@@ -24,6 +24,8 @@ private import dui.ObjectG;
 
 public:
 /* Stock IDs (not all are stock items; some are images only) */
+
+
 enum Stock{
 DIALOG_INFO,
 DIALOG_WARNING,
@@ -55,12 +57,9 @@ GO_BACK,
 GO_DOWN,
 GO_FORWARD,
 GO_UP,
-HARDDISK,
 HELP,
 HOME,
 INDEX,
-INDENT,
-UNINDENT,
 ITALIC,
 JUMP_TO,
 JUSTIFY_CENTER,
@@ -68,7 +67,6 @@ JUSTIFY_FILL,
 JUSTIFY_LEFT,
 JUSTIFY_RIGHT,
 MISSING_IMAGE,
-NETWORK,
 NEW,
 NO,
 OK,
@@ -100,7 +98,7 @@ ZOOM_100,
 ZOOM_FIT,
 ZOOM_IN,
 ZOOM_OUT
-}
+};
 
 public:
 char [][] StockDesc = [
@@ -134,12 +132,9 @@ char [][] StockDesc = [
 "gtk-go-down",
 "gtk-go-forward",
 "gtk-go-up",
-"gtk-harddisk",
 "gtk-help",
 "gtk-home",
 "gtk-index",
-"gtk-indent",
-"gtk-unindent",
 "gtk-italic",
 "gtk-jump-to",
 "gtk-justify-center",
@@ -147,7 +142,6 @@ char [][] StockDesc = [
 "gtk-justify-left",
 "gtk-justify-right",
 "gtk-missing-image",
-"gtk-network",
 "gtk-new",
 "gtk-no",
 "gtk-ok",
@@ -179,6 +173,7 @@ char [][] StockDesc = [
 "gtk-zoom-fit",
 "gtk-zoom-in",
 "gtk-zoom-out"];
+
 
 private:
 extern(C) GtkObject * gtk_object_new(GtkType type, gchar * first_property_name,...);

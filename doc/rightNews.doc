@@ -5,6 +5,12 @@
 <TR><TD>
 <p class="newsHeader">News</P>
 
+<P class="newsTitle">New API docs</P>
+<P class="newsBody">I uploaded the docs from my new experimental Doc generator.<BR>
+To see the old Docs go <A HREF="annotated.html">here</A> or <A HREF="classes.html">here</A>
+</P>
+<P class="newsDate">2004/12/01</p>
+
 <P class="newsTitle">Looking for new logo</P>
 <P class="newsBody">I'm looking for a new logo for DUI.<BR>
 I wasn't too confortable using the rippof Gtk+ logo so I asked and they prefer that I use a different logo.</P>
