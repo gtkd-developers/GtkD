@@ -175,7 +175,7 @@ class Toolbar : Container
 	/**
 	 * 
 	 */
-	Widget appentItem(char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, gpointer userData)
+	Widget appendItem(char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, gpointer userData)
 	{
 		return new Widget(gtk_toolbar_append_item(cast(GtkToolbar*)gtkW(), cChar(text), cChar(tooltipText), cChar(tooltipPrivateText), icon.gtkW(), callback, userData));
 	}

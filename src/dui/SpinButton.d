@@ -140,7 +140,7 @@ class SpinButton : Entry
 	 * Gets this spin buttons adjustment
 	 * @return the adjustment
 	 */
-	Adjustment getAdjustement()
+	Adjustment getAdjustment()
 	{
 		return new Adjustment(gtk_spin_button_get_adjustment(gtkW()));
 	}

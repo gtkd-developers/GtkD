@@ -263,6 +263,7 @@ class Drawable : ObjectG
 	 */
 	void drawRectangle(bit filled, gint x, gint y, gint width, gint height)
 	{
+		printf("Drawable.drawRectangle \n %d %d %d %d %d\n", filled,  x,  y,  width,  height);
 		gdk_draw_rectangle(drawable, gc.getGDKgc(), filled, x, y, width, height);
 	}
 	
