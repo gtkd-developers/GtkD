@@ -36,6 +36,9 @@ extern(C)
 	gint        gtk_combo_box_entry_get_text_column(GtkComboBoxEntry *entry_box);
 }
 
+/**
+ * A text entry field with a dropdown list
+ */
 public:
 class ComboBoxTextEntry : ComboBoxText
 {
@@ -47,29 +50,49 @@ class ComboBoxTextEntry : ComboBoxText
     public:
 	/**
 	 * Create a ComboBox from a Gtk combo box
-	 * @param *gtkWidget 
-	 * @return 
+	 * @param gtkWidget the gtk widget
 	 */
-    this(GtkWidget *gtkWidget)
-    {
-        super(gtkWidget);
-    }
+	this(GtkWidget* gtkWidget)
+	{
+		super(gtkWidget);
+	}
 
+	/**
+	 * Creates a new ComboBoxTextEntry
+	 */
 	this()
 	{
 		super(gtk_combo_box_entry_new_text());
 	}
 
+	/**
+	 * Sets the model column which entry box should use to get strings from to be
+	 * textColumn.
+	 * @param entry_box A GtkComboBoxEntry.
+	 * @param text_column A column in model to get the strings from.
+	 * @since 2.4.
+	 */
 	void setTextColumn(int textColumn)
 	{
 		gtk_combo_box_entry_set_text_column(cast(GtkComboBoxEntry*)getCBB(),textColumn);
 	}
 	
-	gint get_text_column()
+	/**
+	 * Returns the column which entry_box is using to get the strings from.
+	 * @param entry_box A GtkComboBoxEntry.
+	 * @return A column in the data source model of entry_box.
+	 * @since 2.4
+	 */
+	gint getTextColumn()
 	{
 		return gtk_combo_box_entry_get_text_column(cast(GtkComboBoxEntry*)getCBB());
 	}
 
+	
+	/**
+	 * Gets the Entry widget associated with this combo box
+	 * @return The Entry widget of this combo box
+	 */
 	Entry getEntry()
 	{
 		if ( entry === null )
@@ -79,19 +102,24 @@ class ComboBoxTextEntry : ComboBoxText
 		return entry;
 	}
 	
+	/**
+	 * Gets the active text of this combo box
+	 * @return A String with this combo box active text
+	 */
 	String getText()
 	{
 		return getEntry().getText();
 	}
-	
+
+	/**
+	 * Prepends a new entry and removes any repetition already existent on the list
+	 * @param text the String to prepend
+	 */
 	void prependOrReplaceText(String text)
 	{
 		super.prependOrReplaceText(text);
 		getEntry().setText(text);
 	}
-
-
-	
 
 }
 
