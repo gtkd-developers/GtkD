@@ -693,6 +693,138 @@ class SignalHandler(TObject)
 }
 
 
+class SignalHandler(TObject, Targ1)
+{
+
+
+	TObject obj;
+	String signal;
+	
+	bit connected = false;
+
+	alias void delegate(Targ1) OnEventDlg;
+	OnEventDlg[] onEventDlg;
+	public this(TObject obj, String signal)
+	{
+		debug(debugEvent)
+		{
+			printf("SignalHandler.this signal = %s\n" , signal.toStringz());
+		}
+		this.obj = obj;
+		this.signal = signal;
+	}
+	
+	public void opAddAssign(void delegate(Targ1) dlg)
+	{
+		debug(debugEvent)
+		{
+			printf("SignalHandler.opAddAssign signal = %s\n" , signal.toStringz());
+		}
+		if ( !connected )
+		{
+			//connect(obj, signal, &signalCallback, this);
+			g_object_connect(obj.gtk() , (new String("signal::")~signal).toStringz(),&signalCallback,this,null);
+			connected = true;
+		}
+		onEventDlg ~= dlg;
+	}
+
+	/**
+	 * Callback for button pressed events
+	 * @param event the GdkEvent
+	 * @param gtkwidget the gtkwidget that generated the event
+	 * @param data our data set to the listener
+	 */
+	extern (C)
+	{
+		static bit signalCallback(GObject * gObj, Targ1 a1, SignalHandler signalHandler)
+		{
+			debug(debugEvent)
+			{
+				printf("SignalHandler.callback signal = %s\n" , signalHandler.signal.toStringz());
+			}
+			//gdk_threads_enter();
+			//printf("EventHandler0.eventCallback 2\n");
+			TObject obj = signalHandler.obj;
+			foreach(void delegate(Targ1) doEvent ; signalHandler.onEventDlg )
+			{
+				doEvent(a1);
+			//printf("EventHandler0.eventCallback 5\n");
+			}
+			//gdk_flush();
+			//gdk_threads_leave();
+			return true;
+		}
+	}
+
+}
+
+class SignalHandler(TObject, Targ1, Targ2)
+{
+
+
+	TObject obj;
+	String signal;
+	
+	bit connected = false;
+
+	alias void delegate(Targ1, Targ2) OnEventDlg;
+	OnEventDlg[] onEventDlg;
+	public this(TObject obj, String signal)
+	{
+		debug(debugEvent)
+		{
+			printf("SignalHandler.this signal = %s\n" , signal.toStringz());
+		}
+		this.obj = obj;
+		this.signal = signal;
+	}
+	
+	public void opAddAssign(void delegate(Targ1, Targ2) dlg)
+	{
+		debug(debugEvent)
+		{
+			printf("SignalHandler.opAddAssign signal = %s\n" , signal.toStringz());
+		}
+		if ( !connected )
+		{
+			//connect(obj, signal, &signalCallback, this);
+			g_object_connect(obj.gtk() , (new String("signal::")~signal).toStringz(),&signalCallback,this,null);
+			connected = true;
+		}
+		onEventDlg ~= dlg;
+	}
+
+	/**
+	 * Callback for button pressed events
+	 * @param event the GdkEvent
+	 * @param gtkwidget the gtkwidget that generated the event
+	 * @param data our data set to the listener
+	 */
+	extern (C)
+	{
+		static bit signalCallback(GObject * gObj, Targ1 a1, Targ2 a2, SignalHandler signalHandler)
+		{
+			debug(debugEvent)
+			{
+				printf("SignalHandler.callback signal = %s\n" , signalHandler.signal.toStringz());
+			}
+			//gdk_threads_enter();
+			//printf("EventHandler0.eventCallback 2\n");
+			TObject obj = signalHandler.obj;
+			foreach(void delegate(Targ1, Targ2) doEvent ; signalHandler.onEventDlg )
+			{
+				doEvent(a1, a2);
+			//printf("EventHandler0.eventCallback 5\n");
+			}
+			//gdk_flush();
+			//gdk_threads_leave();
+			return true;
+		}
+	}
+
+}
+
 class SignalHandler(TObject, Targ1, Targ2, Targ3)
 {
 
@@ -760,68 +892,4 @@ class SignalHandler(TObject, Targ1, Targ2, Targ3)
 }
 
 
-class SignalHandler(TObject, Targ1)
-{
 
-
-	TObject obj;
-	String signal;
-	
-	bit connected = false;
-
-	alias void delegate(Targ1) OnEventDlg;
-	OnEventDlg[] onEventDlg;
-	public this(TObject obj, String signal)
-	{
-		debug(debugEvent)
-		{
-			printf("SignalHandler.this signal = %s\n" , signal.toStringz());
-		}
-		this.obj = obj;
-		this.signal = signal;
-	}
-	
-	public void opAddAssign(void delegate(Targ1) dlg)
-	{
-		debug(debugEvent)
-		{
-			printf("SignalHandler.opAddAssign signal = %s\n" , signal.toStringz());
-		}
-		if ( !connected )
-		{
-			//connect(obj, signal, &signalCallback, this);
-			g_object_connect(obj.gtk() , (new String("signal::")~signal).toStringz(),&signalCallback,this,null);
-			connected = true;
-		}
-		onEventDlg ~= dlg;
-	}
-
-	/**
-	 * Callback for button pressed events
-	 * @param event the GdkEvent
-	 * @param gtkwidget the gtkwidget that generated the event
-	 * @param data our data set to the listener
-	 */
-	extern (C)
-	{
-		static bit signalCallback(GObject * gObj, Targ1 a1, SignalHandler signalHandler)
-		{
-			debug(debugEvent)
-			{
-				printf("SignalHandler.callback signal = %s\n" , signalHandler.signal.toStringz());
-			}
-			//gdk_threads_enter();
-			//printf("EventHandler0.eventCallback 2\n");
-			TObject obj = signalHandler.obj;
-			foreach(void delegate(Targ1) doEvent ; signalHandler.onEventDlg )
-			{
-				doEvent(a1);
-			//printf("EventHandler0.eventCallback 5\n");
-			}
-			//gdk_flush();
-			//gdk_threads_leave();
-			return true;
-		}
-	}
-
-}

@@ -184,9 +184,16 @@ class TextBuffer : ObjectG
 	protected:
 
 	alias SignalHandler!(TextBuffer) OnChanged;
+	alias SignalHandler!(TextBuffer, TextIter, String, int) OnInsert;
+	alias SignalHandler!(TextBuffer, TextIter, TextIter) OnDelete;
 	
 	OnChanged onChanged;
 
+	bit onInsertAdded;
+	alias void delegate(TextIter, String, int) OnInsertListener;
+	OnInsertListener[] onInsertListeners;
+	
+	OnDelete onDelete;
 
 	public void addOnChanged(void delegate() dlg)
 	{
@@ -196,7 +203,21 @@ class TextBuffer : ObjectG
 		}
 		onChanged += dlg;
 	}
+	
+	public void addOnInsert(void delegate(TextIter, String, int) dlg)
+	{
+		if ( !onInsertAdded )
+		{
+			//onInsert = new OnInsert(this, new String("insert-text"));
+		}
+		onInsertListeners ~= dlg;
+	}
 
+	public static void onInsertCallback()
+	{
+		
+	}
+	
 	/**
 	 * Creates a new text buffer from a gdkTextBuffer
 	 * @param gObject the gdkTextBuffer
@@ -732,6 +753,52 @@ class TextBuffer : ObjectG
 		gtk_text_buffer_remove_all_tags(gtkO(), start.getIter(), end.getIter());
 	}
 
+	/**
+	 * Create a new tag for this buffer
+	 * @param tagName can be null for no name
+	 * @param propertyName
+	 * @param propertyValue
+	 */
+	TextTag createTag(char[] tagName, char[] propertyName, char[] propertyValue, 
+									   char[] propertyName1, int propertyValue1)
+	{
+		return createTag(new String(tagName), new String(propertyName), new String(propertyValue), 
+											new String(propertyName1), propertyValue1);
+	}
+	TextTag createTag(String tagName, String propertyName, String propertyValue, 
+									  String propertyName1, int propertyValue1)
+	{
+		return new TextTag(
+			gtk_text_buffer_create_tag(gtkO(), tagName.toStringz(), 
+					propertyName.toStringz(),propertyValue.toStringz(),
+					propertyName1.toStringz(),propertyValue1,
+					null)
+		);
+			
+	}
+	/**
+	 * Create a new tag for this buffer
+	 * @param tagName can be null for no name
+	 * @param propertyName
+	 * @param propertyValue
+	 */
+	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, 
+									   char[] propertyName1, char[] propertyValue1)
+	{
+		return createTag(new String(tagName), new String(propertyName), propertyValue, 
+											new String(propertyName1), new String(propertyValue1));
+	}
+	TextTag createTag(String tagName, String propertyName, int propertyValue, 
+									  String propertyName1, String propertyValue1)
+	{
+		return new TextTag(
+			gtk_text_buffer_create_tag(gtkO(), tagName.toStringz(), 
+					propertyName.toStringz(),propertyValue,
+					propertyName1.toStringz(),propertyValue1.toStringz(),
+					null)
+		);
+			
+	}
 	/**
 	 * Create a new tag for this buffer
 	 * @param tagName can be null for no name

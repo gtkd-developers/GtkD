@@ -70,7 +70,7 @@ class MainWindow : Window
 	{
 		--countTotalMainWindows;
 		printf("MainWindows.windowDelete count = %d\n", countTotalMainWindows);
-		if ( exit(0, false) || countTotalMainWindows==0 )
+		if ( exit(0, countTotalMainWindows==0) || countTotalMainWindows==0 )
 		{
 			DUI dui = DUI.dui();
 			dui.stop();

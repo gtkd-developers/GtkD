@@ -328,6 +328,24 @@ private import std.gc;
 	 * @param property_name
 	 * @param value the value to set
 	 */
+	public: void setProperty(char[] property_name, Value value)
+	{
+		setProperty(new String(property_name), value.getV());
+	}
+	/**
+	 * Sets a property from this object
+	 * @param property_name
+	 * @param value the value to set
+	 */
+	public: void setProperty(char[] property_name, GValue * value)
+	{
+		setProperty(new String(property_name), value);
+	}
+	/**
+	 * Sets a property from this object
+	 * @param property_name
+	 * @param value the value to set
+	 */
 	public: void setProperty(String property_name, GValue * value)
 	{
 		g_object_set_property(obj(), property_name.toStringz(), value);

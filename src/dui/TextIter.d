@@ -333,8 +333,8 @@ class TextIter
 	 */
 	gunichar getChar()
 	{
-		printf("TextIter.getChar entry \n" );
-		printf("TextIter.getChar char = %c\n", gtk_text_iter_get_char(getIter()));
+		//printf("TextIter.getChar entry \n" );
+		//printf("TextIter.getChar char = %c\n", gtk_text_iter_get_char(getIter()));
 		return gtk_text_iter_get_char(getIter());
 	}
 	
