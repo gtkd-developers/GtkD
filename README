@@ -1,0 +1,9 @@
+DUI is the DUI development releases README file
+
+DUI is a D language graphical user interface based on GKT+ graphical toolkit.
+DUI stands for D graphical User Interface.
+D can interface with C so any graphics toolkit with a C API can be used directly from D, this include GTK+.
+DUI is in a very early state of development and should be considered in alpha state.
+DUI is released under the LGPL license.
+
+see INSTALL for instruction on how to compile and test DUI
