@@ -330,11 +330,11 @@ SRC_dui = \
 dui: dui_OBJ_DIR dui_COMP dui_LINK
 
 dui_OBJ_DIR:
-	mkdir -p obj/src/dglib \
-	mkdir -p obj/src/ddi \
-	mkdir -p obj/src/dango \
-	mkdir -p obj/src/event \
-	mkdir -p obj/src/dui
+	mkdir -p obj/dglib; \
+	mkdir -p obj/ddi; \
+	mkdir -p obj/dango; \
+	mkdir -p obj/event; \
+	mkdir -p obj/dui;
 
 dui_COMP:
 	cd src; \
@@ -551,7 +551,7 @@ SRC_duigl = \
 duigl: duigl_OBJ_DIR duigl_COMP duigl_LINK
 
 duigl_OBJ_DIR:
-	mkdir -p obj/src/ggl
+	mkdir -p obj/ggl;
 
 duigl_COMP:
 	cd src; \
@@ -598,7 +598,7 @@ SRC_DUITests = \
 DUITests: DUITests_OBJ_DIR DUITests_COMP DUITests_LINK
 
 DUITests_OBJ_DIR:
-	mkdir -p obj/src/test
+	mkdir -p obj/test;
 
 DUITests_COMP:
 	cd src; \
@@ -651,9 +651,9 @@ SRC_DUITestGL = \
 DUITestGL: DUITestGL_OBJ_DIR DUITestGL_COMP DUITestGL_LINK
 
 DUITestGL_OBJ_DIR:
-	mkdir -p obj/src/openGL \
-	mkdir -p obj/src/testGL \
-	mkdir -p obj/src/ggl
+	mkdir -p obj/openGL; \
+	mkdir -p obj/testGL; \
+	mkdir -p obj/ggl;
 
 DUITestGL_COMP:
 	cd src; \
@@ -705,8 +705,8 @@ SRC_gearsGL = \
 gearsGL: gearsGL_OBJ_DIR gearsGL_COMP gearsGL_LINK
 
 gearsGL_OBJ_DIR:
-	mkdir -p obj/src/openGL \
-	mkdir -p obj/src/ggl
+	mkdir -p obj/openGL; \
+	mkdir -p obj/ggl;
 
 gearsGL_COMP:
 	cd src; \
@@ -758,9 +758,9 @@ SRC_DUIShapesGL = \
 DUIShapesGL: DUIShapesGL_OBJ_DIR DUIShapesGL_COMP DUIShapesGL_LINK
 
 DUIShapesGL_OBJ_DIR:
-	mkdir -p obj/src/openGL \
-	mkdir -p obj/src/shapesGL \
-	mkdir -p obj/src/ggl
+	mkdir -p obj/openGL; \
+	mkdir -p obj/shapesGL; \
+	mkdir -p obj/ggl;
 
 DUIShapesGL_COMP:
 	cd src; \
@@ -796,7 +796,7 @@ SRC_HelloWorld = \
 HelloWorld: HelloWorld_OBJ_DIR HelloWorld_COMP HelloWorld_LINK
 
 HelloWorld_OBJ_DIR:
-	mkdir -p obj/src/hw
+	mkdir -p obj/hw;
 
 HelloWorld_COMP:
 	cd src; \
@@ -816,7 +816,7 @@ SRC_HelloWorldMoving = \
 HelloWorldMoving: HelloWorldMoving_OBJ_DIR HelloWorldMoving_COMP HelloWorldMoving_LINK
 
 HelloWorldMoving_OBJ_DIR:
-	mkdir -p obj/src/hwMoving
+	mkdir -p obj/hwMoving;
 
 HelloWorldMoving_COMP:
 	cd src; \
@@ -836,7 +836,7 @@ SRC_TestSpawn = \
 TestSpawn: TestSpawn_OBJ_DIR TestSpawn_COMP TestSpawn_LINK
 
 TestSpawn_OBJ_DIR:
-	mkdir -p obj/src/testSpawn
+	mkdir -p obj/testSpawn;
 
 TestSpawn_COMP:
 	cd src; \
@@ -856,7 +856,7 @@ SRC_simpleGL = \
 simpleGL: simpleGL_OBJ_DIR simpleGL_COMP simpleGL_LINK
 
 simpleGL_OBJ_DIR:
-	mkdir -p obj/src/simpleGL
+	mkdir -p obj/simpleGL;
 
 simpleGL_COMP:
 	cd src; \
@@ -876,7 +876,7 @@ SRC_testEvent = \
 testEvent: testEvent_OBJ_DIR testEvent_COMP testEvent_LINK
 
 testEvent_OBJ_DIR:
-	mkdir -p obj/src/testEvent
+	mkdir -p obj/testEvent;
 
 testEvent_COMP:
 	cd src; \
@@ -899,7 +899,7 @@ SRC_cliDDBC = \
 cliDDBC: cliDDBC_OBJ_DIR cliDDBC_COMP cliDDBC_LINK
 
 cliDDBC_OBJ_DIR:
-	mkdir -p obj/src/cliDDBC
+	mkdir -p obj/cliDDBC;
 
 cliDDBC_COMP:
 	cd src; \
