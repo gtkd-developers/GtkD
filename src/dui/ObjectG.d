@@ -73,22 +73,6 @@ private extern(C)
 	gulong g_signal_connect_object(gpointer inst/*ance*/, gchar * detailed_signal, GCallback c_handler, gpointer gobject, GConnectFlags connect_flags);
 }
 
-debug(status)
-{
-	public interface StatusInterface
-	{
-		int complete();
-		char[] gtkName();
-		char[] description();
-		char[] author();
-	}
-}
-else
-{
-	public interface StatusInterface{}
-}
-
-
 /**
  * Base class for DUIObject.
  * This class wraps GObject, DUIObject wraps GtkObject and Widget wraps GtkWidget.
@@ -666,3 +650,20 @@ private import std.gc;
 		return g_signal_connect_object(inst, detailed_signal.toStringz(), c_handler, gobject, connect_flags);
 	}
 }
+
+debug(status)
+{
+	public interface StatusInterface
+	{
+		int complete();
+		char[] gtkName();
+		char[] description();
+		char[] author();
+	}
+}
+else
+{
+	public interface StatusInterface{}
+}
+
+

@@ -676,15 +676,15 @@ class SignalHandler(TObject)
 			//gdk_threads_enter();
 			//printf("EventHandler0.eventCallback 2\n");
 			TObject obj = signalHandler.obj;
-			printf("SignalHandler.signalCallback number of handlers = %d\n", signalHandler.onEventDlg.length);
+			debug(debugEvent)printf("SignalHandler.signalCallback number of handlers = %d\n", signalHandler.onEventDlg.length);
 			foreach(void delegate() doEvent ; signalHandler.onEventDlg )
 			{
-				printf("\tSignalHandler0.signalCallback 4\n");
+				debug(debugEvent)printf("\tSignalHandler0.signalCallback 4\n");
 				doEvent();
 			//printf("EventHandler0.eventCallback 5\n");
 			}
 			//gdk_flush();
-			printf("SignalHandler.signalCallback 6\n");
+			debug(debugEvent)printf("SignalHandler.signalCallback 6\n");
 			//gdk_threads_leave();
 			return true;
 		}
@@ -891,5 +891,141 @@ class SignalHandler(TObject, Targ1, Targ2, Targ3)
 
 }
 
+class TextDeleteHandler(TObject, Targ1, Targ2)
+{
+
+
+	TObject obj;
+	String signal;
+	
+	bit connected = false;
+
+	alias void delegate(Targ1, Targ2) OnEventDlg;
+	OnEventDlg[] onEventDlg;
+	public this(TObject obj, String signal)
+	{
+		debug(debugEvent)
+		{
+			printf("SignalHandler.this signal = %s\n" , signal.toStringz());
+		}
+		this.obj = obj;
+		this.signal = signal;
+	}
+	
+	public void opAddAssign(void delegate(Targ1, Targ2) dlg)
+	{
+		debug(debugEvent)
+		{
+			printf("SignalHandler.opAddAssign signal = %s\n" , signal.toStringz());
+		}
+		if ( !connected )
+		{
+			//connect(obj, signal, &signalCallback, this);
+			g_object_connect(obj.gtk() , (new String("signal::")~signal).toStringz(),&signalCallback,this,null);
+			connected = true;
+		}
+		onEventDlg ~= dlg;
+	}
+
+	/**
+	 * Callback for button pressed events
+	 * @param event the GdkEvent
+	 * @param gtkwidget the gtkwidget that generated the event
+	 * @param data our data set to the listener
+	 */
+	extern (C)
+	{
+		static bit signalCallback(GObject * gObj, GtkTextIter* a1, GtkTextIter* a2, TextDeleteHandler signalHandler)
+		{
+			debug(debugEvent)
+			{
+				printf("SignalHandler.callback signal = %s\n" , signalHandler.signal.toStringz());
+			}
+			//gdk_threads_enter();
+			//printf("EventHandler0.eventCallback 2\n");
+			TObject obj = signalHandler.obj;
+			Targ1 t1 = new Targ1(a1);
+			Targ2 t2 = new Targ2(a2);
+			foreach(void delegate(Targ1, Targ2) doEvent ; signalHandler.onEventDlg )
+			{
+				doEvent(t1, t2);
+			//printf("EventHandler0.eventCallback 5\n");
+			}
+			//gdk_flush();
+			//gdk_threads_leave();
+			return true;
+		}
+	}
+
+}
+
+
+class TextInsertHandler(TObject, Targ1, Targ2, Targ3)
+{
+
+
+	TObject obj;
+	String signal;
+	
+	bit connected = false;
+
+	alias void delegate(Targ1, Targ2, Targ3) OnEventDlg;
+	OnEventDlg[] onEventDlg;
+	public this(TObject obj, String signal)
+	{
+		debug(debugEvent)
+		{
+			printf("TextInsertHandler.this signal = %s\n" , signal.toStringz());
+		}
+		this.obj = obj;
+		this.signal = signal;
+	}
+	
+	public void opAddAssign(void delegate(Targ1, Targ2, Targ3) dlg)
+	{
+		debug(debugEvent)
+		{
+			printf("TextInsertHandler.opAddAssign signal = %s\n" , signal.toStringz());
+		}
+		if ( !connected )
+		{
+			//connect(obj, signal, &signalCallback, this);
+			g_object_connect(obj.gtk() , (new String("signal::")~signal).toStringz(),&signalCallback,this,null);
+			connected = true;
+		}
+		onEventDlg ~= dlg;
+	}
+
+	/**
+	 * Callback for button pressed events
+	 * @param event the GdkEvent
+	 * @param gtkwidget the gtkwidget that generated the event
+	 * @param data our data set to the listener
+	 */
+	extern (C)
+	{
+		static bit signalCallback(GObject * gObj, GtkTextIter* a1, GtkTextIter* a2, int a3, TextInsertHandler signalHandler)
+		{
+			debug(debugEvent)
+			{
+				printf("TextInsertHandler.callback signal = %s\n" , signalHandler.signal.toStringz());
+			}
+			//gdk_threads_enter();
+			//printf("EventHandler0.eventCallback 2\n");
+			TObject obj = signalHandler.obj;
+			Targ1 t1 = new Targ1(a1);
+			Targ2 t2 = new Targ2(a2);
+			foreach(void delegate(Targ1, Targ2, Targ3) doEvent ; signalHandler.onEventDlg )
+			{
+				doEvent(t1, t2, a3);
+			//printf("EventHandler0.eventCallback 5\n");
+			}
+			//gdk_flush();
+			//gdk_threads_leave();
+			return true;
+		}
+	}
+
+}
 
 

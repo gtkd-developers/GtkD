@@ -116,6 +116,7 @@ import dui.ObjectG;
 import dui.OptionMenu;
 import dui.Paned;
 import dui.Plug;
+import dui.PopupBox;
 import dui.Preview;
 import dui.ProgressBar;
 import dui.RadioButton;

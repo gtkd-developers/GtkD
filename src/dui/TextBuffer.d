@@ -184,15 +184,11 @@ class TextBuffer : ObjectG
 	protected:
 
 	alias SignalHandler!(TextBuffer) OnChanged;
-	alias SignalHandler!(TextBuffer, TextIter, String, int) OnInsert;
-	alias SignalHandler!(TextBuffer, TextIter, TextIter) OnDelete;
+	alias TextInsertHandler!(TextBuffer, TextIter, String, int) OnInsert;
+	alias TextDeleteHandler!(TextBuffer, TextIter, TextIter) OnDelete;
 	
 	OnChanged onChanged;
-
-	bit onInsertAdded;
-	alias void delegate(TextIter, String, int) OnInsertListener;
-	OnInsertListener[] onInsertListeners;
-	
+	OnInsert onInsert;
 	OnDelete onDelete;
 
 	public void addOnChanged(void delegate() dlg)
@@ -206,11 +202,11 @@ class TextBuffer : ObjectG
 	
 	public void addOnInsert(void delegate(TextIter, String, int) dlg)
 	{
-		if ( !onInsertAdded )
+		if ( onInsert === null )
 		{
-			//onInsert = new OnInsert(this, new String("insert-text"));
+			onInsert = new OnInsert(this, new String("insert-text"));
 		}
-		onInsertListeners ~= dlg;
+		onInsert += dlg;
 	}
 
 	public static void onInsertCallback()

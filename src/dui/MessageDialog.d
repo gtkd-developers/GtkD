@@ -83,49 +83,17 @@ class MessageDialog : Dialog
 			GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, 
 			gchar * str)
 	{
-		printf("MessageDialog.this A 1 \n");
-		super(gtk_message_dialog_new(cast(GtkWindow*)(parent.gtkW()), flags, type, buttons, str, null));
-		printf("MessageDialog.this A exit \n");
+		super(gtk_message_dialog_new(
+					(parent===null)?null : cast(GtkWindow*)(parent.gtkW()), 
+					flags, type, buttons, str, null));
 	}
 
 	this(Window parent, 
 			GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, 
 			String str)
 	{
-		printf("MessageDialog.this B 1 \n");
-		super(gtk_message_dialog_new(cast(GtkWindow*)(parent.gtkW()), flags, type, buttons, str.toStringz(), null));
-		printf("MessageDialog.this B exit \n");
-	}
-
-	static void popupInformation(Window parent, char[] message, char[] title)
-	{
-		popupInformation(parent, new String(message), new String(title));
-	}
-	static void popupInformation(Window parent, String message, String title)
-	{
-		MessageDialog d = new MessageDialog(parent, 0,
-										DialogType.INFO,
-										DialogButtons.NONE ,
-										message.toStringz());
-		d.setTitle(title);
-		d.addButton(Stock.OK,Response.NO);
-		d.run();
-		d.destroy();
-	}
-	
-	static void popupError(Window parent, char[] message, char[] title)
-	{
-		popupError(parent, new String(message), new String(title));
-	}
-	static void popupError(Window parent, String message, String title)
-	{
-		MessageDialog d = new MessageDialog(parent, 0,
-										DialogType.ERROR,
-										DialogButtons.NONE ,
-										message.toStringz());
-		d.setTitle(title);
-		d.addButton(Stock.DIALOG_ERROR,Response.NO);
-		d.run();
-		d.destroy();
+		super(gtk_message_dialog_new(
+					(parent===null)?null : cast(GtkWindow*)(parent.gtkW()), 
+					flags, type, buttons, str.toStringz(), null));
 	}
 }
