@@ -1,0 +1,73 @@
+#!/usr/bin/bash
+export DUI_VERSION="00.13_97"
+export DUI_DOC=dui_00.13_97_doc.tar
+export DUIGL_VERSION="00.01_63"
+
+# the documentation
+
+rm public/files/$DUI_DOC.gz
+tar --exclude=*.gz -cf $DUI_DOC public/html
+gzip $DUI_DOC
+mv $DUI_DOC.gz public/files
+
+# create a new distribution directory struct
+
+mkdir -p dist/dui_$DUI_VERSION
+mkdir -p dist/dui_$DUI_VERSION/obj/
+mkdir -p dist/dui_$DUI_VERSION/obj/ddi
+mkdir -p dist/dui_$DUI_VERSION/obj/def
+mkdir -p dist/dui_$DUI_VERSION/obj/dui
+mkdir -p dist/dui_$DUI_VERSION/obj/test
+mkdir -p dist/dui_$DUI_VERSION/obj/hw
+mkdir -p dist/dui_$DUI_VERSION/obj/testGL
+mkdir -p dist/dui_$DUI_VERSION/obj/gl
+mkdir -p dist/dui_$DUI_VERSION/obj/ggl
+mkdir -p dist/dui_$DUI_VERSION/obj/dlib
+mkdir -p dist/dui_$DUI_VERSION/obj/dango
+mkdir -p dist/dui_$DUI_VERSION/obj/event
+
+
+# copy the files
+
+cp -R src dist/dui_$DUI_VERSION
+
+cp INSTALL dist/dui_$DUI_VERSION
+cp README dist/dui_$DUI_VERSION
+cp lgpl.txt dist/dui_$DUI_VERSION
+mv dist/dui_$DUI_VERSION/src/Makefile dist/dui_$DUI_VERSION
+
+# create the tar
+
+cd dist
+
+tar -cf dui_$DUI_VERSION.tar dui_$DUI_VERSION
+gzip dui_$DUI_VERSION.tar
+
+cd ..
+
+# copy .. rename and zip all necessary files to the night build
+
+cp libdui.a libdui_$DUI_VERSION.a
+gzip libdui_$DUI_VERSION.a
+cp libduigl.a libduigl_$DUIGL_VERSION.a
+gzip libduigl_$DUIGL_VERSION.a
+
+# copy the tar and night files to the html directory
+
+cp dist/dui_$DUI_VERSION.tar.gz public/files
+cp libdui_$DUI_VERSION.a.gz public/files
+cp libduigl_$DUIGL_VERSION.a.gz public/files
+
+# clear the ftpUpdate directory and copy the files to update to there
+
+rm -fr ftpUpdate/*
+#cp public/html/pages.html ftpUpdate
+#cp public/html/downloadPage.html ftpUpdate
+cp public/html/dui_$DUI_VERSION.tar.gz ftpUpdate
+cp public/html/libdui_$DUI_VERSION.a.gz ftpUpdate
+cp public/html/libduigl_$DUIGL_VERSION.a.gz ftpUpdate
+cp public/html/nightlyBuild.html ftpUpdate
+
+# show the result
+
+#tree dist -d
