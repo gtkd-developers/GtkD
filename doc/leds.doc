@@ -1,0 +1,49 @@
+/*
+ * DUI D (graphic) User Interface
+ * an implementation through GTK+
+ * by Antonio Monteiro.
+ * DUI is released is under the LGPL license
+ * This file is part of DUI.
+ * Send comments and suggestions to duitoolkit@yahoo.ca
+ * or go to the yahoo group
+ * http://groups.yahoo.com/group/duitoolkit
+ * (Group email: duitoolkit@yahoogroups.com)
+ * See detailed information at DUI home page
+ * http://ca.geocities.com/duitoolkit
+ */
+
+ 
+/**
+ * \page ledsPage leds
+ * leds stands for:
+ * - (Linux) Linux Editor for D
+ * - (Window) Light Editor for D
+ * - the 's' is a qualifier and for now stands for "simple" and "superfluous"
+ *
+ * leds is to keep light and simple. There are lots of free tools
+ * that will always be more complete then leds (just 2 of them):
+ * - <A HREF="http://www.eclipse.org"> eclipse </A>
+ * - <A HREF="http://www.jext.org"> jext </A>
+ *
+ * probably will never be more then just a toy with no real future.<br>
+ * it's an examples of a DUI application<br>
+ * completed:
+ * - load file(s)
+ * - edit (no undo, search or replace, ...)
+ * - save buffer(s)
+ * - saveAs buffer
+ *
+ * todo (main goals):
+ * - organize source files on logic sets (projects)
+ * - fire external programs
+ * - use scintilla as the text editor
+ * - hack the DMD parser to be able to popup class members on the editor
+ *
+ * notable features:
+ * - fast startup
+ *  - no huge VM to start
+ *  - no huge configuration files to process
+ *  - no pluggins to instantiate
+ *
+ * \image html leds.png
+ */

@@ -1,0 +1,42 @@
+/*
+ * DUI D (graphic) User Interface
+ * an implementation through GTK+
+ * by Antonio Monteiro.
+ * DUI is released is under the LGPL license
+ * This file is part of DUI.
+ * Send comments and suggestions to duitoolkit@yahoo.ca
+ * or go to the yahoo group
+ * http://groups.yahoo.com/group/duitoolkit
+ * (Group email: duitoolkit@yahoogroups.com)
+ * See detailed information at DUI home page
+ * http://ca.geocities.com/duitoolkit
+ */
+
+/**
+ * \page windowsTools Windows tools
+ *
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * \warning this tools is very new and mostly untested<br>
+ * it is suficient to compile dui.lib duigl.lib and all dui test programs.<br>
+ * this tool CANNOT deal with wrong data (i.e. wrong file names)
+ *
+ * \section introduction
+ * 
+ * As the new installer (see \ref downloadPage ) simplifies installer DUI and Gtk+ on windows<br>
+ * The DUI Manager will simplify compiling your DUI application on windows<BR>
+ * The DUI Manager know what libraries needs to include for simple D programs (phobos only),<br>
+ * dool and DUI programs and DUI/OpenGL (still not usable) programs<BR>
+ * <br>here is an example of a compilation definition<BR>
+ * \image html DUIManProj.jpg
+ * <BR>
+ * <BR>
+ * If you cannot or don't want to use the DUI Manager to compile your D programs<br>
+ * and you are unsure of the libraries to include you can copy then from the DUI Managers<br>
+ * <br> \image html DUIManLibs.jpg
+ *
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+  

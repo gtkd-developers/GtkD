@@ -1,0 +1,42 @@
+/*
+ * DUI D (graphic) User Interface
+ * an implementation through GTK+
+ * by Antonio Monteiro.
+ * DUI is released is under the LGPL license
+ * This file is part of DUI.
+ * Send comments and suggestions to duitoolkit@yahoo.ca
+ * or go to the yahoo group
+ * http://groups.yahoo.com/group/duitoolkit
+ * (Group email: duitoolkit@yahoogroups.com)
+ * See detailed information at DUI home page
+ * http://ca.geocities.com/duitoolkit
+ */
+
+/**
+ * \page doolImpact Dool Impact on DUI
+ *
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ *
+ * \section dool
+ * 
+ * DUI now requires dool (included on the windows installer)<br>
+ * this proved to be the long term solution for the changes introduces with DMD 0.91<BR>
+ *
+ * \section Impact
+ *
+ * The impact of dool is minimum:
+ * - DUI methods never return char[] but an instance of the class String
+ *  - to convert a String to char[] call the method .toString() on the String object
+ * - all DUI I/O is done through the dool io classes instead of the phobos functions
+ *  - transparent to the user
+ *
+ * as DUI is not a string processing library nor a IO supplier these changes are very minimal to the user (programmer).
+ * <br><BR>
+ * it's not expected that the influence of dool over DUI will ever become greater.
+ *
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+  

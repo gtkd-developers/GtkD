@@ -1,0 +1,54 @@
+/*
+ * DUI D (graphic) User Interface
+ * an implementation through GTK+
+ * by Antonio Monteiro.
+ * DUI is released is under the LGPL license
+ * This file is part of DUI.
+ * Send comments and suggestions to duitoolkit@yahoo.ca
+ * or go to the yahoo group
+ * http://groups.yahoo.com/group/duitoolkit
+ * (Group email: duitoolkit@yahoogroups.com)
+ * See detailed information at DUI home page
+ * http://ca.geocities.com/duitoolkit
+ */
+
+/**
+ * \page glExtension DUI OpenGL support
+ *
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * DUI OpenGL support (Linux only) is implemented with a binding on 
+ * <A HREF="http://gtkglext.sourceforge.net/"> GtkGlExt</A>
+ *
+ * DUI OpenGL API was changed (the previous API will not be deprecated as it's a thin layer on gtkglext).<br>
+ * DUI OpenGL API now makes use of D mixins resulting on a clean an simple way add<BR>
+ * OpenGL capailities to any widget (unfortunatly only DrawingArea is support on th new API)<BR>
+ *
+ * DUI OpenGL is tested on:
+ * - Linux (Slackware 9.0 beta)
+ * - <A HREF="http://www.mesa3d.org/"> The Mesa 3D Graphics Library </A>
+ * - Version:  4.0.4
+ *
+ * Here  a picture generate through DUI
+ *
+ * <TABLE BORDER=0>
+ * <TR>
+ * 	<TD> \image html duiglTeapot.png </TD>
+ * </TR>
+ * </TABLE>
+ *
+ * and here is a simple DUI OpenGL program
+ *
+ * <TABLE BORDER=0>
+ * <TR>
+ * 	<TD> \image html SimplGL.png </TD>
+ * </TR>
+ * </TABLE>
+ * and it's code:
+ *
+ * \include SimpleGL.d
+ *
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
