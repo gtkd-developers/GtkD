@@ -26,7 +26,14 @@ module dglib.IOChannel;
 private import def.Types;
 private import def.Constants;
 
-
+version(linux)
+{
+	version=CommonUnix;
+}
+version(Unix)
+{
+	version=CommonUnix;
+}
 
 private:
 
@@ -249,17 +256,17 @@ class IOChannel
 		this(g_io_channel_unix_new(fd));
 	}
 
-	version(linux)
+	version(CommonUnix)
 	{
-	/**
-	 * Returns the file descriptor of the UNIX GIOChannel.
-	 * @param channel a GIOChannel, created with gIoChannelUnixNew().
-	 * @return the file descriptor of the GIOChannel.
-	 */
-	gint unixGetFd()
-	{
-		return g_io_channel_unix_get_fd(gIOChannel);
-	}
+		/**
+		 * Returns the file descriptor of the UNIX GIOChannel.
+		 * @param channel a GIOChannel, created with gIoChannelUnixNew().
+		 * @return the file descriptor of the GIOChannel.
+		 */
+		gint unixGetFd()
+		{
+			return g_io_channel_unix_get_fd(gIOChannel);
+		}
 	}
 
 	/**
