@@ -23,8 +23,6 @@ private import dui.Utils;
 private import dui.ObjectG;
 
 public:
-version(GTK240)
-{
 /* Stock IDs (not all are stock items; some are images only) */
 enum Stock{
 DIALOG_INFO,
@@ -102,7 +100,7 @@ ZOOM_100,
 ZOOM_FIT,
 ZOOM_IN,
 ZOOM_OUT
-};
+}
 
 public:
 char [][] StockDesc = [
@@ -182,159 +180,6 @@ char [][] StockDesc = [
 "gtk-zoom-in",
 "gtk-zoom-out"];
 
-}
-else
-{
-/* Stock IDs (not all are stock items; some are images only) */
-enum Stock{
-DIALOG_INFO,
-DIALOG_WARNING,
-DIALOG_ERROR,
-DIALOG_QUESTION,
-DND,
-DND_MULTIPLE,
-ADD,
-APPLY,
-BOLD,
-CANCEL,
-CDROM,
-CLEAR,
-CLOSE,
-COLOR_PICKER,
-CONVERT,
-COPY,
-CUT,
-DELETE,
-EXECUTE,
-FIND,
-FIND_AND_REPLACE,
-FLOPPY,
-GOTO_BOTTOM,
-GOTO_FIRST,
-GOTO_LAST,
-GOTO_TOP,
-GO_BACK,
-GO_DOWN,
-GO_FORWARD,
-GO_UP,
-HELP,
-HOME,
-INDEX,
-ITALIC,
-JUMP_TO,
-JUSTIFY_CENTER,
-JUSTIFY_FILL,
-JUSTIFY_LEFT,
-JUSTIFY_RIGHT,
-MISSING_IMAGE,
-NEW,
-NO,
-OK,
-OPEN,
-PASTE,
-PREFERENCES,
-PRINT,
-PRINT_PREVIEW,
-PROPERTIES,
-QUIT,
-REDO,
-REFRESH,
-REMOVE,
-REVERT_TO_SAVED,
-SAVE,
-SAVE_AS,
-SELECT_COLOR,
-SELECT_FONT,
-SORT_ASCENDING,
-SORT_DESCENDING,
-SPELL_CHECK,
-STOP,
-STRIKETHROUGH,
-UNDELETE,
-UNDERLINE,
-UNDO,
-YES,
-ZOOM_100,
-ZOOM_FIT,
-ZOOM_IN,
-ZOOM_OUT
-};
-
-public:
-char [][] StockDesc = [
-"gtk-dialog-info",
-"gtk-dialog-warning",
-"gtk-dialog-error",
-"gtk-dialog-question",
-"gtk-dnd",
-"gtk-dnd-multiple",
-"gtk-add",
-"gtk-apply",
-"gtk-bold",
-"gtk-cancel",
-"gtk-cdrom",
-"gtk-clear",
-"gtk-close",
-"gtk-color-picker",
-"gtk-convert",
-"gtk-copy",
-"gtk-cut",
-"gtk-delete",
-"gtk-execute",
-"gtk-find",
-"gtk-find-and-replace",
-"gtk-floppy",
-"gtk-goto-bottom",
-"gtk-goto-first",
-"gtk-goto-last",
-"gtk-goto-top",
-"gtk-go-back",
-"gtk-go-down",
-"gtk-go-forward",
-"gtk-go-up",
-"gtk-help",
-"gtk-home",
-"gtk-index",
-"gtk-italic",
-"gtk-jump-to",
-"gtk-justify-center",
-"gtk-justify-fill",
-"gtk-justify-left",
-"gtk-justify-right",
-"gtk-missing-image",
-"gtk-new",
-"gtk-no",
-"gtk-ok",
-"gtk-open",
-"gtk-paste",
-"gtk-preferences",
-"gtk-print",
-"gtk-print-preview",
-"gtk-properties",
-"gtk-quit",
-"gtk-redo",
-"gtk-refresh",
-"gtk-remove",
-"gtk-revert-to-saved",
-"gtk-save",
-"gtk-save-as",
-"gtk-select-color",
-"gtk-select-font",
-"gtk-sort-ascending",
-"gtk-sort-descending",
-"gtk-spell-check",
-"gtk-stop",
-"gtk-strikethrough",
-"gtk-undelete",
-"gtk-underline",
-"gtk-undo",
-"gtk-yes",
-"gtk-zoom-100",
-"gtk-zoom-fit",
-"gtk-zoom-in",
-"gtk-zoom-out"];
-}
-
 private:
 extern(C) GtkObject * gtk_object_new(GtkType type, gchar * first_property_name,...);
 
@@ -353,14 +198,15 @@ extern(C) void gtk_object_destroy(GtkObject * object);
 
 enum GtkObjectFlags {
 	GTK_IN_DESTRUCTION = 1 << 0, /* Used internally during dispose */
-	GTK_FLOATING = 1 << 1, GTK_RESERVED_1 = 1 << 2, GTK_RESERVED_2 = 1 << 3};
+	GTK_FLOATING = 1 << 1, GTK_RESERVED_1 = 1 << 2, GTK_RESERVED_2 = 1 << 3
+}
 
 
 /**
  * The wrapper for GtkObject
  */
 
-public:
+public
 class DUIObject : ObjectG
 {
 

@@ -62,7 +62,7 @@ extern(C)
 	
 	
 	//void gtk_tree_model_foreach(GtkTreeModel * model, GtkTreeModelForeachFunc func, gpointer user_data);
-};
+}
 
 
 
@@ -73,7 +73,7 @@ public:
 interface TreeNode
 {
 	void* getNodeValue(int column);
-};
+}
 
 
 

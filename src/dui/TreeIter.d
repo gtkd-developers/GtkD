@@ -33,7 +33,7 @@ extern(C)
 	GtkTreePath * gtk_tree_model_get_path(GtkTreeModel * tree_model, GtkTreeIter * iter);
 	gboolean gtk_tree_model_iter_parent(GtkTreeModel * tree_model, GtkTreeIter * iter, GtkTreeIter * child);
 	gboolean gtk_tree_model_get_iter_from_string (GtkTreeModel *tree_model, GtkTreeIter *iter, gchar *path_string);
-};
+}
 
 /**
  * A TreeIter error.

@@ -28,12 +28,9 @@ private import dui.OGTK;
 
 private import ddi.Value;
 
-public:
+public alias GObject GdkObject;
 
-alias GObject GdkObject;
-
-private:
-extern(C)
+private extern(C)
 {
 	// void g_object_class_install_property(GObjectClass * oclass, guint property_id, GParamSpec * pspec);
 	// GParamSpec * g_object_class_find_property(GObjectClass * oclass, gchar * property_name);
@@ -75,6 +72,7 @@ extern(C)
 	GObject * g_value_dup_object(GValue * value);
 	gulong g_signal_connect_object(gpointer inst/*ance*/, gchar * detailed_signal, GCallback c_handler, gpointer gobject, GConnectFlags connect_flags);
 }
+
 debug(status)
 {
 	public interface StatusInterface
@@ -97,7 +95,7 @@ else
  * \todo consider setting the ObjectG on the GObject data so that the ObjectG will
  *       have the same live span as the GObject (reusable from the Dispatcher for instance)
  */
-public:
+public
 class ObjectG : StatusInterface , OGTK
 {
 
