@@ -26,8 +26,8 @@
  * 
  * As the new installer (see \ref downloadPage ) simplifies installer DUI and Gtk+ on windows<br>
  * The DUI Manager will simplify compiling your DUI application on windows<BR>
- * The DUI Manager know what libraries needs to include for simple D programs (phobos only),<br>
- * dool and DUI programs and DUI/OpenGL (still not usable) programs<BR>
+ * The DUI Manager knows what libraries needs to include for simple D programs (phobos only),<br>
+ * dool and DUI programs and DUI/OpenGL programs<BR>
  * <br>here is an example of a compilation definition<BR>
  * \image html DUIManProj.jpg
  * <BR>

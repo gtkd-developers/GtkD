@@ -78,6 +78,8 @@ class TestTreeView1 : ScrolledWindow , TreeViewListener
 	private import dui.CellRendererPixbuf;
 	private import dui.CellRendererText;
 	
+	private import std.stdio;
+	
 	enum columns
 	{
 		duiObject = DUIType.PIXBUF,
@@ -89,16 +91,23 @@ class TestTreeView1 : ScrolledWindow , TreeViewListener
 
 	this()
 	{
+		writefln("TestTreeView1.this 1");
 		super(null,null);
+		writefln("TestTreeView1.this 2");
 		
 		pixbuf = new Pixbuf(book_closed_xpm);
 		image = new Image(pixbuf);
+		writefln("TestTreeView1.this 3");
 
 		TreeView treeView = setup();
+		writefln("TestTreeView1.this 4");
 		populate(treeView);
+		writefln("TestTreeView1.this 5");
 		addWithViewport(treeView);
+		writefln("TestTreeView1.this 6");
 		
 		Dispatcher.getDispatcher().addTreeViewListener(this,treeView);
+		writefln("TestTreeView1.this 7");
 
 	}
 	
@@ -126,27 +135,35 @@ class TestTreeView1 : ScrolledWindow , TreeViewListener
 	 */
 	TreeView setup()
 	{
-
+writefln("TestTreeView1.setup 1");
 		class TTreeStore : TreeStore
 		{
 			this()
 			{
 				//this.nCols = nCols;
+				writefln("TestTreeView1.setup 1.2");
 				static GType [2] columns = [
 					DUIType.PIXBUF,
 					DUIType.STRING]; 
+				writefln("TestTreeView1.setup 1.3");
 				super(columns);
+				writefln("TestTreeView1.setup 1.4");
 				
 			}
 		}
 
+writefln("TestTreeView1.setup 2");
 		testTreeStore = new TTreeStore();
+writefln("TestTreeView1.setup 3");
 		TreeView treeView = new TreeView(testTreeStore);
+writefln("TestTreeView1.setup 4");
 		treeView.setRulesHint(true);
+writefln("TestTreeView1.setup 5");
 		
 		TreeSelection ts = treeView.getSelection();
 		ts.setMode(SelectionMode.MULTIPLE);
 
+writefln("TestTreeView1.setup 6");
 		int col = 0;
 		TreeViewColumn column = new TreeViewColumn("Icon",new CellRendererPixbuf(),"pixbuf", col);
 		treeView.appendColumn(column);
@@ -156,6 +173,7 @@ class TestTreeView1 : ScrolledWindow , TreeViewListener
 		column.setWidget(image);
 		++col;
 		
+writefln("TestTreeView1.setup 7");
 		column = new TreeViewColumn("Description",new CellRendererText(),"text", col);
 		treeView.appendColumn(column);
 		column.setResizable(true);
@@ -164,6 +182,7 @@ class TestTreeView1 : ScrolledWindow , TreeViewListener
 		column.setSortIndicator(true);
 		++col;
 
+writefln("TestTreeView1.setup 8");
 		return treeView;
 		
 	}	

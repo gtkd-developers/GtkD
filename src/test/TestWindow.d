@@ -256,7 +256,7 @@ class TestWindow : MainWindow
 		testSpinButton(notebook);
 		notebook.appendPage(new TestTree,"Tree");
 		notebook.appendPage(new TestTreeView,"TreeView");
-		notebook.appendPage(new TestTreeView1,"TreeView 1");
+		//notebook.appendPage(new TestTreeView1,"TreeView 1");
 		testList(notebook);
 		notebook.appendPage(new Frame(new TestDrawingArea,"Drawing Area"),"Drawing");
 		notebook.appendPage(new TestText,"Text");
@@ -875,17 +875,18 @@ class TestWindow : MainWindow
 		
 	}
 
+	void showTTextView()
+	{
+		new TTextView();
+	}
+	
+	void showTEditableCells()
+	{
+		new TEditableCells();
+	}
+		
 	void gtkDemo(Notebook notebook)
 	{
-		void showTTextView()
-		{
-			new TTextView();
-		}
-		
-		void showTEditableCells()
-		{
-			new TEditableCells();
-		}
 		
 		VButtonBox vBBox = VButtonBox.createActionBox();
 

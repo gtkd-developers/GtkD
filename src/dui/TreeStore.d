@@ -102,11 +102,11 @@ class TreeStore : TreeModel
 	this(GType [] types)
 	{
 		GType *t = types;
-		//printf("Creating a TreeStore with %d columns\n",types.length);
-		//for ( int i=0 ; i< types.length ; i++ )
-		//{
-		//	printf("\tColumn type %d = %d\n",i,types[i]);
-		//}
+		printf("Creating a TreeStore with %d columns\n",types.length);
+		for ( int i=0 ; i< types.length ; i++ )
+		{
+			printf("\tColumn type %d = %d\n",i,types[i]);
+		}
 		this(gtk_tree_store_newv(types.length, t));
 	}
 

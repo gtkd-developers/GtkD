@@ -52,7 +52,7 @@ extern(C)
 	//GdkPixmap * gdk_pixmap_foreign_new_for_display (GdkDisplay * display, GdkNativeWindow anid);
 	//GdkPixmap * gdk_pixmap_lookup_for_display (GdkDisplay * display, GdkNativeWindow anid);
 
-};
+}
 
 /**
  * Functions for rendering pixbufs on drawables.
@@ -88,7 +88,13 @@ class Pixmap :
 	 */
 	this(Drawable drawable, gint width, gint height, gint depth)
 	{
+		printf("Pixmap.this drawable = %X\n", drawable);
+		printf("Pixmap.this drawable.gDraw() = %X\n", drawable.gDraw());
+		printf("Pixmap.this width = %d\n", width);
+		printf("Pixmap.this height = %d\n", height);
+		printf("Pixmap.this depth = %d\n", depth);
 		this(gdk_pixmap_new(drawable.gDraw(), width, height, depth));
+		printf("Pixmap.this done\n");
 	}
 	
 		

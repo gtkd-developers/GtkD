@@ -448,7 +448,7 @@ enum KeySyms
 	asciitilde	= 0x07e,
 	nobreakspace	= 0x0a0,
 	exclamdown	= 0x0a1,
-	cent	= 0x0a2,
+	kcent	= 0x0a2,
 	sterling	= 0x0a3,
 	currency	= 0x0a4,
 	yen	= 0x0a5,
