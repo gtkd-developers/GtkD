@@ -1,0 +1,61 @@
+/*
+ * DUI D (graphic) User Interface
+ * an implementation through GTK+
+ * by Antonio Monteiro.
+ * DUI is released is under the LGPL license
+ * This file is part of DUI.
+ * Send comments and suggestions to duitoolkit@yahoo.ca
+ * or go to the yahoo group
+ * http://groups.yahoo.com/group/duitoolkit
+ * (Group email: duitoolkit@yahoogroups.com)
+ * See detailed information at DUI home page
+ * http://ca.geocities.com/duitoolkit
+ */
+
+
+/**
+ * \page roadmap DUI roadmap 
+ *
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * \ref version_1<br>
+ * \ref version_2<br>
+ * \ref version_Other<br>
+ * \ref extensions<br>
+ * 
+ * \section version_1 First version 1.00 release date unknown
+ *
+ * The first version will allow to use all the widgets from the GTK+ toolkit.<br>
+ * This includes only the higher level functions of the GTK+ library.<br>
+ * The libraries ATK, GDK, glib and Pango are not implement or have a very limited
+ * implementation when needed to support the implemented function of the GTK+ library.<br>
+ * An example of "use" will include setup a combo box, display, change the items,
+ * respond to the user actions and retrieve the selected item.<br>
+ * Not implemented will be changing the color or the font of the combo box.
+ *
+ * \section version_2 second version 2.00 release date unknown
+ *
+ * The second version will include the most common low level function of GTK+<br>
+ * ("most common" and "low level" are still to be defined)<br>
+ * This will include the Pango, GDK, glib and ATK libraries (by that order)
+ * 
+ *
+ * \section version_Other Other versions
+ * 
+ * other version will try to keep up with GTK+ development and will have a numbering
+ * that makes reference to the GTK+ releases
+ *
+ * \section extensions Extensions to GTK+
+ *
+ * DUI will try to include other extensions to GTK+.<br>
+ * the first example already on the development version is the OpenGL extension GtkGlExt.<br>
+ * The wrapping to GtkGlExt is created on a separate library (libduigl).<br>
+ * Extensions to GTK+ that are available on the two main target environments of DUI
+ * (Linux/un*x and wind*ws) will be preferred to others that don't support all environments.<br>
+ * DUI will probably become a set a 3 libraries libdui, libduigl and libduiext<br>
+ * libduiext might be slip into the target environments.
+ *
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */ 

@@ -1,0 +1,62 @@
+/*
+ * DUI D (graphic) User Interface
+ * an implementation through GTK+
+ * by Antonio Monteiro.
+ * DUI is released is under the LGPL license
+ * This file is part of DUI.
+ * Send comments and suggestions to duitoolkit@yahoo.ca
+ * or go to the yahoo group
+ * http://groups.yahoo.com/group/duitoolkit
+ * (Group email: duitoolkit@yahoogroups.com)
+ * See detailed information at DUI home page
+ * http://ca.geocities.com/duitoolkit
+ */
+
+
+
+/**
+ * \page acknowledgmentsPage
+ *  
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * \section acknowledgments Acknowledgments:
+ *
+ * <TABLE BORDER=0>
+ * <TR>
+ * 	  <TD> 
+ *          Thanks to <A HREF="http://www.digitalmars.com/"> Digital Mars </A><br>
+ *          and <A HREF="http://www.walterbright.com"> Walter Bright </A><br>
+ *          for the <A HREF="http://www.digitalmars.com/d/index.html"> D language</A>
+ *    </TD>
+ * 	  <TD> \image html dmlogo.gif </TD>
+ * 	  <TD> \image html d3_small.gif </TD>
+ * </TR>
+ * <TR>
+ * 	  <TD> Thanks to <A HREF="http://www.gtk.org">gtk org</A> for the graphical toolkit </TD>
+ * 	  <TD> \image html gtk-logo-rgb.gif </TD>
+ * </TR>
+ * <TR>
+ * 	  <TD> Thanks to <A HREF="http://www.opend.org/dig/index.html">dig</A> for being the first highly visible GUI for D </TD>
+ * </TR>
+ * <TR>
+ * 	  <TD> Thanks to Naofumi Yasufuku for <A HREF="http://gtkglext.sourceforge.net/"> GtkGlExt</A> </TD>
+ * 	  <TD> \image html gtk-logo-3d-crop.png </TD>
+ * </TR>
+ * <TR>
+ * 	  <TD> Thanks to <A HREF="http://www.mesa3d.org/"> The Mesa 3D Graphics Library</A> </TD>
+ * </TR>
+ * <TR>
+ * 	  <TD> Thanks to <A HREF="http://jcc_7.tripod.com/d/">J C Calvarese</A> for helping with the windows package</TD>
+ * </TR>
+ * <TR>
+ * 	  <TD> Thanks to Thomas Kühne for patching DUI for dmd 0.93 and 0.94</TD>
+ * </TR>
+ * <TR>
+ * 	  <TD> Thanks to John Reimer for solving the windows OpenGL mistery<br>and for the Windows XP Hello World image</TD>
+ * </TR>
+ * </TABLE>
+ * 
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */

@@ -1,0 +1,138 @@
+/*
+ * DUI D (graphic) User Interface
+ * an implementation through GTK+
+ * by Antonio Monteiro.
+ * DUI is released is under the LGPL license
+ * This file is part of DUI.
+ * Send comments and suggestions to duitoolkit@yahoo.ca
+ * or go to the yahoo group
+ * http://groups.yahoo.com/group/duitoolkit
+ * (Group email: duitoolkit@yahoogroups.com)
+ * See detailed information at DUI home page
+ * http://ca.geocities.com/duitoolkit
+ */
+
+
+
+/**
+ * \page usagePage
+ *
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+\htmlinclude screenShots.html
+ * 
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+
+
+
+/**
+ * \page helloWorldPage HelloWorld.d example of DUI code
+ *
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * \image html HelloWorld_OLD.png
+ * 
+ * \include HelloWorld.d
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+
+
+
+/**
+ * \page drawingAreaPage Drawing Area example of DUI code
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * \image html DrawingArea.png drawing area </TD>
+ * 
+ * \include TestDrawing.d
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+ 
+ 
+ 
+/**
+ * \page stockButtonsPage Stock images as buttons example of DUI code
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * \image html StockButtons.png stock buttons
+ * 
+ * \include TestStock.d
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+
+
+ 
+/**
+ * \page scalesPage Scales and scrollbar examples of DUI code
+ * 
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ *  Scales example of DUI code
+ * 
+ * <TABLE BORDER = 0>
+ * <TR>
+ * 	<TD> \image html Scales.png scales using default GTK look</TD>
+ * 	<TD> \image html Scales_aqua.png scales using a different GTK look</TD>
+ * </TR>
+ * </TABLE>
+ * 
+ * \include TestScales.d
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+
+
+
+/**
+ * \page imagesPage images example of DUI code
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * \image html Image.png images
+ *
+ * \include TestImage.d
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+
+
+
+/**
+ * \page textPage Text example of DUI code
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * \image html Text_1.png text
+ *
+ * \include TTextView.d
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+ 
+ 
+ 
+/**
+ * \page treePage Tree picture (sorry no code)
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * \image html Tree_1.png tree
+ * 
+ * sorry no code (as it is to confusing as an examples and is a bad example of D)
+ * 
+ * just showing off a nice picture
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+
+ 

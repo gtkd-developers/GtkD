@@ -1,0 +1,77 @@
+/*
+ * DUI D (graphic) User Interface
+ * an implementation through GTK+
+ * by Antonio Monteiro.
+ * DUI is released is under the LGPL license
+ * This file is part of DUI.
+ * Send comments and suggestions to duitoolkit@yahoo.ca
+ * or go to the yahoo group
+ * http://groups.yahoo.com/group/duitoolkit
+ * (Group email: duitoolkit@yahoogroups.com)
+ * See detailed information at DUI home page
+ * http://ca.geocities.com/duitoolkit
+ */
+
+
+
+/**
+ * \page tutorialSmall small tutorial
+ *
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * \ref introduction<br>
+ * \ref menus<br>
+ * \ref trees<br>
+ * \ref text<br>
+ *
+ * \section introduction
+ * DUI is mostly a 1 to 1 wrapper of GTK+ on a fully OO packaging and so it reflects all it's good and otherwise features.<br>
+ * DUI does have some decorator functions to facilitate it's use, more are planed.<br>
+ * Most of the usage of DUI is straightforward, create widget, add widgets to containers...
+ * there is nothing new there and we expect that this is not your first contact with a GUI toolkit.
+ * If that's not true a brief look at the GTK+ tutorials might be a good starting point
+ * as they are far more complete then DUI documentation.<br>
+ * The completion of a proper DUI manual depends as much on DUI success as DUI success depends on a good manual.
+ *
+ * This tutorial is also (mainly) a reference tool for my own use.
+ *
+ * \section menus
+ * 
+ * \code
+ 		MenuBar menubar = new MenuBar();   // name is self explanatory
+		Menu menu;  	// idem
+		
+		menu = menubar.append("_File");
+ * \endcode
+ *
+ * With GTK+ to see a menu on a menu bar we have to:
+ * - create a new menu item
+ * - append a new item to the menu bar
+ * - create a new menu
+ * - set the new menu as submenu of the new item
+ *
+ * that's done by the statement \code menu = menubar.append("_File"); \endcode<br>
+ * after the menu is created to add items to it:
+ * \code
+ 		menu.append(new MenuItem(myMenuItemListener, "E_xit","file.exit"));
+ * \endcode
+ *
+ * where myMenuItemListener is a MenuItemListener.<br>
+ * this will create a new menuItem with "New" as Label and "x" as the menu mnemonic<br>
+ * and sets the myMenuItemListener to listen to the activate signal from the item.
+ * the action string if set to "file.exit"
+ *
+ * \note ItemFactory is not implemented yet
+ * 
+ * \section trees trees and lists
+ *
+ * todo
+ *
+ * \section text
+ *
+ * todo
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+  

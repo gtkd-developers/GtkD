@@ -1,0 +1,63 @@
+/*
+ * DUI D (graphic) User Interface
+ * an implementation through GTK+
+ * by Antonio Monteiro.
+ * DUI is released is under the LGPL license
+ * This file is part of DUI.
+ * Send comments and suggestions to duitoolkit@yahoo.ca
+ * or go to the yahoo group
+ * http://groups.yahoo.com/group/duitoolkit
+ * (Group email: duitoolkit@yahoogroups.com)
+ * See detailed information at DUI home page
+ * http://ca.geocities.com/duitoolkit
+ */
+
+/**
+ * \page windowsInstaller Windows Installer
+ *
+ * \htmlinclude top.doc
+ * \htmlinclude left.doc
+ *
+ * \warning this tools is very new and mostly untested<br>
+ *
+ * \section introduction
+ * 
+ * The windows installer can be use to install:
+ * - Gtk+
+ * - dool
+ * - DUI
+ * - OpenGL for DUI
+ * - sqlite3
+ *
+ * \subsection helpMe Help needed
+ * I need help on creating windows shortcuts and to set the path from the installer.
+ *
+ * \section Installer
+ * Let's start by the end. After all is installed you will need to add the Gtk+ location to your machine path<br>
+ * The last panel on the installer will give you the exact directory to add<br><br>
+ * <font color="#FF0000">failing to do so will allow you to compile but not run your DUI programs</font><BR><BR>
+ * \image html Installer_05.jpg
+ *<br><br>
+ * All the rest of the installer procedure should be familar to you<br>
+ * just unzip <A HREF="http://sourceforge.net/project/showfiles.php?group_id=97723&package_id=136197"> duiInstaller.ZIP </A> anywhere, find the setup.exe and execute it<br>
+ * after installation you can delete the temporary dantTemp directory.
+ * <br><BR>
+ * \image html Installer_01.jpg
+ * <br><BR>
+ * \image html Installer_02.jpg
+ * <br><BR>
+ * The installer should be able to automatically find the locations to use.<br>
+ * You can override the locations found by the installer<BR>
+ * You will need a valid DMD 0.106 or better development instalation<br>
+ * <br><BR>
+ * \image html Installer_03.jpg
+ * <br><BR>
+ * The openGL libraries and test programs will be installed but unfortunatly they are still not functional on windows.
+ * <br><BR>
+ * \image html Installer_04.jpg
+ * <br><BR>
+ *
+ * \htmlinclude right.doc
+ * \htmlinclude bottom.doc
+ */
+  
