@@ -5,6 +5,10 @@
 <TR><TD>
 <p class="newsHeader">News</P>
 
+<P class="newsTitle">Vacations</P>
+<P class="newsBody">I'll be away for 2 weeks from sunday.</P>
+<P class="newsDate">2004/12/16</p>
+
 <P class="newsTitle">New API docs</P>
 <P class="newsBody">I uploaded the docs from my new experimental Doc generator.<BR>
 To see the old Docs go <A HREF="annotated.html">here</A> or <A HREF="classes.html">here</A>
