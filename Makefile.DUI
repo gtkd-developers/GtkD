@@ -327,7 +327,14 @@ SRC_dui = \
 	dui/Window.d \
 	dui/WindowGroup.d 
 
-dui: dui_COMP dui_LINK
+dui: dui_OBJ_DIR dui_COMP dui_LINK
+
+dui_OBJ_DIR:
+	mkdir -p obj/dglib \
+	mkdir -p obj/ddi \
+	mkdir -p obj/dango \
+	mkdir -p obj/event \
+	mkdir -p obj/dui
 
 dui_COMP:
 	cd src; \
@@ -541,7 +548,10 @@ SRC_duigl = \
 	ggl/GLX11.d \
 	ggl/Types.d 
 
-duigl: duigl_COMP duigl_LINK
+duigl: duigl_OBJ_DIR duigl_COMP duigl_LINK
+
+duigl_OBJ_DIR:
+	mkdir -p obj/ggl
 
 duigl_COMP:
 	cd src; \
@@ -585,7 +595,10 @@ SRC_DUITests = \
 	test/TestTreeView1.d \
 	test/TestWindow.d 
 
-DUITests: DUITests_COMP DUITests_LINK
+DUITests: DUITests_OBJ_DIR DUITests_COMP DUITests_LINK
+
+DUITests_OBJ_DIR:
+	mkdir -p obj/test
 
 DUITests_COMP:
 	cd src; \
@@ -635,7 +648,12 @@ SRC_DUITestGL = \
 	ggl/GLX11.d \
 	ggl/Types.d 
 
-DUITestGL: DUITestGL_COMP DUITestGL_LINK
+DUITestGL: DUITestGL_OBJ_DIR DUITestGL_COMP DUITestGL_LINK
+
+DUITestGL_OBJ_DIR:
+	mkdir -p obj/openGL \
+	mkdir -p obj/testGL \
+	mkdir -p obj/ggl
 
 DUITestGL_COMP:
 	cd src; \
@@ -684,7 +702,12 @@ SRC_gearsGL = \
 	ggl/Types.d \
 	
 
-gearsGL: gearsGL_COMP gearsGL_LINK
+gearsGL: gearsGL_OBJ_DIR gearsGL_COMP gearsGL_LINK
+
+gearsGL_OBJ_DIR:
+	mkdir -p obj/openGL \
+	mkdir -p obj/ggl \
+	mkdir -p obj/examples/gears
 
 gearsGL_COMP:
 	cd src; \
@@ -733,7 +756,12 @@ SRC_DUIShapesGL = \
 	ggl/GLX11.d \
 	ggl/Types.d 
 
-DUIShapesGL: DUIShapesGL_COMP DUIShapesGL_LINK
+DUIShapesGL: DUIShapesGL_OBJ_DIR DUIShapesGL_COMP DUIShapesGL_LINK
+
+DUIShapesGL_OBJ_DIR:
+	mkdir -p obj/openGL \
+	mkdir -p obj/shapesGL \
+	mkdir -p obj/ggl
 
 DUIShapesGL_COMP:
 	cd src; \
@@ -766,7 +794,10 @@ DUIShapesGL_LINK:
 SRC_HelloWorld = \
 	hw/HelloWorld.d 
 
-HelloWorld: HelloWorld_COMP HelloWorld_LINK
+HelloWorld: HelloWorld_OBJ_DIR HelloWorld_COMP HelloWorld_LINK
+
+HelloWorld_OBJ_DIR:
+	mkdir -p obj/hw
 
 HelloWorld_COMP:
 	cd src; \
@@ -774,7 +805,6 @@ HelloWorld_COMP:
 
 HelloWorld_LINK:
 	$(LINK_HelloWorld) \
-	obj/hw/HelloWorld.o \
 	-o \
 	HelloWorld \
 	$(LINK_LIBS_HelloWorld)
@@ -784,7 +814,10 @@ HelloWorld_LINK:
 SRC_HelloWorldMoving = \
 	hwMoving/MovingHelloWorld.d 
 
-HelloWorldMoving: HelloWorldMoving_COMP HelloWorldMoving_LINK
+HelloWorldMoving: HelloWorldMoving_OBJ_DIR HelloWorldMoving_COMP HelloWorldMoving_LINK
+
+HelloWorldMoving_OBJ_DIR:
+	mkdir -p obj/hwMoving
 
 HelloWorldMoving_COMP:
 	cd src; \
@@ -792,7 +825,6 @@ HelloWorldMoving_COMP:
 
 HelloWorldMoving_LINK:
 	$(LINK_HelloWorldMoving) \
-	obj/hwMoving/MovingHelloWorld.o \
 	-o \
 	HelloWorldMoving \
 	$(LINK_LIBS_HelloWorldMoving)
@@ -802,7 +834,10 @@ HelloWorldMoving_LINK:
 SRC_TestSpawn = \
 	testSpawn/TestSpawn.d 
 
-TestSpawn: TestSpawn_COMP TestSpawn_LINK
+TestSpawn: TestSpawn_OBJ_DIR TestSpawn_COMP TestSpawn_LINK
+
+TestSpawn_OBJ_DIR:
+	mkdir -p obj/testSpawn
 
 TestSpawn_COMP:
 	cd src; \
@@ -819,7 +854,10 @@ TestSpawn_LINK:
 SRC_simpleGL = \
 	simpleGL/SimpleGL.d 
 
-simpleGL: simpleGL_COMP simpleGL_LINK
+simpleGL: simpleGL_OBJ_DIR simpleGL_COMP simpleGL_LINK
+
+simpleGL_OBJ_DIR:
+	mkdir -p obj/simpleGL
 
 simpleGL_COMP:
 	cd src; \
@@ -827,7 +865,6 @@ simpleGL_COMP:
 
 simpleGL_LINK:
 	$(LINK_simpleGL) \
-	obj/simpleGL/SimpleGL.o \
 	-o \
 	simpleGL \
 	$(LINK_LIBS_simpleGL)
@@ -837,7 +874,10 @@ simpleGL_LINK:
 SRC_testEvent = \
 	testEvent/TestEvent.d 
 
-testEvent: testEvent_COMP testEvent_LINK
+testEvent: testEvent_OBJ_DIR testEvent_COMP testEvent_LINK
+
+testEvent_OBJ_DIR:
+	mkdir -p obj/testEvent
 
 testEvent_COMP:
 	cd src; \
@@ -857,7 +897,10 @@ SRC_cliDDBC = \
 	cliDDBC/PostGTree.d \
 	cliDDBC/SQLView.d 
 
-cliDDBC: cliDDBC_COMP cliDDBC_LINK
+cliDDBC: cliDDBC_OBJ_DIR cliDDBC_COMP cliDDBC_LINK
+
+cliDDBC_OBJ_DIR:
+	mkdir -p obj/cliDDBC
 
 cliDDBC_COMP:
 	cd src; \
@@ -865,10 +908,6 @@ cliDDBC_COMP:
 
 cliDDBC_LINK:
 	$(LINK_cliDDBC) \
-	obj/cliDDBC/Clipg.o \
-	obj/cliDDBC/ConnectDialog.o \
-	obj/cliDDBC/PostGTree.o \
-	obj/cliDDBC/SQLView.o \
 	-o \
 	cliDDBC \
 	$(LINK_LIBS_cliDDBC)
@@ -1153,23 +1192,20 @@ cleanDUIShapesGL:
 	rm obj/ggl/Types.o
 
 cleanHelloWorld:
-	rm obj/hw/HelloWorld.o
+	rm 
 
 cleanHelloWorldMoving:
-	rm obj/hwMoving/MovingHelloWorld.o
+	rm 
 
 cleanTestSpawn:
 	rm 
 
 cleansimpleGL:
-	rm obj/simpleGL/SimpleGL.o
+	rm 
 
 cleantestEvent:
 	rm 
 
 cleancliDDBC:
-	rm obj/cliDDBC/Clipg.o
-	rm obj/cliDDBC/ConnectDialog.o
-	rm obj/cliDDBC/PostGTree.o
-	rm obj/cliDDBC/SQLView.o
+	rm 
 
