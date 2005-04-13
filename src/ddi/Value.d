@@ -60,7 +60,8 @@ class Value
 	GValue * gValue;
 
 	private import dool.String;
-	//import ddi.Pixbuf;
+	private import ddi.Pixbuf;
+	//private import dui.DUI;
 	
 	/**
 	 * Creates a new Value from a GValue
@@ -300,14 +301,14 @@ class Value
 		this(v);
 	}
 
-//	this(Pixbuf pixbuf)
-//	{
-//		GValue* v = new GValue;
-//		//v.g_type = DUIType.PIXBUF;
-//		v.g_type = DUIType.POINTER;
-//		v.data0.v_pointer = cast(void*)(pixbuf.gdkP());
-//		this(v);
-//	}
+	this(Pixbuf pixbuf)
+	{
+		GValue* v = new GValue;
+		//v.g_type = DUIType.PIXBUF;
+		v.g_type = Pixbuf.getType();
+		v.data0.v_pointer = cast(void*)(pixbuf.gdkP());
+		this(v);
+	}
 
 	/**
 	 * Creates a new Value from a

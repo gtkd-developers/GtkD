@@ -47,8 +47,8 @@ enum DUIType {
 	BOXED = 72,
 	PARAM = 76,
 	OBJECT = 80,
-	PIXBUF = 134614632,
-};
+	//PIXBUF = 134614632,
+}
 
 alias DUIType GType;
 
@@ -85,14 +85,14 @@ enum AnchorType
   SE		= SOUTH_EAST,
   W		= WEST,
   E		= EAST
-};
+}
 
 enum ConnectFlags
 {
 	NONE	= 0,
 	AFTER	= 1 << 0,
 	SWAPPED	= 1 << 1
-};
+}
 
 
 /** Arrow types */
@@ -102,7 +102,7 @@ enum ArrowType
   DOWN,
   LEFT,
   RIGHT
-};
+}
 
 /** Attach options (for tables) */
 enum AttachOptions
@@ -110,7 +110,7 @@ enum AttachOptions
   EXPAND = 1 << 0,
   SHRINK = 1 << 1,
   FILL   = 1 << 2
-};
+}
 
 /** Button box styles */
 enum ButtonBoxStyle 
@@ -120,7 +120,7 @@ enum ButtonBoxStyle
   EDGE,
   START,
   END
-};
+}
 
 /** Curve types */
 enum CurveType
@@ -128,7 +128,7 @@ enum CurveType
   LINEAR,       /* linear interpolation */
   SPLINE,       /* spline interpolation */
   FREE          /* free form curve */
-};
+}
  
 enum  DeleteType{
   CHARS,
@@ -141,7 +141,7 @@ enum  DeleteType{
   PARAGRAPH_ENDS,      /* like C-k in Emacs (or its reverse) */
   PARAGRAPHS,          /* C-k in pico, kill whole line */
   WHITESPACE           /* M-\ in Emacs */
-};
+}
 
 /** Focus movement types */
 enum DirectionType
@@ -152,7 +152,7 @@ enum DirectionType
   DOWN,
   LEFT,
   RIGHT
-};
+}
 
 /** Expander styles */
 enum ExpanderStyle
@@ -161,7 +161,7 @@ enum ExpanderStyle
   SEMI_COLLAPSED,
   SEMI_EXPANDED,
   EXPANDED
-};
+}
 
 /** Built-in stock icon sizes */
 enum IconSize
@@ -173,7 +173,7 @@ enum IconSize
   BUTTON,
   DND,
   DIALOG
-};
+}
 
 //#ifndef GTK_DISABLE_DEPRECATED
 /** side types */
@@ -183,7 +183,7 @@ enum SideType
   BOTTOM,
   LEFT,
   RIGHT
-};
+}
 //#endif /* GTK_DISABLE_DEPRECATED */
 
 /** Reading directions for text */
@@ -192,7 +192,7 @@ enum TextDirection
   NONE,
   LTR,
   RTL
-};
+}
 
 /** justification for label and maybe other widgets (text?) */
 enum Justification
@@ -201,7 +201,7 @@ enum Justification
   RIGHT,
   CENTER,
   FILL
-};
+}
 
 alias Justification Justify;
 
@@ -215,7 +215,7 @@ enum MatchType
   TAIL,      /* "*AAAA" */
   EXACT,     /* "AAAAA" */
   LAST
-};
+}
 //#endif /* GTK_DISABLE_DEPRECATED */
 
 /** Menu keyboard movement types */
@@ -225,14 +225,14 @@ enum MenuDirectionType
   CHILD,
   NEXT,
   PREV
-};
+}
 
 enum MetricType
 {
   PIXELS,
   INCHES,
   CENTIMETERS
-};
+}
 
 enum  MovementStep
 {
@@ -245,14 +245,14 @@ enum  MovementStep
   PARAGRAPH_ENDS,    /* move to either end of a paragraph */
   PAGES,	          /* move by pages */
   BUFFER_ENDS        /* move to ends of the buffer */
-};
+}
 
 /** Orientation for toolbars, etc. */
 enum Orientation
 {
   HORIZONTAL,
   VERTICAL
-};
+}
 
 /** Placement type for scrolled window */
 enum CornerType
@@ -261,14 +261,14 @@ enum CornerType
   BOTTOM_LEFT,
   TOP_RIGHT,
   BOTTOM_RIGHT
-};
+}
 
 /** Packing types (for boxes) */
 enum PackType
 {
   START,
   END
-};
+}
 
 alias PackType GtkPackType;
 
@@ -281,7 +281,7 @@ enum PathPriorityType
   THEME       = 10,
   RC          = 12,
   HIGHEST     = 15
-};
+}
 //#define GTK_PATH_PRIO_MASK 0x0f
 
 /** widget path types */
@@ -290,7 +290,7 @@ enum PathType
   WIDGET,
   WIDGET_CLASS,
   CLASS
-};
+}
 
 /** Scrollbar policy types (for scrolled windows) */
 enum PolicyType
@@ -298,7 +298,7 @@ enum PolicyType
   ALWAYS,
   AUTOMATIC,
   NEVER
-};
+}
 
 enum PositionType
 {
@@ -306,14 +306,14 @@ enum PositionType
   RIGHT,
   TOP,
   BOTTOM
-};
+}
 
 //#ifndef GTK_DISABLE_DEPRECATED
 enum PreviewType
 {
   COLOR,
   GRAYSCALE
-};
+}
 //#endif /* GTK_DISABLE_DEPRECATED */
 
 /** Style for buttons */
@@ -322,7 +322,7 @@ enum ReliefStyle
   NORMAL,
   HALF,
   NONE
-};
+}
 
 /** Resize type */
 enum ResizeMode
@@ -330,7 +330,7 @@ enum ResizeMode
   PARENT,		/* Pass resize request to the parent */
   QUEUE,		/* Queue resizes on this widget */
   IMMEDIATE		/* Perform the resizes now */
-};
+}
 
 //#ifndef GTK_DISABLE_DEPRECATED
 /* signal run types */
@@ -364,7 +364,7 @@ enum ScrollType
   PAGE_RIGHT,
   START,
   END
-};
+}
 
 /** list selection modes */
 enum SelectionMode
@@ -374,7 +374,7 @@ enum SelectionMode
   BROWSE,
   MULTIPLE,
   EXTENDED = MULTIPLE /* Deprecated */
-};
+}
 
 
 
@@ -386,7 +386,7 @@ enum ShadowType
   OUT,
   ETCHED_IN,
   ETCHED_OUT
-};
+}
 
 /** Widget states */
 enum StateType
@@ -396,7 +396,7 @@ enum StateType
   PRELIGHT,
   SELECTED,
   INSENSITIVE
-};
+}
 
 //#if !defined(GTK_DISABLE_DEPRECATED) || defined (GTK_MENU_INTERNALS)
 /** Directions for submenus */
@@ -404,14 +404,14 @@ enum SubmenuDirection
 {
   LEFT,
   RIGHT
-};
+}
 
 /** Placement of submenus */
 enum SubmenuPlacement
 {
   TOP_BOTTOM,
   LEFT_RIGHT
-};
+}
 //#endif /* GTK_DISABLE_DEPRECATED */
 
 /** Style for toolbars */
@@ -421,7 +421,7 @@ enum ToolbarStyle
   TEXT,
   BOTH,
   BOTH_HORIZ
-};
+}
 
 /** Data update types (for ranges) */
 enum UpdateType
@@ -429,7 +429,7 @@ enum UpdateType
   CONTINUOUS,
   DISCONTINUOUS,
   DELAYED
-};
+}
 
 /** Generic visibility flags */
 enum Visibility
@@ -437,7 +437,7 @@ enum Visibility
   NONE,
   PARTIAL,
   FULL
-};
+}
 
 /** Window position types */
 enum WindowPosition
@@ -447,14 +447,14 @@ enum WindowPosition
 	MOUSE,
 	CENTER_ALWAYS,
 	CENTER_ON_PARENT
-};
+}
 
 /** Window types */
 enum WindowType
 {
 	TOPLEVEL,
 	POPUP
-};
+}
 
 enum TextWindowType
 {
@@ -465,7 +465,7 @@ enum TextWindowType
 	RIGHT,
 	TOP,
 	BOTTOM
-};
+}
 
 
 /** Text wrap */
@@ -474,27 +474,27 @@ enum WrapMode
   NONE,
   CHAR,
   WORD
-};
+}
 
 /** How to sort */
 enum SortType
 {
   ASCENDING,
   DESCENDING
-};
+}
 
 /** Style for gtk input method preedit/status */
 enum IMPreeditStyle
 {
   NOTHING,
   CALLBACK
-};
+}
 
 enum IMStatusStyle
 {
   NOTHING,
   CALLBACK
-};
+}
 
 /**
  * Dialog type
@@ -505,7 +505,7 @@ enum DialogType
 	WARNING, 
 	QUESTION, 
 	ERROR
-};
+}
 
 /**
  * Buttons to display
@@ -518,7 +518,7 @@ enum DialogButtons
 	CANCEL,
 	YES_NO,
 	OK_CANCEL
-};
+}
 
 
 enum Response{
@@ -550,7 +550,7 @@ enum Response{
 	NO     = -9,
 	APPLY  = -10,
 	HELP   = -11
-};
+}
 
 /* GC fill types.
  *  Solid:
@@ -564,7 +564,7 @@ enum GdkFill
   GDK_TILED,
   GDK_STIPPLED,
   GDK_OPAQUE_STIPPLED
-};
+}
 
 /* GC function types.
  *   Copy: Overwrites destination pixels with the source pixels.
@@ -602,7 +602,7 @@ enum GdkFunction
   GDK_NAND,
   GDK_NOR,
   GDK_SET
-};
+}
 
 /* GC join styles
  *  JoinMiter:
@@ -614,7 +614,7 @@ enum GdkJoinStyle
   GDK_JOIN_MITER,
   GDK_JOIN_ROUND,
   GDK_JOIN_BEVEL
-};
+}
 
 /* GC line styles
  *  Solid:
@@ -626,13 +626,13 @@ enum GdkLineStyle
   GDK_LINE_SOLID,
   GDK_LINE_ON_OFF_DASH,
   GDK_LINE_DOUBLE_DASH
-};
+}
 
 enum GdkSubwindowMode
 {
   GDK_CLIP_BY_CHILDREN	= 0,
   GDK_INCLUDE_INFERIORS = 1
-};
+}
 
 enum GdkGCValuesMask
 {
@@ -654,14 +654,14 @@ enum GdkGCValuesMask
   GDK_GC_LINE_STYLE    = 1 << 15,
   GDK_GC_CAP_STYLE     = 1 << 16,
   GDK_GC_JOIN_STYLE    = 1 << 17
-};
+}
 
 enum GdkRgbDither
 {
   NONE,
   NORMAL,
   MAX
-};
+}
 
 /* Cursor types.
  */
@@ -746,24 +746,24 @@ enum CursorType
   XTERM 		  = 152,
   LAST_CURSOR,
   CURSOR_IS_PIXMAP 	= -1
-};
+}
 
 enum TextSearchFlags{
   VISIBLE_ONLY,
   TEXT_ONLY
   /* Possible future plans: SEARCH_CASE_INSENSITIVE, SEARCH_REGEXP */
-};
+}
 
 enum PangoStyle{
   NORMAL,
   OBLIQUE,
   ITALIC
-};
+}
 
 enum PangoVariant{
   NORMAL,
   SMALL_CAPS
-};
+}
 
 enum PangoWeight{
   ULTRALIGHT = 200,
@@ -793,7 +793,7 @@ enum PangoFontMask{
   WEIGHT  = 1 << 3,
   STRETCH = 1 << 4,
   SIZE    = 1 << 5
-};
+}
 
 const int PANGO_SCALE = 1024;
 /* CSS scale factors (1.2 factor between each size) */
@@ -823,14 +823,14 @@ enum PangoAttrType
   RISE,		/* PangoAttrInt */
   SHAPE,		/* PangoAttrShape */
   SCALE              /* PangoAttrFloat */
-};
+}
 
 enum PangoUnderline{
   NONE,
   SINGLE,
   DOUBLE,
   LOW
-};
+}
 
 /* Interpolation modes */
 enum InterpType{
@@ -838,7 +838,7 @@ enum InterpType{
 	TILES,
 	BILINEAR,
 	HYPER
-};
+}
 
 alias InterpType GdkInterpType;
 
@@ -847,7 +847,7 @@ enum  PixbufAlphaMode
 {
 	BILEVEL,
 	FULL
-};
+}
 
 /* Color spaces; right now only RGB is supported.
  * Note that these values are encoded in inline pixbufs
@@ -855,7 +855,7 @@ enum  PixbufAlphaMode
  */
 enum Colorspace{
 	RGB
-};
+}
 alias Colorspace GdkColorspace;
 
 enum PixbufError{
@@ -870,13 +870,13 @@ enum PixbufError{
         /* unsupported operation (load, save) for image type */
         UNSUPPORTED_OPERATION,
         FAILED
-};
+}
 
 enum TreeModelFlags
 {
   ITERS_PERSIST = 1 << 0,
   LIST_ONLY = 1 << 1
-};
+}
 
 /////////////////// from events ////////////////////
 
@@ -884,7 +884,7 @@ enum FilterReturn{
 	CONTINUE, /* Event not handled, continue processesing */
 	TRANSLATE, /* Translated event stored */
 	REMOVE /* Terminate processing, removing event */
-};
+}
 
 ///**
 // * The key values
@@ -1025,7 +1025,7 @@ enum CalendarDisplayOptions
   NO_MONTH_CHANGE		= 1 << 2,
   SHOW_WEEK_NUMBERS	= 1 << 3,
   WEEK_START_MONDAY	= 1 << 4
-};
+}
 
 /* Parameters for dialog construction */
 enum DialogFlags
@@ -1033,26 +1033,26 @@ enum DialogFlags
   MODAL               = 1 << 0, /* call gtk_window_set_modal (win, TRUE) */
   DESTROY_WITH_PARENT = 1 << 1, /* call gtk_window_set_destroy_with_parent () */
   NO_SEPARATOR        = 1 << 2  /* no separator bar above buttons */
-};
+}
 
 enum PangoAlignment {
   LEFT,
   CENTER,
   RIGHT
-};
+}
 
 enum PangoWrapMode{
   WORD,
   CHAR,
   WORD_CHAR
-};
+}
 
 enum PangoDirection {
   LTR,
   RTL,
   TTB_LTR,
   TTB_RTL
-};
+}
 
 enum PangoTabAlign
 {
@@ -1065,7 +1065,7 @@ enum PangoTabAlign
    *  PANGO_TAB_CENTER,
    *  PANGO_TAB_NUMERIC
    */
-};
+}
 
 enum VisualType
 {
@@ -1075,7 +1075,7 @@ enum VisualType
   PSEUDO_COLOR,
   TRUE_COLOR,
   DIRECT_COLOR
-};
+}
 
 //////////////////////////// 2.4 //////////////////////////
 enum FileChooserAction
@@ -1084,9 +1084,9 @@ enum FileChooserAction
 	SAVE,
 	SELECT_FOLDER,
 	CREATE_FOLDER
-};
+}
 
 enum FileChooserError{
   NONEXISTENT,
   BAD_FILENAME
-};
+}

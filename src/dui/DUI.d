@@ -96,9 +96,14 @@ extern(C)
 	guint gtk_timeout_add(guint32 interval, void* funct, gpointer data);
 	void gtk_timeout_remove(guint timeout_handler_id);
 
+	GType gdk_pixbuf_get_type();
+	
 }
 
-
+public GType pixbufGetType()
+{
+	return gdk_pixbuf_get_type();
+}
 
 //private import event.Event;
 

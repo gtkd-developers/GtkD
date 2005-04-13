@@ -79,6 +79,7 @@ class TestTreeView : ScrolledWindow , TreeViewListener
 	
 	private import dui.Image;
 	private import ddi.Pixbuf;
+	private import dui.DUI;
 
 	Image image;		
 	Pixbuf pixbuf;
@@ -198,7 +199,7 @@ class TestTreeView : ScrolledWindow , TreeViewListener
 			{
 				//this.nCols = nCols;
 				static GType [5] columns = [
-					//DUIType.PIXBUF,
+					//Pixbuf.getType(),
 					DUIType.STRING,
 					DUIType.STRING,
 					DUIType.STRING,

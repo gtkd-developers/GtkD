@@ -5,6 +5,16 @@
 <TR><TD>
 <p class="newsHeader">News</P>
 
+<P class="newsTitle">Tree View Icon problem solved!</P>
+<P class="newsBody">
+Finally! this one took a long time but now DMD can correctly import pixbuf on the Value class!
+This was a major block on the way to the <B>Beta</B> version.<br>
+To the Beta version we just need to fix the use of the combobox.<br>
+<B>DUI</B> seems quite stable, the beta tests will try mainly to find any memory leaks.<br>
+The development version is up to date with DMD 0.120.
+</P>
+<P class="newsDate">2005/04/12</p>
+
 <P class="newsTitle">Vacations</P>
 <P class="newsBody">I'll be away for 2 weeks from sunday.</P>
 <P class="newsDate">2004/12/16</p>

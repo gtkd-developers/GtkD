@@ -27,8 +27,8 @@ list:
 ##########################
 COMP_dui = dmd
 COMP_FLAGS_dui =  -c -od../obj -op
-COMP_IMPORT_dui = -I~/devel/D/DUI/src:~/dmd/src/phobos:~/devel/D/dool/src:~/dmd/src/phobos
-LINK_LIBS_dui=-lm -L~/dmd/lib -lphobos -L/home/ruimt/devel/D/dool -ldool -lpthread `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK -L. -ldui
+COMP_IMPORT_dui = -I~/devel/D/DUI/src:~/dmd/src/phobos:~/devel/D/Dool/src:~/dmd/src/phobos
+LINK_LIBS_dui=-lm -L~/dmd/lib -lphobos -L/home/ruimt/devel/D/Dool -ldool -lpthread `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK -L. -ldui
 LINK_dui=ar rcs
 
 ##########################
@@ -36,8 +36,8 @@ LINK_dui=ar rcs
 ##########################
 COMP_duigl = dmd
 COMP_FLAGS_duigl =  -c -debug -unittest -od../obj -op
-COMP_IMPORT_duigl = -I~/devel/D/DUI/src:~/dmd/src/phobos:~/devel/D/dool/src:~/dmd/src/phobos
-LINK_LIBS_duigl=-lm -L~/dmd/lib -lphobos -L/home/ruimt/devel/D/dool -ldool -lpthread `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK -L. -ldui
+COMP_IMPORT_duigl = -I~/devel/D/DUI/src:~/dmd/src/phobos:~/devel/D/Dool/src:~/dmd/src/phobos
+LINK_LIBS_duigl=-lm -L~/dmd/lib -lphobos -L/home/ruimt/devel/D/Dool -ldool -lpthread `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK -L. -ldui
 LINK_duigl=ar rcs
 
 ##########################
@@ -45,8 +45,8 @@ LINK_duigl=ar rcs
 ##########################
 COMP_DUITests = dmd
 COMP_FLAGS_DUITests =  -c -O -od../obj -op
-COMP_IMPORT_DUITests = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/dool/src:~/dmd/src/phobos
-LINK_LIBS_DUITests=-L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt//devel/D/dool -ldool -lphobos -lm -lgconf-2 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
+COMP_IMPORT_DUITests = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/Dool/src:~/dmd/src/phobos
+LINK_LIBS_DUITests=-L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt//devel/D/Dool -ldool -lphobos -lm `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
 LINK_DUITests=gcc
 
 ##########################
@@ -54,8 +54,8 @@ LINK_DUITests=gcc
 ##########################
 COMP_DUITestGL = dmd
 COMP_FLAGS_DUITestGL =  -c -O -od../obj -op
-COMP_IMPORT_DUITestGL = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/dool/src:~/dmd/src/phobos
-LINK_LIBS_DUITestGL=-lphobos -L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt//devel/D/dool -ldool -lm -lgconf-2 -L/usr/local/lib -lgdkglext-x11-1.0 -lgtkglext-x11-1.0 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
+COMP_IMPORT_DUITestGL = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/Dool/src:~/dmd/src/phobos
+LINK_LIBS_DUITestGL=-lphobos -L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt//devel/D/Dool -ldool -lm -L/usr/local/lib -lgdkglext-x11-1.0 -lgtkglext-x11-1.0 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
 LINK_DUITestGL=gcc
 
 ##########################
@@ -63,8 +63,8 @@ LINK_DUITestGL=gcc
 ##########################
 COMP_gearsGL = dmd
 COMP_FLAGS_gearsGL =  -c -O -od../obj -op
-COMP_IMPORT_gearsGL = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/dool/src:~/dmd/src/phobos
-LINK_LIBS_gearsGL=-lphobos -L/home/ruimt/devel/D/DUI -ldui -L~/devel/D/dool -ldool -lm -lgconf-2 -L/usr/local/lib -lgdkglext-x11-1.0 -lgtkglext-x11-1.0 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
+COMP_IMPORT_gearsGL = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/Dool/src:~/dmd/src/phobos
+LINK_LIBS_gearsGL=-lphobos -L/home/ruimt/devel/D/DUI -ldui -L~/devel/D/Dool -ldool -lm -L/usr/local/lib -lgdkglext-x11-1.0 -lgtkglext-x11-1.0 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
 LINK_gearsGL=
 
 ##########################
@@ -72,8 +72,8 @@ LINK_gearsGL=
 ##########################
 COMP_DUIShapesGL = dmd
 COMP_FLAGS_DUIShapesGL =  -c -O -od../obj -op
-COMP_IMPORT_DUIShapesGL = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/dool/src:~/dmd/src/phobos
-LINK_LIBS_DUIShapesGL=-lphobos -L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt//devel/D/dool -ldool -lm -lgconf-2 -L/usr/local/lib -lgdkglext-x11-1.0 -lgtkglext-x11-1.0 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
+COMP_IMPORT_DUIShapesGL = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/Dool/src:~/dmd/src/phobos
+LINK_LIBS_DUIShapesGL=-lphobos -L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt//devel/D/Dool -ldool -lm -L/usr/local/lib -lgdkglext-x11-1.0 -lgtkglext-x11-1.0 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
 LINK_DUIShapesGL=gcc
 
 ##########################
@@ -81,8 +81,8 @@ LINK_DUIShapesGL=gcc
 ##########################
 COMP_HelloWorld = dmd
 COMP_FLAGS_HelloWorld =  -c -debug -g -od../obj -op
-COMP_IMPORT_HelloWorld = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/dool/src:~/dmd/src/phobos
-LINK_LIBS_HelloWorld=-L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt/devel/D/dool -ldool -lm -lgconf-2 -lphobos `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
+COMP_IMPORT_HelloWorld = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/Dool/src:~/dmd/src/phobos
+LINK_LIBS_HelloWorld=-L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt/devel/D/Dool -ldool -lm -lphobos `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
 LINK_HelloWorld=gcc
 
 ##########################
@@ -90,8 +90,8 @@ LINK_HelloWorld=gcc
 ##########################
 COMP_HelloWorldMoving = dmd
 COMP_FLAGS_HelloWorldMoving =  -c -debug -g -od../obj -op
-COMP_IMPORT_HelloWorldMoving = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/dool/src:~/dmd/src/phobos
-LINK_LIBS_HelloWorldMoving=-lphobos -L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt/devel/D/dool -ldool -lm -lgconf-2 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
+COMP_IMPORT_HelloWorldMoving = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/Dool/src:~/dmd/src/phobos
+LINK_LIBS_HelloWorldMoving=-lphobos -L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt/devel/D/Dool -ldool -lm `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
 LINK_HelloWorldMoving=gcc
 
 ##########################
@@ -99,8 +99,8 @@ LINK_HelloWorldMoving=gcc
 ##########################
 COMP_TestSpawn = dmd
 COMP_FLAGS_TestSpawn =  -c -debug -g -od../obj -op
-COMP_IMPORT_TestSpawn = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/dool/src:~/dmd/src/phobos
-LINK_LIBS_TestSpawn=-L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt//devel/D/dool -ldool -lm -lgconf-2 -lphobos `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
+COMP_IMPORT_TestSpawn = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/Dool/src:~/dmd/src/phobos
+LINK_LIBS_TestSpawn=-L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt//devel/D/Dool -ldool -lm -lphobos `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
 LINK_TestSpawn=gcc
 
 ##########################
@@ -108,8 +108,8 @@ LINK_TestSpawn=gcc
 ##########################
 COMP_simpleGL = dmd
 COMP_FLAGS_simpleGL =  -c -O -od../obj -op
-COMP_IMPORT_simpleGL = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/dool/src:~/dmd/src/phobos
-LINK_LIBS_simpleGL=-lphobos -L/home/ruimt/devel/D/DUI -lduigl -ldui -L/home/ruimt//devel/D/dool -ldool -lm -lgconf-2 -L/usr/local/lib -lgdkglext-x11-1.0 -lgtkglext-x11-1.0 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
+COMP_IMPORT_simpleGL = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/Dool/src:~/dmd/src/phobos
+LINK_LIBS_simpleGL=-lphobos -L/home/ruimt/devel/D/DUI -lduigl -ldui -L/home/ruimt//devel/D/Dool -ldool -lm -L/usr/local/lib -lgdkglext-x11-1.0 -lgtkglext-x11-1.0 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
 LINK_simpleGL=gcc
 
 ##########################
@@ -117,8 +117,8 @@ LINK_simpleGL=gcc
 ##########################
 COMP_testEvent = dmd
 COMP_FLAGS_testEvent =  -c -debug -g -od../obj -op
-COMP_IMPORT_testEvent = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/dool/src:~/dmd/src/phobos
-LINK_LIBS_testEvent=-L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt//devel/D/dool -ldool -lphobos -lm -lgconf-2 -L/usr/local/lib -lgdkglext-x11-1.0 -lgtkglext-x11-1.0 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
+COMP_IMPORT_testEvent = -I~/dmd/src/phobos:~/devel/D/DUI/src:~/devel/D/Dool/src:~/dmd/src/phobos
+LINK_LIBS_testEvent=-L/home/ruimt/devel/D/DUI -ldui -L/home/ruimt//devel/D/Dool -ldool -lphobos -lm -L/usr/local/lib -lgdkglext-x11-1.0 -lgtkglext-x11-1.0 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK
 LINK_testEvent=gcc
 
 ##########################
@@ -126,8 +126,8 @@ LINK_testEvent=gcc
 ##########################
 COMP_cliDDBC = dmd
 COMP_FLAGS_cliDDBC =  -c -O -version=sqlite3 -version=dpq -od../obj -op
-COMP_IMPORT_cliDDBC = -I/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D/DSQL/src:/home/ruimt/devel/D/dool/src:/home/ruimt/devel/D/DUI/src:~/dmd/src/phobos
-LINK_LIBS_cliDDBC=-lsqlite3 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK -lm -lpthread /home/ruimt/devel/D/dool/libdool.a /home/ruimt/devel/D/DUI/libdui.a -lphobos 
+COMP_IMPORT_cliDDBC = -I/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D/DSQL/src:/home/ruimt/devel/D/Dool/src:/home/ruimt/devel/D/DUI/src:~/dmd/src/phobos
+LINK_LIBS_cliDDBC=-lsqlite3 `pkg-config --libs gtk+-2.0` `pkg-config --libs gthread-2.0` -lstdc++ -DGTK -lm -lpthread /home/ruimt/devel/D/Dool/libdool.a /home/ruimt/devel/D/DUI/libdui.a -lphobos 
 LINK_cliDDBC=gcc
 
 ##########################################
@@ -275,6 +275,7 @@ SRC_dui = \
 	dui/OptionMenu.d \
 	dui/Paned.d \
 	dui/Plug.d \
+	dui/PopupBox.d \
 	dui/Preview.d \
 	dui/ProgressBar.d \
 	dui/RadioButton.d \
@@ -478,6 +479,7 @@ dui_LINK:
 	obj/dui/OptionMenu.o \
 	obj/dui/Paned.o \
 	obj/dui/Plug.o \
+	obj/dui/PopupBox.o \
 	obj/dui/Preview.o \
 	obj/dui/ProgressBar.o \
 	obj/dui/RadioButton.o \
