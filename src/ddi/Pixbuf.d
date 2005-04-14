@@ -155,7 +155,7 @@ alias void * GdkPixbufDestroyNotify;
 	gboolean gdk_pixbuf_format_is_writable (GdkPixbufFormat * format);
 	
 
-};
+}
 
 /**
  * Functions for rendering pixbufs on drawables.

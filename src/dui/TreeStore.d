@@ -68,6 +68,7 @@ class TreeStore : TreeModel
 {
 
 	private import dool.String;
+	private import ddi.Pixbuf;
 	
 	debug(status)
 	{
@@ -143,8 +144,8 @@ class TreeStore : TreeModel
 	
 	void setValue(TreeIter iter, int column, Value value)
 	{
-		printf("TreeStore.setValue column = %d\n", column);
-		value.dump();
+		//printf("TreeStore.setValue column = %d\n", column);
+		//value.dump();
 		
 		gtk_tree_store_set_value(obj(), iter.getIter(), column, value.getV());
 	}
@@ -154,13 +155,27 @@ class TreeStore : TreeModel
 	 * @param iter the tree iteractor, effectivly the row
 	 * @param column to column number to set
 	 * @param value the value
+	 * \todo confirm we need to destroy the Value instance
 	 */
 	void setValue(TreeIter iter, int column, char[] value)
 	{
-		Value v = new Value(value);
-		gtk_tree_store_set_value(obj(), iter.getIter(), column, v.getV());
+		gtk_tree_store_set(obj(), iter.getIter(), column, String.stringz(value) , -1);
 	}
 
+	void setValue(TreeIter iter, int column, String value)
+	{
+		gtk_tree_store_set(obj(), iter.getIter(), column, value.toStringz(), -1);
+	}
+
+	/**
+	 * \todo confirm we need to destroy the Value instance
+	 */
+	void setValue(TreeIter iter, int column, Pixbuf pixbuf)
+	{
+		Value v = new Value(pixbuf);
+		gtk_tree_store_set_value(obj(), iter.getIter(), column, v.getV());
+	}
+	
 	/**
 	 * Sets an iteractor values.
 	 * This is the way to add a new row to the tree,
