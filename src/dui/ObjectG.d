@@ -343,7 +343,7 @@ private import std.gc;
 	void setProperty(String name, bit value)
 	{
 		Value v = new Value(value);
-		v.dump();
+		//v.dump();
 		g_object_set_property(obj(), name.toStringz(), v.getV());
 	}
 	
