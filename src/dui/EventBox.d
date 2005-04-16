@@ -22,12 +22,18 @@ private import def.Types;
 private import def.Constants;
 private import dui.Bin;
 
+alias GtkBin GtkEventBox;
+
 private:
 extern(C)
 {
-	GType gtk_event_box_get_type();
-	GtkWidget* gtk_event_box_new();
-};
+	GType		gtk_event_box_get_type();
+	GtkWidget*	gtk_event_box_new();
+	void		gtk_event_box_set_above_child(GtkEventBox *event_box, gboolean above_child);
+	gboolean	gtk_event_box_get_above_child(GtkEventBox *event_box);
+	void		gtk_event_box_set_visible_window(GtkEventBox *event_box, gboolean visible_window);
+	gboolean	gtk_event_box_get_visible_window(GtkEventBox *event_box);
+}
 
 /**
  * A widget used to catch events for widgets which do not have their own window.
@@ -61,11 +67,37 @@ class EventBox : Bin
 		return gtk_event_box_get_type();
 	}
 	/**
-	 * Creates a new Event box
+	 * Creates a new Event box.
+	 * The event box will be invisible by default (contrary to Gtk)
+	 * and the border will be set to 0
 	 */
 	this()
 	{
 		this(gtk_event_box_new());
+		gtk_event_box_set_visible_window(cast(GtkEventBox*)gtkW(), false);
+		setBorderWidth(0);
+
+	}
+	
+	void setAboveChild(bit aboveChild)
+	{
+		gtk_event_box_set_above_child(cast(GtkEventBox*)gtkW(), aboveChild);
+	}
+	
+
+	bit getAboveChild()
+	{
+		return gtk_event_box_get_above_child(cast(GtkEventBox*)gtkW()) != 0;
+	}
+	
+	void setVisibleWindow(bit visibleWindow)
+	{
+		gtk_event_box_set_visible_window(cast(GtkEventBox*)gtkW(), visibleWindow);
+	}
+	
+	bit getVisibleWindow()
+	{
+		return gtk_event_box_get_visible_window(cast(GtkEventBox*)gtkW()) != 0;
 	}
     
 }
