@@ -212,7 +212,6 @@ class ListStore : TreeModel
 	}
 	void setValue(TreeIter iter, int column, String value)
 	{
-		printf("ListStore.setValue column = %d value =  %.*s\n", column, value.toString());
 		Value v = new Value(value);
 		gtk_list_store_set_value(obj(), iter.getIter(), column, v.getV());
 		//gtk_list_store_set_value(obj(), iter.getIter(), column, (GValue*)cChar(value));

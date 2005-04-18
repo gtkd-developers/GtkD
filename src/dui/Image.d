@@ -276,20 +276,23 @@ class Image : Misc
 		gtk_image_get_image(cast(GtkImage*)gtkW(), gdk_image, mask);
 	}
 
+	private import std.stdio;
+	
 	/**
 	 * 
 	 * @return 
+	 * \todo what's up with this? never gets called! is DMD broken?
 	 */
 	Pixbuf getPixbuf()
 	{
-//		assert(0);
-//		printf("Image.getPixbuf entry\n" );
-//		GdkPixbuf* gPix = gtk_image_get_pixbuf(cast(GtkImage*)gtkW());
-//		printf("Image.getPixbuf gPix = 0x%X\n", gPix);
-//		Pixbuf pix  = new Pixbuf(gPix);
-//		printf("Image.getPixbuf pix = 0x%X\n", pix);
-//		return pix;
-		return new Pixbuf(gtk_image_get_pixbuf(cast(GtkImage*)gtkW()));
+		writefln("Image.getPixbuf!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!");
+		printf("Image.getPixbuf entry\n" );
+		GdkPixbuf* gPix = gtk_image_get_pixbuf(cast(GtkImage*)gtkW());
+		printf("Image.getPixbuf gPix = 0x%X\n", gPix);
+		Pixbuf pix  = new Pixbuf(gPix);
+		printf("Image.getPixbuf pix = 0x%X\n", pix);
+		return pix;
+		//return new Pixbuf(gtk_image_get_pixbuf(cast(GtkImage*)gtkW()));
 	}
 
 	/**

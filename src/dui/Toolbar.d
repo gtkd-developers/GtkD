@@ -37,90 +37,94 @@ alias int GtkIconSize;
 
 private:
 
-extern (C) GType gtk_toolbar_get_type();
-extern (C) GtkWidget * gtk_toolbar_new();
+extern (C)
+{
+	
+	GType gtk_toolbar_get_type();
+	GtkWidget * gtk_toolbar_new();
 
 /* Simple button items */
-extern(C) GtkWidget
-	* gtk_toolbar_append_item(GtkToolbar * toolbar, char * text, char * tooltip_text, char * tooltip_private_text, GtkWidget * icon, GtkSignalFunc callback, gpointer user_data);
-extern(C) GtkWidget
-	* gtk_toolbar_prepend_item(GtkToolbar * toolbar, char * text, char * tooltip_text, char * tooltip_private_text, GtkWidget * icon, GtkSignalFunc callback, gpointer user_data);
-extern(C) GtkWidget
-	* gtk_toolbar_insert_item(
-		GtkToolbar * toolbar,
-		char * text,
-		char * tooltip_text,
-		char * tooltip_private_text,
-		GtkWidget * icon,
-		GtkSignalFunc callback,
-		gpointer user_data,
-		gint position);
+	GtkWidget
+		* gtk_toolbar_append_item(GtkToolbar * toolbar, char * text, char * tooltip_text, char * tooltip_private_text, GtkWidget * icon, GtkSignalFunc callback, gpointer user_data);
+	GtkWidget
+		* gtk_toolbar_prepend_item(GtkToolbar * toolbar, char * text, char * tooltip_text, char * tooltip_private_text, GtkWidget * icon, GtkSignalFunc callback, gpointer user_data);
+	GtkWidget
+		* gtk_toolbar_insert_item(
+			GtkToolbar * toolbar,
+			char * text,
+			char * tooltip_text,
+			char * tooltip_private_text,
+			GtkWidget * icon,
+			GtkSignalFunc callback,
+			gpointer user_data,
+			gint position);
 
 /* Stock Items */
-extern(C) GtkWidget
-	* gtk_toolbar_insert_stock(GtkToolbar * toolbar, gchar * stock_id, char * tooltip_text, char * tooltip_private_text, GtkSignalFunc callback, gpointer user_data, gint position);
+	GtkWidget
+		* gtk_toolbar_insert_stock(GtkToolbar * toolbar, gchar * stock_id, char * tooltip_text, char * tooltip_private_text, GtkSignalFunc callback, gpointer user_data, gint position);
 
 /* Space Items */
-extern(C) void gtk_toolbar_append_space(GtkToolbar * toolbar);
-extern(C) void gtk_toolbar_prepend_space(GtkToolbar * toolbar);
-extern(C) void gtk_toolbar_insert_space(GtkToolbar * toolbar, gint position);
-extern(C) void gtk_toolbar_remove_space(GtkToolbar * toolbar, gint position);
+	void gtk_toolbar_append_space(GtkToolbar * toolbar);
+	void gtk_toolbar_prepend_space(GtkToolbar * toolbar);
+	void gtk_toolbar_insert_space(GtkToolbar * toolbar, gint position);
+	void gtk_toolbar_remove_space(GtkToolbar * toolbar, gint position);
 
 /* Any element type */
-extern(C) GtkWidget
-	* gtk_toolbar_append_element(
-		GtkToolbar * toolbar,
-		GtkToolbarChildType type,
-		GtkWidget * widget,
-		char * text,
-		char * tooltip_text,
-		char * tooltip_private_text,
-		GtkWidget * icon,
-		GtkSignalFunc callback,
-		gpointer user_data);
+	GtkWidget
+		* gtk_toolbar_append_element(
+			GtkToolbar * toolbar,
+			GtkToolbarChildType type,
+			GtkWidget * widget,
+			char * text,
+			char * tooltip_text,
+			char * tooltip_private_text,
+			GtkWidget * icon,
+			GtkSignalFunc callback,
+			gpointer user_data);
 
-extern(C) GtkWidget
-	* gtk_toolbar_prepend_element(
-		GtkToolbar * toolbar,
-		GtkToolbarChildType type,
-		GtkWidget * widget,
-		char * text,
-		char * tooltip_text,
-		char * tooltip_private_text,
-		GtkWidget * icon,
-		GtkSignalFunc callback,
-		gpointer user_data);
+	GtkWidget
+		* gtk_toolbar_prepend_element(
+			GtkToolbar * toolbar,
+			GtkToolbarChildType type,
+			GtkWidget * widget,
+			char * text,
+			char * tooltip_text,
+			char * tooltip_private_text,
+			GtkWidget * icon,
+			GtkSignalFunc callback,
+			gpointer user_data);
 
-extern(C) GtkWidget
-	* gtk_toolbar_insert_element(
-		GtkToolbar * toolbar,
-		GtkToolbarChildType type,
-		GtkWidget * widget,
-		char * text,
-		char * tooltip_text,
-		char * tooltip_private_text,
-		GtkWidget * icon,
-		GtkSignalFunc callback,
-		gpointer user_data,
-		gint position);
+	GtkWidget
+		* gtk_toolbar_insert_element(
+			GtkToolbar * toolbar,
+			GtkToolbarChildType type,
+			GtkWidget * widget,
+			char * text,
+			char * tooltip_text,
+			char * tooltip_private_text,
+			GtkWidget * icon,
+			GtkSignalFunc callback,
+			gpointer user_data,
+			gint position);
 
 /* Generic Widgets */
-extern(C) void gtk_toolbar_append_widget(GtkToolbar * toolbar, GtkWidget * widget, char * tooltip_text, char * tooltip_private_text);
-extern(C) void gtk_toolbar_prepend_widget(GtkToolbar * toolbar, GtkWidget * widget, char * tooltip_text, char * tooltip_private_text);
-extern(C) void gtk_toolbar_insert_widget(GtkToolbar * toolbar, GtkWidget * widget, char * tooltip_text, char * tooltip_private_text, gint position);
+	void gtk_toolbar_append_widget(GtkToolbar * toolbar, GtkWidget * widget, char * tooltip_text, char * tooltip_private_text);
+	void gtk_toolbar_prepend_widget(GtkToolbar * toolbar, GtkWidget * widget, char * tooltip_text, char * tooltip_private_text);
+	void gtk_toolbar_insert_widget(GtkToolbar * toolbar, GtkWidget * widget, char * tooltip_text, char * tooltip_private_text, gint position);
 
 /* Style functions */
-extern(C) void gtk_toolbar_set_orientation(GtkToolbar * toolbar, GtkOrientation orientation);
-extern(C) void gtk_toolbar_set_style(GtkToolbar * toolbar, GtkToolbarStyle style);
-extern(C) void gtk_toolbar_set_icon_size(GtkToolbar * toolbar, GtkIconSize icon_size);
-extern(C) void gtk_toolbar_set_tooltips(GtkToolbar * toolbar, gboolean enable);
-extern(C) void gtk_toolbar_unset_style(GtkToolbar * toolbar);
-extern(C) void gtk_toolbar_unset_icon_size(GtkToolbar * toolbar);
+	void gtk_toolbar_set_orientation(GtkToolbar * toolbar, GtkOrientation orientation);
+	void gtk_toolbar_set_style(GtkToolbar * toolbar, GtkToolbarStyle style);
+	void gtk_toolbar_set_icon_size(GtkToolbar * toolbar, GtkIconSize icon_size);
+	void gtk_toolbar_set_tooltips(GtkToolbar * toolbar, gboolean enable);
+	void gtk_toolbar_unset_style(GtkToolbar * toolbar);
+	void gtk_toolbar_unset_icon_size(GtkToolbar * toolbar);
 
-extern(C) GtkOrientation gtk_toolbar_get_orientation(GtkToolbar * toolbar);
-extern(C) GtkToolbarStyle gtk_toolbar_get_style(GtkToolbar * toolbar);
-extern(C) GtkIconSize gtk_toolbar_get_icon_size(GtkToolbar * toolbar);
-extern(C) gboolean gtk_toolbar_get_tooltips(GtkToolbar * toolbar);
+	GtkOrientation gtk_toolbar_get_orientation(GtkToolbar * toolbar);
+	GtkToolbarStyle gtk_toolbar_get_style(GtkToolbar * toolbar);
+	GtkIconSize gtk_toolbar_get_icon_size(GtkToolbar * toolbar);
+	gboolean gtk_toolbar_get_tooltips(GtkToolbar * toolbar);
+}
 
 /**
  * A container for a set of frequently used tools.
@@ -134,7 +138,14 @@ class Toolbar : Container
 	 * The size to the icon to display
 	 */
 	enum {
-		ICON_SIZE_INVALID, ICON_SIZE_MENU, ICON_SIZE_SMALL_TOOLBAR, ICON_SIZE_LARGE_TOOLBAR, ICON_SIZE_BUTTON, ICON_SIZE_DND, ICON_SIZE_DIALOG }
+		ICON_SIZE_INVALID, 
+		ICON_SIZE_MENU, 
+		ICON_SIZE_SMALL_TOOLBAR,
+		ICON_SIZE_LARGE_TOOLBAR, 
+		ICON_SIZE_BUTTON, 
+		ICON_SIZE_DND, 
+		ICON_SIZE_DIALOG 
+	}
 
 
 	debug(status)
