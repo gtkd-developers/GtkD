@@ -37,6 +37,8 @@ public:
 class ButtonBox : Box
 {
 
+	private import dui.Button;
+	
 	debug(status)
 	{
 		int complete(){return ST_COMPLETE;}
@@ -104,5 +106,11 @@ class ButtonBox : Box
 //		buttonBox.packStartDefaults(button);
 //		
 //	}
+
+	public ButtonBox addButton(Button button)
+	{
+		packEnd(button, false, false, 7);
+		return this;
+	}
 
 }

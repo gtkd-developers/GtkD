@@ -54,10 +54,14 @@ class Alignment : Bin
 	
 	/**
 	 * creates a new aligment
-	 * @param xalign
-	 * @param yalign
-	 * @param xscale
-	 * @param yscale
+	 * @param xalign the horizontal alignment of the child widget, from 0 (left) to 1 (right).
+	 * @param yalign the vertical alignment of the child widget, from 0 (top) to 1 (bottom).
+	 * @param xscale the amount that the child widget expands horizontally to fill
+	 * up unused space, from 0 to 1. A value of 0 indicates that the child widget
+	 * should never expand. A value of 1 indicates that the child widget will expand
+	 * to fill all of the space allocated for the GtkAlignment.
+	 * @param yscale the amount that the child widget expands vertically to fill up
+	 * unused space, from 0 to 1. The values are similar to xscale.
 	 */
 	this(gfloat xalign, gfloat yalign, gfloat xscale, gfloat yscale)
 	{
@@ -66,14 +70,53 @@ class Alignment : Bin
 
 	/**
 	 * sets the alignment values
-	 * @param xalign
-	 * @param yalign
-	 * @param xscale
-	 * @param yscale
+	 * @param xalign the horizontal alignment of the child widget, from 0 (left) to 1 (right).
+	 * @param yalign the vertical alignment of the child widget, from 0 (top) to 1 (bottom).
+	 * @param xscale the amount that the child widget expands horizontally to fill
+	 * up unused space, from 0 to 1. A value of 0 indicates that the child widget
+	 * should never expand. A value of 1 indicates that the child widget will expand
+	 * to fill all of the space allocated for the GtkAlignment.
+	 * @param yscale the amount that the child widget expands vertically to fill up
+	 * unused space, from 0 to 1. The values are similar to xscale.
 	 */
 	void set(gfloat xalign, gfloat yalign, gfloat xscale, gfloat yscale)
 	{
 		gtk_alignment_set(cast(GtkBin*)gtkW(), xalign, yalign, xscale, yscale);
 	}
 
+	public static Alignment center(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment north(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment south(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 1.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment east(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment west(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
 }

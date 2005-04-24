@@ -29,17 +29,31 @@ private import def.Constants;
 private:
 extern (C)
 {
-	GtkWidget*  gtk_combo_box_new_text();
+	
+	alias GtkComboBox GtkComboBoxText;
+	
+	GtkWidget*  gtk_combo_box_new_text          ();
 
-	void        gtk_combo_box_append_text(GtkComboBox *combo_box, gchar *text);
-	void        gtk_combo_box_insert_text(GtkComboBox *combo_box,gint position, gchar *text);
-	void        gtk_combo_box_prepend_text(GtkComboBox *combo_box, gchar *text);
-	void        gtk_combo_box_remove_text(GtkComboBox *combo_box,gint position);
+	void        gtk_combo_box_append_text       (GtkComboBox *combo_box,  gchar *text);
+	void        gtk_combo_box_insert_text       (GtkComboBox *combo_box,gint position,  gchar *text);
+	void        gtk_combo_box_prepend_text      (GtkComboBox *combo_box,  gchar *text);
+	void        gtk_combo_box_remove_text       (GtkComboBox *combo_box,gint position);
+	gchar*      gtk_combo_box_get_active_text   (GtkComboBox *combo_box);
+
+	
 
 }
 
 /**
- * A combo box.
+ * A GtkComboBoxText is a widget that allows the user to choose from a list of
+ * valid choices. GtkComboBoxText offers a simple API which is suitable for
+ * text-only combo boxes, and hides the complexity of managing the data in a
+ * model. It consists of the functions gtk_combo_box_new_text(),
+ * gtk_combo_box_append_text(), gtk_combo_box_insert_text(),
+ * gtk_combo_box_prepend_text(), gtk_combo_box_remove_text() and
+ * gtk_combo_box_get_active_text(). The full combobox api is implemented on the
+ * super class ComboBox. Gtk doesn't have this type is all mixed up in the
+ * ComboBox class.
  */
 public:
 class ComboBoxText : ComboBox
@@ -55,42 +69,84 @@ class ComboBoxText : ComboBox
 	private int count = 0;
 	public int maxCount = 0;
 	
-    public:
+	protected:
+
+	GtkComboBoxText* gtkComboBoxText;
+
+	public:
+
 	/**
-	 * Create a ComboBox from a Gtk combo box
-	 * @param *gtkWidget 
+	 * Creates a ComboBox from a GtkComboBox
+	 * @param *gtkWidget the gtk struct address pointer
 	 * @return 
 	 */
-    this(GtkWidget *gtkWidget)
+    this(GtkComboBoxText *gtkComboBoxText)
     {
-        super(gtkWidget);
+        super(cast(GtkComboBox*)gtkComboBoxText);
+		this.gtkComboBoxText = gtkComboBoxText;
     }
 
+
+	/**
+	 * Convenience function which constructs a new text combo box, which is a GtkComboBox just displaying strings. If
+	 * you use this function to create a text combo box, you should only manipulate its data source with the
+	 * following convenience functions: gtk_combo_box_append_text(), gtk_combo_box_insert_text(),
+	 * gtk_combo_box_prepend_text() and gtk_combo_box_remove_text().
+	 * @return A new text combo box.
+	 */
 	this()
 	{
-		super(gtk_combo_box_new_text());
+		this(cast(GtkComboBoxText*)gtk_combo_box_new_text());
 	}
 
+	/**
+	 * Appends string to the list of strings stored in combo_box. Note that you can only use this function with combo
+	 * boxes constructed with gtk_combo_box_new_text().
+	 * @param combo_box\ufffd A GtkComboBox constructed using gtk_combo_box_new_text().
+	 * @param text\ufffd A string.
+	 */
 	void appendText(char[] text)
 	{
 		appendText(new String(text));
 	}
+	/**
+	 * Appends string to the list of strings stored in combo_box. Note that you can only use this function with combo
+	 * boxes constructed with gtk_combo_box_new_text().
+	 * @param combo_box\ufffd A GtkComboBox constructed using gtk_combo_box_new_text().
+	 * @param text\ufffd A string.
+	 */
 	void appendText(String text)
 	{
-		gtk_combo_box_append_text(getCBB(), text.toStringz());
+		gtk_combo_box_append_text(gtkComboBoxText, text.toStringz());
 		++count;
 		if ( maxCount >0 && count == maxCount+1 )
 		{
 			removeText(maxCount);
 		}
 	}
+
+	/**
+	 * Inserts string at position in the list of strings stored in combo_box. Note that you can only use this
+	 * function with combo boxes constructed with gtk_combo_box_new_text().
+	 * @param combo_box\ufffd A GtkComboBox constructed using gtk_combo_box_new_text().
+	 * @param position\ufffd An index to insert text.
+	 * @param text\ufffd A string.
+	 */
 	void insertText(int position, char[] text)
 	{
 		insertText(position, new String(text));
 	}
+
+	/**
+	 * Inserts string at position in the list of strings stored in combo_box. Note that you can only use this
+	 * function with combo boxes constructed with gtk_combo_box_new_text().
+	 * @param combo_box\ufffd A GtkComboBox constructed using gtk_combo_box_new_text().
+	 * @param position\ufffd An index to insert text.
+	 * @param text\ufffd A string.
+	 */
 	void insertText(int position, String text)
 	{
-		gtk_combo_box_insert_text(getCBB(), position, text.toStringz());
+		gtk_combo_box_insert_text(gtkComboBoxText, position, text.toStringz());
 		++count;
 		if ( maxCount >0 && count == maxCount+1 )
 		{
@@ -98,13 +154,26 @@ class ComboBoxText : ComboBox
 		}
 	}
 	
+	/**
+	 * Prepends string to the list of strings stored in combo_box. Note that you can only use this function with
+	 * combo boxes constructed with gtk_combo_box_new_text().
+	 * @param combo_box\ufffd A GtkComboBox constructed with gtk_combo_box_new_text().
+	 * @param text\ufffd A string.
+	 */
 	void prependText(char[] text)
 	{
 		prependText(new String(text));
 	}
+
+	/**
+	 * Prepends string to the list of strings stored in combo_box. Note that you can only use this function with
+	 * combo boxes constructed with gtk_combo_box_new_text().
+	 * @param combo_box\ufffd A GtkComboBox constructed with gtk_combo_box_new_text().
+	 * @param text\ufffd A string.
+	 */
 	void prependText(String text)
 	{
-		gtk_combo_box_prepend_text(getCBB(), text.toStringz());
+		gtk_combo_box_prepend_text(gtkComboBoxText, text.toStringz());
 		++count;
 		if ( maxCount >0 && count == maxCount+1 )
 		{
@@ -131,9 +200,15 @@ class ComboBoxText : ComboBox
 	}
 
 	
+	/**
+	 * Removes the string at position from combo_box. Note that you can only use this function with combo boxes
+	 * constructed with gtk_combo_box_new_text().
+	 * @param combo_box\ufffd A GtkComboBox constructed with gtk_combo_box_new_text().
+	 * @param position\ufffd Index of the item to remove.
+	 */
 	void removeText(int position)
 	{
-		gtk_combo_box_remove_text(getCBB(),position);
+		gtk_combo_box_remove_text(gtkComboBoxText,position);
 		--count;
 	}
 	
@@ -153,14 +228,18 @@ class ComboBoxText : ComboBox
 
 	String getText()
 	{
-		String text = new String();
-		TreeIter iter = new TreeIter();
-		
-		if ( getActiveIter(iter) )
-		{
-			text.set(iter.getValueString(0));
-		}
-		return text;
+		return getActiveText();
+	}
+	
+	/**
+	 * Returns the currently active string in combo_box or NULL if none is selected. Note that you can only use this
+	 * function with combo boxes constructed with gtk_combo_box_new_text().
+	 * @param combo_box\ufffd A GtkComboBox constructed with gtk_combo_box_new_text().
+	 * @return a newly allocated string containing the currently active text.
+	 */
+	String getActiveText()
+	{
+		return new String(gtk_combo_box_get_active_text(gtkComboBox));
 	}
 
 	int getIndex(char[] text)
@@ -241,3 +320,74 @@ class ComboBoxText : ComboBox
 		}
 	}
 }
+
+/+
+gtk_combo_box_new_text ()
+
+GtkWidget*  gtk_combo_box_new_text          (void);
+
+Convenience function which constructs a new text combo box, which is a GtkComboBox just displaying strings. If you use this function to create a text combo box, you should only manipulate its data source with the following convenience functions: gtk_combo_box_append_text(), gtk_combo_box_insert_text(), gtk_combo_box_prepend_text() and gtk_combo_box_remove_text().
+
+Returns\ufffd:	A new text combo box.
+
+Since 2.4
+gtk_combo_box_append_text ()
+
+void        gtk_combo_box_append_text       (GtkComboBox *combo_box,
+                                             const gchar *text);
+
+Appends string to the list of strings stored in combo_box. Note that you can only use this function with combo boxes constructed with gtk_combo_box_new_text().
+
+combo_box\ufffd:	A GtkComboBox constructed using gtk_combo_box_new_text().
+text\ufffd:	A string.
+
+Since 2.4
+gtk_combo_box_insert_text ()
+
+void        gtk_combo_box_insert_text       (GtkComboBox *combo_box,
+                                             gint position,
+                                             const gchar *text);
+
+Inserts string at position in the list of strings stored in combo_box. Note that you can only use this function with combo boxes constructed with gtk_combo_box_new_text().
+
+combo_box\ufffd:	A GtkComboBox constructed using gtk_combo_box_new_text().
+position\ufffd:	An index to insert text.
+text\ufffd:	A string.
+
+Since 2.4
+gtk_combo_box_prepend_text ()
+
+void        gtk_combo_box_prepend_text      (GtkComboBox *combo_box,
+                                             const gchar *text);
+
+Prepends string to the list of strings stored in combo_box. Note that you can only use this function with combo boxes constructed with gtk_combo_box_new_text().
+
+combo_box\ufffd:	A GtkComboBox constructed with gtk_combo_box_new_text().
+text\ufffd:	A string.
+
+Since 2.4
+gtk_combo_box_remove_text ()
+
+void        gtk_combo_box_remove_text       (GtkComboBox *combo_box,
+                                             gint position);
+
+Removes the string at position from combo_box. Note that you can only use this function with combo boxes constructed with gtk_combo_box_new_text().
+
+combo_box\ufffd:	A GtkComboBox constructed with gtk_combo_box_new_text().
+position\ufffd:	Index of the item to remove.
+
+Since 2.4
+gtk_combo_box_get_active_text ()
+
+gchar*      gtk_combo_box_get_active_text   (GtkComboBox *combo_box);
+
+Returns the currently active string in combo_box or NULL if none is selected. Note that you can only use this function with combo boxes constructed with gtk_combo_box_new_text().
+
+combo_box\ufffd:	A GtkComboBox constructed with gtk_combo_box_new_text().
+Returns\ufffd:	a newly allocated string containing the currently active text.
+
+Since 2.6
+
++/
+
+

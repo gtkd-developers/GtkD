@@ -290,16 +290,29 @@ class TestWindow : MainWindow
 		
 		return menuBar;
 	}
+	
+	private import dui.ToolItem;
+	private import dui.ToolButton;
+	private import dui.MenuToolButton;
 
 	Widget getToolbar()
 	{
 		HandleBox handleBox = new HandleBox();
 		Toolbar toolbar = new Toolbar();
-		toolbar.appendWidget(new Button(Stock.OPEN),"Toolbar button 1","Private text 1");
-		toolbar.appendWidget(new Button(Stock.CLOSE),"Toolbar button 2","Private text 2");
-		toolbar.appendSpace();
-		toolbar.appendWidget(new Button(Stock.SAVE),"Toolbar button 3","Private text 3");
-		toolbar.appendWidget(new Button(Stock.SAVE_AS),"Toolbar button 4","Private text 4");
+		toolbar.setIconSize(IconSize.MENU);
+		toolbar.setStyle(ToolbarStyle.ICONS);
+		toolbar.insert(new MenuToolButton(Stock.EXECUTE), -1);
+
+		toolbar.insert(new MenuToolButton(Stock.OPEN), -1);
+		toolbar.insert(new ToolButton(Stock.CLOSE), -1);
+		toolbar.insert(new ToolButton(Stock.SAVE), -1);
+		toolbar.insert(new MenuToolButton(Stock.SAVE_AS), -1);
+
+//		toolbar.appendWidget(new Button(Stock.OPEN),"Toolbar button 1","Private text 1");
+//		toolbar.appendWidget(new Button(Stock.CLOSE),"Toolbar button 2","Private text 2");
+//		toolbar.appendSpace();
+//		toolbar.appendWidget(new Button(Stock.SAVE),"Toolbar button 3","Private text 3");
+//		toolbar.appendWidget(new Button(Stock.SAVE_AS),"Toolbar button 4","Private text 4");
 		
 		handleBox.add(toolbar);
 		

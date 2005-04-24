@@ -123,4 +123,6 @@ class HButtonBox : ButtonBox
 		actions ~= new String("action.cancel");
 		return createActionBox(listener, stocks, actions);
 	}
+	
+	
 }

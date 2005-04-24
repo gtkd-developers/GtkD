@@ -175,6 +175,8 @@ enum IconSize
   DIALOG
 }
 
+alias IconSize GtkIconSize;
+
 //#ifndef GTK_DISABLE_DEPRECATED
 /** side types */
 enum SideType
@@ -253,6 +255,7 @@ enum Orientation
   HORIZONTAL,
   VERTICAL
 }
+alias Orientation GtkOrientation;
 
 /** Placement type for scrolled window */
 enum CornerType
@@ -323,6 +326,7 @@ enum ReliefStyle
   HALF,
   NONE
 }
+alias ReliefStyle GtkReliefStyle;
 
 /** Resize type */
 enum ResizeMode
@@ -422,6 +426,8 @@ enum ToolbarStyle
   BOTH,
   BOTH_HORIZ
 }
+alias ToolbarStyle GtkToolbarStyle;
+
 
 /** Data update types (for ranges) */
 enum UpdateType

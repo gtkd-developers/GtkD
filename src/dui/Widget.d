@@ -27,8 +27,6 @@ private import dui.Adjustment;
 alias int GtkAccelFlags;
 
 
-private alias IconSize GtkIconSize;
-
 private alias TextDirection GtkTextDirection;
 
 private extern(C)

@@ -83,6 +83,11 @@ class Tooltips : ObjectG
 		return cast(void*)gObject;
 	}
 
+	GtkTooltips* getTT()
+	{
+		return cast(GtkTooltips*)gObject;
+	}
+	
 	/**
 	 * Creates a new tooltip
 	 */
