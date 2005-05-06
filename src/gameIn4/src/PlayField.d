@@ -22,13 +22,12 @@ private import dui.All;
 private import std.conv;
 private import std.string;
 private import std.random;
+	
+private import mDines;
+private import mDine;
 
 public class PlayField : Table , MouseButtonListener
 {
-	
-	private import mDines;
-	private import mDine;
-
 	const int colSize = 30;
 	const int rowSize = 16;
 	int numberBombs = 99;

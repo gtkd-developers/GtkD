@@ -24,15 +24,12 @@ private import std.outbuffer;
 private import std.file;
 private import std.path;
 private import std.c.stdlib;
+	
+private import dui.All;
 
 public:
 class TopScores : ButtonClickedListener
 {
-	
-	
-	
-	private import dui.All;
-	
 	private char[] homeDir;
 	private char[] scoresFile;
 	bit hasHome = false;

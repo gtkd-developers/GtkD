@@ -6,7 +6,7 @@ Dynamic DUI is a modification to Antonio's DUI graphical user interface kit.  Th
 
 Dynamic DUI is still a work in progress which means that there are a few "gotcha's" to be prepared for:
 
-1) Make sure you install at least >= Gtk 2.4 on windows.  There are windows installers available as mentioned at dsource.org; see the DUI project discussions.  On Linux, Gtk 2.4 is also required, but this is usually less of a problem because of the prevalence of Gtk on Linux distributions.
+1) Make sure you install at least Gtk 2.4 on windows; please don't use the new Gtk 2.6.7 for windows; it isn't compatible with this version of DUI yet (so far as I've tested).  There are windows installers available as mentioned at dsource.org; see the DUI project discussions.  On Linux, Gtk 2.4 is also required, but this is usually less of a problem because of the prevalence of Gtk on Linux distributions.
 
 2) Currently, DynDUI assumes the default installation path of GTK on Windows to be
 

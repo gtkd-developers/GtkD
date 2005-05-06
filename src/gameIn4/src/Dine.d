@@ -25,8 +25,6 @@ private import std.path;
 
 public class Dine : Button
 {
-	
-	
 	int row;
 	int col;
 	int count;

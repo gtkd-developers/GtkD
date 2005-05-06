@@ -19,14 +19,13 @@
 module mDines;
 
 private import dui.All;
- 
+ 	
+private import mPlayField;
+private import mDine;
+private import mTopScores;
+
 public class Dines : MainWindow , MenuItemListener
-{
-	
-	private import mPlayField;
-	private import mDine;
-	private import mTopScores;
-	
+{	
 	DinesMenu menu;
 	GameStatus gameStatus;
 	PlayField playField;
