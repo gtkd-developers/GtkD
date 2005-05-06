@@ -1,0 +1,41 @@
+2005-05-05 -- John Reimer
+
+Dynamic DUI is a modification to Antonio's DUI graphical user interface kit.  The purpose of this modification is to ease the process of building a DUI based project. In order to accomplish this goal, Dynamic DUI assumes the installation of all required Gtk shared libraries: dll's on windows and so's on linux.  The programmer links his or her project with "DUI.lib" only; all external Gtk symbols are dynamically loaded on program execution to meet the requirements of the application.  Thus the programmer is saved the task of making sure all Gtk libraries are available and up to date during the link phase of each build.  This also means that the programmer need only concentrate on DUI's interface; Gtk should not be a concern.
+
+-----------------------------------------------------------------------------------------
+
+Dynamic DUI is still a work in progress which means that there are a few "gotcha's" to be prepared for:
+
+1) Make sure you install at least >= Gtk 2.4 on windows.  There are windows installers available as mentioned at dsource.org; see the DUI project discussions.  On Linux, Gtk 2.4 is also required, but this is usually less of a problem because of the prevalence of Gtk on Linux distributions.
+
+2) Currently, DynDUI assumes the default installation path of GTK on Windows to be
+
+"\Program Files\Common Files\GTK\2.4\bin\"
+
+This is the default location given by recent Gtk 2.4 installers.  I'll change or update the source file in the future so that this doesn't have to be hardcoded this way.  If you need DynDUI to find the Gtk dll's elsewhere, just modify dui\lib\paths.d for now, until a better solution is implemented.
+
+Linux has no issues here because "ld" automatically caches and searches for shared libraries when the dynamically loader makes a request.
+
+3) DynDUI makes some assumptions about library names.  Filenames might not be sufficiently qualified to work on all platforms.  Once again the source for these names can be found in dui\lib\paths.d if there is an immediate need to edit them.
+
+4) OpenGL extensions are not currently implemented.  I'll be working on them eventually.
+
+5) An updated Dool is included in the project source tree.  This is because I had to make modifications and bug fixes to the dool before DynDUI would work correctly.
+
+----------------------------------------------------------------------------------------
+
+There is more work yet to be done.  I haven't actually built the DUI.lib yet, but I will try to get to that soon.  Right now, I have made strict use of the "build" tool also available on dsource.org.  Until I get complete instructions up for how to build a DUI based project with DynDUI, I recommend that people use the build tool.  For quick setup to test compile a dui project, all that's required is the following:
+
+-- create a directory in the dui\src directory, eg. .\dui\src\myproject
+
+-- import dui modules as necessary into your application
+
+-- use "build" to create your application; build from the \dui\src directory with a command like:
+
+	build myproject\myproject.d
+
+dmd\src files will be compiled and linked into your project as needed.  This is just a temporary solution until a library is created and more details can be provided.  Others with D experience will have no trouble setting up a correct build environment or creating the DUI.lib before I do.
+
+Comments, suggestions, and improvements are welcome.  You can post messages at anytime on the www.dsource.org/forums/DUI forum.
+
+A special thanks to Kris for the idea and structure of the dynamic loader. And, of course, many thanks to Antonio for the origination of the DUI project.

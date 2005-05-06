@@ -1,0 +1,31 @@
+Microsoft (R) COFF/PE Dumper Version 8.00.40607.16
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file libgthread-2.0-0.dll
+
+File Type: DLL
+
+  Section contains the following exports for libgthread-2.0-0.dll
+
+    00000000 characteristics
+    41169874 time date stamp Sun Aug 08 14:17:40 2004
+        0.00 version
+           1 ordinal base
+           2 number of functions
+           2 number of names
+
+    ordinal hint RVA      name
+
+          1    0 00003410 g_thread_init
+          2    1 000032CE g_thread_init_with_errorcheck_mutexes
+
+  Summary
+
+        1000 .bss
+        1000 .data
+        1000 .edata
+        1000 .idata
+        1000 .reloc
+        1000 .rsrc
+        3000 .text

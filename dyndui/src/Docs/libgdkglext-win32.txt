@@ -1,0 +1,1389 @@
+Microsoft (R) COFF/PE Dumper Version 8.00.40607.16
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file libgdkglext-win32-1.0-0.dll
+
+File Type: DLL
+
+  Section contains the following exports for libgdkglext-win32-1.0-0.dll
+
+    00000000 characteristics
+    404EEA8D time date stamp Wed Mar 10 02:14:37 2004
+        0.00 version
+           1 ordinal base
+        1359 number of functions
+        1359 number of names
+
+    ordinal hint RVA      name
+
+          1    0 00025BC0 gdk_gl_buffer_mask_get_type
+          2    1 00025450 gdk_gl_config_attrib_get_type
+          3    2 00025590 gdk_gl_config_caveat_get_type = _gdk_gl_query_version
+          4    3 00025D40 gdk_gl_config_error_get_type
+          5    4 000275B0 gdk_gl_config_get_attrib
+          6    5 00027750 gdk_gl_config_get_colormap
+          7    6 00027870 gdk_gl_config_get_depth
+          8    7 00001AE0 gdk_gl_config_get_layer_plane
+          9    8 00001B80 gdk_gl_config_get_n_aux_buffers
+         10    9 00001C30 gdk_gl_config_get_n_sample_buffers
+         11    A 00027520 gdk_gl_config_get_screen
+         12    B 000016B0 gdk_gl_config_get_type
+         13    C 000277E0 gdk_gl_config_get_visual
+         14    D 00002040 gdk_gl_config_has_accum_buffer = _gdk_gl_pixmap_copy_to_image
+         15    E 00001E70 gdk_gl_config_has_alpha
+         16    F 00001F00 gdk_gl_config_has_depth_buffer = _gdk_gl_pixmap_get_visual
+         17   10 00001FB0 gdk_gl_config_has_stencil_buffer = _gdk_gl_pixmap_get_composite_drawable
+         18   11 00001D50 gdk_gl_config_is_double_buffered
+         19   12 00001CB0 gdk_gl_config_is_rgba = _gdk_gl_pixmap_draw_polygon
+         20   13 00001DE0 gdk_gl_config_is_stereo = _gdk_gl_pixmap_draw_lines
+         21   14 00026420 gdk_gl_config_mode_get_type
+         22   15 000272B0 gdk_gl_config_new
+         23   16 00001A10 gdk_gl_config_new_by_mode
+         24   17 00001A30 gdk_gl_config_new_by_mode_for_screen
+         25   18 00027340 gdk_gl_config_new_for_screen
+         26   19 00028B70 gdk_gl_context_copy
+         27   1A 000022E0 gdk_gl_context_destroy
+         28   1B 00028F10 gdk_gl_context_get_current
+         29   1C 00028D70 gdk_gl_context_get_gl_config
+         30   1D 00028CE0 gdk_gl_context_get_gl_drawable
+         31   1E 00028EA0 gdk_gl_context_get_render_type
+         32   1F 00028E00 gdk_gl_context_get_share_list
+         33   20 00002100 gdk_gl_context_get_type = __gdk_gl_pixmap_get_size
+         34   21 00028E70 gdk_gl_context_is_direct
+         35   22 00002220 gdk_gl_context_new
+         36   23 0002F004 gdk_gl_debug_flags
+         37   24 000043F0 gdk_gl_draw_cone
+         38   25 000042F0 gdk_gl_draw_cube
+         39   26 000051D0 gdk_gl_draw_dodecahedron = _gdk_gl_get_glResetMinmax
+         40   27 00004BD0 gdk_gl_draw_icosahedron
+         41   28 00004B80 gdk_gl_draw_octahedron
+         42   29 00004370 gdk_gl_draw_sphere
+         43   2A 00005600 gdk_gl_draw_teapot
+         44   2B 00004B30 gdk_gl_draw_tetrahedron
+         45   2C 00004630 gdk_gl_draw_torus
+         46   2D 00025F40 gdk_gl_drawable_attrib_get_type
+         47   2E 00002A40 gdk_gl_drawable_get_current = _gdk_gl_window_get_size
+         48   2F 00002910 gdk_gl_drawable_get_gl_config
+         49   30 000029B0 gdk_gl_drawable_get_size = _gdk_gl_window_draw_glyphs
+         50   31 000023A0 gdk_gl_drawable_get_type
+         51   32 000027D0 gdk_gl_drawable_gl_begin
+         52   33 00002870 gdk_gl_drawable_gl_end
+         53   34 00002550 gdk_gl_drawable_is_double_buffered
+         54   35 00002480 gdk_gl_drawable_make_current = _gdk_pixmap_unset_gl_capability
+         55   36 000025F0 gdk_gl_drawable_swap_buffers
+         56   37 00026240 gdk_gl_drawable_type_get_type
+         57   38 000258F0 gdk_gl_drawable_type_mask_get_type
+         58   39 00002730 gdk_gl_drawable_wait_gdk
+         59   3A 00002690 gdk_gl_drawable_wait_gl = _gdk_gl_window_class_init
+         60   3B 000260F0 gdk_gl_event_mask_get_type
+         61   3C 000261A0 gdk_gl_event_type_get_type
+         62   3D 0002AF70 gdk_gl_font_use_pango_font
+         63   3E 0002B0E0 gdk_gl_font_use_pango_font_for_display
+         64   3F 00017C80 gdk_gl_get_GL_3DFX_tbuffer
+         65   40 0001E4A0 gdk_gl_get_GL_APPLE_element_array
+         66   41 0001E810 gdk_gl_get_GL_APPLE_fence
+         67   42 00020D70 gdk_gl_get_GL_APPLE_texture_range
+         68   43 0001EAB0 gdk_gl_get_GL_APPLE_vertex_array_object
+         69   44 0001ECB0 gdk_gl_get_GL_APPLE_vertex_array_range
+         70   45 000210D0 gdk_gl_get_GL_APPLE_vertex_program_evaluators
+         71   46 0000AAC0 gdk_gl_get_GL_ARB_matrix_palette
+         72   47 00009EE0 gdk_gl_get_GL_ARB_multisample
+         73   48 00009850 gdk_gl_get_GL_ARB_multitexture
+         74   49 0000A3E0 gdk_gl_get_GL_ARB_point_parameters
+         75   4A 0000A210 gdk_gl_get_GL_ARB_texture_compression
+         76   4B 00009DC0 gdk_gl_get_GL_ARB_transpose_matrix
+         77   4C 0000A7A0 gdk_gl_get_GL_ARB_vertex_blend
+         78   4D 0000D170 gdk_gl_get_GL_ARB_vertex_buffer_object
+         79   4E 0000C730 gdk_gl_get_GL_ARB_vertex_program = _gdk_gl_get_glTexSubImage1DEXT
+         80   4F 0000B0B0 gdk_gl_get_GL_ARB_window_pos
+         81   50 00021380 gdk_gl_get_GL_ATIX_pn_triangles
+         82   51 00021260 gdk_gl_get_GL_ATI_blend_equation_separate
+         83   52 0001EDC0 gdk_gl_get_GL_ATI_draw_buffers = _gdk_gl_get_glVertexAttrib3hvNV
+         84   53 0001DB70 gdk_gl_get_GL_ATI_element_array
+         85   54 0001A610 gdk_gl_get_GL_ATI_envmap_bumpmap = _gdk_gl_get_glShaderOp1EXT
+         86   55 0001AB90 gdk_gl_get_GL_ATI_fragment_shader
+         87   56 00020870 gdk_gl_get_GL_ATI_map_object_buffer
+         88   57 0001AE10 gdk_gl_get_GL_ATI_pn_triangles
+         89   58 000209D0 gdk_gl_get_GL_ATI_separate_stencil
+         90   59 0001B2C0 gdk_gl_get_GL_ATI_vertex_array_object
+         91   5A 00020BF0 gdk_gl_get_GL_ATI_vertex_attrib_array_object
+         92   5B 0001D570 gdk_gl_get_GL_ATI_vertex_streams
+         93   5C 00021750 gdk_gl_get_GL_Autodesk_facet_normal
+         94   5D 00021990 gdk_gl_get_GL_Autodesk_valid_back_buffer_hint
+         95   5E 0000D350 gdk_gl_get_GL_EXT_blend_color
+         96   5F 00016030 gdk_gl_get_GL_EXT_blend_func_separate
+         97   60 0000FA80 gdk_gl_get_GL_EXT_blend_minmax
+         98   61 00010DF0 gdk_gl_get_GL_EXT_color_subtable
+         99   62 000116F0 gdk_gl_get_GL_EXT_compiled_vertex_array
+        100   63 0000E480 gdk_gl_get_GL_EXT_convolution
+        101   64 00013F00 gdk_gl_get_GL_EXT_coordinate_frame
+        102   65 0000DA00 gdk_gl_get_GL_EXT_copy_texture
+        103   66 00011830 gdk_gl_get_GL_EXT_cull_vertex
+        104   67 00021A90 gdk_gl_get_GL_EXT_depth_bounds_test = _gdk_gl_get_glMultiTexCoord3sEXT
+        105   68 000121E0 gdk_gl_get_GL_EXT_draw_range_elements
+        106   69 00013720 gdk_gl_get_GL_EXT_fog_coord
+        107   6A 00022170 gdk_gl_get_GL_EXT_fragment_lighting
+        108   6B 0000DE50 gdk_gl_get_GL_EXT_histogram
+        109   6C 000115C0 gdk_gl_get_GL_EXT_index_func
+        110   6D 000114F0 gdk_gl_get_GL_EXT_index_material
+        111   6E 00012350 gdk_gl_get_GL_EXT_light_texture
+        112   6F 000134F0 gdk_gl_get_GL_EXT_multi_draw_arrays
+        113   70 00017DA0 gdk_gl_get_GL_EXT_multisample
+        114   71 00022F30 gdk_gl_get_GL_EXT_multitexture
+        115   72 000110C0 gdk_gl_get_GL_EXT_paletted_texture
+        116   73 00012AD0 gdk_gl_get_GL_EXT_pixel_transform
+        117   74 0000FDF0 gdk_gl_get_GL_EXT_point_parameters = _gdk_gl_get_GL_EXT_color_subtable
+        118   75 0000D420 gdk_gl_get_GL_EXT_polygon_offset
+        119   76 000233E0 gdk_gl_get_GL_EXT_scene_marker
+        120   77 00013140 gdk_gl_get_GL_EXT_secondary_color
+        121   78 0001E240 gdk_gl_get_GL_EXT_stencil_two_side
+        122   79 0000D7D0 gdk_gl_get_GL_EXT_subtexture
+        123   7A 0000D540 gdk_gl_get_GL_EXT_texture3D
+        124   7B 0000F120 gdk_gl_get_GL_EXT_texture_object
+        125   7C 000133C0 gdk_gl_get_GL_EXT_texture_perturb_normal
+        126   7D 0000F8E0 gdk_gl_get_GL_EXT_vertex_array
+        127   7E 0001C2A0 gdk_gl_get_GL_EXT_vertex_shader
+        128   7F 000162B0 gdk_gl_get_GL_EXT_vertex_weighting
+        129   80 00010C40 gdk_gl_get_GL_HP_image_transform
+        130   81 00017780 gdk_gl_get_GL_IBM_multimode_draw_arrays
+        131   82 000234D0 gdk_gl_get_GL_IBM_static_data
+        132   83 00017AF0 gdk_gl_get_GL_IBM_vertex_array_lists
+        133   84 00016120 gdk_gl_get_GL_INGR_blend_func_separate
+        134   85 00012870 gdk_gl_get_GL_INTEL_parallel_arrays
+        135   86 000236E0 gdk_gl_get_GL_KTX_buffer_region
+        136   87 00016BE0 gdk_gl_get_GL_MESA_resize_buffers
+        137   88 000173E0 gdk_gl_get_GL_MESA_window_pos
+        138   89 00023990 gdk_gl_get_GL_NV_element_array
+        139   8A 00018650 gdk_gl_get_GL_NV_evaluators
+        140   8B 00018230 gdk_gl_get_GL_NV_fence
+        141   8C 0001F090 gdk_gl_get_GL_NV_fragment_program
+        142   8D 0001FFF0 gdk_gl_get_GL_NV_half_float = _gdk_gl_get_glMapVertexAttrib2dAPPLE
+        143   8E 0001DF80 gdk_gl_get_GL_NV_occlusion_query
+        144   8F 000205C0 gdk_gl_get_GL_NV_pixel_data_range
+        145   90 0001E140 gdk_gl_get_GL_NV_point_sprite
+        146   91 00020720 gdk_gl_get_GL_NV_primitive_restart
+        147   92 000169D0 gdk_gl_get_GL_NV_register_combiners
+        148   93 00018880 gdk_gl_get_GL_NV_register_combiners2
+        149   94 00023AD0 gdk_gl_get_GL_NV_stencil_two_side
+        150   95 00016420 gdk_gl_get_GL_NV_vertex_array_range
+        151   96 00019DB0 gdk_gl_get_GL_NV_vertex_program
+        152   97 00010ED0 gdk_gl_get_GL_PGI_misc_hints
+        153   98 0000F2D0 gdk_gl_get_GL_SGIS_detail_texture = _gdk_gl_get_glFrameZoomSGIX
+        154   99 00010920 gdk_gl_get_GL_SGIS_fog_function = _gdk_gl_get_glFragmentLightfSGIX
+        155   9A 0000F570 gdk_gl_get_GL_SGIS_multisample
+        156   9B 00024660 gdk_gl_get_GL_SGIS_multitexture
+        157   9C 0000ECF0 gdk_gl_get_GL_SGIS_pixel_texture
+        158   9D 0000FF40 gdk_gl_get_GL_SGIS_point_parameters
+        159   9E 0000F430 gdk_gl_get_GL_SGIS_sharpen_texture
+        160   9F 0000EE90 gdk_gl_get_GL_SGIS_texture4D = _gdk_gl_get_glPointParameterfSGIS
+        161   A0 00017EA0 gdk_gl_get_GL_SGIS_texture_color_mask
+        162   A1 0000D690 gdk_gl_get_GL_SGIS_texture_filter4
+        163   A2 00012600 gdk_gl_get_GL_SGIX_async
+        164   A3 00010800 gdk_gl_get_GL_SGIX_flush_raster
+        165   A4 00024AB0 gdk_gl_get_GL_SGIX_fog_texture
+        166   A5 00011F40 gdk_gl_get_GL_SGIX_fragment_lighting
+        167   A6 00010320 gdk_gl_get_GL_SGIX_framezoom
+        168   A7 00017F80 gdk_gl_get_GL_SGIX_igloo_interface
+        169   A8 000101D0 gdk_gl_get_GL_SGIX_instruments
+        170   A9 00011390 gdk_gl_get_GL_SGIX_list_priority
+        171   AA 0000EA20 gdk_gl_get_GL_SGIX_pixel_texture
+        172   AB 00010600 gdk_gl_get_GL_SGIX_polynomial_ffd
+        173   AC 00010730 gdk_gl_get_GL_SGIX_reference_plane
+        174   AD 0000FC70 gdk_gl_get_GL_SGIX_sprite
+        175   AE 00010400 gdk_gl_get_GL_SGIX_tag_sample_buffer
+        176   AF 0000E8B0 gdk_gl_get_GL_SGI_color_table
+        177   B0 00014200 gdk_gl_get_GL_SUNX_constant_data
+        178   B1 00014580 gdk_gl_get_GL_SUN_global_alpha
+        179   B2 0001DC80 gdk_gl_get_GL_SUN_mesh_array
+        180   B3 00024BE0 gdk_gl_get_GL_SUN_multi_draw_arrays
+        181   B4 00014930 gdk_gl_get_GL_SUN_triangle_list
+        182   B5 00015B50 gdk_gl_get_GL_SUN_vertex
+        183   B6 00006300 gdk_gl_get_GL_VERSION_1_2 = _gdk_gl_get_glSampleCoverage
+        184   B7 000075B0 gdk_gl_get_GL_VERSION_1_3 = _gdk_gl_get_glWindowPos2s
+        185   B8 000088C0 gdk_gl_get_GL_VERSION_1_4
+        186   B9 00024CD0 gdk_gl_get_GL_WIN_swap_hint
+        187   BA 0002B2A0 gdk_gl_get_WGL_ARB_buffer_region
+        188   BB 0002B3E0 gdk_gl_get_WGL_ARB_extensions_string
+        189   BC 0002B6F0 gdk_gl_get_WGL_ARB_make_current_read
+        190   BD 0002B920 gdk_gl_get_WGL_ARB_pbuffer
+        191   BE 0002B580 gdk_gl_get_WGL_ARB_pixel_format = _gdk_gl_get_WGL_EXT_swap_control
+        192   BF 0002BB00 gdk_gl_get_WGL_ARB_render_texture
+        193   C0 0002BD60 gdk_gl_get_WGL_EXT_display_color_table
+        194   C1 0002BEA0 gdk_gl_get_WGL_EXT_extensions_string
+        195   C2 0002BFE0 gdk_gl_get_WGL_EXT_make_current_read
+        196   C3 0002C210 gdk_gl_get_WGL_EXT_pbuffer = _gdk_gl_get_wglQueryGenlockMaxSourceDelayI3D
+        197   C4 0002C420 gdk_gl_get_WGL_EXT_pixel_format
+        198   C5 0002C580 gdk_gl_get_WGL_EXT_swap_control
+        199   C6 0002CB40 gdk_gl_get_WGL_I3D_digital_video_control
+        200   C7 0002CD40 gdk_gl_get_WGL_I3D_gamma
+        201   C8 0002D260 gdk_gl_get_WGL_I3D_genlock
+        202   C9 0002D5B0 gdk_gl_get_WGL_I3D_image_buffer = _exit
+        203   CA 0002D800 gdk_gl_get_WGL_I3D_swap_frame_lock
+        204   CB 0002DA50 gdk_gl_get_WGL_I3D_swap_frame_usage
+        205   CC 0002C6D0 gdk_gl_get_WGL_NV_vertex_array_range
+        206   CD 0002C960 gdk_gl_get_WGL_OML_sync_control
+        207   CE 0001E1E0 gdk_gl_get_glActiveStencilFaceEXT = _gdk_gl_get_glVertex2hvNV
+        208   CF 00023A80 gdk_gl_get_glActiveStencilFaceNV
+        209   D0 00006720 gdk_gl_get_glActiveTexture
+        210   D1 00008DA0 gdk_gl_get_glActiveTextureARB
+        211   D2 00024C80 gdk_gl_get_glAddSwapHintRectWIN
+        212   D3 0001AA40 gdk_gl_get_glAlphaFragmentOp1ATI
+        213   D4 0001AA90 gdk_gl_get_glAlphaFragmentOp2ATI
+        214   D5 0001AAE0 gdk_gl_get_glAlphaFragmentOp3ATI
+        215   D6 00012260 gdk_gl_get_glApplyTextureEXT
+        216   D7 00018920 gdk_gl_get_glAreProgramsResidentNV
+        217   D8 0000EF30 gdk_gl_get_glAreTexturesResidentEXT
+        218   D9 0000F610 gdk_gl_get_glArrayElementEXT
+        219   DA 0001B0A0 gdk_gl_get_glArrayObjectATI
+        220   DB 00012410 gdk_gl_get_glAsyncMarkerSGIX
+        221   DC 0001A810 gdk_gl_get_glBeginFragmentShaderATI
+        222   DD 0001DE20 gdk_gl_get_glBeginOcclusionQueryNV
+        223   DE 00023340 gdk_gl_get_glBeginSceneEXT
+        224   DF 0001B470 gdk_gl_get_glBeginVertexShaderEXT
+        225   E0 0000CDE0 gdk_gl_get_glBindBufferARB
+        226   E1 0001A750 gdk_gl_get_glBindFragmentShaderATI = _gdk_gl_get_glWriteMaskEXT
+        227   E2 0001BCE0 gdk_gl_get_glBindLightParameterEXT
+        228   E3 0001BD40 gdk_gl_get_glBindMaterialParameterEXT = _gdk_gl_get_glVertexStream3ivATI
+        229   E4 0001BE50 gdk_gl_get_glBindParameterEXT
+        230   E5 0000BF70 gdk_gl_get_glBindProgramARB = _gdk_gl_get_glBufferSubDataARB
+        231   E6 00018970 gdk_gl_get_glBindProgramNV
+        232   E7 0001BDA0 gdk_gl_get_glBindTexGenParameterEXT
+        233   E8 0000EF80 gdk_gl_get_glBindTextureEXT
+        234   E9 0001BE00 gdk_gl_get_glBindTextureUnitParameterEXT
+        235   EA 0001E950 gdk_gl_get_glBindVertexArrayAPPLE
+        236   EB 0001B510 gdk_gl_get_glBindVertexShaderEXT
+        237   EC 00013B30 gdk_gl_get_glBinormal3bEXT
+        238   ED 00013B80 gdk_gl_get_glBinormal3bvEXT
+        239   EE 00013BD0 gdk_gl_get_glBinormal3dEXT
+        240   EF 00013C20 gdk_gl_get_glBinormal3dvEXT
+        241   F0 00013C70 gdk_gl_get_glBinormal3fEXT
+        242   F1 00013CC0 gdk_gl_get_glBinormal3fvEXT
+        243   F2 00013D10 gdk_gl_get_glBinormal3iEXT
+        244   F3 00013D60 gdk_gl_get_glBinormal3ivEXT
+        245   F4 00013DB0 gdk_gl_get_glBinormal3sEXT
+        246   F5 00013E00 gdk_gl_get_glBinormal3svEXT = _gdk_gl_get_glTexCoord2fVertex3fvSUN
+        247   F6 00013EA0 gdk_gl_get_glBinormalPointerEXT
+        248   F7 00005650 gdk_gl_get_glBlendColor
+        249   F8 0000D300 gdk_gl_get_glBlendColorEXT
+        250   F9 000056A0 gdk_gl_get_glBlendEquation
+        251   FA 0000FA30 gdk_gl_get_glBlendEquationEXT = _gdk_gl_get_glImageTransformParameterfHP
+        252   FB 00021200 gdk_gl_get_glBlendEquationSeparateATI
+        253   FC 00007AB0 gdk_gl_get_glBlendFuncSeparate
+        254   FD 00015FD0 gdk_gl_get_glBlendFuncSeparateEXT = _gdk_gl_get_glWindowPos3fvMESA
+        255   FE 000160C0 gdk_gl_get_glBlendFuncSeparateINGR = _gdk_gl_get_glWindowPos3sMESA
+        256   FF 0000CF20 gdk_gl_get_glBufferDataARB
+        257  100 00023550 gdk_gl_get_glBufferRegionEnabled
+        258  101 0000CF70 gdk_gl_get_glBufferSubDataARB
+        259  102 00006770 gdk_gl_get_glClientActiveTexture
+        260  103 00008E00 gdk_gl_get_glClientActiveTextureARB
+        261  104 0001D480 gdk_gl_get_glClientActiveVertexStreamATI
+        262  105 00014B90 gdk_gl_get_glColor3fVertex3fSUN
+        263  106 00014BE0 gdk_gl_get_glColor3fVertex3fvSUN
+        264  107 0001F410 gdk_gl_get_glColor3hNV
+        265  108 0001F460 gdk_gl_get_glColor3hvNV
+        266  109 00014CE0 gdk_gl_get_glColor4fNormal3fVertex3fSUN
+        267  10A 00014D40 gdk_gl_get_glColor4fNormal3fVertex3fvSUN
+        268  10B 0001F4B0 gdk_gl_get_glColor4hNV
+        269  10C 0001F500 gdk_gl_get_glColor4hvNV
+        270  10D 00014A50 gdk_gl_get_glColor4ubVertex2fSUN
+        271  10E 00014AA0 gdk_gl_get_glColor4ubVertex2fvSUN
+        272  10F 00014AF0 gdk_gl_get_glColor4ubVertex3fSUN
+        273  110 00014B40 gdk_gl_get_glColor4ubVertex3fvSUN
+        274  111 0001A950 gdk_gl_get_glColorFragmentOp1ATI
+        275  112 0001A9A0 gdk_gl_get_glColorFragmentOp2ATI
+        276  113 0001A9F0 gdk_gl_get_glColorFragmentOp3ATI
+        277  114 0000F660 gdk_gl_get_glColorPointerEXT
+        278  115 00017820 gdk_gl_get_glColorPointerListIBM = _gdk_gl_get_glGetCombinerStageParameterfvNV
+        279  116 000127B0 gdk_gl_get_glColorPointervINTEL
+        280  117 000059B0 gdk_gl_get_glColorSubTable
+        281  118 00010D50 gdk_gl_get_glColorSubTableEXT
+        282  119 00005740 gdk_gl_get_glColorTable
+        283  11A 00010F50 gdk_gl_get_glColorTableEXT
+        284  11B 000057A0 gdk_gl_get_glColorTableParameterfv
+        285  11C 0000E6A0 gdk_gl_get_glColorTableParameterfvSGI
+        286  11D 00005800 gdk_gl_get_glColorTableParameteriv
+        287  11E 0000E700 gdk_gl_get_glColorTableParameterivSGI = _gdk_gl_get_glEdgeFlagPointerEXT
+        288  11F 0000E640 gdk_gl_get_glColorTableSGI
+        289  120 00016610 gdk_gl_get_glCombinerInputNV
+        290  121 00016660 gdk_gl_get_glCombinerOutputNV
+        291  122 00016510 gdk_gl_get_glCombinerParameterfNV
+        292  123 000164C0 gdk_gl_get_glCombinerParameterfvNV
+        293  124 000165C0 gdk_gl_get_glCombinerParameteriNV
+        294  125 00016570 gdk_gl_get_glCombinerParameterivNV
+        295  126 000187B0 gdk_gl_get_glCombinerStageParameterfvNV
+        296  127 000073F0 gdk_gl_get_glCompressedTexImage1D
+        297  128 0000A030 gdk_gl_get_glCompressedTexImage1DARB
+        298  129 000073A0 gdk_gl_get_glCompressedTexImage2D
+        299  12A 00009FD0 gdk_gl_get_glCompressedTexImage2DARB
+        300  12B 00007350 gdk_gl_get_glCompressedTexImage3D
+        301  12C 00009F70 gdk_gl_get_glCompressedTexImage3DARB = _gdk_gl_get_glWindowPos3iARB
+        302  12D 00007510 gdk_gl_get_glCompressedTexSubImage1D = _gdk_gl_get_glWindowPos2i
+        303  12E 0000A150 gdk_gl_get_glCompressedTexSubImage1DARB
+        304  12F 000074B0 gdk_gl_get_glCompressedTexSubImage2D
+        305  130 0000A0F0 gdk_gl_get_glCompressedTexSubImage2DARB
+        306  131 00007450 gdk_gl_get_glCompressedTexSubImage3D
+        307  132 0000A090 gdk_gl_get_glCompressedTexSubImage3DARB
+        308  133 00005A50 gdk_gl_get_glConvolutionFilter1D
+        309  134 0000DFC0 gdk_gl_get_glConvolutionFilter1DEXT
+        310  135 00005AA0 gdk_gl_get_glConvolutionFilter2D
+        311  136 0000E020 gdk_gl_get_glConvolutionFilter2DEXT = _gdk_gl_get_glGenTexturesEXT
+        312  137 00005B00 gdk_gl_get_glConvolutionParameterf
+        313  138 0000E080 gdk_gl_get_glConvolutionParameterfEXT
+        314  139 00005B60 gdk_gl_get_glConvolutionParameterfv
+        315  13A 0000E0E0 gdk_gl_get_glConvolutionParameterfvEXT
+        316  13B 00005BC0 gdk_gl_get_glConvolutionParameteri
+        317  13C 0000E140 gdk_gl_get_glConvolutionParameteriEXT
+        318  13D 00005C20 gdk_gl_get_glConvolutionParameteriv = _gdk_gl_get_glMultiTexCoord2s
+        319  13E 0000E1A0 gdk_gl_get_glConvolutionParameterivEXT
+        320  13F 00005A00 gdk_gl_get_glCopyColorSubTable
+        321  140 00010DA0 gdk_gl_get_glCopyColorSubTableEXT
+        322  141 00005850 gdk_gl_get_glCopyColorTable
+        323  142 0000E750 gdk_gl_get_glCopyColorTableSGI = _gdk_gl_get_glGetPointervEXT
+        324  143 00005C80 gdk_gl_get_glCopyConvolutionFilter1D
+        325  144 0000E200 gdk_gl_get_glCopyConvolutionFilter1DEXT
+        326  145 00005CE0 gdk_gl_get_glCopyConvolutionFilter2D
+        327  146 0000E260 gdk_gl_get_glCopyConvolutionFilter2DEXT
+        328  147 0000D870 gdk_gl_get_glCopyTexImage1DEXT
+        329  148 0000D8C0 gdk_gl_get_glCopyTexImage2DEXT
+        330  149 0000D910 gdk_gl_get_glCopyTexSubImage1DEXT
+        331  14A 0000D960 gdk_gl_get_glCopyTexSubImage2DEXT
+        332  14B 000062C0 gdk_gl_get_glCopyTexSubImage3D
+        333  14C 0000D9B0 gdk_gl_get_glCopyTexSubImage3DEXT
+        334  14D 00011790 gdk_gl_get_glCullParameterdvEXT
+        335  14E 000117E0 gdk_gl_get_glCullParameterfvEXT
+        336  14F 0000A920 gdk_gl_get_glCurrentPaletteMatrixARB
+        337  150 00010530 gdk_gl_get_glDeformSGIX
+        338  151 00010490 gdk_gl_get_glDeformationMap3dSGIX
+        339  152 000104E0 gdk_gl_get_glDeformationMap3fSGIX
+        340  153 00012560 gdk_gl_get_glDeleteAsyncMarkersSGIX
+        341  154 000235F0 gdk_gl_get_glDeleteBufferRegion
+        342  155 0000CE30 gdk_gl_get_glDeleteBuffersARB
+        343  156 0001E5E0 gdk_gl_get_glDeleteFencesAPPLE
+        344  157 00018000 gdk_gl_get_glDeleteFencesNV
+        345  158 0001A7B0 gdk_gl_get_glDeleteFragmentShaderATI
+        346  159 0001DD70 gdk_gl_get_glDeleteOcclusionQueriesNV = _gdk_gl_get_glDrawBuffersATI
+        347  15A 0000BFC0 gdk_gl_get_glDeleteProgramsARB = _gdk_gl_get_glGetBufferSubDataARB
+        348  15B 000189C0 gdk_gl_get_glDeleteProgramsNV
+        349  15C 0000EFD0 gdk_gl_get_glDeleteTexturesEXT
+        350  15D 0001E9B0 gdk_gl_get_glDeleteVertexArraysAPPLE = _gdk_gl_get_glMultiTexCoord4hNV
+        351  15E 0001B5C0 gdk_gl_get_glDeleteVertexShaderEXT
+        352  15F 00021A30 gdk_gl_get_glDepthBoundsEXT
+        353  160 0000F230 gdk_gl_get_glDetailTexFuncSGIS
+        354  161 0001BC80 gdk_gl_get_glDisableVariantClientStateEXT
+        355  162 00020E70 gdk_gl_get_glDisableVertexAttribAPPLE
+        356  163 0000BED0 gdk_gl_get_glDisableVertexAttribArrayARB = _gdk_gl_get_glIsBufferARB
+        357  164 0000F6B0 gdk_gl_get_glDrawArraysEXT
+        358  165 00023690 gdk_gl_get_glDrawBufferRegion
+        359  166 0001ED70 gdk_gl_get_glDrawBuffersATI = _gdk_gl_get_glVertexAttrib3hNV
+        360  167 0001E320 gdk_gl_get_glDrawElementArrayAPPLE = _gdk_gl_get_glVertex4hvNV
+        361  168 0001DAC0 gdk_gl_get_glDrawElementArrayATI
+        362  169 00023820 gdk_gl_get_glDrawElementArrayNV
+        363  16A 0001DC30 gdk_gl_get_glDrawMeshArraysSUN
+        364  16B 0001E380 gdk_gl_get_glDrawRangeElementArrayAPPLE
+        365  16C 0001DB20 gdk_gl_get_glDrawRangeElementArrayATI
+        366  16D 00023880 gdk_gl_get_glDrawRangeElementArrayNV
+        367  16E 000056F0 gdk_gl_get_glDrawRangeElements
+        368  16F 00012180 gdk_gl_get_glDrawRangeElementsEXT
+        369  170 0000F700 gdk_gl_get_glEdgeFlagPointerEXT
+        370  171 000178E0 gdk_gl_get_glEdgeFlagPointerListIBM
+        371  172 0001E2C0 gdk_gl_get_glElementPointerAPPLE
+        372  173 0001DA70 gdk_gl_get_glElementPointerATI
+        373  174 000237D0 gdk_gl_get_glElementPointerNV
+        374  175 0001BC10 gdk_gl_get_glEnableVariantClientStateEXT
+        375  176 00020E10 gdk_gl_get_glEnableVertexAttribAPPLE
+        376  177 0000BE70 gdk_gl_get_glEnableVertexAttribArrayARB
+        377  178 0001A860 gdk_gl_get_glEndFragmentShaderATI
+        378  179 0001DE70 gdk_gl_get_glEndOcclusionQueryNV
+        379  17A 00023390 gdk_gl_get_glEndSceneEXT
+        380  17B 0001B4C0 gdk_gl_get_glEndVertexShaderEXT
+        381  17C 00018600 gdk_gl_get_glEvalMapsNV
+        382  17D 00018A10 gdk_gl_get_glExecuteProgramNV
+        383  17E 0001B7F0 gdk_gl_get_glExtractComponentEXT = _gdk_gl_get_glVertexStream1iATI
+        384  17F 00021420 gdk_gl_get_glFacetNormal3b
+        385  180 000215B0 gdk_gl_get_glFacetNormal3bv
+        386  181 00021470 gdk_gl_get_glFacetNormal3d
+        387  182 00021600 gdk_gl_get_glFacetNormal3dv
+        388  183 000214C0 gdk_gl_get_glFacetNormal3f
+        389  184 00021650 gdk_gl_get_glFacetNormal3fv
+        390  185 00021510 gdk_gl_get_glFacetNormal3i
+        391  186 000216A0 gdk_gl_get_glFacetNormal3iv
+        392  187 00021560 gdk_gl_get_glFacetNormal3s
+        393  188 000216F0 gdk_gl_get_glFacetNormal3sv
+        394  189 000166B0 gdk_gl_get_glFinalCombinerInputNV
+        395  18A 00012460 gdk_gl_get_glFinishAsyncSGIX
+        396  18B 0001E720 gdk_gl_get_glFinishFenceAPPLE
+        397  18C 00018190 gdk_gl_get_glFinishFenceNV
+        398  18D 0001E7C0 gdk_gl_get_glFinishObjectAPPLE
+        399  18E 000141B0 gdk_gl_get_glFinishTextureSUNX = _gdk_gl_get_glTexCoord2fColor4fNormal3fVertex3fSUN
+        400  18F 00020570 gdk_gl_get_glFlushPixelDataRangeNV
+        401  190 000107B0 gdk_gl_get_glFlushRasterSGIX
+        402  191 00023480 gdk_gl_get_glFlushStaticDataIBM
+        403  192 0001EBF0 gdk_gl_get_glFlushVertexArrayRangeAPPLE
+        404  193 00016370 gdk_gl_get_glFlushVertexArrayRangeNV
+        405  194 00007C40 gdk_gl_get_glFogCoordPointer
+        406  195 000136D0 gdk_gl_get_glFogCoordPointerEXT
+        407  196 00017940 gdk_gl_get_glFogCoordPointerListIBM
+        408  197 00007BA0 gdk_gl_get_glFogCoordd
+        409  198 00013630 gdk_gl_get_glFogCoorddEXT
+        410  199 00007BF0 gdk_gl_get_glFogCoorddv
+        411  19A 00013680 gdk_gl_get_glFogCoorddvEXT
+        412  19B 00007B00 gdk_gl_get_glFogCoordf
+        413  19C 00013590 gdk_gl_get_glFogCoordfEXT
+        414  19D 00007B50 gdk_gl_get_glFogCoordfv
+        415  19E 000135E0 gdk_gl_get_glFogCoordfvEXT
+        416  19F 0001FA50 gdk_gl_get_glFogCoordhNV
+        417  1A0 0001FAA0 gdk_gl_get_glFogCoordhvNV
+        418  1A1 00010880 gdk_gl_get_glFogFuncSGIS
+        419  1A2 00022000 gdk_gl_get_glFragmentColorMaterialEXT
+        420  1A3 000118D0 gdk_gl_get_glFragmentColorMaterialSGIX
+        421  1A4 00021B20 gdk_gl_get_glFragmentLightModelfEXT
+        422  1A5 00011A70 gdk_gl_get_glFragmentLightModelfSGIX
+        423  1A6 00021B80 gdk_gl_get_glFragmentLightModelfvEXT = _gdk_gl_get_glMultiTexCoord4dvEXT
+        424  1A7 00011AD0 gdk_gl_get_glFragmentLightModelfvSGIX = _gdk_gl_get_GL_EXT_pixel_transform
+        425  1A8 00021BE0 gdk_gl_get_glFragmentLightModeliEXT
+        426  1A9 00011B30 gdk_gl_get_glFragmentLightModeliSGIX
+        427  1AA 00021C40 gdk_gl_get_glFragmentLightModelivEXT
+        428  1AB 00011B90 gdk_gl_get_glFragmentLightModelivSGIX
+        429  1AC 00021C90 gdk_gl_get_glFragmentLightfEXT
+        430  1AD 00011920 gdk_gl_get_glFragmentLightfSGIX
+        431  1AE 00021CE0 gdk_gl_get_glFragmentLightfvEXT
+        432  1AF 00011970 gdk_gl_get_glFragmentLightfvSGIX
+        433  1B0 00021D30 gdk_gl_get_glFragmentLightiEXT
+        434  1B1 000119C0 gdk_gl_get_glFragmentLightiSGIX
+        435  1B2 00021D80 gdk_gl_get_glFragmentLightivEXT
+        436  1B3 00011A10 gdk_gl_get_glFragmentLightivSGIX
+        437  1B4 00021E90 gdk_gl_get_glFragmentMaterialfEXT
+        438  1B5 00011BF0 gdk_gl_get_glFragmentMaterialfSGIX
+        439  1B6 00021EF0 gdk_gl_get_glFragmentMaterialfvEXT
+        440  1B7 00011C50 gdk_gl_get_glFragmentMaterialfvSGIX = _gdk_gl_get_glSecondaryColor3dEXT
+        441  1B8 00021F40 gdk_gl_get_glFragmentMaterialiEXT
+        442  1B9 00011CB0 gdk_gl_get_glFragmentMaterialiSGIX
+        443  1BA 00021FA0 gdk_gl_get_glFragmentMaterialivEXT
+        444  1BB 00011D10 gdk_gl_get_glFragmentMaterialivSGIX
+        445  1BC 000102D0 gdk_gl_get_glFrameZoomSGIX
+        446  1BD 0001B050 gdk_gl_get_glFreeObjectBufferATI
+        447  1BE 00012500 gdk_gl_get_glGenAsyncMarkersSGIX
+        448  1BF 0000CE80 gdk_gl_get_glGenBuffersARB
+        449  1C0 0001E590 gdk_gl_get_glGenFencesAPPLE
+        450  1C1 00018050 gdk_gl_get_glGenFencesNV
+        451  1C2 0001A6F0 gdk_gl_get_glGenFragmentShadersATI
+        452  1C3 0001DD10 gdk_gl_get_glGenOcclusionQueriesNV
+        453  1C4 0000C010 gdk_gl_get_glGenProgramsARB = _gdk_gl_get_glMapBufferARB
+        454  1C5 00018A60 gdk_gl_get_glGenProgramsNV
+        455  1C6 0001B840 gdk_gl_get_glGenSymbolsEXT = _gdk_gl_get_glVertexStream1ivATI
+        456  1C7 0000F020 gdk_gl_get_glGenTexturesEXT
+        457  1C8 0001EA00 gdk_gl_get_glGenVertexArraysAPPLE = _gdk_gl_get_glMultiTexCoord4hvNV
+        458  1C9 0001B560 gdk_gl_get_glGenVertexShadersEXT
+        459  1CA 0001B0F0 gdk_gl_get_glGetArrayObjectfvATI
+        460  1CB 0001B140 gdk_gl_get_glGetArrayObjectivATI
+        461  1CC 0000D0C0 gdk_gl_get_glGetBufferParameterivARB
+        462  1CD 0000D110 gdk_gl_get_glGetBufferPointervARB
+        463  1CE 0000CFC0 gdk_gl_get_glGetBufferSubDataARB = _gdk_gl_get_glConvolutionFilter1DEXT
+        464  1CF 000058A0 gdk_gl_get_glGetColorTable
+        465  1D0 00010FA0 gdk_gl_get_glGetColorTableEXT
+        466  1D1 00005900 gdk_gl_get_glGetColorTableParameterfv = _gdk_gl_get_glMultiTexCoord1i
+        467  1D2 00011060 gdk_gl_get_glGetColorTableParameterfvEXT
+        468  1D3 0000E800 gdk_gl_get_glGetColorTableParameterfvSGI
+        469  1D4 00005960 gdk_gl_get_glGetColorTableParameteriv
+        470  1D5 00011000 gdk_gl_get_glGetColorTableParameterivEXT
+        471  1D6 0000E860 gdk_gl_get_glGetColorTableParameterivSGI
+        472  1D7 0000E7A0 gdk_gl_get_glGetColorTableSGI = _gdk_gl_get_glIndexPointerEXT
+        473  1D8 00016720 gdk_gl_get_glGetCombinerInputParameterfvNV = _gdk_gl_get_glMultiModeDrawElementsIBM
+        474  1D9 00016780 gdk_gl_get_glGetCombinerInputParameterivNV = _gdk_gl_get_GL_IBM_multimode_draw_arrays
+        475  1DA 000167F0 gdk_gl_get_glGetCombinerOutputParameterfvNV
+        476  1DB 00016870 gdk_gl_get_glGetCombinerOutputParameterivNV
+        477  1DC 00018820 gdk_gl_get_glGetCombinerStageParameterfvNV
+        478  1DD 00007570 gdk_gl_get_glGetCompressedTexImage
+        479  1DE 0000A1B0 gdk_gl_get_glGetCompressedTexImageARB
+        480  1DF 00005D30 gdk_gl_get_glGetConvolutionFilter
+        481  1E0 0000E2C0 gdk_gl_get_glGetConvolutionFilterEXT
+        482  1E1 00005D90 gdk_gl_get_glGetConvolutionParameterfv
+        483  1E2 0000E320 gdk_gl_get_glGetConvolutionParameterfvEXT
+        484  1E3 00005DF0 gdk_gl_get_glGetConvolutionParameteriv
+        485  1E4 0000E380 gdk_gl_get_glGetConvolutionParameterivEXT
+        486  1E5 0000F280 gdk_gl_get_glGetDetailTexFuncSGIS
+        487  1E6 00018140 gdk_gl_get_glGetFenceivNV
+        488  1E7 000168F0 gdk_gl_get_glGetFinalCombinerInputParameterfvNV
+        489  1E8 00016970 gdk_gl_get_glGetFinalCombinerInputParameterivNV
+        490  1E9 000108D0 gdk_gl_get_glGetFogFuncSGIS = _gdk_gl_get_glFragmentColorMaterialSGIX
+        491  1EA 00021DE0 gdk_gl_get_glGetFragmentLightfvEXT
+        492  1EB 00011D70 gdk_gl_get_glGetFragmentLightfvSGIX
+        493  1EC 00021E40 gdk_gl_get_glGetFragmentLightivEXT
+        494  1ED 00011DD0 gdk_gl_get_glGetFragmentLightivSGIX
+        495  1EE 00022060 gdk_gl_get_glGetFragmentMaterialfvEXT
+        496  1EF 00011E30 gdk_gl_get_glGetFragmentMaterialfvSGIX = _gdk_gl_get_glSecondaryColor3sEXT
+        497  1F0 000220C0 gdk_gl_get_glGetFragmentMaterialivEXT
+        498  1F1 00011E90 gdk_gl_get_glGetFragmentMaterialivSGIX
+        499  1F2 00005EE0 gdk_gl_get_glGetHistogram
+        500  1F3 0000DAF0 gdk_gl_get_glGetHistogramEXT
+        501  1F4 00005F40 gdk_gl_get_glGetHistogramParameterfv = _gdk_gl_get_glMultiTexCoord4d
+        502  1F5 0000DB50 gdk_gl_get_glGetHistogramParameterfvEXT
+        503  1F6 00005FA0 gdk_gl_get_glGetHistogramParameteriv
+        504  1F7 0000DBB0 gdk_gl_get_glGetHistogramParameterivEXT
+        505  1F8 00010BF0 gdk_gl_get_glGetImageTransformParameterfvHP = _gdk_gl_get_glFragmentMaterialfSGIX
+        506  1F9 00010B70 gdk_gl_get_glGetImageTransformParameterivHP
+        507  1FA 0000FFE0 gdk_gl_get_glGetInstrumentsSGIX
+        508  1FB 0001C070 gdk_gl_get_glGetInvariantBooleanvEXT
+        509  1FC 0001C130 gdk_gl_get_glGetInvariantFloatvEXT
+        510  1FD 0001C0D0 gdk_gl_get_glGetInvariantIntegervEXT
+        511  1FE 000111A0 gdk_gl_get_glGetListParameterfvSGIX
+        512  1FF 00011200 gdk_gl_get_glGetListParameterivSGIX
+        513  200 0001C190 gdk_gl_get_glGetLocalConstantBooleanvEXT
+        514  201 0001C250 gdk_gl_get_glGetLocalConstantFloatvEXT
+        515  202 0001C1F0 gdk_gl_get_glGetLocalConstantIntegervEXT = _gdk_gl_get_glNormalStream3sATI
+        516  203 000185B0 gdk_gl_get_glGetMapAttribParameterfvNV
+        517  204 00018550 gdk_gl_get_glGetMapAttribParameterivNV
+        518  205 00018450 gdk_gl_get_glGetMapControlPointsNV = _gdk_gl_get_glVertexAttrib2fvNV
+        519  206 000184F0 gdk_gl_get_glGetMapParameterfvNV = _gdk_gl_get_glVertexAttrib2svNV
+        520  207 000184A0 gdk_gl_get_glGetMapParameterivNV = _gdk_gl_get_glVertexAttrib2sNV
+        521  208 00005FF0 gdk_gl_get_glGetMinmax
+        522  209 0000DC00 gdk_gl_get_glGetMinmaxEXT
+        523  20A 00006040 gdk_gl_get_glGetMinmaxParameterfv
+        524  20B 0000DC60 gdk_gl_get_glGetMinmaxParameterfvEXT
+        525  20C 00006090 gdk_gl_get_glGetMinmaxParameteriv
+        526  20D 0000DCC0 gdk_gl_get_glGetMinmaxParameterivEXT
+        527  20E 0001AFB0 gdk_gl_get_glGetObjectBufferfvATI = _gdk_gl_get_glGetVariantFloatvEXT
+        528  20F 0001B000 gdk_gl_get_glGetObjectBufferivATI
+        529  210 0001DED0 gdk_gl_get_glGetOcclusionQueryivNV
+        530  211 0001DF30 gdk_gl_get_glGetOcclusionQueryuivNV
+        531  212 0000ECA0 gdk_gl_get_glGetPixelTexGenParameterfvSGIS
+        532  213 0000EC40 gdk_gl_get_glGetPixelTexGenParameterivSGIS
+        533  214 0000F750 gdk_gl_get_glGetPointervEXT
+        534  215 0000C370 gdk_gl_get_glGetProgramEnvParameterdvARB
+        535  216 0000C3D0 gdk_gl_get_glGetProgramEnvParameterfvARB = _gdk_gl_get_glPolygonOffsetEXT
+        536  217 0000C440 gdk_gl_get_glGetProgramLocalParameterdvARB
+        537  218 0000C4A0 gdk_gl_get_glGetProgramLocalParameterfvARB = _gdk_gl_get_glTexImage3DEXT
+        538  219 0001F040 gdk_gl_get_glGetProgramNamedParameterdvNV
+        539  21A 0001EFE0 gdk_gl_get_glGetProgramNamedParameterfvNV
+        540  21B 00018AC0 gdk_gl_get_glGetProgramParameterdvNV
+        541  21C 00018B20 gdk_gl_get_glGetProgramParameterfvNV
+        542  21D 0000C540 gdk_gl_get_glGetProgramStringARB = _gdk_gl_get_GL_EXT_texture3D
+        543  21E 00018BC0 gdk_gl_get_glGetProgramStringNV
+        544  21F 0000C4F0 gdk_gl_get_glGetProgramivARB = _gdk_gl_get_glTexSubImage3DEXT
+        545  220 00018B70 gdk_gl_get_glGetProgramivNV
+        546  221 00005E40 gdk_gl_get_glGetSeparableFilter
+        547  222 0000E3E0 gdk_gl_get_glGetSeparableFilterEXT
+        548  223 0000F3D0 gdk_gl_get_glGetSharpenTexFuncSGIS
+        549  224 0001A5C0 gdk_gl_get_glGetTexBumpParameterfvATI = _gdk_gl_get_glDeleteVertexShaderEXT
+        550  225 0001A560 gdk_gl_get_glGetTexBumpParameterivATI = _gdk_gl_get_glGenVertexShadersEXT
+        551  226 0000D5E0 gdk_gl_get_glGetTexFilterFuncSGIS
+        552  227 00020D20 gdk_gl_get_glGetTexParameterPointervAPPLE
+        553  228 00018C10 gdk_gl_get_glGetTrackMatrixivNV
+        554  229 0001B200 gdk_gl_get_glGetVariantArrayObjectfvATI
+        555  22A 0001B260 gdk_gl_get_glGetVariantArrayObjectivATI
+        556  22B 0001BF00 gdk_gl_get_glGetVariantBooleanvEXT
+        557  22C 0001BFB0 gdk_gl_get_glGetVariantFloatvEXT
+        558  22D 0001BF60 gdk_gl_get_glGetVariantIntegervEXT
+        559  22E 0001C010 gdk_gl_get_glGetVariantPointervEXT = _gdk_gl_get_glVertexStream4fATI
+        560  22F 00020AF0 gdk_gl_get_glGetVertexAttribArrayObjectfvATI
+        561  230 00020B70 gdk_gl_get_glGetVertexAttribArrayObjectivATI
+        562  231 0000C690 gdk_gl_get_glGetVertexAttribPointervARB = _gdk_gl_get_GL_SGIS_texture_filter4
+        563  232 00018D60 gdk_gl_get_glGetVertexAttribPointervNV = _gdk_gl_get_glVertexAttribs4ubvNV
+        564  233 0000C590 gdk_gl_get_glGetVertexAttribdvARB
+        565  234 00018C60 gdk_gl_get_glGetVertexAttribdvNV
+        566  235 0000C5E0 gdk_gl_get_glGetVertexAttribfvARB = _gdk_gl_get_glGetTexFilterFuncSGIS
+        567  236 00018CB0 gdk_gl_get_glGetVertexAttribfvNV
+        568  237 0000C630 gdk_gl_get_glGetVertexAttribivARB = _gdk_gl_get_glTexFilterFuncSGIS
+        569  238 00018D00 gdk_gl_get_glGetVertexAttribivNV
+        570  239 00014290 gdk_gl_get_glGlobalAlphaFactorbSUN
+        571  23A 00014410 gdk_gl_get_glGlobalAlphaFactordSUN
+        572  23B 000143B0 gdk_gl_get_glGlobalAlphaFactorfSUN
+        573  23C 00014350 gdk_gl_get_glGlobalAlphaFactoriSUN
+        574  23D 000142F0 gdk_gl_get_glGlobalAlphaFactorsSUN
+        575  23E 00014470 gdk_gl_get_glGlobalAlphaFactorubSUN = _gdk_gl_get_glReplacementCodeuiColor4ubVertex3fSUN
+        576  23F 00014530 gdk_gl_get_glGlobalAlphaFactoruiSUN
+        577  240 000144D0 gdk_gl_get_glGlobalAlphaFactorusSUN
+        578  241 00010E80 gdk_gl_get_glHintPGI
+        579  242 000060E0 gdk_gl_get_glHistogram
+        580  243 0000DD10 gdk_gl_get_glHistogramEXT
+        581  244 00017F20 gdk_gl_get_glIglooInterfaceSGIX
+        582  245 00010A30 gdk_gl_get_glImageTransformParameterfHP
+        583  246 00010AF0 gdk_gl_get_glImageTransformParameterfvHP
+        584  247 000109D0 gdk_gl_get_glImageTransformParameteriHP
+        585  248 00010A90 gdk_gl_get_glImageTransformParameterivHP
+        586  249 00011570 gdk_gl_get_glIndexFuncEXT
+        587  24A 000114A0 gdk_gl_get_glIndexMaterialEXT
+        588  24B 0000F7A0 gdk_gl_get_glIndexPointerEXT
+        589  24C 00017990 gdk_gl_get_glIndexPointerListIBM
+        590  24D 0001B7A0 gdk_gl_get_glInsertComponentEXT = _gdk_gl_get_glVertexStream1svATI
+        591  24E 00010040 gdk_gl_get_glInstrumentsBufferSGIX
+        592  24F 00022DD0 gdk_gl_get_glInterleavedTextureCoordSetsEXT = _gdk_gl_get_glMultiTexCoord2dSGIS
+        593  250 000125B0 gdk_gl_get_glIsAsyncMarkerSGIX
+        594  251 0000CED0 gdk_gl_get_glIsBufferARB
+        595  252 0001E680 gdk_gl_get_glIsFenceAPPLE
+        596  253 000180A0 gdk_gl_get_glIsFenceNV
+        597  254 0001AF00 gdk_gl_get_glIsObjectBufferATI = _gdk_gl_get_glGetVariantBooleanvEXT
+        598  255 0001DDC0 gdk_gl_get_glIsOcclusionQueryNV = _gdk_gl_get_GL_ATI_draw_buffers
+        599  256 0000C6E0 gdk_gl_get_glIsProgramARB
+        600  257 00018DB0 gdk_gl_get_glIsProgramNV = _gdk_gl_get_GL_NV_vertex_program
+        601  258 0000F070 gdk_gl_get_glIsTextureEXT
+        602  259 0001BEA0 gdk_gl_get_glIsVariantEnabledEXT
+        603  25A 0001EA50 gdk_gl_get_glIsVertexArrayAPPLE = _gdk_gl_get_glFogCoordhNV
+        604  25B 00020ED0 gdk_gl_get_glIsVertexAttribEnabledAPPLE
+        605  25C 00022110 gdk_gl_get_glLightEnviEXT
+        606  25D 00011EE0 gdk_gl_get_glLightEnviSGIX
+        607  25E 00011250 gdk_gl_get_glListParameterfSGIX
+        608  25F 000112A0 gdk_gl_get_glListParameterfvSGIX
+        609  260 000112F0 gdk_gl_get_glListParameteriSGIX
+        610  261 00011340 gdk_gl_get_glListParameterivSGIX
+        611  262 000105B0 gdk_gl_get_glLoadIdentityDeformationMapSGIX
+        612  263 00018E00 gdk_gl_get_glLoadProgramNV
+        613  264 00007210 gdk_gl_get_glLoadTransposeMatrixd
+        614  265 00009CA0 gdk_gl_get_glLoadTransposeMatrixdARB = _gdk_gl_get_glWindowPos2fvARB
+        615  266 000071C0 gdk_gl_get_glLoadTransposeMatrixf
+        616  267 00009C40 gdk_gl_get_glLoadTransposeMatrixfARB
+        617  268 00011640 gdk_gl_get_glLockArraysEXT
+        618  269 0000D010 gdk_gl_get_glMapBufferARB
+        619  26A 00018350 gdk_gl_get_glMapControlPointsNV
+        620  26B 000207C0 gdk_gl_get_glMapObjectBufferATI
+        621  26C 000183F0 gdk_gl_get_glMapParameterfvNV
+        622  26D 000183A0 gdk_gl_get_glMapParameterivNV
+        623  26E 00020F30 gdk_gl_get_glMapVertexAttrib1dAPPLE
+        624  26F 00020F90 gdk_gl_get_glMapVertexAttrib1fAPPLE
+        625  270 00020FF0 gdk_gl_get_glMapVertexAttrib2dAPPLE
+        626  271 00021050 gdk_gl_get_glMapVertexAttrib2fAPPLE
+        627  272 0000AA70 gdk_gl_get_glMatrixIndexPointerARB
+        628  273 0000A970 gdk_gl_get_glMatrixIndexubvARB
+        629  274 0000AA10 gdk_gl_get_glMatrixIndexuivARB
+        630  275 0000A9C0 gdk_gl_get_glMatrixIndexusvARB
+        631  276 00006130 gdk_gl_get_glMinmax
+        632  277 0000DD60 gdk_gl_get_glMinmaxEXT
+        633  278 000072B0 gdk_gl_get_glMultTransposeMatrixd
+        634  279 00009D60 gdk_gl_get_glMultTransposeMatrixdARB
+        635  27A 00007260 gdk_gl_get_glMultTransposeMatrixf
+        636  27B 00009D00 gdk_gl_get_glMultTransposeMatrixfARB
+        637  27C 00007C90 gdk_gl_get_glMultiDrawArrays
+        638  27D 00013440 gdk_gl_get_glMultiDrawArraysEXT
+        639  27E 00024B30 gdk_gl_get_glMultiDrawArraysSUN
+        640  27F 0001E3E0 gdk_gl_get_glMultiDrawElementArrayAPPLE
+        641  280 000238E0 gdk_gl_get_glMultiDrawElementArrayNV
+        642  281 00007CE0 gdk_gl_get_glMultiDrawElements
+        643  282 00013490 gdk_gl_get_glMultiDrawElementsEXT
+        644  283 00024B80 gdk_gl_get_glMultiDrawElementsSUN
+        645  284 0001E450 gdk_gl_get_glMultiDrawRangeElementArrayAPPLE
+        646  285 00023940 gdk_gl_get_glMultiDrawRangeElementArrayNV
+        647  286 000176C0 gdk_gl_get_glMultiModeDrawArraysIBM
+        648  287 00017720 gdk_gl_get_glMultiModeDrawElementsIBM
+        649  288 000067C0 gdk_gl_get_glMultiTexCoord1d
+        650  289 00008E50 gdk_gl_get_glMultiTexCoord1dARB
+        651  28A 000223B0 gdk_gl_get_glMultiTexCoord1dEXT
+        652  28B 00023B50 gdk_gl_get_glMultiTexCoord1dSGIS
+        653  28C 00006810 gdk_gl_get_glMultiTexCoord1dv
+        654  28D 00008EA0 gdk_gl_get_glMultiTexCoord1dvARB
+        655  28E 00022400 gdk_gl_get_glMultiTexCoord1dvEXT
+        656  28F 00023BA0 gdk_gl_get_glMultiTexCoord1dvSGIS
+        657  290 00006860 gdk_gl_get_glMultiTexCoord1f
+        658  291 00008EF0 gdk_gl_get_glMultiTexCoord1fARB
+        659  292 00022450 gdk_gl_get_glMultiTexCoord1fEXT
+        660  293 00023BF0 gdk_gl_get_glMultiTexCoord1fSGIS
+        661  294 000068B0 gdk_gl_get_glMultiTexCoord1fv
+        662  295 00008F40 gdk_gl_get_glMultiTexCoord1fvARB
+        663  296 000224A0 gdk_gl_get_glMultiTexCoord1fvEXT
+        664  297 00023C40 gdk_gl_get_glMultiTexCoord1fvSGIS
+        665  298 0001F7D0 gdk_gl_get_glMultiTexCoord1hNV
+        666  299 0001F820 gdk_gl_get_glMultiTexCoord1hvNV
+        667  29A 00006900 gdk_gl_get_glMultiTexCoord1i
+        668  29B 00008F90 gdk_gl_get_glMultiTexCoord1iARB
+        669  29C 000224F0 gdk_gl_get_glMultiTexCoord1iEXT
+        670  29D 00023C90 gdk_gl_get_glMultiTexCoord1iSGIS
+        671  29E 00006950 gdk_gl_get_glMultiTexCoord1iv
+        672  29F 00008FE0 gdk_gl_get_glMultiTexCoord1ivARB
+        673  2A0 00022540 gdk_gl_get_glMultiTexCoord1ivEXT
+        674  2A1 00023CE0 gdk_gl_get_glMultiTexCoord1ivSGIS
+        675  2A2 000069A0 gdk_gl_get_glMultiTexCoord1s
+        676  2A3 00009030 gdk_gl_get_glMultiTexCoord1sARB = _gdk_gl_get_glCompressedTexImage1DARB
+        677  2A4 00022590 gdk_gl_get_glMultiTexCoord1sEXT
+        678  2A5 00023D30 gdk_gl_get_glMultiTexCoord1sSGIS
+        679  2A6 000069F0 gdk_gl_get_glMultiTexCoord1sv
+        680  2A7 00009080 gdk_gl_get_glMultiTexCoord1svARB
+        681  2A8 000225E0 gdk_gl_get_glMultiTexCoord1svEXT
+        682  2A9 00023D80 gdk_gl_get_glMultiTexCoord1svSGIS
+        683  2AA 00006A40 gdk_gl_get_glMultiTexCoord2d
+        684  2AB 000090D0 gdk_gl_get_glMultiTexCoord2dARB
+        685  2AC 00022630 gdk_gl_get_glMultiTexCoord2dEXT
+        686  2AD 00023DD0 gdk_gl_get_glMultiTexCoord2dSGIS
+        687  2AE 00006A90 gdk_gl_get_glMultiTexCoord2dv
+        688  2AF 00009120 gdk_gl_get_glMultiTexCoord2dvARB
+        689  2B0 00022680 gdk_gl_get_glMultiTexCoord2dvEXT
+        690  2B1 00023E20 gdk_gl_get_glMultiTexCoord2dvSGIS
+        691  2B2 00006AE0 gdk_gl_get_glMultiTexCoord2f
+        692  2B3 00009170 gdk_gl_get_glMultiTexCoord2fARB
+        693  2B4 000226D0 gdk_gl_get_glMultiTexCoord2fEXT
+        694  2B5 00023E70 gdk_gl_get_glMultiTexCoord2fSGIS
+        695  2B6 00006B30 gdk_gl_get_glMultiTexCoord2fv
+        696  2B7 000091C0 gdk_gl_get_glMultiTexCoord2fvARB
+        697  2B8 00022720 gdk_gl_get_glMultiTexCoord2fvEXT
+        698  2B9 00023EC0 gdk_gl_get_glMultiTexCoord2fvSGIS
+        699  2BA 0001F870 gdk_gl_get_glMultiTexCoord2hNV = _gdk_gl_get_GL_ATI_map_object_buffer
+        700  2BB 0001F8C0 gdk_gl_get_glMultiTexCoord2hvNV
+        701  2BC 00006B80 gdk_gl_get_glMultiTexCoord2i
+        702  2BD 00009210 gdk_gl_get_glMultiTexCoord2iARB = _gdk_gl_get_GL_ARB_texture_compression
+        703  2BE 00022770 gdk_gl_get_glMultiTexCoord2iEXT
+        704  2BF 00023F10 gdk_gl_get_glMultiTexCoord2iSGIS
+        705  2C0 00006BD0 gdk_gl_get_glMultiTexCoord2iv
+        706  2C1 00009260 gdk_gl_get_glMultiTexCoord2ivARB
+        707  2C2 000227C0 gdk_gl_get_glMultiTexCoord2ivEXT
+        708  2C3 00023F60 gdk_gl_get_glMultiTexCoord2ivSGIS
+        709  2C4 00006C20 gdk_gl_get_glMultiTexCoord2s
+        710  2C5 000092B0 gdk_gl_get_glMultiTexCoord2sARB
+        711  2C6 00022810 gdk_gl_get_glMultiTexCoord2sEXT
+        712  2C7 00023FB0 gdk_gl_get_glMultiTexCoord2sSGIS
+        713  2C8 00006C70 gdk_gl_get_glMultiTexCoord2sv
+        714  2C9 00009300 gdk_gl_get_glMultiTexCoord2svARB
+        715  2CA 00022860 gdk_gl_get_glMultiTexCoord2svEXT
+        716  2CB 00024000 gdk_gl_get_glMultiTexCoord2svSGIS
+        717  2CC 00006CC0 gdk_gl_get_glMultiTexCoord3d
+        718  2CD 00009350 gdk_gl_get_glMultiTexCoord3dARB
+        719  2CE 000228B0 gdk_gl_get_glMultiTexCoord3dEXT
+        720  2CF 00024050 gdk_gl_get_glMultiTexCoord3dSGIS
+        721  2D0 00006D10 gdk_gl_get_glMultiTexCoord3dv
+        722  2D1 000093A0 gdk_gl_get_glMultiTexCoord3dvARB
+        723  2D2 00022900 gdk_gl_get_glMultiTexCoord3dvEXT
+        724  2D3 000240A0 gdk_gl_get_glMultiTexCoord3dvSGIS
+        725  2D4 00006D60 gdk_gl_get_glMultiTexCoord3f
+        726  2D5 000093F0 gdk_gl_get_glMultiTexCoord3fARB
+        727  2D6 00022950 gdk_gl_get_glMultiTexCoord3fEXT
+        728  2D7 000240F0 gdk_gl_get_glMultiTexCoord3fSGIS
+        729  2D8 00006DB0 gdk_gl_get_glMultiTexCoord3fv
+        730  2D9 00009440 gdk_gl_get_glMultiTexCoord3fvARB
+        731  2DA 000229A0 gdk_gl_get_glMultiTexCoord3fvEXT
+        732  2DB 00024140 gdk_gl_get_glMultiTexCoord3fvSGIS
+        733  2DC 0001F910 gdk_gl_get_glMultiTexCoord3hNV = _gdk_gl_get_glStencilOpSeparateATI
+        734  2DD 0001F960 gdk_gl_get_glMultiTexCoord3hvNV
+        735  2DE 00006E00 gdk_gl_get_glMultiTexCoord3i
+        736  2DF 00009490 gdk_gl_get_glMultiTexCoord3iARB
+        737  2E0 000229F0 gdk_gl_get_glMultiTexCoord3iEXT
+        738  2E1 00024190 gdk_gl_get_glMultiTexCoord3iSGIS
+        739  2E2 00006E50 gdk_gl_get_glMultiTexCoord3iv
+        740  2E3 000094E0 gdk_gl_get_glMultiTexCoord3ivARB
+        741  2E4 00022A40 gdk_gl_get_glMultiTexCoord3ivEXT
+        742  2E5 000241E0 gdk_gl_get_glMultiTexCoord3ivSGIS
+        743  2E6 00006EA0 gdk_gl_get_glMultiTexCoord3s
+        744  2E7 00009530 gdk_gl_get_glMultiTexCoord3sARB
+        745  2E8 00022A90 gdk_gl_get_glMultiTexCoord3sEXT
+        746  2E9 00024230 gdk_gl_get_glMultiTexCoord3sSGIS
+        747  2EA 00006EF0 gdk_gl_get_glMultiTexCoord3sv
+        748  2EB 00009580 gdk_gl_get_glMultiTexCoord3svARB
+        749  2EC 00022AE0 gdk_gl_get_glMultiTexCoord3svEXT
+        750  2ED 00024280 gdk_gl_get_glMultiTexCoord3svSGIS
+        751  2EE 00006F40 gdk_gl_get_glMultiTexCoord4d
+        752  2EF 000095D0 gdk_gl_get_glMultiTexCoord4dARB
+        753  2F0 00022B30 gdk_gl_get_glMultiTexCoord4dEXT
+        754  2F1 000242D0 gdk_gl_get_glMultiTexCoord4dSGIS
+        755  2F2 00006F90 gdk_gl_get_glMultiTexCoord4dv
+        756  2F3 00009620 gdk_gl_get_glMultiTexCoord4dvARB
+        757  2F4 00022B80 gdk_gl_get_glMultiTexCoord4dvEXT
+        758  2F5 00024320 gdk_gl_get_glMultiTexCoord4dvSGIS
+        759  2F6 00006FE0 gdk_gl_get_glMultiTexCoord4f
+        760  2F7 00009670 gdk_gl_get_glMultiTexCoord4fARB
+        761  2F8 00022BD0 gdk_gl_get_glMultiTexCoord4fEXT
+        762  2F9 00024370 gdk_gl_get_glMultiTexCoord4fSGIS
+        763  2FA 00007030 gdk_gl_get_glMultiTexCoord4fv
+        764  2FB 000096C0 gdk_gl_get_glMultiTexCoord4fvARB
+        765  2FC 00022C20 gdk_gl_get_glMultiTexCoord4fvEXT
+        766  2FD 000243C0 gdk_gl_get_glMultiTexCoord4fvSGIS
+        767  2FE 0001F9B0 gdk_gl_get_glMultiTexCoord4hNV
+        768  2FF 0001FA00 gdk_gl_get_glMultiTexCoord4hvNV
+        769  300 00007080 gdk_gl_get_glMultiTexCoord4i
+        770  301 00009710 gdk_gl_get_glMultiTexCoord4iARB
+        771  302 00022C70 gdk_gl_get_glMultiTexCoord4iEXT
+        772  303 00024410 gdk_gl_get_glMultiTexCoord4iSGIS
+        773  304 000070D0 gdk_gl_get_glMultiTexCoord4iv
+        774  305 00009760 gdk_gl_get_glMultiTexCoord4ivARB
+        775  306 00022CC0 gdk_gl_get_glMultiTexCoord4ivEXT
+        776  307 00024460 gdk_gl_get_glMultiTexCoord4ivSGIS
+        777  308 00007120 gdk_gl_get_glMultiTexCoord4s
+        778  309 000097B0 gdk_gl_get_glMultiTexCoord4sARB
+        779  30A 00022D10 gdk_gl_get_glMultiTexCoord4sEXT
+        780  30B 000244B0 gdk_gl_get_glMultiTexCoord4sSGIS
+        781  30C 00007170 gdk_gl_get_glMultiTexCoord4sv
+        782  30D 00009800 gdk_gl_get_glMultiTexCoord4svARB
+        783  30E 00022D60 gdk_gl_get_glMultiTexCoord4svEXT
+        784  30F 00024500 gdk_gl_get_glMultiTexCoord4svSGIS
+        785  310 00024560 gdk_gl_get_glMultiTexCoordPointerSGIS
+        786  311 000235A0 gdk_gl_get_glNewBufferRegion
+        787  312 0001AEB0 gdk_gl_get_glNewObjectBufferATI
+        788  313 00014C30 gdk_gl_get_glNormal3fVertex3fSUN
+        789  314 00014C80 gdk_gl_get_glNormal3fVertex3fvSUN
+        790  315 0001F370 gdk_gl_get_glNormal3hNV
+        791  316 0001F3C0 gdk_gl_get_glNormal3hvNV
+        792  317 0000F7F0 gdk_gl_get_glNormalPointerEXT
+        793  318 000179E0 gdk_gl_get_glNormalPointerListIBM
+        794  319 00012760 gdk_gl_get_glNormalPointervINTEL
+        795  31A 0001D150 gdk_gl_get_glNormalStream3bATI
+        796  31B 0001D1A0 gdk_gl_get_glNormalStream3bvATI
+        797  31C 0001D3D0 gdk_gl_get_glNormalStream3dATI
+        798  31D 0001D420 gdk_gl_get_glNormalStream3dvATI
+        799  31E 0001D330 gdk_gl_get_glNormalStream3fATI
+        800  31F 0001D380 gdk_gl_get_glNormalStream3fvATI = _gdk_gl_get_glDrawRangeElementArrayAPPLE
+        801  320 0001D290 gdk_gl_get_glNormalStream3iATI
+        802  321 0001D2E0 gdk_gl_get_glNormalStream3ivATI
+        803  322 0001D1F0 gdk_gl_get_glNormalStream3sATI
+        804  323 0001D240 gdk_gl_get_glNormalStream3svATI = _gdk_gl_get_GL_EXT_stencil_two_side
+        805  324 0001ADC0 gdk_gl_get_glPNTrianglesfATI
+        806  325 00021330 gdk_gl_get_glPNTrianglesfATIX
+        807  326 0001AD70 gdk_gl_get_glPNTrianglesiATI
+        808  327 000212E0 gdk_gl_get_glPNTrianglesiATIX
+        809  328 0001A8B0 gdk_gl_get_glPassTexCoordATI
+        810  329 00020510 gdk_gl_get_glPixelDataRangeNV = _gdk_gl_get_glFacetNormal3i
+        811  32A 0000EB70 gdk_gl_get_glPixelTexGenParameterfSGIS = _gdk_gl_get_glSpriteParameterfvSGIX
+        812  32B 0000EBD0 gdk_gl_get_glPixelTexGenParameterfvSGIS
+        813  32C 0000EAB0 gdk_gl_get_glPixelTexGenParameteriSGIS
+        814  32D 0000EB10 gdk_gl_get_glPixelTexGenParameterivSGIS = _gdk_gl_get_glSpriteParameterfSGIX
+        815  32E 0000E9D0 gdk_gl_get_glPixelTexGenSGIX
+        816  32F 000129B0 gdk_gl_get_glPixelTransformParameterfEXT
+        817  330 00012A80 gdk_gl_get_glPixelTransformParameterfvEXT
+        818  331 00012950 gdk_gl_get_glPixelTransformParameteriEXT = _gdk_gl_get_glTangent3fEXT
+        819  332 00012A20 gdk_gl_get_glPixelTransformParameterivEXT
+        820  333 00007D30 gdk_gl_get_glPointParameterf
+        821  334 0000A330 gdk_gl_get_glPointParameterfARB
+        822  335 0000FD40 gdk_gl_get_glPointParameterfEXT
+        823  336 0000FE90 gdk_gl_get_glPointParameterfSGIS
+        824  337 00007D80 gdk_gl_get_glPointParameterfv
+        825  338 0000A380 gdk_gl_get_glPointParameterfvARB
+        826  339 0000FD90 gdk_gl_get_glPointParameterfvEXT
+        827  33A 0000FEE0 gdk_gl_get_glPointParameterfvSGIS
+        828  33B 00007DD0 gdk_gl_get_glPointParameteri
+        829  33C 0001E0A0 gdk_gl_get_glPointParameteriNV
+        830  33D 00007E20 gdk_gl_get_glPointParameteriv
+        831  33E 0001E0F0 gdk_gl_get_glPointParameterivNV
+        832  33F 000124B0 gdk_gl_get_glPollAsyncSGIX
+        833  340 00010090 gdk_gl_get_glPollInstrumentsSGIX
+        834  341 0000D3D0 gdk_gl_get_glPolygonOffsetEXT
+        835  342 000206C0 gdk_gl_get_glPrimitiveRestartIndexNV
+        836  343 00020660 gdk_gl_get_glPrimitiveRestartNV
+        837  344 0000F0D0 gdk_gl_get_glPrioritizeTexturesEXT
+        838  345 0000C070 gdk_gl_get_glProgramEnvParameter4dARB
+        839  346 0000C0D0 gdk_gl_get_glProgramEnvParameter4dvARB
+        840  347 0000C130 gdk_gl_get_glProgramEnvParameter4fARB
+        841  348 0000C190 gdk_gl_get_glProgramEnvParameter4fvARB
+        842  349 0000C1F0 gdk_gl_get_glProgramLocalParameter4dARB
+        843  34A 0000C250 gdk_gl_get_glProgramLocalParameter4dvARB
+        844  34B 0000C2B0 gdk_gl_get_glProgramLocalParameter4fARB
+        845  34C 0000C310 gdk_gl_get_glProgramLocalParameter4fvARB
+        846  34D 0001EEB0 gdk_gl_get_glProgramNamedParameter4dNV = _gdk_gl_get_glVertexAttribs1hvNV
+        847  34E 0001EF70 gdk_gl_get_glProgramNamedParameter4dvNV
+        848  34F 0001EE50 gdk_gl_get_glProgramNamedParameter4fNV
+        849  350 0001EF10 gdk_gl_get_glProgramNamedParameter4fvNV
+        850  351 00018E50 gdk_gl_get_glProgramParameter4dNV
+        851  352 00018EB0 gdk_gl_get_glProgramParameter4dvNV
+        852  353 00018F00 gdk_gl_get_glProgramParameter4fNV
+        853  354 00018F60 gdk_gl_get_glProgramParameter4fvNV
+        854  355 00018FC0 gdk_gl_get_glProgramParameters4dvNV
+        855  356 00019020 gdk_gl_get_glProgramParameters4fvNV
+        856  357 0000BF20 gdk_gl_get_glProgramStringARB = _gdk_gl_get_glBufferDataARB
+        857  358 00023640 gdk_gl_get_glReadBufferRegion
+        858  359 000100E0 gdk_gl_get_glReadInstrumentsSGIX
+        859  35A 000106D0 gdk_gl_get_glReferencePlaneSGIX
+        860  35B 000148E0 gdk_gl_get_glReplacementCodePointerSUN
+        861  35C 00014760 gdk_gl_get_glReplacementCodeubSUN
+        862  35D 00014880 gdk_gl_get_glReplacementCodeubvSUN
+        863  35E 00015570 gdk_gl_get_glReplacementCodeuiColor3fVertex3fSUN = _gdk_gl_get_glCombinerParameterivNV
+        864  35F 000155F0 gdk_gl_get_glReplacementCodeuiColor3fVertex3fvSUN
+        865  360 00015770 gdk_gl_get_glReplacementCodeuiColor4fNormal3fVertex3fSUN
+        866  361 000157F0 gdk_gl_get_glReplacementCodeuiColor4fNormal3fVertex3fvSUN = _gdk_gl_get_glGetCombinerOutputParameterfvNV
+        867  362 00015470 gdk_gl_get_glReplacementCodeuiColor4ubVertex3fSUN
+        868  363 000154F0 gdk_gl_get_glReplacementCodeuiColor4ubVertex3fvSUN
+        869  364 00015670 gdk_gl_get_glReplacementCodeuiNormal3fVertex3fSUN
+        870  365 000156F0 gdk_gl_get_glReplacementCodeuiNormal3fVertex3fvSUN
+        871  366 000146C0 gdk_gl_get_glReplacementCodeuiSUN
+        872  367 00015A80 gdk_gl_get_glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fSUN
+        873  368 00015B00 gdk_gl_get_glReplacementCodeuiTexCoord2fColor4fNormal3fVertex3fvSUN
+        874  369 00015980 gdk_gl_get_glReplacementCodeuiTexCoord2fNormal3fVertex3fSUN
+        875  36A 00015A00 gdk_gl_get_glReplacementCodeuiTexCoord2fNormal3fVertex3fvSUN
+        876  36B 00015870 gdk_gl_get_glReplacementCodeuiTexCoord2fVertex3fSUN = _gdk_gl_get_glGetCombinerOutputParameterivNV
+        877  36C 000158F0 gdk_gl_get_glReplacementCodeuiTexCoord2fVertex3fvSUN = _gdk_gl_get_glGetFinalCombinerInputParameterfvNV
+        878  36D 000153A0 gdk_gl_get_glReplacementCodeuiVertex3fSUN
+        879  36E 00015400 gdk_gl_get_glReplacementCodeuiVertex3fvSUN
+        880  36F 000147C0 gdk_gl_get_glReplacementCodeuivSUN
+        881  370 00014710 gdk_gl_get_glReplacementCodeusSUN
+        882  371 00014820 gdk_gl_get_glReplacementCodeusvSUN
+        883  372 00019080 gdk_gl_get_glRequestResidentProgramsNV
+        884  373 00006180 gdk_gl_get_glResetHistogram
+        885  374 0000DDB0 gdk_gl_get_glResetHistogramEXT
+        886  375 000061D0 gdk_gl_get_glResetMinmax
+        887  376 0000DE00 gdk_gl_get_glResetMinmaxEXT
+        888  377 00016B90 gdk_gl_get_glResizeBuffersMESA
+        889  378 00007300 gdk_gl_get_glSampleCoverage
+        890  379 00009E90 gdk_gl_get_glSampleCoverageARB
+        891  37A 0001A900 gdk_gl_get_glSampleMapATI
+        892  37B 00017D00 gdk_gl_get_glSampleMaskEXT = _gdk_gl_get_glGetVertexAttribivNV
+        893  37C 0000F4D0 gdk_gl_get_glSampleMaskSGIS
+        894  37D 00017D50 gdk_gl_get_glSamplePatternEXT
+        895  37E 0000F520 gdk_gl_get_glSamplePatternSGIS
+        896  37F 00007E70 gdk_gl_get_glSecondaryColor3b
+        897  380 00012BB0 gdk_gl_get_glSecondaryColor3bEXT
+        898  381 00007EC0 gdk_gl_get_glSecondaryColor3bv
+        899  382 00012C00 gdk_gl_get_glSecondaryColor3bvEXT
+        900  383 00007F10 gdk_gl_get_glSecondaryColor3d
+        901  384 00012C50 gdk_gl_get_glSecondaryColor3dEXT
+        902  385 00007F60 gdk_gl_get_glSecondaryColor3dv
+        903  386 00012CA0 gdk_gl_get_glSecondaryColor3dvEXT
+        904  387 00007FB0 gdk_gl_get_glSecondaryColor3f
+        905  388 00012CF0 gdk_gl_get_glSecondaryColor3fEXT
+        906  389 00008000 gdk_gl_get_glSecondaryColor3fv
+        907  38A 00012D40 gdk_gl_get_glSecondaryColor3fvEXT
+        908  38B 0001FAF0 gdk_gl_get_glSecondaryColor3hNV = _gdk_gl_get_glGetVertexAttribArrayObjectfvATI
+        909  38C 0001FB40 gdk_gl_get_glSecondaryColor3hvNV
+        910  38D 00008050 gdk_gl_get_glSecondaryColor3i
+        911  38E 00012D90 gdk_gl_get_glSecondaryColor3iEXT
+        912  38F 000080A0 gdk_gl_get_glSecondaryColor3iv
+        913  390 00012DE0 gdk_gl_get_glSecondaryColor3ivEXT
+        914  391 000080F0 gdk_gl_get_glSecondaryColor3s
+        915  392 00012E30 gdk_gl_get_glSecondaryColor3sEXT
+        916  393 00008140 gdk_gl_get_glSecondaryColor3sv
+        917  394 00012E80 gdk_gl_get_glSecondaryColor3svEXT
+        918  395 00008190 gdk_gl_get_glSecondaryColor3ub
+        919  396 00012ED0 gdk_gl_get_glSecondaryColor3ubEXT
+        920  397 000081E0 gdk_gl_get_glSecondaryColor3ubv
+        921  398 00012F30 gdk_gl_get_glSecondaryColor3ubvEXT
+        922  399 00008230 gdk_gl_get_glSecondaryColor3ui
+        923  39A 00012F80 gdk_gl_get_glSecondaryColor3uiEXT
+        924  39B 00008280 gdk_gl_get_glSecondaryColor3uiv
+        925  39C 00012FE0 gdk_gl_get_glSecondaryColor3uivEXT
+        926  39D 000082D0 gdk_gl_get_glSecondaryColor3us
+        927  39E 00013030 gdk_gl_get_glSecondaryColor3usEXT
+        928  39F 00008320 gdk_gl_get_glSecondaryColor3usv
+        929  3A0 00013090 gdk_gl_get_glSecondaryColor3usvEXT
+        930  3A1 00008380 gdk_gl_get_glSecondaryColorPointer
+        931  3A2 000130F0 gdk_gl_get_glSecondaryColorPointerEXT
+        932  3A3 00017880 gdk_gl_get_glSecondaryColorPointerListIBM = _gdk_gl_get_GL_NV_register_combiners2
+        933  3A4 00022E80 gdk_gl_get_glSelectTextureCoordSetEXT
+        934  3A5 00024610 gdk_gl_get_glSelectTextureCoordSetSGIS
+        935  3A6 00022E20 gdk_gl_get_glSelectTextureEXT = _gdk_gl_get_glMultiTexCoord2dvSGIS
+        936  3A7 000245B0 gdk_gl_get_glSelectTextureSGIS
+        937  3A8 00022EE0 gdk_gl_get_glSelectTextureTransformEXT
+        938  3A9 00005E90 gdk_gl_get_glSeparableFilter2D
+        939  3AA 0000E430 gdk_gl_get_glSeparableFilter2DEXT = _gdk_gl_get_GL_SGIS_sharpen_texture
+        940  3AB 0001E630 gdk_gl_get_glSetFenceAPPLE
+        941  3AC 000181E0 gdk_gl_get_glSetFenceNV
+        942  3AD 0001AB40 gdk_gl_get_glSetFragmentShaderConstantATI
+        943  3AE 0001B890 gdk_gl_get_glSetInvariantEXT = _gdk_gl_get_glVertexStream1fATI
+        944  3AF 0001B8E0 gdk_gl_get_glSetLocalConstantEXT = _gdk_gl_get_glVertexStream1fvATI
+        945  3B0 0001B610 gdk_gl_get_glShaderOp1EXT
+        946  3B1 0001B660 gdk_gl_get_glShaderOp2EXT
+        947  3B2 0001B6B0 gdk_gl_get_glShaderOp3EXT
+        948  3B3 0000F370 gdk_gl_get_glSharpenTexFuncSGIS
+        949  3B4 0000FB10 gdk_gl_get_glSpriteParameterfSGIX
+        950  3B5 0000FB70 gdk_gl_get_glSpriteParameterfvSGIX = _gdk_gl_get_glGetImageTransformParameterivHP
+        951  3B6 0000FBC0 gdk_gl_get_glSpriteParameteriSGIX
+        952  3B7 0000FC20 gdk_gl_get_glSpriteParameterivSGIX
+        953  3B8 00010130 gdk_gl_get_glStartInstrumentsSGIX
+        954  3B9 00020970 gdk_gl_get_glStencilFuncSeparateATI
+        955  3BA 00020910 gdk_gl_get_glStencilOpSeparateATI = _gdk_gl_get_glValidBackBufferHint
+        956  3BB 00010180 gdk_gl_get_glStopInstrumentsSGIX
+        957  3BC 0001B700 gdk_gl_get_glSwizzleEXT
+        958  3BD 000103A0 gdk_gl_get_glTagSampleBufferSGIX
+        959  3BE 00013810 gdk_gl_get_glTangent3bEXT
+        960  3BF 00013860 gdk_gl_get_glTangent3bvEXT
+        961  3C0 000138B0 gdk_gl_get_glTangent3dEXT
+        962  3C1 00013900 gdk_gl_get_glTangent3dvEXT
+        963  3C2 00013950 gdk_gl_get_glTangent3fEXT
+        964  3C3 000139A0 gdk_gl_get_glTangent3fvEXT
+        965  3C4 000139F0 gdk_gl_get_glTangent3iEXT
+        966  3C5 00013A40 gdk_gl_get_glTangent3ivEXT
+        967  3C6 00013A90 gdk_gl_get_glTangent3sEXT
+        968  3C7 00013AE0 gdk_gl_get_glTangent3svEXT
+        969  3C8 00013E50 gdk_gl_get_glTangentPointerEXT
+        970  3C9 00017C30 gdk_gl_get_glTbufferMask3DFX
+        971  3CA 0001E6D0 gdk_gl_get_glTestFenceAPPLE
+        972  3CB 000180F0 gdk_gl_get_glTestFenceNV
+        973  3CC 0001E770 gdk_gl_get_glTestObjectAPPLE
+        974  3CD 0001A500 gdk_gl_get_glTexBumpParameterfvATI
+        975  3CE 0001A4A0 gdk_gl_get_glTexBumpParameterivATI
+        976  3CF 0001F550 gdk_gl_get_glTexCoord1hNV
+        977  3D0 0001F5A0 gdk_gl_get_glTexCoord1hvNV
+        978  3D1 00015000 gdk_gl_get_glTexCoord2fColor3fVertex3fSUN
+        979  3D2 00015060 gdk_gl_get_glTexCoord2fColor3fVertex3fvSUN
+        980  3D3 000151B0 gdk_gl_get_glTexCoord2fColor4fNormal3fVertex3fSUN
+        981  3D4 00015230 gdk_gl_get_glTexCoord2fColor4fNormal3fVertex3fvSUN
+        982  3D5 00014F20 gdk_gl_get_glTexCoord2fColor4ubVertex3fSUN
+        983  3D6 00014F90 gdk_gl_get_glTexCoord2fColor4ubVertex3fvSUN
+        984  3D7 000150C0 gdk_gl_get_glTexCoord2fNormal3fVertex3fSUN = _gdk_gl_get_glBlendFuncSeparateINGR
+        985  3D8 00015130 gdk_gl_get_glTexCoord2fNormal3fVertex3fvSUN
+        986  3D9 00014DA0 gdk_gl_get_glTexCoord2fVertex3fSUN
+        987  3DA 00014E00 gdk_gl_get_glTexCoord2fVertex3fvSUN
+        988  3DB 0001F5F0 gdk_gl_get_glTexCoord2hNV
+        989  3DC 0001F640 gdk_gl_get_glTexCoord2hvNV
+        990  3DD 0001F690 gdk_gl_get_glTexCoord3hNV
+        991  3DE 0001F6E0 gdk_gl_get_glTexCoord3hvNV
+        992  3DF 000152B0 gdk_gl_get_glTexCoord4fColor4fNormal3fVertex4fSUN = _gdk_gl_get_GL_EXT_vertex_weighting
+        993  3E0 00015330 gdk_gl_get_glTexCoord4fColor4fNormal3fVertex4fvSUN
+        994  3E1 00014E60 gdk_gl_get_glTexCoord4fVertex4fSUN
+        995  3E2 00014EC0 gdk_gl_get_glTexCoord4fVertex4fvSUN
+        996  3E3 0001F730 gdk_gl_get_glTexCoord4hNV
+        997  3E4 0001F780 gdk_gl_get_glTexCoord4hvNV
+        998  3E5 0000F840 gdk_gl_get_glTexCoordPointerEXT
+        999  3E6 00017A40 gdk_gl_get_glTexCoordPointerListIBM
+       1000  3E7 00012810 gdk_gl_get_glTexCoordPointervINTEL = _gdk_gl_get_glTangent3bEXT
+       1001  3E8 0000D630 gdk_gl_get_glTexFilterFuncSGIS
+       1002  3E9 00006220 gdk_gl_get_glTexImage3D
+       1003  3EA 0000D4A0 gdk_gl_get_glTexImage3DEXT
+       1004  3EB 0000EDF0 gdk_gl_get_glTexImage4DSGIS = _gdk_gl_get_GL_EXT_point_parameters
+       1005  3EC 0000D730 gdk_gl_get_glTexSubImage1DEXT
+       1006  3ED 0000D780 gdk_gl_get_glTexSubImage2DEXT
+       1007  3EE 00006270 gdk_gl_get_glTexSubImage3D
+       1008  3EF 0000D4F0 gdk_gl_get_glTexSubImage3DEXT
+       1009  3F0 0000EE40 gdk_gl_get_glTexSubImage4DSGIS
+       1010  3F1 00017E40 gdk_gl_get_glTextureColorMaskSGIS
+       1011  3F2 00024A60 gdk_gl_get_glTextureFogSGIX
+       1012  3F3 000122B0 gdk_gl_get_glTextureLightEXT
+       1013  3F4 00012300 gdk_gl_get_glTextureMaterialEXT
+       1014  3F5 00013360 gdk_gl_get_glTextureNormalEXT
+       1015  3F6 00020CB0 gdk_gl_get_glTextureRangeAPPLE
+       1016  3F7 000190D0 gdk_gl_get_glTrackMatrixNV
+       1017  3F8 00011690 gdk_gl_get_glUnlockArraysEXT
+       1018  3F9 0000D060 gdk_gl_get_glUnmapBufferARB
+       1019  3FA 00020810 gdk_gl_get_glUnmapObjectBufferATI
+       1020  3FB 0001AF60 gdk_gl_get_glUpdateObjectBufferATI = _gdk_gl_get_glGetVariantIntegervEXT
+       1021  3FC 00021910 gdk_gl_get_glValidBackBufferHint
+       1022  3FD 0001B1A0 gdk_gl_get_glVariantArrayObjectATI
+       1023  3FE 0001BBB0 gdk_gl_get_glVariantPointerEXT = _gdk_gl_get_glVertexStream2dATI
+       1024  3FF 0001B930 gdk_gl_get_glVariantbvEXT = _gdk_gl_get_glVertexStream1dATI
+       1025  400 0001BA70 gdk_gl_get_glVariantdvEXT = _gdk_gl_get_glVertexStream2iATI
+       1026  401 0001BA20 gdk_gl_get_glVariantfvEXT = _gdk_gl_get_glVertexStream2svATI
+       1027  402 0001B9D0 gdk_gl_get_glVariantivEXT = _gdk_gl_get_glVertexStream2sATI
+       1028  403 0001B980 gdk_gl_get_glVariantsvEXT = _gdk_gl_get_glVertexStream1dvATI
+       1029  404 0001BAC0 gdk_gl_get_glVariantubvEXT = _gdk_gl_get_glVertexStream2ivATI
+       1030  405 0001BB60 gdk_gl_get_glVariantuivEXT = _gdk_gl_get_glVertexStream2fvATI
+       1031  406 0001BB10 gdk_gl_get_glVariantusvEXT = _gdk_gl_get_glVertexStream2fATI
+       1032  407 0001F190 gdk_gl_get_glVertex2hNV
+       1033  408 0001F1E0 gdk_gl_get_glVertex2hvNV
+       1034  409 0001F230 gdk_gl_get_glVertex3hNV
+       1035  40A 0001F280 gdk_gl_get_glVertex3hvNV
+       1036  40B 0001F2D0 gdk_gl_get_glVertex4hNV
+       1037  40C 0001F320 gdk_gl_get_glVertex4hvNV
+       1038  40D 0001EC50 gdk_gl_get_glVertexArrayParameteriAPPLE
+       1039  40E 0001EB90 gdk_gl_get_glVertexArrayRangeAPPLE = _gdk_gl_get_glVertexWeighthNV
+       1040  40F 000163C0 gdk_gl_get_glVertexArrayRangeNV
+       1041  410 0000B2C0 gdk_gl_get_glVertexAttrib1dARB
+       1042  411 00019180 gdk_gl_get_glVertexAttrib1dNV
+       1043  412 0000B310 gdk_gl_get_glVertexAttrib1dvARB = _gdk_gl_get_glProgramLocalParameter4fvARB
+       1044  413 000191D0 gdk_gl_get_glVertexAttrib1dvNV
+       1045  414 0000B360 gdk_gl_get_glVertexAttrib1fARB
+       1046  415 00019220 gdk_gl_get_glVertexAttrib1fNV
+       1047  416 0000B3B0 gdk_gl_get_glVertexAttrib1fvARB
+       1048  417 00019270 gdk_gl_get_glVertexAttrib1fvNV
+       1049  418 0001FC30 gdk_gl_get_glVertexAttrib1hNV
+       1050  419 0001FC80 gdk_gl_get_glVertexAttrib1hvNV
+       1051  41A 0000B400 gdk_gl_get_glVertexAttrib1sARB
+       1052  41B 000192C0 gdk_gl_get_glVertexAttrib1sNV
+       1053  41C 0000B450 gdk_gl_get_glVertexAttrib1svARB
+       1054  41D 00019310 gdk_gl_get_glVertexAttrib1svNV
+       1055  41E 0000B4A0 gdk_gl_get_glVertexAttrib2dARB = _gdk_gl_get_glGetProgramLocalParameterfvARB
+       1056  41F 00019360 gdk_gl_get_glVertexAttrib2dNV
+       1057  420 0000B4F0 gdk_gl_get_glVertexAttrib2dvARB = _gdk_gl_get_glGetProgramivARB
+       1058  421 000193B0 gdk_gl_get_glVertexAttrib2dvNV
+       1059  422 0000B540 gdk_gl_get_glVertexAttrib2fARB = _gdk_gl_get_glGetProgramStringARB
+       1060  423 00019400 gdk_gl_get_glVertexAttrib2fNV
+       1061  424 0000B590 gdk_gl_get_glVertexAttrib2fvARB = _gdk_gl_get_glGetVertexAttribdvARB
+       1062  425 00019450 gdk_gl_get_glVertexAttrib2fvNV
+       1063  426 0001FCD0 gdk_gl_get_glVertexAttrib2hNV
+       1064  427 0001FD20 gdk_gl_get_glVertexAttrib2hvNV = _gdk_gl_get_glGetTexParameterPointervAPPLE
+       1065  428 0000B5E0 gdk_gl_get_glVertexAttrib2sARB = _gdk_gl_get_glGetVertexAttribfvARB
+       1066  429 000194A0 gdk_gl_get_glVertexAttrib2sNV = _gdk_gl_get_glTexBumpParameterivATI
+       1067  42A 0000B630 gdk_gl_get_glVertexAttrib2svARB = _gdk_gl_get_glGetVertexAttribivARB
+       1068  42B 000194F0 gdk_gl_get_glVertexAttrib2svNV
+       1069  42C 0000B680 gdk_gl_get_glVertexAttrib3dARB
+       1070  42D 00019540 gdk_gl_get_glVertexAttrib3dNV
+       1071  42E 0000B6D0 gdk_gl_get_glVertexAttrib3dvARB
+       1072  42F 00019590 gdk_gl_get_glVertexAttrib3dvNV
+       1073  430 0000B720 gdk_gl_get_glVertexAttrib3fARB
+       1074  431 000195E0 gdk_gl_get_glVertexAttrib3fNV
+       1075  432 0000B770 gdk_gl_get_glVertexAttrib3fvARB
+       1076  433 00019630 gdk_gl_get_glVertexAttrib3fvNV
+       1077  434 0001FD70 gdk_gl_get_glVertexAttrib3hNV = _gdk_gl_get_GL_APPLE_texture_range
+       1078  435 0001FDC0 gdk_gl_get_glVertexAttrib3hvNV
+       1079  436 0000B7C0 gdk_gl_get_glVertexAttrib3sARB
+       1080  437 00019680 gdk_gl_get_glVertexAttrib3sNV
+       1081  438 0000B810 gdk_gl_get_glVertexAttrib3svARB
+       1082  439 000196D0 gdk_gl_get_glVertexAttrib3svNV
+       1083  43A 0000B860 gdk_gl_get_glVertexAttrib4NbvARB
+       1084  43B 0000B8B0 gdk_gl_get_glVertexAttrib4NivARB
+       1085  43C 0000B900 gdk_gl_get_glVertexAttrib4NsvARB
+       1086  43D 0000B950 gdk_gl_get_glVertexAttrib4NubARB
+       1087  43E 0000B9A0 gdk_gl_get_glVertexAttrib4NubvARB
+       1088  43F 0000B9F0 gdk_gl_get_glVertexAttrib4NuivARB
+       1089  440 0000BA40 gdk_gl_get_glVertexAttrib4NusvARB
+       1090  441 0000BA90 gdk_gl_get_glVertexAttrib4bvARB
+       1091  442 0000BAE0 gdk_gl_get_glVertexAttrib4dARB
+       1092  443 00019720 gdk_gl_get_glVertexAttrib4dNV
+       1093  444 0000BB30 gdk_gl_get_glVertexAttrib4dvARB
+       1094  445 00019770 gdk_gl_get_glVertexAttrib4dvNV
+       1095  446 0000BB80 gdk_gl_get_glVertexAttrib4fARB
+       1096  447 000197C0 gdk_gl_get_glVertexAttrib4fNV
+       1097  448 0000BBD0 gdk_gl_get_glVertexAttrib4fvARB
+       1098  449 00019810 gdk_gl_get_glVertexAttrib4fvNV = _gdk_gl_get_glBeginFragmentShaderATI
+       1099  44A 0001FE10 gdk_gl_get_glVertexAttrib4hNV = _gdk_gl_get_glEnableVertexAttribAPPLE
+       1100  44B 0001FE60 gdk_gl_get_glVertexAttrib4hvNV
+       1101  44C 0000BC20 gdk_gl_get_glVertexAttrib4ivARB
+       1102  44D 0000BC70 gdk_gl_get_glVertexAttrib4sARB
+       1103  44E 00019860 gdk_gl_get_glVertexAttrib4sNV = _gdk_gl_get_glEndFragmentShaderATI
+       1104  44F 0000BCC0 gdk_gl_get_glVertexAttrib4svARB
+       1105  450 000198B0 gdk_gl_get_glVertexAttrib4svNV = _gdk_gl_get_glPassTexCoordATI
+       1106  451 00019900 gdk_gl_get_glVertexAttrib4ubNV = _gdk_gl_get_glSampleMapATI
+       1107  452 0000BD10 gdk_gl_get_glVertexAttrib4ubvARB
+       1108  453 00019950 gdk_gl_get_glVertexAttrib4ubvNV = _gdk_gl_get_glColorFragmentOp1ATI
+       1109  454 0000BD60 gdk_gl_get_glVertexAttrib4uivARB
+       1110  455 0000BDB0 gdk_gl_get_glVertexAttrib4usvARB
+       1111  456 00020A80 gdk_gl_get_glVertexAttribArrayObjectATI
+       1112  457 0000BE10 gdk_gl_get_glVertexAttribPointerARB
+       1113  458 00019130 gdk_gl_get_glVertexAttribPointerNV
+       1114  459 000199A0 gdk_gl_get_glVertexAttribs1dvNV = _gdk_gl_get_glColorFragmentOp2ATI
+       1115  45A 000199F0 gdk_gl_get_glVertexAttribs1fvNV = _gdk_gl_get_glColorFragmentOp3ATI
+       1116  45B 0001FEB0 gdk_gl_get_glVertexAttribs1hvNV
+       1117  45C 00019A40 gdk_gl_get_glVertexAttribs1svNV = _gdk_gl_get_glAlphaFragmentOp1ATI
+       1118  45D 00019A90 gdk_gl_get_glVertexAttribs2dvNV = _gdk_gl_get_glAlphaFragmentOp2ATI
+       1119  45E 00019AE0 gdk_gl_get_glVertexAttribs2fvNV = _gdk_gl_get_glAlphaFragmentOp3ATI
+       1120  45F 0001FF00 gdk_gl_get_glVertexAttribs2hvNV
+       1121  460 00019B30 gdk_gl_get_glVertexAttribs2svNV
+       1122  461 00019B80 gdk_gl_get_glVertexAttribs3dvNV
+       1123  462 00019BD0 gdk_gl_get_glVertexAttribs3fvNV
+       1124  463 0001FF50 gdk_gl_get_glVertexAttribs3hvNV
+       1125  464 00019C20 gdk_gl_get_glVertexAttribs3svNV
+       1126  465 00019C70 gdk_gl_get_glVertexAttribs4dvNV
+       1127  466 00019CC0 gdk_gl_get_glVertexAttribs4fvNV
+       1128  467 0001FFA0 gdk_gl_get_glVertexAttribs4hvNV
+       1129  468 00019D10 gdk_gl_get_glVertexAttribs4svNV
+       1130  469 00019D60 gdk_gl_get_glVertexAttribs4ubvNV
+       1131  46A 0000A750 gdk_gl_get_glVertexBlendARB
+       1132  46B 0001D520 gdk_gl_get_glVertexBlendEnvfATI
+       1133  46C 0001D4D0 gdk_gl_get_glVertexBlendEnviATI
+       1134  46D 0000F890 gdk_gl_get_glVertexPointerEXT
+       1135  46E 00017A90 gdk_gl_get_glVertexPointerListIBM
+       1136  46F 00012710 gdk_gl_get_glVertexPointervINTEL
+       1137  470 0001C930 gdk_gl_get_glVertexStream1dATI
+       1138  471 0001C980 gdk_gl_get_glVertexStream1dvATI
+       1139  472 0001C890 gdk_gl_get_glVertexStream1fATI
+       1140  473 0001C8E0 gdk_gl_get_glVertexStream1fvATI
+       1141  474 0001C7F0 gdk_gl_get_glVertexStream1iATI
+       1142  475 0001C840 gdk_gl_get_glVertexStream1ivATI
+       1143  476 0001C750 gdk_gl_get_glVertexStream1sATI
+       1144  477 0001C7A0 gdk_gl_get_glVertexStream1svATI
+       1145  478 0001CBB0 gdk_gl_get_glVertexStream2dATI
+       1146  479 0001CC00 gdk_gl_get_glVertexStream2dvATI
+       1147  47A 0001CB10 gdk_gl_get_glVertexStream2fATI
+       1148  47B 0001CB60 gdk_gl_get_glVertexStream2fvATI
+       1149  47C 0001CA70 gdk_gl_get_glVertexStream2iATI = _gdk_gl_get_glElementPointerATI
+       1150  47D 0001CAC0 gdk_gl_get_glVertexStream2ivATI = _gdk_gl_get_glDrawElementArrayATI
+       1151  47E 0001C9D0 gdk_gl_get_glVertexStream2sATI
+       1152  47F 0001CA20 gdk_gl_get_glVertexStream2svATI
+       1153  480 0001CE30 gdk_gl_get_glVertexStream3dATI
+       1154  481 0001CE80 gdk_gl_get_glVertexStream3dvATI
+       1155  482 0001CD90 gdk_gl_get_glVertexStream3fATI
+       1156  483 0001CDE0 gdk_gl_get_glVertexStream3fvATI
+       1157  484 0001CCF0 gdk_gl_get_glVertexStream3iATI
+       1158  485 0001CD40 gdk_gl_get_glVertexStream3ivATI
+       1159  486 0001CC50 gdk_gl_get_glVertexStream3sATI
+       1160  487 0001CCA0 gdk_gl_get_glVertexStream3svATI
+       1161  488 0001D0B0 gdk_gl_get_glVertexStream4dATI
+       1162  489 0001D100 gdk_gl_get_glVertexStream4dvATI
+       1163  48A 0001D010 gdk_gl_get_glVertexStream4fATI
+       1164  48B 0001D060 gdk_gl_get_glVertexStream4fvATI
+       1165  48C 0001CF70 gdk_gl_get_glVertexStream4iATI
+       1166  48D 0001CFC0 gdk_gl_get_glVertexStream4ivATI
+       1167  48E 0001CED0 gdk_gl_get_glVertexStream4sATI = _gdk_gl_get_glGetOcclusionQueryivNV
+       1168  48F 0001CF20 gdk_gl_get_glVertexStream4svATI
+       1169  490 00016250 gdk_gl_get_glVertexWeightPointerEXT = _gdk_gl_get_glWindowPos4fvMESA
+       1170  491 000161A0 gdk_gl_get_glVertexWeightfEXT
+       1171  492 000161F0 gdk_gl_get_glVertexWeightfvEXT
+       1172  493 0001FB90 gdk_gl_get_glVertexWeighthNV
+       1173  494 0001FBE0 gdk_gl_get_glVertexWeighthvNV
+       1174  495 0000A700 gdk_gl_get_glWeightPointerARB
+       1175  496 0000A480 gdk_gl_get_glWeightbvARB
+       1176  497 0000A5C0 gdk_gl_get_glWeightdvARB
+       1177  498 0000A570 gdk_gl_get_glWeightfvARB
+       1178  499 0000A520 gdk_gl_get_glWeightivARB
+       1179  49A 0000A4D0 gdk_gl_get_glWeightsvARB
+       1180  49B 0000A610 gdk_gl_get_glWeightubvARB
+       1181  49C 0000A6B0 gdk_gl_get_glWeightuivARB
+       1182  49D 0000A660 gdk_gl_get_glWeightusvARB
+       1183  49E 000218C0 gdk_gl_get_glWindowBackBufferHint
+       1184  49F 000083D0 gdk_gl_get_glWindowPos2d
+       1185  4A0 0000ABB0 gdk_gl_get_glWindowPos2dARB
+       1186  4A1 00016C60 gdk_gl_get_glWindowPos2dMESA
+       1187  4A2 00008420 gdk_gl_get_glWindowPos2dv
+       1188  4A3 0000AC00 gdk_gl_get_glWindowPos2dvARB
+       1189  4A4 00016CB0 gdk_gl_get_glWindowPos2dvMESA
+       1190  4A5 00008470 gdk_gl_get_glWindowPos2f
+       1191  4A6 0000AC50 gdk_gl_get_glWindowPos2fARB
+       1192  4A7 00016D00 gdk_gl_get_glWindowPos2fMESA = _gdk_gl_get_glSampleMaskEXT
+       1193  4A8 000084C0 gdk_gl_get_glWindowPos2fv
+       1194  4A9 0000ACA0 gdk_gl_get_glWindowPos2fvARB
+       1195  4AA 00016D50 gdk_gl_get_glWindowPos2fvMESA = _gdk_gl_get_glSamplePatternEXT
+       1196  4AB 00008510 gdk_gl_get_glWindowPos2i
+       1197  4AC 0000ACF0 gdk_gl_get_glWindowPos2iARB
+       1198  4AD 00016DA0 gdk_gl_get_glWindowPos2iMESA = _gdk_gl_get_GL_EXT_multisample
+       1199  4AE 00008560 gdk_gl_get_glWindowPos2iv
+       1200  4AF 0000AD40 gdk_gl_get_glWindowPos2ivARB
+       1201  4B0 00016DF0 gdk_gl_get_glWindowPos2ivMESA
+       1202  4B1 000085B0 gdk_gl_get_glWindowPos2s
+       1203  4B2 0000AD90 gdk_gl_get_glWindowPos2sARB
+       1204  4B3 00016E40 gdk_gl_get_glWindowPos2sMESA = _gdk_gl_get_glTextureColorMaskSGIS
+       1205  4B4 00008600 gdk_gl_get_glWindowPos2sv
+       1206  4B5 0000ADE0 gdk_gl_get_glWindowPos2svARB
+       1207  4B6 00016E90 gdk_gl_get_glWindowPos2svMESA
+       1208  4B7 00008650 gdk_gl_get_glWindowPos3d
+       1209  4B8 0000AE30 gdk_gl_get_glWindowPos3dARB
+       1210  4B9 00016EE0 gdk_gl_get_glWindowPos3dMESA
+       1211  4BA 000086A0 gdk_gl_get_glWindowPos3dv
+       1212  4BB 0000AE80 gdk_gl_get_glWindowPos3dvARB
+       1213  4BC 00016F30 gdk_gl_get_glWindowPos3dvMESA
+       1214  4BD 000086F0 gdk_gl_get_glWindowPos3f
+       1215  4BE 0000AED0 gdk_gl_get_glWindowPos3fARB = _gdk_gl_get_glDisableVertexAttribArrayARB
+       1216  4BF 00016F80 gdk_gl_get_glWindowPos3fMESA = _gdk_gl_get_GL_SGIX_igloo_interface
+       1217  4C0 00008740 gdk_gl_get_glWindowPos3fv
+       1218  4C1 0000AF20 gdk_gl_get_glWindowPos3fvARB = _gdk_gl_get_glProgramStringARB
+       1219  4C2 00016FD0 gdk_gl_get_glWindowPos3fvMESA
+       1220  4C3 00008790 gdk_gl_get_glWindowPos3i
+       1221  4C4 0000AF70 gdk_gl_get_glWindowPos3iARB = _gdk_gl_get_glBindProgramARB
+       1222  4C5 00017020 gdk_gl_get_glWindowPos3iMESA
+       1223  4C6 000087E0 gdk_gl_get_glWindowPos3iv
+       1224  4C7 0000AFC0 gdk_gl_get_glWindowPos3ivARB = _gdk_gl_get_glDeleteProgramsARB
+       1225  4C8 00017070 gdk_gl_get_glWindowPos3ivMESA
+       1226  4C9 00008830 gdk_gl_get_glWindowPos3s
+       1227  4CA 0000B010 gdk_gl_get_glWindowPos3sARB = _gdk_gl_get_glGenProgramsARB
+       1228  4CB 000170C0 gdk_gl_get_glWindowPos3sMESA
+       1229  4CC 00008880 gdk_gl_get_glWindowPos3sv
+       1230  4CD 0000B060 gdk_gl_get_glWindowPos3svARB
+       1231  4CE 00017110 gdk_gl_get_glWindowPos3svMESA
+       1232  4CF 00017160 gdk_gl_get_glWindowPos4dMESA
+       1233  4D0 000171B0 gdk_gl_get_glWindowPos4dvMESA
+       1234  4D1 00017200 gdk_gl_get_glWindowPos4fMESA
+       1235  4D2 00017250 gdk_gl_get_glWindowPos4fvMESA
+       1236  4D3 000172A0 gdk_gl_get_glWindowPos4iMESA
+       1237  4D4 000172F0 gdk_gl_get_glWindowPos4ivMESA
+       1238  4D5 00017340 gdk_gl_get_glWindowPos4sMESA
+       1239  4D6 00017390 gdk_gl_get_glWindowPos4svMESA
+       1240  4D7 0001B750 gdk_gl_get_glWriteMaskEXT = _gdk_gl_get_glVertexStream1sATI
+       1241  4D8 00026830 gdk_gl_get_proc_address
+       1242  4D9 0002C620 gdk_gl_get_wglAllocateMemoryNV
+       1243  4DA 0002D4F0 gdk_gl_get_wglAssociateImageBufferEventsI3D
+       1244  4DB 0002D940 gdk_gl_get_wglBeginFrameTrackingI3D
+       1245  4DC 0002BC90 gdk_gl_get_wglBindDisplayColorTableEXT
+       1246  4DD 0002BA10 gdk_gl_get_wglBindTexImageARB
+       1247  4DE 0002B530 gdk_gl_get_wglChoosePixelFormatARB = _gdk_gl_get_wglGetSwapIntervalEXT
+       1248  4DF 0002C3D0 gdk_gl_get_wglChoosePixelFormatEXT
+       1249  4E0 0002B140 gdk_gl_get_wglCreateBufferRegionARB
+       1250  4E1 0002BBD0 gdk_gl_get_wglCreateDisplayColorTableEXT
+       1251  4E2 0002D410 gdk_gl_get_wglCreateImageBufferI3D
+       1252  4E3 0002B790 gdk_gl_get_wglCreatePbufferARB
+       1253  4E4 0002C080 gdk_gl_get_wglCreatePbufferEXT = _gdk_gl_get_wglGenlockSampleRateI3D
+       1254  4E5 0002B1A0 gdk_gl_get_wglDeleteBufferRegionARB
+       1255  4E6 0002BD00 gdk_gl_get_wglDestroyDisplayColorTableEXT
+       1256  4E7 0002D470 gdk_gl_get_wglDestroyImageBufferI3D
+       1257  4E8 0002B880 gdk_gl_get_wglDestroyPbufferARB
+       1258  4E9 0002C170 gdk_gl_get_wglDestroyPbufferEXT
+       1259  4EA 0002D6E0 gdk_gl_get_wglDisableFrameLockI3D
+       1260  4EB 0002CE70 gdk_gl_get_wglDisableGenlockI3D = _gdk_win32_drawable_get_handle
+       1261  4EC 0002D690 gdk_gl_get_wglEnableFrameLockI3D
+       1262  4ED 0002CE20 gdk_gl_get_wglEnableGenlockI3D = _gdk_colormap_get_visual
+       1263  4EE 0002D990 gdk_gl_get_wglEndFrameTrackingI3D
+       1264  4EF 0002C670 gdk_gl_get_wglFreeMemoryNV
+       1265  4F0 0002D080 gdk_gl_get_wglGenlockSampleRateI3D = _g_type_add_interface_static
+       1266  4F1 0002D140 gdk_gl_get_wglGenlockSourceDelayI3D = ___do_global_dtors
+       1267  4F2 0002CFC0 gdk_gl_get_wglGenlockSourceEdgeI3D = _g_type_register_static
+       1268  4F3 0002CF10 gdk_gl_get_wglGenlockSourceI3D
+       1269  4F4 0002B690 gdk_gl_get_wglGetCurrentReadDCARB
+       1270  4F5 0002BF80 gdk_gl_get_wglGetCurrentReadDCEXT
+       1271  4F6 0002CA80 gdk_gl_get_wglGetDigitalVideoParametersI3D
+       1272  4F7 0002B380 gdk_gl_get_wglGetExtensionsStringARB
+       1273  4F8 0002BE40 gdk_gl_get_wglGetExtensionsStringEXT
+       1274  4F9 0002D8E0 gdk_gl_get_wglGetFrameUsageI3D
+       1275  4FA 0002CCA0 gdk_gl_get_wglGetGammaTableI3D
+       1276  4FB 0002CBF0 gdk_gl_get_wglGetGammaTableParametersI3D
+       1277  4FC 0002D0E0 gdk_gl_get_wglGetGenlockSampleRateI3D = _g_hash_table_size
+       1278  4FD 0002D1A0 gdk_gl_get_wglGetGenlockSourceDelayI3D
+       1279  4FE 0002D020 gdk_gl_get_wglGetGenlockSourceEdgeI3D = _g_object_remove_weak_pointer
+       1280  4FF 0002CF60 gdk_gl_get_wglGetGenlockSourceI3D
+       1281  500 0002C7C0 gdk_gl_get_wglGetMscRateOML
+       1282  501 0002B7E0 gdk_gl_get_wglGetPbufferDCARB
+       1283  502 0002C0D0 gdk_gl_get_wglGetPbufferDCEXT
+       1284  503 0002B4D0 gdk_gl_get_wglGetPixelFormatAttribfvARB
+       1285  504 0002C370 gdk_gl_get_wglGetPixelFormatAttribfvEXT
+       1286  505 0002B470 gdk_gl_get_wglGetPixelFormatAttribivARB
+       1287  506 0002C310 gdk_gl_get_wglGetPixelFormatAttribivEXT
+       1288  507 0002C530 gdk_gl_get_wglGetSwapIntervalEXT
+       1289  508 0002C770 gdk_gl_get_wglGetSyncValuesOML
+       1290  509 0002D740 gdk_gl_get_wglIsEnabledFrameLockI3D
+       1291  50A 0002CEC0 gdk_gl_get_wglIsEnabledGenlockI3D = _pango_win32_font_cache_load
+       1292  50B 0002BC30 gdk_gl_get_wglLoadDisplayColorTableEXT
+       1293  50C 0002B640 gdk_gl_get_wglMakeContextCurrentARB
+       1294  50D 0002BF30 gdk_gl_get_wglMakeContextCurrentEXT
+       1295  50E 0002D7A0 gdk_gl_get_wglQueryFrameLockMasterI3D
+       1296  50F 0002D9F0 gdk_gl_get_wglQueryFrameTrackingI3D
+       1297  510 0002D210 gdk_gl_get_wglQueryGenlockMaxSourceDelayI3D
+       1298  511 0002B8D0 gdk_gl_get_wglQueryPbufferARB
+       1299  512 0002C1C0 gdk_gl_get_wglQueryPbufferEXT
+       1300  513 0002D560 gdk_gl_get_wglReleaseImageBufferEventsI3D = ___dllonexit
+       1301  514 0002B830 gdk_gl_get_wglReleasePbufferDCARB
+       1302  515 0002C120 gdk_gl_get_wglReleasePbufferDCEXT
+       1303  516 0002BA60 gdk_gl_get_wglReleaseTexImageARB
+       1304  517 0002B250 gdk_gl_get_wglRestoreBufferRegionARB
+       1305  518 0002B1F0 gdk_gl_get_wglSaveBufferRegionARB
+       1306  519 0002CAE0 gdk_gl_get_wglSetDigitalVideoParametersI3D
+       1307  51A 0002CCF0 gdk_gl_get_wglSetGammaTableI3D
+       1308  51B 0002CC50 gdk_gl_get_wglSetGammaTableParametersI3D
+       1309  51C 0002BAB0 gdk_gl_get_wglSetPbufferAttribARB
+       1310  51D 0002C810 gdk_gl_get_wglSwapBuffersMscOML
+       1311  51E 0002C4E0 gdk_gl_get_wglSwapIntervalEXT
+       1312  51F 0002C870 gdk_gl_get_wglSwapLayerBuffersMscOML
+       1313  520 0002C8C0 gdk_gl_get_wglWaitForMscOML
+       1314  521 0002C910 gdk_gl_get_wglWaitForSbcOML
+       1315  522 00001490 gdk_gl_init
+       1316  523 00001440 gdk_gl_init_check
+       1317  524 00001200 gdk_gl_parse_args
+       1318  525 00026070 gdk_gl_pbuffer_attrib_get_type
+       1319  526 000031B0 gdk_gl_pixmap_destroy
+       1320  527 00003250 gdk_gl_pixmap_get_pixmap
+       1321  528 00002AB0 gdk_gl_pixmap_get_type
+       1322  529 00029650 gdk_gl_pixmap_new
+       1323  52A 00026460 gdk_gl_query_extension
+       1324  52B 00026540 gdk_gl_query_extension_for_display
+       1325  52C 000014D0 gdk_gl_query_gl_extension
+       1326  52D 00026590 gdk_gl_query_version
+       1327  52E 000265F0 gdk_gl_query_version_for_display
+       1328  52F 00025E00 gdk_gl_render_type_get_type
+       1329  530 000259A0 gdk_gl_render_type_mask_get_type
+       1330  531 00025810 gdk_gl_transparent_type_get_type
+       1331  532 00025730 gdk_gl_visual_type_get_type
+       1332  533 00003D50 gdk_gl_window_destroy
+       1333  534 00003650 gdk_gl_window_get_type
+       1334  535 00003DF0 gdk_gl_window_get_window
+       1335  536 0002A4D0 gdk_gl_window_new = _gdk_gl_get_wglGetPixelFormatAttribfvARB
+       1336  537 000035A0 gdk_pixmap_get_gl_pixmap
+       1337  538 00003500 gdk_pixmap_is_gl_capable
+       1338  539 00003340 gdk_pixmap_set_gl_capability = _initQuadObj
+       1339  53A 00003480 gdk_pixmap_unset_gl_capability = _doughnut
+       1340  53B 00027900 gdk_win32_gl_config_get_pfd
+       1341  53C 000273D0 gdk_win32_gl_config_new_from_pixel_format
+       1342  53D 00028A50 gdk_win32_gl_context_foreign_new
+       1343  53E 00028F80 gdk_win32_gl_context_get_hglrc
+       1344  53F 00029220 gdk_win32_gl_drawable_hdc_get
+       1345  540 000292C0 gdk_win32_gl_drawable_hdc_release = __gdk_gl_window_destroy
+       1346  541 0002A0C0 gdk_win32_gl_pixmap_get_pfd
+       1347  542 0002A170 gdk_win32_gl_pixmap_get_pixel_format
+       1348  543 00026690 gdk_win32_gl_query_wgl_extension
+       1349  544 0002AD50 gdk_win32_gl_window_get_pfd
+       1350  545 0002ADF0 gdk_win32_gl_window_get_pixel_format
+       1351  546 00004150 gdk_window_get_gl_window
+       1352  547 000040B0 gdk_window_is_gl_capable = _dodecahedron
+       1353  548 00003EE0 gdk_window_set_gl_capability
+       1354  549 00004030 gdk_window_unset_gl_capability
+       1355  54A 00001180 gdkglext_binary_age
+       1356  54B 0000117C gdkglext_interface_age
+       1357  54C 00001170 gdkglext_major_version
+       1358  54D 00001178 gdkglext_micro_version
+       1359  54E 00001174 gdkglext_minor_version
+
+  Summary
+
+        1000 .bss
+        3000 .data
+        F000 .edata
+        2000 .idata
+        4000 .reloc
+       5D000 .stab
+       E3000 .stabstr
+       2E000 .text

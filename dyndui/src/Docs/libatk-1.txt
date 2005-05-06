@@ -1,0 +1,247 @@
+Microsoft (R) COFF/PE Dumper Version 8.00.40607.16
+Copyright (C) Microsoft Corporation.  All rights reserved.
+
+
+Dump of file libatk-1.0-0.dll
+
+File Type: DLL
+
+  Section contains the following exports for libatk-1.0-0.dll
+
+    00000000 characteristics
+    409412AF time date stamp Sat May 01 14:12:15 2004
+        0.00 version
+           1 ordinal base
+         218 number of functions
+         218 number of names
+
+    ordinal hint RVA      name
+
+          1    0 000011F0 atk_action_do_action
+          2    1 00001570 atk_action_get_description
+          3    2 00001AB0 atk_action_get_keybinding
+          4    3 000018F0 atk_action_get_localized_name
+          5    4 000013B0 atk_action_get_n_actions
+          6    5 00001730 atk_action_get_name
+          7    6 00001E30 atk_action_get_type
+          8    7 00001C70 atk_action_set_description
+          9    8 00015E50 atk_add_focus_tracker
+         10    9 00016130 atk_add_global_event_listener
+         11    A 00016210 atk_add_key_event_listener
+         12    B 000156D0 atk_attribute_set_free
+         13    C 00001F90 atk_component_add_focus_handler
+         14    D 00002230 atk_component_contains
+         15    E 000024E0 atk_component_get_extents
+         16    F 00002A00 atk_component_get_layer
+         17   10 00002B40 atk_component_get_mdi_zorder
+         18   11 00002690 atk_component_get_position
+         19   12 00002800 atk_component_get_size
+         20   13 00003190 atk_component_get_type
+         21   14 00002C80 atk_component_grab_focus
+         22   15 00002390 atk_component_ref_accessible_at_point
+         23   16 000020F0 atk_component_remove_focus_handler
+         24   17 00002DC0 atk_component_set_extents
+         25   18 00002F20 atk_component_set_position
+         26   19 00003070 atk_component_set_size
+         27   1A 00018F40 atk_coord_type_get_type
+         28   1B 00003610 atk_document_get_document
+         29   1C 000034D0 atk_document_get_document_type
+         30   1D 00003730 atk_document_get_type
+         31   1E 00003C40 atk_editable_text_copy_text
+         32   1F 00003D80 atk_editable_text_cut_text
+         33   20 00003EC0 atk_editable_text_delete_text
+         34   21 00004120 atk_editable_text_get_type
+         35   22 00003AF0 atk_editable_text_insert_text
+         36   23 00004000 atk_editable_text_paste_text
+         37   24 00003850 atk_editable_text_set_run_attributes
+         38   25 000039B0 atk_editable_text_set_text_contents
+         39   26 000160B0 atk_focus_tracker_init
+         40   27 00015F60 atk_focus_tracker_notify
+         41   28 0000B210 atk_get_default_registry
+         42   29 00016360 atk_get_focus_object
+         43   2A 000162E0 atk_get_root
+         44   2B 00016370 atk_get_toolkit_name
+         45   2C 000163F0 atk_get_toolkit_version
+         46   2D 00004230 atk_gobject_accessible_for_object
+         47   2E 00004410 atk_gobject_accessible_get_object
+         48   2F 00004680 atk_gobject_accessible_get_type
+         49   30 00004B20 atk_hyperlink_get_end_index
+         50   31 00004F70 atk_hyperlink_get_n_anchors
+         51   32 00004A00 atk_hyperlink_get_object
+         52   33 00004C30 atk_hyperlink_get_start_index
+         53   34 000051A0 atk_hyperlink_get_type
+         54   35 000048E0 atk_hyperlink_get_uri
+         55   36 00004E50 atk_hyperlink_is_inline
+         56   37 000050A0 atk_hyperlink_is_selected_link
+         57   38 00004D40 atk_hyperlink_is_valid
+         58   39 000057D0 atk_hypertext_get_link
+         59   3A 00005A60 atk_hypertext_get_link_index = _atk_no_op_object_factory_class_init
+         60   3B 00005920 atk_hypertext_get_n_links
+         61   3C 00005B90 atk_hypertext_get_type
+         62   3D 00005D70 atk_image_get_image_description
+         63   3E 00006180 atk_image_get_image_position
+         64   3F 00005EB0 atk_image_get_image_size
+         65   40 000063C0 atk_image_get_type
+         66   41 00006040 atk_image_set_image_description
+         67   42 0000A370 atk_implementor_get_type
+         68   43 000092D0 atk_implementor_ref_accessible
+         69   44 00018EA0 atk_key_event_type_get_type
+         70   45 00017D00 atk_layer_get_type
+         71   46 000068E0 atk_no_op_object_factory_get_type
+         72   47 000069B0 atk_no_op_object_factory_new
+         73   48 00006720 atk_no_op_object_get_type
+         74   49 00006530 atk_no_op_object_new
+         75   4A 00009FC0 atk_object_add_relationship = _atk_registry_set_factory_type
+         76   4B 00009010 atk_object_connect_property_change_handler
+         77   4C 0000AAA0 atk_object_factory_create_accessible
+         78   4D 0000ADF0 atk_object_factory_get_accessible_type
+         79   4E 0000AC10 atk_object_factory_get_type
+         80   4F 0000ACD0 atk_object_factory_invalidate = _atk_relation_get_type
+         81   50 00008240 atk_object_get_description
+         82   51 0000A400 atk_object_get_index_in_parent
+         83   52 00008800 atk_object_get_layer
+         84   53 000088F0 atk_object_get_mdi_zorder
+         85   54 00008430 atk_object_get_n_accessible_children
+         86   55 00008150 atk_object_get_name = _atk_object_remove_property_change_handler
+         87   56 00008330 atk_object_get_parent
+         88   57 00008710 atk_object_get_role
+         89   58 0000A330 atk_object_get_type
+         90   59 00009D90 atk_object_initialize
+         91   5A 0000A4C0 atk_object_notify_state_change
+         92   5B 00008520 atk_object_ref_accessible_child
+         93   5C 00008620 atk_object_ref_relation_set
+         94   5D 000089E0 atk_object_ref_state_set
+         95   5E 00009150 atk_object_remove_property_change_handler
+         96   5F 0000A160 atk_object_remove_relationship
+         97   60 00008C30 atk_object_set_description
+         98   61 00008AD0 atk_object_set_name
+         99   62 00008D80 atk_object_set_parent
+        100   63 00008EA0 atk_object_set_role
+        101   64 0000B170 atk_registry_get_factory
+        102   65 0000B130 atk_registry_get_factory_type
+        103   66 0000B0F0 atk_registry_get_type
+        104   67 0000AFC0 atk_registry_set_factory_type
+        105   68 0000B980 atk_relation_get_relation_type
+        106   69 0000BA50 atk_relation_get_target
+        107   6A 0000BCD0 atk_relation_get_type
+        108   6B 0000B7F0 atk_relation_new
+        109   6C 0000C5C0 atk_relation_set_add
+        110   6D 0000C3A0 atk_relation_set_contains
+        111   6E 0000C710 atk_relation_set_get_n_relations
+        112   6F 0000C800 atk_relation_set_get_relation
+        113   70 0000C930 atk_relation_set_get_relation_by_type
+        114   71 0000CBA0 atk_relation_set_get_type
+        115   72 0000CBE0 atk_relation_set_new
+        116   73 0000C4B0 atk_relation_set_remove
+        117   74 0000B620 atk_relation_type_for_name
+        118   75 0000B510 atk_relation_type_get_name
+        119   76 00017FF0 atk_relation_type_get_type = _g_object_set_qdata
+        120   77 0000BD30 atk_relation_type_register
+        121   78 000160D0 atk_remove_focus_tracker
+        122   79 000161B0 atk_remove_global_event_listener
+        123   7A 00016280 atk_remove_key_event_listener
+        124   7B 00009E90 atk_role_for_name
+        125   7C 0000A5C0 atk_role_get_localized_name
+        126   7D 0000A520 atk_role_get_name
+        127   7E 00017B90 atk_role_get_type
+        128   7F 0000A3B0 atk_role_register
+        129   80 0000CD10 atk_selection_add_selection
+        130   81 0000CED0 atk_selection_clear_selection
+        131   82 0000D270 atk_selection_get_selection_count
+        132   83 0000D9C0 atk_selection_get_type
+        133   84 0000D440 atk_selection_is_child_selected
+        134   85 0000D090 atk_selection_ref_selection
+        135   86 0000D620 atk_selection_remove_selection
+        136   87 0000D810 atk_selection_select_all_selection
+        137   88 0000E000 atk_state_set_add_state
+        138   89 0000E140 atk_state_set_add_states
+        139   8A 0000E6E0 atk_state_set_and_sets
+        140   8B 0000E280 atk_state_set_clear_states
+        141   8C 0000E360 atk_state_set_contains_state
+        142   8D 0000E470 atk_state_set_contains_states
+        143   8E 0000ECB0 atk_state_set_get_type
+        144   8F 0000DF20 atk_state_set_is_empty
+        145   90 0000ECF0 atk_state_set_new
+        146   91 0000E8D0 atk_state_set_or_sets
+        147   92 0000E590 atk_state_set_remove_state
+        148   93 0000EAB0 atk_state_set_xor_sets
+        149   94 0000DCC0 atk_state_type_for_name
+        150   95 0000DBD0 atk_state_type_get_name
+        151   96 00018560 atk_state_type_get_type
+        152   97 0000DE00 atk_state_type_register
+        153   98 0000F010 atk_streamable_content_get_mime_type
+        154   99 0000EE30 atk_streamable_content_get_n_mime_types
+        155   9A 0000F220 atk_streamable_content_get_stream
+        156   9B 0000F3F0 atk_streamable_content_get_type
+        157   9C 00011B40 atk_table_add_column_selection
+        158   9D 00011790 atk_table_add_row_selection
+        159   9E 0000FCD0 atk_table_get_caption
+        160   9F 0000FB00 atk_table_get_column_at_index
+        161   A0 00010070 atk_table_get_column_description
+        162   A1 00010240 atk_table_get_column_extent_at = _atk_table_is_column_selected
+        163   A2 00010410 atk_table_get_column_header
+        164   A3 0000F720 atk_table_get_index_at
+        165   A4 0000FE90 atk_table_get_n_columns
+        166   A5 000105D0 atk_table_get_n_rows
+        167   A6 0000F930 atk_table_get_row_at_index
+        168   A7 00010790 atk_table_get_row_description = _atk_table_add_row_selection
+        169   A8 00010950 atk_table_get_row_extent_at
+        170   A9 00010B20 atk_table_get_row_header
+        171   AA 00011080 atk_table_get_selected_columns
+        172   AB 00010EA0 atk_table_get_selected_rows
+        173   AC 00010CE0 atk_table_get_summary
+        174   AD 000129C0 atk_table_get_type = _atk_text_get_caret_offset
+        175   AE 00011240 atk_table_is_column_selected
+        176   AF 00011400 atk_table_is_row_selected
+        177   B0 000115C0 atk_table_is_selected
+        178   B1 0000F510 atk_table_ref_at
+        179   B2 00011D30 atk_table_remove_column_selection
+        180   B3 00011960 atk_table_remove_row_selection
+        181   B4 00011EF0 atk_table_set_caption
+        182   B5 000120D0 atk_table_set_column_description
+        183   B6 000122A0 atk_table_set_column_header
+        184   B7 00012470 atk_table_set_row_description
+        185   B8 00012640 atk_table_set_row_header
+        186   B9 00012810 atk_table_set_summary
+        187   BA 00014500 atk_text_add_selection
+        188   BB 00014E40 atk_text_attribute_for_name
+        189   BC 00014D20 atk_text_attribute_get_name
+        190   BD 00018B20 atk_text_attribute_get_type
+        191   BE 00015040 atk_text_attribute_get_value
+        192   BF 00015750 atk_text_attribute_register
+        193   C0 00018CF0 atk_text_boundary_get_type
+        194   C1 00014B90 atk_text_get_bounded_ranges
+        195   C2 000139C0 atk_text_get_caret_offset
+        196   C3 000133F0 atk_text_get_character_at_offset
+        197   C4 00013FC0 atk_text_get_character_count
+        198   C5 00013B00 atk_text_get_character_extents
+        199   C6 00013E80 atk_text_get_default_attributes
+        200   C7 00014250 atk_text_get_n_selections
+        201   C8 00014100 atk_text_get_offset_at_point
+        202   C9 00014A10 atk_text_get_range_extents
+        203   CA 00013CF0 atk_text_get_run_attributes
+        204   CB 00014390 atk_text_get_selection
+        205   CC 00013290 atk_text_get_text
+        206   CD 00013540 atk_text_get_text_after_offset
+        207   CE 000136C0 atk_text_get_text_at_offset
+        208   CF 00013840 atk_text_get_text_before_offset
+        209   D0 00015690 atk_text_get_type
+        210   D1 00014640 atk_text_remove_selection
+        211   D2 000148D0 atk_text_set_caret_offset
+        212   D3 00014780 atk_text_set_selection
+        213   D4 00016070 atk_util_get_type
+        214   D5 00016540 atk_value_get_current_value
+        215   D6 00016770 atk_value_get_maximum_value
+        216   D7 000169A0 atk_value_get_minimum_value
+        217   D8 00016DC0 atk_value_get_type
+        218   D9 00016BE0 atk_value_set_current_value
+
+  Summary
+
+        1000 .bss
+        1000 .data
+        2000 .edata
+        1000 .idata
+        2000 .reloc
+        1000 .rsrc
+       19000 .text
