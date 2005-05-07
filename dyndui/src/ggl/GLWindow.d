@@ -22,7 +22,9 @@ private import ggl.Types;
 private import ggl.GLConfig;
 private import ddi.Drawable;
 private import ddi.WindowG;
+private import lib.gdkglext;
 
+/+
 private:
 extern(C)
 {
@@ -35,7 +37,7 @@ extern(C)
 	GdkGLWindow * gdk_window_get_gl_window(GdkWindow * window);
 	//#define gdk_window_get_gl_drawable(window)  this is macro that casts the result of gdk_window_get_gl_window to GdkGLDrawable.
 };
-
++/
 /**
  * OpenGL window which is located on-screen
  */

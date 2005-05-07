@@ -21,12 +21,6 @@ private
 {
 	Linker gtk_Linker;
 	Linker gthread_Linker;
-	
-	version(linux)
-	{
-		Linker gtk_Socket_Linker;
-		Linker gtk_Plug_Linker;
-	}
 }
 	
 private 
@@ -36,12 +30,12 @@ static this()
 	with (lib.loader)
 	{
 		gthread_Linker = new Linker(libPath ~ importLibs[LIBRARY.GTHREAD]);
-		gthread_Linker.link(gthreadLinks);
+		gthread_Linker.link( gthreadLinks );
 		
 		debug writefln("...Load gthread functions successful");
 		
 		gtk_Linker = new Linker(libPath ~ importLibs[LIBRARY.GTK]);
-		gtk_Linker.link(gtkLinks);
+		gtk_Linker.link( gtkLinks );
 		
 		/* 
 		   Only Linux version supports gtk_socket* and gtk_plug* functions 
@@ -49,11 +43,8 @@ static this()
 		*/
 		version(linux) 
 		{
-			gtk_Socket_Linker = new Linker(importLibs[LIBRARY.GTK]);
-			gtk_Plug_Linker = new Linker(importLibs[LIBRARY.GTK]);
-			
-			gtk_Socket_Linker.link(gtkSocketLinks);
-			gtk_Plug_Linker.link(gtkPlugLinks);
+			gtk_Linker.link( gtkSocketLinks );
+			gtk_Linker.link( gtkPlugLinks );
 		}
 			
 		debug writefln("...Load gtk functions successful");
@@ -65,17 +56,8 @@ static ~this()
 {
 	delete gtk_Linker;
 	delete gthread_Linker;
-	version(linux)
-	{
-		delete gtk_Socket_Linker;
-		delete gtk_Plug_Linker;
-	}
-	debug writefln("* Finished static ~this(): gtk");
-}
 
-debug void main()
-{
-	writefln(" ...running main");
+	debug writefln("* Finished static ~this(): gtk");
 }
 
 extern(C) void	function(GThreadFunctions *vtable) g_thread_init;

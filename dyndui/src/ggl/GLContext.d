@@ -23,6 +23,9 @@ private import dui.ObjectG;
 private import ggl.GLDrawable;
 private import ggl.GLConfig;
 
+private import lib.gdkglext;
+
+/+
 private:
 extern(C)
 {
@@ -36,7 +39,7 @@ extern(C)
 	int gdk_gl_context_get_render_type(GdkGLContext * glcontext);
 	GdkGLContext * gdk_gl_context_get_current();
 };
-
++/
 /**
  * OpenGL rendering context object
  */

@@ -44,6 +44,7 @@ import ggl.GLFont;
 import ggl.GLPixmap;
 import ggl.GLWidget;
 import ggl.GLWindow;
-import ggl.GLX11;
+version(linux) import ggl.GLX11;
+
 import ggl.GLArea;
 import ggl.GLCapability;

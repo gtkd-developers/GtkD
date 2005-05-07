@@ -25,7 +25,9 @@ private import ddi.WindowG;
 private import ddi.Drawable;
 private import ddi.Pixmap;
 
+private import lib.gdkglext;
 
+/+
 private:
 extern(C)
 {
@@ -38,6 +40,7 @@ extern(C)
 	GdkGLPixmap * gdk_pixmap_get_gl_pixmap(GdkPixmap * pixmap);
 	//#define gdk_pixmap_get_gl_drawable(pixmap) this is macro that casts the result of gdk_pixmap_get_gl_pixmap to GdkGLDrawable.
 };
++/
 
 /**
  * OpenGL pixmap which is maintained off-screen

@@ -30,7 +30,7 @@ private Linker pango_Linker;
 
 static this() 
 {	
-	pango_Linker = new Linker( lib.paths.libPath ~ lib.paths.importLibs[LIBRARY.PANGO] );
+	pango_Linker = new Linker( libPath ~ importLibs[LIBRARY.PANGO] );
 		
 	pango_Linker.link( pangoLinks );
 	debug writefln("* Finished static this(): pango");
@@ -42,11 +42,6 @@ static ~this()
 {
 	delete pango_Linker;
 	debug writefln("* Finished static ~this(): pango");
-}
-	
-debug void main() 
-{
-	writefln("Running main");
 }
 	
 //

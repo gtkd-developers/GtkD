@@ -19,6 +19,15 @@
 module ggl.GLArea;
 
 private import dui.DrawingArea;
+	
+private import dui.Widget;
+	
+private import ggl.GLCapability;
+private import ggl.GLConfig;
+private import ggl.GLContext;
+private import ggl.GLWidget;
+private import ggl.GLDrawable;
+private import ggl.Types;
 
 /**
  * DO NOT USE. A Simple widget with OpenGL Capabilities.
@@ -29,17 +38,7 @@ private import dui.DrawingArea;
  * \bug ** DO NOT USE ** subclassing GLArea doesn't work
  */
 abstract class GLArea : DrawingArea
-{
-	
-	private import dui.Widget;
-	
-	private import ggl.GLCapability;
-	private import ggl.GLConfig;
-	private import ggl.GLContext;
-	private import ggl.GLWidget;
-	private import ggl.GLDrawable;
-	private import ggl.Types;
-	
+{	
 	mixin GLCapability;
 	
 	/**
@@ -74,7 +73,5 @@ abstract class GLArea : DrawingArea
 	//{
 	//	printf("GLCapabilityT.resizeGL \n" );
 	//	return true;
-	//}
-
-	
+	//}	
 }

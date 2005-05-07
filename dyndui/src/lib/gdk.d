@@ -22,9 +22,9 @@ private Linker gdk_Pixbuffer_Linker;
 	
 static this()
 {
-	gdk_Linker = new Linker( lib.paths.libPath ~ lib.paths.importLibs[LIBRARY.GDK] );
+	gdk_Linker = new Linker( libPath ~ importLibs[LIBRARY.GDK] );
 	gdk_Linker.link( gdkLinks );
-	gdk_Pixbuffer_Linker = new Linker( lib.paths.libPath ~ lib.paths.importLibs[LIBRARY.GDK_PIXBUF] );
+	gdk_Pixbuffer_Linker = new Linker( libPath ~ importLibs[LIBRARY.GDK_PIXBUF] );
 	gdk_Pixbuffer_Linker.link( gdkPixbufferLinks );
 	debug writefln("* Finished static this(): gdk");
 }

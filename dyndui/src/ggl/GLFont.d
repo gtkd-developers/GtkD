@@ -19,14 +19,16 @@
 module ggl.GLFont;
 
 private import ggl.Types;
+private import lib.gdkglext;
 
+/+
 private:
 extern(C)
 {
 	PangoFont * gdk_gl_font_use_pango_font(PangoFontDescription * font_desc, int first, int count, int list_base);
 	PangoFont * gdk_gl_font_use_pango_font_for_display(GdkDisplay * display, PangoFontDescription * font_desc, int first, int count, int list_base);
 };
-
++/
 /**
  * Functions for font rendering in OpenGL
  */

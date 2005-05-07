@@ -22,6 +22,9 @@ private import ggl.Types;
 private import ggl.GLContext;
 private import ggl.GLConfig;
 
+private import lib.gdkglext;
+
+/+
 private:
 extern(C)
 {
@@ -36,7 +39,7 @@ extern(C)
 	void gdk_gl_drawable_get_size(GdkGLDrawable * gldrawable, gint * width, gint * height);
 	GdkGLDrawable * gdk_gl_drawable_get_current();
 };
-
++/
 /**
  * OpenGL rendering surface interface
  */

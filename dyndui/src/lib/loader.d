@@ -122,7 +122,7 @@ public class Linker
 		foreach( Symbol link; symbols ) 
 		{
 			*link.pointer = getSymbol(handle, link.name~"\0");
-			debug writefln("Loading...", link.name);
+			debug writefln("Loaded...", link.name);
 			if (*link.pointer is null)
 			{
 				writefln("failed to load: " ~ link.name);

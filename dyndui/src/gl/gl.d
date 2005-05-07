@@ -1115,16 +1115,11 @@ void glAccum( GLenum op, GLfloat value );
 
 void glMatrixMode( GLenum mode );
 
-void glOrtho( GLdouble left, GLdouble right,
-                                 GLdouble bottom, GLdouble top,
-                                 GLdouble near_val, GLdouble far_val );
+void glOrtho( GLdouble left, GLdouble right,GLdouble bottom, GLdouble top, GLdouble near_val, GLdouble far_val );
 
-void glFrustum( GLdouble left, GLdouble right,
-                                   GLdouble bottom, GLdouble top,
-                                   GLdouble near_val, GLdouble far_val );
+void glFrustum( GLdouble left, GLdouble right,GLdouble bottom, GLdouble top,GLdouble near_val, GLdouble far_val );
 
-void glViewport( GLint x, GLint y,
-                                    GLsizei width, GLsizei height );
+void glViewport( GLint x, GLint y,GLsizei width, GLsizei height );
 
 void glPushMatrix( );
 
@@ -1138,10 +1133,8 @@ void glLoadMatrixf( GLfloat *m );
 void glMultMatrixd( GLdouble *m );
 void glMultMatrixf( GLfloat *m );
 
-void glRotated( GLdouble angle,
-                                   GLdouble x, GLdouble y, GLdouble z );
-void glRotatef( GLfloat angle,
-                                   GLfloat x, GLfloat y, GLfloat z );
+void glRotated( GLdouble angle,GLdouble x, GLdouble y, GLdouble z );
+void glRotatef( GLfloat angle,GLfloat x, GLfloat y, GLfloat z );
 
 void glScaled( GLdouble x, GLdouble y, GLdouble z );
 void glScalef( GLfloat x, GLfloat y, GLfloat z );
@@ -1248,22 +1241,14 @@ void glColor3ub( GLubyte red, GLubyte green, GLubyte blue );
 void glColor3ui( GLuint red, GLuint green, GLuint blue );
 void glColor3us( GLushort red, GLushort green, GLushort blue );
 
-void glColor4b( GLbyte red, GLbyte green,
-                                   GLbyte blue, GLbyte alpha );
-void glColor4d( GLdouble red, GLdouble green,
-                                   GLdouble blue, GLdouble alpha );
-void glColor4f( GLfloat red, GLfloat green,
-                                   GLfloat blue, GLfloat alpha );
-void glColor4i( GLint red, GLint green,
-                                   GLint blue, GLint alpha );
-void glColor4s( GLshort red, GLshort green,
-                                   GLshort blue, GLshort alpha );
-void glColor4ub( GLubyte red, GLubyte green,
-                                    GLubyte blue, GLubyte alpha );
-void glColor4ui( GLuint red, GLuint green,
-                                    GLuint blue, GLuint alpha );
-void glColor4us( GLushort red, GLushort green,
-                                    GLushort blue, GLushort alpha );
+void glColor4b( GLbyte red, GLbyte green,GLbyte blue, GLbyte alpha );
+void glColor4d( GLdouble red, GLdouble green,GLdouble blue, GLdouble alpha );
+void glColor4f( GLfloat red, GLfloat green,GLfloat blue, GLfloat alpha );
+void glColor4i( GLint red, GLint green,GLint blue, GLint alpha );
+void glColor4s( GLshort red, GLshort green,GLshort blue, GLshort alpha );
+void glColor4ub( GLubyte red, GLubyte green,GLubyte blue, GLubyte alpha );
+void glColor4ui( GLuint red, GLuint green,GLuint blue, GLuint alpha );
+void glColor4us( GLushort red, GLushort green,GLushort blue, GLushort alpha );
 
 
 void glColor3bv( GLbyte *v );
@@ -1374,20 +1359,15 @@ void glRectsv( GLshort *v1, GLshort *v2 );
  * Vertex Arrays  (1.1)
  */
 
-void glVertexPointer( GLint size, GLenum type,
-                                       GLsizei stride, GLvoid *ptr );
+void glVertexPointer( GLint size, GLenum type,GLsizei stride, GLvoid *ptr );
 
-void glNormalPointer( GLenum type, GLsizei stride,
-                                       GLvoid *ptr );
+void glNormalPointer( GLenum type, GLsizei stride,GLvoid *ptr );
 
-void glColorPointer( GLint size, GLenum type,
-                                      GLsizei stride, GLvoid *ptr );
+void glColorPointer( GLint size, GLenum type,GLsizei stride, GLvoid *ptr );
 
-void glIndexPointer( GLenum type, GLsizei stride,
-                                      GLvoid *ptr );
+void glIndexPointer( GLenum type, GLsizei stride,GLvoid *ptr );
 
-void glTexCoordPointer( GLint size, GLenum type,
-                                         GLsizei stride, GLvoid *ptr );
+void glTexCoordPointer( GLint size, GLenum type,GLsizei stride, GLvoid *ptr );
 
 void glEdgeFlagPointer( GLsizei stride, GLvoid *ptr );
 
@@ -1397,11 +1377,9 @@ void glArrayElement( GLint i );
 
 void glDrawArrays( GLenum mode, GLint first, GLsizei count );
 
-void glDrawElements( GLenum mode, GLsizei count,
-                                      GLenum type, GLvoid *indices );
+void glDrawElements( GLenum mode, GLsizei count,GLenum type, GLvoid *indices );
 
-void glInterleavedArrays( GLenum format, GLsizei stride,
-                                           GLvoid *pointer );
+void glInterleavedArrays( GLenum format, GLsizei stride, GLvoid *pointer );
 
 
 /*
@@ -1412,15 +1390,11 @@ void glShadeModel( GLenum mode );
 
 void glLightf( GLenum light, GLenum pname, GLfloat param );
 void glLighti( GLenum light, GLenum pname, GLint param );
-void glLightfv( GLenum light, GLenum pname,
-                                 GLfloat *params );
-void glLightiv( GLenum light, GLenum pname,
-                                 GLint *params );
+void glLightfv( GLenum light, GLenum pname, GLfloat *params );
+void glLightiv( GLenum light, GLenum pname,GLint *params );
 
-void glGetLightfv( GLenum light, GLenum pname,
-                                    GLfloat *params );
-void glGetLightiv( GLenum light, GLenum pname,
-                                    GLint *params );
+void glGetLightfv( GLenum light, GLenum pname,GLfloat *params );
+void glGetLightiv( GLenum light, GLenum pname,GLint *params );
 
 void glLightModelf( GLenum pname, GLfloat param );
 void glLightModeli( GLenum pname, GLint param );
@@ -1452,36 +1426,21 @@ void glPixelStorei( GLenum pname, GLint param );
 void glPixelTransferf( GLenum pname, GLfloat param );
 void glPixelTransferi( GLenum pname, GLint param );
 
-void glPixelMapfv( GLenum map, GLint mapsize,
-                                    GLfloat *values );
-void glPixelMapuiv( GLenum map, GLint mapsize,
-                                     GLuint *values );
-void glPixelMapusv( GLenum map, GLint mapsize,
-                                     GLushort *values );
+void glPixelMapfv( GLenum map, GLint mapsize,GLfloat *values );
+void glPixelMapuiv( GLenum map, GLint mapsize,GLuint *values );
+void glPixelMapusv( GLenum map, GLint mapsize,GLushort *values );
 
 void glGetPixelMapfv( GLenum map, GLfloat *values );
 void glGetPixelMapuiv( GLenum map, GLuint *values );
 void glGetPixelMapusv( GLenum map, GLushort *values );
 
-void glBitmap( GLsizei width, GLsizei height,
-                                GLfloat xorig, GLfloat yorig,
-                                GLfloat xmove, GLfloat ymove,
-                                GLubyte *bitmap );
+void glBitmap( GLsizei width, GLsizei height,GLfloat xorig, GLfloat yorig,GLfloat xmove, GLfloat ymove,GLubyte *bitmap );
 
-void glReadPixels( GLint x, GLint y,
-                                    GLsizei width, GLsizei height,
-                                    GLenum format, GLenum type,
-                                    GLvoid *pixels );
+void glReadPixels( GLint x, GLint y,GLsizei width, GLsizei height,GLenum format, GLenum type,GLvoid *pixels );
 
-void glDrawPixels( GLsizei width, GLsizei height,
-                                    GLenum format, GLenum type,
-                                    GLvoid *pixels );
+void glDrawPixels( GLsizei width, GLsizei height,GLenum format, GLenum type,GLvoid *pixels );
 
-void glCopyPixels( GLint x, GLint y,
-                                    GLsizei width, GLsizei height,
-                                    GLenum type );
-
-
+void glCopyPixels( GLint x, GLint y,GLsizei width, GLsizei height,GLenum type );
 
 /*
  * Stenciling
@@ -1527,39 +1486,21 @@ void glGetTexEnviv( GLenum target, GLenum pname, GLint *params );
 void glTexParameterf( GLenum target, GLenum pname, GLfloat param );
 void glTexParameteri( GLenum target, GLenum pname, GLint param );
 
-void glTexParameterfv( GLenum target, GLenum pname,
-                                          GLfloat *params );
-void glTexParameteriv( GLenum target, GLenum pname,
-                                          GLint *params );
+void glTexParameterfv( GLenum target, GLenum pname,GLfloat *params );
+void glTexParameteriv( GLenum target, GLenum pname,GLint *params );
 
-void glGetTexParameterfv( GLenum target,
-                                           GLenum pname, GLfloat *params);
-void glGetTexParameteriv( GLenum target,
-                                           GLenum pname, GLint *params );
+void glGetTexParameterfv( GLenum target,GLenum pname, GLfloat *params);
+void glGetTexParameteriv( GLenum target,GLenum pname, GLint *params );
 
-void glGetTexLevelParameterfv( GLenum target, GLint level,
-                                                GLenum pname, GLfloat *params );
-void glGetTexLevelParameteriv( GLenum target, GLint level,
-                                                GLenum pname, GLint *params );
+void glGetTexLevelParameterfv( GLenum target, GLint level,GLenum pname, GLfloat *params );
+void glGetTexLevelParameteriv( GLenum target, GLint level,GLenum pname, GLint *params );
 
 
-void glTexImage1D( GLenum target, GLint level,
-                                    GLint internalFormat,
-                                    GLsizei width, GLint border,
-                                    GLenum format, GLenum type,
-                                    GLvoid *pixels );
+void glTexImage1D( GLenum target, GLint level,GLint internalFormat,GLsizei width, GLint border,GLenum format, GLenum type,GLvoid *pixels );
 
-void glTexImage2D( GLenum target, GLint level,
-                                    GLint internalFormat,
-                                    GLsizei width, GLsizei height,
-                                    GLint border, GLenum format, GLenum type,
-                                    GLvoid *pixels );
+void glTexImage2D( GLenum target, GLint level,GLint internalFormat,GLsizei width, GLsizei height,GLint border, GLenum format, GLenum type,GLvoid *pixels );
 
-void glGetTexImage( GLenum target, GLint level,
-                                     GLenum format, GLenum type,
-                                     GLvoid *pixels );
-
-
+void glGetTexImage( GLenum target, GLint level,GLenum format, GLenum type,GLvoid *pixels );
 
 /* 1.1 functions */
 
@@ -1569,55 +1510,22 @@ void glDeleteTextures( GLsizei n, GLuint *textures);
 
 void glBindTexture( GLenum target, GLuint texture );
 
-void glPrioritizeTextures( GLsizei n,
-                                            GLuint *textures,
-                                            GLclampf *priorities );
+void glPrioritizeTextures( GLsizei n,GLuint *textures,GLclampf *priorities );
 
-GLboolean glAreTexturesResident( GLsizei n,
-                                                  GLuint *textures,
-                                                  GLboolean *residences );
+GLboolean glAreTexturesResident( GLsizei n,GLuint *textures,GLboolean *residences );
 
 GLboolean glIsTexture( GLuint texture );
 
 
-void glTexSubImage1D( GLenum target, GLint level,
-                                       GLint xoffset,
-                                       GLsizei width, GLenum format,
-                                       GLenum type, GLvoid *pixels );
+void glTexSubImage1D( GLenum target, GLint level,GLint xoffset,GLsizei width, GLenum format,GLenum type, GLvoid *pixels );
+void glTexSubImage2D( GLenum target, GLint level,GLint xoffset, GLint yoffset,GLsizei width, GLsizei height,GLenum format, GLenum type,GLvoid *pixels );
+void glCopyTexImage1D( GLenum target, GLint level,GLenum internalformat,GLint x, GLint y,GLsizei width, GLint border );
 
+void glCopyTexImage2D( GLenum target, GLint level,GLenum internalformat,GLint x, GLint y,GLsizei width, GLsizei height,GLint border );
 
-void glTexSubImage2D( GLenum target, GLint level,
-                                       GLint xoffset, GLint yoffset,
-                                       GLsizei width, GLsizei height,
-                                       GLenum format, GLenum type,
-                                       GLvoid *pixels );
+void glCopyTexSubImage1D( GLenum target, GLint level,GLint xoffset, GLint x, GLint y,GLsizei width );
 
-
-void glCopyTexImage1D( GLenum target, GLint level,
-                                        GLenum internalformat,
-                                        GLint x, GLint y,
-                                        GLsizei width, GLint border );
-
-
-void glCopyTexImage2D( GLenum target, GLint level,
-                                        GLenum internalformat,
-                                        GLint x, GLint y,
-                                        GLsizei width, GLsizei height,
-                                        GLint border );
-
-
-void glCopyTexSubImage1D( GLenum target, GLint level,
-                                           GLint xoffset, GLint x, GLint y,
-                                           GLsizei width );
-
-
-void glCopyTexSubImage2D( GLenum target, GLint level,
-                                           GLint xoffset, GLint yoffset,
-                                           GLint x, GLint y,
-                                           GLsizei width, GLsizei height );
-
-
-
+void glCopyTexSubImage2D( GLenum target, GLint level,GLint xoffset, GLint yoffset,GLint x, GLint y,GLsizei width, GLsizei height );
 
 /*
  * Evaluators

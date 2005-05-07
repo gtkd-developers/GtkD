@@ -17,7 +17,7 @@ private Linker gmodule_Linker;
 	
 static this()
 {
-	gmodule_Linker = new Linker(lib.paths.libPath ~ lib.paths.importLibs[LIBRARY.GMODULE] );
+	gmodule_Linker = new Linker(libPath ~ importLibs[LIBRARY.GMODULE] );
 	gmodule_Linker.link(gmoduleLinks);
 	debug writefln("* Finished static this(): gmodule");
 }

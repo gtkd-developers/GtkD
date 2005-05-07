@@ -21,7 +21,9 @@ module ggl.GLX11;
 
 private import ggl.Types;
 private import ggl.GLConfig;
+private import lib.gdkglext;
 
+/+
 private:
 extern(C)
 {
@@ -44,6 +46,7 @@ extern(C)
 	//#define     GDK_GL_PIXMAP_GLXPIXMAP         (glpixmap)
 	//#define     GDK_GL_WINDOW_GLXWINDOW         (glwindow)
 };
++/
 
 /**
  * Internal X-related functions

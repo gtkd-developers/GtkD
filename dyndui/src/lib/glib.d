@@ -19,7 +19,7 @@ private Linker glib_Linker;
 	
 static this()
 {
-	glib_Linker = new Linker(lib.paths.libPath ~ lib.paths.importLibs[LIBRARY.GLIB] );
+	glib_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLIB] );
 	glib_Linker.link(glibLinks);
 	debug writefln("* Finished static this(): glib");
 }

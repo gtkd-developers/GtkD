@@ -19,7 +19,9 @@
 module ggl.GL;
 
 private import ggl.Types;
+private import lib.gdkglext;
 
+/+
 private:
 extern(C)
 {
@@ -33,7 +35,7 @@ extern(C)
 	gboolean gdk_gl_query_gl_extension(char * extension);
 	//GdkGLProc gdk_gl_get_proc_address(char * proc_name);
 };
-
++/
 /**
  * Library initialization functions<br>
  * Functions to query OpenGL support information<br>

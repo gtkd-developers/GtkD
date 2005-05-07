@@ -19,7 +19,9 @@
 module ggl.GLDraw;
 
 private import ggl.Types;
+private import lib.gdkglext;
 
+/+
 private:
 extern(C)
 {
@@ -33,6 +35,7 @@ extern(C)
 	void gdk_gl_draw_icosahedron(gboolean solid);
 	void gdk_gl_draw_teapot(gboolean solid, double scale);
 };
++/
 
 /**
  * Functions for generating easily recognizable 3D geometric objects.

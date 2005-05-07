@@ -25,6 +25,9 @@ private import ggl.GLContext;
 private import ggl.GLDrawable;
 private import ggl.GLWindow;
 
+private import lib.gdkglext;
+
+/+
 private:
 extern(C)
 {
@@ -36,7 +39,7 @@ extern(C)
 	GdkGLWindow * gtk_widget_get_gl_window(GtkWidget * widget);
 	//#define gtk_widget_get_gl_drawable(widget)  this is macro that casts the result of gtk_widget_get_gl_window to GdkGLDrawable.
 };
-
++/
 /**
  * Functions for font rendering in OpenGL
  */

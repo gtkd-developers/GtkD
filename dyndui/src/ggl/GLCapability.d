@@ -19,14 +19,12 @@
 module ggl.GLCapability;
 
 
+private import std.stdio;
+private import ggl.GLWidget;
+private import gl.gl;
 
 template GLCapability()
 {
-
-	private import std.stdio;
-	private import ggl.GLWidget;
-	private import gl.gl;
-
 	//GLContext widgetGLContext;
 	//GLDrawable widgetGLDrawable;
 

@@ -19,7 +19,7 @@ private Linker gobject_Linker;
 
 static this()
 {
-	gobject_Linker = new Linker(lib.paths.libPath ~ lib.paths.importLibs[LIBRARY.GOBJECT]);
+	gobject_Linker = new Linker(libPath ~ importLibs[LIBRARY.GOBJECT]);
 	gobject_Linker.link(gobjectLinks);
 	debug writefln("* Finished static this(): gobject");
 }
@@ -28,11 +28,6 @@ static ~this()
 {
 	delete gobject_Linker;
 	debug writefln("* Finished static this(): gobject");
-}
-
-debug void main()
-{
-	writefln(" ...running main");
 }
 
 extern(C)
