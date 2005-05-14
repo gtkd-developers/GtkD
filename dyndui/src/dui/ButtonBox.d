@@ -21,6 +21,7 @@ module dui.ButtonBox;
 private import def.Types;
 private import dui.Widget;
 private import dui.Box;
+private import dui.Button;
 private import lib.gtk;
 
 /**
@@ -97,5 +98,10 @@ class ButtonBox : Box
 //		buttonBox.packStartDefaults(button);
 //		
 //	}
-
+	
+	public ButtonBox addButton(Button button)
+	{
+		packEnd(button, false, false, 7);
+		return this;
+	}
 }

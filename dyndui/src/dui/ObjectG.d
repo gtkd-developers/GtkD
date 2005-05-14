@@ -18,6 +18,8 @@
 
 module dui.ObjectG;
 
+private import std.gc;
+
 private import dui.Utils;
 
 private import def.Types;
@@ -27,6 +29,7 @@ private import dui.OGTK;
 
 private import ddi.Value;
 private import lib.gobject;
+private import dool.String;
 
 public:
 
@@ -52,11 +55,6 @@ else
  * \todo consider setting the ObjectG on the GObject data so that the ObjectG will
  *       have the same live span as the GObject (reusable from the Dispatcher for instance)
  */
-
-// moved out -------------------
-   private import dool.String;
-   private import std.gc;
-// -----------------------------
 
 public:
 class ObjectG : StatusInterface , OGTK

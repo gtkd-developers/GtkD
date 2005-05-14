@@ -23,6 +23,16 @@ private import def.Constants;
 private import dui.Container;
 private import lib.gtk;
 
+
+/****************************
+  This module is linux only 
+  
+  TODO: add version control
+  to prevent invalid symbol
+  function call on win32.
+ ****************************/
+
+
 /**
  * Container for widgets from other processes.
  */

@@ -119,6 +119,7 @@ import dui.Paned;
 // gtk_plug* functions not supported on Windows?
 version(linux) import dui.Plug; 
 
+import dui.PopupBox;
 import dui.Preview;
 import dui.ProgressBar;
 import dui.RadioButton;

@@ -67,7 +67,7 @@ const char[][LIBRARY.max+1] importLibs =
 
 // Specify the default path for the DUI dll's
 
-version(Windows) const char[] libPath = r"\Program Files\Common Files\GTK\2.4\bin\";
+version(Windows) const char[] libPath = r"\Program Files\Common Files\GTK\2.0\bin\";
 
 //   empty for linux because default path is known by ld
 

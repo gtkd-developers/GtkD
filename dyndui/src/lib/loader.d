@@ -1,5 +1,5 @@
 /*
- * MODULE: LibraryLoader.d 
+ * MODULE: loader.d 
  * 
  * Dynamic Library Loader for DUI
  *
@@ -96,7 +96,7 @@ public class Linker
 		else 
 		{}
 			
-		if (handle == null)
+		if (handle is null)
 			throw new Exception("Library load failed: " ~ lib);
 	}
 	

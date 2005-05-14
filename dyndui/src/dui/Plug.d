@@ -24,6 +24,14 @@ private import dui.Window;
 private import ddi.Display;
 private import lib.gtk;
 
+/****************************
+  This module is linux only 
+  
+  TODO: add version control
+  to prevent invalid symbol
+  function call on win32.
+ ****************************/
+
 /**
  * Plug - not implemented yet
  */

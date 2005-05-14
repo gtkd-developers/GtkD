@@ -36,11 +36,6 @@ static ~this()
 	debug writefln("* Finished static ~this(): gdk");
 }
 
-debug void main()
-{
-	writefln("Running main...");
-}
-
 extern(C)
 {
 	GdkBitmap*		function(GdkDrawable *drawable, gchar *data, gint width, gint height)

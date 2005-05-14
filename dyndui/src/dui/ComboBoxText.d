@@ -31,18 +31,19 @@ private import lib.gtk;
  * A combo box.
  */
 
-// moved out --------------------
-	private import std.stdio;
 	
-	private import dui.TreeIter;
-	private import dui.TreeModel;
+private import dui.TreeIter;
+private import dui.TreeModel;
 
-	private import dool.String;
-// ------------------------------
+private import dool.String;
 
 public:
 class ComboBoxText : ComboBox
 {
+	// Left this import inside because of wierd conflicts
+	// in dmd 0.123 (conflicts with ObjectG.std.gc;
+	private import std.stdio;
+
 	private int count = 0;
 	public int maxCount = 0;
 	

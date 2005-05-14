@@ -38,7 +38,7 @@ class HBox : Box
 		char[] author(){return "Antonio";}
 	}
 	
-	protected:
+	public:
     this(GtkWidget *gtkWidget)
     {
         super(gtkWidget);
