@@ -12,6 +12,10 @@ project directory to automatically compile dyndui and create dyndui.lib.
   modules.  Adding that path to sc.ini is a good idea.  That way you don't 
   have to provide the -I option every time. 
 
+- For your own dui-based projects, use the build tool for maximum ease of use:
+
+build myproject dyndui.lib -Xdyndui
+
 DEPENDENCIES:
 
 "dool" import modules must have been set up:
