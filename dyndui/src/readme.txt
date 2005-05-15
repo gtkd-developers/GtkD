@@ -3,7 +3,7 @@ WINDOWS BUILD INSTRUCTIONS
 Run build.bat:
 
 On windows platforms, type "build" at the command prompt in the dyndui 
-project directory to automatically compile dyndui and create dyndui.lib.
+project directory to automatically compile dyndui and create dui.lib.
 
 - Copy dyndui.lib to your dmd\lib directory
 
@@ -14,7 +14,7 @@ project directory to automatically compile dyndui and create dyndui.lib.
 
 - For your own dui-based projects, use the build tool for maximum ease of use:
 
-build myproject dyndui.lib -Xdyndui
+build myproject dui.lib -Xdui
 
 DEPENDENCIES:
 
