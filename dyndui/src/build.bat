@@ -1,1 +1,1 @@
-build.exe dyndui.d -allobj -clean
+build.exe build.d -allobj -clean
