@@ -7,3 +7,14 @@ version(build)
 }
 
 import dui.All;
+
+import dglib.AQueue;
+import dglib.ErrorG;
+import dglib.File;
+import dglib.IOChannel;
+import dglib.Plugin;
+import dglib.Spawn;
+import dglib.SpawnException;
+import dglib.StringG;
+import dglib.ThreadG;
+import dglib.TimerG;
