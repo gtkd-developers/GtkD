@@ -494,6 +494,11 @@ extern(C)
 			gtk_object_destroy;
 	void		function(GtkEditable * editable, gint start, gint end)
 			gtk_editable_select_region;
+	
+	// added manually by Antonio Monteiro
+	GtkType		function()
+			gtk_object_get_type;
+	
 	gboolean		function(GtkEditable * editable, gint * start, gint * end)
 			gtk_editable_get_selection_bounds;
 	void		function(GtkEditable * editable, gchar * new_text, gint new_text_length, gint * position)
@@ -3265,6 +3270,10 @@ Symbol[] gtkLinks =
 	{ "gtk_object_new",  cast(void**)& gtk_object_new },
 	{ "gtk_object_sink",  cast(void**)& gtk_object_sink },
 	{ "gtk_object_destroy",  cast(void**)& gtk_object_destroy },	
+	
+	//added manually be Antonio Monteiro
+	{ "gtk_object_get_type",  cast(void**)& gtk_object_get_type },	
+	
 	{ "gtk_editable_select_region",  cast(void**)& gtk_editable_select_region },
 	{ "gtk_editable_get_selection_bounds",  cast(void**)& gtk_editable_get_selection_bounds },
 	{ "gtk_editable_insert_text",  cast(void**)& gtk_editable_insert_text },
