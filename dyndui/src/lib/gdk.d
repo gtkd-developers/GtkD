@@ -423,92 +423,92 @@ extern(C)
 			gdk_window_set_cursor;
 			
 			
-	// added manually by Antonio Monteiro
-	GType   function()
-			gdk_window_object_get_type;
-	GdkWindow*    function                   (GdkWindow     *parent,
-													GdkWindowAttr *attributes,
-													gint           attributes_mask)
-			gdk_window_new;
-	void          function               (GdkWindow     *window)
-			gdk_window_destroy;
-	GdkWindowType function       (GdkWindow     *window)
-			gdk_window_get_window_type;
-	GdkWindow*    function            (gint          *win_x,
-													gint          *win_y)
-			gdk_window_at_pointer;
-	void          function                  (GdkWindow     *window)
-			gdk_window_show;
-	void          function                  (GdkWindow     *window)
-			gdk_window_hide;
-	void          function              (GdkWindow     *window)
-			gdk_window_withdraw;
-	void          function         (GdkWindow     *window)
-			gdk_window_show_unraised;
-	void          function                  (GdkWindow     *window,
-													gint           x,
-													gint           y)
-			gdk_window_move;
-	void          function                (GdkWindow     *window,
-													gint           width,
-													gint           height)
-			gdk_window_resize;
-	void          function           (GdkWindow     *window,
-													gint           x,
-													gint           y,
-													gint           width,
-													gint           height)
-			gdk_window_move_resize;
-	void          function              (GdkWindow     *window,
-													GdkWindow     *new_parent,
-													gint           x,
-													gint           y)
-			gdk_window_reparent;
-	void          function                 (GdkWindow     *window)
-			gdk_window_clear;
-	void          function            (GdkWindow     *window,
-													gint           x,
-													gint           y,
-													gint           width,
-													gint           height)
-			gdk_window_clear_area;
-	void          function          (GdkWindow     *window,
-													gint           x,
-													gint           y,
-													gint           width,
-													gint           height)
-			gdk_window_clear_area_e;
-	void          function                 (GdkWindow     *window)
-			gdk_window_raise;
-	void          function                 (GdkWindow     *window)
-			gdk_window_lower;
-	void          function                 (GdkWindow     *window,
-													guint32        timestamp)
-			gdk_window_focus;
-	void          function         (GdkWindow     *window,
-													gpointer       user_data)
-			gdk_window_set_user_data;
-	void          function (GdkWindow     *window,
-													gboolean       override_redirect)
-			gdk_window_set_override_redirect;
-	void          function      (GdkWindow     *window,
-								gboolean       accept_focus)
-			gdk_window_set_accept_focus;
-	void          function      (GdkWindow     *window,
-								gboolean       focus_on_map)
-			gdk_window_set_focus_on_map;
-	void          function            (GdkWindow     *window,
-													GdkFilterFunc  funct,
-													gpointer       data)
-			gdk_window_add_filter;
-	void          function         (GdkWindow     *window,
-													GdkFilterFunc  funct,
-													gpointer       data)
-			gdk_window_remove_filter;
-	void          function                (GdkWindow *window,
-													gint       dx,
-													gint       dy)
-			gdk_window_scroll;
+//	// added manually by Antonio Monteiro
+//	GType   function()
+//			gdk_window_object_get_type;
+//	GdkWindow*    function                   (GdkWindow     *parent,
+//													GdkWindowAttr *attributes,
+//													gint           attributes_mask)
+//			gdk_window_new;
+//	void          function               (GdkWindow     *window)
+//			gdk_window_destroy;
+//	GdkWindowType function       (GdkWindow     *window)
+//			gdk_window_get_window_type;
+//	GdkWindow*    function            (gint          *win_x,
+//													gint          *win_y)
+//			gdk_window_at_pointer;
+//	void          function                  (GdkWindow     *window)
+//			gdk_window_show;
+//	void          function                  (GdkWindow     *window)
+//			gdk_window_hide;
+//	void          function              (GdkWindow     *window)
+//			gdk_window_withdraw;
+//	void          function         (GdkWindow     *window)
+//			gdk_window_show_unraised;
+//	void          function                  (GdkWindow     *window,
+//													gint           x,
+//													gint           y)
+//			gdk_window_move;
+//	void          function                (GdkWindow     *window,
+//													gint           width,
+//													gint           height)
+//			gdk_window_resize;
+//	void          function           (GdkWindow     *window,
+//													gint           x,
+//													gint           y,
+//													gint           width,
+//													gint           height)
+//			gdk_window_move_resize;
+//	void          function              (GdkWindow     *window,
+//													GdkWindow     *new_parent,
+//													gint           x,
+//													gint           y)
+//			gdk_window_reparent;
+//	void          function                 (GdkWindow     *window)
+//			gdk_window_clear;
+//	void          function            (GdkWindow     *window,
+//													gint           x,
+//													gint           y,
+//													gint           width,
+//													gint           height)
+//			gdk_window_clear_area;
+//	void          function          (GdkWindow     *window,
+//													gint           x,
+//													gint           y,
+//													gint           width,
+//													gint           height)
+//			gdk_window_clear_area_e;
+//	void          function                 (GdkWindow     *window)
+//			gdk_window_raise;
+//	void          function                 (GdkWindow     *window)
+//			gdk_window_lower;
+//	void          function                 (GdkWindow     *window,
+//													guint32        timestamp)
+//			gdk_window_focus;
+//	void          function         (GdkWindow     *window,
+//													gpointer       user_data)
+//			gdk_window_set_user_data;
+//	void          function (GdkWindow     *window,
+//													gboolean       override_redirect)
+//			gdk_window_set_override_redirect;
+//	void          function      (GdkWindow     *window,
+//								gboolean       accept_focus)
+//			gdk_window_set_accept_focus;
+//	void          function      (GdkWindow     *window,
+//								gboolean       focus_on_map)
+//			gdk_window_set_focus_on_map;
+//	void          function            (GdkWindow     *window,
+//													GdkFilterFunc  funct,
+//													gpointer       data)
+//			gdk_window_add_filter;
+//	void          function         (GdkWindow     *window,
+//													GdkFilterFunc  funct,
+//													gpointer       data)
+//			gdk_window_remove_filter;
+//	void          function                (GdkWindow *window,
+//													gint       dx,
+//													gint       dy)
+//			gdk_window_scroll;
 	
 		
 			
@@ -700,34 +700,34 @@ Symbol[] gdkLinks =
 	{ "gdk_window_set_back_pixmap",  cast(void**)& gdk_window_set_back_pixmap },
 	{ "gdk_window_set_cursor",  cast(void**)& gdk_window_set_cursor },
 	
-	// added manualy by Antonio Monteiro
-	
-	{ "gdk_window_object_get_type",  cast(void**)& gdk_window_object_get_type },
-	{ "gdk_window_new",  cast(void**)& gdk_window_new },
-	{ "gdk_window_destroy",  cast(void**)& gdk_window_destroy },
-	{ "gdk_window_get_window_type",  cast(void**)& gdk_window_get_window_type },
-	{ "gdk_window_at_pointer",  cast(void**)& gdk_window_at_pointer },
-	{ "gdk_window_show",  cast(void**)& gdk_window_show },
-	{ "gdk_window_hide",  cast(void**)& gdk_window_hide },
-	{ "gdk_window_withdraw",  cast(void**)& gdk_window_withdraw },
-	{ "gdk_window_show_unraised",  cast(void**)& gdk_window_show_unraised },
-	{ "gdk_window_move",  cast(void**)& gdk_window_move },
-	{ "gdk_window_resize",  cast(void**)& gdk_window_resize },
-	{ "gdk_window_move_resize",  cast(void**)& gdk_window_move_resize },
-	{ "gdk_window_reparent",  cast(void**)& gdk_window_reparent },
-	{ "gdk_window_clear",  cast(void**)& gdk_window_clear },
-	{ "gdk_window_clear_area",  cast(void**)& gdk_window_clear_area },
-	{ "gdk_window_clear_area_e",  cast(void**)& gdk_window_clear_area_e },
-	{ "gdk_window_raise",  cast(void**)& gdk_window_raise },
-	{ "gdk_window_lower",  cast(void**)& gdk_window_lower },
-	{ "gdk_window_focus",  cast(void**)& gdk_window_focus },
-	{ "gdk_window_set_user_data",  cast(void**)& gdk_window_set_user_data },
-	{ "gdk_window_set_override_redirect",  cast(void**)& gdk_window_set_override_redirect },
-	{ "gdk_window_set_accept_focus",  cast(void**)& gdk_window_set_accept_focus },
-	{ "gdk_window_set_focus_on_map",  cast(void**)& gdk_window_set_focus_on_map },
-	{ "gdk_window_add_filter",  cast(void**)& gdk_window_add_filter },
-	{ "gdk_window_remove_filter",  cast(void**)& gdk_window_remove_filter },
-	{ "gdk_window_scroll",  cast(void**)& gdk_window_scroll },
+//	// added manualy by Antonio Monteiro
+//	
+//	{ "gdk_window_object_get_type",  cast(void**)& gdk_window_object_get_type },
+//	{ "gdk_window_new",  cast(void**)& gdk_window_new },
+//	{ "gdk_window_destroy",  cast(void**)& gdk_window_destroy },
+//	{ "gdk_window_get_window_type",  cast(void**)& gdk_window_get_window_type },
+//	{ "gdk_window_at_pointer",  cast(void**)& gdk_window_at_pointer },
+//	{ "gdk_window_show",  cast(void**)& gdk_window_show },
+//	{ "gdk_window_hide",  cast(void**)& gdk_window_hide },
+//	{ "gdk_window_withdraw",  cast(void**)& gdk_window_withdraw },
+//	{ "gdk_window_show_unraised",  cast(void**)& gdk_window_show_unraised },
+//	{ "gdk_window_move",  cast(void**)& gdk_window_move },
+//	{ "gdk_window_resize",  cast(void**)& gdk_window_resize },
+//	{ "gdk_window_move_resize",  cast(void**)& gdk_window_move_resize },
+//	{ "gdk_window_reparent",  cast(void**)& gdk_window_reparent },
+//	{ "gdk_window_clear",  cast(void**)& gdk_window_clear },
+//	{ "gdk_window_clear_area",  cast(void**)& gdk_window_clear_area },
+//	{ "gdk_window_clear_area_e",  cast(void**)& gdk_window_clear_area_e },
+//	{ "gdk_window_raise",  cast(void**)& gdk_window_raise },
+//	{ "gdk_window_lower",  cast(void**)& gdk_window_lower },
+//	{ "gdk_window_focus",  cast(void**)& gdk_window_focus },
+//	{ "gdk_window_set_user_data",  cast(void**)& gdk_window_set_user_data },
+//	{ "gdk_window_set_override_redirect",  cast(void**)& gdk_window_set_override_redirect },
+//	{ "gdk_window_set_accept_focus",  cast(void**)& gdk_window_set_accept_focus },
+//	{ "gdk_window_set_focus_on_map",  cast(void**)& gdk_window_set_focus_on_map },
+//	{ "gdk_window_add_filter",  cast(void**)& gdk_window_add_filter },
+//	{ "gdk_window_remove_filter",  cast(void**)& gdk_window_remove_filter },
+//	{ "gdk_window_scroll",  cast(void**)& gdk_window_scroll },
 	
 	
 	{ "gdk_event_get_type",  cast(void**)& gdk_event_get_type },

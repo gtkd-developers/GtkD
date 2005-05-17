@@ -161,33 +161,33 @@ extern(C)
 	void		function()
 			g_type_init;
 			
-	// added manually by Antonio Monteiro
-			
-	gboolean	 function          (GTypeInstance      *instanc)
-			g_type_check_instance;
-	GTypeInstance*   function     (GTypeInstance      *instanc,
-							 GType               iface_type)
-			g_type_check_instance_cast;
-	gboolean     function	(GTypeInstance      *instanc,
-							 GType               iface_type)
-			    g_type_check_instance_is_a;
-	GTypeClass*  function        (GTypeClass         *g_class,
-							 GType               is_a_type)
-			    g_type_check_class_cast;
-	gboolean     function(GTypeClass         *g_class,
-							 GType               is_a_type)
-			    g_type_check_class_is_a        ;
-	gboolean	 function(GType		     type)
-			g_type_check_is_value_type     ;
-	gboolean	 function(GValue		    *value)
-			g_type_check_value             ;
-	gboolean	 function(GValue		    *value,
-							 GType		     type)
-			g_type_check_value_holds	;
-	gboolean         function(GType               type,
-							 guint               flags)
-			g_type_test_flags              ;
-				
+//	// added manually by Antonio Monteiro
+//			
+//	gboolean	 function          (GTypeInstance      *instanc)
+//			g_type_check_instance;
+//	GTypeInstance*   function     (GTypeInstance      *instanc,
+//							 GType               iface_type)
+//			g_type_check_instance_cast;
+//	gboolean     function	(GTypeInstance      *instanc,
+//							 GType               iface_type)
+//			    g_type_check_instance_is_a;
+//	GTypeClass*  function        (GTypeClass         *g_class,
+//							 GType               is_a_type)
+//			    g_type_check_class_cast;
+//	gboolean     function(GTypeClass         *g_class,
+//							 GType               is_a_type)
+//			    g_type_check_class_is_a        ;
+//	gboolean	 function(GType		     type)
+//			g_type_check_is_value_type     ;
+//	gboolean	 function(GValue		    *value)
+//			g_type_check_value             ;
+//	gboolean	 function(GValue		    *value,
+//							 GType		     type)
+//			g_type_check_value_holds	;
+//	gboolean         function(GType               type,
+//							 guint               flags)
+//			g_type_test_flags              ;
+//				
 			
 	gulong		function(gpointer inst, gchar * detailed_signal, GCallback c_handler, gpointer gobject, GConnectFlags connect_flags)
 			g_signal_connect_object;
@@ -262,17 +262,17 @@ Symbol[] gobjectLinks =
 	{ "g_signal_connect_object", cast(void**)& g_signal_connect_object },
 	{ "g_type_init",  cast(void**)& g_type_init },
 	
-	// added manually by Antonio Monteiro
-	
-	{ "g_type_check_instance",  cast(void**)& g_type_check_instance},
-	{ "g_type_check_instance_cast",  cast(void**)& g_type_check_instance_cast},
-	{ "g_type_check_instance_is_a",  cast(void**)& g_type_check_instance_is_a},
-	{ "g_type_check_class_cast",  cast(void**)& g_type_check_class_cast},
-	{ "g_type_check_class_is_a",  cast(void**)& g_type_check_class_is_a        },
-	{ "g_type_check_is_value_type",  cast(void**)& g_type_check_is_value_type     },
-	{ "g_type_check_value",  cast(void**)& g_type_check_value             },
-	{ "g_type_check_value_holds",  cast(void**)& g_type_check_value_holds	},
-	{ "g_type_test_flags",  cast(void**)& g_type_test_flags            },
+//	// added manually by Antonio Monteiro
+//	
+//	{ "g_type_check_instance",  cast(void**)& g_type_check_instance},
+//	{ "g_type_check_instance_cast",  cast(void**)& g_type_check_instance_cast},
+//	{ "g_type_check_instance_is_a",  cast(void**)& g_type_check_instance_is_a},
+//	{ "g_type_check_class_cast",  cast(void**)& g_type_check_class_cast},
+//	{ "g_type_check_class_is_a",  cast(void**)& g_type_check_class_is_a        },
+//	{ "g_type_check_is_value_type",  cast(void**)& g_type_check_is_value_type     },
+//	{ "g_type_check_value",  cast(void**)& g_type_check_value             },
+//	{ "g_type_check_value_holds",  cast(void**)& g_type_check_value_holds	},
+//	{ "g_type_test_flags",  cast(void**)& g_type_test_flags            },
 				
 
 ];
