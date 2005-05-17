@@ -298,6 +298,12 @@ printf("Pixbuf.trimTo 4\n" );
 	//void gdk_pixbuf_composite_color (GdkPixbuf * src, GdkPixbuf * dest, int dest_x, int dest_y, int dest_width, int dest_height, double offset_x, double offset_y, double scale_x, double scale_y, GdkInterpType interp_type, int overall_alpha, int check_x,
 	//        int check_y, int check_size, guint32 color1, guint32 color2);
 
+	
+	Pixbuf scaleSimple(int dest_width, int dest_height)
+	{
+		return new Pixbuf(gdk_pixbuf_scale_simple(gdkP(), dest_width, dest_height, InterpType.NEAREST));
+	}
+	
 	/**
 	 * Creates a scaled version of this pixbuf
 	 * @param dest_width

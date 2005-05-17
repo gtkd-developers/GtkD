@@ -26,6 +26,8 @@ private import lib.gobject;
 
 private import dool.String;
 
+private import ddi.Pixbuf;
+
 public:
 
 
@@ -45,8 +47,6 @@ class Value
 {
 	GValue * gValue;
 
-	//import ddi.Pixbuf;
-	
 	/**
 	 * Creates a new Value from a GValue
 	 */
@@ -284,14 +284,14 @@ class Value
 		this(v);
 	}
 
-//	this(Pixbuf pixbuf)
-//	{
-//		GValue* v = new GValue;
-//		//v.g_type = DUIType.PIXBUF;
-//		v.g_type = DUIType.POINTER;
-//		v.data0.v_pointer = cast(void*)(pixbuf.gdkP());
-//		this(v);
-//	}
+	this(Pixbuf pixbuf)
+	{
+		GValue* v = new GValue;
+		//v.g_type = DUIType.PIXBUF;
+		v.g_type = Pixbuf.getType();
+		v.data0.v_pointer = cast(void*)(pixbuf.gdkP());
+		this(v);
+	}
 
 	/**
 	 * Creates a new Value from a
