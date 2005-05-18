@@ -4,10 +4,13 @@ version(build)
 		pragma(target, "dui.lib");
 	version(linux)
 		pragma(target, "libdui.a");
+	// Do not link this file in
+	pragma(nolink);
 }
 
 private: 
 
+import dango.All;
 import dango.Context;
 import dango.Font;
 import dango.Layout;
@@ -46,6 +49,8 @@ version(linux)
 	import dui.Plug; 
 	import dui.Socket;
 }
+
+import dui.All;
 import dui.AccelGroup;
 import dui.AccelLabel;
 import dui.Adjustment;
@@ -168,6 +173,7 @@ import dui.OGTK;
 import dui.WindowGroup;
 import dui.SizeGroup;
 
+import event.All;
 import event.Dispatcher;
 import event.Event;
 import event.ButtonListener;
