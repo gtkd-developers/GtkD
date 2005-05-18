@@ -5,6 +5,10 @@
  *
  */
 
+/**
+ * @revision 2005/05/17 AntonioMonteiro added Gtk2.6.x functions to event_box
+ */
+ 
 module	lib.gtk;
 
 private
@@ -523,10 +527,23 @@ extern(C)
 			gtk_editable_set_editable;
 	gboolean		function(GtkEditable * editable)
 			gtk_editable_get_editable;
+			
 	GType		function()
 			gtk_event_box_get_type;
 	GtkWidget*		function()
 			gtk_event_box_new;
+			
+	// added new event box functions
+	
+	gboolean   function (GtkEventBox *event_box)
+			gtk_event_box_get_visible_window;
+	void       function (GtkEventBox *event_box,gboolean     visible_window)
+			gtk_event_box_set_visible_window;
+	gboolean   function    (GtkEventBox *event_box)
+			gtk_event_box_get_above_child;
+	void       function    (GtkEventBox *event_box,gboolean     above_child)
+			gtk_event_box_set_above_child;
+
 	GtkWidget*		function(gchar *title,GtkWindow *parent,GtkFileChooserAction action, gchar *first_button_text,...)
 			gtk_file_chooser_dialog_new;
 	GtkWidget*		function( gchar *title,GtkWindow *parent,GtkFileChooserAction action,gchar *backend,gchar *first_button_text,...)
@@ -3289,6 +3306,14 @@ Symbol[] gtkLinks =
 	{ "gtk_editable_get_editable",  cast(void**)& gtk_editable_get_editable },
 	{ "gtk_event_box_get_type",  cast(void**)& gtk_event_box_get_type },
 	{ "gtk_event_box_new",  cast(void**)& gtk_event_box_new },
+	
+	// added new event box functions
+	
+	{ "gtk_event_box_get_visible_window",  cast(void**)& gtk_event_box_get_visible_window },
+	{ "gtk_event_box_set_visible_window",  cast(void**)& gtk_event_box_set_visible_window },
+	{ "gtk_event_box_get_above_child",  cast(void**)& gtk_event_box_get_above_child },
+	{ "gtk_event_box_set_above_child",  cast(void**)& gtk_event_box_set_above_child },
+	
 	{ "gtk_file_chooser_dialog_new",  cast(void**)& gtk_file_chooser_dialog_new },
 	{ "gtk_file_chooser_dialog_new_with_backend",  cast(void**)& gtk_file_chooser_dialog_new_with_backend },
 	{ "gtk_file_chooser_set_action",  cast(void**)& gtk_file_chooser_set_action },

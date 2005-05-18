@@ -55,11 +55,37 @@ class EventBox : Bin
 		return gtk_event_box_get_type();
 	}
 	/**
-	 * Creates a new Event box
+	 * Creates a new Event box.
+	 * The event box will be invisible by default (contrary to Gtk)
+	 * and the border will be set to 0
 	 */
 	this()
 	{
 		this(gtk_event_box_new());
+		gtk_event_box_set_visible_window(cast(GtkEventBox*)gtkW(), cast(gboolean)false);
+		setBorderWidth(0);
+
+	}
+	
+	void setAboveChild(bit aboveChild)
+	{
+		gtk_event_box_set_above_child(cast(GtkEventBox*)gtkW(), aboveChild);
+	}
+	
+
+	bit getAboveChild()
+	{
+		return gtk_event_box_get_above_child(cast(GtkEventBox*)gtkW()) != 0;
+	}
+	
+	void setVisibleWindow(bit visibleWindow)
+	{
+		gtk_event_box_set_visible_window(cast(GtkEventBox*)gtkW(), visibleWindow);
+	}
+	
+	bit getVisibleWindow()
+	{
+		return gtk_event_box_get_visible_window(cast(GtkEventBox*)gtkW()) != 0;
 	}
     
 }
