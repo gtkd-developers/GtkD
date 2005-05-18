@@ -1,8 +1,13 @@
-# python script for parsing a DUI D file to build dynamically callable
-# function list.
+# Python script for parsing a DUI D file to build dynamically callable
+# function list.  This script adds to the functionality of parse.py.
+# In this case all files in the current directory are parsed and ouput
+# to a single file
+#
+# To run type: python parseall.py
 #
 # 2005-02-21: John J. Reimer  -- updated
-
+# 2005-05-18  JJR - updated instructions
+# 
 # In order to reduce code complexity, the following assumptions
 # are made by this script:
 #
@@ -14,7 +19,7 @@
 #       on its own line
 #    6) All symbols to be parsed reside within the first brace level
 #       within extern(...).  Braces encompassing greater depth
-#	are ignored.
+#	    are ignored.
 
 import sys, os, re
 

@@ -31,9 +31,6 @@ private import lib.glib;
 private import dool.String;
 private import dool.io.Path;
 private import dool.io.FileException;
-
-private:
-
 private import dglib.ErrorG;
 
 /**

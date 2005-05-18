@@ -1,8 +1,11 @@
 # python script for parsing a DUI D file to build dynamically callable
 # function list.
 #
+# To run, type: python parse.py <filename>
+#
 # 2005-02-21: John J. Reimer  -- updated
-
+# 2005-05-18: JJR - updated instructions
+#
 # In order to reduce code complexity, the following assumptions
 # are made by this script:
 #

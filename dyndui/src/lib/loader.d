@@ -72,21 +72,29 @@ public struct Symbol
  * of the library and exported functions
  */
 
+alias void delegate( char[] ) failureDG;
+
 public class Linker
 {
 	private HANDLE  handle;
 	private char[]  lib;
+
+	// private bool continueOnFail = false;
 	
+	private failureDG onLoadFailure;
+
+	// -----------------------------------------------------
+
 	this( char[] lib )
 	{
 		this.lib = lib;
 		version(Windows)
 		{
-			 handle = LoadLibraryA( this.lib ~ ".dll\0" );
+			 handle = LoadLibraryA( this.lib ~ "\0" );
 		} 
 		version(linux)
 		{
-			handle = dlopen( this.lib ~ ".so\0", RTLD_NOW);
+			handle = dlopen( this.lib ~ "\0", RTLD_NOW);
 			// clear the error buffer
 			dlerror();
 		}
@@ -98,7 +106,22 @@ public class Linker
 			
 		if (handle is null)
 			throw new Exception("Library load failed: " ~ lib);
+
+		onLoadFailure = &(this.defaultFail);
 	}
+	
+	// ---------------------------------------
+
+	this (char[] lib, failureDG dg )
+	{
+		if (dg is null)
+			onLoadFailure = &(this.defaultFail);
+		else
+			onLoadFailure = dg;
+		this(lib);
+	}
+
+	// ----------------------------------------
 	
 	~this()
 	{
@@ -116,7 +139,26 @@ public class Linker
 		else
 		{}
 	}
+
+	/* *************************************
+
+		Default function to call on failure
+		
+	 ************************************** */
+
 	
+	void defaultFail( char[] message )
+	{	
+		writefln("failed to load: " ~ message );
+		throw new Exception("Function failed to load from library: " ~ this.lib);
+	}	
+
+	/* **************************************
+
+		link functions to function pointers
+ 
+     **************************************** */
+
 	void link( inout Symbol[] symbols )
 	{
 		foreach( Symbol link; symbols ) 
@@ -125,8 +167,7 @@ public class Linker
 			debug writefln("Loaded...", link.name);
 			if (*link.pointer is null)
 			{
-				writefln("failed to load: " ~ link.name);
-				throw new Exception("Function failed to load from library: " ~ this.lib);
+				onLoadFailure( link.name );
 			}
 		}
 	}
