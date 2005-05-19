@@ -28,7 +28,8 @@ enum LIBRARY
 	GTK_GLEXT,
 	GDK_GLEXT,
 	GL,
-	GLU
+	GLU,
+	GLEXT
 }
 
 version (Windows)
@@ -67,7 +68,8 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GTK_GLEXT:	"libgtkglext-x11-1.0.so",
 	LIBRARY.GDK_GLEXT:  "libgdkglext-x11-1.0.so",
 	LIBRARY.GL:			"libGL.so",
-	LIBRARY.GLU:		"libGLU.so"
+	LIBRARY.GLU:		"libGLU.so",
+	LIBRARY.GLEXT:		"libGL.so"
 	];
 }
 

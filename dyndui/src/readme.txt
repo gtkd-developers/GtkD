@@ -33,4 +33,6 @@ In order to set dool up, you must do one of the following:
 
 LINUX BUILD INSTRUCTIONS
 
+Run ./build.sh
+
 To be contininued...

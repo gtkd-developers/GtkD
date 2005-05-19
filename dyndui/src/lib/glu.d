@@ -1,8 +1,8 @@
-modules gl.glu;
+modules lib.glu;
 
 private
 {
-	import gl.gl;
+	import lib.gl;
 	import lib.loader;
 	import lib.paths;
 }
