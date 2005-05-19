@@ -20,8 +20,8 @@ module ggl.GLCapability;
 
 private import std.stdio;
 private import ggl.GLWidget;
-private import lib.gl;
 private import event.Event;
+private import lib.gl;
 
 template GLCapability()
 {

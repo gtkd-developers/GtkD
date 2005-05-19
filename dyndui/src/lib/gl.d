@@ -114,9 +114,9 @@ version(linux)
 			glGetError;
 	GLubyte*		function( GLenum name )
 			glGetString;
-	void		function( )
+	void		function()
 			glFinish;
-	void		function( )
+	void		function()
 			glFlush;
 	void		function( GLenum target, GLenum mode )
 			glHint;

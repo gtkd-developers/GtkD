@@ -12,13 +12,27 @@ private
 	import lib.paths;
 }
 
+private static char[][] failedNames;
+
+class FailResponse 
+{
+	public void onLoadFailure( char[] name )
+	{
+		writefln("Function ", name, " failed to load." );
+		failedNames ~= name;
+	}
+}
+
+FailResponse response;
+
 private Linker glext_Linker;
 
 // -------------------------------------------------
 
 static this()
 {
-		glext_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLEXT], &onLoadFailure );
+		response = new FailResponse;
+		glext_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLEXT], &(response.onLoadFailure) );
 		glext_Linker.link(glextLinks);
 }
 
@@ -28,8 +42,6 @@ static ~this()
 {
 	delete glext_Linker;
 }
-
-private static char[][] failedNames;
 
 // -------------------------------------------------
 /* 
@@ -51,14 +63,6 @@ public bool isAvailable( char[] extensionName )
 			return true;
 	}		
 }
-
-// -------------------------------------------------
-
-private void onLoadFailure( char[] name )
-{
-	writefln("Function ", name, " failed to load." );
-	failedNames ~= name;
-}	
 
 // -------------------------------------------------
 

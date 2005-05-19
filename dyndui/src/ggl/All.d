@@ -19,8 +19,7 @@
 module ggl.All;
 
 import lib.gl;
-version(linux)
-	import lib.glext;
+import lib.glext;
 import lib.glu;
 //import gl.GLwDrawA;
 //import gl.GLwDrawAP;

@@ -5,7 +5,7 @@ version(build)
 	version(linux)
 		pragma(target, "libdui.a");
 	// Do not link this file in
-	pragma(nolink);
+	// pragma(nolink);
 }
 
 private: 
@@ -231,5 +231,4 @@ import lib.paths;
 import lib.loader;
 import lib.gl;
 import lib.glu;
-version(linux)
-	import lib.glext;
+import lib.glext;
