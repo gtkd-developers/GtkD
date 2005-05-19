@@ -32,6 +32,16 @@ static ~this()
 private static char[][] failedNames;
 
 // -------------------------------------------------
+/* 
+ *	isAvailable() checks to see if the symbol loaded 
+ *  when the static module constructor was run.
+ *  If the symbol failed to load, the name will have
+ *  been recorded in the failedNames list;
+ *  This is useful for the extensions library
+ *  in case some extensions were not available.
+ *  I did this because I'm not sure what glext are
+ *  guaranteed to be available on a linux system.
+ */
 
 public bool isAvailable( char[] extensionName ) 
 {
@@ -46,7 +56,7 @@ public bool isAvailable( char[] extensionName )
 
 private void onLoadFailure( char[] name )
 {
-	debug writefln("Function ", name, " failed to load." );
+	writefln("Function ", name, " failed to load." );
 	failedNames ~= name;
 }	
 
