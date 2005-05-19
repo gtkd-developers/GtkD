@@ -25,7 +25,7 @@ static ~this()
 
 private void onLoadFailure( char[] msg )
 {
-	writefln("Function ", msg, " failed to laod" );
+	writefln("Function ", msg, " failed to load." );
 }	
 
 // -------------------------------------------------
