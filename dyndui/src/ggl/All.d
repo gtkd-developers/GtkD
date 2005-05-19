@@ -18,10 +18,9 @@
 
 module ggl.All;
 
-
-import gl.gl;
-import gl.glext;
-import gl.glu;
+import lib.gl;
+import lib.glext;
+import lib.glu;
 //import gl.GLwDrawA;
 //import gl.GLwDrawAP;
 //import gl.GLwMDrawA;
@@ -44,7 +43,9 @@ import ggl.GLFont;
 import ggl.GLPixmap;
 import ggl.GLWidget;
 import ggl.GLWindow;
-version(linux) import ggl.GLX11;
+
+version(linux) 
+	import ggl.GLX11;
 
 import ggl.GLArea;
 import ggl.GLCapability;

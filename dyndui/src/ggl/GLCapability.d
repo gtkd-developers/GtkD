@@ -21,7 +21,7 @@ module ggl.GLCapability;
 
 private import std.stdio;
 private import ggl.GLWidget;
-private import gl.gl;
+private import lib.gl;
 
 template GLCapability()
 {
