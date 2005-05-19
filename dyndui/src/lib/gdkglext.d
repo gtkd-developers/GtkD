@@ -5,6 +5,7 @@ private
 	import lib.loader;
 	import lib.paths;
 	import def.Types;
+	import ggl.Types;
 	debug import std.stdio;
 }
 
@@ -13,13 +14,7 @@ private Linker gtkgl_Linker;
 
 // quick add definitions for GL Extensions
 
-struct GdkGLConfig;
 struct GdkGLConfigMode;
-struct GdkGLContext;
-struct GdkGLDrawable;
-struct GdkGLPixmap;
-struct GdkGLWindow;
-struct VisualID;
 
 static this()
 {

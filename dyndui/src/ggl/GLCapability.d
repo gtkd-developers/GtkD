@@ -18,16 +18,15 @@
 
 module ggl.GLCapability;
 
-
 private import std.stdio;
 private import ggl.GLWidget;
 private import lib.gl;
+private import event.Event;
 
 template GLCapability()
 {
 	//GLContext widgetGLContext;
 	//GLDrawable widgetGLDrawable;
-
 	/**
 	 * Sets the GL capabilities for the widget
 	 */

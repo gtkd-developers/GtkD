@@ -1,4 +1,4 @@
-modules lib.glu;
+module lib.glu;
 
 private
 {
@@ -9,24 +9,31 @@ private
 
 private Linker glu_Linker;
 
+// -------------------------------------------------
+
+class FailResponse 
+{
+	public void onLoadFailure( char[] msg )
+	{
+		writefln("Function ", msg, " failed to load." );
+	}
+}
+
+FailResponse response;
+
+// -------------------------------------------------
+
 static this()
 {
-	glu_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLU], &onLoadFailure );
+	response = new FailResponse;
+	glu_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLU], &(response.onLoadFailure) );
 	glu_Linker.link(gluLinks);
 }
 
 static ~this()
 {
-	delete gl_Linker;
+	delete glu_Linker;
 }
-
-// -------------------------------------------------
-
-
-private void onLoadFailure( char[] msg )
-{
-	writefln("Function ", msg, " failed to load." );
-}	
 
 // -------------------------------------------------
 
@@ -216,10 +223,6 @@ lib.loader.Symbol[] gluLinks =
 	{ "gluUnProject",  cast(void**)& gluUnProject },
 	{ "gluUnProject4",  cast(void**)& gluUnProject4 }
 ];
-
-module gl.glu;
-
-import gl.gl;
 
 alias char uchar;
 

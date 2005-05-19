@@ -204,6 +204,22 @@ import event.CellListener;
 import event.SelectionListener;
 import event.TextListener;
 
+import ggl.All;
+import ggl.Types;
+import ggl.GL;
+import ggl.GLArea;
+import ggl.GLCapability;
+import ggl.GLConfig;
+import ggl.GLContext;
+import ggl.GLDraw;
+import ggl.GLDrawable;
+import ggl.GLFont;
+import ggl.GLPixmap;
+import ggl.GLWidget;
+import ggl.GLWindow;
+version(linux)
+	import ggl.GLX11;
+
 import lib.gdk;
 import lib.gdkglext;
 import lib.glib;
@@ -213,3 +229,7 @@ import lib.gtk;
 import lib.pango;
 import lib.paths;
 import lib.loader;
+import lib.gl;
+import lib.glu;
+version(linux)
+	import lib.glext;
