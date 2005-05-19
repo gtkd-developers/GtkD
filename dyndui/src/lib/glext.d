@@ -73,7 +73,7 @@ version(Windows)
 
 version(linux)
 	extern(C):
-
+/*
 	void		function(GLclampf, GLclampf, GLclampf, GLclampf)
 			glBlendColor;
 	void		function(GLenum)
@@ -242,6 +242,7 @@ version(linux)
 			glCompressedTexSubImage1D;
 	void		function(GLenum, GLint, void *)
 			glGetCompressedTexImage;
+*/
 	void		function(GLenum, GLenum, GLenum, GLenum)
 			glBlendFuncSeparate;
 	void		function(GLfloat)
@@ -1692,6 +1693,7 @@ version(linux)
 
 lib.loader.Symbol[] glextLinks =
 [
+/*
 	{ "glBlendColor",  cast(void**)& glBlendColor },
 	{ "glBlendEquation",  cast(void**)& glBlendEquation },
 	{ "glDrawRangeElements",  cast(void**)& glDrawRangeElements },
@@ -1776,6 +1778,7 @@ lib.loader.Symbol[] glextLinks =
 	{ "glCompressedTexSubImage2D",  cast(void**)& glCompressedTexSubImage2D },
 	{ "glCompressedTexSubImage1D",  cast(void**)& glCompressedTexSubImage1D },
 	{ "glGetCompressedTexImage",  cast(void**)& glGetCompressedTexImage },
+*/
 	{ "glBlendFuncSeparate",  cast(void**)& glBlendFuncSeparate },
 	{ "glFogCoordf",  cast(void**)& glFogCoordf },
 	{ "glFogCoordfv",  cast(void**)& glFogCoordfv },
@@ -2586,6 +2589,7 @@ const int GL_GLEXT_VERSION = 17;
 //#endif
 
 //#ifndef GL_ARB_imaging
+/+
 const int GL_CONSTANT_COLOR = 0x8001;
 const int GL_ONE_MINUS_CONSTANT_COLOR = 0x8002;
 const int GL_CONSTANT_ALPHA = 0x8003;
@@ -2762,7 +2766,7 @@ const int GL_PREVIOUS = 0x8578;
 const int GL_DOT3_RGB = 0x86AE;
 const int GL_DOT3_RGBA = 0x86AF;
 //#endif
-
++/
 //#ifndef GL_VERSION_1_4
 const int GL_BLEND_DST_RGB = 0x80C8;
 const int GL_BLEND_SRC_RGB = 0x80C9;
@@ -4915,7 +4919,7 @@ const int GL_ACTIVE_STENCIL_FACE_EXT = 0x8911;
 /*************************************************************/
 
 //#ifndef GL_VERSION_1_2
-const int GL_VERSION_1_2 = 1;
+// const int GL_VERSION_1_2 = 1;
 //#ifdef GL_GLEXT_PROTOTYPES
 
 //#endif /* GL_GLEXT_PROTOTYPES */
@@ -4960,7 +4964,7 @@ alias  void (* PFNGLCOPYTEXSUBIMAGE3DPROC) (GLenum target, GLint level, GLint xo
 //#endif
 
 //#ifndef GL_VERSION_1_3
-const int GL_VERSION_1_3 = 1;
+//const int GL_VERSION_1_3 = 1;
 //#ifdef GL_GLEXT_PROTOTYPES
 
 //#endif /* GL_GLEXT_PROTOTYPES */

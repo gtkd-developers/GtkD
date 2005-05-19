@@ -92,11 +92,13 @@ enum GLConfigAttrib
 
 /** GDK_GL_DONT_CARE */
 
-const uint GL_DONT_CARE        = 0xFFFFFFFF;
+// extern(D) needed to preven namespace
+// collision with lib.gl GL_DONT_CARE and GL_NONE - jjr
+extern(D) const uint GL_DONT_CARE        = 0xFFFFFFFF;
 
 /** GDK_GL_NONE */
 
-const int GL_NONE              = 0x8000;
+extern(D) const int GL_NONE              = 0x8000;
 
 /** enum GdkGLConfigCaveat */
 

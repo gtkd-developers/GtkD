@@ -204,7 +204,7 @@ import event.CellListener;
 import event.SelectionListener;
 import event.TextListener;
 
-/*
+
 import ggl.All;
 
 import ggl.Types;
@@ -221,7 +221,7 @@ import ggl.GLWidget;
 import ggl.GLWindow;
 version(linux)
 	import ggl.GLX11;
-*/
+
 import lib.gdk;
 import lib.gdkglext;
 import lib.glib;
