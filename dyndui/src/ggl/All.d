@@ -43,8 +43,7 @@ import ggl.GLFont;
 import ggl.GLPixmap;
 import ggl.GLWidget;
 import ggl.GLWindow;
-
-version(linux) 
+version(linux)
 	import ggl.GLX11;
 
 import ggl.GLArea;
