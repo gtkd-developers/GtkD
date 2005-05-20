@@ -14,16 +14,11 @@ private
 
 private static char[][] failedNames;
 
-class FailResponse 
+public void onLoadFailure( char[] name )
 {
-	public void onLoadFailure( char[] name )
-	{
-		writefln("Function ", name, " failed to load." );
-		failedNames ~= name;
-	}
+	writefln("Function ", name, " failed to load." );
+	failedNames ~= name;
 }
-
-FailResponse response;
 
 private Linker glext_Linker;
 
@@ -31,8 +26,7 @@ private Linker glext_Linker;
 
 static this()
 {
-		response = new FailResponse;
-		glext_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLEXT], &(response.onLoadFailure) );
+		glext_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLEXT], &onLoadFailure );
 		glext_Linker.link(glextLinks);
 }
 

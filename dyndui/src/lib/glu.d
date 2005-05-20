@@ -11,22 +11,16 @@ private Linker glu_Linker;
 
 // -------------------------------------------------
 
-class FailResponse 
+public void onLoadFailure( char[] msg )
 {
-	public void onLoadFailure( char[] msg )
-	{
-		writefln("Function ", msg, " failed to load." );
-	}
+	writefln("Function ", msg, " failed to load." );
 }
-
-FailResponse response;
 
 // -------------------------------------------------
 
 static this()
 {
-	response = new FailResponse;
-	glu_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLU], &(response.onLoadFailure) );
+	glu_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLU], &onLoadFailure );
 	glu_Linker.link(gluLinks);
 }
 

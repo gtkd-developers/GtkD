@@ -72,16 +72,16 @@ public struct Symbol
  * of the library and exported functions
  */
 
-alias void delegate( char[] ) failureDG;
+alias void function( char[] ) failureFN;
 
 public class Linker
 {
 	private HANDLE  handle;
-	private char[]  lib;
+	private static char[]  lib;
 
 	// private bool continueOnFail = false;
 	
-	private failureDG onLoadFailure;
+	private failureFN onLoadFailure;
 
 	// -----------------------------------------------------
 
@@ -107,17 +107,18 @@ public class Linker
 		if (handle is null)
 			throw new Exception("Library load failed: " ~ lib);
 
-		onLoadFailure = &(this.defaultFail);
+		if (onLoadFailure is null)
+			onLoadFailure = &(Linker.defaultFail);
 	}
 	
 	// ---------------------------------------
 
-	this (char[] lib, failureDG dg )
+	this (char[] lib, failureFN fn )
 	{
-		if (dg is null)
-			onLoadFailure = &(this.defaultFail);
+		if (fn is null)
+			onLoadFailure = &(Linker.defaultFail);
 		else
-			onLoadFailure = dg;
+			onLoadFailure = fn;
 		this(lib);
 	}
 
@@ -147,10 +148,10 @@ public class Linker
 	 ************************************** */
 
 	
-	void defaultFail( char[] message )
+	static void defaultFail( char[] message )
 	{	
 		writefln("failed to load: " ~ message );
-		throw new Exception("Function failed to load from library: " ~ this.lib);
+		throw new Exception("Function failed to load from library: " ~ Linker.lib);
 	}	
 
 	/* **************************************
