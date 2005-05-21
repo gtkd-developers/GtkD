@@ -244,6 +244,7 @@ class TestWindow : MainWindow
 		//add(table);
 		add(mainBox);
 		notebook.appendPage(new TestEntries,"Entry");
+		testEventBox(notebook);
 		testButtons(notebook);
 		notebook.appendPage(new TestStock,"Stock");
 		testLists(notebook);
@@ -315,6 +316,21 @@ class TestWindow : MainWindow
 		Notebook notebook = new Notebook();
 		notebook.setTabPos(PositionType.LEFT);
 		return notebook;
+	}
+
+	private import dui.EventBox;
+	
+	void testEventBox(Notebook notebook)
+	{
+		
+//		EventBox eventBox = new EventBox();
+//		eventBox.add(new Label("label on event box"));
+//		notebook.appendPage(eventBox,"Buttons");
+
+		//EventBox eventBox = new EventBox();
+		//eventBox.add(new Label("label on event box"));
+		notebook.appendPage(new Label("just a simple label"),"label");
+
 	}
 
 	void testButtons(Notebook notebook)

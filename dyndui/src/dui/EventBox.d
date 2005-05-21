@@ -26,7 +26,7 @@ private import lib.gtk;
 /**
  * A widget used to catch events for widgets which do not have their own window.
  */
-public:
+public
 class EventBox : Bin
 {
 	

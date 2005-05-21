@@ -1891,6 +1891,6 @@ alias void* GSignalEmissionHook;
 alias void* GClosureNotify;
 alias int   GSignalMatchType;
 
-alias GtkBin GtkEventBox;
+struct GtkEventBox;
 
 } // extern(C)
