@@ -18,10 +18,16 @@
 
 module ggl.GLCapability;
 
-private import std.stdio;
-private import ggl.GLWidget;
-private import event.Event;
-private import lib.gl;
+// SNEAKY MIXIN PROBLEM:
+//
+// These need to be public imports
+// or GLCompatibility will not compile
+// as a mixin in other modules!
+ 
+import std.stdio;
+import ggl.GLWidget;
+import event.Event;
+import lib.gl;
 
 template GLCapability()
 {

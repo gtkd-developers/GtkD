@@ -1,1 +1,1 @@
-build.exe build.d -allobj -I\Projects\D\dool\trunk\src -Xdool -clean
+build.exe build.d -allobj -noautoimport -I\projects\d\dool -Xdool -clean

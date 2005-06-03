@@ -1,3 +1,5 @@
+module build;
+
 version(build) 
 {
 	version(Windows)
@@ -5,10 +7,8 @@ version(build)
 	version(linux)
 		pragma(target, "libdui.a");
 	// Do not link this file in
-	// pragma(nolink);
+	pragma(nolink);
 }
-
-private: 
 
 import dango.All;
 import dango.Context;
@@ -204,9 +204,7 @@ import event.CellListener;
 import event.SelectionListener;
 import event.TextListener;
 
-
 import ggl.All;
-
 import ggl.Types;
 import ggl.GL;
 import ggl.GLArea;

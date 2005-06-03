@@ -28,6 +28,7 @@ private import ggl.GLContext;
 private import ggl.GLWidget;
 private import ggl.GLDrawable;
 private import ggl.Types;
+
 private import event.Event;
 
 /**
