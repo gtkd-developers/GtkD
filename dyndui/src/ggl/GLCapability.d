@@ -23,11 +23,16 @@ module ggl.GLCapability;
 // These need to be public imports
 // or GLCompatibility will not compile
 // as a mixin in other modules!
- 
-import std.stdio;
-import ggl.GLWidget;
-import event.Event;
-import lib.gl;
+
+// May as well be explicit about it:
+
+public
+{ 
+	import std.stdio;
+	import ggl.GLWidget;
+	import event.Event;
+	import lib.gl;
+}
 
 template GLCapability()
 {
