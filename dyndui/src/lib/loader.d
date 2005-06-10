@@ -33,6 +33,8 @@ version (Windows)
 
 version (linux)
 {
+	import std.c.linux.linux;
+	/*
 	extern(C)
 	{
 		const int RTLD_LAZY = 0x00001;		// Lazy function call binding
@@ -46,6 +48,7 @@ version (linux)
 		void* dlsym(void*,char*);
 		int   dlclose(void*);
 	}
+	*/
 	// getSymbol - cross-platform access point
 	alias dlsym getSymbol;
 }	
