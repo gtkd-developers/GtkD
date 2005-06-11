@@ -287,7 +287,7 @@ class Widget : DUIObject
 	 */
 	public void addOnMouseButtonPress(bit delegate(Widget,EventButton) dlg)
 	{
-		if ( onMouseButtonPress === null )
+		if ( onMouseButtonPress  is  null )
 		{
 			 onMouseButtonPress = new OnMouseButtonPress(this, EventMask.BUTTON_PRESS, new String("button_press_event"));
 		}
@@ -300,7 +300,7 @@ class Widget : DUIObject
 	 */
 	public void addOnMouseButtonRelease(bit delegate(Widget,EventButton) dlg)
 	{
-		if ( onMouseButtonRelease === null )
+		if ( onMouseButtonRelease  is  null )
 		onMouseButtonRelease = new OnMouseButtonRelease(this, EventMask.BUTTON_PRESS, new String("button_release_event"));
 		onMouseButtonRelease += dlg;
 	}
@@ -311,7 +311,7 @@ class Widget : DUIObject
 	 */
 	public void addOnMotionNotify(bit delegate(Widget,EventMotion) dlg)
 	{
-		if ( onMotionNotify === null )
+		if ( onMotionNotify  is  null )
 		onMotionNotify = new OnMotionNotify(this, EventMask.POINTER_MOTION,new String("motion_notify_event"));
 		onMotionNotify += dlg;
 	}
@@ -322,7 +322,7 @@ class Widget : DUIObject
 	 */
 	public void addOnDelete(bit delegate(Widget,Event) dlg)
 	{
-		if ( onDelete === null )
+		if ( onDelete  is  null )
 		onDelete = new OnDelete(this, EventMask.NONE,new String("delete_event"));
 		onDelete += dlg;
 	}
@@ -333,7 +333,7 @@ class Widget : DUIObject
 	 */
 	public void addOnDestroy(bit delegate(Widget,Event) dlg)
 	{
-		if ( onDestroy === null )
+		if ( onDestroy  is  null )
 		onDestroy = new OnDestroy(this, EventMask.NONE,new String("destroy_event"));
 		onDestroy += dlg;
 	}
@@ -344,7 +344,7 @@ class Widget : DUIObject
 	 */
 	public void addOnExpose(bit delegate(Widget,EventExpose) dlg)
 	{
-		if ( onExpose === null )
+		if ( onExpose  is  null )
 		onExpose = new OnExpose(this, EventMask.NONE,new String("expose_event"));
 		onExpose += dlg;
 	}
@@ -355,7 +355,7 @@ class Widget : DUIObject
 	 */
 	public void addOnNoExpose(bit delegate(Widget,Event) dlg)
 	{
-		if ( onNoExpose === null )
+		if ( onNoExpose  is  null )
 		onNoExpose = new OnNoExpose(this, EventMask.NONE,new String("no_expose_event"));
 		onNoExpose += dlg;
 	}
@@ -366,7 +366,7 @@ class Widget : DUIObject
 	 */
 	public void addOnKeyPress(bit delegate(Widget,EventKey) dlg)
 	{
-		if ( onKeyPress === null )
+		if ( onKeyPress  is  null )
 		{
 			onKeyPress = new OnKeyPress(this, EventMask.KEY_PRESS,new String("key-press-event"));
 		}
@@ -379,7 +379,7 @@ class Widget : DUIObject
 	 */
 	public void addOnKeyRelease(bit delegate(Widget,EventKey) dlg)
 	{
-		if ( onKeyRelease === null )
+		if ( onKeyRelease  is  null )
 		{
 			onKeyRelease = new OnKeyRelease(this, EventMask.KEY_RELEASE,new String("key-release-event"));
 		}
@@ -392,7 +392,7 @@ class Widget : DUIObject
 	 */
 	public void addOnEnterNotify(bit delegate(Widget,EventCrossing) dlg)
 	{
-		if ( onEnterNotify === null )
+		if ( onEnterNotify  is  null )
 		onEnterNotify = new OnEnterNotify(this, EventMask.ENTER_NOTIFY,new String("enter-notify-event"));
 		onEnterNotify += dlg;
 	}
@@ -403,7 +403,7 @@ class Widget : DUIObject
 	 */
 	public void addOnLeaveNotify(bit delegate(Widget,EventCrossing) dlg)
 	{
-		if ( onLeaveNotify === null )
+		if ( onLeaveNotify  is  null )
 		onLeaveNotify = new OnLeaveNotify(this, EventMask.LEAVE_NOTIFY,new String("leave-notify-event"));
 		onLeaveNotify += dlg;
 	}
@@ -414,7 +414,7 @@ class Widget : DUIObject
 	 */
 	public void addOnConfigure(bit delegate(Widget,EventConfigure) dlg)
 	{
-		if ( onConfigure === null )
+		if ( onConfigure  is  null )
 		onConfigure = new OnConfigure(this, EventMask.NONE,new String("configure_event"));
 		onConfigure += dlg;
 	}
@@ -425,7 +425,7 @@ class Widget : DUIObject
 	 */
 	public void addOnFocusIn(bit delegate(Widget,EventFocus) dlg)
 	{
-		if ( onFocusIn === null )
+		if ( onFocusIn  is  null )
 		onFocusIn = new OnFocusIn(this, EventMask.FOCUS_CHANGE,new String("focus_in_event"));
 		onFocusIn += dlg;
 	}
@@ -436,7 +436,7 @@ class Widget : DUIObject
 	 */
 	public void addOnFocusOut(bit delegate(Widget,EventFocus) dlg)
 	{
-		if ( onFocusOut === null )
+		if ( onFocusOut  is  null )
 		onFocusOut = new OnFocusOut(this, EventMask.FOCUS_CHANGE,new String("focus_out_event"));
 		onFocusOut += dlg;
 	}
@@ -447,7 +447,7 @@ class Widget : DUIObject
 	 */
 	public void addOnMap(bit delegate(Widget,Event) dlg)
 	{
-		if ( onMap === null )
+		if ( onMap  is  null )
 		onMap = new OnMap(this, EventMask.NONE,new String("map_event"));
 		onMap += dlg;
 	}
@@ -458,7 +458,7 @@ class Widget : DUIObject
 	 */
 	public void addOnUnmap(bit delegate(Widget,Event) dlg)
 	{
-		if ( onUnmap === null )
+		if ( onUnmap  is  null )
 		onUnmap = new OnUnmap(this, EventMask.NONE,new String("unmap_event"));
 		onUnmap += dlg;
 	}
@@ -469,7 +469,7 @@ class Widget : DUIObject
 	 */
 	public void addOnRealize(bit delegate(Widget,Event) dlg)
 	{
-		if ( onRealize === null )
+		if ( onRealize  is  null )
 		{
 			onRealize = new OnRealize(this, EventMask.NONE,new String("realize"));
 		}
@@ -482,7 +482,7 @@ class Widget : DUIObject
 	 */
 	public void addOnUnrealize(bit delegate(Widget,Event) dlg)
 	{
-		if ( onUnrealize === null )
+		if ( onUnrealize  is  null )
 		onUnrealize = new OnUnrealize(this, EventMask.NONE,new String("unrealize"));
 		onUnrealize += dlg;
 	}
@@ -493,7 +493,7 @@ class Widget : DUIObject
 	 */
 	public void addOnPropertyNotify(bit delegate(Widget,EventProperty) dlg)
 	{
-		if ( onPropertyNotify === null )
+		if ( onPropertyNotify  is  null )
 		onPropertyNotify = new OnPropertyNotify(this, EventMask.NONE,new String("property_notify_event"));
 		onPropertyNotify += dlg;
 	}
@@ -504,7 +504,7 @@ class Widget : DUIObject
 	 */
 	public void addOnSelectionClear(bit delegate(Widget,EventSelection) dlg)
 	{
-		if ( onSelectionClear === null )
+		if ( onSelectionClear  is  null )
 		onSelectionClear = new OnSelectionClear(this, EventMask.NONE,new String("selection_clear_event"));
 		onSelectionClear += dlg;
 	}
@@ -515,7 +515,7 @@ class Widget : DUIObject
 	 */
 	public void addOnSelectionRequest(bit delegate(Widget,EventSelection) dlg)
 	{
-		if ( onSelectionRequest === null )
+		if ( onSelectionRequest  is  null )
 		onSelectionRequest = new OnSelectionRequest(this, EventMask.NONE,new String("selection_request_event"));
 		onSelectionRequest += dlg;
 	}
@@ -526,7 +526,7 @@ class Widget : DUIObject
 	 */
 	public void addOnSelectionNotify(bit delegate(Widget,EventSelection) dlg)
 	{
-		if ( onSelectionNotify === null )
+		if ( onSelectionNotify  is  null )
 		onSelectionNotify = new OnSelectionNotify(this, EventMask.NONE,new String("selection_notify_event"));
 		onSelectionNotify += dlg;
 	}
@@ -537,7 +537,7 @@ class Widget : DUIObject
 	 */
 	public void addOnProximityIn(bit delegate(Widget,EventProximity) dlg)
 	{
-		if ( onProximityIn === null )
+		if ( onProximityIn  is  null )
 		onProximityIn = new OnProximityIn(this, EventMask.NONE,new String("proximity_in_event"));
 		onProximityIn += dlg;
 	}
@@ -548,7 +548,7 @@ class Widget : DUIObject
 	 */
 	public void addOnProximityOut(bit delegate(Widget,EventProximity) dlg)
 	{
-		if ( onProximityOut === null )
+		if ( onProximityOut  is  null )
 		onProximityOut = new OnProximityOut(this, EventMask.NONE,new String("proximity_out_event"));
 		onProximityOut += dlg;
 	}
@@ -559,7 +559,7 @@ class Widget : DUIObject
 	 */
 	public void addOnVisibilityNotify(bit delegate(Widget,EventVisibility) dlg)
 	{
-		if ( onVisibilityNotify === null )
+		if ( onVisibilityNotify  is  null )
 		onVisibilityNotify = new OnVisibilityNotify(this, EventMask.NONE,new String("visibility_notify_event"));
 		onVisibilityNotify += dlg;
 	}
@@ -570,7 +570,7 @@ class Widget : DUIObject
 	 */
 	public void addOnClient(bit delegate(Widget,EventClient) dlg)
 	{
-		if ( onClient === null )
+		if ( onClient  is  null )
 		onClient = new OnClient(this, EventMask.NONE,new String("client_event"));
 		onClient += dlg;
 	}
@@ -581,7 +581,7 @@ class Widget : DUIObject
 	 */
 	public void addOnWindowState(bit delegate(Widget,EventWindowState) dlg)
 	{
-		if ( onWindowState === null )
+		if ( onWindowState  is  null )
 		onWindowState = new OnWindowState(this, EventMask.NONE,new String("window_state_event"));
 		onWindowState += dlg;
 	}
@@ -615,7 +615,7 @@ class Widget : DUIObject
 
 	bit getAutoShow()
 	{	
-		return getData(new String("_AutoShow")) === null; // default == not set ==
+		return getData(new String("_AutoShow"))  is  null; // default == not set ==
 	}
 	
 	/**
@@ -1597,7 +1597,7 @@ class Widget : DUIObject
 	}
 	void modifyFont(String font)
 	{
-		if ( (font !== null) && (font.length>0) )
+		if ( (font !is  null) && (font.length>0) )
 		{
 			modifyFont(new Font(font));
 		}

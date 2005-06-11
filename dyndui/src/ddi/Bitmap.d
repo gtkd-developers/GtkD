@@ -63,7 +63,7 @@ class Bitmap
 	}
 	static Bitmap createFromData(Drawable drawable, String data, gint width, gint height)
 	{
-		if ( drawable !== null )
+		if ( drawable !is null )
 		{
 			return new Bitmap(gdk_bitmap_create_from_data(drawable.gDraw(), data.toStringz(), width, height));
 		}

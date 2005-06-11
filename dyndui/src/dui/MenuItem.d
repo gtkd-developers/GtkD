@@ -81,7 +81,7 @@ class MenuItem : Item
 	
 	void addOnActivate(void delegate(MenuItem) dlg)
 	{
-		if ( onActivate === null )
+		if ( onActivate  is  null )
 		{
 			onActivate = new OnActivate(this, EventMask.NONE, new String("activate"));
 		}
@@ -90,7 +90,7 @@ class MenuItem : Item
 	
 	void addOnActivateItem(void delegate(MenuItem) dlg)
 	{
-		if ( onActivateItem === null )
+		if ( onActivateItem  is  null )
 		{
 			onActivateItem = new OnActivateItem(this, EventMask.NONE, new String("activate_item"));
 		}
@@ -168,7 +168,7 @@ class MenuItem : Item
 	 */
 	void connect(MenuItemListener listener, String action)
 	{
-		if ( listener !== null )
+		if ( listener !is  null )
 		{
 			// can't do like this??? Dispatcher.getDispatcher().addMenuItemListener(listener,this,action);
 			Dispatcher dispatcher = Dispatcher.getDispatcher();

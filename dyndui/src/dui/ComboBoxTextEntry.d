@@ -63,7 +63,7 @@ class ComboBoxTextEntry : ComboBoxText
 
 	Entry getEntry()
 	{
-		if ( entry === null )
+		if ( entry  is  null )
 		{
 			entry = new Entry(getChild().gtkW());
 		}

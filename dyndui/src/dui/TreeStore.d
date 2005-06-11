@@ -28,6 +28,7 @@ private import dui.TreePath;
 private import ddi.Value;
 
 private import dool.String;
+private import std.stdio;
 private import ddi.Pixbuf;
 
 alias GObject GtkTreeStore;
@@ -35,6 +36,8 @@ alias GObject GtkTreeStore;
 private import dui.TreeIter;
 
 private import lib.gtk;
+
+debug=removeIter;
 
 /**
  * A tree model that represents a tree structure.
@@ -207,7 +210,7 @@ class TreeStore : TreeModel
 			//printf(">>>>>>>>>>>>> requesting value for %d\n",i);
 			cols ~= i;
 			void* value = treeNode.getNodeValue(i);
-			if ( value === null )
+			if ( value  is  null )
 			{
 				value = cast(void*)((new String(String.EMPTY_Z)).toStringz());
 			}
@@ -228,7 +231,10 @@ class TreeStore : TreeModel
 	 */
 	bit remove(TreeIter iter)
 	{
-		return gtk_tree_store_remove(obj(), iter.getIter()) == 0 ? false : true;
+		debug(removeIter) writefln("TreeStore.remove iter = %X", iter.getIter());
+		bit ok = gtk_tree_store_remove(obj(), iter.getIter()) == 0 ? false : true;
+		debug(removeIter) writefln("TreeStore.remove removed ok = ", ok);
+		return ok;
 	}
 	
 	/**
@@ -252,8 +258,8 @@ class TreeStore : TreeModel
 	void insertBefore(TreeIter iter, TreeIter parent, TreeIter  sibling)
 	{
 		gtk_tree_store_insert_before(obj(), iter.getIter(),
-				(parent===null) ? null : parent.getIter(), 
-				(sibling===null) ? null : sibling.getIter());
+				(parent is null) ? null : parent.getIter(), 
+				(sibling is null) ? null : sibling.getIter());
 	}
 	
 	/**
@@ -265,8 +271,8 @@ class TreeStore : TreeModel
 	void insertAfter(TreeIter iter, TreeIter parent, TreeIter  sibling)
 	{
 		gtk_tree_store_insert_after(obj(), iter.getIter(), 
-				(parent===null) ? null : parent.getIter(), 
-				(sibling===null) ? null : sibling.getIter());
+				(parent is null) ? null : parent.getIter(), 
+				(sibling is null) ? null : sibling.getIter());
 	}
 	
 	/**

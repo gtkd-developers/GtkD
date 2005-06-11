@@ -82,7 +82,7 @@ class ComboBox : Bin
 	 */
 	public void addOnChanged(void delegate() dlg)
 	{
-		if ( onChanged === null )
+		if ( onChanged  is  null )
 		{
 			onChanged = new OnChanged(this, EventMask.NONE, new String("changed"));
 		}
@@ -135,7 +135,7 @@ class ComboBox : Bin
 	
 	TreeModel getModel()
 	{
-		if ( treeModel === null )
+		if ( treeModel  is  null )
 		{
 			treeModel = new TreeModel(gtk_combo_box_get_model(getCBB()));
 		}

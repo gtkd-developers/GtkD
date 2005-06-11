@@ -102,7 +102,7 @@ class TestEntries : Table
 			break;
 			case "EntryVisible":
 				CheckButton cb = new CheckButton(button);
-				if ( cb !== null )
+				if ( cb !is  null )
 				{
 					entry.setVisibility(cb.getActive());
 				}

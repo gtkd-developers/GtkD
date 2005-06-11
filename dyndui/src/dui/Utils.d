@@ -30,7 +30,7 @@ module dui.Utils;
   */
 public: char * cChar(char[] str)
 {
-	if (str === null)
+	if (str  is  null)
 	{
 		return null;
 	}

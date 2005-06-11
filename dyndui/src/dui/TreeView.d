@@ -304,7 +304,7 @@ class TreeView : Container
 	TreeViewColumn getColumn(int n)
 	{
 		void* col = gtk_tree_view_get_column(gtkT(), n);
-		if ( col === null )
+		if ( col  is  null )
 		{
 			return null;
 		}
@@ -317,7 +317,7 @@ class TreeView : Container
 	void removeAllColumns()
 	{
 		GtkTreeViewColumn* col = gtk_tree_view_get_column(gtkT(), 0);
-		while ( col !== null )
+		while ( col !is  null )
 		{
 			gtk_tree_view_remove_column(gtkT(), col);
 			col = gtk_tree_view_get_column(gtkT(), 0);

@@ -86,7 +86,7 @@ class TextView : Container
 
 	public void addOnMoveCursor(void delegate(MovementStep, int, bit) dlg)
 	{
-		if ( onMoveCursor === null )
+		if ( onMoveCursor  is  null )
 		{
 			onMoveCursor = new OnMoveCursor(this, new String("move-cursor"));
 		}
@@ -95,7 +95,7 @@ class TextView : Container
 
 	public void addOnPopupMenu(void delegate(void*) dlg)
 	{
-		if (  onPopupMenu === null )
+		if (  onPopupMenu  is  null )
 		{
 			onPopupMenu = new OnPopupMenu(this, new String("populate-popup"));
 		}

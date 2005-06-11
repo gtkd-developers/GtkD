@@ -259,7 +259,7 @@ static char gray50_bits[] = [0x02, 0x01];
 
 		pixbuf = new Pixbuf("images/gtk-logo-rgb.gif", null);
 		
-		if (pixbuf.gdkP() === null)
+		if (pixbuf.gdkP()  is null)
 		{
 			printf("Failed to load image file gtk-logo-rgb.gif\n");
 			pixbuf = null;
@@ -329,7 +329,7 @@ static char gray50_bits[] = [0x02, 0x01];
 		buffer.insertWithTagsByName(iter, "Images. ", "heading");
   
 		buffer.insert(iter, "The buffer can have images in it: ");
-		if ( pixbuf !== null )
+		if ( pixbuf !is  null )
 		{
 			buffer.insertPixbuf(iter, scaled);
 			buffer.insertPixbuf(iter, pixbuf);
@@ -477,7 +477,7 @@ static char gray50_bits[] = [0x02, 0x01];
 				//g_assert_not_reached ();
 			}
 			
-			if ( widget !== null )
+			if ( widget !is  null )
 			{
 				view.addChildAtAnchor(widget,anchor);
 			}
@@ -490,7 +490,7 @@ static char gray50_bits[] = [0x02, 0x01];
 	{
 		while (iter.forwardChar())
 		{
-			if (iter.getChildAnchor() !== null ) //gtk_text_iter_get_child_anchor (iter))
+			if (iter.getChildAnchor() !is  null ) //gtk_text_iter_get_child_anchor (iter))
 			{
 				return true;
 			}

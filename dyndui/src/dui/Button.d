@@ -92,7 +92,7 @@ class Button : Bin
 	 */
 	public void addOnClick(void delegate() dlg)
 	{
-		if ( onClick === null )
+		if ( onClick is null )
 		{
 			onClick = new OnClick(this, EventMask.NONE, new String("clicked"));
 		}
@@ -105,7 +105,7 @@ class Button : Bin
 	 */
 	public void addOnButtonClicked(void delegate(Button) dlg)
 	{
-		if ( onButtonClicked === null )
+		if ( onButtonClicked  is  null )
 		{
 			onButtonClicked = new OnButtonClicked(this, EventMask.NONE, new String("clicked"));
 		}
@@ -118,7 +118,7 @@ class Button : Bin
 	 */
 	public void addOnButtonPressed(void delegate(Button) dlg)
 	{
-		if ( onButtonPressed === null )
+		if ( onButtonPressed  is  null )
 		{
 			onButtonPressed = new OnButtonPressed(this, EventMask.NONE, new String("pressed"));
 		}
@@ -131,7 +131,7 @@ class Button : Bin
 	 */
 	public void addOnButtonReleased(void delegate(Button) dlg)
 	{
-		if ( onButtonReleased === null )
+		if ( onButtonReleased  is  null )
 		{
 			onButtonReleased = new OnButtonReleased(this, EventMask.NONE, new String("released"));
 		}
@@ -144,7 +144,7 @@ class Button : Bin
 	 */
 	public void addOnButtonEnter(void delegate(Button) dlg)
 	{
-		if ( onButtonEnter === null )
+		if ( onButtonEnter  is  null )
 		{
 			onButtonEnter = new OnButtonEnter(this, EventMask.NONE, new String("enter"));
 		}
@@ -157,7 +157,7 @@ class Button : Bin
 	 */
 	public void addOnButtonLeave(void delegate(Button) dlg)
 	{
-		if ( onButtonLeave === null )
+		if ( onButtonLeave  is  null )
 		{
 			onButtonLeave = new OnButtonLeave(this, EventMask.NONE, new String("leave"));
 		}
@@ -170,7 +170,7 @@ class Button : Bin
 	 */
 	public void addOnButtonActivate(void delegate(Button) dlg)
 	{
-		if ( onButtonActivate === null )
+		if ( onButtonActivate is null )
 		{
 			onButtonActivate = new OnButtonActivate(this, EventMask.NONE, new String("activate"));
 		}

@@ -667,7 +667,7 @@ class TestWindow : MainWindow
 		r ~= Response.OK;
 		r ~= Response.OK;
 		r ~= Response.CANCEL;
-		if ( fcd === null )
+		if ( fcd  is  null )
 		{
 			fcd = new FileChooserDialog("File Chooser", this, FileChooserAction.OPEN, a , r);
 		}
@@ -688,7 +688,7 @@ class TestWindow : MainWindow
 
 	void showFileSel()
 	{
-		if ( fs === null )
+		if ( fs  is  null )
 		{
 			fs = new FileSelection("File Selection");
 		}
@@ -706,7 +706,7 @@ class TestWindow : MainWindow
 
 	void showColor()
 	{
-		if ( d === null )
+		if ( d  is  null )
 		{
 			d = new ColorSelectionDialog("Select the color");
 		}
@@ -716,7 +716,7 @@ class TestWindow : MainWindow
 
 	void showInput()	
 	{
-		if ( id === null )
+		if ( id  is  null )
 		{
 			id = new InputDialog();
 		}
@@ -733,7 +733,7 @@ class TestWindow : MainWindow
 	
 	void showFont()
 	{
-		if ( f === null )
+		if ( f  is  null )
 		{
 			f = new FontSelectionDialog("Select the font");
 		}

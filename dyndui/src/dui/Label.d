@@ -229,7 +229,7 @@ class Label : Misc
 	Widget getMnemonicWidget()
 	{
 		GtkWidget *gtkO= gtk_label_get_mnemonic_widget(gtkW()); 
-		if ( gtkO === null )
+		if ( gtkO  is  null )
 		{
 			null;
 		}

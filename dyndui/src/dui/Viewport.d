@@ -65,8 +65,8 @@ class Viewport : Bin
 	 */
 	this(Adjustment hAdjustment, Adjustment vAdjustment)
 	{
-		GtkAdjustment *h = (hAdjustment === null) ? null : hAdjustment.gtkO();
-		GtkAdjustment *v = (vAdjustment === null) ? null : vAdjustment.gtkO();
+		GtkAdjustment *h = (hAdjustment  is  null) ? null : hAdjustment.gtkO();
+		GtkAdjustment *v = (vAdjustment  is  null) ? null : vAdjustment.gtkO();
 		
 		this(gtk_viewport_new(h, v));	
 	}

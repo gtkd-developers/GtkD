@@ -61,7 +61,7 @@ class Notebook : Container
 
 	void addOnSwitchPage(void delegate(Notebook, uint) dlg)
 	{
-		if ( onSwitchPage === null )
+		if ( onSwitchPage  is  null )
 		{
 			onSwitchPage = new OnSwitchPage(this, EventMask.NONE, new String("switch-page"));
 		}

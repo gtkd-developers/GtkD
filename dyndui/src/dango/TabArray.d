@@ -103,7 +103,7 @@ class TabArray : OGTK
 	 */
 	void free()
 	{
-		if ( pngT() !== null )
+		if ( pngT() !is  null )
 		{
 			pango_tab_array_free(pngT());
 		}

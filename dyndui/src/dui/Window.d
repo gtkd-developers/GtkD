@@ -59,7 +59,7 @@ protected:
 	
 	void addOnDelete(bit delegate(Window, Event) dlg)
 	{
-		if ( onDelete === null )
+		if ( onDelete  is  null )
 		{
 			onDelete = new OnDelete(this, EventMask.NONE, new String("delete_event"));
 		}
@@ -68,7 +68,7 @@ protected:
 
 	void addOnDestroy(bit delegate(Window, Event) dlg)
 	{
-		if ( onDestroy === null )
+		if ( onDestroy  is  null )
 		{
 			onDestroy = new OnDestroy(this, EventMask.NONE, new String("destroy_event"));
 		}

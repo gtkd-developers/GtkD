@@ -53,7 +53,7 @@ class Value
 
 	~this()
 	{
-		if ( gValue !== null )
+		if ( gValue !is  null )
 		{
 			 g_value_unset(gValue);
 		}

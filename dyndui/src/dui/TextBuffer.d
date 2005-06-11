@@ -78,7 +78,7 @@ class TextBuffer : ObjectG
 
 	public void addOnChanged(void delegate() dlg)
 	{
-		if ( onChanged === null )
+		if ( onChanged  is  null )
 		{
 			onChanged = new OnChanged(this, new String("changed"));
 		}
@@ -87,7 +87,7 @@ class TextBuffer : ObjectG
 	
 	public void addOnInsert(void delegate(TextIter, String, int) dlg)
 	{
-		if ( onInsert === null )
+		if ( onInsert  is  null )
 		{
 			onInsert = new OnInsert(this, new String("insert-text"));
 		}
@@ -184,7 +184,7 @@ class TextBuffer : ObjectG
 	{
 
 		GObject* tt = gtk_text_buffer_get_tag_table(gtkO());
-		if ( tt === null )
+		if ( tt  is  null )
 		{
 			return null;
 		}
@@ -466,7 +466,7 @@ class TextBuffer : ObjectG
 	{
 		return new TextMark(
 			gtk_text_buffer_create_mark(gtkO(), 
-			(mark_name===null) ? null : mark_name.toStringz(), 
+			(mark_name is null) ? null : mark_name.toStringz(), 
 			where.getIter(), 
 			left_gravity));
 	}

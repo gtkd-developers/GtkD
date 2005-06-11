@@ -237,7 +237,7 @@ class TestImage : VBox
 	private Table loadTable(String[] imageFiles)
 	{
 		//Table table = new Table(1,1,false);
-		if ( table === null )
+		if ( table  is  null )
 		{
 			table = new Table(1,1,false);
 		}
@@ -285,7 +285,7 @@ class TestImage : VBox
 
 	void loadImages(Button button)
 	{
-		if ( fs === null )
+		if ( fs  is  null )
 		{
 			fs = new FileSelection("File Selection");
 		}

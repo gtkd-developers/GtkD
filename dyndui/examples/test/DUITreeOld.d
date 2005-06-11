@@ -62,7 +62,7 @@ class WidgetDescOld
 		this.duiName = duiName;
 		this.desc = desc;
 		this.completed = completed;
-		if ( parent !== null )
+		if ( parent !is  null )
 		{
 			parent.addChild(this);
 		}
@@ -70,7 +70,7 @@ class WidgetDescOld
 	
 	void addChild(WidgetDescOld child)
 	{
-		if ( tree === null )
+		if ( tree  is  null )
 		{
 			tree = new Tree();
 			getTreeItem().setSubtree(tree);
@@ -80,7 +80,7 @@ class WidgetDescOld
 	
 	TreeItem getTreeItem()
 	{
-		if ( treeItem === null)
+		if ( treeItem  is  null)
 		{
 			treeItem = new TreeItem(duiName);
 		}

@@ -66,7 +66,7 @@ class DrawingArea : Widget
 //	 */
 //	public void addOnRealize(bit delegate(Widget,Event) dlg)
 //	{
-//		if ( onRealize === null )
+//		if ( onRealize  is  null )
 //		{
 //			onRealize = new OnRealize(this, EventMask.NONE,new String("realize"));
 //		}
@@ -79,7 +79,7 @@ class DrawingArea : Widget
 //	 */
 //	public void addOnUnrealize(bit delegate(Widget,Event) dlg)
 //	{
-//		if ( onUnrealize === null )
+//		if ( onUnrealize  is  null )
 //		onUnrealize = new OnUnrealize(this, EventMask.NONE,new String("unrealize"));
 //		onUnrealize += dlg;
 //	}
@@ -90,7 +90,7 @@ class DrawingArea : Widget
 //	 */
 //	public void addOnExpose(bit delegate(Widget,EventExpose) dlg)
 //	{
-//		if ( onExpose === null )
+//		if ( onExpose  is  null )
 //		onExpose = new OnExpose(this, EventMask.NONE,new String("expose_event"));
 //		onExpose += dlg;
 //	}
@@ -101,7 +101,7 @@ class DrawingArea : Widget
 //	 */
 //	public void addOnNoExpose(bit delegate(Widget,Event) dlg)
 //	{
-//		if ( onNoExpose === null )
+//		if ( onNoExpose  is  null )
 //		onNoExpose = new OnNoExpose(this, EventMask.NONE,new String("no_expose_event"));
 //		onNoExpose += dlg;
 //	}
@@ -112,7 +112,7 @@ class DrawingArea : Widget
 	 */
 	public void addOnConfigure(bit delegate(Widget,EventConfigure) dlg)
 	{
-		if ( onConfigure === null )
+		if ( onConfigure  is  null )
 		onConfigure = new OnConfigure(this, EventMask.NONE,new String("configure_event"));
 		onConfigure += dlg;
 	}

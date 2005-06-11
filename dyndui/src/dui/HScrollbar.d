@@ -62,7 +62,7 @@ class HScrollbar : Scrollbar
 	 */
 	this(Adjustment adjustment)
 	{
-		GtkAdjustment * adj = (adjustment === null) ? null : adjustment.gtkO();
+		GtkAdjustment * adj = (adjustment  is  null) ? null : adjustment.gtkO();
 		this(gtk_hscrollbar_new(adj));
 	}
     

@@ -159,7 +159,7 @@ class Combo : HBox
 			//printf("Combo.getList *list %X\n",*(gtkCombo.list));
 		}
 		
-		if ( list === null )
+		if ( list  is  null )
 		{
 			list = new List(gtkCombo.list);
 		}
@@ -183,7 +183,7 @@ class Combo : HBox
 	 */
 	Entry getEntry()
 	{
-		if ( entry === null )
+		if ( entry  is  null )
 		{
 			entry = new Entry((cast(GtkCombo*)gtkW()).entry);
 		}

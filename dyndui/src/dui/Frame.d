@@ -158,7 +158,7 @@ class Frame : Bin
 	Widget getLabelWidget()
 	{
 		void* gw = gtk_frame_get_label_widget(cast(GtkFrame*)gtkW());
-		if ( gw === null )
+		if ( gw  is  null )
 		{
 			return null;
 		}

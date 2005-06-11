@@ -334,7 +334,7 @@ class TreeViewColumn : DUIObject
 	 */
 	void setWidget(Widget widget)
 	{
-		assert(widget!==null);
+		assert(widget!is null);
 		gtk_tree_view_column_set_widget(gtkO(), widget.gtkW());
 		
 	}

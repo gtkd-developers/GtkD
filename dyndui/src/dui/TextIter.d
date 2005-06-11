@@ -80,7 +80,7 @@ class TextIter
 
 	bit isNull()
 	{
-		return gtkTextIter === null;
+		return gtkTextIter  is  null;
 	}
 	
 	/**
@@ -107,7 +107,7 @@ class TextIter
 	TextBuffer getBuffer()
 	{
 		GtkTextBuffer* i = gtk_text_iter_get_buffer(getIter());
-		return (i===null) ? null : new TextBuffer(i);
+		return (i is null) ? null : new TextBuffer(i);
 	}
 	
 	/**
@@ -266,7 +266,7 @@ class TextIter
 	{
 		GObject* gtkAnchor = gtk_text_iter_get_child_anchor(getIter());
 		//printf("gtkAnchor = %X\n",gtkAnchor);
-		if ( gtkAnchor === null )
+		if ( gtkAnchor  is  null )
 		{
 			//printf("returning null\n");
 			return null;
@@ -833,7 +833,7 @@ class TextIter
 			flags, 
 			matchStart.getIter(), 
 			matchEnd.getIter(), 
-			(limit===null) ? null : limit.getIter()
+			(limit is null) ? null : limit.getIter()
 			) == 0 ? false : true;
 	}
 	
@@ -848,7 +848,7 @@ class TextIter
 	 */
 	bit backwardSearch(String str, TextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
 	{
-		return gtk_text_iter_backward_search(getIter(), str.toStringz(), flags, matchStart.getIter(), matchEnd.getIter(), (limit===null) ? null : limit.getIter()) == 0 ? false : true;
+		return gtk_text_iter_backward_search(getIter(), str.toStringz(), flags, matchStart.getIter(), matchEnd.getIter(), (limit is null) ? null : limit.getIter()) == 0 ? false : true;
 	}
 	
 	/*

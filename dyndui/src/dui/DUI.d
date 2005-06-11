@@ -185,7 +185,7 @@ public: class DUI
 	 */
 	public: static DUI dui (char[][] args)
 	{
-		if ( duiInstance === null )
+		if ( duiInstance  is  null )
 		{
 			g_thread_init(null);
 			gdk_threads_init();

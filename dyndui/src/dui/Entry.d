@@ -70,7 +70,7 @@ class Entry : Widget , Editable
 
 	void addOnActivate(void delegate() dlg)
 	{
-		if ( onActivate === null )
+		if ( onActivate  is  null )
 		{
 			onActivate = new OnActivate(this, EventMask.NONE,new String("activate"));
 		}
@@ -79,7 +79,7 @@ class Entry : Widget , Editable
 	
 	void addOnChanged(void delegate() dlg)
 	{
-		if ( onChanged === null )
+		if ( onChanged  is  null )
 		{
 			onChanged = new OnChanged(this, EventMask.NONE,new String("changed"));
 		}
@@ -88,7 +88,7 @@ class Entry : Widget , Editable
 	
 	void addOnDeleteText(void delegate() dlg)
 	{
-		if ( onDeleteText === null )
+		if ( onDeleteText  is  null )
 		{
 			onDeleteText = new OnDeleteText(this, EventMask.NONE,new String("delete-text"));
 		}
@@ -97,7 +97,7 @@ class Entry : Widget , Editable
 	
 	void addOnInsertText(void delegate() dlg)
 	{
-		if ( onInsertText === null )
+		if ( onInsertText  is  null )
 		{
 			onInsertText = new OnInsertText(this, EventMask.NONE,new String("insert-text"));
 		}
@@ -146,11 +146,11 @@ class Entry : Widget , Editable
 	this(String text, void delegate() dlg)
 	{
 		this();
-		if ( text !== null )
+		if ( text !is null )
 		{
 			setText(text);
 		}
-		if ( dlg !== null )
+		if ( dlg !is  null )
 		{
 			addOnActivate(dlg);
 		}

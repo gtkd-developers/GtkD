@@ -56,12 +56,12 @@ class FileChooserDialog : Dialog
 	}
 	this(String title, Window parent, FileChooserAction action,  String[] buttonsText=null, Response[] responses=null)
 	{
-		if ( buttonsText === null )
+		if ( buttonsText  is  null )
 		{
 			buttonsText ~= new String("OK");
 			buttonsText ~= new String("Cancel");
 		}
-		if ( responses === null )
+		if ( responses  is  null )
 		{
 			responses ~= Response.OK;
 			responses ~= Response.CANCEL;
@@ -82,12 +82,12 @@ class FileChooserDialog : Dialog
 	}
 	this(String title, Window parent, FileChooserAction action,  Stock[] buttons, Response[] responses)
 	{
-		if ( buttons === null )
+		if ( buttons  is  null )
 		{
 			buttons ~= Stock.OK;
 			buttons ~= Stock.CANCEL;
 		}
-		if ( responses === null )
+		if ( responses  is  null )
 		{
 			responses ~= Response.OK;
 			responses ~= Response.CANCEL;

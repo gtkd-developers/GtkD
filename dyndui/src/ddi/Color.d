@@ -141,7 +141,7 @@ class Color
 	 */
 	bit allocColor()
 	{
-		if ( systemColormap === null )
+		if ( systemColormap  is  null )
 		{
 			systemColormap = gdk_colormap_get_system();
 		}

@@ -133,7 +133,7 @@ class FileSelection : Dialog
 		char * str = sels[i];
 		String[] selections;
 		printf("address of selections = %X\n",selections);
-		while ( str !== null )
+		while ( str !is  null )
 		{
 			printf("str[%d] = %s\n",i,str);
 			selections ~= new String(str);

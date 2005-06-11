@@ -62,7 +62,7 @@ class TimerG
 	 */
 	~this()
 	{
-		if ( gTimer !== null )
+		if ( gTimer !is  null )
 		{
 			g_timer_destroy(gTimer);
 			gTimer = null;

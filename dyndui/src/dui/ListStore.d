@@ -165,7 +165,7 @@ class ListStore : TreeModel
 		for ( int i=0 ; i<getNColumns() ; i++ )
 		{
 			void* value = treeNode.getNodeValue(i);
-			if ( value === null )
+			if ( value  is  null )
 			{
 				value = String.EMPTY_Z;
 			}

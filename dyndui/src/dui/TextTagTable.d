@@ -92,7 +92,7 @@ class TextTagTable :
 	TextTag lookup(char[] name)
 	{
 		void* lk = gtk_text_tag_table_lookup(obj(), cChar(name));
-		if ( lk === null )
+		if ( lk  is  null )
 		{
 			return null;
 		}

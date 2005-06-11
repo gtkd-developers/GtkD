@@ -162,7 +162,7 @@ class Spawn
 		
 		ErrorG error = new ErrorG();
 		bit result =  g_spawn_async_with_pipes(
-			((workingDirectory===null) ? null : workingDirectory.toStringz()), 
+			((workingDirectory is null) ? null : workingDirectory.toStringz()), 
 			cast(char**)argv,
 			cast(char**)envp, 
 			flags, 
@@ -170,7 +170,7 @@ class Spawn
 			user_data, 
 			&child_pid,
 			standard_input, standard_output, standard_error,
-			(error===null? null : error.getGA())
+			(error is null? null : error.getGA())
 			) == 0 ? false : true;
 			
 			if ( error.getCode() != 0 )
@@ -344,9 +344,9 @@ class Spawn
 				//ErrorG error)
 	in
 	{
-		assert(command_line!==null);
-		assert(standard_output!==null);
-		assert(standard_error!==null);
+		assert(command_line!is null);
+		assert(standard_output!is null);
+		assert(standard_error!is null);
 	}
 	body
 	{
@@ -354,7 +354,7 @@ class Spawn
 		char* gOut;
 		char* gErr;
 		bit result = g_spawn_command_line_sync( command_line.toStringz(), &gOut, &gErr,
-				&exit_status, (error===null ? null : error.getGA()) ) == 0 ? false : true;
+				&exit_status, (error is null ? null : error.getGA()) ) == 0 ? false : true;
 
 		standard_output.setz(gOut);
 		standard_error.setz(gErr);

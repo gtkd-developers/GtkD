@@ -49,7 +49,7 @@ template Listener()
         void erase(Func func)
         {
             if (func in _listeners)
-                delete _listeners[func];
+                _listeners.remove(func);
         }
 
         Listener* opAddAssign(Func func)

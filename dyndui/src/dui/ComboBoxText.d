@@ -168,7 +168,7 @@ class ComboBoxText : ComboBox
 		bit end = false;
 		if ( model.getIterFirst(iter) )
 		{
-			while ( !end && iter !== null && !found )
+			while ( !end && iter !is  null && !found )
 			{
 				found = iter.getValueString(0).equals(text);
 				if ( !found )
@@ -207,7 +207,7 @@ class ComboBoxText : ComboBox
 		if ( model.getIterFirst(iter) )
 		{
 			int index = 0;
-			while ( !end && iter !== null && !found )
+			while ( !end && iter !is  null && !found )
 			{
 				iter.setModel(model);
 				writefln("try active %s == %s",text, iter.getValueString(0));

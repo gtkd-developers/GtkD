@@ -142,7 +142,7 @@ class InputStringDialog : Window
 	{
 		userString = new String();
 		hide();
-		if ( inputStringDelegate !== null )
+		if ( inputStringDelegate !is  null )
 		{
 			inputStringDelegate(new String());
 		}
@@ -152,7 +152,7 @@ class InputStringDialog : Window
 	{
 		userString = entry.getText();
 		hide();
-		if ( inputStringDelegate !== null )
+		if ( inputStringDelegate !is  null )
 		{
 			inputStringDelegate(userString);
 		}

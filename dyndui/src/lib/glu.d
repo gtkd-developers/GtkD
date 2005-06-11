@@ -7,6 +7,10 @@ private
 	import lib.paths;
 }
 
+
+/* Internal convenience typedefs */
+alias  GLvoid (*_GLUfuncptr)();
+
 private Linker glu_Linker;
 
 // -------------------------------------------------
@@ -469,5 +473,3 @@ alias   GLUtesselator GLUtriangulatorObj;
 
 const int GLU_TESS_MAX_COORD = cast(int)1.0e150;
 
-/* Internal convenience typedefs */
-alias  GLvoid (*_GLUfuncptr)();

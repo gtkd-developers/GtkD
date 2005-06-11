@@ -55,7 +55,7 @@ class CheckButton : ToggleButton
 	 */
 	public void addOnButtonClicked(void delegate(CheckButton) dlg)
 	{
-		if ( onButtonClicked === null )
+		if ( onButtonClicked  is  null )
 		{
 			onButtonClicked = new OnButtonClicked(this, EventMask.NONE, new String("clicked"));
 		}

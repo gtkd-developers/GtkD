@@ -111,7 +111,7 @@ class Dispatcher
 	public:
 	static Dispatcher getDispatcher()
 	{
-		if (dispatcher === null)
+		if (dispatcher  is  null)
 		{
 			dispatcher = new Dispatcher();
 		}

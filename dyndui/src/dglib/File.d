@@ -102,7 +102,7 @@ class File
 			filename.toStringz(),
 			gContents,
 			&length,
-			(error===null?null:error.getGA())) == 0 ? false : true;
+			(error is null?null:error.getGA())) == 0 ? false : true;
 		contents.set(*gContents, length);
 		return ok;
 	}
@@ -180,7 +180,7 @@ class File
 		gint fd = g_file_open_tmp(
 			tmpl.toStringz(), 
 			nu,
-			(error===null?null:error.getGA()));
+			(error is null?null:error.getGA()));
 		nameUsed.setz(*nu);
 		return fd;
 	}
@@ -195,7 +195,7 @@ class File
 	 */
 	static String readLink(String  filename, ErrorG error)
 	{
-		return String.newz(g_file_read_link(filename.toStringz(), (error===null?null:error.getGA())));
+		return String.newz(g_file_read_link(filename.toStringz(), (error is null?null:error.getGA())));
 	}
 
 
@@ -212,7 +212,7 @@ class File
 	this(String path, guint flags, ErrorG error)
 	{
 		path = new String(path);
-		this(g_dir_open(path.toStringz(), flags, (error===null?null:error.getGA())));
+		this(g_dir_open(path.toStringz(), flags, (error is null?null:error.getGA())));
 	}
 
 	this(String path)
@@ -223,7 +223,7 @@ class File
 	this(String path, bit create)
 	{
 		this(path, 0 , null);
-		if ( gDir === null && create)
+		if ( gDir is null && create)
 		{
 			mkdirs(path);
 			gDir = g_dir_open(path.toStringz(), 0, null);
@@ -237,7 +237,7 @@ class File
 	
 	String getPath()
 	{
-		if ( gDir !== null )
+		if ( gDir !is  null )
 		{
 			return path;
 		}
@@ -253,7 +253,7 @@ class File
 	 */
 	String  readName()
 	{
-		if ( gDir === null )
+		if ( gDir  is  null )
 		{
 			return new String();
 		}
@@ -268,7 +268,7 @@ class File
 	 */
 	void rewind()
 	{
-		if ( gDir === null )
+		if ( gDir  is  null )
 		{
 			return;
 		}
@@ -282,7 +282,7 @@ class File
 	 */
 	void close()
 	{
-		if ( gDir === null )
+		if ( gDir  is  null )
 		{
 			return;
 		}
@@ -398,7 +398,7 @@ class File
 	
 	bit existDir()
 	{
-		if ( gDir === null )
+		if ( gDir  is  null )
 		{
 			return false;
 		}

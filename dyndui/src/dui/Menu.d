@@ -162,8 +162,8 @@ class Menu : MenuShell
 	 */
 	void popup(Widget parentMenuShell, Widget parentMenuItem, void * func, gpointer data, guint button, guint32 activateTime)
 	{
-		GtkWidget* pms = parentMenuShell===null ? null : parentMenuShell.gtkW();
-		GtkWidget* pmi = parentMenuItem===null ? null : parentMenuItem.gtkW();
+		GtkWidget* pms = parentMenuShell is null ? null : parentMenuShell.gtkW();
+		GtkWidget* pmi = parentMenuItem is null ? null : parentMenuItem.gtkW();
 		gtk_menu_popup(gtkW(), pms, pmi,func, data, button, activateTime);
 	}
 

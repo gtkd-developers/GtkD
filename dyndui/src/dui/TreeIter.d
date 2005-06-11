@@ -96,7 +96,7 @@ class TreeIter
      */
     this()
     {
-    	iter = new GtkTreeIter;
+    	this(new GtkTreeIter);
     }
     
     /**
@@ -132,6 +132,24 @@ class TreeIter
 	////////////////////////////////////////////////////////////////////////////////
 	
 	
+	void ref()
+	{
+		printf("TreeIter.ref\n");
+		if ( gtkTreeModel !is  null )
+		{
+			gtk_tree_model_ref_node(gtkTreeModel, iter);
+		}
+	}
+	
+	void unref()
+	{
+		printf("TreeIter.unref\n");
+		if ( gtkTreeModel !is  null )
+		{
+			gtk_tree_model_unref_node(gtkTreeModel, iter);
+		}
+	}
+	
 	/**
 	 * Get Value
 	 * @param iter
@@ -140,7 +158,7 @@ class TreeIter
 	 */
 	void getValue(gint column, Value value)
 	{
-		if ( gtkTreeModel === null )
+		if ( gtkTreeModel  is  null )
 		{
 			throw new TreeIterError(new String("getValue"),new String("Tree model not set"));
 		}
@@ -154,7 +172,7 @@ class TreeIter
 	 */
 	String getValueString(gint column)
 	{
-		if ( gtkTreeModel === null )
+		if ( gtkTreeModel  is  null )
 		{
 			throw new TreeIterError(new String("getValueString"),new String("Tree model not set"));
 		}
@@ -170,7 +188,7 @@ class TreeIter
 	 */
 	int getValueInt(gint column)
 	{
-		if ( gtkTreeModel === null )
+		if ( gtkTreeModel  is  null )
 		{
 			throw new TreeIterError(new String("getValueInt"),new String("Tree model not set"));
 		}
@@ -186,7 +204,7 @@ class TreeIter
 	 */
 	TreeIter getParent()
 	{
-		if ( gtkTreeModel === null )
+		if ( gtkTreeModel  is  null )
 		{
 			throw new TreeIterError(new String("getParent"),new String("Tree model not set"));
 		}
@@ -214,7 +232,7 @@ class TreeIter
 	
 	TreeIter getGrandParent()
 	{
-		if ( gtkTreeModel === null )
+		if ( gtkTreeModel  is  null )
 		{
 			throw new TreeIterError(new String("getGrandParent"),new String("Tree model not set"));
 		}
@@ -238,7 +256,7 @@ class TreeIter
 
 	TreePath getTreePath()
 	{
-		if ( gtkTreeModel === null )
+		if ( gtkTreeModel  is  null )
 		{
 			throw new TreeIterError(new String("getTreePath"),new String("Tree model not set"));
 		}
@@ -255,14 +273,14 @@ class TreeIter
 	String getVisiblePath(String separator)
 	{
 		String vPath = new String("");
-		if ( gtkTreeModel === null )
+		if ( gtkTreeModel  is  null )
 		{
 			throw new TreeIterError(new String("getVisiblePath"),new String("Tree model not set"));
 		}
 
 		vPath.set(getValueString(0));
 		TreeIter parent = getParent();
-		while ( parent !== null )
+		while ( parent !is  null )
 		{
 			vPath.set(parent.getValueString(0) ~ separator ~ vPath);
 			parent = parent.getParent();
