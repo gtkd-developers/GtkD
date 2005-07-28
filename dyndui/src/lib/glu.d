@@ -3,7 +3,7 @@ module lib.glu;
 private
 {
 	import lib.gl;
-	import lib.loader;
+	import lib.Loader;
 	import lib.paths;
 }
 
@@ -159,7 +159,7 @@ version(linux)
 	GLint		function(GLdouble winX, GLdouble winY, GLdouble winZ, GLdouble clipW, GLdouble *model, GLdouble *proj, GLint *view, GLdouble near, GLdouble far, GLdouble* objX, GLdouble* objY, GLdouble* objZ, GLdouble* objW)
 			gluUnProject4;
 
-lib.loader.Symbol[] gluLinks =
+lib.Loader.Symbol[] gluLinks =
 [
 	{ "gluBeginCurve",  cast(void**)& gluBeginCurve },
 	{ "gluBeginPolygon",  cast(void**)& gluBeginPolygon },

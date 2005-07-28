@@ -2,7 +2,7 @@ module lib.gdkglext;
 
 private
 {
-	import lib.loader;
+	import lib.Loader;
 	import lib.paths;
 	import def.Types;
 	import ggl.Types;

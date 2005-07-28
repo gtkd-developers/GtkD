@@ -8,7 +8,7 @@ version(linux):
 private
 {
 	import lib.gl;
-	import lib.loader;
+	import lib.Loader;
 	import lib.paths;
 }
 
@@ -1685,7 +1685,7 @@ version(linux)
 			glActiveStencilFaceEXT;
 
 
-lib.loader.Symbol[] glextLinks =
+lib.Loader.Symbol[] glextLinks =
 [
 /*
 	{ "glBlendColor",  cast(void**)& glBlendColor },

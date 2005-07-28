@@ -11,7 +11,7 @@ module lib.pango;
 
 private 
 {
-	import lib.loader;
+	import lib.Loader;
 	import lib.paths;
 	
 	import def.Types;

@@ -10,7 +10,7 @@ private
 {	
 	import def.Types;
     import def.Constants;
-	import lib.loader;
+	import lib.Loader;
 	import lib.paths;
 	debug import std.stdio;
 }

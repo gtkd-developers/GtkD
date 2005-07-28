@@ -15,7 +15,7 @@ private
 {
 	import def.Types;
 	import def.Constants;
-	import lib.loader;
+	import lib.Loader;
 	import lib.paths;
 
 	debug import std.stdio;
@@ -31,7 +31,7 @@ private
 	
 static this()
 {
-	with (lib.loader)
+	with (lib.Loader)
 	{
 		gthread_Linker = new Linker(libPath ~ importLibs[LIBRARY.GTHREAD]);
 		gthread_Linker.link( gthreadLinks );
@@ -66,7 +66,7 @@ static ~this()
 
 extern(C) void	function(GThreadFunctions *vtable) g_thread_init;
 
-lib.loader.Symbol[] gthreadLinks = [ { "g_thread_init",  cast(void**)& g_thread_init } ];
+lib.Loader.Symbol[] gthreadLinks = [ { "g_thread_init",  cast(void**)& g_thread_init } ];
 
 extern(C)
 {

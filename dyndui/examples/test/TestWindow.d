@@ -266,7 +266,7 @@ class TestWindow : MainWindow
 		notebook.appendPage(new TestText,"Text");
 		notebook.appendPage(new TestImage,"Image");
 		notebook.appendPage(new TestAspectFrame(),"Aspect Frame");
-		//notebook.appendPage(new TestTimeout(),"Idle");
+		notebook.appendPage(new TestTimeout(),"Idle");
 		gtkDemo(notebook);
 		
 	}

@@ -8,7 +8,7 @@ module lib.gl;
 
 private
 {
-	import lib.loader;
+	import lib.Loader;
 	import lib.paths;
 }
 
@@ -1091,7 +1091,7 @@ version(GL_MESA)
 
 
 
-lib.loader.Symbol[] glLinks =
+lib.Loader.Symbol[] glLinks =
 [
 	{ "glClearIndex",  cast(void**)& glClearIndex },
 	{ "glClearColor",  cast(void**)& glClearColor },

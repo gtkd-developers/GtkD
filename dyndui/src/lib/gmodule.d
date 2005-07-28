@@ -8,7 +8,7 @@ module lib.gmodule;
 
 private	import def.Types;
 	
-private import lib.loader;
+private import lib.Loader;
 private import lib.paths;
 
 debug private import std.stdio;
