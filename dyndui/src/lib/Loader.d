@@ -14,7 +14,7 @@
  *
  */
  
-module lib.loader;
+module lib.Loader;
 
 import std.stdio;
 
@@ -33,23 +33,15 @@ version (Windows)
 
 version (linux)
 {
-	import std.c.linux.linux;
-	/*
 	extern(C)
 	{
-		const int RTLD_LAZY = 0x00001;		// Lazy function call binding
-		const int RTLD_NOW  = 0x00002;		// Immediate function call binding
-		const int RTLD_NOLOAD = 0x00004;    // No object load
-		const int RTLD_DEEPBIND = 0x00008;  // 
-		const int RTLD_GLOBAL = 0x00100;     // Make object available to whole program
 		
 		void* dlopen(char*, int);
 		char* dlerror();
 		void* dlsym(void*,char*);
 		int   dlclose(void*);
 	}
-	*/
-	// getSymbol - cross-platform access point
+//	// getSymbol - cross-platform access point
 	alias dlsym getSymbol;
 }	
 
@@ -79,6 +71,14 @@ alias void function( char[] ) failureFN;
 
 public class Linker
 {
+
+	const int RTLD_LAZY = 0x00001;		// Lazy function call binding
+	const int RTLD_NOW  = 0x00002;		// Immediate function call binding
+	const int RTLD_NOLOAD = 0x00004;    // No object load
+	const int RTLD_DEEPBIND = 0x00008;  // 
+	const int RTLD_GLOBAL = 0x00100;     // Make object available to whole program
+
+	
 	private HANDLE  handle;
 	private static char[]  lib;
 
