@@ -53,15 +53,15 @@ public class Dine : Button
 		setSizeRequest(24,24);
 		stat = HIDE;
 		
-		if ( flagPixbuf === null )
+		if ( flagPixbuf is null )
 		{
 			flagPixbuf = new Pixbuf(flag_xpm);
 		}
-		if ( badFlagPixbuf === null )
+		if ( badFlagPixbuf is null )
 		{
 			badFlagPixbuf = new Pixbuf(badFlags_xpm);
 		}
-		if ( dontKnowPixbuf === null )
+		if ( dontKnowPixbuf is null )
 		{
 			dontKnowPixbuf = new Pixbuf(dontknow_xpm);
 		}

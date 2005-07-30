@@ -234,7 +234,7 @@ class TopScores : ButtonClickedListener
 			treeStore.set(iterChild,cols, cast(void*[])subVals);
 		}
 		
-		if ( oldIter !== null )
+		if ( oldIter !is null )
 		{
 			treeStore.remove(oldIter);
 		}
@@ -244,7 +244,7 @@ class TopScores : ButtonClickedListener
 	
 	Window getWindow()
 	{
-		if ( window === null )
+		if ( window is null )
 		{
 			window = new Window("D Mines Top Scores");
 			VBox box = new VBox(false, 0);
@@ -269,7 +269,7 @@ class TopScores : ButtonClickedListener
 	
 	TreeView getTreeView()
 	{
-		if ( treeView === null )
+		if ( treeView is null )
 		{
 			treeStore = new TreeStore(columns);
 			treeView = new TreeView(treeStore);

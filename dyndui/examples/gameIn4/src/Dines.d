@@ -126,7 +126,7 @@ public class Dines : MainWindow , MenuItemListener
 				break;
 			
 			case "game.scores":
-				if ( topScores === null )
+				if ( topScores is null )
 				{
 					topScores = new TopScores();
 				}

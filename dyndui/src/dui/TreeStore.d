@@ -28,7 +28,6 @@ private import dui.TreePath;
 private import ddi.Value;
 
 private import dool.String;
-private import std.stdio;
 private import ddi.Pixbuf;
 
 alias GObject GtkTreeStore;
@@ -52,6 +51,8 @@ class TreeStore : TreeModel
 		char[] description(){return "A tree model that represents a tree structure";}
 		char[] author(){return "Antonio";}
 	}
+
+	private import std.stdio;
 
 	/**
 	 * Gets this class type
@@ -225,12 +226,15 @@ class TreeStore : TreeModel
 	+/
 	
 	/**
-	 * Removes a row from the list
+	 * Removes iter from tree_store.
+	 * After being removed, iter is set to the next valid row at that level, 
+	 * or invalidated if it previously pointed to the last one.
 	 * @param iter the iteract that contains the row
-	 * @return true if succesefull
+	 * @return TRUE if iter is still valid, FALSE if not.
 	 */
 	bit remove(TreeIter iter)
 	{
+		debug(removeIter) writefln("TreeStore.remove obj() = %X", obj());
 		debug(removeIter) writefln("TreeStore.remove iter = %X", iter.getIter());
 		bit ok = gtk_tree_store_remove(obj(), iter.getIter()) == 0 ? false : true;
 		debug(removeIter) writefln("TreeStore.remove removed ok = ", ok);
