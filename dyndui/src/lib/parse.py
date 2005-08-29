@@ -11,7 +11,7 @@
 #
 #    1) Comments embedded in comments do not exist
 #    2) All comments start on a line containing no non-comments
-#    3) All comment end on a line containing no non-comments
+#    3) All comments end on a line containing no non-comments
 #    4) Only extern(...) {} style externs are used in code
 #    5) extern(...) braces start either at the end of a line or
 #       on its own line
