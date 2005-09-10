@@ -43,6 +43,8 @@ class Color
 	
 	static GdkColormap* systemColormap;
 
+	static Color _black;
+	static Color _white;
 
 	this(GdkColor* gdkColor)
 	{
@@ -91,6 +93,23 @@ class Color
 		set8( cast(byte)((rgb&0xFF0000)>>16),cast(byte)((rgb&0x00FF00)>>8),cast(byte)(rgb&0xFF));
 	}
 
+	static Color black()
+	{
+		if ( !_black )
+		{
+			_black = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
+		}
+		return _black;
+	}
+	static Color white()
+	{
+		if ( !_white )
+		{
+			_white = new Color(cast(ubyte)255,cast(ubyte)255,cast(ubyte)255);
+		}
+		return _white;
+	}
+	
 	/**
 	 * Sets the Color with RGB values
 	 * @param red

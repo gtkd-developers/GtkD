@@ -142,9 +142,9 @@ class Drawable : ObjectG
 	 * @param width
 	 * @param height
 	 */
-	void getSize(gint * width, gint * height)
+	void getSize(inout int width, inout int height)
 	{
-		gdk_drawable_get_size(gDraw(), width, height);
+		gdk_drawable_get_size(gDraw(), &width, &height);
 	}
 	
 	//void gdk_drawable_set_colormap(gDraw(), GdkColormap * colormap);
@@ -212,6 +212,8 @@ class Drawable : ObjectG
 	 */
 	void drawRectangle(bit filled, gint x, gint y, gint width, gint height)
 	{
+		assert(drawable !is null );
+		assert(gc !is null);
 		gdk_draw_rectangle(drawable, gc.getGDKgc(), filled, x, y, width, height);
 	}
 	
@@ -278,15 +280,23 @@ class Drawable : ObjectG
 		gdk_draw_drawable(gDraw(), gc.getGDKgc(), drawable.gDraw(), xsrc, ysrc, xdest, ydest, width, height);
 	}
 	
+	void drawDrawable(Drawable drawable, gint xsrc, gint ysrc, gint xdest, gint ydest, gint width, gint height)
+	{
+		gdk_draw_drawable(gDraw(), gc.getGDKgc(), drawable.gDraw(), xsrc, ysrc, xdest, ydest, width, height);
+	}
+	
+	void drawDrawable(Drawable drawable, int x, int y, int width, int height)
+	{
+		gdk_draw_drawable(gDraw(), gc.getGDKgc(), drawable.gDraw(), 0, 0, x, y, width, height);
+	}
+	
 	/**
-	 * 
+	 * Use this when updating one drawble from another with the same size and positions
 	 */
 	void drawImage(GC gc, GdkImage * image, gint xsrc, gint ysrc, gint xdest, gint ydest, gint width, gint height)
 	{
 		gdk_draw_image(gDraw(), gc.getGDKgc(), image, xsrc, ysrc, xdest, ydest, width, height);
 	}
-	
-	
 	
 	void drawImage(Image image, gint xdest, gint ydest)
 	{
@@ -305,6 +315,21 @@ class Drawable : ObjectG
 			);
 			
 	}
+
+	void drawPixbuf(Pixbuf pixbuf, int srcX, int srcY, int destX, int destY, int width, int height)
+	{
+		gdk_draw_pixbuf(gDraw(), gc.getGDKgc(), pixbuf.gdkP(), srcX, srcY, destX, destY, width, height,
+			GdkRgbDither.NONE, 0, 0
+			);
+	}
+	
+	void drawPixbuf(Pixbuf pixbuf, int destX, int destY)
+	{
+		gdk_draw_pixbuf(gDraw(), gc.getGDKgc(), pixbuf.gdkP(), 0, 0, destX, destY, pixbuf.getWidth(), pixbuf.getHeight(),
+			GdkRgbDither.NONE, 0, 0
+			);
+	}
+	
 
 	private import dango.Font;
 	

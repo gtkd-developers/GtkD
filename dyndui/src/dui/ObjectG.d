@@ -352,7 +352,7 @@ class ObjectG : StatusInterface , OGTK
 	 * Unreference an object. Objects gtk object with no references will be desctroyed by gtk. 
 	 * @param object
 	 */
-	public: void unref(gpointer object)
+	public static void unref(gpointer object)
 	{
 		g_object_unref(object);
 	}

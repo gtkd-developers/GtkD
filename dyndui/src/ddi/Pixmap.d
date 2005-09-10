@@ -37,6 +37,8 @@ class Pixmap :
 	public:
 	this(GdkDrawable * gdkDrawable)
 	{
+		printf("Pixmap this gdkDrawable = %X\n", gdkDrawable);
+		printf("Pixmap this gdkDrawable = %X\n", *gdkDrawable);
 		super(cast(GObject*)gdkDrawable);
 	}
 
@@ -48,7 +50,7 @@ class Pixmap :
 	 */
 	GdkPixmap* gdkP()
 	{
-		return cast(GdkPixmap*)gObject;
+		return cast(GdkPixmap*)drawable;
 	}
 	
 	/**
@@ -61,6 +63,7 @@ class Pixmap :
 	this(Drawable drawable, gint width, gint height, gint depth)
 	{
 		this(gdk_pixmap_new(drawable.gDraw(), width, height, depth));
+		gc = drawable.getGC();
 	}
 	
 		

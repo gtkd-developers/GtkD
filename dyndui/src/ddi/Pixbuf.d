@@ -49,6 +49,17 @@ class Pixbuf
 		return gdkPixbuf;
 	}
 
+	private import dui.ObjectG;
+	
+	~this()
+	{
+		printf("Pixbuf.dtor before unref\n");
+		ObjectG.unref(gdkPixbuf);
+		printf("Pixbuf.dtor after unref\n");
+		//std.gc.removeRoot(gdkPixbuf);
+		//std.c.stdlib.free(gdkPixbuf);
+	}
+	
 	/**
 	 * Create a Pixbuf from a GdkPixbuf
 	 * @param gdkPixbuf
@@ -56,6 +67,7 @@ class Pixbuf
 	this(GdkPixbuf* gdkPixbuf)
 	{
 		this.gdkPixbuf = gdkPixbuf;
+		//std.gc.addRoot(gdkPixbuf);
 	}
 	
 	/**
@@ -85,8 +97,73 @@ class Pixbuf
 	
 	this(Widget widget)
 	{
-		this(gdk_pixbuf_get_from_drawable(gdkPixbuf, widget.getWindow(), widget.getColormap(),
+		this(cast(GdkPixbuf*)gdk_pixbuf_get_from_drawable(null, widget.getWindow(), widget.getColormap(),
 			0, 0, 0, 0, widget.getWidth(), widget.getHeight()));
+	}
+	
+	private import dui.Window;
+	private import ddi.Drawable;
+	
+	this(Widget widget, int x, int y, int w, int h)
+	{
+		void* cmap = widget.getColormap();
+		if ( cmap is null )
+		{
+			Window window = new Window();
+			cmap = window.getColormap();
+		}
+		this(cast(GdkPixbuf*)gdk_pixbuf_get_from_drawable(
+				null, widget.getWindow(), cast(GdkColormap*)cmap,
+			x, y, 0, 0, w, h));
+	}
+
+	// \TODO remove this hack and set a real Colormap.
+	void* cmap;
+	
+	this(Drawable d, int x, int y, int w, int h)
+	{
+		if ( cmap is null )
+		{
+			Window window = new Window();
+			cmap = window.getColormap();
+		}
+		this(cast(GdkPixbuf*)gdk_pixbuf_get_from_drawable(
+				null, d.gDraw(), cast(GdkColormap*)cmap,
+			x, y, 0, 0, w, h));
+	}
+	
+	void setFromDrawable(Drawable d, int x, int y, int w, int h)
+	{
+		if ( cmap is null )
+		{
+			Window window = new Window();
+			cmap = window.getColormap();
+		}
+		//printf("Pixbuf.setFromDrawable before unref\n");
+		//ObjectG.unref(gdkPixbuf);
+		//printf("Pixbuf.setFromDrawable after unref\n");
+		int sX;
+		int sY;
+		d.getSize(sX,sY);
+		if ( getWidth()!=w || getHeight()!=h)
+		{
+			gdk_pixbuf_scale_simple(gdkP(), w, h, InterpType.NEAREST);
+			gdkPixbuf = 
+			gdk_pixbuf_get_from_drawable(
+					gdkPixbuf,
+					d.gDraw(), 
+					cast(GdkColormap*)cmap,
+					x, y, 0, 0, w, h);
+		}
+		else
+		{
+			gdkPixbuf = 
+			gdk_pixbuf_get_from_drawable(
+					gdkPixbuf, //null,
+					d.gDraw(), 
+					cast(GdkColormap*)cmap,
+					x, y, 0, 0, w, h);
+		}
 	}
 
 	//GdkPixbuf * gdk_pixbuf_get_from_image(GdkPixbuf * dest, GdkImage * src, GdkColormap * cmap, int src_x, int src_y, int dest_x, int dest_y, int width, int height);
@@ -117,7 +194,13 @@ class Pixbuf
 	//int gdk_pixbuf_get_n_channels (GdkPixbuf * pixbuf);
 	//gboolean gdk_pixbuf_get_has_alpha (GdkPixbuf * pixbuf);
 	//int gdk_pixbuf_get_bits_per_sample (GdkPixbuf * pixbuf);
-	//guchar * gdk_pixbuf_get_pixels (GdkPixbuf * pixbuf);
+	
+	guchar* getPixels()
+	{
+		return  gdk_pixbuf_get_pixels (gdkP());
+	}
+	
+	
 	
 	/**
 	 * Gest the width of this pixbuf
@@ -294,14 +377,35 @@ printf("Pixbuf.trimTo 4\n" );
 	//	gdk_pixbuf_scale(GdkPixbuf * src, GdkPixbuf * dest, int dest_x, int dest_y, int dest_width, int dest_height, double offset_x, double offset_y, double scale_x, double scale_y, GdkInterpType interp_type);
 	//}
 
-	//void gdk_pixbuf_composite (GdkPixbuf * src, GdkPixbuf * dest, int dest_x, int dest_y, int dest_width, int dest_height, double offset_x, double offset_y, double scale_x, double scale_y, GdkInterpType interp_type, int overall_alpha);
+	void composite(Pixbuf pixbuf, int destX, int destY, int destW, int destH, double offX, double offY, double scaleX, double scaleY, InterpType interpType, int alpha)
+	{
+		gdk_pixbuf_composite (pixbuf.gdkP(), gdkP(), destX, destY, destW, destH, offX, offY, scaleX, scaleY, interpType, alpha);
+	}
+	
+	void composite(Pixbuf pixbuf, int destX, int destY)
+	{
+		gdk_pixbuf_composite (
+			pixbuf.gdkP(), 
+			gdkP(), 
+			destX, destY, 
+			pixbuf.getWidth(), pixbuf.getHeight(), 
+			0, 0, 
+			1.0, 1.0, 
+			InterpType.NEAREST, 
+			255);
+	}
+	
+	
 	//void gdk_pixbuf_composite_color (GdkPixbuf * src, GdkPixbuf * dest, int dest_x, int dest_y, int dest_width, int dest_height, double offset_x, double offset_y, double scale_x, double scale_y, GdkInterpType interp_type, int overall_alpha, int check_x,
 	//        int check_y, int check_size, guint32 color1, guint32 color2);
 
 	
 	Pixbuf scaleSimple(int dest_width, int dest_height)
 	{
-		return new Pixbuf(gdk_pixbuf_scale_simple(gdkP(), dest_width, dest_height, InterpType.NEAREST));
+		//return new Pixbuf(gdk_pixbuf_scale_simple(gdkP(), dest_width, dest_height, InterpType.NEAREST));
+		//return new Pixbuf(gdk_pixbuf_scale_simple(gdkP(), dest_width, dest_height, InterpType.TILES));
+		return new Pixbuf(gdk_pixbuf_scale_simple(gdkP(), dest_width, dest_height, InterpType.BILINEAR));
+		//return new Pixbuf(gdk_pixbuf_scale_simple(gdkP(), dest_width, dest_height, InterpType.HYPER));
 	}
 	
 	/**

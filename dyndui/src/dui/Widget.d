@@ -301,7 +301,7 @@ class Widget : DUIObject
 	public void addOnMouseButtonRelease(bit delegate(Widget,EventButton) dlg)
 	{
 		if ( onMouseButtonRelease  is  null )
-		onMouseButtonRelease = new OnMouseButtonRelease(this, EventMask.BUTTON_PRESS, new String("button_release_event"));
+		onMouseButtonRelease = new OnMouseButtonRelease(this, EventMask.BUTTON_RELEASE, new String("button_release_event"));
 		onMouseButtonRelease += dlg;
 	}
 
@@ -1247,7 +1247,7 @@ class Widget : DUIObject
 	 */
 	int getWidth()
 	{
-		return gtkWidget,gtkWidget.allocation.width;
+		return gtkWidget.allocation.width;
 	}
 
 	/**
@@ -1256,7 +1256,7 @@ class Widget : DUIObject
 	 */
 	int getHeight()
 	{
-		return gtkWidget,gtkWidget.allocation.height;
+		return gtkWidget.allocation.height;
 	}
 
 	/**
