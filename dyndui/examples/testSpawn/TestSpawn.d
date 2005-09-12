@@ -33,16 +33,18 @@ void testCommandLineSync()
 	
 	ErrorG error = new ErrorG();
 	
+	String command = new String("/D/devel/Leds/src/leds");
+	
 	printf("Test commandLineSync\n");
 	
 	Spawn.commandLineSync(
-		new String("dmd"),
+		command,
 		grabOutput,
 		grabError,
 		exitStatus
 		/*error*/);
 	
-	printf("exitStatus = %d\n", exitStatus);
+	printf("exitStatus = %d for command >>>%.*s<<<\n", exitStatus, command.toString());
 	
 	printf("got ouput  = %.*s\n", grabOutput.toString());
 	printf("got error  = %.*s\n", grabError.toString());

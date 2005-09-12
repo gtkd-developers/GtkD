@@ -228,7 +228,7 @@ import lib.gobject;
 import lib.gtk;
 import lib.pango;
 import lib.paths;
-import lib.loader;
+import lib.Loader;
 import lib.gl;
 import lib.glu;
 import lib.glext;

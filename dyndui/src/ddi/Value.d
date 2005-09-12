@@ -338,6 +338,9 @@ class Value
 		return gValue;
 	}
 
+	/**
+	 * \TODO fix the windows workaround
+	 */
 	String getString()
 	{
 		//printf("Value.getString contents = %.*s\n", contents().toString());
@@ -352,6 +355,15 @@ class Value
 				str = String.newz(cast(char*)gValue.data0.v_pointer);
 				break;
 		}
+		version(Win32)
+		{
+			str = contents();
+			if ( str.length() > 2 && str[0] == '"' && str[str.length-1] == '"' )
+			{
+				str = str[1..str.length-1];
+			}
+		}
+		//printf("Value.getString str = %.*s\n", str.toString());
 		return str;
 	}
 

@@ -350,6 +350,13 @@ class Spawn
 	}
 	body
 	{
+		version(Win32)
+		{
+			for ( int i=0 ; i<command_line.length ; i++)
+			{
+				if ( command_line[i] == '\\' ) command_line[i] = '/';
+			}
+		}
 		ErrorG error = new ErrorG();
 		char* gOut;
 		char* gErr;
@@ -358,6 +365,8 @@ class Spawn
 
 		standard_output.setz(gOut);
 		standard_error.setz(gErr);
+
+		printf("\n\nSpawn.commandLineSync ########################out=\n%s\n", gOut);
 
 		if ( error.getCode() != 0 )
 		{
