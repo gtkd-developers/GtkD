@@ -94,7 +94,7 @@ protected:
 		return gtk_window_get_type();
 	}
 
-	override bit getAutoShow()
+	/*override*/ bit getAutoShow()
 	{
 		return false;
 	}
