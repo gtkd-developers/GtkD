@@ -44,131 +44,138 @@ private import lib.gdk;
  */
 
 // moved out ---------------------------
-	private import dui.DUI;
-	private import dui.ObjectG;
-	private import dui.Tooltips;
-	private import dui.SListG;
-	private import dui.ListG;
-	private import dui.Clipboard;
-
-	private import ddi.GC; 
-	private import ddi.Color;
-	private import ddi.Bitmap;
-	private import ddi.Pixbuf;
-	private import ddi.Screen;
-	private import ddi.Visual;
-	private import ddi.Drawable;
-	private import ddi.WindowG;
-	private import ddi.Display;
-	private import ddi.Cursor;
-
-	private import dango.Font;
-	private import dango.Context;
-	private import dango.Layout;
-
-	private import event.Event;
-	private import event.Listener;
-	private import event.EventHandler;
-
-	private import dool.String;
 // ---------------------------------------
+
+private import dui.DUI;
+private import dui.ObjectG;
+private import dui.Tooltips;
+private import dui.SListG;
+private import dui.ListG;
+private import dui.Clipboard;
+
+private import ddi.GC; 
+private import ddi.Color;
+private import ddi.Bitmap;
+private import ddi.Pixbuf;
+private import ddi.Screen;
+private import ddi.Visual;
+private import ddi.Drawable;
+private import ddi.WindowG;
+private import ddi.Display;
+private import ddi.Cursor;
+
+private import dango.Font;
+private import dango.Context;
+private import dango.Layout;
+
+private import event.Event;
+private import event.Listener;
+
+private import dool.String;
+
+
+private import event.EventHandler;
 
 public:
 
+
+
 class Widget : DUIObject
 {
+
+	
 	protected:
 
 	// events
 	//gboolean event(GtkWidget * widget, GdkEvent * event);
 	
-	// buttons
-	alias EventHandlerR!(Widget, EventButton) OnMouseButtonPress;
-	alias EventHandlerR!(Widget, EventButton) OnMouseButtonRelease;
-		
-	// scroll
-	alias EventHandler!(Widget, EventScroll) OnScroll;
-	
-	// motion
-	alias EventHandler!(Widget, EventMotion) OnMotionNotify;
-	
-	//delete
-	alias EventHandler!(Widget, Event) OnDelete;
-	alias EventHandler!(Widget, Event) OnDestroy;
-	
-	//expose
-	alias EventHandlerAfter!(Widget, EventExpose) OnExpose;
-	alias EventHandlerAfter!(Widget, Event) OnNoExpose;
-	
-	// key
-	alias EventHandlerR!(Widget, EventKey) OnKeyPress;
-	alias EventHandlerR!(Widget, EventKey) OnKeyRelease;
-	
-	// enter
-	alias EventHandler!(Widget, EventCrossing) OnEnterNotify;
-	alias EventHandler!(Widget, EventCrossing) OnLeaveNotify;
-	
-	// configure
-	alias EventHandlerAfterR!(Widget, EventConfigure) OnConfigure;
-	
-	// focus
-	alias EventHandler!(Widget, EventFocus) OnFocusIn;
-	alias EventHandler!(Widget, EventFocus) OnFocusOut;
-	
-	// map
-	alias EventHandler!(Widget, Event) OnMap;
-	alias EventHandler!(Widget, Event) OnUnmap;
-	
-	// realize
-	alias EventHandlerAfterR!(Widget, Event) OnRealize;
-	alias EventHandlerAfterR!(Widget, Event) OnUnrealize;
-	
-	// property
-	alias EventHandler!(Widget, EventProperty) OnPropertyNotify;
-	
-	// selection
-	alias EventHandler!(Widget, EventSelection) OnSelectionClear;
-	alias EventHandler!(Widget, EventSelection) OnSelectionRequest;
-	alias EventHandler!(Widget, EventSelection) OnSelectionNotify;
-	
-	// proximity
-	alias EventHandler!(Widget, EventProximity) OnProximityIn;
-	alias EventHandler!(Widget, EventProximity) OnProximityOut;
-	
-	// visibility
-	alias EventHandler!(Widget, EventVisibility) OnVisibilityNotify;
-	
-	// cliente
-	alias EventHandler!(Widget, EventClient) OnClient;
-	
-	// window state
-	alias EventHandler!(Widget, EventWindowState) OnWindowState;
-
-	/* selection */
-	//void  selection_get(GtkWidget * widget, GtkSelectionData * selection_data, guint info, guint time_);
-	//void  selection_received(GtkWidget * widget, GtkSelectionData * selection_data, guint time_);
-	//alias EventHandler!(Widget, ) ;
-	//alias EventHandler!(Widget, ) ;
-
-	/* Source side drag signals */
-	//void  drag_begin(GtkWidget * widget, GdkDragContext * context);
-	//void  drag_end(GtkWidget * widget, GdkDragContext * context);
-	//void  drag_data_get(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info, guint time_);
-	//void  drag_data_delete(GtkWidget * widget, GdkDragContext * context);
-	//alias EventHandler!(Widget, ) ;
-	//alias EventHandler!(Widget, ) ;
-	//alias EventHandler!(Widget, ) ;
-	//alias EventHandler!(Widget, ) ;
-
-	/* Target side drag signals */
-	//void  drag_leave(GtkWidget * widget, GdkDragContext * context, guint time_);
-	//gboolean drag_motion(GtkWidget * widget, GdkDragContext * context, gint x, gint y, guint time_);
-	//gboolean drag_drop(GtkWidget * widget, GdkDragContext * context, gint x, gint y, guint time_);
-	//void  drag_data_received(GtkWidget * widget, GdkDragContext * context, gint x, gint y, GtkSelectionData * selection_data, guint info, guint time_);
-	//alias EventHandler!(Widget, ) ;
-	//alias EventHandler!(Widget, ) ;
-	//alias EventHandler!(Widget, ) ;
-	//alias EventHandler!(Widget, ) ;
+//	// buttons
+//	alias EventHandlerR!(Widget, EventButton) OnMouseButtonPress;
+//	alias EventHandlerR!(Widget, EventButton) OnMouseButtonRelease;
+//		
+//	// scroll
+//	alias EventHandler!(Widget, EventScroll) OnScroll;
+//	
+//	// motion
+//	alias EventHandler!(Widget, EventMotion) OnMotionNotify;
+//	
+//	//delete
+//	alias EventHandler!(Widget, Event) OnDelete;
+//	alias EventHandler!(Widget, Event) OnDestroy;
+//	
+//	//expose
+//	alias EventHandlerAfter!(Widget, EventExpose) OnExpose;
+//	alias EventHandlerAfter!(Widget, Event) OnNoExpose;
+//	
+//	// key
+//	alias EventHandlerR!(Widget, EventKey) OnKeyPress;
+//	alias EventHandlerR!(Widget, EventKey) OnKeyRelease;
+//	
+//	// enter
+//	alias EventHandler!(Widget, EventCrossing) OnEnterNotify;
+//	alias EventHandler!(Widget, EventCrossing) OnLeaveNotify;
+//	
+//	// configure
+//	alias EventHandlerAfterR!(Widget, EventConfigure) OnConfigure;
+//	
+//	// focus
+//	alias EventHandler!(Widget, EventFocus) OnFocusIn;
+//	alias EventHandler!(Widget, EventFocus) OnFocusOut;
+//	
+//	// map
+//	alias EventHandler!(Widget, Event) OnMap;
+//	alias EventHandler!(Widget, Event) OnUnmap;
+//	
+//	// realize
+//	alias EventHandlerAfterR!(Widget, Event) OnRealize;
+//	alias EventHandlerAfterR!(Widget, Event) OnUnrealize;
+//	
+//	// property
+//	alias EventHandler!(Widget, EventProperty) OnPropertyNotify;
+//	
+//	// selection
+//	alias EventHandler!(Widget, EventSelection) OnSelectionClear;
+//	alias EventHandler!(Widget, EventSelection) OnSelectionRequest;
+//	alias EventHandler!(Widget, EventSelection) OnSelectionNotify;
+//	
+//	// proximity
+//	alias EventHandler!(Widget, EventProximity) OnProximityIn;
+//	alias EventHandler!(Widget, EventProximity) OnProximityOut;
+//	
+//	// visibility
+//	alias EventHandler!(Widget, EventVisibility) OnVisibilityNotify;
+//	
+//	// cliente
+//	alias EventHandler!(Widget, EventClient) OnClient;
+//	
+//	// window state
+//	alias EventHandler!(Widget, EventWindowState) OnWindowState;
+//
+//	/* selection */
+//	//void  selection_get(GtkWidget * widget, GtkSelectionData * selection_data, guint info, guint time_);
+//	//void  selection_received(GtkWidget * widget, GtkSelectionData * selection_data, guint time_);
+//	//alias EventHandler!(Widget, ) ;
+//	//alias EventHandler!(Widget, ) ;
+//
+//	/* Source side drag signals */
+//	//void  drag_begin(GtkWidget * widget, GdkDragContext * context);
+//	//void  drag_end(GtkWidget * widget, GdkDragContext * context);
+//	//void  drag_data_get(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info, guint time_);
+//	//void  drag_data_delete(GtkWidget * widget, GdkDragContext * context);
+//	//alias EventHandler!(Widget, ) ;
+//	//alias EventHandler!(Widget, ) ;
+//	//alias EventHandler!(Widget, ) ;
+//	//alias EventHandler!(Widget, ) ;
+//
+//	/* Target side drag signals */
+//	//void  drag_leave(GtkWidget * widget, GdkDragContext * context, guint time_);
+//	//gboolean drag_motion(GtkWidget * widget, GdkDragContext * context, gint x, gint y, guint time_);
+//	//gboolean drag_drop(GtkWidget * widget, GdkDragContext * context, gint x, gint y, guint time_);
+//	//void  drag_data_received(GtkWidget * widget, GdkDragContext * context, gint x, gint y, GtkSelectionData * selection_data, guint info, guint time_);
+//	//alias EventHandler!(Widget, ) ;
+//	//alias EventHandler!(Widget, ) ;
+//	//alias EventHandler!(Widget, ) ;
+//	//alias EventHandler!(Widget, ) ;
 	
 	protected:
 	// mouse button
@@ -613,7 +620,7 @@ class Widget : DUIObject
 	 * @return true if yes
 	 */
 
-	bit getAutoShow()
+	public bit getAutoShow()
 	{	
 		return getData(new String("_AutoShow"))  is  null; // default == not set ==
 	}

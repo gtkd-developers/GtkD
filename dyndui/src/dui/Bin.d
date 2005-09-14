@@ -57,5 +57,5 @@ class Bin : Container
 	{
 		return new Widget (gtk_bin_get_child (cast(GtkBin*)gtkW()));
 	}
-
+	
 }

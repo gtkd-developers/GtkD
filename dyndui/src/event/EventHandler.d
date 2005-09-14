@@ -34,8 +34,6 @@ private import def.Types;
 private import def.Constants;
 
 private import dui.Utils;
-private import def.Types;
-private import def.Constants;
 private import dui.Widget;
 private import event.Event;
 private import dool.String;
@@ -49,7 +47,7 @@ private static void connect(Widget widget, String signal, void * handler, gpoint
 /**
  * connects a signal to an GObject
  */
-protected:
+public:
 
 //debug = debugEvent;
 
@@ -127,8 +125,6 @@ class EventHandler0(TWidget)
 
 class EventHandler(TWidget)
 {
-
-
 
 	TWidget widget;
 	EventMask eventMask;
@@ -269,7 +265,7 @@ class EventHandler(TWidget, TEvent)
 	}
 }
 
-class EventHandlerR(TWidget, TEvent)
+public class EventHandlerR(TWidget, TEvent)
 {
 
 	TWidget widget;
@@ -1012,3 +1008,90 @@ class TextInsertHandler(TObject, Targ1, Targ2, Targ3)
 }
 
 
+// buttons
+public alias EventHandlerR!(Widget, EventButton) OnMouseButtonPress;
+public alias EventHandlerR!(Widget, EventButton) OnMouseButtonRelease;
+	
+// scroll
+public alias EventHandler!(Widget, EventScroll) OnScroll;
+
+// motion
+public alias EventHandler!(Widget, EventMotion) OnMotionNotify;
+
+//delete
+public alias EventHandler!(Widget, Event) OnDelete;
+public alias EventHandler!(Widget, Event) OnDestroy;
+
+//expose
+public alias EventHandlerAfter!(Widget, EventExpose) OnExpose;
+public alias EventHandlerAfter!(Widget, Event) OnNoExpose;
+
+// key
+public alias EventHandlerR!(Widget, EventKey) OnKeyPress;
+public alias EventHandlerR!(Widget, EventKey) OnKeyRelease;
+
+// enter
+public alias EventHandler!(Widget, EventCrossing) OnEnterNotify;
+public alias EventHandler!(Widget, EventCrossing) OnLeaveNotify;
+
+// configure
+public alias EventHandlerAfterR!(Widget, EventConfigure) OnConfigure;
+
+// focus
+public alias EventHandler!(Widget, EventFocus) OnFocusIn;
+public alias EventHandler!(Widget, EventFocus) OnFocusOut;
+
+// map
+public alias EventHandler!(Widget, Event) OnMap;
+public alias EventHandler!(Widget, Event) OnUnmap;
+
+// realize
+public alias EventHandlerAfterR!(Widget, Event) OnRealize;
+public alias EventHandlerAfterR!(Widget, Event) OnUnrealize;
+
+// property
+public alias EventHandler!(Widget, EventProperty) OnPropertyNotify;
+
+// selection
+public alias EventHandler!(Widget, EventSelection) OnSelectionClear;
+public alias EventHandler!(Widget, EventSelection) OnSelectionRequest;
+public alias EventHandler!(Widget, EventSelection) OnSelectionNotify;
+
+// proximity
+public alias EventHandler!(Widget, EventProximity) OnProximityIn;
+public alias EventHandler!(Widget, EventProximity) OnProximityOut;
+
+// visibility
+public alias EventHandler!(Widget, EventVisibility) OnVisibilityNotify;
+
+// cliente
+public alias EventHandler!(Widget, EventClient) OnClient;
+
+// window state
+public alias EventHandler!(Widget, EventWindowState) OnWindowState;
+
+/* selection */
+//void  selection_get(GtkWidget * widget, GtkSelectionData * selection_data, guint info, guint time_);
+//void  selection_received(GtkWidget * widget, GtkSelectionData * selection_data, guint time_);
+//public alias EventHandler!(Widget, ) ;
+//public alias EventHandler!(Widget, ) ;
+
+/* Source side drag signals */
+//void  drag_begin(GtkWidget * widget, GdkDragContext * context);
+//void  drag_end(GtkWidget * widget, GdkDragContext * context);
+//void  drag_data_get(GtkWidget * widget, GdkDragContext * context, GtkSelectionData * selection_data, guint info, guint time_);
+//void  drag_data_delete(GtkWidget * widget, GdkDragContext * context);
+//public alias EventHandler!(Widget, ) ;
+//public alias EventHandler!(Widget, ) ;
+//public alias EventHandler!(Widget, ) ;
+//public alias EventHandler!(Widget, ) ;
+
+/* Target side drag signals */
+//void  drag_leave(GtkWidget * widget, GdkDragContext * context, guint time_);
+//gboolean drag_motion(GtkWidget * widget, GdkDragContext * context, gint x, gint y, guint time_);
+//gboolean drag_drop(GtkWidget * widget, GdkDragContext * context, gint x, gint y, guint time_);
+//void  drag_data_received(GtkWidget * widget, GdkDragContext * context, gint x, gint y, GtkSelectionData * selection_data, guint info, guint time_);
+//public alias EventHandler!(Widget, ) ;
+//public alias EventHandler!(Widget, ) ;
+//public alias EventHandler!(Widget, ) ;
+//public alias EventHandler!(Widget, ) ;
