@@ -53,9 +53,17 @@ class Pixbuf
 	
 	~this()
 	{
-		printf("Pixbuf.dtor before unref\n");
-		ObjectG.unref(gdkPixbuf);
-		printf("Pixbuf.dtor after unref\n");
+		//version ( win32 )
+		{
+			// this is not good on linux
+			// why doesn't it segfault also on windows?
+			// OK is worst: some programs crash with this some leak without this !!!!!!!!
+			// TODO
+			// FIXME
+			//printf("Pixbuf.dtor before unref\n");
+			ObjectG.unref(gdkPixbuf);
+			//printf("Pixbuf.dtor after unref\n");
+		}
 		//std.gc.removeRoot(gdkPixbuf);
 		//std.c.stdlib.free(gdkPixbuf);
 	}

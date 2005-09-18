@@ -211,9 +211,9 @@ public: class DUI
 	 */
 	public: int go()
 	{
-		gdk_threads_enter();
+		//gdk_threads_enter();
 		gtk_main();
-		gdk_threads_leave();
+		//gdk_threads_leave();
 		return 0;
 	}
 
