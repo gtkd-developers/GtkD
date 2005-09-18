@@ -53,7 +53,7 @@ class Pixbuf
 	
 	~this()
 	{
-		//version ( win32 )
+		version ( win32 )
 		{
 			// this is not good on linux
 			// why doesn't it segfault also on windows?
