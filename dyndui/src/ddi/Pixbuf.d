@@ -147,9 +147,9 @@ class Pixbuf
 			Window window = new Window();
 			cmap = window.getColormap();
 		}
-		//printf("Pixbuf.setFromDrawable before unref\n");
-		//ObjectG.unref(gdkPixbuf);
-		//printf("Pixbuf.setFromDrawable after unref\n");
+		printf("Pixbuf.setFromDrawable before unref\n");
+		ObjectG.unref(gdkPixbuf);
+		printf("Pixbuf.setFromDrawable after unref\n");
 		int sX;
 		int sY;
 		d.getSize(sX,sY);
