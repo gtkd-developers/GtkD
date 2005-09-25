@@ -53,10 +53,11 @@ class Value
 
 	~this()
 	{
-		if ( gValue !is  null )
-		{
-			 g_value_unset(gValue);
-		}
+//		if ( gValue !is  null )
+//		{
+//			 g_value_unset(gValue);
+//			 gValue = null;
+//		}
 	}
 
 	this(GValue * gValue)
