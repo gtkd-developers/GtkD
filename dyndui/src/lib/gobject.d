@@ -6,14 +6,12 @@
 
 module lib.gobject;
 
-private 
-{
-	import def.Types;
-	import def.Constants;
-	import lib.Loader;
-	import lib.paths;
-	debug import std.stdio;
-}
+private import def.Types;
+private import def.Constants;
+private import lib.Loader;
+private import lib.paths;
+debug private import std.stdio;
+
 
 private Linker gobject_Linker;
 

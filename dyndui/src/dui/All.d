@@ -117,7 +117,10 @@ import dui.OptionMenu;
 import dui.Paned;
 
 // gtk_plug* functions not supported on Windows?
-version(linux) import dui.Plug; 
+version(linux)
+{
+	import dui.Plug; 	
+}
 
 import dui.PopupBox;
 import dui.Preview;
@@ -133,7 +136,10 @@ import dui.ScrolledWindow;
 import dui.Separator;
 import dui.SeparatorMenuItem;
 // gtk_socket* functions not supported on Windows?
-version(linux) import dui.Socket;
+version(linux)
+{
+	import dui.Socket;	
+}
 
 import dui.SpinButton;
 import dui.Statusbar;
