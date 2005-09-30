@@ -67,7 +67,7 @@ public struct Symbol
  * of the library and exported functions
  */
 
-alias void function( char[] ) failureFN;
+//alias void function( char[] ) failureFN;
 
 public class Linker
 {
@@ -83,6 +83,8 @@ public class Linker
 	private static char[]  lib;
 
 	// private bool continueOnFail = false;
+	
+	alias void function( char[] ) failureFN;
 	
 	private failureFN onLoadFailure;
 
