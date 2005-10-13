@@ -178,7 +178,7 @@ class TreeIter
 		}
 		Value value = new Value();
 		gtk_tree_model_get_value(gtkTreeModel, iter, column, value.getV());
-		printf("TreeIter.getValuaString = %.*s\n", value.getString().toString());
+		//printf("TreeIter.getValuaString = %.*s\n", value.getString().toString());
 		return value.getString();
 	}
 
@@ -283,12 +283,12 @@ class TreeIter
 		TreeIter parent = getParent();
 		while ( parent !is  null )
 		{
-			printf("TreeIter.getVisiblePath parent = %.*s\n",parent.getValueString(0).toString());
+			//printf("TreeIter.getVisiblePath parent = %.*s\n",parent.getValueString(0).toString());
 			vPath.set(parent.getValueString(0) ~ separator ~ vPath);
 			parent = parent.getParent();
 		}
 		
-		printf("TreeIter.getVisiblePath = %.*s\n", vPath.toString());
+		//printf("TreeIter.getVisiblePath = %.*s\n", vPath.toString());
 		
 		return vPath;
 	}

@@ -80,3 +80,4 @@ version(Windows) const char[] libPath = r"\Program Files\Common Files\GTK\2.0\bi
 //   empty for linux because default path is known by ld
 
 version(linux)   const char[] libPath = "";
+
