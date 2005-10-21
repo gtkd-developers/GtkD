@@ -43,4 +43,9 @@ class SpawnException : Exception
 		this.message = message.dup;
 		super(message.toString());
 	}
+	
+	String getMessage()
+	{
+		return message;
+	}
 }

@@ -29,7 +29,7 @@ LINK_dui=ar rcs
 COMP_DUITests = dmd
 COMP_FLAGS_DUITests =  -c -O -od../obj -op
 COMP_IMPORT_DUITests = -I/home/ruimt/devel/D1/Dool/src:/home/ruimt/dmd/src/phobos:/home/ruimt/dmd/src/phobos
-LINK_LIBS_DUITests=-L/home/ruimt/devel/D1/Dool -ldool -L/home/ruimt/devel/D1/DUI -ldui -lphobos -lstdc++ -ldl -pthread
+LINK_LIBS_DUITests=-L/home/ruimt/devel/D1/Dool -ldool -L/home/ruimt/devel/D1/DUI -ldui -lphobos -lstdc++ -ldl -pthread -L/home/ruimt/devel/D1/Dool -ldool -lstdc++
 LINK_DUITests=gcc
 
 ##########################
@@ -61,7 +61,6 @@ SRC_dui = \
 	dango/Font.d \
 	dango/Layout.d \
 	dango/TabArray.d \
-	\
 	ddi/Bitmap.d \
 	ddi/Color.d \
 	ddi/Cursor.d \
@@ -75,10 +74,8 @@ SRC_dui = \
 	ddi/Value.d \
 	ddi/Visual.d \
 	ddi/WindowG.d \
-	\
 	def/Constants.d \
 	def/Types.d \
-	\
 	dglib/AQueue.d \
 	dglib/ErrorG.d \
 	dglib/File.d \
@@ -89,7 +86,6 @@ SRC_dui = \
 	dglib/StringG.d \
 	dglib/ThreadG.d \
 	dglib/TimerG.d \
-	\
 	dui/AccelGroup.d \
 	dui/AccelLabel.d \
 	dui/Adjustment.d \
@@ -218,7 +214,6 @@ SRC_dui = \
 	dui/Widget.d \
 	dui/Window.d \
 	dui/WindowGroup.d \
-	\
 	event/AdjustmentListener.d \
 	event/All.d \
 	event/ButtonListener.d \
@@ -250,7 +245,6 @@ SRC_dui = \
 	event/TreeViewListener.d \
 	event/WidgetListener.d \
 	event/WindowListener.d \
-	\
 	lib/Loader.d \
 	lib/gdk.d \
 	lib/gdkglext.d \
@@ -481,7 +475,6 @@ dui_LINK:
 	obj/lib/gmodule.o \
 	obj/lib/gobject.o \
 	obj/lib/gtk.o \
-	obj/lib/loader.o \
 	obj/lib/pango.o \
 	obj/lib/paths.o
 
@@ -576,10 +569,6 @@ gameIn4_COMP:
 
 gameIn4_LINK:
 	$(LINK_gameIn4) \
-	obj/../examples/gameIn4/src/Dine.o \
-	obj/../examples/gameIn4/src/Dines.o \
-	obj/../examples/gameIn4/src/PlayField.o \
-	obj/../examples/gameIn4/src/TopScores.o \
 	-o \
 	gameIn4 \
 	$(LINK_LIBS_gameIn4)
@@ -788,7 +777,6 @@ cleandui:
 	rm obj/lib/gmodule.o
 	rm obj/lib/gobject.o
 	rm obj/lib/gtk.o
-	rm obj/lib/loader.o
 	rm obj/lib/pango.o
 	rm obj/lib/paths.o
 
@@ -814,8 +802,5 @@ cleanHelloWorld:
 	rm obj/../examples/hw/HelloWorld.o
 
 cleangameIn4:
-	rm obj/../examples/gameIn4/src/Dine.o
-	rm obj/../examples/gameIn4/src/Dines.o
-	rm obj/../examples/gameIn4/src/PlayField.o
-	rm obj/../examples/gameIn4/src/TopScores.o
+	rm 
 
