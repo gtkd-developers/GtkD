@@ -29,7 +29,7 @@ LINK_dui=ar rcs
 COMP_DUITests = dmd
 COMP_FLAGS_DUITests =  -c -O -od../obj -op
 COMP_IMPORT_DUITests = -I/home/ruimt/devel/D1/Dool/src:/home/ruimt/dmd/src/phobos:/home/ruimt/dmd/src/phobos
-LINK_LIBS_DUITests=-L/home/ruimt/devel/D1/Dool -ldool -L/home/ruimt/devel/D1/DUI -ldui -lphobos -lstdc++ -ldl -pthread -L/home/ruimt/devel/D1/Dool -ldool -lstdc++
+LINK_LIBS_DUITests=-L/home/ruimt/devel/D1/Dool -ldool -L/home/ruimt/devel/D1/DUI -ldui -ldl -pthread -lstdc++ -L/home/ruimt/devel/D1/Dool -ldool -lphobos
 LINK_DUITests=gcc
 
 ##########################
@@ -569,6 +569,10 @@ gameIn4_COMP:
 
 gameIn4_LINK:
 	$(LINK_gameIn4) \
+	obj/../examples/gameIn4/src/Dine.o \
+	obj/../examples/gameIn4/src/Dines.o \
+	obj/../examples/gameIn4/src/PlayField.o \
+	obj/../examples/gameIn4/src/TopScores.o \
 	-o \
 	gameIn4 \
 	$(LINK_LIBS_gameIn4)
@@ -802,5 +806,8 @@ cleanHelloWorld:
 	rm obj/../examples/hw/HelloWorld.o
 
 cleangameIn4:
-	rm 
+	rm obj/../examples/gameIn4/src/Dine.o
+	rm obj/../examples/gameIn4/src/Dines.o
+	rm obj/../examples/gameIn4/src/PlayField.o
+	rm obj/../examples/gameIn4/src/TopScores.o
 
