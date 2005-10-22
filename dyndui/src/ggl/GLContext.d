@@ -80,7 +80,7 @@ class GLContext :
 	this(GLDrawable drawable, GLContext share_list, gboolean direct, int render_type)
 	{
 		GdkGLContext* sl = null;
-		if ( share_list !== null )
+		if ( share_list !is null )
 		{
 			sl = share_list.ggl();
 		}

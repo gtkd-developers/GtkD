@@ -73,7 +73,7 @@ class GLWidget
 	public static bit setGLCapability(Widget widget, GLConfig glconfig, GLContext share_list, bit direct, int render_type)
 	{
 		GdkGLContext* sl = null;
-		if ( share_list !== null )
+		if ( share_list !is null )
 		{
 			sl = share_list.ggl();
 		}
@@ -113,7 +113,7 @@ class GLWidget
 	static GLContext createGLContext(Widget widget, GLContext share_list, bit direct, int render_type)
 	{
 		GdkGLContext* sl = null;
-		if ( share_list !== null )
+		if ( share_list !is null )
 		{
 			sl = share_list.ggl();
 		}

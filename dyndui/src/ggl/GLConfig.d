@@ -115,13 +115,13 @@ class GLConfig
 	{
 		
 		config = gdk_gl_config_new_by_mode(mode);
-		if ( config === null )
+		if ( config is null )
 		{
 			printf ("*** Cannot find the double-buffered visual.\n");
 			printf ("*** Trying single-buffered visual.\n");
 			config = gdk_gl_config_new_by_mode(fallback);
 		}
-		if ( config === null )
+		if ( config is null )
 		{
 			printf ("*** No appropriate OpenGL-capable visual found.\n");
 			throw new Error("GL configure failed");

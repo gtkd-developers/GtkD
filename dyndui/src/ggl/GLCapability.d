@@ -43,7 +43,7 @@ template GLCapability()
 	 */
 	bit setGLCapability(GLConfig glConfig = null, int renderType = GLRenderType.RGBA_TYPE)
 	{
-		if ( glConfig === null )
+		if ( glConfig is null )
 		{
 			glConfig = new GLConfig(GLConfigMode.RGB | GLConfigMode.DEPTH | GLConfigMode.DOUBLE,
 									 GLConfigMode.RGB | GLConfigMode.DEPTH);		}
