@@ -147,9 +147,12 @@ class Pixbuf
 			Window window = new Window();
 			cmap = window.getColormap();
 		}
-		printf("Pixbuf.setFromDrawable before unref\n");
-		ObjectG.unref(gdkPixbuf);
-		printf("Pixbuf.setFromDrawable after unref\n");
+		version ( win32 )
+		{
+			printf("Pixbuf.setFromDrawable before unref\n");
+			ObjectG.unref(gdkPixbuf);
+			printf("Pixbuf.setFromDrawable after unref\n");
+		}
 		int sX;
 		int sY;
 		d.getSize(sX,sY);
@@ -243,9 +246,9 @@ class Pixbuf
 	// constructor GdkPixbuf * gdk_pixbuf_new_subpixbuf(GdkPixbuf * src_pixbuf, int src_x, int src_y, int width, int height);
 	Pixbuf subPixbuf(int srcX, int srcY, int width, int height)
 	{
-		printf("PixBuf.subPixbuf 1\n" );
+		//printf("PixBuf.subPixbuf 1\n" );
 		Pixbuf pix = new Pixbuf(gdk_pixbuf_new_subpixbuf(gdkP(), srcX, srcY, width, height));
-		printf("PixBuf.subPixbuf 2\n" );
+		//printf("PixBuf.subPixbuf 2\n" );
 		return pix;
 	}
 
@@ -260,22 +263,29 @@ class Pixbuf
 		return this;
 	}
 	
+	Pixbuf trimBorder(int hBorderSize, int vBorderSize)
+	{
+		int w = getWidth();
+		int h = getHeight();
+		if ( hBorderSize >0 && vBorderSize >0 && hBorderSize < (w/2) && vBorderSize<(h/2) )
+		{
+			return subPixbuf(hBorderSize, vBorderSize, w-(hBorderSize*2), h-(vBorderSize*2) );
+		}
+		return this;
+	}
+	
 	Pixbuf trimTo(int width, int height)
 	{
-printf("Pixbuf.trimTo 1\n" );
 		if ( width > 0 && height > 0
 			&& width < getWidth() && height < getHeight() 
 			)
 		{
-printf("Pixbuf.trimTo 2\n" );
 			int w = getWidth();
 			int h = getHeight();
 			if ( width > w ) width = w;
 			if ( height > h ) height = h;
-printf("Pixbuf.trimTo 3\n" );
 			return subPixbuf( (w-width)/2, (h-height)/2, width, height);
 		}
-printf("Pixbuf.trimTo 4\n" );
 		return this;
 	}
 	

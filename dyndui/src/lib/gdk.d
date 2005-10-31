@@ -41,6 +41,8 @@ static ~this()
 
 extern(C)
 {
+	void			function()
+			gdk_beep;
 	GdkBitmap*		function(GdkDrawable *drawable, gchar *data, gint width, gint height)
 			gdk_bitmap_create_from_data;
 	GType		function()
@@ -555,6 +557,7 @@ extern(C)
 
 Symbol[] gdkLinks =
 [
+	{ "gdk_beep",	cast(void**)& gdk_beep },
 	{ "gdk_bitmap_create_from_data",  cast(void**)& gdk_bitmap_create_from_data },
 	{ "gdk_colormap_get_type",  cast(void**)& gdk_colormap_get_type },
 	{ "gdk_colormap_new",  cast(void**)& gdk_colormap_new },

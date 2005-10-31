@@ -194,6 +194,11 @@ public: class DUI
 		return duiInstance;
 	}
 	
+	public static void beep()
+	{
+		gdk_beep();
+	}
+	
 	/**
 	 * Get the current DUI.
 	 * @return the DUI for this application or null if it doesn't exist yet
