@@ -29,7 +29,6 @@ class HelloWorld : MainWindow
 	{
 		super("DUI Hello World");
 		setBorderWidth(10);
-		new Label("Hello World");
 		add(new Label("Hello World"));
 		show();
 	}
