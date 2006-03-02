@@ -187,12 +187,13 @@ class Dialog : Window
 		}
 	}
 
+private import gtk.typedefs;
 	/**
 	 * Add stock buttons to the dialog
 	 * @param stockID
 	 * @param responses
 	 */
-	void addButtons(Stock[] stockID, Response[] responses)
+	void addButtons(StockID[] stockID, Response[] responses)
 	{
 		for ( int i=0 ; i<stockID.length && i<responses.length; i++)
 		{
