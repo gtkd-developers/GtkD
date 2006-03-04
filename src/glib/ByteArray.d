@@ -23,7 +23,7 @@
 /*
  * Conversion parameters:
  * outPack = glib
- * outFile = byteArray
+ * outFile = ByteArray
  * strct   = GByteArray
  * clss    = ByteArray
  * prefixes:

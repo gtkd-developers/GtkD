@@ -77,8 +77,6 @@ private import glib.ListG;
  * To call a function for each element in the list use g_slist_foreach().
  * To free the entire list, use g_slist_free().
  */
- 
- 
 public class ListSG
 {
 	
@@ -90,6 +88,7 @@ public class ListSG
 	{
 		return gSList;
 	}
+	
 	
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()

@@ -617,7 +617,7 @@ class: ByteArray
 import: glib.ListG
 structWrap: GList* ListG
 prefix: g_byte_array_
-outFile: byteArray
+outFile: ByteArray
 
 file: glib-Balanced-Binary-Trees.html
 struct: GTree

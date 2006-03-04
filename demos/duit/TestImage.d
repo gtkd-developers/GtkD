@@ -41,7 +41,8 @@ class TestImage : VBox
 {
 	Table table;
 	FileChooserDialog fs;
-
+	ScrolledWindow sw;
+	
 	Window window;
 	
 	this(Window window)
@@ -54,7 +55,7 @@ class TestImage : VBox
 
 		super(false,8);
 		
-		ScrolledWindow sw = new ScrolledWindow(null,null);
+		sw = new ScrolledWindow(null,null);
 		
 		sw.addWithViewport(initTable());
 
@@ -121,6 +122,8 @@ class TestImage : VBox
 			image = new Image(fileName);
 			//image.addOnEnterNotify(&onEnter);
 			//image.addOnLeaveNotify(&onLeave);
+			writefln("adding image %s to table at %s,%s", fileName, col, row);
+			table.resize(col+1, row+1);
 			table.attach(image,col,col+1,row,row+1,AttachOptions.FILL,AttachOptions.FILL,4,4);
 			++col;
 			if ( col == 8 )
@@ -161,6 +164,7 @@ private import glib.ListSG;
 						std.string.toString(cast(char*)list.nthData(i)));
 				fileNames ~= std.string.toString(cast(char*)list.nthData(i)).dup;
 			}
+			
 			loadTable(fileNames);
 		}
 		fs.hide();
