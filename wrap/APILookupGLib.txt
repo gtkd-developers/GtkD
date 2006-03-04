@@ -1,0 +1,696 @@
+#
+# This file is part of duit.
+# 
+# duit is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+# 
+# duit is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+# 
+# You should have received a copy of the GNU Lesser General Public License
+# along with duit; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+#
+###
+#####
+# Definitions for wrapping GLib
+#####
+###
+#
+
+# must start with wrap
+
+wrap: glib
+
+###########################################################
+### GLib Fundamentals #####################################
+###########################################################
+
+file: glib-Version-Information.html
+class: Version
+prefix: glib_
+outFile: GLib
+
+#file: glib-Basic-Types.html
+#outFile: types
+
+#file: glib-Limits-of-Basic-Types.html
+#outFile: typeLimits
+
+#file: glib-Standard-Macros.html
+#class: 
+#prefix: 
+#outFile: 
+
+#file: glib-Type-Conversion-Macros.html
+#class: 
+#prefix: 
+#outFile: 
+
+#file: glib-Byte-Order-Macros.html
+#class: 
+#prefix: 
+#outFile: 
+
+#file: glib-Numerical-Definitions.html
+#class: 
+#prefix: 
+#outFile: 
+
+#file: glib-Miscellaneous-Macros.html
+#class: 
+#prefix: 
+#outFile: 
+
+file: glib-Atomic-Operations.html
+class: Atomic
+prefix: g_atomic_
+outFile: Atomic
+
+###########################################################
+### GLib Core Application Support #########################
+###########################################################
+
+file: glib-The-Main-Event-Loop.html
+
+struct: GMainLoop
+class: MainLoop
+prefix: g_main_loop_
+noprefix: g_main_context_
+noprefix: g_timeout_
+noprefix: g_child_
+noprefix: g_source_
+import: glib.Dataset
+structWrap: GDataset* Dataset
+import: glib.MainContext
+structWrap: GMainContext* MainContext
+import: glib.Source
+structWrap: GSource* Source
+nocode: g_main_loop_ref
+code: start
+	/**
+	 * Increases the reference count on a GMainLoop object by one.
+	 * loop:
+	 *  a GMainLoop
+	 * Returns:
+	 *  loop
+	 */
+	public MainLoop ref()
+	{
+		// GMainLoop* g_main_loop_ref (GMainLoop *loop);
+		return new MainLoop( g_main_loop_ref(gMainLoop) );
+	}
+code: end	
+outFile: MainLoop
+
+struct: GMainContext
+class: MainContext
+prefix: g_main_context_
+strictPrefix: Yes
+import: glib.MainLoop
+structWrap: GMainLLoop* MainLoop
+import: glib.Source
+structWrap: GSource* Source
+import: glib.Cond
+structWrap: GCond* Cond
+import: glib.Mutex
+structWrap: GMutex* Mutex
+import: glib.ThreadPool
+structWrap: GThreadPoll* ThreadPoll
+import: glib.MainContext
+structWrap: GMainContext* MainContext
+#import: glib.SourceFuncs
+#structWrap: GSourceFuncs* SourceFuncs
+#import: glib.PollFD
+#structWrap: GPollFD* PollFD
+outFile: MainContext
+
+class: Timeout
+import: glib.MainLoop
+structWrap: GMainLoop* MainLoop
+import: glib.Dataset
+structWrap: GDataset* Dataset
+prefix: g_timeout_
+strictPrefix: Yes
+import: glib.Source
+structWrap: GSource* Source
+outFile: Timeout
+
+class: Child
+import: glib.MainLoop
+structWrap: GMainLoop* MainLoop
+import: glib.Dataset
+structWrap: GDataset* Dataset
+prefix: g_child_
+strictPrefix: Yes
+outFile: Child
+
+struct: GSource
+class: Source
+import: glib.MainLoop
+structWrap: GMainLoop* MainLoop
+import: glib.Dataset
+structWrap: GDataset* Dataset
+import: glib.Date
+structWrap: GDate* Date
+prefix: g_source_
+strictPrefix: Yes
+#import: glib.SourceFuncs
+#structWrap: GSourceFuncs* SourceFuncs
+import: glib.Source
+structWrap: GSource* Source
+import: glib.MainContext
+structWrap: GMainContext* MainContext
+#import: glib.SourceCallbackFuncs
+#structWrap: GSourceCallbackFuncs* SourceCallbackFuncs
+#import: glib.PollFD
+#structWrap: GPollFD* PollFD
+#import: glib.TimeVal
+#structWrap: GTimeVal* TimeVal
+outFile: Source
+
+
+file: glib-Threads.html
+struct: GThread
+class: Thread
+import: glib.ErrorG
+import: glib.Mutex
+structWrap: GMutex* Mutex
+import: glib.Source
+structWrap: GSource* Source
+import: glib.Dataset
+structWrap: GDataset* Dataset
+import: glib.ListG
+structWrap: GList* ListG
+prefix: g_thread_
+noprefix: g_mutex_
+noprefix: g_static_rec_mutex_
+noprefix: g_static_rw_lock_
+noprefix: g_cond_
+noprefix: g_private_
+noprefix: g_static_private_
+#import: glib.ThreadFunctions
+#structWrap: GThreadFunctions* ThreadFunctions
+import: glib.Thread
+structWrap: GThread* Thread
+#import: glib.Error*
+#structWrap: GError** Error*
+#import: glib.StaticMutex
+#structWrap: GStaticMutex* StaticMutex
+outFile: Thread
+
+struct: GMutex
+class: Mutex
+prefix: g_mutex_
+strictPrefix: Yes
+outFile: Mutex
+
+struct: GStaticRecMutex
+class: StaticRecMutex
+prefix: g_static_rec_mutex_
+strictPrefix: Yes
+outFile: StaticRecMutex
+
+struct: GStaticRWLock
+class: RWLock
+prefix: g_static_rw_lock_
+strictPrefix: Yes
+outFile: RWLock
+
+struct: GCond
+class: Cond
+import: glib.Date
+structWrap: GDate* Date
+prefix: g_cond_
+strictPrefix: Yes
+import: glib.Mutex
+structWrap: GMutex* Mutex
+#import: glib.TimeVal
+#structWrap: GTimeVal* TimeVal
+outFile: Cond
+
+struct: GPrivate
+class: Private
+import: glib.Dataset
+structWrap: GDataset* Dataset
+prefix: g_private_
+strictPrefix: Yes
+outFile: Private
+
+struct: GStaticPrivate
+class: StaticPrivate
+import: glib.Dataset
+structWrap: GDataset* Dataset
+prefix: g_static_private_
+strictPrefix: Yes
+outFile: StaticPrivate
+
+
+file: glib-Thread-Pools.html
+struct: GThreadPool
+class: ThreadPool
+import: glib.ErrorG
+import: glib.ListG
+structWrap: GList* ListG
+prefix: g_thread_pool_
+import: glib.MainLoop
+outFile: ThreadPool
+
+
+file: glib-Asynchronous-Queues.html
+struct: GAsyncQueue
+class: AsyncQueue
+prefix: g_async_queue_
+import: glib.ListG
+import: glib.Date
+import: glib.AsyncQueue
+structWrap: GAsyncQueue* AsyncQueue
+#import: glib.TimeVal
+#structWrap: GTimeVal* TimeVal
+outFile: AsyncQueue
+
+file: glib-Dynamic-Loading-of-Modules.html
+struct: GModule
+class: Module
+prefix: g_module_
+import: glib.Module
+structWrap: GModule* Module
+outFile: Module
+
+
+file: glib-Memory-Allocation.html
+class: Memory
+prefix: g_
+#import: glib.MemVTable
+#structWrap: GMemVTable* MemVTable
+outFile: Memory
+
+
+file: glib-IO-Channels.html
+struct: GIOChannel
+class: IOChannel
+prefix: g_io_channel_
+import: glib.ErrorG
+import: glib.StringG
+import: glib.Source
+import: glib.Dataset
+structWrap: GString* StringG
+structWrap: GSource* Source
+#import: glib.IOChannel
+structWrap: GIOChannel* IOChannel
+outFile: IOChannel
+
+
+file: glib-Error-Reporting.html
+struct: GError
+class: ErrorG
+import: glib.Quark
+prefix: g_error_
+outFile: ErrorG
+
+
+file: glib-Warnings-and-Assertions.html
+class: Messages
+prefix: g_
+outFile: Messages
+
+file: glib-Message-Logging.html
+class: MessageLog
+prefix: g_
+outFile: MessageLog
+
+
+###########################################################
+### GLib Utilities ########################################
+###########################################################
+
+file: glib-String-Utility-Functions.html
+class: Str
+import: std.c.stdio
+import: glib.StringG
+structWrap: GString* StringG
+prefix: g_
+outFile: Str
+
+file: glib-Character-Set-Conversion.html
+class: CharacterSet
+import: glib.ErrorG
+prefix: g_
+# these fail to compile because of a reference to a struct that size is not known
+noprefix: g_convert_with_iconv
+noprefix: g_iconv_open
+noprefix: g_iconv
+noprefix: g_iconv_close
+outFile: CharacterSet
+
+file: glib-Unicode-Manipulation.html
+class: Unicode
+import: glib.ErrorG
+prefix: g_
+outFile: Unicode
+
+file: glib-I18N.html
+class: Internationalization
+prefix: g_
+outFile: Internationalization
+
+file: glib-Date-and-Time-Functions.html
+struct: GDate
+class: Date
+prefix: g_date_
+#import: glib.TimeVal
+#structWrap: GTimeVal* TimeVal
+#import: glib.Date
+structWrap: GDate* Date
+outFile: Date
+
+file: glib-Random-Numbers.html
+struct: GRand
+class: RandG
+prefix: g_
+#import: glib.Rand
+structWrap: GRand* RandG
+outFile: RandG
+
+#file: glib-Hook-Functions.html
+#class: Hook
+#prefix: g_hook_
+##import: glib.HookList
+##structWrap: GHookList* HookList
+##import: glib.Hook
+#structWrap: GHook* Hook
+#outFile: Hook
+
+file: glib-Miscellaneous-Utility-Functions.html
+class: Util
+import: glib.ListG
+structWrap: GList* ListG
+prefix: g_
+#import: glib.DebugKey
+#structWrap: GDebugKey* DebugKey
+outFile: Util
+
+file: glib-Lexical-Scanner.html
+struct: GScanner
+class: ScannerG
+import: glib.HashTable
+structWrap: GHashTable* HashTable
+prefix: g_scanner
+#import: glib.Scanner
+structWrap: GScanner* ScannerG
+#import: glib.ScannerConfig
+#structWrap: GScannerConfig* ScannerConfig
+outFile: ScannerG
+
+file: glib-Automatic-String-Completion.html
+struct: GCompletion
+class: StringCompletion
+import: glib.ListG
+structWrap: GList* ListG
+prefix:g_completion_
+outFile: StringCompletion
+
+file: glib-Timers.html
+struct: GTimer
+class: Timer
+prefix: g_timer
+#import: glib.Timer
+structWrap: GTimer* Timer
+outFile: Timer
+
+file: glib-Spawning-Processes.html
+class: Spawn
+import: glib.ErrorG
+import: glib.MainLoop
+structWrap: GMainLoop* MainLoop
+prefix: g_spawn_
+#import: glib.Pid
+#structWrap: GPid* Pid
+#import: glib.Error*
+#structWrap: GError** Error*
+outFile: Spawn
+
+file: glib-File-Utilities.html
+class: FileUtils
+import: std.c.stdio
+prefix: g_
+#import: glib.ErrorG
+#import: glib.Error*
+#structWrap: GError** Error*
+#import: glib.Dir
+#structWrap: GDir* Dir
+#import: glib.MappedFile
+#structWrap: GMappedFile* MappedFile
+outFile: FileUtils
+
+file: glib-Shell-related-Utilities.html
+class: ShellUtils
+import: glib.ErrorG
+prefix: g_shell_
+outFile: ShellUtils
+
+file: glib-Commandline-option-parser.html
+
+struct: GOptionContext
+class: OptionContext
+import: glib.ErrorG
+prefix: g_option_context_
+noprefix: g_option_group_
+#import: glib.Error*
+#structWrap: GError** Error*
+#import: glib.OptionEntry
+#structWrap: GOptionEntry* OptionEntry
+import: glib.OptionGroup
+structWrap: GOptionGroup* OptionGroup
+outFile: OptionContext
+
+struct: GOptionGroup
+class: OptionGroup
+import: glib.Dataset
+structWrap: GDataset* Dataset
+import: glib.OptionContext
+structWrap: GOptionContext* OptionContext
+prefix: g_option_group_
+strictPrefix: Yes
+#import: glib.OptionEntry
+#structWrap: GOptionEntry* OptionEntry
+outFile: OptionGroup
+
+file: glib-Glob-style-pattern-matching.html
+struct: GPatternSpec
+class: Pattern
+prefix: g_pattern_spec_
+prefix: g_pattern_match_
+#import: glib.PatternSpec
+structWrap: GPatternSpec* Pattern
+outFile: Pattern
+
+file: glib-Simple-XML-Subset-Parser.html
+struct: GMarkupParseContext
+class: SimpleXML
+import: glib.ErrorG
+import: glib.Dataset
+structWrap: GDataset* Dataset
+prefix: g_markup_parse_context_
+#import: glib.Error*
+#structWrap: GError** Error*
+#import: glib.MarkupParser
+#structWrap: GMarkupParser* MarkupParser
+outFile: SimpleXML
+
+file: glib-Key-value-file-parser.html
+struct: GKeyFile
+class: KeyFile
+import: glib.ErrorG
+prefix: g_key_file_
+outFile: GKeyFile
+
+file: glib-Windows-Compatibility-Functions.html
+class: WindowsUtils
+prefix: g_win32_
+outFile: WindowsUtils
+
+
+###########################################################
+### GLib Data Types #######################################
+###########################################################
+
+file: glib-Memory-Slices.html
+class: MemorySlice
+prefix: g_slice_
+outFile: MemorySlice
+
+file: glib-Memory-Chunks.html
+struct: GMemChunk
+class: MemoryChunk
+prefix: g_mem_chunk_
+outFile: MemoryChunk
+
+file: glib-Doubly-Linked-Lists.html
+struct: GList
+class: ListG
+prefix: g_list_
+#import: glib.ListG
+structWrap: GList* ListG
+outFile: ListG
+
+file: glib-Singly-Linked-Lists.html
+struct: GSList
+class: ListSG
+import: glib.ListG
+prefix: g_slist_
+#import: glib.ListSG
+structWrap: GSList* ListSG
+outFile: ListSG
+
+file: glib-Double-ended-Queues.html
+struct: GQueue
+class: QueueG
+import: glib.ListG
+prefix: g_queue_
+#import: glib.QueueG
+structWrap: GQueue* QueueG
+import: glib.ListG
+structWrap: GList* ListG
+outFile: QueueG
+
+file: glib-Trash-Stacks.html
+struct: GTrashStack
+class: TrashStack
+prefix: g_trash_stack_
+#import: glib.TrashStack*
+#structWrap: GTrashStack** TrashStack*
+outFile: TrashStack
+
+file: glib-Hash-Tables.html
+struct: GHashTable
+class: HashTable
+import: glib.Dataset
+prefix: g_hash_table_
+#import: glib.HashTable
+structWrap: GHashTable* HashTable
+outFile: 
+
+file: glib-Strings.html
+struct: GString
+class: StringG
+prefix: g_string_
+#import: glib.StringG
+structWrap: GString* StringG
+outFile: StringG
+
+file: glib-String-Chunks.html
+struct: GStringChunk
+class: StringGChunk
+prefix: g_string_chunk_
+outFile: StrignGChunk
+
+file: glib-Arrays.html
+struct: GArray
+class: ArrayG
+import: glib.ListG
+prefix: g_array_
+#import: glib.Array
+structWrap: GArray* ArrayG
+outFile: ArrayG
+
+file: glib-Pointer-Arrays.html
+struct: GPtrArray
+class: PtrArray
+import: glib.ListG
+structWrap: GList* ListG
+prefix: g_ptr_array_
+#import: glib.PtrArray
+structWrap: GPtrArray* PtrArray
+outFile: PtrArray
+
+file: glib-Byte-Arrays.html
+struct: GByteArray
+class: ByteArray
+import: glib.ListG
+structWrap: GList* ListG
+prefix: g_byte_array_
+outFile: byteArray
+
+file: glib-Balanced-Binary-Trees.html
+struct: GTree
+class: BBTree
+import: glib.ListG
+import: glib.Dataset
+structWrap: GList* List*
+structWrap: GDataset* Dataset
+prefix: g_tree_
+outFile: BBTree
+
+file: glib-N-ary-Trees.html
+struct: GNode
+class: Node
+import: glib.BBTree
+structWrap: GTree* BBTree
+structWrap: GNode* Node
+prefix: g_node_
+outFile: Node
+
+file: glib-Quarks.html
+struct: GQuark
+class: Quark
+import: glib.ErrorG
+prefix: g_quark_
+outFile: Quark
+
+file: glib-Keyed-Data-Lists.html
+struct: GData
+class: DataList
+prefix: g_datalist_
+import: glib.Quark
+import: glib.Dataset
+structWrap: GDataset* Dataset
+outFile: DataList
+
+file: glib-Datasets.html
+class: Dataset
+prefix: g_dataset_
+import: glib.Quark
+outFile: Dataset
+
+file: glib-Relations-and-Tuples.html
+struct: GRelation
+class: Relation
+import: glib.HashTable
+structWrap: GHashTable* HashTable
+prefix: g_relation_
+noprefix: g_tuples_
+import: glib.Tuples
+structWrap: GTuples* Tuples
+outFile: Relation
+
+struct: GTuples
+class: Tuples
+prefix: g_tuples_
+strictPrefix: Yes
+outFile: Tuples
+
+file: glib-Caches.html
+struct: GCache
+class: Cache
+import: glib.HashTable
+structWrap: GHashTable* HashTable
+prefix: g_cache_
+outFile: Cache
+
+file: glib-Memory-Allocators.html
+struct: GAllocator
+class: Allocator
+prefix: g_allocator_
+outFile: Allocator
+
+###########################################################
+### GLib Tools ############################################
+###########################################################

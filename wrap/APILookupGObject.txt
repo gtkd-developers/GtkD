@@ -1,0 +1,276 @@
+#
+# This file is part of duit.
+# 
+# duit is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+# 
+# duit is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+# 
+# You should have received a copy of the GNU Lesser General Public License
+# along with duit; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+#
+###
+#####
+# Definitions for wrapping GObject
+#####
+###
+#
+
+# must start with wrap
+
+wrap: gobject
+
+###########################################################
+### GObject ###############################################
+###########################################################
+
+file: gobject-Type-Information.html
+class: Type
+prefix: g_type_
+import: glib.Quark
+import: gobject.Type
+#structWrap: GType* Type
+#import: gobject.TypeQuery
+#structWrap: GTypeQuery* TypeQuery
+#import: gobject.TypeInfo
+#structWrap: GTypeInfo* TypeInfo
+import: gobject.TypePlugin
+structWrap: GTypePlugin* TypePlugin
+#import: gobject.TypeFundamentalInfo
+#structWrap: GTypeFundamentalInfo* TypeFundamentalInfo
+#import: gobject.InterfaceInfo
+#structWrap: GInterfaceInfo* InterfaceInfo
+#import: gobject.TypeInstance
+#structWrap: GTypeInstance* TypeInstance
+#import: gobject.TypeValueTable
+#structWrap: GTypeValueTable* TypeValueTable
+outFile: Type
+
+file: GTypePlugin.html
+struct: GTypePlugin
+class: TypePlugin
+prefix: g_type_plugin_
+import: gobject.Type
+#import: gobject.TypeInfo
+#structWrap: GTypeInfo* TypeInfo
+#import: gobject.TypeValueTable
+#structWrap: GTypeValueTable* TypeValueTable
+#import: gobject.InterfaceInfo
+#structWrap: GInterfaceInfo* InterfaceInfo
+outFile: TypePlugin
+
+file: GTypeModule.html
+struct: GTypeModule
+class: TypeModule
+prefix: g_type_module_
+#import: gobject.TypeInfo
+#structWrap: GTypeInfo* TypeInfo
+#import: gobject.InterfaceInfo
+#structWrap: GInterfaceInfo* InterfaceInfo
+import: gobject.Enums
+structWrap: GEnumValue* Enums
+import: gobject.Flags
+structWrap: GFlagsValue* Flags
+outFile: TypeModule
+
+file: gobject-The-Base-Object-Type.html
+struct: GObject
+class: ObjectG
+prefix: g_object_
+#import: gobject.ObjectClass
+#structWrap: GObjectClass* ObjectClass
+import: gobject.ParamSpec
+structWrap: GParamSpec* ParamSpec
+#import: gobject.ParamSpec*
+#structWrap: GParamSpec** ParamSpec*
+#import: gobject.Parameter
+#structWrap: GParameter* Parameter
+import: gobject.Value
+structWrap: GValue* Value
+import: gobject.Closure
+structWrap: GClosure* Closure
+
+nocode: g_object_set_data_full
+
+code: start
+
+	import std.gc;
+	import std.string;
+	import std.stdio;
+
+	/**
+	 * Sets our main struct and passes store it on the gobject.
+	 * Add a gabage collector root to the gtk+ struct so it doesn't get collect
+	 */
+	public this (GObject* gObject)
+	{
+		this.gObject = gObject;
+		if ( gObject !is  null )
+		{
+			//writefln("ObjectG.this\n");
+			setDataFull("GObject",this);
+		}
+	}
+
+	/**
+	 * Sets a pointer on this object's has table
+	 * @param key the data identifier
+	 * @param data a pointer 
+	 */
+	public: void setDataFull(char[] key, gpointer data)
+	{
+		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
+		std.gc.addRoot(data);
+		g_object_set_data_full(gObject, std.string.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
+	}
+
+	extern(C)
+	{
+		static void destroyNotify(gpointer* data)
+		{
+			//writefln("objectg.destroy entry");
+			//writefln("objectg.destroy");
+			//writefln("removing gc.root to %s",data);
+			std.gc.removeRoot(data);
+			//writefln("objectg.destroy exit");
+		}
+	}
+	
+code: end
+
+outFile: ObjectG
+
+file: gobject-Enumeration-and-Flag-Types.html
+
+struct: GEnumValue
+class: Enums
+prefix: g_enum_
+noprefix: g_flags_
+#import: gobject.EnumValue
+#structWrap: GEnumValue* EnumValue
+#import: gobject.TypeInfo
+#structWrap: GTypeInfo* TypeInfo
+outFile: Enums
+
+struct: GFlagsValue
+strictPrefix: Y
+class: Flags
+prefix: g_flags_
+noprefix: g_enum_
+import: gobject.Flags
+structWrap: GFlagsValue* Flags
+#import: gobject.TypeInfo
+#structWrap: GTypeInfo* TypeInfo
+outFile: Flags
+
+file: gobject-Boxed-Types.html
+class: Boxed
+prefix: g_
+outFile: Boxed
+
+file: gobject-Generic-values.html
+struct: GValue
+class: Value
+prefix: g_value_
+import: gobject.Value
+structWrap: GValue* Value
+import: gobject.ParamSpec
+structWrap: GParamSpec* ParamSpec
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+openFile: Value
+
+file: gobject-Standard-Parameter-and-Value-Types.html
+#class: Value
+#import: gobject.Value
+#prefix: g_
+closeFile: Value
+
+#file: gobject-Varargs-Value-Collection.html
+#class: 
+#prefix: 
+#outFile: 
+
+file: gobject-GParamSpec.html
+struct: GParamSpec
+class: ParamSpec
+prefix: g_param_spec_
+import: gobject.ParamSpec
+structWrap: GParamSpec* ParamSpec
+import: gobject.Value
+structWrap: GValue* Value
+#import: gobject.ParamSpecTypeInfo
+#structWrap: GParamSpecTypeInfo* ParamSpecTypeInfo
+#import: gobject.ParamSpecPool
+#structWrap: GParamSpecPool* ParamSpecPool
+#import: gobject.ParamSpec*
+#structWrap: GParamSpec** ParamSpec*
+import: glib.ListG
+structWrap: GList* ListG
+outFile: ParamSpec
+
+file: gobject-Signals.html
+class: Signals
+prefix: g_signal_
+import: gobject.Closure
+structWrap: GClosure* Closure
+import: gobject.Type
+#structWrap: GType* Type
+#import: gobject.SignalQuery
+#structWrap: GSignalQuery* SignalQuery
+import: gobject.Value
+structWrap: GValue* Value
+import: glib.Quark
+structWrap: GQuark* Quark
+#import: gobject.SignalInvocationHint
+#structWrap: GSignalInvocationHint* SignalInvocationHint
+outFile: Signals
+
+file: gobject-Closures.html
+
+struct: GClosure
+class: Closure
+prefix: g_closure_
+noprefix: g_cclosure
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+import: gobject.Closure
+structWrap: GClosure* Closure
+import: gobject.Value
+structWrap: GValue* Value
+import: glib.Source
+structWrap: GSource* Source
+outFile: Closure
+
+struct: GCClosure
+class: CClosure
+prefix: g_cclosure
+strictPrefix: Yes
+noprefix: g_closure_
+noprefix: g_source_set_closure
+import: gobject.Closure
+structWrap: GClosure* Closure
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+import: gobject.Value
+structWrap: GValue* Value
+outFile: CClosure
+
+file: gobject-Value-arrays.html
+struct: GValueArray
+class: ValueArray
+prefix: g_value_array_
+import: gobject.Value
+structWrap: GValue* Value
+import: gobject.ValueArray
+structWrap: GValueArray* ValueArray
+outFile: ValueArray

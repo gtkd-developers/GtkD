@@ -1,0 +1,185 @@
+#
+# This file is part of duit.
+# 
+# duit is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+# 
+# duit is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+# 
+# You should have received a copy of the GNU Lesser General Public License
+# along with duit; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+#
+###
+#####
+# Definitions for wrapping Atk
+#####
+###
+#
+
+# must start with wrap
+
+wrap: atk
+
+###########################################################
+### Atk ###################################################
+###########################################################
+
+file: AtkAction.html
+struct: AtkAction
+class: Action
+prefix: atk_action_
+outFile: Action
+
+file: AtkComponent.html
+struct: AtkComponent
+class: Component
+prefix: atk_component_
+outFile: Component
+
+file: AtkDocument.html
+struct: AtkDocument
+class: Document
+prefix: atk_document_
+outFile: Document
+
+file: AtkEditableText.html
+struct: AtkEditableText
+class: EditableText
+prefix: atk_editable_text
+outFile: EditableText
+
+file: AtkGObjectAccessible.html
+struct: AtkGObjectAccessible
+class: GObjectAccessible
+prefix: atk_gobject_accessible
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+outFile: GObjectAccessible
+
+file: AtkHyperlink.html
+struct: AtkHyperlink
+class: Hyperlink
+prefix: atk_hyperlink
+outFile: Hyperlink
+
+file: AtkHypertext.html
+struct: AtkHypertext
+class: Hypertext
+prefix: atk_hypertext
+outFile: Hypertext
+
+file: AtkImage.html
+struct: AtkImage
+class: Image
+prefix: atk_image_
+outFile: Image
+
+file: AtkNoOpObject.html
+struct: AtkNoOpObject
+class: NoOpObject
+prefix: atk_no_op_object_
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+outFile: NoOpObject
+
+file: AtkNoOpObjectFactory.html
+struct: AtkNoOpObjectFactory
+class: NoOpObjectFactory
+prefix: atk_no_op_object_factory
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+outFile: NoOpObjectFactory
+
+file: AtkObject.html
+struct: AtkObject
+class: ObjectAtk
+prefix: atk_object_
+outFile: ObjectAtk
+
+file: AtkObjectFactory.html
+struct: AtkObjectFactory
+class: ObjectFactory
+prefix: atk_object_factory_
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+outFile: ObjectFactory
+
+file: AtkRegistry.html
+struct: AtkRegistry
+class: Registry
+prefix: atk_registry_
+outFile: Registry
+
+file: AtkRelation.html
+struct: AtkRelation
+class: Relation
+prefix: atk_relation_
+import: glib.PtrArray
+structWrap: GPtrArray* PtrArray
+outFile: Relation
+
+file: AtkRelationSet.html
+struct: AtkRelationSet
+class: RelationSet
+prefix: atk_relationSet_
+import: glib.PtrArray
+structWrap: GPtrArray* PtrArray
+outFile: RelationSet
+
+file: AtkSelection.html
+struct: AtkSelection
+class: Selection
+prefix: atk_selection_
+outFile: Selection
+
+file: atk-AtkState.html
+class: State
+prefix: atk_state_
+outFile: State
+
+file: atk-AtkStateSet.html
+class: StateSet
+prefix: atk_state_set_
+outFile: StateSet
+
+file: AtkStreamableContent.html
+struct: AtkStreamableContent
+class: StreamableContent
+prefix: atk_streamable_content_
+import: glib.IOChannel
+structWrap: GIOChannel* IOChannel
+outFile: StreamableContent
+
+file: AtkTable.html
+struct: AtkTable
+class: Table
+prefix: atk_table_
+outFile: Table
+
+file: AtkText.html
+struct: AtkText
+class: Text
+prefix: atk_text_
+outFile:Text
+
+file: AtkUtil.html
+class: Util
+prefix: atk_
+outFile: Util
+
+file: AtkValue.html
+struct: AtkValue
+class: ValueAtk
+prefix: atk_value_
+import: gobject.Value
+structWrap: GValue* Value
+outFile: ValueAtk
