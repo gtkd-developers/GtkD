@@ -123,7 +123,7 @@ public class StringCompletion
 	public void addItems(ListG items)
 	{
 		// void g_completion_add_items (GCompletion *cmp,  GList *items);
-		g_completion_add_items(gCompletion, items.getListGStruct());
+		g_completion_add_items(gCompletion, (items is null) ? null : items.getListGStruct());
 	}
 	
 	/**
@@ -136,7 +136,7 @@ public class StringCompletion
 	public void removeItems(ListG items)
 	{
 		// void g_completion_remove_items (GCompletion *cmp,  GList *items);
-		g_completion_remove_items(gCompletion, items.getListGStruct());
+		g_completion_remove_items(gCompletion, (items is null) ? null : items.getListGStruct());
 	}
 	
 	/**

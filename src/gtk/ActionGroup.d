@@ -358,7 +358,7 @@ public class ActionGroup : ObjectG
 	public void addAction(Action action)
 	{
 		// void gtk_action_group_add_action (GtkActionGroup *action_group,  GtkAction *action);
-		gtk_action_group_add_action(gtkActionGroup, action.getActionStruct());
+		gtk_action_group_add_action(gtkActionGroup, (action is null) ? null : action.getActionStruct());
 	}
 	
 	/**
@@ -380,7 +380,7 @@ public class ActionGroup : ObjectG
 	public void addActionWithAccel(Action action, char[] accelerator)
 	{
 		// void gtk_action_group_add_action_with_accel  (GtkActionGroup *action_group,  GtkAction *action,  const gchar *accelerator);
-		gtk_action_group_add_action_with_accel(gtkActionGroup, action.getActionStruct(), std.string.toStringz(accelerator));
+		gtk_action_group_add_action_with_accel(gtkActionGroup, (action is null) ? null : action.getActionStruct(), std.string.toStringz(accelerator));
 	}
 	
 	/**
@@ -394,7 +394,7 @@ public class ActionGroup : ObjectG
 	public void removeAction(Action action)
 	{
 		// void gtk_action_group_remove_action (GtkActionGroup *action_group,  GtkAction *action);
-		gtk_action_group_remove_action(gtkActionGroup, action.getActionStruct());
+		gtk_action_group_remove_action(gtkActionGroup, (action is null) ? null : action.getActionStruct());
 	}
 	
 	

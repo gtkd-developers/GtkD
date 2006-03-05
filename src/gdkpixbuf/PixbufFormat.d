@@ -135,7 +135,7 @@ public class PixbufFormat
 	public static int gdkPixbufSetOption(Pixbuf pixbuf, char[] key, char[] value)
 	{
 		// gboolean gdk_pixbuf_set_option (GdkPixbuf *pixbuf,  const gchar *key,  const gchar *value);
-		return gdk_pixbuf_set_option(pixbuf.getPixbufStruct(), std.string.toStringz(key), std.string.toStringz(value));
+		return gdk_pixbuf_set_option((pixbuf is null) ? null : pixbuf.getPixbufStruct(), std.string.toStringz(key), std.string.toStringz(value));
 	}
 	
 	/**

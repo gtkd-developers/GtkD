@@ -187,7 +187,7 @@ public class Tooltips : ObjectGtk
 	public void setTip(Widget widget, char[] tipText, char[] tipPrivate)
 	{
 		// void gtk_tooltips_set_tip (GtkTooltips *tooltips,  GtkWidget *widget,  const gchar *tip_text,  const gchar *tip_private);
-		gtk_tooltips_set_tip(gtkTooltips, widget.getWidgetStruct(), std.string.toStringz(tipText), std.string.toStringz(tipPrivate));
+		gtk_tooltips_set_tip(gtkTooltips, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(tipText), std.string.toStringz(tipPrivate));
 	}
 	
 	/**
@@ -200,7 +200,7 @@ public class Tooltips : ObjectGtk
 	public static GtkTooltipsData* dataGet(Widget widget)
 	{
 		// GtkTooltipsData* gtk_tooltips_data_get (GtkWidget *widget);
-		return gtk_tooltips_data_get(widget.getWidgetStruct());
+		return gtk_tooltips_data_get((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -241,6 +241,6 @@ public class Tooltips : ObjectGtk
 	public static int getInfoFromTipWindow(Window tipWindow, GtkTooltips** tooltips, GtkWidget** currentWidget)
 	{
 		// gboolean gtk_tooltips_get_info_from_tip_window  (GtkWindow *tip_window,  GtkTooltips **tooltips,  GtkWidget **current_widget);
-		return gtk_tooltips_get_info_from_tip_window(tipWindow.getWindowStruct(), tooltips, currentWidget);
+		return gtk_tooltips_get_info_from_tip_window((tipWindow is null) ? null : tipWindow.getWindowStruct(), tooltips, currentWidget);
 	}
 }

@@ -109,6 +109,6 @@ public class IMMulticontext : IMContext
 	public void appendMenuitems(MenuShell menushell)
 	{
 		// void gtk_im_multicontext_append_menuitems  (GtkIMMulticontext *context,  GtkMenuShell *menushell);
-		gtk_im_multicontext_append_menuitems(gtkIMMulticontext, menushell.getMenuShellStruct());
+		gtk_im_multicontext_append_menuitems(gtkIMMulticontext, (menushell is null) ? null : menushell.getMenuShellStruct());
 	}
 }

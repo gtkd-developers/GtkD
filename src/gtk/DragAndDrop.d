@@ -128,7 +128,7 @@ public class DragAndDrop
 	public static void destSet(Widget widget, GtkDestDefaults flags, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
 	{
 		// void gtk_drag_dest_set (GtkWidget *widget,  GtkDestDefaults flags,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_drag_dest_set(widget.getWidgetStruct(), flags, targets, nTargets, actions);
+		gtk_drag_dest_set((widget is null) ? null : widget.getWidgetStruct(), flags, targets, nTargets, actions);
 	}
 	
 	/**
@@ -148,7 +148,7 @@ public class DragAndDrop
 	public static void destSetProxy(Widget widget, Window proxyWindow, GdkDragProtocol protocol, int useCoordinates)
 	{
 		// void gtk_drag_dest_set_proxy (GtkWidget *widget,  GdkWindow *proxy_window,  GdkDragProtocol protocol,  gboolean use_coordinates);
-		gtk_drag_dest_set_proxy(widget.getWidgetStruct(), proxyWindow.getWindowStruct(), protocol, useCoordinates);
+		gtk_drag_dest_set_proxy((widget is null) ? null : widget.getWidgetStruct(), (proxyWindow is null) ? null : proxyWindow.getWindowStruct(), protocol, useCoordinates);
 	}
 	
 	/**
@@ -161,7 +161,7 @@ public class DragAndDrop
 	public static void destUnset(Widget widget)
 	{
 		// void gtk_drag_dest_unset (GtkWidget *widget);
-		gtk_drag_dest_unset(widget.getWidgetStruct());
+		gtk_drag_dest_unset((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -185,7 +185,7 @@ public class DragAndDrop
 	public static GdkAtom destFindTarget(Widget widget, DragContext context, GtkTargetList* targetList)
 	{
 		// GdkAtom gtk_drag_dest_find_target (GtkWidget *widget,  GdkDragContext *context,  GtkTargetList *target_list);
-		return gtk_drag_dest_find_target(widget.getWidgetStruct(), context.getDragContextStruct(), targetList);
+		return gtk_drag_dest_find_target((widget is null) ? null : widget.getWidgetStruct(), (context is null) ? null : context.getDragContextStruct(), targetList);
 	}
 	
 	/**
@@ -199,7 +199,7 @@ public class DragAndDrop
 	public static GtkTargetList* destGetTargetList(Widget widget)
 	{
 		// GtkTargetList* gtk_drag_dest_get_target_list  (GtkWidget *widget);
-		return gtk_drag_dest_get_target_list(widget.getWidgetStruct());
+		return gtk_drag_dest_get_target_list((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -214,7 +214,7 @@ public class DragAndDrop
 	public static void destSetTargetList(Widget widget, GtkTargetList* targetList)
 	{
 		// void gtk_drag_dest_set_target_list (GtkWidget *widget,  GtkTargetList *target_list);
-		gtk_drag_dest_set_target_list(widget.getWidgetStruct(), targetList);
+		gtk_drag_dest_set_target_list((widget is null) ? null : widget.getWidgetStruct(), targetList);
 	}
 	
 	/**
@@ -230,7 +230,7 @@ public class DragAndDrop
 	public static void destAddTextTargets(Widget widget)
 	{
 		// void gtk_drag_dest_add_text_targets (GtkWidget *widget);
-		gtk_drag_dest_add_text_targets(widget.getWidgetStruct());
+		gtk_drag_dest_add_text_targets((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -246,7 +246,7 @@ public class DragAndDrop
 	public static void destAddImageTargets(Widget widget)
 	{
 		// void gtk_drag_dest_add_image_targets (GtkWidget *widget);
-		gtk_drag_dest_add_image_targets(widget.getWidgetStruct());
+		gtk_drag_dest_add_image_targets((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -262,7 +262,7 @@ public class DragAndDrop
 	public static void destAddUriTargets(Widget widget)
 	{
 		// void gtk_drag_dest_add_uri_targets (GtkWidget *widget);
-		gtk_drag_dest_add_uri_targets(widget.getWidgetStruct());
+		gtk_drag_dest_add_uri_targets((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -308,7 +308,7 @@ public class DragAndDrop
 	public static void getData(Widget widget, DragContext context, GdkAtom target, uint time)
 	{
 		// void gtk_drag_get_data (GtkWidget *widget,  GdkDragContext *context,  GdkAtom target,  guint32 time_);
-		gtk_drag_get_data(widget.getWidgetStruct(), context.getDragContextStruct(), target, time);
+		gtk_drag_get_data((widget is null) ? null : widget.getWidgetStruct(), (context is null) ? null : context.getDragContextStruct(), target, time);
 	}
 	
 	/**
@@ -336,7 +336,7 @@ public class DragAndDrop
 	public static void highlight(Widget widget)
 	{
 		// void gtk_drag_highlight (GtkWidget *widget);
-		gtk_drag_highlight(widget.getWidgetStruct());
+		gtk_drag_highlight((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -348,7 +348,7 @@ public class DragAndDrop
 	public static void unhighlight(Widget widget)
 	{
 		// void gtk_drag_unhighlight (GtkWidget *widget);
-		gtk_drag_unhighlight(widget.getWidgetStruct());
+		gtk_drag_unhighlight((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -373,7 +373,7 @@ public class DragAndDrop
 	public static DragContext begin(Widget widget, GtkTargetList* targets, GdkDragAction actions, int button, Event event)
 	{
 		// GdkDragContext* gtk_drag_begin (GtkWidget *widget,  GtkTargetList *targets,  GdkDragAction actions,  gint button,  GdkEvent *event);
-		return new DragContext( gtk_drag_begin(widget.getWidgetStruct(), targets, actions, button, event.getEventStruct()) );
+		return new DragContext( gtk_drag_begin((widget is null) ? null : widget.getWidgetStruct(), targets, actions, button, (event is null) ? null : event.getEventStruct()) );
 	}
 	
 	/**
@@ -394,7 +394,7 @@ public class DragAndDrop
 	public void setIconWidget(Widget widget, int hotX, int hotY)
 	{
 		// void gtk_drag_set_icon_widget (GdkDragContext *context,  GtkWidget *widget,  gint hot_x,  gint hot_y);
-		gtk_drag_set_icon_widget(gdkDragContext, widget.getWidgetStruct(), hotX, hotY);
+		gtk_drag_set_icon_widget(gdkDragContext, (widget is null) ? null : widget.getWidgetStruct(), hotX, hotY);
 	}
 	
 	/**
@@ -419,7 +419,7 @@ public class DragAndDrop
 	public void setIconPixmap(Colormap colormap, Pixmap pixmap, Bitmap mask, int hotX, int hotY)
 	{
 		// void gtk_drag_set_icon_pixmap (GdkDragContext *context,  GdkColormap *colormap,  GdkPixmap *pixmap,  GdkBitmap *mask,  gint hot_x,  gint hot_y);
-		gtk_drag_set_icon_pixmap(gdkDragContext, colormap.getColormapStruct(), pixmap.getPixmapStruct(), mask.getBitmapStruct(), hotX, hotY);
+		gtk_drag_set_icon_pixmap(gdkDragContext, (colormap is null) ? null : colormap.getColormapStruct(), (pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct(), hotX, hotY);
 	}
 	
 	/**
@@ -437,7 +437,7 @@ public class DragAndDrop
 	public void setIconPixbuf(Pixbuf pixbuf, int hotX, int hotY)
 	{
 		// void gtk_drag_set_icon_pixbuf (GdkDragContext *context,  GdkPixbuf *pixbuf,  gint hot_x,  gint hot_y);
-		gtk_drag_set_icon_pixbuf(gdkDragContext, pixbuf.getPixbufStruct(), hotX, hotY);
+		gtk_drag_set_icon_pixbuf(gdkDragContext, (pixbuf is null) ? null : pixbuf.getPixbufStruct(), hotX, hotY);
 	}
 	
 	/**
@@ -515,7 +515,7 @@ public class DragAndDrop
 	public static void setDefaultIcon(Colormap colormap, Pixmap pixmap, Bitmap mask, int hotX, int hotY)
 	{
 		// void gtk_drag_set_default_icon (GdkColormap *colormap,  GdkPixmap *pixmap,  GdkBitmap *mask,  gint hot_x,  gint hot_y);
-		gtk_drag_set_default_icon(colormap.getColormapStruct(), pixmap.getPixmapStruct(), mask.getBitmapStruct(), hotX, hotY);
+		gtk_drag_set_default_icon((colormap is null) ? null : colormap.getColormapStruct(), (pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct(), hotX, hotY);
 	}
 	
 	/**
@@ -538,7 +538,7 @@ public class DragAndDrop
 	public static int checkThreshold(Widget widget, int startX, int startY, int currentX, int currentY)
 	{
 		// gboolean gtk_drag_check_threshold (GtkWidget *widget,  gint start_x,  gint start_y,  gint current_x,  gint current_y);
-		return gtk_drag_check_threshold(widget.getWidgetStruct(), startX, startY, currentX, currentY);
+		return gtk_drag_check_threshold((widget is null) ? null : widget.getWidgetStruct(), startX, startY, currentX, currentY);
 	}
 	
 	/**
@@ -560,7 +560,7 @@ public class DragAndDrop
 	public static void sourceSet(Widget widget, GdkModifierType startButtonMask, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
 	{
 		// void gtk_drag_source_set (GtkWidget *widget,  GdkModifierType start_button_mask,  const GtkTargetEntry *targets,  gint n_targets,  GdkDragAction actions);
-		gtk_drag_source_set(widget.getWidgetStruct(), startButtonMask, targets, nTargets, actions);
+		gtk_drag_source_set((widget is null) ? null : widget.getWidgetStruct(), startButtonMask, targets, nTargets, actions);
 	}
 	
 	/**
@@ -580,7 +580,7 @@ public class DragAndDrop
 	public static void sourceSetIcon(Widget widget, Colormap colormap, Pixmap pixmap, Bitmap mask)
 	{
 		// void gtk_drag_source_set_icon (GtkWidget *widget,  GdkColormap *colormap,  GdkPixmap *pixmap,  GdkBitmap *mask);
-		gtk_drag_source_set_icon(widget.getWidgetStruct(), colormap.getColormapStruct(), pixmap.getPixmapStruct(), mask.getBitmapStruct());
+		gtk_drag_source_set_icon((widget is null) ? null : widget.getWidgetStruct(), (colormap is null) ? null : colormap.getColormapStruct(), (pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct());
 	}
 	
 	/**
@@ -595,7 +595,7 @@ public class DragAndDrop
 	public static void sourceSetIconPixbuf(Widget widget, Pixbuf pixbuf)
 	{
 		// void gtk_drag_source_set_icon_pixbuf (GtkWidget *widget,  GdkPixbuf *pixbuf);
-		gtk_drag_source_set_icon_pixbuf(widget.getWidgetStruct(), pixbuf.getPixbufStruct());
+		gtk_drag_source_set_icon_pixbuf((widget is null) ? null : widget.getWidgetStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
 	/**
@@ -609,7 +609,7 @@ public class DragAndDrop
 	public static void sourceSetIconStock(Widget widget, char[] stockId)
 	{
 		// void gtk_drag_source_set_icon_stock (GtkWidget *widget,  const gchar *stock_id);
-		gtk_drag_source_set_icon_stock(widget.getWidgetStruct(), std.string.toStringz(stockId));
+		gtk_drag_source_set_icon_stock((widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(stockId));
 	}
 	
 	/**
@@ -624,7 +624,7 @@ public class DragAndDrop
 	public static void sourceSetIconName(Widget widget, char[] iconName)
 	{
 		// void gtk_drag_source_set_icon_name (GtkWidget *widget,  const gchar *icon_name);
-		gtk_drag_source_set_icon_name(widget.getWidgetStruct(), std.string.toStringz(iconName));
+		gtk_drag_source_set_icon_name((widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(iconName));
 	}
 	
 	/**
@@ -635,7 +635,7 @@ public class DragAndDrop
 	public static void sourceUnset(Widget widget)
 	{
 		// void gtk_drag_source_unset (GtkWidget *widget);
-		gtk_drag_source_unset(widget.getWidgetStruct());
+		gtk_drag_source_unset((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -651,7 +651,7 @@ public class DragAndDrop
 	public static void sourceSetTargetList(Widget widget, GtkTargetList* targetList)
 	{
 		// void gtk_drag_source_set_target_list (GtkWidget *widget,  GtkTargetList *target_list);
-		gtk_drag_source_set_target_list(widget.getWidgetStruct(), targetList);
+		gtk_drag_source_set_target_list((widget is null) ? null : widget.getWidgetStruct(), targetList);
 	}
 	
 	/**
@@ -666,7 +666,7 @@ public class DragAndDrop
 	public static GtkTargetList* sourceGetTargetList(Widget widget)
 	{
 		// GtkTargetList* gtk_drag_source_get_target_list  (GtkWidget *widget);
-		return gtk_drag_source_get_target_list(widget.getWidgetStruct());
+		return gtk_drag_source_get_target_list((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -682,7 +682,7 @@ public class DragAndDrop
 	public static void sourceAddTextTargets(Widget widget)
 	{
 		// void gtk_drag_source_add_text_targets  (GtkWidget *widget);
-		gtk_drag_source_add_text_targets(widget.getWidgetStruct());
+		gtk_drag_source_add_text_targets((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -698,7 +698,7 @@ public class DragAndDrop
 	public static void sourceAddImageTargets(Widget widget)
 	{
 		// void gtk_drag_source_add_image_targets  (GtkWidget *widget);
-		gtk_drag_source_add_image_targets(widget.getWidgetStruct());
+		gtk_drag_source_add_image_targets((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -714,6 +714,6 @@ public class DragAndDrop
 	public static void sourceAddUriTargets(Widget widget)
 	{
 		// void gtk_drag_source_add_uri_targets (GtkWidget *widget);
-		gtk_drag_source_add_uri_targets(widget.getWidgetStruct());
+		gtk_drag_source_add_uri_targets((widget is null) ? null : widget.getWidgetStruct());
 	}
 }

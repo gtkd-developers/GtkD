@@ -242,7 +242,7 @@ public class RadioButton : CheckButton
 	public this (ListSG group)
 	{
 		// GtkWidget* gtk_radio_button_new (GSList *group);
-		this(cast(GtkRadioButton*)gtk_radio_button_new(group.getListSGStruct()) );
+		this(cast(GtkRadioButton*)gtk_radio_button_new((group is null) ? null : group.getListSGStruct()) );
 	}
 	
 	/**
@@ -278,7 +278,7 @@ public class RadioButton : CheckButton
 	public void setGroup(ListSG group)
 	{
 		// void gtk_radio_button_set_group (GtkRadioButton *radio_button,  GSList *group);
-		gtk_radio_button_set_group(gtkRadioButton, group.getListSGStruct());
+		gtk_radio_button_set_group(gtkRadioButton, (group is null) ? null : group.getListSGStruct());
 	}
 	
 	/**

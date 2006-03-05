@@ -108,7 +108,7 @@ public class Bitmap
 	public static Bitmap createFromData(Drawable drawable, char[] data, int width, int height)
 	{
 		// GdkBitmap* gdk_bitmap_create_from_data (GdkDrawable *drawable,  const gchar *data,  gint width,  gint height);
-		return new Bitmap( gdk_bitmap_create_from_data(drawable.getDrawableStruct(), std.string.toStringz(data), width, height) );
+		return new Bitmap( gdk_bitmap_create_from_data((drawable is null) ? null : drawable.getDrawableStruct(), std.string.toStringz(data), width, height) );
 	}
 	
 	

@@ -243,7 +243,7 @@ public class Clipboard : ObjectG
 	public static Clipboard getForDisplay(Display display, GdkAtom selection)
 	{
 		// GtkClipboard* gtk_clipboard_get_for_display (GdkDisplay *display,  GdkAtom selection);
-		return new Clipboard( gtk_clipboard_get_for_display(display.getDisplayStruct(), selection) );
+		return new Clipboard( gtk_clipboard_get_for_display((display is null) ? null : display.getDisplayStruct(), selection) );
 	}
 	
 	/**
@@ -319,7 +319,7 @@ public class Clipboard : ObjectG
 	public int setWithOwner(GtkTargetEntry* targets, uint nTargets, GtkClipboardGetFunc getFunc, GtkClipboardClearFunc clearFunc, ObjectG owner)
 	{
 		// gboolean gtk_clipboard_set_with_owner (GtkClipboard *clipboard,  const GtkTargetEntry *targets,  guint n_targets,  GtkClipboardGetFunc get_func,  GtkClipboardClearFunc clear_func,  GObject *owner);
-		return gtk_clipboard_set_with_owner(gtkClipboard, targets, nTargets, getFunc, clearFunc, owner.getObjectGStruct());
+		return gtk_clipboard_set_with_owner(gtkClipboard, targets, nTargets, getFunc, clearFunc, (owner is null) ? null : owner.getObjectGStruct());
 	}
 	
 	/**
@@ -386,7 +386,7 @@ public class Clipboard : ObjectG
 	public void setImage(Pixbuf pixbuf)
 	{
 		// void gtk_clipboard_set_image (GtkClipboard *clipboard,  GdkPixbuf *pixbuf);
-		gtk_clipboard_set_image(gtkClipboard, pixbuf.getPixbufStruct());
+		gtk_clipboard_set_image(gtkClipboard, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
 	/**

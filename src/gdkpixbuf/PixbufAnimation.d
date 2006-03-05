@@ -364,6 +364,6 @@ public class PixbufAnimation : ObjectG
 	public static void gdkPixbufSimpleAnimAddFrame(GdkPixbufSimpleAnim* animation, Pixbuf pixbuf)
 	{
 		// void gdk_pixbuf_simple_anim_add_frame  (GdkPixbufSimpleAnim *animation,  GdkPixbuf *pixbuf);
-		gdk_pixbuf_simple_anim_add_frame(animation, pixbuf.getPixbufStruct());
+		gdk_pixbuf_simple_anim_add_frame(animation, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 }

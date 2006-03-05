@@ -170,7 +170,7 @@ public class Cursor
 	public this (Pixmap source, Pixmap mask, Color fg, Color bg, int x, int y)
 	{
 		// GdkCursor* gdk_cursor_new_from_pixmap (GdkPixmap *source,  GdkPixmap *mask,  const GdkColor *fg,  const GdkColor *bg,  gint x,  gint y);
-		this(cast(GdkCursor*)gdk_cursor_new_from_pixmap(source.getPixmapStruct(), mask.getPixmapStruct(), fg.getColorStruct(), bg.getColorStruct(), x, y) );
+		this(cast(GdkCursor*)gdk_cursor_new_from_pixmap((source is null) ? null : source.getPixmapStruct(), (mask is null) ? null : mask.getPixmapStruct(), (fg is null) ? null : fg.getColorStruct(), (bg is null) ? null : bg.getColorStruct(), x, y) );
 	}
 	
 	/**
@@ -200,7 +200,7 @@ public class Cursor
 	public this (Display display, Pixbuf pixbuf, int x, int y)
 	{
 		// GdkCursor* gdk_cursor_new_from_pixbuf (GdkDisplay *display,  GdkPixbuf *pixbuf,  gint x,  gint y);
-		this(cast(GdkCursor*)gdk_cursor_new_from_pixbuf(display.getDisplayStruct(), pixbuf.getPixbufStruct(), x, y) );
+		this(cast(GdkCursor*)gdk_cursor_new_from_pixbuf((display is null) ? null : display.getDisplayStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct(), x, y) );
 	}
 	
 	/**
@@ -218,7 +218,7 @@ public class Cursor
 	public this (Display display, char[] name)
 	{
 		// GdkCursor* gdk_cursor_new_from_name (GdkDisplay *display,  const gchar *name);
-		this(cast(GdkCursor*)gdk_cursor_new_from_name(display.getDisplayStruct(), std.string.toStringz(name)) );
+		this(cast(GdkCursor*)gdk_cursor_new_from_name((display is null) ? null : display.getDisplayStruct(), std.string.toStringz(name)) );
 	}
 	
 	/**
@@ -254,7 +254,7 @@ public class Cursor
 	public this (Display display, GdkCursorType cursorType)
 	{
 		// GdkCursor* gdk_cursor_new_for_display (GdkDisplay *display,  GdkCursorType cursor_type);
-		this(cast(GdkCursor*)gdk_cursor_new_for_display(display.getDisplayStruct(), cursorType) );
+		this(cast(GdkCursor*)gdk_cursor_new_for_display((display is null) ? null : display.getDisplayStruct(), cursorType) );
 	}
 	
 	/**

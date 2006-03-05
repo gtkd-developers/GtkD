@@ -150,7 +150,7 @@ public class Event
 	public static Event getGraphicsExpose(Window window)
 	{
 		// GdkEvent* gdk_event_get_graphics_expose (GdkWindow *window);
-		return new Event( gdk_event_get_graphics_expose(window.getWindowStruct()) );
+		return new Event( gdk_event_get_graphics_expose((window is null) ? null : window.getWindowStruct()) );
 	}
 	
 	/**
@@ -353,7 +353,7 @@ public class Event
 	public static int sendClientMessageForDisplay(Display display, Event event, GdkNativeWindow winid)
 	{
 		// gboolean gdk_event_send_client_message_for_display  (GdkDisplay *display,  GdkEvent *event,  GdkNativeWindow winid);
-		return gdk_event_send_client_message_for_display(display.getDisplayStruct(), event.getEventStruct(), winid);
+		return gdk_event_send_client_message_for_display((display is null) ? null : display.getDisplayStruct(), (event is null) ? null : event.getEventStruct(), winid);
 	}
 	
 	/**
@@ -428,7 +428,7 @@ public class Event
 	public void setScreen(Screen screen)
 	{
 		// void gdk_event_set_screen (GdkEvent *event,  GdkScreen *screen);
-		gdk_event_set_screen(gdkEvent, screen.getScreenStruct());
+		gdk_event_set_screen(gdkEvent, (screen is null) ? null : screen.getScreenStruct());
 	}
 	
 	/**
@@ -468,6 +468,6 @@ public class Event
 	public static int gdkSettingGet(char[] name, Value value)
 	{
 		// gboolean gdk_setting_get (const gchar *name,  GValue *value);
-		return gdk_setting_get(std.string.toStringz(name), value.getValueStruct());
+		return gdk_setting_get(std.string.toStringz(name), (value is null) ? null : value.getValueStruct());
 	}
 }

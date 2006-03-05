@@ -34,7 +34,7 @@ private import duit.TestDrawingArea;
 private import duit.TestScales;
 private import duit.TestText;
 //private import duit.TestTree;
-//private import duit.TestTreeView;
+private import duit.TestTreeView;
 //private import duit.TestTreeView1;
 private import duit.TestImage;
 private import duit.TestAspectFrame;
@@ -207,12 +207,9 @@ class TestWindow : MainWindow
 		//table.attach(notebook,0,1,2,3,AttachOptions.EXPAND,AttachOptions.FILL,4,4);
 		mainBox.packStart(notebook,true,true,0);
 		
-		Button cancelButton = new Button(StockID.CANCEL);
-		cancelButton.addOnClicked(&anyButtonExits);
-		Button exitButton = new Button(StockID.QUIT);
-		exitButton.addOnClicked(&anyButtonExits);
-		Button quitButton = new Button(StockID.OK);
-		quitButton.addOnClicked(&anyButtonExits);
+		Button cancelButton = new Button(StockID.CANCEL, &anyButtonExits);
+		Button exitButton = new Button(StockID.QUIT, &anyButtonExits);
+		Button quitButton = new Button(StockID.OK, &anyButtonExits);
 		
 		ButtonBox bBox = HButtonBox.createActionBox();
 		
@@ -241,7 +238,7 @@ class TestWindow : MainWindow
 		notebook.appendPage(new TestScales,"Scales");
 		testSpinButton(notebook);
 		notebook.appendPage(new Label("Deprecated,\nuse TreeView\ninstead"),"Tree");
-		//notebook.appendPage(new TestTreeView,"TreeView");
+		notebook.appendPage(new TestTreeView,"TreeView");
 		//notebook.appendPage(new TestTreeView1,"TreeView 1");
 		testList(notebook);
 		notebook.appendPage(new Frame(new TestDrawingArea,"Drawing Area"),"Drawing");
@@ -319,11 +316,11 @@ class TestWindow : MainWindow
 	{
 		HandleBox handleBox = new HandleBox();
 		Toolbar toolbar = new Toolbar();
-		toolbar.appendWidget(new Button(StockID.OPEN),"Toolbar button 1","Private text 1");
-		toolbar.appendWidget(new Button(StockID.CLOSE),"Toolbar button 2","Private text 2");
+		toolbar.appendWidget(new Button(StockID.OPEN, true),"Toolbar button 1","Private text 1");
+		toolbar.appendWidget(new Button(StockID.CLOSE, true),"Toolbar button 2","Private text 2");
 		toolbar.appendSpace();
-		toolbar.appendWidget(new Button(StockID.SAVE),"Toolbar button 3","Private text 3");
-		toolbar.appendWidget(new Button(StockID.SAVE_AS),"Toolbar button 4","Private text 4");
+		toolbar.appendWidget(new Button(StockID.SAVE, true),"Toolbar button 3","Private text 3");
+		toolbar.appendWidget(new Button(StockID.SAVE_AS, true),"Toolbar button 4","Private text 4");
 		
 		handleBox.add(toolbar);
 		
@@ -893,7 +890,7 @@ class TestWindow : MainWindow
 		char[][] vals2;
 		vals2 ~= "Friend of Duit 2";
 		vals2 ~= "Poland";
-		vals2 ~= "Poland";
+		vals2 ~= "Torun";
 		testListStore.set(iterTop,cols,vals2);
 
 		testListStore.append(iterTop);

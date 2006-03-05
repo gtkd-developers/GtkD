@@ -175,7 +175,7 @@ public class TreeModelSort : ObjectG
 	public static TreeModel newWithModel(TreeModel childModel)
 	{
 		// GtkTreeModel* gtk_tree_model_sort_new_with_model  (GtkTreeModel *child_model);
-		return new TreeModel( gtk_tree_model_sort_new_with_model(childModel.getTreeModelStruct()) );
+		return new TreeModel( gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelStruct()) );
 	}
 	
 	/**
@@ -206,7 +206,7 @@ public class TreeModelSort : ObjectG
 	public TreePath convertChildPathToPath(TreePath childPath)
 	{
 		// GtkTreePath* gtk_tree_model_sort_convert_child_path_to_path  (GtkTreeModelSort *tree_model_sort,  GtkTreePath *child_path);
-		return new TreePath( gtk_tree_model_sort_convert_child_path_to_path(gtkTreeModelSort, childPath.getTreePathStruct()) );
+		return new TreePath( gtk_tree_model_sort_convert_child_path_to_path(gtkTreeModelSort, (childPath is null) ? null : childPath.getTreePathStruct()) );
 	}
 	
 	/**
@@ -222,7 +222,7 @@ public class TreeModelSort : ObjectG
 	public void convertChildIterToIter(TreeIter sortIter, TreeIter childIter)
 	{
 		// void gtk_tree_model_sort_convert_child_iter_to_iter  (GtkTreeModelSort *tree_model_sort,  GtkTreeIter *sort_iter,  GtkTreeIter *child_iter);
-		gtk_tree_model_sort_convert_child_iter_to_iter(gtkTreeModelSort, sortIter.getTreeIterStruct(), childIter.getTreeIterStruct());
+		gtk_tree_model_sort_convert_child_iter_to_iter(gtkTreeModelSort, (sortIter is null) ? null : sortIter.getTreeIterStruct(), (childIter is null) ? null : childIter.getTreeIterStruct());
 	}
 	
 	/**
@@ -241,7 +241,7 @@ public class TreeModelSort : ObjectG
 	public TreePath convertPathToChildPath(TreePath sortedPath)
 	{
 		// GtkTreePath* gtk_tree_model_sort_convert_path_to_child_path  (GtkTreeModelSort *tree_model_sort,  GtkTreePath *sorted_path);
-		return new TreePath( gtk_tree_model_sort_convert_path_to_child_path(gtkTreeModelSort, sortedPath.getTreePathStruct()) );
+		return new TreePath( gtk_tree_model_sort_convert_path_to_child_path(gtkTreeModelSort, (sortedPath is null) ? null : sortedPath.getTreePathStruct()) );
 	}
 	
 	/**
@@ -256,7 +256,7 @@ public class TreeModelSort : ObjectG
 	public void convertIterToChildIter(TreeIter childIter, TreeIter sortedIter)
 	{
 		// void gtk_tree_model_sort_convert_iter_to_child_iter  (GtkTreeModelSort *tree_model_sort,  GtkTreeIter *child_iter,  GtkTreeIter *sorted_iter);
-		gtk_tree_model_sort_convert_iter_to_child_iter(gtkTreeModelSort, childIter.getTreeIterStruct(), sortedIter.getTreeIterStruct());
+		gtk_tree_model_sort_convert_iter_to_child_iter(gtkTreeModelSort, (childIter is null) ? null : childIter.getTreeIterStruct(), (sortedIter is null) ? null : sortedIter.getTreeIterStruct());
 	}
 	
 	/**
@@ -310,6 +310,6 @@ public class TreeModelSort : ObjectG
 	public int iterIsValid(TreeIter iter)
 	{
 		// gboolean gtk_tree_model_sort_iter_is_valid  (GtkTreeModelSort *tree_model_sort,  GtkTreeIter *iter);
-		return gtk_tree_model_sort_iter_is_valid(gtkTreeModelSort, iter.getTreeIterStruct());
+		return gtk_tree_model_sort_iter_is_valid(gtkTreeModelSort, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 }

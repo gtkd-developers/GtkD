@@ -169,7 +169,7 @@ public class ParamSpec
 	public void gParamValueSetDefault(Value value)
 	{
 		// void g_param_value_set_default (GParamSpec *pspec,  GValue *value);
-		g_param_value_set_default(gParamSpec, value.getValueStruct());
+		g_param_value_set_default(gParamSpec, (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -184,7 +184,7 @@ public class ParamSpec
 	public int gParamValueDefaults(Value value)
 	{
 		// gboolean g_param_value_defaults (GParamSpec *pspec,  GValue *value);
-		return g_param_value_defaults(gParamSpec, value.getValueStruct());
+		return g_param_value_defaults(gParamSpec, (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -204,7 +204,7 @@ public class ParamSpec
 	public int gParamValueValidate(Value value)
 	{
 		// gboolean g_param_value_validate (GParamSpec *pspec,  GValue *value);
-		return g_param_value_validate(gParamSpec, value.getValueStruct());
+		return g_param_value_validate(gParamSpec, (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -229,7 +229,7 @@ public class ParamSpec
 	public int gParamValueConvert(Value srcValue, Value destValue, int strictValidation)
 	{
 		// gboolean g_param_value_convert (GParamSpec *pspec,  const GValue *src_value,  GValue *dest_value,  gboolean strict_validation);
-		return g_param_value_convert(gParamSpec, srcValue.getValueStruct(), destValue.getValueStruct(), strictValidation);
+		return g_param_value_convert(gParamSpec, (srcValue is null) ? null : srcValue.getValueStruct(), (destValue is null) ? null : destValue.getValueStruct(), strictValidation);
 	}
 	
 	/**
@@ -248,7 +248,7 @@ public class ParamSpec
 	public int gParamValuesCmp(Value value1, Value value2)
 	{
 		// gint g_param_values_cmp (GParamSpec *pspec,  const GValue *value1,  const GValue *value2);
-		return g_param_values_cmp(gParamSpec, value1.getValueStruct(), value2.getValueStruct());
+		return g_param_values_cmp(gParamSpec, (value1 is null) ? null : value1.getValueStruct(), (value2 is null) ? null : value2.getValueStruct());
 	}
 	
 	/**
@@ -464,7 +464,7 @@ public class ParamSpec
 	public static void poolInsert(GParamSpecPool* pool, ParamSpec pspec, GType ownerType)
 	{
 		// void g_param_spec_pool_insert (GParamSpecPool *pool,  GParamSpec *pspec,  GType owner_type);
-		g_param_spec_pool_insert(pool, pspec.getParamSpecStruct(), ownerType);
+		g_param_spec_pool_insert(pool, (pspec is null) ? null : pspec.getParamSpecStruct(), ownerType);
 	}
 	
 	/**
@@ -477,7 +477,7 @@ public class ParamSpec
 	public static void poolRemove(GParamSpecPool* pool, ParamSpec pspec)
 	{
 		// void g_param_spec_pool_remove (GParamSpecPool *pool,  GParamSpec *pspec);
-		g_param_spec_pool_remove(pool, pspec.getParamSpecStruct());
+		g_param_spec_pool_remove(pool, (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 	
 	/**

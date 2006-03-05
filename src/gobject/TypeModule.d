@@ -224,7 +224,7 @@ public class TypeModule : ObjectG
 	public GType registerEnum(char[] name, Enums _StaticValues)
 	{
 		// GType g_type_module_register_enum (GTypeModule *module,  const gchar *name,  const GEnumValue *const_static_values);
-		return g_type_module_register_enum(gTypeModule, std.string.toStringz(name), _StaticValues.getEnumsStruct());
+		return g_type_module_register_enum(gTypeModule, std.string.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getEnumsStruct());
 	}
 	
 	/**
@@ -254,6 +254,6 @@ public class TypeModule : ObjectG
 	public GType registerFlags(char[] name, Flags _StaticValues)
 	{
 		// GType g_type_module_register_flags (GTypeModule *module,  const gchar *name,  const GFlagsValue *const_static_values);
-		return g_type_module_register_flags(gTypeModule, std.string.toStringz(name), _StaticValues.getFlagsStruct());
+		return g_type_module_register_flags(gTypeModule, std.string.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
 	}
 }

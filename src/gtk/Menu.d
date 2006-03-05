@@ -187,7 +187,7 @@ public class Menu : MenuShell
 	public void setScreen(Screen screen)
 	{
 		// void gtk_menu_set_screen (GtkMenu *menu,  GdkScreen *screen);
-		gtk_menu_set_screen(gtkMenu, screen.getScreenStruct());
+		gtk_menu_set_screen(gtkMenu, (screen is null) ? null : screen.getScreenStruct());
 	}
 	
 	
@@ -206,7 +206,7 @@ public class Menu : MenuShell
 	public void reorderChild(Widget child, int position)
 	{
 		// void gtk_menu_reorder_child (GtkMenu *menu,  GtkWidget *child,  gint position);
-		gtk_menu_reorder_child(gtkMenu, child.getWidgetStruct(), position);
+		gtk_menu_reorder_child(gtkMenu, (child is null) ? null : child.getWidgetStruct(), position);
 	}
 	
 	/**
@@ -233,7 +233,7 @@ public class Menu : MenuShell
 	public void attach(Widget child, uint leftAttach, uint rightAttach, uint topAttach, uint bottomAttach)
 	{
 		// void gtk_menu_attach (GtkMenu *menu,  GtkWidget *child,  guint left_attach,  guint right_attach,  guint top_attach,  guint bottom_attach);
-		gtk_menu_attach(gtkMenu, child.getWidgetStruct(), leftAttach, rightAttach, topAttach, bottomAttach);
+		gtk_menu_attach(gtkMenu, (child is null) ? null : child.getWidgetStruct(), leftAttach, rightAttach, topAttach, bottomAttach);
 	}
 	
 	/**
@@ -267,7 +267,7 @@ public class Menu : MenuShell
 	public void popup(Widget parentMenuShell, Widget parentMenuItem, GtkMenuPositionFunc func, void* data, uint button, uint activateTime)
 	{
 		// void gtk_menu_popup (GtkMenu *menu,  GtkWidget *parent_menu_shell,  GtkWidget *parent_menu_item,  GtkMenuPositionFunc func,  gpointer data,  guint button,  guint32 activate_time);
-		gtk_menu_popup(gtkMenu, parentMenuShell.getWidgetStruct(), parentMenuItem.getWidgetStruct(), func, data, button, activateTime);
+		gtk_menu_popup(gtkMenu, (parentMenuShell is null) ? null : parentMenuShell.getWidgetStruct(), (parentMenuItem is null) ? null : parentMenuItem.getWidgetStruct(), func, data, button, activateTime);
 	}
 	
 	/**
@@ -283,7 +283,7 @@ public class Menu : MenuShell
 	public void setAccelGroup(AccelGroup accelGroup)
 	{
 		// void gtk_menu_set_accel_group (GtkMenu *menu,  GtkAccelGroup *accel_group);
-		gtk_menu_set_accel_group(gtkMenu, accelGroup.getAccelGroupStruct());
+		gtk_menu_set_accel_group(gtkMenu, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 	}
 	
 	/**
@@ -452,7 +452,7 @@ public class Menu : MenuShell
 	public void attachToWidget(Widget attachWidget, GtkMenuDetachFunc detacher)
 	{
 		// void gtk_menu_attach_to_widget (GtkMenu *menu,  GtkWidget *attach_widget,  GtkMenuDetachFunc detacher);
-		gtk_menu_attach_to_widget(gtkMenu, attachWidget.getWidgetStruct(), detacher);
+		gtk_menu_attach_to_widget(gtkMenu, (attachWidget is null) ? null : attachWidget.getWidgetStruct(), detacher);
 	}
 	
 	/**
@@ -493,7 +493,7 @@ public class Menu : MenuShell
 	public static ListG getForAttachWidget(Widget widget)
 	{
 		// GList* gtk_menu_get_for_attach_widget (GtkWidget *widget);
-		return new ListG( gtk_menu_get_for_attach_widget(widget.getWidgetStruct()) );
+		return new ListG( gtk_menu_get_for_attach_widget((widget is null) ? null : widget.getWidgetStruct()) );
 	}
 	
 	

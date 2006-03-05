@@ -274,7 +274,7 @@ public class IMContext : ObjectG
 	public void setClientWindow(Window window)
 	{
 		// void gtk_im_context_set_client_window  (GtkIMContext *context,  GdkWindow *window);
-		gtk_im_context_set_client_window(gtkIMContext, window.getWindowStruct());
+		gtk_im_context_set_client_window(gtkIMContext, (window is null) ? null : window.getWindowStruct());
 	}
 	
 	/**
@@ -371,7 +371,7 @@ public class IMContext : ObjectG
 	public void setCursorLocation(Rectangle area)
 	{
 		// void gtk_im_context_set_cursor_location  (GtkIMContext *context,  GdkRectangle *area);
-		gtk_im_context_set_cursor_location(gtkIMContext, area.getRectangleStruct());
+		gtk_im_context_set_cursor_location(gtkIMContext, (area is null) ? null : area.getRectangleStruct());
 	}
 	
 	/**

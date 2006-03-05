@@ -295,7 +295,7 @@ public class ProgressBar : Progress
 	public this (Adjustment adjustment)
 	{
 		// GtkWidget* gtk_progress_bar_new_with_adjustment  (GtkAdjustment *adjustment);
-		this(cast(GtkProgressBar*)gtk_progress_bar_new_with_adjustment(adjustment.getAdjustmentStruct()) );
+		this(cast(GtkProgressBar*)gtk_progress_bar_new_with_adjustment((adjustment is null) ? null : adjustment.getAdjustmentStruct()) );
 	}
 	
 	/**

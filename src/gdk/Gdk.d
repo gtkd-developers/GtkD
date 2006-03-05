@@ -351,7 +351,7 @@ public class Gdk
 	public static GdkGrabStatus pointerGrab(Window window, int ownerEvents, GdkEventMask eventMask, Window confineTo, Cursor cursor, uint time)
 	{
 		// GdkGrabStatus gdk_pointer_grab (GdkWindow *window,  gboolean owner_events,  GdkEventMask event_mask,  GdkWindow *confine_to,  GdkCursor *cursor,  guint32 time_);
-		return gdk_pointer_grab(window.getWindowStruct(), ownerEvents, eventMask, confineTo.getWindowStruct(), cursor.getCursorStruct(), time);
+		return gdk_pointer_grab((window is null) ? null : window.getWindowStruct(), ownerEvents, eventMask, (confineTo is null) ? null : confineTo.getWindowStruct(), (cursor is null) ? null : cursor.getCursorStruct(), time);
 	}
 	
 	
@@ -419,7 +419,7 @@ public class Gdk
 	public static GdkGrabStatus keyboardGrab(Window window, int ownerEvents, uint time)
 	{
 		// GdkGrabStatus gdk_keyboard_grab (GdkWindow *window,  gboolean owner_events,  guint32 time_);
-		return gdk_keyboard_grab(window.getWindowStruct(), ownerEvents, time);
+		return gdk_keyboard_grab((window is null) ? null : window.getWindowStruct(), ownerEvents, time);
 	}
 	
 	/**

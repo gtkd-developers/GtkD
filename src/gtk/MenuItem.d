@@ -312,7 +312,7 @@ public class MenuItem : Item
 	public void setSubmenu(Widget submenu)
 	{
 		// void gtk_menu_item_set_submenu (GtkMenuItem *menu_item,  GtkWidget *submenu);
-		gtk_menu_item_set_submenu(gtkMenuItem, submenu.getWidgetStruct());
+		gtk_menu_item_set_submenu(gtkMenuItem, (submenu is null) ? null : submenu.getWidgetStruct());
 	}
 	
 	/**

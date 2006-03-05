@@ -165,7 +165,7 @@ public class Node
 	public Node insert(int position, Node node)
 	{
 		// GNode* g_node_insert (GNode *parent,  gint position,  GNode *node);
-		return new Node( g_node_insert(gNode, position, node.getNodeStruct()) );
+		return new Node( g_node_insert(gNode, position, (node is null) ? null : node.getNodeStruct()) );
 	}
 	
 	/**
@@ -183,7 +183,7 @@ public class Node
 	public Node insertBefore(Node sibling, Node node)
 	{
 		// GNode* g_node_insert_before (GNode *parent,  GNode *sibling,  GNode *node);
-		return new Node( g_node_insert_before(gNode, sibling.getNodeStruct(), node.getNodeStruct()) );
+		return new Node( g_node_insert_before(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct()) );
 	}
 	
 	/**
@@ -201,7 +201,7 @@ public class Node
 	public Node insertAfter(Node sibling, Node node)
 	{
 		// GNode* g_node_insert_after (GNode *parent,  GNode *sibling,  GNode *node);
-		return new Node( g_node_insert_after(gNode, sibling.getNodeStruct(), node.getNodeStruct()) );
+		return new Node( g_node_insert_after(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct()) );
 	}
 	
 	
@@ -217,7 +217,7 @@ public class Node
 	public Node prepend(Node node)
 	{
 		// GNode* g_node_prepend (GNode *parent,  GNode *node);
-		return new Node( g_node_prepend(gNode, node.getNodeStruct()) );
+		return new Node( g_node_prepend(gNode, (node is null) ? null : node.getNodeStruct()) );
 	}
 	
 	
@@ -368,7 +368,7 @@ public class Node
 	public int childPosition(Node child)
 	{
 		// gint g_node_child_position (GNode *node,  GNode *child);
-		return g_node_child_position(gNode, child.getNodeStruct());
+		return g_node_child_position(gNode, (child is null) ? null : child.getNodeStruct());
 	}
 	
 	
@@ -492,7 +492,7 @@ public class Node
 	public int isAncestor(Node descendant)
 	{
 		// gboolean g_node_is_ancestor (GNode *node,  GNode *descendant);
-		return g_node_is_ancestor(gNode, descendant.getNodeStruct());
+		return g_node_is_ancestor(gNode, (descendant is null) ? null : descendant.getNodeStruct());
 	}
 	
 	/**

@@ -225,7 +225,7 @@ public class PgAttribute
 	public static PangoAttribute* languageNew(PgLanguage language)
 	{
 		// PangoAttribute* pango_attr_language_new (PangoLanguage *language);
-		return pango_attr_language_new(language.getPgLanguageStruct());
+		return pango_attr_language_new((language is null) ? null : language.getPgLanguageStruct());
 	}
 	
 	/**
@@ -332,7 +332,7 @@ public class PgAttribute
 	public static PangoAttribute* fontDescNew(PgFontDescription desc)
 	{
 		// PangoAttribute* pango_attr_font_desc_new (const PangoFontDescription *desc);
-		return pango_attr_font_desc_new(desc.getPgFontDescriptionStruct());
+		return pango_attr_font_desc_new((desc is null) ? null : desc.getPgFontDescriptionStruct());
 	}
 	
 	/**
@@ -866,7 +866,7 @@ public class PgAttribute
 	public static void iteratorGetFont(PangoAttrIterator* iterator, PgFontDescription desc, PangoLanguage** language, GSList** extraAttrs)
 	{
 		// void pango_attr_iterator_get_font (PangoAttrIterator *iterator,  PangoFontDescription *desc,  PangoLanguage **language,  GSList **extra_attrs);
-		pango_attr_iterator_get_font(iterator, desc.getPgFontDescriptionStruct(), language, extraAttrs);
+		pango_attr_iterator_get_font(iterator, (desc is null) ? null : desc.getPgFontDescriptionStruct(), language, extraAttrs);
 	}
 	
 	/**

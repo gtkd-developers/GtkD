@@ -256,7 +256,7 @@ public class Device
 	public void getState(Window window, double* axes, GdkModifierType* mask)
 	{
 		// void gdk_device_get_state (GdkDevice *device,  GdkWindow *window,  gdouble *axes,  GdkModifierType *mask);
-		gdk_device_get_state(gdkDevice, window.getWindowStruct(), axes, mask);
+		gdk_device_get_state(gdkDevice, (window is null) ? null : window.getWindowStruct(), axes, mask);
 	}
 	
 	/**
@@ -285,7 +285,7 @@ public class Device
 	public int getHistory(Window window, uint start, uint stop, GdkTimeCoord*** events, int* nEvents)
 	{
 		// gboolean gdk_device_get_history (GdkDevice *device,  GdkWindow *window,  guint32 start,  guint32 stop,  GdkTimeCoord ***events,  gint *n_events);
-		return gdk_device_get_history(gdkDevice, window.getWindowStruct(), start, stop, events, nEvents);
+		return gdk_device_get_history(gdkDevice, (window is null) ? null : window.getWindowStruct(), start, stop, events, nEvents);
 	}
 	
 	/**
@@ -335,7 +335,7 @@ public class Device
 	public static void gdkInputSetExtensionEvents(Window window, int mask, GdkExtensionMode mode)
 	{
 		// void gdk_input_set_extension_events (GdkWindow *window,  gint mask,  GdkExtensionMode mode);
-		gdk_input_set_extension_events(window.getWindowStruct(), mask, mode);
+		gdk_input_set_extension_events((window is null) ? null : window.getWindowStruct(), mask, mode);
 	}
 	
 }

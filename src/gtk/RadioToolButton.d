@@ -107,7 +107,7 @@ public class RadioToolButton : ToggleToolButton
 	public static ToolItem newRadioToolButton(ListSG group)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new (GSList *group);
-		return new ToolItem( gtk_radio_tool_button_new(group.getListSGStruct()) );
+		return new ToolItem( gtk_radio_tool_button_new((group is null) ? null : group.getListSGStruct()) );
 	}
 	
 	/**
@@ -125,7 +125,7 @@ public class RadioToolButton : ToggleToolButton
 	public static ToolItem newFromStock(ListSG group, char[] stockId)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new_from_stock  (GSList *group,  const gchar *stock_id);
-		return new ToolItem( gtk_radio_tool_button_new_from_stock(group.getListSGStruct(), std.string.toStringz(stockId)) );
+		return new ToolItem( gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), std.string.toStringz(stockId)) );
 	}
 	
 	/**
@@ -202,6 +202,6 @@ public class RadioToolButton : ToggleToolButton
 	public void setGroup(ListSG group)
 	{
 		// void gtk_radio_tool_button_set_group (GtkRadioToolButton *button,  GSList *group);
-		gtk_radio_tool_button_set_group(gtkRadioToolButton, group.getListSGStruct());
+		gtk_radio_tool_button_set_group(gtkRadioToolButton, (group is null) ? null : group.getListSGStruct());
 	}
 }

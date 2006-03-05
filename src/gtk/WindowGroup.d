@@ -106,7 +106,7 @@ public class WindowGroup : ObjectG
 	public void addWindow(Window window)
 	{
 		// void gtk_window_group_add_window (GtkWindowGroup *window_group,  GtkWindow *window);
-		gtk_window_group_add_window(gtkWindowGroup, window.getWindowStruct());
+		gtk_window_group_add_window(gtkWindowGroup, (window is null) ? null : window.getWindowStruct());
 	}
 	
 	/**
@@ -119,6 +119,6 @@ public class WindowGroup : ObjectG
 	public void removeWindow(Window window)
 	{
 		// void gtk_window_group_remove_window (GtkWindowGroup *window_group,  GtkWindow *window);
-		gtk_window_group_remove_window(gtkWindowGroup, window.getWindowStruct());
+		gtk_window_group_remove_window(gtkWindowGroup, (window is null) ? null : window.getWindowStruct());
 	}
 }

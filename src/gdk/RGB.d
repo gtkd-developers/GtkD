@@ -181,7 +181,7 @@ public class RGB
 	public static void drawRgbImage(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* rgbBuf, int rowstride)
 	{
 		// void gdk_draw_rgb_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *rgb_buf,  gint rowstride);
-		gdk_draw_rgb_image(drawable.getDrawableStruct(), gc.getGCStruct(), x, y, width, height, dith, rgbBuf, rowstride);
+		gdk_draw_rgb_image((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, rgbBuf, rowstride);
 	}
 	
 	/**
@@ -221,7 +221,7 @@ public class RGB
 	public static void drawRgbImageDithalign(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* rgbBuf, int rowstride, int xdith, int ydith)
 	{
 		// void gdk_draw_rgb_image_dithalign (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *rgb_buf,  gint rowstride,  gint xdith,  gint ydith);
-		gdk_draw_rgb_image_dithalign(drawable.getDrawableStruct(), gc.getGCStruct(), x, y, width, height, dith, rgbBuf, rowstride, xdith, ydith);
+		gdk_draw_rgb_image_dithalign((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, rgbBuf, rowstride, xdith, ydith);
 	}
 	
 	/**
@@ -252,7 +252,7 @@ public class RGB
 	public static void drawIndexedImage(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride, GdkRgbCmap* cmap)
 	{
 		// void gdk_draw_indexed_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *buf,  gint rowstride,  GdkRgbCmap *cmap);
-		gdk_draw_indexed_image(drawable.getDrawableStruct(), gc.getGCStruct(), x, y, width, height, dith, buf, rowstride, cmap);
+		gdk_draw_indexed_image((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride, cmap);
 	}
 	
 	/**
@@ -280,7 +280,7 @@ public class RGB
 	public static void drawGrayImage(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride)
 	{
 		// void gdk_draw_gray_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *buf,  gint rowstride);
-		gdk_draw_gray_image(drawable.getDrawableStruct(), gc.getGCStruct(), x, y, width, height, dith, buf, rowstride);
+		gdk_draw_gray_image((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride);
 	}
 	
 	/**
@@ -314,7 +314,7 @@ public class RGB
 	public static void drawRgb32_Image(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride)
 	{
 		// void gdk_draw_rgb_32_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *buf,  gint rowstride);
-		gdk_draw_rgb_32_image(drawable.getDrawableStruct(), gc.getGCStruct(), x, y, width, height, dith, buf, rowstride);
+		gdk_draw_rgb_32_image((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride);
 	}
 	
 	/**
@@ -346,7 +346,7 @@ public class RGB
 	public static void drawRgb32_ImageDithalign(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride, int xdith, int ydith)
 	{
 		// void gdk_draw_rgb_32_image_dithalign (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *buf,  gint rowstride,  gint xdith,  gint ydith);
-		gdk_draw_rgb_32_image_dithalign(drawable.getDrawableStruct(), gc.getGCStruct(), x, y, width, height, dith, buf, rowstride, xdith, ydith);
+		gdk_draw_rgb_32_image_dithalign((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride, xdith, ydith);
 	}
 	
 	
@@ -393,7 +393,7 @@ public class RGB
 	public static void rgbGcSetForeground(GC gc, uint rgb)
 	{
 		// void gdk_rgb_gc_set_foreground (GdkGC *gc,  guint32 rgb);
-		gdk_rgb_gc_set_foreground(gc.getGCStruct(), rgb);
+		gdk_rgb_gc_set_foreground((gc is null) ? null : gc.getGCStruct(), rgb);
 	}
 	
 	/**
@@ -409,7 +409,7 @@ public class RGB
 	public static void rgbGcSetBackground(GC gc, uint rgb)
 	{
 		// void gdk_rgb_gc_set_background (GdkGC *gc,  guint32 rgb);
-		gdk_rgb_gc_set_background(gc.getGCStruct(), rgb);
+		gdk_rgb_gc_set_background((gc is null) ? null : gc.getGCStruct(), rgb);
 	}
 	
 	/**
@@ -450,7 +450,7 @@ public class RGB
 	public static void rgbFindColor(Colormap colormap, Color color)
 	{
 		// void gdk_rgb_find_color (GdkColormap *colormap,  GdkColor *color);
-		gdk_rgb_find_color(colormap.getColormapStruct(), color.getColorStruct());
+		gdk_rgb_find_color((colormap is null) ? null : colormap.getColormapStruct(), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -542,7 +542,7 @@ public class RGB
 	public static int rgbColormapDitherable(Colormap cmap)
 	{
 		// gboolean gdk_rgb_colormap_ditherable (GdkColormap *cmap);
-		return gdk_rgb_colormap_ditherable(cmap.getColormapStruct());
+		return gdk_rgb_colormap_ditherable((cmap is null) ? null : cmap.getColormapStruct());
 	}
 	
 	/**

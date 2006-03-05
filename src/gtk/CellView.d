@@ -149,7 +149,7 @@ public class CellView : Widget
 	public this (Pixbuf pixbuf)
 	{
 		// GtkWidget* gtk_cell_view_new_with_pixbuf (GdkPixbuf *pixbuf);
-		this(cast(GtkCellView*)gtk_cell_view_new_with_pixbuf(pixbuf.getPixbufStruct()) );
+		this(cast(GtkCellView*)gtk_cell_view_new_with_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct()) );
 	}
 	
 	/**
@@ -165,7 +165,7 @@ public class CellView : Widget
 	public void setModel(TreeModel model)
 	{
 		// void gtk_cell_view_set_model (GtkCellView *cell_view,  GtkTreeModel *model);
-		gtk_cell_view_set_model(gtkCellView, model.getTreeModelStruct());
+		gtk_cell_view_set_model(gtkCellView, (model is null) ? null : model.getTreeModelStruct());
 	}
 	
 	/**
@@ -184,7 +184,7 @@ public class CellView : Widget
 	public void setDisplayedRow(TreePath path)
 	{
 		// void gtk_cell_view_set_displayed_row (GtkCellView *cell_view,  GtkTreePath *path);
-		gtk_cell_view_set_displayed_row(gtkCellView, path.getTreePathStruct());
+		gtk_cell_view_set_displayed_row(gtkCellView, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -219,7 +219,7 @@ public class CellView : Widget
 	public int getSizeOfRow(TreePath path, GtkRequisition* requisition)
 	{
 		// gboolean gtk_cell_view_get_size_of_row (GtkCellView *cell_view,  GtkTreePath *path,  GtkRequisition *requisition);
-		return gtk_cell_view_get_size_of_row(gtkCellView, path.getTreePathStruct(), requisition);
+		return gtk_cell_view_get_size_of_row(gtkCellView, (path is null) ? null : path.getTreePathStruct(), requisition);
 	}
 	
 	/**
@@ -233,7 +233,7 @@ public class CellView : Widget
 	public void setBackgroundColor(Color color)
 	{
 		// void gtk_cell_view_set_background_color  (GtkCellView *cell_view,  const GdkColor *color);
-		gtk_cell_view_set_background_color(gtkCellView, color.getColorStruct());
+		gtk_cell_view_set_background_color(gtkCellView, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**

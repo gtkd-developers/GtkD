@@ -222,7 +222,7 @@ public class PgFontsetSimple
 	public this (PgLanguage language)
 	{
 		// PangoFontsetSimple* pango_fontset_simple_new  (PangoLanguage *language);
-		this(cast(PangoFontsetSimple*)pango_fontset_simple_new(language.getPgLanguageStruct()) );
+		this(cast(PangoFontsetSimple*)pango_fontset_simple_new((language is null) ? null : language.getPgLanguageStruct()) );
 	}
 	
 	/**

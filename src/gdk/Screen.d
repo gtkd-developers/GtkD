@@ -179,7 +179,7 @@ public class Screen : ObjectG
 	public void setDefaultColormap(Colormap colormap)
 	{
 		// void gdk_screen_set_default_colormap (GdkScreen *screen,  GdkColormap *colormap);
-		gdk_screen_set_default_colormap(gdkScreen, colormap.getColormapStruct());
+		gdk_screen_set_default_colormap(gdkScreen, (colormap is null) ? null : colormap.getColormapStruct());
 	}
 	
 	/**
@@ -471,7 +471,7 @@ public class Screen : ObjectG
 	public void getMonitorGeometry(int monitorNum, Rectangle dest)
 	{
 		// void gdk_screen_get_monitor_geometry (GdkScreen *screen,  gint monitor_num,  GdkRectangle *dest);
-		gdk_screen_get_monitor_geometry(gdkScreen, monitorNum, dest.getRectangleStruct());
+		gdk_screen_get_monitor_geometry(gdkScreen, monitorNum, (dest is null) ? null : dest.getRectangleStruct());
 	}
 	
 	/**
@@ -509,7 +509,7 @@ public class Screen : ObjectG
 	public int getMonitorAtWindow(Window window)
 	{
 		// gint gdk_screen_get_monitor_at_window  (GdkScreen *screen,  GdkWindow *window);
-		return gdk_screen_get_monitor_at_window(gdkScreen, window.getWindowStruct());
+		return gdk_screen_get_monitor_at_window(gdkScreen, (window is null) ? null : window.getWindowStruct());
 	}
 	
 	/**
@@ -531,7 +531,7 @@ public class Screen : ObjectG
 	public void broadcastClientMessage(Event event)
 	{
 		// void gdk_screen_broadcast_client_message  (GdkScreen *screen,  GdkEvent *event);
-		gdk_screen_broadcast_client_message(gdkScreen, event.getEventStruct());
+		gdk_screen_broadcast_client_message(gdkScreen, (event is null) ? null : event.getEventStruct());
 	}
 	
 	/**
@@ -553,7 +553,7 @@ public class Screen : ObjectG
 	public int getSetting(char[] name, Value value)
 	{
 		// gboolean gdk_screen_get_setting (GdkScreen *screen,  const gchar *name,  GValue *value);
-		return gdk_screen_get_setting(gdkScreen, std.string.toStringz(name), value.getValueStruct());
+		return gdk_screen_get_setting(gdkScreen, std.string.toStringz(name), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**

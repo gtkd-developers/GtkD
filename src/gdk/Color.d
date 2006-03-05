@@ -270,7 +270,7 @@ public class Color
 	public static int white(Colormap colormap, Color color)
 	{
 		// gint gdk_color_white (GdkColormap *colormap,  GdkColor *color);
-		return gdk_color_white(colormap.getColormapStruct(), color.getColorStruct());
+		return gdk_color_white((colormap is null) ? null : colormap.getColormapStruct(), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -288,7 +288,7 @@ public class Color
 	public static int black(Colormap colormap, Color color)
 	{
 		// gint gdk_color_black (GdkColormap *colormap,  GdkColor *color);
-		return gdk_color_black(colormap.getColormapStruct(), color.getColorStruct());
+		return gdk_color_black((colormap is null) ? null : colormap.getColormapStruct(), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -313,7 +313,7 @@ public class Color
 	public static int parse(char[] spec, Color color)
 	{
 		// gint gdk_color_parse (const gchar *spec,  GdkColor *color);
-		return gdk_color_parse(std.string.toStringz(spec), color.getColorStruct());
+		return gdk_color_parse(std.string.toStringz(spec), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -331,7 +331,7 @@ public class Color
 	public static int alloc(Colormap colormap, Color color)
 	{
 		// gint gdk_color_alloc (GdkColormap *colormap,  GdkColor *color);
-		return gdk_color_alloc(colormap.getColormapStruct(), color.getColorStruct());
+		return gdk_color_alloc((colormap is null) ? null : colormap.getColormapStruct(), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -354,7 +354,7 @@ public class Color
 	public static int change(Colormap colormap, Color color)
 	{
 		// gint gdk_color_change (GdkColormap *colormap,  GdkColor *color);
-		return gdk_color_change(colormap.getColormapStruct(), color.getColorStruct());
+		return gdk_color_change((colormap is null) ? null : colormap.getColormapStruct(), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -369,7 +369,7 @@ public class Color
 	public int equal(Color colorb)
 	{
 		// gboolean gdk_color_equal (const GdkColor *colora,  const GdkColor *colorb);
-		return gdk_color_equal(gdkColor, colorb.getColorStruct());
+		return gdk_color_equal(gdkColor, (colorb is null) ? null : colorb.getColorStruct());
 	}
 	
 	/**

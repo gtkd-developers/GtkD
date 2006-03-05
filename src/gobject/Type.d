@@ -617,7 +617,7 @@ public class Type
 	public static GType registerDynamic(GType parentType, char[] typeName, TypePlugin plugin, GTypeFlags flags)
 	{
 		// GType g_type_register_dynamic (GType parent_type,  const gchar *type_name,  GTypePlugin *plugin,  GTypeFlags flags);
-		return g_type_register_dynamic(parentType, std.string.toStringz(typeName), plugin.getTypePluginStruct(), flags);
+		return g_type_register_dynamic(parentType, std.string.toStringz(typeName), (plugin is null) ? null : plugin.getTypePluginStruct(), flags);
 	}
 	
 	/**
@@ -678,7 +678,7 @@ public class Type
 	public static void addInterfaceDynamic(GType instanceType, GType interfaceType, TypePlugin plugin)
 	{
 		// void g_type_add_interface_dynamic (GType instance_type,  GType interface_type,  GTypePlugin *plugin);
-		g_type_add_interface_dynamic(instanceType, interfaceType, plugin.getTypePluginStruct());
+		g_type_add_interface_dynamic(instanceType, interfaceType, (plugin is null) ? null : plugin.getTypePluginStruct());
 	}
 	
 	/**

@@ -238,7 +238,7 @@ public class EntryCompletion : ObjectG
 	public void setModel(TreeModel model)
 	{
 		// void gtk_entry_completion_set_model (GtkEntryCompletion *completion,  GtkTreeModel *model);
-		gtk_entry_completion_set_model(gtkEntryCompletion, model.getTreeModelStruct());
+		gtk_entry_completion_set_model(gtkEntryCompletion, (model is null) ? null : model.getTreeModelStruct());
 	}
 	
 	/**

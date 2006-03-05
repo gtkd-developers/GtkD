@@ -2264,7 +2264,7 @@ public class Widget : ObjectGtk
 	public void draw(Rectangle area)
 	{
 		// void gtk_widget_draw (GtkWidget *widget,  GdkRectangle *area);
-		gtk_widget_draw(gtkWidget, area.getRectangleStruct());
+		gtk_widget_draw(gtkWidget, (area is null) ? null : area.getRectangleStruct());
 	}
 	
 	/**
@@ -2356,7 +2356,7 @@ public class Widget : ObjectGtk
 	public void addAccelerator(char[] accelSignal, AccelGroup accelGroup, uint accelKey, GdkModifierType accelMods, GtkAccelFlags accelFlags)
 	{
 		// void gtk_widget_add_accelerator (GtkWidget *widget,  const gchar *accel_signal,  GtkAccelGroup *accel_group,  guint accel_key,  GdkModifierType accel_mods,  GtkAccelFlags accel_flags);
-		gtk_widget_add_accelerator(gtkWidget, std.string.toStringz(accelSignal), accelGroup.getAccelGroupStruct(), accelKey, accelMods, accelFlags);
+		gtk_widget_add_accelerator(gtkWidget, std.string.toStringz(accelSignal), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct(), accelKey, accelMods, accelFlags);
 	}
 	
 	/**
@@ -2376,7 +2376,7 @@ public class Widget : ObjectGtk
 	public int removeAccelerator(AccelGroup accelGroup, uint accelKey, GdkModifierType accelMods)
 	{
 		// gboolean gtk_widget_remove_accelerator (GtkWidget *widget,  GtkAccelGroup *accel_group,  guint accel_key,  GdkModifierType accel_mods);
-		return gtk_widget_remove_accelerator(gtkWidget, accelGroup.getAccelGroupStruct(), accelKey, accelMods);
+		return gtk_widget_remove_accelerator(gtkWidget, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct(), accelKey, accelMods);
 	}
 	
 	/**
@@ -2405,7 +2405,7 @@ public class Widget : ObjectGtk
 	public void setAccelPath(char[] accelPath, AccelGroup accelGroup)
 	{
 		// void gtk_widget_set_accel_path (GtkWidget *widget,  const gchar *accel_path,  GtkAccelGroup *accel_group);
-		gtk_widget_set_accel_path(gtkWidget, std.string.toStringz(accelPath), accelGroup.getAccelGroupStruct());
+		gtk_widget_set_accel_path(gtkWidget, std.string.toStringz(accelPath), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 	}
 	
 	/**
@@ -2466,7 +2466,7 @@ public class Widget : ObjectGtk
 	public int event(Event event)
 	{
 		// gboolean gtk_widget_event (GtkWidget *widget,  GdkEvent *event);
-		return gtk_widget_event(gtkWidget, event.getEventStruct());
+		return gtk_widget_event(gtkWidget, (event is null) ? null : event.getEventStruct());
 	}
 	
 	/**
@@ -2516,7 +2516,7 @@ public class Widget : ObjectGtk
 	public int intersect(Rectangle area, Rectangle intersection)
 	{
 		// gboolean gtk_widget_intersect (GtkWidget *widget,  GdkRectangle *area,  GdkRectangle *intersection);
-		return gtk_widget_intersect(gtkWidget, area.getRectangleStruct(), intersection.getRectangleStruct());
+		return gtk_widget_intersect(gtkWidget, (area is null) ? null : area.getRectangleStruct(), (intersection is null) ? null : intersection.getRectangleStruct());
 	}
 	
 	/**
@@ -2656,7 +2656,7 @@ public class Widget : ObjectGtk
 	public void setParentWindow(Window parentWindow)
 	{
 		// void gtk_widget_set_parent_window (GtkWidget *widget,  GdkWindow *parent_window);
-		gtk_widget_set_parent_window(gtkWidget, parentWindow.getWindowStruct());
+		gtk_widget_set_parent_window(gtkWidget, (parentWindow is null) ? null : parentWindow.getWindowStruct());
 	}
 	
 	/**
@@ -2879,7 +2879,7 @@ public class Widget : ObjectGtk
 	public void setColormap(Colormap colormap)
 	{
 		// void gtk_widget_set_colormap (GtkWidget *widget,  GdkColormap *colormap);
-		gtk_widget_set_colormap(gtkWidget, colormap.getColormapStruct());
+		gtk_widget_set_colormap(gtkWidget, (colormap is null) ? null : colormap.getColormapStruct());
 	}
 	
 	/**
@@ -3006,7 +3006,7 @@ public class Widget : ObjectGtk
 	public void setStyle(Style style)
 	{
 		// void gtk_widget_set_style (GtkWidget *widget,  GtkStyle *style);
-		gtk_widget_set_style(gtkWidget, style.getStyleStruct());
+		gtk_widget_set_style(gtkWidget, (style is null) ? null : style.getStyleStruct());
 	}
 	
 	
@@ -3063,7 +3063,7 @@ public class Widget : ObjectGtk
 	public static void pushColormap(Colormap cmap)
 	{
 		// void gtk_widget_push_colormap (GdkColormap *cmap);
-		gtk_widget_push_colormap(cmap.getColormapStruct());
+		gtk_widget_push_colormap((cmap is null) ? null : cmap.getColormapStruct());
 	}
 	
 	/**
@@ -3085,7 +3085,7 @@ public class Widget : ObjectGtk
 	public static void setDefaultColormap(Colormap colormap)
 	{
 		// void gtk_widget_set_default_colormap (GdkColormap *colormap);
-		gtk_widget_set_default_colormap(colormap.getColormapStruct());
+		gtk_widget_set_default_colormap((colormap is null) ? null : colormap.getColormapStruct());
 	}
 	
 	/**
@@ -3202,7 +3202,7 @@ public class Widget : ObjectGtk
 	public void shapeCombineMask(Bitmap shapeMask, int offsetX, int offsetY)
 	{
 		// void gtk_widget_shape_combine_mask (GtkWidget *widget,  GdkBitmap *shape_mask,  gint offset_x,  gint offset_y);
-		gtk_widget_shape_combine_mask(gtkWidget, shapeMask.getBitmapStruct(), offsetX, offsetY);
+		gtk_widget_shape_combine_mask(gtkWidget, (shapeMask is null) ? null : shapeMask.getBitmapStruct(), offsetX, offsetY);
 	}
 	
 	/**
@@ -3291,7 +3291,7 @@ public class Widget : ObjectGtk
 	public void modifyStyle(RcStyle style)
 	{
 		// void gtk_widget_modify_style (GtkWidget *widget,  GtkRcStyle *style);
-		gtk_widget_modify_style(gtkWidget, style.getRcStyleStruct());
+		gtk_widget_modify_style(gtkWidget, (style is null) ? null : style.getRcStyleStruct());
 	}
 	
 	/**
@@ -3335,7 +3335,7 @@ public class Widget : ObjectGtk
 	public void modifyFg(GtkStateType state, Color color)
 	{
 		// void gtk_widget_modify_fg (GtkWidget *widget,  GtkStateType state,  const GdkColor *color);
-		gtk_widget_modify_fg(gtkWidget, state, color.getColorStruct());
+		gtk_widget_modify_fg(gtkWidget, state, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -3360,7 +3360,7 @@ public class Widget : ObjectGtk
 	public void modifyBg(GtkStateType state, Color color)
 	{
 		// void gtk_widget_modify_bg (GtkWidget *widget,  GtkStateType state,  const GdkColor *color);
-		gtk_widget_modify_bg(gtkWidget, state, color.getColorStruct());
+		gtk_widget_modify_bg(gtkWidget, state, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -3381,7 +3381,7 @@ public class Widget : ObjectGtk
 	public void modifyText(GtkStateType state, Color color)
 	{
 		// void gtk_widget_modify_text (GtkWidget *widget,  GtkStateType state,  const GdkColor *color);
-		gtk_widget_modify_text(gtkWidget, state, color.getColorStruct());
+		gtk_widget_modify_text(gtkWidget, state, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -3408,7 +3408,7 @@ public class Widget : ObjectGtk
 	public void modifyBase(GtkStateType state, Color color)
 	{
 		// void gtk_widget_modify_base (GtkWidget *widget,  GtkStateType state,  const GdkColor *color);
-		gtk_widget_modify_base(gtkWidget, state, color.getColorStruct());
+		gtk_widget_modify_base(gtkWidget, state, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -3423,7 +3423,7 @@ public class Widget : ObjectGtk
 	public void modifyFont(PgFontDescription fontDesc)
 	{
 		// void gtk_widget_modify_font (GtkWidget *widget,  PangoFontDescription *font_desc);
-		gtk_widget_modify_font(gtkWidget, fontDesc.getPgFontDescriptionStruct());
+		gtk_widget_modify_font(gtkWidget, (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
 	}
 	
 	/**
@@ -3741,7 +3741,7 @@ public class Widget : ObjectGtk
 	public int setScrollAdjustments(Adjustment hadjustment, Adjustment vadjustment)
 	{
 		// gboolean gtk_widget_set_scroll_adjustments  (GtkWidget *widget,  GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
-		return gtk_widget_set_scroll_adjustments(gtkWidget, hadjustment.getAdjustmentStruct(), vadjustment.getAdjustmentStruct());
+		return gtk_widget_set_scroll_adjustments(gtkWidget, (hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 	}
 	
 	/**
@@ -3838,7 +3838,7 @@ public class Widget : ObjectGtk
 	public Region regionIntersect(Region region)
 	{
 		// GdkRegion* gtk_widget_region_intersect (GtkWidget *widget,  GdkRegion *region);
-		return new Region( gtk_widget_region_intersect(gtkWidget, region.getRegionStruct()) );
+		return new Region( gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct()) );
 	}
 	
 	/**
@@ -3861,7 +3861,7 @@ public class Widget : ObjectGtk
 	public int sendExpose(Event event)
 	{
 		// gint gtk_widget_send_expose (GtkWidget *widget,  GdkEvent *event);
-		return gtk_widget_send_expose(gtkWidget, event.getEventStruct());
+		return gtk_widget_send_expose(gtkWidget, (event is null) ? null : event.getEventStruct());
 	}
 	
 	/**
@@ -3893,7 +3893,7 @@ public class Widget : ObjectGtk
 	public void styleGetProperty(char[] propertyName, Value value)
 	{
 		// void gtk_widget_style_get_property (GtkWidget *widget,  const gchar *property_name,  GValue *value);
-		gtk_widget_style_get_property(gtkWidget, std.string.toStringz(propertyName), value.getValueStruct());
+		gtk_widget_style_get_property(gtkWidget, std.string.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**

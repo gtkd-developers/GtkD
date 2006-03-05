@@ -111,7 +111,7 @@ public class Invisible : Widget
 	public this (Screen screen)
 	{
 		// GtkWidget* gtk_invisible_new_for_screen (GdkScreen *screen);
-		this(cast(GtkInvisible*)gtk_invisible_new_for_screen(screen.getScreenStruct()) );
+		this(cast(GtkInvisible*)gtk_invisible_new_for_screen((screen is null) ? null : screen.getScreenStruct()) );
 	}
 	
 	/**
@@ -125,7 +125,7 @@ public class Invisible : Widget
 	public void setScreen(Screen screen)
 	{
 		// void gtk_invisible_set_screen (GtkInvisible *invisible,  GdkScreen *screen);
-		gtk_invisible_set_screen(gtkInvisible, screen.getScreenStruct());
+		gtk_invisible_set_screen(gtkInvisible, (screen is null) ? null : screen.getScreenStruct());
 	}
 	
 	/**

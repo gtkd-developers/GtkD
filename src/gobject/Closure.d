@@ -150,7 +150,7 @@ public class Closure
 	public this (uint sizeofClosure, ObjectG object)
 	{
 		// GClosure* g_closure_new_object (guint sizeof_closure,  GObject *object);
-		this(cast(GClosure*)g_closure_new_object(sizeofClosure, object.getObjectGStruct()) );
+		this(cast(GClosure*)g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct()) );
 	}
 	
 	/**
@@ -240,7 +240,7 @@ public class Closure
 	public void invoke(Value returnValue, uint nParamValues, Value paramValues, void* invocationHint)
 	{
 		// void g_closure_invoke (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint);
-		g_closure_invoke(gClosure, returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint);
+		g_closure_invoke(gClosure, (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint);
 	}
 	
 	/**
@@ -454,7 +454,7 @@ public class Closure
 	public static void gSourceSetClosure(Source source, Closure closure)
 	{
 		// void g_source_set_closure (GSource *source,  GClosure *closure);
-		g_source_set_closure(source.getSourceStruct(), closure.getClosureStruct());
+		g_source_set_closure((source is null) ? null : source.getSourceStruct(), (closure is null) ? null : closure.getClosureStruct());
 	}
 	
 	

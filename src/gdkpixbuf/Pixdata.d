@@ -110,7 +110,7 @@ public class Pixdata
 	public void* fromPixbuf(Pixbuf pixbuf, int useRle)
 	{
 		// gpointer gdk_pixdata_from_pixbuf (GdkPixdata *pixdata,  const GdkPixbuf *pixbuf,  gboolean use_rle);
-		return gdk_pixdata_from_pixbuf(gdkPixdata, pixbuf.getPixbufStruct(), useRle);
+		return gdk_pixdata_from_pixbuf(gdkPixdata, (pixbuf is null) ? null : pixbuf.getPixbufStruct(), useRle);
 	}
 	
 	/**

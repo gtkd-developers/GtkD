@@ -275,7 +275,7 @@ public class Source
 	public uint attach(MainContext context)
 	{
 		// guint g_source_attach (GSource *source,  GMainContext *context);
-		return g_source_attach(gSource, context.getMainContextStruct());
+		return g_source_attach(gSource, (context is null) ? null : context.getMainContextStruct());
 	}
 	
 	/**

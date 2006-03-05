@@ -39,6 +39,8 @@
  * 	- gtk_button_new_from_stock
  * imports:
  * 	- gtk.Widget
+ * 	- gtk.Image;
+ * 	- gtk.typedefs;
  * structWrap:
  * 	- GtkWidget* -> Widget
  * local aliases:
@@ -50,7 +52,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;
+private import gtk.Widget;private import gtk.Image;;private import gtk.typedefs;;
 /**
  * Description
  * The GtkButton widget is generally used to attach a function to that
@@ -138,11 +140,22 @@ public class Button : Bin
 	 * Returns:
 	 *  a new GtkButton
 	 */
-	public this (StockID stockID)
+	public this (StockID stockID, bool hideLabel=false)
 	{
 		// GtkWidget* gtk_button_new_from_stock (const gchar *stock_id);
-		this(cast(GtkButton*)gtk_button_new_from_stock(StockDesc[stockID]) );
+		if ( hideLabel )
+		{
+			this();
+			Image image = new Image(stockID,IconSize.SIZE_MENU);
+			add(image);
+		}
+		else
+		{
+			this(cast(GtkButton*)gtk_button_new_from_stock(StockDesc[stockID]) );
+		}
+		
 	}
+	
 	
 	public this(char[] label, void delegate(Button) dlg, bit mnemonic=true)
 	{
@@ -150,9 +163,9 @@ public class Button : Bin
 		addOnClicked(dlg);
 	}
 	
-	public this(StockID stockID, void delegate(Button) dlg)
+	public this(StockID stockID, void delegate(Button) dlg, bool hideLabel=false)
 	{
-		this(stockID);
+		this(stockID, hideLabel);
 		addOnClicked(dlg);
 	}
 	
@@ -607,7 +620,7 @@ public class Button : Bin
 	public void setImage(Widget image)
 	{
 		// void gtk_button_set_image (GtkButton *button,  GtkWidget *image);
-		gtk_button_set_image(gtkButton, image.getWidgetStruct());
+		gtk_button_set_image(gtkButton, (image is null) ? null : image.getWidgetStruct());
 	}
 	
 	/**

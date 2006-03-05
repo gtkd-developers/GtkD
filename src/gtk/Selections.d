@@ -238,7 +238,7 @@ public class Selections
 	public static int selectionOwnerSet(Widget widget, GdkAtom selection, uint time)
 	{
 		// gboolean gtk_selection_owner_set (GtkWidget *widget,  GdkAtom selection,  guint32 time_);
-		return gtk_selection_owner_set(widget.getWidgetStruct(), selection, time);
+		return gtk_selection_owner_set((widget is null) ? null : widget.getWidgetStruct(), selection, time);
 	}
 	
 	/**
@@ -259,7 +259,7 @@ public class Selections
 	public static int selectionOwnerSetForDisplay(Display display, Widget widget, GdkAtom selection, uint time)
 	{
 		// gboolean gtk_selection_owner_set_for_display  (GdkDisplay *display,  GtkWidget *widget,  GdkAtom selection,  guint32 time_);
-		return gtk_selection_owner_set_for_display(display.getDisplayStruct(), widget.getWidgetStruct(), selection, time);
+		return gtk_selection_owner_set_for_display((display is null) ? null : display.getDisplayStruct(), (widget is null) ? null : widget.getWidgetStruct(), selection, time);
 	}
 	
 	/**
@@ -277,7 +277,7 @@ public class Selections
 	public static void selectionAddTarget(Widget widget, GdkAtom selection, GdkAtom target, uint info)
 	{
 		// void gtk_selection_add_target (GtkWidget *widget,  GdkAtom selection,  GdkAtom target,  guint info);
-		gtk_selection_add_target(widget.getWidgetStruct(), selection, target, info);
+		gtk_selection_add_target((widget is null) ? null : widget.getWidgetStruct(), selection, target, info);
 	}
 	
 	/**
@@ -295,7 +295,7 @@ public class Selections
 	public static void selectionAddTargets(Widget widget, GdkAtom selection, GtkTargetEntry* targets, uint ntargets)
 	{
 		// void gtk_selection_add_targets (GtkWidget *widget,  GdkAtom selection,  const GtkTargetEntry *targets,  guint ntargets);
-		gtk_selection_add_targets(widget.getWidgetStruct(), selection, targets, ntargets);
+		gtk_selection_add_targets((widget is null) ? null : widget.getWidgetStruct(), selection, targets, ntargets);
 	}
 	
 	/**
@@ -309,7 +309,7 @@ public class Selections
 	public static void selectionClearTargets(Widget widget, GdkAtom selection)
 	{
 		// void gtk_selection_clear_targets (GtkWidget *widget,  GdkAtom selection);
-		gtk_selection_clear_targets(widget.getWidgetStruct(), selection);
+		gtk_selection_clear_targets((widget is null) ? null : widget.getWidgetStruct(), selection);
 	}
 	
 	/**
@@ -332,7 +332,7 @@ public class Selections
 	public static int selectionConvert(Widget widget, GdkAtom selection, GdkAtom target, uint time)
 	{
 		// gboolean gtk_selection_convert (GtkWidget *widget,  GdkAtom selection,  GdkAtom target,  guint32 time_);
-		return gtk_selection_convert(widget.getWidgetStruct(), selection, target, time);
+		return gtk_selection_convert((widget is null) ? null : widget.getWidgetStruct(), selection, target, time);
 	}
 	
 	/**
@@ -408,7 +408,7 @@ public class Selections
 	public static int selectionDataSetPixbuf(GtkSelectionData* selectionData, Pixbuf pixbuf)
 	{
 		// gboolean gtk_selection_data_set_pixbuf (GtkSelectionData *selection_data,  GdkPixbuf *pixbuf);
-		return gtk_selection_data_set_pixbuf(selectionData, pixbuf.getPixbufStruct());
+		return gtk_selection_data_set_pixbuf(selectionData, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
 	/**
@@ -533,7 +533,7 @@ public class Selections
 	public static void selectionRemoveAll(Widget widget)
 	{
 		// void gtk_selection_remove_all (GtkWidget *widget);
-		gtk_selection_remove_all(widget.getWidgetStruct());
+		gtk_selection_remove_all((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -554,7 +554,7 @@ public class Selections
 	public static int selectionClear(Widget widget, GdkEventSelection* event)
 	{
 		// gboolean gtk_selection_clear (GtkWidget *widget,  GdkEventSelection *event);
-		return gtk_selection_clear(widget.getWidgetStruct(), event);
+		return gtk_selection_clear((widget is null) ? null : widget.getWidgetStruct(), event);
 	}
 	
 	/**

@@ -27,16 +27,18 @@
  * strct   = GtkTreeStore
  * realStrct=
  * clss    = TreeStore
- * extend  = 
+ * extend  = GtkTreeModel
  * prefixes:
  * 	- gtk_tree_store_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_tree_store_set
  * imports:
  * 	- gtk.TreeIter
  * 	- gobject.Value
+ * 	- gtk.TreeNode
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -49,7 +51,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TreeIter;private import gobject.Value;
+private import gtk.TreeIter;private import gobject.Value;private import gtk.TreeNode;
 /**
  * Description
  * The GtkTreeStore object is a list model for use with a GtkTreeView
@@ -59,8 +61,8 @@ private import gtk.TreeIter;private import gobject.Value;
  * it also implements the tree drag and
  * drop interfaces.
  */
-private import gobject.ObjectG;
-public class TreeStore : ObjectG
+private import gtk.TreeModel;
+public class TreeStore : TreeModel
 {
 	
 	/** the main Gtk struct */
@@ -84,8 +86,137 @@ public class TreeStore : ObjectG
 	 */
 	public this (GtkTreeStore* gtkTreeStore)
 	{
-		super(cast(GObject*)gtkTreeStore);
+		super(cast(GtkTreeModel*)gtkTreeStore);
 		this.gtkTreeStore = gtkTreeStore;
+	}
+	
+	/**
+	 * Non-vararg creation function. Used primarily by language bindings.
+	 * n_columns:
+	 *  number of columns in the list store
+	 * types:
+	 *  an array of GType types for the columns, from first to last
+	 * Returns:
+	 *  a new GtkListStore
+	 */
+	public this (GType[] types)
+	{
+		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
+		this(cast(GtkTreeStore*)gtk_tree_store_newv(types.length, types) );
+	}
+	
+	
+	/**
+	 * Creates a top level iteractor.
+	 * I don't think lists have but the top level iteractor
+	 */
+	TreeIter createIter(TreeIter parent)
+	{
+		GtkTreeIter* iter = new GtkTreeIter;
+		gtk_tree_store_append(getTreeStoreStruct(), iter, (parent is null) ? null : parent.getTreeIterStruct());
+		return new TreeIter(iter);
+	}
+	
+	/**
+	 * sets the values for one row
+	 * @param iter the row iteractor
+	 * @param columns an arrays with the columns to set
+	 * @param values an arrays with the values
+	 */
+	void set(TreeIter iter, int [] columns, char*[] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			//Value v = new Value(values[i]);
+			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
+			gtk_tree_store_set(
+			gtkTreeStore,
+			iter.getTreeIterStruct(),
+			columns[i],
+			values[i],-1);
+		}
+	}
+	
+	void set(TreeIter iter, int [] columns, char[][] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			//Value v = new Value(values[i]);
+			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
+			gtk_tree_store_set(
+			gtkTreeStore,
+			iter.getTreeIterStruct(),
+			columns[i],
+			std.string.toStringz(values[i]),-1);
+		}
+	}
+	
+	/**
+	 * Sets an iteractor values from a tree node.
+	 * This is the way to add a new row to the tree,
+	 * the iteractor is either a top level iteractor created from createIter()
+	 * or a nested iteractor created from append()
+	 * @param iter the iteractor to set
+	 * @param treeNode the tree node
+	 * @see createIter()
+	 * @see append()
+	 */
+	void set(TreeIter iter, TreeNode treeNode)
+	{
+		int[] cols;
+		char[][] vals;
+		for ( int i=0 ; i<treeNode.columnCount() ; i++ )
+		{
+			//printf(">>>>>>>>>>>>> requesting value for %d\n",i);
+			cols ~= i;
+			char[] value = treeNode.getNodeValue(i);
+			if ( value  is  null )
+			{
+				vals ~= "";
+			}
+			else
+			{
+				vals ~= value;
+			}
+		}
+		set(iter, cols, vals);
+	}
+	
+	
+	/**
+	 * Creates and prepends a new row to tree_store. If parent is non-NULL, then it will prepend
+	 * the new row before the first child of parent, otherwise it will prepend a row
+	 * to the top level. iter will be changed to point to this new row. The row
+	 * will be empty after this function is called. To fill in values, you need to
+	 * call gtk_tree_store_set() or gtk_tree_store_set_value().
+	 * parent:
+	 *  A valid GtkTreeIter, or NULL
+	 */
+	public TreeIter prepend(TreeIter parent)
+	{
+		TreeIter iter = new TreeIter();
+		// void gtk_tree_store_prepend (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent);
+		gtk_tree_store_prepend(gtkTreeStore, iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct());
+		return iter;
+	}
+	
+	/**
+	 * Creates and appends a new row to tree_store. If parent is non-NULL, then it will append the
+	 * new row after the last child of parent, otherwise it will append a row to
+	 * the top level. iter will be changed to point to this new row. The row will
+	 * be empty after this function is called. To fill in values, you need to call
+	 * gtk_tree_store_set() or gtk_tree_store_set_value().
+	 * parent:
+	 *  A valid GtkTreeIter, or NULL
+	 */
+	public TreeIter append(TreeIter parent)
+	{
+		TreeIter iter = new TreeIter();
+		// void gtk_tree_store_append (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent);
+		gtk_tree_store_append(gtkTreeStore,
+		iter.getTreeIterStruct(),
+		(parent is null) ? null : parent.getTreeIterStruct());
+		return iter;
 	}
 	
 	/**
@@ -161,28 +292,9 @@ public class TreeStore : ObjectG
 	public void setValue(TreeIter iter, int column, Value value)
 	{
 		// void gtk_tree_store_set_value (GtkTreeStore *tree_store,  GtkTreeIter *iter,  gint column,  GValue *value);
-		gtk_tree_store_set_value(gtkTreeStore, iter.getTreeIterStruct(), column, value.getValueStruct());
+		gtk_tree_store_set_value(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
 	}
 	
-	/**
-	 * Sets the value of one or more cells in the row referenced by iter.
-	 * The variable argument list should contain integer column numbers,
-	 * each column number followed by the value to be set.
-	 * The list is terminated by a -1. For example, to set column 0 with type
-	 * G_TYPE_STRING to "Foo", you would write
-	 * gtk_tree_store_set (store, iter, 0, "Foo", -1).
-	 * tree_store:
-	 *  A GtkTreeStore
-	 * iter:
-	 *  A valid GtkTreeIter for the row being modified
-	 * ...:
-	 *  pairs of column number and value, terminated with -1
-	 */
-	public void set(TreeIter iter, ... )
-	{
-		// void gtk_tree_store_set (GtkTreeStore *tree_store,  GtkTreeIter *iter,  ...);
-		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct());
-	}
 	
 	/**
 	 * See gtk_tree_store_set(); this version takes a va_list for
@@ -197,7 +309,7 @@ public class TreeStore : ObjectG
 	public void setValist(TreeIter iter, void* varArgs)
 	{
 		// void gtk_tree_store_set_valist (GtkTreeStore *tree_store,  GtkTreeIter *iter,  va_list var_args);
-		gtk_tree_store_set_valist(gtkTreeStore, iter.getTreeIterStruct(), varArgs);
+		gtk_tree_store_set_valist(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), varArgs);
 	}
 	
 	/**
@@ -214,7 +326,7 @@ public class TreeStore : ObjectG
 	public int remove(TreeIter iter)
 	{
 		// gboolean gtk_tree_store_remove (GtkTreeStore *tree_store,  GtkTreeIter *iter);
-		return gtk_tree_store_remove(gtkTreeStore, iter.getTreeIterStruct());
+		return gtk_tree_store_remove(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -237,7 +349,7 @@ public class TreeStore : ObjectG
 	public void insert(TreeIter iter, TreeIter parent, int position)
 	{
 		// void gtk_tree_store_insert (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent,  gint position);
-		gtk_tree_store_insert(gtkTreeStore, iter.getTreeIterStruct(), parent.getTreeIterStruct(), position);
+		gtk_tree_store_insert(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct(), position);
 	}
 	
 	/**
@@ -261,7 +373,7 @@ public class TreeStore : ObjectG
 	public void insertBefore(TreeIter iter, TreeIter parent, TreeIter sibling)
 	{
 		// void gtk_tree_store_insert_before (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent,  GtkTreeIter *sibling);
-		gtk_tree_store_insert_before(gtkTreeStore, iter.getTreeIterStruct(), parent.getTreeIterStruct(), sibling.getTreeIterStruct());
+		gtk_tree_store_insert_before(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
 	}
 	
 	/**
@@ -285,7 +397,7 @@ public class TreeStore : ObjectG
 	public void insertAfter(TreeIter iter, TreeIter parent, TreeIter sibling)
 	{
 		// void gtk_tree_store_insert_after (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent,  GtkTreeIter *sibling);
-		gtk_tree_store_insert_after(gtkTreeStore, iter.getTreeIterStruct(), parent.getTreeIterStruct(), sibling.getTreeIterStruct());
+		gtk_tree_store_insert_after(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
 	}
 	
 	/**
@@ -304,7 +416,7 @@ public class TreeStore : ObjectG
 	public void prepend(TreeIter iter, TreeIter parent)
 	{
 		// void gtk_tree_store_prepend (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent);
-		gtk_tree_store_prepend(gtkTreeStore, iter.getTreeIterStruct(), parent.getTreeIterStruct());
+		gtk_tree_store_prepend(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct());
 	}
 	
 	/**
@@ -323,7 +435,7 @@ public class TreeStore : ObjectG
 	public void append(TreeIter iter, TreeIter parent)
 	{
 		// void gtk_tree_store_append (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent);
-		gtk_tree_store_append(gtkTreeStore, iter.getTreeIterStruct(), parent.getTreeIterStruct());
+		gtk_tree_store_append(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct());
 	}
 	
 	/**
@@ -341,7 +453,7 @@ public class TreeStore : ObjectG
 	public int isAncestor(TreeIter iter, TreeIter descendant)
 	{
 		// gboolean gtk_tree_store_is_ancestor (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *descendant);
-		return gtk_tree_store_is_ancestor(gtkTreeStore, iter.getTreeIterStruct(), descendant.getTreeIterStruct());
+		return gtk_tree_store_is_ancestor(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (descendant is null) ? null : descendant.getTreeIterStruct());
 	}
 	
 	/**
@@ -357,7 +469,7 @@ public class TreeStore : ObjectG
 	public int iterDepth(TreeIter iter)
 	{
 		// gint gtk_tree_store_iter_depth (GtkTreeStore *tree_store,  GtkTreeIter *iter);
-		return gtk_tree_store_iter_depth(gtkTreeStore, iter.getTreeIterStruct());
+		return gtk_tree_store_iter_depth(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -386,7 +498,7 @@ public class TreeStore : ObjectG
 	public int iterIsValid(TreeIter iter)
 	{
 		// gboolean gtk_tree_store_iter_is_valid (GtkTreeStore *tree_store,  GtkTreeIter *iter);
-		return gtk_tree_store_iter_is_valid(gtkTreeStore, iter.getTreeIterStruct());
+		return gtk_tree_store_iter_is_valid(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -406,7 +518,7 @@ public class TreeStore : ObjectG
 	public void reorder(TreeIter parent, int* newOrder)
 	{
 		// void gtk_tree_store_reorder (GtkTreeStore *tree_store,  GtkTreeIter *parent,  gint *new_order);
-		gtk_tree_store_reorder(gtkTreeStore, parent.getTreeIterStruct(), newOrder);
+		gtk_tree_store_reorder(gtkTreeStore, (parent is null) ? null : parent.getTreeIterStruct(), newOrder);
 	}
 	
 	/**
@@ -423,7 +535,7 @@ public class TreeStore : ObjectG
 	public void swap(TreeIter a, TreeIter b)
 	{
 		// void gtk_tree_store_swap (GtkTreeStore *tree_store,  GtkTreeIter *a,  GtkTreeIter *b);
-		gtk_tree_store_swap(gtkTreeStore, a.getTreeIterStruct(), b.getTreeIterStruct());
+		gtk_tree_store_swap(gtkTreeStore, (a is null) ? null : a.getTreeIterStruct(), (b is null) ? null : b.getTreeIterStruct());
 	}
 	
 	/**
@@ -442,7 +554,7 @@ public class TreeStore : ObjectG
 	public void moveBefore(TreeIter iter, TreeIter position)
 	{
 		// void gtk_tree_store_move_before (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *position);
-		gtk_tree_store_move_before(gtkTreeStore, iter.getTreeIterStruct(), position.getTreeIterStruct());
+		gtk_tree_store_move_before(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (position is null) ? null : position.getTreeIterStruct());
 	}
 	
 	/**
@@ -463,6 +575,6 @@ public class TreeStore : ObjectG
 	public void moveAfter(TreeIter iter, TreeIter position)
 	{
 		// void gtk_tree_store_move_after (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *position);
-		gtk_tree_store_move_after(gtkTreeStore, iter.getTreeIterStruct(), position.getTreeIterStruct());
+		gtk_tree_store_move_after(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (position is null) ? null : position.getTreeIterStruct());
 	}
 }

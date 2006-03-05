@@ -98,7 +98,7 @@ public class HScale : Scale
 	public this (Adjustment adjustment)
 	{
 		// GtkWidget* gtk_hscale_new (GtkAdjustment *adjustment);
-		this(cast(GtkHScale*)gtk_hscale_new(adjustment.getAdjustmentStruct()) );
+		this(cast(GtkHScale*)gtk_hscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct()) );
 	}
 	
 	/**

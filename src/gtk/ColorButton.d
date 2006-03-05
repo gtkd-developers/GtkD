@@ -147,7 +147,7 @@ public class ColorButton : Button
 	public this (Color color)
 	{
 		// GtkWidget* gtk_color_button_new_with_color (const GdkColor *color);
-		this(cast(GtkColorButton*)gtk_color_button_new_with_color(color.getColorStruct()) );
+		this(cast(GtkColorButton*)gtk_color_button_new_with_color((color is null) ? null : color.getColorStruct()) );
 	}
 	
 	/**
@@ -161,7 +161,7 @@ public class ColorButton : Button
 	public void setColor(Color color)
 	{
 		// void gtk_color_button_set_color (GtkColorButton *color_button,  const GdkColor *color);
-		gtk_color_button_set_color(gtkColorButton, color.getColorStruct());
+		gtk_color_button_set_color(gtkColorButton, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class ColorButton : Button
 	public void getColor(Color color)
 	{
 		// void gtk_color_button_get_color (GtkColorButton *color_button,  GdkColor *color);
-		gtk_color_button_get_color(gtkColorButton, color.getColorStruct());
+		gtk_color_button_get_color(gtkColorButton, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**

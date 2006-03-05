@@ -179,7 +179,7 @@ public class CClosure
 	public static Closure _NewObject(GCallback callbackFunc, ObjectG object)
 	{
 		// GClosure* g_cclosure_new_object (GCallback callback_func,  GObject *object);
-		return new Closure( g_cclosure_new_object(callbackFunc, object.getObjectGStruct()) );
+		return new Closure( g_cclosure_new_object(callbackFunc, (object is null) ? null : object.getObjectGStruct()) );
 	}
 	
 	/**
@@ -197,7 +197,7 @@ public class CClosure
 	public static Closure _NewObjectSwap(GCallback callbackFunc, ObjectG object)
 	{
 		// GClosure* g_cclosure_new_object_swap (GCallback callback_func,  GObject *object);
-		return new Closure( g_cclosure_new_object_swap(callbackFunc, object.getObjectGStruct()) );
+		return new Closure( g_cclosure_new_object_swap(callbackFunc, (object is null) ? null : object.getObjectGStruct()) );
 	}
 	
 	
@@ -237,7 +237,7 @@ public class CClosure
 	public static void _MarshalVOID__VOID(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__VOID (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__VOID(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__VOID((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -260,7 +260,7 @@ public class CClosure
 	public static void _MarshalVOID__BOOLEAN(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__BOOLEAN  (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__BOOLEAN(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__BOOLEAN((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -283,7 +283,7 @@ public class CClosure
 	public static void _MarshalVOID__CHAR(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__CHAR (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__CHAR(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__CHAR((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -306,7 +306,7 @@ public class CClosure
 	public static void _MarshalVOID__UCHAR(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__UCHAR (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__UCHAR(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__UCHAR((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -329,7 +329,7 @@ public class CClosure
 	public static void _MarshalVOID__INT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__INT (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__INT(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__INT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -352,7 +352,7 @@ public class CClosure
 	public static void _MarshalVOID__UINT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__UINT (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__UINT(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__UINT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -375,7 +375,7 @@ public class CClosure
 	public static void _MarshalVOID__LONG(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__LONG (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__LONG(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__LONG((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -398,7 +398,7 @@ public class CClosure
 	public static void _MarshalVOID__ULONG(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__ULONG (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__ULONG(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__ULONG((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -421,7 +421,7 @@ public class CClosure
 	public static void _MarshalVOID__ENUM(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__ENUM (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__ENUM(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__ENUM((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -445,7 +445,7 @@ public class CClosure
 	public static void _MarshalVOID__FLAGS(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__FLAGS (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__FLAGS(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__FLAGS((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -468,7 +468,7 @@ public class CClosure
 	public static void _MarshalVOID__FLOAT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__FLOAT (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__FLOAT(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__FLOAT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -491,7 +491,7 @@ public class CClosure
 	public static void _MarshalVOID__DOUBLE(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__DOUBLE (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__DOUBLE(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__DOUBLE((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -514,7 +514,7 @@ public class CClosure
 	public static void _MarshalVOID__STRING(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__STRING (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__STRING(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__STRING((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -537,7 +537,7 @@ public class CClosure
 	public static void _MarshalVOID__PARAM(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__PARAM (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__PARAM(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__PARAM((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -560,7 +560,7 @@ public class CClosure
 	public static void _MarshalVOID__BOXED(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__BOXED (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__BOXED(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__BOXED((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -583,7 +583,7 @@ public class CClosure
 	public static void _MarshalVOID__POINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__POINTER  (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__POINTER(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__POINTER((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -606,7 +606,7 @@ public class CClosure
 	public static void _MarshalVOID__OBJECT(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__OBJECT (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__OBJECT(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__OBJECT((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -629,7 +629,7 @@ public class CClosure
 	public static void _MarshalSTRING__OBJECT_POINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_STRING__OBJECT_POINTER  (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_STRING__OBJECT_POINTER(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_STRING__OBJECT_POINTER((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -652,7 +652,7 @@ public class CClosure
 	public static void _MarshalVOID__UINT_POINTER(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_VOID__UINT_POINTER  (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_VOID__UINT_POINTER(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_VOID__UINT_POINTER((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 	/**
@@ -676,7 +676,7 @@ public class CClosure
 	public static void _MarshalBOOLEAN__FLAGS(Closure closure, Value returnValue, uint nParamValues, Value paramValues, void* invocationHint, void* marshalData)
 	{
 		// void g_cclosure_marshal_BOOLEAN__FLAGS  (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
-		g_cclosure_marshal_BOOLEAN__FLAGS(closure.getClosureStruct(), returnValue.getValueStruct(), nParamValues, paramValues.getValueStruct(), invocationHint, marshalData);
+		g_cclosure_marshal_BOOLEAN__FLAGS((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
 	
 }

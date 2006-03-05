@@ -201,7 +201,7 @@ public class AccelGroup : ObjectG
 	public void connect(uint accelKey, GdkModifierType accelMods, GtkAccelFlags accelFlags, Closure closure)
 	{
 		// void gtk_accel_group_connect (GtkAccelGroup *accel_group,  guint accel_key,  GdkModifierType accel_mods,  GtkAccelFlags accel_flags,  GClosure *closure);
-		gtk_accel_group_connect(gtkAccelGroup, accelKey, accelMods, accelFlags, closure.getClosureStruct());
+		gtk_accel_group_connect(gtkAccelGroup, accelKey, accelMods, accelFlags, (closure is null) ? null : closure.getClosureStruct());
 	}
 	
 	/**
@@ -222,7 +222,7 @@ public class AccelGroup : ObjectG
 	public void connectByPath(char[] accelPath, Closure closure)
 	{
 		// void gtk_accel_group_connect_by_path (GtkAccelGroup *accel_group,  const gchar *accel_path,  GClosure *closure);
-		gtk_accel_group_connect_by_path(gtkAccelGroup, std.string.toStringz(accelPath), closure.getClosureStruct());
+		gtk_accel_group_connect_by_path(gtkAccelGroup, std.string.toStringz(accelPath), (closure is null) ? null : closure.getClosureStruct());
 	}
 	
 	
@@ -240,7 +240,7 @@ public class AccelGroup : ObjectG
 	public int disconnect(Closure closure)
 	{
 		// gboolean gtk_accel_group_disconnect (GtkAccelGroup *accel_group,  GClosure *closure);
-		return gtk_accel_group_disconnect(gtkAccelGroup, closure.getClosureStruct());
+		return gtk_accel_group_disconnect(gtkAccelGroup, (closure is null) ? null : closure.getClosureStruct());
 	}
 	
 	/**
@@ -293,7 +293,7 @@ public class AccelGroup : ObjectG
 	public int activate(GQuark accelQuark, ObjectG acceleratable, uint accelKey, GdkModifierType accelMods)
 	{
 		// gboolean gtk_accel_group_activate (GtkAccelGroup *accel_group,  GQuark accel_quark,  GObject *acceleratable,  guint accel_key,  GdkModifierType accel_mods);
-		return gtk_accel_group_activate(gtkAccelGroup, accelQuark, acceleratable.getObjectGStruct(), accelKey, accelMods);
+		return gtk_accel_group_activate(gtkAccelGroup, accelQuark, (acceleratable is null) ? null : acceleratable.getObjectGStruct(), accelKey, accelMods);
 	}
 	
 	/**
@@ -335,7 +335,7 @@ public class AccelGroup : ObjectG
 	public static AccelGroup fromAccelClosure(Closure closure)
 	{
 		// GtkAccelGroup* gtk_accel_group_from_accel_closure  (GClosure *closure);
-		return new AccelGroup( gtk_accel_group_from_accel_closure(closure.getClosureStruct()) );
+		return new AccelGroup( gtk_accel_group_from_accel_closure((closure is null) ? null : closure.getClosureStruct()) );
 	}
 	
 	/**
@@ -357,7 +357,7 @@ public class AccelGroup : ObjectG
 	public static int accelGroupsActivate(ObjectG object, uint accelKey, GdkModifierType accelMods)
 	{
 		// gboolean gtk_accel_groups_activate (GObject *object,  guint accel_key,  GdkModifierType accel_mods);
-		return gtk_accel_groups_activate(object.getObjectGStruct(), accelKey, accelMods);
+		return gtk_accel_groups_activate((object is null) ? null : object.getObjectGStruct(), accelKey, accelMods);
 	}
 	
 	/**
@@ -370,7 +370,7 @@ public class AccelGroup : ObjectG
 	public static ListSG accelGroupsFromObject(ObjectG object)
 	{
 		// GSList* gtk_accel_groups_from_object (GObject *object);
-		return new ListSG( gtk_accel_groups_from_object(object.getObjectGStruct()) );
+		return new ListSG( gtk_accel_groups_from_object((object is null) ? null : object.getObjectGStruct()) );
 	}
 	
 	/**

@@ -165,7 +165,7 @@ public class DisplayManager : ObjectG
 	public void setDefaultDisplay(Display display)
 	{
 		// void gdk_display_manager_set_default_display  (GdkDisplayManager *display_manager,  GdkDisplay *display);
-		gdk_display_manager_set_default_display(gdkDisplayManager, display.getDisplayStruct());
+		gdk_display_manager_set_default_display(gdkDisplayManager, (display is null) ? null : display.getDisplayStruct());
 	}
 	
 	/**
@@ -212,6 +212,6 @@ public class DisplayManager : ObjectG
 	public static Device gdkDisplayGetCorePointer(Display display)
 	{
 		// GdkDevice* gdk_display_get_core_pointer (GdkDisplay *display);
-		return new Device( gdk_display_get_core_pointer(display.getDisplayStruct()) );
+		return new Device( gdk_display_get_core_pointer((display is null) ? null : display.getDisplayStruct()) );
 	}
 }

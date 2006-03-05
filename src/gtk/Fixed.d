@@ -137,7 +137,7 @@ public class Fixed : Container
 	public void put(Widget widget, int x, int y)
 	{
 		// void gtk_fixed_put (GtkFixed *fixed,  GtkWidget *widget,  gint x,  gint y);
-		gtk_fixed_put(gtkFixed, widget.getWidgetStruct(), x, y);
+		gtk_fixed_put(gtkFixed, (widget is null) ? null : widget.getWidgetStruct(), x, y);
 	}
 	
 	/**
@@ -154,7 +154,7 @@ public class Fixed : Container
 	public void move(Widget widget, int x, int y)
 	{
 		// void gtk_fixed_move (GtkFixed *fixed,  GtkWidget *widget,  gint x,  gint y);
-		gtk_fixed_move(gtkFixed, widget.getWidgetStruct(), x, y);
+		gtk_fixed_move(gtkFixed, (widget is null) ? null : widget.getWidgetStruct(), x, y);
 	}
 	
 	/**

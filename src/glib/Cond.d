@@ -221,7 +221,7 @@ public class Cond
 	public void wait(Mutex mutex)
 	{
 		// void g_cond_wait (GCond *cond,  GMutex *mutex);
-		g_cond_wait(gCond, mutex.getMutexStruct());
+		g_cond_wait(gCond, (mutex is null) ? null : mutex.getMutexStruct());
 	}
 	
 	/**
@@ -245,7 +245,7 @@ public class Cond
 	public int timedWait(Mutex mutex, GTimeVal* absTime)
 	{
 		// gboolean g_cond_timed_wait (GCond *cond,  GMutex *mutex,  GTimeVal *abs_time);
-		return g_cond_timed_wait(gCond, mutex.getMutexStruct(), absTime);
+		return g_cond_timed_wait(gCond, (mutex is null) ? null : mutex.getMutexStruct(), absTime);
 	}
 	
 	/**

@@ -438,7 +438,7 @@ public class QueueG
 	public void insertBefore(ListG sibling, void* data)
 	{
 		// void g_queue_insert_before (GQueue *queue,  GList *sibling,  gpointer data);
-		g_queue_insert_before(gQueue, sibling.getListGStruct(), data);
+		g_queue_insert_before(gQueue, (sibling is null) ? null : sibling.getListGStruct(), data);
 	}
 	
 	/**
@@ -455,7 +455,7 @@ public class QueueG
 	public void insertAfter(ListG sibling, void* data)
 	{
 		// void g_queue_insert_after (GQueue *queue,  GList *sibling,  gpointer data);
-		g_queue_insert_after(gQueue, sibling.getListGStruct(), data);
+		g_queue_insert_after(gQueue, (sibling is null) ? null : sibling.getListGStruct(), data);
 	}
 	
 	/**
@@ -491,7 +491,7 @@ public class QueueG
 	public void pushHeadLink(ListG link)
 	{
 		// void g_queue_push_head_link (GQueue *queue,  GList *link_);
-		g_queue_push_head_link(gQueue, link.getListGStruct());
+		g_queue_push_head_link(gQueue, (link is null) ? null : link.getListGStruct());
 	}
 	
 	/**
@@ -505,7 +505,7 @@ public class QueueG
 	public void pushTailLink(ListG link)
 	{
 		// void g_queue_push_tail_link (GQueue *queue,  GList *link_);
-		g_queue_push_tail_link(gQueue, link.getListGStruct());
+		g_queue_push_tail_link(gQueue, (link is null) ? null : link.getListGStruct());
 	}
 	
 	/**
@@ -523,7 +523,7 @@ public class QueueG
 	public void pushNthLink(int n, ListG link)
 	{
 		// void g_queue_push_nth_link (GQueue *queue,  gint n,  GList *link_);
-		g_queue_push_nth_link(gQueue, n, link.getListGStruct());
+		g_queue_push_nth_link(gQueue, n, (link is null) ? null : link.getListGStruct());
 	}
 	
 	/**
@@ -629,7 +629,7 @@ public class QueueG
 	public int linkIndex(ListG link)
 	{
 		// gint g_queue_link_index (GQueue *queue,  GList *link_);
-		return g_queue_link_index(gQueue, link.getListGStruct());
+		return g_queue_link_index(gQueue, (link is null) ? null : link.getListGStruct());
 	}
 	
 	/**
@@ -645,7 +645,7 @@ public class QueueG
 	public void unlink(ListG link)
 	{
 		// void g_queue_unlink (GQueue *queue,  GList *link_);
-		g_queue_unlink(gQueue, link.getListGStruct());
+		g_queue_unlink(gQueue, (link is null) ? null : link.getListGStruct());
 	}
 	
 	/**
@@ -660,6 +660,6 @@ public class QueueG
 	public void deleteLink(ListG link)
 	{
 		// void g_queue_delete_link (GQueue *queue,  GList *link_);
-		g_queue_delete_link(gQueue, link.getListGStruct());
+		g_queue_delete_link(gQueue, (link is null) ? null : link.getListGStruct());
 	}
 }

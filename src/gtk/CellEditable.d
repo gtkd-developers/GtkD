@@ -159,7 +159,7 @@ public class CellEditable
 	public void startEditing(Event event)
 	{
 		// void gtk_cell_editable_start_editing (GtkCellEditable *cell_editable,  GdkEvent *event);
-		gtk_cell_editable_start_editing(gtkCellEditable, event.getEventStruct());
+		gtk_cell_editable_start_editing(gtkCellEditable, (event is null) ? null : event.getEventStruct());
 	}
 	
 	/**

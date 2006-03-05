@@ -159,7 +159,7 @@ public class Plug : Window
 	public void constructForDisplay(Display display, GdkNativeWindow socketId)
 	{
 		// void gtk_plug_construct_for_display (GtkPlug *plug,  GdkDisplay *display,  GdkNativeWindow socket_id);
-		gtk_plug_construct_for_display(gtkPlug, display.getDisplayStruct(), socketId);
+		gtk_plug_construct_for_display(gtkPlug, (display is null) ? null : display.getDisplayStruct(), socketId);
 	}
 	
 	/**
@@ -190,7 +190,7 @@ public class Plug : Window
 	public this (Display display, GdkNativeWindow socketId)
 	{
 		// GtkWidget* gtk_plug_new_for_display (GdkDisplay *display,  GdkNativeWindow socket_id);
-		this(cast(GtkPlug*)gtk_plug_new_for_display(display.getDisplayStruct(), socketId) );
+		this(cast(GtkPlug*)gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId) );
 	}
 	
 	/**

@@ -391,7 +391,7 @@ public class Display : ObjectG
 	public void putEvent(Event event)
 	{
 		// void gdk_display_put_event (GdkDisplay *display,  GdkEvent *event);
-		gdk_display_put_event(gdkDisplay, event.getEventStruct());
+		gdk_display_put_event(gdkDisplay, (event is null) ? null : event.getEventStruct());
 	}
 	
 	/**
@@ -539,7 +539,7 @@ public class Display : ObjectG
 	public void warpPointer(Screen screen, int x, int y)
 	{
 		// void gdk_display_warp_pointer (GdkDisplay *display,  GdkScreen *screen,  gint x,  gint y);
-		gdk_display_warp_pointer(gdkDisplay, screen.getScreenStruct(), x, y);
+		gdk_display_warp_pointer(gdkDisplay, (screen is null) ? null : screen.getScreenStruct(), x, y);
 	}
 	
 	/**
@@ -707,6 +707,6 @@ public class Display : ObjectG
 	public void storeClipboard(Window clipboardWindow, uint time, GdkAtom* targets, int nTargets)
 	{
 		// void gdk_display_store_clipboard (GdkDisplay *display,  GdkWindow *clipboard_window,  guint32 time_,  GdkAtom *targets,  gint n_targets);
-		gdk_display_store_clipboard(gdkDisplay, clipboardWindow.getWindowStruct(), time, targets, nTargets);
+		gdk_display_store_clipboard(gdkDisplay, (clipboardWindow is null) ? null : clipboardWindow.getWindowStruct(), time, targets, nTargets);
 	}
 }

@@ -127,7 +127,7 @@ public class ImageMenuItem : MenuItem
 	public void setImage(Widget image)
 	{
 		// void gtk_image_menu_item_set_image (GtkImageMenuItem *image_menu_item,  GtkWidget *image);
-		gtk_image_menu_item_set_image(gtkImageMenuItem, image.getWidgetStruct());
+		gtk_image_menu_item_set_image(gtkImageMenuItem, (image is null) ? null : image.getWidgetStruct());
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class ImageMenuItem : MenuItem
 	public this (char[] stockId, AccelGroup accelGroup)
 	{
 		// GtkWidget* gtk_image_menu_item_new_from_stock  (const gchar *stock_id,  GtkAccelGroup *accel_group);
-		this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_from_stock(std.string.toStringz(stockId), accelGroup.getAccelGroupStruct()) );
+		this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_from_stock(std.string.toStringz(stockId), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct()) );
 	}
 	
 	

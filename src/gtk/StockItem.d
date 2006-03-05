@@ -183,7 +183,7 @@ public class StockItem
 	public static int lookup(char[] stockId, StockItem item)
 	{
 		// gboolean gtk_stock_lookup (const gchar *stock_id,  GtkStockItem *item);
-		return gtk_stock_lookup(std.string.toStringz(stockId), item.getStockItemStruct());
+		return gtk_stock_lookup(std.string.toStringz(stockId), (item is null) ? null : item.getStockItemStruct());
 	}
 	
 	/**

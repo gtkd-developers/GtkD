@@ -309,7 +309,7 @@ public class ScrolledWindow : Bin
 	public void addWithViewport(Widget child)
 	{
 		// void gtk_scrolled_window_add_with_viewport  (GtkScrolledWindow *scrolled_window,  GtkWidget *child);
-		gtk_scrolled_window_add_with_viewport(gtkScrolledWindow, child.getWidgetStruct());
+		gtk_scrolled_window_add_with_viewport(gtkScrolledWindow, (child is null) ? null : child.getWidgetStruct());
 	}
 	
 	/**
@@ -353,7 +353,7 @@ public class ScrolledWindow : Bin
 	public void setHadjustment(Adjustment hadjustment)
 	{
 		// void gtk_scrolled_window_set_hadjustment  (GtkScrolledWindow *scrolled_window,  GtkAdjustment *hadjustment);
-		gtk_scrolled_window_set_hadjustment(gtkScrolledWindow, hadjustment.getAdjustmentStruct());
+		gtk_scrolled_window_set_hadjustment(gtkScrolledWindow, (hadjustment is null) ? null : hadjustment.getAdjustmentStruct());
 	}
 	
 	/**
@@ -366,7 +366,7 @@ public class ScrolledWindow : Bin
 	public void setVadjustment(Adjustment vadjustment)
 	{
 		// void gtk_scrolled_window_set_vadjustment  (GtkScrolledWindow *scrolled_window,  GtkAdjustment *vadjustment);
-		gtk_scrolled_window_set_vadjustment(gtkScrolledWindow, vadjustment.getAdjustmentStruct());
+		gtk_scrolled_window_set_vadjustment(gtkScrolledWindow, (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 	}
 	
 	/**

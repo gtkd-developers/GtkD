@@ -116,7 +116,7 @@ public class ImageGdk
 	public this (GdkImageType type, Visual visual, int width, int height)
 	{
 		// GdkImage* gdk_image_new (GdkImageType type,  GdkVisual *visual,  gint width,  gint height);
-		this(cast(GdkImage*)gdk_image_new(type, visual.getVisualStruct(), width, height) );
+		this(cast(GdkImage*)gdk_image_new(type, (visual is null) ? null : visual.getVisualStruct(), width, height) );
 	}
 	
 	
@@ -142,7 +142,7 @@ public class ImageGdk
 	public this (Visual visual, void* data, int width, int height)
 	{
 		// GdkImage* gdk_image_new_bitmap (GdkVisual *visual,  gpointer data,  gint width,  gint height);
-		this(cast(GdkImage*)gdk_image_new_bitmap(visual.getVisualStruct(), data, width, height) );
+		this(cast(GdkImage*)gdk_image_new_bitmap((visual is null) ? null : visual.getVisualStruct(), data, width, height) );
 	}
 	
 	/**
@@ -168,7 +168,7 @@ public class ImageGdk
 	public static GdkImage* get(Drawable drawable, int x, int y, int width, int height)
 	{
 		// GdkImage* gdk_image_get (GdkDrawable *drawable,  gint x,  gint y,  gint width,  gint height);
-		return gdk_image_get(drawable.getDrawableStruct(), x, y, width, height);
+		return gdk_image_get((drawable is null) ? null : drawable.getDrawableStruct(), x, y, width, height);
 	}
 	
 	/**
@@ -230,7 +230,7 @@ public class ImageGdk
 	public void setColormap(Colormap colormap)
 	{
 		// void gdk_image_set_colormap (GdkImage *image,  GdkColormap *colormap);
-		gdk_image_set_colormap(gdkImage, colormap.getColormapStruct());
+		gdk_image_set_colormap(gdkImage, (colormap is null) ? null : colormap.getColormapStruct());
 	}
 	
 	/**

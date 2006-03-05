@@ -439,7 +439,7 @@ public class Window : Bin
 	public void addAccelGroup(AccelGroup accelGroup)
 	{
 		// void gtk_window_add_accel_group (GtkWindow *window,  GtkAccelGroup *accel_group);
-		gtk_window_add_accel_group(gtkWindow, accelGroup.getAccelGroupStruct());
+		gtk_window_add_accel_group(gtkWindow, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 	}
 	
 	/**
@@ -452,7 +452,7 @@ public class Window : Bin
 	public void removeAccelGroup(AccelGroup accelGroup)
 	{
 		// void gtk_window_remove_accel_group (GtkWindow *window,  GtkAccelGroup *accel_group);
-		gtk_window_remove_accel_group(gtkWindow, accelGroup.getAccelGroupStruct());
+		gtk_window_remove_accel_group(gtkWindow, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 	}
 	
 	
@@ -557,7 +557,7 @@ public class Window : Bin
 	public void setGeometryHints(Widget geometryWidget, GdkGeometry* geometry, GdkWindowHints geomMask)
 	{
 		// void gtk_window_set_geometry_hints (GtkWindow *window,  GtkWidget *geometry_widget,  GdkGeometry *geometry,  GdkWindowHints geom_mask);
-		gtk_window_set_geometry_hints(gtkWindow, geometryWidget.getWidgetStruct(), geometry, geomMask);
+		gtk_window_set_geometry_hints(gtkWindow, (geometryWidget is null) ? null : geometryWidget.getWidgetStruct(), geometry, geomMask);
 	}
 	
 	/**
@@ -623,7 +623,7 @@ public class Window : Bin
 	public void setTransientFor(Window parent)
 	{
 		// void gtk_window_set_transient_for (GtkWindow *window,  GtkWindow *parent);
-		gtk_window_set_transient_for(gtkWindow, parent.getWindowStruct());
+		gtk_window_set_transient_for(gtkWindow, (parent is null) ? null : parent.getWindowStruct());
 	}
 	
 	/**
@@ -655,7 +655,7 @@ public class Window : Bin
 	public void setScreen(Screen screen)
 	{
 		// void gtk_window_set_screen (GtkWindow *window,  GdkScreen *screen);
-		gtk_window_set_screen(gtkWindow, screen.getScreenStruct());
+		gtk_window_set_screen(gtkWindow, (screen is null) ? null : screen.getScreenStruct());
 	}
 	
 	/**
@@ -736,7 +736,7 @@ public class Window : Bin
 	public void addMnemonic(uint keyval, Widget target)
 	{
 		// void gtk_window_add_mnemonic (GtkWindow *window,  guint keyval,  GtkWidget *target);
-		gtk_window_add_mnemonic(gtkWindow, keyval, target.getWidgetStruct());
+		gtk_window_add_mnemonic(gtkWindow, keyval, (target is null) ? null : target.getWidgetStruct());
 	}
 	
 	/**
@@ -751,7 +751,7 @@ public class Window : Bin
 	public void removeMnemonic(uint keyval, Widget target)
 	{
 		// void gtk_window_remove_mnemonic (GtkWindow *window,  guint keyval,  GtkWidget *target);
-		gtk_window_remove_mnemonic(gtkWindow, keyval, target.getWidgetStruct());
+		gtk_window_remove_mnemonic(gtkWindow, keyval, (target is null) ? null : target.getWidgetStruct());
 	}
 	
 	/**
@@ -841,7 +841,7 @@ public class Window : Bin
 	public void setFocus(Widget focus)
 	{
 		// void gtk_window_set_focus (GtkWindow *window,  GtkWidget *focus);
-		gtk_window_set_focus(gtkWindow, focus.getWidgetStruct());
+		gtk_window_set_focus(gtkWindow, (focus is null) ? null : focus.getWidgetStruct());
 	}
 	
 	/**
@@ -861,7 +861,7 @@ public class Window : Bin
 	public void setDefault(Widget defaultWidget)
 	{
 		// void gtk_window_set_default (GtkWindow *window,  GtkWidget *default_widget);
-		gtk_window_set_default(gtkWindow, defaultWidget.getWidgetStruct());
+		gtk_window_set_default(gtkWindow, (defaultWidget is null) ? null : defaultWidget.getWidgetStruct());
 	}
 	
 	/**
@@ -1920,7 +1920,7 @@ public class Window : Bin
 	public static void setDefaultIconList(ListG list)
 	{
 		// void gtk_window_set_default_icon_list  (GList *list);
-		gtk_window_set_default_icon_list(list.getListGStruct());
+		gtk_window_set_default_icon_list((list is null) ? null : list.getListGStruct());
 	}
 	
 	/**
@@ -1933,7 +1933,7 @@ public class Window : Bin
 	public static void setDefaultIcon(Pixbuf icon)
 	{
 		// void gtk_window_set_default_icon (GdkPixbuf *icon);
-		gtk_window_set_default_icon(icon.getPixbufStruct());
+		gtk_window_set_default_icon((icon is null) ? null : icon.getPixbufStruct());
 	}
 	
 	/**
@@ -1991,7 +1991,7 @@ public class Window : Bin
 	public void setIcon(Pixbuf icon)
 	{
 		// void gtk_window_set_icon (GtkWindow *window,  GdkPixbuf *icon);
-		gtk_window_set_icon(gtkWindow, icon.getPixbufStruct());
+		gtk_window_set_icon(gtkWindow, (icon is null) ? null : icon.getPixbufStruct());
 	}
 	
 	/**
@@ -2022,7 +2022,7 @@ public class Window : Bin
 	public void setIconList(ListG list)
 	{
 		// void gtk_window_set_icon_list (GtkWindow *window,  GList *list);
-		gtk_window_set_icon_list(gtkWindow, list.getListGStruct());
+		gtk_window_set_icon_list(gtkWindow, (list is null) ? null : list.getListGStruct());
 	}
 	
 	/**

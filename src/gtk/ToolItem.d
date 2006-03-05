@@ -276,7 +276,7 @@ public class ToolItem : Bin
 	public void setTooltip(Tooltips tooltips, char[] tipText, char[] tipPrivate)
 	{
 		// void gtk_tool_item_set_tooltip (GtkToolItem *tool_item,  GtkTooltips *tooltips,  const gchar *tip_text,  const gchar *tip_private);
-		gtk_tool_item_set_tooltip(gtkToolItem, tooltips.getTooltipsStruct(), std.string.toStringz(tipText), std.string.toStringz(tipPrivate));
+		gtk_tool_item_set_tooltip(gtkToolItem, (tooltips is null) ? null : tooltips.getTooltipsStruct(), std.string.toStringz(tipText), std.string.toStringz(tipPrivate));
 	}
 	
 	/**
@@ -541,7 +541,7 @@ public class ToolItem : Bin
 	public void setProxyMenuItem(char[] menuItemId, Widget menuItem)
 	{
 		// void gtk_tool_item_set_proxy_menu_item  (GtkToolItem *tool_item,  const gchar *menu_item_id,  GtkWidget *menu_item);
-		gtk_tool_item_set_proxy_menu_item(gtkToolItem, std.string.toStringz(menuItemId), menuItem.getWidgetStruct());
+		gtk_tool_item_set_proxy_menu_item(gtkToolItem, std.string.toStringz(menuItemId), (menuItem is null) ? null : menuItem.getWidgetStruct());
 	}
 	
 	/**

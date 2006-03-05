@@ -167,7 +167,7 @@ public class FileChooserButton : HBox
 	public this (Widget dialog)
 	{
 		// GtkWidget* gtk_file_chooser_button_new_with_dialog  (GtkWidget *dialog);
-		this(cast(GtkFileChooserButton*)gtk_file_chooser_button_new_with_dialog(dialog.getWidgetStruct()) );
+		this(cast(GtkFileChooserButton*)gtk_file_chooser_button_new_with_dialog((dialog is null) ? null : dialog.getWidgetStruct()) );
 	}
 	
 	/**

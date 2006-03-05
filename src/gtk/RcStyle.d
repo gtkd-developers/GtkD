@@ -442,7 +442,7 @@ public class RcStyle : ObjectG
 	public static Style getStyle(Widget widget)
 	{
 		// GtkStyle* gtk_rc_get_style (GtkWidget *widget);
-		return new Style( gtk_rc_get_style(widget.getWidgetStruct()) );
+		return new Style( gtk_rc_get_style((widget is null) ? null : widget.getWidgetStruct()) );
 	}
 	
 	/**
@@ -477,7 +477,7 @@ public class RcStyle : ObjectG
 	public static Style getStyleByPaths(Settings settings, char[] widgetPath, char[] classPath, GType type)
 	{
 		// GtkStyle* gtk_rc_get_style_by_paths (GtkSettings *settings,  const char *widget_path,  const char *class_path,  GType type);
-		return new Style( gtk_rc_get_style_by_paths(settings.getSettingsStruct(), std.string.toStringz(widgetPath), std.string.toStringz(classPath), type) );
+		return new Style( gtk_rc_get_style_by_paths((settings is null) ? null : settings.getSettingsStruct(), std.string.toStringz(widgetPath), std.string.toStringz(classPath), type) );
 	}
 	
 	/**
@@ -584,7 +584,7 @@ public class RcStyle : ObjectG
 	public static int reparseAllForSettings(Settings settings, int forceLoad)
 	{
 		// gboolean gtk_rc_reparse_all_for_settings (GtkSettings *settings,  gboolean force_load);
-		return gtk_rc_reparse_all_for_settings(settings.getSettingsStruct(), forceLoad);
+		return gtk_rc_reparse_all_for_settings((settings is null) ? null : settings.getSettingsStruct(), forceLoad);
 	}
 	
 	/**
@@ -605,7 +605,7 @@ public class RcStyle : ObjectG
 	public static void resetStyles(Settings settings)
 	{
 		// void gtk_rc_reset_styles (GtkSettings *settings);
-		gtk_rc_reset_styles(settings.getSettingsStruct());
+		gtk_rc_reset_styles((settings is null) ? null : settings.getSettingsStruct());
 	}
 	
 	/**
@@ -660,7 +660,7 @@ public class RcStyle : ObjectG
 	public static uint parseColor(GScanner* scanner, Color color)
 	{
 		// guint gtk_rc_parse_color (GScanner *scanner,  GdkColor *color);
-		return gtk_rc_parse_color(scanner, color.getColorStruct());
+		return gtk_rc_parse_color(scanner, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -731,7 +731,7 @@ public class RcStyle : ObjectG
 	public static char[] findPixmapInPath(Settings settings, GScanner* scanner, char[] pixmapFile)
 	{
 		// gchar* gtk_rc_find_pixmap_in_path (GtkSettings *settings,  GScanner *scanner,  const gchar *pixmap_file);
-		return std.string.toString(gtk_rc_find_pixmap_in_path(settings.getSettingsStruct(), scanner, std.string.toStringz(pixmapFile)) );
+		return std.string.toString(gtk_rc_find_pixmap_in_path((settings is null) ? null : settings.getSettingsStruct(), scanner, std.string.toStringz(pixmapFile)) );
 	}
 	
 	/**

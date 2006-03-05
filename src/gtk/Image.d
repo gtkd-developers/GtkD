@@ -407,7 +407,7 @@ public class Image : Misc
 	public this (ImageGdk image, Bitmap mask)
 	{
 		// GtkWidget* gtk_image_new_from_image (GdkImage *image,  GdkBitmap *mask);
-		this(cast(GtkImage*)gtk_image_new_from_image(image.getImageGdkStruct(), mask.getBitmapStruct()) );
+		this(cast(GtkImage*)gtk_image_new_from_image((image is null) ? null : image.getImageGdkStruct(), (mask is null) ? null : mask.getBitmapStruct()) );
 	}
 	
 	/**
@@ -426,7 +426,7 @@ public class Image : Misc
 	public this (Pixbuf pixbuf)
 	{
 		// GtkWidget* gtk_image_new_from_pixbuf (GdkPixbuf *pixbuf);
-		this(cast(GtkImage*)gtk_image_new_from_pixbuf(pixbuf.getPixbufStruct()) );
+		this(cast(GtkImage*)gtk_image_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct()) );
 	}
 	
 	/**
@@ -445,7 +445,7 @@ public class Image : Misc
 	public this (Pixmap pixmap, Bitmap mask)
 	{
 		// GtkWidget* gtk_image_new_from_pixmap (GdkPixmap *pixmap,  GdkBitmap *mask);
-		this(cast(GtkImage*)gtk_image_new_from_pixmap(pixmap.getPixmapStruct(), mask.getBitmapStruct()) );
+		this(cast(GtkImage*)gtk_image_new_from_pixmap((pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct()) );
 	}
 	
 	
@@ -506,7 +506,7 @@ public class Image : Misc
 	public void setFromImage(ImageGdk gdkImage, Bitmap mask)
 	{
 		// void gtk_image_set_from_image (GtkImage *image,  GdkImage *gdk_image,  GdkBitmap *mask);
-		gtk_image_set_from_image(gtkImage, gdkImage.getImageGdkStruct(), mask.getBitmapStruct());
+		gtk_image_set_from_image(gtkImage, (gdkImage is null) ? null : gdkImage.getImageGdkStruct(), (mask is null) ? null : mask.getBitmapStruct());
 	}
 	
 	/**
@@ -519,7 +519,7 @@ public class Image : Misc
 	public void setFromPixbuf(Pixbuf pixbuf)
 	{
 		// void gtk_image_set_from_pixbuf (GtkImage *image,  GdkPixbuf *pixbuf);
-		gtk_image_set_from_pixbuf(gtkImage, pixbuf.getPixbufStruct());
+		gtk_image_set_from_pixbuf(gtkImage, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
 	/**
@@ -534,7 +534,7 @@ public class Image : Misc
 	public void setFromPixmap(Pixmap pixmap, Bitmap mask)
 	{
 		// void gtk_image_set_from_pixmap (GtkImage *image,  GdkPixmap *pixmap,  GdkBitmap *mask);
-		gtk_image_set_from_pixmap(gtkImage, pixmap.getPixmapStruct(), mask.getBitmapStruct());
+		gtk_image_set_from_pixmap(gtkImage, (pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct());
 	}
 	
 	/**
@@ -619,7 +619,7 @@ public class Image : Misc
 	public void set(ImageGdk val, Bitmap mask)
 	{
 		// void gtk_image_set (GtkImage *image,  GdkImage *val,  GdkBitmap *mask);
-		gtk_image_set(gtkImage, val.getImageGdkStruct(), mask.getBitmapStruct());
+		gtk_image_set(gtkImage, (val is null) ? null : val.getImageGdkStruct(), (mask is null) ? null : mask.getBitmapStruct());
 	}
 	
 	/**

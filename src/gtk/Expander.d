@@ -353,7 +353,7 @@ public class Expander : Bin
 	public void setLabelWidget(Widget labelWidget)
 	{
 		// void gtk_expander_set_label_widget (GtkExpander *expander,  GtkWidget *label_widget);
-		gtk_expander_set_label_widget(gtkExpander, labelWidget.getWidgetStruct());
+		gtk_expander_set_label_widget(gtkExpander, (labelWidget is null) ? null : labelWidget.getWidgetStruct());
 	}
 	
 	/**

@@ -294,7 +294,7 @@ public class Drawable : ObjectG
 	public void drawableSetColormap(Colormap colormap)
 	{
 		// void gdk_drawable_set_colormap (GdkDrawable *drawable,  GdkColormap *colormap);
-		gdk_drawable_set_colormap(gdkDrawable, colormap.getColormapStruct());
+		gdk_drawable_set_colormap(gdkDrawable, (colormap is null) ? null : colormap.getColormapStruct());
 	}
 	
 	/**
@@ -396,7 +396,7 @@ public class Drawable : ObjectG
 	public void drawPoint(GC gc, int x, int y)
 	{
 		// void gdk_draw_point (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y);
-		gdk_draw_point(gdkDrawable, gc.getGCStruct(), x, y);
+		gdk_draw_point(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), x, y);
 	}
 	
 	/**
@@ -414,7 +414,7 @@ public class Drawable : ObjectG
 	public void drawPoints(GC gc, GdkPoint* points, int npoints)
 	{
 		// void gdk_draw_points (GdkDrawable *drawable,  GdkGC *gc,  GdkPoint *points,  gint npoints);
-		gdk_draw_points(gdkDrawable, gc.getGCStruct(), points, npoints);
+		gdk_draw_points(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points, npoints);
 	}
 	
 	/**
@@ -436,7 +436,7 @@ public class Drawable : ObjectG
 	public void drawLine(GC gc, int x1_, int y1_, int x2_, int y2_)
 	{
 		// void gdk_draw_line (GdkDrawable *drawable,  GdkGC *gc,  gint x1_,  gint y1_,  gint x2_,  gint y2_);
-		gdk_draw_line(gdkDrawable, gc.getGCStruct(), x1_, y1_, x2_, y2_);
+		gdk_draw_line(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), x1_, y1_, x2_, y2_);
 	}
 	
 	/**
@@ -456,7 +456,7 @@ public class Drawable : ObjectG
 	public void drawLines(GC gc, GdkPoint* points, int npoints)
 	{
 		// void gdk_draw_lines (GdkDrawable *drawable,  GdkGC *gc,  GdkPoint *points,  gint npoints);
-		gdk_draw_lines(gdkDrawable, gc.getGCStruct(), points, npoints);
+		gdk_draw_lines(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), points, npoints);
 	}
 	
 	/**
@@ -498,7 +498,7 @@ public class Drawable : ObjectG
 	public void drawPixbuf(GC gc, Pixbuf pixbuf, int srcX, int srcY, int destX, int destY, int width, int height, GdkRgbDither dither, int xDither, int yDither)
 	{
 		// void gdk_draw_pixbuf (GdkDrawable *drawable,  GdkGC *gc,  GdkPixbuf *pixbuf,  gint src_x,  gint src_y,  gint dest_x,  gint dest_y,  gint width,  gint height,  GdkRgbDither dither,  gint x_dither,  gint y_dither);
-		gdk_draw_pixbuf(gdkDrawable, gc.getGCStruct(), pixbuf.getPixbufStruct(), srcX, srcY, destX, destY, width, height, dither, xDither, yDither);
+		gdk_draw_pixbuf(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct(), srcX, srcY, destX, destY, width, height, dither, xDither, yDither);
 	}
 	
 	/**
@@ -517,7 +517,7 @@ public class Drawable : ObjectG
 	public void drawSegments(GC gc, GdkSegment* segs, int nsegs)
 	{
 		// void gdk_draw_segments (GdkDrawable *drawable,  GdkGC *gc,  GdkSegment *segs,  gint nsegs);
-		gdk_draw_segments(gdkDrawable, gc.getGCStruct(), segs, nsegs);
+		gdk_draw_segments(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), segs, nsegs);
 	}
 	
 	
@@ -550,7 +550,7 @@ public class Drawable : ObjectG
 	public void drawRectangle(GC gc, int filled, int x, int y, int width, int height)
 	{
 		// void gdk_draw_rectangle (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  gint x,  gint y,  gint width,  gint height);
-		gdk_draw_rectangle(gdkDrawable, gc.getGCStruct(), filled, x, y, width, height);
+		gdk_draw_rectangle(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), filled, x, y, width, height);
 	}
 	
 	/**
@@ -581,7 +581,7 @@ public class Drawable : ObjectG
 	public void drawArc(GC gc, int filled, int x, int y, int width, int height, int angle1, int angle2)
 	{
 		// void gdk_draw_arc (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  gint x,  gint y,  gint width,  gint height,  gint angle1,  gint angle2);
-		gdk_draw_arc(gdkDrawable, gc.getGCStruct(), filled, x, y, width, height, angle1, angle2);
+		gdk_draw_arc(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), filled, x, y, width, height, angle1, angle2);
 	}
 	
 	/**
@@ -603,7 +603,7 @@ public class Drawable : ObjectG
 	public void drawPolygon(GC gc, int filled, GdkPoint* points, int npoints)
 	{
 		// void gdk_draw_polygon (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  GdkPoint *points,  gint npoints);
-		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, points, npoints);
+		gdk_draw_polygon(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), filled, points, npoints);
 	}
 	
 	/**
@@ -625,7 +625,7 @@ public class Drawable : ObjectG
 	public void drawTrapezoids(GC gc, GdkTrapezoid* trapezoids, int nTrapezoids)
 	{
 		// void gdk_draw_trapezoids (GdkDrawable *drawable,  GdkGC *gc,  GdkTrapezoid *trapezoids,  gint n_trapezoids);
-		gdk_draw_trapezoids(gdkDrawable, gc.getGCStruct(), trapezoids, nTrapezoids);
+		gdk_draw_trapezoids(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), trapezoids, nTrapezoids);
 	}
 	
 	
@@ -653,7 +653,7 @@ public class Drawable : ObjectG
 	public void drawGlyphs(GC gc, PangoFont* font, int x, int y, PangoGlyphString* glyphs)
 	{
 		// void gdk_draw_glyphs (GdkDrawable *drawable,  GdkGC *gc,  PangoFont *font,  gint x,  gint y,  PangoGlyphString *glyphs);
-		gdk_draw_glyphs(gdkDrawable, gc.getGCStruct(), font, x, y, glyphs);
+		gdk_draw_glyphs(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), font, x, y, glyphs);
 	}
 	
 	/**
@@ -685,7 +685,7 @@ public class Drawable : ObjectG
 	public void drawGlyphsTransformed(GC gc, PangoMatrix* matrix, PangoFont* font, int x, int y, PangoGlyphString* glyphs)
 	{
 		// void gdk_draw_glyphs_transformed (GdkDrawable *drawable,  GdkGC *gc,  PangoMatrix *matrix,  PangoFont *font,  gint x,  gint y,  PangoGlyphString *glyphs);
-		gdk_draw_glyphs_transformed(gdkDrawable, gc.getGCStruct(), matrix, font, x, y, glyphs);
+		gdk_draw_glyphs_transformed(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), matrix, font, x, y, glyphs);
 	}
 	
 	/**
@@ -708,7 +708,7 @@ public class Drawable : ObjectG
 	public void drawLayoutLine(GC gc, int x, int y, PangoLayoutLine* line)
 	{
 		// void gdk_draw_layout_line (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  PangoLayoutLine *line);
-		gdk_draw_layout_line(gdkDrawable, gc.getGCStruct(), x, y, line);
+		gdk_draw_layout_line(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), x, y, line);
 	}
 	
 	/**
@@ -737,7 +737,7 @@ public class Drawable : ObjectG
 	public void drawLayoutLineWithColors(GC gc, int x, int y, PangoLayoutLine* line, Color foreground, Color background)
 	{
 		// void gdk_draw_layout_line_with_colors  (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  PangoLayoutLine *line,  const GdkColor *foreground,  const GdkColor *background);
-		gdk_draw_layout_line_with_colors(gdkDrawable, gc.getGCStruct(), x, y, line, foreground.getColorStruct(), background.getColorStruct());
+		gdk_draw_layout_line_with_colors(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), x, y, line, (foreground is null) ? null : foreground.getColorStruct(), (background is null) ? null : background.getColorStruct());
 	}
 	
 	/**
@@ -761,7 +761,7 @@ public class Drawable : ObjectG
 	public void drawLayout(GC gc, int x, int y, PgLayout layout)
 	{
 		// void gdk_draw_layout (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  PangoLayout *layout);
-		gdk_draw_layout(gdkDrawable, gc.getGCStruct(), x, y, layout.getPgLayoutStruct());
+		gdk_draw_layout(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), x, y, (layout is null) ? null : layout.getPgLayoutStruct());
 	}
 	
 	/**
@@ -791,7 +791,7 @@ public class Drawable : ObjectG
 	public void drawLayoutWithColors(GC gc, int x, int y, PgLayout layout, Color foreground, Color background)
 	{
 		// void gdk_draw_layout_with_colors (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  PangoLayout *layout,  const GdkColor *foreground,  const GdkColor *background);
-		gdk_draw_layout_with_colors(gdkDrawable, gc.getGCStruct(), x, y, layout.getPgLayoutStruct(), foreground.getColorStruct(), background.getColorStruct());
+		gdk_draw_layout_with_colors(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), x, y, (layout is null) ? null : layout.getPgLayoutStruct(), (foreground is null) ? null : foreground.getColorStruct(), (background is null) ? null : background.getColorStruct());
 	}
 	
 	/**
@@ -814,7 +814,7 @@ public class Drawable : ObjectG
 	public void drawString(Font font, GC gc, int x, int y, char[] string)
 	{
 		// void gdk_draw_string (GdkDrawable *drawable,  GdkFont *font,  GdkGC *gc,  gint x,  gint y,  const gchar *string);
-		gdk_draw_string(gdkDrawable, font.getFontStruct(), gc.getGCStruct(), x, y, std.string.toStringz(string));
+		gdk_draw_string(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, std.string.toStringz(string));
 	}
 	
 	/**
@@ -839,7 +839,7 @@ public class Drawable : ObjectG
 	public void drawText(Font font, GC gc, int x, int y, char[] text, int textLength)
 	{
 		// void gdk_draw_text (GdkDrawable *drawable,  GdkFont *font,  GdkGC *gc,  gint x,  gint y,  const gchar *text,  gint text_length);
-		gdk_draw_text(gdkDrawable, font.getFontStruct(), gc.getGCStruct(), x, y, std.string.toStringz(text), textLength);
+		gdk_draw_text(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, std.string.toStringz(text), textLength);
 	}
 	
 	/**
@@ -866,7 +866,7 @@ public class Drawable : ObjectG
 	public void drawTextWc(Font font, GC gc, int x, int y, GdkWChar* text, int textLength)
 	{
 		// void gdk_draw_text_wc (GdkDrawable *drawable,  GdkFont *font,  GdkGC *gc,  gint x,  gint y,  const GdkWChar *text,  gint text_length);
-		gdk_draw_text_wc(gdkDrawable, font.getFontStruct(), gc.getGCStruct(), x, y, text, textLength);
+		gdk_draw_text_wc(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, text, textLength);
 	}
 	
 	
@@ -906,7 +906,7 @@ public class Drawable : ObjectG
 	public void drawDrawable(GC gc, Drawable src, int xsrc, int ysrc, int xdest, int ydest, int width, int height)
 	{
 		// void gdk_draw_drawable (GdkDrawable *drawable,  GdkGC *gc,  GdkDrawable *src,  gint xsrc,  gint ysrc,  gint xdest,  gint ydest,  gint width,  gint height);
-		gdk_draw_drawable(gdkDrawable, gc.getGCStruct(), src.getDrawableStruct(), xsrc, ysrc, xdest, ydest, width, height);
+		gdk_draw_drawable(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), (src is null) ? null : src.getDrawableStruct(), xsrc, ysrc, xdest, ydest, width, height);
 	}
 	
 	/**
@@ -936,7 +936,7 @@ public class Drawable : ObjectG
 	public void drawImage(GC gc, ImageGdk image, int xsrc, int ysrc, int xdest, int ydest, int width, int height)
 	{
 		// void gdk_draw_image (GdkDrawable *drawable,  GdkGC *gc,  GdkImage *image,  gint xsrc,  gint ysrc,  gint xdest,  gint ydest,  gint width,  gint height);
-		gdk_draw_image(gdkDrawable, gc.getGCStruct(), image.getImageGdkStruct(), xsrc, ysrc, xdest, ydest, width, height);
+		gdk_draw_image(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), (image is null) ? null : image.getImageGdkStruct(), xsrc, ysrc, xdest, ydest, width, height);
 	}
 	
 	/**
@@ -1012,6 +1012,6 @@ public class Drawable : ObjectG
 	public ImageGdk drawableCopyToImage(ImageGdk image, int srcX, int srcY, int destX, int destY, int width, int height)
 	{
 		// GdkImage* gdk_drawable_copy_to_image (GdkDrawable *drawable,  GdkImage *image,  gint src_x,  gint src_y,  gint dest_x,  gint dest_y,  gint width,  gint height);
-		return new ImageGdk( gdk_drawable_copy_to_image(gdkDrawable, image.getImageGdkStruct(), srcX, srcY, destX, destY, width, height) );
+		return new ImageGdk( gdk_drawable_copy_to_image(gdkDrawable, (image is null) ? null : image.getImageGdkStruct(), srcX, srcY, destX, destY, width, height) );
 	}
 }

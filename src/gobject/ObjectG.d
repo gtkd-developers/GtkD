@@ -229,7 +229,7 @@ public class ObjectG
 	public static void classInstallProperty(GObjectClass* oclass, uint propertyId, ParamSpec pspec)
 	{
 		// void g_object_class_install_property (GObjectClass *oclass,  guint property_id,  GParamSpec *pspec);
-		g_object_class_install_property(oclass, propertyId, pspec.getParamSpecStruct());
+		g_object_class_install_property(oclass, propertyId, (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 	
 	/**
@@ -318,7 +318,7 @@ public class ObjectG
 	public static void interfaceInstallProperty(void* gIface, ParamSpec pspec)
 	{
 		// void g_object_interface_install_property  (gpointer g_iface,  GParamSpec *pspec);
-		g_object_interface_install_property(gIface, pspec.getParamSpecStruct());
+		g_object_interface_install_property(gIface, (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 	
 	/**
@@ -922,7 +922,7 @@ public class ObjectG
 	public void setProperty(char[] propertyName, Value value)
 	{
 		// void g_object_set_property (GObject *object,  const gchar *property_name,  const GValue *value);
-		g_object_set_property(gObject, std.string.toStringz(propertyName), value.getValueStruct());
+		g_object_set_property(gObject, std.string.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -941,7 +941,7 @@ public class ObjectG
 	public void getProperty(char[] propertyName, Value value)
 	{
 		// void g_object_get_property (GObject *object,  const gchar *property_name,  GValue *value);
-		g_object_get_property(gObject, std.string.toStringz(propertyName), value.getValueStruct());
+		g_object_get_property(gObject, std.string.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -1018,7 +1018,7 @@ public class ObjectG
 	public void watchClosure(Closure closure)
 	{
 		// void g_object_watch_closure (GObject *object,  GClosure *closure);
-		g_object_watch_closure(gObject, closure.getClosureStruct());
+		g_object_watch_closure(gObject, (closure is null) ? null : closure.getClosureStruct());
 	}
 	
 	/**

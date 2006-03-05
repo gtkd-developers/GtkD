@@ -1035,9 +1035,13 @@ prefix: gtk_button_
 prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+import: gtk.Image;
+import: gtk.typedefs;
+
 nocode: gtk_button_new_with_mnemonic
 nocode: gtk_button_new_with_label
 nocode: gtk_button_new_from_stock
+
 code: start
 
 	private char[] action;
@@ -1089,11 +1093,22 @@ code: start
 	 * Returns:
 	 *  a new GtkButton
 	 */
-	public this (StockID stockID)
+	public this (StockID stockID, bool hideLabel=false)
 	{
 		// GtkWidget* gtk_button_new_from_stock (const gchar *stock_id);
-		this(cast(GtkButton*)gtk_button_new_from_stock(StockDesc[stockID]) );
+		if ( hideLabel )
+		{
+			this();
+			Image image = new Image(stockID,IconSize.SIZE_MENU);
+			add(image);
+		}
+		else
+		{
+			this(cast(GtkButton*)gtk_button_new_from_stock(StockDesc[stockID]) );
+		}
+		
 	}
+	
 
 	public this(char[] label, void delegate(Button) dlg, bit mnemonic=true)
 	{
@@ -1101,9 +1116,9 @@ code: start
 		addOnClicked(dlg);
 	}
 	
-	public this(StockID stockID, void delegate(Button) dlg)
+	public this(StockID stockID, void delegate(Button) dlg, bool hideLabel=false)
 	{
-		this(stockID);
+		this(stockID, hideLabel);
 		addOnClicked(dlg);
 	}
 	
@@ -1530,6 +1545,19 @@ prefix: gtk_tree_iter_
 #prefix: gtk_
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
+
+code: start
+    /**
+     * creates a new tree iteractor.
+     * used TreeView.createIter and TreeView.append() to create iteractor for a tree or list
+     */
+    this()
+    {
+    	this(new GtkTreeIter);
+    }
+    
+code: end
+
 outFile: TreeIter
 
 struct: GtkTreePath
@@ -1891,6 +1919,20 @@ import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererToggle
 
+
+file:
+code: start
+	/**
+	 * TreeNode interface
+	 */
+	public interface TreeNode
+	{
+		char[] getNodeValue(int column);
+		int columnCount();
+	}
+code: end
+outFile: TreeNode
+
 file: GtkListStore.html
 struct: GtkListStore
 class: ListStore
@@ -1908,6 +1950,7 @@ import: std.string
 nocode: gtk_list_store_set
 
 code: start
+
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
 	 * n_columns:
@@ -1934,7 +1977,7 @@ code: start
 		return new TreeIter(iter);
 	}
 	
-		/**
+	/**
 	 * sets the values for one row
 	 * @param iter the row iteractor
 	 * @param columns an arrays with the columns to set
@@ -1975,6 +2018,7 @@ outFile: ListStore
 file: GtkTreeStore.html
 struct: GtkTreeStore
 class: TreeStore
+extend: GtkTreeModel
 prefix: gtk_tree_store_
 prefix: gtk_
 #import: gobject.Type
@@ -1983,6 +2027,141 @@ import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gobject.Value
 structWrap: GValue* Value
+import: gtk.TreeNode
+nocode: gtk_tree_store_set
+
+code: start
+
+	/**
+	 * Non-vararg creation function. Used primarily by language bindings.
+	 * n_columns:
+	 *  number of columns in the list store
+	 * types:
+	 *  an array of GType types for the columns, from first to last
+	 * Returns:
+	 *  a new GtkListStore
+	 */
+	public this (GType[] types)
+	{
+		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
+		this(cast(GtkTreeStore*)gtk_tree_store_newv(types.length, types) );
+	}
+	
+
+	/**
+	 * Creates a top level iteractor.
+	 * I don't think lists have but the top level iteractor
+	 */
+	TreeIter createIter(TreeIter parent)
+	{
+		GtkTreeIter* iter = new GtkTreeIter;
+		gtk_tree_store_append(getTreeStoreStruct(), iter, (parent is null) ? null : parent.getTreeIterStruct());
+		return new TreeIter(iter);
+	}
+	
+	/**
+	 * sets the values for one row
+	 * @param iter the row iteractor
+	 * @param columns an arrays with the columns to set
+	 * @param values an arrays with the values
+	 */
+	void set(TreeIter iter, int [] columns, char*[] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			//Value v = new Value(values[i]);
+			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
+			gtk_tree_store_set(
+					gtkTreeStore, 
+					iter.getTreeIterStruct(), 
+					columns[i], 
+					values[i],-1);
+		}
+	}
+
+	void set(TreeIter iter, int [] columns, char[][] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			//Value v = new Value(values[i]);
+			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
+			gtk_tree_store_set(
+					gtkTreeStore, 
+					iter.getTreeIterStruct(), 
+					columns[i], 
+					std.string.toStringz(values[i]),-1);
+		}
+	}
+
+	/**
+	 * Sets an iteractor values from a tree node.
+	 * This is the way to add a new row to the tree,
+	 * the iteractor is either a top level iteractor created from createIter()
+	 * or a nested iteractor created from append()
+	 * @param iter the iteractor to set
+	 * @param treeNode the tree node
+	 * @see createIter()
+	 * @see append()
+	 */
+	void set(TreeIter iter, TreeNode treeNode)
+	{
+		int[] cols;
+		char[][] vals;
+		for ( int i=0 ; i<treeNode.columnCount() ; i++ )
+		{
+			//printf(">>>>>>>>>>>>> requesting value for %d\n",i);
+			cols ~= i;
+			char[] value = treeNode.getNodeValue(i);
+			if ( value  is  null )
+			{
+				vals ~= "";
+			}
+			else
+			{
+				vals ~= value;
+			}
+		}
+		set(iter, cols, vals);				
+	}
+
+
+	/**
+	 * Creates and prepends a new row to tree_store. If parent is non-NULL, then it will prepend
+	 * the new row before the first child of parent, otherwise it will prepend a row
+	 * to the top level. iter will be changed to point to this new row. The row
+	 * will be empty after this function is called. To fill in values, you need to
+	 * call gtk_tree_store_set() or gtk_tree_store_set_value().
+	 * parent:
+	 *  A valid GtkTreeIter, or NULL
+	 */
+	public TreeIter prepend(TreeIter parent)
+	{
+		TreeIter iter = new TreeIter();
+		// void gtk_tree_store_prepend (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent);
+		gtk_tree_store_prepend(gtkTreeStore, iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct());
+		return iter;
+	}
+	
+	/**
+	 * Creates and appends a new row to tree_store. If parent is non-NULL, then it will append the
+	 * new row after the last child of parent, otherwise it will append a row to
+	 * the top level. iter will be changed to point to this new row. The row will
+	 * be empty after this function is called. To fill in values, you need to call
+	 * gtk_tree_store_set() or gtk_tree_store_set_value().
+	 * parent:
+	 *  A valid GtkTreeIter, or NULL
+	 */
+	public TreeIter append(TreeIter parent)
+	{
+		TreeIter iter = new TreeIter();
+		// void gtk_tree_store_append (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent);
+		gtk_tree_store_append(gtkTreeStore, 
+			iter.getTreeIterStruct(), 
+			(parent is null) ? null : parent.getTreeIterStruct());
+		return iter;
+	}
+code: end
+
 outFile: TreeStore
 
 

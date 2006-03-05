@@ -323,7 +323,7 @@ public class IconSource
 	public static GtkIconSet* setNewFromPixbuf(Pixbuf pixbuf)
 	{
 		// GtkIconSet* gtk_icon_set_new_from_pixbuf (GdkPixbuf *pixbuf);
-		return gtk_icon_set_new_from_pixbuf(pixbuf.getPixbufStruct());
+		return gtk_icon_set_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
 	/**
@@ -371,7 +371,7 @@ public class IconSource
 	public static Pixbuf setRenderIcon(GtkIconSet* iconSet, Style style, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, char[] detail)
 	{
 		// GdkPixbuf* gtk_icon_set_render_icon (GtkIconSet *icon_set,  GtkStyle *style,  GtkTextDirection direction,  GtkStateType state,  GtkIconSize size,  GtkWidget *widget,  const char *detail);
-		return new Pixbuf( gtk_icon_set_render_icon(iconSet, style.getStyleStruct(), direction, state, size, widget.getWidgetStruct(), std.string.toStringz(detail)) );
+		return new Pixbuf( gtk_icon_set_render_icon(iconSet, (style is null) ? null : style.getStyleStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(detail)) );
 	}
 	
 	/**
@@ -440,7 +440,7 @@ public class IconSource
 	public static int sizeLookupForSettings(Settings settings, GtkIconSize size, int* width, int* height)
 	{
 		// gboolean gtk_icon_size_lookup_for_settings  (GtkSettings *settings,  GtkIconSize size,  gint *width,  gint *height);
-		return gtk_icon_size_lookup_for_settings(settings.getSettingsStruct(), size, width, height);
+		return gtk_icon_size_lookup_for_settings((settings is null) ? null : settings.getSettingsStruct(), size, width, height);
 	}
 	
 	/**
@@ -749,7 +749,7 @@ public class IconSource
 	public void sourceSetPixbuf(Pixbuf pixbuf)
 	{
 		// void gtk_icon_source_set_pixbuf (GtkIconSource *source,  GdkPixbuf *pixbuf);
-		gtk_icon_source_set_pixbuf(gtkIconSource, pixbuf.getPixbufStruct());
+		gtk_icon_source_set_pixbuf(gtkIconSource, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
 	/**

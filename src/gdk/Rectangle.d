@@ -109,7 +109,7 @@ public class Rectangle
 	public int intersect(Rectangle src2, Rectangle dest)
 	{
 		// gboolean gdk_rectangle_intersect (GdkRectangle *src1,  GdkRectangle *src2,  GdkRectangle *dest);
-		return gdk_rectangle_intersect(gdkRectangle, src2.getRectangleStruct(), dest.getRectangleStruct());
+		return gdk_rectangle_intersect(gdkRectangle, (src2 is null) ? null : src2.getRectangleStruct(), (dest is null) ? null : dest.getRectangleStruct());
 	}
 	
 	/**
@@ -126,7 +126,7 @@ public class Rectangle
 	public void unio(Rectangle src2, Rectangle dest)
 	{
 		// void gdk_rectangle_union (GdkRectangle *src1,  GdkRectangle *src2,  GdkRectangle *dest);
-		gdk_rectangle_union(gdkRectangle, src2.getRectangleStruct(), dest.getRectangleStruct());
+		gdk_rectangle_union(gdkRectangle, (src2 is null) ? null : src2.getRectangleStruct(), (dest is null) ? null : dest.getRectangleStruct());
 	}
 	
 	

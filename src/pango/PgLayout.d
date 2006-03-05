@@ -131,7 +131,7 @@ public class PgLayout
 	public this (PgContext context)
 	{
 		// PangoLayout* pango_layout_new (PangoContext *context);
-		this(cast(PangoLayout*)pango_layout_new(context.getPgContextStruct()) );
+		this(cast(PangoLayout*)pango_layout_new((context is null) ? null : context.getPgContextStruct()) );
 	}
 	
 	/**
@@ -295,7 +295,7 @@ public class PgLayout
 	public void setFontDescription(PgFontDescription desc)
 	{
 		// void pango_layout_set_font_description  (PangoLayout *layout,  const PangoFontDescription *desc);
-		pango_layout_set_font_description(pangoLayout, desc.getPgFontDescriptionStruct());
+		pango_layout_set_font_description(pangoLayout, (desc is null) ? null : desc.getPgFontDescriptionStruct());
 	}
 	
 	/**
@@ -585,7 +585,7 @@ public class PgLayout
 	public void setTabs(PgTabArray tabs)
 	{
 		// void pango_layout_set_tabs (PangoLayout *layout,  PangoTabArray *tabs);
-		pango_layout_set_tabs(pangoLayout, tabs.getPgTabArrayStruct());
+		pango_layout_set_tabs(pangoLayout, (tabs is null) ? null : tabs.getPgTabArrayStruct());
 	}
 	
 	/**

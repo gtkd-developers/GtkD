@@ -182,7 +182,7 @@ public class ComboBox : Bin
 	public this (TreeModel model)
 	{
 		// GtkWidget* gtk_combo_box_new_with_model (GtkTreeModel *model);
-		this(cast(GtkComboBox*)gtk_combo_box_new_with_model(model.getTreeModelStruct()) );
+		this(cast(GtkComboBox*)gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelStruct()) );
 	}
 	
 	/**
@@ -324,7 +324,7 @@ public class ComboBox : Bin
 	public int getActiveIter(TreeIter iter)
 	{
 		// gboolean gtk_combo_box_get_active_iter (GtkComboBox *combo_box,  GtkTreeIter *iter);
-		return gtk_combo_box_get_active_iter(gtkComboBox, iter.getTreeIterStruct());
+		return gtk_combo_box_get_active_iter(gtkComboBox, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -339,7 +339,7 @@ public class ComboBox : Bin
 	public void setActiveIter(TreeIter iter)
 	{
 		// void gtk_combo_box_set_active_iter (GtkComboBox *combo_box,  GtkTreeIter *iter);
-		gtk_combo_box_set_active_iter(gtkComboBox, iter.getTreeIterStruct());
+		gtk_combo_box_set_active_iter(gtkComboBox, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -371,7 +371,7 @@ public class ComboBox : Bin
 	public void setModel(TreeModel model)
 	{
 		// void gtk_combo_box_set_model (GtkComboBox *combo_box,  GtkTreeModel *model);
-		gtk_combo_box_set_model(gtkComboBox, model.getTreeModelStruct());
+		gtk_combo_box_set_model(gtkComboBox, (model is null) ? null : model.getTreeModelStruct());
 	}
 	
 	

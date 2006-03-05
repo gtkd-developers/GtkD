@@ -455,7 +455,7 @@ public class TreeModel
 	public int getIter(TreeIter iter, TreePath path)
 	{
 		// gboolean gtk_tree_model_get_iter (GtkTreeModel *tree_model,  GtkTreeIter *iter,  GtkTreePath *path);
-		return gtk_tree_model_get_iter(gtkTreeModel, iter.getTreeIterStruct(), path.getTreePathStruct());
+		return gtk_tree_model_get_iter(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -473,7 +473,7 @@ public class TreeModel
 	public int getIterFromString(TreeIter iter, char[] pathString)
 	{
 		// gboolean gtk_tree_model_get_iter_from_string  (GtkTreeModel *tree_model,  GtkTreeIter *iter,  const gchar *path_string);
-		return gtk_tree_model_get_iter_from_string(gtkTreeModel, iter.getTreeIterStruct(), std.string.toStringz(pathString));
+		return gtk_tree_model_get_iter_from_string(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), std.string.toStringz(pathString));
 	}
 	
 	/**
@@ -489,7 +489,7 @@ public class TreeModel
 	public int getIterFirst(TreeIter iter)
 	{
 		// gboolean gtk_tree_model_get_iter_first (GtkTreeModel *tree_model,  GtkTreeIter *iter);
-		return gtk_tree_model_get_iter_first(gtkTreeModel, iter.getTreeIterStruct());
+		return gtk_tree_model_get_iter_first(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	
@@ -506,7 +506,7 @@ public class TreeModel
 	public TreePath getPath(TreeIter iter)
 	{
 		// GtkTreePath* gtk_tree_model_get_path (GtkTreeModel *tree_model,  GtkTreeIter *iter);
-		return new TreePath( gtk_tree_model_get_path(gtkTreeModel, iter.getTreeIterStruct()) );
+		return new TreePath( gtk_tree_model_get_path(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct()) );
 	}
 	
 	/**
@@ -524,7 +524,7 @@ public class TreeModel
 	public void getValue(TreeIter iter, int column, Value value)
 	{
 		// void gtk_tree_model_get_value (GtkTreeModel *tree_model,  GtkTreeIter *iter,  gint column,  GValue *value);
-		gtk_tree_model_get_value(gtkTreeModel, iter.getTreeIterStruct(), column, value.getValueStruct());
+		gtk_tree_model_get_value(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -540,7 +540,7 @@ public class TreeModel
 	public int iterNext(TreeIter iter)
 	{
 		// gboolean gtk_tree_model_iter_next (GtkTreeModel *tree_model,  GtkTreeIter *iter);
-		return gtk_tree_model_iter_next(gtkTreeModel, iter.getTreeIterStruct());
+		return gtk_tree_model_iter_next(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -561,7 +561,7 @@ public class TreeModel
 	public int iterChildren(TreeIter iter, TreeIter parent)
 	{
 		// gboolean gtk_tree_model_iter_children (GtkTreeModel *tree_model,  GtkTreeIter *iter,  GtkTreeIter *parent);
-		return gtk_tree_model_iter_children(gtkTreeModel, iter.getTreeIterStruct(), parent.getTreeIterStruct());
+		return gtk_tree_model_iter_children(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct());
 	}
 	
 	/**
@@ -576,7 +576,7 @@ public class TreeModel
 	public int iterHasChild(TreeIter iter)
 	{
 		// gboolean gtk_tree_model_iter_has_child (GtkTreeModel *tree_model,  GtkTreeIter *iter);
-		return gtk_tree_model_iter_has_child(gtkTreeModel, iter.getTreeIterStruct());
+		return gtk_tree_model_iter_has_child(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -592,7 +592,7 @@ public class TreeModel
 	public int iterN_Children(TreeIter iter)
 	{
 		// gint gtk_tree_model_iter_n_children (GtkTreeModel *tree_model,  GtkTreeIter *iter);
-		return gtk_tree_model_iter_n_children(gtkTreeModel, iter.getTreeIterStruct());
+		return gtk_tree_model_iter_n_children(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -615,7 +615,7 @@ public class TreeModel
 	public int iterNthChild(TreeIter iter, TreeIter parent, int n)
 	{
 		// gboolean gtk_tree_model_iter_nth_child (GtkTreeModel *tree_model,  GtkTreeIter *iter,  GtkTreeIter *parent,  gint n);
-		return gtk_tree_model_iter_nth_child(gtkTreeModel, iter.getTreeIterStruct(), parent.getTreeIterStruct(), n);
+		return gtk_tree_model_iter_nth_child(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct(), n);
 	}
 	
 	/**
@@ -635,7 +635,7 @@ public class TreeModel
 	public int iterParent(TreeIter iter, TreeIter child)
 	{
 		// gboolean gtk_tree_model_iter_parent (GtkTreeModel *tree_model,  GtkTreeIter *iter,  GtkTreeIter *child);
-		return gtk_tree_model_iter_parent(gtkTreeModel, iter.getTreeIterStruct(), child.getTreeIterStruct());
+		return gtk_tree_model_iter_parent(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), (child is null) ? null : child.getTreeIterStruct());
 	}
 	
 	/**
@@ -653,7 +653,7 @@ public class TreeModel
 	public char[] getStringFromIter(TreeIter iter)
 	{
 		// gchar* gtk_tree_model_get_string_from_iter  (GtkTreeModel *tree_model,  GtkTreeIter *iter);
-		return std.string.toString(gtk_tree_model_get_string_from_iter(gtkTreeModel, iter.getTreeIterStruct()) );
+		return std.string.toString(gtk_tree_model_get_string_from_iter(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct()) );
 	}
 	
 	/**
@@ -675,7 +675,7 @@ public class TreeModel
 	public void refNode(TreeIter iter)
 	{
 		// void gtk_tree_model_ref_node (GtkTreeModel *tree_model,  GtkTreeIter *iter);
-		gtk_tree_model_ref_node(gtkTreeModel, iter.getTreeIterStruct());
+		gtk_tree_model_ref_node(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -692,7 +692,7 @@ public class TreeModel
 	public void unrefNode(TreeIter iter)
 	{
 		// void gtk_tree_model_unref_node (GtkTreeModel *tree_model,  GtkTreeIter *iter);
-		gtk_tree_model_unref_node(gtkTreeModel, iter.getTreeIterStruct());
+		gtk_tree_model_unref_node(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -715,7 +715,7 @@ public class TreeModel
 	public void get(TreeIter iter, ... )
 	{
 		// void gtk_tree_model_get (GtkTreeModel *tree_model,  GtkTreeIter *iter,  ...);
-		gtk_tree_model_get(gtkTreeModel, iter.getTreeIterStruct());
+		gtk_tree_model_get(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -731,7 +731,7 @@ public class TreeModel
 	public void getValist(TreeIter iter, void* varArgs)
 	{
 		// void gtk_tree_model_get_valist (GtkTreeModel *tree_model,  GtkTreeIter *iter,  va_list var_args);
-		gtk_tree_model_get_valist(gtkTreeModel, iter.getTreeIterStruct(), varArgs);
+		gtk_tree_model_get_valist(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), varArgs);
 	}
 	
 	/**
@@ -762,7 +762,7 @@ public class TreeModel
 	public void rowChanged(TreePath path, TreeIter iter)
 	{
 		// void gtk_tree_model_row_changed (GtkTreeModel *tree_model,  GtkTreePath *path,  GtkTreeIter *iter);
-		gtk_tree_model_row_changed(gtkTreeModel, path.getTreePathStruct(), iter.getTreeIterStruct());
+		gtk_tree_model_row_changed(gtkTreeModel, (path is null) ? null : path.getTreePathStruct(), (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -777,7 +777,7 @@ public class TreeModel
 	public void rowInserted(TreePath path, TreeIter iter)
 	{
 		// void gtk_tree_model_row_inserted (GtkTreeModel *tree_model,  GtkTreePath *path,  GtkTreeIter *iter);
-		gtk_tree_model_row_inserted(gtkTreeModel, path.getTreePathStruct(), iter.getTreeIterStruct());
+		gtk_tree_model_row_inserted(gtkTreeModel, (path is null) ? null : path.getTreePathStruct(), (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -793,7 +793,7 @@ public class TreeModel
 	public void rowHasChildToggled(TreePath path, TreeIter iter)
 	{
 		// void gtk_tree_model_row_has_child_toggled  (GtkTreeModel *tree_model,  GtkTreePath *path,  GtkTreeIter *iter);
-		gtk_tree_model_row_has_child_toggled(gtkTreeModel, path.getTreePathStruct(), iter.getTreeIterStruct());
+		gtk_tree_model_row_has_child_toggled(gtkTreeModel, (path is null) ? null : path.getTreePathStruct(), (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -809,7 +809,7 @@ public class TreeModel
 	public void rowDeleted(TreePath path)
 	{
 		// void gtk_tree_model_row_deleted (GtkTreeModel *tree_model,  GtkTreePath *path);
-		gtk_tree_model_row_deleted(gtkTreeModel, path.getTreePathStruct());
+		gtk_tree_model_row_deleted(gtkTreeModel, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -841,7 +841,7 @@ public class TreeModel
 	public void rowsReordered(TreePath path, TreeIter iter, int* newOrder)
 	{
 		// void gtk_tree_model_rows_reordered (GtkTreeModel *tree_model,  GtkTreePath *path,  GtkTreeIter *iter,  gint *new_order);
-		gtk_tree_model_rows_reordered(gtkTreeModel, path.getTreePathStruct(), iter.getTreeIterStruct(), newOrder);
+		gtk_tree_model_rows_reordered(gtkTreeModel, (path is null) ? null : path.getTreePathStruct(), (iter is null) ? null : iter.getTreeIterStruct(), newOrder);
 	}
 	
 	

@@ -149,7 +149,7 @@ public class ToolButton : ToolItem
 	public static ToolItem newToolButton(Widget iconWidget, char[] label)
 	{
 		// GtkToolItem* gtk_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
-		return new ToolItem( gtk_tool_button_new(iconWidget.getWidgetStruct(), std.string.toStringz(label)) );
+		return new ToolItem( gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), std.string.toStringz(label)) );
 	}
 	
 	/**
@@ -317,7 +317,7 @@ public class ToolButton : ToolItem
 	public void setIconWidget(Widget iconWidget)
 	{
 		// void gtk_tool_button_set_icon_widget (GtkToolButton *button,  GtkWidget *icon_widget);
-		gtk_tool_button_set_icon_widget(gtkToolButton, iconWidget.getWidgetStruct());
+		gtk_tool_button_set_icon_widget(gtkToolButton, (iconWidget is null) ? null : iconWidget.getWidgetStruct());
 	}
 	
 	/**
@@ -350,7 +350,7 @@ public class ToolButton : ToolItem
 	public void setLabelWidget(Widget labelWidget)
 	{
 		// void gtk_tool_button_set_label_widget  (GtkToolButton *button,  GtkWidget *label_widget);
-		gtk_tool_button_set_label_widget(gtkToolButton, labelWidget.getWidgetStruct());
+		gtk_tool_button_set_label_widget(gtkToolButton, (labelWidget is null) ? null : labelWidget.getWidgetStruct());
 	}
 	
 	/**

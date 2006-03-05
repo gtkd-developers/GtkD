@@ -157,7 +157,7 @@ public class Progress : Widget
 	public void setAdjustment(Adjustment adjustment)
 	{
 		// void gtk_progress_set_adjustment (GtkProgress *progress,  GtkAdjustment *adjustment);
-		gtk_progress_set_adjustment(gtkProgress, adjustment.getAdjustmentStruct());
+		gtk_progress_set_adjustment(gtkProgress, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	/**

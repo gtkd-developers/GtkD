@@ -587,7 +587,7 @@ public class Label : Misc
 	public void setMnemonicWidget(Widget widget)
 	{
 		// void gtk_label_set_mnemonic_widget (GtkLabel *label,  GtkWidget *widget);
-		gtk_label_set_mnemonic_widget(gtkLabel, widget.getWidgetStruct());
+		gtk_label_set_mnemonic_widget(gtkLabel, (widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**

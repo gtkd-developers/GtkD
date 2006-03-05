@@ -188,7 +188,7 @@ public class Signals
 	public static uint newv(char[] signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, GType* paramTypes)
 	{
 		// guint g_signal_newv (const gchar *signal_name,  GType itype,  GSignalFlags signal_flags,  GClosure *class_closure,  GSignalAccumulator accumulator,  gpointer accu_data,  GSignalCMarshaller c_marshaller,  GType return_type,  guint n_params,  GType *param_types);
-		return g_signal_newv(std.string.toStringz(signalName), itype, signalFlags, classClosure.getClosureStruct(), accumulator, accuData, cMarshaller, returnType, nParams, paramTypes);
+		return g_signal_newv(std.string.toStringz(signalName), itype, signalFlags, (classClosure is null) ? null : classClosure.getClosureStruct(), accumulator, accuData, cMarshaller, returnType, nParams, paramTypes);
 	}
 	
 	/**
@@ -225,7 +225,7 @@ public class Signals
 	public static uint newValist(char[] signalName, GType itype, GSignalFlags signalFlags, Closure classClosure, GSignalAccumulator accumulator, void* accuData, GSignalCMarshaller cMarshaller, GType returnType, uint nParams, void* args)
 	{
 		// guint g_signal_new_valist (const gchar *signal_name,  GType itype,  GSignalFlags signal_flags,  GClosure *class_closure,  GSignalAccumulator accumulator,  gpointer accu_data,  GSignalCMarshaller c_marshaller,  GType return_type,  guint n_params,  va_list args);
-		return g_signal_new_valist(std.string.toStringz(signalName), itype, signalFlags, classClosure.getClosureStruct(), accumulator, accuData, cMarshaller, returnType, nParams, args);
+		return g_signal_new_valist(std.string.toStringz(signalName), itype, signalFlags, (classClosure is null) ? null : classClosure.getClosureStruct(), accumulator, accuData, cMarshaller, returnType, nParams, args);
 	}
 	
 	/**
@@ -356,7 +356,7 @@ public class Signals
 	public static void emitv(Value instanceAndParams, uint signalId, GQuark detail, Value returnValue)
 	{
 		// void g_signal_emitv (const GValue *instance_and_params,  guint signal_id,  GQuark detail,  GValue *return_value);
-		g_signal_emitv(instanceAndParams.getValueStruct(), signalId, detail, returnValue.getValueStruct());
+		g_signal_emitv((instanceAndParams is null) ? null : instanceAndParams.getValueStruct(), signalId, detail, (returnValue is null) ? null : returnValue.getValueStruct());
 	}
 	
 	/**
@@ -466,7 +466,7 @@ public class Signals
 	public static uint connectClosure(void* instanc, char[] detailedSignal, Closure closure, int after)
 	{
 		// gulong g_signal_connect_closure (gpointer instance,  const gchar *detailed_signal,  GClosure *closure,  gboolean after);
-		return g_signal_connect_closure(instanc, std.string.toStringz(detailedSignal), closure.getClosureStruct(), after);
+		return g_signal_connect_closure(instanc, std.string.toStringz(detailedSignal), (closure is null) ? null : closure.getClosureStruct(), after);
 	}
 	
 	/**
@@ -488,7 +488,7 @@ public class Signals
 	public static uint connectClosureById(void* instanc, uint signalId, GQuark detail, Closure closure, int after)
 	{
 		// gulong g_signal_connect_closure_by_id (gpointer instance,  guint signal_id,  GQuark detail,  GClosure *closure,  gboolean after);
-		return g_signal_connect_closure_by_id(instanc, signalId, detail, closure.getClosureStruct(), after);
+		return g_signal_connect_closure_by_id(instanc, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), after);
 	}
 	
 	/**
@@ -578,7 +578,7 @@ public class Signals
 	public static uint handlerFind(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
 		// gulong g_signal_handler_find (gpointer instance,  GSignalMatchType mask,  guint signal_id,  GQuark detail,  GClosure *closure,  gpointer func,  gpointer data);
-		return g_signal_handler_find(instanc, mask, signalId, detail, closure.getClosureStruct(), func, data);
+		return g_signal_handler_find(instanc, mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
 	}
 	
 	/**
@@ -610,7 +610,7 @@ public class Signals
 	public static uint handlersBlockMatched(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
 		// guint g_signal_handlers_block_matched (gpointer instance,  GSignalMatchType mask,  guint signal_id,  GQuark detail,  GClosure *closure,  gpointer func,  gpointer data);
-		return g_signal_handlers_block_matched(instanc, mask, signalId, detail, closure.getClosureStruct(), func, data);
+		return g_signal_handlers_block_matched(instanc, mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
 	}
 	
 	/**
@@ -643,7 +643,7 @@ public class Signals
 	public static uint handlersUnblockMatched(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
 		// guint g_signal_handlers_unblock_matched  (gpointer instance,  GSignalMatchType mask,  guint signal_id,  GQuark detail,  GClosure *closure,  gpointer func,  gpointer data);
-		return g_signal_handlers_unblock_matched(instanc, mask, signalId, detail, closure.getClosureStruct(), func, data);
+		return g_signal_handlers_unblock_matched(instanc, mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
 	}
 	
 	/**
@@ -675,7 +675,7 @@ public class Signals
 	public static uint handlersDisconnectMatched(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
 		// guint g_signal_handlers_disconnect_matched  (gpointer instance,  GSignalMatchType mask,  guint signal_id,  GQuark detail,  GClosure *closure,  gpointer func,  gpointer data);
-		return g_signal_handlers_disconnect_matched(instanc, mask, signalId, detail, closure.getClosureStruct(), func, data);
+		return g_signal_handlers_disconnect_matched(instanc, mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
 	}
 	
 	/**
@@ -770,7 +770,7 @@ public class Signals
 	public static void overrideClassClosure(uint signalId, GType instanceType, Closure classClosure)
 	{
 		// void g_signal_override_class_closure (guint signal_id,  GType instance_type,  GClosure *class_closure);
-		g_signal_override_class_closure(signalId, instanceType, classClosure.getClosureStruct());
+		g_signal_override_class_closure(signalId, instanceType, (classClosure is null) ? null : classClosure.getClosureStruct());
 	}
 	
 	/**
@@ -787,7 +787,7 @@ public class Signals
 	public static void chainFromOverridden(Value instanceAndParams, Value returnValue)
 	{
 		// void g_signal_chain_from_overridden (const GValue *instance_and_params,  GValue *return_value);
-		g_signal_chain_from_overridden(instanceAndParams.getValueStruct(), returnValue.getValueStruct());
+		g_signal_chain_from_overridden((instanceAndParams is null) ? null : instanceAndParams.getValueStruct(), (returnValue is null) ? null : returnValue.getValueStruct());
 	}
 	
 	/**
@@ -846,7 +846,7 @@ public class Signals
 	public static int parseName(char[] detailedSignal, GType itype, uint* signalIdP, Quark detailP, int forceDetailQuark)
 	{
 		// gboolean g_signal_parse_name (const gchar *detailed_signal,  GType itype,  guint *signal_id_p,  GQuark *detail_p,  gboolean force_detail_quark);
-		return g_signal_parse_name(std.string.toStringz(detailedSignal), itype, signalIdP, detailP.getQuarkStruct(), forceDetailQuark);
+		return g_signal_parse_name(std.string.toStringz(detailedSignal), itype, signalIdP, (detailP is null) ? null : detailP.getQuarkStruct(), forceDetailQuark);
 	}
 	
 	/**
@@ -906,6 +906,6 @@ public class Signals
 	public static int accumulatorTrueHandled(GSignalInvocationHint* ihint, Value returnAccu, Value handlerReturn, void* dummy)
 	{
 		// gboolean g_signal_accumulator_true_handled  (GSignalInvocationHint *ihint,  GValue *return_accu,  const GValue *handler_return,  gpointer dummy);
-		return g_signal_accumulator_true_handled(ihint, returnAccu.getValueStruct(), handlerReturn.getValueStruct(), dummy);
+		return g_signal_accumulator_true_handled(ihint, (returnAccu is null) ? null : returnAccu.getValueStruct(), (handlerReturn is null) ? null : handlerReturn.getValueStruct(), dummy);
 	}
 }

@@ -311,7 +311,7 @@ public class Paned : Container
 	public void add1(Widget child)
 	{
 		// void gtk_paned_add1 (GtkPaned *paned,  GtkWidget *child);
-		gtk_paned_add1(gtkPaned, child.getWidgetStruct());
+		gtk_paned_add1(gtkPaned, (child is null) ? null : child.getWidgetStruct());
 	}
 	
 	/**
@@ -326,7 +326,7 @@ public class Paned : Container
 	public void add2(Widget child)
 	{
 		// void gtk_paned_add2 (GtkPaned *paned,  GtkWidget *child);
-		gtk_paned_add2(gtkPaned, child.getWidgetStruct());
+		gtk_paned_add2(gtkPaned, (child is null) ? null : child.getWidgetStruct());
 	}
 	
 	
@@ -344,7 +344,7 @@ public class Paned : Container
 	public void pack1(Widget child, int resize, int shrink)
 	{
 		// void gtk_paned_pack1 (GtkPaned *paned,  GtkWidget *child,  gboolean resize,  gboolean shrink);
-		gtk_paned_pack1(gtkPaned, child.getWidgetStruct(), resize, shrink);
+		gtk_paned_pack1(gtkPaned, (child is null) ? null : child.getWidgetStruct(), resize, shrink);
 	}
 	
 	/**
@@ -361,7 +361,7 @@ public class Paned : Container
 	public void pack2(Widget child, int resize, int shrink)
 	{
 		// void gtk_paned_pack2 (GtkPaned *paned,  GtkWidget *child,  gboolean resize,  gboolean shrink);
-		gtk_paned_pack2(gtkPaned, child.getWidgetStruct(), resize, shrink);
+		gtk_paned_pack2(gtkPaned, (child is null) ? null : child.getWidgetStruct(), resize, shrink);
 	}
 	
 	/**

@@ -392,7 +392,7 @@ public class MainContext
 	public int wait(Cond cond, Mutex mutex)
 	{
 		// gboolean g_main_context_wait (GMainContext *context,  GCond *cond,  GMutex *mutex);
-		return g_main_context_wait(gMainContext, cond.getCondStruct(), mutex.getMutexStruct());
+		return g_main_context_wait(gMainContext, (cond is null) ? null : cond.getCondStruct(), (mutex is null) ? null : mutex.getMutexStruct());
 	}
 	
 	/**

@@ -559,7 +559,7 @@ public class TextView : Container
 	public this (TextBuffer buffer)
 	{
 		// GtkWidget* gtk_text_view_new_with_buffer (GtkTextBuffer *buffer);
-		this(cast(GtkTextView*)gtk_text_view_new_with_buffer(buffer.getTextBufferStruct()) );
+		this(cast(GtkTextView*)gtk_text_view_new_with_buffer((buffer is null) ? null : buffer.getTextBufferStruct()) );
 	}
 	
 	/**
@@ -576,7 +576,7 @@ public class TextView : Container
 	public void setBuffer(TextBuffer buffer)
 	{
 		// void gtk_text_view_set_buffer (GtkTextView *text_view,  GtkTextBuffer *buffer);
-		gtk_text_view_set_buffer(gtkTextView, buffer.getTextBufferStruct());
+		gtk_text_view_set_buffer(gtkTextView, (buffer is null) ? null : buffer.getTextBufferStruct());
 	}
 	
 	/**
@@ -617,7 +617,7 @@ public class TextView : Container
 	public void scrollToMark(TextMark mark, double withinMargin, int useAlign, double xalign, double yalign)
 	{
 		// void gtk_text_view_scroll_to_mark (GtkTextView *text_view,  GtkTextMark *mark,  gdouble within_margin,  gboolean use_align,  gdouble xalign,  gdouble yalign);
-		gtk_text_view_scroll_to_mark(gtkTextView, mark.getTextMarkStruct(), withinMargin, useAlign, xalign, yalign);
+		gtk_text_view_scroll_to_mark(gtkTextView, (mark is null) ? null : mark.getTextMarkStruct(), withinMargin, useAlign, xalign, yalign);
 	}
 	
 	/**
@@ -651,7 +651,7 @@ public class TextView : Container
 	public int scrollToIter(TextIter iter, double withinMargin, int useAlign, double xalign, double yalign)
 	{
 		// gboolean gtk_text_view_scroll_to_iter (GtkTextView *text_view,  GtkTextIter *iter,  gdouble within_margin,  gboolean use_align,  gdouble xalign,  gdouble yalign);
-		return gtk_text_view_scroll_to_iter(gtkTextView, iter.getTextIterStruct(), withinMargin, useAlign, xalign, yalign);
+		return gtk_text_view_scroll_to_iter(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), withinMargin, useAlign, xalign, yalign);
 	}
 	
 	/**
@@ -665,7 +665,7 @@ public class TextView : Container
 	public void scrollMarkOnscreen(TextMark mark)
 	{
 		// void gtk_text_view_scroll_mark_onscreen  (GtkTextView *text_view,  GtkTextMark *mark);
-		gtk_text_view_scroll_mark_onscreen(gtkTextView, mark.getTextMarkStruct());
+		gtk_text_view_scroll_mark_onscreen(gtkTextView, (mark is null) ? null : mark.getTextMarkStruct());
 	}
 	
 	/**
@@ -681,7 +681,7 @@ public class TextView : Container
 	public int moveMarkOnscreen(TextMark mark)
 	{
 		// gboolean gtk_text_view_move_mark_onscreen  (GtkTextView *text_view,  GtkTextMark *mark);
-		return gtk_text_view_move_mark_onscreen(gtkTextView, mark.getTextMarkStruct());
+		return gtk_text_view_move_mark_onscreen(gtkTextView, (mark is null) ? null : mark.getTextMarkStruct());
 	}
 	
 	/**
@@ -710,7 +710,7 @@ public class TextView : Container
 	public void getVisibleRect(Rectangle visibleRect)
 	{
 		// void gtk_text_view_get_visible_rect (GtkTextView *text_view,  GdkRectangle *visible_rect);
-		gtk_text_view_get_visible_rect(gtkTextView, visibleRect.getRectangleStruct());
+		gtk_text_view_get_visible_rect(gtkTextView, (visibleRect is null) ? null : visibleRect.getRectangleStruct());
 	}
 	
 	/**
@@ -728,7 +728,7 @@ public class TextView : Container
 	public void getIterLocation(TextIter iter, Rectangle location)
 	{
 		// void gtk_text_view_get_iter_location (GtkTextView *text_view,  const GtkTextIter *iter,  GdkRectangle *location);
-		gtk_text_view_get_iter_location(gtkTextView, iter.getTextIterStruct(), location.getRectangleStruct());
+		gtk_text_view_get_iter_location(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), (location is null) ? null : location.getRectangleStruct());
 	}
 	
 	/**
@@ -749,7 +749,7 @@ public class TextView : Container
 	public void getLineAtY(TextIter targetIter, int y, int* lineTop)
 	{
 		// void gtk_text_view_get_line_at_y (GtkTextView *text_view,  GtkTextIter *target_iter,  gint y,  gint *line_top);
-		gtk_text_view_get_line_at_y(gtkTextView, targetIter.getTextIterStruct(), y, lineTop);
+		gtk_text_view_get_line_at_y(gtkTextView, (targetIter is null) ? null : targetIter.getTextIterStruct(), y, lineTop);
 	}
 	
 	/**
@@ -768,7 +768,7 @@ public class TextView : Container
 	public void getLineYrange(TextIter iter, int* y, int* height)
 	{
 		// void gtk_text_view_get_line_yrange (GtkTextView *text_view,  const GtkTextIter *iter,  gint *y,  gint *height);
-		gtk_text_view_get_line_yrange(gtkTextView, iter.getTextIterStruct(), y, height);
+		gtk_text_view_get_line_yrange(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), y, height);
 	}
 	
 	/**
@@ -789,7 +789,7 @@ public class TextView : Container
 	public void getIterAtLocation(TextIter iter, int x, int y)
 	{
 		// void gtk_text_view_get_iter_at_location  (GtkTextView *text_view,  GtkTextIter *iter,  gint x,  gint y);
-		gtk_text_view_get_iter_at_location(gtkTextView, iter.getTextIterStruct(), x, y);
+		gtk_text_view_get_iter_at_location(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), x, y);
 	}
 	
 	/**
@@ -820,7 +820,7 @@ public class TextView : Container
 	public void getIterAtPosition(TextIter iter, int* trailing, int x, int y)
 	{
 		// void gtk_text_view_get_iter_at_position  (GtkTextView *text_view,  GtkTextIter *iter,  gint *trailing,  gint x,  gint y);
-		gtk_text_view_get_iter_at_position(gtkTextView, iter.getTextIterStruct(), trailing, x, y);
+		gtk_text_view_get_iter_at_position(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), trailing, x, y);
 	}
 	
 	/**
@@ -906,7 +906,7 @@ public class TextView : Container
 	public GtkTextWindowType getWindowType(Window window)
 	{
 		// GtkTextWindowType gtk_text_view_get_window_type  (GtkTextView *text_view,  GdkWindow *window);
-		return gtk_text_view_get_window_type(gtkTextView, window.getWindowStruct());
+		return gtk_text_view_get_window_type(gtkTextView, (window is null) ? null : window.getWindowStruct());
 	}
 	
 	/**
@@ -965,7 +965,7 @@ public class TextView : Container
 	public int forwardDisplayLine(TextIter iter)
 	{
 		// gboolean gtk_text_view_forward_display_line  (GtkTextView *text_view,  GtkTextIter *iter);
-		return gtk_text_view_forward_display_line(gtkTextView, iter.getTextIterStruct());
+		return gtk_text_view_forward_display_line(gtkTextView, (iter is null) ? null : iter.getTextIterStruct());
 	}
 	
 	/**
@@ -987,7 +987,7 @@ public class TextView : Container
 	public int backwardDisplayLine(TextIter iter)
 	{
 		// gboolean gtk_text_view_backward_display_line  (GtkTextView *text_view,  GtkTextIter *iter);
-		return gtk_text_view_backward_display_line(gtkTextView, iter.getTextIterStruct());
+		return gtk_text_view_backward_display_line(gtkTextView, (iter is null) ? null : iter.getTextIterStruct());
 	}
 	
 	/**
@@ -1009,7 +1009,7 @@ public class TextView : Container
 	public int forwardDisplayLineEnd(TextIter iter)
 	{
 		// gboolean gtk_text_view_forward_display_line_end  (GtkTextView *text_view,  GtkTextIter *iter);
-		return gtk_text_view_forward_display_line_end(gtkTextView, iter.getTextIterStruct());
+		return gtk_text_view_forward_display_line_end(gtkTextView, (iter is null) ? null : iter.getTextIterStruct());
 	}
 	
 	/**
@@ -1031,7 +1031,7 @@ public class TextView : Container
 	public int backwardDisplayLineStart(TextIter iter)
 	{
 		// gboolean gtk_text_view_backward_display_line_start  (GtkTextView *text_view,  GtkTextIter *iter);
-		return gtk_text_view_backward_display_line_start(gtkTextView, iter.getTextIterStruct());
+		return gtk_text_view_backward_display_line_start(gtkTextView, (iter is null) ? null : iter.getTextIterStruct());
 	}
 	
 	/**
@@ -1048,7 +1048,7 @@ public class TextView : Container
 	public int startsDisplayLine(TextIter iter)
 	{
 		// gboolean gtk_text_view_starts_display_line  (GtkTextView *text_view,  const GtkTextIter *iter);
-		return gtk_text_view_starts_display_line(gtkTextView, iter.getTextIterStruct());
+		return gtk_text_view_starts_display_line(gtkTextView, (iter is null) ? null : iter.getTextIterStruct());
 	}
 	
 	/**
@@ -1074,7 +1074,7 @@ public class TextView : Container
 	public int moveVisually(TextIter iter, int count)
 	{
 		// gboolean gtk_text_view_move_visually (GtkTextView *text_view,  GtkTextIter *iter,  gint count);
-		return gtk_text_view_move_visually(gtkTextView, iter.getTextIterStruct(), count);
+		return gtk_text_view_move_visually(gtkTextView, (iter is null) ? null : iter.getTextIterStruct(), count);
 	}
 	
 	/**
@@ -1089,7 +1089,7 @@ public class TextView : Container
 	public void addChildAtAnchor(Widget child, GtkTextChildAnchor* anchor)
 	{
 		// void gtk_text_view_add_child_at_anchor  (GtkTextView *text_view,  GtkWidget *child,  GtkTextChildAnchor *anchor);
-		gtk_text_view_add_child_at_anchor(gtkTextView, child.getWidgetStruct(), anchor);
+		gtk_text_view_add_child_at_anchor(gtkTextView, (child is null) ? null : child.getWidgetStruct(), anchor);
 	}
 	
 	
@@ -1170,7 +1170,7 @@ public class TextView : Container
 	public void addChildInWindow(Widget child, GtkTextWindowType whichWindow, int xpos, int ypos)
 	{
 		// void gtk_text_view_add_child_in_window  (GtkTextView *text_view,  GtkWidget *child,  GtkTextWindowType which_window,  gint xpos,  gint ypos);
-		gtk_text_view_add_child_in_window(gtkTextView, child.getWidgetStruct(), whichWindow, xpos, ypos);
+		gtk_text_view_add_child_in_window(gtkTextView, (child is null) ? null : child.getWidgetStruct(), whichWindow, xpos, ypos);
 	}
 	
 	/**
@@ -1187,7 +1187,7 @@ public class TextView : Container
 	public void moveChild(Widget child, int xpos, int ypos)
 	{
 		// void gtk_text_view_move_child (GtkTextView *text_view,  GtkWidget *child,  gint xpos,  gint ypos);
-		gtk_text_view_move_child(gtkTextView, child.getWidgetStruct(), xpos, ypos);
+		gtk_text_view_move_child(gtkTextView, (child is null) ? null : child.getWidgetStruct(), xpos, ypos);
 	}
 	
 	/**
@@ -1508,7 +1508,7 @@ public class TextView : Container
 	public void setTabs(PgTabArray tabs)
 	{
 		// void gtk_text_view_set_tabs (GtkTextView *text_view,  PangoTabArray *tabs);
-		gtk_text_view_set_tabs(gtkTextView, tabs.getPgTabArrayStruct());
+		gtk_text_view_set_tabs(gtkTextView, (tabs is null) ? null : tabs.getPgTabArrayStruct());
 	}
 	
 	/**

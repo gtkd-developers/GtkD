@@ -439,7 +439,7 @@ public class Duit
 	public static void mainDoEvent(Event event)
 	{
 		// void gtk_main_do_event (GdkEvent *event);
-		gtk_main_do_event(event.getEventStruct());
+		gtk_main_do_event((event is null) ? null : event.getEventStruct());
 	}
 	
 	
@@ -456,7 +456,7 @@ public class Duit
 	public static void grabAdd(Widget widget)
 	{
 		// void gtk_grab_add (GtkWidget *widget);
-		gtk_grab_add(widget.getWidgetStruct());
+		gtk_grab_add((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -479,7 +479,7 @@ public class Duit
 	public static void grabRemove(Widget widget)
 	{
 		// void gtk_grab_remove (GtkWidget *widget);
-		gtk_grab_remove(widget.getWidgetStruct());
+		gtk_grab_remove((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -506,7 +506,7 @@ public class Duit
 	public static void quitAddDestroy(uint mainLevel, ObjectGtk object)
 	{
 		// void gtk_quit_add_destroy (guint main_level,  GtkObject *object);
-		gtk_quit_add_destroy(mainLevel, object.getObjectGtkStruct());
+		gtk_quit_add_destroy(mainLevel, (object is null) ? null : object.getObjectGtkStruct());
 	}
 	
 	/**
@@ -720,7 +720,7 @@ public class Duit
 	public static Widget getEventWidget(Event event)
 	{
 		// GtkWidget* gtk_get_event_widget (GdkEvent *event);
-		return new Widget( gtk_get_event_widget(event.getEventStruct()) );
+		return new Widget( gtk_get_event_widget((event is null) ? null : event.getEventStruct()) );
 	}
 	
 	/**
@@ -750,6 +750,6 @@ public class Duit
 	public static void propagateEvent(Widget widget, Event event)
 	{
 		// void gtk_propagate_event (GtkWidget *widget,  GdkEvent *event);
-		gtk_propagate_event(widget.getWidgetStruct(), event.getEventStruct());
+		gtk_propagate_event((widget is null) ? null : widget.getWidgetStruct(), (event is null) ? null : event.getEventStruct());
 	}
 }

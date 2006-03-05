@@ -123,7 +123,7 @@ public class Cairo
 	public static Cairo create(Surface target)
 	{
 		// cairo_t* cairo_create (cairo_surface_t *target);
-		return new Cairo( cairo_create(target.getSurfaceStruct()) );
+		return new Cairo( cairo_create((target is null) ? null : target.getSurfaceStruct()) );
 	}
 	
 	/**
@@ -315,7 +315,7 @@ public class Cairo
 	public void setSourceSurface(Surface surface, double x, double y)
 	{
 		// void cairo_set_source_surface (cairo_t *cr,  cairo_surface_t *surface,  double x,  double y);
-		cairo_set_source_surface(cairo, surface.getSurfaceStruct(), x, y);
+		cairo_set_source_surface(cairo, (surface is null) ? null : surface.getSurfaceStruct(), x, y);
 	}
 	
 	/**
@@ -765,7 +765,7 @@ public class Cairo
 	public void maskSurface(Surface surface, double surfaceX, double surfaceY)
 	{
 		// void cairo_mask_surface (cairo_t *cr,  cairo_surface_t *surface,  double surface_x,  double surface_y);
-		cairo_mask_surface(cairo, surface.getSurfaceStruct(), surfaceX, surfaceY);
+		cairo_mask_surface(cairo, (surface is null) ? null : surface.getSurfaceStruct(), surfaceX, surfaceY);
 	}
 	
 	/**

@@ -1565,6 +1565,9 @@ extern(C)
 	gboolean function(GtkCellRendererToggle* toggle)gtk_cell_renderer_toggle_get_active;
 	void function(GtkCellRendererToggle* toggle, gboolean setting)gtk_cell_renderer_toggle_set_active;
 	
+	// gtk.
+	
+	
 	// gtk.ListStore
 	
 	GtkListStore* function(gint nColumns, ... )gtk_list_store_new;

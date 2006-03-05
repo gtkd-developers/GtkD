@@ -281,7 +281,7 @@ public class ListStore : TreeModel
 	public void setValist(TreeIter iter, void* varArgs)
 	{
 		// void gtk_list_store_set_valist (GtkListStore *list_store,  GtkTreeIter *iter,  va_list var_args);
-		gtk_list_store_set_valist(gtkListStore, iter.getTreeIterStruct(), varArgs);
+		gtk_list_store_set_valist(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), varArgs);
 	}
 	
 	/**
@@ -300,7 +300,7 @@ public class ListStore : TreeModel
 	public void setValue(TreeIter iter, int column, Value value)
 	{
 		// void gtk_list_store_set_value (GtkListStore *list_store,  GtkTreeIter *iter,  gint column,  GValue *value);
-		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, value.getValueStruct());
+		gtk_list_store_set_value(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -317,7 +317,7 @@ public class ListStore : TreeModel
 	public int remove(TreeIter iter)
 	{
 		// gboolean gtk_list_store_remove (GtkListStore *list_store,  GtkTreeIter *iter);
-		return gtk_list_store_remove(gtkListStore, iter.getTreeIterStruct());
+		return gtk_list_store_remove(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -336,7 +336,7 @@ public class ListStore : TreeModel
 	public void insert(TreeIter iter, int position)
 	{
 		// void gtk_list_store_insert (GtkListStore *list_store,  GtkTreeIter *iter,  gint position);
-		gtk_list_store_insert(gtkListStore, iter.getTreeIterStruct(), position);
+		gtk_list_store_insert(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), position);
 	}
 	
 	/**
@@ -354,7 +354,7 @@ public class ListStore : TreeModel
 	public void insertBefore(TreeIter iter, TreeIter sibling)
 	{
 		// void gtk_list_store_insert_before (GtkListStore *list_store,  GtkTreeIter *iter,  GtkTreeIter *sibling);
-		gtk_list_store_insert_before(gtkListStore, iter.getTreeIterStruct(), sibling.getTreeIterStruct());
+		gtk_list_store_insert_before(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
 	}
 	
 	/**
@@ -372,7 +372,7 @@ public class ListStore : TreeModel
 	public void insertAfter(TreeIter iter, TreeIter sibling)
 	{
 		// void gtk_list_store_insert_after (GtkListStore *list_store,  GtkTreeIter *iter,  GtkTreeIter *sibling);
-		gtk_list_store_insert_after(gtkListStore, iter.getTreeIterStruct(), sibling.getTreeIterStruct());
+		gtk_list_store_insert_after(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
 	}
 	
 	/**
@@ -404,7 +404,7 @@ public class ListStore : TreeModel
 	public void insertWithValues(TreeIter iter, int position, ... )
 	{
 		// void gtk_list_store_insert_with_values  (GtkListStore *list_store,  GtkTreeIter *iter,  gint position,  ...);
-		gtk_list_store_insert_with_values(gtkListStore, iter.getTreeIterStruct(), position);
+		gtk_list_store_insert_with_values(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), position);
 	}
 	
 	/**
@@ -429,7 +429,7 @@ public class ListStore : TreeModel
 	public void insertWithValuesv(TreeIter iter, int position, int* columns, Value values, int nValues)
 	{
 		// void gtk_list_store_insert_with_valuesv  (GtkListStore *list_store,  GtkTreeIter *iter,  gint position,  gint *columns,  GValue *values,  gint n_values);
-		gtk_list_store_insert_with_valuesv(gtkListStore, iter.getTreeIterStruct(), position, columns, values.getValueStruct(), nValues);
+		gtk_list_store_insert_with_valuesv(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), position, columns, (values is null) ? null : values.getValueStruct(), nValues);
 	}
 	
 	/**
@@ -444,7 +444,7 @@ public class ListStore : TreeModel
 	public void prepend(TreeIter iter)
 	{
 		// void gtk_list_store_prepend (GtkListStore *list_store,  GtkTreeIter *iter);
-		gtk_list_store_prepend(gtkListStore, iter.getTreeIterStruct());
+		gtk_list_store_prepend(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -459,7 +459,7 @@ public class ListStore : TreeModel
 	public void append(TreeIter iter)
 	{
 		// void gtk_list_store_append (GtkListStore *list_store,  GtkTreeIter *iter);
-		gtk_list_store_append(gtkListStore, iter.getTreeIterStruct());
+		gtk_list_store_append(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -488,7 +488,7 @@ public class ListStore : TreeModel
 	public int iterIsValid(TreeIter iter)
 	{
 		// gboolean gtk_list_store_iter_is_valid (GtkListStore *list_store,  GtkTreeIter *iter);
-		return gtk_list_store_iter_is_valid(gtkListStore, iter.getTreeIterStruct());
+		return gtk_list_store_iter_is_valid(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -522,7 +522,7 @@ public class ListStore : TreeModel
 	public void swap(TreeIter a, TreeIter b)
 	{
 		// void gtk_list_store_swap (GtkListStore *store,  GtkTreeIter *a,  GtkTreeIter *b);
-		gtk_list_store_swap(gtkListStore, a.getTreeIterStruct(), b.getTreeIterStruct());
+		gtk_list_store_swap(gtkListStore, (a is null) ? null : a.getTreeIterStruct(), (b is null) ? null : b.getTreeIterStruct());
 	}
 	
 	/**
@@ -540,7 +540,7 @@ public class ListStore : TreeModel
 	public void moveBefore(TreeIter iter, TreeIter position)
 	{
 		// void gtk_list_store_move_before (GtkListStore *store,  GtkTreeIter *iter,  GtkTreeIter *position);
-		gtk_list_store_move_before(gtkListStore, iter.getTreeIterStruct(), position.getTreeIterStruct());
+		gtk_list_store_move_before(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), (position is null) ? null : position.getTreeIterStruct());
 	}
 	
 	/**
@@ -560,6 +560,6 @@ public class ListStore : TreeModel
 	public void moveAfter(TreeIter iter, TreeIter position)
 	{
 		// void gtk_list_store_move_after (GtkListStore *store,  GtkTreeIter *iter,  GtkTreeIter *position);
-		gtk_list_store_move_after(gtkListStore, iter.getTreeIterStruct(), position.getTreeIterStruct());
+		gtk_list_store_move_after(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), (position is null) ? null : position.getTreeIterStruct());
 	}
 }

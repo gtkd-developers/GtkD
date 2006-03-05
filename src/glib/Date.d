@@ -491,7 +491,7 @@ public class Date
 	public int daysBetween(Date date2)
 	{
 		// gint g_date_days_between (const GDate *date1,  const GDate *date2);
-		return g_date_days_between(gDate, date2.getDateStruct());
+		return g_date_days_between(gDate, (date2 is null) ? null : date2.getDateStruct());
 	}
 	
 	/**
@@ -508,7 +508,7 @@ public class Date
 	public int compare(Date rhs)
 	{
 		// gint g_date_compare (const GDate *lhs,  const GDate *rhs);
-		return g_date_compare(gDate, rhs.getDateStruct());
+		return g_date_compare(gDate, (rhs is null) ? null : rhs.getDateStruct());
 	}
 	
 	/**
@@ -526,7 +526,7 @@ public class Date
 	public void clamp(Date minDate, Date maxDate)
 	{
 		// void g_date_clamp (GDate *date,  const GDate *min_date,  const GDate *max_date);
-		g_date_clamp(gDate, minDate.getDateStruct(), maxDate.getDateStruct());
+		g_date_clamp(gDate, (minDate is null) ? null : minDate.getDateStruct(), (maxDate is null) ? null : maxDate.getDateStruct());
 	}
 	
 	/**
@@ -540,7 +540,7 @@ public class Date
 	public void order(Date date2)
 	{
 		// void g_date_order (GDate *date1,  GDate *date2);
-		g_date_order(gDate, date2.getDateStruct());
+		g_date_order(gDate, (date2 is null) ? null : date2.getDateStruct());
 	}
 	
 	/**
@@ -779,7 +779,7 @@ public class Date
 	public static uint strftime(char[] s, uint slen, char[] format, Date date)
 	{
 		// gsize g_date_strftime (gchar *s,  gsize slen,  const gchar *format,  const GDate *date);
-		return g_date_strftime(std.string.toStringz(s), slen, std.string.toStringz(format), date.getDateStruct());
+		return g_date_strftime(std.string.toStringz(s), slen, std.string.toStringz(format), (date is null) ? null : date.getDateStruct());
 	}
 	
 	/**

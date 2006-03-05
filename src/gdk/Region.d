@@ -152,7 +152,7 @@ public class Region
 	public static Region rectangle(Rectangle rectangle)
 	{
 		// GdkRegion* gdk_region_rectangle (GdkRectangle *rectangle);
-		return new Region( gdk_region_rectangle(rectangle.getRectangleStruct()) );
+		return new Region( gdk_region_rectangle((rectangle is null) ? null : rectangle.getRectangleStruct()) );
 	}
 	
 	/**
@@ -176,7 +176,7 @@ public class Region
 	public void getClipbox(Rectangle rectangle)
 	{
 		// void gdk_region_get_clipbox (GdkRegion *region,  GdkRectangle *rectangle);
-		gdk_region_get_clipbox(gdkRegion, rectangle.getRectangleStruct());
+		gdk_region_get_clipbox(gdkRegion, (rectangle is null) ? null : rectangle.getRectangleStruct());
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class Region
 	public int equal(Region region2)
 	{
 		// gboolean gdk_region_equal (GdkRegion *region1,  GdkRegion *region2);
-		return gdk_region_equal(gdkRegion, region2.getRegionStruct());
+		return gdk_region_equal(gdkRegion, (region2 is null) ? null : region2.getRegionStruct());
 	}
 	
 	/**
@@ -254,7 +254,7 @@ public class Region
 	public GdkOverlapType rectIn(Rectangle rect)
 	{
 		// GdkOverlapType gdk_region_rect_in (GdkRegion *region,  GdkRectangle *rect);
-		return gdk_region_rect_in(gdkRegion, rect.getRectangleStruct());
+		return gdk_region_rect_in(gdkRegion, (rect is null) ? null : rect.getRectangleStruct());
 	}
 	
 	
@@ -301,7 +301,7 @@ public class Region
 	public void unionWithRect(Rectangle rect)
 	{
 		// void gdk_region_union_with_rect (GdkRegion *region,  GdkRectangle *rect);
-		gdk_region_union_with_rect(gdkRegion, rect.getRectangleStruct());
+		gdk_region_union_with_rect(gdkRegion, (rect is null) ? null : rect.getRectangleStruct());
 	}
 	
 	/**
@@ -316,7 +316,7 @@ public class Region
 	public void intersect(Region source2)
 	{
 		// void gdk_region_intersect (GdkRegion *source1,  GdkRegion *source2);
-		gdk_region_intersect(gdkRegion, source2.getRegionStruct());
+		gdk_region_intersect(gdkRegion, (source2 is null) ? null : source2.getRegionStruct());
 	}
 	
 	/**
@@ -331,7 +331,7 @@ public class Region
 	public void unio(Region source2)
 	{
 		// void gdk_region_union (GdkRegion *source1,  GdkRegion *source2);
-		gdk_region_union(gdkRegion, source2.getRegionStruct());
+		gdk_region_union(gdkRegion, (source2 is null) ? null : source2.getRegionStruct());
 	}
 	
 	/**
@@ -345,7 +345,7 @@ public class Region
 	public void subtract(Region source2)
 	{
 		// void gdk_region_subtract (GdkRegion *source1,  GdkRegion *source2);
-		gdk_region_subtract(gdkRegion, source2.getRegionStruct());
+		gdk_region_subtract(gdkRegion, (source2 is null) ? null : source2.getRegionStruct());
 	}
 	
 	/**
@@ -360,7 +360,7 @@ public class Region
 	public void xor(Region source2)
 	{
 		// void gdk_region_xor (GdkRegion *source1,  GdkRegion *source2);
-		gdk_region_xor(gdkRegion, source2.getRegionStruct());
+		gdk_region_xor(gdkRegion, (source2 is null) ? null : source2.getRegionStruct());
 	}
 	
 	

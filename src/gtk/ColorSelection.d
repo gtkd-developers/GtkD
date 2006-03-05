@@ -246,7 +246,7 @@ public class ColorSelection : VBox
 	public void getCurrentColor(Color color)
 	{
 		// void gtk_color_selection_get_current_color  (GtkColorSelection *colorsel,  GdkColor *color);
-		gtk_color_selection_get_current_color(gtkColorSelection, color.getColorStruct());
+		gtk_color_selection_get_current_color(gtkColorSelection, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -260,7 +260,7 @@ public class ColorSelection : VBox
 	public void setCurrentColor(Color color)
 	{
 		// void gtk_color_selection_set_current_color  (GtkColorSelection *colorsel,  const GdkColor *color);
-		gtk_color_selection_set_current_color(gtkColorSelection, color.getColorStruct());
+		gtk_color_selection_set_current_color(gtkColorSelection, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -300,7 +300,7 @@ public class ColorSelection : VBox
 	public void getPreviousColor(Color color)
 	{
 		// void gtk_color_selection_get_previous_color  (GtkColorSelection *colorsel,  GdkColor *color);
-		gtk_color_selection_get_previous_color(gtkColorSelection, color.getColorStruct());
+		gtk_color_selection_get_previous_color(gtkColorSelection, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -316,7 +316,7 @@ public class ColorSelection : VBox
 	public void setPreviousColor(Color color)
 	{
 		// void gtk_color_selection_set_previous_color  (GtkColorSelection *colorsel,  const GdkColor *color);
-		gtk_color_selection_set_previous_color(gtkColorSelection, color.getColorStruct());
+		gtk_color_selection_set_previous_color(gtkColorSelection, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -363,7 +363,7 @@ public class ColorSelection : VBox
 	public static char[] paletteToString(Color colors, int nColors)
 	{
 		// gchar* gtk_color_selection_palette_to_string  (const GdkColor *colors,  gint n_colors);
-		return std.string.toString(gtk_color_selection_palette_to_string(colors.getColorStruct(), nColors) );
+		return std.string.toString(gtk_color_selection_palette_to_string((colors is null) ? null : colors.getColorStruct(), nColors) );
 	}
 	
 	/**

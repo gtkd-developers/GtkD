@@ -101,6 +101,6 @@ public class HScrollbar : Scrollbar
 	public this (Adjustment adjustment)
 	{
 		// GtkWidget* gtk_hscrollbar_new (GtkAdjustment *adjustment);
-		this(cast(GtkHScrollbar*)gtk_hscrollbar_new(adjustment.getAdjustmentStruct()) );
+		this(cast(GtkHScrollbar*)gtk_hscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct()) );
 	}
 }

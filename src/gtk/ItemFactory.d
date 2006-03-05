@@ -117,7 +117,7 @@ public class ItemFactory : ObjectGtk
 	public this (GType containerType, char[] path, AccelGroup accelGroup)
 	{
 		// GtkItemFactory* gtk_item_factory_new (GType container_type,  const gchar *path,  GtkAccelGroup *accel_group);
-		this(cast(GtkItemFactory*)gtk_item_factory_new(containerType, std.string.toStringz(path), accelGroup.getAccelGroupStruct()) );
+		this(cast(GtkItemFactory*)gtk_item_factory_new(containerType, std.string.toStringz(path), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct()) );
 	}
 	
 	/**
@@ -139,7 +139,7 @@ public class ItemFactory : ObjectGtk
 	public void construct(GType containerType, char[] path, AccelGroup accelGroup)
 	{
 		// void gtk_item_factory_construct (GtkItemFactory *ifactory,  GType container_type,  const gchar *path,  GtkAccelGroup *accel_group);
-		gtk_item_factory_construct(gtkItemFactory, containerType, std.string.toStringz(path), accelGroup.getAccelGroupStruct());
+		gtk_item_factory_construct(gtkItemFactory, containerType, std.string.toStringz(path), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 	}
 	
 	/**
@@ -168,7 +168,7 @@ public class ItemFactory : ObjectGtk
 	public static void addForeign(Widget accelWidget, char[] fullPath, AccelGroup accelGroup, uint keyval, GdkModifierType modifiers)
 	{
 		// void gtk_item_factory_add_foreign (GtkWidget *accel_widget,  const gchar *full_path,  GtkAccelGroup *accel_group,  guint keyval,  GdkModifierType modifiers);
-		gtk_item_factory_add_foreign(accelWidget.getWidgetStruct(), std.string.toStringz(fullPath), accelGroup.getAccelGroupStruct(), keyval, modifiers);
+		gtk_item_factory_add_foreign((accelWidget is null) ? null : accelWidget.getWidgetStruct(), std.string.toStringz(fullPath), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct(), keyval, modifiers);
 	}
 	
 	/**
@@ -183,7 +183,7 @@ public class ItemFactory : ObjectGtk
 	public static ItemFactory fromWidget(Widget widget)
 	{
 		// GtkItemFactory* gtk_item_factory_from_widget  (GtkWidget *widget);
-		return new ItemFactory( gtk_item_factory_from_widget(widget.getWidgetStruct()) );
+		return new ItemFactory( gtk_item_factory_from_widget((widget is null) ? null : widget.getWidgetStruct()) );
 	}
 	
 	/**
@@ -203,7 +203,7 @@ public class ItemFactory : ObjectGtk
 	public static char[] pathFromWidget(Widget widget)
 	{
 		// const gchar* gtk_item_factory_path_from_widget  (GtkWidget *widget);
-		return std.string.toString(gtk_item_factory_path_from_widget(widget.getWidgetStruct()) );
+		return std.string.toString(gtk_item_factory_path_from_widget((widget is null) ? null : widget.getWidgetStruct()) );
 	}
 	
 	/**
@@ -502,7 +502,7 @@ public class ItemFactory : ObjectGtk
 	public static void* popupDataFromWidget(Widget widget)
 	{
 		// gpointer gtk_item_factory_popup_data_from_widget  (GtkWidget *widget);
-		return gtk_item_factory_popup_data_from_widget(widget.getWidgetStruct());
+		return gtk_item_factory_popup_data_from_widget((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**

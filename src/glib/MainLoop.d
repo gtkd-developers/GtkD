@@ -179,7 +179,7 @@ public class MainLoop
 	public this (MainContext context, int isRunning)
 	{
 		// GMainLoop* g_main_loop_new (GMainContext *context,  gboolean is_running);
-		this(cast(GMainLoop*)g_main_loop_new(context.getMainContextStruct(), isRunning) );
+		this(cast(GMainLoop*)g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning) );
 	}
 	
 	

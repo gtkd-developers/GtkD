@@ -274,7 +274,7 @@ public class MenuShell : Container
 	public void append(Widget child)
 	{
 		// void gtk_menu_shell_append (GtkMenuShell *menu_shell,  GtkWidget *child);
-		gtk_menu_shell_append(gtkMenuShell, child.getWidgetStruct());
+		gtk_menu_shell_append(gtkMenuShell, (child is null) ? null : child.getWidgetStruct());
 	}
 	
 	/**
@@ -287,7 +287,7 @@ public class MenuShell : Container
 	public void prepend(Widget child)
 	{
 		// void gtk_menu_shell_prepend (GtkMenuShell *menu_shell,  GtkWidget *child);
-		gtk_menu_shell_prepend(gtkMenuShell, child.getWidgetStruct());
+		gtk_menu_shell_prepend(gtkMenuShell, (child is null) ? null : child.getWidgetStruct());
 	}
 	
 	/**
@@ -304,7 +304,7 @@ public class MenuShell : Container
 	public void insert(Widget child, int position)
 	{
 		// void gtk_menu_shell_insert (GtkMenuShell *menu_shell,  GtkWidget *child,  gint position);
-		gtk_menu_shell_insert(gtkMenuShell, child.getWidgetStruct(), position);
+		gtk_menu_shell_insert(gtkMenuShell, (child is null) ? null : child.getWidgetStruct(), position);
 	}
 	
 	/**
@@ -329,7 +329,7 @@ public class MenuShell : Container
 	public void selectItem(Widget menuItem)
 	{
 		// void gtk_menu_shell_select_item (GtkMenuShell *menu_shell,  GtkWidget *menu_item);
-		gtk_menu_shell_select_item(gtkMenuShell, menuItem.getWidgetStruct());
+		gtk_menu_shell_select_item(gtkMenuShell, (menuItem is null) ? null : menuItem.getWidgetStruct());
 	}
 	
 	/**
@@ -376,7 +376,7 @@ public class MenuShell : Container
 	public void activateItem(Widget menuItem, int forceDeactivate)
 	{
 		// void gtk_menu_shell_activate_item (GtkMenuShell *menu_shell,  GtkWidget *menu_item,  gboolean force_deactivate);
-		gtk_menu_shell_activate_item(gtkMenuShell, menuItem.getWidgetStruct(), forceDeactivate);
+		gtk_menu_shell_activate_item(gtkMenuShell, (menuItem is null) ? null : menuItem.getWidgetStruct(), forceDeactivate);
 	}
 	
 	/**

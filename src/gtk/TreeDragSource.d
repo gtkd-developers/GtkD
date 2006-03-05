@@ -114,7 +114,7 @@ public class TreeDragSource
 	public int sourceDragDataDelete(TreePath path)
 	{
 		// gboolean gtk_tree_drag_source_drag_data_delete  (GtkTreeDragSource *drag_source,  GtkTreePath *path);
-		return gtk_tree_drag_source_drag_data_delete(gtkTreeDragSource, path.getTreePathStruct());
+		return gtk_tree_drag_source_drag_data_delete(gtkTreeDragSource, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -134,7 +134,7 @@ public class TreeDragSource
 	public int sourceDragDataGet(TreePath path, GtkSelectionData* selectionData)
 	{
 		// gboolean gtk_tree_drag_source_drag_data_get  (GtkTreeDragSource *drag_source,  GtkTreePath *path,  GtkSelectionData *selection_data);
-		return gtk_tree_drag_source_drag_data_get(gtkTreeDragSource, path.getTreePathStruct(), selectionData);
+		return gtk_tree_drag_source_drag_data_get(gtkTreeDragSource, (path is null) ? null : path.getTreePathStruct(), selectionData);
 	}
 	
 	/**
@@ -151,7 +151,7 @@ public class TreeDragSource
 	public int sourceRowDraggable(TreePath path)
 	{
 		// gboolean gtk_tree_drag_source_row_draggable  (GtkTreeDragSource *drag_source,  GtkTreePath *path);
-		return gtk_tree_drag_source_row_draggable(gtkTreeDragSource, path.getTreePathStruct());
+		return gtk_tree_drag_source_row_draggable(gtkTreeDragSource, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	
@@ -175,7 +175,7 @@ public class TreeDragSource
 	public static int destDragDataReceived(GtkTreeDragDest* dragDest, TreePath dest, GtkSelectionData* selectionData)
 	{
 		// gboolean gtk_tree_drag_dest_drag_data_received  (GtkTreeDragDest *drag_dest,  GtkTreePath *dest,  GtkSelectionData *selection_data);
-		return gtk_tree_drag_dest_drag_data_received(dragDest, dest.getTreePathStruct(), selectionData);
+		return gtk_tree_drag_dest_drag_data_received(dragDest, (dest is null) ? null : dest.getTreePathStruct(), selectionData);
 	}
 	
 	/**
@@ -196,7 +196,7 @@ public class TreeDragSource
 	public static int destRowDropPossible(GtkTreeDragDest* dragDest, TreePath destPath, GtkSelectionData* selectionData)
 	{
 		// gboolean gtk_tree_drag_dest_row_drop_possible  (GtkTreeDragDest *drag_dest,  GtkTreePath *dest_path,  GtkSelectionData *selection_data);
-		return gtk_tree_drag_dest_row_drop_possible(dragDest, destPath.getTreePathStruct(), selectionData);
+		return gtk_tree_drag_dest_row_drop_possible(dragDest, (destPath is null) ? null : destPath.getTreePathStruct(), selectionData);
 	}
 	
 	/**
@@ -214,7 +214,7 @@ public class TreeDragSource
 	public static int treeSetRowDragData(GtkSelectionData* selectionData, TreeModel treeModel, TreePath path)
 	{
 		// gboolean gtk_tree_set_row_drag_data (GtkSelectionData *selection_data,  GtkTreeModel *tree_model,  GtkTreePath *path);
-		return gtk_tree_set_row_drag_data(selectionData, treeModel.getTreeModelStruct(), path.getTreePathStruct());
+		return gtk_tree_set_row_drag_data(selectionData, (treeModel is null) ? null : treeModel.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**

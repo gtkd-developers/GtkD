@@ -146,7 +146,7 @@ public class AccelLabel : Label
 	public void setAccelClosure(Closure accelClosure)
 	{
 		// void gtk_accel_label_set_accel_closure  (GtkAccelLabel *accel_label,  GClosure *accel_closure);
-		gtk_accel_label_set_accel_closure(gtkAccelLabel, accelClosure.getClosureStruct());
+		gtk_accel_label_set_accel_closure(gtkAccelLabel, (accelClosure is null) ? null : accelClosure.getClosureStruct());
 	}
 	
 	/**
@@ -174,7 +174,7 @@ public class AccelLabel : Label
 	public void setAccelWidget(Widget accelWidget)
 	{
 		// void gtk_accel_label_set_accel_widget  (GtkAccelLabel *accel_label,  GtkWidget *accel_widget);
-		gtk_accel_label_set_accel_widget(gtkAccelLabel, accelWidget.getWidgetStruct());
+		gtk_accel_label_set_accel_widget(gtkAccelLabel, (accelWidget is null) ? null : accelWidget.getWidgetStruct());
 	}
 	
 	/**

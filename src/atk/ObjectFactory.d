@@ -103,7 +103,7 @@ public class ObjectFactory : ObjectG
 	public AtkObject* createAccessible(ObjectG obj)
 	{
 		// AtkObject* atk_object_factory_create_accessible  (AtkObjectFactory *factory,  GObject *obj);
-		return atk_object_factory_create_accessible(atkObjectFactory, obj.getObjectGStruct());
+		return atk_object_factory_create_accessible(atkObjectFactory, (obj is null) ? null : obj.getObjectGStruct());
 	}
 	
 	/**

@@ -152,7 +152,7 @@ public class Box : Container
 	public void packStart(Widget child, int expand, int fill, uint padding)
 	{
 		// void gtk_box_pack_start (GtkBox *box,  GtkWidget *child,  gboolean expand,  gboolean fill,  guint padding);
-		gtk_box_pack_start(gtkBox, child.getWidgetStruct(), expand, fill, padding);
+		gtk_box_pack_start(gtkBox, (child is null) ? null : child.getWidgetStruct(), expand, fill, padding);
 	}
 	
 	/**
@@ -183,7 +183,7 @@ public class Box : Container
 	public void packEnd(Widget child, int expand, int fill, uint padding)
 	{
 		// void gtk_box_pack_end (GtkBox *box,  GtkWidget *child,  gboolean expand,  gboolean fill,  guint padding);
-		gtk_box_pack_end(gtkBox, child.getWidgetStruct(), expand, fill, padding);
+		gtk_box_pack_end(gtkBox, (child is null) ? null : child.getWidgetStruct(), expand, fill, padding);
 	}
 	
 	/**
@@ -202,7 +202,7 @@ public class Box : Container
 	public void packStartDefaults(Widget widget)
 	{
 		// void gtk_box_pack_start_defaults (GtkBox *box,  GtkWidget *widget);
-		gtk_box_pack_start_defaults(gtkBox, widget.getWidgetStruct());
+		gtk_box_pack_start_defaults(gtkBox, (widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -221,7 +221,7 @@ public class Box : Container
 	public void packEndDefaults(Widget widget)
 	{
 		// void gtk_box_pack_end_defaults (GtkBox *box,  GtkWidget *widget);
-		gtk_box_pack_end_defaults(gtkBox, widget.getWidgetStruct());
+		gtk_box_pack_end_defaults(gtkBox, (widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -303,7 +303,7 @@ public class Box : Container
 	public void reorderChild(Widget child, int position)
 	{
 		// void gtk_box_reorder_child (GtkBox *box,  GtkWidget *child,  gint position);
-		gtk_box_reorder_child(gtkBox, child.getWidgetStruct(), position);
+		gtk_box_reorder_child(gtkBox, (child is null) ? null : child.getWidgetStruct(), position);
 	}
 	
 	/**
@@ -328,7 +328,7 @@ public class Box : Container
 	public void queryChildPacking(Widget child, int* expand, int* fill, uint* padding, GtkPackType* packType)
 	{
 		// void gtk_box_query_child_packing (GtkBox *box,  GtkWidget *child,  gboolean *expand,  gboolean *fill,  guint *padding,  GtkPackType *pack_type);
-		gtk_box_query_child_packing(gtkBox, child.getWidgetStruct(), expand, fill, padding, packType);
+		gtk_box_query_child_packing(gtkBox, (child is null) ? null : child.getWidgetStruct(), expand, fill, padding, packType);
 	}
 	
 	/**
@@ -358,7 +358,7 @@ public class Box : Container
 	public void setChildPacking(Widget child, int expand, int fill, uint padding, GtkPackType packType)
 	{
 		// void gtk_box_set_child_packing (GtkBox *box,  GtkWidget *child,  gboolean expand,  gboolean fill,  guint padding,  GtkPackType pack_type);
-		gtk_box_set_child_packing(gtkBox, child.getWidgetStruct(), expand, fill, padding, packType);
+		gtk_box_set_child_packing(gtkBox, (child is null) ? null : child.getWidgetStruct(), expand, fill, padding, packType);
 	}
 	
 	

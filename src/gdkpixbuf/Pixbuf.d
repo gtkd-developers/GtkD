@@ -922,7 +922,7 @@ public class Pixbuf
 	public void scale(Pixbuf dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType)
 	{
 		// void gdk_pixbuf_scale (const GdkPixbuf *src,  GdkPixbuf *dest,  int dest_x,  int dest_y,  int dest_width,  int dest_height,  double offset_x,  double offset_y,  double scale_x,  double scale_y,  GdkInterpType interp_type);
-		gdk_pixbuf_scale(gdkPixbuf, dest.getPixbufStruct(), destX, destY, destWidth, destHeight, offsetX, offsetY, scaleX, scaleY, interpType);
+		gdk_pixbuf_scale(gdkPixbuf, (dest is null) ? null : dest.getPixbufStruct(), destX, destY, destWidth, destHeight, offsetX, offsetY, scaleX, scaleY, interpType);
 	}
 	
 	/**
@@ -994,7 +994,7 @@ public class Pixbuf
 	public void composite(Pixbuf dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType, int overallAlpha)
 	{
 		// void gdk_pixbuf_composite (const GdkPixbuf *src,  GdkPixbuf *dest,  int dest_x,  int dest_y,  int dest_width,  int dest_height,  double offset_x,  double offset_y,  double scale_x,  double scale_y,  GdkInterpType interp_type,  int overall_alpha);
-		gdk_pixbuf_composite(gdkPixbuf, dest.getPixbufStruct(), destX, destY, destWidth, destHeight, offsetX, offsetY, scaleX, scaleY, interpType, overallAlpha);
+		gdk_pixbuf_composite(gdkPixbuf, (dest is null) ? null : dest.getPixbufStruct(), destX, destY, destWidth, destHeight, offsetX, offsetY, scaleX, scaleY, interpType, overallAlpha);
 	}
 	
 	/**
@@ -1044,7 +1044,7 @@ public class Pixbuf
 	public void compositeColor(Pixbuf dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType, int overallAlpha, int checkX, int checkY, int checkSize, uint color1, uint color2)
 	{
 		// void gdk_pixbuf_composite_color (const GdkPixbuf *src,  GdkPixbuf *dest,  int dest_x,  int dest_y,  int dest_width,  int dest_height,  double offset_x,  double offset_y,  double scale_x,  double scale_y,  GdkInterpType interp_type,  int overall_alpha,  int check_x,  int check_y,  int check_size,  guint32 color1,  guint32 color2);
-		gdk_pixbuf_composite_color(gdkPixbuf, dest.getPixbufStruct(), destX, destY, destWidth, destHeight, offsetX, offsetY, scaleX, scaleY, interpType, overallAlpha, checkX, checkY, checkSize, color1, color2);
+		gdk_pixbuf_composite_color(gdkPixbuf, (dest is null) ? null : dest.getPixbufStruct(), destX, destY, destWidth, destHeight, offsetX, offsetY, scaleX, scaleY, interpType, overallAlpha, checkX, checkY, checkSize, color1, color2);
 	}
 	
 	
@@ -1135,7 +1135,7 @@ public class Pixbuf
 	public void copyArea(int srcX, int srcY, int width, int height, Pixbuf destPixbuf, int destX, int destY)
 	{
 		// void gdk_pixbuf_copy_area (const GdkPixbuf *src_pixbuf,  int src_x,  int src_y,  int width,  int height,  GdkPixbuf *dest_pixbuf,  int dest_x,  int dest_y);
-		gdk_pixbuf_copy_area(gdkPixbuf, srcX, srcY, width, height, destPixbuf.getPixbufStruct(), destX, destY);
+		gdk_pixbuf_copy_area(gdkPixbuf, srcX, srcY, width, height, (destPixbuf is null) ? null : destPixbuf.getPixbufStruct(), destX, destY);
 	}
 	
 	/**
@@ -1159,7 +1159,7 @@ public class Pixbuf
 	public void saturateAndPixelate(Pixbuf dest, float saturation, int pixelate)
 	{
 		// void gdk_pixbuf_saturate_and_pixelate  (const GdkPixbuf *src,  GdkPixbuf *dest,  gfloat saturation,  gboolean pixelate);
-		gdk_pixbuf_saturate_and_pixelate(gdkPixbuf, dest.getPixbufStruct(), saturation, pixelate);
+		gdk_pixbuf_saturate_and_pixelate(gdkPixbuf, (dest is null) ? null : dest.getPixbufStruct(), saturation, pixelate);
 	}
 	
 	/**

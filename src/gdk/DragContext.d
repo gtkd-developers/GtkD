@@ -186,7 +186,7 @@ public class DragContext
 	public void gdkDragFindWindow(Window dragWindow, int xRoot, int yRoot, GdkWindow** destWindow, GdkDragProtocol* protocol)
 	{
 		// void gdk_drag_find_window (GdkDragContext *context,  GdkWindow *drag_window,  gint x_root,  gint y_root,  GdkWindow **dest_window,  GdkDragProtocol *protocol);
-		gdk_drag_find_window(gdkDragContext, dragWindow.getWindowStruct(), xRoot, yRoot, destWindow, protocol);
+		gdk_drag_find_window(gdkDragContext, (dragWindow is null) ? null : dragWindow.getWindowStruct(), xRoot, yRoot, destWindow, protocol);
 	}
 	
 	/**
@@ -214,7 +214,7 @@ public class DragContext
 	public void gdkDragFindWindowForScreen(Window dragWindow, Screen screen, int xRoot, int yRoot, GdkWindow** destWindow, GdkDragProtocol* protocol)
 	{
 		// void gdk_drag_find_window_for_screen (GdkDragContext *context,  GdkWindow *drag_window,  GdkScreen *screen,  gint x_root,  gint y_root,  GdkWindow **dest_window,  GdkDragProtocol *protocol);
-		gdk_drag_find_window_for_screen(gdkDragContext, dragWindow.getWindowStruct(), screen.getScreenStruct(), xRoot, yRoot, destWindow, protocol);
+		gdk_drag_find_window_for_screen(gdkDragContext, (dragWindow is null) ? null : dragWindow.getWindowStruct(), (screen is null) ? null : screen.getScreenStruct(), xRoot, yRoot, destWindow, protocol);
 	}
 	
 	/**
@@ -243,7 +243,7 @@ public class DragContext
 	public static DragContext gdkDragBegin(Window window, ListG targets)
 	{
 		// GdkDragContext* gdk_drag_begin (GdkWindow *window,  GList *targets);
-		return new DragContext( gdk_drag_begin(window.getWindowStruct(), targets.getListGStruct()) );
+		return new DragContext( gdk_drag_begin((window is null) ? null : window.getWindowStruct(), (targets is null) ? null : targets.getListGStruct()) );
 	}
 	
 	/**
@@ -273,7 +273,7 @@ public class DragContext
 	public int gdkDragMotion(Window destWindow, GdkDragProtocol protocol, int xRoot, int yRoot, GdkDragAction suggestedAction, GdkDragAction possibleActions, uint time)
 	{
 		// gboolean gdk_drag_motion (GdkDragContext *context,  GdkWindow *dest_window,  GdkDragProtocol protocol,  gint x_root,  gint y_root,  GdkDragAction suggested_action,  GdkDragAction possible_actions,  guint32 time_);
-		return gdk_drag_motion(gdkDragContext, destWindow.getWindowStruct(), protocol, xRoot, yRoot, suggestedAction, possibleActions, time);
+		return gdk_drag_motion(gdkDragContext, (destWindow is null) ? null : destWindow.getWindowStruct(), protocol, xRoot, yRoot, suggestedAction, possibleActions, time);
 	}
 	
 	/**
@@ -326,7 +326,7 @@ public class DragContext
 	public static uint gdkDragGetProtocolForDisplay(Display display, uint xid, GdkDragProtocol* protocol)
 	{
 		// guint32 gdk_drag_get_protocol_for_display  (GdkDisplay *display,  guint32 xid,  GdkDragProtocol *protocol);
-		return gdk_drag_get_protocol_for_display(display.getDisplayStruct(), xid, protocol);
+		return gdk_drag_get_protocol_for_display((display is null) ? null : display.getDisplayStruct(), xid, protocol);
 	}
 	
 	

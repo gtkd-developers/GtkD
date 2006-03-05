@@ -943,7 +943,7 @@ public class Str
 	public static StringG stringAsciiUp(StringG string)
 	{
 		// GString* g_string_ascii_up (GString *string);
-		return new StringG( g_string_ascii_up(string.getStringGStruct()) );
+		return new StringG( g_string_ascii_up((string is null) ? null : string.getStringGStruct()) );
 	}
 	
 	/**
@@ -958,7 +958,7 @@ public class Str
 	public static StringG stringAsciiDown(StringG string)
 	{
 		// GString* g_string_ascii_down (GString *string);
-		return new StringG( g_string_ascii_down(string.getStringGStruct()) );
+		return new StringG( g_string_ascii_down((string is null) ? null : string.getStringGStruct()) );
 	}
 	
 	/**

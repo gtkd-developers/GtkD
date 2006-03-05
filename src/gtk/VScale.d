@@ -98,7 +98,7 @@ public class VScale : Scale
 	public this (Adjustment adjustment)
 	{
 		// GtkWidget* gtk_vscale_new (GtkAdjustment *adjustment);
-		this(cast(GtkVScale*)gtk_vscale_new(adjustment.getAdjustmentStruct()) );
+		this(cast(GtkVScale*)gtk_vscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct()) );
 	}
 	
 	/**

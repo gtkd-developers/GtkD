@@ -139,7 +139,7 @@ public class Value
 	public void copy(Value destValue)
 	{
 		// void g_value_copy (const GValue *src_value,  GValue *dest_value);
-		g_value_copy(gValue, destValue.getValueStruct());
+		g_value_copy(gValue, (destValue is null) ? null : destValue.getValueStruct());
 	}
 	
 	/**
@@ -264,7 +264,7 @@ public class Value
 	public int transform(Value destValue)
 	{
 		// gboolean g_value_transform (const GValue *src_value,  GValue *dest_value);
-		return g_value_transform(gValue, destValue.getValueStruct());
+		return g_value_transform(gValue, (destValue is null) ? null : destValue.getValueStruct());
 	}
 	
 	
@@ -1192,7 +1192,7 @@ public class Value
 	public void setParam(ParamSpec param)
 	{
 		// void g_value_set_param (GValue *value,  GParamSpec *param);
-		g_value_set_param(gValue, param.getParamSpecStruct());
+		g_value_set_param(gValue, (param is null) ? null : param.getParamSpecStruct());
 	}
 	
 	/**
@@ -1208,7 +1208,7 @@ public class Value
 	public void takeParam(ParamSpec param)
 	{
 		// void g_value_take_param (GValue *value,  GParamSpec *param);
-		g_value_take_param(gValue, param.getParamSpecStruct());
+		g_value_take_param(gValue, (param is null) ? null : param.getParamSpecStruct());
 	}
 	
 	/**
@@ -1223,7 +1223,7 @@ public class Value
 	public void setParamTakeOwnership(ParamSpec param)
 	{
 		// void g_value_set_param_take_ownership  (GValue *value,  GParamSpec *param);
-		g_value_set_param_take_ownership(gValue, param.getParamSpecStruct());
+		g_value_set_param_take_ownership(gValue, (param is null) ? null : param.getParamSpecStruct());
 	}
 	
 	/**
@@ -1571,7 +1571,7 @@ public class Value
 	public static ParamSpec gParamSpecValueArray(char[] name, char[] nick, char[] blurb, ParamSpec elementSpec, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_value_array (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamSpec *element_spec,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_value_array(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), elementSpec.getParamSpecStruct(), flags) );
+		return new ParamSpec( g_param_spec_value_array(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), (elementSpec is null) ? null : elementSpec.getParamSpecStruct(), flags) );
 	}
 	
 	
@@ -1593,7 +1593,7 @@ public class Value
 	public static ParamSpec gParamSpecOverride(char[] name, ParamSpec overridden)
 	{
 		// GParamSpec* g_param_spec_override (const gchar *name,  GParamSpec *overridden);
-		return new ParamSpec( g_param_spec_override(std.string.toStringz(name), overridden.getParamSpecStruct()) );
+		return new ParamSpec( g_param_spec_override(std.string.toStringz(name), (overridden is null) ? null : overridden.getParamSpecStruct()) );
 	}
 	
 	

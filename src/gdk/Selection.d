@@ -130,7 +130,7 @@ public class Selection
 	public static int ownerSet(Window owner, GdkAtom selection, uint time, int sendEvent)
 	{
 		// gboolean gdk_selection_owner_set (GdkWindow *owner,  GdkAtom selection,  guint32 time_,  gboolean send_event);
-		return gdk_selection_owner_set(owner.getWindowStruct(), selection, time, sendEvent);
+		return gdk_selection_owner_set((owner is null) ? null : owner.getWindowStruct(), selection, time, sendEvent);
 	}
 	
 	/**
@@ -157,7 +157,7 @@ public class Selection
 	public static int ownerSetForDisplay(Display display, Window owner, GdkAtom selection, uint time, int sendEvent)
 	{
 		// gboolean gdk_selection_owner_set_for_display  (GdkDisplay *display,  GdkWindow *owner,  GdkAtom selection,  guint32 time_,  gboolean send_event);
-		return gdk_selection_owner_set_for_display(display.getDisplayStruct(), owner.getWindowStruct(), selection, time, sendEvent);
+		return gdk_selection_owner_set_for_display((display is null) ? null : display.getDisplayStruct(), (owner is null) ? null : owner.getWindowStruct(), selection, time, sendEvent);
 	}
 	
 	/**
@@ -198,7 +198,7 @@ public class Selection
 	public static Window ownerGetForDisplay(Display display, GdkAtom selection)
 	{
 		// GdkWindow* gdk_selection_owner_get_for_display  (GdkDisplay *display,  GdkAtom selection);
-		return new Window( gdk_selection_owner_get_for_display(display.getDisplayStruct(), selection) );
+		return new Window( gdk_selection_owner_get_for_display((display is null) ? null : display.getDisplayStruct(), selection) );
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class Selection
 	public static void convert(Window requestor, GdkAtom selection, GdkAtom target, uint time)
 	{
 		// void gdk_selection_convert (GdkWindow *requestor,  GdkAtom selection,  GdkAtom target,  guint32 time_);
-		gdk_selection_convert(requestor.getWindowStruct(), selection, target, time);
+		gdk_selection_convert((requestor is null) ? null : requestor.getWindowStruct(), selection, target, time);
 	}
 	
 	/**
@@ -248,7 +248,7 @@ public class Selection
 	public static int propertyGet(Window requestor, char** data, GdkAtom* propType, int* propFormat)
 	{
 		// gboolean gdk_selection_property_get (GdkWindow *requestor,  guchar **data,  GdkAtom *prop_type,  gint *prop_format);
-		return gdk_selection_property_get(requestor.getWindowStruct(), data, propType, propFormat);
+		return gdk_selection_property_get((requestor is null) ? null : requestor.getWindowStruct(), data, propType, propFormat);
 	}
 	
 	/**
@@ -292,6 +292,6 @@ public class Selection
 	public static void sendNotifyForDisplay(Display display, uint requestor, GdkAtom selection, GdkAtom target, GdkAtom property, uint time)
 	{
 		// void gdk_selection_send_notify_for_display  (GdkDisplay *display,  guint32 requestor,  GdkAtom selection,  GdkAtom target,  GdkAtom property,  guint32 time_);
-		gdk_selection_send_notify_for_display(display.getDisplayStruct(), requestor, selection, target, property, time);
+		gdk_selection_send_notify_for_display((display is null) ? null : display.getDisplayStruct(), requestor, selection, target, property, time);
 	}
 }

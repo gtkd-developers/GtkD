@@ -128,7 +128,7 @@ public class GC : ObjectG
 	public this (Drawable drawable)
 	{
 		// GdkGC* gdk_gc_new (GdkDrawable *drawable);
-		this(cast(GdkGC*)gdk_gc_new(drawable.getDrawableStruct()) );
+		this(cast(GdkGC*)gdk_gc_new((drawable is null) ? null : drawable.getDrawableStruct()) );
 	}
 	
 	/**
@@ -147,7 +147,7 @@ public class GC : ObjectG
 	public this (Drawable drawable, GdkGCValues* values, GdkGCValuesMask valuesMask)
 	{
 		// GdkGC* gdk_gc_new_with_values (GdkDrawable *drawable,  GdkGCValues *values,  GdkGCValuesMask values_mask);
-		this(cast(GdkGC*)gdk_gc_new_with_values(drawable.getDrawableStruct(), values, valuesMask) );
+		this(cast(GdkGC*)gdk_gc_new_with_values((drawable is null) ? null : drawable.getDrawableStruct(), values, valuesMask) );
 	}
 	
 	/**
@@ -241,7 +241,7 @@ public class GC : ObjectG
 	public void setForeground(Color color)
 	{
 		// void gdk_gc_set_foreground (GdkGC *gc,  const GdkColor *color);
-		gdk_gc_set_foreground(gdkGC, color.getColorStruct());
+		gdk_gc_set_foreground(gdkGC, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -257,7 +257,7 @@ public class GC : ObjectG
 	public void setBackground(Color color)
 	{
 		// void gdk_gc_set_background (GdkGC *gc,  const GdkColor *color);
-		gdk_gc_set_background(gdkGC, color.getColorStruct());
+		gdk_gc_set_background(gdkGC, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -275,7 +275,7 @@ public class GC : ObjectG
 	public void setRgbFgColor(Color color)
 	{
 		// void gdk_gc_set_rgb_fg_color (GdkGC *gc,  const GdkColor *color);
-		gdk_gc_set_rgb_fg_color(gdkGC, color.getColorStruct());
+		gdk_gc_set_rgb_fg_color(gdkGC, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -293,7 +293,7 @@ public class GC : ObjectG
 	public void setRgbBgColor(Color color)
 	{
 		// void gdk_gc_set_rgb_bg_color (GdkGC *gc,  const GdkColor *color);
-		gdk_gc_set_rgb_bg_color(gdkGC, color.getColorStruct());
+		gdk_gc_set_rgb_bg_color(gdkGC, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -311,7 +311,7 @@ public class GC : ObjectG
 	public void setFont(Font font)
 	{
 		// void gdk_gc_set_font (GdkGC *gc,  GdkFont *font);
-		gdk_gc_set_font(gdkGC, font.getFontStruct());
+		gdk_gc_set_font(gdkGC, (font is null) ? null : font.getFontStruct());
 	}
 	
 	/**
@@ -355,7 +355,7 @@ public class GC : ObjectG
 	public void setTile(Pixmap tile)
 	{
 		// void gdk_gc_set_tile (GdkGC *gc,  GdkPixmap *tile);
-		gdk_gc_set_tile(gdkGC, tile.getPixmapStruct());
+		gdk_gc_set_tile(gdkGC, (tile is null) ? null : tile.getPixmapStruct());
 	}
 	
 	/**
@@ -370,7 +370,7 @@ public class GC : ObjectG
 	public void setStipple(Pixmap stipple)
 	{
 		// void gdk_gc_set_stipple (GdkGC *gc,  GdkPixmap *stipple);
-		gdk_gc_set_stipple(gdkGC, stipple.getPixmapStruct());
+		gdk_gc_set_stipple(gdkGC, (stipple is null) ? null : stipple.getPixmapStruct());
 	}
 	
 	/**
@@ -420,7 +420,7 @@ public class GC : ObjectG
 	public void setClipMask(Bitmap mask)
 	{
 		// void gdk_gc_set_clip_mask (GdkGC *gc,  GdkBitmap *mask);
-		gdk_gc_set_clip_mask(gdkGC, mask.getBitmapStruct());
+		gdk_gc_set_clip_mask(gdkGC, (mask is null) ? null : mask.getBitmapStruct());
 	}
 	
 	/**
@@ -450,7 +450,7 @@ public class GC : ObjectG
 	public void setClipRegion(Region region)
 	{
 		// void gdk_gc_set_clip_region (GdkGC *gc,  GdkRegion *region);
-		gdk_gc_set_clip_region(gdkGC, region.getRegionStruct());
+		gdk_gc_set_clip_region(gdkGC, (region is null) ? null : region.getRegionStruct());
 	}
 	
 	/**
@@ -544,7 +544,7 @@ public class GC : ObjectG
 	public void copy(GC srcGc)
 	{
 		// void gdk_gc_copy (GdkGC *dst_gc,  GdkGC *src_gc);
-		gdk_gc_copy(gdkGC, srcGc.getGCStruct());
+		gdk_gc_copy(gdkGC, (srcGc is null) ? null : srcGc.getGCStruct());
 	}
 	
 	/**
@@ -559,7 +559,7 @@ public class GC : ObjectG
 	public void setColormap(Colormap colormap)
 	{
 		// void gdk_gc_set_colormap (GdkGC *gc,  GdkColormap *colormap);
-		gdk_gc_set_colormap(gdkGC, colormap.getColormapStruct());
+		gdk_gc_set_colormap(gdkGC, (colormap is null) ? null : colormap.getColormapStruct());
 	}
 	
 	/**

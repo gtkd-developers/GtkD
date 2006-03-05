@@ -209,7 +209,7 @@ public class ListSG
 	public ListSG insertBefore(ListSG sibling, void* data)
 	{
 		// GSList* g_slist_insert_before (GSList *slist,  GSList *sibling,  gpointer data);
-		return new ListSG( g_slist_insert_before(gSList, sibling.getListSGStruct(), data) );
+		return new ListSG( g_slist_insert_before(gSList, (sibling is null) ? null : sibling.getListSGStruct(), data) );
 	}
 	
 	/**
@@ -263,7 +263,7 @@ public class ListSG
 	public ListSG removeLink(ListSG link)
 	{
 		// GSList* g_slist_remove_link (GSList *list,  GSList *link_);
-		return new ListSG( g_slist_remove_link(gSList, link.getListSGStruct()) );
+		return new ListSG( g_slist_remove_link(gSList, (link is null) ? null : link.getListSGStruct()) );
 	}
 	
 	/**
@@ -278,7 +278,7 @@ public class ListSG
 	public ListSG deleteLink(ListSG link)
 	{
 		// GSList* g_slist_delete_link (GSList *list,  GSList *link_);
-		return new ListSG( g_slist_delete_link(gSList, link.getListSGStruct()) );
+		return new ListSG( g_slist_delete_link(gSList, (link is null) ? null : link.getListSGStruct()) );
 	}
 	
 	/**
@@ -437,7 +437,7 @@ public class ListSG
 	public ListSG concat(ListSG list2)
 	{
 		// GSList* g_slist_concat (GSList *list1,  GSList *list2);
-		return new ListSG( g_slist_concat(gSList, list2.getListSGStruct()) );
+		return new ListSG( g_slist_concat(gSList, (list2 is null) ? null : list2.getListSGStruct()) );
 	}
 	
 	/**
@@ -552,7 +552,7 @@ public class ListSG
 	public int position(ListSG llink)
 	{
 		// gint g_slist_position (GSList *list,  GSList *llink);
-		return g_slist_position(gSList, llink.getListSGStruct());
+		return g_slist_position(gSList, (llink is null) ? null : llink.getListSGStruct());
 	}
 	
 	/**

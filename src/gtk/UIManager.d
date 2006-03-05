@@ -465,7 +465,7 @@ public class UIManager : ObjectG
 	public void insertActionGroup(ActionGroup actionGroup, int pos)
 	{
 		// void gtk_ui_manager_insert_action_group  (GtkUIManager *self,  GtkActionGroup *action_group,  gint pos);
-		gtk_ui_manager_insert_action_group(gtkUIManager, actionGroup.getActionGroupStruct(), pos);
+		gtk_ui_manager_insert_action_group(gtkUIManager, (actionGroup is null) ? null : actionGroup.getActionGroupStruct(), pos);
 	}
 	
 	/**
@@ -480,7 +480,7 @@ public class UIManager : ObjectG
 	public void removeActionGroup(ActionGroup actionGroup)
 	{
 		// void gtk_ui_manager_remove_action_group  (GtkUIManager *self,  GtkActionGroup *action_group);
-		gtk_ui_manager_remove_action_group(gtkUIManager, actionGroup.getActionGroupStruct());
+		gtk_ui_manager_remove_action_group(gtkUIManager, (actionGroup is null) ? null : actionGroup.getActionGroupStruct());
 	}
 	
 	/**

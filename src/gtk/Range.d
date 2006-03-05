@@ -254,7 +254,7 @@ public class Range : Widget
 	public void setAdjustment(Adjustment adjustment)
 	{
 		// void gtk_range_set_adjustment (GtkRange *range,  GtkAdjustment *adjustment);
-		gtk_range_set_adjustment(gtkRange, adjustment.getAdjustmentStruct());
+		gtk_range_set_adjustment(gtkRange, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	/**

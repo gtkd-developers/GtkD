@@ -327,7 +327,7 @@ public class OptionContext
 	public void addGroup(OptionGroup group)
 	{
 		// void g_option_context_add_group (GOptionContext *context,  GOptionGroup *group);
-		g_option_context_add_group(gOptionContext, group.getOptionGroupStruct());
+		g_option_context_add_group(gOptionContext, (group is null) ? null : group.getOptionGroupStruct());
 	}
 	
 	/**
@@ -344,7 +344,7 @@ public class OptionContext
 	public void setMainGroup(OptionGroup group)
 	{
 		// void g_option_context_set_main_group (GOptionContext *context,  GOptionGroup *group);
-		g_option_context_set_main_group(gOptionContext, group.getOptionGroupStruct());
+		g_option_context_set_main_group(gOptionContext, (group is null) ? null : group.getOptionGroupStruct());
 	}
 	
 	/**

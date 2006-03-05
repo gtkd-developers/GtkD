@@ -98,7 +98,7 @@ public class ValueAtk
 	public void getCurrentValue(Value value)
 	{
 		// void atk_value_get_current_value (AtkValue *obj,  GValue *value);
-		atk_value_get_current_value(atkValue, value.getValueStruct());
+		atk_value_get_current_value(atkValue, (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -111,7 +111,7 @@ public class ValueAtk
 	public void getMaximumValue(Value value)
 	{
 		// void atk_value_get_maximum_value (AtkValue *obj,  GValue *value);
-		atk_value_get_maximum_value(atkValue, value.getValueStruct());
+		atk_value_get_maximum_value(atkValue, (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public class ValueAtk
 	public void getMinimumValue(Value value)
 	{
 		// void atk_value_get_minimum_value (AtkValue *obj,  GValue *value);
-		atk_value_get_minimum_value(atkValue, value.getValueStruct());
+		atk_value_get_minimum_value(atkValue, (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -139,6 +139,6 @@ public class ValueAtk
 	public int setCurrentValue(Value value)
 	{
 		// gboolean atk_value_set_current_value (AtkValue *obj,  const GValue *value);
-		return atk_value_set_current_value(atkValue, value.getValueStruct());
+		return atk_value_set_current_value(atkValue, (value is null) ? null : value.getValueStruct());
 	}
 }

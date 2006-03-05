@@ -85,7 +85,7 @@ public class GCs
 	public static GC get(int depth, Colormap colormap, GdkGCValues* values, GdkGCValuesMask valuesMask)
 	{
 		// GdkGC* gtk_gc_get (gint depth,  GdkColormap *colormap,  GdkGCValues *values,  GdkGCValuesMask values_mask);
-		return new GC( gtk_gc_get(depth, colormap.getColormapStruct(), values, valuesMask) );
+		return new GC( gtk_gc_get(depth, (colormap is null) ? null : colormap.getColormapStruct(), values, valuesMask) );
 	}
 	
 	/**
@@ -96,6 +96,6 @@ public class GCs
 	public static void release(GC gc)
 	{
 		// void gtk_gc_release (GdkGC *gc);
-		gtk_gc_release(gc.getGCStruct());
+		gtk_gc_release((gc is null) ? null : gc.getGCStruct());
 	}
 }

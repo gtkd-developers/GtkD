@@ -265,7 +265,7 @@ public class SpinButton : Entry
 	public void configure(Adjustment adjustment, double climbRate, uint digits)
 	{
 		// void gtk_spin_button_configure (GtkSpinButton *spin_button,  GtkAdjustment *adjustment,  gdouble climb_rate,  guint digits);
-		gtk_spin_button_configure(gtkSpinButton, adjustment.getAdjustmentStruct(), climbRate, digits);
+		gtk_spin_button_configure(gtkSpinButton, (adjustment is null) ? null : adjustment.getAdjustmentStruct(), climbRate, digits);
 	}
 	
 	/**
@@ -282,7 +282,7 @@ public class SpinButton : Entry
 	public this (Adjustment adjustment, double climbRate, uint digits)
 	{
 		// GtkWidget* gtk_spin_button_new (GtkAdjustment *adjustment,  gdouble climb_rate,  guint digits);
-		this(cast(GtkSpinButton*)gtk_spin_button_new(adjustment.getAdjustmentStruct(), climbRate, digits) );
+		this(cast(GtkSpinButton*)gtk_spin_button_new((adjustment is null) ? null : adjustment.getAdjustmentStruct(), climbRate, digits) );
 	}
 	
 	/**
@@ -319,7 +319,7 @@ public class SpinButton : Entry
 	public void setAdjustment(Adjustment adjustment)
 	{
 		// void gtk_spin_button_set_adjustment (GtkSpinButton *spin_button,  GtkAdjustment *adjustment);
-		gtk_spin_button_set_adjustment(gtkSpinButton, adjustment.getAdjustmentStruct());
+		gtk_spin_button_set_adjustment(gtkSpinButton, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	/**

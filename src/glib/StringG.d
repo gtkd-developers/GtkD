@@ -511,6 +511,6 @@ public class StringG
 	public int equal(StringG v2)
 	{
 		// gboolean g_string_equal (const GString *v,  const GString *v2);
-		return g_string_equal(gString, v2.getStringGStruct());
+		return g_string_equal(gString, (v2 is null) ? null : v2.getStringGStruct());
 	}
 }

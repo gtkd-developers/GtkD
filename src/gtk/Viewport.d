@@ -130,7 +130,7 @@ public class Viewport : Bin
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
 		// GtkWidget* gtk_viewport_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
-		this(cast(GtkViewport*)gtk_viewport_new(hadjustment.getAdjustmentStruct(), vadjustment.getAdjustmentStruct()) );
+		this(cast(GtkViewport*)gtk_viewport_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct()) );
 	}
 	
 	/**
@@ -169,7 +169,7 @@ public class Viewport : Bin
 	public void setHadjustment(Adjustment adjustment)
 	{
 		// void gtk_viewport_set_hadjustment (GtkViewport *viewport,  GtkAdjustment *adjustment);
-		gtk_viewport_set_hadjustment(gtkViewport, adjustment.getAdjustmentStruct());
+		gtk_viewport_set_hadjustment(gtkViewport, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	/**
@@ -182,7 +182,7 @@ public class Viewport : Bin
 	public void setVadjustment(Adjustment adjustment)
 	{
 		// void gtk_viewport_set_vadjustment (GtkViewport *viewport,  GtkAdjustment *adjustment);
-		gtk_viewport_set_vadjustment(gtkViewport, adjustment.getAdjustmentStruct());
+		gtk_viewport_set_vadjustment(gtkViewport, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	/**

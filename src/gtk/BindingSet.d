@@ -129,7 +129,7 @@ public class BindingSet
 	public static int activate(ObjectGtk object, uint keyval, GdkModifierType modifiers)
 	{
 		// gboolean gtk_bindings_activate (GtkObject *object,  guint keyval,  GdkModifierType modifiers);
-		return gtk_bindings_activate(object.getObjectGtkStruct(), keyval, modifiers);
+		return gtk_bindings_activate((object is null) ? null : object.getObjectGtkStruct(), keyval, modifiers);
 	}
 	
 	/**
@@ -145,7 +145,7 @@ public class BindingSet
 	public static int activateEvent(ObjectGtk object, GdkEventKey* event)
 	{
 		// gboolean gtk_bindings_activate_event (GtkObject *object,  GdkEventKey *event);
-		return gtk_bindings_activate_event(object.getObjectGtkStruct(), event);
+		return gtk_bindings_activate_event((object is null) ? null : object.getObjectGtkStruct(), event);
 	}
 	
 	/**
@@ -158,7 +158,7 @@ public class BindingSet
 	public int activate(uint keyval, GdkModifierType modifiers, ObjectGtk object)
 	{
 		// gboolean gtk_binding_set_activate (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  GtkObject *object);
-		return gtk_binding_set_activate(gtkBindingSet, keyval, modifiers, object.getObjectGtkStruct());
+		return gtk_binding_set_activate(gtkBindingSet, keyval, modifiers, (object is null) ? null : object.getObjectGtkStruct());
 	}
 	
 	
@@ -220,7 +220,7 @@ public class BindingSet
 	public void bindingEntryAddSignall(uint keyval, GdkModifierType modifiers, char[] signalName, ListSG bindingArgs)
 	{
 		// void gtk_binding_entry_add_signall (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  const gchar *signal_name,  GSList *binding_args);
-		gtk_binding_entry_add_signall(gtkBindingSet, keyval, modifiers, std.string.toStringz(signalName), bindingArgs.getListSGStruct());
+		gtk_binding_entry_add_signall(gtkBindingSet, keyval, modifiers, std.string.toStringz(signalName), (bindingArgs is null) ? null : bindingArgs.getListSGStruct());
 	}
 	
 	/**

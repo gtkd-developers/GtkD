@@ -572,7 +572,7 @@ public class Window : Drawable
 	public void moveRegion(Region region, int dx, int dy)
 	{
 		// void gdk_window_move_region (GdkWindow *window,  GdkRegion *region,  gint dx,  gint dy);
-		gdk_window_move_region(gdkWindow, region.getRegionStruct(), dx, dy);
+		gdk_window_move_region(gdkWindow, (region is null) ? null : region.getRegionStruct(), dx, dy);
 	}
 	
 	/**
@@ -590,7 +590,7 @@ public class Window : Drawable
 	public void reparent(Window newParent, int x, int y)
 	{
 		// void gdk_window_reparent (GdkWindow *window,  GdkWindow *new_parent,  gint x,  gint y);
-		gdk_window_reparent(gdkWindow, newParent.getWindowStruct(), x, y);
+		gdk_window_reparent(gdkWindow, (newParent is null) ? null : newParent.getWindowStruct(), x, y);
 	}
 	
 	/**
@@ -788,7 +788,7 @@ public class Window : Drawable
 	public void beginPaintRect(Rectangle rectangle)
 	{
 		// void gdk_window_begin_paint_rect (GdkWindow *window,  GdkRectangle *rectangle);
-		gdk_window_begin_paint_rect(gdkWindow, rectangle.getRectangleStruct());
+		gdk_window_begin_paint_rect(gdkWindow, (rectangle is null) ? null : rectangle.getRectangleStruct());
 	}
 	
 	/**
@@ -835,7 +835,7 @@ public class Window : Drawable
 	public void beginPaintRegion(Region region)
 	{
 		// void gdk_window_begin_paint_region (GdkWindow *window,  GdkRegion *region);
-		gdk_window_begin_paint_region(gdkWindow, region.getRegionStruct());
+		gdk_window_begin_paint_region(gdkWindow, (region is null) ? null : region.getRegionStruct());
 	}
 	
 	/**
@@ -869,7 +869,7 @@ public class Window : Drawable
 	public void invalidateRect(Rectangle rect, int invalidateChildren)
 	{
 		// void gdk_window_invalidate_rect (GdkWindow *window,  GdkRectangle *rect,  gboolean invalidate_children);
-		gdk_window_invalidate_rect(gdkWindow, rect.getRectangleStruct(), invalidateChildren);
+		gdk_window_invalidate_rect(gdkWindow, (rect is null) ? null : rect.getRectangleStruct(), invalidateChildren);
 	}
 	
 	/**
@@ -898,7 +898,7 @@ public class Window : Drawable
 	public void invalidateRegion(Region region, int invalidateChildren)
 	{
 		// void gdk_window_invalidate_region (GdkWindow *window,  GdkRegion *region,  gboolean invalidate_children);
-		gdk_window_invalidate_region(gdkWindow, region.getRegionStruct(), invalidateChildren);
+		gdk_window_invalidate_region(gdkWindow, (region is null) ? null : region.getRegionStruct(), invalidateChildren);
 	}
 	
 	
@@ -1208,7 +1208,7 @@ public class Window : Drawable
 	public void shapeCombineMask(Bitmap mask, int x, int y)
 	{
 		// void gdk_window_shape_combine_mask (GdkWindow *window,  GdkBitmap *mask,  gint x,  gint y);
-		gdk_window_shape_combine_mask(gdkWindow, mask.getBitmapStruct(), x, y);
+		gdk_window_shape_combine_mask(gdkWindow, (mask is null) ? null : mask.getBitmapStruct(), x, y);
 	}
 	
 	/**
@@ -1236,7 +1236,7 @@ public class Window : Drawable
 	public void shapeCombineRegion(Region shapeRegion, int offsetX, int offsetY)
 	{
 		// void gdk_window_shape_combine_region (GdkWindow *window,  GdkRegion *shape_region,  gint offset_x,  gint offset_y);
-		gdk_window_shape_combine_region(gdkWindow, shapeRegion.getRegionStruct(), offsetX, offsetY);
+		gdk_window_shape_combine_region(gdkWindow, (shapeRegion is null) ? null : shapeRegion.getRegionStruct(), offsetX, offsetY);
 	}
 	
 	/**
@@ -1352,7 +1352,7 @@ public class Window : Drawable
 	public void setBackground(Color color)
 	{
 		// void gdk_window_set_background (GdkWindow *window,  const GdkColor *color);
-		gdk_window_set_background(gdkWindow, color.getColorStruct());
+		gdk_window_set_background(gdkWindow, (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -1380,7 +1380,7 @@ public class Window : Drawable
 	public void setBackPixmap(Pixmap pixmap, int parentRelative)
 	{
 		// void gdk_window_set_back_pixmap (GdkWindow *window,  GdkPixmap *pixmap,  gboolean parent_relative);
-		gdk_window_set_back_pixmap(gdkWindow, pixmap.getPixmapStruct(), parentRelative);
+		gdk_window_set_back_pixmap(gdkWindow, (pixmap is null) ? null : pixmap.getPixmapStruct(), parentRelative);
 	}
 	
 	
@@ -1399,7 +1399,7 @@ public class Window : Drawable
 	public void setCursor(Cursor cursor)
 	{
 		// void gdk_window_set_cursor (GdkWindow *window,  GdkCursor *cursor);
-		gdk_window_set_cursor(gdkWindow, cursor.getCursorStruct());
+		gdk_window_set_cursor(gdkWindow, (cursor is null) ? null : cursor.getCursorStruct());
 	}
 	
 	
@@ -1503,7 +1503,7 @@ public class Window : Drawable
 	public void setIconList(ListG pixbufs)
 	{
 		// void gdk_window_set_icon_list (GdkWindow *window,  GList *pixbufs);
-		gdk_window_set_icon_list(gdkWindow, pixbufs.getListGStruct());
+		gdk_window_set_icon_list(gdkWindow, (pixbufs is null) ? null : pixbufs.getListGStruct());
 	}
 	
 	/**
@@ -1645,7 +1645,7 @@ public class Window : Drawable
 	public void getFrameExtents(Rectangle rect)
 	{
 		// void gdk_window_get_frame_extents (GdkWindow *window,  GdkRectangle *rect);
-		gdk_window_get_frame_extents(gdkWindow, rect.getRectangleStruct());
+		gdk_window_get_frame_extents(gdkWindow, (rect is null) ? null : rect.getRectangleStruct());
 	}
 	
 	
@@ -1829,7 +1829,7 @@ public class Window : Drawable
 	public void setIcon(Window iconWindow, Pixmap pixmap, Bitmap mask)
 	{
 		// void gdk_window_set_icon (GdkWindow *window,  GdkWindow *icon_window,  GdkPixmap *pixmap,  GdkBitmap *mask);
-		gdk_window_set_icon(gdkWindow, iconWindow.getWindowStruct(), pixmap.getPixmapStruct(), mask.getBitmapStruct());
+		gdk_window_set_icon(gdkWindow, (iconWindow is null) ? null : iconWindow.getWindowStruct(), (pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct());
 	}
 	
 	/**
@@ -1863,7 +1863,7 @@ public class Window : Drawable
 	public void setTransientFor(Window parent)
 	{
 		// void gdk_window_set_transient_for (GdkWindow *window,  GdkWindow *parent);
-		gdk_window_set_transient_for(gdkWindow, parent.getWindowStruct());
+		gdk_window_set_transient_for(gdkWindow, (parent is null) ? null : parent.getWindowStruct());
 	}
 	
 	/**
@@ -1907,7 +1907,7 @@ public class Window : Drawable
 	public void setGroup(Window leader)
 	{
 		// void gdk_window_set_group (GdkWindow *window,  GdkWindow *leader);
-		gdk_window_set_group(gdkWindow, leader.getWindowStruct());
+		gdk_window_set_group(gdkWindow, (leader is null) ? null : leader.getWindowStruct());
 	}
 	
 	/**

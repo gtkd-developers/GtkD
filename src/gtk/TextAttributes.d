@@ -167,7 +167,7 @@ public class TextAttributes
 	public void copyValues(TextAttributes dest)
 	{
 		// void gtk_text_attributes_copy_values (GtkTextAttributes *src,  GtkTextAttributes *dest);
-		gtk_text_attributes_copy_values(gtkTextAttributes, dest.getTextAttributesStruct());
+		gtk_text_attributes_copy_values(gtkTextAttributes, (dest is null) ? null : dest.getTextAttributesStruct());
 	}
 	
 	/**

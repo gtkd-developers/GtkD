@@ -144,7 +144,7 @@ public class Layout : Container
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
 		// GtkWidget* gtk_layout_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
-		this(cast(GtkLayout*)gtk_layout_new(hadjustment.getAdjustmentStruct(), vadjustment.getAdjustmentStruct()) );
+		this(cast(GtkLayout*)gtk_layout_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct()) );
 	}
 	
 	/**
@@ -162,7 +162,7 @@ public class Layout : Container
 	public void put(Widget childWidget, int x, int y)
 	{
 		// void gtk_layout_put (GtkLayout *layout,  GtkWidget *child_widget,  gint x,  gint y);
-		gtk_layout_put(gtkLayout, childWidget.getWidgetStruct(), x, y);
+		gtk_layout_put(gtkLayout, (childWidget is null) ? null : childWidget.getWidgetStruct(), x, y);
 	}
 	
 	/**
@@ -179,7 +179,7 @@ public class Layout : Container
 	public void move(Widget childWidget, int x, int y)
 	{
 		// void gtk_layout_move (GtkLayout *layout,  GtkWidget *child_widget,  gint x,  gint y);
-		gtk_layout_move(gtkLayout, childWidget.getWidgetStruct(), x, y);
+		gtk_layout_move(gtkLayout, (childWidget is null) ? null : childWidget.getWidgetStruct(), x, y);
 	}
 	
 	/**
@@ -285,7 +285,7 @@ public class Layout : Container
 	public void setHadjustment(Adjustment adjustment)
 	{
 		// void gtk_layout_set_hadjustment (GtkLayout *layout,  GtkAdjustment *adjustment);
-		gtk_layout_set_hadjustment(gtkLayout, adjustment.getAdjustmentStruct());
+		gtk_layout_set_hadjustment(gtkLayout, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	/**
@@ -303,7 +303,7 @@ public class Layout : Container
 	public void setVadjustment(Adjustment adjustment)
 	{
 		// void gtk_layout_set_vadjustment (GtkLayout *layout,  GtkAdjustment *adjustment);
-		gtk_layout_set_vadjustment(gtkLayout, adjustment.getAdjustmentStruct());
+		gtk_layout_set_vadjustment(gtkLayout, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	

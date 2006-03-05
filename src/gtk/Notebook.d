@@ -284,7 +284,7 @@ public class Notebook : Container
 	public int appendPage(Widget child, Widget tabLabel)
 	{
 		// gint gtk_notebook_append_page (GtkNotebook *notebook,  GtkWidget *child,  GtkWidget *tab_label);
-		return gtk_notebook_append_page(gtkNotebook, child.getWidgetStruct(), tabLabel.getWidgetStruct());
+		return gtk_notebook_append_page(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), (tabLabel is null) ? null : tabLabel.getWidgetStruct());
 	}
 	
 	/**
@@ -311,7 +311,7 @@ public class Notebook : Container
 	public int appendPageMenu(Widget child, Widget tabLabel, Widget menuLabel)
 	{
 		// gint gtk_notebook_append_page_menu (GtkNotebook *notebook,  GtkWidget *child,  GtkWidget *tab_label,  GtkWidget *menu_label);
-		return gtk_notebook_append_page_menu(gtkNotebook, child.getWidgetStruct(), tabLabel.getWidgetStruct(), menuLabel.getWidgetStruct());
+		return gtk_notebook_append_page_menu(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), (tabLabel is null) ? null : tabLabel.getWidgetStruct(), (menuLabel is null) ? null : menuLabel.getWidgetStruct());
 	}
 	
 	/**
@@ -330,7 +330,7 @@ public class Notebook : Container
 	public int prependPage(Widget child, Widget tabLabel)
 	{
 		// gint gtk_notebook_prepend_page (GtkNotebook *notebook,  GtkWidget *child,  GtkWidget *tab_label);
-		return gtk_notebook_prepend_page(gtkNotebook, child.getWidgetStruct(), tabLabel.getWidgetStruct());
+		return gtk_notebook_prepend_page(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), (tabLabel is null) ? null : tabLabel.getWidgetStruct());
 	}
 	
 	/**
@@ -357,7 +357,7 @@ public class Notebook : Container
 	public int prependPageMenu(Widget child, Widget tabLabel, Widget menuLabel)
 	{
 		// gint gtk_notebook_prepend_page_menu (GtkNotebook *notebook,  GtkWidget *child,  GtkWidget *tab_label,  GtkWidget *menu_label);
-		return gtk_notebook_prepend_page_menu(gtkNotebook, child.getWidgetStruct(), tabLabel.getWidgetStruct(), menuLabel.getWidgetStruct());
+		return gtk_notebook_prepend_page_menu(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), (tabLabel is null) ? null : tabLabel.getWidgetStruct(), (menuLabel is null) ? null : menuLabel.getWidgetStruct());
 	}
 	
 	/**
@@ -379,7 +379,7 @@ public class Notebook : Container
 	public int insertPage(Widget child, Widget tabLabel, int position)
 	{
 		// gint gtk_notebook_insert_page (GtkNotebook *notebook,  GtkWidget *child,  GtkWidget *tab_label,  gint position);
-		return gtk_notebook_insert_page(gtkNotebook, child.getWidgetStruct(), tabLabel.getWidgetStruct(), position);
+		return gtk_notebook_insert_page(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), (tabLabel is null) ? null : tabLabel.getWidgetStruct(), position);
 	}
 	
 	/**
@@ -409,7 +409,7 @@ public class Notebook : Container
 	public int insertPageMenu(Widget child, Widget tabLabel, Widget menuLabel, int position)
 	{
 		// gint gtk_notebook_insert_page_menu (GtkNotebook *notebook,  GtkWidget *child,  GtkWidget *tab_label,  GtkWidget *menu_label,  gint position);
-		return gtk_notebook_insert_page_menu(gtkNotebook, child.getWidgetStruct(), tabLabel.getWidgetStruct(), menuLabel.getWidgetStruct(), position);
+		return gtk_notebook_insert_page_menu(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), (tabLabel is null) ? null : tabLabel.getWidgetStruct(), (menuLabel is null) ? null : menuLabel.getWidgetStruct(), position);
 	}
 	
 	/**
@@ -443,7 +443,7 @@ public class Notebook : Container
 	public int pageNum(Widget child)
 	{
 		// gint gtk_notebook_page_num (GtkNotebook *notebook,  GtkWidget *child);
-		return gtk_notebook_page_num(gtkNotebook, child.getWidgetStruct());
+		return gtk_notebook_page_num(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 	}
 	
 	
@@ -486,7 +486,7 @@ public class Notebook : Container
 	public void reorderChild(Widget child, int position)
 	{
 		// void gtk_notebook_reorder_child (GtkNotebook *notebook,  GtkWidget *child,  gint position);
-		gtk_notebook_reorder_child(gtkNotebook, child.getWidgetStruct(), position);
+		gtk_notebook_reorder_child(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), position);
 	}
 	
 	/**
@@ -615,7 +615,7 @@ public class Notebook : Container
 	public Widget getMenuLabel(Widget child)
 	{
 		// GtkWidget* gtk_notebook_get_menu_label (GtkNotebook *notebook,  GtkWidget *child);
-		return new Widget( gtk_notebook_get_menu_label(gtkNotebook, child.getWidgetStruct()) );
+		return new Widget( gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
 	}
 	
 	/**
@@ -663,7 +663,7 @@ public class Notebook : Container
 	public Widget getTabLabel(Widget child)
 	{
 		// GtkWidget* gtk_notebook_get_tab_label (GtkNotebook *notebook,  GtkWidget *child);
-		return new Widget( gtk_notebook_get_tab_label(gtkNotebook, child.getWidgetStruct()) );
+		return new Widget( gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
 	}
 	
 	/**
@@ -683,7 +683,7 @@ public class Notebook : Container
 	public void queryTabLabelPacking(Widget child, int* expand, int* fill, GtkPackType* packType)
 	{
 		// void gtk_notebook_query_tab_label_packing  (GtkNotebook *notebook,  GtkWidget *child,  gboolean *expand,  gboolean *fill,  GtkPackType *pack_type);
-		gtk_notebook_query_tab_label_packing(gtkNotebook, child.getWidgetStruct(), expand, fill, packType);
+		gtk_notebook_query_tab_label_packing(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), expand, fill, packType);
 	}
 	
 	/**
@@ -713,7 +713,7 @@ public class Notebook : Container
 	public void setMenuLabel(Widget child, Widget menuLabel)
 	{
 		// void gtk_notebook_set_menu_label (GtkNotebook *notebook,  GtkWidget *child,  GtkWidget *menu_label);
-		gtk_notebook_set_menu_label(gtkNotebook, child.getWidgetStruct(), menuLabel.getWidgetStruct());
+		gtk_notebook_set_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), (menuLabel is null) ? null : menuLabel.getWidgetStruct());
 	}
 	
 	/**
@@ -728,7 +728,7 @@ public class Notebook : Container
 	public void setMenuLabelText(Widget child, char[] menuText)
 	{
 		// void gtk_notebook_set_menu_label_text  (GtkNotebook *notebook,  GtkWidget *child,  const gchar *menu_text);
-		gtk_notebook_set_menu_label_text(gtkNotebook, child.getWidgetStruct(), std.string.toStringz(menuText));
+		gtk_notebook_set_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(menuText));
 	}
 	
 	/**
@@ -760,7 +760,7 @@ public class Notebook : Container
 	public void setTabLabel(Widget child, Widget tabLabel)
 	{
 		// void gtk_notebook_set_tab_label (GtkNotebook *notebook,  GtkWidget *child,  GtkWidget *tab_label);
-		gtk_notebook_set_tab_label(gtkNotebook, child.getWidgetStruct(), tabLabel.getWidgetStruct());
+		gtk_notebook_set_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), (tabLabel is null) ? null : tabLabel.getWidgetStruct());
 	}
 	
 	/**
@@ -781,7 +781,7 @@ public class Notebook : Container
 	public void setTabLabelPacking(Widget child, int expand, int fill, GtkPackType packType)
 	{
 		// void gtk_notebook_set_tab_label_packing  (GtkNotebook *notebook,  GtkWidget *child,  gboolean expand,  gboolean fill,  GtkPackType pack_type);
-		gtk_notebook_set_tab_label_packing(gtkNotebook, child.getWidgetStruct(), expand, fill, packType);
+		gtk_notebook_set_tab_label_packing(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), expand, fill, packType);
 	}
 	
 	/**
@@ -797,7 +797,7 @@ public class Notebook : Container
 	public void setTabLabelText(Widget child, char[] tabText)
 	{
 		// void gtk_notebook_set_tab_label_text (GtkNotebook *notebook,  GtkWidget *child,  const gchar *tab_text);
-		gtk_notebook_set_tab_label_text(gtkNotebook, child.getWidgetStruct(), std.string.toStringz(tabText));
+		gtk_notebook_set_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(tabText));
 	}
 	
 	/**
@@ -832,7 +832,7 @@ public class Notebook : Container
 	public char[] getMenuLabelText(Widget child)
 	{
 		// const gchar* gtk_notebook_get_menu_label_text  (GtkNotebook *notebook,  GtkWidget *child);
-		return std.string.toString(gtk_notebook_get_menu_label_text(gtkNotebook, child.getWidgetStruct()) );
+		return std.string.toString(gtk_notebook_get_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
 	}
 	
 	/**
@@ -893,7 +893,7 @@ public class Notebook : Container
 	public char[] getTabLabelText(Widget child)
 	{
 		// const gchar* gtk_notebook_get_tab_label_text  (GtkNotebook *notebook,  GtkWidget *child);
-		return std.string.toString(gtk_notebook_get_tab_label_text(gtkNotebook, child.getWidgetStruct()) );
+		return std.string.toString(gtk_notebook_get_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
 	}
 	
 	/**

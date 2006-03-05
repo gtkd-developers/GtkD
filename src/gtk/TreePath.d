@@ -525,7 +525,7 @@ public class TreePath
 	public int compare(TreePath b)
 	{
 		// gint gtk_tree_path_compare (const GtkTreePath *a,  const GtkTreePath *b);
-		return gtk_tree_path_compare(gtkTreePath, b.getTreePathStruct());
+		return gtk_tree_path_compare(gtkTreePath, (b is null) ? null : b.getTreePathStruct());
 	}
 	
 	/**
@@ -588,7 +588,7 @@ public class TreePath
 	public int isAncestor(TreePath descendant)
 	{
 		// gboolean gtk_tree_path_is_ancestor (GtkTreePath *path,  GtkTreePath *descendant);
-		return gtk_tree_path_is_ancestor(gtkTreePath, descendant.getTreePathStruct());
+		return gtk_tree_path_is_ancestor(gtkTreePath, (descendant is null) ? null : descendant.getTreePathStruct());
 	}
 	
 	/**
@@ -603,7 +603,7 @@ public class TreePath
 	public int isDescendant(TreePath ancestor)
 	{
 		// gboolean gtk_tree_path_is_descendant (GtkTreePath *path,  GtkTreePath *ancestor);
-		return gtk_tree_path_is_descendant(gtkTreePath, ancestor.getTreePathStruct());
+		return gtk_tree_path_is_descendant(gtkTreePath, (ancestor is null) ? null : ancestor.getTreePathStruct());
 	}
 	
 	

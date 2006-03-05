@@ -450,8 +450,8 @@ public struct Funct
 			}
 			else
 			{
-				parmToGtk = DuitClass.idsToDuit(parms[i], convParms, aliases)
-							~ ".get"~parmsWrap[i]~"Struct()";
+				char[] id = DuitClass.idsToDuit(parms[i], convParms, aliases);
+				parmToGtk = "("~id~" is null) ? null : "~id~ ".get"~parmsWrap[i]~"Struct()";
 			}
 		}
 		else

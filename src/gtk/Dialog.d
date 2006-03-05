@@ -276,7 +276,7 @@ public class Dialog : Window
 	public this (char[] title, Window parent, GtkDialogFlags flags, char[] firstButtonText, ... )
 	{
 		// GtkWidget* gtk_dialog_new_with_buttons (const gchar *title,  GtkWindow *parent,  GtkDialogFlags flags,  const gchar *first_button_text,  ...);
-		this(cast(GtkDialog*)gtk_dialog_new_with_buttons(std.string.toStringz(title), parent.getWindowStruct(), flags, std.string.toStringz(firstButtonText)) );
+		this(cast(GtkDialog*)gtk_dialog_new_with_buttons(std.string.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, std.string.toStringz(firstButtonText)) );
 	}
 	
 	/**
@@ -398,7 +398,7 @@ public class Dialog : Window
 	public void addActionWidget(Widget child, int responseId)
 	{
 		// void gtk_dialog_add_action_widget (GtkDialog *dialog,  GtkWidget *child,  gint response_id);
-		gtk_dialog_add_action_widget(gtkDialog, child.getWidgetStruct(), responseId);
+		gtk_dialog_add_action_widget(gtkDialog, (child is null) ? null : child.getWidgetStruct(), responseId);
 	}
 	
 	/**
@@ -475,7 +475,7 @@ public class Dialog : Window
 	public int getResponseForWidget(Widget widget)
 	{
 		// gint gtk_dialog_get_response_for_widget  (GtkDialog *dialog,  GtkWidget *widget);
-		return gtk_dialog_get_response_for_widget(gtkDialog, widget.getWidgetStruct());
+		return gtk_dialog_get_response_for_widget(gtkDialog, (widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -496,7 +496,7 @@ public class Dialog : Window
 	public static int alternativeDialogButtonOrder(Screen screen)
 	{
 		// gboolean gtk_alternative_dialog_button_order  (GdkScreen *screen);
-		return gtk_alternative_dialog_button_order(screen.getScreenStruct());
+		return gtk_alternative_dialog_button_order((screen is null) ? null : screen.getScreenStruct());
 	}
 	
 	/**

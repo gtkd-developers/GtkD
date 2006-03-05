@@ -205,7 +205,7 @@ public class TextTagTable : ObjectG
 	public void tableAdd(TextTag tag)
 	{
 		// void gtk_text_tag_table_add (GtkTextTagTable *table,  GtkTextTag *tag);
-		gtk_text_tag_table_add(gtkTextTagTable, tag.getTextTagStruct());
+		gtk_text_tag_table_add(gtkTextTagTable, (tag is null) ? null : tag.getTextTagStruct());
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class TextTagTable : ObjectG
 	public void tableRemove(TextTag tag)
 	{
 		// void gtk_text_tag_table_remove (GtkTextTagTable *table,  GtkTextTag *tag);
-		gtk_text_tag_table_remove(gtkTextTagTable, tag.getTextTagStruct());
+		gtk_text_tag_table_remove(gtkTextTagTable, (tag is null) ? null : tag.getTextTagStruct());
 	}
 	
 	/**

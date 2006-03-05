@@ -103,7 +103,7 @@ public class CellLayout
 	public void packStart(CellRenderer cell, int expand)
 	{
 		// void gtk_cell_layout_pack_start (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  gboolean expand);
-		gtk_cell_layout_pack_start(gtkCellLayout, cell.getCellRendererStruct(), expand);
+		gtk_cell_layout_pack_start(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct(), expand);
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class CellLayout
 	public void packEnd(CellRenderer cell, int expand)
 	{
 		// void gtk_cell_layout_pack_end (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  gboolean expand);
-		gtk_cell_layout_pack_end(gtkCellLayout, cell.getCellRendererStruct(), expand);
+		gtk_cell_layout_pack_end(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct(), expand);
 	}
 	
 	/**
@@ -139,7 +139,7 @@ public class CellLayout
 	public void reorder(CellRenderer cell, int position)
 	{
 		// void gtk_cell_layout_reorder (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  gint position);
-		gtk_cell_layout_reorder(gtkCellLayout, cell.getCellRendererStruct(), position);
+		gtk_cell_layout_reorder(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct(), position);
 	}
 	
 	/**
@@ -171,7 +171,7 @@ public class CellLayout
 	public void setAttributes(CellRenderer cell, ... )
 	{
 		// void gtk_cell_layout_set_attributes (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  ...);
-		gtk_cell_layout_set_attributes(gtkCellLayout, cell.getCellRendererStruct());
+		gtk_cell_layout_set_attributes(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct());
 	}
 	
 	/**
@@ -193,7 +193,7 @@ public class CellLayout
 	public void addAttribute(CellRenderer cell, char[] attribute, int column)
 	{
 		// void gtk_cell_layout_add_attribute (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  const gchar *attribute,  gint column);
-		gtk_cell_layout_add_attribute(gtkCellLayout, cell.getCellRendererStruct(), std.string.toStringz(attribute), column);
+		gtk_cell_layout_add_attribute(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct(), std.string.toStringz(attribute), column);
 	}
 	
 	/**
@@ -216,7 +216,7 @@ public class CellLayout
 	public void setCellDataFunc(CellRenderer cell, GtkCellLayoutDataFunc func, void* funcData, GDestroyNotify destroy)
 	{
 		// void gtk_cell_layout_set_cell_data_func  (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  GtkCellLayoutDataFunc func,  gpointer func_data,  GDestroyNotify destroy);
-		gtk_cell_layout_set_cell_data_func(gtkCellLayout, cell.getCellRendererStruct(), func, funcData, destroy);
+		gtk_cell_layout_set_cell_data_func(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct(), func, funcData, destroy);
 	}
 	
 	/**
@@ -231,6 +231,6 @@ public class CellLayout
 	public void clearAttributes(CellRenderer cell)
 	{
 		// void gtk_cell_layout_clear_attributes  (GtkCellLayout *cell_layout,  GtkCellRenderer *cell);
-		gtk_cell_layout_clear_attributes(gtkCellLayout, cell.getCellRendererStruct());
+		gtk_cell_layout_clear_attributes(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct());
 	}
 }

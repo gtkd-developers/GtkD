@@ -115,7 +115,7 @@ public class Settings : ObjectG
 	public static Settings getForScreen(Screen screen)
 	{
 		// GtkSettings* gtk_settings_get_for_screen (GdkScreen *screen);
-		return new Settings( gtk_settings_get_for_screen(screen.getScreenStruct()) );
+		return new Settings( gtk_settings_get_for_screen((screen is null) ? null : screen.getScreenStruct()) );
 	}
 	
 	/**
@@ -157,7 +157,7 @@ public class Settings : ObjectG
 	public static int rcPropertyParseColor(GParamSpec* pspec, StringG gstring, Value propertyValue)
 	{
 		// gboolean gtk_rc_property_parse_color (const GParamSpec *pspec,  const GString *gstring,  GValue *property_value);
-		return gtk_rc_property_parse_color(pspec, gstring.getStringGStruct(), propertyValue.getValueStruct());
+		return gtk_rc_property_parse_color(pspec, (gstring is null) ? null : gstring.getStringGStruct(), (propertyValue is null) ? null : propertyValue.getValueStruct());
 	}
 	
 	/**
@@ -180,7 +180,7 @@ public class Settings : ObjectG
 	public static int rcPropertyParseEnum(GParamSpec* pspec, StringG gstring, Value propertyValue)
 	{
 		// gboolean gtk_rc_property_parse_enum (const GParamSpec *pspec,  const GString *gstring,  GValue *property_value);
-		return gtk_rc_property_parse_enum(pspec, gstring.getStringGStruct(), propertyValue.getValueStruct());
+		return gtk_rc_property_parse_enum(pspec, (gstring is null) ? null : gstring.getStringGStruct(), (propertyValue is null) ? null : propertyValue.getValueStruct());
 	}
 	
 	/**
@@ -202,7 +202,7 @@ public class Settings : ObjectG
 	public static int rcPropertyParseFlags(GParamSpec* pspec, StringG gstring, Value propertyValue)
 	{
 		// gboolean gtk_rc_property_parse_flags (const GParamSpec *pspec,  const GString *gstring,  GValue *property_value);
-		return gtk_rc_property_parse_flags(pspec, gstring.getStringGStruct(), propertyValue.getValueStruct());
+		return gtk_rc_property_parse_flags(pspec, (gstring is null) ? null : gstring.getStringGStruct(), (propertyValue is null) ? null : propertyValue.getValueStruct());
 	}
 	
 	/**
@@ -223,7 +223,7 @@ public class Settings : ObjectG
 	public static int rcPropertyParseRequisition(GParamSpec* pspec, StringG gstring, Value propertyValue)
 	{
 		// gboolean gtk_rc_property_parse_requisition  (const GParamSpec *pspec,  const GString *gstring,  GValue *property_value);
-		return gtk_rc_property_parse_requisition(pspec, gstring.getStringGStruct(), propertyValue.getValueStruct());
+		return gtk_rc_property_parse_requisition(pspec, (gstring is null) ? null : gstring.getStringGStruct(), (propertyValue is null) ? null : propertyValue.getValueStruct());
 	}
 	
 	/**
@@ -245,7 +245,7 @@ public class Settings : ObjectG
 	public static int rcPropertyParseBorder(GParamSpec* pspec, StringG gstring, Value propertyValue)
 	{
 		// gboolean gtk_rc_property_parse_border (const GParamSpec *pspec,  const GString *gstring,  GValue *property_value);
-		return gtk_rc_property_parse_border(pspec, gstring.getStringGStruct(), propertyValue.getValueStruct());
+		return gtk_rc_property_parse_border(pspec, (gstring is null) ? null : gstring.getStringGStruct(), (propertyValue is null) ? null : propertyValue.getValueStruct());
 	}
 	
 	/**

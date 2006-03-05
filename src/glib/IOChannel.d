@@ -279,7 +279,7 @@ public class IOChannel
 	public GIOStatus readLineString(StringG buffer, uint* terminatorPos, GError** error)
 	{
 		// GIOStatus g_io_channel_read_line_string (GIOChannel *channel,  GString *buffer,  gsize *terminator_pos,  GError **error);
-		return g_io_channel_read_line_string(gIOChannel, buffer.getStringGStruct(), terminatorPos, error);
+		return g_io_channel_read_line_string(gIOChannel, (buffer is null) ? null : buffer.getStringGStruct(), terminatorPos, error);
 	}
 	
 	/**

@@ -1015,7 +1015,7 @@ public class FileChooser
 	public void setPreviewWidget(Widget previewWidget)
 	{
 		// void gtk_file_chooser_set_preview_widget  (GtkFileChooser *chooser,  GtkWidget *preview_widget);
-		gtk_file_chooser_set_preview_widget(gtkFileChooser, previewWidget.getWidgetStruct());
+		gtk_file_chooser_set_preview_widget(gtkFileChooser, (previewWidget is null) ? null : previewWidget.getWidgetStruct());
 	}
 	
 	/**
@@ -1145,7 +1145,7 @@ public class FileChooser
 	public void setExtraWidget(Widget extraWidget)
 	{
 		// void gtk_file_chooser_set_extra_widget  (GtkFileChooser *chooser,  GtkWidget *extra_widget);
-		gtk_file_chooser_set_extra_widget(gtkFileChooser, extraWidget.getWidgetStruct());
+		gtk_file_chooser_set_extra_widget(gtkFileChooser, (extraWidget is null) ? null : extraWidget.getWidgetStruct());
 	}
 	
 	/**
@@ -1178,7 +1178,7 @@ public class FileChooser
 	public void addFilter(FileFilter filter)
 	{
 		// void gtk_file_chooser_add_filter (GtkFileChooser *chooser,  GtkFileFilter *filter);
-		gtk_file_chooser_add_filter(gtkFileChooser, filter.getFileFilterStruct());
+		gtk_file_chooser_add_filter(gtkFileChooser, (filter is null) ? null : filter.getFileFilterStruct());
 	}
 	
 	/**
@@ -1192,7 +1192,7 @@ public class FileChooser
 	public void removeFilter(FileFilter filter)
 	{
 		// void gtk_file_chooser_remove_filter (GtkFileChooser *chooser,  GtkFileFilter *filter);
-		gtk_file_chooser_remove_filter(gtkFileChooser, filter.getFileFilterStruct());
+		gtk_file_chooser_remove_filter(gtkFileChooser, (filter is null) ? null : filter.getFileFilterStruct());
 	}
 	
 	/**
@@ -1229,7 +1229,7 @@ public class FileChooser
 	public void setFilter(FileFilter filter)
 	{
 		// void gtk_file_chooser_set_filter (GtkFileChooser *chooser,  GtkFileFilter *filter);
-		gtk_file_chooser_set_filter(gtkFileChooser, filter.getFileFilterStruct());
+		gtk_file_chooser_set_filter(gtkFileChooser, (filter is null) ? null : filter.getFileFilterStruct());
 	}
 	
 	/**

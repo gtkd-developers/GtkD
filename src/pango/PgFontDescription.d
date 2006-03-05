@@ -656,7 +656,7 @@ public class PgFontDescription
 	public static PangoEngineShape* pangoFontFindShaper(PangoFont* font, PgLanguage language, uint ch)
 	{
 		// PangoEngineShape* pango_font_find_shaper (PangoFont *font,  PangoLanguage *language,  guint32 ch);
-		return pango_font_find_shaper(font, language.getPgLanguageStruct(), ch);
+		return pango_font_find_shaper(font, (language is null) ? null : language.getPgLanguageStruct(), ch);
 	}
 	
 	/**
@@ -684,7 +684,7 @@ public class PgFontDescription
 	public static PangoCoverage* pangoFontGetCoverage(PangoFont* font, PgLanguage language)
 	{
 		// PangoCoverage* pango_font_get_coverage (PangoFont *font,  PangoLanguage *language);
-		return pango_font_get_coverage(font, language.getPgLanguageStruct());
+		return pango_font_get_coverage(font, (language is null) ? null : language.getPgLanguageStruct());
 	}
 	
 	/**
@@ -730,7 +730,7 @@ public class PgFontDescription
 	public static PgFontMetrics pangoFontGetMetrics(PangoFont* font, PgLanguage language)
 	{
 		// PangoFontMetrics* pango_font_get_metrics (PangoFont *font,  PangoLanguage *language);
-		return new PgFontMetrics( pango_font_get_metrics(font, language.getPgLanguageStruct()) );
+		return new PgFontMetrics( pango_font_get_metrics(font, (language is null) ? null : language.getPgLanguageStruct()) );
 	}
 	
 	/**

@@ -138,7 +138,7 @@ public class Frame : Bin
 	public void setLabelWidget(Widget labelWidget)
 	{
 		// void gtk_frame_set_label_widget (GtkFrame *frame,  GtkWidget *label_widget);
-		gtk_frame_set_label_widget(gtkFrame, labelWidget.getWidgetStruct());
+		gtk_frame_set_label_widget(gtkFrame, (labelWidget is null) ? null : labelWidget.getWidgetStruct());
 	}
 	
 	/**

@@ -259,7 +259,7 @@ public class Font
 	public static Font loadForDisplay(Display display, char[] fontName)
 	{
 		// GdkFont* gdk_font_load_for_display (GdkDisplay *display,  const gchar *font_name);
-		return new Font( gdk_font_load_for_display(display.getDisplayStruct(), std.string.toStringz(fontName)) );
+		return new Font( gdk_font_load_for_display((display is null) ? null : display.getDisplayStruct(), std.string.toStringz(fontName)) );
 	}
 	
 	/**
@@ -298,7 +298,7 @@ public class Font
 	public static Font fontsetLoadForDisplay(Display display, char[] fontsetName)
 	{
 		// GdkFont* gdk_fontset_load_for_display (GdkDisplay *display,  const gchar *fontset_name);
-		return new Font( gdk_fontset_load_for_display(display.getDisplayStruct(), std.string.toStringz(fontsetName)) );
+		return new Font( gdk_fontset_load_for_display((display is null) ? null : display.getDisplayStruct(), std.string.toStringz(fontsetName)) );
 	}
 	
 	/**
@@ -341,7 +341,7 @@ public class Font
 	public static Font fromDescriptionForDisplay(Display display, PangoFontDescription* fontDesc)
 	{
 		// GdkFont* gdk_font_from_description_for_display  (GdkDisplay *display,  PangoFontDescription *font_desc);
-		return new Font( gdk_font_from_description_for_display(display.getDisplayStruct(), fontDesc) );
+		return new Font( gdk_font_from_description_for_display((display is null) ? null : display.getDisplayStruct(), fontDesc) );
 	}
 	
 	/**
@@ -420,7 +420,7 @@ public class Font
 	public int equal(Font fontb)
 	{
 		// gboolean gdk_font_equal (const GdkFont *fonta,  const GdkFont *fontb);
-		return gdk_font_equal(gdkFont, fontb.getFontStruct());
+		return gdk_font_equal(gdkFont, (fontb is null) ? null : fontb.getFontStruct());
 	}
 	
 	/**

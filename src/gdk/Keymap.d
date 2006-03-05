@@ -221,7 +221,7 @@ public class Keymap : ObjectG
 	public static Keymap getForDisplay(Display display)
 	{
 		// GdkKeymap* gdk_keymap_get_for_display (GdkDisplay *display);
-		return new Keymap( gdk_keymap_get_for_display(display.getDisplayStruct()) );
+		return new Keymap( gdk_keymap_get_for_display((display is null) ? null : display.getDisplayStruct()) );
 	}
 	
 	/**

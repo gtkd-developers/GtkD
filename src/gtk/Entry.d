@@ -865,7 +865,7 @@ public class Entry : Widget
 	public void setCompletion(EntryCompletion completion)
 	{
 		// void gtk_entry_set_completion (GtkEntry *entry,  GtkEntryCompletion *completion);
-		gtk_entry_set_completion(gtkEntry, completion.getEntryCompletionStruct());
+		gtk_entry_set_completion(gtkEntry, (completion is null) ? null : completion.getEntryCompletionStruct());
 	}
 	
 	/**

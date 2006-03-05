@@ -586,7 +586,7 @@ public class TreeView : Container
 	public this (TreeModel model)
 	{
 		// GtkWidget* gtk_tree_view_new_with_model (GtkTreeModel *model);
-		this(cast(GtkTreeView*)gtk_tree_view_new_with_model(model.getTreeModelStruct()) );
+		this(cast(GtkTreeView*)gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelStruct()) );
 	}
 	
 	/**
@@ -615,7 +615,7 @@ public class TreeView : Container
 	public void setModel(TreeModel model)
 	{
 		// void gtk_tree_view_set_model (GtkTreeView *tree_view,  GtkTreeModel *model);
-		gtk_tree_view_set_model(gtkTreeView, model.getTreeModelStruct());
+		gtk_tree_view_set_model(gtkTreeView, (model is null) ? null : model.getTreeModelStruct());
 	}
 	
 	/**
@@ -655,7 +655,7 @@ public class TreeView : Container
 	public void setHadjustment(Adjustment adjustment)
 	{
 		// void gtk_tree_view_set_hadjustment (GtkTreeView *tree_view,  GtkAdjustment *adjustment);
-		gtk_tree_view_set_hadjustment(gtkTreeView, adjustment.getAdjustmentStruct());
+		gtk_tree_view_set_hadjustment(gtkTreeView, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	/**
@@ -682,7 +682,7 @@ public class TreeView : Container
 	public void setVadjustment(Adjustment adjustment)
 	{
 		// void gtk_tree_view_set_vadjustment (GtkTreeView *tree_view,  GtkAdjustment *adjustment);
-		gtk_tree_view_set_vadjustment(gtkTreeView, adjustment.getAdjustmentStruct());
+		gtk_tree_view_set_vadjustment(gtkTreeView, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	/**
@@ -787,7 +787,7 @@ public class TreeView : Container
 	public int appendColumn(TreeViewColumn column)
 	{
 		// gint gtk_tree_view_append_column (GtkTreeView *tree_view,  GtkTreeViewColumn *column);
-		return gtk_tree_view_append_column(gtkTreeView, column.getTreeViewColumnStruct());
+		return gtk_tree_view_append_column(gtkTreeView, (column is null) ? null : column.getTreeViewColumnStruct());
 	}
 	
 	/**
@@ -802,7 +802,7 @@ public class TreeView : Container
 	public int removeColumn(TreeViewColumn column)
 	{
 		// gint gtk_tree_view_remove_column (GtkTreeView *tree_view,  GtkTreeViewColumn *column);
-		return gtk_tree_view_remove_column(gtkTreeView, column.getTreeViewColumnStruct());
+		return gtk_tree_view_remove_column(gtkTreeView, (column is null) ? null : column.getTreeViewColumnStruct());
 	}
 	
 	/**
@@ -822,7 +822,7 @@ public class TreeView : Container
 	public int insertColumn(TreeViewColumn column, int position)
 	{
 		// gint gtk_tree_view_insert_column (GtkTreeView *tree_view,  GtkTreeViewColumn *column,  gint position);
-		return gtk_tree_view_insert_column(gtkTreeView, column.getTreeViewColumnStruct(), position);
+		return gtk_tree_view_insert_column(gtkTreeView, (column is null) ? null : column.getTreeViewColumnStruct(), position);
 	}
 	
 	/**
@@ -847,7 +847,7 @@ public class TreeView : Container
 	public int insertColumnWithAttributes(int position, char[] title, CellRenderer cell, ... )
 	{
 		// gint gtk_tree_view_insert_column_with_attributes  (GtkTreeView *tree_view,  gint position,  const gchar *title,  GtkCellRenderer *cell,  ...);
-		return gtk_tree_view_insert_column_with_attributes(gtkTreeView, position, std.string.toStringz(title), cell.getCellRendererStruct());
+		return gtk_tree_view_insert_column_with_attributes(gtkTreeView, position, std.string.toStringz(title), (cell is null) ? null : cell.getCellRendererStruct());
 	}
 	
 	/**
@@ -877,7 +877,7 @@ public class TreeView : Container
 	public int insertColumnWithDataFunc(int position, char[] title, CellRenderer cell, GtkTreeCellDataFunc func, void* data, GDestroyNotify dnotify)
 	{
 		// gint gtk_tree_view_insert_column_with_data_func  (GtkTreeView *tree_view,  gint position,  const gchar *title,  GtkCellRenderer *cell,  GtkTreeCellDataFunc func,  gpointer data,  GDestroyNotify dnotify);
-		return gtk_tree_view_insert_column_with_data_func(gtkTreeView, position, std.string.toStringz(title), cell.getCellRendererStruct(), func, data, dnotify);
+		return gtk_tree_view_insert_column_with_data_func(gtkTreeView, position, std.string.toStringz(title), (cell is null) ? null : cell.getCellRendererStruct(), func, data, dnotify);
 	}
 	
 	/**
@@ -923,7 +923,7 @@ public class TreeView : Container
 	public void moveColumnAfter(TreeViewColumn column, TreeViewColumn baseColumn)
 	{
 		// void gtk_tree_view_move_column_after (GtkTreeView *tree_view,  GtkTreeViewColumn *column,  GtkTreeViewColumn *base_column);
-		gtk_tree_view_move_column_after(gtkTreeView, column.getTreeViewColumnStruct(), baseColumn.getTreeViewColumnStruct());
+		gtk_tree_view_move_column_after(gtkTreeView, (column is null) ? null : column.getTreeViewColumnStruct(), (baseColumn is null) ? null : baseColumn.getTreeViewColumnStruct());
 	}
 	
 	/**
@@ -940,7 +940,7 @@ public class TreeView : Container
 	public void setExpanderColumn(TreeViewColumn column)
 	{
 		// void gtk_tree_view_set_expander_column  (GtkTreeView *tree_view,  GtkTreeViewColumn *column);
-		gtk_tree_view_set_expander_column(gtkTreeView, column.getTreeViewColumnStruct());
+		gtk_tree_view_set_expander_column(gtkTreeView, (column is null) ? null : column.getTreeViewColumnStruct());
 	}
 	
 	/**
@@ -1033,7 +1033,7 @@ public class TreeView : Container
 	public void scrollToCell(TreePath path, TreeViewColumn column, int useAlign, float rowAlign, float colAlign)
 	{
 		// void gtk_tree_view_scroll_to_cell (GtkTreeView *tree_view,  GtkTreePath *path,  GtkTreeViewColumn *column,  gboolean use_align,  gfloat row_align,  gfloat col_align);
-		gtk_tree_view_scroll_to_cell(gtkTreeView, path.getTreePathStruct(), column.getTreeViewColumnStruct(), useAlign, rowAlign, colAlign);
+		gtk_tree_view_scroll_to_cell(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), useAlign, rowAlign, colAlign);
 	}
 	
 	/**
@@ -1057,7 +1057,7 @@ public class TreeView : Container
 	public void setCursor(TreePath path, TreeViewColumn focusColumn, int startEditing)
 	{
 		// void gtk_tree_view_set_cursor (GtkTreeView *tree_view,  GtkTreePath *path,  GtkTreeViewColumn *focus_column,  gboolean start_editing);
-		gtk_tree_view_set_cursor(gtkTreeView, path.getTreePathStruct(), focusColumn.getTreeViewColumnStruct(), startEditing);
+		gtk_tree_view_set_cursor(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (focusColumn is null) ? null : focusColumn.getTreeViewColumnStruct(), startEditing);
 	}
 	
 	/**
@@ -1087,7 +1087,7 @@ public class TreeView : Container
 	public void setCursorOnCell(TreePath path, TreeViewColumn focusColumn, CellRenderer focusCell, int startEditing)
 	{
 		// void gtk_tree_view_set_cursor_on_cell  (GtkTreeView *tree_view,  GtkTreePath *path,  GtkTreeViewColumn *focus_column,  GtkCellRenderer *focus_cell,  gboolean start_editing);
-		gtk_tree_view_set_cursor_on_cell(gtkTreeView, path.getTreePathStruct(), focusColumn.getTreeViewColumnStruct(), focusCell.getCellRendererStruct(), startEditing);
+		gtk_tree_view_set_cursor_on_cell(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (focusColumn is null) ? null : focusColumn.getTreeViewColumnStruct(), (focusCell is null) ? null : focusCell.getCellRendererStruct(), startEditing);
 	}
 	
 	/**
@@ -1121,7 +1121,7 @@ public class TreeView : Container
 	public void rowActivated(TreePath path, TreeViewColumn column)
 	{
 		// void gtk_tree_view_row_activated (GtkTreeView *tree_view,  GtkTreePath *path,  GtkTreeViewColumn *column);
-		gtk_tree_view_row_activated(gtkTreeView, path.getTreePathStruct(), column.getTreeViewColumnStruct());
+		gtk_tree_view_row_activated(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct());
 	}
 	
 	/**
@@ -1158,7 +1158,7 @@ public class TreeView : Container
 	public void expandToPath(TreePath path)
 	{
 		// void gtk_tree_view_expand_to_path (GtkTreeView *tree_view,  GtkTreePath *path);
-		gtk_tree_view_expand_to_path(gtkTreeView, path.getTreePathStruct());
+		gtk_tree_view_expand_to_path(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -1175,7 +1175,7 @@ public class TreeView : Container
 	public int expandRow(TreePath path, int openAll)
 	{
 		// gboolean gtk_tree_view_expand_row (GtkTreeView *tree_view,  GtkTreePath *path,  gboolean open_all);
-		return gtk_tree_view_expand_row(gtkTreeView, path.getTreePathStruct(), openAll);
+		return gtk_tree_view_expand_row(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), openAll);
 	}
 	
 	/**
@@ -1190,7 +1190,7 @@ public class TreeView : Container
 	public int collapseRow(TreePath path)
 	{
 		// gboolean gtk_tree_view_collapse_row (GtkTreeView *tree_view,  GtkTreePath *path);
-		return gtk_tree_view_collapse_row(gtkTreeView, path.getTreePathStruct());
+		return gtk_tree_view_collapse_row(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -1220,7 +1220,7 @@ public class TreeView : Container
 	public int rowExpanded(TreePath path)
 	{
 		// gboolean gtk_tree_view_row_expanded (GtkTreeView *tree_view,  GtkTreePath *path);
-		return gtk_tree_view_row_expanded(gtkTreeView, path.getTreePathStruct());
+		return gtk_tree_view_row_expanded(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -1314,7 +1314,7 @@ public class TreeView : Container
 	public void getCellArea(TreePath path, TreeViewColumn column, Rectangle rect)
 	{
 		// void gtk_tree_view_get_cell_area (GtkTreeView *tree_view,  GtkTreePath *path,  GtkTreeViewColumn *column,  GdkRectangle *rect);
-		gtk_tree_view_get_cell_area(gtkTreeView, path.getTreePathStruct(), column.getTreeViewColumnStruct(), rect.getRectangleStruct());
+		gtk_tree_view_get_cell_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), (rect is null) ? null : rect.getRectangleStruct());
 	}
 	
 	/**
@@ -1340,7 +1340,7 @@ public class TreeView : Container
 	public void getBackgroundArea(TreePath path, TreeViewColumn column, Rectangle rect)
 	{
 		// void gtk_tree_view_get_background_area  (GtkTreeView *tree_view,  GtkTreePath *path,  GtkTreeViewColumn *column,  GdkRectangle *rect);
-		gtk_tree_view_get_background_area(gtkTreeView, path.getTreePathStruct(), column.getTreeViewColumnStruct(), rect.getRectangleStruct());
+		gtk_tree_view_get_background_area(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), (rect is null) ? null : rect.getRectangleStruct());
 	}
 	
 	/**
@@ -1357,7 +1357,7 @@ public class TreeView : Container
 	public void getVisibleRect(Rectangle visibleRect)
 	{
 		// void gtk_tree_view_get_visible_rect (GtkTreeView *tree_view,  GdkRectangle *visible_rect);
-		gtk_tree_view_get_visible_rect(gtkTreeView, visibleRect.getRectangleStruct());
+		gtk_tree_view_get_visible_rect(gtkTreeView, (visibleRect is null) ? null : visibleRect.getRectangleStruct());
 	}
 	
 	/**
@@ -1507,7 +1507,7 @@ public class TreeView : Container
 	public void setDragDestRow(TreePath path, GtkTreeViewDropPosition pos)
 	{
 		// void gtk_tree_view_set_drag_dest_row (GtkTreeView *tree_view,  GtkTreePath *path,  GtkTreeViewDropPosition pos);
-		gtk_tree_view_set_drag_dest_row(gtkTreeView, path.getTreePathStruct(), pos);
+		gtk_tree_view_set_drag_dest_row(gtkTreeView, (path is null) ? null : path.getTreePathStruct(), pos);
 	}
 	
 	/**
@@ -1559,7 +1559,7 @@ public class TreeView : Container
 	public Pixmap createRowDragIcon(TreePath path)
 	{
 		// GdkPixmap* gtk_tree_view_create_row_drag_icon  (GtkTreeView *tree_view,  GtkTreePath *path);
-		return new Pixmap( gtk_tree_view_create_row_drag_icon(gtkTreeView, path.getTreePathStruct()) );
+		return new Pixmap( gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct()) );
 	}
 	
 	/**

@@ -223,7 +223,7 @@ public class RadioMenuItem : CheckMenuItem
 	public this (ListSG group)
 	{
 		// GtkWidget* gtk_radio_menu_item_new (GSList *group);
-		this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new(group.getListSGStruct()) );
+		this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new((group is null) ? null : group.getListSGStruct()) );
 	}
 	
 	
@@ -255,7 +255,7 @@ public class RadioMenuItem : CheckMenuItem
 	public void setGroup(ListSG group)
 	{
 		// void gtk_radio_menu_item_set_group (GtkRadioMenuItem *radio_menu_item,  GSList *group);
-		gtk_radio_menu_item_set_group(gtkRadioMenuItem, group.getListSGStruct());
+		gtk_radio_menu_item_set_group(gtkRadioMenuItem, (group is null) ? null : group.getListSGStruct());
 	}
 	
 	/**

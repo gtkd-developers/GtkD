@@ -202,7 +202,7 @@ public class SizeGroup : ObjectG
 	public void addWidget(Widget widget)
 	{
 		// void gtk_size_group_add_widget (GtkSizeGroup *size_group,  GtkWidget *widget);
-		gtk_size_group_add_widget(gtkSizeGroup, widget.getWidgetStruct());
+		gtk_size_group_add_widget(gtkSizeGroup, (widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -222,7 +222,7 @@ public class SizeGroup : ObjectG
 	public void removeWidget(Widget widget)
 	{
 		// void gtk_size_group_remove_widget (GtkSizeGroup *size_group,  GtkWidget *widget);
-		gtk_size_group_remove_widget(gtkSizeGroup, widget.getWidgetStruct());
+		gtk_size_group_remove_widget(gtkSizeGroup, (widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 }

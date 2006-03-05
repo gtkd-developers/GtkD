@@ -207,7 +207,7 @@ public class PgContext : ObjectG
 	public static ListG pangoReorderItems(ListG logicalItems)
 	{
 		// GList* pango_reorder_items (GList *logical_items);
-		return new ListG( pango_reorder_items(logicalItems.getListGStruct()) );
+		return new ListG( pango_reorder_items((logicalItems is null) ? null : logicalItems.getListGStruct()) );
 	}
 	
 	/**
@@ -243,7 +243,7 @@ public class PgContext : ObjectG
 	public void setFontMap(PgFontMap fontMap)
 	{
 		// void pango_context_set_font_map (PangoContext *context,  PangoFontMap *font_map);
-		pango_context_set_font_map(pangoContext, fontMap.getPgFontMapStruct());
+		pango_context_set_font_map(pangoContext, (fontMap is null) ? null : fontMap.getPgFontMapStruct());
 	}
 	
 	/**
@@ -285,7 +285,7 @@ public class PgContext : ObjectG
 	public void setFontDescription(PgFontDescription desc)
 	{
 		// void pango_context_set_font_description  (PangoContext *context,  const PangoFontDescription *desc);
-		pango_context_set_font_description(pangoContext, desc.getPgFontDescriptionStruct());
+		pango_context_set_font_description(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct());
 	}
 	
 	/**
@@ -311,7 +311,7 @@ public class PgContext : ObjectG
 	public void setLanguage(PgLanguage language)
 	{
 		// void pango_context_set_language (PangoContext *context,  PangoLanguage *language);
-		pango_context_set_language(pangoContext, language.getPgLanguageStruct());
+		pango_context_set_language(pangoContext, (language is null) ? null : language.getPgLanguageStruct());
 	}
 	
 	/**
@@ -398,7 +398,7 @@ public class PgContext : ObjectG
 	public PangoFont* loadFont(PgFontDescription desc)
 	{
 		// PangoFont* pango_context_load_font (PangoContext *context,  const PangoFontDescription *desc);
-		return pango_context_load_font(pangoContext, desc.getPgFontDescriptionStruct());
+		return pango_context_load_font(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct());
 	}
 	
 	/**
@@ -416,7 +416,7 @@ public class PgContext : ObjectG
 	public PangoFontset* loadFontset(PgFontDescription desc, PgLanguage language)
 	{
 		// PangoFontset* pango_context_load_fontset (PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
-		return pango_context_load_fontset(pangoContext, desc.getPgFontDescriptionStruct(), language.getPgLanguageStruct());
+		return pango_context_load_fontset(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
 	}
 	
 	/**
@@ -449,7 +449,7 @@ public class PgContext : ObjectG
 	public PgFontMetrics getMetrics(PgFontDescription desc, PgLanguage language)
 	{
 		// PangoFontMetrics* pango_context_get_metrics (PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
-		return new PgFontMetrics( pango_context_get_metrics(pangoContext, desc.getPgFontDescriptionStruct(), language.getPgLanguageStruct()) );
+		return new PgFontMetrics( pango_context_get_metrics(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct()) );
 	}
 	
 	/**
@@ -568,7 +568,7 @@ public class PgContext : ObjectG
 	public static void pangoGetLogAttrs(char[] text, int length, int level, PgLanguage language, PangoLogAttr* logAttrs, int attrsLen)
 	{
 		// void pango_get_log_attrs (const char *text,  int length,  int level,  PangoLanguage *language,  PangoLogAttr *log_attrs,  int attrs_len);
-		pango_get_log_attrs(std.string.toStringz(text), length, level, language.getPgLanguageStruct(), logAttrs, attrsLen);
+		pango_get_log_attrs(std.string.toStringz(text), length, level, (language is null) ? null : language.getPgLanguageStruct(), logAttrs, attrsLen);
 	}
 	
 	/**

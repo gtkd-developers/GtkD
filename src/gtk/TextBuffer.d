@@ -477,7 +477,7 @@ public class TextBuffer : ObjectG
 	public this (TextTagTable table)
 	{
 		// GtkTextBuffer* gtk_text_buffer_new (GtkTextTagTable *table);
-		this(cast(GtkTextBuffer*)gtk_text_buffer_new(table.getTextTagTableStruct()) );
+		this(cast(GtkTextBuffer*)gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct()) );
 	}
 	
 	/**
@@ -543,7 +543,7 @@ public class TextBuffer : ObjectG
 	public void insert(TextIter iter, char[] text, int len)
 	{
 		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
-		gtk_text_buffer_insert(gtkTextBuffer, iter.getTextIterStruct(), std.string.toStringz(text), len);
+		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), len);
 	}
 	
 	/**
@@ -586,7 +586,7 @@ public class TextBuffer : ObjectG
 	public int insertInteractive(TextIter iter, char[] text, int len, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive(gtkTextBuffer, iter.getTextIterStruct(), std.string.toStringz(text), len, defaultEditable);
+		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), len, defaultEditable);
 	}
 	
 	/**
@@ -632,7 +632,7 @@ public class TextBuffer : ObjectG
 	public void insertRange(TextIter iter, TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_insert_range (GtkTextBuffer *buffer,  GtkTextIter *iter,  const GtkTextIter *start,  const GtkTextIter *end);
-		gtk_text_buffer_insert_range(gtkTextBuffer, iter.getTextIterStruct(), start.getTextIterStruct(), end.getTextIterStruct());
+		gtk_text_buffer_insert_range(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**
@@ -657,7 +657,7 @@ public class TextBuffer : ObjectG
 	public int insertRangeInteractive(TextIter iter, TextIter start, TextIter end, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_range_interactive  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean default_editable);
-		return gtk_text_buffer_insert_range_interactive(gtkTextBuffer, iter.getTextIterStruct(), start.getTextIterStruct(), end.getTextIterStruct(), defaultEditable);
+		return gtk_text_buffer_insert_range_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), defaultEditable);
 	}
 	
 	/**
@@ -682,7 +682,7 @@ public class TextBuffer : ObjectG
 	public void insertWithTags(TextIter iter, char[] text, int len, TextTag firstTag, ... )
 	{
 		// void gtk_text_buffer_insert_with_tags  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  GtkTextTag *first_tag,  ...);
-		gtk_text_buffer_insert_with_tags(gtkTextBuffer, iter.getTextIterStruct(), std.string.toStringz(text), len, firstTag.getTextTagStruct());
+		gtk_text_buffer_insert_with_tags(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), len, (firstTag is null) ? null : firstTag.getTextTagStruct());
 	}
 	
 	/**
@@ -704,7 +704,7 @@ public class TextBuffer : ObjectG
 	public void insertWithTagsByName(TextIter iter, char[] text, int len, char[] firstTagName, ... )
 	{
 		// void gtk_text_buffer_insert_with_tags_by_name  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  const gchar *first_tag_name,  ...);
-		gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, iter.getTextIterStruct(), std.string.toStringz(text), len, std.string.toStringz(firstTagName));
+		gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), len, std.string.toStringz(firstTagName));
 	}
 	
 	/**
@@ -725,7 +725,7 @@ public class TextBuffer : ObjectG
 	public void delet(TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_delete (GtkTextBuffer *buffer,  GtkTextIter *start,  GtkTextIter *end);
-		gtk_text_buffer_delete(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct());
+		gtk_text_buffer_delete(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**
@@ -748,7 +748,7 @@ public class TextBuffer : ObjectG
 	public int deleteInteractive(TextIter startIter, TextIter endIter, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_delete_interactive  (GtkTextBuffer *buffer,  GtkTextIter *start_iter,  GtkTextIter *end_iter,  gboolean default_editable);
-		return gtk_text_buffer_delete_interactive(gtkTextBuffer, startIter.getTextIterStruct(), endIter.getTextIterStruct(), defaultEditable);
+		return gtk_text_buffer_delete_interactive(gtkTextBuffer, (startIter is null) ? null : startIter.getTextIterStruct(), (endIter is null) ? null : endIter.getTextIterStruct(), defaultEditable);
 	}
 	
 	/**
@@ -776,7 +776,7 @@ public class TextBuffer : ObjectG
 	public int backspace(TextIter iter, int interactive, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_backspace (GtkTextBuffer *buffer,  GtkTextIter *iter,  gboolean interactive,  gboolean default_editable);
-		return gtk_text_buffer_backspace(gtkTextBuffer, iter.getTextIterStruct(), interactive, defaultEditable);
+		return gtk_text_buffer_backspace(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), interactive, defaultEditable);
 	}
 	
 	
@@ -802,7 +802,7 @@ public class TextBuffer : ObjectG
 	public char[] getText(TextIter start, TextIter end, int includeHiddenChars)
 	{
 		// gchar* gtk_text_buffer_get_text (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
-		return std.string.toString(gtk_text_buffer_get_text(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), includeHiddenChars) );
+		return std.string.toString(gtk_text_buffer_get_text(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars) );
 	}
 	
 	/**
@@ -830,7 +830,7 @@ public class TextBuffer : ObjectG
 	public char[] getSlice(TextIter start, TextIter end, int includeHiddenChars)
 	{
 		// gchar* gtk_text_buffer_get_slice (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
-		return std.string.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), includeHiddenChars) );
+		return std.string.toString(gtk_text_buffer_get_slice(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars) );
 	}
 	
 	/**
@@ -852,7 +852,7 @@ public class TextBuffer : ObjectG
 	public void insertPixbuf(TextIter iter, Pixbuf pixbuf)
 	{
 		// void gtk_text_buffer_insert_pixbuf (GtkTextBuffer *buffer,  GtkTextIter *iter,  GdkPixbuf *pixbuf);
-		gtk_text_buffer_insert_pixbuf(gtkTextBuffer, iter.getTextIterStruct(), pixbuf.getPixbufStruct());
+		gtk_text_buffer_insert_pixbuf(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
 	/**
@@ -877,7 +877,7 @@ public class TextBuffer : ObjectG
 	public void insertChildAnchor(TextIter iter, GtkTextChildAnchor* anchor)
 	{
 		// void gtk_text_buffer_insert_child_anchor  (GtkTextBuffer *buffer,  GtkTextIter *iter,  GtkTextChildAnchor *anchor);
-		gtk_text_buffer_insert_child_anchor(gtkTextBuffer, iter.getTextIterStruct(), anchor);
+		gtk_text_buffer_insert_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), anchor);
 	}
 	
 	/**
@@ -896,7 +896,7 @@ public class TextBuffer : ObjectG
 	public GtkTextChildAnchor* createChildAnchor(TextIter iter)
 	{
 		// GtkTextChildAnchor* gtk_text_buffer_create_child_anchor  (GtkTextBuffer *buffer,  GtkTextIter *iter);
-		return gtk_text_buffer_create_child_anchor(gtkTextBuffer, iter.getTextIterStruct());
+		return gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
 	}
 	
 	/**
@@ -929,7 +929,7 @@ public class TextBuffer : ObjectG
 	public TextMark createMark(char[] markName, TextIter where, int leftGravity)
 	{
 		// GtkTextMark* gtk_text_buffer_create_mark (GtkTextBuffer *buffer,  const gchar *mark_name,  const GtkTextIter *where,  gboolean left_gravity);
-		return new TextMark( gtk_text_buffer_create_mark(gtkTextBuffer, std.string.toStringz(markName), where.getTextIterStruct(), leftGravity) );
+		return new TextMark( gtk_text_buffer_create_mark(gtkTextBuffer, std.string.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity) );
 	}
 	
 	/**
@@ -945,7 +945,7 @@ public class TextBuffer : ObjectG
 	public void moveMark(TextMark mark, TextIter where)
 	{
 		// void gtk_text_buffer_move_mark (GtkTextBuffer *buffer,  GtkTextMark *mark,  const GtkTextIter *where);
-		gtk_text_buffer_move_mark(gtkTextBuffer, mark.getTextMarkStruct(), where.getTextIterStruct());
+		gtk_text_buffer_move_mark(gtkTextBuffer, (mark is null) ? null : mark.getTextMarkStruct(), (where is null) ? null : where.getTextIterStruct());
 	}
 	
 	/**
@@ -961,7 +961,7 @@ public class TextBuffer : ObjectG
 	public void moveMarkByName(char[] name, TextIter where)
 	{
 		// void gtk_text_buffer_move_mark_by_name  (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *where);
-		gtk_text_buffer_move_mark_by_name(gtkTextBuffer, std.string.toStringz(name), where.getTextIterStruct());
+		gtk_text_buffer_move_mark_by_name(gtkTextBuffer, std.string.toStringz(name), (where is null) ? null : where.getTextIterStruct());
 	}
 	
 	/**
@@ -982,7 +982,7 @@ public class TextBuffer : ObjectG
 	public void deleteMark(TextMark mark)
 	{
 		// void gtk_text_buffer_delete_mark (GtkTextBuffer *buffer,  GtkTextMark *mark);
-		gtk_text_buffer_delete_mark(gtkTextBuffer, mark.getTextMarkStruct());
+		gtk_text_buffer_delete_mark(gtkTextBuffer, (mark is null) ? null : mark.getTextMarkStruct());
 	}
 	
 	/**
@@ -1069,7 +1069,7 @@ public class TextBuffer : ObjectG
 	public void placeCursor(TextIter where)
 	{
 		// void gtk_text_buffer_place_cursor (GtkTextBuffer *buffer,  const GtkTextIter *where);
-		gtk_text_buffer_place_cursor(gtkTextBuffer, where.getTextIterStruct());
+		gtk_text_buffer_place_cursor(gtkTextBuffer, (where is null) ? null : where.getTextIterStruct());
 	}
 	
 	/**
@@ -1091,7 +1091,7 @@ public class TextBuffer : ObjectG
 	public void selectRange(TextIter ins, TextIter bound)
 	{
 		// void gtk_text_buffer_select_range (GtkTextBuffer *buffer,  const GtkTextIter *ins,  const GtkTextIter *bound);
-		gtk_text_buffer_select_range(gtkTextBuffer, ins.getTextIterStruct(), bound.getTextIterStruct());
+		gtk_text_buffer_select_range(gtkTextBuffer, (ins is null) ? null : ins.getTextIterStruct(), (bound is null) ? null : bound.getTextIterStruct());
 	}
 	
 	/**
@@ -1110,7 +1110,7 @@ public class TextBuffer : ObjectG
 	public void applyTag(TextTag tag, TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_apply_tag (GtkTextBuffer *buffer,  GtkTextTag *tag,  const GtkTextIter *start,  const GtkTextIter *end);
-		gtk_text_buffer_apply_tag(gtkTextBuffer, tag.getTextTagStruct(), start.getTextIterStruct(), end.getTextIterStruct());
+		gtk_text_buffer_apply_tag(gtkTextBuffer, (tag is null) ? null : tag.getTextTagStruct(), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**
@@ -1129,7 +1129,7 @@ public class TextBuffer : ObjectG
 	public void removeTag(TextTag tag, TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_remove_tag (GtkTextBuffer *buffer,  GtkTextTag *tag,  const GtkTextIter *start,  const GtkTextIter *end);
-		gtk_text_buffer_remove_tag(gtkTextBuffer, tag.getTextTagStruct(), start.getTextIterStruct(), end.getTextIterStruct());
+		gtk_text_buffer_remove_tag(gtkTextBuffer, (tag is null) ? null : tag.getTextTagStruct(), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**
@@ -1147,7 +1147,7 @@ public class TextBuffer : ObjectG
 	public void applyTagByName(char[] name, TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_apply_tag_by_name  (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *start,  const GtkTextIter *end);
-		gtk_text_buffer_apply_tag_by_name(gtkTextBuffer, std.string.toStringz(name), start.getTextIterStruct(), end.getTextIterStruct());
+		gtk_text_buffer_apply_tag_by_name(gtkTextBuffer, std.string.toStringz(name), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**
@@ -1165,7 +1165,7 @@ public class TextBuffer : ObjectG
 	public void removeTagByName(char[] name, TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_remove_tag_by_name  (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *start,  const GtkTextIter *end);
-		gtk_text_buffer_remove_tag_by_name(gtkTextBuffer, std.string.toStringz(name), start.getTextIterStruct(), end.getTextIterStruct());
+		gtk_text_buffer_remove_tag_by_name(gtkTextBuffer, std.string.toStringz(name), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**
@@ -1184,7 +1184,7 @@ public class TextBuffer : ObjectG
 	public void removeAllTags(TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_remove_all_tags (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end);
-		gtk_text_buffer_remove_all_tags(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct());
+		gtk_text_buffer_remove_all_tags(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**
@@ -1231,7 +1231,7 @@ public class TextBuffer : ObjectG
 	public void getIterAtLineOffset(TextIter iter, int lineNumber, int charOffset)
 	{
 		// void gtk_text_buffer_get_iter_at_line_offset  (GtkTextBuffer *buffer,  GtkTextIter *iter,  gint line_number,  gint char_offset);
-		gtk_text_buffer_get_iter_at_line_offset(gtkTextBuffer, iter.getTextIterStruct(), lineNumber, charOffset);
+		gtk_text_buffer_get_iter_at_line_offset(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), lineNumber, charOffset);
 	}
 	
 	/**
@@ -1249,7 +1249,7 @@ public class TextBuffer : ObjectG
 	public void getIterAtOffset(TextIter iter, int charOffset)
 	{
 		// void gtk_text_buffer_get_iter_at_offset  (GtkTextBuffer *buffer,  GtkTextIter *iter,  gint char_offset);
-		gtk_text_buffer_get_iter_at_offset(gtkTextBuffer, iter.getTextIterStruct(), charOffset);
+		gtk_text_buffer_get_iter_at_offset(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), charOffset);
 	}
 	
 	/**
@@ -1264,7 +1264,7 @@ public class TextBuffer : ObjectG
 	public void getIterAtLine(TextIter iter, int lineNumber)
 	{
 		// void gtk_text_buffer_get_iter_at_line  (GtkTextBuffer *buffer,  GtkTextIter *iter,  gint line_number);
-		gtk_text_buffer_get_iter_at_line(gtkTextBuffer, iter.getTextIterStruct(), lineNumber);
+		gtk_text_buffer_get_iter_at_line(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), lineNumber);
 	}
 	
 	/**
@@ -1284,7 +1284,7 @@ public class TextBuffer : ObjectG
 	public void getIterAtLineIndex(TextIter iter, int lineNumber, int byteIndex)
 	{
 		// void gtk_text_buffer_get_iter_at_line_index  (GtkTextBuffer *buffer,  GtkTextIter *iter,  gint line_number,  gint byte_index);
-		gtk_text_buffer_get_iter_at_line_index(gtkTextBuffer, iter.getTextIterStruct(), lineNumber, byteIndex);
+		gtk_text_buffer_get_iter_at_line_index(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), lineNumber, byteIndex);
 	}
 	
 	/**
@@ -1299,7 +1299,7 @@ public class TextBuffer : ObjectG
 	public void getIterAtMark(TextIter iter, TextMark mark)
 	{
 		// void gtk_text_buffer_get_iter_at_mark  (GtkTextBuffer *buffer,  GtkTextIter *iter,  GtkTextMark *mark);
-		gtk_text_buffer_get_iter_at_mark(gtkTextBuffer, iter.getTextIterStruct(), mark.getTextMarkStruct());
+		gtk_text_buffer_get_iter_at_mark(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (mark is null) ? null : mark.getTextMarkStruct());
 	}
 	
 	/**
@@ -1314,7 +1314,7 @@ public class TextBuffer : ObjectG
 	public void getIterAtChildAnchor(TextIter iter, GtkTextChildAnchor* anchor)
 	{
 		// void gtk_text_buffer_get_iter_at_child_anchor  (GtkTextBuffer *buffer,  GtkTextIter *iter,  GtkTextChildAnchor *anchor);
-		gtk_text_buffer_get_iter_at_child_anchor(gtkTextBuffer, iter.getTextIterStruct(), anchor);
+		gtk_text_buffer_get_iter_at_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), anchor);
 	}
 	
 	/**
@@ -1329,7 +1329,7 @@ public class TextBuffer : ObjectG
 	public void getStartIter(TextIter iter)
 	{
 		// void gtk_text_buffer_get_start_iter (GtkTextBuffer *buffer,  GtkTextIter *iter);
-		gtk_text_buffer_get_start_iter(gtkTextBuffer, iter.getTextIterStruct());
+		gtk_text_buffer_get_start_iter(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
 	}
 	
 	/**
@@ -1347,7 +1347,7 @@ public class TextBuffer : ObjectG
 	public void getEndIter(TextIter iter)
 	{
 		// void gtk_text_buffer_get_end_iter (GtkTextBuffer *buffer,  GtkTextIter *iter);
-		gtk_text_buffer_get_end_iter(gtkTextBuffer, iter.getTextIterStruct());
+		gtk_text_buffer_get_end_iter(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
 	}
 	
 	/**
@@ -1363,7 +1363,7 @@ public class TextBuffer : ObjectG
 	public void getBounds(TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_get_bounds (GtkTextBuffer *buffer,  GtkTextIter *start,  GtkTextIter *end);
-		gtk_text_buffer_get_bounds(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct());
+		gtk_text_buffer_get_bounds(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**
@@ -1436,7 +1436,7 @@ public class TextBuffer : ObjectG
 	public void pasteClipboard(Clipboard clipboard, TextIter overrideLocation, int defaultEditable)
 	{
 		// void gtk_text_buffer_paste_clipboard (GtkTextBuffer *buffer,  GtkClipboard *clipboard,  GtkTextIter *override_location,  gboolean default_editable);
-		gtk_text_buffer_paste_clipboard(gtkTextBuffer, clipboard.getClipboardStruct(), overrideLocation.getTextIterStruct(), defaultEditable);
+		gtk_text_buffer_paste_clipboard(gtkTextBuffer, (clipboard is null) ? null : clipboard.getClipboardStruct(), (overrideLocation is null) ? null : overrideLocation.getTextIterStruct(), defaultEditable);
 	}
 	
 	/**
@@ -1449,7 +1449,7 @@ public class TextBuffer : ObjectG
 	public void copyClipboard(Clipboard clipboard)
 	{
 		// void gtk_text_buffer_copy_clipboard (GtkTextBuffer *buffer,  GtkClipboard *clipboard);
-		gtk_text_buffer_copy_clipboard(gtkTextBuffer, clipboard.getClipboardStruct());
+		gtk_text_buffer_copy_clipboard(gtkTextBuffer, (clipboard is null) ? null : clipboard.getClipboardStruct());
 	}
 	
 	/**
@@ -1465,7 +1465,7 @@ public class TextBuffer : ObjectG
 	public void cutClipboard(Clipboard clipboard, int defaultEditable)
 	{
 		// void gtk_text_buffer_cut_clipboard (GtkTextBuffer *buffer,  GtkClipboard *clipboard,  gboolean default_editable);
-		gtk_text_buffer_cut_clipboard(gtkTextBuffer, clipboard.getClipboardStruct(), defaultEditable);
+		gtk_text_buffer_cut_clipboard(gtkTextBuffer, (clipboard is null) ? null : clipboard.getClipboardStruct(), defaultEditable);
 	}
 	
 	/**
@@ -1487,7 +1487,7 @@ public class TextBuffer : ObjectG
 	public int getSelectionBounds(TextIter start, TextIter end)
 	{
 		// gboolean gtk_text_buffer_get_selection_bounds  (GtkTextBuffer *buffer,  GtkTextIter *start,  GtkTextIter *end);
-		return gtk_text_buffer_get_selection_bounds(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct());
+		return gtk_text_buffer_get_selection_bounds(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**
@@ -1539,7 +1539,7 @@ public class TextBuffer : ObjectG
 	public void addSelectionClipboard(Clipboard clipboard)
 	{
 		// void gtk_text_buffer_add_selection_clipboard  (GtkTextBuffer *buffer,  GtkClipboard *clipboard);
-		gtk_text_buffer_add_selection_clipboard(gtkTextBuffer, clipboard.getClipboardStruct());
+		gtk_text_buffer_add_selection_clipboard(gtkTextBuffer, (clipboard is null) ? null : clipboard.getClipboardStruct());
 	}
 	
 	/**
@@ -1556,7 +1556,7 @@ public class TextBuffer : ObjectG
 	public void removeSelectionClipboard(Clipboard clipboard)
 	{
 		// void gtk_text_buffer_remove_selection_clipboard  (GtkTextBuffer *buffer,  GtkClipboard *clipboard);
-		gtk_text_buffer_remove_selection_clipboard(gtkTextBuffer, clipboard.getClipboardStruct());
+		gtk_text_buffer_remove_selection_clipboard(gtkTextBuffer, (clipboard is null) ? null : clipboard.getClipboardStruct());
 	}
 	
 	

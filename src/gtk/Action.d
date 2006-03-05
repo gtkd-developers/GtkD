@@ -359,7 +359,7 @@ public class Action : ObjectG
 	public void connectProxy(Widget proxy)
 	{
 		// void gtk_action_connect_proxy (GtkAction *action,  GtkWidget *proxy);
-		gtk_action_connect_proxy(gtkAction, proxy.getWidgetStruct());
+		gtk_action_connect_proxy(gtkAction, (proxy is null) ? null : proxy.getWidgetStruct());
 	}
 	
 	/**
@@ -374,7 +374,7 @@ public class Action : ObjectG
 	public void disconnectProxy(Widget proxy)
 	{
 		// void gtk_action_disconnect_proxy (GtkAction *action,  GtkWidget *proxy);
-		gtk_action_disconnect_proxy(gtkAction, proxy.getWidgetStruct());
+		gtk_action_disconnect_proxy(gtkAction, (proxy is null) ? null : proxy.getWidgetStruct());
 	}
 	
 	/**
@@ -436,7 +436,7 @@ public class Action : ObjectG
 	public void blockActivateFrom(Widget proxy)
 	{
 		// void gtk_action_block_activate_from (GtkAction *action,  GtkWidget *proxy);
-		gtk_action_block_activate_from(gtkAction, proxy.getWidgetStruct());
+		gtk_action_block_activate_from(gtkAction, (proxy is null) ? null : proxy.getWidgetStruct());
 	}
 	
 	/**
@@ -453,7 +453,7 @@ public class Action : ObjectG
 	public void unblockActivateFrom(Widget proxy)
 	{
 		// void gtk_action_unblock_activate_from  (GtkAction *action,  GtkWidget *proxy);
-		gtk_action_unblock_activate_from(gtkAction, proxy.getWidgetStruct());
+		gtk_action_unblock_activate_from(gtkAction, (proxy is null) ? null : proxy.getWidgetStruct());
 	}
 	
 	/**
@@ -519,7 +519,7 @@ public class Action : ObjectG
 	public void setAccelGroup(AccelGroup accelGroup)
 	{
 		// void gtk_action_set_accel_group (GtkAction *action,  GtkAccelGroup *accel_group);
-		gtk_action_set_accel_group(gtkAction, accelGroup.getAccelGroupStruct());
+		gtk_action_set_accel_group(gtkAction, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 	}
 	
 	

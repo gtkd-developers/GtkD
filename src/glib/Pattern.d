@@ -131,7 +131,7 @@ public class Pattern
 	public int equal(Pattern pspec2)
 	{
 		// gboolean g_pattern_spec_equal (GPatternSpec *pspec1,  GPatternSpec *pspec2);
-		return g_pattern_spec_equal(gPatternSpec, pspec2.getPatternStruct());
+		return g_pattern_spec_equal(gPatternSpec, (pspec2 is null) ? null : pspec2.getPatternStruct());
 	}
 	
 	/**

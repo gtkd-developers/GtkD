@@ -212,7 +212,7 @@ public class ButtonBox : Box
 	public int getChildSecondary(Widget child)
 	{
 		// gboolean gtk_button_box_get_child_secondary  (GtkButtonBox *widget,  GtkWidget *child);
-		return gtk_button_box_get_child_secondary(gtkButtonBox, child.getWidgetStruct());
+		return gtk_button_box_get_child_secondary(gtkButtonBox, (child is null) ? null : child.getWidgetStruct());
 	}
 	
 	
@@ -305,7 +305,7 @@ public class ButtonBox : Box
 	public void setChildSecondary(Widget child, int isSecondary)
 	{
 		// void gtk_button_box_set_child_secondary  (GtkButtonBox *widget,  GtkWidget *child,  gboolean is_secondary);
-		gtk_button_box_set_child_secondary(gtkButtonBox, child.getWidgetStruct(), isSecondary);
+		gtk_button_box_set_child_secondary(gtkButtonBox, (child is null) ? null : child.getWidgetStruct(), isSecondary);
 	}
 	
 	

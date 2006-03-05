@@ -380,7 +380,7 @@ public class IconView : Container
 	public this (TreeModel model)
 	{
 		// GtkWidget* gtk_icon_view_new_with_model (GtkTreeModel *model);
-		this(cast(GtkIconView*)gtk_icon_view_new_with_model(model.getTreeModelStruct()) );
+		this(cast(GtkIconView*)gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelStruct()) );
 	}
 	
 	/**
@@ -397,7 +397,7 @@ public class IconView : Container
 	public void setModel(TreeModel model)
 	{
 		// void gtk_icon_view_set_model (GtkIconView *icon_view,  GtkTreeModel *model);
-		gtk_icon_view_set_model(gtkIconView, model.getTreeModelStruct());
+		gtk_icon_view_set_model(gtkIconView, (model is null) ? null : model.getTreeModelStruct());
 	}
 	
 	/**
@@ -573,7 +573,7 @@ public class IconView : Container
 	public void setCursor(TreePath path, CellRenderer cell, int startEditing)
 	{
 		// void gtk_icon_view_set_cursor (GtkIconView *icon_view,  GtkTreePath *path,  GtkCellRenderer *cell,  gboolean start_editing);
-		gtk_icon_view_set_cursor(gtkIconView, path.getTreePathStruct(), cell.getCellRendererStruct(), startEditing);
+		gtk_icon_view_set_cursor(gtkIconView, (path is null) ? null : path.getTreePathStruct(), (cell is null) ? null : cell.getCellRendererStruct(), startEditing);
 	}
 	
 	/**
@@ -862,7 +862,7 @@ public class IconView : Container
 	public void selectPath(TreePath path)
 	{
 		// void gtk_icon_view_select_path (GtkIconView *icon_view,  GtkTreePath *path);
-		gtk_icon_view_select_path(gtkIconView, path.getTreePathStruct());
+		gtk_icon_view_select_path(gtkIconView, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -876,7 +876,7 @@ public class IconView : Container
 	public void unselectPath(TreePath path)
 	{
 		// void gtk_icon_view_unselect_path (GtkIconView *icon_view,  GtkTreePath *path);
-		gtk_icon_view_unselect_path(gtkIconView, path.getTreePathStruct());
+		gtk_icon_view_unselect_path(gtkIconView, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -893,7 +893,7 @@ public class IconView : Container
 	public int pathIsSelected(TreePath path)
 	{
 		// gboolean gtk_icon_view_path_is_selected (GtkIconView *icon_view,  GtkTreePath *path);
-		return gtk_icon_view_path_is_selected(gtkIconView, path.getTreePathStruct());
+		return gtk_icon_view_path_is_selected(gtkIconView, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -952,7 +952,7 @@ public class IconView : Container
 	public void itemActivated(TreePath path)
 	{
 		// void gtk_icon_view_item_activated (GtkIconView *icon_view,  GtkTreePath *path);
-		gtk_icon_view_item_activated(gtkIconView, path.getTreePathStruct());
+		gtk_icon_view_item_activated(gtkIconView, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -982,7 +982,7 @@ public class IconView : Container
 	public void scrollToPath(TreePath path, int useAlign, float rowAlign, float colAlign)
 	{
 		// void gtk_icon_view_scroll_to_path (GtkIconView *icon_view,  GtkTreePath *path,  gboolean use_align,  gfloat row_align,  gfloat col_align);
-		gtk_icon_view_scroll_to_path(gtkIconView, path.getTreePathStruct(), useAlign, rowAlign, colAlign);
+		gtk_icon_view_scroll_to_path(gtkIconView, (path is null) ? null : path.getTreePathStruct(), useAlign, rowAlign, colAlign);
 	}
 	
 	/**
@@ -1120,7 +1120,7 @@ public class IconView : Container
 	public void setDragDestItem(TreePath path, GtkIconViewDropPosition pos)
 	{
 		// void gtk_icon_view_set_drag_dest_item  (GtkIconView *icon_view,  GtkTreePath *path,  GtkIconViewDropPosition pos);
-		gtk_icon_view_set_drag_dest_item(gtkIconView, path.getTreePathStruct(), pos);
+		gtk_icon_view_set_drag_dest_item(gtkIconView, (path is null) ? null : path.getTreePathStruct(), pos);
 	}
 	
 	/**
@@ -1181,7 +1181,7 @@ public class IconView : Container
 	public Pixmap createDragIcon(TreePath path)
 	{
 		// GdkPixmap* gtk_icon_view_create_drag_icon (GtkIconView *icon_view,  GtkTreePath *path);
-		return new Pixmap( gtk_icon_view_create_drag_icon(gtkIconView, path.getTreePathStruct()) );
+		return new Pixmap( gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct()) );
 	}
 	
 	

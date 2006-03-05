@@ -182,7 +182,7 @@ public class RadioAction : ToggleAction
 	public void setGroup(ListSG group)
 	{
 		// void gtk_radio_action_set_group (GtkRadioAction *action,  GSList *group);
-		gtk_radio_action_set_group(gtkRadioAction, group.getListSGStruct());
+		gtk_radio_action_set_group(gtkRadioAction, (group is null) ? null : group.getListSGStruct());
 	}
 	
 	/**

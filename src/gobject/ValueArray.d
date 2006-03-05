@@ -153,7 +153,7 @@ public class ValueArray
 	public ValueArray append(Value value)
 	{
 		// GValueArray* g_value_array_append (GValueArray *value_array,  const GValue *value);
-		return new ValueArray( g_value_array_append(gValueArray, value.getValueStruct()) );
+		return new ValueArray( g_value_array_append(gValueArray, (value is null) ? null : value.getValueStruct()) );
 	}
 	
 	/**
@@ -168,7 +168,7 @@ public class ValueArray
 	public ValueArray prepend(Value value)
 	{
 		// GValueArray* g_value_array_prepend (GValueArray *value_array,  const GValue *value);
-		return new ValueArray( g_value_array_prepend(gValueArray, value.getValueStruct()) );
+		return new ValueArray( g_value_array_prepend(gValueArray, (value is null) ? null : value.getValueStruct()) );
 	}
 	
 	/**
@@ -185,7 +185,7 @@ public class ValueArray
 	public ValueArray insert(uint index, Value value)
 	{
 		// GValueArray* g_value_array_insert (GValueArray *value_array,  guint index_,  const GValue *value);
-		return new ValueArray( g_value_array_insert(gValueArray, index, value.getValueStruct()) );
+		return new ValueArray( g_value_array_insert(gValueArray, index, (value is null) ? null : value.getValueStruct()) );
 	}
 	
 	/**

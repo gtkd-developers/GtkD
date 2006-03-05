@@ -245,7 +245,7 @@ public class IconTheme : ObjectG
 	public static IconTheme getForScreen(Screen screen)
 	{
 		// GtkIconTheme* gtk_icon_theme_get_for_screen (GdkScreen *screen);
-		return new IconTheme( gtk_icon_theme_get_for_screen(screen.getScreenStruct()) );
+		return new IconTheme( gtk_icon_theme_get_for_screen((screen is null) ? null : screen.getScreenStruct()) );
 	}
 	
 	/**
@@ -261,7 +261,7 @@ public class IconTheme : ObjectG
 	public void setScreen(Screen screen)
 	{
 		// void gtk_icon_theme_set_screen (GtkIconTheme *icon_theme,  GdkScreen *screen);
-		gtk_icon_theme_set_screen(gtkIconTheme, screen.getScreenStruct());
+		gtk_icon_theme_set_screen(gtkIconTheme, (screen is null) ? null : screen.getScreenStruct());
 	}
 	
 	/**
@@ -543,7 +543,7 @@ public class IconTheme : ObjectG
 	public static void addBuiltinIcon(char[] iconName, int size, Pixbuf pixbuf)
 	{
 		// void gtk_icon_theme_add_builtin_icon (const gchar *icon_name,  gint size,  GdkPixbuf *pixbuf);
-		gtk_icon_theme_add_builtin_icon(std.string.toStringz(iconName), size, pixbuf.getPixbufStruct());
+		gtk_icon_theme_add_builtin_icon(std.string.toStringz(iconName), size, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
 	

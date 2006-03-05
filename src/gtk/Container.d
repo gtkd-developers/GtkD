@@ -297,7 +297,7 @@ public class Container : Widget
 	public void add(Widget widget)
 	{
 		// void gtk_container_add (GtkContainer *container,  GtkWidget *widget);
-		gtk_container_add(gtkContainer, widget.getWidgetStruct());
+		gtk_container_add(gtkContainer, (widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -318,7 +318,7 @@ public class Container : Widget
 	public void remove(Widget widget)
 	{
 		// void gtk_container_remove (GtkContainer *container,  GtkWidget *widget);
-		gtk_container_remove(gtkContainer, widget.getWidgetStruct());
+		gtk_container_remove(gtkContainer, (widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**
@@ -337,7 +337,7 @@ public class Container : Widget
 	public void addWithProperties(Widget widget, char[] firstPropName, ... )
 	{
 		// void gtk_container_add_with_properties  (GtkContainer *container,  GtkWidget *widget,  const gchar *first_prop_name,  ...);
-		gtk_container_add_with_properties(gtkContainer, widget.getWidgetStruct(), std.string.toStringz(firstPropName));
+		gtk_container_add_with_properties(gtkContainer, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(firstPropName));
 	}
 	
 	/**
@@ -449,7 +449,7 @@ public class Container : Widget
 	public void setFocusChild(Widget child)
 	{
 		// void gtk_container_set_focus_child (GtkContainer *container,  GtkWidget *child);
-		gtk_container_set_focus_child(gtkContainer, child.getWidgetStruct());
+		gtk_container_set_focus_child(gtkContainer, (child is null) ? null : child.getWidgetStruct());
 	}
 	
 	/**
@@ -484,7 +484,7 @@ public class Container : Widget
 	public void setFocusVadjustment(Adjustment adjustment)
 	{
 		// void gtk_container_set_focus_vadjustment  (GtkContainer *container,  GtkAdjustment *adjustment);
-		gtk_container_set_focus_vadjustment(gtkContainer, adjustment.getAdjustmentStruct());
+		gtk_container_set_focus_vadjustment(gtkContainer, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	/**
@@ -519,7 +519,7 @@ public class Container : Widget
 	public void setFocusHadjustment(Adjustment adjustment)
 	{
 		// void gtk_container_set_focus_hadjustment  (GtkContainer *container,  GtkAdjustment *adjustment);
-		gtk_container_set_focus_hadjustment(gtkContainer, adjustment.getAdjustmentStruct());
+		gtk_container_set_focus_hadjustment(gtkContainer, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	/**
@@ -562,7 +562,7 @@ public class Container : Widget
 	public void childGet(Widget child, char[] firstPropName, ... )
 	{
 		// void gtk_container_child_get (GtkContainer *container,  GtkWidget *child,  const gchar *first_prop_name,  ...);
-		gtk_container_child_get(gtkContainer, child.getWidgetStruct(), std.string.toStringz(firstPropName));
+		gtk_container_child_get(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(firstPropName));
 	}
 	
 	/**
@@ -580,7 +580,7 @@ public class Container : Widget
 	public void childSet(Widget child, char[] firstPropName, ... )
 	{
 		// void gtk_container_child_set (GtkContainer *container,  GtkWidget *child,  const gchar *first_prop_name,  ...);
-		gtk_container_child_set(gtkContainer, child.getWidgetStruct(), std.string.toStringz(firstPropName));
+		gtk_container_child_set(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(firstPropName));
 	}
 	
 	/**
@@ -597,7 +597,7 @@ public class Container : Widget
 	public void childGetProperty(Widget child, char[] propertyName, Value value)
 	{
 		// void gtk_container_child_get_property  (GtkContainer *container,  GtkWidget *child,  const gchar *property_name,  GValue *value);
-		gtk_container_child_get_property(gtkContainer, child.getWidgetStruct(), std.string.toStringz(propertyName), value.getValueStruct());
+		gtk_container_child_get_property(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -614,7 +614,7 @@ public class Container : Widget
 	public void childSetProperty(Widget child, char[] propertyName, Value value)
 	{
 		// void gtk_container_child_set_property  (GtkContainer *container,  GtkWidget *child,  const gchar *property_name,  const GValue *value);
-		gtk_container_child_set_property(gtkContainer, child.getWidgetStruct(), std.string.toStringz(propertyName), value.getValueStruct());
+		gtk_container_child_set_property(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -632,7 +632,7 @@ public class Container : Widget
 	public void childGetValist(Widget child, char[] firstPropertyName, void* varArgs)
 	{
 		// void gtk_container_child_get_valist (GtkContainer *container,  GtkWidget *child,  const gchar *first_property_name,  va_list var_args);
-		gtk_container_child_get_valist(gtkContainer, child.getWidgetStruct(), std.string.toStringz(firstPropertyName), varArgs);
+		gtk_container_child_get_valist(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(firstPropertyName), varArgs);
 	}
 	
 	/**
@@ -650,7 +650,7 @@ public class Container : Widget
 	public void childSetValist(Widget child, char[] firstPropertyName, void* varArgs)
 	{
 		// void gtk_container_child_set_valist (GtkContainer *container,  GtkWidget *child,  const gchar *first_property_name,  va_list var_args);
-		gtk_container_child_set_valist(gtkContainer, child.getWidgetStruct(), std.string.toStringz(firstPropertyName), varArgs);
+		gtk_container_child_set_valist(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(firstPropertyName), varArgs);
 	}
 	
 	/**
@@ -730,7 +730,7 @@ public class Container : Widget
 	public void propagateExpose(Widget child, GdkEventExpose* event)
 	{
 		// void gtk_container_propagate_expose (GtkContainer *container,  GtkWidget *child,  GdkEventExpose *event);
-		gtk_container_propagate_expose(gtkContainer, child.getWidgetStruct(), event);
+		gtk_container_propagate_expose(gtkContainer, (child is null) ? null : child.getWidgetStruct(), event);
 	}
 	
 	/**
@@ -772,7 +772,7 @@ public class Container : Widget
 	public void setFocusChain(ListG focusableWidgets)
 	{
 		// void gtk_container_set_focus_chain (GtkContainer *container,  GList *focusable_widgets);
-		gtk_container_set_focus_chain(gtkContainer, focusableWidgets.getListGStruct());
+		gtk_container_set_focus_chain(gtkContainer, (focusableWidgets is null) ? null : focusableWidgets.getListGStruct());
 	}
 	
 	/**
@@ -814,7 +814,7 @@ public class Container : Widget
 	public static void classInstallChildProperty(Container cclass, uint propertyId, GParamSpec* pspec)
 	{
 		// void gtk_container_class_install_child_property  (GtkContainerClass *cclass,  guint property_id,  GParamSpec *pspec);
-		gtk_container_class_install_child_property(cclass.getContainerStruct(), propertyId, pspec);
+		gtk_container_class_install_child_property((cclass is null) ? null : cclass.getContainerStruct(), propertyId, pspec);
 	}
 	
 	/**

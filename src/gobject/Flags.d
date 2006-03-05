@@ -172,7 +172,7 @@ public class Flags
 	public static GType registerStatic(char[] name, Flags _StaticValues)
 	{
 		// GType g_flags_register_static (const gchar *name,  const GFlagsValue *const_static_values);
-		return g_flags_register_static(std.string.toStringz(name), _StaticValues.getFlagsStruct());
+		return g_flags_register_static(std.string.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
 	}
 	
 	
@@ -195,6 +195,6 @@ public class Flags
 	public static void completeTypeInfo(GType type, GTypeInfo* info, Flags _Values)
 	{
 		// void g_flags_complete_type_info (GType g_flags_type,  GTypeInfo *info,  const GFlagsValue *const_values);
-		g_flags_complete_type_info(type, info, _Values.getFlagsStruct());
+		g_flags_complete_type_info(type, info, (_Values is null) ? null : _Values.getFlagsStruct());
 	}
 }

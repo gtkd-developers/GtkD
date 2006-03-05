@@ -127,7 +127,7 @@ public class Colormap
 	public this (Visual visual, int allocate)
 	{
 		// GdkColormap* gdk_colormap_new (GdkVisual *visual,  gboolean allocate);
-		this(cast(GdkColormap*)gdk_colormap_new(visual.getVisualStruct(), allocate) );
+		this(cast(GdkColormap*)gdk_colormap_new((visual is null) ? null : visual.getVisualStruct(), allocate) );
 	}
 	
 	/**
@@ -230,7 +230,7 @@ public class Colormap
 	public int allocColors(Color colors, int ncolors, int writeable, int bestMatch, int* success)
 	{
 		// gint gdk_colormap_alloc_colors (GdkColormap *colormap,  GdkColor *colors,  gint ncolors,  gboolean writeable,  gboolean best_match,  gboolean *success);
-		return gdk_colormap_alloc_colors(gdkColormap, colors.getColorStruct(), ncolors, writeable, bestMatch, success);
+		return gdk_colormap_alloc_colors(gdkColormap, (colors is null) ? null : colors.getColorStruct(), ncolors, writeable, bestMatch, success);
 	}
 	
 	/**
@@ -254,7 +254,7 @@ public class Colormap
 	public int allocColor(Color color, int writeable, int bestMatch)
 	{
 		// gboolean gdk_colormap_alloc_color (GdkColormap *colormap,  GdkColor *color,  gboolean writeable,  gboolean best_match);
-		return gdk_colormap_alloc_color(gdkColormap, color.getColorStruct(), writeable, bestMatch);
+		return gdk_colormap_alloc_color(gdkColormap, (color is null) ? null : color.getColorStruct(), writeable, bestMatch);
 	}
 	
 	/**
@@ -269,7 +269,7 @@ public class Colormap
 	public void freeColors(Color colors, int ncolors)
 	{
 		// void gdk_colormap_free_colors (GdkColormap *colormap,  GdkColor *colors,  gint ncolors);
-		gdk_colormap_free_colors(gdkColormap, colors.getColorStruct(), ncolors);
+		gdk_colormap_free_colors(gdkColormap, (colors is null) ? null : colors.getColorStruct(), ncolors);
 	}
 	
 	/**
@@ -292,7 +292,7 @@ public class Colormap
 	public void queryColor(uint pixel, Color result)
 	{
 		// void gdk_colormap_query_color (GdkColormap *colormap,  gulong pixel,  GdkColor *result);
-		gdk_colormap_query_color(gdkColormap, pixel, result.getColorStruct());
+		gdk_colormap_query_color(gdkColormap, pixel, (result is null) ? null : result.getColorStruct());
 	}
 	
 	/**
@@ -338,7 +338,7 @@ public class Colormap
 	public void gdkColorsStore(Color colors, int ncolors)
 	{
 		// void gdk_colors_store (GdkColormap *colormap,  GdkColor *colors,  gint ncolors);
-		gdk_colors_store(gdkColormap, colors.getColorStruct(), ncolors);
+		gdk_colors_store(gdkColormap, (colors is null) ? null : colors.getColorStruct(), ncolors);
 	}
 	
 	

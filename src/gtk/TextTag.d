@@ -200,7 +200,7 @@ public class TextTag : ObjectG
 	public int event(ObjectG eventObject, Event event, TextIter iter)
 	{
 		// gboolean gtk_text_tag_event (GtkTextTag *tag,  GObject *event_object,  GdkEvent *event,  const GtkTextIter *iter);
-		return gtk_text_tag_event(gtkTextTag, eventObject.getObjectGStruct(), event.getEventStruct(), iter.getTextIterStruct());
+		return gtk_text_tag_event(gtkTextTag, (eventObject is null) ? null : eventObject.getObjectGStruct(), (event is null) ? null : event.getEventStruct(), (iter is null) ? null : iter.getTextIterStruct());
 	}
 	
 	

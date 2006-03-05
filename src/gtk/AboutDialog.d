@@ -521,7 +521,7 @@ public class AboutDialog : Dialog
 	public void setLogo(Pixbuf logo)
 	{
 		// void gtk_about_dialog_set_logo (GtkAboutDialog *about,  GdkPixbuf *logo);
-		gtk_about_dialog_set_logo(gtkAboutDialog, logo.getPixbufStruct());
+		gtk_about_dialog_set_logo(gtkAboutDialog, (logo is null) ? null : logo.getPixbufStruct());
 	}
 	
 	/**
@@ -618,7 +618,7 @@ public class AboutDialog : Dialog
 	public static void showAboutDialog(Window parent, char[] firstPropertyName, ... )
 	{
 		// void gtk_show_about_dialog (GtkWindow *parent,  const gchar *first_property_name,  ...);
-		gtk_show_about_dialog(parent.getWindowStruct(), std.string.toStringz(firstPropertyName));
+		gtk_show_about_dialog((parent is null) ? null : parent.getWindowStruct(), std.string.toStringz(firstPropertyName));
 	}
 	
 	

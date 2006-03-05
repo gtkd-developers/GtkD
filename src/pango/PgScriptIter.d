@@ -180,7 +180,7 @@ public class PgScriptIter
 	public static int pangoLanguageIncludesScript(PgLanguage language, PangoScript script)
 	{
 		// gboolean pango_language_includes_script (PangoLanguage *language,  PangoScript script);
-		return pango_language_includes_script(language.getPgLanguageStruct(), script);
+		return pango_language_includes_script((language is null) ? null : language.getPgLanguageStruct(), script);
 	}
 	
 	/**

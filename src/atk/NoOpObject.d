@@ -97,6 +97,6 @@ public class NoOpObject : ObjectAtk
 	public static AtkObject* newNoOpObject(ObjectG obj)
 	{
 		// AtkObject* atk_no_op_object_new (GObject *obj);
-		return atk_no_op_object_new(obj.getObjectGStruct());
+		return atk_no_op_object_new((obj is null) ? null : obj.getObjectGStruct());
 	}
 }

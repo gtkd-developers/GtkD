@@ -142,7 +142,7 @@ public class MenuToolButton : ToolButton
 	public static ToolItem newMenuToolButton(Widget iconWidget, char[] label)
 	{
 		// GtkToolItem* gtk_menu_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
-		return new ToolItem( gtk_menu_tool_button_new(iconWidget.getWidgetStruct(), std.string.toStringz(label)) );
+		return new ToolItem( gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), std.string.toStringz(label)) );
 	}
 	
 	/**
@@ -173,7 +173,7 @@ public class MenuToolButton : ToolButton
 	public void setMenu(Widget menu)
 	{
 		// void gtk_menu_tool_button_set_menu (GtkMenuToolButton *button,  GtkWidget *menu);
-		gtk_menu_tool_button_set_menu(gtkMenuToolButton, menu.getWidgetStruct());
+		gtk_menu_tool_button_set_menu(gtkMenuToolButton, (menu is null) ? null : menu.getWidgetStruct());
 	}
 	
 	/**
@@ -226,6 +226,6 @@ public class MenuToolButton : ToolButton
 	public void setArrowTooltip(Tooltips tooltips, char[] tipText, char[] tipPrivate)
 	{
 		// void gtk_menu_tool_button_set_arrow_tooltip  (GtkMenuToolButton *button,  GtkTooltips *tooltips,  const gchar *tip_text,  const gchar *tip_private);
-		gtk_menu_tool_button_set_arrow_tooltip(gtkMenuToolButton, tooltips.getTooltipsStruct(), std.string.toStringz(tipText), std.string.toStringz(tipPrivate));
+		gtk_menu_tool_button_set_arrow_tooltip(gtkMenuToolButton, (tooltips is null) ? null : tooltips.getTooltipsStruct(), std.string.toStringz(tipText), std.string.toStringz(tipPrivate));
 	}
 }

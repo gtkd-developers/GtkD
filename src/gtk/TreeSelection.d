@@ -240,7 +240,7 @@ public class TreeSelection : ObjectG
 	public int getSelected(GtkTreeModel** model, TreeIter iter)
 	{
 		// gboolean gtk_tree_selection_get_selected (GtkTreeSelection *selection,  GtkTreeModel **model,  GtkTreeIter *iter);
-		return gtk_tree_selection_get_selected(gtkTreeSelection, model, iter.getTreeIterStruct());
+		return gtk_tree_selection_get_selected(gtkTreeSelection, model, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -306,7 +306,7 @@ public class TreeSelection : ObjectG
 	public void selectPath(TreePath path)
 	{
 		// void gtk_tree_selection_select_path (GtkTreeSelection *selection,  GtkTreePath *path);
-		gtk_tree_selection_select_path(gtkTreeSelection, path.getTreePathStruct());
+		gtk_tree_selection_select_path(gtkTreeSelection, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -319,7 +319,7 @@ public class TreeSelection : ObjectG
 	public void unselectPath(TreePath path)
 	{
 		// void gtk_tree_selection_unselect_path  (GtkTreeSelection *selection,  GtkTreePath *path);
-		gtk_tree_selection_unselect_path(gtkTreeSelection, path.getTreePathStruct());
+		gtk_tree_selection_unselect_path(gtkTreeSelection, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -335,7 +335,7 @@ public class TreeSelection : ObjectG
 	public int pathIsSelected(TreePath path)
 	{
 		// gboolean gtk_tree_selection_path_is_selected  (GtkTreeSelection *selection,  GtkTreePath *path);
-		return gtk_tree_selection_path_is_selected(gtkTreeSelection, path.getTreePathStruct());
+		return gtk_tree_selection_path_is_selected(gtkTreeSelection, (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -348,7 +348,7 @@ public class TreeSelection : ObjectG
 	public void selectIter(TreeIter iter)
 	{
 		// void gtk_tree_selection_select_iter (GtkTreeSelection *selection,  GtkTreeIter *iter);
-		gtk_tree_selection_select_iter(gtkTreeSelection, iter.getTreeIterStruct());
+		gtk_tree_selection_select_iter(gtkTreeSelection, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -361,7 +361,7 @@ public class TreeSelection : ObjectG
 	public void unselectIter(TreeIter iter)
 	{
 		// void gtk_tree_selection_unselect_iter  (GtkTreeSelection *selection,  GtkTreeIter *iter);
-		gtk_tree_selection_unselect_iter(gtkTreeSelection, iter.getTreeIterStruct());
+		gtk_tree_selection_unselect_iter(gtkTreeSelection, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -376,7 +376,7 @@ public class TreeSelection : ObjectG
 	public int iterIsSelected(TreeIter iter)
 	{
 		// gboolean gtk_tree_selection_iter_is_selected  (GtkTreeSelection *selection,  GtkTreeIter *iter);
-		return gtk_tree_selection_iter_is_selected(gtkTreeSelection, iter.getTreeIterStruct());
+		return gtk_tree_selection_iter_is_selected(gtkTreeSelection, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -415,7 +415,7 @@ public class TreeSelection : ObjectG
 	public void selectRange(TreePath startPath, TreePath endPath)
 	{
 		// void gtk_tree_selection_select_range (GtkTreeSelection *selection,  GtkTreePath *start_path,  GtkTreePath *end_path);
-		gtk_tree_selection_select_range(gtkTreeSelection, startPath.getTreePathStruct(), endPath.getTreePathStruct());
+		gtk_tree_selection_select_range(gtkTreeSelection, (startPath is null) ? null : startPath.getTreePathStruct(), (endPath is null) ? null : endPath.getTreePathStruct());
 	}
 	
 	/**
@@ -446,6 +446,6 @@ public class TreeSelection : ObjectG
 	public void unselectRange(TreePath startPath, TreePath endPath)
 	{
 		// void gtk_tree_selection_unselect_range  (GtkTreeSelection *selection,  GtkTreePath *start_path,  GtkTreePath *end_path);
-		gtk_tree_selection_unselect_range(gtkTreeSelection, startPath.getTreePathStruct(), endPath.getTreePathStruct());
+		gtk_tree_selection_unselect_range(gtkTreeSelection, (startPath is null) ? null : startPath.getTreePathStruct(), (endPath is null) ? null : endPath.getTreePathStruct());
 	}
 }

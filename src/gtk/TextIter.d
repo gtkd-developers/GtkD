@@ -272,7 +272,7 @@ public class TextIter
 	public char[] getSlice(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_slice (const GtkTextIter *start,  const GtkTextIter *end);
-		return std.string.toString(gtk_text_iter_get_slice(gtkTextIter, end.getTextIterStruct()) );
+		return std.string.toString(gtk_text_iter_get_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
 	}
 	
 	/**
@@ -291,7 +291,7 @@ public class TextIter
 	public char[] getText(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_text (const GtkTextIter *start,  const GtkTextIter *end);
-		return std.string.toString(gtk_text_iter_get_text(gtkTextIter, end.getTextIterStruct()) );
+		return std.string.toString(gtk_text_iter_get_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
 	}
 	
 	/**
@@ -308,7 +308,7 @@ public class TextIter
 	public char[] getVisibleSlice(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_visible_slice (const GtkTextIter *start,  const GtkTextIter *end);
-		return std.string.toString(gtk_text_iter_get_visible_slice(gtkTextIter, end.getTextIterStruct()) );
+		return std.string.toString(gtk_text_iter_get_visible_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
 	}
 	
 	/**
@@ -325,7 +325,7 @@ public class TextIter
 	public char[] getVisibleText(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_visible_text (const GtkTextIter *start,  const GtkTextIter *end);
-		return std.string.toString(gtk_text_iter_get_visible_text(gtkTextIter, end.getTextIterStruct()) );
+		return std.string.toString(gtk_text_iter_get_visible_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
 	}
 	
 	/**
@@ -412,7 +412,7 @@ public class TextIter
 	public int beginsTag(TextTag tag)
 	{
 		// gboolean gtk_text_iter_begins_tag (const GtkTextIter *iter,  GtkTextTag *tag);
-		return gtk_text_iter_begins_tag(gtkTextIter, tag.getTextTagStruct());
+		return gtk_text_iter_begins_tag(gtkTextIter, (tag is null) ? null : tag.getTextTagStruct());
 	}
 	
 	/**
@@ -432,7 +432,7 @@ public class TextIter
 	public int endsTag(TextTag tag)
 	{
 		// gboolean gtk_text_iter_ends_tag (const GtkTextIter *iter,  GtkTextTag *tag);
-		return gtk_text_iter_ends_tag(gtkTextIter, tag.getTextTagStruct());
+		return gtk_text_iter_ends_tag(gtkTextIter, (tag is null) ? null : tag.getTextTagStruct());
 	}
 	
 	/**
@@ -449,7 +449,7 @@ public class TextIter
 	public int togglesTag(TextTag tag)
 	{
 		// gboolean gtk_text_iter_toggles_tag (const GtkTextIter *iter,  GtkTextTag *tag);
-		return gtk_text_iter_toggles_tag(gtkTextIter, tag.getTextTagStruct());
+		return gtk_text_iter_toggles_tag(gtkTextIter, (tag is null) ? null : tag.getTextTagStruct());
 	}
 	
 	/**
@@ -464,7 +464,7 @@ public class TextIter
 	public int hasTag(TextTag tag)
 	{
 		// gboolean gtk_text_iter_has_tag (const GtkTextIter *iter,  GtkTextTag *tag);
-		return gtk_text_iter_has_tag(gtkTextIter, tag.getTextTagStruct());
+		return gtk_text_iter_has_tag(gtkTextIter, (tag is null) ? null : tag.getTextTagStruct());
 	}
 	
 	/**
@@ -722,7 +722,7 @@ public class TextIter
 	public int getAttributes(TextAttributes values)
 	{
 		// gboolean gtk_text_iter_get_attributes (const GtkTextIter *iter,  GtkTextAttributes *values);
-		return gtk_text_iter_get_attributes(gtkTextIter, values.getTextAttributesStruct());
+		return gtk_text_iter_get_attributes(gtkTextIter, (values is null) ? null : values.getTextAttributesStruct());
 	}
 	
 	/**
@@ -1479,7 +1479,7 @@ public class TextIter
 	public int forwardToTagToggle(TextTag tag)
 	{
 		// gboolean gtk_text_iter_forward_to_tag_toggle  (GtkTextIter *iter,  GtkTextTag *tag);
-		return gtk_text_iter_forward_to_tag_toggle(gtkTextIter, tag.getTextTagStruct());
+		return gtk_text_iter_forward_to_tag_toggle(gtkTextIter, (tag is null) ? null : tag.getTextTagStruct());
 	}
 	
 	/**
@@ -1500,7 +1500,7 @@ public class TextIter
 	public int backwardToTagToggle(TextTag tag)
 	{
 		// gboolean gtk_text_iter_backward_to_tag_toggle  (GtkTextIter *iter,  GtkTextTag *tag);
-		return gtk_text_iter_backward_to_tag_toggle(gtkTextIter, tag.getTextTagStruct());
+		return gtk_text_iter_backward_to_tag_toggle(gtkTextIter, (tag is null) ? null : tag.getTextTagStruct());
 	}
 	
 	
@@ -1523,7 +1523,7 @@ public class TextIter
 	public int forwardFindChar(GtkTextCharPredicate pred, void* userData, TextIter limit)
 	{
 		// gboolean gtk_text_iter_forward_find_char (GtkTextIter *iter,  GtkTextCharPredicate pred,  gpointer user_data,  const GtkTextIter *limit);
-		return gtk_text_iter_forward_find_char(gtkTextIter, pred, userData, limit.getTextIterStruct());
+		return gtk_text_iter_forward_find_char(gtkTextIter, pred, userData, (limit is null) ? null : limit.getTextIterStruct());
 	}
 	
 	/**
@@ -1542,7 +1542,7 @@ public class TextIter
 	public int backwardFindChar(GtkTextCharPredicate pred, void* userData, TextIter limit)
 	{
 		// gboolean gtk_text_iter_backward_find_char  (GtkTextIter *iter,  GtkTextCharPredicate pred,  gpointer user_data,  const GtkTextIter *limit);
-		return gtk_text_iter_backward_find_char(gtkTextIter, pred, userData, limit.getTextIterStruct());
+		return gtk_text_iter_backward_find_char(gtkTextIter, pred, userData, (limit is null) ? null : limit.getTextIterStruct());
 	}
 	
 	
@@ -1578,7 +1578,7 @@ public class TextIter
 	public int forwardSearch(char[] str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
 	{
 		// gboolean gtk_text_iter_forward_search (const GtkTextIter *iter,  const gchar *str,  GtkTextSearchFlags flags,  GtkTextIter *match_start,  GtkTextIter *match_end,  const GtkTextIter *limit);
-		return gtk_text_iter_forward_search(gtkTextIter, std.string.toStringz(str), flags, matchStart.getTextIterStruct(), matchEnd.getTextIterStruct(), limit.getTextIterStruct());
+		return gtk_text_iter_forward_search(gtkTextIter, std.string.toStringz(str), flags, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), (limit is null) ? null : limit.getTextIterStruct());
 	}
 	
 	/**
@@ -1601,7 +1601,7 @@ public class TextIter
 	public int backwardSearch(char[] str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
 	{
 		// gboolean gtk_text_iter_backward_search (const GtkTextIter *iter,  const gchar *str,  GtkTextSearchFlags flags,  GtkTextIter *match_start,  GtkTextIter *match_end,  const GtkTextIter *limit);
-		return gtk_text_iter_backward_search(gtkTextIter, std.string.toStringz(str), flags, matchStart.getTextIterStruct(), matchEnd.getTextIterStruct(), limit.getTextIterStruct());
+		return gtk_text_iter_backward_search(gtkTextIter, std.string.toStringz(str), flags, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), (limit is null) ? null : limit.getTextIterStruct());
 	}
 	
 	/**
@@ -1620,7 +1620,7 @@ public class TextIter
 	public int equal(TextIter rhs)
 	{
 		// gboolean gtk_text_iter_equal (const GtkTextIter *lhs,  const GtkTextIter *rhs);
-		return gtk_text_iter_equal(gtkTextIter, rhs.getTextIterStruct());
+		return gtk_text_iter_equal(gtkTextIter, (rhs is null) ? null : rhs.getTextIterStruct());
 	}
 	
 	/**
@@ -1638,7 +1638,7 @@ public class TextIter
 	public int compare(TextIter rhs)
 	{
 		// gint gtk_text_iter_compare (const GtkTextIter *lhs,  const GtkTextIter *rhs);
-		return gtk_text_iter_compare(gtkTextIter, rhs.getTextIterStruct());
+		return gtk_text_iter_compare(gtkTextIter, (rhs is null) ? null : rhs.getTextIterStruct());
 	}
 	
 	/**
@@ -1656,7 +1656,7 @@ public class TextIter
 	public int inRange(TextIter start, TextIter end)
 	{
 		// gboolean gtk_text_iter_in_range (const GtkTextIter *iter,  const GtkTextIter *start,  const GtkTextIter *end);
-		return gtk_text_iter_in_range(gtkTextIter, start.getTextIterStruct(), end.getTextIterStruct());
+		return gtk_text_iter_in_range(gtkTextIter, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**
@@ -1674,6 +1674,6 @@ public class TextIter
 	public void order(TextIter second)
 	{
 		// void gtk_text_iter_order (GtkTextIter *first,  GtkTextIter *second);
-		gtk_text_iter_order(gtkTextIter, second.getTextIterStruct());
+		gtk_text_iter_order(gtkTextIter, (second is null) ? null : second.getTextIterStruct());
 	}
 }

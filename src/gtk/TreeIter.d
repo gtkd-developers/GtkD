@@ -205,6 +205,16 @@ public class TreeIter
 	}
 	
 	/**
+	 * creates a new tree iteractor.
+	 * used TreeView.createIter and TreeView.append() to create iteractor for a tree or list
+	 */
+	this()
+	{
+		this(new GtkTreeIter);
+	}
+	
+	
+	/**
 	 */
 	
 	// imports for the signal processing
