@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = Selection
  * strct   = AtkSelection
+ * realStrct=
  * clss    = Selection
+ * extend  = 
  * prefixes:
  * 	- atk_selection_
  * omit structs:

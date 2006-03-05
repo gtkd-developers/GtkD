@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = DataList
  * strct   = GData
+ * realStrct=
  * clss    = DataList
+ * extend  = 
  * prefixes:
  * 	- g_datalist_
  * omit structs:

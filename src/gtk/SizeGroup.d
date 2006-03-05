@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = SizeGroup
  * strct   = GtkSizeGroup
+ * realStrct=
  * clss    = SizeGroup
+ * extend  = 
  * prefixes:
  * 	- gtk_size_group_
  * 	- gtk_

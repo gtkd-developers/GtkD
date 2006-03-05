@@ -25,7 +25,9 @@
  * outPack = cairoLib
  * outFile = Version
  * strct   = 
+ * realStrct=
  * clss    = Version
+ * extend  = 
  * prefixes:
  * omit structs:
  * omit prefixes:

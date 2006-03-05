@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Input
  * strct   = 
+ * realStrct=
  * clss    = Input
+ * extend  = 
  * prefixes:
  * 	- gdk_input_
  * omit structs:

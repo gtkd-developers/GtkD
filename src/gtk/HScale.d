@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = HScale
  * strct   = GtkHScale
+ * realStrct=
  * clss    = HScale
+ * extend  = 
  * prefixes:
  * 	- gtk_hscale_
  * 	- gtk_

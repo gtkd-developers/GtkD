@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Timeout
  * strct   = 
+ * realStrct=
  * clss    = Timeout
+ * extend  = 
  * prefixes:
  * 	- gtk_timeout_
  * omit structs:

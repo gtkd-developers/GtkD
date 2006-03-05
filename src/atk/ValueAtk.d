@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = ValueAtk
  * strct   = AtkValue
+ * realStrct=
  * clss    = ValueAtk
+ * extend  = 
  * prefixes:
  * 	- atk_value_
  * omit structs:

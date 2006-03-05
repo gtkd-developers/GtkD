@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TreeRowReference
  * strct   = GtkTreeRowReference
+ * realStrct=
  * clss    = TreeRowReference
+ * extend  = 
  * prefixes:
  * 	- gtk_tree_row_reference_
  * omit structs:

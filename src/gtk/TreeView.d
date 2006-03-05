@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TreeView
  * strct   = GtkTreeView
+ * realStrct=
  * clss    = TreeView
+ * extend  = 
  * prefixes:
  * 	- gtk_tree_view_
  * 	- gtk_

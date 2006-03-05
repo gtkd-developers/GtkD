@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Mutex
  * strct   = GMutex
+ * realStrct=
  * clss    = Mutex
+ * extend  = 
  * prefixes:
  * 	- g_mutex_
  * omit structs:

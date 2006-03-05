@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = NoOpObject
  * strct   = AtkNoOpObject
+ * realStrct=
  * clss    = NoOpObject
+ * extend  = 
  * prefixes:
  * 	- atk_no_op_object_
  * omit structs:

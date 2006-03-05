@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Alignment
  * strct   = GtkAlignment
+ * realStrct=
  * clss    = Alignment
+ * extend  = 
  * prefixes:
  * 	- gtk_alignment_
  * 	- gtk_

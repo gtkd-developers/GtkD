@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Expander
  * strct   = GtkExpander
+ * realStrct=
  * clss    = Expander
+ * extend  = 
  * prefixes:
  * 	- gtk_expander_
  * 	- gtk_

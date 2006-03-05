@@ -1578,7 +1578,7 @@ public struct GdkGCValues;
 // GdkColor foreground;
 // GdkColor background;
 // GdkFont *font;
-// GdkFunction function;
+// GdkFunction funct;
 // GdkFill fill;
 // GdkPixmap *tile;
 // GdkPixmap *stipple;

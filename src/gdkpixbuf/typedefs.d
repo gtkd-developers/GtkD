@@ -298,7 +298,7 @@ public struct GdkPixbufFormat;
 	public struct GdkPixbufModule;
 	// char *moduleName;
 	// char *modulePath;
-	// GModule *module;
+	// GModule *modul;
 	// GdkPixbufFormat *info;
 	// GdkPixbuf *(* load) (FILE *f,
 	// GError **error);

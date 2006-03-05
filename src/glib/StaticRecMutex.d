@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = StaticRecMutex
  * strct   = GStaticRecMutex
+ * realStrct=
  * clss    = StaticRecMutex
+ * extend  = 
  * prefixes:
  * 	- g_static_rec_mutex_
  * omit structs:

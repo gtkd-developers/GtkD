@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Clipboard
  * strct   = GtkClipboard
+ * realStrct=
  * clss    = Clipboard
+ * extend  = 
  * prefixes:
  * 	- gtk_clipboard_
  * 	- gtk_

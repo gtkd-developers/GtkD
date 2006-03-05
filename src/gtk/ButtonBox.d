@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ButtonBox
  * strct   = GtkButtonBox
+ * realStrct=
  * clss    = ButtonBox
+ * extend  = 
  * prefixes:
  * 	- gtk_button_box_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = Action
  * strct   = AtkAction
+ * realStrct=
  * clss    = Action
+ * extend  = 
  * prefixes:
  * 	- atk_action_
  * omit structs:

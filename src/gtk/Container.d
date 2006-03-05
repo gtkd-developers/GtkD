@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Container
  * strct   = GtkContainer
+ * realStrct=
  * clss    = Container
+ * extend  = 
  * prefixes:
  * 	- gtk_container_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = Relation
  * strct   = AtkRelation
+ * realStrct=
  * clss    = Relation
+ * extend  = 
  * prefixes:
  * 	- atk_relation_
  * omit structs:

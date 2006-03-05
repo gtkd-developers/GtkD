@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = Table
  * strct   = AtkTable
+ * realStrct=
  * clss    = Table
+ * extend  = 
  * prefixes:
  * 	- atk_table_
  * omit structs:

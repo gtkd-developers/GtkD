@@ -25,7 +25,9 @@
  * outPack = cairoLib
  * outFile = Surface
  * strct   = cairo_surface_t
+ * realStrct=
  * clss    = Surface
+ * extend  = 
  * prefixes:
  * 	- cairo_surface_
  * 	- cairo_

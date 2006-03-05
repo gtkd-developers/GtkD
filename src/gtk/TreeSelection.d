@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TreeSelection
  * strct   = GtkTreeSelection
+ * realStrct=
  * clss    = TreeSelection
+ * extend  = 
  * prefixes:
  * 	- gtk_tree_selection_
  * 	- gtk_

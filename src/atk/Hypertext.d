@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = Hypertext
  * strct   = AtkHypertext
+ * realStrct=
  * clss    = Hypertext
+ * extend  = 
  * prefixes:
  * 	- atk_hypertext
  * omit structs:

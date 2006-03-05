@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = StandardEnumerations
  * strct   = 
+ * realStrct=
  * clss    = StandardEnumerations
+ * extend  = 
  * prefixes:
  * omit structs:
  * omit prefixes:

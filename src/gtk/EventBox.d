@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = EventBox
  * strct   = GtkEventBox
+ * realStrct=
  * clss    = EventBox
+ * extend  = 
  * prefixes:
  * 	- gtk_event_box_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = RadioAction
  * strct   = GtkRadioAction
+ * realStrct=
  * clss    = RadioAction
+ * extend  = 
  * prefixes:
  * 	- gtk_radio_action_
  * 	- gtk_

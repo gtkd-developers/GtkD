@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = AspectFrame
  * strct   = GtkAspectFrame
+ * realStrct=
  * clss    = AspectFrame
+ * extend  = 
  * prefixes:
  * 	- gtk_aspect_frame_
  * 	- gtk_

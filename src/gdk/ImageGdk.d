@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = ImageGdk
  * strct   = GdkImage
+ * realStrct=
  * clss    = ImageGdk
+ * extend  = 
  * prefixes:
  * 	- gdk_image_
  * omit structs:

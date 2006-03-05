@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = FontSelectionDialog
  * strct   = GtkFontSelectionDialog
+ * realStrct=
  * clss    = FontSelectionDialog
+ * extend  = 
  * prefixes:
  * 	- gtk_font_selection_dialog_
  * 	- gtk_

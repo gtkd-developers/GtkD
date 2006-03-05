@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = IconView
  * strct   = GtkIconView
+ * realStrct=
  * clss    = IconView
+ * extend  = 
  * prefixes:
  * 	- gtk_icon_view_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = pango
  * outFile = PgLanguage
  * strct   = PangoLanguage
+ * realStrct=
  * clss    = PgLanguage
+ * extend  = 
  * prefixes:
  * 	- pango_language_
  * omit structs:

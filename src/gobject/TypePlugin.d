@@ -25,7 +25,9 @@
  * outPack = gobject
  * outFile = TypePlugin
  * strct   = GTypePlugin
+ * realStrct=
  * clss    = TypePlugin
+ * extend  = 
  * prefixes:
  * 	- g_type_plugin_
  * omit structs:

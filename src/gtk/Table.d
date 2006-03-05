@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Table
  * strct   = GtkTable
+ * realStrct=
  * clss    = Table
+ * extend  = 
  * prefixes:
  * 	- gtk_table_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = gdkpixbuf
  * outFile = PixbufAnimation
  * strct   = GdkPixbufAnimation
+ * realStrct=
  * clss    = PixbufAnimation
+ * extend  = 
  * prefixes:
  * 	- gdk_pixbuf_animation_
  * omit structs:

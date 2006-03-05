@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ObjectGtk
  * strct   = GtkObject
+ * realStrct=
  * clss    = ObjectGtk
+ * extend  = 
  * prefixes:
  * 	- gtk_object_
  * 	- gtk_

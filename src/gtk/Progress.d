@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Progress
  * strct   = GtkProgress
+ * realStrct=
  * clss    = Progress
+ * extend  = 
  * prefixes:
  * 	- gtk_progress_
  * 	- gtk_

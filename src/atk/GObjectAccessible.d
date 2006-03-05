@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = GObjectAccessible
  * strct   = AtkGObjectAccessible
+ * realStrct=
  * clss    = GObjectAccessible
+ * extend  = 
  * prefixes:
  * 	- atk_gobject_accessible
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = HandleBox
  * strct   = GtkHandleBox
+ * realStrct=
  * clss    = HandleBox
+ * extend  = 
  * prefixes:
  * 	- gtk_handle_box_
  * 	- gtk_

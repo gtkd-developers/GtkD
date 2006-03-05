@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = HSeparator
  * strct   = GtkHSeparator
+ * realStrct=
  * clss    = HSeparator
+ * extend  = 
  * prefixes:
  * 	- gtk_hseparator_
  * 	- gtk_

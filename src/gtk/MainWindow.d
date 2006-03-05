@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = MainWindow
  * strct   = 
+ * realStrct=
  * clss    = 
+ * extend  = 
  * prefixes:
  * omit structs:
  * omit prefixes:

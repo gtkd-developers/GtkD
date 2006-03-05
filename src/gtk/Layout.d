@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Layout
  * strct   = GtkLayout
+ * realStrct=
  * clss    = Layout
+ * extend  = 
  * prefixes:
  * 	- gtk_layout_
  * 	- gtk_

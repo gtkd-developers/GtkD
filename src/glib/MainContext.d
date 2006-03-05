@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = MainContext
  * strct   = GMainContext
+ * realStrct=
  * clss    = MainContext
+ * extend  = 
  * prefixes:
  * 	- g_main_context_
  * omit structs:

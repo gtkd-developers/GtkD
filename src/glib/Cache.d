@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Cache
  * strct   = GCache
+ * realStrct=
  * clss    = Cache
+ * extend  = 
  * prefixes:
  * 	- g_cache_
  * omit structs:

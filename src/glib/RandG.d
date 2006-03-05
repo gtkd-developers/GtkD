@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = RandG
  * strct   = GRand
+ * realStrct=
  * clss    = RandG
+ * extend  = 
  * prefixes:
  * 	- g_
  * omit structs:

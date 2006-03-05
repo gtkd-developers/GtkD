@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Bitmap
  * strct   = GdkBitmap
+ * realStrct=
  * clss    = Bitmap
+ * extend  = 
  * prefixes:
  * 	- gdk_bitmap_
  * omit structs:

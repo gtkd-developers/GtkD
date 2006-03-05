@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TreeIter
  * strct   = GtkTreeIter
+ * realStrct=
  * clss    = TreeIter
+ * extend  = 
  * prefixes:
  * 	- gtk_tree_iter_
  * omit structs:

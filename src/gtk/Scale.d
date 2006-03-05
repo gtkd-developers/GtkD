@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Scale
  * strct   = GtkScale
+ * realStrct=
  * clss    = Scale
+ * extend  = 
  * prefixes:
  * 	- gtk_scale_
  * 	- gtk_

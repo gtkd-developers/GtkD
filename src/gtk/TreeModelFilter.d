@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TreeModelFilter
  * strct   = GtkTreeModelFilter
+ * realStrct=
  * clss    = TreeModelFilter
+ * extend  = 
  * prefixes:
  * 	- gtk_tree_model_filter_
  * 	- gtk_

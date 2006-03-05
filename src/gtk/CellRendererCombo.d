@@ -24,8 +24,10 @@
  * Conversion parameters:
  * outPack = gtk
  * outFile = CellRendererCombo
- * strct   = GtkCellRendererCombo
+ * strct   = GtkCellRenderer
+ * realStrct=GtkCellRendererCombo
  * clss    = CellRendererCombo
+ * extend  = 
  * prefixes:
  * 	- gtk_cell_renderer_combo_
  * 	- gtk_
@@ -110,10 +112,10 @@ public class CellRendererCombo : CellRendererText
 	 * Default value: TRUE
 	 * Since 2.6
 	 */
-	public static CellRenderer newCellRendererCombo()
+	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_combo_new  (void);
-		return new CellRenderer( gtk_cell_renderer_combo_new() );
+		this(cast(GtkCellRendererCombo*)gtk_cell_renderer_combo_new() );
 	}
 	
 	

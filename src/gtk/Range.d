@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Range
  * strct   = GtkRange
+ * realStrct=
  * clss    = Range
+ * extend  = 
  * prefixes:
  * 	- gtk_range_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = SimpleXML
  * strct   = GMarkupParseContext
+ * realStrct=
  * clss    = SimpleXML
+ * extend  = 
  * prefixes:
  * 	- g_markup_parse_context_
  * omit structs:

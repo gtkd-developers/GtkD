@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = WindowGroup
  * strct   = GtkWindowGroup
+ * realStrct=
  * clss    = WindowGroup
+ * extend  = 
  * prefixes:
  * 	- gtk_window_group_
  * 	- gtk_

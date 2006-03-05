@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = OptionContext
  * strct   = GOptionContext
+ * realStrct=
  * clss    = OptionContext
+ * extend  = 
  * prefixes:
  * 	- g_option_context_
  * omit structs:

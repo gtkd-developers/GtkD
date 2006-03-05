@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = AccelMap
  * strct   = GtkAccelMap
+ * realStrct=
  * clss    = AccelMap
+ * extend  = 
  * prefixes:
  * 	- gtk_accel_map_
  * 	- gtk_

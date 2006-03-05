@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TreeDragSource
  * strct   = GtkTreeDragSource
+ * realStrct=
  * clss    = TreeDragSource
+ * extend  = 
  * prefixes:
  * 	- gtk_tree_drag_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Messages
  * strct   = 
+ * realStrct=
  * clss    = Messages
+ * extend  = 
  * prefixes:
  * 	- g_
  * omit structs:

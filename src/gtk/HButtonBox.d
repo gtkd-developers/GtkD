@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = HButtonBox
  * strct   = GtkHButtonBox
+ * realStrct=
  * clss    = HButtonBox
+ * extend  = 
  * prefixes:
  * 	- gtk_hbutton_box_
  * 	- gtk_

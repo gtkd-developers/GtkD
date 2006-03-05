@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = CellEditable
  * strct   = GtkCellEditable
+ * realStrct=
  * clss    = CellEditable
+ * extend  = 
  * prefixes:
  * 	- gtk_cell_editable_
  * 	- gtk_

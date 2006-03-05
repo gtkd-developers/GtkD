@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TreeStore
  * strct   = GtkTreeStore
+ * realStrct=
  * clss    = TreeStore
+ * extend  = 
  * prefixes:
  * 	- gtk_tree_store_
  * 	- gtk_

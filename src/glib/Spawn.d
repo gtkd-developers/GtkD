@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Spawn
  * strct   = 
+ * realStrct=
  * clss    = Spawn
+ * extend  = 
  * prefixes:
  * 	- g_spawn_
  * omit structs:

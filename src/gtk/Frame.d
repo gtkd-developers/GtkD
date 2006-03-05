@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Frame
  * strct   = GtkFrame
+ * realStrct=
  * clss    = Frame
+ * extend  = 
  * prefixes:
  * 	- gtk_frame_
  * 	- gtk_

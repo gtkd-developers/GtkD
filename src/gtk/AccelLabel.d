@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = AccelLabel
  * strct   = GtkAccelLabel
+ * realStrct=
  * clss    = AccelLabel
+ * extend  = 
  * prefixes:
  * 	- gtk_accel_label_
  * 	- gtk_

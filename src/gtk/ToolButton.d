@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ToolButton
  * strct   = GtkToolButton
+ * realStrct=
  * clss    = ToolButton
+ * extend  = 
  * prefixes:
  * 	- gtk_tool_button_
  * 	- gtk_

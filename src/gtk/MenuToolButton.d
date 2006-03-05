@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = MenuToolButton
  * strct   = GtkMenuToolButton
+ * realStrct=
  * clss    = MenuToolButton
+ * extend  = 
  * prefixes:
  * 	- gtk_menu_tool_button_
  * 	- gtk_

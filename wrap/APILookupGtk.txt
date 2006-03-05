@@ -1617,6 +1617,31 @@ import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
+
+nocode: gtk_tree_view_column_new_with_attributes
+
+code: start
+	private import std.string;
+	/**
+	 * Creates a new Tree view column
+	 * @param header th column header text
+	 * @param renderer the rederer for the column cells
+	 * @param type the type of data to be displayed (shouldn't this be on the renderer?)
+	 * @param column the column number
+	 */
+	this(char [] header, CellRenderer renderer, char [] type, int column)
+	{
+		this(gtk_tree_view_column_new_with_attributes(
+				std.string.toStringz(header), 
+				renderer.getCellRendererStruct(), 
+				std.string.toStringz(type),
+				column,
+				null)
+			);
+	}
+
+code: end
+
 outFile: TreeViewColumn
 
 file: GtkTreeView.html
@@ -1817,7 +1842,8 @@ structWrap: GdkEvent* Event
 outFile: CellEditable
 
 file: GtkCellRendererCombo.html
-struct: GtkCellRendererCombo
+struct: GtkCellRenderer
+realStruct: GtkCellRendererCombo
 class: CellRendererCombo
 prefix: gtk_cell_renderer_combo_
 prefix: gtk_
@@ -1826,7 +1852,8 @@ structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererCombo
 
 file: GtkCellRendererPixbuf.html
-struct: GtkCellRendererPixbuf
+struct: GtkCellRenderer
+realStruct: GtkCellRendererPixbuf
 class: CellRendererPixbuf
 prefix: gtk_cell_renderer_pixbuf_
 prefix: gtk_
@@ -1835,7 +1862,8 @@ structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererPixbuf
 
 file: GtkCellRendererProgress.html
-struct: GtkCellRendererProgress
+struct: GtkCellRenderer
+realStruct: GtkCellRendererProgress
 class: CellRendererProgress
 prefix: gtk_cell_renderer_progress_
 prefix: gtk_
@@ -1844,7 +1872,8 @@ structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererProgress
 
 file: GtkCellRendererText.html
-struct: GtkCellRendererText
+struct: GtkCellRenderer
+realStruct: GtkCellRendererText
 class: CellRendererText
 prefix: gtk_cell_renderer_text_
 prefix: gtk_
@@ -1853,7 +1882,8 @@ structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererText
 
 file: GtkCellRendererToggle.html
-struct: GtkCellRendererToggle
+struct: GtkCellRenderer
+realStruct: GtkCellRendererToggle
 class: CellRendererToggle
 prefix: gtk_cell_renderer_toggle_
 prefix: gtk_
@@ -1864,6 +1894,7 @@ outFile: CellRendererToggle
 file: GtkListStore.html
 struct: GtkListStore
 class: ListStore
+extend: GtkTreeModel
 prefix: gtk_list_store_
 prefix: gtk_
 #import: gobject.Type
@@ -1872,6 +1903,73 @@ import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gobject.Value
 structWrap: GValue* Value
+import: std.string
+
+nocode: gtk_list_store_set
+
+code: start
+	/**
+	 * Non-vararg creation function. Used primarily by language bindings.
+	 * n_columns:
+	 *  number of columns in the list store
+	 * types:
+	 *  an array of GType types for the columns, from first to last
+	 * Returns:
+	 *  a new GtkListStore
+	 */
+	public this (GType[] types)
+	{
+		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
+		this(cast(GtkListStore*)gtk_list_store_newv(types.length, types) );
+	}
+	
+	/**
+	 * Creates a top level iteractor.
+	 * I don't think lists have but the top level iteractor
+	 */
+	TreeIter createIter()
+	{
+		GtkTreeIter* iter = new GtkTreeIter;
+		gtk_list_store_append(getListStoreStruct(), iter);
+		return new TreeIter(iter);
+	}
+	
+		/**
+	 * sets the values for one row
+	 * @param iter the row iteractor
+	 * @param columns an arrays with the columns to set
+	 * @param values an arrays with the values
+	 */
+	void set(TreeIter iter, int [] columns, char*[] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			//Value v = new Value(values[i]);
+			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
+			gtk_list_store_set(
+					gtkListStore, 
+					iter.getTreeIterStruct(), 
+					columns[i], 
+					values[i],-1);
+		}
+	}
+
+	void set(TreeIter iter, int [] columns, char[][] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			//Value v = new Value(values[i]);
+			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
+			gtk_list_store_set(
+					gtkListStore, 
+					iter.getTreeIterStruct(), 
+					columns[i], 
+					std.string.toStringz(values[i]),-1);
+		}
+	}
+
+
+code: end
 outFile: ListStore
 
 file: GtkTreeStore.html

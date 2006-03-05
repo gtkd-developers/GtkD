@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Event
  * strct   = GdkEvent
+ * realStrct=
  * clss    = Event
+ * extend  = 
  * prefixes:
  * 	- gdk_event_
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = AsyncQueue
  * strct   = GAsyncQueue
+ * realStrct=
  * clss    = AsyncQueue
+ * extend  = 
  * prefixes:
  * 	- g_async_queue_
  * omit structs:

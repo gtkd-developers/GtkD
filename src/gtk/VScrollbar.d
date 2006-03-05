@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = VScrollbar
  * strct   = GtkVScrollbar
+ * realStrct=
  * clss    = VScrollbar
+ * extend  = 
  * prefixes:
  * 	- gtk_vscrollbar_
  * 	- gtk_

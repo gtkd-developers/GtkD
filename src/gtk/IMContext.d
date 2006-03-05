@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = IMContext
  * strct   = GtkIMContext
+ * realStrct=
  * clss    = IMContext
+ * extend  = 
  * prefixes:
  * 	- gtk_im_context_
  * 	- gtk_

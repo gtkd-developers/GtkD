@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = MessageDialog
  * strct   = GtkMessageDialog
+ * realStrct=
  * clss    = MessageDialog
+ * extend  = 
  * prefixes:
  * 	- gtk_message_dialog_
  * 	- gtk_

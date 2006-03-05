@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = MenuShell
  * strct   = GtkMenuShell
+ * realStrct=
  * clss    = MenuShell
+ * extend  = 
  * prefixes:
  * 	- gtk_menu_shell_
  * 	- gtk_

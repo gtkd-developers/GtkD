@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = MenuBar
  * strct   = GtkMenuBar
+ * realStrct=
  * clss    = MenuBar
+ * extend  = 
  * prefixes:
  * 	- gtk_menu_bar_
  * 	- gtk_

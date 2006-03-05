@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = IOChannel
  * strct   = GIOChannel
+ * realStrct=
  * clss    = IOChannel
+ * extend  = 
  * prefixes:
  * 	- g_io_channel_
  * omit structs:

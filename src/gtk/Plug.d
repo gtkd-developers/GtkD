@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Plug
  * strct   = GtkPlug
+ * realStrct=
  * clss    = Plug
+ * extend  = 
  * prefixes:
  * 	- gtk_plug_
  * 	- gtk_

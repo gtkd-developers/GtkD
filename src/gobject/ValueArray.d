@@ -25,7 +25,9 @@
  * outPack = gobject
  * outFile = ValueArray
  * strct   = GValueArray
+ * realStrct=
  * clss    = ValueArray
+ * extend  = 
  * prefixes:
  * 	- g_value_array_
  * omit structs:

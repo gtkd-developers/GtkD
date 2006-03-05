@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = Text
  * strct   = AtkText
+ * realStrct=
  * clss    = Text
+ * extend  = 
  * prefixes:
  * 	- atk_text_
  * omit structs:

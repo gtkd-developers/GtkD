@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Adjustment
  * strct   = GtkAdjustment
+ * realStrct=
  * clss    = Adjustment
+ * extend  = 
  * prefixes:
  * 	- gtk_adjustment_
  * 	- gtk_

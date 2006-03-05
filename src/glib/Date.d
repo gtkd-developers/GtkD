@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Date
  * strct   = GDate
+ * realStrct=
  * clss    = Date
+ * extend  = 
  * prefixes:
  * 	- g_date_
  * omit structs:

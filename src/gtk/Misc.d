@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Misc
  * strct   = GtkMisc
+ * realStrct=
  * clss    = Misc
+ * extend  = 
  * prefixes:
  * 	- gtk_misc_
  * 	- gtk_

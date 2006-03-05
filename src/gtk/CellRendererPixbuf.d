@@ -24,8 +24,10 @@
  * Conversion parameters:
  * outPack = gtk
  * outFile = CellRendererPixbuf
- * strct   = GtkCellRendererPixbuf
+ * strct   = GtkCellRenderer
+ * realStrct=GtkCellRendererPixbuf
  * clss    = CellRendererPixbuf
+ * extend  = 
  * prefixes:
  * 	- gtk_cell_renderer_pixbuf_
  * 	- gtk_
@@ -114,10 +116,10 @@ public class CellRendererPixbuf : CellRenderer
 	 * Default value: FALSE
 	 * Since 2.8
 	 */
-	public static CellRenderer newCellRendererPixbuf()
+	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_pixbuf_new  (void);
-		return new CellRenderer( gtk_cell_renderer_pixbuf_new() );
+		this(cast(GtkCellRendererPixbuf*)gtk_cell_renderer_pixbuf_new() );
 	}
 	
 	

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Button
  * strct   = GtkButton
+ * realStrct=
  * clss    = Button
+ * extend  = 
  * prefixes:
  * 	- gtk_button_
  * 	- gtk_

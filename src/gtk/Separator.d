@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Separator
  * strct   = GtkSeparator
+ * realStrct=
  * clss    = Separator
+ * extend  = 
  * prefixes:
  * 	- gtk_separator
  * 	- gtk_

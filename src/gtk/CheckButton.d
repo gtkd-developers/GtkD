@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = CheckButton
  * strct   = GtkCheckButton
+ * realStrct=
  * clss    = CheckButton
+ * extend  = 
  * prefixes:
  * 	- gtk_check_button_
  * 	- gtk_

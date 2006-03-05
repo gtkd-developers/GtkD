@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = StateSet
  * strct   = 
+ * realStrct=
  * clss    = StateSet
+ * extend  = 
  * prefixes:
  * 	- atk_state_set_
  * omit structs:

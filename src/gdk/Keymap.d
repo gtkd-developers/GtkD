@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Keymap
  * strct   = GdkKeymap
+ * realStrct=
  * clss    = Keymap
+ * extend  = 
  * prefixes:
  * 	- gdk_keymap_
  * omit structs:

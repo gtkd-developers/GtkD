@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = CellRenderer
  * strct   = GtkCellRenderer
+ * realStrct=
  * clss    = CellRenderer
+ * extend  = 
  * prefixes:
  * 	- gtk_cell_renderer_
  * 	- gtk_

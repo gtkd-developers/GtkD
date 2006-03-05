@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Node
  * strct   = GNode
+ * realStrct=
  * clss    = Node
+ * extend  = 
  * prefixes:
  * 	- g_node_
  * omit structs:

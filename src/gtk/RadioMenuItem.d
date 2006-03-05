@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = RadioMenuItem
  * strct   = GtkRadioMenuItem
+ * realStrct=
  * clss    = RadioMenuItem
+ * extend  = 
  * prefixes:
  * 	- gtk_radio_menu_item_
  * 	- gtk_

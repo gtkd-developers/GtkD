@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = StrignGChunk
  * strct   = GStringChunk
+ * realStrct=
  * clss    = StringGChunk
+ * extend  = 
  * prefixes:
  * 	- g_string_chunk_
  * omit structs:

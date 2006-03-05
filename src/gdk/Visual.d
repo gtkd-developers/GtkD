@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Visual
  * strct   = GdkVisual
+ * realStrct=
  * clss    = Visual
+ * extend  = 
  * prefixes:
  * 	- gdk_visual_
  * omit structs:

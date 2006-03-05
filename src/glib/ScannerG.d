@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = ScannerG
  * strct   = GScanner
+ * realStrct=
  * clss    = ScannerG
+ * extend  = 
  * prefixes:
  * 	- g_scanner
  * omit structs:

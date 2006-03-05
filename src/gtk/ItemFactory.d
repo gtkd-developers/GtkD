@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ItemFactory
  * strct   = GtkItemFactory
+ * realStrct=
  * clss    = ItemFactory
+ * extend  = 
  * prefixes:
  * 	- gtk_item_factory_
  * 	- gtk_

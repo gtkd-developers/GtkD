@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = EditableText
  * strct   = AtkEditableText
+ * realStrct=
  * clss    = EditableText
+ * extend  = 
  * prefixes:
  * 	- atk_editable_text
  * omit structs:

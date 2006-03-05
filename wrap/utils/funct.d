@@ -522,7 +522,15 @@ public struct Funct
 				gtkCall ~= "this(";
 				//if ( convParms.strct == "GObject" )
 				{
-					gtkCall ~="cast("~convParms.strct~"*)";
+					if ( convParms.realStrct.length > 0 )
+					{
+						gtkCall ~="cast("~convParms.realStrct~"*)";
+					}
+					else
+					{
+						gtkCall ~="cast("~convParms.strct~"*)";
+					}
+					
 				}
 			}
 			else

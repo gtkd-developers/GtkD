@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Version
  * strct   = 
+ * realStrct=
  * clss    = Version
+ * extend  = 
  * prefixes:
  * 	- gtk_
  * omit structs:

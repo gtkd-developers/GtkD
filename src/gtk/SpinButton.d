@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = SpinButton
  * strct   = GtkSpinButton
+ * realStrct=
  * clss    = SpinButton
+ * extend  = 
  * prefixes:
  * 	- gtk_spin_button_
  * 	- gtk_

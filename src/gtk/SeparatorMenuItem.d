@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = SeparatorMenuItem
  * strct   = GtkSeparatorMenuItem
+ * realStrct=
  * clss    = SeparatorMenuItem
+ * extend  = 
  * prefixes:
  * 	- gtk_separator_menu_item_
  * 	- gtk_

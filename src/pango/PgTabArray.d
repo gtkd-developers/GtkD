@@ -25,7 +25,9 @@
  * outPack = pango
  * outFile = PgTabArray
  * strct   = PangoTabArray
+ * realStrct=
  * clss    = PgTabArray
+ * extend  = 
  * prefixes:
  * 	- pango_tab_array_
  * omit structs:

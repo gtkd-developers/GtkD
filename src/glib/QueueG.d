@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = QueueG
  * strct   = GQueue
+ * realStrct=
  * clss    = QueueG
+ * extend  = 
  * prefixes:
  * 	- g_queue_
  * omit structs:

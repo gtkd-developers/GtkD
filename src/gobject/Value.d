@@ -25,7 +25,9 @@
  * outPack = gobject
  * outFile = Value
  * strct   = GValue
+ * realStrct=
  * clss    = Value
+ * extend  = 
  * prefixes:
  * 	- g_value_
  * omit structs:

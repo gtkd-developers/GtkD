@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Unicode
  * strct   = 
+ * realStrct=
  * clss    = Unicode
+ * extend  = 
  * prefixes:
  * 	- g_
  * omit structs:

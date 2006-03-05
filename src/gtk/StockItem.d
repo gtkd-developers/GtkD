@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = StockItem
  * strct   = GtkStockItem
+ * realStrct=
  * clss    = StockItem
+ * extend  = 
  * prefixes:
  * 	- gtk_stock_
  * 	- gtk_

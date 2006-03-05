@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Idle
  * strct   = 
+ * realStrct=
  * clss    = Idle
+ * extend  = 
  * prefixes:
  * 	- gtk_idle_
  * omit structs:

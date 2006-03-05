@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = StaticPrivate
  * strct   = GStaticPrivate
+ * realStrct=
  * clss    = StaticPrivate
+ * extend  = 
  * prefixes:
  * 	- g_static_private_
  * omit structs:

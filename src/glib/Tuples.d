@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Tuples
  * strct   = GTuples
+ * realStrct=
  * clss    = Tuples
+ * extend  = 
  * prefixes:
  * 	- g_tuples_
  * omit structs:

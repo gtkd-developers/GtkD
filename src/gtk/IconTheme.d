@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = IconTheme
  * strct   = GtkIconTheme
+ * realStrct=
  * clss    = IconTheme
+ * extend  = 
  * prefixes:
  * 	- gtk_icon_theme_
  * 	- gtk_

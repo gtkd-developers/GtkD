@@ -25,7 +25,9 @@
  * outPack = pango
  * outFile = PgLayout
  * strct   = PangoLayout
+ * realStrct=
  * clss    = PgLayout
+ * extend  = 
  * prefixes:
  * 	- pango_layout_
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = EntryCompletion
  * strct   = GtkEntryCompletion
+ * realStrct=
  * clss    = EntryCompletion
+ * extend  = 
  * prefixes:
  * 	- gtk_entry_completion_
  * 	- gtk_

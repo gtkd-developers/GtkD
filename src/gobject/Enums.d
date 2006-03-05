@@ -25,7 +25,9 @@
  * outPack = gobject
  * outFile = Enums
  * strct   = GEnumValue
+ * realStrct=
  * clss    = Enums
+ * extend  = 
  * prefixes:
  * 	- g_enum_
  * omit structs:

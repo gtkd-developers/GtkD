@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Settings
  * strct   = GtkSettings
+ * realStrct=
  * clss    = Settings
+ * extend  = 
  * prefixes:
  * 	- gtk_settings_
  * 	- gtk_

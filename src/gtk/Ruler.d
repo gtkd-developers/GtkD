@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Ruler
  * strct   = GtkRuler
+ * realStrct=
  * clss    = Ruler
+ * extend  = 
  * prefixes:
  * 	- gtk_ruler_
  * 	- gtk_

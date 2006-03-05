@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Tooltips
  * strct   = GtkTooltips
+ * realStrct=
  * clss    = Tooltips
+ * extend  = 
  * prefixes:
  * 	- gtk_tooltips_
  * 	- gtk_

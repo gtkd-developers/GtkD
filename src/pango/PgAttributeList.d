@@ -25,7 +25,9 @@
  * outPack = pango
  * outFile = PgAttributeList
  * strct   = PangoAttrList
+ * realStrct=
  * clss    = PgAttributeList
+ * extend  = 
  * prefixes:
  * 	- pango_attr_List_
  * omit structs:

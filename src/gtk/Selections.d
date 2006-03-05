@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Selections
  * strct   = 
+ * realStrct=
  * clss    = Selections
+ * extend  = 
  * prefixes:
  * 	- gtk_
  * omit structs:

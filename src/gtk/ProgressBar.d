@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ProgressBar
  * strct   = GtkProgressBar
+ * realStrct=
  * clss    = ProgressBar
+ * extend  = 
  * prefixes:
  * 	- gtk_progress_bar_
  * 	- gtk_

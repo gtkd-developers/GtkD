@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = HPaned
  * strct   = GtkHPaned
+ * realStrct=
  * clss    = HPaned
+ * extend  = 
  * prefixes:
  * 	- gtk_hpaned_
  * 	- gtk_

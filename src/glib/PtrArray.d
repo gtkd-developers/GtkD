@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = PtrArray
  * strct   = GPtrArray
+ * realStrct=
  * clss    = PtrArray
+ * extend  = 
  * prefixes:
  * 	- g_ptr_array_
  * omit structs:

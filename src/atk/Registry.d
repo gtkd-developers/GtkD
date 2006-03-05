@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = Registry
  * strct   = AtkRegistry
+ * realStrct=
  * clss    = Registry
+ * extend  = 
  * prefixes:
  * 	- atk_registry_
  * omit structs:

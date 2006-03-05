@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = Component
  * strct   = AtkComponent
+ * realStrct=
  * clss    = Component
+ * extend  = 
  * prefixes:
  * 	- atk_component_
  * omit structs:

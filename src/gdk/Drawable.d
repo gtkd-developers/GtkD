@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Drawable
  * strct   = GdkDrawable
+ * realStrct=
  * clss    = Drawable
+ * extend  = 
  * prefixes:
  * 	- gdk_drawble_
  * 	- gdk_

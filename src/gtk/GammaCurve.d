@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = GammaCurve
  * strct   = GtkGammaCurve
+ * realStrct=
  * clss    = GammaCurve
+ * extend  = 
  * prefixes:
  * 	- gtk_gamma_curve_
  * 	- gtk_

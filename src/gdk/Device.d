@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Device
  * strct   = GdkDevice
+ * realStrct=
  * clss    = Device
+ * extend  = 
  * prefixes:
  * 	- gdk_device_
  * omit structs:

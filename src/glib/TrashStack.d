@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = TrashStack
  * strct   = GTrashStack
+ * realStrct=
  * clss    = TrashStack
+ * extend  = 
  * prefixes:
  * 	- g_trash_stack_
  * omit structs:

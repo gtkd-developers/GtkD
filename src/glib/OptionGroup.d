@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = OptionGroup
  * strct   = GOptionGroup
+ * realStrct=
  * clss    = OptionGroup
+ * extend  = 
  * prefixes:
  * 	- g_option_group_
  * omit structs:

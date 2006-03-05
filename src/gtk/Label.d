@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Label
  * strct   = GtkLabel
+ * realStrct=
  * clss    = Label
+ * extend  = 
  * prefixes:
  * 	- gtk_label_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = RGB
  * strct   = 
+ * realStrct=
  * clss    = RGB
+ * extend  = 
  * prefixes:
  * 	- gdk_
  * omit structs:

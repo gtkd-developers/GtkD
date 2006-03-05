@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Action
  * strct   = GtkAction
+ * realStrct=
  * clss    = Action
+ * extend  = 
  * prefixes:
  * 	- gtk_action_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Widget
  * strct   = GtkWidget
+ * realStrct=
  * clss    = Widget
+ * extend  = 
  * prefixes:
  * 	- gtk_widget_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Screen
  * strct   = GdkScreen
+ * realStrct=
  * clss    = Screen
+ * extend  = 
  * prefixes:
  * 	- gdk_screen_
  * omit structs:

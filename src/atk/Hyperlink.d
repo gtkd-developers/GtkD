@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = Hyperlink
  * strct   = AtkHyperlink
+ * realStrct=
  * clss    = Hyperlink
+ * extend  = 
  * prefixes:
  * 	- atk_hyperlink
  * omit structs:

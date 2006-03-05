@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = VRuler
  * strct   = GtkVRuler
+ * realStrct=
  * clss    = VRuler
+ * extend  = 
  * prefixes:
  * 	- gtk_vruler_
  * 	- gtk_

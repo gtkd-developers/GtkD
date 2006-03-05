@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = IconInfo
  * strct   = GtkIconInfo
+ * realStrct=
  * clss    = IconInfo
+ * extend  = 
  * prefixes:
  * 	- gtk_icon_info_
  * omit structs:

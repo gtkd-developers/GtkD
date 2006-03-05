@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Relation
  * strct   = GRelation
+ * realStrct=
  * clss    = Relation
+ * extend  = 
  * prefixes:
  * 	- g_relation_
  * omit structs:

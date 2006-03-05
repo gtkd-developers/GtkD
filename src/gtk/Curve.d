@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Curve
  * strct   = GtkCurve
+ * realStrct=
  * clss    = Curve
+ * extend  = 
  * prefixes:
  * 	- gtk_curve_
  * 	- gtk_

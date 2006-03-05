@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TextView
  * strct   = GtkTextView
+ * realStrct=
  * clss    = TextView
+ * extend  = 
  * prefixes:
  * 	- gtk_text_view_
  * 	- gtk_

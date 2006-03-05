@@ -25,7 +25,9 @@
  * outPack = pango
  * outFile = PgFontMetrics
  * strct   = PangoFontMetrics
+ * realStrct=
  * clss    = PgFontMetrics
+ * extend  = 
  * prefixes:
  * 	- pango_font_metrics_
  * omit structs:

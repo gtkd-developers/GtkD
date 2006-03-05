@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = BindingSet
  * strct   = GtkBindingSet
+ * realStrct=
  * clss    = BindingSet
+ * extend  = 
  * prefixes:
  * 	- gtk_binding_set_
  * 	- gtk_bindings_

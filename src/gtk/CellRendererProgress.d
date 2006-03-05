@@ -24,8 +24,10 @@
  * Conversion parameters:
  * outPack = gtk
  * outFile = CellRendererProgress
- * strct   = GtkCellRendererProgress
+ * strct   = GtkCellRenderer
+ * realStrct=GtkCellRendererProgress
  * clss    = CellRendererProgress
+ * extend  = 
  * prefixes:
  * 	- gtk_cell_renderer_progress_
  * 	- gtk_
@@ -97,10 +99,10 @@ public class CellRendererProgress : CellRenderer
 	 * Default value: NULL
 	 * Since 2.6
 	 */
-	public static CellRenderer newCellRendererProgress()
+	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_progress_new  (void);
-		return new CellRenderer( gtk_cell_renderer_progress_new() );
+		this(cast(GtkCellRendererProgress*)gtk_cell_renderer_progress_new() );
 	}
 	
 }

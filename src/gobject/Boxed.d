@@ -25,7 +25,9 @@
  * outPack = gobject
  * outFile = Boxed
  * strct   = 
+ * realStrct=
  * clss    = Boxed
+ * extend  = 
  * prefixes:
  * 	- g_
  * omit structs:

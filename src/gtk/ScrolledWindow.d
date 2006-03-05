@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ScrolledWindow
  * strct   = GtkScrolledWindow
+ * realStrct=
  * clss    = ScrolledWindow
+ * extend  = 
  * prefixes:
  * 	- gtk_scrolled_window_
  * 	- gtk_

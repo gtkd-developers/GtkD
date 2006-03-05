@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Duit
  * strct   = 
+ * realStrct=
  * clss    = Duit
+ * extend  = 
  * prefixes:
  * 	- gtk_
  * omit structs:

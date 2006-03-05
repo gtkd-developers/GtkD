@@ -25,7 +25,9 @@
  * outPack = pango
  * outFile = PgFontDescription
  * strct   = PangoFontDescription
+ * realStrct=
  * clss    = PgFontDescription
+ * extend  = 
  * prefixes:
  * 	- pango_font_description_
  * omit structs:

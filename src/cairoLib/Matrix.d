@@ -25,7 +25,9 @@
  * outPack = cairoLib
  * outFile = Matrix
  * strct   = cairo_matrix_t
+ * realStrct=
  * clss    = Matrix
+ * extend  = 
  * prefixes:
  * 	- cairo_matrix_
  * omit structs:

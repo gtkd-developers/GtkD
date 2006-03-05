@@ -25,7 +25,9 @@
  * outPack = gobject
  * outFile = ParamSpec
  * strct   = GParamSpec
+ * realStrct=
  * clss    = ParamSpec
+ * extend  = 
  * prefixes:
  * 	- g_param_spec_
  * omit structs:

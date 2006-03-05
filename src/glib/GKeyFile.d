@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = GKeyFile
  * strct   = GKeyFile
+ * realStrct=
  * clss    = KeyFile
+ * extend  = 
  * prefixes:
  * 	- g_key_file_
  * omit structs:

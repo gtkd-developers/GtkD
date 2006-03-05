@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = MainLoop
  * strct   = GMainLoop
+ * realStrct=
  * clss    = MainLoop
+ * extend  = 
  * prefixes:
  * 	- g_main_loop_
  * omit structs:

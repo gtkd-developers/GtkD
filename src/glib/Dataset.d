@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Dataset
  * strct   = 
+ * realStrct=
  * clss    = Dataset
+ * extend  = 
  * prefixes:
  * 	- g_dataset_
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = AboutDialog
  * strct   = GtkAboutDialog
+ * realStrct=
  * clss    = AboutDialog
+ * extend  = 
  * prefixes:
  * 	- gtk_about_dialog_
  * 	- gtk_

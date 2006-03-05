@@ -25,7 +25,9 @@
  * outPack = pango
  * outFile = PgEngineLang
  * strct   = 
+ * realStrct=
  * clss    = PgEngineLang
+ * extend  = 
  * prefixes:
  * 	- script_engine_lang_
  * omit structs:

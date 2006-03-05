@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = MemoryChunk
  * strct   = GMemChunk
+ * realStrct=
  * clss    = MemoryChunk
+ * extend  = 
  * prefixes:
  * 	- g_mem_chunk_
  * omit structs:

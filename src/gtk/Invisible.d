@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Invisible
  * strct   = GtkInvisible
+ * realStrct=
  * clss    = Invisible
+ * extend  = 
  * prefixes:
  * 	- gtk_invisible_
  * 	- gtk_

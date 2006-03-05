@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TextTag
  * strct   = GtkTextTag
+ * realStrct=
  * clss    = TextTag
+ * extend  = 
  * prefixes:
  * 	- gtk_text_tag_
  * 	- gtk_

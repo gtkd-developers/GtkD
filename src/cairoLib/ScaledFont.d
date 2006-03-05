@@ -25,7 +25,9 @@
  * outPack = cairoLib
  * outFile = ScaledFont
  * strct   = cairo_scaled_font_t
+ * realStrct=
  * clss    = ScaledFont
+ * extend  = 
  * prefixes:
  * 	- cairo_scaled_font_
  * omit structs:

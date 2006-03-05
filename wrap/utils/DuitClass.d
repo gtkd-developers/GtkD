@@ -397,15 +397,18 @@ public class DuitClass
 		
 		if ( convParms.strct.length > 0 )
 		{
-			char[] var = toVar(convParms.strct.dup);
+			char[] gtkStruct = convParms.realStrct.length > 0 
+								? convParms.realStrct
+								: convParms.strct;
+			char[] var = toVar(gtkStruct.dup);
 			text ~= "";
 			text ~= "/** the main Gtk struct */";
-			text ~= "protected "~convParms.strct~"* "~var~";";
+			text ~= "protected "~gtkStruct~"* "~var~";";
 			text ~= "";
 			if ( convParms.clss.length > 0 )
 			{
 				text ~= "";
-				text ~= "public "~convParms.strct~"* get"~convParms.clss~"Struct()";
+				text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()";
 				text ~= "{";
 				text ~= "return " ~ var ~ ';';
 				text ~= "}";
@@ -423,7 +426,7 @@ public class DuitClass
 					text ~= "/**";
 					text ~= " * Sets our main struct and passes it to the parent class";
 					text ~= " */";
-					text ~= "public this ("~convParms.strct~"* "~var~")";
+					text ~= "public this ("~gtkStruct~"* "~var~")";
 					text ~= "{";
 					if ( parentName.length > 0 )
 					{
@@ -490,7 +493,8 @@ public class DuitClass
 	}
 	
 	/**
-	 * Under "Object Hierarchy" section
+	 * Read the parent class under "Object Hierarchy" section
+	 * or get from the extend on the convParms
 	 * Params:
 	 *    	clss = 	
 	 * Returns: 
@@ -501,55 +505,66 @@ public class DuitClass
 		
 		if ( parentName is null )
 		{
-			
-			int i = moveToBlockStart("Object Hierarchy", inLines);
-			i += 2;
-			while ( i < inLines.length && !startsWith(std.string.strip(inLines[i]), "+----") )
+			if ( convParms.extend.length > 0 )
 			{
-				debug(getParent)writefln("\t skip line %s", inLines[i]);
-				++i;
+				parentName = convParms.extend.dup;
+				duitParentName = convertClassName(convParms.extend, duitParentNamePrefix);
 			}
-			debug(getParent)
+			else
 			{
-				writefln("getParent 1 ");
-				for ( int j=i-3 ;j<inLines.length && j<i+5 ; j++)
+				int i = moveToBlockStart("Object Hierarchy", inLines);
+				i += 2;
+				while ( i < inLines.length && !startsWith(std.string.strip(inLines[i]), "+----") )
 				{
-					writefln("\t getParent line = %s", inLines[j]);
+					debug(getParent)writefln("\t skip line %s", inLines[i]);
+					++i;
 				}
-				if ( i<inLines.length )	writefln("\t getParent first line = %s", inLines[i]);
-			}
-			char[] parent;
-			char[] current;
-			char[] next;
-			
-			if ( i < inLines.length )
-			{
-				next = std.string.strip(inLines[i-1]);	// many times "GObject"
-				if ( next != "GInterface" )
+				debug(getParent)
 				{
-					current = next;
+					writefln("getParent 1 ");
+					for ( int j=i-3 ;j<inLines.length && j<i+5 ; j++)
+					{
+						writefln("\t getParent line = %s", inLines[j]);
+					}
+					if ( i<inLines.length )	writefln("\t getParent first line = %s", inLines[i]);
 				}
-			}
-			while ( i < inLines.length 
-					&& startsWith(std.string.strip(inLines[i]), "+----") 
-					&& current != convParms.strct
-					)
-			{
-				parent = current;
-				next = inLines[i][6..inLines[i].length];
-				if ( "GInitiallyUnowned" != next )
+				char[] parent;
+				char[] current;
+				char[] next;
+				
+				if ( i < inLines.length )
 				{
-					current = next.dup;
-					debug(getParent) writefln("\t current = %s", current);
+					next = std.string.strip(inLines[i-1]);	// many times "GObject"
+					if ( next != "GInterface" )
+					{
+						current = next;
+					}
 				}
-				++i;
+				char[] gtkStruct = convParms.strct;
+				if ( convParms.realStrct.length > 0 )
+				{
+					gtkStruct = convParms.realStrct;
+				}
+				while ( i < inLines.length 
+						&& startsWith(std.string.strip(inLines[i]), "+----") 
+						&& current != gtkStruct
+						)
+				{
+					parent = current;
+					next = inLines[i][6..inLines[i].length];
+					if ( "GInitiallyUnowned" != next )
+					{
+						current = next.dup;
+						debug(getParent) writefln("\t current = %s", current);
+					}
+					++i;
+				}
+				if ( gtkStruct ==  current && parent.length>0 )
+				{
+					parentName = parent.dup;
+					duitParentName = convertClassName(parentName, duitParentNamePrefix);
+				}
 			}
-			if ( convParms.strct ==  current && parent.length>0 )
-			{
-				parentName = parent.dup;
-				duitParentName = convertClassName(parentName, duitParentNamePrefix);
-			}
-			
 		}
 		return parentName;
 	}
@@ -1281,10 +1296,14 @@ public class DuitClass
 				collectedStructs ~= "";
 				char[] line = lines[pos];
 				++pos;
+				char[] gtkStruct = convParms.realStrct.length > 0 
+					? convParms.realStrct
+					: convParms.strct;
+
 				if ( pos < lines.length && lines[pos][0] > ' ' )
 				{
 					collectedStructs ~= "/**";
-					if ( structName == convParms.strct )
+					if ( structName == gtkStruct )
 					{
 						collectedStructs ~= " * Main Gtk struct.";
 					}
@@ -1294,7 +1313,7 @@ public class DuitClass
 					}
 					collectedStructs ~= " */";
 				}
-				else if ( structName == convParms.strct )
+				else if ( structName == gtkStruct )
 				{
 					collectedStructs ~= "/**";
 					collectedStructs ~= " * Main Gtk struct.";
@@ -1614,7 +1633,13 @@ public class DuitClass
 	}
 	
 	
-	
+	/**
+	 * Prints out the potential Gtk struct to be wrapped 
+	 * so that the wrap parameter can be set on the APILookupXXX.txt
+	 * TODO assume all structs are to be wrapped an explicitly declare the ones not to be wrapped
+	 * Params:
+	 *    	fun = 	
+	 */
 	private void checkIfGtkStructs(Funct fun)
 	{
 		bit found = false;
@@ -1880,7 +1905,7 @@ public class DuitClass
 		char[] converted;
 		
 		int pos = 0 ;
-		char[] seps = " \n\r\t\f\v()[]*,";
+		char[] seps = " \n\r\t\f\v()[]*,;";
 		
 		char c = ' ';
 		char pc;

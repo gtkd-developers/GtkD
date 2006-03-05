@@ -30,7 +30,9 @@ public struct ConvParms
 	public char[] outPack;
 	public char[] outFile;
 	public char[] strct;
+	public char[] realStrct;
 	public char[] clss;
+	public char[] extend;
 	public char[][] prefixes;
 	public bit strictPrefix;	/// include only function that match the prefix
 	public char[][] imprts;
@@ -49,7 +51,9 @@ public struct ConvParms
 		//outPack.length = 0;
 		outFile.length = 0;
 		strct.length = 0;
+		realStrct.length = 0;
 		clss.length = 0;
+		extend.length = 0;
 		prefixes.length = 0;
 		strictPrefix = false;
 		imprts.length = 0;
@@ -71,7 +75,9 @@ public struct ConvParms
 		text ~= "\n * outPack = "~outPack;
 		text ~= "\n * outFile = "~outFile;
 		text ~= "\n * strct   = "~strct;
+		text ~= "\n * realStrct="~realStrct;
 		text ~= "\n * clss    = "~clss;
+		text ~= "\n * extend  = "~extend;
 		
 		text ~= "\n * prefixes:";
 		foreach ( char[] prefix ; prefixes )

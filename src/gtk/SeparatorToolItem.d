@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = SeparatorToolItem
  * strct   = GtkSeparatorToolItem
+ * realStrct=
  * clss    = SeparatorToolItem
+ * extend  = 
  * prefixes:
  * 	- gtk_separator_tool_item_
  * 	- gtk_

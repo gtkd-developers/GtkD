@@ -25,7 +25,9 @@
  * outPack = gdkpixbuf
  * outFile = Pixdata
  * strct   = GdkPixdata
+ * realStrct=
  * clss    = Pixdata
+ * extend  = 
  * prefixes:
  * 	- gdk_pixdata_
  * omit structs:

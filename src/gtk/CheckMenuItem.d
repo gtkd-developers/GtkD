@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = CheckMenuItem
  * strct   = GtkCheckMenuItem
+ * realStrct=
  * clss    = CheckMenuItem
+ * extend  = 
  * prefixes:
  * 	- gtk_check_menu_item_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = gobject
  * outFile = Flags
  * strct   = GFlagsValue
+ * realStrct=
  * clss    = Flags
+ * extend  = 
  * prefixes:
  * 	- g_flags_
  * omit structs:

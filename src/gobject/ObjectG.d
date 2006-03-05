@@ -25,7 +25,9 @@
  * outPack = gobject
  * outFile = ObjectG
  * strct   = GObject
+ * realStrct=
  * clss    = ObjectG
+ * extend  = 
  * prefixes:
  * 	- g_object_
  * omit structs:

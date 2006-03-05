@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Box
  * strct   = GtkBox
+ * realStrct=
  * clss    = Box
+ * extend  = 
  * prefixes:
  * 	- gtk_box_
  * 	- gtk_

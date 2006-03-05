@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Statusbar
  * strct   = GtkStatusbar
+ * realStrct=
  * clss    = Statusbar
+ * extend  = 
  * prefixes:
  * 	- gtk_statusbar_
  * 	- gtk_

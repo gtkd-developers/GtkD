@@ -25,7 +25,9 @@
  * outPack = gobject
  * outFile = CClosure
  * strct   = GCClosure
+ * realStrct=
  * clss    = CClosure
+ * extend  = 
  * prefixes:
  * 	- g_cclosure
  * omit structs:

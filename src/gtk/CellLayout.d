@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = CellLayout
  * strct   = GtkCellLayout
+ * realStrct=
  * clss    = CellLayout
+ * extend  = 
  * prefixes:
  * 	- gtk_cell_layout_
  * 	- gtk_

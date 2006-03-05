@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Color
  * strct   = GdkColor
+ * realStrct=
  * clss    = Color
+ * extend  = 
  * prefixes:
  * 	- gdk_color_
  * omit structs:

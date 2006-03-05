@@ -25,16 +25,20 @@
  * outPack = gtk
  * outFile = ListStore
  * strct   = GtkListStore
+ * realStrct=
  * clss    = ListStore
+ * extend  = GtkTreeModel
  * prefixes:
  * 	- gtk_list_store_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_list_store_set
  * imports:
  * 	- gtk.TreeIter
  * 	- gobject.Value
+ * 	- std.string
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -47,7 +51,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TreeIter;private import gobject.Value;
+private import gtk.TreeIter;private import gobject.Value;private import std.string;
 /**
  * Description
  * The GtkListStore object is a list model for use with a GtkTreeView
@@ -116,8 +120,8 @@ private import gtk.TreeIter;private import gobject.Value;
  * access to a particular row is needed often and your code is expected to
  * run on older versions of GTK+, it is worth keeping the iter around.
  */
-private import gobject.ObjectG;
-public class ListStore : ObjectG
+private import gtk.TreeModel;
+public class ListStore : TreeModel
 {
 	
 	/** the main Gtk struct */
@@ -141,9 +145,70 @@ public class ListStore : ObjectG
 	 */
 	public this (GtkListStore* gtkListStore)
 	{
-		super(cast(GObject*)gtkListStore);
+		super(cast(GtkTreeModel*)gtkListStore);
 		this.gtkListStore = gtkListStore;
 	}
+	
+	/**
+	 * Non-vararg creation function. Used primarily by language bindings.
+	 * n_columns:
+	 *  number of columns in the list store
+	 * types:
+	 *  an array of GType types for the columns, from first to last
+	 * Returns:
+	 *  a new GtkListStore
+	 */
+	public this (GType[] types)
+	{
+		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
+		this(cast(GtkListStore*)gtk_list_store_newv(types.length, types) );
+	}
+	
+	/**
+	 * Creates a top level iteractor.
+	 * I don't think lists have but the top level iteractor
+	 */
+	TreeIter createIter()
+	{
+		GtkTreeIter* iter = new GtkTreeIter;
+		gtk_list_store_append(getListStoreStruct(), iter);
+		return new TreeIter(iter);
+	}
+	
+	/**
+	 * sets the values for one row
+	 * @param iter the row iteractor
+	 * @param columns an arrays with the columns to set
+	 * @param values an arrays with the values
+	 */
+	void set(TreeIter iter, int [] columns, char*[] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			//Value v = new Value(values[i]);
+			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
+			gtk_list_store_set(
+			gtkListStore,
+			iter.getTreeIterStruct(),
+			columns[i],
+			values[i],-1);
+		}
+	}
+	
+	void set(TreeIter iter, int [] columns, char[][] values)
+	{
+		for ( int i=0 ; i<columns.length && i<values.length; i++ )
+		{
+			//Value v = new Value(values[i]);
+			//gtk_list_store_set(obj(), iter.getIter(), columns[i], v.getV(),-1);
+			gtk_list_store_set(
+			gtkListStore,
+			iter.getTreeIterStruct(),
+			columns[i],
+			std.string.toStringz(values[i]),-1);
+		}
+	}
+	
 	
 	/**
 	 */
@@ -202,25 +267,6 @@ public class ListStore : ObjectG
 		gtk_list_store_set_column_types(gtkListStore, nColumns, types);
 	}
 	
-	/**
-	 * Sets the value of one or more cells in the row referenced by iter.
-	 * The variable argument list should contain integer column numbers,
-	 * each column number followed by the value to be set.
-	 * The list is terminated by a -1. For example, to set column 0 with type
-	 * G_TYPE_STRING to "Foo", you would write gtk_list_store_set (store, iter,
-	 * 0, "Foo", -1).
-	 * list_store:
-	 *  a GtkListStore
-	 * iter:
-	 *  row iterator
-	 * ...:
-	 *  pairs of column number and value, terminated with -1
-	 */
-	public void set(TreeIter iter, ... )
-	{
-		// void gtk_list_store_set (GtkListStore *list_store,  GtkTreeIter *iter,  ...);
-		gtk_list_store_set(gtkListStore, iter.getTreeIterStruct());
-	}
 	
 	/**
 	 * See gtk_list_store_set(); this version takes a va_list for use by language

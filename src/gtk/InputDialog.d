@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = InputDialog
  * strct   = GtkInputDialog
+ * realStrct=
  * clss    = InputDialog
+ * extend  = 
  * prefixes:
  * 	- gtk_input_dialog_
  * 	- gtk_

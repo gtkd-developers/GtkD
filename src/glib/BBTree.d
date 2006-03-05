@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = BBTree
  * strct   = GTree
+ * realStrct=
  * clss    = BBTree
+ * extend  = 
  * prefixes:
  * 	- g_tree_
  * omit structs:

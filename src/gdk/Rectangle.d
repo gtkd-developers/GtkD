@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Rectangle
  * strct   = GdkRectangle
+ * realStrct=
  * clss    = Rectangle
+ * extend  = 
  * prefixes:
  * 	- gdk_rectangle_
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Paned
  * strct   = GtkPaned
+ * realStrct=
  * clss    = Paned
+ * extend  = 
  * prefixes:
  * 	- gtk_paned_
  * 	- gtk_

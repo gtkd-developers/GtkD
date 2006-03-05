@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Allocator
  * strct   = GAllocator
+ * realStrct=
  * clss    = Allocator
+ * extend  = 
  * prefixes:
  * 	- g_allocator_
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Pixmap
  * strct   = GdkPixmap
+ * realStrct=
  * clss    = Pixmap
+ * extend  = 
  * prefixes:
  * 	- gdk_pixmap_
  * omit structs:

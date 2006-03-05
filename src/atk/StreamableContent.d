@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = StreamableContent
  * strct   = AtkStreamableContent
+ * realStrct=
  * clss    = StreamableContent
+ * extend  = 
  * prefixes:
  * 	- atk_streamable_content_
  * omit structs:

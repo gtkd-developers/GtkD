@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ComboBox
  * strct   = GtkComboBox
+ * realStrct=
  * clss    = ComboBox
+ * extend  = 
  * prefixes:
  * 	- gtk_combo_box_
  * 	- gtk_

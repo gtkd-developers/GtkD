@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Window
  * strct   = GtkWindow
+ * realStrct=
  * clss    = Window
+ * extend  = 
  * prefixes:
  * 	- gtk_window_
  * 	- gtk_

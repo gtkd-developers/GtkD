@@ -18,14 +18,18 @@
 
 module duit.TestWindow;
 
+private import gtk.Version;
+private import gtk.Table;
+
+
 private import gtk.typedefs;
 private import gtk.Duit;
 private import gtk.MainWindow;
 private import gtk.Adjustment;
+private import duit.TestEntries;
 
 //private import duit.DUITree;
-private import duit.TestEntries;
-//private import duit.TestStock;
+private import duit.TestStock;
 private import duit.TestDrawingArea;
 private import duit.TestScales;
 private import duit.TestText;
@@ -33,7 +37,7 @@ private import duit.TestText;
 //private import duit.TestTreeView;
 //private import duit.TestTreeView1;
 private import duit.TestImage;
-//private import duit.TestAspectFrame;
+private import duit.TestAspectFrame;
 private import duit.TestIdle;
 //private import duit.TTextView;
 //private import duit.TEditableCells;
@@ -79,6 +83,27 @@ private import gtk.CellRendererText;
 //private import ddi.Drawable;
 private import gtk.Window;
 
+private import gtk.ScrolledWindow;
+private import gtk.MessageDialog;
+	
+
+private		import std.gc;
+private import glib.ListSG;
+	
+private import gtk.Label;
+private import glib.ListG;
+private import gtk.ComboBoxEntry;
+	private import gtk.Paned;
+	private import gtk.HPaned;
+	private import gtk.VPaned;
+	
+private import gtk.Calendar;
+private import std.stdio;
+private import gtk.VButtonBox;
+private import gtk.FileChooserButton;
+private import gdk.Drawable;
+	
+
 /**
  * This tests the DUI widgets
  */
@@ -86,7 +111,6 @@ private import gtk.Window;
 
 class TestWindow : MainWindow
 {
-private import gtk.MessageDialog;
 	/**
 	 * Executed when the user tries to close the window
 	 * @return true to refuse to close the window
@@ -139,7 +163,6 @@ private import gtk.MessageDialog;
 		d.destroy();
 	}
 	
-private import gtk.Version;
 	
 	this()
 	{
@@ -167,8 +190,6 @@ private import gtk.Version;
 
 	}
 	
-private import gtk.Table;
-
 	void setup()
 	{
 		
@@ -211,7 +232,7 @@ private import gtk.Table;
 		notebook.appendPage(new TestEntries,"Entry");
 		testEventBox(notebook);
 		testButtons(notebook);
-		//notebook.appendPage(new TestStock,"Stock");
+		notebook.appendPage(new TestStock,"Stock");
 		testLists(notebook);
 		testNotebook(notebook);
 		testPaned(notebook);
@@ -219,18 +240,14 @@ private import gtk.Table;
 		testViewport(notebook);
 		notebook.appendPage(new TestScales,"Scales");
 		testSpinButton(notebook);
-		printf("TestWindow.setup()... line 256\n");
-		//notebook.appendPage(new TestTree,"Tree");
-		printf("TestWindow.setup()... line 258\n");
+		notebook.appendPage(new Label("Deprecated,\nuse TreeView\ninstead"),"Tree");
 		//notebook.appendPage(new TestTreeView,"TreeView");
-		printf("TestWindow.setup()... line 260\n");
 		//notebook.appendPage(new TestTreeView1,"TreeView 1");
-		printf("TestWindow.setup()... line 262\n");
 		testList(notebook);
 		notebook.appendPage(new Frame(new TestDrawingArea,"Drawing Area"),"Drawing");
 		notebook.appendPage(new TestText,"Text");
 		notebook.appendPage(new TestImage(this),"Image");
-		//notebook.appendPage(new TestAspectFrame(),"Aspect Frame");
+		notebook.appendPage(new TestAspectFrame(),"Aspect Frame");
 		notebook.appendPage(new TestIdle(),"Idle");
 		gtkDemo(notebook);
 		
@@ -322,7 +339,6 @@ private import gtk.Table;
 		return notebook;
 	}
 
-	import std.gc;
 	void onNotebookSwitchPage(GtkNotebookPage *notePage, uint pageNumber, Notebook notebook)
 	{
 		//writefln("Notebook switch to page %s", pageNumber);
@@ -346,8 +362,6 @@ private import gtk.Table;
 
 	}
 
-private import glib.ListSG;
-	
 	void testButtons(Notebook notebook)
 	{
 
@@ -432,7 +446,6 @@ private import glib.ListSG;
 
 	}
 	
-private import gtk.Label;
 
 	void testLists(Notebook notebook)
 	{
@@ -530,8 +543,7 @@ private import gtk.Label;
 		notebook.appendPage(new Frame(mainBox,"Lists"),"Lists");
 		
 	}
-private import glib.ListG;
-private import gtk.ComboBoxEntry;
+
 	ComboBoxEntry comboText;
 	
 	void showCombo()
@@ -662,10 +674,6 @@ private import gtk.ComboBoxEntry;
 		//nb.addOnSwitchPage(&nb.switchPage);
 	}
 	
-	private import gtk.Paned;
-	private import gtk.HPaned;
-	private import gtk.VPaned;
-	
 	void testPaned(Notebook notebook)
 	{
 
@@ -710,7 +718,7 @@ private import gtk.ComboBoxEntry;
 			fcd = new FileChooserDialog("File Chooser", this, FileChooserAction.TION_OPEN, a, r);
 		}
 		
-		//fs.setMultiple(true);
+		fcd.getFileChooser().setSelectMultiple(true);
 		fcd.run();
 //		writefln("file selected = %s",fcd.getFileName());
 //
@@ -761,7 +769,6 @@ private import gtk.ComboBoxEntry;
 		id.hide();
 	}
 	
-private import gtk.Calendar;
 	void showCalendar(Button button)
 	{
 		Window calWin = new Window("Calendar");
@@ -784,9 +791,6 @@ private import gtk.Calendar;
 	
 	Button fontButton;
 
-private import std.stdio;
-private import gtk.VButtonBox;
-private import gtk.FileChooserButton;
 	void testDialogs(Notebook notebook)
 	{
 
@@ -820,8 +824,6 @@ private import gtk.FileChooserButton;
 		
 	}
 
-private import gtk.ScrolledWindow;
-	
 	void testViewport(Notebook notebook)
 	{
 
@@ -860,77 +862,79 @@ private import gtk.ScrolledWindow;
 	
 	void testList(Notebook notebook)
 	{
-//		class TestListStore : ListStore
-//		{
-//			this()
-//			{
-//				static GType [3] columns = [1<<16,1<<16,1<<16]; 
-//				super(columns);
-//			}
-//		}
-//		
-//		TestListStore testListStore = new TestListStore();
-//
-//		TreeIter iterTop = testListStore.createIter();
-//
-//		static int [3] cols = [0,1,2];
-//		void*[] vals;
-//		vals.length = 3;
-//		vals[0] = (new String("a list 1,1")).toStringz();
-//		vals[1] = (new String("b list 1,2")).toStringz();
-//		vals[2] = (new String("c list 1,3")).toStringz();
-//		testListStore.set(iterTop,cols,vals);
-//		
-//		testListStore.append(iterTop);
-//		void*[] vals1;
-//		vals1.length = 3;
-//		vals1[0] = (new String("c list 2,1")).toStringz();
-//		vals1[1] = (new String("b list 2,2")).toStringz();
-//		vals1[2] = (new String("a list 2,3")).toStringz();
-//		testListStore.set(iterTop,cols,vals1);
-//		
-//		testListStore.append(iterTop);
-//		void*[] vals2;
-//		vals2.length = 3;
-//		vals2[0] = (new String("b list 3,1")).toStringz();
-//		vals2[1] = (new String("a list 3,2")).toStringz();
-//		vals2[2] = (new String("c list 3,3")).toStringz();
-//		testListStore.set(iterTop,cols,vals2);
-//
-//		TreeView treeView = new TreeView(testListStore);
-//		treeView.setHeadersClickable(true);
-//		treeView.setRulesHint(true);
-//		
-//		//CellRendererText cellText = new CellRendererText();
-//		TreeViewColumn column = new TreeViewColumn("Author",new CellRendererText(),"text", 0);
-//		treeView.appendColumn(column);
-//		column.setResizable(true);
-//		column.setReorderable(true);
-//		column.setSortColumnID(0);
-//		column.setSortIndicator(true);
-//		
-//		column = new TreeViewColumn("Title",new CellRendererText(),"text", 1);
-//		treeView.appendColumn(column);
-//		column.setResizable(true);
-//		column.setReorderable(true);
-//		column.setSortColumnID(1);
-//		column.setSortIndicator(true);
-//
-//		column = new TreeViewColumn("Category",new CellRendererText(),"text", 2);
-//		treeView.appendColumn(column);
-//		column.setResizable(true);
-//		column.setReorderable(true);
-//		column.setSortColumnID(2);
-//		column.setSortIndicator(true);
-//		
-//		//notebook.appendPage(treeView,"ListView");
-//		ScrolledWindow sw = new ScrolledWindow(null,null);
-//		sw.addWithViewport(treeView);
-//		notebook.appendPage(sw,"ListView");
+		class TestListStore : ListStore
+		{
+			this()
+			{
+				static GType [3] columns = [16<<2,16<<2,16<<2]; 
+				super(columns);
+			}
+		}
+		
+		TestListStore testListStore = new TestListStore();
+
+		TreeIter iterTop = testListStore.createIter();
+
+		static int [3] cols = [0,1,2];
+		char[][] vals;
+		vals ~= "Antonio";
+		vals ~= "Canada";
+		vals ~= "Ontario";
+		testListStore.set(iterTop,cols,vals);
+		
+		testListStore.append(iterTop);
+		char[][] vals1;
+		vals1 ~= "John Reimer";
+		vals1 ~= "Canada";
+		vals1 ~= "BC";
+		testListStore.set(iterTop,cols,vals1);
+		
+		testListStore.append(iterTop);
+		char[][] vals2;
+		vals2 ~= "Friend of Duit 2";
+		vals2 ~= "Poland";
+		vals2 ~= "Poland";
+		testListStore.set(iterTop,cols,vals2);
+
+		testListStore.append(iterTop);
+		char[][] vals3;
+		vals3 ~= "Friend of Duit 3";
+		vals3 ~= "Denmark";
+		vals3 ~= "Denmark";
+		testListStore.set(iterTop,cols,vals3);
+
+		TreeView treeView = new TreeView(testListStore);
+		treeView.setHeadersClickable(true);
+		treeView.setRulesHint(true);
+		
+		//CellRendererText cellText = new CellRendererText();
+		TreeViewColumn column = new TreeViewColumn("Author",new CellRendererText(),"text", 0);
+		treeView.appendColumn(column);
+		column.setResizable(true);
+		column.setReorderable(true);
+		column.setSortColumnId(0);
+		column.setSortIndicator(true);
+		
+		column = new TreeViewColumn("Country",new CellRendererText(),"text", 1);
+		treeView.appendColumn(column);
+		column.setResizable(true);
+		column.setReorderable(true);
+		column.setSortColumnId(1);
+		column.setSortIndicator(true);
+
+		column = new TreeViewColumn("Province",new CellRendererText(),"text", 2);
+		treeView.appendColumn(column);
+		column.setResizable(true);
+		column.setReorderable(true);
+		column.setSortColumnId(2);
+		column.setSortIndicator(true);
+		
+		//notebook.appendPage(treeView,"ListView");
+		ScrolledWindow sw = new ScrolledWindow(null,null);
+		sw.addWithViewport(treeView);
+		notebook.appendPage(sw,"ListView");
 		
 	}
-	
-private import gdk.Drawable;
 	
 	void testDelete(Notebook notebook)
 	{

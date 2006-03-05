@@ -24,8 +24,10 @@
  * Conversion parameters:
  * outPack = gtk
  * outFile = CellRendererText
- * strct   = GtkCellRendererText
+ * strct   = GtkCellRenderer
+ * realStrct=GtkCellRendererText
  * clss    = CellRendererText
+ * extend  = 
  * prefixes:
  * 	- gtk_cell_renderer_text_
  * 	- gtk_
@@ -133,10 +135,10 @@ public class CellRendererText : CellRenderer
 	 * Returns:
 	 *  the new cell renderer
 	 */
-	public static CellRenderer newCellRendererText()
+	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_text_new (void);
-		return new CellRenderer( gtk_cell_renderer_text_new() );
+		this(cast(GtkCellRendererText*)gtk_cell_renderer_text_new() );
 	}
 	
 	/**
@@ -156,10 +158,10 @@ public class CellRendererText : CellRenderer
 	 *  "attributes" PangoAttrList : Read / Write
 	 * A list of style attributes to apply to the text of the renderer.
 	 */
-	public void setFixedHeightFromFont(int numberOfRows)
+	public static void setFixedHeightFromFont(GtkCellRendererText* renderer, int numberOfRows)
 	{
 		// void gtk_cell_renderer_text_set_fixed_height_from_font  (GtkCellRendererText *renderer,  gint number_of_rows);
-		gtk_cell_renderer_text_set_fixed_height_from_font(gtkCellRendererText, numberOfRows);
+		gtk_cell_renderer_text_set_fixed_height_from_font(renderer, numberOfRows);
 	}
 	
 	

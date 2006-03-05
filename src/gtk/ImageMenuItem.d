@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ImageMenuItem
  * strct   = GtkImageMenuItem
+ * realStrct=
  * clss    = ImageMenuItem
+ * extend  = 
  * prefixes:
  * 	- gtk_image_menu_item_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = VBox
  * strct   = GtkVBox
+ * realStrct=
  * clss    = VBox
+ * extend  = 
  * prefixes:
  * 	- gtk_vbox_
  * 	- gtk_

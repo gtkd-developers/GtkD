@@ -25,7 +25,9 @@
  * outPack = cairoLib
  * outFile = Status
  * strct   = cairo_status_t
+ * realStrct=
  * clss    = Status
+ * extend  = 
  * prefixes:
  * 	- cairo_status_t
  * omit structs:

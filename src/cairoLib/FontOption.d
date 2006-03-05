@@ -25,7 +25,9 @@
  * outPack = cairoLib
  * outFile = FontOption
  * strct   = cairo_font_options_t
+ * realStrct=
  * clss    = FontOption
+ * extend  = 
  * prefixes:
  * 	- cairo_font_options_
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = pango
  * outFile = PgGlyphString
  * strct   = PangoGlyphString
+ * realStrct=
  * clss    = PgGlyphString
+ * extend  = 
  * prefixes:
  * 	- pango_glyph_string_
  * omit structs:

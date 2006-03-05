@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = RWLock
  * strct   = GStaticRWLock
+ * realStrct=
  * clss    = RWLock
+ * extend  = 
  * prefixes:
  * 	- g_static_rw_lock_
  * omit structs:

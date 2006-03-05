@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Threads
  * strct   = 
+ * realStrct=
  * clss    = 
+ * extend  = 
  * prefixes:
  * omit structs:
  * omit prefixes:

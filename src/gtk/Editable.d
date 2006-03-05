@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Editable
  * strct   = GtkEditable
+ * realStrct=
  * clss    = Editable
+ * extend  = 
  * prefixes:
  * 	- gtk_editable_
  * 	- gtk_

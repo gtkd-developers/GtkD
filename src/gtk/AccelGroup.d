@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = AccelGroup
  * strct   = GtkAccelGroup
+ * realStrct=
  * clss    = AccelGroup
+ * extend  = 
  * prefixes:
  * 	- gtk_accel_group_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Font
  * strct   = GdkFont
+ * realStrct=
  * clss    = Font
+ * extend  = 
  * prefixes:
  * 	- gdk_font_
  * 	- gdk_

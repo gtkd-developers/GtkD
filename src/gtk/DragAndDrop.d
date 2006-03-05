@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = DragAndDrop
  * strct   = GdkDragContext
+ * realStrct=
  * clss    = DragAndDrop
+ * extend  = 
  * prefixes:
  * 	- gtk_drag_
  * 	- gtk_

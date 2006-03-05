@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Colormap
  * strct   = GdkColormap
+ * realStrct=
  * clss    = Colormap
+ * extend  = 
  * prefixes:
  * 	- gdk_colormap_
  * omit structs:

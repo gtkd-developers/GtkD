@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Arrow
  * strct   = GtkArrow
+ * realStrct=
  * clss    = Arrow
+ * extend  = 
  * prefixes:
  * 	- gtk_arrow_
  * 	- gtk_

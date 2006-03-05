@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Toolbar
  * strct   = GtkToolbar
+ * realStrct=
  * clss    = Toolbar
+ * extend  = 
  * prefixes:
  * 	- gtk_toolbar_
  * 	- gtk_

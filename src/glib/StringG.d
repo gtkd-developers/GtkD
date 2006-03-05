@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = StringG
  * strct   = GString
+ * realStrct=
  * clss    = StringG
+ * extend  = 
  * prefixes:
  * 	- g_string_
  * omit structs:

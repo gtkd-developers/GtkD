@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Timer
  * strct   = GTimer
+ * realStrct=
  * clss    = Timer
+ * extend  = 
  * prefixes:
  * 	- g_timer
  * omit structs:

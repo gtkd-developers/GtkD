@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Module
  * strct   = GModule
+ * realStrct=
  * clss    = Module
+ * extend  = 
  * prefixes:
  * 	- g_module_
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = gobject
  * outFile = TypeModule
  * strct   = GTypeModule
+ * realStrct=
  * clss    = TypeModule
+ * extend  = 
  * prefixes:
  * 	- g_type_module_
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Image
  * strct   = GtkImage
+ * realStrct=
  * clss    = Image
+ * extend  = 
  * prefixes:
  * 	- gtk_image_
  * 	- gtk_

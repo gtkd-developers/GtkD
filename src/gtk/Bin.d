@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Bin
  * strct   = GtkBin
+ * realStrct=
  * clss    = Bin
+ * extend  = 
  * prefixes:
  * 	- gtk_bin_
  * 	- gtk_

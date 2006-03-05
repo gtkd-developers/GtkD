@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = DragContext
  * strct   = GdkDragContext
+ * realStrct=
  * clss    = DragContext
+ * extend  = 
  * prefixes:
  * 	- gdk-drag_context_
  * omit structs:

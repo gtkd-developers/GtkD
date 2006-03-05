@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Calendar
  * strct   = GtkCalendar
+ * realStrct=
  * clss    = Calendar
+ * extend  = 
  * prefixes:
  * 	- gtk_calendar_
  * 	- gtk_

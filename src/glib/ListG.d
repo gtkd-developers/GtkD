@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = ListG
  * strct   = GList
+ * realStrct=
  * clss    = ListG
+ * extend  = 
  * prefixes:
  * 	- g_list_
  * omit structs:

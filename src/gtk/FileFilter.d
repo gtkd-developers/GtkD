@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = FileFilter
  * strct   = GtkFileFilter
+ * realStrct=
  * clss    = FileFilter
+ * extend  = 
  * prefixes:
  * 	- gtk_file_filter_
  * 	- gtk_

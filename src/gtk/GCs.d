@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = GCs
  * strct   = 
+ * realStrct=
  * clss    = GCs
+ * extend  = 
  * prefixes:
  * 	- gtk_gc_
  * 	- gtk_

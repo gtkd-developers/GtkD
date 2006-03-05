@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = FileChooserWidget
  * strct   = GtkFileChooserWidget
+ * realStrct=
  * clss    = FileChooserWidget
+ * extend  = 
  * prefixes:
  * 	- gtk_file_chooser_widget_
  * 	- gtk_

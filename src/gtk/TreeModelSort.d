@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TreeModelSort
  * strct   = GtkTreeModelSort
+ * realStrct=
  * clss    = TreeModelSort
+ * extend  = 
  * prefixes:
  * 	- gtk_tree_model_sort_
  * 	- gtk_

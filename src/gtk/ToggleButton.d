@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ToggleButton
  * strct   = GtkToggleButton
+ * realStrct=
  * clss    = ToggleButton
+ * extend  = 
  * prefixes:
  * 	- gtk_toggle_button_
  * 	- gtk_

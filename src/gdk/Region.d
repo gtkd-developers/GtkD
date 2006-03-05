@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Region
  * strct   = GdkRegion
+ * realStrct=
  * clss    = Region
+ * extend  = 
  * prefixes:
  * 	- gdk_region_
  * omit structs:

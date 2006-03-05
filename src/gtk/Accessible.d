@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Accessible
  * strct   = GtkAccessible
+ * realStrct=
  * clss    = Accessible
+ * extend  = 
  * prefixes:
  * 	- gtk_accessible_
  * 	- gtk_

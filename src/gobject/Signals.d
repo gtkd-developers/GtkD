@@ -25,7 +25,9 @@
  * outPack = gobject
  * outFile = Signals
  * strct   = 
+ * realStrct=
  * clss    = Signals
+ * extend  = 
  * prefixes:
  * 	- g_signal_
  * omit structs:

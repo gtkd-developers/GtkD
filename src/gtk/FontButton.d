@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = FontButton
  * strct   = GtkFontButton
+ * realStrct=
  * clss    = FontButton
+ * extend  = 
  * prefixes:
  * 	- gtk_font_button_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = StringCompletion
  * strct   = GCompletion
+ * realStrct=
  * clss    = StringCompletion
+ * extend  = 
  * prefixes:
  * 	- g_completion_
  * omit structs:

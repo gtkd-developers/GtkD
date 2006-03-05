@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TextBuffer
  * strct   = GtkTextBuffer
+ * realStrct=
  * clss    = TextBuffer
+ * extend  = 
  * prefixes:
  * 	- gtk_text_buffer_
  * 	- gtk_

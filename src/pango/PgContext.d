@@ -25,7 +25,9 @@
  * outPack = pango
  * outFile = PgContext
  * strct   = PangoContext
+ * realStrct=
  * clss    = PgContext
+ * extend  = 
  * prefixes:
  * 	- pango_context_
  * omit structs:

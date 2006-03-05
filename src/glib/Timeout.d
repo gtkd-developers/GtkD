@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Timeout
  * strct   = 
+ * realStrct=
  * clss    = Timeout
+ * extend  = 
  * prefixes:
  * 	- g_timeout_
  * omit structs:

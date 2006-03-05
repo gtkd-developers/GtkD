@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = ErrorG
  * strct   = GError
+ * realStrct=
  * clss    = ErrorG
+ * extend  = 
  * prefixes:
  * 	- g_error_
  * omit structs:

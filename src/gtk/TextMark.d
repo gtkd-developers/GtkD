@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TextMark
  * strct   = GtkTextMark
+ * realStrct=
  * clss    = TextMark
+ * extend  = 
  * prefixes:
  * 	- gtk_text_mark_
  * 	- gtk_

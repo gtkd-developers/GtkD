@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TearoffMenuItem
  * strct   = GtkTearoffMenuItem
+ * realStrct=
  * clss    = TearoffMenuItem
+ * extend  = 
  * prefixes:
  * 	- gtk_tearoff_menu_item_
  * 	- gtk_

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = RcStyle
  * strct   = GtkRcStyle
+ * realStrct=
  * clss    = RcStyle
+ * extend  = 
  * prefixes:
  * 	- gtk_rc_
  * 	- gtk_

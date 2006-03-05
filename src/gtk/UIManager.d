@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = UIManager
  * strct   = GtkUIManager
+ * realStrct=
  * clss    = UIManager
+ * extend  = 
  * prefixes:
  * 	- gtk_ui_manager_
  * 	- gtk_

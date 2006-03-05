@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ColorButton
  * strct   = GtkColorButton
+ * realStrct=
  * clss    = ColorButton
+ * extend  = 
  * prefixes:
  * 	- gtk_color_button_
  * 	- gtk_

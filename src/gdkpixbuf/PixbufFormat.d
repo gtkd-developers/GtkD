@@ -25,7 +25,9 @@
  * outPack = gdkpixbuf
  * outFile = PixbufFormat
  * strct   = GdkPixbufFormat
+ * realStrct=
  * clss    = PixbufFormat
+ * extend  = 
  * prefixes:
  * 	- gdk_pixbuf_format_
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = HBox
  * strct   = GtkHBox
+ * realStrct=
  * clss    = HBox
+ * extend  = 
  * prefixes:
  * 	- gtk_hbox_
  * 	- gtk_

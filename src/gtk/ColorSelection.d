@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ColorSelection
  * strct   = GtkColorSelection
+ * realStrct=
  * clss    = ColorSelection
+ * extend  = 
  * prefixes:
  * 	- gtk_color_selection_
  * 	- gtk_

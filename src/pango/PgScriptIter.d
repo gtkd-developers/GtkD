@@ -25,7 +25,9 @@
  * outPack = pango
  * outFile = PgScriptIter
  * strct   = PangoScriptIter
+ * realStrct=
  * clss    = PgScriptIter
+ * extend  = 
  * prefixes:
  * 	- pango_script_iter_
  * omit structs:

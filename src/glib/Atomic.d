@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Atomic
  * strct   = 
+ * realStrct=
  * clss    = Atomic
+ * extend  = 
  * prefixes:
  * 	- g_atomic_
  * omit structs:

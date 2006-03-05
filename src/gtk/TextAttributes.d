@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TextAttributes
  * strct   = GtkTextAttributes
+ * realStrct=
  * clss    = TextAttributes
+ * extend  = 
  * prefixes:
  * 	- gtk_text_attributes_
  * omit structs:

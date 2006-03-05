@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Quark
  * strct   = GQuark
+ * realStrct=
  * clss    = Quark
+ * extend  = 
  * prefixes:
  * 	- g_quark_
  * omit structs:

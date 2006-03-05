@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = RadioButton
  * strct   = GtkRadioButton
+ * realStrct=
  * clss    = RadioButton
+ * extend  = 
  * prefixes:
  * 	- gtk_radio_button_
  * 	- gtk_

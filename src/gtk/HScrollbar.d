@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = HScrollbar
  * strct   = GtkHScrollbar
+ * realStrct=
  * clss    = HScrollbar
+ * extend  = 
  * prefixes:
  * 	- gtk_hscrollbar_
  * 	- gtk_

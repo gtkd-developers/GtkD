@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Viewport
  * strct   = GtkViewport
+ * realStrct=
  * clss    = Viewport
+ * extend  = 
  * prefixes:
  * 	- gtk_viewport_
  * 	- gtk_

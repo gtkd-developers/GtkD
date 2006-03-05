@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ColorSelectionDialog
  * strct   = GtkColorSelectionDialog
+ * realStrct=
  * clss    = ColorSelectionDialog
+ * extend  = 
  * prefixes:
  * 	- gtk_color_selection_dialog_
  * 	- gtk_

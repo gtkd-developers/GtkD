@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = Image
  * strct   = AtkImage
+ * realStrct=
  * clss    = Image
+ * extend  = 
  * prefixes:
  * 	- atk_image_
  * omit structs:

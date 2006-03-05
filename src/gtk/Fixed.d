@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Fixed
  * strct   = GtkFixed
+ * realStrct=
  * clss    = Fixed
+ * extend  = 
  * prefixes:
  * 	- gtk_fixed_
  * 	- gtk_

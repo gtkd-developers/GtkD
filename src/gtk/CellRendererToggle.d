@@ -24,8 +24,10 @@
  * Conversion parameters:
  * outPack = gtk
  * outFile = CellRendererToggle
- * strct   = GtkCellRendererToggle
+ * strct   = GtkCellRenderer
+ * realStrct=GtkCellRendererToggle
  * clss    = CellRendererToggle
+ * extend  = 
  * prefixes:
  * 	- gtk_cell_renderer_toggle_
  * 	- gtk_
@@ -131,10 +133,10 @@ public class CellRendererToggle : CellRenderer
 	 * Returns:
 	 *  the new cell renderer
 	 */
-	public static CellRenderer newCellRendererToggle()
+	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_toggle_new  (void);
-		return new CellRenderer( gtk_cell_renderer_toggle_new() );
+		this(cast(GtkCellRendererToggle*)gtk_cell_renderer_toggle_new() );
 	}
 	
 	/**
@@ -144,10 +146,10 @@ public class CellRendererToggle : CellRenderer
 	 * Returns:
 	 *  TRUE if we're rendering radio toggles rather than checkboxes
 	 */
-	public int getRadio()
+	public static int getRadio(GtkCellRendererToggle* toggle)
 	{
 		// gboolean gtk_cell_renderer_toggle_get_radio  (GtkCellRendererToggle *toggle);
-		return gtk_cell_renderer_toggle_get_radio(gtkCellRendererToggle);
+		return gtk_cell_renderer_toggle_get_radio(toggle);
 	}
 	
 	/**
@@ -163,10 +165,10 @@ public class CellRendererToggle : CellRenderer
 	 * radio:
 	 *  TRUE to make the toggle look like a radio button
 	 */
-	public void setRadio(int radio)
+	public static void setRadio(GtkCellRendererToggle* toggle, int radio)
 	{
 		// void gtk_cell_renderer_toggle_set_radio  (GtkCellRendererToggle *toggle,  gboolean radio);
-		gtk_cell_renderer_toggle_set_radio(gtkCellRendererToggle, radio);
+		gtk_cell_renderer_toggle_set_radio(toggle, radio);
 	}
 	
 	/**
@@ -177,10 +179,10 @@ public class CellRendererToggle : CellRenderer
 	 * Returns:
 	 *  TRUE if the cell renderer is active.
 	 */
-	public int getActive()
+	public static int getActive(GtkCellRendererToggle* toggle)
 	{
 		// gboolean gtk_cell_renderer_toggle_get_active  (GtkCellRendererToggle *toggle);
-		return gtk_cell_renderer_toggle_get_active(gtkCellRendererToggle);
+		return gtk_cell_renderer_toggle_get_active(toggle);
 	}
 	
 	/**
@@ -195,10 +197,10 @@ public class CellRendererToggle : CellRenderer
 	 * The toggle button can be activated.
 	 * Default value: TRUE
 	 */
-	public void setActive(int setting)
+	public static void setActive(GtkCellRendererToggle* toggle, int setting)
 	{
 		// void gtk_cell_renderer_toggle_set_active  (GtkCellRendererToggle *toggle,  gboolean setting);
-		gtk_cell_renderer_toggle_set_active(gtkCellRendererToggle, setting);
+		gtk_cell_renderer_toggle_set_active(toggle, setting);
 	}
 	
 	

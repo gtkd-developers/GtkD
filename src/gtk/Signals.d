@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Signals
  * strct   = 
+ * realStrct=
  * clss    = Signals
+ * extend  = 
  * prefixes:
  * 	- gtk_signal_
  * 	- gtk_

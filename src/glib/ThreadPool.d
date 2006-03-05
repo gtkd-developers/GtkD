@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = ThreadPool
  * strct   = GThreadPool
+ * realStrct=
  * clss    = ThreadPool
+ * extend  = 
  * prefixes:
  * 	- g_thread_pool_
  * omit structs:

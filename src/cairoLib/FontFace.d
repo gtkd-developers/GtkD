@@ -25,7 +25,9 @@
  * outPack = cairoLib
  * outFile = FontFace
  * strct   = cairo_font_face_t
+ * realStrct=
  * clss    = FontFace
+ * extend  = 
  * prefixes:
  * 	- cairo_font_face_
  * omit structs:

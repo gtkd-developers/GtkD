@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = Window
  * strct   = GdkWindow
+ * realStrct=
  * clss    = Window
+ * extend  = 
  * prefixes:
  * 	- gdk_window_
  * omit structs:

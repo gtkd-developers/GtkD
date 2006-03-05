@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = FontSelection
  * strct   = GtkFontSelection
+ * realStrct=
  * clss    = FontSelection
+ * extend  = 
  * prefixes:
  * 	- gtk_font_selection_
  * 	- gtk_

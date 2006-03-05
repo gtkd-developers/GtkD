@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Notebook
  * strct   = GtkNotebook
+ * realStrct=
  * clss    = Notebook
+ * extend  = 
  * prefixes:
  * 	- gtk_notebook_
  * 	- gtk_

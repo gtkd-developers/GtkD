@@ -25,7 +25,9 @@
  * outPack = cairoLib
  * outFile = Pattern
  * strct   = cairo_pattern_t
+ * realStrct=
  * clss    = Pattern
+ * extend  = 
  * prefixes:
  * 	- cairo_pattern_
  * omit structs:

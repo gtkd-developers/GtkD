@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ToolItem
  * strct   = GtkToolItem
+ * realStrct=
  * clss    = ToolItem
+ * extend  = 
  * prefixes:
  * 	- gtk_tool_item_
  * 	- gtk_

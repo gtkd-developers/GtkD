@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TreeSortable
  * strct   = GtkTreeSortable
+ * realStrct=
  * clss    = TreeSortable
+ * extend  = 
  * prefixes:
  * 	- gtk_tree_sortable_
  * 	- gtk_

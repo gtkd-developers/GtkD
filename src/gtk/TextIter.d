@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TextIter
  * strct   = GtkTextIter
+ * realStrct=
  * clss    = TextIter
+ * extend  = 
  * prefixes:
  * 	- gtk_text_iter_
  * 	- gtk_

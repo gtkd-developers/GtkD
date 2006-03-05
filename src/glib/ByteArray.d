@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = ByteArray
  * strct   = GByteArray
+ * realStrct=
  * clss    = ByteArray
+ * extend  = 
  * prefixes:
  * 	- g_byte_array_
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = DrawingArea
  * strct   = GtkDrawingArea
+ * realStrct=
  * clss    = DrawingArea
+ * extend  = 
  * prefixes:
  * 	- gtk_drawing_area_
  * 	- gtk_

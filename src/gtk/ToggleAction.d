@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = ToggleAction
  * strct   = GtkToggleAction
+ * realStrct=
  * clss    = ToggleAction
+ * extend  = 
  * prefixes:
  * 	- gtk_toggle_action_
  * 	- gtk_

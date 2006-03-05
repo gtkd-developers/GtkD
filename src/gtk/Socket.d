@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Socket
  * strct   = GtkSocket
+ * realStrct=
  * clss    = Socket
+ * extend  = 
  * prefixes:
  * 	- gtk_socket_
  * 	- gtk_

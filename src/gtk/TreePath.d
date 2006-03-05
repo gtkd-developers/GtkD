@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = TreePath
  * strct   = GtkTreePath
+ * realStrct=
  * clss    = TreePath
+ * extend  = 
  * prefixes:
  * 	- gtk_tree_path_
  * omit structs:

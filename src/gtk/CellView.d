@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = CellView
  * strct   = GtkCellView
+ * realStrct=
  * clss    = CellView
+ * extend  = 
  * prefixes:
  * 	- gtk_cell_view_
  * 	- gtk_

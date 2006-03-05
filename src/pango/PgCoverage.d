@@ -25,7 +25,9 @@
  * outPack = pango
  * outFile = PgCoverage
  * strct   = 
+ * realStrct=
  * clss    = PgCoverage
+ * extend  = 
  * prefixes:
  * 	- pango_coverage_
  * omit structs:

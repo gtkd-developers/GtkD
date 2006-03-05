@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = Scrollbar
  * strct   = GtkScrollbar
+ * realStrct=
  * clss    = Scrollbar
+ * extend  = 
  * prefixes:
  * 	- gtk_scrollbar_
  * 	- gtk_

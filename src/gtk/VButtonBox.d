@@ -25,7 +25,9 @@
  * outPack = gtk
  * outFile = VButtonBox
  * strct   = GtkVButtonBox
+ * realStrct=
  * clss    = VButtonBox
+ * extend  = 
  * prefixes:
  * 	- gtk_vbutton_box_
  * 	- gtk_

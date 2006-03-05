@@ -25,7 +25,9 @@
  * outPack = gdk
  * outFile = DisplayManager
  * strct   = GdkDisplayManager
+ * realStrct=
  * clss    = DisplayManager
+ * extend  = 
  * prefixes:
  * 	- gdk_display_manager_
  * omit structs:

@@ -25,7 +25,9 @@
  * outPack = atk
  * outFile = ObjectFactory
  * strct   = AtkObjectFactory
+ * realStrct=
  * clss    = ObjectFactory
+ * extend  = 
  * prefixes:
  * 	- atk_object_factory_
  * omit structs:

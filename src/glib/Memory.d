@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = Memory
  * strct   = 
+ * realStrct=
  * clss    = Memory
+ * extend  = 
  * prefixes:
  * 	- g_
  * omit structs:

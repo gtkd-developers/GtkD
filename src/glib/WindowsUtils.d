@@ -25,7 +25,9 @@
  * outPack = glib
  * outFile = WindowsUtils
  * strct   = 
+ * realStrct=
  * clss    = WindowsUtils
+ * extend  = 
  * prefixes:
  * 	- g_win32_
  * omit structs:
