@@ -121,6 +121,7 @@ class TestDrawingArea : VBox
 		char[] primitiveType;
 		PgFontDescription font;
 		Image image;
+		Pixbuf scaledPixbuf;
 		
 		SpinButton spin;
 		SpinButton backSpin;
@@ -144,10 +145,13 @@ class TestDrawingArea : VBox
 			primitiveType = "Filled Arc";
 			font = new PgFontDescription(PgFontDescription.fromString("Courier 48"));
 			image = new Image("/home/ruimt/devel/D1/DUI/images/duiLogo_4.xpm");
+			scaledPixbuf = image.getPixbuf();
 			paintColor = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
 			black = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
 
 			spin = new SpinButton(new Adjustment(30, 1, 400, 1, 10, 10),1,0);
+			sizeSpinChanged(spin);
+			spin.addOnValueChanged(&sizeSpinChanged);
 			backSpin = new SpinButton(new Adjustment(5, 4, 100, 1, 10, 10),1,0);
 			backSpin.addOnValueChanged(&backSpinChanged);
 		
@@ -262,6 +266,19 @@ private import gtk.typedefs;
 			GC gc = new GC(getDrawable());
 			writefln("backSpinChanged - exit");
 		}
+
+		public void sizeSpinChanged(SpinButton spinButton)
+		{
+			int width = spinButton.getValueAsInt();
+			scaledPixbuf = image.getPixbuf();
+			
+			float ww = width * scaledPixbuf.getWidth() / 30;
+			float hh = width * scaledPixbuf.getHeight() / 30;
+			
+			scaledPixbuf = scaledPixbuf.scaleSimple(cast(int)ww, cast(int)hh, GdkInterpType.HYPER);
+		}
+					
+
 		
 private import gdk.Font;
 private import pango.PgContext;
@@ -317,19 +334,11 @@ private import gdk.ImageGdk;
 					break;
 				
 				case "Image":
-					Pixbuf p;
-					p = image.getPixbuf();
-//					//Pixbuf pixbuf = p.trimTo(height , width);
-//					ImageGdk i = new ImageGdk(ImageGdk.get(cast(Drawable)p,0,0,10,10));
-					//d.drawPixbuf(gc, p, x, y, x, y, 10, 10);
-					p.renderToDrawable(d.getDrawableStruct(), gc.getGCStruct(), 
+					scaledPixbuf.renderToDrawable(d.getDrawableStruct(), gc.getGCStruct(), 
 						0, 0, x, y, 
-						p.getWidth(), p.getHeight(), 
+						scaledPixbuf.getWidth(), scaledPixbuf.getHeight(), 
 						GdkRgbDither.THER_NONE, 0, 0
 						);
-
-
-//					d.drawImage(gc, image, x, y);
 					break;
 				
 				case "Polygon":
