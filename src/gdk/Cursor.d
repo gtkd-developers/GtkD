@@ -37,7 +37,7 @@
  * 	- gdk.Pixmap
  * 	- gdk.Color
  * 	- gdk.Display
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- gdk.Cursor
  * structWrap:
  * 	- GdkColor* -> Color
@@ -54,7 +54,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Pixmap;private import gdk.Color;private import gdk.Display;private import gdkpixbuf.Pixbuf;private import gdk.Cursor;
+private import gdk.Pixmap;private import gdk.Color;private import gdk.Display;private import gdk.Pixbuf;private import gdk.Cursor;
 /**
  * Description
  * These functions are used to create and destroy cursors.

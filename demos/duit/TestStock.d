@@ -37,6 +37,8 @@ private import gdk.Event;
  */
 class TestStock : ScrolledWindow
 {	
+
+private import gtk.Tooltips;
 	this()
 	{
 		super(null, null);
@@ -51,9 +53,14 @@ class TestStock : ScrolledWindow
 		
 		Color color = new Color(cast(ubyte)0,cast(ubyte)255,cast(ubyte)255);
 		
+		IconSize size = Button.getIconSize();
+		Button.setIconSize(IconSize.SIZE_DIALOG);
 		for(StockID stockID=StockID.min ; stockID<=StockID.max ; stockID++)
 		{
-			Button button = new Button(stockID);
+			Button button = new Button(stockID, true);
+			Tooltips tt = new Tooltips();
+			tt.setDelay(0);
+			tt.setTip(button, StockDesc[stockID], StockDesc[stockID]);
 			//button.setCursor(CursorType.BASED_ARROW_DOWN);
 			//button.setBackground(color);
 			//Cursor cursor = new Cursor(CursorType.CLOCK);
@@ -61,6 +68,7 @@ class TestStock : ScrolledWindow
 			
 //			button.addOnEnterNotify(&enterNotify);
 //			button.addOnLeaveNotify(&leaveNotify);
+			
 			
 			table.attach(button,col,col+1,row,row+1,AttachOptions.SHRINK,AttachOptions.SHRINK,2,2);
 			++row;
@@ -71,6 +79,7 @@ class TestStock : ScrolledWindow
 			}
 		}
 		
+		Button.setIconSize(size);
 		addWithViewport(table);
 
 	}

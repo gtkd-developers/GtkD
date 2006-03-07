@@ -37,7 +37,7 @@
  * 	- gtk_image_new_from_stock
  * 	- gtk_image_new_from_icon_name
  * imports:
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- gdk.ImageGdk
  * 	- gdk.Bitmap
  * 	- gdk.Pixmap
@@ -55,7 +55,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gdkpixbuf.Pixbuf;private import gdk.ImageGdk;private import gdk.Bitmap;private import gdk.Pixmap;
+private import gdk.Pixbuf;private import gdk.ImageGdk;private import gdk.Bitmap;private import gdk.Pixmap;
 /**
  * Description
  * The GtkImage widget displays an image. Various kinds of object

@@ -179,6 +179,27 @@ public enum GConnectFlags
 }
 alias GConnectFlags ConnectFlags;
 
+struct GValue
+{
+	align(4)
+	{
+		GType		g_type;
+		union Data
+		{
+			gint	v_int;
+			guint	v_uint;
+			glong	v_long;
+			gulong	v_ulong;
+			gint64      v_int64;
+			guint64     v_uint64;
+			gfloat	v_float;
+			gdouble	v_double;
+			gpointer	v_pointer;
+		};
+	}
+	Data data1;
+	Data data2;
+};
 
 /**
  * An opaque structure used as the base of all interface types.
@@ -488,20 +509,6 @@ public struct GFlagsValue
 	char *valueName;
 	char *valueNick;
 }
-
-
-/**
- * Main Gtk struct.
- * An opaque structure used to hold different types of values.
- * The data within the structure has protected scope: it is accessible only
- * to functions within a GTypeValueTable structure, or implementations of
- * the g_value_*() API. That is, code portions which implement new fundamental
- * types.
- * GValue users can not make any assumptions about how data is stored
- * within the 2 element data union, and the g_type member should
- * only be accessed through the G_VALUE_TYPE() macro.
- */
-public struct GValue;
 
 
 /**

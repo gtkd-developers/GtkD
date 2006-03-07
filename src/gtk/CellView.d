@@ -37,7 +37,7 @@
  * 	- gtk_cell_view_new_with_text
  * 	- gtk_cell_view_new_with_markup
  * imports:
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- gtk.TreeModel
  * 	- gtk.TreePath
  * 	- gdk.Color
@@ -57,7 +57,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gdkpixbuf.Pixbuf;private import gtk.TreeModel;private import gtk.TreePath;private import gdk.Color;private import glib.ListG;
+private import gdk.Pixbuf;private import gtk.TreeModel;private import gtk.TreePath;private import gdk.Color;private import glib.ListG;
 /**
  * Description
  * A GtkCellView displays a single row of a GtkTreeModel, using

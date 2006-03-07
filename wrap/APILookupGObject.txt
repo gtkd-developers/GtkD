@@ -27,6 +27,27 @@
 
 # must start with wrap
 
+addStructs: start
+struct GValue
+{
+	GType		g_type;
+	union Data
+	{
+		gint	v_int;
+		guint	v_uint;
+		glong	v_long;
+		gulong	v_ulong;
+		gint64      v_int64;
+		guint64     v_uint64;
+		gfloat	v_float;
+		gdouble	v_double;
+		gpointer	v_pointer;
+	};
+	Data data1;
+	Data data2;
+};
+addStructs: end
+
 wrap: gobject
 
 ###########################################################
@@ -180,6 +201,7 @@ outFile: Boxed
 file: gobject-Generic-values.html
 struct: GValue
 class: Value
+nostruct: GValue
 prefix: g_value_
 import: gobject.Value
 structWrap: GValue* Value
@@ -187,6 +209,20 @@ import: gobject.ParamSpec
 structWrap: GParamSpec* ParamSpec
 import: gobject.ObjectG
 structWrap: GObject* ObjectG
+import: gdk.Pixbuf
+
+code: start
+	this(Pixbuf pixbuf)
+	{
+		GValue* v = new GValue;
+		//v.g_type = DUIType.PIXBUF;
+		v.g_type = Pixbuf.getType();
+		v.data0.v_pointer = cast(void*)(pixbuf.gdkP());
+		this(v);
+	}
+
+ode: end
+
 openFile: Value
 
 file: gobject-Standard-Parameter-and-Value-Types.html

@@ -35,7 +35,7 @@ class TestDrawingArea : VBox
 	private import gtk.Menu;
 	private import gtk.Adjustment;
 	private import gtk.HBox;
-	private import gdkpixbuf.Pixbuf;
+	private import gdk.Pixbuf;
 	//private import gdk.Point;
 	private import gdk.Color;
 	private import gdk.Drawable;

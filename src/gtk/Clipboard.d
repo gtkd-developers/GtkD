@@ -38,7 +38,7 @@
  * 	- gtk.Clipboard
  * 	- gdk.Display
  * 	- gobject.ObjectG
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * structWrap:
  * 	- GObject* -> ObjectG
  * 	- GdkDisplay* -> Display
@@ -53,7 +53,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Clipboard;private import gdk.Display;private import gobject.ObjectG;private import gdkpixbuf.Pixbuf;
+private import gtk.Clipboard;private import gdk.Display;private import gobject.ObjectG;private import gdk.Pixbuf;
 /**
  * Description
  *  The GtkClipboard object represents a clipboard of data shared

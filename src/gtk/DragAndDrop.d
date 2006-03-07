@@ -42,7 +42,7 @@
  * 	- gdk.Colormap
  * 	- gdk.Pixmap
  * 	- gdk.Bitmap
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * structWrap:
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkColormap* -> Colormap
@@ -61,7 +61,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gdk.Window;private import gdk.DragContext;private import gdk.Event;private import gdk.Colormap;private import gdk.Pixmap;private import gdk.Bitmap;private import gdkpixbuf.Pixbuf;
+private import gtk.Widget;private import gdk.Window;private import gdk.DragContext;private import gdk.Event;private import gdk.Colormap;private import gdk.Pixmap;private import gdk.Bitmap;private import gdk.Pixbuf;
 /**
  * Description
  * GTK+ has a rich set of functions for doing inter-process

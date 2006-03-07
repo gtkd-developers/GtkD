@@ -342,7 +342,7 @@ structWrap: GdkDisplay* Display
 #structWrap: GtkTargetEntry* TargetEntry
 import: gobject.ObjectG
 structWrap: GObject* ObjectG
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 #import: gtk.SelectionData
 #structWrap: GtkSelectionData* SelectionData
@@ -373,7 +373,7 @@ import: gdk.Pixmap
 structWrap: GdkPixmap* Pixmap
 import: gdk.Bitmap
 structWrap: GdkBitmap* Bitmap
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 outFile: DragAndDrop
 
@@ -390,7 +390,7 @@ import: gdk.Screen
 structWrap: GdkScreen* Screen
 import: gtk.IconInfo
 structWrap: GtkIconInfo* IconInfo
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 #import: g.Error*
 #structWrap: GError** Error*
@@ -404,7 +404,7 @@ prefix: gtk_icon_info_
 strictPrefix: Y
 import: gtk.IconInfo
 structWrap: GtkIconInfo* IconInfo
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 outFile: IconInfo
 
@@ -430,7 +430,7 @@ prefix: gtk_
 #structWrap: GtkIconFactory* IconFactory
 #import: gtk.IconSet
 #structWrap: GtkIconSet* IconSet
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Style
 structWrap: GtkStyle* Style
@@ -533,7 +533,7 @@ import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
 #import: gtk.IconSet
 #structWrap: GtkIconSet* IconSet
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.IconSource
 structWrap: GtkIconSource* IconSource
@@ -563,7 +563,7 @@ import: gdk.Display
 structWrap: GdkDisplay* Display
 #import: gtk.SelectionData
 #structWrap: GtkSelectionData* SelectionData
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 outFile: Selections
 
@@ -774,7 +774,7 @@ import: glib.ListG
 structWrap: GList* ListG
 #import: gdk.EventKey
 #structWrap: GdkEventKey* EventKey
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 code: start
 	/**
@@ -864,7 +864,7 @@ struct: GtkAboutDialog
 class: AboutDialog
 prefix: gtk_about_dialog_
 prefix: gtk_
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Window
 structWrap: GtkWindow* Window
@@ -898,7 +898,7 @@ prefix: gtk_
 #structWrap: GdkImage** ImageGdk*
 #import: gdk.Bitmap*
 #structWrap: GdkBitmap** Bitmap*
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 #import: gdk.Pixmap*
 #structWrap: GdkPixmap** Pixmap*
@@ -1044,7 +1044,21 @@ nocode: gtk_button_new_from_stock
 
 code: start
 
+
+	private static IconSize currentIconSize = IconSize.SIZE_BUTTON;
+
 	private char[] action;
+	
+	
+	public static void setIconSize(IconSize iconSize)
+	{
+		currentIconSize = iconSize;
+	}
+	public static IconSize getIconSize()
+	{
+		return currentIconSize;
+	}
+
 	public void setAction(char[] action)
 	{
 		this.action = action.dup;
@@ -1379,7 +1393,7 @@ import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
 import: gtk.TextIter
 structWrap: GtkTextIter* TextIter
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: glib.ListSG
 structWrap: GSList* ListSG
@@ -1425,7 +1439,7 @@ import: gtk.TextIter
 structWrap: GtkTextIter* TextIter
 import: gtk.TextTag
 structWrap: GtkTextTag* TextTag
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 #import: gtk.TextChildAnchor
 #structWrap: GtkTextChildAnchor* TextChildAnchor
@@ -1727,7 +1741,7 @@ struct: GtkCellView
 class: CellView
 prefix: gtk_cell_view_
 prefix: gtk_
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.TreeModel
 structWrap: GtkTreeModel* TreeModel
@@ -2028,6 +2042,10 @@ structWrap: GtkTreeIter* TreeIter
 import: gobject.Value
 structWrap: GValue* Value
 import: gtk.TreeNode
+import: gdk.Pixbuf;
+import: gobject.Value;
+	
+
 nocode: gtk_tree_store_set
 
 code: start
@@ -2052,13 +2070,37 @@ code: start
 	 * Creates a top level iteractor.
 	 * I don't think lists have but the top level iteractor
 	 */
-	TreeIter createIter(TreeIter parent)
+	TreeIter createIter(TreeIter parent=null)
 	{
 		GtkTreeIter* iter = new GtkTreeIter;
 		gtk_tree_store_append(getTreeStoreStruct(), iter, (parent is null) ? null : parent.getTreeIterStruct());
 		return new TreeIter(iter);
 	}
 	
+	/**
+	 * Sets one value into one cells.
+	 * @param iter the tree iteractor, effectivly the row
+	 * @param column to column number to set
+	 * @param value the value
+	 * \todo confirm we need to destroy the Value instance
+	 */
+	void setValue(TreeIter iter, int column, char[] value)
+	{
+		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, std.string.toStringz(value) , -1);
+	}
+
+
+	
+	/**
+	 * \todo confirm we need to destroy the Value instance
+	 */
+	void setValue(TreeIter iter, int column, Pixbuf pixbuf)
+	{
+		Value v = new Value(pixbuf);
+		gtk_tree_store_set_value(gtkTreeStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+	}
+
+
 	/**
 	 * sets the values for one row
 	 * @param iter the row iteractor
@@ -3654,7 +3696,7 @@ import: gtk.RcStyle
 structWrap: GtkRcStyle* RcStyle
 import: gdk.Color
 structWrap: GdkColor* Color
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment

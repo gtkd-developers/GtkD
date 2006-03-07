@@ -48,7 +48,7 @@
  * 	- gdk.Bitmap
  * 	- gtk.RcStyle
  * 	- gdk.Color
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- gtk.Adjustment
  * 	- gdk.Region
  * 	- gobject.Value
@@ -92,7 +92,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import atk.ObjectAtk;private import gdk.Rectangle;private import gtk.AccelGroup;private import glib.ListG;private import gdk.Event;private import gdk.Window;private import gdk.Colormap;private import gdk.Visual;private import gtk.Style;private import gdk.Bitmap;private import gtk.RcStyle;private import gdk.Color;private import gdkpixbuf.Pixbuf;private import gtk.Adjustment;private import gdk.Region;private import gobject.Value;private import gtk.Settings;private import gtk.Clipboard;private import gdk.Display;private import gdk.Screen;private import pango.PgLayout;private import pango.PgContext;private import pango.PgFontDescription;
+private import atk.ObjectAtk;private import gdk.Rectangle;private import gtk.AccelGroup;private import glib.ListG;private import gdk.Event;private import gdk.Window;private import gdk.Colormap;private import gdk.Visual;private import gtk.Style;private import gdk.Bitmap;private import gtk.RcStyle;private import gdk.Color;private import gdk.Pixbuf;private import gtk.Adjustment;private import gdk.Region;private import gobject.Value;private import gtk.Settings;private import gtk.Clipboard;private import gdk.Display;private import gdk.Screen;private import pango.PgLayout;private import pango.PgContext;private import pango.PgFontDescription;
 /**
  * Description
  * GtkWidget introduces style

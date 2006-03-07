@@ -42,6 +42,7 @@ public struct ConvParms
 	public char[][] noCode;		/// insert the external declaration but not the wrapping code
 	public char[][char[]] aliases;
 	public char[] classCode;	/// any valid D code to be copied to the final Duit class
+	public char[][] text;		/// text to be added to the text read from the file
 
 	public void clearAll()
 	{
@@ -63,6 +64,7 @@ public struct ConvParms
 		noStructs.length = 0;
 		aliases = clear();
 		classCode.length = 0;
+		text.length = 0;
 
 	}
 	

@@ -37,7 +37,7 @@
  * imports:
  * 	- gtk.TextBuffer
  * 	- gtk.TextIter
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- glib.ListSG
  * 	- gtk.TextTag
  * 	- gtk.TextAttributes
@@ -57,7 +57,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TextBuffer;private import gtk.TextIter;private import gdkpixbuf.Pixbuf;private import glib.ListSG;private import gtk.TextTag;private import gtk.TextAttributes;
+private import gtk.TextBuffer;private import gtk.TextIter;private import gdk.Pixbuf;private import glib.ListSG;private import gtk.TextTag;private import gtk.TextAttributes;
 /**
  * Description
  * You may wish to begin by reading the text widget

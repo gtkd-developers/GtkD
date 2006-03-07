@@ -38,7 +38,7 @@
  * 	- gtk.Style
  * 	- gdk.Window
  * 	- gdk.Rectangle
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- gtk.IconSource
  * 	- gtk.Widget
  * 	- gdk.Font
@@ -61,7 +61,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Style;private import gdk.Window;private import gdk.Rectangle;private import gdkpixbuf.Pixbuf;private import gtk.IconSource;private import gtk.Widget;private import gdk.Font;private import gdk.Drawable;
+private import gtk.Style;private import gdk.Window;private import gdk.Rectangle;private import gdk.Pixbuf;private import gtk.IconSource;private import gtk.Widget;private import gdk.Font;private import gdk.Drawable;
 /**
  * Description
  */

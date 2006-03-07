@@ -130,6 +130,14 @@ public class GtkWrapper : WrapperIF
 	private char[][] collectedUnions;	/// public, module level definitions of unions
 	private char[][] collectedConstants;/// public, module level type contants
 	
+	private char[][] lookupAliases;		/// lookup file aliases definitions 
+	private char[][] lookupEnums;		/// lookup file enum definitions 
+	private char[][] lookupStructs;		/// lookup file struct definitions 
+	private char[][] lookupTypes;		/// lookup file type definitions 
+	private char[][] lookupFuncts;		/// lookup file functs definitions 
+	private char[][] lookupUnions;		/// lookup file unions definitions 
+	private char[][] lookupConstants;	/// lookup file constants definitions 
+	
 	DefReader[] defReaders;
 	
 	this(char[] apiLookupDefinitionBaseDirectory)
@@ -220,44 +228,56 @@ public class GtkWrapper : WrapperIF
 				  )
 			{
 				debug(lookup)writefln("(%s) %s=%s", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
-				if ( "wrap" == defReader.getKey() )
+				switch ( defReader.getKey() )
 				{
-					pack = defReader.getValue();
-					outPack = packages[pack];
-					debug(lookup)writefln("wrap %s", outPack);
-					if ( outPack !is null )
-					{
-						status = wrapFile(pack, outPack);
-					}
-					if ( nextPack.length>0 && outPack!=nextPack )
-					{
-						buildTypedefs(outPack);
-						buildLoaderTable(outPack, externalDeclarations);
-						externalDeclarations.length = 0;
-					}
-					nextPack = outPack.dup;
-				}
-				else if ( "lookup" == defReader.getKey() )
-				{
-					defReaders ~= defReader;
-					defReader = new DefReader(std.path.join(apiLookupDefinitionBaseDirectory,defReader.getValue()));
-					defReader.next();
-					debug(lookup)writefln("lookup on file %s (%s=%s)", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
-				}
-				else if ( defReader.getKey().length == 0 )
-				{
-					if ( defReaders.length > 0 )
-					{
-						defReader = defReaders[defReaders.length-1];
-						defReaders.length = defReaders.length -1;
-						debug(lookup)writefln("lookup back to %s (%s=%s)", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
+					case "addAliases": lookupAliases ~= loadTextMultiLine("addAliases"); defReader.next();break;
+					case "addEnums": lookupEnums ~= loadTextMultiLine("addEnums"); defReader.next();break;
+					case "addStructs": lookupStructs ~= loadTextMultiLine("addStructs"); defReader.next();break;
+					case "addTypes": lookupTypes ~= loadTextMultiLine("addTypes"); defReader.next();break;
+					case "addFuncts": lookupFuncts ~= loadTextMultiLine("addFuncts"); defReader.next();break;
+					case "addUnions": lookupUnions ~= loadTextMultiLine("addUnions"); defReader.next();break;
+					case "addConstants": lookupConstants ~= loadTextMultiLine("addConstants"); defReader.next();break;
+					case "wrap":
+						pack = defReader.getValue();
+						outPack = packages[pack];
+						debug(lookup)writefln("wrap %s", outPack);
+						if ( outPack !is null )
+						{
+							status = wrapFile(pack, outPack);
+						}
+						if ( nextPack.length>0 && outPack!=nextPack )
+						{
+							buildTypedefs(outPack);
+							buildLoaderTable(outPack, externalDeclarations);
+							externalDeclarations.length = 0;
+						}
+						nextPack = outPack.dup;
+						break;
+
+					case "lookup":
+						defReaders ~= defReader;
+						defReader = new DefReader(std.path.join(apiLookupDefinitionBaseDirectory,defReader.getValue()));
 						defReader.next();
-						debug(lookup)writefln("lookup next == %s (%s=%s)", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
-					}
-					else
-					{
-						defReader = null;
-					}
+						debug(lookup)writefln("lookup on file %s (%s=%s)", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
+						break;
+
+					default:
+						if ( defReader.getKey().length == 0 )
+						{
+							if ( defReaders.length > 0 )
+							{
+								defReader = defReaders[defReaders.length-1];
+								defReaders.length = defReaders.length -1;
+								debug(lookup)writefln("lookup back to %s (%s=%s)", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
+								defReader.next();
+								debug(lookup)writefln("lookup next == %s (%s=%s)", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
+							}
+							else
+							{
+								defReader = null;
+							}
+						}
+						break;
 				}
 				debug(lookup)if(defReader!is null)writefln("loop (%s) %s=%s", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
 			}
@@ -326,6 +346,18 @@ public class GtkWrapper : WrapperIF
 		return text;
 	}
 	
+	private char[][] loadTextMultiLine(char[] key)
+	{
+		char[][] text;
+		
+		while ( key!=defReader.next(false) && "end"!=defReader.getValue() )
+		{
+			text ~= defReader.getFullLine();
+		}
+		
+		return text;
+	}
+	
 	private int copyFile(char[] fromDir, char[] toDir, char[] fileName)
 	{
 		int status = ERR_NONE;
@@ -357,7 +389,7 @@ public class GtkWrapper : WrapperIF
 		
 		char[] key = defReader.next();
 		
-		char[] keys = " file struct realStruct class extend prefix strictPrefix"
+		char[] keys = " file text struct realStruct class extend prefix strictPrefix"
 					  " openFile mergeFile closeFile outFile"
 					  " copy import structWrap alias"
 					  " noprefix nostruct nocode"
@@ -385,6 +417,9 @@ public class GtkWrapper : WrapperIF
 				case "import": convParms.imprts ~= defReader.getValue(); break;
 				case "structWrap": loadAA(convParms.structWrap, defReader, errors); break;
 				case "alias": loadAA(convParms.aliases, defReader, errors); break;
+				case "text": 
+					convParms.text ~= loadTextMultiLine("text");
+					break;
 				case "code": 
 					convParms.classCode ~= loadText("code");
 					break;
@@ -405,10 +440,17 @@ public class GtkWrapper : WrapperIF
 					outFile(outPack, text, convParms);
 					break;
 				case "file": 
-					convParms.inFile = defReader.getValue();
+					convParms.inFile = std.string.strip(defReader.getValue());
 					if ( convParms.inFile.length > 0 )
 					{
-						text = cast(char[]) std.file.read(std.path.join(std.path.join(inputRoot,pack),convParms.inFile));
+						if ( DuitClass.startsWith(convParms.inFile,"/") )
+						{
+							text = cast(char[]) std.file.read(convParms.inFile);
+						}
+						else
+						{
+							text = cast(char[]) std.file.read(std.path.join(std.path.join(inputRoot,pack),convParms.inFile));
+						}
 					}
 					else
 					{
@@ -753,6 +795,7 @@ public class GtkWrapper : WrapperIF
 		{
 			def ~= "\nimport glib.typedefs;\n\n";
 			def ~= "\nimport gobject.typedefs;\n\n";
+			def ~= "\nimport gdk.typedefs;\n\n";
 			def ~= "\nimport pango.typedefs;\n\n";
 			def ~= "\n";
 		}
@@ -788,21 +831,27 @@ public class GtkWrapper : WrapperIF
 		}
 		
 		char[] tabs = "";
+		DuitClass.append(def, lookupAliases, tabs);
 		DuitClass.append(def, collectedAliases, tabs);
 		tabs = "";
 		
+		DuitClass.append(def, lookupEnums, tabs);
 		DuitClass.append(def, collectedEnums, tabs);
 		tabs = "";
 		
+		DuitClass.append(def, lookupStructs, tabs);
 		DuitClass.append(def, collectedStructs, tabs);
 		tabs = "";
 		
+		DuitClass.append(def, lookupTypes, tabs);
 		DuitClass.append(def, collectedTypes, tabs);
 		tabs = "";
 
+		DuitClass.append(def, lookupFuncts, tabs);
 		DuitClass.append(def, collectedFuncts, tabs);
 		tabs = "";
 
+		DuitClass.append(def, lookupUnions, tabs);
 		DuitClass.append(def, collectedUnions, tabs);
 		tabs = "";
 		if ( stockEnums.length > 0 )
@@ -827,6 +876,14 @@ public class GtkWrapper : WrapperIF
 
 		char[] pathname = std.path.join("src", outPack);
 		std.file.write(std.path.join(pathname,"typedefs.d"),def);
+
+		lookupAliases.length = 0;
+		lookupEnums.length = 0;
+		lookupStructs.length = 0;
+		lookupTypes.length = 0;
+		lookupFuncts.length = 0;
+		lookupUnions.length = 0;
+		lookupConstants.length = 0;
 
 		collectedAliases.length = 0;
 		collectedEnums.length = 0;

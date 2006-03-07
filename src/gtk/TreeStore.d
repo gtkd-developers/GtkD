@@ -39,6 +39,8 @@
  * 	- gtk.TreeIter
  * 	- gobject.Value
  * 	- gtk.TreeNode
+ * 	- gdk.Pixbuf;
+ * 	- gobject.Value;
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -51,7 +53,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TreeIter;private import gobject.Value;private import gtk.TreeNode;
+private import gtk.TreeIter;private import gobject.Value;private import gtk.TreeNode;private import gdk.Pixbuf;;private import gobject.Value;;
 /**
  * Description
  * The GtkTreeStore object is a list model for use with a GtkTreeView
@@ -110,12 +112,36 @@ public class TreeStore : TreeModel
 	 * Creates a top level iteractor.
 	 * I don't think lists have but the top level iteractor
 	 */
-	TreeIter createIter(TreeIter parent)
+	TreeIter createIter(TreeIter parent=null)
 	{
 		GtkTreeIter* iter = new GtkTreeIter;
 		gtk_tree_store_append(getTreeStoreStruct(), iter, (parent is null) ? null : parent.getTreeIterStruct());
 		return new TreeIter(iter);
 	}
+	
+	/**
+	 * Sets one value into one cells.
+	 * @param iter the tree iteractor, effectivly the row
+	 * @param column to column number to set
+	 * @param value the value
+	 * \todo confirm we need to destroy the Value instance
+	 */
+	void setValue(TreeIter iter, int column, char[] value)
+	{
+		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, std.string.toStringz(value) , -1);
+	}
+	
+	
+	
+	/**
+	 * \todo confirm we need to destroy the Value instance
+	 */
+	void setValue(TreeIter iter, int column, Pixbuf pixbuf)
+	{
+		Value v = new Value(pixbuf);
+		gtk_tree_store_set_value(gtkTreeStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+	}
+	
 	
 	/**
 	 * sets the values for one row

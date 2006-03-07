@@ -44,7 +44,7 @@
  * 	- gtk.TextTagTable
  * 	- gtk.TextIter
  * 	- gtk.TextTag
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- gtk.TextMark
  * 	- gtk.Clipboard
  * structWrap:
@@ -68,7 +68,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TextBuffer;private import gdk.Rectangle;private import gtk.Widget;private import pango.PgTabArray;private import gtk.TextAttributes;private import gtk.TextTagTable;private import gtk.TextIter;private import gtk.TextTag;private import gdkpixbuf.Pixbuf;private import gtk.TextMark;private import gtk.Clipboard;
+private import gtk.TextBuffer;private import gdk.Rectangle;private import gtk.Widget;private import pango.PgTabArray;private import gtk.TextAttributes;private import gtk.TextTagTable;private import gtk.TextIter;private import gtk.TextTag;private import gdk.Pixbuf;private import gtk.TextMark;private import gtk.Clipboard;
 /**
  * Description
  * You may wish to begin by reading the text widget

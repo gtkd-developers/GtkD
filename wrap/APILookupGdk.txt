@@ -185,7 +185,7 @@ import: gdk.GC
 structWrap: GdkGC* GC
 #import: gdk.Point
 #structWrap: GdkPoint* Point
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 #import: gdk.Segment
 #structWrap: GdkSegment* Segment
@@ -316,12 +316,55 @@ outFile: ImageGdk
 
 ## move to GdkPixbuf? no?
 ## extend GdkPixbuf? Yes?
-#file: gdk-Pixbufs.html
-##extends: gdkPixbuf.Pixbuf
-#struct: GdkPixbuf
-#class: Pixbuf
-#prefix: gdk_pixbuf_
-#outFile: Pixbuf
+
+
+
+file: gdk-Pixbufs.html
+struct: GdkPixbuf
+class: Pixbuf
+prefix: gdk_pixbuf_
+openFile: Pixbuf
+
+file: /home/data/down/GTK/API/gdk-pixbuf/gdk-pixbuf-creating.html
+struct: GdkPixbuf
+class: Pixbuf
+prefix: gdk_pixbuf_
+noprefix: gdk_pixbuf_ref
+noprefix: gdk_pixbuf_unref
+#import: g.Error*
+#structWrap: GError** Error*
+import: gdkpixbuf.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+import: gdkpixbuf.PixbufFormat
+structWrap: GdkPixbufFormat* PixbufFormat
+
+text: start
+gdk_pixbuf_get_type ()
+
+GType         gdk_pixbuf_get_type           ();
+<hr>
+text: end
+
+mergeFile: Pixbuf
+
+file: /home/data/down/GTK/API/gdk-pixbuf/gdk-pixbuf-gdk-pixbuf.html
+mergeFile:  Pixbuf
+
+file: /home/data/down/GTK/API/gdk-pixbuf/gdk-pixbuf-refcounting.html
+mergeFile:  Pixbuf
+
+file: /home/data/down/GTK/API/gdk-pixbuf/gdk-pixbuf-file-loading.html
+noprefix: gdk_pixbuf_get_file_info 
+mergeFile:  Pixbuf
+
+file: /home/data/down/GTK/API/gdk-pixbuf/gdk-pixbuf-file-saving.html
+mergeFile:  Pixbuf
+
+file: /home/data/down/GTK/API/gdk-pixbuf/gdk-pixbuf-scaling.html
+mergeFile:  Pixbuf
+
+file: /home/data/down/GTK/API/gdk-pixbuf/gdk-pixbuf-util.html
+closeFile:  Pixbuf
 
 file: gdk-Colormaps-and-Colors.html
 
@@ -505,7 +548,7 @@ import: gdk.Color
 structWrap: GdkColor* Color
 import: gdk.Display
 structWrap: GdkDisplay* Display
-import: gdkpixbuf.Pixbuf
+import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gdk.Cursor
 structWrap: GdkCursor* Cursor

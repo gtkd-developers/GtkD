@@ -35,7 +35,7 @@ private import duit.TestScales;
 private import duit.TestText;
 //private import duit.TestTree;
 private import duit.TestTreeView;
-//private import duit.TestTreeView1;
+private import duit.TestTreeView1;
 private import duit.TestImage;
 private import duit.TestAspectFrame;
 private import duit.TestIdle;
@@ -239,7 +239,7 @@ class TestWindow : MainWindow
 		testSpinButton(notebook);
 		notebook.appendPage(new Label("Deprecated,\nuse TreeView\ninstead"),"Tree");
 		notebook.appendPage(new TestTreeView,"TreeView");
-		//notebook.appendPage(new TestTreeView1,"TreeView 1");
+		notebook.appendPage(new TestTreeView1,"TreeView 1");
 		testList(notebook);
 		notebook.appendPage(new Frame(new TestDrawingArea,"Drawing Area"),"Drawing");
 		notebook.appendPage(new TestText,"Text");

@@ -39,37 +39,42 @@ wrap: gdk-pixbuf
 #prefix: 
 #outFile: 
 
-file: gdk-pixbuf-creating.html
-struct: GdkPixbuf
-class: Pixbuf
-prefix: gdk_pixbuf_
-noprefix: gdk_pixbuf_ref
-noprefix: gdk_pixbuf_unref
-#import: g.Error*
-#structWrap: GError** Error*
-import: gdkpixbuf.Pixbuf
-structWrap: GdkPixbuf* Pixbuf
-import: gdkpixbuf.PixbufFormat
-structWrap: GdkPixbufFormat* PixbufFormat
-openFile: Pixbuf
-
-file: gdk-pixbuf-gdk-pixbuf.html
-mergeFile:  Pixbuf
-
-file: gdk-pixbuf-refcounting.html
-mergeFile:  Pixbuf
-
-file: gdk-pixbuf-file-loading.html
-mergeFile:  Pixbuf
-
-file: gdk-pixbuf-file-saving.html
-mergeFile:  Pixbuf
-
-file: gdk-pixbuf-scaling.html
-mergeFile:  Pixbuf
-
-file: gdk-pixbuf-util.html
-closeFile:  Pixbuf
+##################
+### moved to gdk and merged with gdk.Pixbuf
+##################
+#
+#file: gdk-pixbuf-creating.html
+#struct: GdkPixbuf
+#class: Pixbuf
+#prefix: gdk_pixbuf_
+#noprefix: gdk_pixbuf_ref
+#noprefix: gdk_pixbuf_unref
+##import: g.Error*
+##structWrap: GError** Error*
+#import: gdkpixbuf.Pixbuf
+#structWrap: GdkPixbuf* Pixbuf
+#import: gdkpixbuf.PixbufFormat
+#structWrap: GdkPixbufFormat* PixbufFormat
+#openFile: Pixbuf
+#
+#file: gdk-pixbuf-gdk-pixbuf.html
+#mergeFile:  Pixbuf
+#
+#file: gdk-pixbuf-refcounting.html
+#mergeFile:  Pixbuf
+#
+#file: gdk-pixbuf-file-loading.html
+#mergeFile:  Pixbuf
+#
+#file: gdk-pixbuf-file-saving.html
+#mergeFile:  Pixbuf
+#
+#file: gdk-pixbuf-scaling.html
+#mergeFile:  Pixbuf
+#
+#file: gdk-pixbuf-util.html
+#closeFile:  Pixbuf
+############################
 
 file: gdk-pixbuf-inline.html
 struct: GdkPixdata
@@ -193,4 +198,10 @@ import: gdkpixbuf.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: glib.ListSG
 structWrap: GSList* ListSG
-outFile: PixbufFormat
+openFile: PixbufFormat
+
+file: gdk-pixbuf-file-loading.html
+prefix: gdk_pixbuf_get_file_info 
+strictPrefix: Y
+closeFile:  PixbufFormat
+

@@ -36,7 +36,7 @@
  * imports:
  * 	- gtk.Widget
  * 	- gdk.Display
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- GdkPixbuf* -> Pixbuf
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gdk.Display;private import gdkpixbuf.Pixbuf;
+private import gtk.Widget;private import gdk.Display;private import gdk.Pixbuf;
 /**
  * Description
  * The selection mechanism provides the basis for different types

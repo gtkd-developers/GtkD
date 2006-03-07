@@ -29,7 +29,7 @@ module utils.DuitClass;
 //debug = noPrefixes;
 //debug = functionType;
 //debug = declaration;
-//debug = structs;
+debug = structs;
 //debug = enums;
 //debug = enumPrefix;
 //debug = parmType;
@@ -851,7 +851,9 @@ public class DuitClass
 	
 	private char[][] getMember(char[][] prefixes)
 	{
-		char[][] lines = getUntil("<hr>");
+		char[][] lines = convParms.text.dup;
+		convParms.text.length = 0;
+		lines ~= getUntil("<hr>");
 		char[][] member;
 		
 		//debug(structs){
@@ -1320,7 +1322,10 @@ public class DuitClass
 					collectedStructs ~= " */";
 				}
 			}
-			if ( !invalidDStruct && structDef.length > 0 )
+			if ( (!invalidDStruct
+					|| "GValue"==structName
+				 )
+				&& structDef.length>0 )
 			{
 				collectedStructs ~= "public struct "~structName~"\n{";
 				foreach ( char[] def; structDef )

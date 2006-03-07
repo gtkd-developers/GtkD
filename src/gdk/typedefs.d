@@ -376,6 +376,89 @@ public enum GdkImageType
 alias GdkImageType dkImageType;
 
 /**
+ * An error code in the GDK_PIXBUF_ERROR domain. Many gdk-pixbuf
+ * operations can cause errors in this domain, or in the G_FILE_ERROR
+ * domain.
+ * GDK_PIXBUF_ERROR_CORRUPT_IMAGE
+ * An image file was broken somehow.
+ * GDK_PIXBUF_ERROR_INSUFFICIENT_MEMORY
+ * Not enough memory.
+ * GDK_PIXBUF_ERROR_BAD_OPTION
+ * A bad option was passed to a pixbuf save module.
+ * GDK_PIXBUF_ERROR_UNKNOWN_TYPE
+ * Unknown image type.
+ * GDK_PIXBUF_ERROR_UNSUPPORTED_OPERATION
+ * Don't know how to perform the
+ * given operation on the type of image at hand.
+ * GDK_PIXBUF_ERROR_FAILED
+ * Generic failure code, something went wrong.
+ */
+public enum GdkPixbufError
+{
+	/+* image data hosed +/
+	GDK_PIXBUF_ERROR_CORRUPT_IMAGE,
+	/+* no mem to load image +/
+	GDK_PIXBUF_ERROR_INSUFFICIENT_MEMORY,
+	/+* bad option passed to save routine +/
+	GDK_PIXBUF_ERROR_BAD_OPTION,
+	/+* unsupported image type (sort of an ENOSYS) +/
+	GDK_PIXBUF_ERROR_UNKNOWN_TYPE,
+	/+* unsupported operation (load, save) for image type +/
+	GDK_PIXBUF_ERROR_UNSUPPORTED_OPERATION,
+	GDK_PIXBUF_ERROR_FAILED
+}
+alias GdkPixbufError dkPixbufError;
+
+/**
+ */
+public enum GdkColorspace
+{
+	PACE_RGB
+}
+alias GdkColorspace dkColorspace;
+
+/**
+ */
+public enum GdkPixbufAlphaMode
+{
+	BILEVEL,
+	FULL
+}
+alias GdkPixbufAlphaMode dkPixbufAlphaMode;
+
+/**
+ */
+public enum GdkInterpType
+{
+	NEAREST,
+	TILES,
+	BILINEAR,
+	HYPER
+}
+alias GdkInterpType dkInterpType;
+
+/**
+ * The possible rotations which can be passed to gdk_pixbuf_rotate_simple().
+ * To make them easier to use, their numerical values are the actual degrees.
+ * GDK_PIXBUF_ROTATE_NONE
+ * No rotation.
+ * GDK_PIXBUF_ROTATE_COUNTERCLOCKWISE
+ * Rotate by 90 degrees.
+ * GDK_PIXBUF_ROTATE_UPSIDEDOWN
+ * Rotate by 180 degrees.
+ * GDK_PIXBUF_ROTATE_CLOCKWISE
+ * Rotate by 270 degrees.
+ */
+public enum GdkPixbufRotation
+{
+	TE_NONE = 0,
+	TE_COUNTERCLOCKWISE = 90,
+	TE_UPSIDEDOWN = 180,
+	TE_CLOCKWISE = 270
+}
+alias GdkPixbufRotation dkPixbufRotation;
+
+/**
  * A set of values that describe the manner in which the
  * pixel values for a visual are converted into RGB
  * values for display.
@@ -1722,6 +1805,12 @@ public struct GdkImage;
 
 
 /**
+ * Main Gtk struct.
+ */
+public struct GdkPixbuf;
+
+
+/**
  * The GdkColor structure is used to describe an
  * allocated or unallocated color.
  * guint32pixel;
@@ -2733,6 +2822,45 @@ public struct GdkTimeCoord;
  */
 // void (*GdkSpanFunc) (GdkSpan *span,  gpointer data);
 public typedef extern(C) void  function (GdkSpan*, void*) GdkSpanFunc;
+
+/*
+ *  A function of this type is responsible for freeing the pixel array
+ *  of a pixbuf. The gdk_pixbuf_new_from_data() function lets you
+ *  pass in a pre-allocated pixel array so that a pixbuf can be
+ *  created from it; in this case you will need to pass in a function
+ *  of GdkPixbufDestroyNotify so that the pixel data can be freed
+ *  when the pixbuf is finalized.
+ * pixels:
+ * The pixel array of the pixbuf that is being finalized.
+ * data:
+ * User closure data.
+ * See Also
+ *  GdkPixbuf, gdk_pixbuf_new_from_data().
+ */
+// void (*GdkPixbufDestroyNotify) (guchar *pixels,  gpointer data);
+public typedef extern(C) void  function (guchar*, void*) GdkPixbufDestroyNotify;
+
+/*
+ * Specifies the type of the function passed to
+ * gdk_pixbuf_save_to_callback(). It is called once for each block of
+ * bytes that is "written" by gdk_pixbuf_save_to_callback(). If
+ * successful it should return TRUE. If an error occurs it should set
+ * error and return FALSE, in which case gdk_pixbuf_save_to_callback()
+ * will fail with the same error.
+ * buf:
+ * bytes to be written.
+ * count:
+ * number of bytes in buf.
+ * error:
+ * A location to return an error.
+ * data:
+ * user data passed to gdk_pixbuf_save_to_callback().
+ * Returns:
+ * TRUE if successful, FALSE (with error set) if failed.
+ * Since 2.4
+ */
+// gboolean (*GdkPixbufSaveFunc) (const gchar *buf,  gsize count,  GError **error,  gpointer data);
+public typedef extern(C) int  function (char[], uint, GError**, void*) GdkPixbufSaveFunc;
 
 /*
  * Specifies the type of function used to filter native events before they are

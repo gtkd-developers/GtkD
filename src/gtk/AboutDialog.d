@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- gtk.Window
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
@@ -49,7 +49,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gdkpixbuf.Pixbuf;private import gtk.Window;
+private import gdk.Pixbuf;private import gtk.Window;
 /**
  * Description
  * The GtkAboutDialog offers a simple way to display information about

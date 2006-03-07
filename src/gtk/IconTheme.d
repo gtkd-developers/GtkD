@@ -39,7 +39,7 @@
  * 	- gtk.IconTheme
  * 	- gdk.Screen
  * 	- gtk.IconInfo
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
@@ -56,7 +56,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.IconTheme;private import gdk.Screen;private import gtk.IconInfo;private import gdkpixbuf.Pixbuf;private import glib.ListG;
+private import gtk.IconTheme;private import gdk.Screen;private import gtk.IconInfo;private import gdk.Pixbuf;private import glib.ListG;
 /**
  * Description
  * GtkIconTheme provides a facility for looking up icons by name

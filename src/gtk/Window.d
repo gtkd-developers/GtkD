@@ -40,7 +40,7 @@
  * 	- gtk.Window
  * 	- gdk.Screen
  * 	- glib.ListG
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixbuf* -> Pixbuf
@@ -57,7 +57,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.AccelGroup;private import gtk.Widget;private import gtk.Window;private import gdk.Screen;private import glib.ListG;private import gdkpixbuf.Pixbuf;
+private import gtk.AccelGroup;private import gtk.Widget;private import gtk.Window;private import gdk.Screen;private import glib.ListG;private import gdk.Pixbuf;
 /**
  * Description
  */

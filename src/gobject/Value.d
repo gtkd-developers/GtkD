@@ -31,12 +31,14 @@
  * prefixes:
  * 	- g_value_
  * omit structs:
+ * 	- GValue
  * omit prefixes:
  * omit code:
  * imports:
  * 	- gobject.Value
  * 	- gobject.ParamSpec
  * 	- gobject.ObjectG
+ * 	- gdk.Pixbuf
  * structWrap:
  * 	- GObject* -> ObjectG
  * 	- GParamSpec* -> ParamSpec
@@ -50,7 +52,7 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import gobject.Value;private import gobject.ParamSpec;private import gobject.ObjectG;
+private import gobject.Value;private import gobject.ParamSpec;private import gobject.ObjectG;private import gdk.Pixbuf;
 /**
  * Description
  * The GValue structure is basically a variable container that consists
@@ -91,6 +93,16 @@ public class Value
 	{
 		this.gValue = gValue;
 	}
+	
+	this(Pixbuf pixbuf)
+	{
+		GValue* v = new GValue;
+		//v.g_type = DUIType.PIXBUF;
+		v.g_type = Pixbuf.getType();
+		v.data1.v_pointer = cast(void*)(pixbuf.getPixbufStruct());
+		this(v);
+	}
+
 	
 	/**
 	 * Description

@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- gtk.Style
  * 	- gtk.Widget
  * 	- gtk.Settings
@@ -53,7 +53,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gdkpixbuf.Pixbuf;private import gtk.Style;private import gtk.Widget;private import gtk.Settings;
+private import gdk.Pixbuf;private import gtk.Style;private import gtk.Widget;private import gtk.Settings;
 /**
  * Description
  * Browse the available stock icons in the list of stock IDs found here. You can also use
