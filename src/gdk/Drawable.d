@@ -908,6 +908,19 @@ public class Drawable : ObjectG
 		// void gdk_draw_drawable (GdkDrawable *drawable,  GdkGC *gc,  GdkDrawable *src,  gint xsrc,  gint ysrc,  gint xdest,  gint ydest,  gint width,  gint height);
 		gdk_draw_drawable(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), (src is null) ? null : src.getDrawableStruct(), xsrc, ysrc, xdest, ydest, width, height);
 	}
+private import gdk.Pixbuf;
+	
+	public void drawPixbuf(GC gc, Pixbuf pixbuf, int xsrc, int ysrc, int xdest, int ydest, int width, int height)
+	{
+		gdk_draw_drawable(
+			gdkDrawable, 
+			(gc is null) ? null : gc.getGCStruct(), 
+			cast(GdkDrawable*)((pixbuf is null) ? null : pixbuf.getPixbufStruct()), 
+			xsrc, ysrc, 
+			xdest, ydest, 
+			width, height
+		);
+	}
 	
 	/**
 	 * Draws a GdkImage onto a drawable.

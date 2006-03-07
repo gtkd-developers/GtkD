@@ -30,19 +30,22 @@
 addStructs: start
 struct GValue
 {
-	GType		g_type;
-	union Data
+	align(4)
 	{
-		gint	v_int;
-		guint	v_uint;
-		glong	v_long;
-		gulong	v_ulong;
-		gint64      v_int64;
-		guint64     v_uint64;
-		gfloat	v_float;
-		gdouble	v_double;
-		gpointer	v_pointer;
-	};
+		GType		g_type;
+		union Data
+		{
+			gint	v_int;
+			guint	v_uint;
+			glong	v_long;
+			gulong	v_ulong;
+			gint64      v_int64;
+			guint64     v_uint64;
+			gfloat	v_float;
+			gdouble	v_double;
+			gpointer	v_pointer;
+		};
+	}
 	Data data1;
 	Data data2;
 };
@@ -217,7 +220,7 @@ code: start
 		GValue* v = new GValue;
 		//v.g_type = DUIType.PIXBUF;
 		v.g_type = Pixbuf.getType();
-		v.data0.v_pointer = cast(void*)(pixbuf.gdkP());
+		v.data1.v_pointer = cast(void*)(pixbuf.getPixbufStruct());
 		this(v);
 	}
 

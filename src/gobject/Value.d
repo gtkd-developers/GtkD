@@ -102,7 +102,6 @@ public class Value
 		v.data1.v_pointer = cast(void*)(pixbuf.getPixbufStruct());
 		this(v);
 	}
-
 	
 	/**
 	 * Description

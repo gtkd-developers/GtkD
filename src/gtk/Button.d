@@ -159,7 +159,7 @@ public class Button : Bin
 		if ( hideLabel )
 		{
 			this();
-			Image image = new Image(stockID,IconSize.SIZE_MENU);
+			Image image = new Image(stockID,currentIconSize);
 			add(image);
 		}
 		else
@@ -169,16 +169,16 @@ public class Button : Bin
 		
 	}
 	
+	public this(StockID stockID, void delegate(Button) dlg, bool hideLabel=false)
+	{
+		this(stockID, hideLabel);
+		addOnClicked(dlg);
+	}
+	
 	
 	public this(char[] label, void delegate(Button) dlg, bit mnemonic=true)
 	{
 		this(label, mnemonic);
-		addOnClicked(dlg);
-	}
-	
-	public this(StockID stockID, void delegate(Button) dlg, bool hideLabel=false)
-	{
-		this(stockID, hideLabel);
 		addOnClicked(dlg);
 	}
 	

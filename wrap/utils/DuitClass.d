@@ -29,7 +29,7 @@ module utils.DuitClass;
 //debug = noPrefixes;
 //debug = functionType;
 //debug = declaration;
-debug = structs;
+//debug = structs;
 //debug = enums;
 //debug = enumPrefix;
 //debug = parmType;

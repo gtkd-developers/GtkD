@@ -317,11 +317,16 @@ private import gdk.ImageGdk;
 					break;
 				
 				case "Image":
-//					Pixbuf p;
-//					p = image.getPixbuf();
+					Pixbuf p;
+					p = image.getPixbuf();
 //					//Pixbuf pixbuf = p.trimTo(height , width);
 //					ImageGdk i = new ImageGdk(ImageGdk.get(cast(Drawable)p,0,0,10,10));
-//					d.drawImage(gc, i, x, y, x, y, 10, 10);
+					//d.drawPixbuf(gc, p, x, y, x, y, 10, 10);
+					p.renderToDrawable(d.getDrawableStruct(), gc.getGCStruct(), 
+						0, 0, x, y, 
+						p.getWidth(), p.getHeight(), 
+						GdkRgbDither.THER_NONE, 0, 0
+						);
 
 
 //					d.drawImage(gc, image, x, y);
