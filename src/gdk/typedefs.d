@@ -126,7 +126,7 @@ public enum GdkGrabStatus
 	GDK_GRAB_NOT_VIEWABLE = 3,
 	GDK_GRAB_FROZEN = 4
 }
-alias GdkGrabStatus dkGrabStatus;
+alias GdkGrabStatus GrabStatus;
 
 /**
  * The method for determining which pixels are included in a region, when
@@ -143,7 +143,7 @@ public enum GdkFillRule
 	EVEN_ODD_RULE,
 	WINDING_RULE
 }
-alias GdkFillRule dkFillRule;
+alias GdkFillRule FillRule;
 
 /**
  * Specifies the possible values returned by gdk_region_rect_in().
@@ -160,7 +160,7 @@ public enum GdkOverlapType
 	RECTANGLE_OUT,
 	RECTANGLE_PART
 }
-alias GdkOverlapType dkOverlapType;
+alias GdkOverlapType OverlapType;
 
 /**
  * A set of bit flags used to indicate which fields
@@ -223,7 +223,7 @@ public enum GdkGCValuesMask
 	CAP_STYLE = 1 << 16,
 	JOIN_STYLE = 1 << 17
 }
-alias GdkGCValuesMask dkGCValuesMask;
+alias GdkGCValuesMask GCValuesMask;
 
 /**
  * Determines how the bit values for the source pixels are combined with
@@ -252,7 +252,7 @@ public enum GdkFunction
 	NOR,
 	SET
 }
-alias GdkFunction dkFunction;
+alias GdkFunction Function;
 
 /**
  * Determines how primitives are drawn.
@@ -270,7 +270,7 @@ public enum GdkFill
 	STIPPLED,
 	OPAQUE_STIPPLED
 }
-alias GdkFill dkFill;
+alias GdkFill Fill;
 
 /**
  * Determines how drawing onto a window will affect child
@@ -285,7 +285,7 @@ public enum GdkSubwindowMode
 	CLIP_BY_CHILDREN = 0,
 	INCLUDE_INFERIORS = 1
 }
-alias GdkSubwindowMode dkSubwindowMode;
+alias GdkSubwindowMode SubwindowMode;
 
 /**
  * Determines how lines are drawn.
@@ -302,7 +302,7 @@ public enum GdkLineStyle
 	GDK_LINE_ON_OFF_DASH,
 	GDK_LINE_DOUBLE_DASH
 }
-alias GdkLineStyle dkLineStyle;
+alias GdkLineStyle LineStyle;
 
 /**
  * Determines how the end of lines are drawn.
@@ -316,7 +316,7 @@ public enum GdkCapStyle
 	ROUND,
 	PROJECTING
 }
-alias GdkCapStyle dkCapStyle;
+alias GdkCapStyle CapStyle;
 
 /**
  * Determines how the joins between segments of a polygon are drawn.
@@ -333,7 +333,7 @@ public enum GdkJoinStyle
 	ROUND,
 	BEVEL
 }
-alias GdkJoinStyle dkJoinStyle;
+alias GdkJoinStyle JoinStyle;
 
 /**
  * Selects whether or not GdkRGB applies dithering
@@ -347,11 +347,11 @@ alias GdkJoinStyle dkJoinStyle;
  */
 public enum GdkRgbDither
 {
-	THER_NONE,
-	THER_NORMAL,
-	THER_MAX
+	NONE,
+	NORMAL,
+	MAX
 }
-alias GdkRgbDither dkRgbDither;
+alias GdkRgbDither RgbDither;
 
 /**
  * Specifies the type of a GdkImage.
@@ -373,7 +373,7 @@ public enum GdkImageType
 	SHARED,
 	FASTEST
 }
-alias GdkImageType dkImageType;
+alias GdkImageType ImageType;
 
 /**
  * An error code in the GDK_PIXBUF_ERROR domain. Many gdk-pixbuf
@@ -407,15 +407,15 @@ public enum GdkPixbufError
 	GDK_PIXBUF_ERROR_UNSUPPORTED_OPERATION,
 	GDK_PIXBUF_ERROR_FAILED
 }
-alias GdkPixbufError dkPixbufError;
+alias GdkPixbufError PixbufError;
 
 /**
  */
 public enum GdkColorspace
 {
-	PACE_RGB
+	RGB
 }
-alias GdkColorspace dkColorspace;
+alias GdkColorspace Colorspace;
 
 /**
  */
@@ -424,7 +424,7 @@ public enum GdkPixbufAlphaMode
 	BILEVEL,
 	FULL
 }
-alias GdkPixbufAlphaMode dkPixbufAlphaMode;
+alias GdkPixbufAlphaMode PixbufAlphaMode;
 
 /**
  */
@@ -435,7 +435,7 @@ public enum GdkInterpType
 	BILINEAR,
 	HYPER
 }
-alias GdkInterpType dkInterpType;
+alias GdkInterpType InterpType;
 
 /**
  * The possible rotations which can be passed to gdk_pixbuf_rotate_simple().
@@ -451,12 +451,12 @@ alias GdkInterpType dkInterpType;
  */
 public enum GdkPixbufRotation
 {
-	TE_NONE = 0,
-	TE_COUNTERCLOCKWISE = 90,
-	TE_UPSIDEDOWN = 180,
-	TE_CLOCKWISE = 270
+	E_NONE = 0,
+	E_COUNTERCLOCKWISE = 90,
+	E_UPSIDEDOWN = 180,
+	E_CLOCKWISE = 270
 }
-alias GdkPixbufRotation dkPixbufRotation;
+alias GdkPixbufRotation PixbufRotation;
 
 /**
  * A set of values that describe the manner in which the
@@ -476,7 +476,7 @@ public enum GdkVisualType
 	TRUE_COLOR,
 	DIRECT_COLOR
 }
-alias GdkVisualType dkVisualType;
+alias GdkVisualType VisualType;
 
 /**
  * A set of values describing the possible byte-orders
@@ -489,7 +489,7 @@ public enum GdkByteOrder
 	LSB_FIRST,
 	MSB_FIRST
 }
-alias GdkByteOrder dkByteOrder;
+alias GdkByteOrder ByteOrder;
 
 /**
  * Warning
@@ -506,7 +506,7 @@ public enum GdkFontType
 	FONT,
 	FONTSET
 }
-alias GdkFontType dkFontType;
+alias GdkFontType FontType;
 
 /**
  * The standard cursors available.
@@ -675,7 +675,7 @@ public enum GdkCursorType
 	LAST_CURSOR,
 	CURSOR_IS_PIXMAP = -1
 }
-alias GdkCursorType dkCursorType;
+alias GdkCursorType CursorType;
 
 /**
  * Describes the kind of window.
@@ -701,7 +701,7 @@ public enum GdkWindowType
 	TEMP,
 	FOREIGN
 }
-alias GdkWindowType dkWindowType;
+alias GdkWindowType WindowType;
 
 /**
  * GDK_INPUT_OUTPUT windows are the standard kind of window you might expect.
@@ -717,7 +717,7 @@ public enum GdkWindowClass
 	INPUT_OUTPUT,
 	INPUT_ONLY
 }
-alias GdkWindowClass dkWindowClass;
+alias GdkWindowClass WindowClass;
 
 /**
  * Used to indicate which fields of a GdkGeometry struct should be paid attention
@@ -759,7 +759,7 @@ public enum GdkWindowHints
 	HINT_USER_POS = 1 << 7,
 	HINT_USER_SIZE = 1 << 8
 }
-alias GdkWindowHints dkWindowHints;
+alias GdkWindowHints WindowHints;
 
 /**
  * Defines the reference point of a window and the meaning of coordinates
@@ -790,18 +790,18 @@ alias GdkWindowHints dkWindowHints;
  */
 public enum GdkGravity
 {
-	VITY_NORTH_WEST = 1,
-	VITY_NORTH,
-	VITY_NORTH_EAST,
-	VITY_WEST,
-	VITY_CENTER,
-	VITY_EAST,
-	VITY_SOUTH_WEST,
-	VITY_SOUTH,
-	VITY_SOUTH_EAST,
-	VITY_STATIC
+	NORTH_WEST = 1,
+	NORTH,
+	NORTH_EAST,
+	WEST,
+	CENTER,
+	EAST,
+	SOUTH_WEST,
+	SOUTH,
+	SOUTH_EAST,
+	STATIC
 }
-alias GdkGravity dkGravity;
+alias GdkGravity Gravity;
 
 /**
  * Determines a window edge or corner.
@@ -824,16 +824,16 @@ alias GdkGravity dkGravity;
  */
 public enum GdkWindowEdge
 {
-	EDGE_NORTH_WEST,
-	EDGE_NORTH,
-	EDGE_NORTH_EAST,
-	EDGE_WEST,
-	EDGE_EAST,
-	EDGE_SOUTH_WEST,
-	EDGE_SOUTH,
-	EDGE_SOUTH_EAST
+	NORTH_WEST,
+	NORTH,
+	NORTH_EAST,
+	WEST,
+	EAST,
+	SOUTH_WEST,
+	SOUTH,
+	SOUTH_EAST
 }
-alias GdkWindowEdge dkWindowEdge;
+alias GdkWindowEdge WindowEdge;
 
 /**
  * These are hints for the window manager that indicate what type of function
@@ -856,16 +856,16 @@ alias GdkWindowEdge dkWindowEdge;
  */
 public enum GdkWindowTypeHint
 {
-	TYPE_HINT_NORMAL,
-	TYPE_HINT_DIALOG,
-	TYPE_HINT_MENU,
-	TYPE_HINT_TOOLBAR,
-	TYPE_HINT_SPLASHSCREEN,
-	TYPE_HINT_UTILITY,
-	TYPE_HINT_DOCK,
-	TYPE_HINT_DESKTOP
+	NORMAL,
+	DIALOG,
+	MENU,
+	TOOLBAR,
+	SPLASHSCREEN,
+	UTILITY,
+	DOCK,
+	DESKTOP
 }
-alias GdkWindowTypeHint dkWindowTypeHint;
+alias GdkWindowTypeHint WindowTypeHint;
 
 /**
  * Used to indicate which fields in the GdkWindowAttr struct should be
@@ -902,7 +902,7 @@ public enum GdkWindowAttributesType
 	A_WMCLASS = 1 << 7,
 	A_NOREDIR = 1 << 8
 }
-alias GdkWindowAttributesType dkWindowAttributesType;
+alias GdkWindowAttributesType WindowAttributesType;
 
 /**
  * Specifies the result of applying a GdkFilterFunc to a native event.
@@ -919,7 +919,7 @@ public enum GdkFilterReturn
 	passed inn +/
 	REMOVE /+* Terminate processing, removing event +/
 }
-alias GdkFilterReturn dkFilterReturn;
+alias GdkFilterReturn FilterReturn;
 
 /**
  * A set of bit-flags to indicate the state of modifier keys and mouse buttons
@@ -953,7 +953,7 @@ public enum GdkModifierType
 	RELEASE_MASK = 1 << 30,
 	MODIFIER_MASK = RELEASE_MASK | 0x1fff
 }
-alias GdkModifierType dkModifierType;
+alias GdkModifierType ModifierType;
 
 /**
  * These are hints originally defined by the Motif toolkit.
@@ -984,7 +984,7 @@ public enum GdkWMDecoration
 	DECOR_MINIMIZE = 1 << 5,
 	DECOR_MAXIMIZE = 1 << 6
 }
-alias GdkWMDecoration dkWMDecoration;
+alias GdkWMDecoration WMDecoration;
 
 /**
  * These are hints originally defined by the Motif toolkit.
@@ -1013,7 +1013,7 @@ public enum GdkWMFunction
 	FUNC_MAXIMIZE = 1 << 4,
 	FUNC_CLOSE = 1 << 5
 }
-alias GdkWMFunction dkWMFunction;
+alias GdkWMFunction WMFunction;
 
 /**
  * Specifies the type of the event.
@@ -1146,7 +1146,7 @@ public enum GdkEventType
 	OWNER_CHANGE = 34,
 	GRAB_BROKEN = 35
 }
-alias GdkEventType dkEventType;
+alias GdkEventType EventType;
 
 /**
  * A set of bit-flags to indicate which events a window is to receive.
@@ -1226,7 +1226,7 @@ public enum GdkEventMask
 	GDK_SCROLL_MASK = 1 << 21,
 	GDK_ALL_EVENTS_MASK = 0x3FFFFE
 }
-alias GdkEventMask dkEventMask;
+alias GdkEventMask EventMask;
 
 /**
  * Specifies the direction for GdkEventScroll.
@@ -1246,7 +1246,7 @@ public enum GdkScrollDirection
 	LEFT,
 	RIGHT
 }
-alias GdkScrollDirection dkScrollDirection;
+alias GdkScrollDirection ScrollDirection;
 
 /**
  * Specifies the visiblity status of a window for a GdkEventVisibility.
@@ -1263,7 +1263,7 @@ public enum GdkVisibilityState
 	PARTIAL,
 	FULLY_OBSCURED
 }
-alias GdkVisibilityState dkVisibilityState;
+alias GdkVisibilityState VisibilityState;
 
 /**
  * Specifies the crossing mode for GdkEventCrossing.
@@ -1280,7 +1280,7 @@ public enum GdkCrossingMode
 	GRAB,
 	UNGRAB
 }
-alias GdkCrossingMode dkCrossingMode;
+alias GdkCrossingMode CrossingMode;
 
 /**
  * Specifies the kind of crossing for GdkEventCrossing.
@@ -1298,7 +1298,7 @@ public enum GdkNotifyType
 	NONLINEAR_VIRTUAL = 4,
 	UNKNOWN = 5
 }
-alias GdkNotifyType dkNotifyType;
+alias GdkNotifyType NotifyType;
 
 /**
  * Specifies the type of a property change for a GdkEventProperty.
@@ -1312,7 +1312,7 @@ public enum GdkPropertyState
 	NEW_VALUE,
 	DELETE
 }
-alias GdkPropertyState dkPropertyState;
+alias GdkPropertyState PropertyState;
 
 /**
  * Specifies the state of a toplevel window.
@@ -1333,15 +1333,15 @@ alias GdkPropertyState dkPropertyState;
  */
 public enum GdkWindowState
 {
-	TATE_WITHDRAWN = 1 << 0,
-	TATE_ICONIFIED = 1 << 1,
-	TATE_MAXIMIZED = 1 << 2,
-	TATE_STICKY = 1 << 3,
-	TATE_FULLSCREEN = 1 << 4,
-	TATE_ABOVE = 1 << 5,
-	TATE_BELOW = 1 << 6
+	WITHDRAWN = 1 << 0,
+	ICONIFIED = 1 << 1,
+	MAXIMIZED = 1 << 2,
+	STICKY = 1 << 3,
+	FULLSCREEN = 1 << 4,
+	ABOVE = 1 << 5,
+	BELOW = 1 << 6
 }
-alias GdkWindowState dkWindowState;
+alias GdkWindowState WindowState;
 
 /**
  * Specifies the kind of modification applied to a setting in a GdkEventSetting.
@@ -1354,11 +1354,11 @@ alias GdkWindowState dkWindowState;
  */
 public enum GdkSettingAction
 {
-	TION_NEW,
-	TION_CHANGED,
-	TION_DELETED
+	NEW,
+	CHANGED,
+	DELETED
 }
-alias GdkSettingAction dkSettingAction;
+alias GdkSettingAction SettingAction;
 
 /**
  * Specifies why a selection ownership was changed.
@@ -1371,11 +1371,11 @@ alias GdkSettingAction dkSettingAction;
  */
 public enum GdkOwnerChange
 {
-	ANGE_NEW_OWNER,
-	ANGE_DESTROY,
-	ANGE_CLOSE
+	NEW_OWNER,
+	DESTROY,
+	CLOSE
 }
-alias GdkOwnerChange dkOwnerChange;
+alias GdkOwnerChange OwnerChange;
 
 /**
  * Used in GdkDragContext to indicate the protocol according to
@@ -1389,16 +1389,16 @@ alias GdkOwnerChange dkOwnerChange;
  */
 public enum GdkDragProtocol
 {
-	O_MOTIF,
-	O_XDND,
-	O_ROOTWIN, /+* A root window with nobody claiming
+	MOTIF,
+	XDND,
+	ROOTWIN, /+* A root window with nobody claiming
 	 * drags +/
-	O_NONE, /+* Not a valid drag window +/
-	O_WIN32_DROPFILES, /+* The simple WM_DROPFILES dnd +/
-	O_OLE2, /+* The complex OLE2 dnd (not implemented) +/
-	O_LOCAL /+* Intra-app +/
+	NONE, /+* Not a valid drag window +/
+	WIN32_DROPFILES, /+* The simple WM_DROPFILES dnd +/
+	OLE2, /+* The complex OLE2 dnd (not implemented) +/
+	LOCAL /+* Intra-app +/
 }
-alias GdkDragProtocol dkDragProtocol;
+alias GdkDragProtocol DragProtocol;
 
 /**
  * Used in GdkDragContext to indicate what the destination
@@ -1419,7 +1419,7 @@ public enum GdkDragAction
 	ACTION_PRIVATE = 1 << 4,
 	ACTION_ASK = 1 << 5
 }
-alias GdkDragAction dkDragAction;
+alias GdkDragAction DragAction;
 
 /**
  * A set of bit flags used to specify conditions for which
@@ -1443,7 +1443,7 @@ public enum GdkInputCondition
 	WRITE = 1 << 1,
 	EXCEPTION = 1 << 2
 }
-alias GdkInputCondition dkInputCondition;
+alias GdkInputCondition InputCondition;
 
 /**
  * An enumeration describing the type of an input device
@@ -1458,7 +1458,7 @@ public enum GdkInputSource
 	SOURCE_ERASER,
 	SOURCE_CURSOR
 }
-alias GdkInputSource dkInputSource;
+alias GdkInputSource InputSource;
 
 /**
  * An enumeration that describes the mode of an input device.
@@ -1473,7 +1473,7 @@ public enum GdkInputMode
 	MODE_SCREEN,
 	MODE_WINDOW
 }
-alias GdkInputMode dkInputMode;
+alias GdkInputMode InputMode;
 
 /**
  * An enumeration describing the way in which a device
@@ -1498,16 +1498,16 @@ alias GdkInputMode dkInputMode;
  */
 public enum GdkAxisUse
 {
-	S_IGNORE,
-	S_X,
-	S_Y,
-	S_PRESSURE,
-	S_XTILT,
-	S_YTILT,
-	S_WHEEL,
-	S_LAST
+	IGNORE,
+	X,
+	Y,
+	PRESSURE,
+	XTILT,
+	YTILT,
+	WHEEL,
+	LAST
 }
-alias GdkAxisUse dkAxisUse;
+alias GdkAxisUse AxisUse;
 
 /**
  * An enumeration used to specify which extension events
@@ -1525,7 +1525,7 @@ public enum GdkExtensionMode
 	EVENTS_ALL,
 	EVENTS_CURSOR
 }
-alias GdkExtensionMode dkExtensionMode;
+alias GdkExtensionMode ExtensionMode;
 
 
 /**

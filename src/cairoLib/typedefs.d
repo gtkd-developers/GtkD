@@ -53,10 +53,10 @@ private alias void* Pixmap;
  */
 public enum cairo_antialias_t
 {
-	AS_DEFAULT,
-	AS_NONE,
-	AS_GRAY,
-	AS_SUBPIXEL
+	DEFAULT,
+	NONE,
+	GRAY,
+	SUBPIXEL
 }
 /**
  * cairo_fill_rule_t is used to select how paths are filled. For both
@@ -71,8 +71,8 @@ public enum cairo_antialias_t
  */
 public enum cairo_fill_rule_t
 {
-	LE_WINDING,
-	LE_EVEN_ODD
+	WINDING,
+	EVEN_ODD
 }
 /**
  * enumeration for style of line-endings
@@ -80,32 +80,32 @@ public enum cairo_fill_rule_t
  */
 public enum cairo_line_cap_t
 {
-	AP_BUTT,
-	AP_ROUND,
-	AP_SQUARE
+	BUTT,
+	ROUND,
+	SQUARE
 }
 public enum cairo_line_join_t
 {
-	IN_MITER,
-	IN_ROUND,
-	IN_BEVEL
+	MITER,
+	ROUND,
+	BEVEL
 }
 public enum cairo_operator_t
 {
-	OR_CLEAR,
-	OR_SOURCE,
-	OR_OVER,
-	OR_IN,
-	OR_OUT,
-	OR_ATOP,
-	OR_DEST,
-	OR_DEST_OVER,
-	OR_DEST_IN,
-	OR_DEST_OUT,
-	OR_DEST_ATOP,
-	OR_XOR,
-	OR_ADD,
-	OR_SATURATE
+	CLEAR,
+	SOURCE,
+	OVER,
+	IN,
+	OUT,
+	ATOP,
+	DEST,
+	DEST_OVER,
+	DEST_IN,
+	DEST_OUT,
+	DEST_ATOP,
+	XOR,
+	ADD,
+	SATURATE
 }
 public enum cairo_path_data_type_t
 {
@@ -116,29 +116,29 @@ public enum cairo_path_data_type_t
 }
 public enum cairo_font_slant_t
 {
-	NT_NORMAL,
-	NT_ITALIC,
-	NT_OBLIQUE
+	NORMAL,
+	ITALIC,
+	OBLIQUE
 }
 public enum cairo_font_weight_t
 {
-	HT_NORMAL,
-	HT_BOLD
+	NORMAL,
+	BOLD
 }
 public enum cairo_extend_t
 {
-	ND_NONE,
-	ND_REPEAT,
-	ND_REFLECT
+	NONE,
+	REPEAT,
+	REFLECT
 }
 public enum cairo_filter_t
 {
-	ER_FAST,
-	ER_GOOD,
-	ER_BEST,
-	ER_NEAREST,
-	ER_BILINEAR,
-	ER_GAUSSIAN
+	FAST,
+	GOOD,
+	BEST,
+	NEAREST,
+	BILINEAR,
+	GAUSSIAN
 }
 /**
  * The subpixel order specifies the order of color elements within
@@ -148,11 +148,11 @@ public enum cairo_filter_t
  */
 public enum cairo_subpixel_order_t
 {
-	ER_DEFAULT,
-	ER_RGB,
-	ER_BGR,
-	ER_VRGB,
-	ER_VBGR
+	DEFAULT,
+	RGB,
+	BGR,
+	VRGB,
+	VBGR
 }
 /**
  * Specifies the type of hinting to do on font outlines. Hinting
@@ -165,11 +165,11 @@ public enum cairo_subpixel_order_t
  */
 public enum cairo_hint_style_t
 {
-	LE_DEFAULT,
-	LE_NONE,
-	LE_SLIGHT,
-	LE_MEDIUM,
-	LE_FULL
+	DEFAULT,
+	NONE,
+	SLIGHT,
+	MEDIUM,
+	FULL
 }
 /**
  * Specifies whether to hint font metrics; hinting font metrics
@@ -181,9 +181,9 @@ public enum cairo_hint_style_t
  */
 public enum cairo_hint_metrics_t
 {
-	CS_DEFAULT,
-	CS_OFF,
-	CS_ON
+	DEFAULT,
+	OFF,
+	ON
 }
 /**
  * cairo_content_t is used to describe the content that a surface will
@@ -196,9 +196,9 @@ public enum cairo_hint_metrics_t
  */
 public enum cairo_content_t
 {
-	NT_COLOR = 0x1000,
-	NT_ALPHA = 0x2000,
-	NT_COLOR_ALPHA = 0x3000
+	COLOR = 0x1000,
+	ALPHA = 0x2000,
+	COLOR_ALPHA = 0x3000
 }
 /**
  * cairo_format_t is used to identify the memory format of
@@ -207,10 +207,10 @@ public enum cairo_content_t
  */
 public enum cairo_format_t
 {
-	AT_ARGB32,
-	AT_RGB24,
-	AT_A8,
-	AT_A1
+	ARGB32,
+	RGB24,
+	A8,
+	A1
 }
 /**
  * cairo_status_t is used to indicate errors that can occur when
@@ -221,26 +221,26 @@ public enum cairo_format_t
  */
 public enum cairo_status_t
 {
-	US_SUCCESS = 0,
-	US_NO_MEMORY,
-	US_INVALID_RESTORE,
-	US_INVALID_POP_GROUP,
-	US_NO_CURRENT_POINT,
-	US_INVALID_MATRIX,
-	US_INVALID_STATUS,
-	US_NULL_POINTER,
-	US_INVALID_STRING,
-	US_INVALID_PATH_DATA,
-	US_READ_ERROR,
-	US_WRITE_ERROR,
-	US_SURFACE_FINISHED,
-	US_SURFACE_TYPE_MISMATCH,
-	US_PATTERN_TYPE_MISMATCH,
-	US_INVALID_CONTENT,
-	US_INVALID_FORMAT,
-	US_INVALID_VISUAL,
-	US_FILE_NOT_FOUND,
-	US_INVALID_DASH
+	SUCCESS = 0,
+	NO_MEMORY,
+	INVALID_RESTORE,
+	INVALID_POP_GROUP,
+	NO_CURRENT_POINT,
+	INVALID_MATRIX,
+	INVALID_STATUS,
+	NULL_POINTER,
+	INVALID_STRING,
+	INVALID_PATH_DATA,
+	READ_ERROR,
+	WRITE_ERROR,
+	SURFACE_FINISHED,
+	SURFACE_TYPE_MISMATCH,
+	PATTERN_TYPE_MISMATCH,
+	INVALID_CONTENT,
+	INVALID_FORMAT,
+	INVALID_VISUAL,
+	FILE_NOT_FOUND,
+	INVALID_DASH
 }
 
 /**

@@ -115,6 +115,11 @@ public class ScrolledWindow : Bin
 		this.gtkScrolledWindow = gtkScrolledWindow;
 	}
 	
+	public this()
+	{
+		this(null, null);
+	}
+	
 	/**
 	 * Creates a new scrolled window. The two arguments are the scrolled
 	 * window's adjustments; these will be shared with the scrollbars and the
@@ -137,6 +142,16 @@ public class ScrolledWindow : Bin
 		);
 	}
 	
+	/**
+	 * Creates a new Scrolled window and set the policy type
+	 * @param hPolicy the horizontal policy
+	 * @param vPolicy the vertical policy
+	 */
+	this(PolicyType hPolicy, PolicyType vPolicy)
+	{
+		this();
+		setPolicy(hPolicy, vPolicy);
+	}
 	
 	/**
 	 */

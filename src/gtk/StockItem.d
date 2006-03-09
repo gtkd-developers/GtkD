@@ -48,6 +48,7 @@ module gtk.StockItem;
 private import gtk.typedefs;
 
 private import lib.gtk;
+private import std.string;
 
 private import gtk.StockItem;private import glib.ListSG;
 /**

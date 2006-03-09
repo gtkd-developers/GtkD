@@ -46,6 +46,7 @@ module gtk.Signals;
 private import gtk.typedefs;
 
 private import lib.gtk;
+private import std.string;
 
 private import gtk.ObjectGtk;
 /**

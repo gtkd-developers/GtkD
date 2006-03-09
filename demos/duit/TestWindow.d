@@ -39,7 +39,7 @@ private import duit.TestTreeView1;
 private import duit.TestImage;
 private import duit.TestAspectFrame;
 private import duit.TestIdle;
-//private import duit.TTextView;
+private import duit.TTextView;
 //private import duit.TEditableCells;
 	
 private import gtk.MenuItem;
@@ -712,7 +712,7 @@ class TestWindow : MainWindow
 		r ~= ResponseType.GTK_RESPONSE_CANCEL;
 		if ( fcd  is  null )
 		{
-			fcd = new FileChooserDialog("File Chooser", this, FileChooserAction.TION_OPEN, a, r);
+			fcd = new FileChooserDialog("File Chooser", this, FileChooserAction.OPEN, a, r);
 		}
 		
 		fcd.getFileChooser().setSelectMultiple(true);
@@ -795,7 +795,7 @@ class TestWindow : MainWindow
 
 		if ( fcd  is  null )
 		{
-			fcd = new FileChooserDialog("File Chooser", this, FileChooserAction.TION_OPEN);
+			fcd = new FileChooserDialog("File Chooser", this, FileChooserAction.OPEN);
 		}
 
 		
@@ -956,7 +956,7 @@ class TestWindow : MainWindow
 	{
 		void showTTextView(Button button)
 		{
-			//new TTextView();
+			new TTextView();
 		}
 		
 		void showTEditableCells(Button button)

@@ -54,7 +54,7 @@ private import gtk.Tooltips;
 		Color color = new Color(cast(ubyte)0,cast(ubyte)255,cast(ubyte)255);
 		
 		IconSize size = Button.getIconSize();
-		Button.setIconSize(IconSize.SIZE_DIALOG);
+		Button.setIconSize(IconSize.DIALOG);
 		for(StockID stockID=StockID.min ; stockID<=StockID.max ; stockID++)
 		{
 			Button button = new Button(stockID, true);

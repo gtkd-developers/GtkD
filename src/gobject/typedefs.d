@@ -69,10 +69,10 @@ public alias GClosureMarshal GSignalCMarshaller;
  */
 public enum GTypeDebugFlags
 {
-	TYPE_DEBUNONE = 0,
-	TYPE_DEBUOBJECTS = 1 << 0,
-	TYPE_DEBUSIGNALS = 1 << 1,
-	TYPE_DEBUMASK = 0x03
+	NONE = 0,
+	OBJECTS = 1 << 0,
+	SIGNALS = 1 << 1,
+	MASK = 0x03
 }
 alias GTypeDebugFlags TypeDebugFlags;
 
@@ -82,8 +82,8 @@ alias GTypeDebugFlags TypeDebugFlags;
  */
 public enum GTypeFlags
 {
-	TYPE_FLAABSTRACT = (1 << 4),
-	TYPE_FLAVALUE_ABSTRACT = (1 << 5)
+	ABSTRACT = (1 << 4),
+	VALUE_ABSTRACT = (1 << 5)
 }
 alias GTypeFlags TypeFlags;
 
@@ -94,10 +94,10 @@ alias GTypeFlags TypeFlags;
  */
 public enum GTypeFundamentalFlags
 {
-	TYPE_FLACLASSED = (1 << 0),
-	TYPE_FLAINSTANTIATABLE = (1 << 1),
-	TYPE_FLADERIVABLE = (1 << 2),
-	TYPE_FLADEEP_DERIVABLE = (1 << 3)
+	LAG_CLASSED = (1 << 0),
+	LAG_INSTANTIATABLE = (1 << 1),
+	LAG_DERIVABLE = (1 << 2),
+	LAG_DEEP_DERIVABLE = (1 << 3)
 }
 alias GTypeFundamentalFlags TypeFundamentalFlags;
 

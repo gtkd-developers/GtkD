@@ -43,7 +43,7 @@ module gtk.Version;
 private import gtk.typedefs;
 
 private import lib.gtk;
-
+private import std.string;
 
 /**
  * Description

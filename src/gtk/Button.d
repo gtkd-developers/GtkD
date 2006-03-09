@@ -91,7 +91,7 @@ public class Button : Bin
 		this.gtkButton = gtkButton;
 	}
 	
-	private static IconSize currentIconSize = IconSize.SIZE_BUTTON;
+	private static IconSize currentIconSize = IconSize.BUTTON;
 	
 	private char[] action;
 	

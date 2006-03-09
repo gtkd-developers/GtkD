@@ -33,6 +33,16 @@ import gobject.typedefs;
 public alias void FcPattern;
 public alias void FcCharSet;
 struct FT_Face;
+const int PANGO_SCALE = 1024;
+const double PANGO_SCALE_XX_SMALL = 0.5787037037037;	/// The scale factor for three shrinking steps (1 / (1.2 * 1.2 * 1.2)).
+const double PANGO_SCALE_X_SMALL  = 0.6444444444444;	/// The scale factor for two shrinking steps (1 / (1.2 * 1.2)).
+const double PANGO_SCALE_SMALL    = 0.8333333333333;	/// The scale factor for one shrinking step (1 / 1.2).
+const double PANGO_SCALE_MEDIUM   = 1.0;	/// The scale factor for normal size (1.0).
+const double PANGO_SCALE_LARGE    = 1.2;	/// The scale factor for one magnification step (1.2)
+const double PANGO_SCALE_X_LARGE  = 1.4399999999999;	/// The scale factor for two magnification steps (1.2 * 1.2).
+const double PANGO_SCALE_XX_LARGE = 1.728;	/// The scale factor for three magnification steps (1.2 * 1.2 * 1.2).
+
+
 /**
  * typedef guint32 PangoGlyph;
  * A PangoGlyph represents a single glyph in the output form of a string.
@@ -81,13 +91,13 @@ public alias PangoGlyphItem PangoLayoutRun;
  */
 public enum PangoDirection
 {
-	TION_LTR,
-	TION_RTL,
-	TION_TTB_LTR,
-	TION_TTB_RTL,
-	TION_WEAK_LTR,
-	TION_WEAK_RTL,
-	TION_NEUTRAL
+	LTR,
+	RTL,
+	TTB_LTR,
+	TTB_RTL,
+	WEAK_LTR,
+	WEAK_RTL,
+	NEUTRAL
 }
 /**
  * An enumeration specifying the various slant styles possible for a font.
@@ -95,9 +105,9 @@ public enum PangoDirection
  */
 public enum PangoStyle
 {
-	TYLE_NORMAL,
-	TYLE_OBLIQUE,
-	TYLE_ITALIC
+	NORMAL,
+	OBLIQUE,
+	ITALIC
 }
 /**
  * An enumeration specifying the weight (boldness) of a font. This is a numerical
@@ -108,13 +118,13 @@ public enum PangoStyle
  */
 public enum PangoWeight
 {
-	IGHT_ULTRALIGHT = 200,
-	IGHT_LIGHT = 300,
-	IGHT_NORMAL = 400,
-	IGHT_SEMIBOLD = 600,
-	IGHT_BOLD = 700,
-	IGHT_ULTRABOLD = 800,
-	IGHT_HEAVY = 900
+	ULTRALIGHT = 200,
+	LIGHT = 300,
+	NORMAL = 400,
+	SEMIBOLD = 600,
+	BOLD = 700,
+	ULTRABOLD = 800,
+	HEAVY = 900
 }
 /**
  * An enumeration specifying capitalization variant of the font.
@@ -125,8 +135,8 @@ public enum PangoWeight
  */
 public enum PangoVariant
 {
-	IANT_NORMAL,
-	IANT_SMALL_CAPS
+	NORMAL,
+	SMALL_CAPS
 }
 /**
  * An enumeration specifying the width of the font relative to other designs
@@ -144,15 +154,15 @@ public enum PangoVariant
  */
 public enum PangoStretch
 {
-	ETCH_ULTRA_CONDENSED,
-	ETCH_EXTRA_CONDENSED,
-	ETCH_CONDENSED,
-	ETCH_SEMI_CONDENSED,
-	ETCH_NORMAL,
-	ETCH_SEMI_EXPANDED,
-	ETCH_EXPANDED,
-	ETCH_EXTRA_EXPANDED,
-	ETCH_ULTRA_EXPANDED
+	ULTRA_CONDENSED,
+	EXTRA_CONDENSED,
+	CONDENSED,
+	SEMI_CONDENSED,
+	NORMAL,
+	SEMI_EXPANDED,
+	EXPANDED,
+	EXTRA_EXPANDED,
+	ULTRA_EXPANDED
 }
 /**
  * The bits in a PangoFontMask correspond to fields in a
@@ -172,12 +182,12 @@ public enum PangoStretch
  */
 public enum PangoFontMask
 {
-	MASK_FAMILY = 1 << 0,
-	MASK_STYLE = 1 << 1,
-	MASK_VARIANT = 1 << 2,
-	MASK_WEIGHT = 1 << 3,
-	MASK_STRETCH = 1 << 4,
-	MASK_SIZE = 1 << 5
+	FAMILY = 1 << 0,
+	STYLE = 1 << 1,
+	VARIANT = 1 << 2,
+	WEIGHT = 1 << 3,
+	STRETCH = 1 << 4,
+	SIZE = 1 << 5
 }
 /**
  * The PangoAttrType
@@ -263,11 +273,11 @@ public enum PangoAttrType
  */
 public enum PangoUnderline
 {
-	LINE_NONE,
-	LINE_SINGLE,
-	LINE_DOUBLE,
-	LINE_LOW,
-	LINE_ERROR
+	NONE,
+	SINGLE,
+	DOUBLE,
+	LOW,
+	ERROR
 }
 /**
  * A PangoTabAlign specifies where a tab stop appears relative to the text.
@@ -347,70 +357,70 @@ public enum PangoAlignment
  */
 public enum PangoScript
 {
-	RIPT_INVALID_CODE = -1,
-	RIPT_COMMON = 0, /+* Zyyy +/
-	RIPT_INHERITED, /+* Qaai +/
-	RIPT_ARABIC, /+* Arab +/
-	RIPT_ARMENIAN, /+* Armn +/
-	RIPT_BENGALI, /+* Beng +/
-	RIPT_BOPOMOFO, /+* Bopo +/
-	RIPT_CHEROKEE, /+* Cher +/
-	RIPT_COPTIC, /+* Qaac +/
-	RIPT_CYRILLIC, /+* Cyrl (Cyrs) +/
-	RIPT_DESERET, /+* Dsrt +/
-	RIPT_DEVANAGARI, /+* Deva +/
-	RIPT_ETHIOPIC, /+* Ethi +/
-	RIPT_GEORGIAN, /+* Geor (Geon, Geoa) +/
-	RIPT_GOTHIC, /+* Goth +/
-	RIPT_GREEK, /+* Grek +/
-	RIPT_GUJARATI, /+* Gujr +/
-	RIPT_GURMUKHI, /+* Guru +/
-	RIPT_HAN, /+* Hani +/
-	RIPT_HANGUL, /+* Hang +/
-	RIPT_HEBREW, /+* Hebr +/
-	RIPT_HIRAGANA, /+* Hira +/
-	RIPT_KANNADA, /+* Knda +/
-	RIPT_KATAKANA, /+* Kana +/
-	RIPT_KHMER, /+* Khmr +/
-	RIPT_LAO, /+* Laoo +/
-	RIPT_LATIN, /+* Latn (Latf, Latg) +/
-	RIPT_MALAYALAM, /+* Mlym +/
-	RIPT_MONGOLIAN, /+* Mong +/
-	RIPT_MYANMAR, /+* Mymr +/
-	RIPT_OGHAM, /+* Ogam +/
-	RIPT_OLD_ITALIC, /+* Ital +/
-	RIPT_ORIYA, /+* Orya +/
-	RIPT_RUNIC, /+* Runr +/
-	RIPT_SINHALA, /+* Sinh +/
-	RIPT_SYRIAC, /+* Syrc (Syrj, Syrn, Syre) +/
-	RIPT_TAMIL, /+* Taml +/
-	RIPT_TELUGU, /+* Telu +/
-	RIPT_THAANA, /+* Thaa +/
-	RIPT_THAI, /+* Thai +/
-	RIPT_TIBETAN, /+* Tibt +/
-	RIPT_CANADIAN_ABORIGINAL, /+* Cans +/
-	RIPT_YI, /+* Yiii +/
-	RIPT_TAGALOG, /+* Tglg +/
-	RIPT_HANUNOO, /+* Hano +/
-	RIPT_BUHID, /+* Buhd +/
-	RIPT_TAGBANWA, /+* Tagb +/
+	INVALID_CODE = -1,
+	COMMON = 0, /+* Zyyy +/
+	INHERITED, /+* Qaai +/
+	ARABIC, /+* Arab +/
+	ARMENIAN, /+* Armn +/
+	BENGALI, /+* Beng +/
+	BOPOMOFO, /+* Bopo +/
+	CHEROKEE, /+* Cher +/
+	COPTIC, /+* Qaac +/
+	CYRILLIC, /+* Cyrl (Cyrs) +/
+	DESERET, /+* Dsrt +/
+	DEVANAGARI, /+* Deva +/
+	ETHIOPIC, /+* Ethi +/
+	GEORGIAN, /+* Geor (Geon, Geoa) +/
+	GOTHIC, /+* Goth +/
+	GREEK, /+* Grek +/
+	GUJARATI, /+* Gujr +/
+	GURMUKHI, /+* Guru +/
+	HAN, /+* Hani +/
+	HANGUL, /+* Hang +/
+	HEBREW, /+* Hebr +/
+	HIRAGANA, /+* Hira +/
+	KANNADA, /+* Knda +/
+	KATAKANA, /+* Kana +/
+	KHMER, /+* Khmr +/
+	LAO, /+* Laoo +/
+	LATIN, /+* Latn (Latf, Latg) +/
+	MALAYALAM, /+* Mlym +/
+	MONGOLIAN, /+* Mong +/
+	MYANMAR, /+* Mymr +/
+	OGHAM, /+* Ogam +/
+	OLD_ITALIC, /+* Ital +/
+	ORIYA, /+* Orya +/
+	RUNIC, /+* Runr +/
+	SINHALA, /+* Sinh +/
+	SYRIAC, /+* Syrc (Syrj, Syrn, Syre) +/
+	TAMIL, /+* Taml +/
+	TELUGU, /+* Telu +/
+	THAANA, /+* Thaa +/
+	THAI, /+* Thai +/
+	TIBETAN, /+* Tibt +/
+	CANADIAN_ABORIGINAL, /+* Cans +/
+	YI, /+* Yiii +/
+	TAGALOG, /+* Tglg +/
+	HANUNOO, /+* Hano +/
+	BUHID, /+* Buhd +/
+	TAGBANWA, /+* Tagb +/
 	/+* Unicode-4.0 additions +/
-	RIPT_BRAILLE, /+* Brai +/
-	RIPT_CYPRIOT, /+* Cprt +/
-	RIPT_LIMBU, /+* Limb +/
-	RIPT_OSMANYA, /+* Osma +/
-	RIPT_SHAVIAN, /+* Shaw +/
-	RIPT_LINEAR_B, /+* Linb +/
-	RIPT_TAI_LE, /+* Tale +/
-	RIPT_UGARITIC, /+* Ugar +/
+	BRAILLE, /+* Brai +/
+	CYPRIOT, /+* Cprt +/
+	LIMBU, /+* Limb +/
+	OSMANYA, /+* Osma +/
+	SHAVIAN, /+* Shaw +/
+	LINEAR_B, /+* Linb +/
+	TAI_LE, /+* Tale +/
+	UGARITIC, /+* Ugar +/
 	/+* Unicode-4.1 additions +/
-	RIPT_NEW_TAI_LUE, /+* Talu +/
-	RIPT_BUGINESE, /+* Bugi +/
-	RIPT_GLAGOLITIC, /+* Glag +/
-	RIPT_TIFINAGH, /+* Tfng +/
-	RIPT_SYLOTI_NAGRI, /+* Sylo +/
-	RIPT_OLD_PERSIAN, /+* Xpeo +/
-	RIPT_KHAROSHTHI /+* Khar +/
+	NEW_TAI_LUE, /+* Talu +/
+	BUGINESE, /+* Bugi +/
+	GLAGOLITIC, /+* Glag +/
+	TIFINAGH, /+* Tfng +/
+	SYLOTI_NAGRI, /+* Sylo +/
+	OLD_PERSIAN, /+* Xpeo +/
+	KHAROSHTHI /+* Khar +/
 }
 /**
  * Used to indicate how well a font can represent a particular ISO 10646

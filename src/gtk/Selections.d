@@ -47,6 +47,7 @@
 module gtk.Selections;
 
 private import gtk.typedefs;
+private import std.string;
 
 private import lib.gtk;
 

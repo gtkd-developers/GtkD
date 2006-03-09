@@ -32,6 +32,7 @@
  * 	- gtk_text_iter_
  * 	- gtk_
  * omit structs:
+ * 	- GtkTextIter
  * omit prefixes:
  * omit code:
  * imports:
@@ -41,11 +42,13 @@
  * 	- glib.ListSG
  * 	- gtk.TextTag
  * 	- gtk.TextAttributes
+ * 	- gtk.TextChildAnchor
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkTextAttributes* -> TextAttributes
  * 	- GtkTextBuffer* -> TextBuffer
+ * 	- GtkTextChildAnchor* -> TextChildAnchor
  * 	- GtkTextIter* -> TextIter
  * 	- GtkTextTag* -> TextTag
  * local aliases:
@@ -57,7 +60,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TextBuffer;private import gtk.TextIter;private import gdk.Pixbuf;private import glib.ListSG;private import gtk.TextTag;private import gtk.TextAttributes;
+private import gtk.TextBuffer;private import gtk.TextIter;private import gdk.Pixbuf;private import glib.ListSG;private import gtk.TextTag;private import gtk.TextAttributes;private import gtk.TextChildAnchor;
 /**
  * Description
  * You may wish to begin by reading the text widget
@@ -90,6 +93,12 @@ public class TextIter
 	{
 		this.gtkTextIter = gtkTextIter;
 	}
+	
+	public this()
+	{
+		this(new GtkTextIter);
+	}
+	
 	
 	/**
 	 */
@@ -389,10 +398,10 @@ public class TextIter
 	 * Returns:
 	 *  the anchor at iter
 	 */
-	public GtkTextChildAnchor* getChildAnchor()
+	public TextChildAnchor getChildAnchor()
 	{
 		// GtkTextChildAnchor* gtk_text_iter_get_child_anchor  (const GtkTextIter *iter);
-		return gtk_text_iter_get_child_anchor(gtkTextIter);
+		return new TextChildAnchor( gtk_text_iter_get_child_anchor(gtkTextIter) );
 	}
 	
 	/**

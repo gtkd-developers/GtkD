@@ -132,10 +132,10 @@ public alias GFlagsValue GtkFlagValue;
  */
 public enum GtkDestDefaults
 {
-	ULT_MOTION = 1 << 0, /+* respond to "dragMotion" +/
-	ULT_HIGHLIGHT = 1 << 1, /+* auto-highlight +/
-	ULT_DROP = 1 << 2, /+* respond to "dragDrop" +/
-	ULT_ALL = 0x07
+	MOTION = 1 << 0, /+* respond to "dragMotion" +/
+	HIGHLIGHT = 1 << 1, /+* auto-highlight +/
+	DROP = 1 << 2, /+* respond to "dragDrop" +/
+	ALL = 0x07
 }
 alias GtkDestDefaults DestDefaults;
 
@@ -176,13 +176,13 @@ alias GtkIconThemeError IconThemeError;
 
 public enum GtkIconSize
 {
-	SIZE_INVALID,
-	SIZE_MENU,
-	SIZE_SMALL_TOOLBAR,
-	SIZE_LARGE_TOOLBAR,
-	SIZE_BUTTON,
-	SIZE_DND,
-	SIZE_DIALOG
+	INVALID,
+	MENU,
+	SMALL_TOOLBAR,
+	LARGE_TOOLBAR,
+	BUTTON,
+	DND,
+	DIALOG
 }
 alias GtkIconSize IconSize;
 
@@ -201,10 +201,10 @@ alias GtkIconSize IconSize;
  */
 public enum GtkRcFlags
 {
-	FG = 1 << 0,
-	BG = 1 << 1,
-	TEXT = 1 << 2,
-	BASE = 1 << 3
+	G = 1 << 0,
+	GTK_RC_BG = 1 << 1,
+	GTK_RC_TEXT = 1 << 2,
+	GTK_RC_BASE = 1 << 3
 }
 alias GtkRcFlags RcFlags;
 
@@ -526,8 +526,8 @@ alias GtkMovementStep MovementStep;
  */
 public enum GtkOrientation
 {
-	TION_HORIZONTAL,
-	TION_VERTICAL
+	HORIZONTAL,
+	VERTICAL
 }
 alias GtkOrientation Orientation;
 
@@ -655,12 +655,12 @@ alias GtkResizeMode ResizeMode;
 
 public enum GtkScrollStep
 {
-	STEPS,
-	PAGES,
-	ENDS,
-	HORIZONTAL_STEPS,
-	HORIZONTAL_PAGES,
-	HORIZONTAL_ENDS
+	S,
+	GTK_SCROLL_PAGES,
+	GTK_SCROLL_ENDS,
+	GTK_SCROLL_HORIZONTAL_STEPS,
+	GTK_SCROLL_HORIZONTAL_PAGES,
+	GTK_SCROLL_HORIZONTAL_ENDS
 }
 alias GtkScrollStep ScrollStep;
 
@@ -838,9 +838,9 @@ alias GtkUpdateType UpdateType;
  */
 public enum GtkVisibility
 {
-	LITY_NONE,
-	LITY_PARTIAL,
-	LITY_FULL
+	NONE,
+	PARTIAL,
+	FULL
 }
 alias GtkVisibility Visibility;
 
@@ -1300,18 +1300,18 @@ alias GtkCellRendererState CellRendererState;
  */
 public enum GtkCellRendererMode
 {
-	MODE_INERT,
-	MODE_ACTIVATABLE,
-	MODE_EDITABLE
+	INERT,
+	ACTIVATABLE,
+	EDITABLE
 }
 alias GtkCellRendererMode CellRendererMode;
 
 public enum GtkPackDirection
 {
-	TION_LTR,
-	TION_RTL,
-	TION_TTB,
-	TION_BTT
+	LTR,
+	RTL,
+	TTB,
+	BTT
 }
 alias GtkPackDirection PackDirection;
 
@@ -1413,10 +1413,10 @@ alias GtkUIManagerItemType UIManagerItemType;
  */
 public enum GtkFileChooserAction
 {
-	TION_OPEN,
-	TION_SAVE,
-	TION_SELECT_FOLDER,
-	TION_CREATE_FOLDER
+	OPEN,
+	SAVE,
+	SELECT_FOLDER,
+	CREATE_FOLDER
 }
 alias GtkFileChooserAction FileChooserAction;
 
@@ -1424,9 +1424,9 @@ alias GtkFileChooserAction FileChooserAction;
  */
 public enum GtkFileChooserConfirmation
 {
-	TION_CONFIRM,
-	TION_ACCEPT_FILENAME,
-	TION_SELECT_AGAIN
+	CONFIRM,
+	ACCEPT_FILENAME,
+	SELECT_AGAIN
 }
 alias GtkFileChooserConfirmation FileChooserConfirmation;
 
@@ -1434,8 +1434,8 @@ alias GtkFileChooserConfirmation FileChooserConfirmation;
  */
 public enum GtkFileChooserError
 {
-	RROR_NONEXISTENT,
-	RROR_BAD_FILENAME
+	NONEXISTENT,
+	BAD_FILENAME
 }
 alias GtkFileChooserError FileChooserError;
 
@@ -1451,10 +1451,10 @@ alias GtkFileChooserError FileChooserError;
  */
 public enum GtkFileFilterFlags
 {
-	FILENAME = 1 << 0,
-	URI = 1 << 1,
-	DISPLAY_NAME = 1 << 2,
-	MIME_TYPE = 1 << 3
+	ILENAME = 1 << 0,
+	GTK_FILE_FILTER_URI = 1 << 1,
+	GTK_FILE_FILTER_DISPLAY_NAME = 1 << 2,
+	GTK_FILE_FILTER_MIME_TYPE = 1 << 3
 }
 alias GtkFileFilterFlags FileFilterFlags;
 
@@ -1588,6 +1588,30 @@ public enum GtkTextDirection
 	RTL
 }
 alias GtkTextDirection TextDirection;
+
+
+struct GtkTextIter {
+	/* GtkTextIter is an opaque datatype; ignore all these fields.
+	 * Initialize the iter with gtk_text_buffer_get_iter_*
+	 * functions
+	 */
+	/*< private >*/
+	gpointer dummy1;
+	gpointer dummy2;
+	gint dummy3;
+	gint dummy4;
+	gint dummy5;
+	gint dummy6;
+	gint dummy7;
+	gint dummy8;
+	gpointer dummy9;
+	gpointer dummy10;
+	gint dummy11;
+	gint dummy12;
+	/* padding */
+	gint dummy13;
+	gpointer dummy14;
+}
 
 
 /**
@@ -2046,16 +2070,6 @@ public struct GtkSpinButton;
  * the starting position of the selected characters
  */
 public struct GtkEditable;
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkTextIter;
-// /+* GtkTextIter is an opaque datatype; ignore all these fields.
-// * Initialize the iter with textBufferGetIter*
-// * functions
-// +/
 
 
 /**

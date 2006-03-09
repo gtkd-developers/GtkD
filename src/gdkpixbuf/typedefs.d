@@ -55,7 +55,7 @@ public enum GdkPixdataType
 	GDK_PIXDATA_ENCODING_RLE = 0x02 << 24,
 	GDK_PIXDATA_ENCODING_MASK = 0x0f << 24
 }
-alias GdkPixdataType dkPixdataType;
+alias GdkPixdataType PixdataType;
 
 /**
  * An enumeration which is used by gdk_pixdata_to_csource() to
@@ -80,7 +80,7 @@ public enum GdkPixdataDumpType
 	/+* save RLE decoder macro? +/
 	GDK_PIXDATA_DUMP_RLE_DECODER = 1 << 16
 }
-alias GdkPixdataDumpType dkPixdataDumpType;
+alias GdkPixdataDumpType PixdataDumpType;
 
 /**
  * Flags which allow a module to specify further details about the supported
@@ -98,7 +98,7 @@ public enum GdkPixbufFormatFlags
 	SCALABLE = 1 << 1,
 	THREADSAFE = 1 << 2
 }
-alias GdkPixbufFormatFlags dkPixbufFormatFlags;
+alias GdkPixbufFormatFlags PixbufFormatFlags;
 
 
 /**

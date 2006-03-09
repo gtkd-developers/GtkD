@@ -35,6 +35,8 @@
  * omit prefixes:
  * omit code:
  * 	- gtk_text_buffer_set_text
+ * 	- gtk_text_buffer_insert_with_tags
+ * 	- gtk_text_buffer_insert_with_tags_by_name
  * imports:
  * 	- gtk.TextBuffer
  * 	- gdk.Rectangle
@@ -45,14 +47,17 @@
  * 	- gtk.TextIter
  * 	- gtk.TextTag
  * 	- gdk.Pixbuf
+ * 	- gtk.TextChildAnchor
  * 	- gtk.TextMark
  * 	- gtk.Clipboard
+ * 	- std.stdarg;
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkRectangle* -> Rectangle
  * 	- GtkClipboard* -> Clipboard
  * 	- GtkTextAttributes* -> TextAttributes
  * 	- GtkTextBuffer* -> TextBuffer
+ * 	- GtkTextChildAnchor* -> TextChildAnchor
  * 	- GtkTextIter* -> TextIter
  * 	- GtkTextMark* -> TextMark
  * 	- GtkTextTag* -> TextTag
@@ -68,7 +73,19 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TextBuffer;private import gdk.Rectangle;private import gtk.Widget;private import pango.PgTabArray;private import gtk.TextAttributes;private import gtk.TextTagTable;private import gtk.TextIter;private import gtk.TextTag;private import gdk.Pixbuf;private import gtk.TextMark;private import gtk.Clipboard;
+private import gtk.TextBuffer;
+private import gdk.Rectangle;
+private import gtk.Widget;
+private import pango.PgTabArray;
+private import gtk.TextAttributes;
+private import gtk.TextTagTable;
+private import gtk.TextIter;
+private import gtk.TextTag;
+private import gdk.Pixbuf;
+private import gtk.TextChildAnchor;
+private import gtk.TextMark;
+private import gtk.Clipboard;
+
 /**
  * Description
  * You may wish to begin by reading the text widget
@@ -78,6 +95,8 @@ private import gtk.TextBuffer;private import gdk.Rectangle;private import gtk.Wi
 private import gobject.ObjectG;
 public class TextBuffer : ObjectG
 {
+private import std.stdarg;
+private import std.string;
 	
 	/** the main Gtk struct */
 	protected GtkTextBuffer* gtkTextBuffer;
@@ -118,6 +137,262 @@ public class TextBuffer : ObjectG
 	{
 		// void gtk_text_buffer_set_text (GtkTextBuffer *buffer,  const gchar *text,  gint len);
 		gtk_text_buffer_set_text(gtkTextBuffer, std.string.toStringz(text), text.length);
+	}
+	
+	/**
+	 * Inserts len bytes of text at position iter. If len is -1,
+	 * text must be nul-terminated and will be inserted in its
+	 * entirety. Emits the "insert_text" signal; insertion actually occurs
+	 * in the default handler for the signal. iter is invalidated when
+	 * insertion occurs (because the buffer contents change), but the
+	 * default signal handler revalidates it to point to the end of the
+	 * inserted text.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * iter:
+	 *  a position in the buffer
+	 * text:
+	 *  UTF-8 format text to insert
+	 * len:
+	 *  length of text in bytes, or -1
+	 */
+	public void insert(TextIter iter, char[] text)
+	{
+		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
+		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length);
+	}
+	
+	/**
+	 * Simply calls gtk_text_buffer_insert(), using the current
+	 * cursor position as the insertion point.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * text:
+	 *  some text in UTF-8 format
+	 * len:
+	 *  length of text, in bytes
+	 */
+	public void insertAtCursor(char[] text)
+	{
+		// void gtk_text_buffer_insert_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len);
+		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, std.string.toStringz(text), text.length);
+	}
+	
+	/**
+	 * Like gtk_text_buffer_insert(), but the insertion will not occur if
+	 * iter is at a non-editable location in the buffer. Usually you
+	 * want to prevent insertions at ineditable locations if the insertion
+	 * results from a user action (is interactive).
+	 * default_editable indicates the editability of text that doesn't
+	 * have a tag affecting editability applied to it. Typically the
+	 * result of gtk_text_view_get_editable() is appropriate here.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * iter:
+	 *  a position in buffer
+	 * text:
+	 *  some UTF-8 text
+	 * len:
+	 *  length of text in bytes, or -1
+	 * default_editable:
+	 *  default editability of buffer
+	 * Returns:
+	 *  whether text was actually inserted
+	 */
+	public int insertInteractive(TextIter iter, char[] text, int defaultEditable)
+	{
+		// gboolean gtk_text_buffer_insert_interactive  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
+		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length, defaultEditable);
+	}
+	
+	/**
+	 * Calls gtk_text_buffer_insert_interactive() at the cursor
+	 * position.
+	 * default_editable indicates the editability of text that doesn't
+	 * have a tag affecting editability applied to it. Typically the
+	 * result of gtk_text_view_get_editable() is appropriate here.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * text:
+	 *  text in UTF-8 format
+	 * len:
+	 *  length of text in bytes, or -1
+	 * default_editable:
+	 *  default editability of buffer
+	 * Returns:
+	 *  whether text was actually inserted
+	 */
+	public int insertInteractiveAtCursor(char[] text, int defaultEditable)
+	{
+		// gboolean gtk_text_buffer_insert_interactive_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len,  gboolean default_editable);
+		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, std.string.toStringz(text), text.length, defaultEditable);
+	}
+	
+	/**
+	 * Inserts text into buffer at iter, applying the list of tags to
+	 * the newly-inserted text. The last tag specified must be NULL to
+	 * terminate the list. Equivalent to calling gtk_text_buffer_insert(),
+	 * then gtk_text_buffer_apply_tag() on the inserted text;
+	 * gtk_text_buffer_insert_with_tags() is just a convenience function.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * iter:
+	 *  an iterator in buffer
+	 * text:
+	 *  UTF-8 text
+	 * len:
+	 *  length of text, or -1
+	 * first_tag:
+	 *  first tag to apply to text
+	 * ...:
+	 *  NULL-terminated list of tags to apply
+	 */
+	public void insertWithTags(TextIter iter, char[] text, ... )
+	{
+		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(TextTag)); i++)
+		{
+			TextTag tag = va_arg!(TextTag)(_argptr);
+			// void gtk_text_buffer_insert_with_tags  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  GtkTextTag *first_tag,  ...);
+			gtk_text_buffer_insert_with_tags(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length, (tag is null) ? null : tag.getTextTagStruct(), null);
+		}
+	}
+	
+	/**
+	 * Same as gtk_text_buffer_insert_with_tags(), but allows you
+	 * to pass in tag names instead of tag objects.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * iter:
+	 *  position in buffer
+	 * text:
+	 *  UTF-8 text
+	 * len:
+	 *  length of text, or -1
+	 * first_tag_name:
+	 *  name of a tag to apply to text
+	 * ...:
+	 *  more tag names
+	 */
+	public void insertWithTagsByName(TextIter iter, char[] text, ... )
+	{
+		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(char[])); i++)
+		{
+			char[] tagName = va_arg!(char[])(_argptr);
+			// void gtk_text_buffer_insert_with_tags_by_name  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  const gchar *first_tag_name,  ...);
+			gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length, std.string.toStringz(tagName), null);
+		}
+	}
+	
+	/**
+	 * Create a new tag for this buffer
+	 * @param tagName can be null for no name
+	 * @param propertyName
+	 * @param propertyValue
+	 */
+	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue,
+									char[] propertyName1, char[] propertyValue1)
+	{
+		writefln("create tag 1 %s", tagName);
+		return new TextTag(
+			gtk_text_buffer_create_tag(
+				gtkTextBuffer,
+				std.string.toStringz(tagName),
+				std.string.toStringz(propertyName),
+				propertyValue,
+				std.string.toStringz(propertyName1),
+				std.string.toStringz(propertyValue1),
+				null)
+		);
+		
+	}
+	/**
+	 * Create a new tag for this buffer
+	 * @param tagName can be null for no name
+	 * @param propertyName
+	 * @param propertyValue
+	 */
+	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue)
+	{
+		return new TextTag(
+			gtk_text_buffer_create_tag(
+				gtkTextBuffer,
+				tagName.toStringz(),
+				propertyName.toStringz(),
+				propertyValue,
+				null)
+		);
+		
+	}
+	
+	/**
+	 * Create a new tag for this buffer
+	 * @param tagName can be null for no name
+	 * @param propertyName
+	 * @param propertyValue
+	 */
+	TextTag createTag(char[] tagName, char[] propertyName, double propertyValue)
+	{
+		writefln("create tag 2 %s", tagName);
+		return new TextTag(
+		gtk_text_buffer_create_tag(gtkTextBuffer, tagName.toStringz(), propertyName.toStringz(),propertyValue,null)
+		);
+		
+	}
+	
+	/**
+	 * Create a new tag for this buffer
+	 * @param tagName can be null for no name
+	 * @param propertyName
+	 * @param propertyValue
+	 * @param propertyName2
+	 * @param propertyValue2
+	 */
+	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2)
+	{
+		writefln("create tag 3 %s", tagName);
+		return new TextTag(
+		gtk_text_buffer_create_tag(gtkTextBuffer, tagName.toStringz(), propertyName.toStringz(), propertyValue, propertyName2.toStringz(), propertyValue2, null)
+		);
+	}
+	
+	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2, char[] propertyName3, int propertyValue3, char[] propertyName4, int propertyValue4, char[] propertyName5, int propertyValue5)
+	{
+		writefln("create tag 4 %s", tagName);
+		return new TextTag(
+		gtk_text_buffer_create_tag(gtkTextBuffer, tagName.toStringz(), propertyName.toStringz(), propertyValue, propertyName2.toStringz(), propertyValue2, propertyName3.toStringz(), propertyValue3, propertyName4.toStringz(), propertyValue4, propertyName5.toStringz(), propertyValue5, null)
+		);
+	}
+	/**
+	 * Create a new tag for this buffer
+	 * @param tagName can be null for no name
+	 * @param propertyName
+	 * @param propertyValue
+	 */
+	TextTag createTag(char[] tagName, char[] propertyName, char[] propertyValue)
+	{
+		writefln("create tag 5 %s", tagName);
+		return new TextTag(
+		gtk_text_buffer_create_tag(gtkTextBuffer, tagName.toStringz(), propertyName.toStringz(),propertyValue.toStringz(),null)
+		);
+		
+	}
+	
+	import gdk.Bitmap;
+	
+	/**
+	 * Create a new tag for this buffer
+	 * @param tagName can be null for no name
+	 * @param propertyName
+	 * @param propertyValue
+	 * @return
+	 */
+	TextTag createTag(char[] tagName, char[] propertyName, Bitmap propertyValue)
+	{
+		writefln("create tag 6 %s", tagName);
+		return new TextTag(
+		gtk_text_buffer_create_tag(gtkTextBuffer, tagName.toStringz(), propertyName.toStringz(),propertyValue.getBitmapStruct(),null)
+		);
+		
 	}
 	
 	
@@ -269,8 +544,8 @@ public class TextBuffer : ObjectG
 		return consumed;
 	}
 	
-	void delegate(TextIter, GtkTextChildAnchor*, TextBuffer)[] onInsertChildAnchorListeners;
-	void addOnInsertChildAnchor(void delegate(TextIter, GtkTextChildAnchor*, TextBuffer) dlg)
+	void delegate(TextIter, TextChildAnchor, TextBuffer)[] onInsertChildAnchorListeners;
+	void addOnInsertChildAnchor(void delegate(TextIter, TextChildAnchor, TextBuffer) dlg)
 	{
 		if ( !("insert-child-anchor" in connectedSignals) )
 		{
@@ -289,9 +564,9 @@ public class TextBuffer : ObjectG
 	{
 		bit consumed = false;
 		
-		foreach ( void delegate(TextIter, GtkTextChildAnchor*, TextBuffer) dlg ; textBuffer.onInsertChildAnchorListeners )
+		foreach ( void delegate(TextIter, TextChildAnchor, TextBuffer) dlg ; textBuffer.onInsertChildAnchorListeners )
 		{
-			dlg(new TextIter(arg1), arg2, textBuffer);
+			dlg(new TextIter(arg1), new TextChildAnchor(arg2), textBuffer);
 		}
 		
 		return consumed;
@@ -660,52 +935,7 @@ public class TextBuffer : ObjectG
 		return gtk_text_buffer_insert_range_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), defaultEditable);
 	}
 	
-	/**
-	 * Inserts text into buffer at iter, applying the list of tags to
-	 * the newly-inserted text. The last tag specified must be NULL to
-	 * terminate the list. Equivalent to calling gtk_text_buffer_insert(),
-	 * then gtk_text_buffer_apply_tag() on the inserted text;
-	 * gtk_text_buffer_insert_with_tags() is just a convenience function.
-	 * buffer:
-	 *  a GtkTextBuffer
-	 * iter:
-	 *  an iterator in buffer
-	 * text:
-	 *  UTF-8 text
-	 * len:
-	 *  length of text, or -1
-	 * first_tag:
-	 *  first tag to apply to text
-	 * ...:
-	 *  NULL-terminated list of tags to apply
-	 */
-	public void insertWithTags(TextIter iter, char[] text, int len, TextTag firstTag, ... )
-	{
-		// void gtk_text_buffer_insert_with_tags  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  GtkTextTag *first_tag,  ...);
-		gtk_text_buffer_insert_with_tags(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), len, (firstTag is null) ? null : firstTag.getTextTagStruct());
-	}
 	
-	/**
-	 * Same as gtk_text_buffer_insert_with_tags(), but allows you
-	 * to pass in tag names instead of tag objects.
-	 * buffer:
-	 *  a GtkTextBuffer
-	 * iter:
-	 *  position in buffer
-	 * text:
-	 *  UTF-8 text
-	 * len:
-	 *  length of text, or -1
-	 * first_tag_name:
-	 *  name of a tag to apply to text
-	 * ...:
-	 *  more tag names
-	 */
-	public void insertWithTagsByName(TextIter iter, char[] text, int len, char[] firstTagName, ... )
-	{
-		// void gtk_text_buffer_insert_with_tags_by_name  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  const gchar *first_tag_name,  ...);
-		gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), len, std.string.toStringz(firstTagName));
-	}
 	
 	/**
 	 * Deletes text between start and end. The order of start and end
@@ -874,10 +1104,10 @@ public class TextBuffer : ObjectG
 	 * anchor:
 	 *  a GtkTextChildAnchor
 	 */
-	public void insertChildAnchor(TextIter iter, GtkTextChildAnchor* anchor)
+	public void insertChildAnchor(TextIter iter, TextChildAnchor anchor)
 	{
 		// void gtk_text_buffer_insert_child_anchor  (GtkTextBuffer *buffer,  GtkTextIter *iter,  GtkTextChildAnchor *anchor);
-		gtk_text_buffer_insert_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), anchor);
+		gtk_text_buffer_insert_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (anchor is null) ? null : anchor.getTextChildAnchorStruct());
 	}
 	
 	/**
@@ -893,10 +1123,10 @@ public class TextBuffer : ObjectG
 	 * Returns:
 	 *  the created child anchor
 	 */
-	public GtkTextChildAnchor* createChildAnchor(TextIter iter)
+	public TextChildAnchor createChildAnchor(TextIter iter)
 	{
 		// GtkTextChildAnchor* gtk_text_buffer_create_child_anchor  (GtkTextBuffer *buffer,  GtkTextIter *iter);
-		return gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
+		return new TextChildAnchor( gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct()) );
 	}
 	
 	/**
@@ -1208,11 +1438,11 @@ public class TextBuffer : ObjectG
 	 * Returns:
 	 *  a new tag
 	 */
-	public TextTag createTag(char[] tagName, char[] firstPropertyName, ... )
-	{
-		// GtkTextTag* gtk_text_buffer_create_tag (GtkTextBuffer *buffer,  const gchar *tag_name,  const gchar *first_property_name,  ...);
-		return new TextTag( gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(firstPropertyName)) );
-	}
+//	public TextTag createTag(char[] tagName, char[] firstPropertyName, ... )
+//	{
+//		// GtkTextTag* gtk_text_buffer_create_tag (GtkTextBuffer *buffer,  const gchar *tag_name,  const gchar *first_property_name,  ...);
+//		return new TextTag( gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(firstPropertyName)) );
+//	}
 	
 	/**
 	 * Obtains an iterator pointing to char_offset within the given
@@ -1311,10 +1541,10 @@ public class TextBuffer : ObjectG
 	 * anchor:
 	 *  a child anchor that appears in buffer
 	 */
-	public void getIterAtChildAnchor(TextIter iter, GtkTextChildAnchor* anchor)
+	public void getIterAtChildAnchor(TextIter iter, TextChildAnchor anchor)
 	{
 		// void gtk_text_buffer_get_iter_at_child_anchor  (GtkTextBuffer *buffer,  GtkTextIter *iter,  GtkTextChildAnchor *anchor);
-		gtk_text_buffer_get_iter_at_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), anchor);
+		gtk_text_buffer_get_iter_at_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (anchor is null) ? null : anchor.getTextChildAnchorStruct());
 	}
 	
 	/**

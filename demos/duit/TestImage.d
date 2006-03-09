@@ -148,7 +148,7 @@ private import glib.ListSG;
 			a ~= "Please don't";
 			r ~= ResponseType.GTK_RESPONSE_ACCEPT;
 			r ~= ResponseType.GTK_RESPONSE_CANCEL;
-			fs = new FileChooserDialog("File Selection", window, FileChooserAction.TION_OPEN, a, r);
+			fs = new FileChooserDialog("File Selection", window, FileChooserAction.OPEN, a, r);
 		}
 		fs.getFileChooser().setSelectMultiple(true);
 		ResponseType response = cast(ResponseType) fs.run();

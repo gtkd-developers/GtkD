@@ -337,7 +337,7 @@ private import gdk.ImageGdk;
 					scaledPixbuf.renderToDrawable(d.getDrawableStruct(), gc.getGCStruct(), 
 						0, 0, x, y, 
 						scaledPixbuf.getWidth(), scaledPixbuf.getHeight(), 
-						GdkRgbDither.THER_NONE, 0, 0
+						GdkRgbDither.NONE, 0, 0
 						);
 					break;
 				

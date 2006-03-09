@@ -33,6 +33,7 @@
  * 	- gtk_
  * omit structs:
  * omit prefixes:
+ * 	- gtk_text_child_anchor_
  * omit code:
  * imports:
  * 	- gtk.TextBuffer
@@ -43,6 +44,7 @@
  * 	- pango.PgTabArray
  * 	- gtk.TextAttributes
  * 	- gdk.Window
+ * 	- gtk.TextChildAnchor
  * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
@@ -50,6 +52,7 @@
  * 	- GdkWindow* -> Window
  * 	- GtkTextAttributes* -> TextAttributes
  * 	- GtkTextBuffer* -> TextBuffer
+ * 	- GtkTextChildAnchor* -> TextChildAnchor
  * 	- GtkTextIter* -> TextIter
  * 	- GtkTextMark* -> TextMark
  * 	- GtkWidget* -> Widget
@@ -63,7 +66,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TextBuffer;private import gtk.TextMark;private import gtk.TextIter;private import gdk.Rectangle;private import gtk.Widget;private import pango.PgTabArray;private import gtk.TextAttributes;private import gdk.Window;private import glib.ListG;
+private import gtk.TextBuffer;private import gtk.TextMark;private import gtk.TextIter;private import gdk.Rectangle;private import gtk.Widget;private import pango.PgTabArray;private import gtk.TextAttributes;private import gdk.Window;private import gtk.TextChildAnchor;private import glib.ListG;
 /**
  * Description
  * You may wish to begin by reading the text widget
@@ -1086,58 +1089,15 @@ public class TextView : Container
 	 * anchor:
 	 *  a GtkTextChildAnchor in the GtkTextBuffer for text_view
 	 */
-	public void addChildAtAnchor(Widget child, GtkTextChildAnchor* anchor)
+	public void addChildAtAnchor(Widget child, TextChildAnchor anchor)
 	{
 		// void gtk_text_view_add_child_at_anchor  (GtkTextView *text_view,  GtkWidget *child,  GtkTextChildAnchor *anchor);
-		gtk_text_view_add_child_at_anchor(gtkTextView, (child is null) ? null : child.getWidgetStruct(), anchor);
+		gtk_text_view_add_child_at_anchor(gtkTextView, (child is null) ? null : child.getWidgetStruct(), (anchor is null) ? null : anchor.getTextChildAnchorStruct());
 	}
 	
 	
-	/**
-	 * Creates a new GtkTextChildAnchor. Usually you would then insert
-	 * it into a GtkTextBuffer with gtk_text_buffer_insert_child_anchor().
-	 * To perform the creation and insertion in one step, use the
-	 * convenience function gtk_text_buffer_create_child_anchor().
-	 * Returns:
-	 *  a new GtkTextChildAnchor
-	 */
-	public static GtkTextChildAnchor* textChildAnchorNew()
-	{
-		// GtkTextChildAnchor* gtk_text_child_anchor_new  (void);
-		return gtk_text_child_anchor_new();
-	}
 	
-	/**
-	 * Gets a list of all widgets anchored at this child anchor.
-	 * The returned list should be freed with g_list_free().
-	 * anchor:
-	 *  a GtkTextChildAnchor
-	 * Returns:
-	 *  list of widgets anchored at anchor
-	 */
-	public static ListG textChildAnchorGetWidgets(GtkTextChildAnchor* anchor)
-	{
-		// GList* gtk_text_child_anchor_get_widgets  (GtkTextChildAnchor *anchor);
-		return new ListG( gtk_text_child_anchor_get_widgets(anchor) );
-	}
 	
-	/**
-	 * Determines whether a child anchor has been deleted from
-	 * the buffer. Keep in mind that the child anchor will be
-	 * unreferenced when removed from the buffer, so you need to
-	 * hold your own reference (with g_object_ref()) if you plan
-	 * to use this function  otherwise all deleted child anchors
-	 * will also be finalized.
-	 * anchor:
-	 *  a GtkTextChildAnchor
-	 * Returns:
-	 *  TRUE if the child anchor has been deleted from its buffer
-	 */
-	public static int textChildAnchorGetDeleted(GtkTextChildAnchor* anchor)
-	{
-		// gboolean gtk_text_child_anchor_get_deleted  (GtkTextChildAnchor *anchor);
-		return gtk_text_child_anchor_get_deleted(anchor);
-	}
 	
 	/**
 	 * Adds a child at fixed coordinates in one of the text widget's

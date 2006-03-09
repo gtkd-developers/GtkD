@@ -831,6 +831,9 @@ public class GtkWrapper : WrapperIF
 		}
 		
 		char[] tabs = "";
+		
+		DuitClass.append(def, lookupConstants, tabs);
+
 		DuitClass.append(def, lookupAliases, tabs);
 		DuitClass.append(def, collectedAliases, tabs);
 		tabs = "";

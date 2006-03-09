@@ -57,6 +57,7 @@
 
 module gtk.DragAndDrop;
 
+private import std.string;
 private import gtk.typedefs;
 
 private import lib.gtk;

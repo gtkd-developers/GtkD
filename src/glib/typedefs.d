@@ -120,7 +120,7 @@ public alias uint GQuark;
  */
 public enum GThreadError
 {
-	RROR_AGAIN /+* Resource temporarily unavailable +/
+	AGAIN /+* Resource temporarily unavailable +/
 }
 alias GThreadError ThreadError;
 
@@ -143,10 +143,10 @@ alias GThreadError ThreadError;
  */
 public enum GThreadPriority
 {
-	RITY_LOW,
-	RITY_NORMAL,
-	RITY_HIGH,
-	RITY_URGENT
+	LOW,
+	NORMAL,
+	HIGH,
+	URGENT
 }
 alias GThreadPriority ThreadPriority;
 
@@ -162,9 +162,9 @@ alias GThreadPriority ThreadPriority;
  */
 public enum GOnceStatus
 {
-	ATUS_NOTCALLED,
-	ATUS_PROGRESS,
-	ATUS_READY
+	NOTCALLED,
+	PROGRESS,
+	READY
 }
 alias GOnceStatus OnceStatus;
 
@@ -213,10 +213,10 @@ alias GSeekType SeekType;
  */
 public enum GIOStatus
 {
-	ATUS_ERROR,
-	ATUS_NORMAL,
-	ATUS_EOF,
-	ATUS_AGAIN
+	ERROR,
+	NORMAL,
+	EOF,
+	AGAIN
 }
 alias GIOStatus IOStatus;
 
@@ -291,14 +291,14 @@ alias GIOCondition IOCondition;
  */
 public enum GIOFlags
 {
-	FLAG_APPEND = 1 << 0,
-	FLAG_NONBLOCK = 1 << 1,
-	FLAG_IS_READABLE = 1 << 2, /+* Read only flag +/
-	FLAG_IS_WRITEABLE = 1 << 3, /+* Read only flag +/
-	FLAG_IS_SEEKABLE = 1 << 4, /+* Read only flag +/
-	FLAG_MASK = (1 << 5) - 1,
-	FLAG_GET_MASK = FLAG_MASK,
-	FLAG_SET_MASK = FLAG_APPEND | FLAG_NONBLOCK
+	APPEND = 1 << 0,
+	NONBLOCK = 1 << 1,
+	IS_READABLE = 1 << 2, /+* Read only flag +/
+	IS_WRITEABLE = 1 << 3, /+* Read only flag +/
+	IS_SEEKABLE = 1 << 4, /+* Read only flag +/
+	MASK = (1 << 5) - 1,
+	GET_MASK = MASK,
+	SET_MASK = APPEND | NONBLOCK
 }
 alias GIOFlags IOFlags;
 
@@ -316,10 +316,10 @@ alias GIOFlags IOFlags;
  */
 public enum GIOError
 {
-	RROR_NONE,
-	RROR_AGAIN,
-	RROR_INVAL,
-	RROR_UNKNOWN
+	NONE,
+	AGAIN,
+	INVAL,
+	UNKNOWN
 }
 alias GIOError IOError;
 
@@ -360,12 +360,12 @@ alias GLogLevelFlags LogLevelFlags;
  */
 public enum GConvertError
 {
-	RROR_NO_CONVERSION,
-	RROR_ILLEGAL_SEQUENCE,
-	RROR_FAILED,
-	RROR_PARTIAL_INPUT,
-	RROR_BAD_URI,
-	RROR_NOT_ABSOLUTE_PATH
+	NO_CONVERSION,
+	ILLEGAL_SEQUENCE,
+	FAILED,
+	PARTIAL_INPUT,
+	BAD_URI,
+	NOT_ABSOLUTE_PATH
 }
 alias GConvertError ConvertError;
 
@@ -491,9 +491,9 @@ alias GNormalizeMode NormalizeMode;
  */
 public enum GDateDMY
 {
-	E_DAY = 0,
-	E_MONTH = 1,
-	E_YEAR = 2
+	AY = 0,
+	G_DATE_MONTH = 1,
+	G_DATE_YEAR = 2
 }
 alias GDateDMY DateDMY;
 
@@ -696,26 +696,26 @@ alias GErrorType ErrorType;
  */
 public enum GSpawnError
 {
-	RROR_FORK, /+* fork failed due to lack of memory +/
-	RROR_READ, /+* read or select on pipes failed +/
-	RROR_CHDIR, /+* changing to working dir failed +/
-	RROR_ACCES, /+* execv() returned EACCES +/
-	RROR_PERM, /+* execv() returned EPERM +/
-	RROR_2BIG, /+* execv() returned E2BIG +/
-	RROR_NOEXEC, /+* execv() returned ENOEXEC +/
-	RROR_NAMETOOLONG, /+* "" "" ENAMETOOLONG +/
-	RROR_NOENT, /+* "" "" ENOENT +/
-	RROR_NOMEM, /+* "" "" ENOMEM +/
-	RROR_NOTDIR, /+* "" "" ENOTDIR +/
-	RROR_LOOP, /+* "" "" ELOOP +/
-	RROR_TXTBUSY, /+* "" "" ETXTBUSY +/
-	RROR_IO, /+* "" "" EIO +/
-	RROR_NFILE, /+* "" "" ENFILE +/
-	RROR_MFILE, /+* "" "" EMFLE +/
-	RROR_INVAL, /+* "" "" EINVAL +/
-	RROR_ISDIR, /+* "" "" EISDIR +/
-	RROR_LIBBAD, /+* "" "" ELIBBAD +/
-	RROR_FAILED /+* other fatal failure, error->message
+	FORK, /+* fork failed due to lack of memory +/
+	READ, /+* read or select on pipes failed +/
+	CHDIR, /+* changing to working dir failed +/
+	ACCES, /+* execv() returned EACCES +/
+	PERM, /+* execv() returned EPERM +/
+	TOO_BIG, /+* execv() returned E2BIG +/
+	NOEXEC, /+* execv() returned ENOEXEC +/
+	NAMETOOLONG, /+* "" "" ENAMETOOLONG +/
+	NOENT, /+* "" "" ENOENT +/
+	NOMEM, /+* "" "" ENOMEM +/
+	NOTDIR, /+* "" "" ENOTDIR +/
+	LOOP, /+* "" "" ELOOP +/
+	TXTBUSY, /+* "" "" ETXTBUSY +/
+	IO, /+* "" "" EIO +/
+	NFILE, /+* "" "" ENFILE +/
+	MFILE, /+* "" "" EMFLE +/
+	INVAL, /+* "" "" EINVAL +/
+	ISDIR, /+* "" "" EISDIR +/
+	LIBBAD, /+* "" "" ELIBBAD +/
+	FAILED /+* other fatal failure, error->message
 	 * should explain
 	+/
 }
@@ -757,31 +757,31 @@ alias GSpawnFlags SpawnFlags;
  */
 public enum GFileError
 {
-	RROR_EXIST,
-	RROR_ISDIR,
-	RROR_ACCES,
-	RROR_NAMETOOLONG,
-	RROR_NOENT,
-	RROR_NOTDIR,
-	RROR_NXIO,
-	RROR_NODEV,
-	RROR_ROFS,
-	RROR_TXTBSY,
-	RROR_FAULT,
-	RROR_LOOP,
-	RROR_NOSPC,
-	RROR_NOMEM,
-	RROR_MFILE,
-	RROR_NFILE,
-	RROR_BADF,
-	RROR_INVAL,
-	RROR_PIPE,
-	RROR_AGAIN,
-	RROR_INTR,
-	RROR_IO,
-	RROR_PERM,
-	RROR_NOSYS,
-	RROR_FAILED
+	EXIST,
+	ISDIR,
+	ACCES,
+	NAMETOOLONG,
+	NOENT,
+	NOTDIR,
+	NXIO,
+	NODEV,
+	ROFS,
+	TXTBSY,
+	FAULT,
+	LOOP,
+	NOSPC,
+	NOMEM,
+	MFILE,
+	NFILE,
+	BADF,
+	INVAL,
+	PIPE,
+	AGAIN,
+	INTR,
+	IO,
+	PERM,
+	NOSYS,
+	FAILED
 }
 alias GFileError FileError;
 
@@ -800,11 +800,11 @@ alias GFileError FileError;
  */
 public enum GFileTest
 {
-	TEST_IS_REGULAR = 1 << 0,
-	TEST_IS_SYMLINK = 1 << 1,
-	TEST_IS_DIR = 1 << 2,
-	TEST_IS_EXECUTABLE = 1 << 3,
-	TEST_EXISTS = 1 << 4
+	IS_REGULAR = 1 << 0,
+	IS_SYMLINK = 1 << 1,
+	IS_DIR = 1 << 2,
+	IS_EXECUTABLE = 1 << 3,
+	EXISTS = 1 << 4
 }
 alias GFileTest FileTest;
 
@@ -834,9 +834,9 @@ alias GShellError ShellError;
  */
 public enum GOptionError
 {
-	RROR_UNKNOWN_OPTION,
-	RROR_BAD_VALUE,
-	RROR_FAILED
+	UNKNOWN_OPTION,
+	BAD_VALUE,
+	FAILED
 }
 alias GOptionError OptionError;
 
@@ -857,13 +857,13 @@ alias GOptionError OptionError;
  */
 public enum GOptionArg
 {
-	N_ARG_NONE,
-	N_ARG_STRING,
-	N_ARG_INT,
-	N_ARG_CALLBACK,
-	N_ARG_FILENAME,
-	N_ARG_STRING_ARRAY,
-	N_ARG_FILENAME_ARRAY
+	NONE,
+	STRING,
+	INT,
+	CALLBACK,
+	FILENAME,
+	STRING_ARRAY,
+	FILENAME_ARRAY
 }
 alias GOptionArg OptionArg;
 
@@ -874,13 +874,13 @@ alias GOptionArg OptionArg;
  */
 public enum GOptionFlags
 {
-	FLAG_HIDDEN = 1 << 0,
-	FLAG_IN_MAIN = 1 << 1,
-	FLAG_REVERSE = 1 << 2,
-	FLAG_NO_ARG = 1 << 3,
-	FLAG_FILENAME = 1 << 4,
-	FLAG_OPTIONAL_ARG = 1 << 5,
-	FLAG_NOALIAS = 1 << 6
+	HIDDEN = 1 << 0,
+	IN_MAIN = 1 << 1,
+	REVERSE = 1 << 2,
+	NO_ARG = 1 << 3,
+	FILENAME = 1 << 4,
+	OPTIONAL_ARG = 1 << 5,
+	NOALIAS = 1 << 6
 }
 alias GOptionFlags OptionFlags;
 
@@ -901,15 +901,15 @@ alias GOptionFlags OptionFlags;
  */
 public enum GMarkupError
 {
-	RROR_BAD_UTF8,
-	RROR_EMPTY,
-	RROR_PARSE,
+	BAD_UTF8,
+	EMPTY,
+	PARSE,
 	/+* These three are primarily intended for specific GMarkupParser
 	 * implementations to set.
 	+/
-	RROR_UNKNOWN_ELEMENT,
-	RROR_UNKNOWN_ATTRIBUTE,
-	RROR_INVALID_CONTENT
+	UNKNOWN_ELEMENT,
+	UNKNOWN_ATTRIBUTE,
+	INVALID_CONTENT
 }
 alias GMarkupError MarkupError;
 
@@ -943,12 +943,12 @@ alias GMarkupParseFlags MarkupParseFlags;
  */
 public enum GKeyFileError
 {
-	RROR_UNKNOWN_ENCODING,
-	RROR_PARSE,
-	RROR_NOT_FOUND,
-	RROR_KEY_NOT_FOUND,
-	RROR_GROUP_NOT_FOUND,
-	RROR_INVALID_VALUE
+	UNKNOWN_ENCODING,
+	PARSE,
+	NOT_FOUND,
+	KEY_NOT_FOUND,
+	GROUP_NOT_FOUND,
+	INVALID_VALUE
 }
 alias GKeyFileError KeyFileError;
 

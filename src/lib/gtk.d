@@ -25,7 +25,7 @@
 
 module lib.gtk;
 
-private import std.c.stdio;
+//private import std.c.stdio;
 private import gtk.typedefs;
 private import lib.Loader;
 private import lib.paths;
@@ -1151,9 +1151,6 @@ extern(C)
 	gboolean function(GtkTextView* textView, GtkTextIter* iter)gtk_text_view_starts_display_line;
 	gboolean function(GtkTextView* textView, GtkTextIter* iter, gint count)gtk_text_view_move_visually;
 	void function(GtkTextView* textView, GtkWidget* child, GtkTextChildAnchor* anchor)gtk_text_view_add_child_at_anchor;
-	GtkTextChildAnchor* function()gtk_text_child_anchor_new;
-	GList* function(GtkTextChildAnchor* anchor)gtk_text_child_anchor_get_widgets;
-	gboolean function(GtkTextChildAnchor* anchor)gtk_text_child_anchor_get_deleted;
 	void function(GtkTextView* textView, GtkWidget* child, GtkTextWindowType whichWindow, gint xpos, gint ypos)gtk_text_view_add_child_in_window;
 	void function(GtkTextView* textView, GtkWidget* child, gint xpos, gint ypos)gtk_text_view_move_child;
 	void function(GtkTextView* textView, GtkWrapMode wrapMode)gtk_text_view_set_wrap_mode;
@@ -1183,6 +1180,12 @@ extern(C)
 	void function(GtkTextView* textView, gboolean acceptsTab)gtk_text_view_set_accepts_tab;
 	gboolean function(GtkTextView* textView)gtk_text_view_get_accepts_tab;
 	GtkTextAttributes* function(GtkTextView* textView)gtk_text_view_get_default_attributes;
+	
+	// gtk.TextChildAnchor
+	
+	GtkTextChildAnchor* function()gtk_text_child_anchor_new;
+	GList* function(GtkTextChildAnchor* anchor)gtk_text_child_anchor_get_widgets;
+	gboolean function(GtkTextChildAnchor* anchor)gtk_text_child_anchor_get_deleted;
 	
 	// gtk.TreeModel
 	
@@ -3750,9 +3753,6 @@ Symbol[] gtkLinks =
 	{ "gtk_text_view_starts_display_line",  cast(void**)& gtk_text_view_starts_display_line},
 	{ "gtk_text_view_move_visually",  cast(void**)& gtk_text_view_move_visually},
 	{ "gtk_text_view_add_child_at_anchor",  cast(void**)& gtk_text_view_add_child_at_anchor},
-	{ "gtk_text_child_anchor_new",  cast(void**)& gtk_text_child_anchor_new},
-	{ "gtk_text_child_anchor_get_widgets",  cast(void**)& gtk_text_child_anchor_get_widgets},
-	{ "gtk_text_child_anchor_get_deleted",  cast(void**)& gtk_text_child_anchor_get_deleted},
 	{ "gtk_text_view_add_child_in_window",  cast(void**)& gtk_text_view_add_child_in_window},
 	{ "gtk_text_view_move_child",  cast(void**)& gtk_text_view_move_child},
 	{ "gtk_text_view_set_wrap_mode",  cast(void**)& gtk_text_view_set_wrap_mode},
@@ -3782,6 +3782,9 @@ Symbol[] gtkLinks =
 	{ "gtk_text_view_set_accepts_tab",  cast(void**)& gtk_text_view_set_accepts_tab},
 	{ "gtk_text_view_get_accepts_tab",  cast(void**)& gtk_text_view_get_accepts_tab},
 	{ "gtk_text_view_get_default_attributes",  cast(void**)& gtk_text_view_get_default_attributes},
+	{ "gtk_text_child_anchor_new",  cast(void**)& gtk_text_child_anchor_new},
+	{ "gtk_text_child_anchor_get_widgets",  cast(void**)& gtk_text_child_anchor_get_widgets},
+	{ "gtk_text_child_anchor_get_deleted",  cast(void**)& gtk_text_child_anchor_get_deleted},
 	{ "gtk_tree_model_get_flags",  cast(void**)& gtk_tree_model_get_flags},
 	{ "gtk_tree_model_get_n_columns",  cast(void**)& gtk_tree_model_get_n_columns},
 	{ "gtk_tree_model_get_column_type",  cast(void**)& gtk_tree_model_get_column_type},

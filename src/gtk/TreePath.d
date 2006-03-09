@@ -43,6 +43,7 @@
  */
 
 module gtk.TreePath;
+private import std.string;
 
 private import gtk.typedefs;
 

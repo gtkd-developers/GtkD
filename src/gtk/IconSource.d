@@ -48,6 +48,7 @@
  */
 
 module gtk.IconSource;
+private import std.string;
 
 private import gtk.typedefs;
 

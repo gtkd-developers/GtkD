@@ -52,6 +52,7 @@ module gtk.TreeStore;
 private import gtk.typedefs;
 
 private import lib.gtk;
+private import std.string;
 
 private import gtk.TreeIter;private import gobject.Value;private import gtk.TreeNode;private import gdk.Pixbuf;;private import gobject.Value;;
 /**

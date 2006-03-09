@@ -987,17 +987,41 @@ public class DuitClass
 		char[] upper = std.string.toupper(enumName.dup);
 		int n = 0;
 		int e = 0;
-		while ( n<upper.length 
-				&& e<enumEntry.length
-				&& ( enumEntry[e] == '_'
-						|| 
-						( upper[n] == enumEntry[e] 
-							&&
-							( upper.length-n > 4
-								&& upper[n..n+4]!="TYPE"
-								&& upper[n..n+4]!="FLAG"
-							)
-						)
+		
+		bool endOfStrings()
+		{
+			bool v = (n>=upper.length) || (e>=enumEntry.length);
+			debug(enumPrefix) if (v) writefln("\t ended by endfStrings");
+			return v;
+		}
+		
+		bool isUnderscore()
+		{
+			bool v = enumEntry[e] == '_';
+			return  v;
+		}
+		
+		bool sameChar()
+		{
+			bool v = upper[n] == enumEntry[e];
+			debug(enumPrefix) if (!v) writefln("\t ended by sameChar");
+			return v;
+		}
+		
+		bool isSuffix()
+		{
+			bool v = upper.length-n == 4
+					&& ( upper[n..n+4]=="TYPE"
+						 || upper[n..n+4]=="FLAG"
+						);
+			debug(enumPrefix) if (v) writefln("\t ended by isSuffix");
+			return v;
+		}
+		
+		while ( !endOfStrings()
+				&& ( isUnderscore()
+					|| 
+					( sameChar() && !isSuffix()	)
 					)
 			)
 		{
@@ -1025,8 +1049,17 @@ public class DuitClass
 	{
 		char[] enumName = lines[0][5..lines[0].length];
 		char[] duitEnumName;
+		
+		bool isGdkPrefix(char[] name)
+		{
+			return 
+				startsWith(enumName, "Gdk")
+				;
+		}
+		
+		
 		if ( startsWith(enumName, "Gtk")
-			 //|| startsWith(enumName, "Gdk")
+			 || isGdkPrefix(enumName)
 			)
 		{
 			duitEnumName = enumName[3..enumName.length];
@@ -1123,7 +1156,7 @@ public class DuitClass
 					
 					values ~= v;
 					
-					debug(enumPrefix)writefln("-> %s", value[prefixLength..value.length]);
+					//debug(enumPrefix)writefln("-> %s", value[prefixLength..value.length]);
 //					if ( startsWith(value, enumPrefix) )
 //					{
 //						values ~= value[prefixLength..value.length];

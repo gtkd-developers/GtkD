@@ -50,6 +50,7 @@
 module gtk.TreeModel;
 
 private import gtk.typedefs;
+private import std.string;
 
 private import lib.gtk;
 

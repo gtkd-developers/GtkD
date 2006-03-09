@@ -76,6 +76,7 @@ private import lib.gtk;
 	 *  g_free (result);
  * }
  */
+private import std.string;
 public class Editable
 {
 	

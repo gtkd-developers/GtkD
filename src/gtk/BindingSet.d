@@ -51,6 +51,7 @@ module gtk.BindingSet;
 private import gtk.typedefs;
 
 private import lib.gtk;
+private import std.string;
 
 private import gtk.BindingSet;private import gtk.ObjectGtk;private import glib.ListSG;
 /**
