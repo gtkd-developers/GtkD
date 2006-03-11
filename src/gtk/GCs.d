@@ -49,7 +49,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gdk.GC;private import gdk.Colormap;
+private import gdk.GC;
+private import gdk.Colormap;
+
 /**
  * Description
  * These functions provide access to a shared pool of GdkGC objects.

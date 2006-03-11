@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Screen
  * 	- gdk.Colormap
  * 	- gdk.Visual
@@ -62,7 +63,17 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Screen;private import gdk.Colormap;private import gdk.Visual;private import gdk.Window;private import gdk.Display;private import glib.ListG;private import gdk.Rectangle;private import gdk.Event;private import gobject.Value;
+private import std.string;
+private import gdk.Screen;
+private import gdk.Colormap;
+private import gdk.Visual;
+private import gdk.Window;
+private import gdk.Display;
+private import glib.ListG;
+private import gdk.Rectangle;
+private import gdk.Event;
+private import gobject.Value;
+
 /**
  * Description
  *  GdkScreen objects are the GDK representation of a physical screen. It is used

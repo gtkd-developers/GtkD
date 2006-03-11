@@ -49,6 +49,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.TreeModel;
+
 /**
  * Description
  * A GtkComboBoxEntry is a widget that allows the user to choose from a

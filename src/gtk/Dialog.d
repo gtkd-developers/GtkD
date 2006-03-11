@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Window
  * 	- gtk.Widget
  * 	- gdk.Screen
@@ -51,7 +52,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Window;private import gtk.Widget;private import gdk.Screen;
+private import std.string;
+private import gtk.Window;
+private import gtk.Widget;
+private import gdk.Screen;
+
 /**
  * Description
  * Dialog boxes are a convenient way to prompt the user for a small amount of

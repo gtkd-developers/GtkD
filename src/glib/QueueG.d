@@ -48,7 +48,9 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.ListG;private import glib.ListG;
+private import glib.ListG;
+private import glib.ListG;
+
 /**
  * Description
  * The GQueue structure and its associated functions provide a standard

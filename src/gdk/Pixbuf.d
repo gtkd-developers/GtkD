@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
+private import std.string;
 
 /**
  * Description

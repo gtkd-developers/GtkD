@@ -37,6 +37,7 @@
  * 	- gtk_toggle_button_new_with_label
  * 	- gtk_toggle_button_new_with_mnemonic
  * imports:
+ * 	- std.string
  * structWrap:
  * local aliases:
  */
@@ -47,6 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 
 /**
  * Description

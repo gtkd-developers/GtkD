@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * 	- glib.ListSG
  * 	- gobject.Closure
@@ -53,7 +54,12 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import glib.ListSG;private import gobject.Closure;private import gtk.AccelGroup;
+private import std.string;
+private import gtk.Widget;
+private import glib.ListSG;
+private import gobject.Closure;
+private import gtk.AccelGroup;
+
 /**
  * Description
  * Actions represent operations that the user can be perform, along with

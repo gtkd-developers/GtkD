@@ -36,6 +36,7 @@
  * 	- gtk_text_attributes_
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gobject.ObjectG
  * 	- gdk.Event
  * 	- gtk.TextIter
@@ -52,7 +53,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gobject.ObjectG;private import gdk.Event;private import gtk.TextIter;
+private import std.string;
+private import gobject.ObjectG;
+private import gdk.Event;
+private import gtk.TextIter;
+
 /**
  * Description
  * You may wish to begin by reading the text widget

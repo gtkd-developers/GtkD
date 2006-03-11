@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Keymap
  * 	- gdk.Display
  * structWrap:
@@ -48,7 +49,10 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Keymap;private import gdk.Display;
+private import std.string;
+private import gdk.Keymap;
+private import gdk.Display;
+
 /**
  * Description
  * Key values are the codes which are sent whenever a key is pressed or released.

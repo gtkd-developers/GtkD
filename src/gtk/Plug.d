@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gdk.Display;
+
 /**
  * Description
  * Together with GtkSocket, GtkPlug provides the ability

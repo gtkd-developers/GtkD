@@ -49,7 +49,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.IMContext;private import gtk.MenuShell;
+private import gtk.IMContext;
+private import gtk.MenuShell;
+
 /**
  * Description
  */

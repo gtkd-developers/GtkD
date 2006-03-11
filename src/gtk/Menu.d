@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * 	- gdk.Screen
  * 	- gtk.AccelGroup
@@ -53,7 +54,12 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gdk.Screen;private import gtk.AccelGroup;private import glib.ListG;
+private import std.string;
+private import gtk.Widget;
+private import gdk.Screen;
+private import gtk.AccelGroup;
+private import glib.ListG;
+
 /**
  * Description
  * A GtkMenu is a GtkMenuShell that implements a drop down menu consisting of

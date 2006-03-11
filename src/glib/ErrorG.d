@@ -46,6 +46,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.Quark;
+
 /**
  * Description
  * GLib provides a standard method of reporting errors from a called function to

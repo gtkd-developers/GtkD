@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.Widget;
+
 /**
  * Description
  * The GtkFixed widget is a container which can place child widgets at fixed

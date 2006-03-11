@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Action
  * 	- glib.ListG
  * structWrap:
@@ -49,7 +50,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Action;private import glib.ListG;
+private import std.string;
+private import gtk.Action;
+private import glib.ListG;
+
 /**
  * Description
  * Actions are organised into groups. An action group is essentially a

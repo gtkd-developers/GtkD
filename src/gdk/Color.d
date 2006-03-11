@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Color
  * 	- gdk.Colormap
  * structWrap:
@@ -48,7 +49,10 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Color;private import gdk.Colormap;
+private import std.string;
+private import gdk.Color;
+private import gdk.Colormap;
+
 /**
  * Description
  * These functions are used to modify colormaps.

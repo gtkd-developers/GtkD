@@ -73,7 +73,22 @@ private import pango.typedefs;
 
 private import lib.pango;
 
-private import pango.PgContext;private import pango.PgItem;private import pango.PgLayout;private import pango.PgFontDescription;private import pango.PgFontMetrics;private import pango.PgFontFamily;private import pango.PgFontFace;private import pango.PgFontMap;private import pango.PgFontsetSimple;private import pango.PgAttribute;private import pango.PgAttributeList;private import pango.PgTabArray;private import pango.PgLayout;private import pango.PgLayoutIter;private import pango.PgScriptIter;
+private import pango.PgContext;
+private import pango.PgItem;
+private import pango.PgLayout;
+private import pango.PgFontDescription;
+private import pango.PgFontMetrics;
+private import pango.PgFontFamily;
+private import pango.PgFontFace;
+private import pango.PgFontMap;
+private import pango.PgFontsetSimple;
+private import pango.PgAttribute;
+private import pango.PgAttributeList;
+private import pango.PgTabArray;
+private import pango.PgLayout;
+private import pango.PgLayoutIter;
+private import pango.PgScriptIter;
+
 /**
  * Description
  * Attributed text is used in a number of places in Pango. It

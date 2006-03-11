@@ -48,7 +48,9 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Region;private import gdk.Rectangle;
+private import gdk.Region;
+private import gdk.Rectangle;
+
 /**
  * Description
  * GDK provides the GdkPoint, GdkRectangle, GdkRegion and GdkSpan data types

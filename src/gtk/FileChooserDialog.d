@@ -37,11 +37,13 @@
  * 	- gtk_file_chooser_dialog_new
  * 	- gtk_file_chooser_dialog_new_with_backend
  * imports:
+ * 	- std.string
  * 	- gtk.Window
  * 	- glib.ListSG;
  * 	- gtk.Widget;
  * 	- gtk.FileFilter;
  * 	- gtk.FileChooser;
+ * 	- std.string
  * structWrap:
  * 	- GtkWindow* -> Window
  * local aliases:
@@ -53,7 +55,14 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Window;private import glib.ListSG;;private import gtk.Widget;;private import gtk.FileFilter;;private import gtk.FileChooser;;
+private import std.string;
+private import gtk.Window;
+private import glib.ListSG;;
+private import gtk.Widget;;
+private import gtk.FileFilter;;
+private import gtk.FileChooser;;
+private import std.string;
+
 /**
  * Description
  *  GtkFileChooserDialog is a dialog box suitable for use with
@@ -179,8 +188,6 @@ public class FileChooserDialog : Dialog
 		}
 		return fileChooser;
 	}
-	
-	private import std.string;
 	
 	/**
 	 * Creates a new GtkFileChooserDialog. This function is analogous to

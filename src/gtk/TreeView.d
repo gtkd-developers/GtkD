@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.TreeModel
  * 	- gtk.TreeSelection
  * 	- gtk.Adjustment
@@ -65,7 +66,18 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TreeModel;private import gtk.TreeSelection;private import gtk.Adjustment;private import gtk.TreeViewColumn;private import gtk.CellRenderer;private import glib.ListG;private import gtk.TreePath;private import gdk.Rectangle;private import gdk.Window;private import gdk.Pixmap;
+private import std.string;
+private import gtk.TreeModel;
+private import gtk.TreeSelection;
+private import gtk.Adjustment;
+private import gtk.TreeViewColumn;
+private import gtk.CellRenderer;
+private import glib.ListG;
+private import gtk.TreePath;
+private import gdk.Rectangle;
+private import gdk.Window;
+private import gdk.Pixmap;
+
 /**
  * Description
  * Widget that displays any object that implements the GtkTreeModel interface.

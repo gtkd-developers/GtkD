@@ -51,7 +51,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TreeModel;private import gtk.TreePath;private import gtk.TreeIter;
+private import gtk.TreeModel;
+private import gtk.TreePath;
+private import gtk.TreeIter;
+
 /**
  * Description
  * A GtkTreeModelFilter is a tree model which wraps another tree model,

@@ -36,6 +36,7 @@
  * 	- gtk_item_factory_create_menu_entries
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.AccelGroup
  * 	- gtk.Widget
  * 	- gtk.ItemFactory
@@ -52,7 +53,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.AccelGroup;private import gtk.Widget;private import gtk.ItemFactory;
+private import std.string;
+private import gtk.AccelGroup;
+private import gtk.Widget;
+private import gtk.ItemFactory;
+
 /**
  * Description
  * As of GTK+ 2.4, GtkItemFactory has been deprecated in favour of GtkUIManager.

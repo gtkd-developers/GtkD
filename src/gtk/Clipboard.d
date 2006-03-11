@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Clipboard
  * 	- gdk.Display
  * 	- gobject.ObjectG
@@ -53,7 +54,12 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Clipboard;private import gdk.Display;private import gobject.ObjectG;private import gdk.Pixbuf;
+private import std.string;
+private import gtk.Clipboard;
+private import gdk.Display;
+private import gobject.ObjectG;
+private import gdk.Pixbuf;
+
 /**
  * Description
  *  The GtkClipboard object represents a clipboard of data shared

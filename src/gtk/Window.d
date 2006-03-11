@@ -35,12 +35,14 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.AccelGroup
  * 	- gtk.Widget
  * 	- gtk.Window
  * 	- gdk.Screen
  * 	- glib.ListG
  * 	- gdk.Pixbuf
+ * 	- gtk.Window
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixbuf* -> Pixbuf
@@ -57,7 +59,15 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.AccelGroup;private import gtk.Widget;private import gtk.Window;private import gdk.Screen;private import glib.ListG;private import gdk.Pixbuf;
+private import std.string;
+private import gtk.AccelGroup;
+private import gtk.Widget;
+private import gtk.Window;
+private import gdk.Screen;
+private import glib.ListG;
+private import gdk.Pixbuf;
+private import gtk.Window;
+
 /**
  * Description
  */

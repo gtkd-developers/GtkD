@@ -38,9 +38,11 @@
  * 	- gtk_button_new_with_label
  * 	- gtk_button_new_from_stock
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
- * 	- gtk.Image;
- * 	- gtk.typedefs;
+ * 	- gtk.Image
+ * 	- gtk.typedefs
+ * 	- gtk.Button
  * structWrap:
  * 	- GtkWidget* -> Widget
  * local aliases:
@@ -52,7 +54,12 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gtk.Image;;private import gtk.typedefs;;
+private import std.string;
+private import gtk.Widget;
+private import gtk.Image;
+private import gtk.typedefs;
+private import gtk.Button;
+
 /**
  * Description
  * The GtkButton widget is generally used to attach a function to that

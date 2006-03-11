@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.Widget;
+
 /**
  * Description
  * The GtkBin widget is a container with just one child.

@@ -37,6 +37,7 @@
  * 	- gtk_expander_new
  * 	- gtk_expander_new_with_mnemonic
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -49,7 +50,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.Widget;
+
 /**
  * Description
  * A GtkExpander allows the user to hide or show its child by clicking on an expander triangle similar to

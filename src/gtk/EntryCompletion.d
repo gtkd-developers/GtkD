@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * 	- gtk.TreeModel
  * structWrap:
@@ -49,7 +50,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gtk.TreeModel;
+private import std.string;
+private import gtk.Widget;
+private import gtk.TreeModel;
+
 /**
  * Description
  * GtkEntryCompletion is an auxiliary object to be used in conjunction with

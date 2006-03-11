@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * structWrap:
  * local aliases:
  */
@@ -43,8 +44,8 @@ module gtk.TextChildAnchor;
 private import gtk.typedefs;
 
 private import lib.gtk;
-private import std.string;
 
+private import std.string;
 
 /**
  * Description

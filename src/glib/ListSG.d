@@ -47,6 +47,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ListG;
+
 /**
  * Description
  * The GSList structure and its associated functions provide a standard

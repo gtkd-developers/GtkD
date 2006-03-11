@@ -52,7 +52,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TreeModel;private import gtk.TreePath;private import gobject.ObjectG;private import gtk.TreeIter;
+private import gtk.TreeModel;
+private import gtk.TreePath;
+private import gobject.ObjectG;
+private import gtk.TreeIter;
+
 /**
  * Description
  * The GtkTreeModel interface defines a generic tree interface for use by

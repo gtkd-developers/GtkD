@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.Adjustment;
+
 /**
  * Description
  * The GtkVScrollbar widget is a widget arranged vertically creating a scrollbar.

@@ -54,7 +54,12 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.DragContext;private import gdk.Window;private import gdk.Screen;private import glib.ListG;private import gdk.Display;
+private import gdk.DragContext;
+private import gdk.Window;
+private import gdk.Screen;
+private import glib.ListG;
+private import gdk.Display;
+
 /**
  * Description
  * These functions provide a low level interface for drag and drop.

@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.ToolItem
  * 	- glib.ListSG
  * structWrap:
@@ -49,7 +50,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.ToolItem;private import glib.ListSG;
+private import std.string;
+private import gtk.ToolItem;
+private import glib.ListSG;
+
 /**
  * Description
  * A GtkRadioToolButton is a GtkToolItem that contains a radio button,

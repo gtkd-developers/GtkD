@@ -37,6 +37,7 @@
  * 	- gtk_tree_iter_
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.TreeIter
  * 	- gtk.TreePath
  * 	- gobject.Value
@@ -50,11 +51,14 @@
 module gtk.TreeModel;
 
 private import gtk.typedefs;
-private import std.string;
 
 private import lib.gtk;
 
-private import gtk.TreeIter;private import gtk.TreePath;private import gobject.Value;
+private import std.string;
+private import gtk.TreeIter;
+private import gtk.TreePath;
+private import gobject.Value;
+
 /**
  * Description
  * The GtkTreeModel interface defines a generic tree interface for use by

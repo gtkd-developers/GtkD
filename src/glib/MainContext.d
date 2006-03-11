@@ -56,7 +56,13 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.MainLoop;private import glib.Source;private import glib.Cond;private import glib.Mutex;private import glib.ThreadPool;private import glib.MainContext;
+private import glib.MainLoop;
+private import glib.Source;
+private import glib.Cond;
+private import glib.Mutex;
+private import glib.ThreadPool;
+private import glib.MainContext;
+
 /**
  * Description
  *  The main event loop manages all the available sources of events for

@@ -38,6 +38,8 @@
  * 	- gobject.ParamSpec
  * 	- gobject.Value
  * 	- gobject.Closure
+ * 	- std.gc
+ * 	- std.string
  * structWrap:
  * 	- GClosure* -> Closure
  * 	- GParamSpec* -> ParamSpec
@@ -51,7 +53,12 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import gobject.ParamSpec;private import gobject.Value;private import gobject.Closure;
+private import gobject.ParamSpec;
+private import gobject.Value;
+private import gobject.Closure;
+private import std.gc;
+private import std.string;
+
 /**
  * Description
  * GObject is the fundamental type providing the common attributes and methods
@@ -120,10 +127,6 @@ public class ObjectG
 		return cast(void*)gObject;
 	}
 	
-	
-	import std.gc;
-	import std.string;
-	import std.stdio;
 	
 	/**
 	 * Sets our main struct and passes store it on the gobject.

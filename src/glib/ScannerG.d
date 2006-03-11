@@ -48,6 +48,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.HashTable;
+
 /**
  * Description
  * The GScanner and its associated functions provide a general purpose

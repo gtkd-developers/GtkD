@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.StockItem
  * 	- glib.ListSG
  * structWrap:
@@ -48,9 +49,11 @@ module gtk.StockItem;
 private import gtk.typedefs;
 
 private import lib.gtk;
-private import std.string;
 
-private import gtk.StockItem;private import glib.ListSG;
+private import std.string;
+private import gtk.StockItem;
+private import glib.ListSG;
+
 /**
  * Description
  * Stock items represent commonly-used menu or toolbar items such as

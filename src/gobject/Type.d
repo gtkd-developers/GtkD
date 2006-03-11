@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- glib.Quark
  * 	- gobject.Type
  * 	- gobject.TypePlugin
@@ -48,7 +49,11 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import glib.Quark;private import gobject.Type;private import gobject.TypePlugin;
+private import std.string;
+private import glib.Quark;
+private import gobject.Type;
+private import gobject.TypePlugin;
+
 /**
  * Description
  * The GType API is the foundation of the GObject system. It provides the

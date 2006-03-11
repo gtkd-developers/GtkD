@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gdk.Event;
+
 /**
  * Description
  * The GtkCellEditable interface must be implemented for widgets

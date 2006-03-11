@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Adjustment
  * 	- glib.ListG
  * 	- gobject.Value
@@ -53,7 +54,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Adjustment;private import glib.ListG;private import gobject.Value;
+private import std.string;
+private import gtk.Adjustment;
+private import glib.ListG;
+private import gobject.Value;
+
 /**
  * Description
  * A GTK+ user interface is constructed by nesting widgets inside widgets. Container widgets are the inner

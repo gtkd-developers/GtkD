@@ -35,7 +35,7 @@
  * omit code:
  * imports:
  * 	- gdkpixbuf.PixbufAnimation
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufAnimation* -> PixbufAnimation
@@ -48,7 +48,9 @@ private import gdkpixbuf.typedefs;
 
 private import lib.gdkpixbuf;
 
-private import gdkpixbuf.PixbufAnimation;private import gdkpixbuf.Pixbuf;
+private import gdkpixbuf.PixbufAnimation;
+private import gdk.Pixbuf;
+
 /**
  * Description
  *  The gdk-pixbuf library provides a simple mechanism to load and represent

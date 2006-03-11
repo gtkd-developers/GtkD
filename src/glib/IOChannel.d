@@ -51,7 +51,11 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.ErrorG;private import glib.StringG;private import glib.Source;private import glib.Dataset;
+private import glib.ErrorG;
+private import glib.StringG;
+private import glib.Source;
+private import glib.Dataset;
+
 /**
  * Description
  * The GIOChannel data type aims to provide a portable method for using file

@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Font
  * structWrap:
  * 	- GdkFont* -> Font
@@ -47,7 +48,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gdk.Font;
+
 /**
  * Description
  * The GtkFontSelectionDialog widget is a dialog box for selecting a font.

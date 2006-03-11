@@ -47,7 +47,9 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import std.c.stdio;private import glib.StringG;
+private import std.c.stdio;
+private import glib.StringG;
+
 /**
  * Description
  * This section describes a number of utility functions for creating,

@@ -33,6 +33,8 @@ private import gtk.Window;
 
 private import gtk.typedefs;
 
+private import std.stdio;
+
 
 /**
  * This tests the DUI loading and display and image file

@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Drawable
  * 	- gdk.Display
  * 	- gdk.Screen
@@ -98,7 +99,35 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Drawable;private import gdk.Display;private import gdk.Screen;private import gdk.Visual;private import gdk.Colormap;private import gdk.Region;private import gdk.GC;private import gdk.Pixbuf;private import gdk.Color;private import gdk.Font;private import gdk.ImageGdk;private import pango.PgContext;private import pango.PgItem;private import pango.PgLayout;private import pango.PgFontDescription;private import pango.PgFontMetrics;private import pango.PgFontFamily;private import pango.PgFontFace;private import pango.PgFontMap;private import pango.PgFontsetSimple;private import pango.PgAttribute;private import pango.PgAttributeList;private import pango.PgLanguage;private import pango.PgTabArray;private import pango.PgLayout;private import pango.PgLayoutIter;private import pango.PgScriptIter;
+private import std.string;
+private import gdk.Drawable;
+private import gdk.Display;
+private import gdk.Screen;
+private import gdk.Visual;
+private import gdk.Colormap;
+private import gdk.Region;
+private import gdk.GC;
+private import gdk.Pixbuf;
+private import gdk.Color;
+private import gdk.Font;
+private import gdk.ImageGdk;
+private import pango.PgContext;
+private import pango.PgItem;
+private import pango.PgLayout;
+private import pango.PgFontDescription;
+private import pango.PgFontMetrics;
+private import pango.PgFontFamily;
+private import pango.PgFontFace;
+private import pango.PgFontMap;
+private import pango.PgFontsetSimple;
+private import pango.PgAttribute;
+private import pango.PgAttributeList;
+private import pango.PgLanguage;
+private import pango.PgTabArray;
+private import pango.PgLayout;
+private import pango.PgLayoutIter;
+private import pango.PgScriptIter;
+
 /**
  * Description
  * These functions provide support for drawing points, lines, arcs and text

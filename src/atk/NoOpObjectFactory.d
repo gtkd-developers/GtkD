@@ -47,6 +47,7 @@ private import atk.typedefs;
 private import lib.atk;
 
 private import gobject.ObjectG;
+
 /**
  * Description
  * The AtkObjectFactory which creates an AtkNoOpObject. An instance of this is

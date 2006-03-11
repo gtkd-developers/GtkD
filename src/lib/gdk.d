@@ -29,7 +29,6 @@ private import std.c.stdio;
 private import gdk.typedefs;
 private import lib.Loader;
 private import lib.paths;
-private debug import std.stdio;
 
 private Linker gdk_Linker;
 

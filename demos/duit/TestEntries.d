@@ -65,7 +65,7 @@ class TestEntries : Table
 
 	void showEntry(Button button)
 	{
-		printf("text field contains %s\n",entry.getText().toStringz());
+		printf("text field contains %s\n",std.string.toStringz(entry.getText()));
 		
 	}
 

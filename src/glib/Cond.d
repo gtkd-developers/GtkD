@@ -48,7 +48,9 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.Date;private import glib.Mutex;
+private import glib.Date;
+private import glib.Mutex;
+
 /**
  * Description
  * Threads act almost like processes, but unlike processes all threads of

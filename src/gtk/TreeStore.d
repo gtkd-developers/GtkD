@@ -36,11 +36,13 @@
  * omit code:
  * 	- gtk_tree_store_set
  * imports:
+ * 	- std.string
  * 	- gtk.TreeIter
  * 	- gobject.Value
  * 	- gtk.TreeNode
  * 	- gdk.Pixbuf;
  * 	- gobject.Value;
+ * 	- std.string
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -52,9 +54,15 @@ module gtk.TreeStore;
 private import gtk.typedefs;
 
 private import lib.gtk;
+
+private import std.string;
+private import gtk.TreeIter;
+private import gobject.Value;
+private import gtk.TreeNode;
+private import gdk.Pixbuf;;
+private import gobject.Value;;
 private import std.string;
 
-private import gtk.TreeIter;private import gobject.Value;private import gtk.TreeNode;private import gdk.Pixbuf;;private import gobject.Value;;
 /**
  * Description
  * The GtkTreeStore object is a list model for use with a GtkTreeView

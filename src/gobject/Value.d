@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gobject.Value
  * 	- gobject.ParamSpec
  * 	- gobject.ObjectG
@@ -52,7 +53,12 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import gobject.Value;private import gobject.ParamSpec;private import gobject.ObjectG;private import gdk.Pixbuf;
+private import std.string;
+private import gobject.Value;
+private import gobject.ParamSpec;
+private import gobject.ObjectG;
+private import gdk.Pixbuf;
+
 /**
  * Description
  * The GValue structure is basically a variable container that consists

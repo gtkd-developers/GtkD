@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * 	- gdk.Window
  * 	- gdk.DragContext
@@ -43,6 +44,7 @@
  * 	- gdk.Pixmap
  * 	- gdk.Bitmap
  * 	- gdk.Pixbuf
+ * 	- std.string
  * structWrap:
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkColormap* -> Colormap
@@ -57,12 +59,21 @@
 
 module gtk.DragAndDrop;
 
-private import std.string;
 private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gdk.Window;private import gdk.DragContext;private import gdk.Event;private import gdk.Colormap;private import gdk.Pixmap;private import gdk.Bitmap;private import gdk.Pixbuf;
+private import std.string;
+private import gtk.Widget;
+private import gdk.Window;
+private import gdk.DragContext;
+private import gdk.Event;
+private import gdk.Colormap;
+private import gdk.Pixmap;
+private import gdk.Bitmap;
+private import gdk.Pixbuf;
+private import std.string;
+
 /**
  * Description
  * GTK+ has a rich set of functions for doing inter-process

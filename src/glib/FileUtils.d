@@ -46,6 +46,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import std.c.stdio;
+
 /**
  * Description
  * There is a group of functions which wrap the common POSIX functions

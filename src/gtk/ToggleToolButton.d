@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.ToolItem
  * structWrap:
  * 	- GtkToolItem* -> ToolItem
@@ -47,7 +48,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.ToolItem;
+
 /**
  * Description
  *  A GtkToggleToolButton is a GtkToolItem that contains a toggle

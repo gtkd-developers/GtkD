@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.TreeModel
  * 	- gtk.TreePath
  * 	- gtk.TreeIter
@@ -51,7 +52,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TreeModel;private import gtk.TreePath;private import gtk.TreeIter;
+private import std.string;
+private import gtk.TreeModel;
+private import gtk.TreePath;
+private import gtk.TreeIter;
+
 /**
  * Description
  * The GtkTreeModelSort is a model which implements the GtkTreeSortable

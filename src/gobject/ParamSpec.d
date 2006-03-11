@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gobject.ParamSpec
  * 	- gobject.Value
  * 	- glib.ListG
@@ -50,7 +51,11 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import gobject.ParamSpec;private import gobject.Value;private import glib.ListG;
+private import std.string;
+private import gobject.ParamSpec;
+private import gobject.Value;
+private import glib.ListG;
+
 /**
  * Description
  * GParamSpec is an object structure that encapsulates the metadata

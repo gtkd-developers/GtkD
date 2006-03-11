@@ -37,6 +37,7 @@
  * 	- gtk_label_new
  * 	- gtk_label_new_with_mnemonic
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -49,7 +50,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.Widget;
+
 /**
  * Description
  * The GtkLabel widget displays a small amount of text. As the name

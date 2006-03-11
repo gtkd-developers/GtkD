@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.CellRenderer;
+
 /**
  * Description
  * GtkCellRendererCombo renders text in a cell like GtkCellRendererText from which it

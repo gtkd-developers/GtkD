@@ -36,12 +36,14 @@
  * omit code:
  * 	- gtk_tree_view_column_new_with_attributes
  * imports:
+ * 	- std.string
  * 	- gtk.CellRenderer
  * 	- glib.ListG
  * 	- gtk.Widget
  * 	- gtk.TreeModel
  * 	- gtk.TreeIter
  * 	- gdk.Rectangle
+ * 	- std.string
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkRectangle* -> Rectangle
@@ -58,7 +60,15 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.CellRenderer;private import glib.ListG;private import gtk.Widget;private import gtk.TreeModel;private import gtk.TreeIter;private import gdk.Rectangle;
+private import std.string;
+private import gtk.CellRenderer;
+private import glib.ListG;
+private import gtk.Widget;
+private import gtk.TreeModel;
+private import gtk.TreeIter;
+private import gdk.Rectangle;
+private import std.string;
+
 /**
  * Description
  * The GtkTreeViewColumn object represents a visible column in a GtkTreeView widget.
@@ -97,7 +107,6 @@ public class TreeViewColumn : ObjectGtk
 		this.gtkTreeViewColumn = gtkTreeViewColumn;
 	}
 	
-	private import std.string;
 	/**
 	 * Creates a new Tree view column
 	 * @param header th column header text

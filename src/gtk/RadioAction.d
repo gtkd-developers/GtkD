@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
@@ -47,7 +48,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import glib.ListSG;
+
 /**
  * Description
  * A GtkRadioAction is similar to GtkRadioMenuItem. A number of radio

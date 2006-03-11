@@ -19,12 +19,6 @@
 module duit.TestDrawingArea;
 
 private import gtk.VBox;
-/**
- * This tests the DUI drawing area widget
- */
-class TestDrawingArea : VBox
-{
-
 	private import std.stdio;
 	
 	private import std.math;
@@ -49,6 +43,12 @@ class TestDrawingArea : VBox
 	//private import event.Event;
 	
 	
+/**
+ * This tests the DUI drawing area widget
+ */
+class TestDrawingArea : VBox
+{
+
 	this()
 	{
 		super(false,4);
@@ -144,7 +144,7 @@ class TestDrawingArea : VBox
 
 			primitiveType = "Filled Arc";
 			font = new PgFontDescription(PgFontDescription.fromString("Courier 48"));
-			image = new Image("/home/ruimt/devel/D1/DUI/images/duiLogo_4.xpm");
+			image = new Image("images/duitIcon.xpm");
 			scaledPixbuf = image.getPixbuf();
 			paintColor = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
 			black = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);

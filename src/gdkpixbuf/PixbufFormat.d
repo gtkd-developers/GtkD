@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
@@ -48,7 +48,9 @@ private import gdkpixbuf.typedefs;
 
 private import lib.gdkpixbuf;
 
-private import gdkpixbuf.Pixbuf;private import glib.ListSG;
+private import gdk.Pixbuf;
+private import glib.ListSG;
+
 /**
  * Description
  * If gdk-pixbuf has been compiled with GModule support, it can be extended by

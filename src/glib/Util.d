@@ -47,6 +47,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ListG;
+
 /**
  * Description
  * These are portable utility functions.

@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- glib.StringG
  * structWrap:
  * 	- GString* -> StringG
@@ -48,7 +48,9 @@ private import gdkpixbuf.typedefs;
 
 private import lib.gdkpixbuf;
 
-private import gdkpixbuf.Pixbuf;private import glib.StringG;
+private import gdk.Pixbuf;
+private import glib.StringG;
+
 /**
  * Description
  * Using GdkPixdata, images can be compiled into an application,

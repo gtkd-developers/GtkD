@@ -48,6 +48,7 @@ private import cairoLib.typedefs;
 private import lib.cairoLib;
 
 private import cairoLib.Surface;
+
 /**
  * Description
  *  cairo_t is the main object used when drawing with cairo. To

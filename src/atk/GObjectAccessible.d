@@ -47,6 +47,7 @@ private import atk.typedefs;
 private import lib.atk;
 
 private import gobject.ObjectG;
+
 /**
  * Description
  * This object class is derived from AtkObject. It can be used as a basis for

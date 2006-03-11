@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Style
  * 	- gdk.Window
  * 	- gdk.Rectangle
@@ -61,7 +62,16 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Style;private import gdk.Window;private import gdk.Rectangle;private import gdk.Pixbuf;private import gtk.IconSource;private import gtk.Widget;private import gdk.Font;private import gdk.Drawable;
+private import std.string;
+private import gtk.Style;
+private import gdk.Window;
+private import gdk.Rectangle;
+private import gdk.Pixbuf;
+private import gtk.IconSource;
+private import gtk.Widget;
+private import gdk.Font;
+private import gdk.Drawable;
+
 /**
  * Description
  */

@@ -53,7 +53,11 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Visual;private import gdk.Colormap;private import gdk.Color;private import gdk.Screen;
+private import gdk.Visual;
+private import gdk.Colormap;
+private import gdk.Color;
+private import gdk.Screen;
+
 /**
  * Description
  * These functions are used to modify colormaps.

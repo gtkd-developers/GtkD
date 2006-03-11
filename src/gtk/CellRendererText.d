@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.CellRenderer
  * structWrap:
  * 	- GtkCellRenderer* -> CellRenderer
@@ -47,7 +48,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.CellRenderer;
+
 /**
  * Description
  * A GtkCellRendererText renders a given text in its cell, using the font, color and

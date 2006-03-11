@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Pixbuf
  * 	- gtk.Style
  * 	- gtk.Widget
@@ -48,13 +49,17 @@
  */
 
 module gtk.IconSource;
-private import std.string;
 
 private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gdk.Pixbuf;private import gtk.Style;private import gtk.Widget;private import gtk.Settings;
+private import std.string;
+private import gdk.Pixbuf;
+private import gtk.Style;
+private import gtk.Widget;
+private import gtk.Settings;
+
 /**
  * Description
  * Browse the available stock icons in the list of stock IDs found here. You can also use

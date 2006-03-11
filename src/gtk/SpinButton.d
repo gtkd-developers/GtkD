@@ -49,7 +49,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gtk.Adjustment;
+private import gtk.Widget;
+private import gtk.Adjustment;
+
 /**
  * Description
  * A GtkSpinButton is an ideal way to allow the user to set the value of some

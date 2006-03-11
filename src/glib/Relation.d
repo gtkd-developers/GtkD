@@ -49,7 +49,9 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.HashTable;private import glib.Tuples;
+private import glib.HashTable;
+private import glib.Tuples;
+
 /**
  * Description
  * A GRelation is a table of data which can be indexed on any number of fields,

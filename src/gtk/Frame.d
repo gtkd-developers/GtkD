@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -47,7 +48,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.Widget;
+
 /**
  * Description
  * The frame widget is a Bin that surrounds its child

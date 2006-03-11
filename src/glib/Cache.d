@@ -47,6 +47,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.HashTable;
+
 /**
  * Description
  * A GCache allows sharing of complex data structures, in order to save

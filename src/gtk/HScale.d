@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.Adjustment;
+
 /**
  * Description
  * The GtkHScale widget is used to allow the user to select a value using

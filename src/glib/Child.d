@@ -48,7 +48,9 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.MainLoop;private import glib.Dataset;
+private import glib.MainLoop;
+private import glib.Dataset;
+
 /**
  * Description
  *  The main event loop manages all the available sources of events for

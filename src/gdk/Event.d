@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Event
  * 	- gdk.Window
  * 	- gdk.Display
@@ -54,7 +55,13 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Event;private import gdk.Window;private import gdk.Display;private import gdk.Screen;private import gobject.Value;
+private import std.string;
+private import gdk.Event;
+private import gdk.Window;
+private import gdk.Display;
+private import gdk.Screen;
+private import gobject.Value;
+
 /**
  * Description
  * This section describes functions dealing with events from the window system.

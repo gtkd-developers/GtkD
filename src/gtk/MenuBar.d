@@ -51,7 +51,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gtk.Menu;;private import gtk.MenuItem;;
+private import gtk.Widget;
+private import gtk.Menu;;
+private import gtk.MenuItem;;
+
 /**
  * Description
  * The GtkMenuBar is a subclass of GtkMenuShell which contains one to many GtkMenuItem. The result is a standard menu bar which can hold many menu items. GtkMenuBar allows for a shadow type to be set for aesthetic purposes. The shadow types are defined in the gtk_menu_bar_set_shadow_type function.

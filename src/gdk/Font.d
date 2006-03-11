@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Font
  * 	- gdk.Display
  * structWrap:
@@ -49,7 +50,10 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Font;private import gdk.Display;
+private import std.string;
+private import gdk.Font;
+private import gdk.Display;
+
 /**
  * Description
  * The GdkFont data type represents a font for drawing on

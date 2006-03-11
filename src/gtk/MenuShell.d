@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.Widget;
+
 /**
  * Description
  * A GtkMenuShell is the abstract base class used to derive the

@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gobject.Closure
  * 	- gobject.ObjectG
  * 	- gtk.AccelGroup
@@ -53,7 +54,12 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gobject.Closure;private import gobject.ObjectG;private import gtk.AccelGroup;private import glib.ListSG;
+private import std.string;
+private import gobject.Closure;
+private import gobject.ObjectG;
+private import gtk.AccelGroup;
+private import glib.ListSG;
+
 /**
  * Description
  * A GtkAccelGroup represents a group of keyboard accelerators,

@@ -37,7 +37,7 @@
  * 	- gdk_pixbuf_loader_new_with_mime_type
  * imports:
  * 	- gdkpixbuf.PixbufFormat
- * 	- gdkpixbuf.Pixbuf
+ * 	- gdk.Pixbuf
  * 	- gdkpixbuf.PixbufAnimation
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
@@ -52,7 +52,10 @@ private import gdkpixbuf.typedefs;
 
 private import lib.gdkpixbuf;
 
-private import gdkpixbuf.PixbufFormat;private import gdkpixbuf.Pixbuf;private import gdkpixbuf.PixbufAnimation;
+private import gdkpixbuf.PixbufFormat;
+private import gdk.Pixbuf;
+private import gdkpixbuf.PixbufAnimation;
+
 /**
  * Description
  *  GdkPixbufLoader provides a way for applications to drive the

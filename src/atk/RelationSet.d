@@ -47,6 +47,7 @@ private import atk.typedefs;
 private import lib.atk;
 
 private import glib.PtrArray;
+
 /**
  * Description
  */

@@ -48,7 +48,10 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.ErrorG;private import glib.ListG;private import glib.MainLoop;
+private import glib.ErrorG;
+private import glib.ListG;
+private import glib.MainLoop;
+
 /**
  * Description
  * Sometimes you wish to asyncronously fork out the execution of work and

@@ -29,7 +29,6 @@ private import std.c.stdio;
 private import gobject.typedefs;
 private import lib.Loader;
 private import lib.paths;
-private debug import std.stdio;
 
 private Linker gobject_Linker;
 

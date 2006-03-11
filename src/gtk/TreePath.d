@@ -36,20 +36,24 @@
  * 	- gtk_tree_path_new
  * 	- gtk_tree_path_new_first
  * imports:
+ * 	- std.string
  * 	- gtk.TreePath
+ * 	- std.string
  * structWrap:
  * 	- GtkTreePath* -> TreePath
  * local aliases:
  */
 
 module gtk.TreePath;
-private import std.string;
 
 private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.TreePath;
+private import std.string;
+
 /**
  * Description
  * The GtkTreeModel interface defines a generic tree interface for use by

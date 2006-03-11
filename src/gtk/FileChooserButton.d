@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * 	- glib.ListSG;
  * 	- gtk.Widget;
@@ -51,7 +52,13 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import glib.ListSG;;private import gtk.Widget;;private import gtk.FileFilter;;private import gtk.FileChooser;;
+private import std.string;
+private import gtk.Widget;
+private import glib.ListSG;;
+private import gtk.Widget;;
+private import gtk.FileFilter;;
+private import gtk.FileChooser;;
+
 /**
  * Description
  * The GtkFileChooserButton is a widget that lets the user select a

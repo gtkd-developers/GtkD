@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gdk.Screen;
+
 /**
  * Description
  * The GtkInvisible widget is used internally in GTK+, and is probably not

@@ -33,6 +33,10 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- gtk.Widget
+ * 	- gtk.Window
+ * 	- gtk.Duit
+ * 	- gdk.Event
  * structWrap:
  * local aliases:
  */
@@ -43,11 +47,13 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import gtk.Widget;
+private import gtk.Window;
+private import gtk.Duit;
+private import gdk.Event;
 
 /**
  */
-
-private import gtk.Window;
 
 /**
  * A top Level window that will stop the main event cycle when it's closed.
@@ -55,10 +61,6 @@ private import gtk.Window;
  */
 public class MainWindow : Window
 {
-	
-	private import gtk.Widget;
-	private import gtk.Duit;
-	private import gdk.Event;
 	
 	private static int countTotalMainWindows = 0;
 	

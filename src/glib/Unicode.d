@@ -46,6 +46,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ErrorG;
+
 /**
  * Description
  * This section describes a number of functions for dealing with

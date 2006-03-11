@@ -36,6 +36,7 @@
  * 	- gtk_text_child_anchor_
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.TextBuffer
  * 	- gtk.TextMark
  * 	- gtk.TextIter
@@ -66,7 +67,18 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TextBuffer;private import gtk.TextMark;private import gtk.TextIter;private import gdk.Rectangle;private import gtk.Widget;private import pango.PgTabArray;private import gtk.TextAttributes;private import gdk.Window;private import gtk.TextChildAnchor;private import glib.ListG;
+private import std.string;
+private import gtk.TextBuffer;
+private import gtk.TextMark;
+private import gtk.TextIter;
+private import gdk.Rectangle;
+private import gtk.Widget;
+private import pango.PgTabArray;
+private import gtk.TextAttributes;
+private import gdk.Window;
+private import gtk.TextChildAnchor;
+private import glib.ListG;
+
 /**
  * Description
  * You may wish to begin by reading the text widget

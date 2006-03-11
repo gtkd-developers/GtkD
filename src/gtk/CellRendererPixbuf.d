@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.CellRenderer;
+
 /**
  * Description
  * A GtkCellRendererPixbuf can be used to render an image in a cell. It allows to render

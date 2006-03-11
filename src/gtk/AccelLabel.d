@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gobject.Closure
  * 	- gtk.Widget
  * structWrap:
@@ -49,7 +50,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gobject.Closure;private import gtk.Widget;
+private import std.string;
+private import gobject.Closure;
+private import gtk.Widget;
+
 /**
  * Description
  * The GtkAccelLabel widget is a subclass of GtkLabel that also displays an

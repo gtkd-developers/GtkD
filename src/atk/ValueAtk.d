@@ -47,6 +47,7 @@ private import atk.typedefs;
 private import lib.atk;
 
 private import gobject.Value;
+
 /**
  * Description
  * AtkValue should be implemented for components which either display a

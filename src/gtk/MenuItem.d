@@ -38,6 +38,7 @@
  * 	- gtk_menu_item_new_with_label
  * 	- gtk_menu_item_new_with_mnemonic
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -50,7 +51,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.Widget;
+
 /**
  * Description
  * The GtkMenuItem widget and the derived widgets are the only valid

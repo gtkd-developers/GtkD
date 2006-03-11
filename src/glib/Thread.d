@@ -61,7 +61,13 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.ErrorG;private import glib.Mutex;private import glib.Source;private import glib.Dataset;private import glib.ListG;private import glib.Thread;
+private import glib.ErrorG;
+private import glib.Mutex;
+private import glib.Source;
+private import glib.Dataset;
+private import glib.ListG;
+private import glib.Thread;
+
 /**
  * Description
  * Threads act almost like processes, but unlike processes all threads of

@@ -48,7 +48,9 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import gobject.Value;private import gobject.ValueArray;
+private import gobject.Value;
+private import gobject.ValueArray;
+
 /**
  * Description
  * The prime purpose of a GValueArray is for it to be used as an object property

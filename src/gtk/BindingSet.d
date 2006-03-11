@@ -36,9 +36,11 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.BindingSet
  * 	- gtk.ObjectGtk
  * 	- glib.ListSG
+ * 	- std.string;
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GtkBindingSet* -> BindingSet
@@ -51,9 +53,13 @@ module gtk.BindingSet;
 private import gtk.typedefs;
 
 private import lib.gtk;
-private import std.string;
 
-private import gtk.BindingSet;private import gtk.ObjectGtk;private import glib.ListSG;
+private import std.string;
+private import gtk.BindingSet;
+private import gtk.ObjectGtk;
+private import glib.ListSG;
+private import std.string;;
+
 /**
  * Description
  */

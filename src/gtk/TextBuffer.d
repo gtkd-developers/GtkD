@@ -37,7 +37,9 @@
  * 	- gtk_text_buffer_set_text
  * 	- gtk_text_buffer_insert_with_tags
  * 	- gtk_text_buffer_insert_with_tags_by_name
+ * 	- gtk_text_buffer_create_tag
  * imports:
+ * 	- std.string
  * 	- gtk.TextBuffer
  * 	- gdk.Rectangle
  * 	- gtk.Widget
@@ -50,8 +52,10 @@
  * 	- gtk.TextChildAnchor
  * 	- gtk.TextMark
  * 	- gtk.Clipboard
- * 	- std.stdarg;
+ * 	- gdk.Bitmap
+ * 	- std.stdarg
  * structWrap:
+ * 	- GdkBitmap* -> Bitmap
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkRectangle* -> Rectangle
  * 	- GtkClipboard* -> Clipboard
@@ -73,6 +77,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.TextBuffer;
 private import gdk.Rectangle;
 private import gtk.Widget;
@@ -85,6 +90,8 @@ private import gdk.Pixbuf;
 private import gtk.TextChildAnchor;
 private import gtk.TextMark;
 private import gtk.Clipboard;
+private import gdk.Bitmap;
+private import std.stdarg;
 
 /**
  * Description
@@ -95,8 +102,6 @@ private import gtk.Clipboard;
 private import gobject.ObjectG;
 public class TextBuffer : ObjectG
 {
-private import std.stdarg;
-private import std.string;
 	
 	/** the main Gtk struct */
 	protected GtkTextBuffer* gtkTextBuffer;
@@ -290,18 +295,15 @@ private import std.string;
 	 * @param propertyValue
 	 */
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue,
-									char[] propertyName1, char[] propertyValue1)
+	char[] propertyName1, char[] propertyValue1)
 	{
-		writefln("create tag 1 %s", tagName);
 		return new TextTag(
-			gtk_text_buffer_create_tag(
-				gtkTextBuffer,
-				std.string.toStringz(tagName),
-				std.string.toStringz(propertyName),
-				propertyValue,
-				std.string.toStringz(propertyName1),
-				std.string.toStringz(propertyValue1),
-				null)
+		gtk_text_buffer_create_tag(gtkTextBuffer,
+		std.string.toStringz(tagName),
+		std.string.toStringz(propertyName),propertyValue,
+		std.string.toStringz(propertyName1),
+		std.string.toStringz(propertyValue1),
+		null)
 		);
 		
 	}
@@ -314,12 +316,9 @@ private import std.string;
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue)
 	{
 		return new TextTag(
-			gtk_text_buffer_create_tag(
-				gtkTextBuffer,
-				tagName.toStringz(),
-				propertyName.toStringz(),
-				propertyValue,
-				null)
+		gtk_text_buffer_create_tag(gtkTextBuffer,
+		std.string.toStringz(tagName),
+		std.string.toStringz(propertyName),propertyValue,null)
 		);
 		
 	}
@@ -332,9 +331,8 @@ private import std.string;
 	 */
 	TextTag createTag(char[] tagName, char[] propertyName, double propertyValue)
 	{
-		writefln("create tag 2 %s", tagName);
 		return new TextTag(
-		gtk_text_buffer_create_tag(gtkTextBuffer, tagName.toStringz(), propertyName.toStringz(),propertyValue,null)
+		gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName),propertyValue,null)
 		);
 		
 	}
@@ -349,17 +347,15 @@ private import std.string;
 	 */
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2)
 	{
-		writefln("create tag 3 %s", tagName);
 		return new TextTag(
-		gtk_text_buffer_create_tag(gtkTextBuffer, tagName.toStringz(), propertyName.toStringz(), propertyValue, propertyName2.toStringz(), propertyValue2, null)
+		gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName), propertyValue, std.string.toStringz(propertyName2), propertyValue2, null)
 		);
 	}
 	
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2, char[] propertyName3, int propertyValue3, char[] propertyName4, int propertyValue4, char[] propertyName5, int propertyValue5)
 	{
-		writefln("create tag 4 %s", tagName);
 		return new TextTag(
-		gtk_text_buffer_create_tag(gtkTextBuffer, tagName.toStringz(), propertyName.toStringz(), propertyValue, propertyName2.toStringz(), propertyValue2, propertyName3.toStringz(), propertyValue3, propertyName4.toStringz(), propertyValue4, propertyName5.toStringz(), propertyValue5, null)
+		gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName), propertyValue, std.string.toStringz(propertyName2), propertyValue2, std.string.toStringz(propertyName3), propertyValue3, std.string.toStringz(propertyName4), propertyValue4, std.string.toStringz(propertyName5), propertyValue5, null)
 		);
 	}
 	/**
@@ -370,14 +366,11 @@ private import std.string;
 	 */
 	TextTag createTag(char[] tagName, char[] propertyName, char[] propertyValue)
 	{
-		writefln("create tag 5 %s", tagName);
 		return new TextTag(
-		gtk_text_buffer_create_tag(gtkTextBuffer, tagName.toStringz(), propertyName.toStringz(),propertyValue.toStringz(),null)
+		gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName),std.string.toStringz(propertyValue),null)
 		);
 		
 	}
-	
-	import gdk.Bitmap;
 	
 	/**
 	 * Create a new tag for this buffer
@@ -388,9 +381,8 @@ private import std.string;
 	 */
 	TextTag createTag(char[] tagName, char[] propertyName, Bitmap propertyValue)
 	{
-		writefln("create tag 6 %s", tagName);
 		return new TextTag(
-		gtk_text_buffer_create_tag(gtkTextBuffer, tagName.toStringz(), propertyName.toStringz(),propertyValue.getBitmapStruct(),null)
+		gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName),propertyValue.getBitmapStruct(),null)
 		);
 		
 	}
@@ -1417,32 +1409,6 @@ private import std.string;
 		gtk_text_buffer_remove_all_tags(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
-	/**
-	 * Creates a tag and adds it to the tag table for buffer.
-	 * Equivalent to calling gtk_text_tag_new() and then adding the
-	 * tag to the buffer's tag table. The returned tag is owned by
-	 * the buffer's tag table, so the ref count will be equal to one.
-	 * If tag_name is NULL, the tag is anonymous.
-	 * If tag_name is non-NULL, a tag called tag_name must not already
-	 * exist in the tag table for this buffer.
-	 * The first_property_name argument and subsequent arguments are a list
-	 * of properties to set on the tag, as with g_object_set().
-	 * buffer:
-	 *  a GtkTextBuffer
-	 * tag_name:
-	 *  name of the new tag, or NULL
-	 * first_property_name:
-	 *  name of first property to set, or NULL
-	 * ...:
-	 *  NULL-terminated list of property names and values
-	 * Returns:
-	 *  a new tag
-	 */
-//	public TextTag createTag(char[] tagName, char[] firstPropertyName, ... )
-//	{
-//		// GtkTextTag* gtk_text_buffer_create_tag (GtkTextBuffer *buffer,  const gchar *tag_name,  const gchar *first_property_name,  ...);
-//		return new TextTag( gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(firstPropertyName)) );
-//	}
 	
 	/**
 	 * Obtains an iterator pointing to char_offset within the given

@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.ObjectGtk;
+
 /**
  * Description
  * The GtkAdjustment object represents a value which has an associated lower

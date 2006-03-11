@@ -29,7 +29,6 @@ private import std.c.stdio;
 private import atk.typedefs;
 private import lib.Loader;
 private import lib.paths;
-private debug import std.stdio;
 
 private Linker atk_Linker;
 

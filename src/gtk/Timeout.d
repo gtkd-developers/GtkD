@@ -99,8 +99,6 @@ public class Timeout
 	/** our gtk timeout ID */
 	uint timeoutID;
 	
-	private import lib.gtk;
-	private import gtk.typedefs;
 	
 	/**
 	 * Creates a new timeout cycle.

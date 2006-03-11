@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.Widget;
+
 /**
  * Description
  * GtkPaned is the base class for widgets with two panes,

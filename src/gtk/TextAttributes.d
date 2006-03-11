@@ -47,6 +47,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.TextAttributes;
+
 /**
  * Description
  * You may wish to begin by reading the text widget

@@ -48,6 +48,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.BBTree;
+
 /**
  * Description
  * The GNode struct and its associated functions provide a N-ary tree data

@@ -52,7 +52,11 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.DisplayManager;private import gdk.Display;private import glib.ListSG;private import gdk.Device;
+private import gdk.DisplayManager;
+private import gdk.Display;
+private import glib.ListSG;
+private import gdk.Device;
+
 /**
  * Description
  * The purpose of the GdkDisplayManager singleton object is to offer

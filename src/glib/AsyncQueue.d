@@ -48,7 +48,10 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.ListG;private import glib.Date;private import glib.AsyncQueue;
+private import glib.ListG;
+private import glib.Date;
+private import glib.AsyncQueue;
+
 /**
  * Description
  * Often you need to communicate between different threads. In general

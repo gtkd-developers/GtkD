@@ -60,6 +60,7 @@ wrap: gobject
 file: gobject-Type-Information.html
 class: Type
 prefix: g_type_
+import: std.string
 import: glib.Quark
 import: gobject.Type
 #structWrap: GType* Type
@@ -83,6 +84,7 @@ file: GTypePlugin.html
 struct: GTypePlugin
 class: TypePlugin
 prefix: g_type_plugin_
+import: std.string
 import: gobject.Type
 #import: gobject.TypeInfo
 #structWrap: GTypeInfo* TypeInfo
@@ -95,6 +97,7 @@ outFile: TypePlugin
 file: GTypeModule.html
 struct: GTypeModule
 class: TypeModule
+import: std.string
 prefix: g_type_module_
 #import: gobject.TypeInfo
 #structWrap: GTypeInfo* TypeInfo
@@ -122,14 +125,13 @@ import: gobject.Value
 structWrap: GValue* Value
 import: gobject.Closure
 structWrap: GClosure* Closure
+import: std.gc
+import: std.string
+
 
 nocode: g_object_set_data_full
 
 code: start
-
-	import std.gc;
-	import std.string;
-	import std.stdio;
 
 	/**
 	 * Sets our main struct and passes store it on the gobject.
@@ -179,6 +181,7 @@ struct: GEnumValue
 class: Enums
 prefix: g_enum_
 noprefix: g_flags_
+import: std.string
 #import: gobject.EnumValue
 #structWrap: GEnumValue* EnumValue
 #import: gobject.TypeInfo
@@ -190,6 +193,7 @@ strictPrefix: Y
 class: Flags
 prefix: g_flags_
 noprefix: g_enum_
+import: std.string
 import: gobject.Flags
 structWrap: GFlagsValue* Flags
 #import: gobject.TypeInfo
@@ -199,6 +203,7 @@ outFile: Flags
 file: gobject-Boxed-Types.html
 class: Boxed
 prefix: g_
+import: std.string
 outFile: Boxed
 
 file: gobject-Generic-values.html
@@ -206,6 +211,7 @@ struct: GValue
 class: Value
 nostruct: GValue
 prefix: g_value_
+import: std.string
 import: gobject.Value
 structWrap: GValue* Value
 import: gobject.ParamSpec
@@ -243,6 +249,7 @@ file: gobject-GParamSpec.html
 struct: GParamSpec
 class: ParamSpec
 prefix: g_param_spec_
+import: std.string
 import: gobject.ParamSpec
 structWrap: GParamSpec* ParamSpec
 import: gobject.Value
@@ -260,6 +267,7 @@ outFile: ParamSpec
 file: gobject-Signals.html
 class: Signals
 prefix: g_signal_
+import: std.string
 import: gobject.Closure
 structWrap: GClosure* Closure
 import: gobject.Type

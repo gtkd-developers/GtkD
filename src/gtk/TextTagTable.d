@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.TextTagTable
  * 	- gtk.TextTag
  * structWrap:
@@ -49,7 +50,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TextTagTable;private import gtk.TextTag;
+private import std.string;
+private import gtk.TextTagTable;
+private import gtk.TextTag;
+
 /**
  * Description
  * You may wish to begin by reading the text widget

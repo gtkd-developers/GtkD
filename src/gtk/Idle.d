@@ -99,9 +99,6 @@ public class Idle
 	/** our gtk idle ID */
 	uint idleID;
 	
-	private import lib.gtk;
-	private import gtk.typedefs;
-	
 	/**
 	 * Creates a new idle cycle.
 	 * Params:

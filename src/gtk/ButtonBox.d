@@ -50,7 +50,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gtk.Button;private import gtk.HButtonBox;private import gtk.VButtonBox;
+private import gtk.Widget;
+private import gtk.Button;
+private import gtk.HButtonBox;
+private import gtk.VButtonBox;
+
 /**
  * Description
  * The primary purpose of this class is to keep track of the various properties

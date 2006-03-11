@@ -53,7 +53,11 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import gobject.ObjectG;private import gobject.Closure;private import gobject.Value;private import glib.Source;
+private import gobject.ObjectG;
+private import gobject.Closure;
+private import gobject.Value;
+private import glib.Source;
+
 /**
  * Description
  * A GClosure represents a callback supplied by the programmer. It will generally

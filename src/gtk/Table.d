@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.Widget;
+
 /**
  * Description
  * The GtkTable functions allow the programmer to arrange widgets in rows and

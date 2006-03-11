@@ -41,6 +41,11 @@
  * 	- gdk.Event
  * 	- gtk.Widget
  * 	- gtk.ObjectGtk
+ * 	- std.string
+ * 	- lib.gtk
+ * 	- gtk.typedefs
+ * 	- lib.gtk
+ * 	- gtk.typedefs
  * structWrap:
  * 	- GdkEvent* -> Event
  * 	- GtkObject* -> ObjectGtk
@@ -49,13 +54,20 @@
  */
 
 module gtk.Duit;
-private import std.string;
 
 private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gdk.Event;private import gtk.Widget;private import gtk.ObjectGtk;
+private import gdk.Event;
+private import gtk.Widget;
+private import gtk.ObjectGtk;
+private import std.string;
+private import lib.gtk;
+private import gtk.typedefs;
+private import lib.gtk;
+private import gtk.typedefs;
+
 /**
  * Description
  * Before using GTK+, you need to initialize it; initialization connects

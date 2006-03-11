@@ -47,6 +47,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.Module;
+
 /**
  * Description
  * These functions provide a portable way to dynamically load object files

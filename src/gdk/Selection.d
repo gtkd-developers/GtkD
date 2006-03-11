@@ -48,7 +48,9 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Window;private import gdk.Display;
+private import gdk.Window;
+private import gdk.Display;
+
 /**
  * Description
  * The X selection mechanism provides a way to transfer

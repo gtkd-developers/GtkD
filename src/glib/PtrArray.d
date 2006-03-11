@@ -48,6 +48,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ListG;
+
 /**
  * Description
  * Pointer Arrays are similar to Arrays but are used only for storing pointers.

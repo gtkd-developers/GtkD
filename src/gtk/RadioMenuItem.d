@@ -39,6 +39,7 @@
  * 	- gtk_radio_menu_item_new_with_mnemonic_from_widget
  * 	- gtk_radio_menu_item_new_with_label_from_widget
  * imports:
+ * 	- std.string
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
@@ -51,7 +52,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import glib.ListSG;
+
 /**
  * Description
  * A radio menu item is a check menu item that belongs to a group. At each

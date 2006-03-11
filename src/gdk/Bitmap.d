@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Bitmap
  * 	- gdk.Drawable
  * structWrap:
@@ -48,7 +49,10 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Bitmap;private import gdk.Drawable;
+private import std.string;
+private import gdk.Bitmap;
+private import gdk.Drawable;
+
 /**
  * Description
  * Pixmaps are offscreen drawables. They can be drawn upon with the

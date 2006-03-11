@@ -47,6 +47,7 @@ private import atk.typedefs;
 private import lib.atk;
 
 private import gobject.ObjectG;
+
 /**
  * Description
  * An AtkNoOpObject is an AtkObject which purports to implement all ATK

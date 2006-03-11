@@ -55,7 +55,12 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TreeModel;private import gtk.TreePath;private import gtk.CellRenderer;private import glib.ListG;private import gdk.Pixmap;
+private import gtk.TreeModel;
+private import gtk.TreePath;
+private import gtk.CellRenderer;
+private import glib.ListG;
+private import gdk.Pixmap;
+
 /**
  * Description
  * GtkIconView provides an alternative view on a list model.

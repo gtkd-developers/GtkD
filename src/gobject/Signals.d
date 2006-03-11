@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gobject.Closure
  * 	- gobject.Type
  * 	- gobject.Value
@@ -51,7 +52,12 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import gobject.Closure;private import gobject.Type;private import gobject.Value;private import glib.Quark;
+private import std.string;
+private import gobject.Closure;
+private import gobject.Type;
+private import gobject.Value;
+private import glib.Quark;
+
 /**
  * Description
  * The basic concept of the signal system is that of the emission

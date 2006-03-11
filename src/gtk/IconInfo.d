@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.IconInfo
  * 	- gdk.Pixbuf
  * structWrap:
@@ -47,9 +48,11 @@ module gtk.IconInfo;
 private import gtk.typedefs;
 
 private import lib.gtk;
-private import std.string;
 
-private import gtk.IconInfo;private import gdk.Pixbuf;
+private import std.string;
+private import gtk.IconInfo;
+private import gdk.Pixbuf;
+
 /**
  * Description
  * GtkIconTheme provides a facility for looking up icons by name

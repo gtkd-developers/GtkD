@@ -35,6 +35,7 @@ private import gdk.GC;
 private import gtk.SpinButton;
 private import gtk.Adjustment;
 
+private import std.stdio;
 
 /**
  * This tests the DUI drawing area widget

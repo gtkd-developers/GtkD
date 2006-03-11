@@ -32,13 +32,13 @@ private import gdk.Cursor;
 
 private import gdk.Event;
 
+private import gtk.Tooltips;
 /**
  * This tests the DUI the Stock images in button
  */
 class TestStock : ScrolledWindow
 {	
 
-private import gtk.Tooltips;
 	this()
 	{
 		super(null, null);

@@ -37,6 +37,7 @@
  * 	- gtk_image_menu_item_new_with_label
  * 	- gtk_image_menu_item_new_with_mnemonic
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * 	- gtk.AccelGroup
  * structWrap:
@@ -51,7 +52,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gtk.AccelGroup;
+private import std.string;
+private import gtk.Widget;
+private import gtk.AccelGroup;
+
 /**
  * Description
  * A GtkImageMenuItem is a menu item which has an icon next to the text label.

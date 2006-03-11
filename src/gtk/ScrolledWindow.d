@@ -50,7 +50,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gtk.Adjustment;
+private import gtk.Widget;
+private import gtk.Adjustment;
+
 /**
  * Description
  * GtkScrolledWindow is a GtkBin subclass: it's a container

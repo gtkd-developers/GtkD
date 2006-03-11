@@ -50,7 +50,10 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import glib.ListG;private import gdk.Visual;private import gdk.Screen;
+private import glib.ListG;
+private import gdk.Visual;
+private import gdk.Screen;
+
 /**
  * Description
  * A GdkVisual describes a particular video hardware display format. It includes

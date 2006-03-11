@@ -50,7 +50,10 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Visual;private import gdk.Drawable;private import gdk.Colormap;
+private import gdk.Visual;
+private import gdk.Drawable;
+private import gdk.Colormap;
+
 /**
  * Description
  * The GdkImage type represents an area for drawing graphics.

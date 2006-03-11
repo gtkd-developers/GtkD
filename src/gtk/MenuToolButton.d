@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.ToolItem
  * 	- gtk.Widget
  * 	- gtk.Tooltips
@@ -51,7 +52,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.ToolItem;private import gtk.Widget;private import gtk.Tooltips;
+private import std.string;
+private import gtk.ToolItem;
+private import gtk.Widget;
+private import gtk.Tooltips;
+
 /**
  * Description
  *  A GtkMenuToolButton is a GtkToolItem that contains a button and

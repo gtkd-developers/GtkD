@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Adjustment
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
@@ -47,7 +48,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.Adjustment;
+
 /**
  * Description
  * A GtkProgress is the abstract base class used to derive

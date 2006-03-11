@@ -47,7 +47,9 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.ErrorG;private import glib.Dataset;
+private import glib.ErrorG;
+private import glib.Dataset;
+
 /**
  * Description
  * The "GMarkup" parser is intended to parse a simple markup format

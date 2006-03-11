@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.TreeIter
  * structWrap:
  * 	- GtkTreeIter* -> TreeIter
@@ -46,7 +47,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.TreeIter;
+
 /**
  * Description
  * The GtkTreeModel interface defines a generic tree interface for use by

@@ -38,6 +38,7 @@
  * 	- gtk_combo_box_new_text
  * imports:
  * 	- atk.ObjectAtk
+ * 	- std.string
  * 	- gtk.TreeModel
  * 	- gtk.TreeIter
  * structWrap:
@@ -53,7 +54,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import atk.ObjectAtk;private import gtk.TreeModel;private import gtk.TreeIter;
+private import atk.ObjectAtk;
+private import std.string;
+private import gtk.TreeModel;
+private import gtk.TreeIter;
+
 /**
  * Description
  * A GtkComboBox is a widget that allows the user to choose from a

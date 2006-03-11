@@ -215,7 +215,7 @@ public class DuitClass
 		// moved back to class level
 		foreach( char[] imprt ; convParms.imprts )
 		{
-			duitText ~= "private import "~imprt~";";
+			duitText ~= "private import "~imprt~";\n";
 		}
 
 		properties.length = 0;

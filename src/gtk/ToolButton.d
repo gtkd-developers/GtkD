@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.ToolItem
  * 	- gtk.Widget
  * structWrap:
@@ -49,7 +50,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.ToolItem;private import gtk.Widget;
+private import std.string;
+private import gtk.ToolItem;
+private import gtk.Widget;
+
 /**
  * Description
  * GtkToolButtons are GtkToolItems containing buttons.

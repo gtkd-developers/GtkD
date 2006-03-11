@@ -35,7 +35,9 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.CellRenderer
+ * 	- std.string;
  * structWrap:
  * 	- GtkCellRenderer* -> CellRenderer
  * local aliases:
@@ -46,9 +48,11 @@ module gtk.CellLayout;
 private import gtk.typedefs;
 
 private import lib.gtk;
-private import std.string;
 
+private import std.string;
 private import gtk.CellRenderer;
+private import std.string;;
+
 /**
  * Description
  * GtkCellLayout is an interface to be implemented by all objects which

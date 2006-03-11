@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gobject.Enums
  * 	- gobject.Flags
  * structWrap:
@@ -48,7 +49,10 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import gobject.Enums;private import gobject.Flags;
+private import std.string;
+private import gobject.Enums;
+private import gobject.Flags;
+
 /**
  * Description
  * GTypeModule provides a simple implementation of the GTypePlugin

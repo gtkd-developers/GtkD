@@ -64,6 +64,9 @@ public class GtkWrapper : WrapperIF
 	private import std.path;
 	private import std.stdio;
 	
+	private char[] buildText;	/// to build the build.d 
+	private char[] buildTextLibs;	/// to build the build.d libs 
+	
 	public char[] license =
 "/*"
 "\n * This file is part of duit."
@@ -145,8 +148,43 @@ public class GtkWrapper : WrapperIF
 		this.apiLookupDefinitionBaseDirectory = apiLookupDefinitionBaseDirectory;
 	}
 	
+	
+	private void startBuildText()
+	{
+		buildText = 
+			  "/*"
+			"\n * Automatically generated build imports from"
+			"\n * the initial version generouselly given by:"
+			"\n * John Reimer"
+			"\n */"
+			"\n"
+			"\nmodule build;"
+			"\n"
+			"\nversion( build )"
+			"\n{"
+			"\n	pragma (nolink);"
+			"\n"
+			"\n	version (linux)     pragma (target, \"DUIT.lib\"  );"
+			"\n	version (Windows)   pragma (target, \"libDUIT.a\" );"
+			"\n}"
+			"\n"
+			;
+
+		buildTextLibs.length = 0;
+    
+	}
+	
+	public void writeBuildText()
+	{
+		writefln("writeBuildText start");
+		std.file.write(std.path.join("src/build", "duit.d"), buildText~"\n\n"~buildTextLibs);
+	}
+	
 	int process(char[] apiLookupDefinition)
 	{
+		
+		startBuildText();
+		
 		int status = ERR_NONE;
 		defReader = new DefReader(std.path.join(apiLookupDefinitionBaseDirectory,apiLookupDefinition));
 
@@ -243,6 +281,8 @@ public class GtkWrapper : WrapperIF
 						debug(lookup)writefln("wrap %s", outPack);
 						if ( outPack !is null )
 						{
+							buildText ~= "\n";
+							buildTextLibs ~= "private import lib."~outPack~";\n";
 							status = wrapFile(pack, outPack);
 						}
 						if ( nextPack.length>0 && outPack!=nextPack )
@@ -437,6 +477,7 @@ public class GtkWrapper : WrapperIF
 					text.length = 0;
 					break;
 				case "outFile": 
+					buildText ~= "\nprivate import "~convParms.outPack~"."~defReader.getValue()~";";
 					outFile(outPack, text, convParms);
 					break;
 				case "file": 
@@ -620,7 +661,6 @@ public class GtkWrapper : WrapperIF
 "\nprivate import "~loaderTableName~".typedefs;"~
 "\nprivate import lib.Loader;"
 "\nprivate import lib.paths;"
-"\nprivate debug import std.stdio;"
 "\n"
 "\nprivate Linker "~loaderTableName~"_Linker;"
 "\n"
@@ -907,5 +947,9 @@ int main()
 	GtkWrapper wrapper = new GtkWrapper("/home/ruimt/devel/D1/Duit/wrap/");
 	int status = wrapper.process("APILookup.txt");
 	wrapper.printErrors();
+	if ( wrapper.errors.length == 0 )
+	{
+		wrapper.writeBuildText();
+	}
 	return status;
 }

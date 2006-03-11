@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.TextBuffer
  * structWrap:
  * 	- GtkTextBuffer* -> TextBuffer
@@ -47,7 +48,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.TextBuffer;
+
 /**
  * Description
  * You may wish to begin by reading the text widget

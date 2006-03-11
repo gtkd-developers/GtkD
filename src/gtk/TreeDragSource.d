@@ -49,7 +49,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TreePath;private import gtk.TreeModel;
+private import gtk.TreePath;
+private import gtk.TreeModel;
+
 /**
  * Description
  * GTK+ supports Drag-and-Drop in tree views with a high-level and a low-level

@@ -35,6 +35,7 @@
  * 	- gdk_bitmap_
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Drawable
  * 	- gdk.Pixmap
  * 	- gdk.Color
@@ -53,7 +54,12 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Drawable;private import gdk.Pixmap;private import gdk.Color;private import gdk.Colormap;
+private import std.string;
+private import gdk.Drawable;
+private import gdk.Pixmap;
+private import gdk.Color;
+private import gdk.Colormap;
+
 /**
  * Description
  * Pixmaps are offscreen drawables. They can be drawn upon with the

@@ -36,6 +36,7 @@
  * omit code:
  * 	- gtk_toolbar_get_style
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -48,7 +49,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.Widget;
+
 /**
  * Description
  * A toolbar is created with a call to gtk_toolbar_new().

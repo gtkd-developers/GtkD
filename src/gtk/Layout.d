@@ -49,7 +49,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Adjustment;private import gtk.Widget;
+private import gtk.Adjustment;
+private import gtk.Widget;
+
 /**
  * Description
  * GtkLayout is similar to GtkDrawingArea in that it's a "blank slate"

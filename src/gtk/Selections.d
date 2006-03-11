@@ -34,9 +34,11 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * 	- gdk.Display
  * 	- gdk.Pixbuf
+ * 	- std.string
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- GdkPixbuf* -> Pixbuf
@@ -47,11 +49,15 @@
 module gtk.Selections;
 
 private import gtk.typedefs;
-private import std.string;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gdk.Display;private import gdk.Pixbuf;
+private import std.string;
+private import gtk.Widget;
+private import gdk.Display;
+private import gdk.Pixbuf;
+private import std.string;
+
 /**
  * Description
  * The selection mechanism provides the basis for different types

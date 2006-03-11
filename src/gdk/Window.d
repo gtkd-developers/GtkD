@@ -35,6 +35,7 @@
  * 	- gdk_window_invalidate_maybe_recurse
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Window
  * 	- gdk.Region
  * 	- gdk.Rectangle
@@ -61,7 +62,16 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Window;private import gdk.Region;private import gdk.Rectangle;private import gdk.Bitmap;private import gdk.Color;private import gdk.Pixmap;private import gdk.Cursor;private import glib.ListG;
+private import std.string;
+private import gdk.Window;
+private import gdk.Region;
+private import gdk.Rectangle;
+private import gdk.Bitmap;
+private import gdk.Color;
+private import gdk.Pixmap;
+private import gdk.Cursor;
+private import glib.ListG;
+
 /**
  * Description
  * A GdkWindow is a rectangular region on the screen. It's a low-level object,

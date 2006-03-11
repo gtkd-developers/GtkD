@@ -37,6 +37,9 @@
  * 	- gtk_check_button_new_with_label
  * 	- gtk_check_button_new_with_mnemonic
  * imports:
+ * 	- std.string
+ * 	- gtk.Button
+ * 	- std.string
  * structWrap:
  * local aliases:
  */
@@ -47,6 +50,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
+private import gtk.Button;
+private import std.string;
 
 /**
  * Description
@@ -109,7 +115,6 @@ public class CheckButton : ToggleButton
 		}
 	}
 	
-	private import gtk.Button;
 	public this(char[] label, void delegate(CheckButton) onClicked, bool mnemonic=true)
 	{
 		this(label, mnemonic);

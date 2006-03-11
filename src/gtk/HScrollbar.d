@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.Adjustment;
+
 /**
  * Description
  * The GtkHScrollbar widget is a widget arranged horizontally creating a

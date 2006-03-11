@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Style
  * 	- gtk.Widget
  * 	- gtk.Settings
@@ -55,7 +56,13 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Style;private import gtk.Widget;private import gtk.Settings;private import gdk.Color;private import gtk.RcStyle;
+private import std.string;
+private import gtk.Style;
+private import gtk.Widget;
+private import gtk.Settings;
+private import gdk.Color;
+private import gtk.RcStyle;
+
 /**
  * Description
  * GTK+ provides resource file mechanism for configuring

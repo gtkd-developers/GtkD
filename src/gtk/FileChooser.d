@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Window
  * 	- glib.ListSG
  * 	- gtk.Widget
@@ -49,12 +50,16 @@
 
 module gtk.FileChooser;
 
-private import std.string;
 private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Window;private import glib.ListSG;private import gtk.Widget;private import gtk.FileFilter;
+private import std.string;
+private import gtk.Window;
+private import glib.ListSG;
+private import gtk.Widget;
+private import gtk.FileFilter;
+
 /**
  * Description
  *  GtkFileChooser is an interface that can be implemented by file

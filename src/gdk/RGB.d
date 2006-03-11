@@ -54,7 +54,12 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Drawable;private import gdk.GC;private import gdk.Colormap;private import gdk.Color;private import gdk.Visual;
+private import gdk.Drawable;
+private import gdk.GC;
+private import gdk.Colormap;
+private import gdk.Color;
+private import gdk.Visual;
+
 /**
  * Description
  * GdkRGB is a low-level module which renders RGB, grayscale, and indexed

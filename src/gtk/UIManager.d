@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.ActionGroup
  * 	- glib.ListG
  * 	- gtk.AccelGroup
@@ -57,7 +58,14 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.ActionGroup;private import glib.ListG;private import gtk.AccelGroup;private import gtk.Widget;private import glib.ListSG;private import gtk.Action;
+private import std.string;
+private import gtk.ActionGroup;
+private import glib.ListG;
+private import gtk.AccelGroup;
+private import gtk.Widget;
+private import glib.ListSG;
+private import gtk.Action;
+
 /**
  * Description
  * A GtkUIManager constructs a user interface (menus and toolbars) from

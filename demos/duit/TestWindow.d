@@ -39,7 +39,7 @@ private import duit.TestTreeView1;
 private import duit.TestImage;
 private import duit.TestAspectFrame;
 private import duit.TestIdle;
-private import duit.TTextView;
+//private import duit.TTextView;
 //private import duit.TEditableCells;
 	
 private import gtk.MenuItem;
@@ -102,7 +102,8 @@ private import std.stdio;
 private import gtk.VButtonBox;
 private import gtk.FileChooserButton;
 private import gdk.Drawable;
-	
+
+private import gtk.AboutDialog;
 
 /**
  * This tests the DUI widgets
@@ -271,33 +272,50 @@ class TestWindow : MainWindow
 		return menuBar;
 	}
 
+	class DuitAbout : AboutDialog
+	{
+		this()
+		{
+			char** names = new char*[2];
+			int i = 0;
+			names[i++] = cast(char*)"Antonio Monteiro (binding/wrapping/proxying/decorating for D)";
+			names[i++] = cast(char*)"www.gtk.org (base C library)";
+			setAuthors(names);
+			setDocumenters(names);
+			setArtists(names);
+			setLicense("License is LGPL");
+			setWebsite("http://lisdev.com");
+		}
+	}
+	
 	void onMenuActivate(MenuItem menuItem)
 	{
 		char[] action = menuItem.getAction();
 		switch( action )
 		{
 			case "help.about":
-				MessageDialog d = new MessageDialog(
-						this,
-						GtkDialogFlags.MODAL,
-						MessageType.INFO,
-						ButtonsType.OK,
-						"DUI D (graphic) User Interface\n"
-						"an implementation through GTK+\n"
-						"by Antonio Monteiro.\n"
-						"DUI is released under the LGPL license\n"
-						"\n"
-						"Send comments and suggestions to duitoolkit@yahoo.ca\n"
-						"or go to the yahoo group\n"
-						"http://groups.yahoo.com/group/duitoolkit\n"
-						"(Group email: duitoolkit@yahoogroups.com)\n"
-						"\n"
-						"See detailed information at DUI home page\n"
-						"http://ca.geocities.com/duitoolkit\n"
-						);
-				d.run();
-				d.destroy();
-			break;
+				(new AboutDialog()).showAll();
+//				MessageDialog d = new MessageDialog(
+//						this,
+//						GtkDialogFlags.MODAL,
+//						MessageType.INFO,
+//						ButtonsType.OK,
+//						"DUI D (graphic) User Interface\n"
+//						"an implementation through GTK+\n"
+//						"by Antonio Monteiro.\n"
+//						"DUI is released under the LGPL license\n"
+//						"\n"
+//						"Send comments and suggestions to duitoolkit@yahoo.ca\n"
+//						"or go to the yahoo group\n"
+//						"http://groups.yahoo.com/group/duitoolkit\n"
+//						"(Group email: duitoolkit@yahoogroups.com)\n"
+//						"\n"
+//						"See detailed information at DUI home page\n"
+//						"http://ca.geocities.com/duitoolkit\n"
+//						);
+//				d.run();
+//				d.destroy();
+				break;
 			default:
 				MessageDialog d = new MessageDialog(
 					this, 
@@ -956,7 +974,7 @@ class TestWindow : MainWindow
 	{
 		void showTTextView(Button button)
 		{
-			new TTextView();
+//			new TTextView();
 		}
 		
 		void showTEditableCells(Button button)

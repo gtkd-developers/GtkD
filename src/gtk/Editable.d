@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * structWrap:
  * local aliases:
  */
@@ -45,6 +46,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 
 /**
  * Description
@@ -76,7 +78,6 @@ private import lib.gtk;
 	 *  g_free (result);
  * }
  */
-private import std.string;
 public class Editable
 {
 	

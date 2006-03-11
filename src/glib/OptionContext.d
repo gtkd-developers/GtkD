@@ -48,7 +48,9 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.ErrorG;private import glib.OptionGroup;
+private import glib.ErrorG;
+private import glib.OptionGroup;
+
 /**
  * Description
  * The GOption commandline parser is intended to be a simpler replacement for the

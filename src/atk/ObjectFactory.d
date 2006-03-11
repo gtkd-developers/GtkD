@@ -47,6 +47,7 @@ private import atk.typedefs;
 private import lib.atk;
 
 private import gobject.ObjectG;
+
 /**
  * Description
  * This class is the base object class for a factory used to create an

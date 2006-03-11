@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Window
  * 	- gdk.Cursor
  * structWrap:
@@ -48,7 +49,10 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Window;private import gdk.Cursor;
+private import std.string;
+private import gdk.Window;
+private import gdk.Cursor;
+
 /**
  * Description
  * This section describes the GDK initialization functions and miscellaneous

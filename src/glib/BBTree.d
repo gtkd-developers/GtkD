@@ -48,7 +48,9 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.ListG;private import glib.Dataset;
+private import glib.ListG;
+private import glib.Dataset;
+
 /**
  * Description
  * The GTree structure and its associated functions provide a sorted collection

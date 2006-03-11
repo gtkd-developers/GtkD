@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Widget
  * 	- gdk.Rectangle
  * 	- gdk.Window
@@ -55,7 +56,13 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Widget;private import gdk.Rectangle;private import gdk.Window;private import gdk.Event;private import gtk.CellEditable;
+private import std.string;
+private import gtk.Widget;
+private import gdk.Rectangle;
+private import gdk.Window;
+private import gdk.Event;
+private import gtk.CellEditable;
+
 /**
  * Description
  * The GtkCellRenderer is a base class of a set of objects used for

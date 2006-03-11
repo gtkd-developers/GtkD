@@ -46,6 +46,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ErrorG;
+
 /**
  * Description
  * GKeyFile lets you parse, edit or create files containing groups of

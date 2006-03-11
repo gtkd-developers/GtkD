@@ -35,7 +35,9 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.ObjectGtk
+ * 	- std.string
  * structWrap:
  * 	- GtkObject* -> ObjectGtk
  * local aliases:
@@ -46,9 +48,11 @@ module gtk.Signals;
 private import gtk.typedefs;
 
 private import lib.gtk;
+
+private import std.string;
+private import gtk.ObjectGtk;
 private import std.string;
 
-private import gtk.ObjectGtk;
 /**
  * Description
  * The GTK+ signal system merely proxies the GLib signal system now. For future

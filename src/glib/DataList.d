@@ -47,7 +47,9 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.Quark;private import glib.Dataset;
+private import glib.Quark;
+private import glib.Dataset;
+
 /**
  * Description
  * Keyed data lists provide lists of arbitrary data elements which can be accessed

@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gobject.Type
  * structWrap:
  * local aliases:
@@ -45,7 +46,9 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
+private import std.string;
 private import gobject.Type;
+
 /**
  * Description
  * The GObject type system supports dynamic loading of types. The GTypePlugin

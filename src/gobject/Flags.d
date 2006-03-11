@@ -35,6 +35,7 @@
  * 	- g_enum_
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gobject.Flags
  * structWrap:
  * 	- GFlagsValue* -> Flags
@@ -47,7 +48,9 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
+private import std.string;
 private import gobject.Flags;
+
 /**
  * Description
  * The GLib type system provides fundamental types for enumeration and flags types. (Flags types

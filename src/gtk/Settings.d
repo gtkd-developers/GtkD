@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Settings
  * 	- gdk.Screen
  * 	- glib.StringG
@@ -53,7 +54,12 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Settings;private import gdk.Screen;private import glib.StringG;private import gobject.Value;
+private import std.string;
+private import gtk.Settings;
+private import gdk.Screen;
+private import glib.StringG;
+private import gobject.Value;
+
 /**
  * Description
  */

@@ -37,6 +37,7 @@
  * 	- gtk_message_dialog_new
  * 	- gtk_message_dialog_new_with_markup
  * imports:
+ * 	- std.string
  * 	- gtk.Window
  * structWrap:
  * 	- GtkWindow* -> Window
@@ -49,7 +50,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gtk.Window;
+
 /**
  * Description
  * GtkMessageDialog presents a dialog with an image representing the type of

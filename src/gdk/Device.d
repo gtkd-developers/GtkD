@@ -50,7 +50,10 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import glib.ListG;private import gdk.Device;private import gdk.Window;
+private import glib.ListG;
+private import gdk.Device;
+private import gdk.Window;
+
 /**
  * Description
  * In addition to the normal keyboard and mouse input devices, GTK+ also

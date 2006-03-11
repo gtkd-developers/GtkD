@@ -50,6 +50,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ErrorG;
+
 /**
  * Description
  * File Name Encodings

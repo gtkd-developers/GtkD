@@ -37,6 +37,7 @@
  * 	- gtk_check_menu_item_new_with_label
  * 	- gtk_check_menu_item_new_with_mnemonic
  * imports:
+ * 	- std.string
  * structWrap:
  * local aliases:
  */
@@ -47,6 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 
 /**
  * Description

@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Window
  * 	- gdk.Rectangle
  * structWrap:
@@ -49,7 +50,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gdk.Window;private import gdk.Rectangle;
+private import std.string;
+private import gdk.Window;
+private import gdk.Rectangle;
+
 /**
  * Description
  */

@@ -36,6 +36,7 @@
  * omit code:
  * 	- gtk_list_store_set
  * imports:
+ * 	- std.string
  * 	- gtk.TreeIter
  * 	- gobject.Value
  * 	- std.string
@@ -51,7 +52,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TreeIter;private import gobject.Value;private import std.string;
+private import std.string;
+private import gtk.TreeIter;
+private import gobject.Value;
+private import std.string;
+
 /**
  * Description
  * The GtkListStore object is a list model for use with a GtkTreeView

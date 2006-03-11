@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Color
  * structWrap:
  * 	- GdkColor* -> Color
@@ -47,7 +48,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import std.string;
 private import gdk.Color;
+
 /**
  * Description
  * The GtkColorButton is a button which displays the currently selected color an allows to open a color

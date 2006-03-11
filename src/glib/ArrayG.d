@@ -47,6 +47,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ListG;
+
 /**
  * Description
  * Arrays are similar to standard C arrays, except that they grow automatically

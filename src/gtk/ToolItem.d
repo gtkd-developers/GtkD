@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Tooltips
  * 	- gtk.Widget
  * structWrap:
@@ -49,7 +50,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Tooltips;private import gtk.Widget;
+private import std.string;
+private import gtk.Tooltips;
+private import gtk.Widget;
+
 /**
  * Description
  * GtkToolItems are widgets that can appear on a toolbar. To

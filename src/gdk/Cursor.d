@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gdk.Pixmap
  * 	- gdk.Color
  * 	- gdk.Display
@@ -54,7 +55,13 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Pixmap;private import gdk.Color;private import gdk.Display;private import gdk.Pixbuf;private import gdk.Cursor;
+private import std.string;
+private import gdk.Pixmap;
+private import gdk.Color;
+private import gdk.Display;
+private import gdk.Pixbuf;
+private import gdk.Cursor;
+
 /**
  * Description
  * These functions are used to create and destroy cursors.

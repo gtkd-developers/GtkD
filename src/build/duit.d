@@ -1,363 +1,354 @@
+/*
+ * Automatically generated build imports from
+ * the initial version generouselly given by:
+ * John Reimer
+ */
+
 module build;
 
 version( build )
-{      
-    pragma (nolink);
-    
-    version (linux)     pragma (target, "DUIT.lib"  );
-    version (Windows)   pragma (target, "libDUIT.a" );
-    
-private import atk.Action,
-               atk.Component,
-               atk.Document,
-               atk.EditableText,
-               atk.GObjectAccessible,
-               atk.Hyperlink,
-               atk.Image,
-               atk.NoOpObject,
-               atk.NoOpObjectFactory,
-               atk.ObjectAtk,
-               atk.ObjectFactory,
-               atk.Registry,
-               atk.Relation,
-               atk.RelationSet,
-               atk.Selection,
-               atk.State,
-               atk.StateSet,
-               atk.StreamableContent,
-               atk.Table,
-               atk.Text,
-               atk.typedefs,
-               atk.Util,
-               atk.ValueAtk;
-
-version(linux)
 {
-private import cairoLib.Cairo,
-               cairoLib.FontFace,
-               cairoLib.FontOption,
-               cairoLib.Matrix,
-               cairoLib.Pattern,
-               cairoLib.ScaledFont,
-               cairoLib.Status,
-               cairoLib.Surface,
-               cairoLib.typedefs,
-               cairoLib.Types,
-               cairoLib.Version;
-}
-               
-private import gdk.Bitmap,
-               gdk.Color,
-               gdk.Colormap,
-               gdk.Cursor,
-               gdk.Device,
-               gdk.Display,
-               gdk.DisplayManager,
-               gdk.DragContext,
-               gdk.Drawable,
-               gdk.Event,
-               gdk.EventStruct,
-               gdk.Font,
-               gdk.GC,
-               gdk.Gdk,
-               gdk.GdkDisplay,
-               gdk.ImageGdk,
-               gdk.Input,
-               gdk.Keymap,
-               gdk.Pixmap,
-               gdk.Rectangle,
-               gdk.Region,
-               gdk.RGB,
-               gdk.Screen,
-               gdk.Selection,
-               gdk.Threads,
-               gdk.typedefs,
-               gdk.Visual,
-               gdk.Window;
-               
-private import gdkpixbuf.Pixbuf,
-               gdkpixbuf.PixbufAnimation,
-               gdkpixbuf.PixbufFormat,
-               gdkpixbuf.PixbufLoader,
-               gdkpixbuf.Pixdata,
-               gdkpixbuf.typedefs;
-               
-private import glib.Allocator,
-               glib.ArrayG,
-               glib.AsyncQueue,
-               glib.Atomic,
-               glib.BBTree,
-               glib.ByteArray,
-               glib.Cache,
-               glib.CharacterSet,
-               glib.Child,
-               glib.Cond,
-               glib.DataList,
-               glib.Dataset,
-               glib.Date,
-               glib.ErrorG,
-               glib.FileUtils,
-               glib.GKeyFile,
-               glib.GLib,
-               glib.HashTable,
-               glib.Internationalization,
-               glib.IOChannel,
-               glib.KeyFile,
-               glib.ListG,
-               glib.ListSG,
-               glib.MainContext,
-               glib.MainLoop,
-               glib.Memory,
-               glib.MemoryChunk,
-               glib.MemorySlice,
-               glib.MessageLog,
-               glib.Messages,
-               glib.Module,
-               glib.Mutex,
-               glib.Node,
-               glib.OptionContext,
-               glib.OptionGroup,
-               glib.Pattern,
-               glib.Private,
-               glib.PtrArray,
-               glib.Quark,
-               glib.QueueG,
-               glib.RandG,
-               glib.Relation,
-               glib.RWLock,
-               glib.ScannerG,
-               glib.ShellUtils,
-               glib.SimpleXML,
-               glib.Source,
-               glib.Spawn,
-               glib.StaticPrivate,
-               glib.StaticRecMutex,
-               glib.Str,
-            //   glib.StrignGChunk,
-               glib.StringCompletion,
-               glib.StringG,
-               glib.StringGChunk,
-               glib.Thread,
-               glib.ThreadPool,
-               glib.Timeout,
-               glib.Timer,
-               glib.TrashStack,
-               glib.Tuples,
-               glib.typedefs,
-               glib.Unicode,
-               glib.Util,
-               glib.Version,
-               glib.WindowsUtils;
-               
-private import gobject.Boxed,
-               gobject.CClosure,
-               gobject.Closure,
-               gobject.Enums,
-               gobject.Flags,
-               gobject.ObjectG,
-               gobject.ParamSpec,
-               gobject.Signals,
-               gobject.Type,
-               gobject.typedefs,
-               gobject.TypeModule,
-               gobject.TypePlugin,
-               gobject.Value,
-               gobject.ValueArray;
-               
-private import gtk.AboutDialog,
-               gtk.AccelGroup,
-               gtk.AccelLabel,
-               gtk.AccelMap,
-               gtk.Accessible,
-               gtk.Action,
-               gtk.ActionGroup,
-               gtk.Adjustment,
-               gtk.Alignment,
-               gtk.Arrow,
-               gtk.AspectFrame,
-               gtk.Bin,
-               gtk.BindingSet,
-               gtk.Box,
-               gtk.Button,
-               gtk.ButtonBox,
-               gtk.Calendar,
-               gtk.CellEditable,
-               gtk.CellLayout,
-               gtk.CellRenderer,
-               gtk.CellRendererCombo,
-               gtk.CellRendererPixbuf,
-               gtk.CellRendererProgress,
-               gtk.CellRendererText,
-               gtk.CellRendererToggle,
-               gtk.CellView,
-               gtk.CheckButton,
-               gtk.CheckMenuItem,
-               gtk.Clipboard,
-               gtk.ColorButton,
-               gtk.ColorSelection,
-               gtk.ColorSelectionDialog,
-               gtk.ComboBox,
-               gtk.ComboBoxEntry,
-               gtk.Container,
-               gtk.Curve,
-               gtk.Dialog,
-               gtk.DragAndDrop,
-               gtk.DrawingArea,
-               gtk.Duit,
-               gtk.Editable,
-               gtk.Entry,
-               gtk.EntryCompletion,
-               gtk.EventBox,
-               gtk.Expander,
-               gtk.FileChooser,
-               gtk.FileChooserButton,
-               gtk.FileChooserDialog,
-               gtk.FileChooserWidget,
-               gtk.FileFilter,
-               gtk.FileSelection,
-               gtk.Fixed,
-               gtk.FontButton,
-               gtk.FontSelectionDialog,
-               gtk.Frame,
-               gtk.GammaCurve,
-               gtk.GCs,
-               gtk.HandleBox,
-               gtk.HBox,
-               gtk.HButtonBox,
-               gtk.HPaned,
-               gtk.HRuler,
-               gtk.HScale,
-               gtk.HScrollbar,
-               gtk.HSeparator,
-               gtk.IconInfo,
-               gtk.IconSource,
-               gtk.IconTheme,
-               gtk.IconView,
-               gtk.Idle,
-               gtk.Image,
-               gtk.ImageMenuItem,
-               gtk.IMContext,
-               gtk.IMContextSimple,
-               gtk.IMMulticontext,
-               gtk.InputDialog,
-               gtk.Item,
-               gtk.ItemFactory,
-               gtk.Label,
-               gtk.Layout,
-               gtk.ListStore,
-               gtk.MainWindow,
-               gtk.Menu,
-               gtk.MenuBar,
-               gtk.MenuItem,
-               gtk.MenuShell,
-               gtk.MenuToolButton,
-               gtk.MessageDialog,
-               gtk.Misc,
-               gtk.Notebook,
-               gtk.ObjectGtk,
-               gtk.Paned,
-               gtk.Plug,
-               gtk.Progress,
-               gtk.ProgressBar,
-               gtk.RadioAction,
-               gtk.RadioButton,
-               gtk.RadioMenuItem,
-               gtk.RadioToolButton,
-               gtk.Range,
-               gtk.RcStyle,
-               gtk.Ruler,
-               gtk.Scale,
-               gtk.Scrollbar,
-               gtk.ScrolledWindow,
-               gtk.Selections,
-               gtk.Separator,
-               gtk.SeparatorMenuItem,
-               gtk.SeparatorToolItem,
-               gtk.Settings,
-               gtk.Signals,
-               gtk.SizeGroup,
-               gtk.Socket,
-               gtk.SpinButton,
-               gtk.StandardEnumerations,
-               gtk.Statusbar,
-               gtk.StockItem,
-               gtk.Style,
-               gtk.Table,
-               gtk.TearoffMenuItem,
-               gtk.TextAttributes,
-               gtk.TextBuffer,
-               gtk.TextIter,
-               gtk.TextMark,
-               gtk.TextTag,
-               gtk.TextTagTable,
-               gtk.TextView,
-               gtk.Timeout,
-               gtk.ToggleAction,
-               gtk.ToggleButton,
-               gtk.ToggleToolButton,
-               gtk.Toolbar,
-               gtk.ToolButton,
-               gtk.ToolItem,
-               gtk.Tooltips,
-               gtk.TreeDragSource,
-               gtk.TreeIter,
-               gtk.TreeModel,
-               gtk.TreeModelFilter,
-               gtk.TreeModelSort,
-               gtk.TreePath,
-               gtk.TreeRowReference,
-               gtk.TreeSelection,
-               gtk.TreeSortable,
-               gtk.TreeStore,
-               gtk.TreeView,
-               gtk.TreeViewColumn,
-               gtk.typedefs,
-               gtk.Types,
-               gtk.UIManager,
-               gtk.VBox,
-               gtk.VButtonBox,
-               gtk.Version,
-               gtk.Viewport,
-               gtk.VPaned,
-               gtk.VRuler,
-               gtk.VScale,
-               gtk.VScrollbar,
-               gtk.VSeparator,
-               gtk.Widget,
-               gtk.Window,
-               gtk.WindowGroup;
-               
-private import pango.PgAttribute,
-               pango.PgAttributeList,
-               pango.PgContext,
-               pango.PgCoverage,
-               pango.PgEngine,
-               pango.PgEngineLang,
-               pango.PgEngineShape,
-               pango.PgFontDescription,
-               pango.PgFontFace,
-               pango.PgFontFamily,
-               pango.PgFontMap,
-               pango.PgFontMetrics,
-               pango.PgFontsetSimple,
-               pango.PgGlyphString,
-               pango.PgItem,
-               pango.PgLanguage,
-               pango.PgLayout,
-               pango.PgLayoutIter,
-               pango.PgScriptIter,
-               pango.PgTabArray,
-               pango.typedefs;
-               
-private import lib.atk,
-            //   lib.cairoLib,
-               lib.gdk,
-               lib.gdkpixbuf,
-               lib.glib,
-               lib.gobject,
-               lib.gtk,
-               lib.pango,
-               lib.paths,
-               lib.Loader;
+	pragma (nolink);
 
-}  // end of version build
+	version (linux)     pragma (target, "DUIT.lib"  );
+	version (Windows)   pragma (target, "libDUIT.a" );
+}
+
+
+
+private import glib.GLib;
+private import glib.Atomic;
+private import glib.MainLoop;
+private import glib.MainContext;
+private import glib.Timeout;
+private import glib.Child;
+private import glib.Source;
+private import glib.Thread;
+private import glib.Mutex;
+private import glib.StaticRecMutex;
+private import glib.RWLock;
+private import glib.Cond;
+private import glib.Private;
+private import glib.StaticPrivate;
+private import glib.ThreadPool;
+private import glib.AsyncQueue;
+private import glib.Module;
+private import glib.Memory;
+private import glib.IOChannel;
+private import glib.ErrorG;
+private import glib.Messages;
+private import glib.MessageLog;
+private import glib.Str;
+private import glib.CharacterSet;
+private import glib.Unicode;
+private import glib.Internationalization;
+private import glib.Date;
+private import glib.RandG;
+private import glib.Util;
+private import glib.ScannerG;
+private import glib.StringCompletion;
+private import glib.Timer;
+private import glib.Spawn;
+private import glib.FileUtils;
+private import glib.ShellUtils;
+private import glib.OptionContext;
+private import glib.OptionGroup;
+private import glib.Pattern;
+private import glib.SimpleXML;
+private import glib.GKeyFile;
+private import glib.WindowsUtils;
+private import glib.MemorySlice;
+private import glib.MemoryChunk;
+private import glib.ListG;
+private import glib.ListSG;
+private import glib.QueueG;
+private import glib.TrashStack;
+private import glib.;
+private import glib.StringG;
+private import glib.StrignGChunk;
+private import glib.ArrayG;
+private import glib.PtrArray;
+private import glib.ByteArray;
+private import glib.BBTree;
+private import glib.Node;
+private import glib.Quark;
+private import glib.DataList;
+private import glib.Dataset;
+private import glib.Relation;
+private import glib.Tuples;
+private import glib.Cache;
+private import glib.Allocator;
+
+private import gobject.Type;
+private import gobject.TypePlugin;
+private import gobject.TypeModule;
+private import gobject.ObjectG;
+private import gobject.Enums;
+private import gobject.Flags;
+private import gobject.Boxed;
+private import gobject.ParamSpec;
+private import gobject.Signals;
+private import gobject.Closure;
+private import gobject.CClosure;
+private import gobject.ValueArray;
+
+private import cairoLib.Pattern;
+private import cairoLib.FontFace;
+private import cairoLib.ScaledFont;
+private import cairoLib.FontOption;
+private import cairoLib.Matrix;
+private import cairoLib.Status;
+private import cairoLib.Version;
+private import cairoLib.Types;
+
+private import pango.PgContext;
+private import pango.PgItem;
+private import pango.PgGlyphString;
+private import pango.PgFontDescription;
+private import pango.PgFontMetrics;
+private import pango.PgFontFamily;
+private import pango.PgFontFace;
+private import pango.PgFontMap;
+private import pango.PgFontsetSimple;
+private import pango.PgAttribute;
+private import pango.PgAttributeList;
+private import pango.PgLanguage;
+private import pango.PgTabArray;
+private import pango.PgLayout;
+private import pango.PgLayoutIter;
+private import pango.PgScriptIter;
+private import pango.PgCoverage;
+private import pango.PgEngine;
+private import pango.PgEngineLang;
+private import pango.PgEngineShape;
+
+private import atk.Action;
+private import atk.Component;
+private import atk.Document;
+private import atk.EditableText;
+private import atk.GObjectAccessible;
+private import atk.Hyperlink;
+private import atk.Hypertext;
+private import atk.Image;
+private import atk.NoOpObject;
+private import atk.NoOpObjectFactory;
+private import atk.ObjectAtk;
+private import atk.ObjectFactory;
+private import atk.Registry;
+private import atk.Relation;
+private import atk.RelationSet;
+private import atk.Selection;
+private import atk.State;
+private import atk.StateSet;
+private import atk.StreamableContent;
+private import atk.Table;
+private import atk.Text;
+private import atk.Util;
+private import atk.ValueAtk;
+
+private import gdkpixbuf.Pixdata;
+private import gdkpixbuf.PixbufAnimation;
+private import gdkpixbuf.PixbufLoader;
+
+private import gdk.Gdk;
+private import gdk.Display;
+private import gdk.DisplayManager;
+private import gdk.Screen;
+private import gdk.Rectangle;
+private import gdk.Region;
+private import gdk.GC;
+private import gdk.Drawable;
+private import gdk.Pixmap;
+private import gdk.Bitmap;
+private import gdk.RGB;
+private import gdk.ImageGdk;
+private import gdk.Colormap;
+private import gdk.Color;
+private import gdk.Visual;
+private import gdk.Font;
+private import gdk.Cursor;
+private import gdk.Window;
+private import gdk.Event;
+private import gdk.EventStruct;
+private import gdk.Keymap;
+private import gdk.Selection;
+private import gdk.DragContext;
+private import gdk.Threads;
+private import gdk.Input;
+private import gdk.Device;
+
+private import gtk.Duit;
+private import gtk.Timeout;
+private import gtk.Idle;
+private import gtk.AccelGroup;
+private import gtk.AccelMap;
+private import gtk.Clipboard;
+private import gtk.DragAndDrop;
+private import gtk.IconTheme;
+private import gtk.IconInfo;
+private import gtk.StockItem;
+private import gtk.IconSource;
+private import gtk.RcStyle;
+private import gtk.Settings;
+private import gtk.BindingSet;
+private import gtk.StandardEnumerations;
+private import gtk.GCs;
+private import gtk.Style;
+private import gtk.Selections;
+private import gtk.Version;
+private import gtk.Signals;
+private import gtk.Types;
+private import gtk.Dialog;
+private import gtk.Invisible;
+private import gtk.MessageDialog;
+private import gtk.Window;
+private import gtk.MainWindow;
+private import gtk.WindowGroup;
+private import gtk.AboutDialog;
+private import gtk.AccelLabel;
+private import gtk.Image;
+private import gtk.Label;
+private import gtk.ProgressBar;
+private import gtk.Statusbar;
+private import gtk.Button;
+private import gtk.CheckButton;
+private import gtk.RadioButton;
+private import gtk.ToggleButton;
+private import gtk.Entry;
+private import gtk.EntryCompletion;
+private import gtk.HScale;
+private import gtk.VScale;
+private import gtk.SpinButton;
+private import gtk.Editable;
+private import gtk.TextIter;
+private import gtk.TextMark;
+private import gtk.TextBuffer;
+private import gtk.TextTag;
+private import gtk.TextAttributes;
+private import gtk.TextTagTable;
+private import gtk.TextView;
+private import gtk.TextChildAnchor;
+private import gtk.TreeModel;
+private import gtk.TreeIter;
+private import gtk.TreePath;
+private import gtk.TreeRowReference;
+private import gtk.TreeSelection;
+private import gtk.TreeViewColumn;
+private import gtk.TreeView;
+private import gtk.TreeDragSource;
+private import gtk.CellView;
+private import gtk.IconView;
+private import gtk.TreeSortable;
+private import gtk.TreeModelSort;
+private import gtk.TreeModelFilter;
+private import gtk.CellLayout;
+private import gtk.CellRenderer;
+private import gtk.CellEditable;
+private import gtk.CellRendererCombo;
+private import gtk.CellRendererPixbuf;
+private import gtk.CellRendererProgress;
+private import gtk.CellRendererText;
+private import gtk.CellRendererToggle;
+private import gtk.TreeNode;
+private import gtk.ListStore;
+private import gtk.TreeStore;
+private import gtk.ComboBox;
+private import gtk.ComboBoxEntry;
+private import gtk.Menu;
+private import gtk.MenuBar;
+private import gtk.MenuItem;
+private import gtk.MenuShell;
+private import gtk.ImageMenuItem;
+private import gtk.RadioMenuItem;
+private import gtk.CheckMenuItem;
+private import gtk.SeparatorMenuItem;
+private import gtk.TearoffMenuItem;
+private import gtk.Toolbar;
+private import gtk.ToolItem;
+private import gtk.SeparatorToolItem;
+private import gtk.ToolButton;
+private import gtk.MenuToolButton;
+private import gtk.ToggleToolButton;
+private import gtk.RadioToolButton;
+private import gtk.UIManager;
+private import gtk.ActionGroup;
+private import gtk.Action;
+private import gtk.ToggleAction;
+private import gtk.RadioAction;
+private import gtk.ColorButton;
+private import gtk.ColorSelection;
+private import gtk.ColorSelectionDialog;
+private import gtk.FileSelection;
+private import gtk.FileChooser;
+private import gtk.FileChooserButton;
+private import gtk.FileChooserDialog;
+private import gtk.FileChooserWidget;
+private import gtk.FileFilter;
+private import gtk.FontButton;
+private import gtk.FontSelection;
+private import gtk.FontSelectionDialog;
+private import gtk.InputDialog;
+private import gtk.Alignment;
+private import gtk.AspectFrame;
+private import gtk.HBox;
+private import gtk.VBox;
+private import gtk.HButtonBox;
+private import gtk.VButtonBox;
+private import gtk.Fixed;
+private import gtk.HPaned;
+private import gtk.VPaned;
+private import gtk.Layout;
+private import gtk.Notebook;
+private import gtk.Table;
+private import gtk.Expander;
+private import gtk.Frame;
+private import gtk.HSeparator;
+private import gtk.VSeparator;
+private import gtk.HScrollbar;
+private import gtk.VScrollbar;
+private import gtk.ScrolledWindow;
+private import gtk.Adjustment;
+private import gtk.Arrow;
+private import gtk.Calendar;
+private import gtk.DrawingArea;
+private import gtk.EventBox;
+private import gtk.HandleBox;
+private import gtk.IMContextSimple;
+private import gtk.IMMulticontext;
+private import gtk.SizeGroup;
+private import gtk.Tooltips;
+private import gtk.Viewport;
+private import gtk.Accessible;
+private import gtk.Bin;
+private import gtk.Box;
+private import gtk.ButtonBox;
+private import gtk.Container;
+private import gtk.Item;
+private import gtk.Misc;
+private import gtk.ObjectGtk;
+private import gtk.Paned;
+private import gtk.Range;
+private import gtk.Scale;
+private import gtk.Scrollbar;
+private import gtk.Separator;
+private import gtk.Widget;
+private import gtk.IMContext;
+private import gtk.Plug;
+private import gtk.Socket;
+private import gtk.Curve;
+private import gtk.GammaCurve;
+private import gtk.Ruler;
+private import gtk.HRuler;
+private import gtk.VRuler;
+private import gtk.ItemFactory;
+private import gtk.Progress;
+
+private import lib.lib;
+private import lib.glib;
+private import lib.gobject;
+private import lib.cairoLib;
+private import lib.pango;
+private import lib.atk;
+private import lib.gdkpixbuf;
+private import lib.gdk;
+private import lib.gtk;

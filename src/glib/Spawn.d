@@ -47,7 +47,9 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import glib.ErrorG;private import glib.MainLoop;
+private import glib.ErrorG;
+private import glib.MainLoop;
+
 /**
  * Description
  */

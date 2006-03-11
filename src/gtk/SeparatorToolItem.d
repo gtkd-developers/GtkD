@@ -48,6 +48,7 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.ToolItem;
+
 /**
  * Description
  *  A GtkSeparatorItem is a GtkToolItem that separates groups of other

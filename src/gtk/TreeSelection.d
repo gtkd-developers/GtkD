@@ -53,7 +53,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.TreeView;private import gtk.TreeIter;private import glib.ListG;private import gtk.TreePath;
+private import gtk.TreeView;
+private import gtk.TreeIter;
+private import glib.ListG;
+private import gtk.TreePath;
+
 /**
  * Description
  * The GtkTreeSelection object is a helper object to manage the selection

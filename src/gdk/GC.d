@@ -62,7 +62,16 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import gdk.Drawable;private import gdk.Screen;private import gdk.GC;private import gdk.Color;private import gdk.Font;private import gdk.Pixmap;private import gdk.Bitmap;private import gdk.Region;private import gdk.Colormap;
+private import gdk.Drawable;
+private import gdk.Screen;
+private import gdk.GC;
+private import gdk.Color;
+private import gdk.Font;
+private import gdk.Pixmap;
+private import gdk.Bitmap;
+private import gdk.Region;
+private import gdk.Colormap;
+
 /**
  * Description
  * All drawing operations in GDK take a

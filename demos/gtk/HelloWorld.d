@@ -30,6 +30,9 @@ private import std.stdio;
 private import gdk.typedefs;
 private import gobject.Signals;
 private import gtk.Timeout;
+
+private import gdk.Event;
+
 public class HelloWorld : Window
 {
 
@@ -39,6 +42,7 @@ public class HelloWorld : Window
 	this()
 	{
 		super("Duit");
+		setDecorated(true);
 		VBox box = new VBox(false, 2);
 		box.add(new Label("Hello World"));
 		Button button = new Button("About");
@@ -56,7 +60,7 @@ public class HelloWorld : Window
 		move(0,400);
 		showAll();
 		
-		addOnDeleteEvent(&onDeleteEvent);
+		addOnDelete(&onDeleteEvent);
 		
 		timeout = new Timeout(1000, &changeLabel);
 	}

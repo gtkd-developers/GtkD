@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- std.string
  * 	- gtk.Label
  * 	- gtk.Widget
  * structWrap:
@@ -48,7 +49,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import gtk.Label;private import gtk.Widget;
+private import std.string;
+private import gtk.Label;
+private import gtk.Widget;
+
 /**
  * Description
  * The GtkNotebook widget is a GtkContainer whose children are pages that
