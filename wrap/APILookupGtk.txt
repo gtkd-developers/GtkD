@@ -836,7 +836,7 @@ code: start
 	 */
 	public this(char[] title)
 	{
-		this(WindowType.TOPLEVEL);
+		this(GtkWindowType.TOPLEVEL);
 		setTitle(title);
 	}
 code: end

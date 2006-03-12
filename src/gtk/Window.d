@@ -107,7 +107,7 @@ public class Window : Bin
 	 */
 	public this(char[] title)
 	{
-		this(WindowType.TOPLEVEL);
+		this(GtkWindowType.TOPLEVEL);
 		setTitle(title);
 	}
 	

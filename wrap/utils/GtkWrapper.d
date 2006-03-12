@@ -164,8 +164,8 @@ public class GtkWrapper : WrapperIF
 			"\n{"
 			"\n	pragma (nolink);"
 			"\n"
-			"\n	version (linux)     pragma (target, \"DUIT.lib\"  );"
-			"\n	version (Windows)   pragma (target, \"libDUIT.a\" );"
+			"\n	version (Windows)     pragma (target, \"DUIT.lib\"  );"
+			"\n	version (linux)   pragma (target, \"libDUIT.a\" );"
 			"\n}"
 			"\n"
 			;

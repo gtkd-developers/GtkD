@@ -18,101 +18,16 @@
 
 module gtk.HelloWorld;
 
-private import gtk.AboutDialog;
-private import gtk.Widget;
 private import gtk.Window;
-private import gtk.Label;
-private import gtk.Button;
-private import gtk.VBox;
 private import gtk.Duit;
-private import std.stdio;
 
-private import gdk.typedefs;
-private import gobject.Signals;
-private import gtk.Timeout;
-
-private import gdk.Event;
-
-public class HelloWorld : Window
+class HelloWorld : Window
 {
-
-	Label byeLabel;
-	Timeout timeout;
-
 	this()
 	{
-		super("Duit");
-		setDecorated(true);
-		VBox box = new VBox(false, 2);
-		box.add(new Label("Hello World"));
-		Button button = new Button("About");
-		button.addOnClicked(&onClicked);
-		button.addOnClicked(&popupAbout);
-		button.addOnClicked(delegate void(Button b){
-			writefln("\nliterally clicked");
-		});
-		
-		box.add(button);
-		byeLabel = new Label("Bye-bye World");
-		box.add(byeLabel);
-		add(box);
-		setBorderWidth(10);
-		move(0,400);
+		super("Hello World");
 		showAll();
-		
-		addOnDelete(&onDeleteEvent);
-		
-		timeout = new Timeout(1000, &changeLabel);
 	}
-	
-	bit changeLabel()
-	{
-		switch ( byeLabel.getText() )
-		{
-			case "Bye-bye World": byeLabel.setText("still here"); break;
-			case "still here": byeLabel.setText("close window"); break;
-			case "close window": byeLabel.setText("to terminate"); break;
-			default : byeLabel.setText("Bye-bye World"); break;
-		}
-		return true;
-	}
-	
-	void onClicked(Button button)
-	{
-		writefln("\nOn click from Hello World %s", button);
-	}
-	
-	void popupAbout(Button button)
-	{
-		with (new AboutDialog())
-		{
-			
-			char** names = new char*[2];
-			int i = 0;
-			names[i++] = cast(char*)"Antonio Monteiro (binding/wrapping/proxying/decorating for D)";
-			names[i++] = cast(char*)"www.gtk.org (base C library)";
-			setAuthors(names);
-			setDocumenters(names);
-			setArtists(names);
-			setLicense("License is LGPL");
-			setWebsite("http://lisdev.com");
-			showAll();
-		}
-	}
-	
-	gboolean onDeleteEvent(Event event, Widget widget)
-	{
-		destroy();
-		writefln("Exit by request from HelloWorld");
-		Duit.exit(0);
-		return 0;
-	}
-	
-	char[] toString()
-	{
-		return "I Am HelloWorld";
-	}
-	
 }
 
 void main(char[][] args)
@@ -121,4 +36,3 @@ void main(char[][] args)
 	new HelloWorld();
 	Duit.main();
 }
-

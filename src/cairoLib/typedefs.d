@@ -483,8 +483,8 @@ public struct cairo_path_data_t
 	{
 		cairo_path_data_type_t type;
 		int length;
-	};
+	} ;
 	struct {
 		double x, y;
-	};
+	} ;
 }
