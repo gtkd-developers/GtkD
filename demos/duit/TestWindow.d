@@ -109,6 +109,10 @@ private import gtk.TreeStore;
 private import gdk.Pixbuf;
 private import gtk.ComboBox;
 
+private import gtk.TreePath;
+private import gtk.CellRenderer;
+private import gtk.CellRendererPixbuf;
+
 /**
  * This tests the DUI widgets
  */
@@ -513,29 +517,48 @@ class TestWindow : MainWindow
 		
 		ComboStore comboStore = new ComboStore();
 		
+		TreeIter iterFirst;	// to set the first active iter
 		TreeIter iterChild;
-		TreeIter iterTop = comboStore.createIter();
+		TreeIter iterTop = comboStore.append(null);
 		comboStore.setValue(iterTop, 0, "Paganini" );
-		comboStore.setValue(iterTop, 1, "Nicolo" );
-							
+		iterFirst = comboStore.append(iterTop);
+		comboStore.setValue(iterFirst, 0, "Nicolo" );
+				
+		iterTop = comboStore.append(null);
+		comboStore.setValue(iterTop, 0, "List" );
 		iterChild = comboStore.append(iterTop);
-		comboStore.setValue(iterChild, 0, "List" );
-		comboStore.setValue(iterChild, 1, "Franz" );
+		comboStore.setValue(iterChild, 0, "Franz" );
 		
+		iterTop = comboStore.append(null);
+		comboStore.setValue(iterTop, 0, "Beethoven" );
 		iterChild = comboStore.append(iterTop);
-		comboStore.setValue(iterChild, 0, "Beethoven" );
-		comboStore.setValue(iterChild, 1, "Ludwic" );
+		comboStore.setValue(iterChild, 0, "Ludwic" );
+		iterChild = comboStore.append(iterTop);
+		comboStore.setValue(iterChild, 0, "Maria" );
+		iterChild = comboStore.append(iterTop);
+		comboStore.setValue(iterChild, 0, "Van" );
 		
+		iterTop = comboStore.append(null);
+		comboStore.setValue(iterTop, 0, "Bach" );
 		iterChild = comboStore.append(iterTop);
-		comboStore.setValue(iterChild, 0, "Bach" );
-		comboStore.setValue(iterChild, 1, "Johann" );
+		comboStore.setValue(iterChild, 0, "Johann" );
+		iterChild = comboStore.append(iterTop);
+		comboStore.setValue(iterChild, 0, "Sebastian" );
 		
 		ComboBox treeCombo = new ComboBox(comboStore);
-		treeCombo.setWrapWidth(2);
+		treeCombo.setWrapWidth(1);
 		CellRenderer renderer = new CellRendererText();
 		treeCombo.packStart(renderer, true);
+		treeCombo.addAttribute(renderer, "text",0);
+
+		// TODO something is wrong gettign the ier from the path
+		//TreePath path = new TreePath("0,0");
+		//comboStore.getIter(iterChild, path);
+		//treeCombo.setActiveIter(iterChild);
+		// use a previously set iter
+		treeCombo.setActiveIter(iterFirst);
 		
-		mainBox.packStart(new Frame(treeCombo,"Tree Combo box (example broken)"),false,true,0);
+		mainBox.packStart(new Frame(treeCombo,"Tree Combo box"),false,true,0);
 		
 		
 		
@@ -559,9 +582,6 @@ class TestWindow : MainWindow
 		notebook.appendPage(new Frame(mainBox,"Lists"),"Lists");
 		
 	}
-
-private import gtk.CellRenderer;
-private import gtk.CellRendererPixbuf;
 	ComboBox simpleCombo;
 	ComboBoxEntry comboText;
 	
