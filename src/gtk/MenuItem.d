@@ -38,7 +38,7 @@
  * 	- gtk_menu_item_new_with_label
  * 	- gtk_menu_item_new_with_mnemonic
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -51,7 +51,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 
 /**
@@ -131,12 +131,12 @@ public class MenuItem : Item
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_menu_item_new_with_mnemonic (const gchar *label);
-			this(cast(GtkMenuItem*)gtk_menu_item_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkMenuItem*)gtk_menu_item_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_menu_item_new_with_label (const gchar *label);
-			this(cast(GtkMenuItem*)gtk_menu_item_new_with_label(std.string.toStringz(label)) );
+			this(cast(GtkMenuItem*)gtk_menu_item_new_with_label(Str.toStringz(label)) );
 		}
 	}
 	
@@ -340,7 +340,7 @@ public class MenuItem : Item
 	public void setAccelPath(char[] accelPath)
 	{
 		// void gtk_menu_item_set_accel_path (GtkMenuItem *menu_item,  const gchar *accel_path);
-		gtk_menu_item_set_accel_path(gtkMenuItem, std.string.toStringz(accelPath));
+		gtk_menu_item_set_accel_path(gtkMenuItem, Str.toStringz(accelPath));
 	}
 	
 	/**

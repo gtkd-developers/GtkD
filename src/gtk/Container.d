@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Adjustment
  * 	- glib.ListG
  * 	- gobject.Value
@@ -54,7 +54,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Adjustment;
 private import glib.ListG;
 private import gobject.Value;
@@ -342,7 +342,7 @@ public class Container : Widget
 	public void addWithProperties(Widget widget, char[] firstPropName, ... )
 	{
 		// void gtk_container_add_with_properties  (GtkContainer *container,  GtkWidget *widget,  const gchar *first_prop_name,  ...);
-		gtk_container_add_with_properties(gtkContainer, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(firstPropName));
+		gtk_container_add_with_properties(gtkContainer, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(firstPropName));
 	}
 	
 	/**
@@ -567,7 +567,7 @@ public class Container : Widget
 	public void childGet(Widget child, char[] firstPropName, ... )
 	{
 		// void gtk_container_child_get (GtkContainer *container,  GtkWidget *child,  const gchar *first_prop_name,  ...);
-		gtk_container_child_get(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(firstPropName));
+		gtk_container_child_get(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(firstPropName));
 	}
 	
 	/**
@@ -585,7 +585,7 @@ public class Container : Widget
 	public void childSet(Widget child, char[] firstPropName, ... )
 	{
 		// void gtk_container_child_set (GtkContainer *container,  GtkWidget *child,  const gchar *first_prop_name,  ...);
-		gtk_container_child_set(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(firstPropName));
+		gtk_container_child_set(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(firstPropName));
 	}
 	
 	/**
@@ -602,7 +602,7 @@ public class Container : Widget
 	public void childGetProperty(Widget child, char[] propertyName, Value value)
 	{
 		// void gtk_container_child_get_property  (GtkContainer *container,  GtkWidget *child,  const gchar *property_name,  GValue *value);
-		gtk_container_child_get_property(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
+		gtk_container_child_get_property(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -619,7 +619,7 @@ public class Container : Widget
 	public void childSetProperty(Widget child, char[] propertyName, Value value)
 	{
 		// void gtk_container_child_set_property  (GtkContainer *container,  GtkWidget *child,  const gchar *property_name,  const GValue *value);
-		gtk_container_child_set_property(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
+		gtk_container_child_set_property(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -637,7 +637,7 @@ public class Container : Widget
 	public void childGetValist(Widget child, char[] firstPropertyName, void* varArgs)
 	{
 		// void gtk_container_child_get_valist (GtkContainer *container,  GtkWidget *child,  const gchar *first_property_name,  va_list var_args);
-		gtk_container_child_get_valist(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(firstPropertyName), varArgs);
+		gtk_container_child_get_valist(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(firstPropertyName), varArgs);
 	}
 	
 	/**
@@ -655,7 +655,7 @@ public class Container : Widget
 	public void childSetValist(Widget child, char[] firstPropertyName, void* varArgs)
 	{
 		// void gtk_container_child_set_valist (GtkContainer *container,  GtkWidget *child,  const gchar *first_property_name,  va_list var_args);
-		gtk_container_child_set_valist(gtkContainer, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(firstPropertyName), varArgs);
+		gtk_container_child_set_valist(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(firstPropertyName), varArgs);
 	}
 	
 	/**
@@ -804,7 +804,7 @@ public class Container : Widget
 	public static GParamSpec* classFindChildProperty(GObjectClass* cclass, char[] propertyName)
 	{
 		// GParamSpec* gtk_container_class_find_child_property  (GObjectClass *cclass,  const gchar *property_name);
-		return gtk_container_class_find_child_property(cclass, std.string.toStringz(propertyName));
+		return gtk_container_class_find_child_property(cclass, Str.toStringz(propertyName));
 	}
 	
 	/**

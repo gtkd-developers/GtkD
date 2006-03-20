@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Pixbuf
  * 	- gtk.Style
  * 	- gtk.Widget
@@ -54,7 +54,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Pixbuf;
 private import gtk.Style;
 private import gtk.Widget;
@@ -160,7 +160,7 @@ public class IconSource
 	public static void factoryAdd(GtkIconFactory* factory, char[] stockId, GtkIconSet* iconSet)
 	{
 		// void gtk_icon_factory_add (GtkIconFactory *factory,  const gchar *stock_id,  GtkIconSet *icon_set);
-		gtk_icon_factory_add(factory, std.string.toStringz(stockId), iconSet);
+		gtk_icon_factory_add(factory, Str.toStringz(stockId), iconSet);
 	}
 	
 	/**
@@ -195,7 +195,7 @@ public class IconSource
 	public static GtkIconSet* factoryLookup(GtkIconFactory* factory, char[] stockId)
 	{
 		// GtkIconSet* gtk_icon_factory_lookup (GtkIconFactory *factory,  const gchar *stock_id);
-		return gtk_icon_factory_lookup(factory, std.string.toStringz(stockId));
+		return gtk_icon_factory_lookup(factory, Str.toStringz(stockId));
 	}
 	
 	/**
@@ -212,7 +212,7 @@ public class IconSource
 	public static GtkIconSet* factoryLookupDefault(char[] stockId)
 	{
 		// GtkIconSet* gtk_icon_factory_lookup_default (const gchar *stock_id);
-		return gtk_icon_factory_lookup_default(std.string.toStringz(stockId));
+		return gtk_icon_factory_lookup_default(Str.toStringz(stockId));
 	}
 	
 	/**
@@ -377,7 +377,7 @@ public class IconSource
 	public static Pixbuf setRenderIcon(GtkIconSet* iconSet, Style style, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, char[] detail)
 	{
 		// GdkPixbuf* gtk_icon_set_render_icon (GtkIconSet *icon_set,  GtkStyle *style,  GtkTextDirection direction,  GtkStateType state,  GtkIconSize size,  GtkWidget *widget,  const char *detail);
-		return new Pixbuf( gtk_icon_set_render_icon(iconSet, (style is null) ? null : style.getStyleStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(detail)) );
+		return new Pixbuf( gtk_icon_set_render_icon(iconSet, (style is null) ? null : style.getStyleStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail)) );
 	}
 	
 	/**
@@ -464,7 +464,7 @@ public class IconSource
 	public static GtkIconSize sizeRegister(char[] name, int width, int height)
 	{
 		// GtkIconSize gtk_icon_size_register (const gchar *name,  gint width,  gint height);
-		return gtk_icon_size_register(std.string.toStringz(name), width, height);
+		return gtk_icon_size_register(Str.toStringz(name), width, height);
 	}
 	
 	/**
@@ -479,7 +479,7 @@ public class IconSource
 	public static void sizeRegisterAlias(char[] alia, GtkIconSize target)
 	{
 		// void gtk_icon_size_register_alias (const gchar *alias,  GtkIconSize target);
-		gtk_icon_size_register_alias(std.string.toStringz(alia), target);
+		gtk_icon_size_register_alias(Str.toStringz(alia), target);
 	}
 	
 	/**
@@ -492,7 +492,7 @@ public class IconSource
 	public static GtkIconSize sizeFromName(char[] name)
 	{
 		// GtkIconSize gtk_icon_size_from_name (const gchar *name);
-		return gtk_icon_size_from_name(std.string.toStringz(name));
+		return gtk_icon_size_from_name(Str.toStringz(name));
 	}
 	
 	/**
@@ -506,7 +506,7 @@ public class IconSource
 	public static char[] sizeGetName(GtkIconSize size)
 	{
 		// const gchar* gtk_icon_size_get_name (GtkIconSize size);
-		return std.string.toString(gtk_icon_size_get_name(size) );
+		return Str.toString(gtk_icon_size_get_name(size) );
 	}
 	
 	/**
@@ -566,7 +566,7 @@ public class IconSource
 	public char[] sourceGetFilename()
 	{
 		// const gchar* gtk_icon_source_get_filename (const GtkIconSource *source);
-		return std.string.toString(gtk_icon_source_get_filename(gtkIconSource) );
+		return Str.toString(gtk_icon_source_get_filename(gtkIconSource) );
 	}
 	
 	/**
@@ -600,7 +600,7 @@ public class IconSource
 	public char[] sourceGetIconName()
 	{
 		// const gchar* gtk_icon_source_get_icon_name (const GtkIconSource *source);
-		return std.string.toString(gtk_icon_source_get_icon_name(gtkIconSource) );
+		return Str.toString(gtk_icon_source_get_icon_name(gtkIconSource) );
 	}
 	
 	/**
@@ -741,7 +741,7 @@ public class IconSource
 	public void sourceSetFilename(char[] filename)
 	{
 		// void gtk_icon_source_set_filename (GtkIconSource *source,  const gchar *filename);
-		gtk_icon_source_set_filename(gtkIconSource, std.string.toStringz(filename));
+		gtk_icon_source_set_filename(gtkIconSource, Str.toStringz(filename));
 	}
 	
 	/**
@@ -769,7 +769,7 @@ public class IconSource
 	public void sourceSetIconName(char[] iconName)
 	{
 		// void gtk_icon_source_set_icon_name (GtkIconSource *source,  const gchar *icon_name);
-		gtk_icon_source_set_icon_name(gtkIconSource, std.string.toStringz(iconName));
+		gtk_icon_source_set_icon_name(gtkIconSource, Str.toStringz(iconName));
 	}
 	
 	/**

@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- glib.ErrorG
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,6 +47,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ErrorG;
+private import glib.Str;
 
 /**
  * Description
@@ -82,7 +84,7 @@ public class ShellUtils
 	public static int parseArgv(char[] commandLine, int* argcp, char*** argvp, GError** error)
 	{
 		// gboolean g_shell_parse_argv (const gchar *command_line,  gint *argcp,  gchar ***argvp,  GError **error);
-		return g_shell_parse_argv(std.string.toStringz(commandLine), argcp, argvp, error);
+		return g_shell_parse_argv(Str.toStringz(commandLine), argcp, argvp, error);
 	}
 	
 	/**
@@ -100,7 +102,7 @@ public class ShellUtils
 	public static char[] quote(char[] unquotedString)
 	{
 		// gchar* g_shell_quote (const gchar *unquoted_string);
-		return std.string.toString(g_shell_quote(std.string.toStringz(unquotedString)) );
+		return Str.toString(g_shell_quote(Str.toStringz(unquotedString)) );
 	}
 	
 	/**
@@ -134,6 +136,6 @@ public class ShellUtils
 	public static char[] unquote(char[] quotedString, GError** error)
 	{
 		// gchar* g_shell_unquote (const gchar *quoted_string,  GError **error);
-		return std.string.toString(g_shell_unquote(std.string.toStringz(quotedString), error) );
+		return Str.toString(g_shell_unquote(Str.toStringz(quotedString), error) );
 	}
 }

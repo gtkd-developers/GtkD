@@ -37,6 +37,7 @@
  * imports:
  * 	- glib.ErrorG
  * 	- glib.OptionGroup
+ * 	- glib.Str
  * structWrap:
  * 	- GOptionGroup* -> OptionGroup
  * local aliases:
@@ -50,6 +51,7 @@ private import lib.glib;
 
 private import glib.ErrorG;
 private import glib.OptionGroup;
+private import glib.Str;
 
 /**
  * Description
@@ -171,7 +173,7 @@ public class OptionContext
 	public this (char[] parameterString)
 	{
 		// GOptionContext* g_option_context_new (const gchar *parameter_string);
-		this(cast(GOptionContext*)g_option_context_new(std.string.toStringz(parameterString)) );
+		this(cast(GOptionContext*)g_option_context_new(Str.toStringz(parameterString)) );
 	}
 	
 	/**
@@ -310,7 +312,7 @@ public class OptionContext
 	public void addMainEntries(GOptionEntry* entries, char[] translationDomain)
 	{
 		// void g_option_context_add_main_entries  (GOptionContext *context,  const GOptionEntry *entries,  const gchar *translation_domain);
-		g_option_context_add_main_entries(gOptionContext, entries, std.string.toStringz(translationDomain));
+		g_option_context_add_main_entries(gOptionContext, entries, Str.toStringz(translationDomain));
 	}
 	
 	

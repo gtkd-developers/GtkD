@@ -26,8 +26,39 @@ module gobject.typedefs;
 import glib.typedefs;
 
 
-/* The GObject Basic Types */
-public alias int GType;
+
+// G_TYPE_*
+enum GType
+{
+	INVALID = 2<<0,
+	NONE = 2<<1,
+	INTERFACE = 2<<2,
+	CHAR = 2<<3,
+	UCHAR = 2<<4,
+	BOOLEAN = 2<<5,
+	INT = 2<<6,
+	UINT = 2<<7,
+	LONG = 2<<8,
+	ULONG = 2<<9,
+	INT64 = 2<<10,
+	UINT64 = 2<<11,
+	ENUM = 2<<12,
+	FLAGS = 2<<13,
+	FLOAT = 2<<14,
+	DOUBLE = 2<<15,
+	STRING = 2<<16,
+	POINTER = 2<<17,
+	BOXED = 2<<18,
+	PARAM = 2<<19,
+	OBJECT = 2<<20,
+	RESERVED_GLIB_FIRST = 2<<21,
+	RESERVED_GLIB_LAST = 2<<31,
+	RESERVED_BSE_FIRST = 2<<32,
+	RESERVED_BSE_LAST = 2<<48,
+	RESERVED_USER_FIRST = 2<<49,
+
+}
+
 
 /**
  * typedef gchar** GStrv;

@@ -37,13 +37,13 @@
  * 	- gtk_file_chooser_dialog_new
  * 	- gtk_file_chooser_dialog_new_with_backend
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Window
  * 	- glib.ListSG;
  * 	- gtk.Widget;
  * 	- gtk.FileFilter;
  * 	- gtk.FileChooser;
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * 	- GtkWindow* -> Window
  * local aliases:
@@ -55,13 +55,13 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Window;
 private import glib.ListSG;;
 private import gtk.Widget;;
 private import gtk.FileFilter;;
 private import gtk.FileChooser;;
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -221,7 +221,7 @@ public class FileChooserDialog : Dialog
 		
 		this(
 		cast(GtkFileChooserDialog*)gtk_file_chooser_dialog_new(
-		std.string.toStringz(title),
+		Str.toStringz(title),
 		parent.getWindowStruct(),
 		action,
 		null,
@@ -257,10 +257,10 @@ public class FileChooserDialog : Dialog
 		// GtkWidget* gtk_file_chooser_dialog_new_with_backend  (const gchar *title,  GtkWindow *parent,  GtkFileChooserAction action,  const gchar *backend,  const gchar *first_button_text,  ...);
 		this(
 		cast(GtkFileChooserDialog*)gtk_file_chooser_dialog_new_with_backend(
-		std.string.toStringz(title),
+		Str.toStringz(title),
 		parent.getWindowStruct(),
 		action,
-		std.string.toStringz(backend),
+		Str.toStringz(backend),
 		null,
 		0
 		));

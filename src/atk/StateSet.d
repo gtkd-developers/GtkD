@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import atk.typedefs;
 
 private import lib.atk;
 
+private import glib.Str;
 
 /**
  * Description

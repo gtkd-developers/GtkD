@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Event
  * 	- gdk.Window
  * 	- gdk.Display
@@ -55,7 +55,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Event;
 private import gdk.Window;
 private import gdk.Display;
@@ -475,6 +475,6 @@ public class Event
 	public static int gdkSettingGet(char[] name, Value value)
 	{
 		// gboolean gdk_setting_get (const gchar *name,  GValue *value);
-		return gdk_setting_get(std.string.toStringz(name), (value is null) ? null : value.getValueStruct());
+		return gdk_setting_get(Str.toStringz(name), (value is null) ? null : value.getValueStruct());
 	}
 }

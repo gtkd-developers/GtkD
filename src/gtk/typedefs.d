@@ -5527,7 +5527,8 @@ public typedef extern(C) void  function (GtkWidget*, void*, uint) GtkItemFactory
 
 // StockIDs
 enum StockID
-{	
+{
+	
 	/**
 	 * The "About" item.
 	 * Since 2.6

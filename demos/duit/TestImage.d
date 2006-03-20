@@ -35,6 +35,7 @@ private import gtk.typedefs;
 
 private import std.stdio;
 
+private import glib.Str;
 
 /**
  * This tests the DUI loading and display and image file
@@ -163,8 +164,8 @@ private import glib.ListSG;
 			for ( int i = 0; i<list.length() ; i++)
 			{
 				writefln("Testmage.loadImages.File selected = %s", 
-						std.string.toString(cast(char*)list.nthData(i)));
-				fileNames ~= std.string.toString(cast(char*)list.nthData(i)).dup;
+						Str.toString(cast(char*)list.nthData(i)));
+				fileNames ~= Str.toString(cast(char*)list.nthData(i)).dup;
 			}
 			
 			loadTable(fileNames);

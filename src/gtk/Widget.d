@@ -36,7 +36,7 @@
  * 	- gtk_widget_ref
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- atk.ObjectAtk
  * 	- gdk.Rectangle
  * 	- gtk.AccelGroup
@@ -94,7 +94,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import atk.ObjectAtk;
 private import gdk.Rectangle;
 private import gtk.AccelGroup;
@@ -2010,7 +2010,7 @@ public class Widget : ObjectGtk
 	public this (GType type, char[] firstPropertyName, ... )
 	{
 		// GtkWidget* gtk_widget_new (GType type,  const gchar *first_property_name,  ...);
-		this(cast(GtkWidget*)gtk_widget_new(type, std.string.toStringz(firstPropertyName)) );
+		this(cast(GtkWidget*)gtk_widget_new(type, Str.toStringz(firstPropertyName)) );
 	}
 	
 	
@@ -2082,7 +2082,7 @@ public class Widget : ObjectGtk
 	public void set(char[] firstPropertyName, ... )
 	{
 		// void gtk_widget_set (GtkWidget *widget,  const gchar *first_property_name,  ...);
-		gtk_widget_set(gtkWidget, std.string.toStringz(firstPropertyName));
+		gtk_widget_set(gtkWidget, Str.toStringz(firstPropertyName));
 	}
 	
 	/**
@@ -2381,7 +2381,7 @@ public class Widget : ObjectGtk
 	public void addAccelerator(char[] accelSignal, AccelGroup accelGroup, uint accelKey, GdkModifierType accelMods, GtkAccelFlags accelFlags)
 	{
 		// void gtk_widget_add_accelerator (GtkWidget *widget,  const gchar *accel_signal,  GtkAccelGroup *accel_group,  guint accel_key,  GdkModifierType accel_mods,  GtkAccelFlags accel_flags);
-		gtk_widget_add_accelerator(gtkWidget, std.string.toStringz(accelSignal), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct(), accelKey, accelMods, accelFlags);
+		gtk_widget_add_accelerator(gtkWidget, Str.toStringz(accelSignal), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct(), accelKey, accelMods, accelFlags);
 	}
 	
 	/**
@@ -2430,7 +2430,7 @@ public class Widget : ObjectGtk
 	public void setAccelPath(char[] accelPath, AccelGroup accelGroup)
 	{
 		// void gtk_widget_set_accel_path (GtkWidget *widget,  const gchar *accel_path,  GtkAccelGroup *accel_group);
-		gtk_widget_set_accel_path(gtkWidget, std.string.toStringz(accelPath), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+		gtk_widget_set_accel_path(gtkWidget, Str.toStringz(accelPath), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 	}
 	
 	/**
@@ -2605,7 +2605,7 @@ public class Widget : ObjectGtk
 	public void setName(char[] name)
 	{
 		// void gtk_widget_set_name (GtkWidget *widget,  const gchar *name);
-		gtk_widget_set_name(gtkWidget, std.string.toStringz(name));
+		gtk_widget_set_name(gtkWidget, Str.toStringz(name));
 	}
 	
 	/**
@@ -2620,7 +2620,7 @@ public class Widget : ObjectGtk
 	public char[] getName()
 	{
 		// const gchar* gtk_widget_get_name (GtkWidget *widget);
-		return std.string.toString(gtk_widget_get_name(gtkWidget) );
+		return Str.toString(gtk_widget_get_name(gtkWidget) );
 	}
 	
 	/**
@@ -3288,7 +3288,7 @@ public class Widget : ObjectGtk
 	public char[] getCompositeName()
 	{
 		// gchar* gtk_widget_get_composite_name (GtkWidget *widget);
-		return std.string.toString(gtk_widget_get_composite_name(gtkWidget) );
+		return Str.toString(gtk_widget_get_composite_name(gtkWidget) );
 	}
 	
 	/**
@@ -3506,7 +3506,7 @@ public class Widget : ObjectGtk
 	public PgLayout createPangoLayout(char[] text)
 	{
 		// PangoLayout* gtk_widget_create_pango_layout (GtkWidget *widget,  const gchar *text);
-		return new PgLayout( gtk_widget_create_pango_layout(gtkWidget, std.string.toStringz(text)) );
+		return new PgLayout( gtk_widget_create_pango_layout(gtkWidget, Str.toStringz(text)) );
 	}
 	
 	/**
@@ -3536,7 +3536,7 @@ public class Widget : ObjectGtk
 	public Pixbuf renderIcon(char[] stockId, GtkIconSize size, char[] detail)
 	{
 		// GdkPixbuf* gtk_widget_render_icon (GtkWidget *widget,  const gchar *stock_id,  GtkIconSize size,  const gchar *detail);
-		return new Pixbuf( gtk_widget_render_icon(gtkWidget, std.string.toStringz(stockId), size, std.string.toStringz(detail)) );
+		return new Pixbuf( gtk_widget_render_icon(gtkWidget, Str.toStringz(stockId), size, Str.toStringz(detail)) );
 	}
 	
 	/**
@@ -3745,7 +3745,7 @@ public class Widget : ObjectGtk
 	public void setCompositeName(char[] name)
 	{
 		// void gtk_widget_set_composite_name (GtkWidget *widget,  const gchar *name);
-		gtk_widget_set_composite_name(gtkWidget, std.string.toStringz(name));
+		gtk_widget_set_composite_name(gtkWidget, Str.toStringz(name));
 	}
 	
 	/**
@@ -3823,7 +3823,7 @@ public class Widget : ObjectGtk
 	public static GParamSpec* classFindStyleProperty(GtkWidgetClass* klass, char[] propertyName)
 	{
 		// GParamSpec* gtk_widget_class_find_style_property  (GtkWidgetClass *klass,  const gchar *property_name);
-		return gtk_widget_class_find_style_property(klass, std.string.toStringz(propertyName));
+		return gtk_widget_class_find_style_property(klass, Str.toStringz(propertyName));
 	}
 	
 	/**
@@ -3903,7 +3903,7 @@ public class Widget : ObjectGtk
 	public void styleGet(char[] firstPropertyName, ... )
 	{
 		// void gtk_widget_style_get (GtkWidget *widget,  const gchar *first_property_name,  ...);
-		gtk_widget_style_get(gtkWidget, std.string.toStringz(firstPropertyName));
+		gtk_widget_style_get(gtkWidget, Str.toStringz(firstPropertyName));
 	}
 	
 	/**
@@ -3918,7 +3918,7 @@ public class Widget : ObjectGtk
 	public void styleGetProperty(char[] propertyName, Value value)
 	{
 		// void gtk_widget_style_get_property (GtkWidget *widget,  const gchar *property_name,  GValue *value);
-		gtk_widget_style_get_property(gtkWidget, std.string.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
+		gtk_widget_style_get_property(gtkWidget, Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -3936,7 +3936,7 @@ public class Widget : ObjectGtk
 	public void styleGetValist(char[] firstPropertyName, void* varArgs)
 	{
 		// void gtk_widget_style_get_valist (GtkWidget *widget,  const gchar *first_property_name,  va_list var_args);
-		gtk_widget_style_get_valist(gtkWidget, std.string.toStringz(firstPropertyName), varArgs);
+		gtk_widget_style_get_valist(gtkWidget, Str.toStringz(firstPropertyName), varArgs);
 	}
 	
 	/**
@@ -4012,7 +4012,7 @@ public class Widget : ObjectGtk
 	public void childNotify(char[] childProperty)
 	{
 		// void gtk_widget_child_notify (GtkWidget *widget,  const gchar *child_property);
-		gtk_widget_child_notify(gtkWidget, std.string.toStringz(childProperty));
+		gtk_widget_child_notify(gtkWidget, Str.toStringz(childProperty));
 	}
 	
 	/**

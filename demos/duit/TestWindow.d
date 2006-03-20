@@ -39,7 +39,7 @@ private import duit.TestTreeView1;
 private import duit.TestImage;
 private import duit.TestAspectFrame;
 private import duit.TestIdle;
-//private import duit.TTextView;
+private import duit.TTextView;
 //private import duit.TEditableCells;
 	
 private import gtk.MenuItem;
@@ -104,6 +104,10 @@ private import gtk.FileChooserButton;
 private import gdk.Drawable;
 
 private import gtk.AboutDialog;
+
+private import gtk.TreeStore;
+private import gdk.Pixbuf;
+private import gtk.ComboBox;
 
 /**
  * This tests the DUI widgets
@@ -461,6 +465,20 @@ class TestWindow : MainWindow
 
 	}
 	
+	class ComboStore : TreeStore
+	{
+		this()
+		{
+			//int* i = cast(int*)pixbufGetType();
+			
+			GType[] columns;
+			columns ~= 16<<2;
+			columns ~= 16<<2;
+			super(columns);
+		}
+		
+	}
+
 
 	void testLists(Notebook notebook)
 	{
@@ -477,93 +495,84 @@ class TestWindow : MainWindow
 		comboText.appendText("Combo box text entry 4");
 		comboText.appendText("Combo box text entry 5");
 		comboText.setActive(2);
-		mainBox.packStart(comboText,false,false,0);
+		
+		ButtonBox actionBox1 = HButtonBox.createActionBox();
+		actionBox1.packStart(comboText,false,false,0);
+		
+		Button showCombo1 = new Button("ShowCombo", &showTextCombo);
+		actionBox1.packStart(showCombo1,false,false,0);
 
-		// combo with widgets
-		// TODO with the new ComboBox + TreeModel
-		mainBox.packStart(new Label("Items combo"),false,true,0);
-		mainBox.packStart(new Label("TODO with the new ComboBox + TreeModel"),false,true,0);
-//
-////printf("TestWindow.testLists 2\n");
-////		ListItem getLItem(char number)
-////		{
-////			ListItem lItem = new ListItem();
-////			HBox hBox = new HBox(false,3);
-////			lItem.add(hBox);
-////			//Arrow arrow = new Arrow(ArrowType.RIGHT, ShadowType.OUT);
-////			//hBox.packStart(arrow,false,false,0);
-////			Label label = new Label("Item number for this item = " ~ number);
-////			hBox.packStart(label,false,false,0);
-////			return lItem;
-////		}
-////printf("TestWindow.testLists 3\n");
-////		Combo combo1 = new Combo();
-////		combo1.addItem(getLItem(1),"1st item");
-////		combo1.addItem(getLItem(2),"2nd item");
-////		combo1.addItem(getLItem(3),"3rd item");
-////printf("TestWindow.testLists 4\n");
-////		for ( int li=4 ; li<=100 ; li++)
-////		{
-////			combo1.addItem(getLItem(li),(new String(li))~"th item");
-////		}
-////		combo1.setText("26th item");
-////
-////		mainBox.packStart(combo1,false,true,0);
-//
-//		// list
-		mainBox.packStart(new Frame(new Label("deprecated use TreeView"),"List"),false,true,0);
-//		
-//		ListG list = new ListG();
-//		for (char i ='a' ; i<='z' ; i++)
-//		{
-//			ListItem li = new ListItem();
-//			HBox liBox = new HBox(false,3);
-//			liBox.packStart(new Button(new String("list button ") ~ i),false,true,0);
-//			liBox.packStart(new CheckButton("check"),false,true,0);
-//			li.add(liBox);
-//			list.add(li);
-//		}
-//		ScrolledWindow sw = new ScrolledWindow();		
-//		sw.addWithViewport(list);
-//		sw.setSizeRequest(80,180);
-//		sw.setPolicy(PolicyType.AUTOMATIC,PolicyType.AUTOMATIC);
-//		mainBox.packStart(sw,true,true,0);
-//
-//		// option menu
-		mainBox.packStart(new Frame(new Label("deprecated use ComboBox"),"Option Menu"),false,true,0);
-//		
-//		OptionMenu opt = new OptionMenu();
-//		Menu menu = new Menu();
-//
-//		MenuItem item = new MenuItem("Top");
-//		menu.append(item);
-//		item =new MenuItem("Bottom");
-//		menu.append(item);
-//		item = new MenuItem("Left");
-//		menu.append(item);
-//		item = new MenuItem("Right");
-//		menu.append(item);
-//		opt.setMenu(menu);
-//		mainBox.packStart(opt,false,false,0);
-//		
-//		// actions
-//		
-//		ButtonBox actionBox = HButtonBox.createActionBox();
-//		
-//		Button showCombo = new Button("ShowCombo", &showCombo);
-//		actionBox.packStart(showCombo,false,false,0);
-//		
-//		mainBox.packStart(actionBox,false,false,0);
-//		
+		mainBox.packStart(new Frame(actionBox1, "Text entry ComboBox"),false,false,0);
+
+		
+		
+		// TODO combo with widgets
+
+		
+		// new ComboBox + TreeModel
+		
+		ComboStore comboStore = new ComboStore();
+		
+		TreeIter iterChild;
+		TreeIter iterTop = comboStore.createIter();
+		comboStore.setValue(iterTop, 0, "Paganini" );
+		comboStore.setValue(iterTop, 1, "Nicolo" );
+							
+		iterChild = comboStore.append(iterTop);
+		comboStore.setValue(iterChild, 0, "List" );
+		comboStore.setValue(iterChild, 1, "Franz" );
+		
+		iterChild = comboStore.append(iterTop);
+		comboStore.setValue(iterChild, 0, "Beethoven" );
+		comboStore.setValue(iterChild, 1, "Ludwic" );
+		
+		iterChild = comboStore.append(iterTop);
+		comboStore.setValue(iterChild, 0, "Bach" );
+		comboStore.setValue(iterChild, 1, "Johann" );
+		
+		ComboBox treeCombo = new ComboBox(comboStore);
+		treeCombo.setWrapWidth(2);
+		CellRenderer renderer = new CellRendererText();
+		treeCombo.packStart(renderer, true);
+		
+		mainBox.packStart(new Frame(treeCombo,"Tree Combo box (example broken)"),false,true,0);
+		
+		
+		
+		simpleCombo = new ComboBox();
+		simpleCombo.appendText("Top");
+		simpleCombo.appendText("Bottom");
+		simpleCombo.appendText("Left");
+		simpleCombo.appendText("Right");
+		simpleCombo.setActive(0);
+		
+		// actions
+		
+		ButtonBox actionBox = HButtonBox.createActionBox();
+		actionBox.packStart(simpleCombo,false,false,0);
+		
+		Button showCombo = new Button("ShowCombo", &showSimpleCombo);
+		actionBox.packStart(showCombo,false,false,0);
+		
+		mainBox.packStart(new Frame(actionBox, "Simple text list"),false,false,0);
+		
 		notebook.appendPage(new Frame(mainBox,"Lists"),"Lists");
 		
 	}
 
+private import gtk.CellRenderer;
+private import gtk.CellRendererPixbuf;
+	ComboBox simpleCombo;
 	ComboBoxEntry comboText;
 	
-	void showCombo()
+	void showTextCombo(Button button)
 	{
-	//	printf("Combo selected text = %s\n",comboText.getText().toStringz());
+		printf("Combo selected text = %.*s\n",comboText.getActiveText());
+	}
+
+	void showSimpleCombo(Button button)
+	{
+		printf("Combo selected text = %.*s\n",simpleCombo.getActiveText());
 	}
 
 	class NB : Notebook
@@ -974,12 +983,12 @@ class TestWindow : MainWindow
 	{
 		void showTTextView(Button button)
 		{
-//			new TTextView();
+			new TTextView();
 		}
 		
 		void showTEditableCells(Button button)
 		{
-			//new TEditableCells();
+		//	new TEditableCells();
 		}
 		
 		ButtonBox vBBox = VButtonBox.createActionBox();

@@ -35,9 +35,9 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.ObjectGtk
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * 	- GtkObject* -> ObjectGtk
  * local aliases:
@@ -49,9 +49,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.ObjectGtk;
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -189,7 +189,7 @@ public class Signals
 	public static uint newSignals(char[] name, GtkSignalRunType signalFlags, GtkType objectType, uint functionOffset, GtkSignalMarshaller marshaller, GtkType returnVal, uint nArgs, ... )
 	{
 		// guint gtk_signal_new (const gchar *name,  GtkSignalRunType signal_flags,  GtkType object_type,  guint function_offset,  GtkSignalMarshaller marshaller,  GtkType return_val,  guint n_args,  ...);
-		return gtk_signal_new(std.string.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, nArgs);
+		return gtk_signal_new(Str.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, nArgs);
 	}
 	
 	/**
@@ -223,7 +223,7 @@ public class Signals
 	public static uint newv(char[] name, GtkSignalRunType signalFlags, GtkType objectType, uint functionOffset, GtkSignalMarshaller marshaller, GtkType returnVal, uint nArgs, GtkType* args)
 	{
 		// guint gtk_signal_newv (const gchar *name,  GtkSignalRunType signal_flags,  GtkType object_type,  guint function_offset,  GtkSignalMarshaller marshaller,  GtkType return_val,  guint n_args,  GtkType *args);
-		return gtk_signal_newv(std.string.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, nArgs, args);
+		return gtk_signal_newv(Str.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, nArgs, args);
 	}
 	
 	
@@ -268,7 +268,7 @@ public class Signals
 	public static void emitByName(ObjectGtk object, char[] name, ... )
 	{
 		// void gtk_signal_emit_by_name (GtkObject *object,  const gchar *name,  ...);
-		gtk_signal_emit_by_name((object is null) ? null : object.getObjectGtkStruct(), std.string.toStringz(name));
+		gtk_signal_emit_by_name((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name));
 	}
 	
 	/**
@@ -308,7 +308,7 @@ public class Signals
 	public static void emitvByName(ObjectGtk object, char[] name, GtkArg* args)
 	{
 		// void gtk_signal_emitv_by_name (GtkObject *object,  const gchar *name,  GtkArg *args);
-		gtk_signal_emitv_by_name((object is null) ? null : object.getObjectGtkStruct(), std.string.toStringz(name), args);
+		gtk_signal_emitv_by_name((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), args);
 	}
 	
 	
@@ -326,7 +326,7 @@ public class Signals
 	public static void emitStopByName(ObjectGtk object, char[] name)
 	{
 		// void gtk_signal_emit_stop_by_name (GtkObject *object,  const gchar *name);
-		gtk_signal_emit_stop_by_name((object is null) ? null : object.getObjectGtkStruct(), std.string.toStringz(name));
+		gtk_signal_emit_stop_by_name((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name));
 	}
 	
 	
@@ -366,7 +366,7 @@ public class Signals
 	public static uint connectFull(ObjectGtk object, char[] name, GtkSignalFunc func, GtkCallbackMarshal unsupported, void* data, GtkDestroyNotify destroyFunc, int objectSignal, int after)
 	{
 		// gulong gtk_signal_connect_full (GtkObject *object,  const gchar *name,  GtkSignalFunc func,  GtkCallbackMarshal unsupported,  gpointer data,  GtkDestroyNotify destroy_func,  gint object_signal,  gint after);
-		return gtk_signal_connect_full((object is null) ? null : object.getObjectGtkStruct(), std.string.toStringz(name), func, unsupported, data, destroyFunc, objectSignal, after);
+		return gtk_signal_connect_full((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), func, unsupported, data, destroyFunc, objectSignal, after);
 	}
 	
 	/**
@@ -397,7 +397,7 @@ public class Signals
 	public static void connectWhileAlive(ObjectGtk object, char[] name, GtkSignalFunc func, void* funcData, ObjectGtk aliveObject)
 	{
 		// void gtk_signal_connect_while_alive (GtkObject *object,  const gchar *name,  GtkSignalFunc func,  gpointer func_data,  GtkObject *alive_object);
-		gtk_signal_connect_while_alive((object is null) ? null : object.getObjectGtkStruct(), std.string.toStringz(name), func, funcData, (aliveObject is null) ? null : aliveObject.getObjectGtkStruct());
+		gtk_signal_connect_while_alive((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), func, funcData, (aliveObject is null) ? null : aliveObject.getObjectGtkStruct());
 	}
 	
 	/**
@@ -425,7 +425,7 @@ public class Signals
 	public static void connectObjectWhileAlive(ObjectGtk object, char[] name, GtkSignalFunc func, ObjectGtk aliveObject)
 	{
 		// void gtk_signal_connect_object_while_alive  (GtkObject *object,  const gchar *name,  GtkSignalFunc func,  GtkObject *alive_object);
-		gtk_signal_connect_object_while_alive((object is null) ? null : object.getObjectGtkStruct(), std.string.toStringz(name), func, (aliveObject is null) ? null : aliveObject.getObjectGtkStruct());
+		gtk_signal_connect_object_while_alive((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), func, (aliveObject is null) ? null : aliveObject.getObjectGtkStruct());
 	}
 	
 	

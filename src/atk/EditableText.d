@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import atk.typedefs;
 
 private import lib.atk;
 
+private import glib.Str;
 
 /**
  * Description
@@ -117,7 +119,7 @@ public class EditableText
 	public void _SetTextContents(char[] string)
 	{
 		// void atk_editable_text_set_text_contents  (AtkEditableText *text,  const gchar *string);
-		atk_editable_text_set_text_contents(atkEditableText, std.string.toStringz(string));
+		atk_editable_text_set_text_contents(atkEditableText, Str.toStringz(string));
 	}
 	
 	/**
@@ -136,7 +138,7 @@ public class EditableText
 	public void _InsertText(char[] string, int length, int* position)
 	{
 		// void atk_editable_text_insert_text (AtkEditableText *text,  const gchar *string,  gint length,  gint *position);
-		atk_editable_text_insert_text(atkEditableText, std.string.toStringz(string), length, position);
+		atk_editable_text_insert_text(atkEditableText, Str.toStringz(string), length, position);
 	}
 	
 	/**

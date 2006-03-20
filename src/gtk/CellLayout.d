@@ -35,9 +35,9 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.CellRenderer
- * 	- std.string;
+ * 	- glib.Str
  * structWrap:
  * 	- GtkCellRenderer* -> CellRenderer
  * local aliases:
@@ -49,9 +49,8 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.CellRenderer;
-private import std.string;;
 
 /**
  * Description
@@ -59,38 +58,13 @@ private import std.string;;
  * want to provide a GtkTreeViewColumn-like API for packing cells, setting
  * attributes and data funcs.
  */
-public class CellLayout
+public template CellLayout(TStruct)
 {
-	
-	/** the main Gtk struct */
-	protected GtkCellLayout* gtkCellLayout;
-	
 	
 	public GtkCellLayout* getCellLayoutStruct()
 	{
-		return gtkCellLayout;
+		return cast(GtkCellLayout*)getStruct();
 	}
-	
-	
-	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)gtkCellLayout;
-	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (GtkCellLayout* gtkCellLayout)
-	{
-		this.gtkCellLayout = gtkCellLayout;
-	}
-	
-	/**
-	 */
-	
-	
-	
 	
 	/**
 	 * Packs the cell into the beginning of cell_layout. If expand is FALSE,
@@ -108,7 +82,7 @@ public class CellLayout
 	public void packStart(CellRenderer cell, int expand)
 	{
 		// void gtk_cell_layout_pack_start (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  gboolean expand);
-		gtk_cell_layout_pack_start(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct(), expand);
+		gtk_cell_layout_pack_start(getCellLayoutStruct(), (cell is null) ? null : cell.getCellRendererStruct(), expand);
 	}
 	
 	/**
@@ -127,7 +101,7 @@ public class CellLayout
 	public void packEnd(CellRenderer cell, int expand)
 	{
 		// void gtk_cell_layout_pack_end (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  gboolean expand);
-		gtk_cell_layout_pack_end(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct(), expand);
+		gtk_cell_layout_pack_end(getCellLayoutStruct(), (cell is null) ? null : cell.getCellRendererStruct(), expand);
 	}
 	
 	/**
@@ -144,7 +118,7 @@ public class CellLayout
 	public void reorder(CellRenderer cell, int position)
 	{
 		// void gtk_cell_layout_reorder (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  gint position);
-		gtk_cell_layout_reorder(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct(), position);
+		gtk_cell_layout_reorder(getCellLayoutStruct(), (cell is null) ? null : cell.getCellRendererStruct(), position);
 	}
 	
 	/**
@@ -157,7 +131,7 @@ public class CellLayout
 	public void clear()
 	{
 		// void gtk_cell_layout_clear (GtkCellLayout *cell_layout);
-		gtk_cell_layout_clear(gtkCellLayout);
+		gtk_cell_layout_clear(getCellLayoutStruct());
 	}
 	
 	/**
@@ -176,7 +150,7 @@ public class CellLayout
 	public void setAttributes(CellRenderer cell, ... )
 	{
 		// void gtk_cell_layout_set_attributes (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  ...);
-		gtk_cell_layout_set_attributes(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct());
+		gtk_cell_layout_set_attributes(getCellLayoutStruct(), (cell is null) ? null : cell.getCellRendererStruct());
 	}
 	
 	/**
@@ -198,7 +172,7 @@ public class CellLayout
 	public void addAttribute(CellRenderer cell, char[] attribute, int column)
 	{
 		// void gtk_cell_layout_add_attribute (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  const gchar *attribute,  gint column);
-		gtk_cell_layout_add_attribute(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct(), std.string.toStringz(attribute), column);
+		gtk_cell_layout_add_attribute(getCellLayoutStruct(), (cell is null) ? null : cell.getCellRendererStruct(), Str.toStringz(attribute), column);
 	}
 	
 	/**
@@ -221,7 +195,7 @@ public class CellLayout
 	public void setCellDataFunc(CellRenderer cell, GtkCellLayoutDataFunc func, void* funcData, GDestroyNotify destroy)
 	{
 		// void gtk_cell_layout_set_cell_data_func  (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  GtkCellLayoutDataFunc func,  gpointer func_data,  GDestroyNotify destroy);
-		gtk_cell_layout_set_cell_data_func(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct(), func, funcData, destroy);
+		gtk_cell_layout_set_cell_data_func(getCellLayoutStruct(), (cell is null) ? null : cell.getCellRendererStruct(), func, funcData, destroy);
 	}
 	
 	/**
@@ -236,6 +210,6 @@ public class CellLayout
 	public void clearAttributes(CellRenderer cell)
 	{
 		// void gtk_cell_layout_clear_attributes  (GtkCellLayout *cell_layout,  GtkCellRenderer *cell);
-		gtk_cell_layout_clear_attributes(gtkCellLayout, (cell is null) ? null : cell.getCellRendererStruct());
+		gtk_cell_layout_clear_attributes(getCellLayoutStruct(), (cell is null) ? null : cell.getCellRendererStruct());
 	}
 }

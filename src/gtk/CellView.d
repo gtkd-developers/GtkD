@@ -37,7 +37,7 @@
  * 	- gtk_cell_view_new_with_text
  * 	- gtk_cell_view_new_with_markup
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Pixbuf
  * 	- gtk.TreeModel
  * 	- gtk.TreePath
@@ -58,7 +58,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Pixbuf;
 private import gtk.TreeModel;
 private import gtk.TreePath;
@@ -117,12 +117,12 @@ public class CellView : Widget
 		if ( markup )
 		{
 			// GtkWidget* gtk_cell_view_new_with_markup (const gchar *markup);
-			this(cast(GtkCellView*)gtk_cell_view_new_with_markup(std.string.toStringz(text)) );
+			this(cast(GtkCellView*)gtk_cell_view_new_with_markup(Str.toStringz(text)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_cell_view_new_with_text (const gchar *text);
-			this(cast(GtkCellView*)gtk_cell_view_new_with_text(std.string.toStringz(text)) );
+			this(cast(GtkCellView*)gtk_cell_view_new_with_text(Str.toStringz(text)) );
 		}
 	}
 	

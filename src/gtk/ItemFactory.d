@@ -36,7 +36,7 @@
  * 	- gtk_item_factory_create_menu_entries
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.AccelGroup
  * 	- gtk.Widget
  * 	- gtk.ItemFactory
@@ -53,7 +53,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.AccelGroup;
 private import gtk.Widget;
 private import gtk.ItemFactory;
@@ -122,7 +122,7 @@ public class ItemFactory : ObjectGtk
 	public this (GType containerType, char[] path, AccelGroup accelGroup)
 	{
 		// GtkItemFactory* gtk_item_factory_new (GType container_type,  const gchar *path,  GtkAccelGroup *accel_group);
-		this(cast(GtkItemFactory*)gtk_item_factory_new(containerType, std.string.toStringz(path), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct()) );
+		this(cast(GtkItemFactory*)gtk_item_factory_new(containerType, Str.toStringz(path), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct()) );
 	}
 	
 	/**
@@ -144,7 +144,7 @@ public class ItemFactory : ObjectGtk
 	public void construct(GType containerType, char[] path, AccelGroup accelGroup)
 	{
 		// void gtk_item_factory_construct (GtkItemFactory *ifactory,  GType container_type,  const gchar *path,  GtkAccelGroup *accel_group);
-		gtk_item_factory_construct(gtkItemFactory, containerType, std.string.toStringz(path), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+		gtk_item_factory_construct(gtkItemFactory, containerType, Str.toStringz(path), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 	}
 	
 	/**
@@ -173,7 +173,7 @@ public class ItemFactory : ObjectGtk
 	public static void addForeign(Widget accelWidget, char[] fullPath, AccelGroup accelGroup, uint keyval, GdkModifierType modifiers)
 	{
 		// void gtk_item_factory_add_foreign (GtkWidget *accel_widget,  const gchar *full_path,  GtkAccelGroup *accel_group,  guint keyval,  GdkModifierType modifiers);
-		gtk_item_factory_add_foreign((accelWidget is null) ? null : accelWidget.getWidgetStruct(), std.string.toStringz(fullPath), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct(), keyval, modifiers);
+		gtk_item_factory_add_foreign((accelWidget is null) ? null : accelWidget.getWidgetStruct(), Str.toStringz(fullPath), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct(), keyval, modifiers);
 	}
 	
 	/**
@@ -208,7 +208,7 @@ public class ItemFactory : ObjectGtk
 	public static char[] pathFromWidget(Widget widget)
 	{
 		// const gchar* gtk_item_factory_path_from_widget  (GtkWidget *widget);
-		return std.string.toString(gtk_item_factory_path_from_widget((widget is null) ? null : widget.getWidgetStruct()) );
+		return Str.toString(gtk_item_factory_path_from_widget((widget is null) ? null : widget.getWidgetStruct()) );
 	}
 	
 	/**
@@ -229,7 +229,7 @@ public class ItemFactory : ObjectGtk
 	public Widget getItem(char[] path)
 	{
 		// GtkWidget* gtk_item_factory_get_item (GtkItemFactory *ifactory,  const gchar *path);
-		return new Widget( gtk_item_factory_get_item(gtkItemFactory, std.string.toStringz(path)) );
+		return new Widget( gtk_item_factory_get_item(gtkItemFactory, Str.toStringz(path)) );
 	}
 	
 	/**
@@ -250,7 +250,7 @@ public class ItemFactory : ObjectGtk
 	public Widget getWidget(char[] path)
 	{
 		// GtkWidget* gtk_item_factory_get_widget (GtkItemFactory *ifactory,  const gchar *path);
-		return new Widget( gtk_item_factory_get_widget(gtkItemFactory, std.string.toStringz(path)) );
+		return new Widget( gtk_item_factory_get_widget(gtkItemFactory, Str.toStringz(path)) );
 	}
 	
 	/**
@@ -370,7 +370,7 @@ public class ItemFactory : ObjectGtk
 	public void deleteItem(char[] path)
 	{
 		// void gtk_item_factory_delete_item (GtkItemFactory *ifactory,  const gchar *path);
-		gtk_item_factory_delete_item(gtkItemFactory, std.string.toStringz(path));
+		gtk_item_factory_delete_item(gtkItemFactory, Str.toStringz(path));
 	}
 	
 	/**
@@ -525,7 +525,7 @@ public class ItemFactory : ObjectGtk
 	public static ItemFactory fromPath(char[] path)
 	{
 		// GtkItemFactory* gtk_item_factory_from_path (const gchar *path);
-		return new ItemFactory( gtk_item_factory_from_path(std.string.toStringz(path)) );
+		return new ItemFactory( gtk_item_factory_from_path(Str.toStringz(path)) );
 	}
 	
 	
@@ -542,7 +542,7 @@ public class ItemFactory : ObjectGtk
 	public static void itemFactoriesPathDelete(char[] ifactoryPath, char[] path)
 	{
 		// void gtk_item_factories_path_delete (const gchar *ifactory_path,  const gchar *path);
-		gtk_item_factories_path_delete(std.string.toStringz(ifactoryPath), std.string.toStringz(path));
+		gtk_item_factories_path_delete(Str.toStringz(ifactoryPath), Str.toStringz(path));
 	}
 	
 	/**

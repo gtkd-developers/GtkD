@@ -39,7 +39,7 @@
  * 	- gobject.Value
  * 	- gobject.Closure
  * 	- std.gc
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * 	- GClosure* -> Closure
  * 	- GParamSpec* -> ParamSpec
@@ -57,7 +57,7 @@ private import gobject.ParamSpec;
 private import gobject.Value;
 private import gobject.Closure;
 private import std.gc;
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -151,7 +151,7 @@ public class ObjectG
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
 		std.gc.addRoot(data);
-		g_object_set_data_full(gObject, std.string.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
+		g_object_set_data_full(gObject, Str.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
 	}
 	
 	extern(C)
@@ -248,7 +248,7 @@ public class ObjectG
 	public static ParamSpec classFindProperty(GObjectClass* oclass, char[] propertyName)
 	{
 		// GParamSpec* g_object_class_find_property (GObjectClass *oclass,  const gchar *property_name);
-		return new ParamSpec( g_object_class_find_property(oclass, std.string.toStringz(propertyName)) );
+		return new ParamSpec( g_object_class_find_property(oclass, Str.toStringz(propertyName)) );
 	}
 	
 	/**
@@ -294,7 +294,7 @@ public class ObjectG
 	public static void classOverrideProperty(GObjectClass* oclass, uint propertyId, char[] name)
 	{
 		// void g_object_class_override_property  (GObjectClass *oclass,  guint property_id,  const gchar *name);
-		g_object_class_override_property(oclass, propertyId, std.string.toStringz(name));
+		g_object_class_override_property(oclass, propertyId, Str.toStringz(name));
 	}
 	
 	/**
@@ -344,7 +344,7 @@ public class ObjectG
 	public static ParamSpec interfaceFindProperty(void* gIface, char[] propertyName)
 	{
 		// GParamSpec* g_object_interface_find_property  (gpointer g_iface,  const gchar *property_name);
-		return new ParamSpec( g_object_interface_find_property(gIface, std.string.toStringz(propertyName)) );
+		return new ParamSpec( g_object_interface_find_property(gIface, Str.toStringz(propertyName)) );
 	}
 	
 	/**
@@ -386,7 +386,7 @@ public class ObjectG
 	public this (GType objectType, char[] firstPropertyName, ... )
 	{
 		// gpointer g_object_new (GType object_type,  const gchar *first_property_name,  ...);
-		this(cast(GObject*)g_object_new(objectType, std.string.toStringz(firstPropertyName)) );
+		this(cast(GObject*)g_object_new(objectType, Str.toStringz(firstPropertyName)) );
 	}
 	
 	/**
@@ -648,7 +648,7 @@ public class ObjectG
 	public static void* connect(void* object, char[] signalSpec, ... )
 	{
 		// gpointer g_object_connect (gpointer object,  const gchar *signal_spec,  ...);
-		return g_object_connect(object, std.string.toStringz(signalSpec));
+		return g_object_connect(object, Str.toStringz(signalSpec));
 	}
 	
 	/**
@@ -668,7 +668,7 @@ public class ObjectG
 	public static void disconnect(void* object, char[] signalSpec, ... )
 	{
 		// void g_object_disconnect (gpointer object,  const gchar *signal_spec,  ...);
-		g_object_disconnect(object, std.string.toStringz(signalSpec));
+		g_object_disconnect(object, Str.toStringz(signalSpec));
 	}
 	
 	/**
@@ -684,7 +684,7 @@ public class ObjectG
 	public static void set(void* object, char[] firstPropertyName, ... )
 	{
 		// void g_object_set (gpointer object,  const gchar *first_property_name,  ...);
-		g_object_set(object, std.string.toStringz(firstPropertyName));
+		g_object_set(object, Str.toStringz(firstPropertyName));
 	}
 	
 	/**
@@ -718,7 +718,7 @@ public class ObjectG
 	public static void get(void* object, char[] firstPropertyName, ... )
 	{
 		// void g_object_get (gpointer object,  const gchar *first_property_name,  ...);
-		g_object_get(object, std.string.toStringz(firstPropertyName));
+		g_object_get(object, Str.toStringz(firstPropertyName));
 	}
 	
 	/**
@@ -731,7 +731,7 @@ public class ObjectG
 	public void notify(char[] propertyName)
 	{
 		// void g_object_notify (GObject *object,  const gchar *property_name);
-		g_object_notify(gObject, std.string.toStringz(propertyName));
+		g_object_notify(gObject, Str.toStringz(propertyName));
 	}
 	
 	/**
@@ -772,7 +772,7 @@ public class ObjectG
 	public void* getData(char[] key)
 	{
 		// gpointer g_object_get_data (GObject *object,  const gchar *key);
-		return g_object_get_data(gObject, std.string.toStringz(key));
+		return g_object_get_data(gObject, Str.toStringz(key));
 	}
 	
 	/**
@@ -790,7 +790,7 @@ public class ObjectG
 	public void setData(char[] key, void* data)
 	{
 		// void g_object_set_data (GObject *object,  const gchar *key,  gpointer data);
-		g_object_set_data(gObject, std.string.toStringz(key), data);
+		g_object_set_data(gObject, Str.toStringz(key), data);
 	}
 	
 	
@@ -807,7 +807,7 @@ public class ObjectG
 	public void* stealData(char[] key)
 	{
 		// gpointer g_object_steal_data (GObject *object,  const gchar *key);
-		return g_object_steal_data(gObject, std.string.toStringz(key));
+		return g_object_steal_data(gObject, Str.toStringz(key));
 	}
 	
 	/**
@@ -925,7 +925,7 @@ public class ObjectG
 	public void setProperty(char[] propertyName, Value value)
 	{
 		// void g_object_set_property (GObject *object,  const gchar *property_name,  const GValue *value);
-		g_object_set_property(gObject, std.string.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
+		g_object_set_property(gObject, Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -944,7 +944,7 @@ public class ObjectG
 	public void getProperty(char[] propertyName, Value value)
 	{
 		// void g_object_get_property (GObject *object,  const gchar *property_name,  GValue *value);
-		g_object_get_property(gObject, std.string.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
+		g_object_get_property(gObject, Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -964,7 +964,7 @@ public class ObjectG
 	public this (GType objectType, char[] firstPropertyName, void* varArgs)
 	{
 		// GObject* g_object_new_valist (GType object_type,  const gchar *first_property_name,  va_list var_args);
-		this(cast(GObject*)g_object_new_valist(objectType, std.string.toStringz(firstPropertyName), varArgs) );
+		this(cast(GObject*)g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs) );
 	}
 	
 	/**
@@ -980,7 +980,7 @@ public class ObjectG
 	public void setValist(char[] firstPropertyName, void* varArgs)
 	{
 		// void g_object_set_valist (GObject *object,  const gchar *first_property_name,  va_list var_args);
-		g_object_set_valist(gObject, std.string.toStringz(firstPropertyName), varArgs);
+		g_object_set_valist(gObject, Str.toStringz(firstPropertyName), varArgs);
 	}
 	
 	/**
@@ -1000,7 +1000,7 @@ public class ObjectG
 	public void getValist(char[] firstPropertyName, void* varArgs)
 	{
 		// void g_object_get_valist (GObject *object,  const gchar *first_property_name,  va_list var_args);
-		g_object_get_valist(gObject, std.string.toStringz(firstPropertyName), varArgs);
+		g_object_get_valist(gObject, Str.toStringz(firstPropertyName), varArgs);
 	}
 	
 	/**

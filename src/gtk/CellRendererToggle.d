@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.CellRenderer
  * structWrap:
  * 	- GtkCellRenderer* -> CellRenderer
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.CellRenderer;
 
 /**
@@ -117,7 +117,7 @@ public class CellRendererToggle : CellRenderer
 		
 		foreach ( void delegate(char[], CellRendererToggle) dlg ; cellRendererToggle.onToggledListeners )
 		{
-			dlg(std.string.toString(path), cellRendererToggle);
+			dlg(Str.toString(path), cellRendererToggle);
 		}
 		
 		return consumed;

@@ -36,10 +36,10 @@
  * omit code:
  * 	- gtk_list_store_set
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TreeIter
  * 	- gobject.Value
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -52,10 +52,10 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TreeIter;
 private import gobject.Value;
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -210,7 +210,7 @@ public class ListStore : TreeModel
 			gtkListStore,
 			iter.getTreeIterStruct(),
 			columns[i],
-			std.string.toStringz(values[i]),-1);
+			Str.toStringz(values[i]),-1);
 		}
 	}
 	

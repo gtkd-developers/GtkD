@@ -89,6 +89,7 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
 
 outFile: PgContext
 
@@ -173,6 +174,7 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
 
 outFile: PgGlyphString
 
@@ -219,6 +221,7 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
 
 outFile: PgFontDescription
 
@@ -298,6 +301,7 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
 
 outFile: PgFontFamily
 
@@ -338,6 +342,7 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
 
 outFile: PgFontFace
 
@@ -378,6 +383,7 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
 
 outFile: PgFontMap
 
@@ -418,6 +424,7 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
 
 outFile: PgFontsetSimple
 
@@ -430,6 +437,7 @@ noprefix: pango_language_
 #import: g.SList*
 #structWrap: GSList** SList*
 import: glib.ListSG
+import: glib.Str
 structWrap: GSList* ListSG
 
 import: pango.PgContext
@@ -511,6 +519,7 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
 
 outFile: PgLanguage
 
@@ -602,6 +611,7 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
 
 outFile: PgLayout
 
@@ -682,6 +692,7 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 #import: pango.PgScriptIter
 #structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
 
 outFile: PgScriptIter
 
@@ -776,6 +787,7 @@ outFile: PgCoverage
 file: pango-Engines.html
 class: PgEngine
 prefix: script_engine_
+import: glib.Str
 outFile: PgEngine
 
 file: PangoEngineLang.html

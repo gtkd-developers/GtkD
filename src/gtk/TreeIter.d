@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TreeIter
  * structWrap:
  * 	- GtkTreeIter* -> TreeIter
@@ -47,7 +47,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TreeIter;
 
 /**

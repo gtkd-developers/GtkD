@@ -26,10 +26,6 @@ module cairoLib.typedefs;
 import glib.typedefs;
 
 
-/* The GObject Basic Types */
-public alias bool cairo_bool_t;
-public alias byte uchar;
-
 private alias void* HDC;
 
 
@@ -46,6 +42,9 @@ private alias void* Drawable;
 
 
 private alias void* Pixmap;
+
+
+public alias bool cairo_bool_t;
 
 /**
  * Specifies the type of antialiasing to do when rendering text or shapes.
@@ -431,7 +430,7 @@ public struct cairo_user_data_key_t;
  *  the status code of the read operation
  */
 // cairo_status_t (*cairo_read_func_t) (void *closure,  unsigned char *data,  unsigned int length);
-public typedef extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_read_func_t;
+public typedef extern(C) cairo_status_t  function (void*, char*, uint) cairo_read_func_t;
 
 /*
  * cairo_write_func_t is the type of function which is called when a
@@ -451,7 +450,7 @@ public typedef extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_re
  *  the status code of the write operation
  */
 // cairo_status_t (*cairo_write_func_t) (void *closure,  unsigned char *data,  unsigned int length);
-public typedef extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_write_func_t;
+public typedef extern(C) cairo_status_t  function (void*, char*, uint) cairo_write_func_t;
 
 /*
  * cairo_destroy_func_t the type of function which is called when a
@@ -487,4 +486,5 @@ public struct cairo_path_data_t
 	struct {
 		double x, y;
 	} ;
+
 }

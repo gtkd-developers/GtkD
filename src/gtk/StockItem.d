@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.StockItem
  * 	- glib.ListSG
  * structWrap:
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.StockItem;
 private import glib.ListSG;
 
@@ -187,7 +187,7 @@ public class StockItem
 	public static int lookup(char[] stockId, StockItem item)
 	{
 		// gboolean gtk_stock_lookup (const gchar *stock_id,  GtkStockItem *item);
-		return gtk_stock_lookup(std.string.toStringz(stockId), (item is null) ? null : item.getStockItemStruct());
+		return gtk_stock_lookup(Str.toStringz(stockId), (item is null) ? null : item.getStockItemStruct());
 	}
 	
 	/**
@@ -209,7 +209,7 @@ public class StockItem
 	public static void setTranslateFunc(char[] domain, GtkTranslateFunc func, void* data, GtkDestroyNotify notify)
 	{
 		// void gtk_stock_set_translate_func (const gchar *domain,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
-		gtk_stock_set_translate_func(std.string.toStringz(domain), func, data, notify);
+		gtk_stock_set_translate_func(Str.toStringz(domain), func, data, notify);
 	}
 	
 	

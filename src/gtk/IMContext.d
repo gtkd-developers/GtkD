@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Window
  * 	- gdk.Rectangle
  * structWrap:
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Window;
 private import gdk.Rectangle;
 
@@ -116,7 +116,7 @@ public class IMContext : ObjectG
 		
 		foreach ( void delegate(char[], IMContext) dlg ; iMContext.onCommitListeners )
 		{
-			dlg(std.string.toString(arg1), iMContext);
+			dlg(Str.toString(arg1), iMContext);
 		}
 		
 		return consumed;
@@ -413,7 +413,7 @@ public class IMContext : ObjectG
 	public void setSurrounding(char[] text, int len, int cursorIndex)
 	{
 		// void gtk_im_context_set_surrounding (GtkIMContext *context,  const gchar *text,  gint len,  gint cursor_index);
-		gtk_im_context_set_surrounding(gtkIMContext, std.string.toStringz(text), len, cursorIndex);
+		gtk_im_context_set_surrounding(gtkIMContext, Str.toStringz(text), len, cursorIndex);
 	}
 	
 	/**

@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,7 +46,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -139,7 +139,7 @@ public class ToggleAction : Action
 	public this (char[] name, char[] label, char[] tooltip, char[] stockId)
 	{
 		// GtkToggleAction* gtk_toggle_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
-		this(cast(GtkToggleAction*)gtk_toggle_action_new(std.string.toStringz(name), std.string.toStringz(label), std.string.toStringz(tooltip), std.string.toStringz(stockId)) );
+		this(cast(GtkToggleAction*)gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId)) );
 	}
 	
 	/**

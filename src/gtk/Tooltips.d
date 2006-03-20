@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.Window
  * structWrap:
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 private import gtk.Window;
 
@@ -191,7 +191,7 @@ public class Tooltips : ObjectGtk
 	public void setTip(Widget widget, char[] tipText, char[] tipPrivate)
 	{
 		// void gtk_tooltips_set_tip (GtkTooltips *tooltips,  GtkWidget *widget,  const gchar *tip_text,  const gchar *tip_private);
-		gtk_tooltips_set_tip(gtkTooltips, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(tipText), std.string.toStringz(tipPrivate));
+		gtk_tooltips_set_tip(gtkTooltips, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(tipText), Str.toStringz(tipPrivate));
 	}
 	
 	/**

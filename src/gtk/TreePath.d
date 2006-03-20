@@ -36,9 +36,9 @@
  * 	- gtk_tree_path_new
  * 	- gtk_tree_path_new_first
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TreePath
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * 	- GtkTreePath* -> TreePath
  * local aliases:
@@ -50,9 +50,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TreePath;
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -402,7 +402,7 @@ public class TreePath
 	public this (char[] path)
 	{
 		// GtkTreePath* gtk_tree_path_new_from_string (const gchar *path);
-		this(cast(GtkTreePath*)gtk_tree_path_new_from_string(std.string.toStringz(path)) );
+		this(cast(GtkTreePath*)gtk_tree_path_new_from_string(Str.toStringz(path)) );
 	}
 	
 	/**
@@ -432,7 +432,7 @@ public class TreePath
 	public char[] toString()
 	{
 		// gchar* gtk_tree_path_to_string (GtkTreePath *path);
-		return std.string.toString(gtk_tree_path_to_string(gtkTreePath) );
+		return Str.toString(gtk_tree_path_to_string(gtkTreePath) );
 	}
 	
 	

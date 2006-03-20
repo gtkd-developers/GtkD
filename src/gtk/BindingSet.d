@@ -36,11 +36,11 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.BindingSet
  * 	- gtk.ObjectGtk
  * 	- glib.ListSG
- * 	- std.string;
+ * 	- glib.Str;
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GtkBindingSet* -> BindingSet
@@ -54,11 +54,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.BindingSet;
 private import gtk.ObjectGtk;
 private import glib.ListSG;
-private import std.string;;
+private import glib.Str;;
 
 /**
  * Description
@@ -104,7 +104,7 @@ public class BindingSet
 	public this (char[] setName)
 	{
 		// GtkBindingSet* gtk_binding_set_new (const gchar *set_name);
-		this(cast(GtkBindingSet*)gtk_binding_set_new(std.string.toStringz(setName)) );
+		this(cast(GtkBindingSet*)gtk_binding_set_new(Str.toStringz(setName)) );
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public class BindingSet
 	public static BindingSet find(char[] setName)
 	{
 		// GtkBindingSet* gtk_binding_set_find (const gchar *set_name);
-		return new BindingSet( gtk_binding_set_find(std.string.toStringz(setName)) );
+		return new BindingSet( gtk_binding_set_find(Str.toStringz(setName)) );
 	}
 	
 	/**
@@ -191,7 +191,7 @@ public class BindingSet
 	public void bindingEntryAddSignal(uint keyval, GdkModifierType modifiers, char[] signalName, uint nArgs, ... )
 	{
 		// void gtk_binding_entry_add_signal (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  const gchar *signal_name,  guint n_args,  ...);
-		gtk_binding_entry_add_signal(gtkBindingSet, keyval, modifiers, std.string.toStringz(signalName), nArgs);
+		gtk_binding_entry_add_signal(gtkBindingSet, keyval, modifiers, Str.toStringz(signalName), nArgs);
 	}
 	
 	/**
@@ -203,7 +203,7 @@ public class BindingSet
 	public void addPath(GtkPathType pathType, char[] pathPattern, GtkPathPriorityType priority)
 	{
 		// void gtk_binding_set_add_path (GtkBindingSet *binding_set,  GtkPathType path_type,  const gchar *path_pattern,  GtkPathPriorityType priority);
-		gtk_binding_set_add_path(gtkBindingSet, pathType, std.string.toStringz(pathPattern), priority);
+		gtk_binding_set_add_path(gtkBindingSet, pathType, Str.toStringz(pathPattern), priority);
 	}
 	
 	/**
@@ -227,7 +227,7 @@ public class BindingSet
 	public void bindingEntryAddSignall(uint keyval, GdkModifierType modifiers, char[] signalName, ListSG bindingArgs)
 	{
 		// void gtk_binding_entry_add_signall (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  const gchar *signal_name,  GSList *binding_args);
-		gtk_binding_entry_add_signall(gtkBindingSet, keyval, modifiers, std.string.toStringz(signalName), (bindingArgs is null) ? null : bindingArgs.getListSGStruct());
+		gtk_binding_entry_add_signall(gtkBindingSet, keyval, modifiers, Str.toStringz(signalName), (bindingArgs is null) ? null : bindingArgs.getListSGStruct());
 	}
 	
 	/**

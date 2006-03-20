@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- glib.Quark
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,6 +47,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.Quark;
+private import glib.Str;
 
 /**
  * Description
@@ -314,7 +316,7 @@ public class ErrorG
 	public this (GQuark domain, int code, char[] format, ... )
 	{
 		// GError* g_error_new (GQuark domain,  gint code,  const gchar *format,  ...);
-		this(cast(GError*)g_error_new(domain, code, std.string.toStringz(format)) );
+		this(cast(GError*)g_error_new(domain, code, Str.toStringz(format)) );
 	}
 	
 	/**
@@ -334,7 +336,7 @@ public class ErrorG
 	public this (GQuark domain, int code, char[] message)
 	{
 		// GError* g_error_new_literal (GQuark domain,  gint code,  const gchar *message);
-		this(cast(GError*)g_error_new_literal(domain, code, std.string.toStringz(message)) );
+		this(cast(GError*)g_error_new_literal(domain, code, Str.toStringz(message)) );
 	}
 	
 	/**
@@ -396,7 +398,7 @@ public class ErrorG
 	public static void gSetError(GError** err, GQuark domain, int code, char[] format, ... )
 	{
 		// void g_set_error (GError **err,  GQuark domain,  gint code,  const gchar *format,  ...);
-		g_set_error(err, domain, code, std.string.toStringz(format));
+		g_set_error(err, domain, code, Str.toStringz(format));
 	}
 	
 	/**

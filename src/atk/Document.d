@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import atk.typedefs;
 
 private import lib.atk;
 
+private import glib.Str;
 
 /**
  * Description
@@ -92,7 +94,7 @@ public class Document
 	public char[] getDocumentType()
 	{
 		// const gchar* atk_document_get_document_type (AtkDocument *document);
-		return std.string.toString(atk_document_get_document_type(atkDocument) );
+		return Str.toString(atk_document_get_document_type(atkDocument) );
 	}
 	
 	/**

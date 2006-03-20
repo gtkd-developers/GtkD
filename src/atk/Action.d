@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import atk.typedefs;
 
 private import lib.atk;
 
+private import glib.Str;
 
 /**
  * Description
@@ -144,7 +146,7 @@ public class Action
 	public char[] getDescription(int i)
 	{
 		// const gchar* atk_action_get_description (AtkAction *action,  gint i);
-		return std.string.toString(atk_action_get_description(atkAction, i) );
+		return Str.toString(atk_action_get_description(atkAction, i) );
 	}
 	
 	/**
@@ -160,7 +162,7 @@ public class Action
 	public char[] getName(int i)
 	{
 		// const gchar* atk_action_get_name (AtkAction *action,  gint i);
-		return std.string.toString(atk_action_get_name(atkAction, i) );
+		return Str.toString(atk_action_get_name(atkAction, i) );
 	}
 	
 	/**
@@ -176,7 +178,7 @@ public class Action
 	public char[] getLocalizedName(int i)
 	{
 		// const gchar* atk_action_get_localized_name (AtkAction *action,  gint i);
-		return std.string.toString(atk_action_get_localized_name(atkAction, i) );
+		return Str.toString(atk_action_get_localized_name(atkAction, i) );
 	}
 	
 	/**
@@ -192,7 +194,7 @@ public class Action
 	public char[] getKeybinding(int i)
 	{
 		// const gchar* atk_action_get_keybinding (AtkAction *action,  gint i);
-		return std.string.toString(atk_action_get_keybinding(atkAction, i) );
+		return Str.toString(atk_action_get_keybinding(atkAction, i) );
 	}
 	
 	/**
@@ -209,6 +211,6 @@ public class Action
 	public int setDescription(int i, char[] desc)
 	{
 		// gboolean atk_action_set_description (AtkAction *action,  gint i,  const gchar *desc);
-		return atk_action_set_description(atkAction, i, std.string.toStringz(desc));
+		return atk_action_set_description(atkAction, i, Str.toStringz(desc));
 	}
 }

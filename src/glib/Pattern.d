@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * 	- GPatternSpec* -> Pattern
  * local aliases:
@@ -46,6 +47,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -104,7 +106,7 @@ public class Pattern
 	public this (char[] pattern)
 	{
 		// GPatternSpec* g_pattern_spec_new (const gchar *pattern);
-		this(cast(GPatternSpec*)g_pattern_spec_new(std.string.toStringz(pattern)) );
+		this(cast(GPatternSpec*)g_pattern_spec_new(Str.toStringz(pattern)) );
 	}
 	
 	/**
@@ -163,7 +165,7 @@ public class Pattern
 	public int gPatternMatch(uint stringLength, char[] string, char[] stringReversed)
 	{
 		// gboolean g_pattern_match (GPatternSpec *pspec,  guint string_length,  const gchar *string,  const gchar *string_reversed);
-		return g_pattern_match(gPatternSpec, stringLength, std.string.toStringz(string), std.string.toStringz(stringReversed));
+		return g_pattern_match(gPatternSpec, stringLength, Str.toStringz(string), Str.toStringz(stringReversed));
 	}
 	
 	/**
@@ -180,7 +182,7 @@ public class Pattern
 	public int string(char[] string)
 	{
 		// gboolean g_pattern_match_string (GPatternSpec *pspec,  const gchar *string);
-		return g_pattern_match_string(gPatternSpec, std.string.toStringz(string));
+		return g_pattern_match_string(gPatternSpec, Str.toStringz(string));
 	}
 	
 	/**
@@ -198,6 +200,6 @@ public class Pattern
 	public static int simple(char[] pattern, char[] string)
 	{
 		// gboolean g_pattern_match_simple (const gchar *pattern,  const gchar *string);
-		return g_pattern_match_simple(std.string.toStringz(pattern), std.string.toStringz(string));
+		return g_pattern_match_simple(Str.toStringz(pattern), Str.toStringz(string));
 	}
 }

@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -45,7 +45,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -833,7 +833,7 @@ public class Pixbuf
 	public char[] getOption(char[] key)
 	{
 		// const gchar* gdk_pixbuf_get_option (GdkPixbuf *pixbuf,  const gchar *key);
-		return std.string.toString(gdk_pixbuf_get_option(gdkPixbuf, std.string.toStringz(key)) );
+		return Str.toString(gdk_pixbuf_get_option(gdkPixbuf, Str.toStringz(key)) );
 	}
 	
 	
@@ -863,7 +863,7 @@ public class Pixbuf
 	public this (char[] filename, GError** error)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file (const char *filename,  GError **error);
-		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_file(std.string.toStringz(filename), error) );
+		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_file(Str.toStringz(filename), error) );
 	}
 	
 	/**
@@ -891,7 +891,7 @@ public class Pixbuf
 	public this (char[] filename, int width, int height, GError** error)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file_at_size  (const char *filename,  int width,  int height,  GError **error);
-		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_file_at_size(std.string.toStringz(filename), width, height, error) );
+		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, error) );
 	}
 	
 	/**
@@ -926,7 +926,7 @@ public class Pixbuf
 	public this (char[] filename, int width, int height, int preserveAspectRatio, GError** error)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file_at_scale  (const char *filename,  int width,  int height,  gboolean preserve_aspect_ratio,  GError **error);
-		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_file_at_scale(std.string.toStringz(filename), width, height, preserveAspectRatio, error) );
+		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, error) );
 	}
 	
 	
@@ -952,7 +952,7 @@ public class Pixbuf
 	public int savev(char[] filename, char[] type, char** optionKeys, char** optionValues, GError** error)
 	{
 		// gboolean gdk_pixbuf_savev (GdkPixbuf *pixbuf,  const char *filename,  const char *type,  char **option_keys,  char **option_values,  GError **error);
-		return gdk_pixbuf_savev(gdkPixbuf, std.string.toStringz(filename), std.string.toStringz(type), optionKeys, optionValues, error);
+		return gdk_pixbuf_savev(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), optionKeys, optionValues, error);
 	}
 	
 	/**
@@ -1002,7 +1002,7 @@ public class Pixbuf
 	public int save(char[] filename, char[] type, GError** error, ... )
 	{
 		// gboolean gdk_pixbuf_save (GdkPixbuf *pixbuf,  const char *filename,  const char *type,  GError **error,  ...);
-		return gdk_pixbuf_save(gdkPixbuf, std.string.toStringz(filename), std.string.toStringz(type), error);
+		return gdk_pixbuf_save(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), error);
 	}
 	
 	
@@ -1034,7 +1034,7 @@ public class Pixbuf
 	public int saveToCallback(GdkPixbufSaveFunc saveFunc, void* userData, char[] type, GError** error, ... )
 	{
 		// gboolean gdk_pixbuf_save_to_callback (GdkPixbuf *pixbuf,  GdkPixbufSaveFunc save_func,  gpointer user_data,  const char *type,  GError **error,  ...);
-		return gdk_pixbuf_save_to_callback(gdkPixbuf, saveFunc, userData, std.string.toStringz(type), error);
+		return gdk_pixbuf_save_to_callback(gdkPixbuf, saveFunc, userData, Str.toStringz(type), error);
 	}
 	
 	/**
@@ -1063,7 +1063,7 @@ public class Pixbuf
 	public int saveToCallbackv(GdkPixbufSaveFunc saveFunc, void* userData, char[] type, char** optionKeys, char** optionValues, GError** error)
 	{
 		// gboolean gdk_pixbuf_save_to_callbackv (GdkPixbuf *pixbuf,  GdkPixbufSaveFunc save_func,  gpointer user_data,  const char *type,  char **option_keys,  char **option_values,  GError **error);
-		return gdk_pixbuf_save_to_callbackv(gdkPixbuf, saveFunc, userData, std.string.toStringz(type), optionKeys, optionValues, error);
+		return gdk_pixbuf_save_to_callbackv(gdkPixbuf, saveFunc, userData, Str.toStringz(type), optionKeys, optionValues, error);
 	}
 	
 	/**
@@ -1094,7 +1094,7 @@ public class Pixbuf
 	public int saveToBuffer(char** buffer, uint* bufferSize, char[] type, GError** error, ... )
 	{
 		// gboolean gdk_pixbuf_save_to_buffer (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  GError **error,  ...);
-		return gdk_pixbuf_save_to_buffer(gdkPixbuf, buffer, bufferSize, std.string.toStringz(type), error);
+		return gdk_pixbuf_save_to_buffer(gdkPixbuf, buffer, bufferSize, Str.toStringz(type), error);
 	}
 	
 	/**
@@ -1121,7 +1121,7 @@ public class Pixbuf
 	public int saveToBufferv(char** buffer, uint* bufferSize, char[] type, char** optionKeys, char** optionValues, GError** error)
 	{
 		// gboolean gdk_pixbuf_save_to_bufferv (GdkPixbuf *pixbuf,  gchar **buffer,  gsize *buffer_size,  const char *type,  char **option_keys,  char **option_values,  GError **error);
-		return gdk_pixbuf_save_to_bufferv(gdkPixbuf, buffer, bufferSize, std.string.toStringz(type), optionKeys, optionValues, error);
+		return gdk_pixbuf_save_to_bufferv(gdkPixbuf, buffer, bufferSize, Str.toStringz(type), optionKeys, optionValues, error);
 	}
 	
 	

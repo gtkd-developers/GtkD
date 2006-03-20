@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- glib.ListSG;
  * 	- gtk.Widget;
  * 	- gtk.FileFilter;
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import glib.ListSG;;
 private import gtk.Widget;;
 private import gtk.FileFilter;;
@@ -146,6 +146,6 @@ public class FileChooserWidget : VBox
 	public this (GtkFileChooserAction action, char[] backend)
 	{
 		// GtkWidget* gtk_file_chooser_widget_new_with_backend  (GtkFileChooserAction action,  const gchar *backend);
-		this(cast(GtkFileChooserWidget*)gtk_file_chooser_widget_new_with_backend(action, std.string.toStringz(backend)) );
+		this(cast(GtkFileChooserWidget*)gtk_file_chooser_widget_new_with_backend(action, Str.toStringz(backend)) );
 	}
 }

@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TextTagTable
  * 	- gtk.TextTag
  * structWrap:
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TextTagTable;
 private import gtk.TextTag;
 
@@ -239,7 +239,7 @@ public class TextTagTable : ObjectG
 	public TextTag tableLookup(char[] name)
 	{
 		// GtkTextTag* gtk_text_tag_table_lookup (GtkTextTagTable *table,  const gchar *name);
-		return new TextTag( gtk_text_tag_table_lookup(gtkTextTagTable, std.string.toStringz(name)) );
+		return new TextTag( gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name)) );
 	}
 	
 	/**

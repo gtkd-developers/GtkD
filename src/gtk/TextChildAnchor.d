@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -45,7 +45,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -222,7 +222,7 @@ public class TextChildAnchor
 		
 		foreach ( void delegate(char[], TextChildAnchor) dlg ; textChildAnchor.onInsertAtCursorListeners )
 		{
-			dlg(std.string.toString(arg1), textChildAnchor);
+			dlg(Str.toString(arg1), textChildAnchor);
 		}
 		
 		return consumed;

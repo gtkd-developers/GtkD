@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Pixbuf
  * 	- gtk.Window
  * structWrap:
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Pixbuf;
 private import gtk.Window;
 
@@ -131,7 +131,7 @@ public class AboutDialog : Dialog
 	public char[] getName()
 	{
 		// const gchar* gtk_about_dialog_get_name (GtkAboutDialog *about);
-		return std.string.toString(gtk_about_dialog_get_name(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_name(gtkAboutDialog) );
 	}
 	
 	/**
@@ -146,7 +146,7 @@ public class AboutDialog : Dialog
 	public void setName(char[] name)
 	{
 		// void gtk_about_dialog_set_name (GtkAboutDialog *about,  const gchar *name);
-		gtk_about_dialog_set_name(gtkAboutDialog, std.string.toStringz(name));
+		gtk_about_dialog_set_name(gtkAboutDialog, Str.toStringz(name));
 	}
 	
 	/**
@@ -161,7 +161,7 @@ public class AboutDialog : Dialog
 	public char[] getVersion()
 	{
 		// const gchar* gtk_about_dialog_get_version (GtkAboutDialog *about);
-		return std.string.toString(gtk_about_dialog_get_version(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_version(gtkAboutDialog) );
 	}
 	
 	/**
@@ -175,7 +175,7 @@ public class AboutDialog : Dialog
 	public void setVersion(char[] versio)
 	{
 		// void gtk_about_dialog_set_version (GtkAboutDialog *about,  const gchar *version);
-		gtk_about_dialog_set_version(gtkAboutDialog, std.string.toStringz(versio));
+		gtk_about_dialog_set_version(gtkAboutDialog, Str.toStringz(versio));
 	}
 	
 	/**
@@ -190,7 +190,7 @@ public class AboutDialog : Dialog
 	public char[] getCopyright()
 	{
 		// const gchar* gtk_about_dialog_get_copyright (GtkAboutDialog *about);
-		return std.string.toString(gtk_about_dialog_get_copyright(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_copyright(gtkAboutDialog) );
 	}
 	
 	/**
@@ -205,7 +205,7 @@ public class AboutDialog : Dialog
 	public void setCopyright(char[] copyright)
 	{
 		// void gtk_about_dialog_set_copyright (GtkAboutDialog *about,  const gchar *copyright);
-		gtk_about_dialog_set_copyright(gtkAboutDialog, std.string.toStringz(copyright));
+		gtk_about_dialog_set_copyright(gtkAboutDialog, Str.toStringz(copyright));
 	}
 	
 	/**
@@ -220,7 +220,7 @@ public class AboutDialog : Dialog
 	public char[] getComments()
 	{
 		// const gchar* gtk_about_dialog_get_comments (GtkAboutDialog *about);
-		return std.string.toString(gtk_about_dialog_get_comments(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_comments(gtkAboutDialog) );
 	}
 	
 	/**
@@ -236,7 +236,7 @@ public class AboutDialog : Dialog
 	public void setComments(char[] comments)
 	{
 		// void gtk_about_dialog_set_comments (GtkAboutDialog *about,  const gchar *comments);
-		gtk_about_dialog_set_comments(gtkAboutDialog, std.string.toStringz(comments));
+		gtk_about_dialog_set_comments(gtkAboutDialog, Str.toStringz(comments));
 	}
 	
 	/**
@@ -251,7 +251,7 @@ public class AboutDialog : Dialog
 	public char[] getLicense()
 	{
 		// const gchar* gtk_about_dialog_get_license (GtkAboutDialog *about);
-		return std.string.toString(gtk_about_dialog_get_license(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_license(gtkAboutDialog) );
 	}
 	
 	/**
@@ -267,7 +267,7 @@ public class AboutDialog : Dialog
 	public void setLicense(char[] license)
 	{
 		// void gtk_about_dialog_set_license (GtkAboutDialog *about,  const gchar *license);
-		gtk_about_dialog_set_license(gtkAboutDialog, std.string.toStringz(license));
+		gtk_about_dialog_set_license(gtkAboutDialog, Str.toStringz(license));
 	}
 	
 	/**
@@ -312,7 +312,7 @@ public class AboutDialog : Dialog
 	public char[] getWebsite()
 	{
 		// const gchar* gtk_about_dialog_get_website (GtkAboutDialog *about);
-		return std.string.toString(gtk_about_dialog_get_website(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_website(gtkAboutDialog) );
 	}
 	
 	/**
@@ -326,7 +326,7 @@ public class AboutDialog : Dialog
 	public void setWebsite(char[] website)
 	{
 		// void gtk_about_dialog_set_website (GtkAboutDialog *about,  const gchar *website);
-		gtk_about_dialog_set_website(gtkAboutDialog, std.string.toStringz(website));
+		gtk_about_dialog_set_website(gtkAboutDialog, Str.toStringz(website));
 	}
 	
 	/**
@@ -341,7 +341,7 @@ public class AboutDialog : Dialog
 	public char[] getWebsiteLabel()
 	{
 		// const gchar* gtk_about_dialog_get_website_label  (GtkAboutDialog *about);
-		return std.string.toString(gtk_about_dialog_get_website_label(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_website_label(gtkAboutDialog) );
 	}
 	
 	/**
@@ -356,7 +356,7 @@ public class AboutDialog : Dialog
 	public void setWebsiteLabel(char[] websiteLabel)
 	{
 		// void gtk_about_dialog_set_website_label  (GtkAboutDialog *about,  const gchar *website_label);
-		gtk_about_dialog_set_website_label(gtkAboutDialog, std.string.toStringz(websiteLabel));
+		gtk_about_dialog_set_website_label(gtkAboutDialog, Str.toStringz(websiteLabel));
 	}
 	
 	/**
@@ -468,7 +468,7 @@ public class AboutDialog : Dialog
 	public char[] getTranslatorCredits()
 	{
 		// const gchar* gtk_about_dialog_get_translator_credits  (GtkAboutDialog *about);
-		return std.string.toString(gtk_about_dialog_get_translator_credits(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_translator_credits(gtkAboutDialog) );
 	}
 	
 	/**
@@ -492,7 +492,7 @@ public class AboutDialog : Dialog
 	public void setTranslatorCredits(char[] translatorCredits)
 	{
 		// void gtk_about_dialog_set_translator_credits  (GtkAboutDialog *about,  const gchar *translator_credits);
-		gtk_about_dialog_set_translator_credits(gtkAboutDialog, std.string.toStringz(translatorCredits));
+		gtk_about_dialog_set_translator_credits(gtkAboutDialog, Str.toStringz(translatorCredits));
 	}
 	
 	/**
@@ -541,7 +541,7 @@ public class AboutDialog : Dialog
 	public char[] getLogoIconName()
 	{
 		// const gchar* gtk_about_dialog_get_logo_icon_name  (GtkAboutDialog *about);
-		return std.string.toString(gtk_about_dialog_get_logo_icon_name(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_logo_icon_name(gtkAboutDialog) );
 	}
 	
 	/**
@@ -558,7 +558,7 @@ public class AboutDialog : Dialog
 	public void setLogoIconName(char[] iconName)
 	{
 		// void gtk_about_dialog_set_logo_icon_name  (GtkAboutDialog *about,  const gchar *icon_name);
-		gtk_about_dialog_set_logo_icon_name(gtkAboutDialog, std.string.toStringz(iconName));
+		gtk_about_dialog_set_logo_icon_name(gtkAboutDialog, Str.toStringz(iconName));
 	}
 	
 	
@@ -622,7 +622,7 @@ public class AboutDialog : Dialog
 	public static void showAboutDialog(Window parent, char[] firstPropertyName, ... )
 	{
 		// void gtk_show_about_dialog (GtkWindow *parent,  const gchar *first_property_name,  ...);
-		gtk_show_about_dialog((parent is null) ? null : parent.getWindowStruct(), std.string.toStringz(firstPropertyName));
+		gtk_show_about_dialog((parent is null) ? null : parent.getWindowStruct(), Str.toStringz(firstPropertyName));
 	}
 	
 	

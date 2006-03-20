@@ -35,6 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -45,6 +46,7 @@ private import cairoLib.typedefs;
 
 private import lib.cairoLib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -389,10 +391,10 @@ public class Surface
 	 * pointer to a "nil" surface if an error such as out of memory
 	 * occurs. You can use cairo_surface_status() to check for this.
 	 */
-	public static cairo_surface_t* imageSurfaceCreateForData(uchar* data, cairo_format_t format, int width, int height, int stride)
+	public static cairo_surface_t* imageSurfaceCreateForData(char[] data, cairo_format_t format, int width, int height, int stride)
 	{
 		// cairo_surface_t* cairo_image_surface_create_for_data  (unsigned char *data,  cairo_format_t format,  int width,  int height,  int stride);
-		return cairo_image_surface_create_for_data(data, format, width, height, stride);
+		return cairo_image_surface_create_for_data(Str.toStringz(data), format, width, height, stride);
 	}
 	
 	/**
@@ -432,7 +434,7 @@ public class Surface
 	public static cairo_surface_t* pdfSurfaceCreate(char[] filename, double widthInPoints, double heightInPoints)
 	{
 		// cairo_surface_t* cairo_pdf_surface_create (const char *filename,  double width_in_points,  double height_in_points);
-		return cairo_pdf_surface_create(std.string.toStringz(filename), widthInPoints, heightInPoints);
+		return cairo_pdf_surface_create(Str.toStringz(filename), widthInPoints, heightInPoints);
 	}
 	
 	/**
@@ -478,7 +480,7 @@ public class Surface
 	public static cairo_surface_t* imageSurfaceCreateFromPng(char[] filename)
 	{
 		// cairo_surface_t* cairo_image_surface_create_from_png  (const char *filename);
-		return cairo_image_surface_create_from_png(std.string.toStringz(filename));
+		return cairo_image_surface_create_from_png(Str.toStringz(filename));
 	}
 	
 	
@@ -518,7 +520,7 @@ public class Surface
 	public cairo_status_t writeToPng(char[] filename)
 	{
 		// cairo_status_t cairo_surface_write_to_png (cairo_surface_t *surface,  const char *filename);
-		return cairo_surface_write_to_png(cairo_surface, std.string.toStringz(filename));
+		return cairo_surface_write_to_png(cairo_surface, Str.toStringz(filename));
 	}
 	
 	
@@ -554,7 +556,7 @@ public class Surface
 	public static cairo_surface_t* psSurfaceCreate(char[] filename, double widthInPoints, double heightInPoints)
 	{
 		// cairo_surface_t* cairo_ps_surface_create (const char *filename,  double width_in_points,  double height_in_points);
-		return cairo_ps_surface_create(std.string.toStringz(filename), widthInPoints, heightInPoints);
+		return cairo_ps_surface_create(Str.toStringz(filename), widthInPoints, heightInPoints);
 	}
 	
 	/**

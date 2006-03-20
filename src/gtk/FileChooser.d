@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Window
  * 	- glib.ListSG
  * 	- gtk.Widget
@@ -54,7 +54,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Window;
 private import glib.ListSG;
 private import gtk.Widget;
@@ -666,7 +666,7 @@ public class FileChooser
 	public void setCurrentName(char[] name)
 	{
 		// void gtk_file_chooser_set_current_name  (GtkFileChooser *chooser,  const gchar *name);
-		gtk_file_chooser_set_current_name(gtkFileChooser, std.string.toStringz(name));
+		gtk_file_chooser_set_current_name(gtkFileChooser, Str.toStringz(name));
 	}
 	
 	/**
@@ -686,7 +686,7 @@ public class FileChooser
 	public char[] getFilename()
 	{
 		// gchar* gtk_file_chooser_get_filename (GtkFileChooser *chooser);
-		return std.string.toString(gtk_file_chooser_get_filename(gtkFileChooser) );
+		return Str.toString(gtk_file_chooser_get_filename(gtkFileChooser) );
 	}
 	
 	/**
@@ -729,7 +729,7 @@ public class FileChooser
 	public int setFilename(char[] filename)
 	{
 		// gboolean gtk_file_chooser_set_filename (GtkFileChooser *chooser,  const char *filename);
-		return gtk_file_chooser_set_filename(gtkFileChooser, std.string.toStringz(filename));
+		return gtk_file_chooser_set_filename(gtkFileChooser, Str.toStringz(filename));
 	}
 	
 	/**
@@ -748,7 +748,7 @@ public class FileChooser
 	public int selectFilename(char[] filename)
 	{
 		// gboolean gtk_file_chooser_select_filename  (GtkFileChooser *chooser,  const char *filename);
-		return gtk_file_chooser_select_filename(gtkFileChooser, std.string.toStringz(filename));
+		return gtk_file_chooser_select_filename(gtkFileChooser, Str.toStringz(filename));
 	}
 	
 	/**
@@ -764,7 +764,7 @@ public class FileChooser
 	public void unselectFilename(char[] filename)
 	{
 		// void gtk_file_chooser_unselect_filename  (GtkFileChooser *chooser,  const char *filename);
-		gtk_file_chooser_unselect_filename(gtkFileChooser, std.string.toStringz(filename));
+		gtk_file_chooser_unselect_filename(gtkFileChooser, Str.toStringz(filename));
 	}
 	
 	/**
@@ -826,7 +826,7 @@ public class FileChooser
 	public int setCurrentFolder(char[] filename)
 	{
 		// gboolean gtk_file_chooser_set_current_folder  (GtkFileChooser *chooser,  const gchar *filename);
-		return gtk_file_chooser_set_current_folder(gtkFileChooser, std.string.toStringz(filename));
+		return gtk_file_chooser_set_current_folder(gtkFileChooser, Str.toStringz(filename));
 	}
 	
 	/**
@@ -845,7 +845,7 @@ public class FileChooser
 	public char[] getCurrentFolder()
 	{
 		// gchar* gtk_file_chooser_get_current_folder  (GtkFileChooser *chooser);
-		return std.string.toString(gtk_file_chooser_get_current_folder(gtkFileChooser) );
+		return Str.toString(gtk_file_chooser_get_current_folder(gtkFileChooser) );
 	}
 	
 	/**
@@ -864,7 +864,7 @@ public class FileChooser
 	public char[] getUri()
 	{
 		// gchar* gtk_file_chooser_get_uri (GtkFileChooser *chooser);
-		return std.string.toString(gtk_file_chooser_get_uri(gtkFileChooser) );
+		return Str.toString(gtk_file_chooser_get_uri(gtkFileChooser) );
 	}
 	
 	/**
@@ -907,7 +907,7 @@ public class FileChooser
 	public int setUri(char[] uri)
 	{
 		// gboolean gtk_file_chooser_set_uri (GtkFileChooser *chooser,  const char *uri);
-		return gtk_file_chooser_set_uri(gtkFileChooser, std.string.toStringz(uri));
+		return gtk_file_chooser_set_uri(gtkFileChooser, Str.toStringz(uri));
 	}
 	
 	/**
@@ -926,7 +926,7 @@ public class FileChooser
 	public int selectUri(char[] uri)
 	{
 		// gboolean gtk_file_chooser_select_uri (GtkFileChooser *chooser,  const char *uri);
-		return gtk_file_chooser_select_uri(gtkFileChooser, std.string.toStringz(uri));
+		return gtk_file_chooser_select_uri(gtkFileChooser, Str.toStringz(uri));
 	}
 	
 	/**
@@ -942,7 +942,7 @@ public class FileChooser
 	public void unselectUri(char[] uri)
 	{
 		// void gtk_file_chooser_unselect_uri (GtkFileChooser *chooser,  const char *uri);
-		gtk_file_chooser_unselect_uri(gtkFileChooser, std.string.toStringz(uri));
+		gtk_file_chooser_unselect_uri(gtkFileChooser, Str.toStringz(uri));
 	}
 	
 	/**
@@ -978,7 +978,7 @@ public class FileChooser
 	public int setCurrentFolderUri(char[] uri)
 	{
 		// gboolean gtk_file_chooser_set_current_folder_uri  (GtkFileChooser *chooser,  const gchar *uri);
-		return gtk_file_chooser_set_current_folder_uri(gtkFileChooser, std.string.toStringz(uri));
+		return gtk_file_chooser_set_current_folder_uri(gtkFileChooser, Str.toStringz(uri));
 	}
 	
 	/**
@@ -996,7 +996,7 @@ public class FileChooser
 	public char[] getCurrentFolderUri()
 	{
 		// gchar* gtk_file_chooser_get_current_folder_uri  (GtkFileChooser *chooser);
-		return std.string.toString(gtk_file_chooser_get_current_folder_uri(gtkFileChooser) );
+		return Str.toString(gtk_file_chooser_get_current_folder_uri(gtkFileChooser) );
 	}
 	
 	/**
@@ -1121,7 +1121,7 @@ public class FileChooser
 	public char[] getPreviewFilename()
 	{
 		// char* gtk_file_chooser_get_preview_filename  (GtkFileChooser *chooser);
-		return std.string.toString(gtk_file_chooser_get_preview_filename(gtkFileChooser) );
+		return Str.toString(gtk_file_chooser_get_preview_filename(gtkFileChooser) );
 	}
 	
 	/**
@@ -1137,7 +1137,7 @@ public class FileChooser
 	public char[] getPreviewUri()
 	{
 		// char* gtk_file_chooser_get_preview_uri  (GtkFileChooser *chooser);
-		return std.string.toString(gtk_file_chooser_get_preview_uri(gtkFileChooser) );
+		return Str.toString(gtk_file_chooser_get_preview_uri(gtkFileChooser) );
 	}
 	
 	/**
@@ -1271,7 +1271,7 @@ public class FileChooser
 	public int addShortcutFolder(char[] folder, GError** error)
 	{
 		// gboolean gtk_file_chooser_add_shortcut_folder  (GtkFileChooser *chooser,  const char *folder,  GError **error);
-		return gtk_file_chooser_add_shortcut_folder(gtkFileChooser, std.string.toStringz(folder), error);
+		return gtk_file_chooser_add_shortcut_folder(gtkFileChooser, Str.toStringz(folder), error);
 	}
 	
 	/**
@@ -1291,7 +1291,7 @@ public class FileChooser
 	public int removeShortcutFolder(char[] folder, GError** error)
 	{
 		// gboolean gtk_file_chooser_remove_shortcut_folder  (GtkFileChooser *chooser,  const char *folder,  GError **error);
-		return gtk_file_chooser_remove_shortcut_folder(gtkFileChooser, std.string.toStringz(folder), error);
+		return gtk_file_chooser_remove_shortcut_folder(gtkFileChooser, Str.toStringz(folder), error);
 	}
 	
 	/**
@@ -1330,7 +1330,7 @@ public class FileChooser
 	public int addShortcutFolderUri(char[] uri, GError** error)
 	{
 		// gboolean gtk_file_chooser_add_shortcut_folder_uri  (GtkFileChooser *chooser,  const char *uri,  GError **error);
-		return gtk_file_chooser_add_shortcut_folder_uri(gtkFileChooser, std.string.toStringz(uri), error);
+		return gtk_file_chooser_add_shortcut_folder_uri(gtkFileChooser, Str.toStringz(uri), error);
 	}
 	
 	/**
@@ -1350,7 +1350,7 @@ public class FileChooser
 	public int removeShortcutFolderUri(char[] uri, GError** error)
 	{
 		// gboolean gtk_file_chooser_remove_shortcut_folder_uri  (GtkFileChooser *chooser,  const char *uri,  GError **error);
-		return gtk_file_chooser_remove_shortcut_folder_uri(gtkFileChooser, std.string.toStringz(uri), error);
+		return gtk_file_chooser_remove_shortcut_folder_uri(gtkFileChooser, Str.toStringz(uri), error);
 	}
 	
 	/**

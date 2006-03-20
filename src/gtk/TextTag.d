@@ -36,7 +36,7 @@
  * 	- gtk_text_attributes_
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gobject.ObjectG
  * 	- gdk.Event
  * 	- gtk.TextIter
@@ -53,7 +53,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gobject.ObjectG;
 private import gdk.Event;
 private import gtk.TextIter;
@@ -150,7 +150,7 @@ public class TextTag : ObjectG
 	public this (char[] name)
 	{
 		// GtkTextTag* gtk_text_tag_new (const gchar *name);
-		this(cast(GtkTextTag*)gtk_text_tag_new(std.string.toStringz(name)) );
+		this(cast(GtkTextTag*)gtk_text_tag_new(Str.toStringz(name)) );
 	}
 	
 	/**

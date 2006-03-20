@@ -40,6 +40,7 @@ prefix: cairo_
 structWrap: cairo_surface_t* Surface
 structWrap: cairo_t* Cairo
 import: cairoLib.Surface
+import: glib.Str
 openFile: Cairo
 
 file: cairo-Paths.html
@@ -101,6 +102,7 @@ struct: cairo_surface_t
 class: Surface
 prefix: cairo_surface_
 prefix: cairo_
+import: glib.Str
 openFile: Surface
 
 file: cairo-Image-Surfaces.html
@@ -133,12 +135,14 @@ struct: cairo_matrix_t
 class: Matrix
 structWrap: surfaceT* Surface
 prefix: cairo_matrix_
+import: glib.Str
 outFile: Matrix
 
 file: cairo-Error-handling.html
 struct: cairo_status_t
 class: Status
 prefix: cairo_status_t
+import: glib.Str
 outFile: Status
 
 
@@ -146,6 +150,7 @@ file: cairo-Version-Information.html
 #struct: 
 class: Version
 #prefix: 
+import: glib.Str
 outFile: Version
 
 file: cairo-Types.html

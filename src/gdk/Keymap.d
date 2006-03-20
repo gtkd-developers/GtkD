@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Keymap
  * 	- gdk.Display
  * structWrap:
@@ -49,7 +49,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Keymap;
 private import gdk.Display;
 
@@ -398,7 +398,7 @@ public class Keymap : ObjectG
 	public static char[] gdkKeyvalName(uint keyval)
 	{
 		// gchar* gdk_keyval_name (guint keyval);
-		return std.string.toString(gdk_keyval_name(keyval) );
+		return Str.toString(gdk_keyval_name(keyval) );
 	}
 	
 	/**
@@ -412,7 +412,7 @@ public class Keymap : ObjectG
 	public static uint gdkKeyvalFromName(char[] keyvalName)
 	{
 		// guint gdk_keyval_from_name (const gchar *keyval_name);
-		return gdk_keyval_from_name(std.string.toStringz(keyvalName));
+		return gdk_keyval_from_name(Str.toStringz(keyvalName));
 	}
 	
 	/**

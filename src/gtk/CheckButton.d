@@ -37,9 +37,9 @@
  * 	- gtk_check_button_new_with_label
  * 	- gtk_check_button_new_with_mnemonic
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Button
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -50,9 +50,9 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Button;
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -106,12 +106,12 @@ public class CheckButton : ToggleButton
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_check_button_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkCheckButton*)gtk_check_button_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkCheckButton*)gtk_check_button_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_check_button_new_with_label (const gchar *label);
-			this(cast(GtkCheckButton*)gtk_check_button_new_with_label(std.string.toStringz(label)) );
+			this(cast(GtkCheckButton*)gtk_check_button_new_with_label(Str.toStringz(label)) );
 		}
 	}
 	

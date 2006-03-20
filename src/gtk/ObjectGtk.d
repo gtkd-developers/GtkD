@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,7 +46,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -196,7 +196,7 @@ public class ObjectGtk : ObjectG
 	public this (GtkType type, char[] firstPropertyName, ... )
 	{
 		// GtkObject* gtk_object_new (GtkType type,  const gchar *first_property_name,  ...);
-		this(cast(GtkObject*)gtk_object_new(type, std.string.toStringz(firstPropertyName)) );
+		this(cast(GtkObject*)gtk_object_new(type, Str.toStringz(firstPropertyName)) );
 	}
 	
 	/**
@@ -308,7 +308,7 @@ public class ObjectGtk : ObjectG
 	public void get(char[] firstPropertyName, ... )
 	{
 		// void gtk_object_get (GtkObject *object,  const gchar *first_property_name,  ...);
-		gtk_object_get(gtkObject, std.string.toStringz(firstPropertyName));
+		gtk_object_get(gtkObject, Str.toStringz(firstPropertyName));
 	}
 	
 	/**
@@ -332,7 +332,7 @@ public class ObjectGtk : ObjectG
 	public void set(char[] firstPropertyName, ... )
 	{
 		// void gtk_object_set (GtkObject *object,  const gchar *first_property_name,  ...);
-		gtk_object_set(gtkObject, std.string.toStringz(firstPropertyName));
+		gtk_object_set(gtkObject, Str.toStringz(firstPropertyName));
 	}
 	
 	/**
@@ -352,7 +352,7 @@ public class ObjectGtk : ObjectG
 	public void setData(char[] key, void* data)
 	{
 		// void gtk_object_set_data (GtkObject *object,  const gchar *key,  gpointer data);
-		gtk_object_set_data(gtkObject, std.string.toStringz(key), data);
+		gtk_object_set_data(gtkObject, Str.toStringz(key), data);
 	}
 	
 	/**
@@ -373,7 +373,7 @@ public class ObjectGtk : ObjectG
 	public void setDataFull(char[] key, void* data, GtkDestroyNotify destroy)
 	{
 		// void gtk_object_set_data_full (GtkObject *object,  const gchar *key,  gpointer data,  GtkDestroyNotify destroy);
-		gtk_object_set_data_full(gtkObject, std.string.toStringz(key), data, destroy);
+		gtk_object_set_data_full(gtkObject, Str.toStringz(key), data, destroy);
 	}
 	
 	/**
@@ -391,7 +391,7 @@ public class ObjectGtk : ObjectG
 	public void removeData(char[] key)
 	{
 		// void gtk_object_remove_data (GtkObject *object,  const gchar *key);
-		gtk_object_remove_data(gtkObject, std.string.toStringz(key));
+		gtk_object_remove_data(gtkObject, Str.toStringz(key));
 	}
 	
 	/**
@@ -408,7 +408,7 @@ public class ObjectGtk : ObjectG
 	public void* getData(char[] key)
 	{
 		// gpointer gtk_object_get_data (GtkObject *object,  const gchar *key);
-		return gtk_object_get_data(gtkObject, std.string.toStringz(key));
+		return gtk_object_get_data(gtkObject, Str.toStringz(key));
 	}
 	
 	/**
@@ -427,7 +427,7 @@ public class ObjectGtk : ObjectG
 	public void removeNoNotify(char[] key)
 	{
 		// void gtk_object_remove_no_notify (GtkObject *object,  const gchar *key);
-		gtk_object_remove_no_notify(gtkObject, std.string.toStringz(key));
+		gtk_object_remove_no_notify(gtkObject, Str.toStringz(key));
 	}
 	
 	/**
@@ -483,7 +483,7 @@ public class ObjectGtk : ObjectG
 	public static void addArgType(char[] argName, GtkType argType, uint argFlags, uint argId)
 	{
 		// void gtk_object_add_arg_type (const gchar *arg_name,  GtkType arg_type,  guint arg_flags,  guint arg_id);
-		gtk_object_add_arg_type(std.string.toStringz(argName), argType, argFlags, argId);
+		gtk_object_add_arg_type(Str.toStringz(argName), argType, argFlags, argId);
 	}
 	
 	/**

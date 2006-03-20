@@ -39,6 +39,7 @@
  * 	- gdkpixbuf.PixbufFormat
  * 	- gdk.Pixbuf
  * 	- gdkpixbuf.PixbufAnimation
+ * 	- glib.Str
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufAnimation* -> PixbufAnimation
@@ -55,6 +56,7 @@ private import lib.gdkpixbuf;
 private import gdkpixbuf.PixbufFormat;
 private import gdk.Pixbuf;
 private import gdkpixbuf.PixbufAnimation;
+private import glib.Str;
 
 /**
  * Description
@@ -145,12 +147,12 @@ public class PixbufLoader : ObjectG
 		if ( isMimeType )
 		{
 			// GdkPixbufLoader* gdk_pixbuf_loader_new_with_mime_type  (const char *mime_type,  GError **error);
-			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_mime_type(std.string.toStringz(type), error) );
+			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_mime_type(Str.toStringz(type), error) );
 		}
 		else
 		{
 			// GdkPixbufLoader* gdk_pixbuf_loader_new_with_type  (const char *image_type,  GError **error);
-			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_type(std.string.toStringz(type), error) );
+			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_type(Str.toStringz(type), error) );
 		}
 	}
 	

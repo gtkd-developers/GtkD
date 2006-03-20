@@ -54,6 +54,7 @@
  * 	- pango.PgLayout
  * 	- pango.PgLayoutIter
  * 	- pango.PgScriptIter
+ * 	- glib.Str
  * structWrap:
  * 	- PangoAttribute* -> PgAttribute
  * 	- PangoAttributeList* -> PgAttributeList
@@ -93,6 +94,7 @@ private import pango.PgTabArray;
 private import pango.PgLayout;
 private import pango.PgLayoutIter;
 private import pango.PgScriptIter;
+private import glib.Str;
 
 /**
  * Description
@@ -261,7 +263,7 @@ public class PgFontDescription
 	public void setFamily(char[] family)
 	{
 		// void pango_font_description_set_family  (PangoFontDescription *desc,  const char *family);
-		pango_font_description_set_family(pangoFontDescription, std.string.toStringz(family));
+		pango_font_description_set_family(pangoFontDescription, Str.toStringz(family));
 	}
 	
 	/**
@@ -279,7 +281,7 @@ public class PgFontDescription
 	public void setFamilyStatic(char[] family)
 	{
 		// void pango_font_description_set_family_static  (PangoFontDescription *desc,  const char *family);
-		pango_font_description_set_family_static(pangoFontDescription, std.string.toStringz(family));
+		pango_font_description_set_family_static(pangoFontDescription, Str.toStringz(family));
 	}
 	
 	/**
@@ -293,7 +295,7 @@ public class PgFontDescription
 	public char[] getFamily()
 	{
 		// const char* pango_font_description_get_family  (const PangoFontDescription *desc);
-		return std.string.toString(pango_font_description_get_family(pangoFontDescription) );
+		return Str.toString(pango_font_description_get_family(pangoFontDescription) );
 	}
 	
 	/**
@@ -604,7 +606,7 @@ public class PgFontDescription
 	public static PangoFontDescription* fromString(char[] str)
 	{
 		// PangoFontDescription* pango_font_description_from_string  (const char *str);
-		return pango_font_description_from_string(std.string.toStringz(str));
+		return pango_font_description_from_string(Str.toStringz(str));
 	}
 	
 	/**
@@ -621,7 +623,7 @@ public class PgFontDescription
 	public char[] toString()
 	{
 		// char* pango_font_description_to_string  (const PangoFontDescription *desc);
-		return std.string.toString(pango_font_description_to_string(pangoFontDescription) );
+		return Str.toString(pango_font_description_to_string(pangoFontDescription) );
 	}
 	
 	/**
@@ -637,7 +639,7 @@ public class PgFontDescription
 	public char[] toFilename()
 	{
 		// char* pango_font_description_to_filename  (const PangoFontDescription *desc);
-		return std.string.toString(pango_font_description_to_filename(pangoFontDescription) );
+		return Str.toString(pango_font_description_to_filename(pangoFontDescription) );
 	}
 	
 	

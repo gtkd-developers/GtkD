@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,7 +46,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -128,7 +128,7 @@ public class Statusbar : HBox
 		
 		foreach ( void delegate(guint, char[], Statusbar) dlg ; statusbar.onTextPoppedListeners )
 		{
-			dlg(contextId, std.string.toString(text), statusbar);
+			dlg(contextId, Str.toString(text), statusbar);
 		}
 		
 		return consumed;
@@ -156,7 +156,7 @@ public class Statusbar : HBox
 		
 		foreach ( void delegate(guint, char[], Statusbar) dlg ; statusbar.onTextPushedListeners )
 		{
-			dlg(contextId, std.string.toString(text), statusbar);
+			dlg(contextId, Str.toString(text), statusbar);
 		}
 		
 		return consumed;
@@ -188,7 +188,7 @@ public class Statusbar : HBox
 	public uint getContextId(char[] contextDescription)
 	{
 		// guint gtk_statusbar_get_context_id (GtkStatusbar *statusbar,  const gchar *context_description);
-		return gtk_statusbar_get_context_id(gtkStatusbar, std.string.toStringz(contextDescription));
+		return gtk_statusbar_get_context_id(gtkStatusbar, Str.toStringz(contextDescription));
 	}
 	
 	/**
@@ -206,7 +206,7 @@ public class Statusbar : HBox
 	public uint push(uint contextId, char[] text)
 	{
 		// guint gtk_statusbar_push (GtkStatusbar *statusbar,  guint context_id,  const gchar *text);
-		return gtk_statusbar_push(gtkStatusbar, contextId, std.string.toStringz(text));
+		return gtk_statusbar_push(gtkStatusbar, contextId, Str.toStringz(text));
 	}
 	
 	/**

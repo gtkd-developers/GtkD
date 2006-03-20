@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- glib.Quark
  * 	- gobject.Type
  * 	- gobject.TypePlugin
@@ -49,7 +49,7 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import std.string;
+private import glib.Str;
 private import glib.Quark;
 private import gobject.Type;
 private import gobject.TypePlugin;
@@ -160,7 +160,7 @@ public class Type
 	public static char[] name(GType type)
 	{
 		// const gchar* g_type_name (GType type);
-		return std.string.toString(g_type_name(type) );
+		return Str.toString(g_type_name(type) );
 	}
 	
 	/**
@@ -187,7 +187,7 @@ public class Type
 	public static GType fromName(char[] name)
 	{
 		// GType g_type_from_name (const gchar *name);
-		return g_type_from_name(std.string.toStringz(name));
+		return g_type_from_name(Str.toStringz(name));
 	}
 	
 	/**
@@ -599,7 +599,7 @@ public class Type
 	public static GType registerStatic(GType parentType, char[] typeName, GTypeInfo* info, GTypeFlags flags)
 	{
 		// GType g_type_register_static (GType parent_type,  const gchar *type_name,  const GTypeInfo *info,  GTypeFlags flags);
-		return g_type_register_static(parentType, std.string.toStringz(typeName), info, flags);
+		return g_type_register_static(parentType, Str.toStringz(typeName), info, flags);
 	}
 	
 	/**
@@ -622,7 +622,7 @@ public class Type
 	public static GType registerDynamic(GType parentType, char[] typeName, TypePlugin plugin, GTypeFlags flags)
 	{
 		// GType g_type_register_dynamic (GType parent_type,  const gchar *type_name,  GTypePlugin *plugin,  GTypeFlags flags);
-		return g_type_register_dynamic(parentType, std.string.toStringz(typeName), (plugin is null) ? null : plugin.getTypePluginStruct(), flags);
+		return g_type_register_dynamic(parentType, Str.toStringz(typeName), (plugin is null) ? null : plugin.getTypePluginStruct(), flags);
 	}
 	
 	/**
@@ -648,7 +648,7 @@ public class Type
 	public static GType registerFundamental(GType typeId, char[] typeName, GTypeInfo* info, GTypeFundamentalInfo* finfo, GTypeFlags flags)
 	{
 		// GType g_type_register_fundamental (GType type_id,  const gchar *type_name,  const GTypeInfo *info,  const GTypeFundamentalInfo *finfo,  GTypeFlags flags);
-		return g_type_register_fundamental(typeId, std.string.toStringz(typeName), info, finfo, flags);
+		return g_type_register_fundamental(typeId, Str.toStringz(typeName), info, finfo, flags);
 	}
 	
 	/**

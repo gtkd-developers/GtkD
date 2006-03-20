@@ -23,9 +23,11 @@
 /*
  * Conversion parameters:
  * outPack = glib
- * outFile = 
+ * outFile = HashTable
  * strct   = GHashTable
+ * realStrct=
  * clss    = HashTable
+ * extend  = 
  * prefixes:
  * 	- g_hash_table_
  * omit structs:
@@ -45,6 +47,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.Dataset;
+
 /**
  * Description
  * A GHashTable provides associations between keys and values which

@@ -36,6 +36,7 @@
  * imports:
  * 	- glib.Dataset
  * 	- glib.OptionContext
+ * 	- glib.Str
  * structWrap:
  * 	- GDataset* -> Dataset
  * 	- GOptionContext* -> OptionContext
@@ -50,6 +51,7 @@ private import lib.glib;
 
 private import glib.Dataset;
 private import glib.OptionContext;
+private import glib.Str;
 
 /**
  * Description
@@ -199,7 +201,7 @@ public class OptionGroup
 	public this (char[] name, char[] description, char[] helpDescription, void* userData, GDestroyNotify destroy)
 	{
 		// GOptionGroup* g_option_group_new (const gchar *name,  const gchar *description,  const gchar *help_description,  gpointer user_data,  GDestroyNotify destroy);
-		this(cast(GOptionGroup*)g_option_group_new(std.string.toStringz(name), std.string.toStringz(description), std.string.toStringz(helpDescription), userData, destroy) );
+		this(cast(GOptionGroup*)g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy) );
 	}
 	
 	/**
@@ -306,6 +308,6 @@ public class OptionGroup
 	public void setTranslationDomain(char[] domain)
 	{
 		// void g_option_group_set_translation_domain  (GOptionGroup *group,  const gchar *domain);
-		g_option_group_set_translation_domain(gOptionGroup, std.string.toStringz(domain));
+		g_option_group_set_translation_domain(gOptionGroup, Str.toStringz(domain));
 	}
 }

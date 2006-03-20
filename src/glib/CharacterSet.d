@@ -39,6 +39,7 @@
  * omit code:
  * imports:
  * 	- glib.ErrorG
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -50,6 +51,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ErrorG;
+private import glib.Str;
 
 /**
  * Description
@@ -183,7 +185,7 @@ public class CharacterSet
 	public static char[] convert(char[] str, int len, char[] toCodeset, char[] fromCodeset, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_convert (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return std.string.toString(g_convert(std.string.toStringz(str), len, std.string.toStringz(toCodeset), std.string.toStringz(fromCodeset), bytesRead, bytesWritten, error) );
+		return Str.toString(g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), bytesRead, bytesWritten, error) );
 	}
 	
 	/**
@@ -231,7 +233,7 @@ public class CharacterSet
 	public static char[] convertWithFallback(char[] str, int len, char[] toCodeset, char[] fromCodeset, char[] fallback, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return std.string.toString(g_convert_with_fallback(std.string.toStringz(str), len, std.string.toStringz(toCodeset), std.string.toStringz(fromCodeset), std.string.toStringz(fallback), bytesRead, bytesWritten, error) );
+		return Str.toString(g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), bytesRead, bytesWritten, error) );
 	}
 	
 	
@@ -271,7 +273,7 @@ public class CharacterSet
 	public static char[] localeToUtf8(char[] opsysstring, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_locale_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return std.string.toString(g_locale_to_utf8(std.string.toStringz(opsysstring), len, bytesRead, bytesWritten, error) );
+		return Str.toString(g_locale_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error) );
 	}
 	
 	/**
@@ -304,7 +306,7 @@ public class CharacterSet
 	public static char[] filenameToUtf8(char[] opsysstring, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_filename_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return std.string.toString(g_filename_to_utf8(std.string.toStringz(opsysstring), len, bytesRead, bytesWritten, error) );
+		return Str.toString(g_filename_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error) );
 	}
 	
 	/**
@@ -336,7 +338,7 @@ public class CharacterSet
 	public static char[] filenameFromUtf8(char[] utf8string, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_filename_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return std.string.toString(g_filename_from_utf8(std.string.toStringz(utf8string), len, bytesRead, bytesWritten, error) );
+		return Str.toString(g_filename_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error) );
 	}
 	
 	/**
@@ -358,7 +360,7 @@ public class CharacterSet
 	public static char[] filenameFromUri(char[] uri, char** hostname, GError** error)
 	{
 		// gchar* g_filename_from_uri (const gchar *uri,  gchar **hostname,  GError **error);
-		return std.string.toString(g_filename_from_uri(std.string.toStringz(uri), hostname, error) );
+		return Str.toString(g_filename_from_uri(Str.toStringz(uri), hostname, error) );
 	}
 	
 	/**
@@ -379,7 +381,7 @@ public class CharacterSet
 	public static char[] filenameToUri(char[] filename, char[] hostname, GError** error)
 	{
 		// gchar* g_filename_to_uri (const gchar *filename,  const gchar *hostname,  GError **error);
-		return std.string.toString(g_filename_to_uri(std.string.toStringz(filename), std.string.toStringz(hostname), error) );
+		return Str.toString(g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), error) );
 	}
 	
 	/**
@@ -436,7 +438,7 @@ public class CharacterSet
 	public static char[] filenameDisplayName(char[] filename)
 	{
 		// gchar* g_filename_display_name (const gchar *filename);
-		return std.string.toString(g_filename_display_name(std.string.toStringz(filename)) );
+		return Str.toString(g_filename_display_name(Str.toStringz(filename)) );
 	}
 	
 	/**
@@ -458,7 +460,7 @@ public class CharacterSet
 	public static char[] filenameDisplayBasename(char[] filename)
 	{
 		// gchar* g_filename_display_basename (const gchar *filename);
-		return std.string.toString(g_filename_display_basename(std.string.toStringz(filename)) );
+		return Str.toString(g_filename_display_basename(Str.toStringz(filename)) );
 	}
 	
 	/**
@@ -476,7 +478,7 @@ public class CharacterSet
 	public static char** uriListExtractUris(char[] uriList)
 	{
 		// gchar** g_uri_list_extract_uris (const gchar *uri_list);
-		return g_uri_list_extract_uris(std.string.toStringz(uriList));
+		return g_uri_list_extract_uris(Str.toStringz(uriList));
 	}
 	
 	/**
@@ -509,7 +511,7 @@ public class CharacterSet
 	public static char[] localeFromUtf8(char[] utf8string, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_locale_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return std.string.toString(g_locale_from_utf8(std.string.toStringz(utf8string), len, bytesRead, bytesWritten, error) );
+		return Str.toString(g_locale_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error) );
 	}
 	
 	

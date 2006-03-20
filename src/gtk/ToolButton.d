@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.ToolItem
  * 	- gtk.Widget
  * structWrap:
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.ToolItem;
 private import gtk.Widget;
 
@@ -153,7 +153,7 @@ public class ToolButton : ToolItem
 	public static ToolItem newToolButton(Widget iconWidget, char[] label)
 	{
 		// GtkToolItem* gtk_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
-		return new ToolItem( gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), std.string.toStringz(label)) );
+		return new ToolItem( gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label)) );
 	}
 	
 	/**
@@ -170,7 +170,7 @@ public class ToolButton : ToolItem
 	public static ToolItem newFromStock(char[] stockId)
 	{
 		// GtkToolItem* gtk_tool_button_new_from_stock (const gchar *stock_id);
-		return new ToolItem( gtk_tool_button_new_from_stock(std.string.toStringz(stockId)) );
+		return new ToolItem( gtk_tool_button_new_from_stock(Str.toStringz(stockId)) );
 	}
 	
 	/**
@@ -188,7 +188,7 @@ public class ToolButton : ToolItem
 	public void setLabel(char[] label)
 	{
 		// void gtk_tool_button_set_label (GtkToolButton *button,  const gchar *label);
-		gtk_tool_button_set_label(gtkToolButton, std.string.toStringz(label));
+		gtk_tool_button_set_label(gtkToolButton, Str.toStringz(label));
 	}
 	
 	/**
@@ -204,7 +204,7 @@ public class ToolButton : ToolItem
 	public char[] getLabel()
 	{
 		// const gchar* gtk_tool_button_get_label (GtkToolButton *button);
-		return std.string.toString(gtk_tool_button_get_label(gtkToolButton) );
+		return Str.toString(gtk_tool_button_get_label(gtkToolButton) );
 	}
 	
 	/**
@@ -256,7 +256,7 @@ public class ToolButton : ToolItem
 	public void setStockId(char[] stockId)
 	{
 		// void gtk_tool_button_set_stock_id (GtkToolButton *button,  const gchar *stock_id);
-		gtk_tool_button_set_stock_id(gtkToolButton, std.string.toStringz(stockId));
+		gtk_tool_button_set_stock_id(gtkToolButton, Str.toStringz(stockId));
 	}
 	
 	/**
@@ -271,7 +271,7 @@ public class ToolButton : ToolItem
 	public char[] getStockId()
 	{
 		// const gchar* gtk_tool_button_get_stock_id (GtkToolButton *button);
-		return std.string.toString(gtk_tool_button_get_stock_id(gtkToolButton) );
+		return Str.toString(gtk_tool_button_get_stock_id(gtkToolButton) );
 	}
 	
 	/**
@@ -289,7 +289,7 @@ public class ToolButton : ToolItem
 	public void setIconName(char[] iconName)
 	{
 		// void gtk_tool_button_set_icon_name (GtkToolButton *button,  const gchar *icon_name);
-		gtk_tool_button_set_icon_name(gtkToolButton, std.string.toStringz(iconName));
+		gtk_tool_button_set_icon_name(gtkToolButton, Str.toStringz(iconName));
 	}
 	
 	/**
@@ -305,7 +305,7 @@ public class ToolButton : ToolItem
 	public char[] getIconName()
 	{
 		// const gchar* gtk_tool_button_get_icon_name (GtkToolButton *button);
-		return std.string.toString(gtk_tool_button_get_icon_name(gtkToolButton) );
+		return Str.toString(gtk_tool_button_get_icon_name(gtkToolButton) );
 	}
 	
 	/**

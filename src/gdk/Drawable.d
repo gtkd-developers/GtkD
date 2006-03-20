@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Drawable
  * 	- gdk.Display
  * 	- gdk.Screen
@@ -99,7 +99,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Drawable;
 private import gdk.Display;
 private import gdk.Screen;
@@ -244,7 +244,7 @@ public class Drawable : ObjectG
 	public void drawableSetData(char[] key, void* data, GDestroyNotify destroyFunc)
 	{
 		// void gdk_drawable_set_data (GdkDrawable *drawable,  const gchar *key,  gpointer data,  GDestroyNotify destroy_func);
-		gdk_drawable_set_data(gdkDrawable, std.string.toStringz(key), data, destroyFunc);
+		gdk_drawable_set_data(gdkDrawable, Str.toStringz(key), data, destroyFunc);
 	}
 	
 	/**
@@ -262,7 +262,7 @@ public class Drawable : ObjectG
 	public void* drawableGetData(char[] key)
 	{
 		// gpointer gdk_drawable_get_data (GdkDrawable *drawable,  const gchar *key);
-		return gdk_drawable_get_data(gdkDrawable, std.string.toStringz(key));
+		return gdk_drawable_get_data(gdkDrawable, Str.toStringz(key));
 	}
 	
 	/**
@@ -843,7 +843,7 @@ public class Drawable : ObjectG
 	public void drawString(Font font, GC gc, int x, int y, char[] string)
 	{
 		// void gdk_draw_string (GdkDrawable *drawable,  GdkFont *font,  GdkGC *gc,  gint x,  gint y,  const gchar *string);
-		gdk_draw_string(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, std.string.toStringz(string));
+		gdk_draw_string(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, Str.toStringz(string));
 	}
 	
 	/**
@@ -868,7 +868,7 @@ public class Drawable : ObjectG
 	public void drawText(Font font, GC gc, int x, int y, char[] text, int textLength)
 	{
 		// void gdk_draw_text (GdkDrawable *drawable,  GdkFont *font,  GdkGC *gc,  gint x,  gint y,  const gchar *text,  gint text_length);
-		gdk_draw_text(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, std.string.toStringz(text), textLength);
+		gdk_draw_text(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, Str.toStringz(text), textLength);
 	}
 	
 	/**

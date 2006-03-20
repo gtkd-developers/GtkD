@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.EntryCompletion
  * structWrap:
  * 	- GtkEntryCompletion* -> EntryCompletion
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.EntryCompletion;
 
 /**
@@ -270,7 +270,7 @@ public class Entry : Widget
 		
 		foreach ( void delegate(char[], Entry) dlg ; entry.onInsertAtCursorListeners )
 		{
-			dlg(std.string.toString(arg1), entry);
+			dlg(Str.toString(arg1), entry);
 		}
 		
 		return consumed;
@@ -435,7 +435,7 @@ public class Entry : Widget
 	public void setText(char[] text)
 	{
 		// void gtk_entry_set_text (GtkEntry *entry,  const gchar *text);
-		gtk_entry_set_text(gtkEntry, std.string.toStringz(text));
+		gtk_entry_set_text(gtkEntry, Str.toStringz(text));
 	}
 	
 	/**
@@ -450,7 +450,7 @@ public class Entry : Widget
 	public void appendText(char[] text)
 	{
 		// void gtk_entry_append_text (GtkEntry *entry,  const gchar *text);
-		gtk_entry_append_text(gtkEntry, std.string.toStringz(text));
+		gtk_entry_append_text(gtkEntry, Str.toStringz(text));
 	}
 	
 	/**
@@ -465,7 +465,7 @@ public class Entry : Widget
 	public void prependText(char[] text)
 	{
 		// void gtk_entry_prepend_text (GtkEntry *entry,  const gchar *text);
-		gtk_entry_prepend_text(gtkEntry, std.string.toStringz(text));
+		gtk_entry_prepend_text(gtkEntry, Str.toStringz(text));
 	}
 	
 	/**
@@ -506,7 +506,7 @@ public class Entry : Widget
 	public char[] getText()
 	{
 		// const gchar* gtk_entry_get_text (GtkEntry *entry);
-		return std.string.toString(gtk_entry_get_text(gtkEntry) );
+		return Str.toString(gtk_entry_get_text(gtkEntry) );
 	}
 	
 	/**

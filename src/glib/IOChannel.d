@@ -38,6 +38,7 @@
  * 	- glib.StringG
  * 	- glib.Source
  * 	- glib.Dataset
+ * 	- glib.Str
  * structWrap:
  * 	- GIOChannel* -> IOChannel
  * 	- GSource* -> Source
@@ -55,6 +56,7 @@ private import glib.ErrorG;
 private import glib.StringG;
 private import glib.Source;
 private import glib.Dataset;
+private import glib.Str;
 
 /**
  * Description
@@ -187,7 +189,7 @@ public class IOChannel
 	public this (char[] filename, char[] mode, GError** error)
 	{
 		// GIOChannel* g_io_channel_new_file (const gchar *filename,  const gchar *mode,  GError **error);
-		this(cast(GIOChannel*)g_io_channel_new_file(std.string.toStringz(filename), std.string.toStringz(mode), error) );
+		this(cast(GIOChannel*)g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), error) );
 	}
 	
 	/**
@@ -215,7 +217,7 @@ public class IOChannel
 	public GIOStatus readChars(char[] buf, uint count, uint* bytesRead, GError** error)
 	{
 		// GIOStatus g_io_channel_read_chars (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read,  GError **error);
-		return g_io_channel_read_chars(gIOChannel, std.string.toStringz(buf), count, bytesRead, error);
+		return g_io_channel_read_chars(gIOChannel, Str.toStringz(buf), count, bytesRead, error);
 	}
 	
 	/**
@@ -339,7 +341,7 @@ public class IOChannel
 	public GIOStatus writeChars(char[] buf, int count, uint* bytesWritten, GError** error)
 	{
 		// GIOStatus g_io_channel_write_chars (GIOChannel *channel,  const gchar *buf,  gssize count,  gsize *bytes_written,  GError **error);
-		return g_io_channel_write_chars(gIOChannel, std.string.toStringz(buf), count, bytesWritten, error);
+		return g_io_channel_write_chars(gIOChannel, Str.toStringz(buf), count, bytesWritten, error);
 	}
 	
 	/**
@@ -622,7 +624,7 @@ public class IOChannel
 	public char[] getLineTerm(int* length)
 	{
 		// const gchar* g_io_channel_get_line_term (GIOChannel *channel,  gint *length);
-		return std.string.toString(g_io_channel_get_line_term(gIOChannel, length) );
+		return Str.toString(g_io_channel_get_line_term(gIOChannel, length) );
 	}
 	
 	/**
@@ -643,7 +645,7 @@ public class IOChannel
 	public void setLineTerm(char[] lineTerm, int length)
 	{
 		// void g_io_channel_set_line_term (GIOChannel *channel,  const gchar *line_term,  gint length);
-		g_io_channel_set_line_term(gIOChannel, std.string.toStringz(lineTerm), length);
+		g_io_channel_set_line_term(gIOChannel, Str.toStringz(lineTerm), length);
 	}
 	
 	/**
@@ -700,7 +702,7 @@ public class IOChannel
 	public char[] getEncoding()
 	{
 		// const gchar* g_io_channel_get_encoding (GIOChannel *channel);
-		return std.string.toString(g_io_channel_get_encoding(gIOChannel) );
+		return Str.toString(g_io_channel_get_encoding(gIOChannel) );
 	}
 	
 	/**
@@ -742,7 +744,7 @@ public class IOChannel
 	public GIOStatus setEncoding(char[] encoding, GError** error)
 	{
 		// GIOStatus g_io_channel_set_encoding (GIOChannel *channel,  const gchar *encoding,  GError **error);
-		return g_io_channel_set_encoding(gIOChannel, std.string.toStringz(encoding), error);
+		return g_io_channel_set_encoding(gIOChannel, Str.toStringz(encoding), error);
 	}
 	
 	/**
@@ -797,7 +799,7 @@ public class IOChannel
 	public GIOError read(char[] buf, uint count, uint* bytesRead)
 	{
 		// GIOError g_io_channel_read (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read);
-		return g_io_channel_read(gIOChannel, std.string.toStringz(buf), count, bytesRead);
+		return g_io_channel_read(gIOChannel, Str.toStringz(buf), count, bytesRead);
 	}
 	
 	
@@ -819,7 +821,7 @@ public class IOChannel
 	public GIOError write(char[] buf, uint count, uint* bytesWritten)
 	{
 		// GIOError g_io_channel_write (GIOChannel *channel,  const gchar *buf,  gsize count,  gsize *bytes_written);
-		return g_io_channel_write(gIOChannel, std.string.toStringz(buf), count, bytesWritten);
+		return g_io_channel_write(gIOChannel, Str.toStringz(buf), count, bytesWritten);
 	}
 	
 	/**

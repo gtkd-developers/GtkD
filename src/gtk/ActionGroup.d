@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Action
  * 	- glib.ListG
  * structWrap:
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Action;
 private import glib.ListG;
 
@@ -237,7 +237,7 @@ public class ActionGroup : ObjectG
 	public this (char[] name)
 	{
 		// GtkActionGroup* gtk_action_group_new (const gchar *name);
-		this(cast(GtkActionGroup*)gtk_action_group_new(std.string.toStringz(name)) );
+		this(cast(GtkActionGroup*)gtk_action_group_new(Str.toStringz(name)) );
 	}
 	
 	/**
@@ -251,7 +251,7 @@ public class ActionGroup : ObjectG
 	public char[] getName()
 	{
 		// const gchar* gtk_action_group_get_name (GtkActionGroup *action_group);
-		return std.string.toString(gtk_action_group_get_name(gtkActionGroup) );
+		return Str.toString(gtk_action_group_get_name(gtkActionGroup) );
 	}
 	
 	/**
@@ -329,7 +329,7 @@ public class ActionGroup : ObjectG
 	public Action getAction(char[] actionName)
 	{
 		// GtkAction* gtk_action_group_get_action (GtkActionGroup *action_group,  const gchar *action_name);
-		return new Action( gtk_action_group_get_action(gtkActionGroup, std.string.toStringz(actionName)) );
+		return new Action( gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName)) );
 	}
 	
 	/**
@@ -384,7 +384,7 @@ public class ActionGroup : ObjectG
 	public void addActionWithAccel(Action action, char[] accelerator)
 	{
 		// void gtk_action_group_add_action_with_accel  (GtkActionGroup *action_group,  GtkAction *action,  const gchar *accelerator);
-		gtk_action_group_add_action_with_accel(gtkActionGroup, (action is null) ? null : action.getActionStruct(), std.string.toStringz(accelerator));
+		gtk_action_group_add_action_with_accel(gtkActionGroup, (action is null) ? null : action.getActionStruct(), Str.toStringz(accelerator));
 	}
 	
 	/**
@@ -580,7 +580,7 @@ public class ActionGroup : ObjectG
 	public void setTranslationDomain(char[] domain)
 	{
 		// void gtk_action_group_set_translation_domain  (GtkActionGroup *action_group,  const gchar *domain);
-		gtk_action_group_set_translation_domain(gtkActionGroup, std.string.toStringz(domain));
+		gtk_action_group_set_translation_domain(gtkActionGroup, Str.toStringz(domain));
 	}
 	
 	/**
@@ -602,7 +602,7 @@ public class ActionGroup : ObjectG
 	public char[] translateString(char[] string)
 	{
 		// const gchar* gtk_action_group_translate_string  (GtkActionGroup *action_group,  const gchar *string);
-		return std.string.toString(gtk_action_group_translate_string(gtkActionGroup, std.string.toStringz(string)) );
+		return Str.toString(gtk_action_group_translate_string(gtkActionGroup, Str.toStringz(string)) );
 	}
 	
 	

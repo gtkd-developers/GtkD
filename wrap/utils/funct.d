@@ -444,7 +444,7 @@ public struct Funct
 		{
 			if ( parmsWrap[i] == "char[]" )
 			{
-				parmToGtk = "std.string.toStringz("
+				parmToGtk = "Str.toStringz("
 							~ DuitClass.idsToDuit(parms[i], convParms, aliases)
 							~")";
 			}
@@ -468,7 +468,7 @@ public struct Funct
 		{
 			if ( parmsWrap[i] == "char[]" )
 			{
-				parmToDuit = "std.string.toString("
+				parmToDuit = "Str.toString("
 							~ DuitClass.idsToDuit(parms[i], convParms, aliases)
 							~")";
 			}
@@ -540,7 +540,7 @@ public struct Funct
 				{
 					if ( typeWrap == "char[]" )
 					{
-						gtkCall ~= "std.string.toString(";
+						gtkCall ~= "Str.toString(";
 					}
 					else
 					{

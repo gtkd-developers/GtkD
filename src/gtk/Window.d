@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.AccelGroup
  * 	- gtk.Widget
  * 	- gtk.Window
@@ -59,7 +59,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.AccelGroup;
 private import gtk.Widget;
 private import gtk.Window;
@@ -328,7 +328,7 @@ public class Window : Bin
 	public void setTitle(char[] title)
 	{
 		// void gtk_window_set_title (GtkWindow *window,  const gchar *title);
-		gtk_window_set_title(gtkWindow, std.string.toStringz(title));
+		gtk_window_set_title(gtkWindow, Str.toStringz(title));
 	}
 	
 	/**
@@ -350,7 +350,7 @@ public class Window : Bin
 	public void setWmclass(char[] wmclassName, char[] wmclassClass)
 	{
 		// void gtk_window_set_wmclass (GtkWindow *window,  const gchar *wmclass_name,  const gchar *wmclass_class);
-		gtk_window_set_wmclass(gtkWindow, std.string.toStringz(wmclassName), std.string.toStringz(wmclassClass));
+		gtk_window_set_wmclass(gtkWindow, Str.toStringz(wmclassName), Str.toStringz(wmclassClass));
 	}
 	
 	/**
@@ -1271,7 +1271,7 @@ public class Window : Bin
 	public void setRole(char[] role)
 	{
 		// void gtk_window_set_role (GtkWindow *window,  const gchar *role);
-		gtk_window_set_role(gtkWindow, std.string.toStringz(role));
+		gtk_window_set_role(gtkWindow, Str.toStringz(role));
 	}
 	
 	/**
@@ -1515,7 +1515,7 @@ public class Window : Bin
 	public char[] getIconName()
 	{
 		// gchar* gtk_window_get_icon_name (GtkWindow *window);
-		return std.string.toString(gtk_window_get_icon_name(gtkWindow) );
+		return Str.toString(gtk_window_get_icon_name(gtkWindow) );
 	}
 	
 	/**
@@ -1605,7 +1605,7 @@ public class Window : Bin
 	public char[] getRole()
 	{
 		// const gchar* gtk_window_get_role (GtkWindow *window);
-		return std.string.toString(gtk_window_get_role(gtkWindow) );
+		return Str.toString(gtk_window_get_role(gtkWindow) );
 	}
 	
 	/**
@@ -1673,7 +1673,7 @@ public class Window : Bin
 	public char[] getTitle()
 	{
 		// const gchar* gtk_window_get_title (GtkWindow *window);
-		return std.string.toString(gtk_window_get_title(gtkWindow) );
+		return Str.toString(gtk_window_get_title(gtkWindow) );
 	}
 	
 	/**
@@ -1879,7 +1879,7 @@ public class Window : Bin
 	public int parseGeometry(char[] geometry)
 	{
 		// gboolean gtk_window_parse_geometry (GtkWindow *window,  const gchar *geometry);
-		return gtk_window_parse_geometry(gtkWindow, std.string.toStringz(geometry));
+		return gtk_window_parse_geometry(gtkWindow, Str.toStringz(geometry));
 	}
 	
 	/**
@@ -1961,7 +1961,7 @@ public class Window : Bin
 	public static int setDefaultIconFromFile(char[] filename, GError** err)
 	{
 		// gboolean gtk_window_set_default_icon_from_file  (const gchar *filename,  GError **err);
-		return gtk_window_set_default_icon_from_file(std.string.toStringz(filename), err);
+		return gtk_window_set_default_icon_from_file(Str.toStringz(filename), err);
 	}
 	
 	/**
@@ -1975,7 +1975,7 @@ public class Window : Bin
 	public static void setDefaultIconName(char[] name)
 	{
 		// void gtk_window_set_default_icon_name  (const gchar *name);
-		gtk_window_set_default_icon_name(std.string.toStringz(name));
+		gtk_window_set_default_icon_name(Str.toStringz(name));
 	}
 	
 	/**
@@ -2053,7 +2053,7 @@ public class Window : Bin
 	public int setIconFromFile(char[] filename, GError** err)
 	{
 		// gboolean gtk_window_set_icon_from_file (GtkWindow *window,  const gchar *filename,  GError **err);
-		return gtk_window_set_icon_from_file(gtkWindow, std.string.toStringz(filename), err);
+		return gtk_window_set_icon_from_file(gtkWindow, Str.toStringz(filename), err);
 	}
 	
 	/**
@@ -2070,7 +2070,7 @@ public class Window : Bin
 	public void setIconName(char[] name)
 	{
 		// void gtk_window_set_icon_name (GtkWindow *window,  const gchar *name);
-		gtk_window_set_icon_name(gtkWindow, std.string.toStringz(name));
+		gtk_window_set_icon_name(gtkWindow, Str.toStringz(name));
 	}
 	
 	/**
@@ -2118,7 +2118,7 @@ public class Window : Bin
 	public void decoratedWindowSetTitle(char[] title)
 	{
 		// void gtk_decorated_window_set_title (GtkWindow *window,  const gchar *title);
-		gtk_decorated_window_set_title(gtkWindow, std.string.toStringz(title));
+		gtk_decorated_window_set_title(gtkWindow, Str.toStringz(title));
 	}
 	
 	/**

@@ -52,6 +52,7 @@
  * 	- pango.PgLayout
  * 	- pango.PgLayoutIter
  * 	- pango.PgScriptIter
+ * 	- glib.Str
  * structWrap:
  * 	- GList* -> ListG
  * 	- GSList* -> ListSG
@@ -95,6 +96,7 @@ private import pango.PgTabArray;
 private import pango.PgLayout;
 private import pango.PgLayoutIter;
 private import pango.PgScriptIter;
+private import glib.Str;
 
 /**
  * Description
@@ -171,7 +173,7 @@ public class PgContext : ObjectG
 	public ListG pangoItemize(char[] text, int startIndex, int length, PangoAttrList* attrs, PangoAttrIterator* cachedIter)
 	{
 		// GList* pango_itemize (PangoContext *context,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
-		return new ListG( pango_itemize(pangoContext, std.string.toStringz(text), startIndex, length, attrs, cachedIter) );
+		return new ListG( pango_itemize(pangoContext, Str.toStringz(text), startIndex, length, attrs, cachedIter) );
 	}
 	
 	/**
@@ -202,7 +204,7 @@ public class PgContext : ObjectG
 	public ListG pangoItemizeWithBaseDir(PangoDirection baseDir, char[] text, int startIndex, int length, PangoAttrList* attrs, PangoAttrIterator* cachedIter)
 	{
 		// GList* pango_itemize_with_base_dir (PangoContext *context,  PangoDirection base_dir,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
-		return new ListG( pango_itemize_with_base_dir(pangoContext, baseDir, std.string.toStringz(text), startIndex, length, attrs, cachedIter) );
+		return new ListG( pango_itemize_with_base_dir(pangoContext, baseDir, Str.toStringz(text), startIndex, length, attrs, cachedIter) );
 	}
 	
 	
@@ -538,7 +540,7 @@ public class PgContext : ObjectG
 	public static PangoDirection pangoFindBaseDir(char[] text, int length)
 	{
 		// PangoDirection pango_find_base_dir (const gchar *text,  gint length);
-		return pango_find_base_dir(std.string.toStringz(text), length);
+		return pango_find_base_dir(Str.toStringz(text), length);
 	}
 	
 	/**
@@ -558,7 +560,7 @@ public class PgContext : ObjectG
 	public static void pangoBreak(char[] text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
 	{
 		// void pango_break (const gchar *text,  int length,  PangoAnalysis *analysis,  PangoLogAttr *attrs,  int attrs_len);
-		pango_break(std.string.toStringz(text), length, analysis, attrs, attrsLen);
+		pango_break(Str.toStringz(text), length, analysis, attrs, attrsLen);
 	}
 	
 	/**
@@ -585,7 +587,7 @@ public class PgContext : ObjectG
 	public static void pangoGetLogAttrs(char[] text, int length, int level, PgLanguage language, PangoLogAttr* logAttrs, int attrsLen)
 	{
 		// void pango_get_log_attrs (const char *text,  int length,  int level,  PangoLanguage *language,  PangoLogAttr *log_attrs,  int attrs_len);
-		pango_get_log_attrs(std.string.toStringz(text), length, level, (language is null) ? null : language.getPgLanguageStruct(), logAttrs, attrsLen);
+		pango_get_log_attrs(Str.toStringz(text), length, level, (language is null) ? null : language.getPgLanguageStruct(), logAttrs, attrsLen);
 	}
 	
 	/**
@@ -610,7 +612,7 @@ public class PgContext : ObjectG
 	public static void pangoFindParagraphBoundary(char[] text, int length, int* paragraphDelimiterIndex, int* nextParagraphStart)
 	{
 		// void pango_find_paragraph_boundary (const gchar *text,  gint length,  gint *paragraph_delimiter_index,  gint *next_paragraph_start);
-		pango_find_paragraph_boundary(std.string.toStringz(text), length, paragraphDelimiterIndex, nextParagraphStart);
+		pango_find_paragraph_boundary(Str.toStringz(text), length, paragraphDelimiterIndex, nextParagraphStart);
 	}
 	
 	/**
@@ -635,7 +637,7 @@ public class PgContext : ObjectG
 	public static void pangoDefaultBreak(char[] text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
 	{
 		// void pango_default_break (const gchar *text,  int length,  PangoAnalysis *analysis,  PangoLogAttr *attrs,  int attrs_len);
-		pango_default_break(std.string.toStringz(text), length, analysis, attrs, attrsLen);
+		pango_default_break(Str.toStringz(text), length, analysis, attrs, attrsLen);
 	}
 	
 	
@@ -656,6 +658,6 @@ public class PgContext : ObjectG
 	public static void pangoShape(char[] text, int length, PangoAnalysis* analysis, PangoGlyphString* glyphs)
 	{
 		// void pango_shape (const gchar *text,  gint length,  PangoAnalysis *analysis,  PangoGlyphString *glyphs);
-		pango_shape(std.string.toStringz(text), length, analysis, glyphs);
+		pango_shape(Str.toStringz(text), length, analysis, glyphs);
 	}
 }

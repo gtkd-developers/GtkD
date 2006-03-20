@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * 	- GDate* -> Date
  * local aliases:
@@ -45,6 +46,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -384,7 +386,7 @@ public class Date
 	public void setParse(char[] str)
 	{
 		// void g_date_set_parse (GDate *date,  const gchar *str);
-		g_date_set_parse(gDate, std.string.toStringz(str));
+		g_date_set_parse(gDate, Str.toStringz(str));
 	}
 	
 	/**
@@ -779,7 +781,7 @@ public class Date
 	public static uint strftime(char[] s, uint slen, char[] format, Date date)
 	{
 		// gsize g_date_strftime (gchar *s,  gsize slen,  const gchar *format,  const GDate *date);
-		return g_date_strftime(std.string.toStringz(s), slen, std.string.toStringz(format), (date is null) ? null : date.getDateStruct());
+		return g_date_strftime(Str.toStringz(s), slen, Str.toStringz(format), (date is null) ? null : date.getDateStruct());
 	}
 	
 	/**

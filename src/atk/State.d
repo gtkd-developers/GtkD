@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import atk.typedefs;
 
 private import lib.atk;
 
+private import glib.Str;
 
 /**
  * Description
@@ -68,7 +70,7 @@ public class State
 	public static AtkStateType typeRegister(char[] name)
 	{
 		// AtkStateType atk_state_type_register (const gchar *name);
-		return atk_state_type_register(std.string.toStringz(name));
+		return atk_state_type_register(Str.toStringz(name));
 	}
 	
 	/**
@@ -81,7 +83,7 @@ public class State
 	public static char[] typeGetName(AtkStateType type)
 	{
 		// const gchar* atk_state_type_get_name (AtkStateType type);
-		return std.string.toString(atk_state_type_get_name(type) );
+		return Str.toString(atk_state_type_get_name(type) );
 	}
 	
 	/**
@@ -94,6 +96,6 @@ public class State
 	public static AtkStateType typeForName(char[] name)
 	{
 		// AtkStateType atk_state_type_for_name (const gchar *name);
-		return atk_state_type_for_name(std.string.toStringz(name));
+		return atk_state_type_for_name(Str.toStringz(name));
 	}
 }

@@ -36,6 +36,7 @@
  * imports:
  * 	- gdk.Pixbuf
  * 	- glib.ListSG
+ * 	- glib.Str
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GdkPixbuf* -> Pixbuf
@@ -50,6 +51,7 @@ private import lib.gdkpixbuf;
 
 private import gdk.Pixbuf;
 private import glib.ListSG;
+private import glib.Str;
 
 /**
  * Description
@@ -147,7 +149,7 @@ public class PixbufFormat
 	public static int gdkPixbufSetOption(Pixbuf pixbuf, char[] key, char[] value)
 	{
 		// gboolean gdk_pixbuf_set_option (GdkPixbuf *pixbuf,  const gchar *key,  const gchar *value);
-		return gdk_pixbuf_set_option((pixbuf is null) ? null : pixbuf.getPixbufStruct(), std.string.toStringz(key), std.string.toStringz(value));
+		return gdk_pixbuf_set_option((pixbuf is null) ? null : pixbuf.getPixbufStruct(), Str.toStringz(key), Str.toStringz(value));
 	}
 	
 	/**
@@ -177,7 +179,7 @@ public class PixbufFormat
 	public char[] getName()
 	{
 		// gchar* gdk_pixbuf_format_get_name (GdkPixbufFormat *format);
-		return std.string.toString(gdk_pixbuf_format_get_name(gdkPixbufFormat) );
+		return Str.toString(gdk_pixbuf_format_get_name(gdkPixbufFormat) );
 	}
 	
 	/**
@@ -191,7 +193,7 @@ public class PixbufFormat
 	public char[] getDescription()
 	{
 		// gchar* gdk_pixbuf_format_get_description  (GdkPixbufFormat *format);
-		return std.string.toString(gdk_pixbuf_format_get_description(gdkPixbufFormat) );
+		return Str.toString(gdk_pixbuf_format_get_description(gdkPixbufFormat) );
 	}
 	
 	/**
@@ -302,7 +304,7 @@ public class PixbufFormat
 	public char[] getLicense()
 	{
 		// gchar* gdk_pixbuf_format_get_license (GdkPixbufFormat *format);
-		return std.string.toString(gdk_pixbuf_format_get_license(gdkPixbufFormat) );
+		return Str.toString(gdk_pixbuf_format_get_license(gdkPixbufFormat) );
 	}
 	
 	
@@ -335,9 +337,9 @@ public class PixbufFormat
 	 * See Also
 	 *  GdkPixbufLoader.
 	 */
-	public static GdkPixbufFormat* (char[] filename, int* width, int* height)
+	public static GdkPixbufFormat* vv(char[] filename, int* width, int* height)
 	{
 		// GdkPixbufFormat* gdk_pixbuf_get_file_info (const gchar *filename,  gint *width,  gint *height);
-		return gdk_pixbuf_get_file_info(std.string.toStringz(filename), width, height);
+		return gdk_pixbuf_get_file_info(Str.toStringz(filename), width, height);
 	}
 }

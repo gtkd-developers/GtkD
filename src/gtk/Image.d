@@ -37,7 +37,7 @@
  * 	- gtk_image_new_from_stock
  * 	- gtk_image_new_from_icon_name
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Pixbuf
  * 	- gdk.ImageGdk
  * 	- gdk.Bitmap
@@ -56,7 +56,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Pixbuf;
 private import gdk.ImageGdk;
 private import gdk.Bitmap;
@@ -195,7 +195,7 @@ public class Image : Misc
 	public this (char[] iconName, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_icon_name (const gchar *icon_name,  GtkIconSize size);
-		this(cast(GtkImage*)gtk_image_new_from_icon_name(std.string.toStringz(iconName), size) );
+		this(cast(GtkImage*)gtk_image_new_from_icon_name(Str.toStringz(iconName), size) );
 	}
 	
 	
@@ -369,7 +369,7 @@ public class Image : Misc
 	public this (char[] filename)
 	{
 		// GtkWidget* gtk_image_new_from_file (const gchar *filename);
-		this(cast(GtkImage*)gtk_image_new_from_file(std.string.toStringz(filename)) );
+		this(cast(GtkImage*)gtk_image_new_from_file(Str.toStringz(filename)) );
 	}
 	
 	/**
@@ -482,7 +482,7 @@ public class Image : Misc
 	public void setFromFile(char[] filename)
 	{
 		// void gtk_image_set_from_file (GtkImage *image,  const gchar *filename);
-		gtk_image_set_from_file(gtkImage, std.string.toStringz(filename));
+		gtk_image_set_from_file(gtkImage, Str.toStringz(filename));
 	}
 	
 	/**
@@ -555,7 +555,7 @@ public class Image : Misc
 	public void setFromStock(char[] stockId, GtkIconSize size)
 	{
 		// void gtk_image_set_from_stock (GtkImage *image,  const gchar *stock_id,  GtkIconSize size);
-		gtk_image_set_from_stock(gtkImage, std.string.toStringz(stockId), size);
+		gtk_image_set_from_stock(gtkImage, Str.toStringz(stockId), size);
 	}
 	
 	/**
@@ -585,7 +585,7 @@ public class Image : Misc
 	public void setFromIconName(char[] iconName, GtkIconSize size)
 	{
 		// void gtk_image_set_from_icon_name (GtkImage *image,  const gchar *icon_name,  GtkIconSize size);
-		gtk_image_set_from_icon_name(gtkImage, std.string.toStringz(iconName), size);
+		gtk_image_set_from_icon_name(gtkImage, Str.toStringz(iconName), size);
 	}
 	
 	/**

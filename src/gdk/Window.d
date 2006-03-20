@@ -35,7 +35,7 @@
  * 	- gdk_window_invalidate_maybe_recurse
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Window
  * 	- gdk.Region
  * 	- gdk.Rectangle
@@ -62,7 +62,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Window;
 private import gdk.Region;
 private import gdk.Rectangle;
@@ -1343,7 +1343,7 @@ public class Window : Drawable
 	public void setTitle(char[] title)
 	{
 		// void gdk_window_set_title (GdkWindow *window,  const gchar *title);
-		gdk_window_set_title(gdkWindow, std.string.toStringz(title));
+		gdk_window_set_title(gdkWindow, Str.toStringz(title));
 	}
 	
 	/**
@@ -1855,7 +1855,7 @@ public class Window : Drawable
 	public void setIconName(char[] name)
 	{
 		// void gdk_window_set_icon_name (GdkWindow *window,  const gchar *name);
-		gdk_window_set_icon_name(gdkWindow, std.string.toStringz(name));
+		gdk_window_set_icon_name(gdkWindow, Str.toStringz(name));
 	}
 	
 	/**
@@ -1896,7 +1896,7 @@ public class Window : Drawable
 	public void setRole(char[] role)
 	{
 		// void gdk_window_set_role (GdkWindow *window,  const gchar *role);
-		gdk_window_set_role(gdkWindow, std.string.toStringz(role));
+		gdk_window_set_role(gdkWindow, Str.toStringz(role));
 	}
 	
 	/**

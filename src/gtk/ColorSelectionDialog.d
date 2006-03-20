@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,7 +46,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -97,6 +97,6 @@ public class ColorSelectionDialog : Dialog
 	public this (char[] title)
 	{
 		// GtkWidget* gtk_color_selection_dialog_new (const gchar *title);
-		this(cast(GtkColorSelectionDialog*)gtk_color_selection_dialog_new(std.string.toStringz(title)) );
+		this(cast(GtkColorSelectionDialog*)gtk_color_selection_dialog_new(Str.toStringz(title)) );
 	}
 }

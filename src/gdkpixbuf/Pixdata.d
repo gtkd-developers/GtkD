@@ -36,6 +36,7 @@
  * imports:
  * 	- gdk.Pixbuf
  * 	- glib.StringG
+ * 	- glib.Str
  * structWrap:
  * 	- GString* -> StringG
  * 	- GdkPixbuf* -> Pixbuf
@@ -50,6 +51,7 @@ private import lib.gdkpixbuf;
 
 private import gdk.Pixbuf;
 private import glib.StringG;
+private import glib.Str;
 
 /**
  * Description
@@ -199,6 +201,6 @@ public class Pixdata
 	public StringG toCsource(char[] name, GdkPixdataDumpType dumpType)
 	{
 		// GString* gdk_pixdata_to_csource (GdkPixdata *pixdata,  const gchar *name,  GdkPixdataDumpType dump_type);
-		return new StringG( gdk_pixdata_to_csource(gdkPixdata, std.string.toStringz(name), dumpType) );
+		return new StringG( gdk_pixdata_to_csource(gdkPixdata, Str.toStringz(name), dumpType) );
 	}
 }

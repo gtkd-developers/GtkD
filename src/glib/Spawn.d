@@ -36,6 +36,7 @@
  * imports:
  * 	- glib.ErrorG
  * 	- glib.MainLoop
+ * 	- glib.Str
  * structWrap:
  * 	- GMainLoop* -> MainLoop
  * local aliases:
@@ -49,6 +50,7 @@ private import lib.glib;
 
 private import glib.ErrorG;
 private import glib.MainLoop;
+private import glib.Str;
 
 /**
  * Description
@@ -212,7 +214,7 @@ public class Spawn
 	public static int asyncWithPipes(char[] workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, int* standardInput, int* standardOutput, int* standardError, GError** error)
 	{
 		// gboolean g_spawn_async_with_pipes (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  GPid *child_pid,  gint *standard_input,  gint *standard_output,  gint *standard_error,  GError **error);
-		return g_spawn_async_with_pipes(std.string.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, standardInput, standardOutput, standardError, error);
+		return g_spawn_async_with_pipes(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, standardInput, standardOutput, standardError, error);
 	}
 	
 	/**
@@ -240,7 +242,7 @@ public class Spawn
 	public static int async(char[] workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, GPid* childPid, GError** error)
 	{
 		// gboolean g_spawn_async (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  GPid *child_pid,  GError **error);
-		return g_spawn_async(std.string.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, error);
+		return g_spawn_async(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, error);
 	}
 	
 	/**
@@ -280,7 +282,7 @@ public class Spawn
 	public static int sync(char[] workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus, GError** error)
 	{
 		// gboolean g_spawn_sync (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gchar **standard_output,  gchar **standard_error,  gint *exit_status,  GError **error);
-		return g_spawn_sync(std.string.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, standardOutput, standardError, exitStatus, error);
+		return g_spawn_sync(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, standardOutput, standardError, exitStatus, error);
 	}
 	
 	/**
@@ -302,7 +304,7 @@ public class Spawn
 	public static int commandLineAsync(char[] commandLine, GError** error)
 	{
 		// gboolean g_spawn_command_line_async (const gchar *command_line,  GError **error);
-		return g_spawn_command_line_async(std.string.toStringz(commandLine), error);
+		return g_spawn_command_line_async(Str.toStringz(commandLine), error);
 	}
 	
 	/**
@@ -342,7 +344,7 @@ public class Spawn
 	public static int commandLineSync(char[] commandLine, char** standardOutput, char** standardError, int* exitStatus, GError** error)
 	{
 		// gboolean g_spawn_command_line_sync (const gchar *command_line,  gchar **standard_output,  gchar **standard_error,  gint *exit_status,  GError **error);
-		return g_spawn_command_line_sync(std.string.toStringz(commandLine), standardOutput, standardError, exitStatus, error);
+		return g_spawn_command_line_sync(Str.toStringz(commandLine), standardOutput, standardError, exitStatus, error);
 	}
 	
 	/**

@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Clipboard
  * 	- gdk.Display
  * 	- gobject.ObjectG
@@ -54,7 +54,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Clipboard;
 private import gdk.Display;
 private import gobject.ObjectG;
@@ -375,7 +375,7 @@ public class Clipboard : ObjectG
 	public void setText(char[] text, int len)
 	{
 		// void gtk_clipboard_set_text (GtkClipboard *clipboard,  const gchar *text,  gint len);
-		gtk_clipboard_set_text(gtkClipboard, std.string.toStringz(text), len);
+		gtk_clipboard_set_text(gtkClipboard, Str.toStringz(text), len);
 	}
 	
 	/**
@@ -526,7 +526,7 @@ public class Clipboard : ObjectG
 	public char[] waitForText()
 	{
 		// gchar* gtk_clipboard_wait_for_text (GtkClipboard *clipboard);
-		return std.string.toString(gtk_clipboard_wait_for_text(gtkClipboard) );
+		return Str.toString(gtk_clipboard_wait_for_text(gtkClipboard) );
 	}
 	
 	/**

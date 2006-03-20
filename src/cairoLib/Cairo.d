@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- cairoLib.Surface
+ * 	- glib.Str
  * structWrap:
  * 	- cairo_surface_t* -> Surface
  * 	- cairo_t* -> Cairo
@@ -48,6 +49,7 @@ private import cairoLib.typedefs;
 private import lib.cairoLib;
 
 private import cairoLib.Surface;
+private import glib.Str;
 
 /**
  * Description
@@ -1209,7 +1211,7 @@ public class Cairo
 	public void textPath(char[] utf8)
 	{
 		// void cairo_text_path (cairo_t *cr,  const char *utf8);
-		cairo_text_path(cairo, std.string.toStringz(utf8));
+		cairo_text_path(cairo, Str.toStringz(utf8));
 	}
 	
 	/**
@@ -1490,7 +1492,7 @@ public class Cairo
 	public void selectFontFace(char[] family, cairo_font_slant_t slant, cairo_font_weight_t weight)
 	{
 		// void cairo_select_font_face (cairo_t *cr,  const char *family,  cairo_font_slant_t slant,  cairo_font_weight_t weight);
-		cairo_select_font_face(cairo, std.string.toStringz(family), slant, weight);
+		cairo_select_font_face(cairo, Str.toStringz(family), slant, weight);
 	}
 	
 	/**
@@ -1604,7 +1606,7 @@ public class Cairo
 	public void showText(char[] utf8)
 	{
 		// void cairo_show_text (cairo_t *cr,  const char *utf8);
-		cairo_show_text(cairo, std.string.toStringz(utf8));
+		cairo_show_text(cairo, Str.toStringz(utf8));
 	}
 	
 	/**
@@ -1686,7 +1688,7 @@ public class Cairo
 	public void textExtents(char[] utf8, cairo_text_extents_t* extents)
 	{
 		// void cairo_text_extents (cairo_t *cr,  const char *utf8,  cairo_text_extents_t *extents);
-		cairo_text_extents(cairo, std.string.toStringz(utf8), extents);
+		cairo_text_extents(cairo, Str.toStringz(utf8), extents);
 	}
 	
 	/**

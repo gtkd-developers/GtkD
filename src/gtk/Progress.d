@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Adjustment
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Adjustment;
 
 /**
@@ -143,7 +143,7 @@ public class Progress : Widget
 	public void setFormatString(char[] format)
 	{
 		// void gtk_progress_set_format_string (GtkProgress *progress,  const gchar *format);
-		gtk_progress_set_format_string(gtkProgress, std.string.toStringz(format));
+		gtk_progress_set_format_string(gtkProgress, Str.toStringz(format));
 	}
 	
 	/**
@@ -243,7 +243,7 @@ public class Progress : Widget
 	public char[] getCurrentText()
 	{
 		// gchar* gtk_progress_get_current_text (GtkProgress *progress);
-		return std.string.toString(gtk_progress_get_current_text(gtkProgress) );
+		return Str.toString(gtk_progress_get_current_text(gtkProgress) );
 	}
 	
 	/**
@@ -261,7 +261,7 @@ public class Progress : Widget
 	public char[] getTextFromValue(double value)
 	{
 		// gchar* gtk_progress_get_text_from_value  (GtkProgress *progress,  gdouble value);
-		return std.string.toString(gtk_progress_get_text_from_value(gtkProgress, value) );
+		return Str.toString(gtk_progress_get_text_from_value(gtkProgress, value) );
 	}
 	
 	/**

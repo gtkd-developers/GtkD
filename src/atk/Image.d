@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import atk.typedefs;
 
 private import lib.atk;
 
+private import glib.Str;
 
 /**
  * Description
@@ -118,7 +120,7 @@ public class Image
 	public char[] getImageDescription()
 	{
 		// const gchar* atk_image_get_image_description  (AtkImage *image);
-		return std.string.toString(atk_image_get_image_description(atkImage) );
+		return Str.toString(atk_image_get_image_description(atkImage) );
 	}
 	
 	/**
@@ -134,7 +136,7 @@ public class Image
 	public int setImageDescription(char[] description)
 	{
 		// gboolean atk_image_set_image_description (AtkImage *image,  const gchar *description);
-		return atk_image_set_image_description(atkImage, std.string.toStringz(description));
+		return atk_image_set_image_description(atkImage, Str.toStringz(description));
 	}
 	
 	/**

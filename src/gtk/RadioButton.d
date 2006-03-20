@@ -39,7 +39,7 @@
  * 	- gtk_radio_button_new_with_label_from_widget
  * 	- gtk_radio_button_new_with_mnemonic_from_widget
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
@@ -52,7 +52,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import glib.ListSG;
 
 /**
@@ -150,7 +150,7 @@ public class RadioButton : CheckButton
 			// GtkWidget* gtk_radio_button_new_with_mnemonic  (GSList *group,  const gchar *label);
 			this(cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic(
 			group is null ? null : group.getListSGStruct(),
-			std.string.toStringz(label))
+			Str.toStringz(label))
 			);
 		}
 		else
@@ -158,7 +158,7 @@ public class RadioButton : CheckButton
 			// GtkWidget* gtk_radio_button_new_with_label (GSList *group,  const gchar *label);
 			this(cast(GtkRadioButton*)gtk_radio_button_new_with_label(
 			group is null ? null : group.getListSGStruct(),
-			std.string.toStringz(label))
+			Str.toStringz(label))
 			);
 		}
 	}
@@ -183,7 +183,7 @@ public class RadioButton : CheckButton
 			// GtkWidget* gtk_radio_button_new_with_mnemonic_from_widget  (GtkRadioButton *group,  const gchar *label);
 			this(cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic_from_widget(
 			radioButton.getRadioButtonStruct(),
-			std.string.toStringz(label))
+			Str.toStringz(label))
 			);
 		}
 		else
@@ -191,7 +191,7 @@ public class RadioButton : CheckButton
 			// GtkWidget* gtk_radio_button_new_with_label_from_widget  (GtkRadioButton *group,  const gchar *label);
 			this(cast(GtkRadioButton*)gtk_radio_button_new_with_label_from_widget(
 			radioButton.getRadioButtonStruct(),
-			std.string.toStringz(label))
+			Str.toStringz(label))
 			);
 		}
 	}

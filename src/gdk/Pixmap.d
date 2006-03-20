@@ -35,7 +35,7 @@
  * 	- gdk_bitmap_
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Drawable
  * 	- gdk.Pixmap
  * 	- gdk.Color
@@ -54,7 +54,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Drawable;
 private import gdk.Pixmap;
 private import gdk.Color;
@@ -148,7 +148,7 @@ public class Pixmap : Drawable
 	public static Pixmap createFromData(Drawable drawable, char[] data, int width, int height, int depth, Color fg, Color bg)
 	{
 		// GdkPixmap* gdk_pixmap_create_from_data (GdkDrawable *drawable,  const gchar *data,  gint width,  gint height,  gint depth,  const GdkColor *fg,  const GdkColor *bg);
-		return new Pixmap( gdk_pixmap_create_from_data((drawable is null) ? null : drawable.getDrawableStruct(), std.string.toStringz(data), width, height, depth, (fg is null) ? null : fg.getColorStruct(), (bg is null) ? null : bg.getColorStruct()) );
+		return new Pixmap( gdk_pixmap_create_from_data((drawable is null) ? null : drawable.getDrawableStruct(), Str.toStringz(data), width, height, depth, (fg is null) ? null : fg.getColorStruct(), (bg is null) ? null : bg.getColorStruct()) );
 	}
 	
 	/**
@@ -172,7 +172,7 @@ public class Pixmap : Drawable
 	public static Pixmap createFromXpm(Drawable drawable, GdkBitmap** mask, Color transparentColor, char[] filename)
 	{
 		// GdkPixmap* gdk_pixmap_create_from_xpm (GdkDrawable *drawable,  GdkBitmap **mask,  const GdkColor *transparent_color,  const gchar *filename);
-		return new Pixmap( gdk_pixmap_create_from_xpm((drawable is null) ? null : drawable.getDrawableStruct(), mask, (transparentColor is null) ? null : transparentColor.getColorStruct(), std.string.toStringz(filename)) );
+		return new Pixmap( gdk_pixmap_create_from_xpm((drawable is null) ? null : drawable.getDrawableStruct(), mask, (transparentColor is null) ? null : transparentColor.getColorStruct(), Str.toStringz(filename)) );
 	}
 	
 	/**
@@ -199,7 +199,7 @@ public class Pixmap : Drawable
 	public static Pixmap colormapCreateFromXpm(Drawable drawable, Colormap colormap, GdkBitmap** mask, Color transparentColor, char[] filename)
 	{
 		// GdkPixmap* gdk_pixmap_colormap_create_from_xpm  (GdkDrawable *drawable,  GdkColormap *colormap,  GdkBitmap **mask,  const GdkColor *transparent_color,  const gchar *filename);
-		return new Pixmap( gdk_pixmap_colormap_create_from_xpm((drawable is null) ? null : drawable.getDrawableStruct(), (colormap is null) ? null : colormap.getColormapStruct(), mask, (transparentColor is null) ? null : transparentColor.getColorStruct(), std.string.toStringz(filename)) );
+		return new Pixmap( gdk_pixmap_colormap_create_from_xpm((drawable is null) ? null : drawable.getDrawableStruct(), (colormap is null) ? null : colormap.getColormapStruct(), mask, (transparentColor is null) ? null : transparentColor.getColorStruct(), Str.toStringz(filename)) );
 	}
 	
 	/**

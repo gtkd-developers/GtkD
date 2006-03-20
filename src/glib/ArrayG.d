@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- glib.ListG
+ * 	- glib.Str
  * structWrap:
  * 	- GArray* -> ArrayG
  * local aliases:
@@ -47,6 +48,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ListG;
+private import glib.Str;
 
 /**
  * Description
@@ -326,6 +328,6 @@ public class ArrayG
 	public char[] free(int freeSegment)
 	{
 		// gchar* g_array_free (GArray *array,  gboolean free_segment);
-		return std.string.toString(g_array_free(gArray, freeSegment) );
+		return Str.toString(g_array_free(gArray, freeSegment) );
 	}
 }

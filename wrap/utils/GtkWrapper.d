@@ -127,6 +127,7 @@ public class GtkWrapper : WrapperIF
 	private char[][] collectedEnums;	/// public, module level definitions of enums
 	private char[][] stockEnums;		/// special enums for StockID
 	private char[][] stockChars;		/// the char[] values for StockIDs
+	private char[][] gTypes;			/// special enums for G_TYPE_*
 	private char[][] collectedStructs;	/// public, module level definitions of structs
 	private char[][] collectedTypes;	/// public, module level definitions of other types
 	private char[][] collectedFuncts;	/// public, module level definitions of functions
@@ -559,6 +560,7 @@ public class GtkWrapper : WrapperIF
 		collectedConstants ~=	duitClass.getConstants();
 		stockEnums ~= duitClass.getStockEnums();
 		stockChars ~= duitClass.getStockChars();
+		gTypes ~= duitClass.getGTypes();
 	}
 	
 	/**
@@ -781,19 +783,10 @@ public class GtkWrapper : WrapperIF
 		else if ( "gobject" == outPack )
 		{
 			def ~= "\nimport glib.typedefs;\n\n";
-			def ~= "\n/* The GObject Basic Types */"
-					"\npublic alias int GType;"
-					"\n"
-					;
 		}
 		else if ( "cairoLib" == outPack )
 		{
 			def ~= "\nimport glib.typedefs;\n\n";
-			def ~= "\n/* The GObject Basic Types */"
-					"\npublic alias bool cairo_bool_t;"
-					"\npublic alias byte uchar;"
-					"\n"
-					;
 			//def ~= "\nimport std.c.windows.windows;\n\n";
 			def ~= "\nprivate alias void* HDC;\n\n";
 			def ~= "\nstruct Display;\n\n";
@@ -801,6 +794,7 @@ public class GtkWrapper : WrapperIF
 			def ~= "\nstruct Screen;\n\n";
 			def ~= "\nprivate alias void* Drawable;\n\n";
 			def ~= "\nprivate alias void* Pixmap;\n\n";
+			def ~= "\npublic alias bool cairo_bool_t;\n\n";
 		}
 		
 		else if ( "pango" == outPack )
@@ -871,7 +865,20 @@ public class GtkWrapper : WrapperIF
 		}
 		
 		char[] tabs = "";
-		
+
+				
+		if ( gTypes.length > 0 )
+		{
+			def ~= "\n\n// G_TYPE_*";
+			def ~= "\nenum GType";
+			def ~= "\n{\n";
+			tabs ~= "\t";
+			DuitClass.append(def, gTypes, tabs);
+			tabs = "";
+			def ~= "\n}\n\n";
+		}
+		tabs = "";
+
 		DuitClass.append(def, lookupConstants, tabs);
 
 		DuitClass.append(def, lookupAliases, tabs);
@@ -897,11 +904,12 @@ public class GtkWrapper : WrapperIF
 		DuitClass.append(def, lookupUnions, tabs);
 		DuitClass.append(def, collectedUnions, tabs);
 		tabs = "";
+		
 		if ( stockEnums.length > 0 )
 		{
 			def ~= "\n\n// StockIDs";
 			def ~= "\nenum StockID";
-			def ~= "\n{";
+			def ~= "\n{\n";
 			tabs ~= "\t";
 			DuitClass.append(def, stockEnums, tabs);
 			tabs = "";
@@ -935,6 +943,10 @@ public class GtkWrapper : WrapperIF
 		collectedFuncts.length = 0;
 		collectedUnions.length = 0;
 		collectedConstants.length = 0;
+		
+		stockEnums.length = 0;
+		stockChars.length = 0;
+		gTypes.length = 0;
 
 	}
 

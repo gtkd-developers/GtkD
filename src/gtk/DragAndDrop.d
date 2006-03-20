@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * 	- gdk.Window
  * 	- gdk.DragContext
@@ -44,7 +44,7 @@
  * 	- gdk.Pixmap
  * 	- gdk.Bitmap
  * 	- gdk.Pixbuf
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkColormap* -> Colormap
@@ -63,7 +63,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 private import gdk.Window;
 private import gdk.DragContext;
@@ -72,7 +72,7 @@ private import gdk.Colormap;
 private import gdk.Pixmap;
 private import gdk.Bitmap;
 private import gdk.Pixbuf;
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -467,7 +467,7 @@ public class DragAndDrop
 	public void setIconStock(char[] stockId, int hotX, int hotY)
 	{
 		// void gtk_drag_set_icon_stock (GdkDragContext *context,  const gchar *stock_id,  gint hot_x,  gint hot_y);
-		gtk_drag_set_icon_stock(gdkDragContext, std.string.toStringz(stockId), hotX, hotY);
+		gtk_drag_set_icon_stock(gdkDragContext, Str.toStringz(stockId), hotX, hotY);
 	}
 	
 	/**
@@ -490,7 +490,7 @@ public class DragAndDrop
 	public void setIconName(char[] iconName, int hotX, int hotY)
 	{
 		// void gtk_drag_set_icon_name (GdkDragContext *context,  const gchar *icon_name,  gint hot_x,  gint hot_y);
-		gtk_drag_set_icon_name(gdkDragContext, std.string.toStringz(iconName), hotX, hotY);
+		gtk_drag_set_icon_name(gdkDragContext, Str.toStringz(iconName), hotX, hotY);
 	}
 	
 	/**
@@ -621,7 +621,7 @@ public class DragAndDrop
 	public static void sourceSetIconStock(Widget widget, char[] stockId)
 	{
 		// void gtk_drag_source_set_icon_stock (GtkWidget *widget,  const gchar *stock_id);
-		gtk_drag_source_set_icon_stock((widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(stockId));
+		gtk_drag_source_set_icon_stock((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(stockId));
 	}
 	
 	/**
@@ -636,7 +636,7 @@ public class DragAndDrop
 	public static void sourceSetIconName(Widget widget, char[] iconName)
 	{
 		// void gtk_drag_source_set_icon_name (GtkWidget *widget,  const gchar *icon_name);
-		gtk_drag_source_set_icon_name((widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(iconName));
+		gtk_drag_source_set_icon_name((widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(iconName));
 	}
 	
 	/**

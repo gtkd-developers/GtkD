@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * 	- glib.ListSG
  * 	- gobject.Closure
@@ -54,7 +54,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 private import glib.ListSG;
 private import gobject.Closure;
@@ -175,7 +175,7 @@ public class Action : ObjectG
 	public this (char[] name, char[] label, char[] tooltip, char[] stockId)
 	{
 		// GtkAction* gtk_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
-		this(cast(GtkAction*)gtk_action_new(std.string.toStringz(name), std.string.toStringz(label), std.string.toStringz(tooltip), std.string.toStringz(stockId)) );
+		this(cast(GtkAction*)gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId)) );
 	}
 	
 	/**
@@ -190,7 +190,7 @@ public class Action : ObjectG
 	public char[] getName()
 	{
 		// const gchar* gtk_action_get_name (GtkAction *action);
-		return std.string.toString(gtk_action_get_name(gtkAction) );
+		return Str.toString(gtk_action_get_name(gtkAction) );
 	}
 	
 	/**
@@ -475,7 +475,7 @@ public class Action : ObjectG
 	public char[] getAccelPath()
 	{
 		// const gchar* gtk_action_get_accel_path (GtkAction *action);
-		return std.string.toString(gtk_action_get_accel_path(gtkAction) );
+		return Str.toString(gtk_action_get_accel_path(gtkAction) );
 	}
 	
 	/**
@@ -491,7 +491,7 @@ public class Action : ObjectG
 	public void setAccelPath(char[] accelPath)
 	{
 		// void gtk_action_set_accel_path (GtkAction *action,  const gchar *accel_path);
-		gtk_action_set_accel_path(gtkAction, std.string.toStringz(accelPath));
+		gtk_action_set_accel_path(gtkAction, Str.toStringz(accelPath));
 	}
 	
 	/**

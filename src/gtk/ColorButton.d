@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Color
  * structWrap:
  * 	- GdkColor* -> Color
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Color;
 
 /**
@@ -248,7 +248,7 @@ public class ColorButton : Button
 	public void setTitle(char[] title)
 	{
 		// void gtk_color_button_set_title (GtkColorButton *color_button,  const gchar *title);
-		gtk_color_button_set_title(gtkColorButton, std.string.toStringz(title));
+		gtk_color_button_set_title(gtkColorButton, Str.toStringz(title));
 	}
 	
 	/**
@@ -269,7 +269,7 @@ public class ColorButton : Button
 	public char[] getTitle()
 	{
 		// const gchar* gtk_color_button_get_title (GtkColorButton *color_button);
-		return std.string.toString(gtk_color_button_get_title(gtkColorButton) );
+		return Str.toString(gtk_color_button_get_title(gtkColorButton) );
 	}
 	
 	

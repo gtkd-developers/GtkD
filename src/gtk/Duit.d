@@ -41,7 +41,7 @@
  * 	- gdk.Event
  * 	- gtk.Widget
  * 	- gtk.ObjectGtk
- * 	- std.string
+ * 	- glib.Str
  * 	- lib.gtk
  * 	- gtk.typedefs
  * 	- lib.gtk
@@ -62,7 +62,7 @@ private import lib.gtk;
 private import gdk.Event;
 private import gtk.Widget;
 private import gtk.ObjectGtk;
-private import std.string;
+private import glib.Str;
 private import lib.gtk;
 private import gtk.typedefs;
 private import lib.gtk;
@@ -160,7 +160,7 @@ public class Duit
 	public static char[] setLocale()
 	{
 		// gchar* gtk_set_locale (void);
-		return std.string.toString(gtk_set_locale() );
+		return Str.toString(gtk_set_locale() );
 	}
 	
 	/**
@@ -298,7 +298,7 @@ public class Duit
 	public static int initWithArgs(int* argc, char*** argv, char[] parameterString, GOptionEntry* entries, char[] translationDomain, GError** error)
 	{
 		// gboolean gtk_init_with_args (int *argc,  char ***argv,  char *parameter_string,  GOptionEntry *entries,  char *translation_domain,  GError **error);
-		return gtk_init_with_args(argc, argv, std.string.toStringz(parameterString), entries, std.string.toStringz(translationDomain), error);
+		return gtk_init_with_args(argc, argv, Str.toStringz(parameterString), entries, Str.toStringz(translationDomain), error);
 	}
 	
 	/**

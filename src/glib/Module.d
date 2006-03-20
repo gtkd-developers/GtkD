@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- glib.Module
+ * 	- glib.Str
  * structWrap:
  * 	- GModule* -> Module
  * local aliases:
@@ -47,6 +48,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.Module;
+private import glib.Str;
 
 /**
  * Description
@@ -169,7 +171,7 @@ public class Module
 	public static char[] buildPath(char[] directory, char[] moduleName)
 	{
 		// gchar* g_module_build_path (const gchar *directory,  const gchar *module_name);
-		return std.string.toString(g_module_build_path(std.string.toStringz(directory), std.string.toStringz(moduleName)) );
+		return Str.toString(g_module_build_path(Str.toStringz(directory), Str.toStringz(moduleName)) );
 	}
 	
 	/**
@@ -195,7 +197,7 @@ public class Module
 	public static Module open(char[] fileName, GModuleFlags flags)
 	{
 		// GModule* g_module_open (const gchar *file_name,  GModuleFlags flags);
-		return new Module( g_module_open(std.string.toStringz(fileName), flags) );
+		return new Module( g_module_open(Str.toStringz(fileName), flags) );
 	}
 	
 	
@@ -213,7 +215,7 @@ public class Module
 	public int symbol(char[] symbolName, void** symbol)
 	{
 		// gboolean g_module_symbol (GModule *module,  const gchar *symbol_name,  gpointer *symbol);
-		return g_module_symbol(gModule, std.string.toStringz(symbolName), symbol);
+		return g_module_symbol(gModule, Str.toStringz(symbolName), symbol);
 	}
 	
 	/**
@@ -227,7 +229,7 @@ public class Module
 	public char[] name()
 	{
 		// const gchar* g_module_name (GModule *module);
-		return std.string.toString(g_module_name(gModule) );
+		return Str.toString(g_module_name(gModule) );
 	}
 	
 	/**
@@ -263,7 +265,7 @@ public class Module
 	public static char[] error()
 	{
 		// const gchar* g_module_error (void);
-		return std.string.toString(g_module_error() );
+		return Str.toString(g_module_error() );
 	}
 	
 	

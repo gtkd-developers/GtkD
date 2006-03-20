@@ -86,6 +86,8 @@ structWrap: GdkPixbuf* Pixbuf
 #structWrap: GError** Error*
 import: glib.StringG
 structWrap: GString* StringG
+import: glib.Str
+
 outFile: Pixdata
 
 # on gdk
@@ -118,6 +120,8 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 #import: gdk.PixbufSimpleAnim
 #structWrap: GdkPixbufSimpleAnim* PixbufSimpleAnim
+import: glib.Str
+
 outFile: PixbufAnimation
 
 file: GdkPixbufLoader.html
@@ -132,6 +136,7 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gdkpixbuf.PixbufAnimation
 structWrap: GdkPixbufAnimation* PixbufAnimation
+import: glib.Str
 
 nocode: gdk_pixbuf_loader_new_with_type
 nocode: gdk_pixbuf_loader_new_with_mime_type
@@ -155,12 +160,12 @@ code: start
 		if ( isMimeType )
 		{
 			// GdkPixbufLoader* gdk_pixbuf_loader_new_with_mime_type  (const char *mime_type,  GError **error);
-			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_mime_type(std.string.toStringz(type), error) );
+			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_mime_type(Str.toStringz(type), error) );
 		}
 		else
 		{
 			// GdkPixbufLoader* gdk_pixbuf_loader_new_with_type  (const char *image_type,  GError **error);
-			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_type(std.string.toStringz(type), error) );
+			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_type(Str.toStringz(type), error) );
 		}
 	}
 code: end
@@ -198,6 +203,7 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: glib.ListSG
 structWrap: GSList* ListSG
+import: glib.Str
 openFile: PixbufFormat
 
 file: gdk-pixbuf-file-loading.html

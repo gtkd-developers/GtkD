@@ -36,6 +36,7 @@
  * imports:
  * 	- glib.ErrorG
  * 	- glib.Dataset
+ * 	- glib.Str
  * structWrap:
  * 	- GDataset* -> Dataset
  * local aliases:
@@ -49,6 +50,7 @@ private import lib.glib;
 
 private import glib.ErrorG;
 private import glib.Dataset;
+private import glib.Str;
 
 /**
  * Description
@@ -130,7 +132,7 @@ public class SimpleXML
 	public static char[] gMarkupEscapeText(char[] text, int length)
 	{
 		// gchar* g_markup_escape_text (const gchar *text,  gssize length);
-		return std.string.toString(g_markup_escape_text(std.string.toStringz(text), length) );
+		return Str.toString(g_markup_escape_text(Str.toStringz(text), length) );
 	}
 	
 	/**
@@ -160,7 +162,7 @@ public class SimpleXML
 	public static char[] gMarkupPrintfEscaped(char[] format, ... )
 	{
 		// gchar* g_markup_printf_escaped (const char *format,  ...);
-		return std.string.toString(g_markup_printf_escaped(std.string.toStringz(format)) );
+		return Str.toString(g_markup_printf_escaped(Str.toStringz(format)) );
 	}
 	
 	/**
@@ -179,7 +181,7 @@ public class SimpleXML
 	public static char[] gMarkupVprintfEscaped(char[] format, void* args)
 	{
 		// gchar* g_markup_vprintf_escaped (const char *format,  va_list args);
-		return std.string.toString(g_markup_vprintf_escaped(std.string.toStringz(format), args) );
+		return Str.toString(g_markup_vprintf_escaped(Str.toStringz(format), args) );
 	}
 	
 	/**
@@ -241,7 +243,7 @@ public class SimpleXML
 	public char[] getElement()
 	{
 		// const gchar* g_markup_parse_context_get_element  (GMarkupParseContext *context);
-		return std.string.toString(g_markup_parse_context_get_element(gMarkupParseContext) );
+		return Str.toString(g_markup_parse_context_get_element(gMarkupParseContext) );
 	}
 	
 	/**
@@ -291,6 +293,6 @@ public class SimpleXML
 	public int parse(char[] text, int textLen, GError** error)
 	{
 		// gboolean g_markup_parse_context_parse (GMarkupParseContext *context,  const gchar *text,  gssize text_len,  GError **error);
-		return g_markup_parse_context_parse(gMarkupParseContext, std.string.toStringz(text), textLen, error);
+		return g_markup_parse_context_parse(gMarkupParseContext, Str.toStringz(text), textLen, error);
 	}
 }

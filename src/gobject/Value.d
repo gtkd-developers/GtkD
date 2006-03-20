@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gobject.Value
  * 	- gobject.ParamSpec
  * 	- gobject.ObjectG
@@ -53,7 +53,7 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import std.string;
+private import glib.Str;
 private import gobject.Value;
 private import gobject.ParamSpec;
 private import gobject.ObjectG;
@@ -321,7 +321,7 @@ public class Value
 	public char[] gStrdupValueContents()
 	{
 		// gchar* g_strdup_value_contents (const GValue *value);
-		return std.string.toString(g_strdup_value_contents(gValue) );
+		return Str.toString(g_strdup_value_contents(gValue) );
 	}
 	
 	
@@ -349,7 +349,7 @@ public class Value
 	public static ParamSpec gParamSpecBoolean(char[] name, char[] nick, char[] blurb, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_boolean (const gchar *name,  const gchar *nick,  const gchar *blurb,  gboolean default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_boolean(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), defaultValue, flags) );
+		return new ParamSpec( g_param_spec_boolean(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags) );
 	}
 	
 	/**
@@ -405,7 +405,7 @@ public class Value
 	public static ParamSpec gParamSpecChar(char[] name, char[] nick, char[] blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_char (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint8 minimum,  gint8 maximum,  gint8 default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_char(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_char(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
 	}
 	
 	/**
@@ -461,7 +461,7 @@ public class Value
 	public static ParamSpec gParamSpecUchar(char[] name, char[] nick, char[] blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_uchar (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint8 minimum,  guint8 maximum,  guint8 default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_uchar(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_uchar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
 	}
 	
 	/**
@@ -518,7 +518,7 @@ public class Value
 	public static ParamSpec gParamSpecInt(char[] name, char[] nick, char[] blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_int (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint minimum,  gint maximum,  gint default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_int(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_int(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
 	}
 	
 	/**
@@ -575,7 +575,7 @@ public class Value
 	public static ParamSpec gParamSpecUint(char[] name, char[] nick, char[] blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_uint (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint minimum,  guint maximum,  guint default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_uint(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_uint(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
 	}
 	
 	/**
@@ -632,7 +632,7 @@ public class Value
 	public static ParamSpec gParamSpecLong(char[] name, char[] nick, char[] blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_long (const gchar *name,  const gchar *nick,  const gchar *blurb,  glong minimum,  glong maximum,  glong default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_long(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_long(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
 	}
 	
 	/**
@@ -689,7 +689,7 @@ public class Value
 	public static ParamSpec gParamSpecUlong(char[] name, char[] nick, char[] blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_ulong (const gchar *name,  const gchar *nick,  const gchar *blurb,  gulong minimum,  gulong maximum,  gulong default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_ulong(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_ulong(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
 	}
 	
 	/**
@@ -746,7 +746,7 @@ public class Value
 	public static ParamSpec gParamSpecInt64(char[] name, char[] nick, char[] blurb, long minimum, long maximum, long defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_int64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint64 minimum,  gint64 maximum,  gint64 default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_int64(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_int64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
 	}
 	
 	/**
@@ -804,7 +804,7 @@ public class Value
 	public static ParamSpec gParamSpecUint64(char[] name, char[] nick, char[] blurb, ulong minimum, ulong maximum, ulong defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_uint64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint64 minimum,  guint64 maximum,  guint64 default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_uint64(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_uint64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
 	}
 	
 	/**
@@ -861,7 +861,7 @@ public class Value
 	public static ParamSpec gParamSpecFloat(char[] name, char[] nick, char[] blurb, float minimum, float maximum, float defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_float (const gchar *name,  const gchar *nick,  const gchar *blurb,  gfloat minimum,  gfloat maximum,  gfloat default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_float(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_float(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
 	}
 	
 	/**
@@ -919,7 +919,7 @@ public class Value
 	public static ParamSpec gParamSpecDouble(char[] name, char[] nick, char[] blurb, double minimum, double maximum, double defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_double (const gchar *name,  const gchar *nick,  const gchar *blurb,  gdouble minimum,  gdouble maximum,  gdouble default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_double(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_double(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
 	}
 	
 	/**
@@ -975,7 +975,7 @@ public class Value
 	public static ParamSpec gParamSpecEnum(char[] name, char[] nick, char[] blurb, GType enumType, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_enum (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType enum_type,  gint default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_enum(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), enumType, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_enum(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), enumType, defaultValue, flags) );
 	}
 	
 	/**
@@ -1031,7 +1031,7 @@ public class Value
 	public static ParamSpec gParamSpecFlags(char[] name, char[] nick, char[] blurb, GType flagsType, uint defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_flags (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType flags_type,  guint default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_flags(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), flagsType, defaultValue, flags) );
+		return new ParamSpec( g_param_spec_flags(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flagsType, defaultValue, flags) );
 	}
 	
 	/**
@@ -1085,7 +1085,7 @@ public class Value
 	public static ParamSpec gParamSpecString(char[] name, char[] nick, char[] blurb, char[] defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_string (const gchar *name,  const gchar *nick,  const gchar *blurb,  const gchar *default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_string(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), std.string.toStringz(defaultValue), flags) );
+		return new ParamSpec( g_param_spec_string(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), Str.toStringz(defaultValue), flags) );
 	}
 	
 	/**
@@ -1098,7 +1098,7 @@ public class Value
 	public void setString(char[] vString)
 	{
 		// void g_value_set_string (GValue *value,  const gchar *v_string);
-		g_value_set_string(gValue, std.string.toStringz(vString));
+		g_value_set_string(gValue, Str.toStringz(vString));
 	}
 	
 	/**
@@ -1113,7 +1113,7 @@ public class Value
 	public void setStaticString(char[] vString)
 	{
 		// void g_value_set_static_string (GValue *value,  const gchar *v_string);
-		g_value_set_static_string(gValue, std.string.toStringz(vString));
+		g_value_set_static_string(gValue, Str.toStringz(vString));
 	}
 	
 	/**
@@ -1127,7 +1127,7 @@ public class Value
 	public void takeString(char[] vString)
 	{
 		// void g_value_take_string (GValue *value,  gchar *v_string);
-		g_value_take_string(gValue, std.string.toStringz(vString));
+		g_value_take_string(gValue, Str.toStringz(vString));
 	}
 	
 	/**
@@ -1142,7 +1142,7 @@ public class Value
 	public void setStringTakeOwnership(char[] vString)
 	{
 		// void g_value_set_string_take_ownership  (GValue *value,  gchar *v_string);
-		g_value_set_string_take_ownership(gValue, std.string.toStringz(vString));
+		g_value_set_string_take_ownership(gValue, Str.toStringz(vString));
 	}
 	
 	/**
@@ -1155,7 +1155,7 @@ public class Value
 	public char[] getString()
 	{
 		// const gchar* g_value_get_string (const GValue *value);
-		return std.string.toString(g_value_get_string(gValue) );
+		return Str.toString(g_value_get_string(gValue) );
 	}
 	
 	/**
@@ -1168,7 +1168,7 @@ public class Value
 	public char[] dupString()
 	{
 		// gchar* g_value_dup_string (const GValue *value);
-		return std.string.toString(g_value_dup_string(gValue) );
+		return Str.toString(g_value_dup_string(gValue) );
 	}
 	
 	
@@ -1196,7 +1196,7 @@ public class Value
 	public static ParamSpec gParamSpecParam(char[] name, char[] nick, char[] blurb, GType paramType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_param (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType param_type,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_param(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), paramType, flags) );
+		return new ParamSpec( g_param_spec_param(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), paramType, flags) );
 	}
 	
 	/**
@@ -1294,7 +1294,7 @@ public class Value
 	public static ParamSpec gParamSpecBoxed(char[] name, char[] nick, char[] blurb, GType boxedType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_boxed (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType boxed_type,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_boxed(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), boxedType, flags) );
+		return new ParamSpec( g_param_spec_boxed(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), boxedType, flags) );
 	}
 	
 	/**
@@ -1406,7 +1406,7 @@ public class Value
 	public static ParamSpec gParamSpecPointer(char[] name, char[] nick, char[] blurb, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_pointer (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_pointer(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), flags) );
+		return new ParamSpec( g_param_spec_pointer(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags) );
 	}
 	
 	/**
@@ -1460,7 +1460,7 @@ public class Value
 	public static ParamSpec gParamSpecObject(char[] name, char[] nick, char[] blurb, GType objectType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_object (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType object_type,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_object(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), objectType, flags) );
+		return new ParamSpec( g_param_spec_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags) );
 	}
 	
 	/**
@@ -1558,7 +1558,7 @@ public class Value
 	public static ParamSpec gParamSpecUnichar(char[] name, char[] nick, char[] blurb, gunichar defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_unichar (const gchar *name,  const gchar *nick,  const gchar *blurb,  gunichar default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_unichar(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), defaultValue, flags) );
+		return new ParamSpec( g_param_spec_unichar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags) );
 	}
 	
 	
@@ -1588,7 +1588,7 @@ public class Value
 	public static ParamSpec gParamSpecValueArray(char[] name, char[] nick, char[] blurb, ParamSpec elementSpec, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_value_array (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamSpec *element_spec,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_value_array(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), (elementSpec is null) ? null : elementSpec.getParamSpecStruct(), flags) );
+		return new ParamSpec( g_param_spec_value_array(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (elementSpec is null) ? null : elementSpec.getParamSpecStruct(), flags) );
 	}
 	
 	
@@ -1610,7 +1610,7 @@ public class Value
 	public static ParamSpec gParamSpecOverride(char[] name, ParamSpec overridden)
 	{
 		// GParamSpec* g_param_spec_override (const gchar *name,  GParamSpec *overridden);
-		return new ParamSpec( g_param_spec_override(std.string.toStringz(name), (overridden is null) ? null : overridden.getParamSpecStruct()) );
+		return new ParamSpec( g_param_spec_override(Str.toStringz(name), (overridden is null) ? null : overridden.getParamSpecStruct()) );
 	}
 	
 	
@@ -1641,6 +1641,6 @@ public class Value
 	public static ParamSpec gParamSpecGtype(char[] name, char[] nick, char[] blurb, GType isA_Type, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_gtype (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType is_a_type,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_gtype(std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), isA_Type, flags) );
+		return new ParamSpec( g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isA_Type, flags) );
 	}
 }

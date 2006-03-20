@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -80,7 +82,7 @@ public class MessageLog
 	public static void log(char[] logDomain, GLogLevelFlags logLevel, char[] format, ... )
 	{
 		// void g_log (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *format,  ...);
-		g_log(std.string.toStringz(logDomain), logLevel, std.string.toStringz(format));
+		g_log(Str.toStringz(logDomain), logLevel, Str.toStringz(format));
 	}
 	
 	/**
@@ -100,7 +102,7 @@ public class MessageLog
 	public static void logv(char[] logDomain, GLogLevelFlags logLevel, char[] format, void* args)
 	{
 		// void g_logv (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *format,  va_list args);
-		g_logv(std.string.toStringz(logDomain), logLevel, std.string.toStringz(format), args);
+		g_logv(Str.toStringz(logDomain), logLevel, Str.toStringz(format), args);
 	}
 	
 	
@@ -143,7 +145,7 @@ public class MessageLog
 	public static uint logSetHandler(char[] logDomain, GLogLevelFlags logLevels, GLogFunc logFunc, void* userData)
 	{
 		// guint g_log_set_handler (const gchar *log_domain,  GLogLevelFlags log_levels,  GLogFunc log_func,  gpointer user_data);
-		return g_log_set_handler(std.string.toStringz(logDomain), logLevels, logFunc, userData);
+		return g_log_set_handler(Str.toStringz(logDomain), logLevels, logFunc, userData);
 	}
 	
 	/**
@@ -156,7 +158,7 @@ public class MessageLog
 	public static void logRemoveHandler(char[] logDomain, uint handlerId)
 	{
 		// void g_log_remove_handler (const gchar *log_domain,  guint handler_id);
-		g_log_remove_handler(std.string.toStringz(logDomain), handlerId);
+		g_log_remove_handler(Str.toStringz(logDomain), handlerId);
 	}
 	
 	/**
@@ -189,7 +191,7 @@ public class MessageLog
 	public static GLogLevelFlags logSetFatalMask(char[] logDomain, GLogLevelFlags fatalMask)
 	{
 		// GLogLevelFlags g_log_set_fatal_mask (const gchar *log_domain,  GLogLevelFlags fatal_mask);
-		return g_log_set_fatal_mask(std.string.toStringz(logDomain), fatalMask);
+		return g_log_set_fatal_mask(Str.toStringz(logDomain), fatalMask);
 	}
 	
 	/**
@@ -212,7 +214,7 @@ public class MessageLog
 	public static void logDefaultHandler(char[] logDomain, GLogLevelFlags logLevel, char[] message, void* unusedData)
 	{
 		// void g_log_default_handler (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *message,  gpointer unused_data);
-		g_log_default_handler(std.string.toStringz(logDomain), logLevel, std.string.toStringz(message), unusedData);
+		g_log_default_handler(Str.toStringz(logDomain), logLevel, Str.toStringz(message), unusedData);
 	}
 	
 	/**

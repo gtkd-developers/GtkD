@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gobject.Enums
  * 	- gobject.Flags
  * structWrap:
@@ -49,7 +49,7 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import std.string;
+private import glib.Str;
 private import gobject.Enums;
 private import gobject.Flags;
 
@@ -153,7 +153,7 @@ public class TypeModule : ObjectG
 	public void setName(char[] name)
 	{
 		// void g_type_module_set_name (GTypeModule *module,  const gchar *name);
-		g_type_module_set_name(gTypeModule, std.string.toStringz(name));
+		g_type_module_set_name(gTypeModule, Str.toStringz(name));
 	}
 	
 	/**
@@ -182,7 +182,7 @@ public class TypeModule : ObjectG
 	public GType registerType(GType parentType, char[] typeName, GTypeInfo* typeInfo, GTypeFlags flags)
 	{
 		// GType g_type_module_register_type (GTypeModule *module,  GType parent_type,  const gchar *type_name,  const GTypeInfo *type_info,  GTypeFlags flags);
-		return g_type_module_register_type(gTypeModule, parentType, std.string.toStringz(typeName), typeInfo, flags);
+		return g_type_module_register_type(gTypeModule, parentType, Str.toStringz(typeName), typeInfo, flags);
 	}
 	
 	/**
@@ -228,7 +228,7 @@ public class TypeModule : ObjectG
 	public GType registerEnum(char[] name, Enums _StaticValues)
 	{
 		// GType g_type_module_register_enum (GTypeModule *module,  const gchar *name,  const GEnumValue *const_static_values);
-		return g_type_module_register_enum(gTypeModule, std.string.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getEnumsStruct());
+		return g_type_module_register_enum(gTypeModule, Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getEnumsStruct());
 	}
 	
 	/**
@@ -258,6 +258,6 @@ public class TypeModule : ObjectG
 	public GType registerFlags(char[] name, Flags _StaticValues)
 	{
 		// GType g_type_module_register_flags (GTypeModule *module,  const gchar *name,  const GFlagsValue *const_static_values);
-		return g_type_module_register_flags(gTypeModule, std.string.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
+		return g_type_module_register_flags(gTypeModule, Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
 	}
 }

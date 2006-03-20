@@ -207,7 +207,7 @@ extern(C)
 	void function(cairo_surface_t* surface, double xOffset, double yOffset)cairo_surface_set_device_offset;
 	cairo_status_t function(cairo_surface_t* surface)cairo_surface_status;
 	cairo_surface_t* function(cairo_format_t format, int width, int height)cairo_image_surface_create;
-	cairo_surface_t* function(uchar* data, cairo_format_t format, int width, int height, int stride)cairo_image_surface_create_for_data;
+	cairo_surface_t* function(char* data, cairo_format_t format, int width, int height, int stride)cairo_image_surface_create_for_data;
 	int function(cairo_surface_t* surface)cairo_image_surface_get_width;
 	int function(cairo_surface_t* surface)cairo_image_surface_get_height;
 	cairo_surface_t* function(char* filename, double widthInPoints, double heightInPoints)cairo_pdf_surface_create;

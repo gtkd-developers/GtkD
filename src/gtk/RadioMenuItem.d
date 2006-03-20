@@ -39,7 +39,7 @@
  * 	- gtk_radio_menu_item_new_with_mnemonic_from_widget
  * 	- gtk_radio_menu_item_new_with_label_from_widget
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
@@ -52,7 +52,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import glib.ListSG;
 
 /**
@@ -124,13 +124,13 @@ public class RadioMenuItem : CheckMenuItem
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic_from_widget  (GtkRadioMenuItem *group,  const gchar *label);
 			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic_from_widget(
-			radioMenuItem.getRadioMenuItemStruct(), std.string.toStringz(label)) );
+			radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_label_from_widget  (GtkRadioMenuItem *group,  const gchar *label);
 			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label_from_widget(
-			radioMenuItem.getRadioMenuItemStruct(), std.string.toStringz(label)) );
+			radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label)) );
 		}
 	}
 	
@@ -168,13 +168,13 @@ public class RadioMenuItem : CheckMenuItem
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic  (GSList *group,  const gchar *label);
 			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic(
-			group is null ? null : group.getListSGStruct(), std.string.toStringz(label)) );
+			group is null ? null : group.getListSGStruct(), Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_label  (GSList *group,  const gchar *label);
 			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label(
-			group is null ? null : group.getListSGStruct(), std.string.toStringz(label)) );
+			group is null ? null : group.getListSGStruct(), Str.toStringz(label)) );
 		}
 	}
 	

@@ -36,7 +36,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TextBuffer
  * 	- gtk.TextIter
  * 	- gdk.Pixbuf
@@ -61,7 +61,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TextBuffer;
 private import gtk.TextIter;
 private import gdk.Pixbuf;
@@ -290,7 +290,7 @@ public class TextIter
 	public char[] getSlice(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_slice (const GtkTextIter *start,  const GtkTextIter *end);
-		return std.string.toString(gtk_text_iter_get_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
+		return Str.toString(gtk_text_iter_get_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
 	}
 	
 	/**
@@ -309,7 +309,7 @@ public class TextIter
 	public char[] getText(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_text (const GtkTextIter *start,  const GtkTextIter *end);
-		return std.string.toString(gtk_text_iter_get_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
+		return Str.toString(gtk_text_iter_get_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
 	}
 	
 	/**
@@ -326,7 +326,7 @@ public class TextIter
 	public char[] getVisibleSlice(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_visible_slice (const GtkTextIter *start,  const GtkTextIter *end);
-		return std.string.toString(gtk_text_iter_get_visible_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
+		return Str.toString(gtk_text_iter_get_visible_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
 	}
 	
 	/**
@@ -343,7 +343,7 @@ public class TextIter
 	public char[] getVisibleText(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_visible_text (const GtkTextIter *start,  const GtkTextIter *end);
-		return std.string.toString(gtk_text_iter_get_visible_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
+		return Str.toString(gtk_text_iter_get_visible_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
 	}
 	
 	/**
@@ -1596,7 +1596,7 @@ public class TextIter
 	public int forwardSearch(char[] str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
 	{
 		// gboolean gtk_text_iter_forward_search (const GtkTextIter *iter,  const gchar *str,  GtkTextSearchFlags flags,  GtkTextIter *match_start,  GtkTextIter *match_end,  const GtkTextIter *limit);
-		return gtk_text_iter_forward_search(gtkTextIter, std.string.toStringz(str), flags, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), (limit is null) ? null : limit.getTextIterStruct());
+		return gtk_text_iter_forward_search(gtkTextIter, Str.toStringz(str), flags, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), (limit is null) ? null : limit.getTextIterStruct());
 	}
 	
 	/**
@@ -1619,7 +1619,7 @@ public class TextIter
 	public int backwardSearch(char[] str, GtkTextSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
 	{
 		// gboolean gtk_text_iter_backward_search (const GtkTextIter *iter,  const gchar *str,  GtkTextSearchFlags flags,  GtkTextIter *match_start,  GtkTextIter *match_end,  const GtkTextIter *limit);
-		return gtk_text_iter_backward_search(gtkTextIter, std.string.toStringz(str), flags, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), (limit is null) ? null : limit.getTextIterStruct());
+		return gtk_text_iter_backward_search(gtkTextIter, Str.toStringz(str), flags, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), (limit is null) ? null : limit.getTextIterStruct());
 	}
 	
 	/**

@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- glib.ListG
+ * 	- glib.Str
  * structWrap:
  * 	- GList* -> ListG
  * local aliases:
@@ -47,6 +48,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ListG;
+private import glib.Str;
 
 /**
  * Description
@@ -169,7 +171,7 @@ public class StringCompletion
 	public ListG complete(char[] prefix, char** newPrefix)
 	{
 		// GList* g_completion_complete (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
-		return new ListG( g_completion_complete(gCompletion, std.string.toStringz(prefix), newPrefix) );
+		return new ListG( g_completion_complete(gCompletion, Str.toStringz(prefix), newPrefix) );
 	}
 	
 	/**
@@ -196,7 +198,7 @@ public class StringCompletion
 	public ListG completeUtf8(char[] prefix, char** newPrefix)
 	{
 		// GList* g_completion_complete_utf8 (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
-		return new ListG( g_completion_complete_utf8(gCompletion, std.string.toStringz(prefix), newPrefix) );
+		return new ListG( g_completion_complete_utf8(gCompletion, Str.toStringz(prefix), newPrefix) );
 	}
 	
 	/**

@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import cairoLib.typedefs;
 
 private import lib.cairoLib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -89,7 +91,7 @@ public class Status
 	public static char[] oString(cairo_status_t status)
 	{
 		// const char* cairo_status_to_string (cairo_status_t status);
-		return std.string.toString(cairo_status_to_string(status) );
+		return Str.toString(cairo_status_to_string(status) );
 	}
 	
 	/**

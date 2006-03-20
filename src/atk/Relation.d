@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- glib.PtrArray
+ * 	- glib.Str
  * structWrap:
  * 	- GPtrArray* -> PtrArray
  * local aliases:
@@ -47,6 +48,7 @@ private import atk.typedefs;
 private import lib.atk;
 
 private import glib.PtrArray;
+private import glib.Str;
 
 /**
  * Description
@@ -98,7 +100,7 @@ public class Relation : ObjectG
 	public static AtkRelationType typeRegister(char[] name)
 	{
 		// AtkRelationType atk_relation_type_register (const gchar *name);
-		return atk_relation_type_register(std.string.toStringz(name));
+		return atk_relation_type_register(Str.toStringz(name));
 	}
 	
 	/**
@@ -111,7 +113,7 @@ public class Relation : ObjectG
 	public static char[] typeGetName(AtkRelationType type)
 	{
 		// const gchar* atk_relation_type_get_name (AtkRelationType type);
-		return std.string.toString(atk_relation_type_get_name(type) );
+		return Str.toString(atk_relation_type_get_name(type) );
 	}
 	
 	/**
@@ -125,7 +127,7 @@ public class Relation : ObjectG
 	public static AtkRelationType typeForName(char[] name)
 	{
 		// AtkRelationType atk_relation_type_for_name (const gchar *name);
-		return atk_relation_type_for_name(std.string.toStringz(name));
+		return atk_relation_type_for_name(Str.toStringz(name));
 	}
 	
 	/**

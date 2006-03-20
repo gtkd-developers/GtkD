@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,7 +46,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -250,7 +250,7 @@ public class Types
 	public static GtkEnumValue* enumFindValue(GtkType enumType, char[] valueName)
 	{
 		// GtkEnumValue* gtk_type_enum_find_value (GtkType enum_type,  const gchar *value_name);
-		return gtk_type_enum_find_value(enumType, std.string.toStringz(valueName));
+		return gtk_type_enum_find_value(enumType, Str.toStringz(valueName));
 	}
 	
 	/**
@@ -267,6 +267,6 @@ public class Types
 	public static GtkFlagValue* flagsFindValue(GtkType flagsType, char[] valueName)
 	{
 		// GtkFlagValue* gtk_type_flags_find_value (GtkType flags_type,  const gchar *value_name);
-		return gtk_type_flags_find_value(flagsType, std.string.toStringz(valueName));
+		return gtk_type_flags_find_value(flagsType, Str.toStringz(valueName));
 	}
 }

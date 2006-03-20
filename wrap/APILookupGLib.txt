@@ -36,6 +36,7 @@ wrap: glib
 file: glib-Version-Information.html
 class: Version
 prefix: glib_
+import: glib.Str
 outFile: GLib
 
 #file: glib-Basic-Types.html
@@ -282,6 +283,7 @@ class: Module
 prefix: g_module_
 import: glib.Module
 structWrap: GModule* Module
+import: glib.Str
 outFile: Module
 
 
@@ -301,6 +303,7 @@ import: glib.ErrorG
 import: glib.StringG
 import: glib.Source
 import: glib.Dataset
+import: glib.Str
 structWrap: GString* StringG
 structWrap: GSource* Source
 #import: glib.IOChannel
@@ -312,6 +315,7 @@ file: glib-Error-Reporting.html
 struct: GError
 class: ErrorG
 import: glib.Quark
+import: glib.Str
 prefix: g_error_
 outFile: ErrorG
 
@@ -319,11 +323,13 @@ outFile: ErrorG
 file: glib-Warnings-and-Assertions.html
 class: Messages
 prefix: g_
+import: glib.Str
 outFile: Messages
 
 file: glib-Message-Logging.html
 class: MessageLog
 prefix: g_
+import: glib.Str
 outFile: MessageLog
 
 
@@ -336,13 +342,66 @@ class: Str
 import: std.c.stdio
 import: glib.StringG
 structWrap: GString* StringG
+import: std.c.string
 prefix: g_
+
+code: start
+/*************************************************
+ * Convert C-style 0 terminated string s to char[] string.
+ * copied from phobos
+ */
+public static char[] toString(char *s)
+{
+    return s ? s[0 .. strlen(s)] : cast(char[])null;
+}
+
+/*********************************
+ * Convert array of chars s[] to a C-style 0 terminated string.
+ * copied from phobos
+ */
+public static char* toStringz(char[] s)
+in
+{
+}
+out (result)
+{
+//	if (result)
+//	{
+//		// TODO this one fails in some case???
+//		assert(strlen(result) == s.length);
+//		assert(memcmp(result, s, s.length) == 0);
+//	}
+}
+body
+{
+	char[] copy;
+	
+	if (s.length == 0)
+	{
+		copy = "";
+	}
+	else
+	{
+		// Need to make a copy
+		copy = new char[s.length + 1];
+		copy[0..s.length] = s;
+		copy[s.length] = 0;
+	}
+	
+	return copy;
+}
+	
+
+code: end
+
+
 outFile: Str
 
 file: glib-Character-Set-Conversion.html
 class: CharacterSet
 import: glib.ErrorG
 prefix: g_
+import: glib.Str
 # these fail to compile because of a reference to a struct that size is not known
 noprefix: g_convert_with_iconv
 noprefix: g_iconv_open
@@ -354,11 +413,13 @@ file: glib-Unicode-Manipulation.html
 class: Unicode
 import: glib.ErrorG
 prefix: g_
+import: glib.Str
 outFile: Unicode
 
 file: glib-I18N.html
 class: Internationalization
 prefix: g_
+import: glib.Str
 outFile: Internationalization
 
 file: glib-Date-and-Time-Functions.html
@@ -368,6 +429,7 @@ prefix: g_date_
 #import: glib.TimeVal
 #structWrap: GTimeVal* TimeVal
 #import: glib.Date
+import: glib.Str
 structWrap: GDate* Date
 outFile: Date
 
@@ -395,6 +457,8 @@ structWrap: GList* ListG
 prefix: g_
 #import: glib.DebugKey
 #structWrap: GDebugKey* DebugKey
+import: glib.Str
+
 outFile: Util
 
 file: glib-Lexical-Scanner.html
@@ -407,6 +471,7 @@ prefix: g_scanner
 structWrap: GScanner* ScannerG
 #import: glib.ScannerConfig
 #structWrap: GScannerConfig* ScannerConfig
+import: glib.Str
 outFile: ScannerG
 
 file: glib-Automatic-String-Completion.html
@@ -415,6 +480,7 @@ class: StringCompletion
 import: glib.ListG
 structWrap: GList* ListG
 prefix:g_completion_
+import: glib.Str
 outFile: StringCompletion
 
 file: glib-Timers.html
@@ -435,11 +501,13 @@ prefix: g_spawn_
 #structWrap: GPid* Pid
 #import: glib.Error*
 #structWrap: GError** Error*
+import: glib.Str
 outFile: Spawn
 
 file: glib-File-Utilities.html
 class: FileUtils
 import: std.c.stdio
+import: glib.Str
 prefix: g_
 #import: glib.ErrorG
 #import: glib.Error*
@@ -454,6 +522,7 @@ file: glib-Shell-related-Utilities.html
 class: ShellUtils
 import: glib.ErrorG
 prefix: g_shell_
+import: glib.Str
 outFile: ShellUtils
 
 file: glib-Commandline-option-parser.html
@@ -469,6 +538,7 @@ noprefix: g_option_group_
 #structWrap: GOptionEntry* OptionEntry
 import: glib.OptionGroup
 structWrap: GOptionGroup* OptionGroup
+import: glib.Str
 outFile: OptionContext
 
 struct: GOptionGroup
@@ -481,6 +551,7 @@ prefix: g_option_group_
 strictPrefix: Yes
 #import: glib.OptionEntry
 #structWrap: GOptionEntry* OptionEntry
+import: glib.Str
 outFile: OptionGroup
 
 file: glib-Glob-style-pattern-matching.html
@@ -490,6 +561,7 @@ prefix: g_pattern_spec_
 prefix: g_pattern_match_
 #import: glib.PatternSpec
 structWrap: GPatternSpec* Pattern
+import: glib.Str
 outFile: Pattern
 
 file: glib-Simple-XML-Subset-Parser.html
@@ -503,18 +575,21 @@ prefix: g_markup_parse_context_
 #structWrap: GError** Error*
 #import: glib.MarkupParser
 #structWrap: GMarkupParser* MarkupParser
+import: glib.Str
 outFile: SimpleXML
 
 file: glib-Key-value-file-parser.html
 struct: GKeyFile
 class: KeyFile
 import: glib.ErrorG
+import: glib.Str
 prefix: g_key_file_
 outFile: GKeyFile
 
 file: glib-Windows-Compatibility-Functions.html
 class: WindowsUtils
 prefix: g_win32_
+import: glib.Str
 outFile: WindowsUtils
 
 
@@ -531,6 +606,7 @@ file: glib-Memory-Chunks.html
 struct: GMemChunk
 class: MemoryChunk
 prefix: g_mem_chunk_
+import: glib.Str
 outFile: MemoryChunk
 
 file: glib-Doubly-Linked-Lists.html
@@ -576,7 +652,7 @@ import: glib.Dataset
 prefix: g_hash_table_
 #import: glib.HashTable
 structWrap: GHashTable* HashTable
-outFile: 
+outFile: HashTable
 
 file: glib-Strings.html
 struct: GString
@@ -584,12 +660,14 @@ class: StringG
 prefix: g_string_
 #import: glib.StringG
 structWrap: GString* StringG
+import: glib.Str
 outFile: StringG
 
 file: glib-String-Chunks.html
 struct: GStringChunk
 class: StringGChunk
 prefix: g_string_chunk_
+import: glib.Str
 outFile: StrignGChunk
 
 file: glib-Arrays.html
@@ -599,6 +677,7 @@ import: glib.ListG
 prefix: g_array_
 #import: glib.Array
 structWrap: GArray* ArrayG
+import: glib.Str
 outFile: ArrayG
 
 file: glib-Pointer-Arrays.html
@@ -643,6 +722,7 @@ struct: GQuark
 class: Quark
 import: glib.ErrorG
 prefix: g_quark_
+import: glib.Str
 outFile: Quark
 
 file: glib-Keyed-Data-Lists.html
@@ -689,6 +769,7 @@ file: glib-Memory-Allocators.html
 struct: GAllocator
 class: Allocator
 prefix: g_allocator_
+import: glib.Str
 outFile: Allocator
 
 ###########################################################

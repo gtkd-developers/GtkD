@@ -120,7 +120,7 @@ enumType: G_PARAM_CONSTRUCT_ONLY ParamFlags.CONSTRUCT_ONLY
 
 # define the lookup and destination directories
 # "src" and "obj" will be added to outputRoot
-inputRoot: /home/data/down/GTK/API/
+inputRoot: /home/ruimt/data/down/GTK/API/
 outputRoot: /home/ruimt/devel/D1/Duit/
 
 # define the packages to process

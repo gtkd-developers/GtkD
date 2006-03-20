@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TreeModel
  * 	- gtk.TreePath
  * 	- gtk.TreeIter
@@ -52,7 +52,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TreeModel;
 private import gtk.TreePath;
 private import gtk.TreeIter;

@@ -38,7 +38,7 @@
  * 	- gtk_combo_box_new_text
  * imports:
  * 	- atk.ObjectAtk
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TreeModel
  * 	- gtk.TreeIter
  * structWrap:
@@ -55,9 +55,12 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import atk.ObjectAtk;
-private import std.string;
+private import glib.Str;
 private import gtk.TreeModel;
 private import gtk.TreeIter;
+
+private import gtk.CellLayout;
+private import gtk.CellRenderer;
 
 /**
  * Description
@@ -89,6 +92,7 @@ public class ComboBox : Bin
 	/** the main Gtk struct */
 	protected GtkComboBox* gtkComboBox;
 	
+	mixin CellLayout!(GtkComboBox);
 	
 	public GtkComboBox* getComboBoxStruct()
 	{
@@ -393,7 +397,7 @@ public class ComboBox : Bin
 	public void appendText(char[] text)
 	{
 		// void gtk_combo_box_append_text (GtkComboBox *combo_box,  const gchar *text);
-		gtk_combo_box_append_text(gtkComboBox, std.string.toStringz(text));
+		gtk_combo_box_append_text(gtkComboBox, Str.toStringz(text));
 	}
 	
 	/**
@@ -411,7 +415,7 @@ public class ComboBox : Bin
 	public void insertText(int position, char[] text)
 	{
 		// void gtk_combo_box_insert_text (GtkComboBox *combo_box,  gint position,  const gchar *text);
-		gtk_combo_box_insert_text(gtkComboBox, position, std.string.toStringz(text));
+		gtk_combo_box_insert_text(gtkComboBox, position, Str.toStringz(text));
 	}
 	
 	/**
@@ -427,7 +431,7 @@ public class ComboBox : Bin
 	public void prependText(char[] text)
 	{
 		// void gtk_combo_box_prepend_text (GtkComboBox *combo_box,  const gchar *text);
-		gtk_combo_box_prepend_text(gtkComboBox, std.string.toStringz(text));
+		gtk_combo_box_prepend_text(gtkComboBox, Str.toStringz(text));
 	}
 	
 	/**
@@ -459,7 +463,7 @@ public class ComboBox : Bin
 	public char[] getActiveText()
 	{
 		// gchar* gtk_combo_box_get_active_text (GtkComboBox *combo_box);
-		return std.string.toString(gtk_combo_box_get_active_text(gtkComboBox) );
+		return Str.toString(gtk_combo_box_get_active_text(gtkComboBox) );
 	}
 	
 	/**

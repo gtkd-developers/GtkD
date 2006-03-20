@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,7 +46,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -114,7 +114,7 @@ public class AspectFrame : Frame
 	public this (char[] label, float xalign, float yalign, float ratio, int obeyChild)
 	{
 		// GtkWidget* gtk_aspect_frame_new (const gchar *label,  gfloat xalign,  gfloat yalign,  gfloat ratio,  gboolean obey_child);
-		this(cast(GtkAspectFrame*)gtk_aspect_frame_new(std.string.toStringz(label), xalign, yalign, ratio, obeyChild) );
+		this(cast(GtkAspectFrame*)gtk_aspect_frame_new(Str.toStringz(label), xalign, yalign, ratio, obeyChild) );
 	}
 	
 	/**

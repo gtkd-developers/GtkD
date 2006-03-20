@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Font
  * 	- gdk.Display
  * structWrap:
@@ -50,7 +50,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Font;
 private import gdk.Display;
 
@@ -221,7 +221,7 @@ public class Font
 	 */
 	public this(char[] fontName)
 	{
-		this(gdk_font_load(std.string.toStringz(fontName)));
+		this(gdk_font_load(Str.toStringz(fontName)));
 	}
 	
 	/**
@@ -243,7 +243,7 @@ public class Font
 	public static Font load(char[] fontName)
 	{
 		// GdkFont* gdk_font_load (const gchar *font_name);
-		return new Font( gdk_font_load(std.string.toStringz(fontName)) );
+		return new Font( gdk_font_load(Str.toStringz(fontName)) );
 	}
 	
 	/**
@@ -263,7 +263,7 @@ public class Font
 	public static Font loadForDisplay(Display display, char[] fontName)
 	{
 		// GdkFont* gdk_font_load_for_display (GdkDisplay *display,  const gchar *font_name);
-		return new Font( gdk_font_load_for_display((display is null) ? null : display.getDisplayStruct(), std.string.toStringz(fontName)) );
+		return new Font( gdk_font_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontName)) );
 	}
 	
 	/**
@@ -281,7 +281,7 @@ public class Font
 	public static Font fontsetLoad(char[] fontsetName)
 	{
 		// GdkFont* gdk_fontset_load (const gchar *fontset_name);
-		return new Font( gdk_fontset_load(std.string.toStringz(fontsetName)) );
+		return new Font( gdk_fontset_load(Str.toStringz(fontsetName)) );
 	}
 	
 	/**
@@ -302,7 +302,7 @@ public class Font
 	public static Font fontsetLoadForDisplay(Display display, char[] fontsetName)
 	{
 		// GdkFont* gdk_fontset_load_for_display (GdkDisplay *display,  const gchar *fontset_name);
-		return new Font( gdk_fontset_load_for_display((display is null) ? null : display.getDisplayStruct(), std.string.toStringz(fontsetName)) );
+		return new Font( gdk_fontset_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontsetName)) );
 	}
 	
 	/**
@@ -449,7 +449,7 @@ public class Font
 	public void stringExtents(char[] string, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
 	{
 		// void gdk_string_extents (GdkFont *font,  const gchar *string,  gint *lbearing,  gint *rbearing,  gint *width,  gint *ascent,  gint *descent);
-		gdk_string_extents(gdkFont, std.string.toStringz(string), lbearing, rbearing, width, ascent, descent);
+		gdk_string_extents(gdkFont, Str.toStringz(string), lbearing, rbearing, width, ascent, descent);
 	}
 	
 	/**
@@ -478,7 +478,7 @@ public class Font
 	public void textExtents(char[] text, int textLength, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
 	{
 		// void gdk_text_extents (GdkFont *font,  const gchar *text,  gint text_length,  gint *lbearing,  gint *rbearing,  gint *width,  gint *ascent,  gint *descent);
-		gdk_text_extents(gdkFont, std.string.toStringz(text), textLength, lbearing, rbearing, width, ascent, descent);
+		gdk_text_extents(gdkFont, Str.toStringz(text), textLength, lbearing, rbearing, width, ascent, descent);
 	}
 	
 	/**
@@ -525,7 +525,7 @@ public class Font
 	public int stringWidth(char[] string)
 	{
 		// gint gdk_string_width (GdkFont *font,  const gchar *string);
-		return gdk_string_width(gdkFont, std.string.toStringz(string));
+		return gdk_string_width(gdkFont, Str.toStringz(string));
 	}
 	
 	/**
@@ -544,7 +544,7 @@ public class Font
 	public int textWidth(char[] text, int textLength)
 	{
 		// gint gdk_text_width (GdkFont *font,  const gchar *text,  gint text_length);
-		return gdk_text_width(gdkFont, std.string.toStringz(text), textLength);
+		return gdk_text_width(gdkFont, Str.toStringz(text), textLength);
 	}
 	
 	/**
@@ -619,7 +619,7 @@ public class Font
 	public int stringMeasure(char[] string)
 	{
 		// gint gdk_string_measure (GdkFont *font,  const gchar *string);
-		return gdk_string_measure(gdkFont, std.string.toStringz(string));
+		return gdk_string_measure(gdkFont, Str.toStringz(string));
 	}
 	
 	/**
@@ -642,7 +642,7 @@ public class Font
 	public int textMeasure(char[] text, int textLength)
 	{
 		// gint gdk_text_measure (GdkFont *font,  const gchar *text,  gint text_length);
-		return gdk_text_measure(gdkFont, std.string.toStringz(text), textLength);
+		return gdk_text_measure(gdkFont, Str.toStringz(text), textLength);
 	}
 	
 	/**
@@ -682,7 +682,7 @@ public class Font
 	public int stringHeight(char[] string)
 	{
 		// gint gdk_string_height (GdkFont *font,  const gchar *string);
-		return gdk_string_height(gdkFont, std.string.toStringz(string));
+		return gdk_string_height(gdkFont, Str.toStringz(string));
 	}
 	
 	/**
@@ -704,7 +704,7 @@ public class Font
 	public int textHeight(char[] text, int textLength)
 	{
 		// gint gdk_text_height (GdkFont *font,  const gchar *text,  gint text_length);
-		return gdk_text_height(gdkFont, std.string.toStringz(text), textLength);
+		return gdk_text_height(gdkFont, Str.toStringz(text), textLength);
 	}
 	
 	/**
@@ -744,7 +744,7 @@ public class Font
 	public static char[] wcstombs(GdkWChar* src)
 	{
 		// gchar* gdk_wcstombs (const GdkWChar *src);
-		return std.string.toString(gdk_wcstombs(src) );
+		return Str.toString(gdk_wcstombs(src) );
 	}
 	
 	/**
@@ -766,6 +766,6 @@ public class Font
 	public static int mbstowcs(GdkWChar* dest, char[] src, int destMax)
 	{
 		// gint gdk_mbstowcs (GdkWChar *dest,  const gchar *src,  gint dest_max);
-		return gdk_mbstowcs(dest, std.string.toStringz(src), destMax);
+		return gdk_mbstowcs(dest, Str.toStringz(src), destMax);
 	}
 }

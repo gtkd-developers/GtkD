@@ -36,7 +36,7 @@
  * 	- gtk_text_child_anchor_
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TextBuffer
  * 	- gtk.TextMark
  * 	- gtk.TextIter
@@ -67,7 +67,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TextBuffer;
 private import gtk.TextMark;
 private import gtk.TextIter;
@@ -256,7 +256,7 @@ public class TextView : Container
 		
 		foreach ( void delegate(char[], TextView) dlg ; textView.onInsertAtCursorListeners )
 		{
-			dlg(std.string.toString(arg1), textView);
+			dlg(Str.toString(arg1), textView);
 		}
 		
 		return consumed;

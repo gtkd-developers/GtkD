@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,7 +46,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -143,7 +143,7 @@ public class FontButton : Button
 	public this (char[] fontname)
 	{
 		// GtkWidget* gtk_font_button_new_with_font (const gchar *fontname);
-		this(cast(GtkFontButton*)gtk_font_button_new_with_font(std.string.toStringz(fontname)) );
+		this(cast(GtkFontButton*)gtk_font_button_new_with_font(Str.toStringz(fontname)) );
 	}
 	
 	/**
@@ -160,7 +160,7 @@ public class FontButton : Button
 	public int setFontName(char[] fontname)
 	{
 		// gboolean gtk_font_button_set_font_name (GtkFontButton *font_button,  const gchar *fontname);
-		return gtk_font_button_set_font_name(gtkFontButton, std.string.toStringz(fontname));
+		return gtk_font_button_set_font_name(gtkFontButton, Str.toStringz(fontname));
 	}
 	
 	/**
@@ -174,7 +174,7 @@ public class FontButton : Button
 	public char[] getFontName()
 	{
 		// const gchar* gtk_font_button_get_font_name (GtkFontButton *font_button);
-		return std.string.toString(gtk_font_button_get_font_name(gtkFontButton) );
+		return Str.toString(gtk_font_button_get_font_name(gtkFontButton) );
 	}
 	
 	/**
@@ -300,7 +300,7 @@ public class FontButton : Button
 	public void setTitle(char[] title)
 	{
 		// void gtk_font_button_set_title (GtkFontButton *font_button,  const gchar *title);
-		gtk_font_button_set_title(gtkFontButton, std.string.toStringz(title));
+		gtk_font_button_set_title(gtkFontButton, Str.toStringz(title));
 	}
 	
 	/**
@@ -320,7 +320,7 @@ public class FontButton : Button
 	public char[] getTitle()
 	{
 		// const gchar* gtk_font_button_get_title (GtkFontButton *font_button);
-		return std.string.toString(gtk_font_button_get_title(gtkFontButton) );
+		return Str.toString(gtk_font_button_get_title(gtkFontButton) );
 	}
 	
 	

@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -92,7 +94,7 @@ public class Version
 	public static char[] checkVersion(uint requiredMajor, uint requiredMinor, uint requiredMicro)
 	{
 		// const gchar* glib_check_version (guint required_major,  guint required_minor,  guint required_micro);
-		return std.string.toString(glib_check_version(requiredMajor, requiredMinor, requiredMicro) );
+		return Str.toString(glib_check_version(requiredMajor, requiredMinor, requiredMicro) );
 	}
 	
 	

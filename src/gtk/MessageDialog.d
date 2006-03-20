@@ -37,7 +37,7 @@
  * 	- gtk_message_dialog_new
  * 	- gtk_message_dialog_new_with_markup
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Window
  * structWrap:
  * 	- GtkWindow* -> Window
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Window;
 
 /**
@@ -194,8 +194,8 @@ public class MessageDialog : Dialog
 			flags,
 			type,
 			buttons,
-			std.string.toStringz(messageFormat),
-			std.string.toStringz(message),	// this should be null
+			Str.toStringz(messageFormat),
+			Str.toStringz(message),	// this should be null
 			null
 			)
 			);
@@ -209,8 +209,8 @@ public class MessageDialog : Dialog
 			flags,
 			type,
 			buttons,
-			std.string.toStringz(messageFormat),
-			std.string.toStringz(message),	// this should be null
+			Str.toStringz(messageFormat),
+			Str.toStringz(message),	// this should be null
 			null
 			)
 			);
@@ -239,7 +239,7 @@ public class MessageDialog : Dialog
 	public void setMarkup(char[] str)
 	{
 		// void gtk_message_dialog_set_markup (GtkMessageDialog *message_dialog,  const gchar *str);
-		gtk_message_dialog_set_markup(gtkMessageDialog, std.string.toStringz(str));
+		gtk_message_dialog_set_markup(gtkMessageDialog, Str.toStringz(str));
 	}
 	
 	/**
@@ -258,7 +258,7 @@ public class MessageDialog : Dialog
 	public void formatSecondaryText(char[] messageFormat, ... )
 	{
 		// void gtk_message_dialog_format_secondary_text  (GtkMessageDialog *message_dialog,  const gchar *message_format,  ...);
-		gtk_message_dialog_format_secondary_text(gtkMessageDialog, std.string.toStringz(messageFormat));
+		gtk_message_dialog_format_secondary_text(gtkMessageDialog, Str.toStringz(messageFormat));
 	}
 	
 	/**
@@ -292,7 +292,7 @@ public class MessageDialog : Dialog
 	public void formatSecondaryMarkup(char[] messageFormat, ... )
 	{
 		// void gtk_message_dialog_format_secondary_markup  (GtkMessageDialog *message_dialog,  const gchar *message_format,  ...);
-		gtk_message_dialog_format_secondary_markup(gtkMessageDialog, std.string.toStringz(messageFormat));
+		gtk_message_dialog_format_secondary_markup(gtkMessageDialog, Str.toStringz(messageFormat));
 	}
 	
 	

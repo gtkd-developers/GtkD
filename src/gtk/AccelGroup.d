@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gobject.Closure
  * 	- gobject.ObjectG
  * 	- gtk.AccelGroup
@@ -54,7 +54,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gobject.Closure;
 private import gobject.ObjectG;
 private import gtk.AccelGroup;
@@ -228,7 +228,7 @@ public class AccelGroup : ObjectG
 	public void connectByPath(char[] accelPath, Closure closure)
 	{
 		// void gtk_accel_group_connect_by_path (GtkAccelGroup *accel_group,  const gchar *accel_path,  GClosure *closure);
-		gtk_accel_group_connect_by_path(gtkAccelGroup, std.string.toStringz(accelPath), (closure is null) ? null : closure.getClosureStruct());
+		gtk_accel_group_connect_by_path(gtkAccelGroup, Str.toStringz(accelPath), (closure is null) ? null : closure.getClosureStruct());
 	}
 	
 	
@@ -436,7 +436,7 @@ public class AccelGroup : ObjectG
 	public static void acceleratorParse(char[] accelerator, uint* acceleratorKey, GdkModifierType* acceleratorMods)
 	{
 		// void gtk_accelerator_parse (const gchar *accelerator,  guint *accelerator_key,  GdkModifierType *accelerator_mods);
-		gtk_accelerator_parse(std.string.toStringz(accelerator), acceleratorKey, acceleratorMods);
+		gtk_accelerator_parse(Str.toStringz(accelerator), acceleratorKey, acceleratorMods);
 	}
 	
 	/**
@@ -456,7 +456,7 @@ public class AccelGroup : ObjectG
 	public static char[] acceleratorName(uint acceleratorKey, GdkModifierType acceleratorMods)
 	{
 		// gchar* gtk_accelerator_name (guint accelerator_key,  GdkModifierType accelerator_mods);
-		return std.string.toString(gtk_accelerator_name(acceleratorKey, acceleratorMods) );
+		return Str.toString(gtk_accelerator_name(acceleratorKey, acceleratorMods) );
 	}
 	
 	/**
@@ -473,7 +473,7 @@ public class AccelGroup : ObjectG
 	public static char[] acceleratorGetLabel(uint acceleratorKey, GdkModifierType acceleratorMods)
 	{
 		// gchar* gtk_accelerator_get_label (guint accelerator_key,  GdkModifierType accelerator_mods);
-		return std.string.toString(gtk_accelerator_get_label(acceleratorKey, acceleratorMods) );
+		return Str.toString(gtk_accelerator_get_label(acceleratorKey, acceleratorMods) );
 	}
 	
 	/**

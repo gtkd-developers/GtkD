@@ -52,6 +52,7 @@
  * 	- pango.PgTabArray
  * 	- pango.PgLayoutIter
  * 	- pango.PgScriptIter
+ * 	- glib.Str
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- PangoAttribute* -> PgAttribute
@@ -95,6 +96,7 @@ private import pango.PgLanguage;
 private import pango.PgTabArray;
 private import pango.PgLayoutIter;
 private import pango.PgScriptIter;
+private import glib.Str;
 
 /**
  * Description
@@ -209,7 +211,7 @@ public class PgLayout
 	public void setText(char[] text, int length)
 	{
 		// void pango_layout_set_text (PangoLayout *layout,  const char *text,  int length);
-		pango_layout_set_text(pangoLayout, std.string.toStringz(text), length);
+		pango_layout_set_text(pangoLayout, Str.toStringz(text), length);
 	}
 	
 	/**
@@ -223,7 +225,7 @@ public class PgLayout
 	public char[] getText()
 	{
 		// const char* pango_layout_get_text (PangoLayout *layout);
-		return std.string.toString(pango_layout_get_text(pangoLayout) );
+		return Str.toString(pango_layout_get_text(pangoLayout) );
 	}
 	
 	/**
@@ -240,7 +242,7 @@ public class PgLayout
 	public void setMarkup(char[] markup, int length)
 	{
 		// void pango_layout_set_markup (PangoLayout *layout,  const char *markup,  int length);
-		pango_layout_set_markup(pangoLayout, std.string.toStringz(markup), length);
+		pango_layout_set_markup(pangoLayout, Str.toStringz(markup), length);
 	}
 	
 	/**
@@ -270,7 +272,7 @@ public class PgLayout
 	public void setMarkupWithAccel(char[] markup, int length, gunichar accelMarker, gunichar* accelChar)
 	{
 		// void pango_layout_set_markup_with_accel  (PangoLayout *layout,  const char *markup,  int length,  gunichar accel_marker,  gunichar *accel_char);
-		pango_layout_set_markup_with_accel(pangoLayout, std.string.toStringz(markup), length, accelMarker, accelChar);
+		pango_layout_set_markup_with_accel(pangoLayout, Str.toStringz(markup), length, accelMarker, accelChar);
 	}
 	
 	/**

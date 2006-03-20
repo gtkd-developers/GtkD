@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gobject.Type
  * structWrap:
  * local aliases:
@@ -46,7 +46,7 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import std.string;
+private import glib.Str;
 private import gobject.Type;
 
 /**

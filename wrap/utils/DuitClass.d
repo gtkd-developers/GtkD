@@ -39,6 +39,7 @@ module utils.DuitClass;
 //debug = getSignal;
 //debug = signalFunction;
 //debug = stockItems;
+debug = gTypes;
 
 //version = noGtkBody;
 
@@ -77,6 +78,7 @@ public class DuitClass
 	private char[][] collectedAliases;	/// public, module level type aliases
 	private char[][] collectedEnums;	/// public, module level definitions of enums
 	private char[][] stockEnums;		/// special enums for the SotckID
+	private char[][] gTypes;			/// special enums for G_TYPE_*
 	private char[][] stockChars;		/// the char[] value for the stockIDs
 	private char[][] collectedStructs;	/// public, module level definitions of structs
 	private char[][] collectedTypes;	/// public, module level definitions of other types
@@ -134,6 +136,11 @@ public class DuitClass
 		return stockChars;
 	}
 	
+	public char[][] getGTypes()
+	{
+		return gTypes;
+	}
+	
 	public char[][] getStructs()
 	{
 		return collectedStructs;
@@ -181,6 +188,7 @@ public class DuitClass
 		collectedEnums.length = 0;
 		stockEnums.length = 0;
 		stockChars.length = 0;
+		gTypes.length = 0;
 		collectedStructs.length = 0;
 		collectedUnions.length = 0;
 		collectedTypes.length = 0;
@@ -902,10 +910,38 @@ public class DuitClass
 		{
 			collectStockItems(lines, convParms);
 		}
+		else if ( startsWith(lines[0], "G_TYPE_") && convParms.outFile == "Type" )
+		{
+			collectGTypes(lines, convParms);
+		}
 
 		return member;
 	}
 	
+
+	private void collectGTypes(char[][] lines, ConvParms* convParms)
+	{
+		debug(gTypes)writefln("gype lines\n\t%s\n\t%s\n\t%s",lines[0],lines[1],lines[2]);
+		int defLine = 1;
+		if ( lines.length > 0 
+			&& std.string.find(lines[defLine],"G_TYPE_MAKE_FUNDAMENTAL") 
+			&& endsWith(lines[defLine],")")
+			&& std.string.find(lines[defLine],"<<") < 0 
+			)
+		{
+			int pos = std.string.find(lines[defLine], "(");
+			if ( pos > 0 )
+			{
+				int posf = std.string.find(lines[defLine], ")");
+				if ( posf>pos )
+				{
+					gTypes ~= lines[0][7..lines[0].length]
+							~ " = 2<<"~lines[defLine][pos+1..posf]
+							~ ",";
+				}
+			}
+		}
+	}
 
 	// we expect all stock constants to be defined in one file
 	int stockCurrEnum;
@@ -913,7 +949,7 @@ public class DuitClass
 	
 	private void collectStockItems(char[][] lines, ConvParms* convParms)
 	{
-		debug(stockItems)writefln("lines\n\t%s\n\t%s\n\t%s",lines[0],lines[1],lines[2]);
+		debug(stockItems)writefln("stock items lines\n\t%s\n\t%s\n\t%s",lines[0],lines[1],lines[2]);
 		int defLine = 1;
 		if ( lines.length > 0 && startsWith(lines[defLine],"#define GTK_") )
 		{
@@ -2191,7 +2227,7 @@ public class DuitClass
 	}
 	
 	/**
-	 * Consumes "const" and "unsigned" adding "u" to the type when "unsigned" is found.
+	 * Consumes "const" and "unsigned" adding "u" to the type when "unsigned" is found uchar will become just char
 	 * Params:
 	 *    	type = 	
 	 *    	p = 	
@@ -2208,6 +2244,10 @@ public class DuitClass
 		{
 			DuitClass.skipBlank(p, text);
 			type = "u" ~ DuitClass.untilBlank(p, text);
+		}
+		if ( type == "uchar" )
+		{
+			type = "char";
 		}
 	}
 	

@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -102,7 +104,7 @@ public class Allocator
 	public this (char[] name, uint nPreallocs)
 	{
 		// GAllocator* g_allocator_new (const gchar *name,  guint n_preallocs);
-		this(cast(GAllocator*)g_allocator_new(std.string.toStringz(name), nPreallocs) );
+		this(cast(GAllocator*)g_allocator_new(Str.toStringz(name), nPreallocs) );
 	}
 	
 	/**

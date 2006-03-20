@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import pango.typedefs;
 
 private import lib.pango;
 
+private import glib.Str;
 
 /**
  * Description
@@ -128,6 +130,6 @@ public class PgEngine
 	public static PangoEngine* create(char[] id)
 	{
 		// PangoEngine* script_engine_create (const char *id);
-		return script_engine_create(std.string.toStringz(id));
+		return script_engine_create(Str.toStringz(id));
 	}
 }

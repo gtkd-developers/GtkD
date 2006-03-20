@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -45,7 +45,7 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -108,7 +108,7 @@ public class Boxed
 	public static GType boxedTypeRegisterStatic(char[] name, GBoxedCopyFunc boxedCopy, GBoxedFreeFunc boxedFree)
 	{
 		// GType g_boxed_type_register_static (const gchar *name,  GBoxedCopyFunc boxed_copy,  GBoxedFreeFunc boxed_free);
-		return g_boxed_type_register_static(std.string.toStringz(name), boxedCopy, boxedFree);
+		return g_boxed_type_register_static(Str.toStringz(name), boxedCopy, boxedFree);
 	}
 	
 	/**
@@ -122,7 +122,7 @@ public class Boxed
 	public static GType pointerTypeRegisterStatic(char[] name)
 	{
 		// GType g_pointer_type_register_static (const gchar *name);
-		return g_pointer_type_register_static(std.string.toStringz(name));
+		return g_pointer_type_register_static(Str.toStringz(name));
 	}
 	
 	

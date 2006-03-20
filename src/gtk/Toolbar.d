@@ -36,7 +36,7 @@
  * omit code:
  * 	- gtk_toolbar_get_style
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -49,7 +49,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 
 /**
@@ -542,7 +542,7 @@ public class Toolbar : Container
 	public Widget appendItem(char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_append_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
-		return new Widget( gtk_toolbar_append_item(gtkToolbar, std.string.toStringz(text), std.string.toStringz(tooltipText), std.string.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
+		return new Widget( gtk_toolbar_append_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
 	}
 	
 	/**
@@ -571,7 +571,7 @@ public class Toolbar : Container
 	public Widget prependItem(char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_prepend_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
-		return new Widget( gtk_toolbar_prepend_item(gtkToolbar, std.string.toStringz(text), std.string.toStringz(tooltipText), std.string.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
+		return new Widget( gtk_toolbar_prepend_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
 	}
 	
 	/**
@@ -603,7 +603,7 @@ public class Toolbar : Container
 	public Widget insertItem(char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData, int position)
 	{
 		// GtkWidget* gtk_toolbar_insert_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data,  gint position);
-		return new Widget( gtk_toolbar_insert_item(gtkToolbar, std.string.toStringz(text), std.string.toStringz(tooltipText), std.string.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position) );
+		return new Widget( gtk_toolbar_insert_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position) );
 	}
 	
 	/**
@@ -681,7 +681,7 @@ public class Toolbar : Container
 	public Widget appendElement(GtkToolbarChildType type, Widget widget, char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_append_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
-		return new Widget( gtk_toolbar_append_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(text), std.string.toStringz(tooltipText), std.string.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
+		return new Widget( gtk_toolbar_append_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
 	}
 	
 	/**
@@ -718,7 +718,7 @@ public class Toolbar : Container
 	public Widget prependElement(GtkToolbarChildType type, Widget widget, char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_prepend_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
-		return new Widget( gtk_toolbar_prepend_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(text), std.string.toStringz(tooltipText), std.string.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
+		return new Widget( gtk_toolbar_prepend_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
 	}
 	
 	/**
@@ -758,7 +758,7 @@ public class Toolbar : Container
 	public Widget insertElement(GtkToolbarChildType type, Widget widget, char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData, int position)
 	{
 		// GtkWidget* gtk_toolbar_insert_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data,  gint position);
-		return new Widget( gtk_toolbar_insert_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(text), std.string.toStringz(tooltipText), std.string.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position) );
+		return new Widget( gtk_toolbar_insert_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position) );
 	}
 	
 	/**
@@ -777,7 +777,7 @@ public class Toolbar : Container
 	public void appendWidget(Widget widget, char[] tooltipText, char[] tooltipPrivateText)
 	{
 		// void gtk_toolbar_append_widget (GtkToolbar *toolbar,  GtkWidget *widget,  const char *tooltip_text,  const char *tooltip_private_text);
-		gtk_toolbar_append_widget(gtkToolbar, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(tooltipText), std.string.toStringz(tooltipPrivateText));
+		gtk_toolbar_append_widget(gtkToolbar, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText));
 	}
 	
 	/**
@@ -796,7 +796,7 @@ public class Toolbar : Container
 	public void prependWidget(Widget widget, char[] tooltipText, char[] tooltipPrivateText)
 	{
 		// void gtk_toolbar_prepend_widget (GtkToolbar *toolbar,  GtkWidget *widget,  const char *tooltip_text,  const char *tooltip_private_text);
-		gtk_toolbar_prepend_widget(gtkToolbar, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(tooltipText), std.string.toStringz(tooltipPrivateText));
+		gtk_toolbar_prepend_widget(gtkToolbar, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText));
 	}
 	
 	/**
@@ -817,7 +817,7 @@ public class Toolbar : Container
 	public void insertWidget(Widget widget, char[] tooltipText, char[] tooltipPrivateText, int position)
 	{
 		// void gtk_toolbar_insert_widget (GtkToolbar *toolbar,  GtkWidget *widget,  const char *tooltip_text,  const char *tooltip_private_text,  gint position);
-		gtk_toolbar_insert_widget(gtkToolbar, (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(tooltipText), std.string.toStringz(tooltipPrivateText), position);
+		gtk_toolbar_insert_widget(gtkToolbar, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), position);
 	}
 	
 	/**
@@ -862,7 +862,7 @@ public class Toolbar : Container
 	public Widget insertStock(char[] stockId, char[] tooltipText, char[] tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
 	{
 		// GtkWidget* gtk_toolbar_insert_stock (GtkToolbar *toolbar,  const gchar *stock_id,  const char *tooltip_text,  const char *tooltip_private_text,  GtkSignalFunc callback,  gpointer user_data,  gint position);
-		return new Widget( gtk_toolbar_insert_stock(gtkToolbar, std.string.toStringz(stockId), std.string.toStringz(tooltipText), std.string.toStringz(tooltipPrivateText), callback, userData, position) );
+		return new Widget( gtk_toolbar_insert_stock(gtkToolbar, Str.toStringz(stockId), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), callback, userData, position) );
 	}
 	
 	/**

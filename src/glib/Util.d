@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- glib.ListG
+ * 	- glib.Str
  * structWrap:
  * 	- GList* -> ListG
  * local aliases:
@@ -47,6 +48,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ListG;
+private import glib.Str;
 
 /**
  * Description
@@ -73,7 +75,7 @@ public class Util
 	public static char[] getApplicationName()
 	{
 		// const gchar* g_get_application_name (void);
-		return std.string.toString(g_get_application_name() );
+		return Str.toString(g_get_application_name() );
 	}
 	
 	/**
@@ -92,7 +94,7 @@ public class Util
 	public static void setApplicationName(char[] applicationName)
 	{
 		// void g_set_application_name (const gchar *application_name);
-		g_set_application_name(std.string.toStringz(applicationName));
+		g_set_application_name(Str.toStringz(applicationName));
 	}
 	
 	/**
@@ -108,7 +110,7 @@ public class Util
 	public static char[] getPrgname()
 	{
 		// gchar* g_get_prgname (void);
-		return std.string.toString(g_get_prgname() );
+		return Str.toString(g_get_prgname() );
 	}
 	
 	/**
@@ -121,7 +123,7 @@ public class Util
 	public static void setPrgname(char[] prgname)
 	{
 		// void g_set_prgname (const gchar *prgname);
-		g_set_prgname(std.string.toStringz(prgname));
+		g_set_prgname(Str.toStringz(prgname));
 	}
 	
 	/**
@@ -142,7 +144,7 @@ public class Util
 	public static char[] getenv(char[] variable)
 	{
 		// const gchar* g_getenv (const gchar *variable);
-		return std.string.toString(g_getenv(std.string.toStringz(variable)) );
+		return Str.toString(g_getenv(Str.toStringz(variable)) );
 	}
 	
 	/**
@@ -165,7 +167,7 @@ public class Util
 	public static int setenv(char[] variable, char[] value, int overwrite)
 	{
 		// gboolean g_setenv (const gchar *variable,  const gchar *value,  gboolean overwrite);
-		return g_setenv(std.string.toStringz(variable), std.string.toStringz(value), overwrite);
+		return g_setenv(Str.toStringz(variable), Str.toStringz(value), overwrite);
 	}
 	
 	/**
@@ -181,7 +183,7 @@ public class Util
 	public static void unsetenv(char[] variable)
 	{
 		// void g_unsetenv (const gchar *variable);
-		g_unsetenv(std.string.toStringz(variable));
+		g_unsetenv(Str.toStringz(variable));
 	}
 	
 	/**
@@ -208,7 +210,7 @@ public class Util
 	public static char[] getUserName()
 	{
 		// const gchar* g_get_user_name (void);
-		return std.string.toString(g_get_user_name() );
+		return Str.toString(g_get_user_name() );
 	}
 	
 	/**
@@ -223,7 +225,7 @@ public class Util
 	public static char[] getRealName()
 	{
 		// const gchar* g_get_real_name (void);
-		return std.string.toString(g_get_real_name() );
+		return Str.toString(g_get_real_name() );
 	}
 	
 	/**
@@ -240,7 +242,7 @@ public class Util
 	public static char[] getUserCacheDir()
 	{
 		// const gchar* g_get_user_cache_dir (void);
-		return std.string.toString(g_get_user_cache_dir() );
+		return Str.toString(g_get_user_cache_dir() );
 	}
 	
 	/**
@@ -257,7 +259,7 @@ public class Util
 	public static char[] getUserDataDir()
 	{
 		// const gchar* g_get_user_data_dir (void);
-		return std.string.toString(g_get_user_data_dir() );
+		return Str.toString(g_get_user_data_dir() );
 	}
 	
 	/**
@@ -274,7 +276,7 @@ public class Util
 	public static char[] getUserConfigDir()
 	{
 		// const gchar* g_get_user_config_dir (void);
-		return std.string.toString(g_get_user_config_dir() );
+		return Str.toString(g_get_user_config_dir() );
 	}
 	
 	/**
@@ -347,7 +349,7 @@ public class Util
 	public static char[] getHostName()
 	{
 		// const gchar* g_get_host_name (void);
-		return std.string.toString(g_get_host_name() );
+		return Str.toString(g_get_host_name() );
 	}
 	
 	/**
@@ -361,7 +363,7 @@ public class Util
 	public static char[] getHomeDir()
 	{
 		// const gchar* g_get_home_dir (void);
-		return std.string.toString(g_get_home_dir() );
+		return Str.toString(g_get_home_dir() );
 	}
 	
 	/**
@@ -377,7 +379,7 @@ public class Util
 	public static char[] getTmpDir()
 	{
 		// const gchar* g_get_tmp_dir (void);
-		return std.string.toString(g_get_tmp_dir() );
+		return Str.toString(g_get_tmp_dir() );
 	}
 	
 	/**
@@ -390,7 +392,7 @@ public class Util
 	public static char[] getCurrentDir()
 	{
 		// gchar* g_get_current_dir (void);
-		return std.string.toString(g_get_current_dir() );
+		return Str.toString(g_get_current_dir() );
 	}
 	
 	/**
@@ -408,7 +410,7 @@ public class Util
 	public static char[] basename(char[] fileName)
 	{
 		// const gchar* g_basename (const gchar *file_name);
-		return std.string.toString(g_basename(std.string.toStringz(fileName)) );
+		return Str.toString(g_basename(Str.toStringz(fileName)) );
 	}
 	
 	
@@ -424,7 +426,7 @@ public class Util
 	public static int pathIsAbsolute(char[] fileName)
 	{
 		// gboolean g_path_is_absolute (const gchar *file_name);
-		return g_path_is_absolute(std.string.toStringz(fileName));
+		return g_path_is_absolute(Str.toStringz(fileName));
 	}
 	
 	/**
@@ -439,7 +441,7 @@ public class Util
 	public static char[] pathSkipRoot(char[] fileName)
 	{
 		// const gchar* g_path_skip_root (const gchar *file_name);
-		return std.string.toString(g_path_skip_root(std.string.toStringz(fileName)) );
+		return Str.toString(g_path_skip_root(Str.toStringz(fileName)) );
 	}
 	
 	/**
@@ -457,7 +459,7 @@ public class Util
 	public static char[] pathGetBasename(char[] fileName)
 	{
 		// gchar* g_path_get_basename (const gchar *file_name);
-		return std.string.toString(g_path_get_basename(std.string.toStringz(fileName)) );
+		return Str.toString(g_path_get_basename(Str.toStringz(fileName)) );
 	}
 	
 	/**
@@ -472,7 +474,7 @@ public class Util
 	public static char[] pathGetDirname(char[] fileName)
 	{
 		// gchar* g_path_get_dirname (const gchar *file_name);
-		return std.string.toString(g_path_get_dirname(std.string.toStringz(fileName)) );
+		return Str.toString(g_path_get_dirname(Str.toStringz(fileName)) );
 	}
 	
 	/**
@@ -499,7 +501,7 @@ public class Util
 	public static char[] buildFilename(char[] firstElement, ... )
 	{
 		// gchar* g_build_filename (const gchar *first_element,  ...);
-		return std.string.toString(g_build_filename(std.string.toStringz(firstElement)) );
+		return Str.toString(g_build_filename(Str.toStringz(firstElement)) );
 	}
 	
 	/**
@@ -515,7 +517,7 @@ public class Util
 	public static char[] buildFilenamev(char** args)
 	{
 		// gchar* g_build_filenamev (gchar **args);
-		return std.string.toString(g_build_filenamev(args) );
+		return Str.toString(g_build_filenamev(args) );
 	}
 	
 	/**
@@ -553,7 +555,7 @@ public class Util
 	public static char[] buildPath(char[] separator, char[] firstElement, ... )
 	{
 		// gchar* g_build_path (const gchar *separator,  const gchar *first_element,  ...);
-		return std.string.toString(g_build_path(std.string.toStringz(separator), std.string.toStringz(firstElement)) );
+		return Str.toString(g_build_path(Str.toStringz(separator), Str.toStringz(firstElement)) );
 	}
 	
 	/**
@@ -571,7 +573,7 @@ public class Util
 	public static char[] buildPathv(char[] separator, char** args)
 	{
 		// gchar* g_build_pathv (const gchar *separator,  gchar **args);
-		return std.string.toString(g_build_pathv(std.string.toStringz(separator), args) );
+		return Str.toString(g_build_pathv(Str.toStringz(separator), args) );
 	}
 	
 	/**
@@ -598,7 +600,7 @@ public class Util
 	public static char[] findProgramInPath(char[] program)
 	{
 		// gchar* g_find_program_in_path (const gchar *program);
-		return std.string.toString(g_find_program_in_path(std.string.toStringz(program)) );
+		return Str.toString(g_find_program_in_path(Str.toStringz(program)) );
 	}
 	
 	/**
@@ -722,7 +724,7 @@ public class Util
 	public static uint parseDebugString(char[] string, GDebugKey* keys, uint nkeys)
 	{
 		// guint g_parse_debug_string (const gchar *string,  const GDebugKey *keys,  guint nkeys);
-		return g_parse_debug_string(std.string.toStringz(string), keys, nkeys);
+		return g_parse_debug_string(Str.toStringz(string), keys, nkeys);
 	}
 	
 	

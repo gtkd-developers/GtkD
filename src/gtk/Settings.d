@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Settings
  * 	- gdk.Screen
  * 	- glib.StringG
@@ -54,7 +54,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Settings;
 private import gdk.Screen;
 private import glib.StringG;
@@ -262,7 +262,7 @@ public class Settings : ObjectG
 	public void setPropertyValue(char[] name, GtkSettingsValue* svalue)
 	{
 		// void gtk_settings_set_property_value (GtkSettings *settings,  const gchar *name,  const GtkSettingsValue *svalue);
-		gtk_settings_set_property_value(gtkSettings, std.string.toStringz(name), svalue);
+		gtk_settings_set_property_value(gtkSettings, Str.toStringz(name), svalue);
 	}
 	
 	/**
@@ -274,7 +274,7 @@ public class Settings : ObjectG
 	public void setStringProperty(char[] name, char[] vString, char[] origin)
 	{
 		// void gtk_settings_set_string_property  (GtkSettings *settings,  const gchar *name,  const gchar *v_string,  const gchar *origin);
-		gtk_settings_set_string_property(gtkSettings, std.string.toStringz(name), std.string.toStringz(vString), std.string.toStringz(origin));
+		gtk_settings_set_string_property(gtkSettings, Str.toStringz(name), Str.toStringz(vString), Str.toStringz(origin));
 	}
 	
 	/**
@@ -286,7 +286,7 @@ public class Settings : ObjectG
 	public void setLongProperty(char[] name, int vLong, char[] origin)
 	{
 		// void gtk_settings_set_long_property (GtkSettings *settings,  const gchar *name,  glong v_long,  const gchar *origin);
-		gtk_settings_set_long_property(gtkSettings, std.string.toStringz(name), vLong, std.string.toStringz(origin));
+		gtk_settings_set_long_property(gtkSettings, Str.toStringz(name), vLong, Str.toStringz(origin));
 	}
 	
 	/**
@@ -303,7 +303,7 @@ public class Settings : ObjectG
 	public void setDoubleProperty(char[] name, double vDouble, char[] origin)
 	{
 		// void gtk_settings_set_double_property  (GtkSettings *settings,  const gchar *name,  gdouble v_double,  const gchar *origin);
-		gtk_settings_set_double_property(gtkSettings, std.string.toStringz(name), vDouble, std.string.toStringz(origin));
+		gtk_settings_set_double_property(gtkSettings, Str.toStringz(name), vDouble, Str.toStringz(origin));
 	}
 	
 	

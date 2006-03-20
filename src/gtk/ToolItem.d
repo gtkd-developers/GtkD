@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Tooltips
  * 	- gtk.Widget
  * structWrap:
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Tooltips;
 private import gtk.Widget;
 
@@ -151,7 +151,7 @@ public class ToolItem : Bin
 		
 		foreach ( gboolean delegate(Tooltips, char[], char[], ToolItem) dlg ; toolItem.onSetTooltipListeners )
 		{
-			dlg(new Tooltips(tooltips), std.string.toString(tipText), std.string.toString(tipPrivate), toolItem);
+			dlg(new Tooltips(tooltips), Str.toString(tipText), Str.toString(tipPrivate), toolItem);
 		}
 		
 		return consumed;
@@ -280,7 +280,7 @@ public class ToolItem : Bin
 	public void setTooltip(Tooltips tooltips, char[] tipText, char[] tipPrivate)
 	{
 		// void gtk_tool_item_set_tooltip (GtkToolItem *tool_item,  GtkTooltips *tooltips,  const gchar *tip_text,  const gchar *tip_private);
-		gtk_tool_item_set_tooltip(gtkToolItem, (tooltips is null) ? null : tooltips.getTooltipsStruct(), std.string.toStringz(tipText), std.string.toStringz(tipPrivate));
+		gtk_tool_item_set_tooltip(gtkToolItem, (tooltips is null) ? null : tooltips.getTooltipsStruct(), Str.toStringz(tipText), Str.toStringz(tipPrivate));
 	}
 	
 	/**
@@ -527,7 +527,7 @@ public class ToolItem : Bin
 	public Widget getProxyMenuItem(char[] menuItemId)
 	{
 		// GtkWidget* gtk_tool_item_get_proxy_menu_item  (GtkToolItem *tool_item,  const gchar *menu_item_id);
-		return new Widget( gtk_tool_item_get_proxy_menu_item(gtkToolItem, std.string.toStringz(menuItemId)) );
+		return new Widget( gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId)) );
 	}
 	
 	/**
@@ -545,7 +545,7 @@ public class ToolItem : Bin
 	public void setProxyMenuItem(char[] menuItemId, Widget menuItem)
 	{
 		// void gtk_tool_item_set_proxy_menu_item  (GtkToolItem *tool_item,  const gchar *menu_item_id,  GtkWidget *menu_item);
-		gtk_tool_item_set_proxy_menu_item(gtkToolItem, std.string.toStringz(menuItemId), (menuItem is null) ? null : menuItem.getWidgetStruct());
+		gtk_tool_item_set_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId), (menuItem is null) ? null : menuItem.getWidgetStruct());
 	}
 	
 	/**

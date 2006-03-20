@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -72,7 +74,7 @@ public class Messages
 	public static void print(char[] format, ... )
 	{
 		// void g_print (const gchar *format,  ...);
-		g_print(std.string.toStringz(format));
+		g_print(Str.toStringz(format));
 	}
 	
 	/**
@@ -107,7 +109,7 @@ public class Messages
 	public static void printerr(char[] format, ... )
 	{
 		// void g_printerr (const gchar *format,  ...);
-		g_printerr(std.string.toStringz(format));
+		g_printerr(Str.toStringz(format));
 	}
 	
 	/**
@@ -174,7 +176,7 @@ public class Messages
 		public static void onErrorQuery(char[] prgName)
 		{
 			// void g_on_error_query (const gchar *prg_name);
-			g_on_error_query(std.string.toStringz(prgName));
+			g_on_error_query(Str.toStringz(prgName));
 		}
 		
 		/**
@@ -189,7 +191,7 @@ public class Messages
 		public static void onErrorStackTrace(char[] prgName)
 		{
 			// void g_on_error_stack_trace (const gchar *prg_name);
-			g_on_error_stack_trace(std.string.toStringz(prgName));
+			g_on_error_stack_trace(Str.toStringz(prgName));
 		}
 		
 }

@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.ActionGroup
  * 	- glib.ListG
  * 	- gtk.AccelGroup
@@ -58,7 +58,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.ActionGroup;
 private import glib.ListG;
 private import gtk.AccelGroup;
@@ -544,7 +544,7 @@ public class UIManager : ObjectG
 	public Widget getWidget(char[] path)
 	{
 		// GtkWidget* gtk_ui_manager_get_widget (GtkUIManager *self,  const gchar *path);
-		return new Widget( gtk_ui_manager_get_widget(gtkUIManager, std.string.toStringz(path)) );
+		return new Widget( gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path)) );
 	}
 	
 	/**
@@ -581,7 +581,7 @@ public class UIManager : ObjectG
 	public Action getAction(char[] path)
 	{
 		// GtkAction* gtk_ui_manager_get_action (GtkUIManager *self,  const gchar *path);
-		return new Action( gtk_ui_manager_get_action(gtkUIManager, std.string.toStringz(path)) );
+		return new Action( gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path)) );
 	}
 	
 	/**
@@ -605,7 +605,7 @@ public class UIManager : ObjectG
 	public uint addUiFromString(char[] buffer, int length, GError** error)
 	{
 		// guint gtk_ui_manager_add_ui_from_string  (GtkUIManager *self,  const gchar *buffer,  gssize length,  GError **error);
-		return gtk_ui_manager_add_ui_from_string(gtkUIManager, std.string.toStringz(buffer), length, error);
+		return gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, error);
 	}
 	
 	/**
@@ -626,7 +626,7 @@ public class UIManager : ObjectG
 	public uint addUiFromFile(char[] filename, GError** error)
 	{
 		// guint gtk_ui_manager_add_ui_from_file (GtkUIManager *self,  const gchar *filename,  GError **error);
-		return gtk_ui_manager_add_ui_from_file(gtkUIManager, std.string.toStringz(filename), error);
+		return gtk_ui_manager_add_ui_from_file(gtkUIManager, Str.toStringz(filename), error);
 	}
 	
 	/**
@@ -673,7 +673,7 @@ public class UIManager : ObjectG
 	public void addUi(uint mergeId, char[] path, char[] name, char[] action, GtkUIManagerItemType type, int top)
 	{
 		// void gtk_ui_manager_add_ui (GtkUIManager *self,  guint merge_id,  const gchar *path,  const gchar *name,  const gchar *action,  GtkUIManagerItemType type,  gboolean top);
-		gtk_ui_manager_add_ui(gtkUIManager, mergeId, std.string.toStringz(path), std.string.toStringz(name), std.string.toStringz(action), type, top);
+		gtk_ui_manager_add_ui(gtkUIManager, mergeId, Str.toStringz(path), Str.toStringz(name), Str.toStringz(action), type, top);
 	}
 	
 	/**
@@ -702,7 +702,7 @@ public class UIManager : ObjectG
 	public char[] getUi()
 	{
 		// gchar* gtk_ui_manager_get_ui (GtkUIManager *self);
-		return std.string.toString(gtk_ui_manager_get_ui(gtkUIManager) );
+		return Str.toString(gtk_ui_manager_get_ui(gtkUIManager) );
 	}
 	
 	/**

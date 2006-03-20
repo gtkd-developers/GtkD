@@ -38,7 +38,7 @@
  * 	- gtk_button_new_with_label
  * 	- gtk_button_new_from_stock
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.Image
  * 	- gtk.typedefs
@@ -54,7 +54,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 private import gtk.Image;
 private import gtk.typedefs;
@@ -140,12 +140,12 @@ public class Button : Bin
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_button_new_with_mnemonic (const gchar *label);
-			this(cast(GtkButton*)gtk_button_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkButton*)gtk_button_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_button_new_with_label (const gchar *label);
-			this(cast(GtkButton*)gtk_button_new_with_label(std.string.toStringz(label)) );
+			this(cast(GtkButton*)gtk_button_new_with_label(Str.toStringz(label)) );
 		}
 	}
 	
@@ -481,7 +481,7 @@ public class Button : Bin
 	public char[] getLabel()
 	{
 		// const gchar* gtk_button_get_label (GtkButton *button);
-		return std.string.toString(gtk_button_get_label(gtkButton) );
+		return Str.toString(gtk_button_get_label(gtkButton) );
 	}
 	
 	/**
@@ -497,7 +497,7 @@ public class Button : Bin
 	public void setLabel(char[] label)
 	{
 		// void gtk_button_set_label (GtkButton *button,  const gchar *label);
-		gtk_button_set_label(gtkButton, std.string.toStringz(label));
+		gtk_button_set_label(gtkButton, Str.toStringz(label));
 	}
 	
 	/**

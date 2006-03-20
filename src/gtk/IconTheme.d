@@ -36,7 +36,7 @@
  * 	- gtk_icon_info_
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.IconTheme
  * 	- gdk.Screen
  * 	- gtk.IconInfo
@@ -57,7 +57,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.IconTheme;
 private import gdk.Screen;
 private import gtk.IconInfo;
@@ -329,7 +329,7 @@ public class IconTheme : ObjectG
 	public void appendSearchPath(char[] path)
 	{
 		// void gtk_icon_theme_append_search_path  (GtkIconTheme *icon_theme,  const gchar *path);
-		gtk_icon_theme_append_search_path(gtkIconTheme, std.string.toStringz(path));
+		gtk_icon_theme_append_search_path(gtkIconTheme, Str.toStringz(path));
 	}
 	
 	/**
@@ -344,7 +344,7 @@ public class IconTheme : ObjectG
 	public void prependSearchPath(char[] path)
 	{
 		// void gtk_icon_theme_prepend_search_path  (GtkIconTheme *icon_theme,  const gchar *path);
-		gtk_icon_theme_prepend_search_path(gtkIconTheme, std.string.toStringz(path));
+		gtk_icon_theme_prepend_search_path(gtkIconTheme, Str.toStringz(path));
 	}
 	
 	/**
@@ -362,7 +362,7 @@ public class IconTheme : ObjectG
 	public void setCustomTheme(char[] themeName)
 	{
 		// void gtk_icon_theme_set_custom_theme (GtkIconTheme *icon_theme,  const gchar *theme_name);
-		gtk_icon_theme_set_custom_theme(gtkIconTheme, std.string.toStringz(themeName));
+		gtk_icon_theme_set_custom_theme(gtkIconTheme, Str.toStringz(themeName));
 	}
 	
 	/**
@@ -380,7 +380,7 @@ public class IconTheme : ObjectG
 	public int hasIcon(char[] iconName)
 	{
 		// gboolean gtk_icon_theme_has_icon (GtkIconTheme *icon_theme,  const gchar *icon_name);
-		return gtk_icon_theme_has_icon(gtkIconTheme, std.string.toStringz(iconName));
+		return gtk_icon_theme_has_icon(gtkIconTheme, Str.toStringz(iconName));
 	}
 	
 	/**
@@ -406,7 +406,7 @@ public class IconTheme : ObjectG
 	public IconInfo lookupIcon(char[] iconName, int size, GtkIconLookupFlags flags)
 	{
 		// GtkIconInfo* gtk_icon_theme_lookup_icon (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  GtkIconLookupFlags flags);
-		return new IconInfo( gtk_icon_theme_lookup_icon(gtkIconTheme, std.string.toStringz(iconName), size, flags) );
+		return new IconInfo( gtk_icon_theme_lookup_icon(gtkIconTheme, Str.toStringz(iconName), size, flags) );
 	}
 	
 	/**
@@ -442,7 +442,7 @@ public class IconTheme : ObjectG
 	public Pixbuf loadIcon(char[] iconName, int size, GtkIconLookupFlags flags, GError** error)
 	{
 		// GdkPixbuf* gtk_icon_theme_load_icon (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  GtkIconLookupFlags flags,  GError **error);
-		return new Pixbuf( gtk_icon_theme_load_icon(gtkIconTheme, std.string.toStringz(iconName), size, flags, error) );
+		return new Pixbuf( gtk_icon_theme_load_icon(gtkIconTheme, Str.toStringz(iconName), size, flags, error) );
 	}
 	
 	/**
@@ -466,7 +466,7 @@ public class IconTheme : ObjectG
 	public ListG listIcons(char[] context)
 	{
 		// GList* gtk_icon_theme_list_icons (GtkIconTheme *icon_theme,  const gchar *context);
-		return new ListG( gtk_icon_theme_list_icons(gtkIconTheme, std.string.toStringz(context)) );
+		return new ListG( gtk_icon_theme_list_icons(gtkIconTheme, Str.toStringz(context)) );
 	}
 	
 	/**
@@ -487,7 +487,7 @@ public class IconTheme : ObjectG
 	public int* getIconSizes(char[] iconName)
 	{
 		// gint* gtk_icon_theme_get_icon_sizes (GtkIconTheme *icon_theme,  const gchar *icon_name);
-		return gtk_icon_theme_get_icon_sizes(gtkIconTheme, std.string.toStringz(iconName));
+		return gtk_icon_theme_get_icon_sizes(gtkIconTheme, Str.toStringz(iconName));
 	}
 	
 	/**
@@ -504,7 +504,7 @@ public class IconTheme : ObjectG
 	public char[] getExampleIconName()
 	{
 		// char* gtk_icon_theme_get_example_icon_name  (GtkIconTheme *icon_theme);
-		return std.string.toString(gtk_icon_theme_get_example_icon_name(gtkIconTheme) );
+		return Str.toString(gtk_icon_theme_get_example_icon_name(gtkIconTheme) );
 	}
 	
 	/**
@@ -550,7 +550,7 @@ public class IconTheme : ObjectG
 	public static void addBuiltinIcon(char[] iconName, int size, Pixbuf pixbuf)
 	{
 		// void gtk_icon_theme_add_builtin_icon (const gchar *icon_name,  gint size,  GdkPixbuf *pixbuf);
-		gtk_icon_theme_add_builtin_icon(std.string.toStringz(iconName), size, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		gtk_icon_theme_add_builtin_icon(Str.toStringz(iconName), size, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
 	

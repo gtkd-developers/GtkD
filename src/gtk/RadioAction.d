@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import glib.ListSG;
 
 /**
@@ -146,7 +146,7 @@ public class RadioAction : ToggleAction
 	public this (char[] name, char[] label, char[] tooltip, char[] stockId, int value)
 	{
 		// GtkRadioAction* gtk_radio_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id,  gint value);
-		this(cast(GtkRadioAction*)gtk_radio_action_new(std.string.toStringz(name), std.string.toStringz(label), std.string.toStringz(tooltip), std.string.toStringz(stockId), value) );
+		this(cast(GtkRadioAction*)gtk_radio_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), value) );
 	}
 	
 	/**

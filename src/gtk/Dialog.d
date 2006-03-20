@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Window
  * 	- gtk.Widget
  * 	- gdk.Screen
@@ -52,7 +52,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Window;
 private import gtk.Widget;
 private import gdk.Screen;
@@ -281,7 +281,7 @@ public class Dialog : Window
 	public this (char[] title, Window parent, GtkDialogFlags flags, char[] firstButtonText, ... )
 	{
 		// GtkWidget* gtk_dialog_new_with_buttons (const gchar *title,  GtkWindow *parent,  GtkDialogFlags flags,  const gchar *first_button_text,  ...);
-		this(cast(GtkDialog*)gtk_dialog_new_with_buttons(std.string.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, std.string.toStringz(firstButtonText)) );
+		this(cast(GtkDialog*)gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(firstButtonText)) );
 	}
 	
 	/**
@@ -365,7 +365,7 @@ public class Dialog : Window
 	public Widget addButton(char[] buttonText, int responseId)
 	{
 		// GtkWidget* gtk_dialog_add_button (GtkDialog *dialog,  const gchar *button_text,  gint response_id);
-		return new Widget( gtk_dialog_add_button(gtkDialog, std.string.toStringz(buttonText), responseId) );
+		return new Widget( gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId) );
 	}
 	
 	/**
@@ -383,7 +383,7 @@ public class Dialog : Window
 	public void addButtons(char[] firstButtonText, ... )
 	{
 		// void gtk_dialog_add_buttons (GtkDialog *dialog,  const gchar *first_button_text,  ...);
-		gtk_dialog_add_buttons(gtkDialog, std.string.toStringz(firstButtonText));
+		gtk_dialog_add_buttons(gtkDialog, Str.toStringz(firstButtonText));
 	}
 	
 	/**

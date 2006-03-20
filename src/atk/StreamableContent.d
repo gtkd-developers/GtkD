@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- glib.IOChannel
+ * 	- glib.Str
  * structWrap:
  * 	- GIOChannel* -> IOChannel
  * local aliases:
@@ -47,6 +48,7 @@ private import atk.typedefs;
 private import lib.atk;
 
 private import glib.IOChannel;
+private import glib.Str;
 
 /**
  * Description
@@ -109,7 +111,7 @@ public class StreamableContent
 	public char[] getMimeType(int i)
 	{
 		// const gchar* atk_streamable_content_get_mime_type  (AtkStreamableContent *streamable,  gint i);
-		return std.string.toString(atk_streamable_content_get_mime_type(atkStreamableContent, i) );
+		return Str.toString(atk_streamable_content_get_mime_type(atkStreamableContent, i) );
 	}
 	
 	/**
@@ -125,6 +127,6 @@ public class StreamableContent
 	public IOChannel getStream(char[] mimeType)
 	{
 		// GIOChannel* atk_streamable_content_get_stream  (AtkStreamableContent *streamable,  const gchar *mime_type);
-		return new IOChannel( atk_streamable_content_get_stream(atkStreamableContent, std.string.toStringz(mimeType)) );
+		return new IOChannel( atk_streamable_content_get_stream(atkStreamableContent, Str.toStringz(mimeType)) );
 	}
 }

@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import atk.typedefs;
 
 private import lib.atk;
 
+private import glib.Str;
 
 /**
  * Description
@@ -126,7 +128,7 @@ public class Util
 	public static uint addGlobalEventListener(GSignalEmissionHook listener, char[] eventType)
 	{
 		// guint atk_add_global_event_listener (GSignalEmissionHook listener,  const gchar *event_type);
-		return atk_add_global_event_listener(listener, std.string.toStringz(eventType));
+		return atk_add_global_event_listener(listener, Str.toStringz(eventType));
 	}
 	
 	/**
@@ -202,7 +204,7 @@ public class Util
 	public static char[] getToolkitName()
 	{
 		// const gchar* atk_get_toolkit_name (void);
-		return std.string.toString(atk_get_toolkit_name() );
+		return Str.toString(atk_get_toolkit_name() );
 	}
 	
 	/**
@@ -213,6 +215,6 @@ public class Util
 	public static char[] getToolkitVersion()
 	{
 		// const gchar* atk_get_toolkit_version (void);
-		return std.string.toString(atk_get_toolkit_version() );
+		return Str.toString(atk_get_toolkit_version() );
 	}
 }

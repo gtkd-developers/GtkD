@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import atk.typedefs;
 
 private import lib.atk;
 
+private import glib.Str;
 
 /**
  * Description
@@ -234,7 +236,7 @@ public class ObjectAtk : ObjectG
 		
 		foreach ( void delegate(char[], gboolean, ObjectAtk) dlg ; objectAtk.onStateChangeListeners )
 		{
-			dlg(std.string.toString(arg1), arg2, objectAtk);
+			dlg(Str.toString(arg1), arg2, objectAtk);
 		}
 		
 		return consumed;
@@ -281,7 +283,7 @@ public class ObjectAtk : ObjectG
 	public static AtkRole atkRoleRegister(char[] name)
 	{
 		// AtkRole atk_role_register (const gchar *name);
-		return atk_role_register(std.string.toStringz(name));
+		return atk_role_register(Str.toStringz(name));
 	}
 	
 	
@@ -314,7 +316,7 @@ public class ObjectAtk : ObjectG
 	public char[] getName()
 	{
 		// const gchar* atk_object_get_name (AtkObject *accessible);
-		return std.string.toString(atk_object_get_name(atkObject) );
+		return Str.toString(atk_object_get_name(atkObject) );
 	}
 	
 	/**
@@ -328,7 +330,7 @@ public class ObjectAtk : ObjectG
 	public char[] getDescription()
 	{
 		// const gchar* atk_object_get_description (AtkObject *accessible);
-		return std.string.toString(atk_object_get_description(atkObject) );
+		return Str.toString(atk_object_get_description(atkObject) );
 	}
 	
 	/**
@@ -472,7 +474,7 @@ public class ObjectAtk : ObjectG
 	public void setName(char[] name)
 	{
 		// void atk_object_set_name (AtkObject *accessible,  const gchar *name);
-		atk_object_set_name(atkObject, std.string.toStringz(name));
+		atk_object_set_name(atkObject, Str.toStringz(name));
 	}
 	
 	/**
@@ -485,7 +487,7 @@ public class ObjectAtk : ObjectG
 	public void setDescription(char[] description)
 	{
 		// void atk_object_set_description (AtkObject *accessible,  const gchar *description);
-		atk_object_set_description(atkObject, std.string.toStringz(description));
+		atk_object_set_description(atkObject, Str.toStringz(description));
 	}
 	
 	/**
@@ -618,7 +620,7 @@ public class ObjectAtk : ObjectG
 	public static char[] atkRoleGetName(AtkRole role)
 	{
 		// const gchar* atk_role_get_name (AtkRole role);
-		return std.string.toString(atk_role_get_name(role) );
+		return Str.toString(atk_role_get_name(role) );
 	}
 	
 	/**
@@ -631,7 +633,7 @@ public class ObjectAtk : ObjectG
 	public static char[] atkRoleGetLocalizedName(AtkRole role)
 	{
 		// const gchar* atk_role_get_localized_name (AtkRole role);
-		return std.string.toString(atk_role_get_localized_name(role) );
+		return Str.toString(atk_role_get_localized_name(role) );
 	}
 	
 	/**
@@ -652,7 +654,7 @@ public class ObjectAtk : ObjectG
 	public static AtkRole atkRoleForName(char[] name)
 	{
 		// AtkRole atk_role_for_name (const gchar *name);
-		return atk_role_for_name(std.string.toStringz(name));
+		return atk_role_for_name(Str.toStringz(name));
 	}
 	
 	

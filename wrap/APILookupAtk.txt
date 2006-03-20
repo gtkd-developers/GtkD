@@ -37,6 +37,7 @@ file: AtkAction.html
 struct: AtkAction
 class: Action
 prefix: atk_action_
+import: glib.Str
 outFile: Action
 
 file: AtkComponent.html
@@ -49,12 +50,14 @@ file: AtkDocument.html
 struct: AtkDocument
 class: Document
 prefix: atk_document_
+import: glib.Str
 outFile: Document
 
 file: AtkEditableText.html
 struct: AtkEditableText
 class: EditableText
 prefix: atk_editable_text
+import: glib.Str
 outFile: EditableText
 
 file: AtkGObjectAccessible.html
@@ -69,6 +72,7 @@ file: AtkHyperlink.html
 struct: AtkHyperlink
 class: Hyperlink
 prefix: atk_hyperlink
+import: glib.Str
 outFile: Hyperlink
 
 file: AtkHypertext.html
@@ -81,6 +85,7 @@ file: AtkImage.html
 struct: AtkImage
 class: Image
 prefix: atk_image_
+import: glib.Str
 outFile: Image
 
 file: AtkNoOpObject.html
@@ -103,6 +108,7 @@ file: AtkObject.html
 struct: AtkObject
 class: ObjectAtk
 prefix: atk_object_
+import: glib.Str
 outFile: ObjectAtk
 
 file: AtkObjectFactory.html
@@ -124,6 +130,7 @@ struct: AtkRelation
 class: Relation
 prefix: atk_relation_
 import: glib.PtrArray
+import: glib.Str
 structWrap: GPtrArray* PtrArray
 outFile: Relation
 
@@ -144,11 +151,13 @@ outFile: Selection
 file: atk-AtkState.html
 class: State
 prefix: atk_state_
+import: glib.Str
 outFile: State
 
 file: atk-AtkStateSet.html
 class: StateSet
 prefix: atk_state_set_
+import: glib.Str
 outFile: StateSet
 
 file: AtkStreamableContent.html
@@ -157,23 +166,27 @@ class: StreamableContent
 prefix: atk_streamable_content_
 import: glib.IOChannel
 structWrap: GIOChannel* IOChannel
+import: glib.Str
 outFile: StreamableContent
 
 file: AtkTable.html
 struct: AtkTable
 class: Table
 prefix: atk_table_
+import: glib.Str
 outFile: Table
 
 file: AtkText.html
 struct: AtkText
 class: Text
 prefix: atk_text_
+import: glib.Str
 outFile:Text
 
 file: AtkUtil.html
 class: Util
 prefix: atk_
+import: glib.Str
 outFile: Util
 
 file: AtkValue.html

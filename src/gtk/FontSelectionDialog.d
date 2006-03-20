@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Font
  * structWrap:
  * 	- GdkFont* -> Font
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Font;
 
 /**
@@ -104,7 +104,7 @@ public class FontSelectionDialog : Dialog
 	public this (char[] title)
 	{
 		// GtkWidget* gtk_font_selection_dialog_new (const gchar *title);
-		this(cast(GtkFontSelectionDialog*)gtk_font_selection_dialog_new(std.string.toStringz(title)) );
+		this(cast(GtkFontSelectionDialog*)gtk_font_selection_dialog_new(Str.toStringz(title)) );
 	}
 	
 	/**
@@ -132,7 +132,7 @@ public class FontSelectionDialog : Dialog
 	public char[] getFontName()
 	{
 		// gchar* gtk_font_selection_dialog_get_font_name  (GtkFontSelectionDialog *fsd);
-		return std.string.toString(gtk_font_selection_dialog_get_font_name(gtkFontSelectionDialog) );
+		return Str.toString(gtk_font_selection_dialog_get_font_name(gtkFontSelectionDialog) );
 	}
 	
 	/**
@@ -147,7 +147,7 @@ public class FontSelectionDialog : Dialog
 	public int setFontName(char[] fontname)
 	{
 		// gboolean gtk_font_selection_dialog_set_font_name  (GtkFontSelectionDialog *fsd,  const gchar *fontname);
-		return gtk_font_selection_dialog_set_font_name(gtkFontSelectionDialog, std.string.toStringz(fontname));
+		return gtk_font_selection_dialog_set_font_name(gtkFontSelectionDialog, Str.toStringz(fontname));
 	}
 	
 	/**
@@ -161,7 +161,7 @@ public class FontSelectionDialog : Dialog
 	public char[] getPreviewText()
 	{
 		// const gchar* gtk_font_selection_dialog_get_preview_text  (GtkFontSelectionDialog *fsd);
-		return std.string.toString(gtk_font_selection_dialog_get_preview_text(gtkFontSelectionDialog) );
+		return Str.toString(gtk_font_selection_dialog_get_preview_text(gtkFontSelectionDialog) );
 	}
 	
 	/**
@@ -179,6 +179,6 @@ public class FontSelectionDialog : Dialog
 	public void setPreviewText(char[] text)
 	{
 		// void gtk_font_selection_dialog_set_preview_text  (GtkFontSelectionDialog *fsd,  const gchar *text);
-		gtk_font_selection_dialog_set_preview_text(gtkFontSelectionDialog, std.string.toStringz(text));
+		gtk_font_selection_dialog_set_preview_text(gtkFontSelectionDialog, Str.toStringz(text));
 	}
 }

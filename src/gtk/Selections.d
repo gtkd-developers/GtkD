@@ -34,11 +34,11 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * 	- gdk.Display
  * 	- gdk.Pixbuf
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- GdkPixbuf* -> Pixbuf
@@ -52,11 +52,11 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 private import gdk.Display;
 private import gdk.Pixbuf;
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -380,7 +380,7 @@ public class Selections
 	public static int selectionDataSetText(GtkSelectionData* selectionData, char[] str, int len)
 	{
 		// gboolean gtk_selection_data_set_text (GtkSelectionData *selection_data,  const gchar *str,  gint len);
-		return gtk_selection_data_set_text(selectionData, std.string.toStringz(str), len);
+		return gtk_selection_data_set_text(selectionData, Str.toStringz(str), len);
 	}
 	
 	/**

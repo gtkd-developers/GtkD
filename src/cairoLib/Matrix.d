@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * 	- surfaceT* -> Surface
  * local aliases:
@@ -45,6 +46,7 @@ private import cairoLib.typedefs;
 
 private import lib.cairoLib;
 
+private import glib.Str;
 
 /**
  * Description

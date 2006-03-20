@@ -36,13 +36,13 @@
  * omit code:
  * 	- gtk_tree_store_set
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TreeIter
  * 	- gobject.Value
  * 	- gtk.TreeNode
  * 	- gdk.Pixbuf;
  * 	- gobject.Value;
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -55,13 +55,13 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TreeIter;
 private import gobject.Value;
 private import gtk.TreeNode;
 private import gdk.Pixbuf;;
 private import gobject.Value;;
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -137,7 +137,7 @@ public class TreeStore : TreeModel
 	 */
 	void setValue(TreeIter iter, int column, char[] value)
 	{
-		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, std.string.toStringz(value) , -1);
+		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
 	}
 	
 	
@@ -182,7 +182,7 @@ public class TreeStore : TreeModel
 			gtkTreeStore,
 			iter.getTreeIterStruct(),
 			columns[i],
-			std.string.toStringz(values[i]),-1);
+			Str.toStringz(values[i]),-1);
 		}
 	}
 	

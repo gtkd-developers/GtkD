@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,7 +46,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -134,7 +134,7 @@ public class FileSelection : Dialog
 	public this (char[] title)
 	{
 		// GtkWidget* gtk_file_selection_new (const gchar *title);
-		this(cast(GtkFileSelection*)gtk_file_selection_new(std.string.toStringz(title)) );
+		this(cast(GtkFileSelection*)gtk_file_selection_new(Str.toStringz(title)) );
 	}
 	
 	/**
@@ -154,7 +154,7 @@ public class FileSelection : Dialog
 	public void setFilename(char[] filename)
 	{
 		// void gtk_file_selection_set_filename (GtkFileSelection *filesel,  const gchar *filename);
-		gtk_file_selection_set_filename(gtkFileSelection, std.string.toStringz(filename));
+		gtk_file_selection_set_filename(gtkFileSelection, Str.toStringz(filename));
 	}
 	
 	/**
@@ -171,7 +171,7 @@ public class FileSelection : Dialog
 	public char[] getFilename()
 	{
 		// const gchar* gtk_file_selection_get_filename  (GtkFileSelection *filesel);
-		return std.string.toString(gtk_file_selection_get_filename(gtkFileSelection) );
+		return Str.toString(gtk_file_selection_get_filename(gtkFileSelection) );
 	}
 	
 	/**
@@ -187,7 +187,7 @@ public class FileSelection : Dialog
 	public void complete(char[] pattern)
 	{
 		// void gtk_file_selection_complete (GtkFileSelection *filesel,  const gchar *pattern);
-		gtk_file_selection_complete(gtkFileSelection, std.string.toStringz(pattern));
+		gtk_file_selection_complete(gtkFileSelection, Str.toStringz(pattern));
 	}
 	
 	/**

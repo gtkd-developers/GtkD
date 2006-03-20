@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gobject.ParamSpec
  * 	- gobject.Value
  * 	- glib.ListG
@@ -51,7 +51,7 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import std.string;
+private import glib.Str;
 private import gobject.ParamSpec;
 private import gobject.Value;
 private import glib.ListG;
@@ -266,7 +266,7 @@ public class ParamSpec
 	public char[] getName()
 	{
 		// const gchar* g_param_spec_get_name (GParamSpec *pspec);
-		return std.string.toString(g_param_spec_get_name(gParamSpec) );
+		return Str.toString(g_param_spec_get_name(gParamSpec) );
 	}
 	
 	/**
@@ -279,7 +279,7 @@ public class ParamSpec
 	public char[] getNick()
 	{
 		// const gchar* g_param_spec_get_nick (GParamSpec *pspec);
-		return std.string.toString(g_param_spec_get_nick(gParamSpec) );
+		return Str.toString(g_param_spec_get_nick(gParamSpec) );
 	}
 	
 	/**
@@ -292,7 +292,7 @@ public class ParamSpec
 	public char[] getBlurb()
 	{
 		// const gchar* g_param_spec_get_blurb (GParamSpec *pspec);
-		return std.string.toString(g_param_spec_get_blurb(gParamSpec) );
+		return Str.toString(g_param_spec_get_blurb(gParamSpec) );
 	}
 	
 	/**
@@ -417,7 +417,7 @@ public class ParamSpec
 	public static void* internal(GType paramType, char[] name, char[] nick, char[] blurb, GParamFlags flags)
 	{
 		// gpointer g_param_spec_internal (GType param_type,  const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamFlags flags);
-		return g_param_spec_internal(paramType, std.string.toStringz(name), std.string.toStringz(nick), std.string.toStringz(blurb), flags);
+		return g_param_spec_internal(paramType, Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
 	}
 	
 	
@@ -436,7 +436,7 @@ public class ParamSpec
 	public static GType gParamTypeRegisterStatic(char[] name, GParamSpecTypeInfo* pspecInfo)
 	{
 		// GType g_param_type_register_static (const gchar *name,  const GParamSpecTypeInfo *pspec_info);
-		return g_param_type_register_static(std.string.toStringz(name), pspecInfo);
+		return g_param_type_register_static(Str.toStringz(name), pspecInfo);
 	}
 	
 	
@@ -502,7 +502,7 @@ public class ParamSpec
 	public static ParamSpec poolLookup(GParamSpecPool* pool, char[] paramName, GType ownerType, int walkAncestors)
 	{
 		// GParamSpec* g_param_spec_pool_lookup (GParamSpecPool *pool,  const gchar *param_name,  GType owner_type,  gboolean walk_ancestors);
-		return new ParamSpec( g_param_spec_pool_lookup(pool, std.string.toStringz(paramName), ownerType, walkAncestors) );
+		return new ParamSpec( g_param_spec_pool_lookup(pool, Str.toStringz(paramName), ownerType, walkAncestors) );
 	}
 	
 	/**

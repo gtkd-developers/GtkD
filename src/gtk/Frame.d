@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 
 /**
@@ -112,7 +112,7 @@ public class Frame : Bin
 	public this (char[] label)
 	{
 		// GtkWidget* gtk_frame_new (const gchar *label);
-		this(cast(GtkFrame*)gtk_frame_new(std.string.toStringz(label)) );
+		this(cast(GtkFrame*)gtk_frame_new(Str.toStringz(label)) );
 	}
 	
 	/**
@@ -126,7 +126,7 @@ public class Frame : Bin
 	public void setLabel(char[] label)
 	{
 		// void gtk_frame_set_label (GtkFrame *frame,  const gchar *label);
-		gtk_frame_set_label(gtkFrame, std.string.toStringz(label));
+		gtk_frame_set_label(gtkFrame, Str.toStringz(label));
 	}
 	
 	/**
@@ -192,7 +192,7 @@ public class Frame : Bin
 	public char[] getLabel()
 	{
 		// const gchar* gtk_frame_get_label (GtkFrame *frame);
-		return std.string.toString(gtk_frame_get_label(gtkFrame) );
+		return Str.toString(gtk_frame_get_label(gtkFrame) );
 	}
 	
 	/**

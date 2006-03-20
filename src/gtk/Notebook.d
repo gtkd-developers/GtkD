@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Label
  * 	- gtk.Widget
  * structWrap:
@@ -49,7 +49,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Label;
 private import gtk.Widget;
 
@@ -732,7 +732,7 @@ public class Notebook : Container
 	public void setMenuLabelText(Widget child, char[] menuText)
 	{
 		// void gtk_notebook_set_menu_label_text  (GtkNotebook *notebook,  GtkWidget *child,  const gchar *menu_text);
-		gtk_notebook_set_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(menuText));
+		gtk_notebook_set_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(menuText));
 	}
 	
 	/**
@@ -801,7 +801,7 @@ public class Notebook : Container
 	public void setTabLabelText(Widget child, char[] tabText)
 	{
 		// void gtk_notebook_set_tab_label_text (GtkNotebook *notebook,  GtkWidget *child,  const gchar *tab_text);
-		gtk_notebook_set_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), std.string.toStringz(tabText));
+		gtk_notebook_set_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(tabText));
 	}
 	
 	/**
@@ -836,7 +836,7 @@ public class Notebook : Container
 	public char[] getMenuLabelText(Widget child)
 	{
 		// const gchar* gtk_notebook_get_menu_label_text  (GtkNotebook *notebook,  GtkWidget *child);
-		return std.string.toString(gtk_notebook_get_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
+		return Str.toString(gtk_notebook_get_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
 	}
 	
 	/**
@@ -897,7 +897,7 @@ public class Notebook : Container
 	public char[] getTabLabelText(Widget child)
 	{
 		// const gchar* gtk_notebook_get_tab_label_text  (GtkNotebook *notebook,  GtkWidget *child);
-		return std.string.toString(gtk_notebook_get_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
+		return Str.toString(gtk_notebook_get_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
 	}
 	
 	/**

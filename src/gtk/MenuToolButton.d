@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.ToolItem
  * 	- gtk.Widget
  * 	- gtk.Tooltips
@@ -52,7 +52,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.ToolItem;
 private import gtk.Widget;
 private import gtk.Tooltips;
@@ -147,7 +147,7 @@ public class MenuToolButton : ToolButton
 	public static ToolItem newMenuToolButton(Widget iconWidget, char[] label)
 	{
 		// GtkToolItem* gtk_menu_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
-		return new ToolItem( gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), std.string.toStringz(label)) );
+		return new ToolItem( gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label)) );
 	}
 	
 	/**
@@ -163,7 +163,7 @@ public class MenuToolButton : ToolButton
 	public static ToolItem newFromStock(char[] stockId)
 	{
 		// GtkToolItem* gtk_menu_tool_button_new_from_stock  (const gchar *stock_id);
-		return new ToolItem( gtk_menu_tool_button_new_from_stock(std.string.toStringz(stockId)) );
+		return new ToolItem( gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId)) );
 	}
 	
 	/**
@@ -231,6 +231,6 @@ public class MenuToolButton : ToolButton
 	public void setArrowTooltip(Tooltips tooltips, char[] tipText, char[] tipPrivate)
 	{
 		// void gtk_menu_tool_button_set_arrow_tooltip  (GtkMenuToolButton *button,  GtkTooltips *tooltips,  const gchar *tip_text,  const gchar *tip_private);
-		gtk_menu_tool_button_set_arrow_tooltip(gtkMenuToolButton, (tooltips is null) ? null : tooltips.getTooltipsStruct(), std.string.toStringz(tipText), std.string.toStringz(tipPrivate));
+		gtk_menu_tool_button_set_arrow_tooltip(gtkMenuToolButton, (tooltips is null) ? null : tooltips.getTooltipsStruct(), Str.toStringz(tipText), Str.toStringz(tipPrivate));
 	}
 }

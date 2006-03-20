@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- glib.HashTable
+ * 	- glib.Str
  * structWrap:
  * 	- GHashTable* -> HashTable
  * 	- GScanner* -> ScannerG
@@ -48,6 +49,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.HashTable;
+private import glib.Str;
 
 /**
  * Description
@@ -143,7 +145,7 @@ public class ScannerG
 	public void _InputText(char[] text, uint textLen)
 	{
 		// void g_scanner_input_text (GScanner *scanner,  const	gchar *text,  guint text_len);
-		g_scanner_input_text(gScanner, std.string.toStringz(text), textLen);
+		g_scanner_input_text(gScanner, Str.toStringz(text), textLen);
 	}
 	
 	/**
@@ -280,7 +282,7 @@ public class ScannerG
 	public void _ScopeAddSymbol(uint scopeId, char[] symbol, void* value)
 	{
 		// void g_scanner_scope_add_symbol (GScanner *scanner,  guint scope_id,  const gchar *symbol,  gpointer value);
-		g_scanner_scope_add_symbol(gScanner, scopeId, std.string.toStringz(symbol), value);
+		g_scanner_scope_add_symbol(gScanner, scopeId, Str.toStringz(symbol), value);
 	}
 	
 	/**
@@ -318,7 +320,7 @@ public class ScannerG
 	public void* _ScopeLookupSymbol(uint scopeId, char[] symbol)
 	{
 		// gpointer g_scanner_scope_lookup_symbol (GScanner *scanner,  guint scope_id,  const gchar *symbol);
-		return g_scanner_scope_lookup_symbol(gScanner, scopeId, std.string.toStringz(symbol));
+		return g_scanner_scope_lookup_symbol(gScanner, scopeId, Str.toStringz(symbol));
 	}
 	
 	/**
@@ -333,7 +335,7 @@ public class ScannerG
 	public void _ScopeRemoveSymbol(uint scopeId, char[] symbol)
 	{
 		// void g_scanner_scope_remove_symbol (GScanner *scanner,  guint scope_id,  const gchar *symbol);
-		g_scanner_scope_remove_symbol(gScanner, scopeId, std.string.toStringz(symbol));
+		g_scanner_scope_remove_symbol(gScanner, scopeId, Str.toStringz(symbol));
 	}
 	
 	
@@ -352,7 +354,7 @@ public class ScannerG
 	public void* _LookupSymbol(char[] symbol)
 	{
 		// gpointer g_scanner_lookup_symbol (GScanner *scanner,  const gchar *symbol);
-		return g_scanner_lookup_symbol(gScanner, std.string.toStringz(symbol));
+		return g_scanner_lookup_symbol(gScanner, Str.toStringz(symbol));
 	}
 	
 	/**
@@ -368,7 +370,7 @@ public class ScannerG
 	public void _Warn(char[] format, ... )
 	{
 		// void g_scanner_warn (GScanner *scanner,  const gchar *format,  ...);
-		g_scanner_warn(gScanner, std.string.toStringz(format));
+		g_scanner_warn(gScanner, Str.toStringz(format));
 	}
 	
 	/**
@@ -384,7 +386,7 @@ public class ScannerG
 	public void _Error(char[] format, ... )
 	{
 		// void g_scanner_error (GScanner *scanner,  const gchar *format,  ...);
-		g_scanner_error(gScanner, std.string.toStringz(format));
+		g_scanner_error(gScanner, Str.toStringz(format));
 	}
 	
 	/**
@@ -421,7 +423,7 @@ public class ScannerG
 	public void _UnexpToken(GTokenType expectedToken, char[] identifierSpec, char[] symbolSpec, char[] symbolName, char[] message, int isError)
 	{
 		// void g_scanner_unexp_token (GScanner *scanner,  GTokenType expected_token,  const gchar *identifier_spec,  const gchar *symbol_spec,  const gchar *symbol_name,  const gchar *message,  gint is_error);
-		g_scanner_unexp_token(gScanner, expectedToken, std.string.toStringz(identifierSpec), std.string.toStringz(symbolSpec), std.string.toStringz(symbolName), std.string.toStringz(message), isError);
+		g_scanner_unexp_token(gScanner, expectedToken, Str.toStringz(identifierSpec), Str.toStringz(symbolSpec), Str.toStringz(symbolName), Str.toStringz(message), isError);
 	}
 	
 	

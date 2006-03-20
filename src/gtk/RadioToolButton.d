@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.ToolItem
  * 	- glib.ListSG
  * structWrap:
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.ToolItem;
 private import glib.ListSG;
 
@@ -129,7 +129,7 @@ public class RadioToolButton : ToggleToolButton
 	public static ToolItem newFromStock(ListSG group, char[] stockId)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new_from_stock  (GSList *group,  const gchar *stock_id);
-		return new ToolItem( gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), std.string.toStringz(stockId)) );
+		return new ToolItem( gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), Str.toStringz(stockId)) );
 	}
 	
 	/**
@@ -161,7 +161,7 @@ public class RadioToolButton : ToggleToolButton
 	public ToolItem newWithStockFromWidget(char[] stockId)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new_with_stock_from_widget  (GtkRadioToolButton *group,  const gchar *stock_id);
-		return new ToolItem( gtk_radio_tool_button_new_with_stock_from_widget(gtkRadioToolButton, std.string.toStringz(stockId)) );
+		return new ToolItem( gtk_radio_tool_button_new_with_stock_from_widget(gtkRadioToolButton, Str.toStringz(stockId)) );
 	}
 	
 	/**

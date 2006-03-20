@@ -60,7 +60,7 @@ wrap: gobject
 file: gobject-Type-Information.html
 class: Type
 prefix: g_type_
-import: std.string
+import: glib.Str
 import: glib.Quark
 import: gobject.Type
 #structWrap: GType* Type
@@ -84,7 +84,7 @@ file: GTypePlugin.html
 struct: GTypePlugin
 class: TypePlugin
 prefix: g_type_plugin_
-import: std.string
+import: glib.Str
 import: gobject.Type
 #import: gobject.TypeInfo
 #structWrap: GTypeInfo* TypeInfo
@@ -97,7 +97,7 @@ outFile: TypePlugin
 file: GTypeModule.html
 struct: GTypeModule
 class: TypeModule
-import: std.string
+import: glib.Str
 prefix: g_type_module_
 #import: gobject.TypeInfo
 #structWrap: GTypeInfo* TypeInfo
@@ -126,7 +126,7 @@ structWrap: GValue* Value
 import: gobject.Closure
 structWrap: GClosure* Closure
 import: std.gc
-import: std.string
+import: glib.Str
 
 
 nocode: g_object_set_data_full
@@ -156,7 +156,7 @@ code: start
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
 		std.gc.addRoot(data);
-		g_object_set_data_full(gObject, std.string.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
+		g_object_set_data_full(gObject, Str.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
 	}
 
 	extern(C)
@@ -181,7 +181,7 @@ struct: GEnumValue
 class: Enums
 prefix: g_enum_
 noprefix: g_flags_
-import: std.string
+import: glib.Str
 #import: gobject.EnumValue
 #structWrap: GEnumValue* EnumValue
 #import: gobject.TypeInfo
@@ -193,7 +193,7 @@ strictPrefix: Y
 class: Flags
 prefix: g_flags_
 noprefix: g_enum_
-import: std.string
+import: glib.Str
 import: gobject.Flags
 structWrap: GFlagsValue* Flags
 #import: gobject.TypeInfo
@@ -203,7 +203,7 @@ outFile: Flags
 file: gobject-Boxed-Types.html
 class: Boxed
 prefix: g_
-import: std.string
+import: glib.Str
 outFile: Boxed
 
 file: gobject-Generic-values.html
@@ -211,7 +211,7 @@ struct: GValue
 class: Value
 nostruct: GValue
 prefix: g_value_
-import: std.string
+import: glib.Str
 import: gobject.Value
 structWrap: GValue* Value
 import: gobject.ParamSpec
@@ -249,7 +249,7 @@ file: gobject-GParamSpec.html
 struct: GParamSpec
 class: ParamSpec
 prefix: g_param_spec_
-import: std.string
+import: glib.Str
 import: gobject.ParamSpec
 structWrap: GParamSpec* ParamSpec
 import: gobject.Value
@@ -267,7 +267,7 @@ outFile: ParamSpec
 file: gobject-Signals.html
 class: Signals
 prefix: g_signal_
-import: std.string
+import: glib.Str
 import: gobject.Closure
 structWrap: GClosure* Closure
 import: gobject.Type

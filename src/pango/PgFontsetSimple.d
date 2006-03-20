@@ -49,6 +49,7 @@
  * 	- pango.PgLayout
  * 	- pango.PgLayoutIter
  * 	- pango.PgScriptIter
+ * 	- glib.Str
  * structWrap:
  * 	- PangoAttribute* -> PgAttribute
  * 	- PangoAttributeList* -> PgAttributeList
@@ -88,6 +89,7 @@ private import pango.PgTabArray;
 private import pango.PgLayout;
 private import pango.PgLayoutIter;
 private import pango.PgScriptIter;
+private import glib.Str;
 
 /**
  * Description

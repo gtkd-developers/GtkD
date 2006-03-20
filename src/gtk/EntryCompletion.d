@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.TreeModel
  * structWrap:
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 private import gtk.TreeModel;
 
@@ -166,7 +166,7 @@ public class EntryCompletion : ObjectG
 		
 		foreach ( gboolean delegate(char[], EntryCompletion) dlg ; entryCompletion.onInsertPrefixListeners )
 		{
-			dlg(std.string.toString(prefix), entryCompletion);
+			dlg(Str.toString(prefix), entryCompletion);
 		}
 		
 		return consumed;
@@ -352,7 +352,7 @@ public class EntryCompletion : ObjectG
 	public void insertActionText(int index, char[] text)
 	{
 		// void gtk_entry_completion_insert_action_text  (GtkEntryCompletion *completion,  gint index_,  const gchar *text);
-		gtk_entry_completion_insert_action_text(gtkEntryCompletion, index, std.string.toStringz(text));
+		gtk_entry_completion_insert_action_text(gtkEntryCompletion, index, Str.toStringz(text));
 	}
 	
 	/**
@@ -369,7 +369,7 @@ public class EntryCompletion : ObjectG
 	public void insertActionMarkup(int index, char[] markup)
 	{
 		// void gtk_entry_completion_insert_action_markup  (GtkEntryCompletion *completion,  gint index_,  const gchar *markup);
-		gtk_entry_completion_insert_action_markup(gtkEntryCompletion, index, std.string.toStringz(markup));
+		gtk_entry_completion_insert_action_markup(gtkEntryCompletion, index, Str.toStringz(markup));
 	}
 	
 	/**

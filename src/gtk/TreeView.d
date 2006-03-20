@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TreeModel
  * 	- gtk.TreeSelection
  * 	- gtk.Adjustment
@@ -66,7 +66,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TreeModel;
 private import gtk.TreeSelection;
 private import gtk.Adjustment;
@@ -859,7 +859,7 @@ public class TreeView : Container
 	public int insertColumnWithAttributes(int position, char[] title, CellRenderer cell, ... )
 	{
 		// gint gtk_tree_view_insert_column_with_attributes  (GtkTreeView *tree_view,  gint position,  const gchar *title,  GtkCellRenderer *cell,  ...);
-		return gtk_tree_view_insert_column_with_attributes(gtkTreeView, position, std.string.toStringz(title), (cell is null) ? null : cell.getCellRendererStruct());
+		return gtk_tree_view_insert_column_with_attributes(gtkTreeView, position, Str.toStringz(title), (cell is null) ? null : cell.getCellRendererStruct());
 	}
 	
 	/**
@@ -889,7 +889,7 @@ public class TreeView : Container
 	public int insertColumnWithDataFunc(int position, char[] title, CellRenderer cell, GtkTreeCellDataFunc func, void* data, GDestroyNotify dnotify)
 	{
 		// gint gtk_tree_view_insert_column_with_data_func  (GtkTreeView *tree_view,  gint position,  const gchar *title,  GtkCellRenderer *cell,  GtkTreeCellDataFunc func,  gpointer data,  GDestroyNotify dnotify);
-		return gtk_tree_view_insert_column_with_data_func(gtkTreeView, position, std.string.toStringz(title), (cell is null) ? null : cell.getCellRendererStruct(), func, data, dnotify);
+		return gtk_tree_view_insert_column_with_data_func(gtkTreeView, position, Str.toStringz(title), (cell is null) ? null : cell.getCellRendererStruct(), func, data, dnotify);
 	}
 	
 	/**

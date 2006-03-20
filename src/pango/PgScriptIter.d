@@ -49,6 +49,7 @@
  * 	- pango.PgTabArray
  * 	- pango.PgLayout
  * 	- pango.PgLayoutIter
+ * 	- glib.Str
  * structWrap:
  * 	- PangoAttribute* -> PgAttribute
  * 	- PangoAttributeList* -> PgAttributeList
@@ -88,6 +89,7 @@ private import pango.PgLanguage;
 private import pango.PgTabArray;
 private import pango.PgLayout;
 private import pango.PgLayoutIter;
+private import glib.Str;
 
 /**
  * Description
@@ -216,7 +218,7 @@ public class PgScriptIter
 	public this (char[] text, int length)
 	{
 		// PangoScriptIter* pango_script_iter_new (const char *text,  int length);
-		this(cast(PangoScriptIter*)pango_script_iter_new(std.string.toStringz(text), length) );
+		this(cast(PangoScriptIter*)pango_script_iter_new(Str.toStringz(text), length) );
 	}
 	
 	/**

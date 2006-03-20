@@ -51,6 +51,7 @@
  * 	- pango.PgLayout
  * 	- pango.PgLayoutIter
  * 	- pango.PgScriptIter
+ * 	- glib.Str
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- PangoAttribute* -> PgAttribute
@@ -94,6 +95,7 @@ private import pango.PgTabArray;
 private import pango.PgLayout;
 private import pango.PgLayoutIter;
 private import pango.PgScriptIter;
+private import glib.Str;
 
 /**
  * Description
@@ -380,7 +382,7 @@ public class PgGlyphString
 	public void indexToX(char[] text, int length, PangoAnalysis* analysis, int index, int trailing, int* xPos)
 	{
 		// void pango_glyph_string_index_to_x (PangoGlyphString *glyphs,  char *text,  int length,  PangoAnalysis *analysis,  int index_,  gboolean trailing,  int *x_pos);
-		pango_glyph_string_index_to_x(pangoGlyphString, std.string.toStringz(text), length, analysis, index, trailing, xPos);
+		pango_glyph_string_index_to_x(pangoGlyphString, Str.toStringz(text), length, analysis, index, trailing, xPos);
 	}
 	
 	/**
@@ -410,7 +412,7 @@ public class PgGlyphString
 	public void xToIndex(char[] text, int length, PangoAnalysis* analysis, int xPos, int* index, int* trailing)
 	{
 		// void pango_glyph_string_x_to_index (PangoGlyphString *glyphs,  char *text,  int length,  PangoAnalysis *analysis,  int x_pos,  int *index_,  int *trailing);
-		pango_glyph_string_x_to_index(pangoGlyphString, std.string.toStringz(text), length, analysis, xPos, index, trailing);
+		pango_glyph_string_x_to_index(pangoGlyphString, Str.toStringz(text), length, analysis, xPos, index, trailing);
 	}
 	
 	/**
@@ -433,7 +435,7 @@ public class PgGlyphString
 	public void getLogicalWidths(char[] text, int length, int embeddingLevel, int* logicalWidths)
 	{
 		// void pango_glyph_string_get_logical_widths  (PangoGlyphString *glyphs,  const char *text,  int length,  int embedding_level,  int *logical_widths);
-		pango_glyph_string_get_logical_widths(pangoGlyphString, std.string.toStringz(text), length, embeddingLevel, logicalWidths);
+		pango_glyph_string_get_logical_widths(pangoGlyphString, Str.toStringz(text), length, embeddingLevel, logicalWidths);
 	}
 	
 	/**
@@ -459,7 +461,7 @@ public class PgGlyphString
 	public static PangoGlyphItem* pangoGlyphItemSplit(PangoGlyphItem* orig, char[] text, int splitIndex)
 	{
 		// PangoGlyphItem* pango_glyph_item_split (PangoGlyphItem *orig,  const char *text,  int split_index);
-		return pango_glyph_item_split(orig, std.string.toStringz(text), splitIndex);
+		return pango_glyph_item_split(orig, Str.toStringz(text), splitIndex);
 	}
 	
 	/**
@@ -492,7 +494,7 @@ public class PgGlyphString
 	public static ListSG pangoGlyphItemApplyAttrs(PangoGlyphItem* glyphItem, char[] text, PangoAttrList* list)
 	{
 		// GSList* pango_glyph_item_apply_attrs (PangoGlyphItem *glyph_item,  const char *text,  PangoAttrList *list);
-		return new ListSG( pango_glyph_item_apply_attrs(glyphItem, std.string.toStringz(text), list) );
+		return new ListSG( pango_glyph_item_apply_attrs(glyphItem, Str.toStringz(text), list) );
 	}
 	
 	/**
@@ -517,7 +519,7 @@ public class PgGlyphString
 	public static void pangoGlyphItemLetterSpace(PangoGlyphItem* glyphItem, char[] text, PangoLogAttr* logAttrs, int letterSpacing)
 	{
 		// void pango_glyph_item_letter_space (PangoGlyphItem *glyph_item,  const char *text,  PangoLogAttr *log_attrs,  int letter_spacing);
-		pango_glyph_item_letter_space(glyphItem, std.string.toStringz(text), logAttrs, letterSpacing);
+		pango_glyph_item_letter_space(glyphItem, Str.toStringz(text), logAttrs, letterSpacing);
 	}
 	
 	/**

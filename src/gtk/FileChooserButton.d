@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * 	- glib.ListSG;
  * 	- gtk.Widget;
@@ -52,7 +52,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 private import glib.ListSG;;
 private import gtk.Widget;;
@@ -140,7 +140,7 @@ public class FileChooserButton : HBox
 	public this (char[] title, GtkFileChooserAction action)
 	{
 		// GtkWidget* gtk_file_chooser_button_new (const gchar *title,  GtkFileChooserAction action);
-		this(cast(GtkFileChooserButton*)gtk_file_chooser_button_new(std.string.toStringz(title), action) );
+		this(cast(GtkFileChooserButton*)gtk_file_chooser_button_new(Str.toStringz(title), action) );
 	}
 	
 	/**
@@ -158,7 +158,7 @@ public class FileChooserButton : HBox
 	public this (char[] title, GtkFileChooserAction action, char[] backend)
 	{
 		// GtkWidget* gtk_file_chooser_button_new_with_backend  (const gchar *title,  GtkFileChooserAction action,  const gchar *backend);
-		this(cast(GtkFileChooserButton*)gtk_file_chooser_button_new_with_backend(std.string.toStringz(title), action, std.string.toStringz(backend)) );
+		this(cast(GtkFileChooserButton*)gtk_file_chooser_button_new_with_backend(Str.toStringz(title), action, Str.toStringz(backend)) );
 	}
 	
 	/**
@@ -189,7 +189,7 @@ public class FileChooserButton : HBox
 	public char[] getTitle()
 	{
 		// const gchar* gtk_file_chooser_button_get_title  (GtkFileChooserButton *button);
-		return std.string.toString(gtk_file_chooser_button_get_title(gtkFileChooserButton) );
+		return Str.toString(gtk_file_chooser_button_get_title(gtkFileChooserButton) );
 	}
 	
 	/**
@@ -203,7 +203,7 @@ public class FileChooserButton : HBox
 	public void setTitle(char[] title)
 	{
 		// void gtk_file_chooser_button_set_title  (GtkFileChooserButton *button,  const gchar *title);
-		gtk_file_chooser_button_set_title(gtkFileChooserButton, std.string.toStringz(title));
+		gtk_file_chooser_button_set_title(gtkFileChooserButton, Str.toStringz(title));
 	}
 	
 	/**

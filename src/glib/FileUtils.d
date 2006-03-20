@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- std.c.stdio
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,6 +47,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import std.c.stdio;
+private import glib.Str;
 
 /**
  * Description
@@ -120,7 +122,7 @@ public class FileUtils
 	public static int fileGetContents(char[] filename, char** contents, uint* length, GError** error)
 	{
 		// gboolean g_file_get_contents (const gchar *filename,  gchar **contents,  gsize *length,  GError **error);
-		return g_file_get_contents(std.string.toStringz(filename), contents, length, error);
+		return g_file_get_contents(Str.toStringz(filename), contents, length, error);
 	}
 	
 	/**
@@ -157,7 +159,7 @@ public class FileUtils
 	public static int fileSetContents(char[] filename, char[] contents, int length, GError** error)
 	{
 		// gboolean g_file_set_contents (const gchar *filename,  const gchar *contents,  gssize length,  GError **error);
-		return g_file_set_contents(std.string.toStringz(filename), std.string.toStringz(contents), length, error);
+		return g_file_set_contents(Str.toStringz(filename), Str.toStringz(contents), length, error);
 	}
 	
 	/**
@@ -204,7 +206,7 @@ public class FileUtils
 	public static int fileTest(char[] filename, GFileTest test)
 	{
 		// gboolean g_file_test (const gchar *filename,  GFileTest test);
-		return g_file_test(std.string.toStringz(filename), test);
+		return g_file_test(Str.toStringz(filename), test);
 	}
 	
 	/**
@@ -228,7 +230,7 @@ public class FileUtils
 	public static int mkstemp(char[] tmpl)
 	{
 		// gint g_mkstemp (gchar *tmpl);
-		return g_mkstemp(std.string.toStringz(tmpl));
+		return g_mkstemp(Str.toStringz(tmpl));
 	}
 	
 	/**
@@ -260,7 +262,7 @@ public class FileUtils
 	public static int fileOpenTmp(char[] tmpl, char** nameUsed, GError** error)
 	{
 		// gint g_file_open_tmp (const gchar *tmpl,  gchar **name_used,  GError **error);
-		return g_file_open_tmp(std.string.toStringz(tmpl), nameUsed, error);
+		return g_file_open_tmp(Str.toStringz(tmpl), nameUsed, error);
 	}
 	
 	/**
@@ -279,7 +281,7 @@ public class FileUtils
 	public static char[] fileReadLink(char[] filename, GError** error)
 	{
 		// gchar* g_file_read_link (const gchar *filename,  GError **error);
-		return std.string.toString(g_file_read_link(std.string.toStringz(filename), error) );
+		return Str.toString(g_file_read_link(Str.toStringz(filename), error) );
 	}
 	
 	/**
@@ -297,7 +299,7 @@ public class FileUtils
 	public static int mkdirWithParents(char[] pathname, int mode)
 	{
 		// int g_mkdir_with_parents (const gchar *pathname,  int mode);
-		return g_mkdir_with_parents(std.string.toStringz(pathname), mode);
+		return g_mkdir_with_parents(Str.toStringz(pathname), mode);
 	}
 	
 	
@@ -321,7 +323,7 @@ public class FileUtils
 	public static GDir* dirOpen(char[] path, uint flags, GError** error)
 	{
 		// GDir* g_dir_open (const gchar *path,  guint flags,  GError **error);
-		return g_dir_open(std.string.toStringz(path), flags, error);
+		return g_dir_open(Str.toStringz(path), flags, error);
 	}
 	
 	/**
@@ -338,7 +340,7 @@ public class FileUtils
 	public static char[] dirReadName(GDir* dir)
 	{
 		// const gchar* g_dir_read_name (GDir *dir);
-		return std.string.toString(g_dir_read_name(dir) );
+		return Str.toString(g_dir_read_name(dir) );
 	}
 	
 	/**
@@ -389,7 +391,7 @@ public class FileUtils
 	public static GMappedFile* mappedFileNew(char[] filename, int writable, GError** error)
 	{
 		// GMappedFile* g_mapped_file_new (const gchar *filename,  gboolean writable,  GError **error);
-		return g_mapped_file_new(std.string.toStringz(filename), writable, error);
+		return g_mapped_file_new(Str.toStringz(filename), writable, error);
 	}
 	
 	/**
@@ -431,7 +433,7 @@ public class FileUtils
 	public static char[] mappedFileGetContents(GMappedFile* file)
 	{
 		// gchar* g_mapped_file_get_contents (GMappedFile *file);
-		return std.string.toString(g_mapped_file_get_contents(file) );
+		return Str.toString(g_mapped_file_get_contents(file) );
 	}
 	
 	/**
@@ -456,7 +458,7 @@ public class FileUtils
 	public static int open(char[] filename, int flags, int mode)
 	{
 		// int g_open (const gchar *filename,  int flags,  int mode);
-		return g_open(std.string.toStringz(filename), flags, mode);
+		return g_open(Str.toStringz(filename), flags, mode);
 	}
 	
 	/**
@@ -477,7 +479,7 @@ public class FileUtils
 	public static int rename(char[] oldfilename, char[] newfilename)
 	{
 		// int g_rename (const gchar *oldfilename,  const gchar *newfilename);
-		return g_rename(std.string.toStringz(oldfilename), std.string.toStringz(newfilename));
+		return g_rename(Str.toStringz(oldfilename), Str.toStringz(newfilename));
 	}
 	
 	/**
@@ -496,7 +498,7 @@ public class FileUtils
 	public static int mkdir(char[] filename, int mode)
 	{
 		// int g_mkdir (const gchar *filename,  int mode);
-		return g_mkdir(std.string.toStringz(filename), mode);
+		return g_mkdir(Str.toStringz(filename), mode);
 	}
 	
 	/**
@@ -516,7 +518,7 @@ public class FileUtils
 	public static int stat(char[] filename, void* buf)
 	{
 		// int g_stat (const gchar *filename,  struct stat *buf);
-		return g_stat(std.string.toStringz(filename), buf);
+		return g_stat(Str.toStringz(filename), buf);
 	}
 	
 	/**
@@ -539,7 +541,7 @@ public class FileUtils
 	public static int lstat(char[] filename, void* buf)
 	{
 		// int g_lstat (const gchar *filename,  struct stat *buf);
-		return g_lstat(std.string.toStringz(filename), buf);
+		return g_lstat(Str.toStringz(filename), buf);
 	}
 	
 	/**
@@ -560,7 +562,7 @@ public class FileUtils
 	public static int unlink(char[] filename)
 	{
 		// int g_unlink (const gchar *filename);
-		return g_unlink(std.string.toStringz(filename));
+		return g_unlink(Str.toStringz(filename));
 	}
 	
 	/**
@@ -584,7 +586,7 @@ public class FileUtils
 	public static int remove(char[] filename)
 	{
 		// int g_remove (const gchar *filename);
-		return g_remove(std.string.toStringz(filename));
+		return g_remove(Str.toStringz(filename));
 	}
 	
 	/**
@@ -602,7 +604,7 @@ public class FileUtils
 	public static int rmdir(char[] filename)
 	{
 		// int g_rmdir (const gchar *filename);
-		return g_rmdir(std.string.toStringz(filename));
+		return g_rmdir(Str.toStringz(filename));
 	}
 	
 	/**
@@ -622,7 +624,7 @@ public class FileUtils
 	public static FILE* fopen(char[] filename, char[] mode)
 	{
 		// FILE* g_fopen (const gchar *filename,  const gchar *mode);
-		return g_fopen(std.string.toStringz(filename), std.string.toStringz(mode));
+		return g_fopen(Str.toStringz(filename), Str.toStringz(mode));
 	}
 	
 	/**
@@ -644,7 +646,7 @@ public class FileUtils
 	public static FILE* freopen(char[] filename, char[] mode, FILE* stream)
 	{
 		// FILE* g_freopen (const gchar *filename,  const gchar *mode,  FILE *stream);
-		return g_freopen(std.string.toStringz(filename), std.string.toStringz(mode), stream);
+		return g_freopen(Str.toStringz(filename), Str.toStringz(mode), stream);
 	}
 	
 	/**
@@ -667,7 +669,7 @@ public class FileUtils
 	public static int chmod(char[] filename, int mode)
 	{
 		// int g_chmod (const gchar *filename,  int mode);
-		return g_chmod(std.string.toStringz(filename), mode);
+		return g_chmod(Str.toStringz(filename), mode);
 	}
 	
 	/**
@@ -691,7 +693,7 @@ public class FileUtils
 	public static int access(char[] filename, int mode)
 	{
 		// int g_access (const gchar *filename,  int mode);
-		return g_access(std.string.toStringz(filename), mode);
+		return g_access(Str.toStringz(filename), mode);
 	}
 	
 	/**
@@ -714,7 +716,7 @@ public class FileUtils
 	public static int creat(char[] filename, int mode)
 	{
 		// int g_creat (const gchar *filename,  int mode);
-		return g_creat(std.string.toStringz(filename), mode);
+		return g_creat(Str.toStringz(filename), mode);
 	}
 	
 	/**
@@ -730,6 +732,6 @@ public class FileUtils
 	public static int chdir(char[] path)
 	{
 		// int g_chdir (const gchar *path);
-		return g_chdir(std.string.toStringz(path));
+		return g_chdir(Str.toStringz(path));
 	}
 }

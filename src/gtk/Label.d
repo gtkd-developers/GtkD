@@ -37,7 +37,7 @@
  * 	- gtk_label_new
  * 	- gtk_label_new_with_mnemonic
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 
 /**
@@ -180,12 +180,12 @@ public class Label : Misc
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_label_new_with_mnemonic (const gchar *str);
-			this(cast(GtkLabel*)gtk_label_new_with_mnemonic(std.string.toStringz(str)) );
+			this(cast(GtkLabel*)gtk_label_new_with_mnemonic(Str.toStringz(str)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_label_new (const gchar *str);
-			this(cast(GtkLabel*)gtk_label_new(std.string.toStringz(str)) );
+			this(cast(GtkLabel*)gtk_label_new(Str.toStringz(str)) );
 		}
 	}
 	
@@ -296,7 +296,7 @@ public class Label : Misc
 	public void setText(char[] str)
 	{
 		// void gtk_label_set_text (GtkLabel *label,  const gchar *str);
-		gtk_label_set_text(gtkLabel, std.string.toStringz(str));
+		gtk_label_set_text(gtkLabel, Str.toStringz(str));
 	}
 	
 	/**
@@ -332,7 +332,7 @@ public class Label : Misc
 	public void setMarkup(char[] str)
 	{
 		// void gtk_label_set_markup (GtkLabel *label,  const gchar *str);
-		gtk_label_set_markup(gtkLabel, std.string.toStringz(str));
+		gtk_label_set_markup(gtkLabel, Str.toStringz(str));
 	}
 	
 	/**
@@ -350,7 +350,7 @@ public class Label : Misc
 	public void setMarkupWithMnemonic(char[] str)
 	{
 		// void gtk_label_set_markup_with_mnemonic  (GtkLabel *label,  const gchar *str);
-		gtk_label_set_markup_with_mnemonic(gtkLabel, std.string.toStringz(str));
+		gtk_label_set_markup_with_mnemonic(gtkLabel, Str.toStringz(str));
 	}
 	
 	/**
@@ -366,7 +366,7 @@ public class Label : Misc
 	public void setPattern(char[] pattern)
 	{
 		// void gtk_label_set_pattern (GtkLabel *label,  const gchar *pattern);
-		gtk_label_set_pattern(gtkLabel, std.string.toStringz(pattern));
+		gtk_label_set_pattern(gtkLabel, Str.toStringz(pattern));
 	}
 	
 	/**
@@ -465,7 +465,7 @@ public class Label : Misc
 	public uint parseUline(char[] string)
 	{
 		// guint gtk_label_parse_uline (GtkLabel *label,  const gchar *string);
-		return gtk_label_parse_uline(gtkLabel, std.string.toStringz(string));
+		return gtk_label_parse_uline(gtkLabel, Str.toStringz(string));
 	}
 	
 	/**
@@ -547,7 +547,7 @@ public class Label : Misc
 	public char[] getText()
 	{
 		// const gchar* gtk_label_get_text (GtkLabel *label);
-		return std.string.toString(gtk_label_get_text(gtkLabel) );
+		return Str.toString(gtk_label_get_text(gtkLabel) );
 	}
 	
 	
@@ -621,7 +621,7 @@ public class Label : Misc
 	public void setTextWithMnemonic(char[] str)
 	{
 		// void gtk_label_set_text_with_mnemonic  (GtkLabel *label,  const gchar *str);
-		gtk_label_set_text_with_mnemonic(gtkLabel, std.string.toStringz(str));
+		gtk_label_set_text_with_mnemonic(gtkLabel, Str.toStringz(str));
 	}
 	
 	/**
@@ -712,7 +712,7 @@ public class Label : Misc
 	public char[] getLabel()
 	{
 		// const gchar* gtk_label_get_label (GtkLabel *label);
-		return std.string.toString(gtk_label_get_label(gtkLabel) );
+		return Str.toString(gtk_label_get_label(gtkLabel) );
 	}
 	
 	/**
@@ -849,7 +849,7 @@ public class Label : Misc
 	public void setLabel(char[] str)
 	{
 		// void gtk_label_set_label (GtkLabel *label,  const gchar *str);
-		gtk_label_set_label(gtkLabel, std.string.toStringz(str));
+		gtk_label_set_label(gtkLabel, Str.toStringz(str));
 	}
 	
 	/**

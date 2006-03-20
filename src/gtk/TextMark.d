@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TextBuffer
  * structWrap:
  * 	- GtkTextBuffer* -> TextBuffer
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TextBuffer;
 
 /**
@@ -163,7 +163,7 @@ public class TextMark : ObjectG
 	public char[] getName()
 	{
 		// const gchar* gtk_text_mark_get_name (GtkTextMark *mark);
-		return std.string.toString(gtk_text_mark_get_name(gtkTextMark) );
+		return Str.toString(gtk_text_mark_get_name(gtkTextMark) );
 	}
 	
 	/**

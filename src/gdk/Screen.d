@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Screen
  * 	- gdk.Colormap
  * 	- gdk.Visual
@@ -63,7 +63,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Screen;
 private import gdk.Colormap;
 private import gdk.Visual;
@@ -449,7 +449,7 @@ public class Screen : ObjectG
 	public char[] makeDisplayName()
 	{
 		// gchar* gdk_screen_make_display_name (GdkScreen *screen);
-		return std.string.toString(gdk_screen_make_display_name(gdkScreen) );
+		return Str.toString(gdk_screen_make_display_name(gdkScreen) );
 	}
 	
 	/**
@@ -564,7 +564,7 @@ public class Screen : ObjectG
 	public int getSetting(char[] name, Value value)
 	{
 		// gboolean gdk_screen_get_setting (GdkScreen *screen,  const gchar *name,  GValue *value);
-		return gdk_screen_get_setting(gdkScreen, std.string.toStringz(name), (value is null) ? null : value.getValueStruct());
+		return gdk_screen_get_setting(gdkScreen, Str.toStringz(name), (value is null) ? null : value.getValueStruct());
 	}
 	
 	/**
@@ -599,7 +599,7 @@ public class Screen : ObjectG
 	public int gdkSpawnOnScreen(char[] workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid, GError** error)
 	{
 		// gboolean gdk_spawn_on_screen (GdkScreen *screen,  const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gint *child_pid,  GError **error);
-		return gdk_spawn_on_screen(gdkScreen, std.string.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, error);
+		return gdk_spawn_on_screen(gdkScreen, Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, error);
 	}
 	
 	/**
@@ -644,7 +644,7 @@ public class Screen : ObjectG
 	public int gdkSpawnOnScreenWithPipes(char[] workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, int* childPid, int* standardInput, int* standardOutput, int* standardError, GError** error)
 	{
 		// gboolean gdk_spawn_on_screen_with_pipes (GdkScreen *screen,  const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gint *child_pid,  gint *standard_input,  gint *standard_output,  gint *standard_error,  GError **error);
-		return gdk_spawn_on_screen_with_pipes(gdkScreen, std.string.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, standardInput, standardOutput, standardError, error);
+		return gdk_spawn_on_screen_with_pipes(gdkScreen, Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, childPid, standardInput, standardOutput, standardError, error);
 	}
 	
 	/**
@@ -678,6 +678,6 @@ public class Screen : ObjectG
 	public int gdkSpawnCommandLineOnScreen(char[] commandLine, GError** error)
 	{
 		// gboolean gdk_spawn_command_line_on_screen  (GdkScreen *screen,  const gchar *command_line,  GError **error);
-		return gdk_spawn_command_line_on_screen(gdkScreen, std.string.toStringz(commandLine), error);
+		return gdk_spawn_command_line_on_screen(gdkScreen, Str.toStringz(commandLine), error);
 	}
 }

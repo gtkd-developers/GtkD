@@ -35,7 +35,7 @@
  * 	- g_enum_
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gobject.Flags
  * structWrap:
  * 	- GFlagsValue* -> Flags
@@ -48,7 +48,7 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import std.string;
+private import glib.Str;
 private import gobject.Flags;
 
 /**
@@ -139,7 +139,7 @@ public class Flags
 	public static Flags getValueByName(GFlagsClass* flagsClass, char[] name)
 	{
 		// GFlagsValue* g_flags_get_value_by_name (GFlagsClass *flags_class,  const gchar *name);
-		return new Flags( g_flags_get_value_by_name(flagsClass, std.string.toStringz(name)) );
+		return new Flags( g_flags_get_value_by_name(flagsClass, Str.toStringz(name)) );
 	}
 	
 	/**
@@ -155,7 +155,7 @@ public class Flags
 	public static Flags getValueByNick(GFlagsClass* flagsClass, char[] nick)
 	{
 		// GFlagsValue* g_flags_get_value_by_nick (GFlagsClass *flags_class,  const gchar *nick);
-		return new Flags( g_flags_get_value_by_nick(flagsClass, std.string.toStringz(nick)) );
+		return new Flags( g_flags_get_value_by_nick(flagsClass, Str.toStringz(nick)) );
 	}
 	
 	
@@ -175,7 +175,7 @@ public class Flags
 	public static GType registerStatic(char[] name, Flags _StaticValues)
 	{
 		// GType g_flags_register_static (const gchar *name,  const GFlagsValue *const_static_values);
-		return g_flags_register_static(std.string.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
+		return g_flags_register_static(Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
 	}
 	
 	

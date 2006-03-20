@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gobject.Closure
  * 	- gtk.Widget
  * structWrap:
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gobject.Closure;
 private import gtk.Widget;
 
@@ -136,7 +136,7 @@ public class AccelLabel : Label
 	public this (char[] string)
 	{
 		// GtkWidget* gtk_accel_label_new (const gchar *string);
-		this(cast(GtkAccelLabel*)gtk_accel_label_new(std.string.toStringz(string)) );
+		this(cast(GtkAccelLabel*)gtk_accel_label_new(Str.toStringz(string)) );
 	}
 	
 	/**

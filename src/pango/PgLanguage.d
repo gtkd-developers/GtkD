@@ -49,6 +49,7 @@
  * 	- pango.PgLayout
  * 	- pango.PgLayoutIter
  * 	- pango.PgScriptIter
+ * 	- glib.Str
  * structWrap:
  * 	- PangoAttribute* -> PgAttribute
  * 	- PangoAttributeList* -> PgAttributeList
@@ -88,6 +89,7 @@ private import pango.PgTabArray;
 private import pango.PgLayout;
 private import pango.PgLayoutIter;
 private import pango.PgScriptIter;
+private import glib.Str;
 
 /**
  * Description
@@ -199,7 +201,7 @@ public class PgLanguage
 	public static PangoLanguage* fromString(char[] language)
 	{
 		// PangoLanguage* pango_language_from_string (const char *language);
-		return pango_language_from_string(std.string.toStringz(language));
+		return pango_language_from_string(Str.toStringz(language));
 	}
 	
 	
@@ -222,7 +224,7 @@ public class PgLanguage
 	public int matches(char[] rangeList)
 	{
 		// gboolean pango_language_matches (PangoLanguage *language,  const char *range_list);
-		return pango_language_matches(pangoLanguage, std.string.toStringz(rangeList));
+		return pango_language_matches(pangoLanguage, Str.toStringz(rangeList));
 	}
 	
 	

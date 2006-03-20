@@ -36,14 +36,14 @@
  * omit code:
  * 	- gtk_tree_view_column_new_with_attributes
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.CellRenderer
  * 	- glib.ListG
  * 	- gtk.Widget
  * 	- gtk.TreeModel
  * 	- gtk.TreeIter
  * 	- gdk.Rectangle
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkRectangle* -> Rectangle
@@ -60,14 +60,14 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.CellRenderer;
 private import glib.ListG;
 private import gtk.Widget;
 private import gtk.TreeModel;
 private import gtk.TreeIter;
 private import gdk.Rectangle;
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -117,9 +117,9 @@ public class TreeViewColumn : ObjectGtk
 	this(char [] header, CellRenderer renderer, char [] type, int column)
 	{
 		this(gtk_tree_view_column_new_with_attributes(
-		std.string.toStringz(header),
+		Str.toStringz(header),
 		renderer.getCellRendererStruct(),
-		std.string.toStringz(type),
+		Str.toStringz(type),
 		column,
 		null)
 		);
@@ -255,7 +255,7 @@ public class TreeViewColumn : ObjectGtk
 	public void addAttribute(CellRenderer cellRenderer, char[] attribute, int column)
 	{
 		// void gtk_tree_view_column_add_attribute  (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  const gchar *attribute,  gint column);
-		gtk_tree_view_column_add_attribute(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), std.string.toStringz(attribute), column);
+		gtk_tree_view_column_add_attribute(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), Str.toStringz(attribute), column);
 	}
 	
 	/**
@@ -547,7 +547,7 @@ public class TreeViewColumn : ObjectGtk
 	public void setTitle(char[] title)
 	{
 		// void gtk_tree_view_column_set_title (GtkTreeViewColumn *tree_column,  const gchar *title);
-		gtk_tree_view_column_set_title(gtkTreeViewColumn, std.string.toStringz(title));
+		gtk_tree_view_column_set_title(gtkTreeViewColumn, Str.toStringz(title));
 	}
 	
 	/**
@@ -561,7 +561,7 @@ public class TreeViewColumn : ObjectGtk
 	public char[] getTitle()
 	{
 		// const gchar* gtk_tree_view_column_get_title (GtkTreeViewColumn *tree_column);
-		return std.string.toString(gtk_tree_view_column_get_title(gtkTreeViewColumn) );
+		return Str.toString(gtk_tree_view_column_get_title(gtkTreeViewColumn) );
 	}
 	
 	/**

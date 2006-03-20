@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Color
  * structWrap:
  * 	- GdkColor* -> Color
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Color;
 
 /**
@@ -351,7 +351,7 @@ public class ColorSelection : VBox
 	public static int paletteFromString(char[] str, GdkColor** colors, int* nColors)
 	{
 		// gboolean gtk_color_selection_palette_from_string  (const gchar *str,  GdkColor **colors,  gint *n_colors);
-		return gtk_color_selection_palette_from_string(std.string.toStringz(str), colors, nColors);
+		return gtk_color_selection_palette_from_string(Str.toStringz(str), colors, nColors);
 	}
 	
 	/**
@@ -366,7 +366,7 @@ public class ColorSelection : VBox
 	public static char[] paletteToString(Color colors, int nColors)
 	{
 		// gchar* gtk_color_selection_palette_to_string  (const GdkColor *colors,  gint n_colors);
-		return std.string.toString(gtk_color_selection_palette_to_string((colors is null) ? null : colors.getColorStruct(), nColors) );
+		return Str.toString(gtk_color_selection_palette_to_string((colors is null) ? null : colors.getColorStruct(), nColors) );
 	}
 	
 	/**

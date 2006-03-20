@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -178,7 +180,7 @@ public class MemoryChunk
 	public this (char[] name, int atomSize, uint areaSize, int type)
 	{
 		// GMemChunk* g_mem_chunk_new (const gchar *name,  gint atom_size,  gulong area_size,  gint type);
-		this(cast(GMemChunk*)g_mem_chunk_new(std.string.toStringz(name), atomSize, areaSize, type) );
+		this(cast(GMemChunk*)g_mem_chunk_new(Str.toStringz(name), atomSize, areaSize, type) );
 	}
 	
 	/**

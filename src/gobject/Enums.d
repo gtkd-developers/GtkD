@@ -35,7 +35,7 @@
  * 	- g_flags_
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,7 +46,7 @@ private import gobject.typedefs;
 
 private import lib.gobject;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -134,7 +134,7 @@ public class Enums
 	public static GEnumValue* getValueByName(GEnumClass* enumClass, char[] name)
 	{
 		// GEnumValue* g_enum_get_value_by_name (GEnumClass *enum_class,  const gchar *name);
-		return g_enum_get_value_by_name(enumClass, std.string.toStringz(name));
+		return g_enum_get_value_by_name(enumClass, Str.toStringz(name));
 	}
 	
 	/**
@@ -150,7 +150,7 @@ public class Enums
 	public static GEnumValue* getValueByNick(GEnumClass* enumClass, char[] nick)
 	{
 		// GEnumValue* g_enum_get_value_by_nick (GEnumClass *enum_class,  const gchar *nick);
-		return g_enum_get_value_by_nick(enumClass, std.string.toStringz(nick));
+		return g_enum_get_value_by_nick(enumClass, Str.toStringz(nick));
 	}
 	
 	
@@ -173,7 +173,7 @@ public class Enums
 	public static GType registerStatic(char[] name, GEnumValue* _StaticValues)
 	{
 		// GType g_enum_register_static (const gchar *name,  const GEnumValue *const_static_values);
-		return g_enum_register_static(std.string.toStringz(name), _StaticValues);
+		return g_enum_register_static(Str.toStringz(name), _StaticValues);
 	}
 	
 	

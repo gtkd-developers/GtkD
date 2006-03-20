@@ -37,7 +37,7 @@
  * 	- gtk_image_menu_item_new_with_label
  * 	- gtk_image_menu_item_new_with_mnemonic
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.AccelGroup
  * structWrap:
@@ -52,7 +52,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 private import gtk.AccelGroup;
 
@@ -106,12 +106,12 @@ public class ImageMenuItem : MenuItem
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_image_menu_item_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_image_menu_item_new_with_label  (const gchar *label);
-			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(std.string.toStringz(label)) );
+			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(Str.toStringz(label)) );
 		}
 	}
 	
@@ -179,7 +179,7 @@ public class ImageMenuItem : MenuItem
 	public this (char[] stockId, AccelGroup accelGroup)
 	{
 		// GtkWidget* gtk_image_menu_item_new_from_stock  (const gchar *stock_id,  GtkAccelGroup *accel_group);
-		this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_from_stock(std.string.toStringz(stockId), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct()) );
+		this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_from_stock(Str.toStringz(stockId), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct()) );
 	}
 	
 	

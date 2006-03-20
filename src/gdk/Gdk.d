@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Window
  * 	- gdk.Cursor
  * structWrap:
@@ -49,7 +49,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Window;
 private import gdk.Cursor;
 
@@ -133,7 +133,7 @@ public class Gdk
 	public static char[] getDisplayArgName()
 	{
 		// const gchar* gdk_get_display_arg_name (void);
-		return std.string.toString(gdk_get_display_arg_name() );
+		return Str.toString(gdk_get_display_arg_name() );
 	}
 	
 	/**
@@ -152,7 +152,7 @@ public class Gdk
 	public static char[] setLocale()
 	{
 		// gchar* gdk_set_locale (void);
-		return std.string.toString(gdk_set_locale() );
+		return Str.toString(gdk_set_locale() );
 	}
 	
 	/**
@@ -170,7 +170,7 @@ public class Gdk
 	public static void setSmClientId(char[] smClientId)
 	{
 		// void gdk_set_sm_client_id (const gchar *sm_client_id);
-		gdk_set_sm_client_id(std.string.toStringz(smClientId));
+		gdk_set_sm_client_id(Str.toStringz(smClientId));
 	}
 	
 	/**
@@ -217,7 +217,7 @@ public class Gdk
 	public static char[] getProgramClass()
 	{
 		// const char* gdk_get_program_class (void);
-		return std.string.toString(gdk_get_program_class() );
+		return Str.toString(gdk_get_program_class() );
 	}
 	
 	/**
@@ -230,7 +230,7 @@ public class Gdk
 	public static void setProgramClass(char[] programClass)
 	{
 		// void gdk_set_program_class (const char *program_class);
-		gdk_set_program_class(std.string.toStringz(programClass));
+		gdk_set_program_class(Str.toStringz(programClass));
 	}
 	
 	/**
@@ -242,7 +242,7 @@ public class Gdk
 	public static char[] getDisplay()
 	{
 		// gchar* gdk_get_display (void);
-		return std.string.toString(gdk_get_display() );
+		return Str.toString(gdk_get_display() );
 	}
 	
 	/**

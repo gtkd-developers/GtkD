@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Color
  * 	- gdk.Colormap
  * structWrap:
@@ -49,7 +49,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Color;
 private import gdk.Colormap;
 
@@ -317,7 +317,7 @@ public class Color
 	public static int parse(char[] spec, Color color)
 	{
 		// gint gdk_color_parse (const gchar *spec,  GdkColor *color);
-		return gdk_color_parse(std.string.toStringz(spec), (color is null) ? null : color.getColorStruct());
+		return gdk_color_parse(Str.toStringz(spec), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**

@@ -83,7 +83,7 @@ import: gtk.ObjectGtk
 structWrap: GtkObject* ObjectGtk
 #import: gdk.ModifierType
 #structWrap: GdkModifierType* ModifierType
-import: std.string
+import: glib.Str
 import: lib.gtk
 import: gtk.typedefs
 import: lib.gtk
@@ -327,7 +327,7 @@ struct:  GtkAccelGroup
 class: AccelGroup
 prefix: gtk_accel_group_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gobject.Closure
 structWrap: GClosure* Closure
 #import: gtk.AccelGroupEntry
@@ -349,7 +349,7 @@ struct:  GtkAccelMap
 class: AccelMap
 prefix: gtk_accel_map_
 prefix: gtk_
-import: std.string
+import: glib.Str
 #import: gtk.AccelKey
 #structWrap: GtkAccelKey* AccelKey
 #import: g.Scanner
@@ -363,7 +363,7 @@ struct: GtkClipboard
 class: Clipboard
 prefix: gtk_clipboard_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Clipboard
 structWrap: GtkClipboard* Clipboard
 import: gdk.Display
@@ -385,7 +385,7 @@ struct: GdkDragContext
 class: DragAndDrop
 prefix: gtk_drag_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 #import: gtk.TargetEntry
@@ -406,7 +406,7 @@ import: gdk.Bitmap
 structWrap: GdkBitmap* Bitmap
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-import: std.string
+import: glib.Str
 outFile: DragAndDrop
 
 file: GtkIconTheme.html
@@ -416,7 +416,7 @@ class: IconTheme
 prefix: gtk_icon_theme_
 noprefix: gtk_icon_info_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.IconTheme
 structWrap: GtkIconTheme* IconTheme
 import: gdk.Screen
@@ -435,7 +435,7 @@ struct: GtkIconInfo
 class: IconInfo
 prefix: gtk_icon_info_
 strictPrefix: Y
-import: std.string
+import: glib.Str
 import: gtk.IconInfo
 structWrap: GtkIconInfo* IconInfo
 import: gdk.Pixbuf
@@ -447,7 +447,7 @@ struct: GtkStockItem
 class: StockItem
 prefix: gtk_stock_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.StockItem
 structWrap: GtkStockItem* StockItem
 import: glib.ListSG
@@ -459,7 +459,7 @@ struct: GtkIconSource
 class: IconSource
 prefix: gtk_icon_
 prefix: gtk_
-import: std.string
+import: glib.Str
 #import: gtk.IconSource
 #structWrap: GtkIconSource* IconSource
 #import: gtk.IconFactory
@@ -483,7 +483,7 @@ prefix: gtk_rc_
 prefix: gtk_
 #import: g.Scanner
 #structWrap: GScanner* Scanner
-import: std.string
+import: glib.Str
 import: gtk.Style
 structWrap: GtkStyle* Style
 import: gtk.Widget
@@ -505,7 +505,7 @@ struct: GtkSettings
 class: Settings
 prefix: gtk_settings_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Settings
 structWrap: GtkSettings* Settings
 import: gdk.Screen
@@ -526,7 +526,7 @@ class: BindingSet
 prefix: gtk_binding_set_
 prefix: gtk_bindings_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.BindingSet
 structWrap: GtkBindingSet* BindingSet
 import: gtk.ObjectGtk
@@ -535,7 +535,7 @@ structWrap: GtkObject* ObjectGtk
 #structWrap: GdkEventKey* EventKey
 import: glib.ListSG
 structWrap: GSList* ListSG
-import: std.string;
+import: glib.Str;
 #import: g.Scanner
 #structWrap: GScanner* Scanner
 outFile: BindingSet
@@ -565,7 +565,7 @@ struct: GtkStyle
 class: Style
 prefix: gtk_style_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Style
 structWrap: GtkStyle* Style
 import: gdk.Window
@@ -594,7 +594,7 @@ file: gtk-Selections.html
 #struct: 
 class: Selections
 prefix: gtk_
-import: std.string
+import: glib.Str
 #import: gtk.TargetList
 #structWrap: GtkTargetList* TargetList
 #import: gtk.TargetEntry
@@ -607,14 +607,14 @@ structWrap: GdkDisplay* Display
 #structWrap: GtkSelectionData* SelectionData
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-import: std.string
+import: glib.Str
 outFile: Selections
 
 file: gtk-Feature-Test-Macros.html
 #struct: 
 class: Version
 prefix: gtk_
-import: std.string
+import: glib.Str
 outFile: Version
 
 file: gtk-Signals.html
@@ -622,14 +622,14 @@ file: gtk-Signals.html
 class: Signals
 prefix: gtk_signal_
 prefix: gtk_
-import: std.string
+import: glib.Str
 #import: gtk.Type
 #structWrap: GtkType* Type
 import: gtk.ObjectGtk
 structWrap: GtkObject* ObjectGtk
 #import: gtk.Arg
 #structWrap: GtkArg* Arg
-import: std.string
+import: glib.Str
 outFile: Signals
 
 file: gtk-Types.html
@@ -637,7 +637,7 @@ struct: GtkType
 class: Types
 prefix: gtk_type_
 prefix: gtk_
-import: std.string
+import: glib.Str
 #import: gtk.TypeInfo
 #structWrap: GtkTypeInfo* TypeInfo
 #import: gtk.EnumValue
@@ -655,7 +655,7 @@ struct: GtkDialog
 class: Dialog
 prefix: gtk_dialog_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Window
 structWrap: GtkWindow* Window
 import: gtk.Widget
@@ -689,7 +689,7 @@ struct: GtkMessageDialog
 class: MessageDialog
 prefix: gtk_message_dialog_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Window
 structWrap: GtkWindow* Window
 
@@ -777,8 +777,8 @@ code: start
 						flags, 
 						type, 
 						buttons, 
-						std.string.toStringz(messageFormat),
-						std.string.toStringz(message),	// this should be null
+						Str.toStringz(messageFormat),
+						Str.toStringz(message),	// this should be null
 						null
 						)
 			);
@@ -792,8 +792,8 @@ code: start
 						flags, 
 						type, 
 						buttons, 
-						std.string.toStringz(messageFormat),
-						std.string.toStringz(message),	// this should be null
+						Str.toStringz(messageFormat),
+						Str.toStringz(message),	// this should be null
 						null
 						)
 			);
@@ -809,7 +809,7 @@ struct: GtkWindow
 class: Window
 prefix: gtk_window_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.AccelGroup
 structWrap: GtkAccelGroup* AccelGroup
 import: gtk.Widget
@@ -917,7 +917,7 @@ struct: GtkAboutDialog
 class: AboutDialog
 prefix: gtk_about_dialog_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Window
@@ -933,7 +933,7 @@ struct: GtkAccelLabel
 class: AccelLabel
 prefix: gtk_accel_label_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gobject.Closure
 structWrap: GClosure* Closure
 import: gtk.Widget
@@ -945,7 +945,7 @@ struct: GtkImage
 class: Image
 prefix: gtk_image_
 prefix: gtk_
-import: std.string
+import: glib.Str
 #import: gtk.IconSet*
 #structWrap: GtkIconSet** IconSet*
 #import: gtk.IconSize
@@ -1010,7 +1010,7 @@ code: start
 	public this (char[] iconName, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_icon_name (const gchar *icon_name,  GtkIconSize size);
-		this(cast(GtkImage*)gtk_image_new_from_icon_name(std.string.toStringz(iconName), size) );
+		this(cast(GtkImage*)gtk_image_new_from_icon_name(Str.toStringz(iconName), size) );
 	}
 	
 code: end
@@ -1022,7 +1022,7 @@ struct: GtkLabel
 class: Label
 prefix: gtk_label_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 nocode: gtk_label_new
@@ -1054,12 +1054,12 @@ code: start
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_label_new_with_mnemonic (const gchar *str);
-			this(cast(GtkLabel*)gtk_label_new_with_mnemonic(std.string.toStringz(str)) );
+			this(cast(GtkLabel*)gtk_label_new_with_mnemonic(Str.toStringz(str)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_label_new (const gchar *str);
-			this(cast(GtkLabel*)gtk_label_new(std.string.toStringz(str)) );
+			this(cast(GtkLabel*)gtk_label_new(Str.toStringz(str)) );
 		}
 	}
 code: end
@@ -1070,7 +1070,7 @@ struct: GtkProgressBar
 class: ProgressBar
 prefix: gtk_progress_bar_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 outFile: ProgressBar
@@ -1078,7 +1078,7 @@ outFile: ProgressBar
 file: GtkStatusbar.html
 struct: GtkStatusbar
 class: Statusbar
-import: std.string
+import: glib.Str
 prefix: gtk_statusbar_
 prefix: gtk_
 outFile: Statusbar
@@ -1092,7 +1092,7 @@ struct: GtkButton
 class: Button
 prefix: gtk_button_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Image
@@ -1148,12 +1148,12 @@ code: start
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_button_new_with_mnemonic (const gchar *label);
-			this(cast(GtkButton*)gtk_button_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkButton*)gtk_button_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_button_new_with_label (const gchar *label);
-			this(cast(GtkButton*)gtk_button_new_with_label(std.string.toStringz(label)) );
+			this(cast(GtkButton*)gtk_button_new_with_label(Str.toStringz(label)) );
 		}
 	}
 	
@@ -1203,9 +1203,9 @@ outFile: Button
 file: GtkCheckButton.html
 struct: GtkCheckButton
 class: CheckButton
-import: std.string
+import: glib.Str
 import: gtk.Button
-import: std.string
+import: glib.Str
 prefix: gtk_check_button_
 prefix: gtk_
 
@@ -1231,12 +1231,12 @@ code: start
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_check_button_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkCheckButton*)gtk_check_button_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkCheckButton*)gtk_check_button_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_check_button_new_with_label (const gchar *label);
-			this(cast(GtkCheckButton*)gtk_check_button_new_with_label(std.string.toStringz(label)) );
+			this(cast(GtkCheckButton*)gtk_check_button_new_with_label(Str.toStringz(label)) );
 		}
 	}
 	
@@ -1255,7 +1255,7 @@ struct: GtkRadioButton
 class: RadioButton
 prefix: gtk_radio_button_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
 
@@ -1284,7 +1284,7 @@ code: start
 			// GtkWidget* gtk_radio_button_new_with_mnemonic  (GSList *group,  const gchar *label);
 			this(cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic(
 						group is null ? null : group.getListSGStruct(), 
-						std.string.toStringz(label)) 
+						Str.toStringz(label)) 
 						);
 		}
 		else
@@ -1292,7 +1292,7 @@ code: start
 			// GtkWidget* gtk_radio_button_new_with_label (GSList *group,  const gchar *label);
 			this(cast(GtkRadioButton*)gtk_radio_button_new_with_label(
 						group is null ? null : group.getListSGStruct(), 
-						std.string.toStringz(label)) 
+						Str.toStringz(label)) 
 						);
 		}
 	}
@@ -1317,7 +1317,7 @@ code: start
 			// GtkWidget* gtk_radio_button_new_with_mnemonic_from_widget  (GtkRadioButton *group,  const gchar *label);
 			this(cast(GtkRadioButton*)gtk_radio_button_new_with_mnemonic_from_widget(
 						radioButton.getRadioButtonStruct(),
-						std.string.toStringz(label))
+						Str.toStringz(label))
 						);
 		}
 		else
@@ -1325,7 +1325,7 @@ code: start
 			// GtkWidget* gtk_radio_button_new_with_label_from_widget  (GtkRadioButton *group,  const gchar *label);
 			this(cast(GtkRadioButton*)gtk_radio_button_new_with_label_from_widget(
 						radioButton.getRadioButtonStruct(), 
-						std.string.toStringz(label))
+						Str.toStringz(label))
 						);
 		}
 	}
@@ -1337,7 +1337,7 @@ struct: GtkToggleButton
 class: ToggleButton
 prefix: gtk_toggle_button_
 prefix: gtk_
-import: std.string
+import: glib.Str
 
 nocode: gtk_toggle_button_new_with_label
 nocode: gtk_toggle_button_new_with_mnemonic
@@ -1358,12 +1358,12 @@ code: start
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_toggle_button_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_toggle_button_new_with_label  (const gchar *label);
-			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_label(std.string.toStringz(label)) );
+			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_label(Str.toStringz(label)) );
 		}
 	}
 code: end
@@ -1379,7 +1379,7 @@ struct: GtkEntry
 class: Entry
 prefix: gtk_entry_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.EntryCompletion
 structWrap: GtkEntryCompletion* EntryCompletion
 
@@ -1404,7 +1404,7 @@ struct: GtkEntryCompletion
 class: EntryCompletion
 prefix: gtk_entry_completion_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.TreeModel
@@ -1445,7 +1445,7 @@ struct: GtkEditable
 class: Editable
 prefix: gtk_editable_
 prefix: gtk_
-import: std.string
+import: glib.Str
 outFile: Editable
 
 ###########################################################
@@ -1458,7 +1458,7 @@ class: TextIter
 nostruct: GtkTextIter
 prefix: gtk_text_iter_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
 import: gtk.TextIter
@@ -1490,7 +1490,7 @@ struct: GtkTextMark
 class: TextMark
 prefix: gtk_text_mark_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
 outFile: TextMark
@@ -1500,7 +1500,7 @@ struct: GtkTextBuffer
 class: TextBuffer
 prefix: gtk_text_buffer_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
 #import: gtk.TextMark
@@ -1555,7 +1555,7 @@ code: start
 	public void setText(char[] text)
 	{
 		// void gtk_text_buffer_set_text (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_set_text(gtkTextBuffer, std.string.toStringz(text), text.length);
+		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), text.length);
 	}
 	
 		/**
@@ -1578,7 +1578,7 @@ code: start
 	public void insert(TextIter iter, char[] text)
 	{
 		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
-		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length);
+		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length);
 	}
 	
 	/**
@@ -1594,7 +1594,7 @@ code: start
 	public void insertAtCursor(char[] text)
 	{
 		// void gtk_text_buffer_insert_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, std.string.toStringz(text), text.length);
+		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), text.length);
 	}
 	
 	/**
@@ -1621,7 +1621,7 @@ code: start
 	public int insertInteractive(TextIter iter, char[] text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length, defaultEditable);
+		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, defaultEditable);
 	}
 	
 	/**
@@ -1644,7 +1644,7 @@ code: start
 	public int insertInteractiveAtCursor(char[] text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, std.string.toStringz(text), text.length, defaultEditable);
+		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), text.length, defaultEditable);
 	}
 
 	/**
@@ -1672,7 +1672,7 @@ code: start
 		{
 			TextTag tag = va_arg!(TextTag)(_argptr);
 			// void gtk_text_buffer_insert_with_tags  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  GtkTextTag *first_tag,  ...);
-			gtk_text_buffer_insert_with_tags(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length, (tag is null) ? null : tag.getTextTagStruct(), null);
+			gtk_text_buffer_insert_with_tags(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, (tag is null) ? null : tag.getTextTagStruct(), null);
 		}
 	}
 	
@@ -1698,7 +1698,7 @@ code: start
 		{
 			char[] tagName = va_arg!(char[])(_argptr);
 			// void gtk_text_buffer_insert_with_tags_by_name  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  const gchar *first_tag_name,  ...);
-			gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length, std.string.toStringz(tagName), null);
+			gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, Str.toStringz(tagName), null);
 		}
 	}
 	
@@ -1713,10 +1713,10 @@ code: start
 	{
 		return new TextTag(
 			gtk_text_buffer_create_tag(gtkTextBuffer,
-				std.string.toStringz(tagName), 
-				std.string.toStringz(propertyName),propertyValue,
-				std.string.toStringz(propertyName1),
-				std.string.toStringz(propertyValue1),
+				Str.toStringz(tagName), 
+				Str.toStringz(propertyName),propertyValue,
+				Str.toStringz(propertyName1),
+				Str.toStringz(propertyValue1),
 					null)
 		);
 			
@@ -1731,8 +1731,8 @@ code: start
 	{
 		return new TextTag(
 			gtk_text_buffer_create_tag(gtkTextBuffer, 
-				std.string.toStringz(tagName),
-				std.string.toStringz(propertyName),propertyValue,null)
+				Str.toStringz(tagName),
+				Str.toStringz(propertyName),propertyValue,null)
 		);
 			
 	}
@@ -1746,7 +1746,7 @@ code: start
 	TextTag createTag(char[] tagName, char[] propertyName, double propertyValue)
 	{
 		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName),propertyValue,null)
+			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),propertyValue,null)
 		);
 			
 	}
@@ -1762,14 +1762,14 @@ code: start
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2)
 	{
 		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName), propertyValue, std.string.toStringz(propertyName2), propertyValue2, null)
+			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName), propertyValue, Str.toStringz(propertyName2), propertyValue2, null)
 		);
 	}
 
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2, char[] propertyName3, int propertyValue3, char[] propertyName4, int propertyValue4, char[] propertyName5, int propertyValue5)
 	{
 		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName), propertyValue, std.string.toStringz(propertyName2), propertyValue2, std.string.toStringz(propertyName3), propertyValue3, std.string.toStringz(propertyName4), propertyValue4, std.string.toStringz(propertyName5), propertyValue5, null)
+			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName), propertyValue, Str.toStringz(propertyName2), propertyValue2, Str.toStringz(propertyName3), propertyValue3, Str.toStringz(propertyName4), propertyValue4, Str.toStringz(propertyName5), propertyValue5, null)
 		);
 	}
 	/**
@@ -1781,7 +1781,7 @@ code: start
 	TextTag createTag(char[] tagName, char[] propertyName, char[] propertyValue)
 	{
 		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName),std.string.toStringz(propertyValue),null)
+			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),Str.toStringz(propertyValue),null)
 		);
 			
 	}
@@ -1796,7 +1796,7 @@ code: start
 	TextTag createTag(char[] tagName, char[] propertyName, Bitmap propertyValue)
 	{
 		return new TextTag(
-			gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName),propertyValue.getBitmapStruct(),null)
+			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),propertyValue.getBitmapStruct(),null)
 		);
 			
 	}
@@ -1812,7 +1812,7 @@ class: TextTag
 prefix: gtk_text_tag_
 noprefix: gtk_text_attributes_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gobject.ObjectG
 structWrap: GObject* ObjectG
 import: gdk.Event
@@ -1834,7 +1834,7 @@ struct: GtkTextTagTable
 class: TextTagTable
 prefix: gtk_text_tag_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.TextTagTable
 structWrap: GtkTextTagTable* TextTagTable
 import: gtk.TextTag
@@ -1848,7 +1848,7 @@ class: TextView
 prefix: gtk_text_view_
 prefix: gtk_
 noprefix: gtk_text_child_anchor_
-import: std.string
+import: glib.Str
 import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
 import: gtk.TextMark
@@ -1873,7 +1873,7 @@ outFile: TextView
 
 struct: GtkTextChildAnchor
 class: TextChildAnchor
-import: std.string
+import: glib.Str
 prefix: gtk_text_child_anchor_
 strictPrefix: Y
 outFile: TextChildAnchor
@@ -1890,7 +1890,7 @@ prefix: gtk_tree_model_
 noprefix: gtk_tree_row_reference_
 noprefix: gtk_tree_path_
 noprefix: gtk_tree_iter_
-import: std.string
+import: glib.Str
 #noprefix: gtk_
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
@@ -1905,7 +1905,7 @@ class: TreeIter
 strictPrefix: Y
 prefix: gtk_tree_iter_
 #prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 
@@ -1928,10 +1928,10 @@ class: TreePath
 strictPrefix: Y
 prefix: gtk_tree_path_
 #prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
-import: std.string
+import: glib.Str
 
 nocode: gtk_tree_path_new
 nocode: gtk_tree_path_new_first
@@ -1998,7 +1998,7 @@ struct: GtkTreeViewColumn
 class: TreeViewColumn
 prefix: gtk_tree_view_column_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
 import: glib.ListG
@@ -2011,7 +2011,7 @@ import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
-import: std.string
+import: glib.Str
 nocode: gtk_tree_view_column_new_with_attributes
 
 code: start
@@ -2025,9 +2025,9 @@ code: start
 	this(char [] header, CellRenderer renderer, char [] type, int column)
 	{
 		this(gtk_tree_view_column_new_with_attributes(
-				std.string.toStringz(header), 
+				Str.toStringz(header), 
 				renderer.getCellRendererStruct(), 
-				std.string.toStringz(type),
+				Str.toStringz(type),
 				column,
 				null)
 			);
@@ -2042,7 +2042,7 @@ struct: GtkTreeView
 class: TreeView
 prefix: gtk_tree_view_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.TreeModel
 structWrap: GtkTreeModel* TreeModel
 import: gtk.TreeSelection
@@ -2093,7 +2093,7 @@ struct: GtkCellView
 class: CellView
 prefix: gtk_cell_view_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.TreeModel
@@ -2127,12 +2127,12 @@ code: start
 		if ( markup )
 		{
 			// GtkWidget* gtk_cell_view_new_with_markup (const gchar *markup);
-			this(cast(GtkCellView*)gtk_cell_view_new_with_markup(std.string.toStringz(text)) );
+			this(cast(GtkCellView*)gtk_cell_view_new_with_markup(Str.toStringz(text)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_cell_view_new_with_text (const gchar *text);
-			this(cast(GtkCellView*)gtk_cell_view_new_with_text(std.string.toStringz(text)) );
+			this(cast(GtkCellView*)gtk_cell_view_new_with_text(Str.toStringz(text)) );
 		}
 	}
 code: end
@@ -2176,7 +2176,7 @@ outFile: TreeSortable
 file: GtkTreeModelSort.html
 struct: GtkTreeModelSort
 class: TreeModelSort
-import: std.string
+import: glib.Str
 prefix: gtk_tree_model_sort_
 prefix: gtk_
 import: gtk.TreeModel
@@ -2207,10 +2207,10 @@ struct: GtkCellLayout
 class: CellLayout
 prefix: gtk_cell_layout_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
-import: std.string;
+import: glib.Str
 outFile: CellLayout
 
 file: GtkCellRenderer.html
@@ -2218,7 +2218,7 @@ struct: GtkCellRenderer
 class: CellRenderer
 prefix: gtk_cell_renderer_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gdk.Rectangle
@@ -2276,7 +2276,7 @@ realStruct: GtkCellRendererText
 class: CellRendererText
 prefix: gtk_cell_renderer_text_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererText
@@ -2287,7 +2287,7 @@ realStruct: GtkCellRendererToggle
 class: CellRendererToggle
 prefix: gtk_cell_renderer_toggle_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererToggle
@@ -2312,14 +2312,14 @@ class: ListStore
 extend: GtkTreeModel
 prefix: gtk_list_store_
 prefix: gtk_
-import: std.string
+import: glib.Str
 #import: gobject.Type
 #structWrap: GType* Type
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gobject.Value
 structWrap: GValue* Value
-import: std.string
+import: glib.Str
 
 nocode: gtk_list_store_set
 
@@ -2381,7 +2381,7 @@ code: start
 					gtkListStore, 
 					iter.getTreeIterStruct(), 
 					columns[i], 
-					std.string.toStringz(values[i]),-1);
+					Str.toStringz(values[i]),-1);
 		}
 	}
 
@@ -2395,7 +2395,7 @@ class: TreeStore
 extend: GtkTreeModel
 prefix: gtk_tree_store_
 prefix: gtk_
-import: std.string
+import: glib.Str
 #import: gobject.Type
 #structWrap: GType* Type
 import: gtk.TreeIter
@@ -2405,7 +2405,7 @@ structWrap: GValue* Value
 import: gtk.TreeNode
 import: gdk.Pixbuf;
 import: gobject.Value;
-import: std.string
+import: glib.Str
 
 
 nocode: gtk_tree_store_set
@@ -2448,7 +2448,7 @@ code: start
 	 */
 	void setValue(TreeIter iter, int column, char[] value)
 	{
-		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, std.string.toStringz(value) , -1);
+		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
 	}
 
 
@@ -2493,7 +2493,7 @@ code: start
 					gtkTreeStore, 
 					iter.getTreeIterStruct(), 
 					columns[i], 
-					std.string.toStringz(values[i]),-1);
+					Str.toStringz(values[i]),-1);
 		}
 	}
 
@@ -2586,15 +2586,19 @@ prefix: gtk_
 #noprefix: gtk_combo_box_insert_text
 #noprefix: gtk_combo_box_prepend_text
 #noprefix: gtk_combo_box_remove_text
-import: std.string
+import: glib.Str
 import: gtk.TreeModel
 structWrap: GtkTreeModel* TreeModel
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
-
+import: gtk.CellRenderer
 nocode: gtk_combo_box_new
 nocode:gtk_combo_box_new_text
 code: start
+
+	// add the CellLayout capabilities
+	mixin CellLayout!(GtkComboBox);
+
 	/**
 	 * Creates a new empty GtkComboBox.
 	 * If text is true then
@@ -2603,7 +2607,8 @@ code: start
 	 * a text combo box, you should only manipulate its data source with the
 	 * following convenience functions: gtk_combo_box_append_text(),
 	 * gtk_combo_box_insert_text(), gtk_combo_box_prepend_text() and
-	 * gtk_combo_box_remove_text().	 * Returns:
+	 * gtk_combo_box_remove_text().
+	 * Returns:
 	 *  A new GtkComboBox.
 	 * Since 2.4
 	 */
@@ -2693,7 +2698,7 @@ struct: GtkMenu
 class: Menu
 prefix: gtk_menu_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gdk.Screen
@@ -2733,7 +2738,7 @@ struct: GtkMenuItem
 class: MenuItem
 prefix: gtk_menu_item_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 # method conflict with parent method
@@ -2783,12 +2788,12 @@ code: start
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_menu_item_new_with_mnemonic (const gchar *label);
-			this(cast(GtkMenuItem*)gtk_menu_item_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkMenuItem*)gtk_menu_item_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_menu_item_new_with_label (const gchar *label);
-			this(cast(GtkMenuItem*)gtk_menu_item_new_with_label(std.string.toStringz(label)) );
+			this(cast(GtkMenuItem*)gtk_menu_item_new_with_label(Str.toStringz(label)) );
 		}
 	}
 
@@ -2820,7 +2825,7 @@ struct: GtkImageMenuItem
 class: ImageMenuItem
 prefix: gtk_image_menu_item_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.AccelGroup
@@ -2845,12 +2850,12 @@ code: start
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_image_menu_item_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_image_menu_item_new_with_label  (const gchar *label);
-			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(std.string.toStringz(label)) );
+			this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_with_label(Str.toStringz(label)) );
 		}
 	}
 code: end
@@ -2862,7 +2867,7 @@ struct: GtkRadioMenuItem
 class: RadioMenuItem
 prefix: gtk_radio_menu_item_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
 
@@ -2892,13 +2897,13 @@ code: start
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic_from_widget  (GtkRadioMenuItem *group,  const gchar *label);
 			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic_from_widget(
-				radioMenuItem.getRadioMenuItemStruct(), std.string.toStringz(label)) );
+				radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_label_from_widget  (GtkRadioMenuItem *group,  const gchar *label);
 			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label_from_widget(
-				radioMenuItem.getRadioMenuItemStruct(), std.string.toStringz(label)) );
+				radioMenuItem.getRadioMenuItemStruct(), Str.toStringz(label)) );
 		}
 	}
 	
@@ -2936,13 +2941,13 @@ code: start
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_mnemonic  (GSList *group,  const gchar *label);
 			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_mnemonic(
-				group is null ? null : group.getListSGStruct(), std.string.toStringz(label)) );
+				group is null ? null : group.getListSGStruct(), Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_radio_menu_item_new_with_label  (GSList *group,  const gchar *label);
 			this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_with_label(
-				group is null ? null : group.getListSGStruct(), std.string.toStringz(label)) );
+				group is null ? null : group.getListSGStruct(), Str.toStringz(label)) );
 		}
 	}
 code: end
@@ -2953,7 +2958,7 @@ struct: GtkCheckMenuItem
 class: CheckMenuItem
 prefix: gtk_check_menu_item_
 prefix: gtk_
-import: std.string
+import: glib.Str
 
 nocode: gtk_check_menu_item_new_with_label
 nocode: gtk_check_menu_item_new_with_mnemonic
@@ -2974,12 +2979,12 @@ code: start
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_check_menu_item_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkCheckMenuItem*)gtk_check_menu_item_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkCheckMenuItem*)gtk_check_menu_item_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_check_menu_item_new_with_label  (const gchar *label);
-			this(cast(GtkCheckMenuItem*)gtk_check_menu_item_new_with_label(std.string.toStringz(label)) );
+			this(cast(GtkCheckMenuItem*)gtk_check_menu_item_new_with_label(Str.toStringz(label)) );
 		}
 	}
 code: end
@@ -3005,7 +3010,7 @@ struct: GtkToolbar
 class: Toolbar
 prefix: gtk_toolbar_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 nocode: gtk_toolbar_get_style
@@ -3031,7 +3036,7 @@ struct: GtkToolItem
 class: ToolItem
 prefix: gtk_tool_item_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Tooltips
 structWrap: GtkTooltips* Tooltips
 import: gtk.Widget
@@ -3052,7 +3057,7 @@ struct: GtkToolButton
 class: ToolButton
 prefix: gtk_tool_button_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.ToolItem
 structWrap: GtkToolItem* ToolItem
 import: gtk.Widget
@@ -3064,7 +3069,7 @@ struct: GtkMenuToolButton
 class: MenuToolButton
 prefix: gtk_menu_tool_button_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.ToolItem
 structWrap: GtkToolItem* ToolItem
 import: gtk.Widget
@@ -3078,7 +3083,7 @@ struct: GtkToggleToolButton
 class: ToggleToolButton
 prefix: gtk_toggle_tool_button_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.ToolItem
 structWrap: GtkToolItem* ToolItem
 outFile: ToggleToolButton
@@ -3088,7 +3093,7 @@ struct: GtkRadioToolButton
 class: RadioToolButton
 prefix: gtk_radio_tool_button_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.ToolItem
 structWrap: GtkToolItem* ToolItem
 import: glib.ListSG
@@ -3104,7 +3109,7 @@ struct: GtkUIManager
 class: UIManager
 prefix: gtk_ui_manager_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.ActionGroup
 structWrap: GtkActionGroup* ActionGroup
 import: glib.ListG
@@ -3124,7 +3129,7 @@ struct: GtkActionGroup
 class: ActionGroup
 prefix: gtk_action_group_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Action
 structWrap: GtkAction* Action
 import: glib.ListG
@@ -3142,7 +3147,7 @@ struct: GtkAction
 class: Action
 prefix: gtk_action_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: glib.ListSG
@@ -3158,7 +3163,7 @@ struct: GtkToggleAction
 class: ToggleAction
 prefix: gtk_toggle_action_
 prefix: gtk_
-import: std.string
+import: glib.Str
 outFile: ToggleAction
 
 file: GtkRadioAction.html
@@ -3166,7 +3171,7 @@ struct: GtkRadioAction
 class: RadioAction
 prefix: gtk_radio_action_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
 outFile: RadioAction
@@ -3180,7 +3185,7 @@ struct: GtkColorButton
 class: ColorButton
 prefix: gtk_color_button_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gdk.Color
 structWrap: GdkColor* Color
 outFile: ColorButton
@@ -3190,7 +3195,7 @@ struct: GtkColorSelection
 class: ColorSelection
 prefix: gtk_color_selection_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gdk.Color
 structWrap: GdkColor* Color
 outFile: ColorSelection
@@ -3200,7 +3205,7 @@ struct: GtkColorSelectionDialog
 class: ColorSelectionDialog
 prefix: gtk_color_selection_dialog_
 prefix: gtk_
-import: std.string
+import: glib.Str
 outFile: ColorSelectionDialog
 
 file: GtkFileSelection.html
@@ -3208,7 +3213,7 @@ struct: GtkFileSelection
 class: FileSelection
 prefix: gtk_file_selection_
 prefix: gtk_
-import: std.string
+import: glib.Str
 outFile: FileSelection
 
 file: GtkFileChooser.html
@@ -3216,7 +3221,7 @@ struct: GtkFileChooser
 class: FileChooser
 prefix: gtk_file_chooser_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Window
 structWrap: GtkWindow* Window
 import: glib.ListSG
@@ -3232,7 +3237,7 @@ struct: GtkFileChooserButton
 class: FileChooserButton
 prefix: gtk_file_chooser_button_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: glib.ListSG;
@@ -3260,14 +3265,14 @@ struct: GtkFileChooserDialog
 class: FileChooserDialog
 prefix: gtk_file_chooser_dialog_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Window
 structWrap: GtkWindow* Window
 import: glib.ListSG;
 import: gtk.Widget;
 import: gtk.FileFilter;
 import: gtk.FileChooser;
-import: std.string
+import: glib.Str
 nocode: gtk_file_chooser_dialog_new
 nocode: gtk_file_chooser_dialog_new_with_backend
 
@@ -3316,7 +3321,7 @@ code: start
 
 		this(
 			cast(GtkFileChooserDialog*)gtk_file_chooser_dialog_new(
-				std.string.toStringz(title),
+				Str.toStringz(title),
 				parent.getWindowStruct(),
 				action,
 				null,
@@ -3352,10 +3357,10 @@ code: start
 		// GtkWidget* gtk_file_chooser_dialog_new_with_backend  (const gchar *title,  GtkWindow *parent,  GtkFileChooserAction action,  const gchar *backend,  const gchar *first_button_text,  ...);
 		this(
 			cast(GtkFileChooserDialog*)gtk_file_chooser_dialog_new_with_backend(
-				std.string.toStringz(title), 
+				Str.toStringz(title), 
 				parent.getWindowStruct(), 
 				action, 
-				std.string.toStringz(backend), 
+				Str.toStringz(backend), 
 				null,
 				0
 				));
@@ -3403,7 +3408,7 @@ struct: GtkFileChooserWidget
 class: FileChooserWidget
 prefix: gtk_file_chooser_widget_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: glib.ListSG;
 import: gtk.Widget;
 import: gtk.FileFilter;
@@ -3428,7 +3433,7 @@ struct:  GtkFileFilter
 class: FileFilter
 prefix: gtk_file_filter_
 prefix: gtk_
-import: std.string
+import: glib.Str
 outFile: FileFilter
 
 file: GtkFontButton.html
@@ -3436,7 +3441,7 @@ struct: GtkFontButton
 class: FontButton
 prefix: gtk_font_button_
 prefix: gtk_
-import: std.string
+import: glib.Str
 outFile: FontButton
 
 file: GtkFontSelection.html
@@ -3444,7 +3449,7 @@ struct: GtkFontSelection
 class: FontSelection
 prefix: gtk_font_selection_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gdk.Font
 structWrap: GdkFont* Font
 outFile: FontSelection
@@ -3454,7 +3459,7 @@ struct: GtkFontSelectionDialog
 class: FontSelectionDialog
 prefix: gtk_font_selection_dialog_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gdk.Font
 structWrap: GdkFont* Font
 outFile: FontSelectionDialog
@@ -3482,7 +3487,7 @@ struct: GtkAspectFrame
 class: AspectFrame
 prefix: gtk_aspect_frame_
 prefix: gtk_
-import: std.string
+import: glib.Str
 outFile: AspectFrame
 
 file: GtkHBox.html
@@ -3581,7 +3586,7 @@ struct: GtkNotebook
 class: Notebook
 prefix: gtk_notebook_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Label
 import: gtk.Widget
 structWrap: GtkWidget* Widget
@@ -3631,7 +3636,7 @@ struct: GtkExpander
 class: Expander
 prefix: gtk_expander_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
@@ -3657,12 +3662,12 @@ code: start
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_expander_new_with_mnemonic (const gchar *label);
-			this(cast(GtkExpander*)gtk_expander_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkExpander*)gtk_expander_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_expander_new (const gchar *label);
-			this(cast(GtkExpander*)gtk_expander_new(std.string.toStringz(label)) );
+			this(cast(GtkExpander*)gtk_expander_new(Str.toStringz(label)) );
 		}
 	}
 code: end
@@ -3678,7 +3683,7 @@ struct: GtkFrame
 class: Frame
 prefix: gtk_frame_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 code: start
@@ -3866,7 +3871,7 @@ struct: GtkTooltips
 class: Tooltips
 prefix: gtk_tooltips_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 #import: gtk.TooltipsData
@@ -3978,7 +3983,7 @@ struct: GtkContainer
 class: Container
 structWrap: GtkContainerClass* Container
 structWrap: GtkWidget* Widget
-import: std.string
+import: glib.Str
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 prefix: gtk_container_
@@ -4030,7 +4035,7 @@ struct: GtkObject
 class: ObjectGtk
 prefix: gtk_object_
 prefix: gtk_
-import: std.string
+import: glib.Str
 outFile: ObjectGtk
 
 file: GtkPaned.html
@@ -4075,7 +4080,7 @@ outFile: Separator
 file: GtkWidget.html
 struct: GtkWidget
 class: Widget
-import: std.string
+import: glib.Str
 import: atk.ObjectAtk
 structWrap: AtkObject* ObjectAtk
 prefix: gtk_widget_
@@ -4193,7 +4198,7 @@ struct: GtkIMContext
 class: IMContext
 prefix: gtk_im_context_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gdk.Window
 structWrap: GdkWindow* Window
 #import: gtk.EventKey
@@ -4292,7 +4297,7 @@ class: ItemFactory
 prefix: gtk_item_factory_
 prefix: gtk_
 noprefix: gtk_item_factory_create_menu_entries
-import: std.string
+import: glib.Str
 import: gtk.AccelGroup
 structWrap: GtkAccelGroup* AccelGroup
 import: gtk.Widget
@@ -4350,7 +4355,7 @@ struct: GtkProgress
 class: Progress
 prefix: gtk_progress_
 prefix: gtk_
-import: std.string
+import: glib.Str
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 outFile: Progress

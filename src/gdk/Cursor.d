@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Pixmap
  * 	- gdk.Color
  * 	- gdk.Display
@@ -55,7 +55,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Pixmap;
 private import gdk.Color;
 private import gdk.Display;
@@ -225,7 +225,7 @@ public class Cursor
 	public this (Display display, char[] name)
 	{
 		// GdkCursor* gdk_cursor_new_from_name (GdkDisplay *display,  const gchar *name);
-		this(cast(GdkCursor*)gdk_cursor_new_from_name((display is null) ? null : display.getDisplayStruct(), std.string.toStringz(name)) );
+		this(cast(GdkCursor*)gdk_cursor_new_from_name((display is null) ? null : display.getDisplayStruct(), Str.toStringz(name)) );
 	}
 	
 	/**

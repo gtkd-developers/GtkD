@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.AccelMap
  * structWrap:
  * 	- GtkAccelMap* -> AccelMap
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.AccelMap;
 
 /**
@@ -113,7 +113,7 @@ public class AccelMap : ObjectG
 		
 		foreach ( void delegate(char[], guint, GdkModifierType, AccelMap) dlg ; accelMap.onChangedListeners )
 		{
-			dlg(std.string.toString(accelPath), accelKey, accelMods, accelMap);
+			dlg(Str.toString(accelPath), accelKey, accelMods, accelMap);
 		}
 		
 		return consumed;
@@ -147,7 +147,7 @@ public class AccelMap : ObjectG
 	public static void addEntry(char[] accelPath, uint accelKey, GdkModifierType accelMods)
 	{
 		// void gtk_accel_map_add_entry (const gchar *accel_path,  guint accel_key,  GdkModifierType accel_mods);
-		gtk_accel_map_add_entry(std.string.toStringz(accelPath), accelKey, accelMods);
+		gtk_accel_map_add_entry(Str.toStringz(accelPath), accelKey, accelMods);
 	}
 	
 	/**
@@ -162,7 +162,7 @@ public class AccelMap : ObjectG
 	public static int lookupEntry(char[] accelPath, GtkAccelKey* key)
 	{
 		// gboolean gtk_accel_map_lookup_entry (const gchar *accel_path,  GtkAccelKey *key);
-		return gtk_accel_map_lookup_entry(std.string.toStringz(accelPath), key);
+		return gtk_accel_map_lookup_entry(Str.toStringz(accelPath), key);
 	}
 	
 	/**
@@ -186,7 +186,7 @@ public class AccelMap : ObjectG
 	public static int changeEntry(char[] accelPath, uint accelKey, GdkModifierType accelMods, int replace)
 	{
 		// gboolean gtk_accel_map_change_entry (const gchar *accel_path,  guint accel_key,  GdkModifierType accel_mods,  gboolean replace);
-		return gtk_accel_map_change_entry(std.string.toStringz(accelPath), accelKey, accelMods, replace);
+		return gtk_accel_map_change_entry(Str.toStringz(accelPath), accelKey, accelMods, replace);
 	}
 	
 	/**
@@ -199,7 +199,7 @@ public class AccelMap : ObjectG
 	public static void load(char[] fileName)
 	{
 		// void gtk_accel_map_load (const gchar *file_name);
-		gtk_accel_map_load(std.string.toStringz(fileName));
+		gtk_accel_map_load(Str.toStringz(fileName));
 	}
 	
 	/**
@@ -214,7 +214,7 @@ public class AccelMap : ObjectG
 	public static void save(char[] fileName)
 	{
 		// void gtk_accel_map_save (const gchar *file_name);
-		gtk_accel_map_save(std.string.toStringz(fileName));
+		gtk_accel_map_save(Str.toStringz(fileName));
 	}
 	
 	/**
@@ -284,7 +284,7 @@ public class AccelMap : ObjectG
 	public static void addFilter(char[] filterPattern)
 	{
 		// void gtk_accel_map_add_filter (const gchar *filter_pattern);
-		gtk_accel_map_add_filter(std.string.toStringz(filterPattern));
+		gtk_accel_map_add_filter(Str.toStringz(filterPattern));
 	}
 	
 	/**
@@ -340,7 +340,7 @@ public class AccelMap : ObjectG
 	public static void lockPath(char[] accelPath)
 	{
 		// void gtk_accel_map_lock_path (const gchar *accel_path);
-		gtk_accel_map_lock_path(std.string.toStringz(accelPath));
+		gtk_accel_map_lock_path(Str.toStringz(accelPath));
 	}
 	
 	/**
@@ -375,6 +375,6 @@ public class AccelMap : ObjectG
 	public static void unlockPath(char[] accelPath)
 	{
 		// void gtk_accel_map_unlock_path (const gchar *accel_path);
-		gtk_accel_map_unlock_path(std.string.toStringz(accelPath));
+		gtk_accel_map_unlock_path(Str.toStringz(accelPath));
 	}
 }

@@ -37,7 +37,7 @@
  * 	- gtk_tree_iter_
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TreeIter
  * 	- gtk.TreePath
  * 	- gobject.Value
@@ -54,7 +54,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TreeIter;
 private import gtk.TreePath;
 private import gobject.Value;
@@ -478,7 +478,7 @@ public class TreeModel
 	public int getIterFromString(TreeIter iter, char[] pathString)
 	{
 		// gboolean gtk_tree_model_get_iter_from_string  (GtkTreeModel *tree_model,  GtkTreeIter *iter,  const gchar *path_string);
-		return gtk_tree_model_get_iter_from_string(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), std.string.toStringz(pathString));
+		return gtk_tree_model_get_iter_from_string(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), Str.toStringz(pathString));
 	}
 	
 	/**
@@ -658,7 +658,7 @@ public class TreeModel
 	public char[] getStringFromIter(TreeIter iter)
 	{
 		// gchar* gtk_tree_model_get_string_from_iter  (GtkTreeModel *tree_model,  GtkTreeIter *iter);
-		return std.string.toString(gtk_tree_model_get_string_from_iter(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct()) );
+		return Str.toString(gtk_tree_model_get_string_from_iter(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct()) );
 	}
 	
 	/**

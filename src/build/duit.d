@@ -10,8 +10,8 @@ version( build )
 {
 	pragma (nolink);
 
-	version (linux)     pragma (target, "DUIT.lib"  );
-	version (Windows)   pragma (target, "libDUIT.a" );
+	version (Windows)     pragma (target, "DUIT.lib"  );
+	version (linux)   pragma (target, "libDUIT.a" );
 }
 
 
@@ -63,7 +63,7 @@ private import glib.ListG;
 private import glib.ListSG;
 private import glib.QueueG;
 private import glib.TrashStack;
-private import glib.;
+private import glib.HashTable;
 private import glib.StringG;
 private import glib.StrignGChunk;
 private import glib.ArrayG;

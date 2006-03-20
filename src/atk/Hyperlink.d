@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import atk.typedefs;
 
 private import lib.atk;
 
+private import glib.Str;
 
 /**
  * Description
@@ -132,7 +134,7 @@ public class Hyperlink : ObjectG
 	public char[] _GetUri(int i)
 	{
 		// gchar* atk_hyperlink_get_uri (AtkHyperlink *link_,  gint i);
-		return std.string.toString(atk_hyperlink_get_uri(atkHyperlink, i) );
+		return Str.toString(atk_hyperlink_get_uri(atkHyperlink, i) );
 	}
 	
 	/**

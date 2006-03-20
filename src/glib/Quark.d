@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- glib.ErrorG
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,6 +47,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ErrorG;
+private import glib.Str;
 
 /**
  * Description
@@ -108,7 +110,7 @@ public class Quark
 	public static GQuark fromString(char[] string)
 	{
 		// GQuark g_quark_from_string (const gchar *string);
-		return g_quark_from_string(std.string.toStringz(string));
+		return g_quark_from_string(Str.toStringz(string));
 	}
 	
 	/**
@@ -131,7 +133,7 @@ public class Quark
 	public static GQuark fromStaticString(char[] string)
 	{
 		// GQuark g_quark_from_static_string (const gchar *string);
-		return g_quark_from_static_string(std.string.toStringz(string));
+		return g_quark_from_static_string(Str.toStringz(string));
 	}
 	
 	/**
@@ -144,7 +146,7 @@ public class Quark
 	public static char[] toString(GQuark quark)
 	{
 		// const gchar* g_quark_to_string (GQuark quark);
-		return std.string.toString(g_quark_to_string(quark) );
+		return Str.toString(g_quark_to_string(quark) );
 	}
 	
 	/**
@@ -161,7 +163,7 @@ public class Quark
 	public static GQuark tryString(char[] string)
 	{
 		// GQuark g_quark_try_string (const gchar *string);
-		return g_quark_try_string(std.string.toStringz(string));
+		return g_quark_try_string(Str.toStringz(string));
 	}
 	
 	/**
@@ -176,7 +178,7 @@ public class Quark
 	public static char[] gInternString(char[] string)
 	{
 		// const gchar* g_intern_string (const gchar *string);
-		return std.string.toString(g_intern_string(std.string.toStringz(string)) );
+		return Str.toString(g_intern_string(Str.toStringz(string)) );
 	}
 	
 	/**
@@ -193,6 +195,6 @@ public class Quark
 	public static char[] gInternStaticString(char[] string)
 	{
 		// const gchar* g_intern_static_string (const gchar *string);
-		return std.string.toString(g_intern_static_string(std.string.toStringz(string)) );
+		return Str.toString(g_intern_static_string(Str.toStringz(string)) );
 	}
 }

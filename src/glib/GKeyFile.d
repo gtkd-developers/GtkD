@@ -35,6 +35,7 @@
  * omit code:
  * imports:
  * 	- glib.ErrorG
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,6 +47,7 @@ private import glib.typedefs;
 private import lib.glib;
 
 private import glib.ErrorG;
+private import glib.Str;
 
 /**
  * Description
@@ -191,7 +193,7 @@ public class KeyFile
 	public int loadFromFile(char[] file, GKeyFileFlags flags, GError** error)
 	{
 		// gboolean g_key_file_load_from_file (GKeyFile *key_file,  const gchar *file,  GKeyFileFlags flags,  GError **error);
-		return g_key_file_load_from_file(gKeyFile, std.string.toStringz(file), flags, error);
+		return g_key_file_load_from_file(gKeyFile, Str.toStringz(file), flags, error);
 	}
 	
 	/**
@@ -215,7 +217,7 @@ public class KeyFile
 	public int loadFromData(char[] data, uint length, GKeyFileFlags flags, GError** error)
 	{
 		// gboolean g_key_file_load_from_data (GKeyFile *key_file,  const gchar *data,  gsize length,  GKeyFileFlags flags,  GError **error);
-		return g_key_file_load_from_data(gKeyFile, std.string.toStringz(data), length, flags, error);
+		return g_key_file_load_from_data(gKeyFile, Str.toStringz(data), length, flags, error);
 	}
 	
 	/**
@@ -242,7 +244,7 @@ public class KeyFile
 	public int loadFromDataDirs(char[] file, char** fullPath, GKeyFileFlags flags, GError** error)
 	{
 		// gboolean g_key_file_load_from_data_dirs (GKeyFile *key_file,  const gchar *file,  gchar **full_path,  GKeyFileFlags flags,  GError **error);
-		return g_key_file_load_from_data_dirs(gKeyFile, std.string.toStringz(file), fullPath, flags, error);
+		return g_key_file_load_from_data_dirs(gKeyFile, Str.toStringz(file), fullPath, flags, error);
 	}
 	
 	/**
@@ -262,7 +264,7 @@ public class KeyFile
 	public char[] toData(uint* length, GError** error)
 	{
 		// gchar* g_key_file_to_data (GKeyFile *key_file,  gsize *length,  GError **error);
-		return std.string.toString(g_key_file_to_data(gKeyFile, length, error) );
+		return Str.toString(g_key_file_to_data(gKeyFile, length, error) );
 	}
 	
 	/**
@@ -276,7 +278,7 @@ public class KeyFile
 	public char[] getStartGroup()
 	{
 		// gchar* g_key_file_get_start_group (GKeyFile *key_file);
-		return std.string.toString(g_key_file_get_start_group(gKeyFile) );
+		return Str.toString(g_key_file_get_start_group(gKeyFile) );
 	}
 	
 	/**
@@ -320,7 +322,7 @@ public class KeyFile
 	public char** getKeys(char[] groupName, uint* length, GError** error)
 	{
 		// gchar** g_key_file_get_keys (GKeyFile *key_file,  const gchar *group_name,  gsize *length,  GError **error);
-		return g_key_file_get_keys(gKeyFile, std.string.toStringz(groupName), length, error);
+		return g_key_file_get_keys(gKeyFile, Str.toStringz(groupName), length, error);
 	}
 	
 	/**
@@ -337,7 +339,7 @@ public class KeyFile
 	public int hasGroup(char[] groupName)
 	{
 		// gboolean g_key_file_has_group (GKeyFile *key_file,  const gchar *group_name);
-		return g_key_file_has_group(gKeyFile, std.string.toStringz(groupName));
+		return g_key_file_has_group(gKeyFile, Str.toStringz(groupName));
 	}
 	
 	/**
@@ -359,7 +361,7 @@ public class KeyFile
 	public int hasKey(char[] groupName, char[] key, GError** error)
 	{
 		// gboolean g_key_file_has_key (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return g_key_file_has_key(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), error);
+		return g_key_file_has_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
 	}
 	
 	/**
@@ -384,7 +386,7 @@ public class KeyFile
 	public char[] getValue(char[] groupName, char[] key, GError** error)
 	{
 		// gchar* g_key_file_get_value (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return std.string.toString(g_key_file_get_value(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), error) );
+		return Str.toString(g_key_file_get_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error) );
 	}
 	
 	/**
@@ -409,7 +411,7 @@ public class KeyFile
 	public char[] getString(char[] groupName, char[] key, GError** error)
 	{
 		// gchar* g_key_file_get_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return std.string.toString(g_key_file_get_string(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), error) );
+		return Str.toString(g_key_file_get_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error) );
 	}
 	
 	/**
@@ -438,7 +440,7 @@ public class KeyFile
 	public char[] getLocaleString(char[] groupName, char[] key, char[] locale, GError** error)
 	{
 		// gchar* g_key_file_get_locale_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  GError **error);
-		return std.string.toString(g_key_file_get_locale_string(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), std.string.toStringz(locale), error) );
+		return Str.toString(g_key_file_get_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), error) );
 	}
 	
 	/**
@@ -464,7 +466,7 @@ public class KeyFile
 	public int getBoolean(char[] groupName, char[] key, GError** error)
 	{
 		// gboolean g_key_file_get_boolean (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return g_key_file_get_boolean(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), error);
+		return g_key_file_get_boolean(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
 	}
 	
 	/**
@@ -490,7 +492,7 @@ public class KeyFile
 	public int getInteger(char[] groupName, char[] key, GError** error)
 	{
 		// gint g_key_file_get_integer (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return g_key_file_get_integer(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), error);
+		return g_key_file_get_integer(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
 	}
 	
 	/**
@@ -517,7 +519,7 @@ public class KeyFile
 	public char** getStringList(char[] groupName, char[] key, uint* length, GError** error)
 	{
 		// gchar** g_key_file_get_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
-		return g_key_file_get_string_list(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), length, error);
+		return g_key_file_get_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), length, error);
 	}
 	
 	/**
@@ -550,7 +552,7 @@ public class KeyFile
 	public char** getLocaleStringList(char[] groupName, char[] key, char[] locale, uint* length, GError** error)
 	{
 		// gchar** g_key_file_get_locale_string_list  (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  gsize *length,  GError **error);
-		return g_key_file_get_locale_string_list(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), std.string.toStringz(locale), length, error);
+		return g_key_file_get_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), length, error);
 	}
 	
 	/**
@@ -578,7 +580,7 @@ public class KeyFile
 	public int* getBooleanList(char[] groupName, char[] key, uint* length, GError** error)
 	{
 		// gboolean* g_key_file_get_boolean_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
-		return g_key_file_get_boolean_list(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), length, error);
+		return g_key_file_get_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), length, error);
 	}
 	
 	/**
@@ -606,7 +608,7 @@ public class KeyFile
 	public int* getIntegerList(char[] groupName, char[] key, uint* length, GError** error)
 	{
 		// gint* g_key_file_get_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
-		return g_key_file_get_integer_list(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), length, error);
+		return g_key_file_get_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), length, error);
 	}
 	
 	/**
@@ -630,7 +632,7 @@ public class KeyFile
 	public char[] getComment(char[] groupName, char[] key, GError** error)
 	{
 		// gchar* g_key_file_get_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return std.string.toString(g_key_file_get_comment(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), error) );
+		return Str.toString(g_key_file_get_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error) );
 	}
 	
 	/**
@@ -650,7 +652,7 @@ public class KeyFile
 	public void setValue(char[] groupName, char[] key, char[] value)
 	{
 		// void g_key_file_set_value (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *value);
-		g_key_file_set_value(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), std.string.toStringz(value));
+		g_key_file_set_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(value));
 	}
 	
 	/**
@@ -670,7 +672,7 @@ public class KeyFile
 	public void setString(char[] groupName, char[] key, char[] string)
 	{
 		// void g_key_file_set_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *string);
-		g_key_file_set_string(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), std.string.toStringz(string));
+		g_key_file_set_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(string));
 	}
 	
 	/**
@@ -692,7 +694,7 @@ public class KeyFile
 	public void setLocaleString(char[] groupName, char[] key, char[] locale, char[] string)
 	{
 		// void g_key_file_set_locale_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  const gchar *string);
-		g_key_file_set_locale_string(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), std.string.toStringz(locale), std.string.toStringz(string));
+		g_key_file_set_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), Str.toStringz(string));
 	}
 	
 	/**
@@ -711,7 +713,7 @@ public class KeyFile
 	public void setBoolean(char[] groupName, char[] key, int value)
 	{
 		// void g_key_file_set_boolean (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gboolean value);
-		g_key_file_set_boolean(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), value);
+		g_key_file_set_boolean(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), value);
 	}
 	
 	/**
@@ -730,7 +732,7 @@ public class KeyFile
 	public void setInteger(char[] groupName, char[] key, int value)
 	{
 		// void g_key_file_set_integer (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gint value);
-		g_key_file_set_integer(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), value);
+		g_key_file_set_integer(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), value);
 	}
 	
 	/**
@@ -752,7 +754,7 @@ public class KeyFile
 	public void setStringList(char[] groupName, char[] key, char*[] list, uint length)
 	{
 		// void g_key_file_set_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *const list[],  gsize length);
-		g_key_file_set_string_list(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), list, length);
+		g_key_file_set_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
 	}
 	
 	/**
@@ -776,7 +778,7 @@ public class KeyFile
 	public void setLocaleStringList(char[] groupName, char[] key, char[] locale, char*[] list, uint length)
 	{
 		// void g_key_file_set_locale_string_list  (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  const gchar *const list[],  gsize length);
-		g_key_file_set_locale_string_list(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), std.string.toStringz(locale), list, length);
+		g_key_file_set_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), list, length);
 	}
 	
 	/**
@@ -798,7 +800,7 @@ public class KeyFile
 	public void setBooleanList(char[] groupName, char[] key, int[] list, uint length)
 	{
 		// void g_key_file_set_boolean_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gboolean list[],  gsize length);
-		g_key_file_set_boolean_list(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), list, length);
+		g_key_file_set_boolean_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
 	}
 	
 	/**
@@ -819,7 +821,7 @@ public class KeyFile
 	public void setIntegerList(char[] groupName, char[] key, int[] list, uint length)
 	{
 		// void g_key_file_set_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gint list[],  gsize length);
-		g_key_file_set_integer_list(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), list, length);
+		g_key_file_set_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
 	}
 	
 	/**
@@ -843,7 +845,7 @@ public class KeyFile
 	public void setComment(char[] groupName, char[] key, char[] comment, GError** error)
 	{
 		// void g_key_file_set_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *comment,  GError **error);
-		g_key_file_set_comment(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), std.string.toStringz(comment), error);
+		g_key_file_set_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(comment), error);
 	}
 	
 	/**
@@ -860,7 +862,7 @@ public class KeyFile
 	public void removeGroup(char[] groupName, GError** error)
 	{
 		// void g_key_file_remove_group (GKeyFile *key_file,  const gchar *group_name,  GError **error);
-		g_key_file_remove_group(gKeyFile, std.string.toStringz(groupName), error);
+		g_key_file_remove_group(gKeyFile, Str.toStringz(groupName), error);
 	}
 	
 	/**
@@ -878,7 +880,7 @@ public class KeyFile
 	public void removeKey(char[] groupName, char[] key, GError** error)
 	{
 		// void g_key_file_remove_key (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		g_key_file_remove_key(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), error);
+		g_key_file_remove_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
 	}
 	
 	/**
@@ -900,6 +902,6 @@ public class KeyFile
 	public void removeComment(char[] groupName, char[] key, GError** error)
 	{
 		// void g_key_file_remove_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		g_key_file_remove_comment(gKeyFile, std.string.toStringz(groupName), std.string.toStringz(key), error);
+		g_key_file_remove_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
 	}
 }

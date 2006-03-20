@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import atk.typedefs;
 
 private import lib.atk;
 
+private import glib.Str;
 
 /**
  * Description
@@ -457,7 +459,7 @@ public class Table
 	public char[] getColumnDescription(int column)
 	{
 		// const gchar* atk_table_get_column_description  (AtkTable *table,  gint column);
-		return std.string.toString(atk_table_get_column_description(atkTable, column) );
+		return Str.toString(atk_table_get_column_description(atkTable, column) );
 	}
 	
 	/**
@@ -473,7 +475,7 @@ public class Table
 	public char[] getRowDescription(int row)
 	{
 		// const gchar* atk_table_get_row_description (AtkTable *table,  gint row);
-		return std.string.toString(atk_table_get_row_description(atkTable, row) );
+		return Str.toString(atk_table_get_row_description(atkTable, row) );
 	}
 	
 	/**
@@ -548,7 +550,7 @@ public class Table
 	public void setRowDescription(int row, char[] description)
 	{
 		// void atk_table_set_row_description (AtkTable *table,  gint row,  const gchar *description);
-		atk_table_set_row_description(atkTable, row, std.string.toStringz(description));
+		atk_table_set_row_description(atkTable, row, Str.toStringz(description));
 	}
 	
 	/**
@@ -564,7 +566,7 @@ public class Table
 	public void setColumnDescription(int column, char[] description)
 	{
 		// void atk_table_set_column_description  (AtkTable *table,  gint column,  const gchar *description);
-		atk_table_set_column_description(atkTable, column, std.string.toStringz(description));
+		atk_table_set_column_description(atkTable, column, Str.toStringz(description));
 	}
 	
 	/**

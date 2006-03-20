@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -82,7 +84,7 @@ public class Internationalization
 	public static char[] stripContext(char[] msgid, char[] msgval)
 	{
 		// const gchar* g_strip_context (const gchar *msgid,  const gchar *msgval);
-		return std.string.toString(g_strip_context(std.string.toStringz(msgid), std.string.toStringz(msgval)) );
+		return Str.toString(g_strip_context(Str.toStringz(msgid), Str.toStringz(msgval)) );
 	}
 	
 	/**

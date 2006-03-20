@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * 	- gdk.Screen
  * 	- gtk.AccelGroup
@@ -54,7 +54,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 private import gdk.Screen;
 private import gtk.AccelGroup;
@@ -330,7 +330,7 @@ public class Menu : MenuShell
 	public void setAccelPath(char[] accelPath)
 	{
 		// void gtk_menu_set_accel_path (GtkMenu *menu,  const gchar *accel_path);
-		gtk_menu_set_accel_path(gtkMenu, std.string.toStringz(accelPath));
+		gtk_menu_set_accel_path(gtkMenu, Str.toStringz(accelPath));
 	}
 	
 	/**
@@ -344,7 +344,7 @@ public class Menu : MenuShell
 	public void setTitle(char[] title)
 	{
 		// void gtk_menu_set_title (GtkMenu *menu,  const gchar *title);
-		gtk_menu_set_title(gtkMenu, std.string.toStringz(title));
+		gtk_menu_set_title(gtkMenu, Str.toStringz(title));
 	}
 	
 	/**
@@ -373,7 +373,7 @@ public class Menu : MenuShell
 	public char[] getTitle()
 	{
 		// const gchar* gtk_menu_get_title (GtkMenu *menu);
-		return std.string.toString(gtk_menu_get_title(gtkMenu) );
+		return Str.toString(gtk_menu_get_title(gtkMenu) );
 	}
 	
 	/**

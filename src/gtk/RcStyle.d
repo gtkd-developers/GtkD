@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Style
  * 	- gtk.Widget
  * 	- gtk.Settings
@@ -56,7 +56,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Style;
 private import gtk.Widget;
 private import gtk.Settings;
@@ -484,7 +484,7 @@ public class RcStyle : ObjectG
 	public static Style getStyleByPaths(Settings settings, char[] widgetPath, char[] classPath, GType type)
 	{
 		// GtkStyle* gtk_rc_get_style_by_paths (GtkSettings *settings,  const char *widget_path,  const char *class_path,  GType type);
-		return new Style( gtk_rc_get_style_by_paths((settings is null) ? null : settings.getSettingsStruct(), std.string.toStringz(widgetPath), std.string.toStringz(classPath), type) );
+		return new Style( gtk_rc_get_style_by_paths((settings is null) ? null : settings.getSettingsStruct(), Str.toStringz(widgetPath), Str.toStringz(classPath), type) );
 	}
 	
 	/**
@@ -502,7 +502,7 @@ public class RcStyle : ObjectG
 	public void addWidgetNameStyle(char[] pattern)
 	{
 		// void gtk_rc_add_widget_name_style (GtkRcStyle *rc_style,  const gchar *pattern);
-		gtk_rc_add_widget_name_style(gtkRcStyle, std.string.toStringz(pattern));
+		gtk_rc_add_widget_name_style(gtkRcStyle, Str.toStringz(pattern));
 	}
 	
 	/**
@@ -520,7 +520,7 @@ public class RcStyle : ObjectG
 	public void addWidgetClassStyle(char[] pattern)
 	{
 		// void gtk_rc_add_widget_class_style (GtkRcStyle *rc_style,  const gchar *pattern);
-		gtk_rc_add_widget_class_style(gtkRcStyle, std.string.toStringz(pattern));
+		gtk_rc_add_widget_class_style(gtkRcStyle, Str.toStringz(pattern));
 	}
 	
 	/**
@@ -538,7 +538,7 @@ public class RcStyle : ObjectG
 	public void addClassStyle(char[] pattern)
 	{
 		// void gtk_rc_add_class_style (GtkRcStyle *rc_style,  const gchar *pattern);
-		gtk_rc_add_class_style(gtkRcStyle, std.string.toStringz(pattern));
+		gtk_rc_add_class_style(gtkRcStyle, Str.toStringz(pattern));
 	}
 	
 	/**
@@ -550,7 +550,7 @@ public class RcStyle : ObjectG
 	public static void parse(char[] filename)
 	{
 		// void gtk_rc_parse (const gchar *filename);
-		gtk_rc_parse(std.string.toStringz(filename));
+		gtk_rc_parse(Str.toStringz(filename));
 	}
 	
 	/**
@@ -561,7 +561,7 @@ public class RcStyle : ObjectG
 	public static void parseString(char[] rcString)
 	{
 		// void gtk_rc_parse_string (const gchar *rc_string);
-		gtk_rc_parse_string(std.string.toStringz(rcString));
+		gtk_rc_parse_string(Str.toStringz(rcString));
 	}
 	
 	/**
@@ -625,7 +625,7 @@ public class RcStyle : ObjectG
 	public static void addDefaultFile(char[] filename)
 	{
 		// void gtk_rc_add_default_file (const gchar *filename);
-		gtk_rc_add_default_file(std.string.toStringz(filename));
+		gtk_rc_add_default_file(Str.toStringz(filename));
 	}
 	
 	/**
@@ -718,7 +718,7 @@ public class RcStyle : ObjectG
 	public static char[] findModuleInPath(char[] moduleFile)
 	{
 		// gchar* gtk_rc_find_module_in_path (const gchar *module_file);
-		return std.string.toString(gtk_rc_find_module_in_path(std.string.toStringz(moduleFile)) );
+		return Str.toString(gtk_rc_find_module_in_path(Str.toStringz(moduleFile)) );
 	}
 	
 	/**
@@ -738,7 +738,7 @@ public class RcStyle : ObjectG
 	public static char[] findPixmapInPath(Settings settings, GScanner* scanner, char[] pixmapFile)
 	{
 		// gchar* gtk_rc_find_pixmap_in_path (GtkSettings *settings,  GScanner *scanner,  const gchar *pixmap_file);
-		return std.string.toString(gtk_rc_find_pixmap_in_path((settings is null) ? null : settings.getSettingsStruct(), scanner, std.string.toStringz(pixmapFile)) );
+		return Str.toString(gtk_rc_find_pixmap_in_path((settings is null) ? null : settings.getSettingsStruct(), scanner, Str.toStringz(pixmapFile)) );
 	}
 	
 	/**
@@ -752,7 +752,7 @@ public class RcStyle : ObjectG
 	public static char[] getModuleDir()
 	{
 		// gchar* gtk_rc_get_module_dir (void);
-		return std.string.toString(gtk_rc_get_module_dir() );
+		return Str.toString(gtk_rc_get_module_dir() );
 	}
 	
 	/**
@@ -768,7 +768,7 @@ public class RcStyle : ObjectG
 	public static char[] getImModulePath()
 	{
 		// gchar* gtk_rc_get_im_module_path (void);
-		return std.string.toString(gtk_rc_get_im_module_path() );
+		return Str.toString(gtk_rc_get_im_module_path() );
 	}
 	
 	/**
@@ -782,7 +782,7 @@ public class RcStyle : ObjectG
 	public static char[] getImModuleFile()
 	{
 		// gchar* gtk_rc_get_im_module_file (void);
-		return std.string.toString(gtk_rc_get_im_module_file() );
+		return Str.toString(gtk_rc_get_im_module_file() );
 	}
 	
 	/**
@@ -795,7 +795,7 @@ public class RcStyle : ObjectG
 	public static char[] getThemeDir()
 	{
 		// gchar* gtk_rc_get_theme_dir (void);
-		return std.string.toString(gtk_rc_get_theme_dir() );
+		return Str.toString(gtk_rc_get_theme_dir() );
 	}
 	
 	/**

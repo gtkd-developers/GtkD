@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.IconInfo
  * 	- gdk.Pixbuf
  * structWrap:
@@ -49,7 +49,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.IconInfo;
 private import gdk.Pixbuf;
 
@@ -269,7 +269,7 @@ public class IconInfo
 	public char[] getFilename()
 	{
 		// const gchar* gtk_icon_info_get_filename (GtkIconInfo *icon_info);
-		return std.string.toString(gtk_icon_info_get_filename(gtkIconInfo) );
+		return Str.toString(gtk_icon_info_get_filename(gtkIconInfo) );
 	}
 	
 	/**
@@ -414,6 +414,6 @@ public class IconInfo
 	public char[] getDisplayName()
 	{
 		// const gchar* gtk_icon_info_get_display_name (GtkIconInfo *icon_info);
-		return std.string.toString(gtk_icon_info_get_display_name(gtkIconInfo) );
+		return Str.toString(gtk_icon_info_get_display_name(gtkIconInfo) );
 	}
 }

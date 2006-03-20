@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -74,7 +76,7 @@ public class WindowsUtils
 	public static char[] errorMessage(int error)
 	{
 		// gchar* g_win32_error_message (gint error);
-		return std.string.toString(g_win32_error_message(error) );
+		return Str.toString(g_win32_error_message(error) );
 	}
 	
 	/**
@@ -91,7 +93,7 @@ public class WindowsUtils
 	public static char[] getlocale()
 	{
 		// gchar* g_win32_getlocale (void);
-		return std.string.toString(g_win32_getlocale() );
+		return Str.toString(g_win32_getlocale() );
 	}
 	
 	/**
@@ -129,7 +131,7 @@ public class WindowsUtils
 	public static char[] getPackageInstallationDirectory(char[] p, char[] dllName)
 	{
 		// gchar* g_win32_get_package_installation_directory  (gchar *package,  gchar *dll_name);
-		return std.string.toString(g_win32_get_package_installation_directory(std.string.toStringz(p), std.string.toStringz(dllName)) );
+		return Str.toString(g_win32_get_package_installation_directory(Str.toStringz(p), Str.toStringz(dllName)) );
 	}
 	
 	/**
@@ -152,7 +154,7 @@ public class WindowsUtils
 	public static char[] getPackageInstallationSubdirectory(char[] p, char[] dllName, char[] subdir)
 	{
 		// gchar* g_win32_get_package_installation_subdirectory  (gchar *package,  gchar *dll_name,  gchar *subdir);
-		return std.string.toString(g_win32_get_package_installation_subdirectory(std.string.toStringz(p), std.string.toStringz(dllName), std.string.toStringz(subdir)) );
+		return Str.toString(g_win32_get_package_installation_subdirectory(Str.toStringz(p), Str.toStringz(dllName), Str.toStringz(subdir)) );
 	}
 	
 	/**
@@ -205,7 +207,7 @@ public class WindowsUtils
 	public static char[] localeFilenameFromUtf8(char[] utf8filename)
 	{
 		// gchar* g_win32_locale_filename_from_utf8  (const gchar *utf8filename);
-		return std.string.toString(g_win32_locale_filename_from_utf8(std.string.toStringz(utf8filename)) );
+		return Str.toString(g_win32_locale_filename_from_utf8(Str.toStringz(utf8filename)) );
 	}
 	
 	

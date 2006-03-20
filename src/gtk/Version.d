@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -45,7 +45,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -100,7 +100,7 @@ public class Version
 	public static char[] checkVersion(uint requiredMajor, uint requiredMinor, uint requiredMicro)
 	{
 		// gchar* gtk_check_version (guint required_major,  guint required_minor,  guint required_micro);
-		return std.string.toString(gtk_check_version(requiredMajor, requiredMinor, requiredMicro) );
+		return Str.toString(gtk_check_version(requiredMajor, requiredMinor, requiredMicro) );
 	}
 	
 	

@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * 	- GString* -> StringG
  * local aliases:
@@ -45,6 +46,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -93,7 +95,7 @@ public class StringG
 	public this (char[] init)
 	{
 		// GString* g_string_new (const gchar *init);
-		this(cast(GString*)g_string_new(std.string.toStringz(init)) );
+		this(cast(GString*)g_string_new(Str.toStringz(init)) );
 	}
 	
 	/**
@@ -109,7 +111,7 @@ public class StringG
 	public this (char[] init, int len)
 	{
 		// GString* g_string_new_len (const gchar *init,  gssize len);
-		this(cast(GString*)g_string_new_len(std.string.toStringz(init), len) );
+		this(cast(GString*)g_string_new_len(Str.toStringz(init), len) );
 	}
 	
 	/**
@@ -141,7 +143,7 @@ public class StringG
 	public StringG assign(char[] rval)
 	{
 		// GString* g_string_assign (GString *string,  const gchar *rval);
-		return new StringG( g_string_assign(gString, std.string.toStringz(rval)) );
+		return new StringG( g_string_assign(gString, Str.toStringz(rval)) );
 	}
 	
 	
@@ -161,7 +163,7 @@ public class StringG
 	public void printf(char[] format, ... )
 	{
 		// void g_string_printf (GString *string,  const gchar *format,  ...);
-		g_string_printf(gString, std.string.toStringz(format));
+		g_string_printf(gString, Str.toStringz(format));
 	}
 	
 	/**
@@ -178,7 +180,7 @@ public class StringG
 	public void appendPrintf(char[] format, ... )
 	{
 		// void g_string_append_printf (GString *string,  const gchar *format,  ...);
-		g_string_append_printf(gString, std.string.toStringz(format));
+		g_string_append_printf(gString, Str.toStringz(format));
 	}
 	
 	/**
@@ -193,7 +195,7 @@ public class StringG
 	public StringG append(char[] val)
 	{
 		// GString* g_string_append (GString *string,  const gchar *val);
-		return new StringG( g_string_append(gString, std.string.toStringz(val)) );
+		return new StringG( g_string_append(gString, Str.toStringz(val)) );
 	}
 	
 	/**
@@ -242,7 +244,7 @@ public class StringG
 	public StringG appendLen(char[] val, int len)
 	{
 		// GString* g_string_append_len (GString *string,  const gchar *val,  gssize len);
-		return new StringG( g_string_append_len(gString, std.string.toStringz(val), len) );
+		return new StringG( g_string_append_len(gString, Str.toStringz(val), len) );
 	}
 	
 	/**
@@ -257,7 +259,7 @@ public class StringG
 	public StringG prepend(char[] val)
 	{
 		// GString* g_string_prepend (GString *string,  const gchar *val);
-		return new StringG( g_string_prepend(gString, std.string.toStringz(val)) );
+		return new StringG( g_string_prepend(gString, Str.toStringz(val)) );
 	}
 	
 	/**
@@ -306,7 +308,7 @@ public class StringG
 	public StringG prependLen(char[] val, int len)
 	{
 		// GString* g_string_prepend_len (GString *string,  const gchar *val,  gssize len);
-		return new StringG( g_string_prepend_len(gString, std.string.toStringz(val), len) );
+		return new StringG( g_string_prepend_len(gString, Str.toStringz(val), len) );
 	}
 	
 	/**
@@ -323,7 +325,7 @@ public class StringG
 	public StringG insert(int pos, char[] val)
 	{
 		// GString* g_string_insert (GString *string,  gssize pos,  const gchar *val);
-		return new StringG( g_string_insert(gString, pos, std.string.toStringz(val)) );
+		return new StringG( g_string_insert(gString, pos, Str.toStringz(val)) );
 	}
 	
 	/**
@@ -379,7 +381,7 @@ public class StringG
 	public StringG insertLen(int pos, char[] val, int len)
 	{
 		// GString* g_string_insert_len (GString *string,  gssize pos,  const gchar *val,  gssize len);
-		return new StringG( g_string_insert_len(gString, pos, std.string.toStringz(val), len) );
+		return new StringG( g_string_insert_len(gString, pos, Str.toStringz(val), len) );
 	}
 	
 	/**
@@ -448,7 +450,7 @@ public class StringG
 	public char[] free(int freeSegment)
 	{
 		// gchar* g_string_free (GString *string,  gboolean free_segment);
-		return std.string.toString(g_string_free(gString, freeSegment) );
+		return Str.toString(g_string_free(gString, freeSegment) );
 	}
 	
 	/**

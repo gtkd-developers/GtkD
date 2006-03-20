@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * 	- gdk.Rectangle
  * 	- gdk.Window
@@ -56,7 +56,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 private import gdk.Rectangle;
 private import gdk.Window;
@@ -179,7 +179,7 @@ public class CellRenderer : ObjectGtk
 		
 		foreach ( void delegate(CellEditable, char[], CellRenderer) dlg ; cellRenderer.onEditingStartedListeners )
 		{
-			dlg(new CellEditable(editable), std.string.toString(path), cellRenderer);
+			dlg(new CellEditable(editable), Str.toString(path), cellRenderer);
 		}
 		
 		return consumed;
@@ -270,7 +270,7 @@ public class CellRenderer : ObjectGtk
 	public int activate(Event event, Widget widget, char[] path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
 	{
 		// gboolean gtk_cell_renderer_activate (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  GdkRectangle *background_area,  GdkRectangle *cell_area,  GtkCellRendererState flags);
-		return gtk_cell_renderer_activate(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
+		return gtk_cell_renderer_activate(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
 	}
 	
 	/**
@@ -295,7 +295,7 @@ public class CellRenderer : ObjectGtk
 	public CellEditable startEditing(Event event, Widget widget, char[] path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
 	{
 		// GtkCellEditable* gtk_cell_renderer_start_editing  (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  GdkRectangle *background_area,  GdkRectangle *cell_area,  GtkCellRendererState flags);
-		return new CellEditable( gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), std.string.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags) );
+		return new CellEditable( gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags) );
 	}
 	
 	/**

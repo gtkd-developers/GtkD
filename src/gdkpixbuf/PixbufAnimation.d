@@ -36,6 +36,7 @@
  * imports:
  * 	- gdkpixbuf.PixbufAnimation
  * 	- gdk.Pixbuf
+ * 	- glib.Str
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufAnimation* -> PixbufAnimation
@@ -50,6 +51,7 @@ private import lib.gdkpixbuf;
 
 private import gdkpixbuf.PixbufAnimation;
 private import gdk.Pixbuf;
+private import glib.Str;
 
 /**
  * Description
@@ -113,7 +115,7 @@ public class PixbufAnimation : ObjectG
 	public this (char[] filename, GError** error)
 	{
 		// GdkPixbufAnimation* gdk_pixbuf_animation_new_from_file  (const char *filename,  GError **error);
-		this(cast(GdkPixbufAnimation*)gdk_pixbuf_animation_new_from_file(std.string.toStringz(filename), error) );
+		this(cast(GdkPixbufAnimation*)gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), error) );
 	}
 	
 	/**

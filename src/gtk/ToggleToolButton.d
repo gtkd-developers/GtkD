@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.ToolItem
  * structWrap:
  * 	- GtkToolItem* -> ToolItem
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.ToolItem;
 
 /**
@@ -152,7 +152,7 @@ public class ToggleToolButton : ToolButton
 	public static ToolItem newFromStock(char[] stockId)
 	{
 		// GtkToolItem* gtk_toggle_tool_button_new_from_stock  (const gchar *stock_id);
-		return new ToolItem( gtk_toggle_tool_button_new_from_stock(std.string.toStringz(stockId)) );
+		return new ToolItem( gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId)) );
 	}
 	
 	/**

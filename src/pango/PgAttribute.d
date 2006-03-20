@@ -36,6 +36,7 @@
  * omit code:
  * imports:
  * 	- glib.ListSG
+ * 	- glib.Str
  * 	- pango.PgContext
  * 	- pango.PgItem
  * 	- pango.PgLayout
@@ -77,6 +78,7 @@ private import pango.typedefs;
 private import lib.pango;
 
 private import glib.ListSG;
+private import glib.Str;
 private import pango.PgContext;
 private import pango.PgItem;
 private import pango.PgLayout;
@@ -174,7 +176,7 @@ public class PgAttribute
 	public static int pangoParseMarkup(char[] markupText, int length, gunichar accelMarker, PangoAttrList** attrList, char** text, gunichar* accelChar, GError** error)
 	{
 		// gboolean pango_parse_markup (const char *markup_text,  int length,  gunichar accel_marker,  PangoAttrList **attr_list,  char **text,  gunichar *accel_char,  GError **error);
-		return pango_parse_markup(std.string.toStringz(markupText), length, accelMarker, attrList, text, accelChar, error);
+		return pango_parse_markup(Str.toStringz(markupText), length, accelMarker, attrList, text, accelChar, error);
 	}
 	
 	/**
@@ -187,7 +189,7 @@ public class PgAttribute
 	public static PangoAttrType typeRegister(char[] name)
 	{
 		// PangoAttrType pango_attr_type_register (const gchar *name);
-		return pango_attr_type_register(std.string.toStringz(name));
+		return pango_attr_type_register(Str.toStringz(name));
 	}
 	
 	/**
@@ -254,7 +256,7 @@ public class PgAttribute
 	public static PangoAttribute* familyNew(char[] family)
 	{
 		// PangoAttribute* pango_attr_family_new (const char *family);
-		return pango_attr_family_new(std.string.toStringz(family));
+		return pango_attr_family_new(Str.toStringz(family));
 	}
 	
 	/**
@@ -600,7 +602,7 @@ public class PgAttribute
 	public static int pangoColorParse(PangoColor* color, char[] spec)
 	{
 		// gboolean pango_color_parse (PangoColor *color,  const char *spec);
-		return pango_color_parse(color, std.string.toStringz(spec));
+		return pango_color_parse(color, Str.toStringz(spec));
 	}
 	
 	/**

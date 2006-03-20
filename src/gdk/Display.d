@@ -34,7 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gdk.Display
  * 	- gdk.Screen
  * 	- glib.ListG
@@ -55,7 +55,7 @@ private import gdk.typedefs;
 
 private import lib.gdk;
 
-private import std.string;
+private import glib.Str;
 private import gdk.Display;
 private import gdk.Screen;
 private import glib.ListG;
@@ -154,7 +154,7 @@ public class Display : ObjectG
 	public static Display open(char[] displayName)
 	{
 		// GdkDisplay* gdk_display_open (const gchar *display_name);
-		return new Display( gdk_display_open(std.string.toStringz(displayName)) );
+		return new Display( gdk_display_open(Str.toStringz(displayName)) );
 	}
 	
 	/**
@@ -184,7 +184,7 @@ public class Display : ObjectG
 	public char[] getName()
 	{
 		// const gchar* gdk_display_get_name (GdkDisplay *display);
-		return std.string.toString(gdk_display_get_name(gdkDisplay) );
+		return Str.toString(gdk_display_get_name(gdkDisplay) );
 	}
 	
 	/**

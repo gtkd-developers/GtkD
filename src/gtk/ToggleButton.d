@@ -37,7 +37,7 @@
  * 	- gtk_toggle_button_new_with_label
  * 	- gtk_toggle_button_new_with_mnemonic
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -48,7 +48,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -127,12 +127,12 @@ public class ToggleButton : Button
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_toggle_button_new_with_mnemonic  (const gchar *label);
-			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_toggle_button_new_with_label  (const gchar *label);
-			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_label(std.string.toStringz(label)) );
+			this(cast(GtkToggleButton*)gtk_toggle_button_new_with_label(Str.toStringz(label)) );
 		}
 	}
 	

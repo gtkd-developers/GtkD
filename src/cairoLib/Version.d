@@ -33,6 +33,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -43,6 +44,7 @@ private import cairoLib.typedefs;
 
 private import lib.cairoLib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -146,6 +148,6 @@ public static int cairoVersion()
 public static char[] cairoVersionString()
 {
 	// const char* cairo_version_string (void);
-	return std.string.toString(cairo_version_string() );
+	return Str.toString(cairo_version_string() );
 }
 }

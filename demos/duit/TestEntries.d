@@ -26,6 +26,7 @@ private import gtk.Button;
 private import gtk.Label;
 private import gtk.typedefs;
 
+private import glib.Str;
 /**
  * This tests the DUI Entry widget
  */
@@ -65,7 +66,7 @@ class TestEntries : Table
 
 	void showEntry(Button button)
 	{
-		printf("text field contains %s\n",std.string.toStringz(entry.getText()));
+		printf("text field contains %s\n",Str.toStringz(entry.getText()));
 		
 	}
 

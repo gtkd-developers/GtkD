@@ -39,7 +39,7 @@
  * 	- gtk_text_buffer_insert_with_tags_by_name
  * 	- gtk_text_buffer_create_tag
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.TextBuffer
  * 	- gdk.Rectangle
  * 	- gtk.Widget
@@ -77,7 +77,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.TextBuffer;
 private import gdk.Rectangle;
 private import gtk.Widget;
@@ -141,7 +141,7 @@ public class TextBuffer : ObjectG
 	public void setText(char[] text)
 	{
 		// void gtk_text_buffer_set_text (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_set_text(gtkTextBuffer, std.string.toStringz(text), text.length);
+		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), text.length);
 	}
 	
 	/**
@@ -164,7 +164,7 @@ public class TextBuffer : ObjectG
 	public void insert(TextIter iter, char[] text)
 	{
 		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
-		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length);
+		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length);
 	}
 	
 	/**
@@ -180,7 +180,7 @@ public class TextBuffer : ObjectG
 	public void insertAtCursor(char[] text)
 	{
 		// void gtk_text_buffer_insert_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, std.string.toStringz(text), text.length);
+		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), text.length);
 	}
 	
 	/**
@@ -207,7 +207,7 @@ public class TextBuffer : ObjectG
 	public int insertInteractive(TextIter iter, char[] text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length, defaultEditable);
+		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, defaultEditable);
 	}
 	
 	/**
@@ -230,7 +230,7 @@ public class TextBuffer : ObjectG
 	public int insertInteractiveAtCursor(char[] text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, std.string.toStringz(text), text.length, defaultEditable);
+		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), text.length, defaultEditable);
 	}
 	
 	/**
@@ -258,7 +258,7 @@ public class TextBuffer : ObjectG
 		{
 			TextTag tag = va_arg!(TextTag)(_argptr);
 			// void gtk_text_buffer_insert_with_tags  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  GtkTextTag *first_tag,  ...);
-			gtk_text_buffer_insert_with_tags(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length, (tag is null) ? null : tag.getTextTagStruct(), null);
+			gtk_text_buffer_insert_with_tags(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, (tag is null) ? null : tag.getTextTagStruct(), null);
 		}
 	}
 	
@@ -284,7 +284,7 @@ public class TextBuffer : ObjectG
 		{
 			char[] tagName = va_arg!(char[])(_argptr);
 			// void gtk_text_buffer_insert_with_tags_by_name  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  const gchar *first_tag_name,  ...);
-			gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), text.length, std.string.toStringz(tagName), null);
+			gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, Str.toStringz(tagName), null);
 		}
 	}
 	
@@ -299,10 +299,10 @@ public class TextBuffer : ObjectG
 	{
 		return new TextTag(
 		gtk_text_buffer_create_tag(gtkTextBuffer,
-		std.string.toStringz(tagName),
-		std.string.toStringz(propertyName),propertyValue,
-		std.string.toStringz(propertyName1),
-		std.string.toStringz(propertyValue1),
+		Str.toStringz(tagName),
+		Str.toStringz(propertyName),propertyValue,
+		Str.toStringz(propertyName1),
+		Str.toStringz(propertyValue1),
 		null)
 		);
 		
@@ -317,8 +317,8 @@ public class TextBuffer : ObjectG
 	{
 		return new TextTag(
 		gtk_text_buffer_create_tag(gtkTextBuffer,
-		std.string.toStringz(tagName),
-		std.string.toStringz(propertyName),propertyValue,null)
+		Str.toStringz(tagName),
+		Str.toStringz(propertyName),propertyValue,null)
 		);
 		
 	}
@@ -332,7 +332,7 @@ public class TextBuffer : ObjectG
 	TextTag createTag(char[] tagName, char[] propertyName, double propertyValue)
 	{
 		return new TextTag(
-		gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName),propertyValue,null)
+		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),propertyValue,null)
 		);
 		
 	}
@@ -348,14 +348,14 @@ public class TextBuffer : ObjectG
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2)
 	{
 		return new TextTag(
-		gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName), propertyValue, std.string.toStringz(propertyName2), propertyValue2, null)
+		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName), propertyValue, Str.toStringz(propertyName2), propertyValue2, null)
 		);
 	}
 	
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2, char[] propertyName3, int propertyValue3, char[] propertyName4, int propertyValue4, char[] propertyName5, int propertyValue5)
 	{
 		return new TextTag(
-		gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName), propertyValue, std.string.toStringz(propertyName2), propertyValue2, std.string.toStringz(propertyName3), propertyValue3, std.string.toStringz(propertyName4), propertyValue4, std.string.toStringz(propertyName5), propertyValue5, null)
+		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName), propertyValue, Str.toStringz(propertyName2), propertyValue2, Str.toStringz(propertyName3), propertyValue3, Str.toStringz(propertyName4), propertyValue4, Str.toStringz(propertyName5), propertyValue5, null)
 		);
 	}
 	/**
@@ -367,7 +367,7 @@ public class TextBuffer : ObjectG
 	TextTag createTag(char[] tagName, char[] propertyName, char[] propertyValue)
 	{
 		return new TextTag(
-		gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName),std.string.toStringz(propertyValue),null)
+		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),Str.toStringz(propertyValue),null)
 		);
 		
 	}
@@ -382,7 +382,7 @@ public class TextBuffer : ObjectG
 	TextTag createTag(char[] tagName, char[] propertyName, Bitmap propertyValue)
 	{
 		return new TextTag(
-		gtk_text_buffer_create_tag(gtkTextBuffer, std.string.toStringz(tagName), std.string.toStringz(propertyName),propertyValue.getBitmapStruct(),null)
+		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),propertyValue.getBitmapStruct(),null)
 		);
 		
 	}
@@ -614,7 +614,7 @@ public class TextBuffer : ObjectG
 		
 		foreach ( void delegate(TextIter, char[], gint, TextBuffer) dlg ; textBuffer.onInsertTextListeners )
 		{
-			dlg(new TextIter(arg1), std.string.toString(arg2), arg3, textBuffer);
+			dlg(new TextIter(arg1), Str.toString(arg2), arg3, textBuffer);
 		}
 		
 		return consumed;
@@ -810,7 +810,7 @@ public class TextBuffer : ObjectG
 	public void insert(TextIter iter, char[] text, int len)
 	{
 		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
-		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), len);
+		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), len);
 	}
 	
 	/**
@@ -826,7 +826,7 @@ public class TextBuffer : ObjectG
 	public void insertAtCursor(char[] text, int len)
 	{
 		// void gtk_text_buffer_insert_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len);
-		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, std.string.toStringz(text), len);
+		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), len);
 	}
 	
 	/**
@@ -853,7 +853,7 @@ public class TextBuffer : ObjectG
 	public int insertInteractive(TextIter iter, char[] text, int len, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), std.string.toStringz(text), len, defaultEditable);
+		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), len, defaultEditable);
 	}
 	
 	/**
@@ -876,7 +876,7 @@ public class TextBuffer : ObjectG
 	public int insertInteractiveAtCursor(char[] text, int len, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len,  gboolean default_editable);
-		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, std.string.toStringz(text), len, defaultEditable);
+		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), len, defaultEditable);
 	}
 	
 	/**
@@ -1024,7 +1024,7 @@ public class TextBuffer : ObjectG
 	public char[] getText(TextIter start, TextIter end, int includeHiddenChars)
 	{
 		// gchar* gtk_text_buffer_get_text (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
-		return std.string.toString(gtk_text_buffer_get_text(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars) );
+		return Str.toString(gtk_text_buffer_get_text(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars) );
 	}
 	
 	/**
@@ -1052,7 +1052,7 @@ public class TextBuffer : ObjectG
 	public char[] getSlice(TextIter start, TextIter end, int includeHiddenChars)
 	{
 		// gchar* gtk_text_buffer_get_slice (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
-		return std.string.toString(gtk_text_buffer_get_slice(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars) );
+		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars) );
 	}
 	
 	/**
@@ -1151,7 +1151,7 @@ public class TextBuffer : ObjectG
 	public TextMark createMark(char[] markName, TextIter where, int leftGravity)
 	{
 		// GtkTextMark* gtk_text_buffer_create_mark (GtkTextBuffer *buffer,  const gchar *mark_name,  const GtkTextIter *where,  gboolean left_gravity);
-		return new TextMark( gtk_text_buffer_create_mark(gtkTextBuffer, std.string.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity) );
+		return new TextMark( gtk_text_buffer_create_mark(gtkTextBuffer, Str.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity) );
 	}
 	
 	/**
@@ -1183,7 +1183,7 @@ public class TextBuffer : ObjectG
 	public void moveMarkByName(char[] name, TextIter where)
 	{
 		// void gtk_text_buffer_move_mark_by_name  (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *where);
-		gtk_text_buffer_move_mark_by_name(gtkTextBuffer, std.string.toStringz(name), (where is null) ? null : where.getTextIterStruct());
+		gtk_text_buffer_move_mark_by_name(gtkTextBuffer, Str.toStringz(name), (where is null) ? null : where.getTextIterStruct());
 	}
 	
 	/**
@@ -1218,7 +1218,7 @@ public class TextBuffer : ObjectG
 	public void deleteMarkByName(char[] name)
 	{
 		// void gtk_text_buffer_delete_mark_by_name  (GtkTextBuffer *buffer,  const gchar *name);
-		gtk_text_buffer_delete_mark_by_name(gtkTextBuffer, std.string.toStringz(name));
+		gtk_text_buffer_delete_mark_by_name(gtkTextBuffer, Str.toStringz(name));
 	}
 	
 	/**
@@ -1234,7 +1234,7 @@ public class TextBuffer : ObjectG
 	public TextMark getMark(char[] name)
 	{
 		// GtkTextMark* gtk_text_buffer_get_mark (GtkTextBuffer *buffer,  const gchar *name);
-		return new TextMark( gtk_text_buffer_get_mark(gtkTextBuffer, std.string.toStringz(name)) );
+		return new TextMark( gtk_text_buffer_get_mark(gtkTextBuffer, Str.toStringz(name)) );
 	}
 	
 	/**
@@ -1369,7 +1369,7 @@ public class TextBuffer : ObjectG
 	public void applyTagByName(char[] name, TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_apply_tag_by_name  (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *start,  const GtkTextIter *end);
-		gtk_text_buffer_apply_tag_by_name(gtkTextBuffer, std.string.toStringz(name), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
+		gtk_text_buffer_apply_tag_by_name(gtkTextBuffer, Str.toStringz(name), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**
@@ -1387,7 +1387,7 @@ public class TextBuffer : ObjectG
 	public void removeTagByName(char[] name, TextIter start, TextIter end)
 	{
 		// void gtk_text_buffer_remove_tag_by_name  (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *start,  const GtkTextIter *end);
-		gtk_text_buffer_remove_tag_by_name(gtkTextBuffer, std.string.toStringz(name), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
+		gtk_text_buffer_remove_tag_by_name(gtkTextBuffer, Str.toStringz(name), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
 	/**

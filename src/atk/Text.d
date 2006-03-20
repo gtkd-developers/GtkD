@@ -34,6 +34,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -44,6 +45,7 @@ private import atk.typedefs;
 
 private import lib.atk;
 
+private import glib.Str;
 
 /**
  * Description
@@ -234,7 +236,7 @@ public class Text
 	public char[] getText(int startOffset, int endOffset)
 	{
 		// gchar* atk_text_get_text (AtkText *text,  gint start_offset,  gint end_offset);
-		return std.string.toString(atk_text_get_text(atkText, startOffset, endOffset) );
+		return Str.toString(atk_text_get_text(atkText, startOffset, endOffset) );
 	}
 	
 	/**
@@ -296,7 +298,7 @@ public class Text
 	public char[] getTextAfterOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_text_after_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return std.string.toString(atk_text_get_text_after_offset(atkText, offset, boundaryType, startOffset, endOffset) );
+		return Str.toString(atk_text_get_text_after_offset(atkText, offset, boundaryType, startOffset, endOffset) );
 	}
 	
 	/**
@@ -350,7 +352,7 @@ public class Text
 	public char[] getTextAtOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_text_at_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return std.string.toString(atk_text_get_text_at_offset(atkText, offset, boundaryType, startOffset, endOffset) );
+		return Str.toString(atk_text_get_text_at_offset(atkText, offset, boundaryType, startOffset, endOffset) );
 	}
 	
 	/**
@@ -402,7 +404,7 @@ public class Text
 	public char[] getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_text_before_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return std.string.toString(atk_text_get_text_before_offset(atkText, offset, boundaryType, startOffset, endOffset) );
+		return Str.toString(atk_text_get_text_before_offset(atkText, offset, boundaryType, startOffset, endOffset) );
 	}
 	
 	/**
@@ -614,7 +616,7 @@ public class Text
 	public char[] getSelection(int selectionNum, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_selection (AtkText *text,  gint selection_num,  gint *start_offset,  gint *end_offset);
-		return std.string.toString(atk_text_get_selection(atkText, selectionNum, startOffset, endOffset) );
+		return Str.toString(atk_text_get_selection(atkText, selectionNum, startOffset, endOffset) );
 	}
 	
 	/**
@@ -714,7 +716,7 @@ public class Text
 	public static AtkTextAttribute attributeRegister(char[] name)
 	{
 		// AtkTextAttribute atk_text_attribute_register  (const gchar *name);
-		return atk_text_attribute_register(std.string.toStringz(name));
+		return atk_text_attribute_register(Str.toStringz(name));
 	}
 	
 	/**
@@ -727,7 +729,7 @@ public class Text
 	public static char[] attributeGetName(AtkTextAttribute attr)
 	{
 		// const gchar* atk_text_attribute_get_name (AtkTextAttribute attr);
-		return std.string.toString(atk_text_attribute_get_name(attr) );
+		return Str.toString(atk_text_attribute_get_name(attr) );
 	}
 	
 	/**
@@ -742,7 +744,7 @@ public class Text
 	public static AtkTextAttribute attributeForName(char[] name)
 	{
 		// AtkTextAttribute atk_text_attribute_for_name  (const gchar *name);
-		return atk_text_attribute_for_name(std.string.toStringz(name));
+		return atk_text_attribute_for_name(Str.toStringz(name));
 	}
 	
 	/**
@@ -768,7 +770,7 @@ public class Text
 	public static char[] attributeGetValue(AtkTextAttribute attr, int index)
 	{
 		// const gchar* atk_text_attribute_get_value (AtkTextAttribute attr,  gint index_);
-		return std.string.toString(atk_text_attribute_get_value(attr, index) );
+		return Str.toString(atk_text_attribute_get_value(attr, index) );
 	}
 	
 	

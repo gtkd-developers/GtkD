@@ -37,7 +37,7 @@
  * 	- gtk_expander_new
  * 	- gtk_expander_new_with_mnemonic
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -50,7 +50,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 private import gtk.Widget;
 
 /**
@@ -138,12 +138,12 @@ public class Expander : Bin
 		if ( mnemonic )
 		{
 			// GtkWidget* gtk_expander_new_with_mnemonic (const gchar *label);
-			this(cast(GtkExpander*)gtk_expander_new_with_mnemonic(std.string.toStringz(label)) );
+			this(cast(GtkExpander*)gtk_expander_new_with_mnemonic(Str.toStringz(label)) );
 		}
 		else
 		{
 			// GtkWidget* gtk_expander_new (const gchar *label);
-			this(cast(GtkExpander*)gtk_expander_new(std.string.toStringz(label)) );
+			this(cast(GtkExpander*)gtk_expander_new(Str.toStringz(label)) );
 		}
 	}
 	
@@ -260,7 +260,7 @@ public class Expander : Bin
 	public void setLabel(char[] label)
 	{
 		// void gtk_expander_set_label (GtkExpander *expander,  const gchar *label);
-		gtk_expander_set_label(gtkExpander, std.string.toStringz(label));
+		gtk_expander_set_label(gtkExpander, Str.toStringz(label));
 	}
 	
 	/**
@@ -279,7 +279,7 @@ public class Expander : Bin
 	public char[] getLabel()
 	{
 		// const gchar* gtk_expander_get_label (GtkExpander *expander);
-		return std.string.toString(gtk_expander_get_label(gtkExpander) );
+		return Str.toString(gtk_expander_get_label(gtkExpander) );
 	}
 	
 	/**

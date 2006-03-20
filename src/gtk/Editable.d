@@ -35,7 +35,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.string
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -46,7 +46,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
-private import std.string;
+private import glib.Str;
 
 /**
  * Description
@@ -191,7 +191,7 @@ public class Editable
 		
 		foreach ( void delegate(char[], gint, gint*, Editable) dlg ; editable.onInsertTextListeners )
 		{
-			dlg(std.string.toString(newText), newTextLength, position, editable);
+			dlg(Str.toString(newText), newTextLength, position, editable);
 		}
 		
 		return consumed;
@@ -253,7 +253,7 @@ public class Editable
 	public void insertText(char[] newText, int newTextLength, int* position)
 	{
 		// void gtk_editable_insert_text (GtkEditable *editable,  const gchar *new_text,  gint new_text_length,  gint *position);
-		gtk_editable_insert_text(gtkEditable, std.string.toStringz(newText), newTextLength, position);
+		gtk_editable_insert_text(gtkEditable, Str.toStringz(newText), newTextLength, position);
 	}
 	
 	/**
@@ -297,7 +297,7 @@ public class Editable
 	public char[] getChars(int startPos, int endPos)
 	{
 		// gchar* gtk_editable_get_chars (GtkEditable *editable,  gint start_pos,  gint end_pos);
-		return std.string.toString(gtk_editable_get_chars(gtkEditable, startPos, endPos) );
+		return Str.toString(gtk_editable_get_chars(gtkEditable, startPos, endPos) );
 	}
 	
 	/**
