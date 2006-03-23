@@ -430,7 +430,7 @@ public class GtkWrapper : WrapperIF
 		
 		char[] key = defReader.next();
 		
-		char[] keys = " file text struct realStruct class extend prefix strictPrefix"
+		char[] keys = " file text struct realStruct class template extend prefix strictPrefix"
 					  " openFile mergeFile closeFile outFile"
 					  " copy import structWrap alias"
 					  " noprefix nostruct nocode"
@@ -450,6 +450,7 @@ public class GtkWrapper : WrapperIF
 				case "realStruct": convParms.realStrct = defReader.getValue(); break;
 				case "class": convParms.clss = defReader.getValue(); break;
 				case "extend": convParms.extend = defReader.getValue(); break;
+				case "template": convParms.templ ~= defReader.getValue(); break;
 				case "prefix": convParms.prefixes ~= defReader.getValue(); break;
 				case "strictPrefix": convParms.strictPrefix = defReader.getValueBit(); break;
 				case "noprefix": convParms.noPrefixes ~= defReader.getValue(); break;

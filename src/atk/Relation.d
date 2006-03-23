@@ -27,6 +27,7 @@
  * strct   = AtkRelation
  * realStrct=
  * clss    = Relation
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_relation_

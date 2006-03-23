@@ -27,6 +27,7 @@
  * strct   = GObject
  * realStrct=
  * clss    = ObjectG
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_object_

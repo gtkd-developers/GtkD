@@ -27,6 +27,7 @@
  * strct   = GtkAdjustment
  * realStrct=
  * clss    = Adjustment
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_adjustment_

@@ -27,6 +27,7 @@
  * strct   = GAsyncQueue
  * realStrct=
  * clss    = AsyncQueue
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_async_queue_

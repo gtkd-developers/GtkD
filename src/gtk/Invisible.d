@@ -27,6 +27,7 @@
  * strct   = GtkInvisible
  * realStrct=
  * clss    = Invisible
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_invisible_

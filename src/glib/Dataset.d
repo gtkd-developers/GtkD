@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Dataset
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_dataset_

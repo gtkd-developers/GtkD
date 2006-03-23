@@ -27,6 +27,7 @@
  * strct   = GtkComboBoxEntry
  * realStrct=
  * clss    = ComboBoxEntry
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_combo_box_entry_

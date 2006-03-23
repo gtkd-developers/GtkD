@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = PgEngineShape
+ * template for:
  * extend  = 
  * prefixes:
  * 	- script_engine_shape_

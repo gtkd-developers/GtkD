@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Unicode
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_

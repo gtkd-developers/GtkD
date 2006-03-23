@@ -27,6 +27,7 @@
  * strct   = GThread
  * realStrct=
  * clss    = Thread
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_thread_

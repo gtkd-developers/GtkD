@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Input
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_input_

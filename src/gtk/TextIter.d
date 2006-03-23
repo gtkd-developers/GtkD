@@ -27,6 +27,7 @@
  * strct   = GtkTextIter
  * realStrct=
  * clss    = TextIter
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_text_iter_

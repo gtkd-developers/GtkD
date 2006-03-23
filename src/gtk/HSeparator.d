@@ -27,6 +27,7 @@
  * strct   = GtkHSeparator
  * realStrct=
  * clss    = HSeparator
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_hseparator_

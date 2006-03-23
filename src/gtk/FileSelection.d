@@ -27,6 +27,7 @@
  * strct   = GtkFileSelection
  * realStrct=
  * clss    = FileSelection
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_file_selection_

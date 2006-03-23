@@ -27,6 +27,7 @@
  * strct   = GdkDisplay
  * realStrct=
  * clss    = Display
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_display_

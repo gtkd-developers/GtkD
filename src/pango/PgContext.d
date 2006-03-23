@@ -27,6 +27,7 @@
  * strct   = PangoContext
  * realStrct=
  * clss    = PgContext
+ * template for:
  * extend  = 
  * prefixes:
  * 	- pango_context_

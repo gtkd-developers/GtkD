@@ -27,6 +27,7 @@
  * strct   = GdkColor
  * realStrct=
  * clss    = Color
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_color_

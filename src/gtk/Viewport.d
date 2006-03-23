@@ -27,6 +27,7 @@
  * strct   = GtkViewport
  * realStrct=
  * clss    = Viewport
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_viewport_

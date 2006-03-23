@@ -27,6 +27,7 @@
  * strct   = GtkTextView
  * realStrct=
  * clss    = TextView
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_text_view_

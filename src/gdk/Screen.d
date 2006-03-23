@@ -27,6 +27,7 @@
  * strct   = GdkScreen
  * realStrct=
  * clss    = Screen
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_screen_

@@ -27,6 +27,7 @@
  * strct   = GtkFontSelection
  * realStrct=
  * clss    = FontSelection
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_font_selection_

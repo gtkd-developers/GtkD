@@ -27,6 +27,7 @@
  * strct   = GtkProgressBar
  * realStrct=
  * clss    = ProgressBar
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_progress_bar_

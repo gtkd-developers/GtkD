@@ -27,6 +27,7 @@
  * strct   = GtkCellRenderer
  * realStrct=GtkCellRendererPixbuf
  * clss    = CellRendererPixbuf
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_cell_renderer_pixbuf_

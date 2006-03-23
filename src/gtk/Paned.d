@@ -27,6 +27,7 @@
  * strct   = GtkPaned
  * realStrct=
  * clss    = Paned
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_paned_

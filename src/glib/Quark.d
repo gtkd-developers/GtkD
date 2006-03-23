@@ -27,6 +27,7 @@
  * strct   = GQuark
  * realStrct=
  * clss    = Quark
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_quark_

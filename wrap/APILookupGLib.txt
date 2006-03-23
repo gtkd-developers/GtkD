@@ -390,7 +390,42 @@ body
 	
 	return copy;
 }
-	
+
+	public static char** toStringzArray(char[][] args)
+	{
+		if ( args is null )
+		{
+			return null;
+		}
+		char** argv = new char*[args.length];
+		int argc = 0;
+		foreach (char[] p; args)
+		{
+			argv[argc++] = cast(char*)p;
+		}
+		argv[argc] = null;
+		
+		return argv;
+	}
+
+	public static char[][] toStringArray(char** args)
+	{
+		if ( args is null )
+		{
+			return null;
+		}
+		char[][] argv;
+		
+		char* arg = *args;
+		while( arg !is null )
+		{
+			argv ~= toString(arg);
+			++args;
+		}
+		
+		return argv;
+	}
+
 
 code: end
 
@@ -502,6 +537,183 @@ prefix: g_spawn_
 #import: glib.Error*
 #structWrap: GError** Error*
 import: glib.Str
+import: std.c.stdio;
+import: std.c.string;
+nocode: g_spawn_async_with_pipes
+
+code: start
+
+	char[] workingDirectory = ".";
+	char[][] argv;
+	char[][] envp;
+	GSpawnFlags flags;
+	GSpawnChildSetupFunc childSetup; 
+	void* userData;
+	GPid childPid;
+	FILE* standardInput;
+	FILE* standardOutput;
+	FILE* standardError;
+	GError* error;
+	int stdIn;
+	int stdOut;
+	int stdErr;
+
+	
+	void delegate(int, int) externalWatch;
+	
+	/**
+	 * Creates a Spawn for execution.
+	 */
+	public this(char[] program, char[][] envp=null)
+	{
+		argv ~= program;
+		this.envp = envp;
+	}
+	
+	/**
+	 * Creates a Spawn for execution.
+	 */
+	public this(char[][] program, char[][] envp=null)
+	{
+		argv = program;
+		this.envp = envp;
+	}
+	
+	public void addChildWatch(void delegate(int,int) dlg)
+	{
+		externalWatch = dlg;
+	}
+	
+	/**
+	 * Closes all open streams and child process.
+	 */
+	public void close()
+	{
+		if (stdIn != 0 )
+		{
+			fclose(standardInput);
+			stdIn = 0;
+		}
+		if (stdOut != 0 )
+		{
+			fclose(standardOutput);
+			stdOut = 0;
+		}
+		if (stdErr != 0 )
+		{
+			fclose(standardError);
+			stdErr = 0;
+		}
+		if ( childPid != 0 )
+		{
+			closePid(childPid);
+			childPid = 0;
+		}
+	}
+	
+	/**
+	 * Adds a parameter to the execution program
+	 */
+	public void addParm(char[] parm)
+	{
+		argv ~= parm;
+	}
+
+	/**
+	 * Gets the last error message
+	 */
+	public char[] getLastError()
+	{
+		if ( error != null )
+		{
+			return Str.toString(error.message);
+		}
+		return "";
+	}
+
+
+	/**
+	 * Executes the prepared process
+	 */
+	public int execAsyncWithPipes()
+	{
+		int result = g_spawn_async_with_pipes(
+				Str.toStringz(workingDirectory), 
+				Str.toStringzArray(argv), 
+				Str.toStringzArray(envp),
+				flags, 
+				childSetup, 
+				userData, 
+				&childPid, 
+				&stdIn, 
+				&stdOut, 
+				&stdErr, 
+				&error
+			);
+
+		if ( result != 0 )
+		{
+			g_child_watch_add(childPid, cast(GChildWatchFunc)(&childWatchCallback), this);
+			standardInput = fdopen(stdIn, "w");
+			standardOutput = fdopen(stdOut, "r");
+			standardError = fdopen(stdErr, "r");
+		}
+
+		return result;
+	}
+	
+	public char[] readLine(int max=4096)
+	{
+		if ( stdOut != 0 )
+		{
+			return readLine(standardOutput, max);
+		}
+	}
+
+	public char[] readLineError(int max=4096)
+	{
+		if ( stdErr != 0 )
+		{
+			return readLine(standardError, max);
+		}
+	}
+
+	private char[] readLine(FILE* stream, int max)
+	{
+		char[] line;
+		line.length = max+1;
+		fgets(&line[0], max, stream);
+		int l = strlen(&line[0]);
+		if ( l > 0 ) --l;
+		return line[0..l];
+	}
+	
+	extern(C) static void childWatchCallback(int pid, int status, Spawn spawn)
+	{
+		if ( spawn.externalWatch !is null )
+		{
+			spawn.externalWatch(pid, status);
+		}
+		spawn.close();
+	}
+
+	public bool endOfOutput()
+	{
+		if ( standardOutput is null ) return true;
+		return feof(standardOutput) != 0;
+	}
+	
+	public bool endOfError()
+	{
+		if ( standardError is null ) return true;
+		return feof(standardError) != 0;
+	}
+	
+
+	
+
+code: end
+
 outFile: Spawn
 
 file: glib-File-Utilities.html

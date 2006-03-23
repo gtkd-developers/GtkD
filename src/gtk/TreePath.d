@@ -27,6 +27,7 @@
  * strct   = GtkTreePath
  * realStrct=
  * clss    = TreePath
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_tree_path_

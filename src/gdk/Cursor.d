@@ -27,6 +27,7 @@
  * strct   = GdkCursor
  * realStrct=
  * clss    = Cursor
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_cursor_

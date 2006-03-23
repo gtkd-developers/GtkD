@@ -27,6 +27,7 @@
  * strct   = GtkColorButton
  * realStrct=
  * clss    = ColorButton
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_color_button_

@@ -27,6 +27,7 @@
  * strct   = GKeyFile
  * realStrct=
  * clss    = KeyFile
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_key_file_

@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Duit
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_

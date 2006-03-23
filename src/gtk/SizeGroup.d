@@ -27,6 +27,7 @@
  * strct   = GtkSizeGroup
  * realStrct=
  * clss    = SizeGroup
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_size_group_

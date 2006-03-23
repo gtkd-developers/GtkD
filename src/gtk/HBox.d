@@ -27,6 +27,7 @@
  * strct   = GtkHBox
  * realStrct=
  * clss    = HBox
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_hbox_

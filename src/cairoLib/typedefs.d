@@ -486,5 +486,4 @@ public struct cairo_path_data_t
 	struct {
 		double x, y;
 	} ;
-
 }

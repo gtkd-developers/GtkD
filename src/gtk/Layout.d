@@ -27,6 +27,7 @@
  * strct   = GtkLayout
  * realStrct=
  * clss    = Layout
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_layout_

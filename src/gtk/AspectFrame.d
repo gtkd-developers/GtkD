@@ -27,6 +27,7 @@
  * strct   = GtkAspectFrame
  * realStrct=
  * clss    = AspectFrame
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_aspect_frame_

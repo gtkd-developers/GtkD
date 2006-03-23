@@ -27,6 +27,7 @@
  * strct   = GMainContext
  * realStrct=
  * clss    = MainContext
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_main_context_

@@ -27,6 +27,7 @@
  * strct   = GtkAction
  * realStrct=
  * clss    = Action
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_action_

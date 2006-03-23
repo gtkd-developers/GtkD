@@ -27,6 +27,7 @@
  * strct   = GOptionContext
  * realStrct=
  * clss    = OptionContext
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_option_context_

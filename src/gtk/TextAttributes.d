@@ -27,6 +27,7 @@
  * strct   = GtkTextAttributes
  * realStrct=
  * clss    = TextAttributes
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_text_attributes_

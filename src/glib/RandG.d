@@ -27,6 +27,7 @@
  * strct   = GRand
  * realStrct=
  * clss    = RandG
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_

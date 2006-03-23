@@ -27,6 +27,7 @@
  * strct   = AtkNoOpObject
  * realStrct=
  * clss    = NoOpObject
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_no_op_object_

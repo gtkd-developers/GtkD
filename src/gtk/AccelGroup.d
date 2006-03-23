@@ -27,6 +27,7 @@
  * strct   = GtkAccelGroup
  * realStrct=
  * clss    = AccelGroup
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_accel_group_

@@ -27,6 +27,7 @@
  * strct   = cairo_status_t
  * realStrct=
  * clss    = Status
+ * template for:
  * extend  = 
  * prefixes:
  * 	- cairo_status_t

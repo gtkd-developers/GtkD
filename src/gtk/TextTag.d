@@ -27,6 +27,7 @@
  * strct   = GtkTextTag
  * realStrct=
  * clss    = TextTag
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_text_tag_

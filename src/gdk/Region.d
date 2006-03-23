@@ -27,6 +27,7 @@
  * strct   = GdkRegion
  * realStrct=
  * clss    = Region
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_region_

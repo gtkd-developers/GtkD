@@ -27,6 +27,7 @@
  * strct   = GCompletion
  * realStrct=
  * clss    = StringCompletion
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_completion_

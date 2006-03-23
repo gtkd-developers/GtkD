@@ -27,6 +27,7 @@
  * strct   = GdkDragContext
  * realStrct=
  * clss    = DragContext
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk-drag_context_

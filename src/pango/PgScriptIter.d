@@ -27,6 +27,7 @@
  * strct   = PangoScriptIter
  * realStrct=
  * clss    = PgScriptIter
+ * template for:
  * extend  = 
  * prefixes:
  * 	- pango_script_iter_

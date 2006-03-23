@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = FileUtils
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_

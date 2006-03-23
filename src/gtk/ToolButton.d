@@ -27,6 +27,7 @@
  * strct   = GtkToolButton
  * realStrct=
  * clss    = ToolButton
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_tool_button_

@@ -27,6 +27,7 @@
  * strct   = GOptionGroup
  * realStrct=
  * clss    = OptionGroup
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_option_group_

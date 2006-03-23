@@ -27,6 +27,7 @@
  * strct   = GThreadPool
  * realStrct=
  * clss    = ThreadPool
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_thread_pool_

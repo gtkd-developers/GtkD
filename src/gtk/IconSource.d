@@ -27,6 +27,7 @@
  * strct   = GtkIconSource
  * realStrct=
  * clss    = IconSource
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_icon_

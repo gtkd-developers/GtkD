@@ -27,6 +27,7 @@
  * strct   = GScanner
  * realStrct=
  * clss    = ScannerG
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_scanner

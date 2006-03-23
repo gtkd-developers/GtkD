@@ -27,6 +27,7 @@
  * strct   = GStaticRWLock
  * realStrct=
  * clss    = RWLock
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_static_rw_lock_

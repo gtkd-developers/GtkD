@@ -27,6 +27,7 @@
  * strct   = GCond
  * realStrct=
  * clss    = Cond
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_cond_

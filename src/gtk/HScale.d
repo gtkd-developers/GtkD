@@ -27,6 +27,7 @@
  * strct   = GtkHScale
  * realStrct=
  * clss    = HScale
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_hscale_

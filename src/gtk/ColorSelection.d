@@ -27,6 +27,7 @@
  * strct   = GtkColorSelection
  * realStrct=
  * clss    = ColorSelection
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_color_selection_

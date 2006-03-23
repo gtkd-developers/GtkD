@@ -27,6 +27,7 @@
  * strct   = GtkEntryCompletion
  * realStrct=
  * clss    = EntryCompletion
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_entry_completion_

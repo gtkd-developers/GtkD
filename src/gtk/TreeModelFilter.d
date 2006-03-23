@@ -27,6 +27,7 @@
  * strct   = GtkTreeModelFilter
  * realStrct=
  * clss    = TreeModelFilter
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_tree_model_filter_

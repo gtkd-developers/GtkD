@@ -27,6 +27,7 @@
  * strct   = GHashTable
  * realStrct=
  * clss    = HashTable
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_hash_table_

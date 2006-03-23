@@ -27,6 +27,7 @@
  * strct   = GdkRectangle
  * realStrct=
  * clss    = Rectangle
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_rectangle_

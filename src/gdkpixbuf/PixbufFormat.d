@@ -27,6 +27,7 @@
  * strct   = GdkPixbufFormat
  * realStrct=
  * clss    = PixbufFormat
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_pixbuf_format_

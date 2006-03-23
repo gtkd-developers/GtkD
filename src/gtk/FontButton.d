@@ -27,6 +27,7 @@
  * strct   = GtkFontButton
  * realStrct=
  * clss    = FontButton
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_font_button_

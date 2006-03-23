@@ -27,6 +27,7 @@
  * strct   = GtkAboutDialog
  * realStrct=
  * clss    = AboutDialog
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_about_dialog_

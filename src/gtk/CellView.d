@@ -27,6 +27,7 @@
  * strct   = GtkCellView
  * realStrct=
  * clss    = CellView
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_cell_view_

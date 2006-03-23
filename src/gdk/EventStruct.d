@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = 
+ * template for:
  * extend  = 
  * prefixes:
  * omit structs:

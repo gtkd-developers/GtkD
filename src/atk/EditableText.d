@@ -27,6 +27,7 @@
  * strct   = AtkEditableText
  * realStrct=
  * clss    = EditableText
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_editable_text

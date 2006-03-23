@@ -27,6 +27,7 @@
  * strct   = GSource
  * realStrct=
  * clss    = Source
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_source_

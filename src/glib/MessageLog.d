@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = MessageLog
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_

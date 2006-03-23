@@ -27,6 +27,7 @@
  * strct   = GValueArray
  * realStrct=
  * clss    = ValueArray
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_value_array_

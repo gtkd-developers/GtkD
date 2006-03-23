@@ -15,47 +15,46 @@
  * along with duit; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
- 
-// generated automatically - do not change
-// find conversion definition on APILookup.txt
-// implement new conversion functionalities on the wrap.utils pakage
 
-/*
- * Conversion parameters:
- * outPack = pango
- * outFile = PgEngineLang
- * strct   = 
- * realStrct=
- * clss    = PgEngineLang
- * template for:
- * extend  = 
- * prefixes:
- * 	- script_engine_lang_
- * omit structs:
- * omit prefixes:
- * omit code:
- * imports:
- * structWrap:
- * local aliases:
- */
+module gtk.SpawnTests;
 
-module pango.PgEngineLang;
+private import glib.Spawn;
+private import gtk.Duit;
+private import std.stdio;
 
-private import pango.typedefs;
-
-private import lib.pango;
-
-
-/**
- * Description
- */
-public class PgEngineLang
+void main(char[][] args)
 {
+	//Duit.init(args);
+	Spawn spawn;
 	
-	/**
-	 */
+	//Spawn spawn = new Spawn("/home/ruimt/devel/D1/Leds/leds");
+	if ( args.length > 1 )
+	{
+		spawn = new Spawn(args[1..args.length]);
+	}
+	else
+	{
+		spawn = new Spawn("/bin/ls");
+	}
+	//spawn.addParm("--version");
+	int result = spawn.execAsyncWithPipes();
+
+	int outCount;
+	int errCount;
 	
+	while ( !spawn.endOfOutput() )
+	{
+		writefln("[out %d] %s",outCount++, spawn.readLine());
+	}
 	
+	while ( !spawn.endOfError() )
+	{
+		writefln("[err %d] %s",errCount++, spawn.readLineError());
+	}
 	
+	writefln("exit loop");
 	
+	spawn.close();
+	
+//	Duit.main();
 }

@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = ShellUtils
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_shell_

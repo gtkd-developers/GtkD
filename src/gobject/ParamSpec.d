@@ -27,6 +27,7 @@
  * strct   = GParamSpec
  * realStrct=
  * clss    = ParamSpec
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_param_spec_

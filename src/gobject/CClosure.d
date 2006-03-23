@@ -27,6 +27,7 @@
  * strct   = GCClosure
  * realStrct=
  * clss    = CClosure
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_cclosure

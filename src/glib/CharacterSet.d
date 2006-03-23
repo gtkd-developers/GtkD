@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = CharacterSet
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_

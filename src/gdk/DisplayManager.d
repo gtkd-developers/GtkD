@@ -27,6 +27,7 @@
  * strct   = GdkDisplayManager
  * realStrct=
  * clss    = DisplayManager
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_display_manager_

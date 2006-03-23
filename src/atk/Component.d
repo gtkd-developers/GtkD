@@ -27,6 +27,7 @@
  * strct   = AtkComponent
  * realStrct=
  * clss    = Component
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_component_

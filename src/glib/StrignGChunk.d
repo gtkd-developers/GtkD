@@ -27,6 +27,7 @@
  * strct   = GStringChunk
  * realStrct=
  * clss    = StringGChunk
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_string_chunk_

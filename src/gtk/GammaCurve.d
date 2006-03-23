@@ -27,6 +27,7 @@
  * strct   = GtkGammaCurve
  * realStrct=
  * clss    = GammaCurve
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_gamma_curve_

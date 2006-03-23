@@ -27,6 +27,7 @@
  * strct   = GdkColormap
  * realStrct=
  * clss    = Colormap
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_colormap_

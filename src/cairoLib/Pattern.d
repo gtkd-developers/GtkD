@@ -27,6 +27,7 @@
  * strct   = cairo_pattern_t
  * realStrct=
  * clss    = Pattern
+ * template for:
  * extend  = 
  * prefixes:
  * 	- cairo_pattern_

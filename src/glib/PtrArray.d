@@ -27,6 +27,7 @@
  * strct   = GPtrArray
  * realStrct=
  * clss    = PtrArray
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_ptr_array_

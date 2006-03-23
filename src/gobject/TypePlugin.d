@@ -27,6 +27,7 @@
  * strct   = GTypePlugin
  * realStrct=
  * clss    = TypePlugin
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_type_plugin_

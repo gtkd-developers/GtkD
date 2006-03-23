@@ -2205,6 +2205,7 @@ outFile: TreeModelFilter
 file: GtkCellLayout.html
 struct: GtkCellLayout
 class: CellLayout
+template: TStruct
 prefix: gtk_cell_layout_
 prefix: gtk_
 import: glib.Str
@@ -2592,6 +2593,8 @@ structWrap: GtkTreeModel* TreeModel
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gtk.CellRenderer
+import: gtk.CellLayout
+
 nocode: gtk_combo_box_new
 nocode:gtk_combo_box_new_text
 code: start

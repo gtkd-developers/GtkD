@@ -27,6 +27,7 @@
  * strct   = AtkObject
  * realStrct=
  * clss    = ObjectAtk
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_object_

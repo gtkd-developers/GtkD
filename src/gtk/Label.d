@@ -27,6 +27,7 @@
  * strct   = GtkLabel
  * realStrct=
  * clss    = Label
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_label_

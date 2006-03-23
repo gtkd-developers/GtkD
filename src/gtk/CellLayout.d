@@ -27,6 +27,8 @@
  * strct   = GtkCellLayout
  * realStrct=
  * clss    = CellLayout
+ * template for:
+ * 	- TStruct
  * extend  = 
  * prefixes:
  * 	- gtk_cell_layout_
@@ -51,6 +53,7 @@ private import lib.gtk;
 
 private import glib.Str;
 private import gtk.CellRenderer;
+private import glib.Str;
 
 /**
  * Description
@@ -61,10 +64,21 @@ private import gtk.CellRenderer;
 public template CellLayout(TStruct)
 {
 	
+	/** the main Gtk struct */
+	protected GtkCellLayout* gtkCellLayout;
+	
+	
 	public GtkCellLayout* getCellLayoutStruct()
 	{
 		return cast(GtkCellLayout*)getStruct();
 	}
+	
+	
+	/**
+	 */
+	
+	
+	
 	
 	/**
 	 * Packs the cell into the beginning of cell_layout. If expand is FALSE,

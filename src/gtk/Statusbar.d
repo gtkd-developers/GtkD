@@ -27,6 +27,7 @@
  * strct   = GtkStatusbar
  * realStrct=
  * clss    = Statusbar
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_statusbar_

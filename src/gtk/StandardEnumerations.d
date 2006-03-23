@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = StandardEnumerations
+ * template for:
  * extend  = 
  * prefixes:
  * omit structs:

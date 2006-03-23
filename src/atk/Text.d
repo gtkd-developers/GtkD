@@ -27,6 +27,7 @@
  * strct   = AtkText
  * realStrct=
  * clss    = Text
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_text_

@@ -27,6 +27,7 @@
  * strct   = GtkColorSelectionDialog
  * realStrct=
  * clss    = ColorSelectionDialog
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_color_selection_dialog_

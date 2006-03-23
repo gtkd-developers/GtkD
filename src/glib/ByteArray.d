@@ -27,6 +27,7 @@
  * strct   = GByteArray
  * realStrct=
  * clss    = ByteArray
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_byte_array_

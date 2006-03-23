@@ -27,6 +27,7 @@
  * strct   = GdkPixbufAnimation
  * realStrct=
  * clss    = PixbufAnimation
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_pixbuf_animation_

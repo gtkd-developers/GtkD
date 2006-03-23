@@ -27,6 +27,7 @@
  * strct   = GtkHScrollbar
  * realStrct=
  * clss    = HScrollbar
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_hscrollbar_

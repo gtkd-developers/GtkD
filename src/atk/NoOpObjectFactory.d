@@ -27,6 +27,7 @@
  * strct   = AtkNoOpObjectFactory
  * realStrct=
  * clss    = NoOpObjectFactory
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_no_op_object_factory

@@ -27,6 +27,7 @@
  * strct   = GtkWindowGroup
  * realStrct=
  * clss    = WindowGroup
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_window_group_

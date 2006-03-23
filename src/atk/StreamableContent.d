@@ -27,6 +27,7 @@
  * strct   = AtkStreamableContent
  * realStrct=
  * clss    = StreamableContent
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_streamable_content_

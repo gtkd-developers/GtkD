@@ -27,6 +27,7 @@
  * strct   = GdkKeymap
  * realStrct=
  * clss    = Keymap
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_keymap_

@@ -27,6 +27,7 @@
  * strct   = GtkUIManager
  * realStrct=
  * clss    = UIManager
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_ui_manager_

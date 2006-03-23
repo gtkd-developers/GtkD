@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = WindowsUtils
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_win32_

@@ -27,6 +27,7 @@
  * strct   = GEnumValue
  * realStrct=
  * clss    = Enums
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_enum_

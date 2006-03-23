@@ -27,6 +27,7 @@
  * strct   = GtkHandleBox
  * realStrct=
  * clss    = HandleBox
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_handle_box_

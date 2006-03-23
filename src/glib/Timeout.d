@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Timeout
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_timeout_

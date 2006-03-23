@@ -27,6 +27,7 @@
  * strct   = GtkIconView
  * realStrct=
  * clss    = IconView
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_icon_view_

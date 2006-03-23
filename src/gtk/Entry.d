@@ -27,6 +27,7 @@
  * strct   = GtkEntry
  * realStrct=
  * clss    = Entry
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_entry_

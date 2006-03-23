@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Version
+ * template for:
  * extend  = 
  * prefixes:
  * omit structs:

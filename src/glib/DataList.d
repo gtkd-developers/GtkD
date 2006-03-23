@@ -27,6 +27,7 @@
  * strct   = GData
  * realStrct=
  * clss    = DataList
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_datalist_

@@ -27,6 +27,7 @@
  * strct   = GdkBitmap
  * realStrct=
  * clss    = Bitmap
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_bitmap_

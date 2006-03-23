@@ -27,6 +27,7 @@
  * strct   = GtkPlug
  * realStrct=
  * clss    = Plug
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_plug_

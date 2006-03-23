@@ -27,6 +27,7 @@
  * strct   = GtkToolbar
  * realStrct=
  * clss    = Toolbar
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_toolbar_

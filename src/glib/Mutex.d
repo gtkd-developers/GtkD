@@ -27,6 +27,7 @@
  * strct   = GMutex
  * realStrct=
  * clss    = Mutex
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_mutex_

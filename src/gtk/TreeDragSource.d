@@ -27,6 +27,7 @@
  * strct   = GtkTreeDragSource
  * realStrct=
  * clss    = TreeDragSource
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_tree_drag_

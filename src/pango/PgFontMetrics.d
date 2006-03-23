@@ -27,6 +27,7 @@
  * strct   = PangoFontMetrics
  * realStrct=
  * clss    = PgFontMetrics
+ * template for:
  * extend  = 
  * prefixes:
  * 	- pango_font_metrics_

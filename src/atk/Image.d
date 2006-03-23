@@ -27,6 +27,7 @@
  * strct   = AtkImage
  * realStrct=
  * clss    = Image
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_image_

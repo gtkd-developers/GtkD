@@ -27,6 +27,7 @@
  * strct   = GTree
  * realStrct=
  * clss    = BBTree
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_tree_

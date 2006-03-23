@@ -27,6 +27,7 @@
  * strct   = GTuples
  * realStrct=
  * clss    = Tuples
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_tuples_

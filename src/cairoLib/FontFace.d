@@ -27,6 +27,7 @@
  * strct   = cairo_font_face_t
  * realStrct=
  * clss    = FontFace
+ * template for:
  * extend  = 
  * prefixes:
  * 	- cairo_font_face_

@@ -27,6 +27,7 @@
  * strct   = cairo_surface_t
  * realStrct=
  * clss    = Surface
+ * template for:
  * extend  = 
  * prefixes:
  * 	- cairo_surface_

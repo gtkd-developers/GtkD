@@ -27,6 +27,7 @@
  * strct   = AtkDocument
  * realStrct=
  * clss    = Document
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_document_

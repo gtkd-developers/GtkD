@@ -27,6 +27,7 @@
  * strct   = GtkSettings
  * realStrct=
  * clss    = Settings
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_settings_

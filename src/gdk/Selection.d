@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Selection
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_selection_

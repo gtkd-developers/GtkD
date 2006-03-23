@@ -27,6 +27,7 @@
  * strct   = GPatternSpec
  * realStrct=
  * clss    = Pattern
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_pattern_spec_

@@ -27,6 +27,7 @@
  * strct   = GStaticPrivate
  * realStrct=
  * clss    = StaticPrivate
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_static_private_

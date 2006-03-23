@@ -27,6 +27,7 @@
  * strct   = cairo_matrix_t
  * realStrct=
  * clss    = Matrix
+ * template for:
  * extend  = 
  * prefixes:
  * 	- cairo_matrix_

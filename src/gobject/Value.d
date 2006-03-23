@@ -27,6 +27,7 @@
  * strct   = GValue
  * realStrct=
  * clss    = Value
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_value_

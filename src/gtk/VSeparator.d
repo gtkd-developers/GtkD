@@ -27,6 +27,7 @@
  * strct   = GtkVSeparator
  * realStrct=
  * clss    = VSeparator
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_vseparator_

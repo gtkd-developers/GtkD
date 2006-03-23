@@ -27,6 +27,7 @@
  * strct   = AtkHyperlink
  * realStrct=
  * clss    = Hyperlink
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_hyperlink

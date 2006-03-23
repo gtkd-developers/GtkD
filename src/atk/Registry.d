@@ -27,6 +27,7 @@
  * strct   = AtkRegistry
  * realStrct=
  * clss    = Registry
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_registry_

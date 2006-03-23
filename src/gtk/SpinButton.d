@@ -27,6 +27,7 @@
  * strct   = GtkSpinButton
  * realStrct=
  * clss    = SpinButton
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_spin_button_

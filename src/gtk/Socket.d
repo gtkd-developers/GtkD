@@ -27,6 +27,7 @@
  * strct   = GtkSocket
  * realStrct=
  * clss    = Socket
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_socket_

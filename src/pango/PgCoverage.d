@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = PgCoverage
+ * template for:
  * extend  = 
  * prefixes:
  * 	- pango_coverage_

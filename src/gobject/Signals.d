@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Signals
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_signal_

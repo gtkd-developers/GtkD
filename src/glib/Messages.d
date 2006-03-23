@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Messages
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_

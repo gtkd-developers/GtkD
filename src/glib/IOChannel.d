@@ -27,6 +27,7 @@
  * strct   = GIOChannel
  * realStrct=
  * clss    = IOChannel
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_io_channel_

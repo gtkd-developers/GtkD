@@ -27,6 +27,7 @@
  * strct   = PangoFontFamily
  * realStrct=
  * clss    = PgFontFamily
+ * template for:
  * extend  = 
  * prefixes:
  * 	- pango_font_family_

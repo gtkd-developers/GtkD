@@ -27,6 +27,7 @@
  * strct   = GdkFont
  * realStrct=
  * clss    = Font
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_font_

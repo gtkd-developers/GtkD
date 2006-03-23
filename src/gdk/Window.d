@@ -27,6 +27,7 @@
  * strct   = GdkWindow
  * realStrct=
  * clss    = Window
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_window_

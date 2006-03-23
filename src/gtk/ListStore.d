@@ -27,6 +27,7 @@
  * strct   = GtkListStore
  * realStrct=
  * clss    = ListStore
+ * template for:
  * extend  = GtkTreeModel
  * prefixes:
  * 	- gtk_list_store_

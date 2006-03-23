@@ -27,6 +27,7 @@
  * strct   = GtkEditable
  * realStrct=
  * clss    = Editable
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_editable_

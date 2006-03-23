@@ -27,6 +27,7 @@
  * strct   = GModule
  * realStrct=
  * clss    = Module
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_module_

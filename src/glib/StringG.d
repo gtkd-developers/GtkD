@@ -27,6 +27,7 @@
  * strct   = GString
  * realStrct=
  * clss    = StringG
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_string_

@@ -27,6 +27,7 @@
  * strct   = GtkTextChildAnchor
  * realStrct=
  * clss    = TextChildAnchor
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_text_child_anchor_

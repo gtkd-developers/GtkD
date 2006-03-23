@@ -27,6 +27,7 @@
  * strct   = GMemChunk
  * realStrct=
  * clss    = MemoryChunk
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_mem_chunk_

@@ -27,6 +27,7 @@
  * strct   = GtkTreeViewColumn
  * realStrct=
  * clss    = TreeViewColumn
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_tree_view_column_

@@ -27,6 +27,7 @@
  * strct   = PangoAttrList
  * realStrct=
  * clss    = PgAttributeList
+ * template for:
  * extend  = 
  * prefixes:
  * 	- pango_attr_List_

@@ -27,6 +27,7 @@
  * strct   = GtkMenuToolButton
  * realStrct=
  * clss    = MenuToolButton
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_menu_tool_button_

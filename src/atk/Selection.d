@@ -27,6 +27,7 @@
  * strct   = AtkSelection
  * realStrct=
  * clss    = Selection
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_selection_

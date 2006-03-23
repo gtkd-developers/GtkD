@@ -27,6 +27,7 @@
  * strct   = GtkFileChooserButton
  * realStrct=
  * clss    = FileChooserButton
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_file_chooser_button_

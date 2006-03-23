@@ -39,7 +39,7 @@ module utils.DuitClass;
 //debug = getSignal;
 //debug = signalFunction;
 //debug = stockItems;
-debug = gTypes;
+//debug = gTypes;
 
 //version = noGtkBody;
 
@@ -350,6 +350,41 @@ public class DuitClass
 			}
 		}
 	}
+
+	/**
+	 * Checks if we are a template and if the parent name
+	 * Params:
+	 *    	parentName = 	
+	 * Returns: 
+	 */
+	private char[] getClassHeader(ConvParms* convParms, char[] parentName)
+	{
+		char[] h;
+		if ( convParms.templ.length == 0 )
+		{
+			h = "public class "~convParms.clss;
+		}
+		else
+		{
+			h = "public template "~convParms.clss~"(";
+			
+			foreach ( int count, char[] tp ; convParms.templ )
+			{
+				if ( count > 0 )
+				{
+					h ~= ", ";
+				}
+				h ~= tp;
+			}
+			h ~= ")";
+		}
+		if ( parentName.length > 0 )
+		{
+			h ~= " : " ~ parentName;
+		}
+		return h;
+	}
+
 	
 	/**
 	 * Create the class header.
@@ -367,12 +402,8 @@ public class DuitClass
 			if ( duitParentName.length > 0 )
 			{
 				text ~= "private import "~duitParentNamePrefix~"."~duitParentName~";\n";
-				text ~= "public class "~convParms.clss~" : "~duitParentName;
 			}
-			else
-			{
-				text ~= "public class "~convParms.clss;
-			}
+			text ~= getClassHeader(convParms, duitParentName);
 			char[] implements = getImplements();
 			if ( implements.length > 0 )
 			{
@@ -413,35 +444,47 @@ public class DuitClass
 			text ~= "/** the main Gtk struct */";
 			text ~= "protected "~gtkStruct~"* "~var~";";
 			text ~= "";
+			
+			
+			
 			if ( convParms.clss.length > 0 )
 			{
 				text ~= "";
 				text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()";
 				text ~= "{";
-				text ~= "return " ~ var ~ ';';
-				text ~= "}";
-				text ~= "";
-				text ~= "";
-				text ~= "/** the main Gtk struct as a void* */";
-				text ~= "protected void* getStruct()";
-				text ~= "{";
-				text ~= "return cast(void*)" ~ var ~ ';';
-				text ~= "}";
-				text ~= "";
-				if ( "GObject" != convParms.strct )
+				if ( convParms.templ.length > 0 )
 				{
-					// GObject has a specific constructor for the struct
-					text ~= "/**";
-					text ~= " * Sets our main struct and passes it to the parent class";
-					text ~= " */";
-					text ~= "public this ("~gtkStruct~"* "~var~")";
-					text ~= "{";
-					if ( parentName.length > 0 )
-					{
-						text ~= "super("~castToParent(var)~");";
-					}
-					text ~= "this."~var~" = "~var~";";
+					text ~= "return cast("~gtkStruct~"*)getStruct();";
 					text ~= "}";
+					text ~= "";
+				}
+				else
+				{
+					text ~= "return " ~ var ~ ';';
+					text ~= "}";
+					text ~= "";
+					text ~= "";
+					text ~= "/** the main Gtk struct as a void* */";
+					text ~= "protected void* getStruct()";
+					text ~= "{";
+					text ~= "return cast(void*)" ~ var ~ ';';
+					text ~= "}";
+					text ~= "";
+					if ( "GObject" != convParms.strct )
+					{
+						// GObject has a specific constructor for the struct
+						text ~= "/**";
+						text ~= " * Sets our main struct and passes it to the parent class";
+						text ~= " */";
+						text ~= "public this ("~gtkStruct~"* "~var~")";
+						text ~= "{";
+						if ( parentName.length > 0 )
+						{
+							text ~= "super("~castToParent(var)~");";
+						}
+						text ~= "this."~var~" = "~var~";";
+						text ~= "}";
+					}
 				}
 			}
 		}
@@ -1393,6 +1436,7 @@ public class DuitClass
 			}
 			if ( (!invalidDStruct
 					|| "GValue"==structName
+					|| "GError"==structName
 				 )
 				&& structDef.length>0 )
 			{

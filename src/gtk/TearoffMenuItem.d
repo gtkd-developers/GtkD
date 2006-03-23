@@ -27,6 +27,7 @@
  * strct   = GtkTearoffMenuItem
  * realStrct=
  * clss    = TearoffMenuItem
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_tearoff_menu_item_

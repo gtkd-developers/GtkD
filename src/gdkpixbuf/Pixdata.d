@@ -27,6 +27,7 @@
  * strct   = GdkPixdata
  * realStrct=
  * clss    = Pixdata
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_pixdata_

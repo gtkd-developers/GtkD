@@ -559,9 +559,7 @@ class TestWindow : MainWindow
 		treeCombo.setActiveIter(iterFirst);
 		
 		mainBox.packStart(new Frame(treeCombo,"Tree Combo box"),false,true,0);
-		
-		
-		
+
 		simpleCombo = new ComboBox();
 		simpleCombo.appendText("Top");
 		simpleCombo.appendText("Bottom");

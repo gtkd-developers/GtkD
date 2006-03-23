@@ -27,6 +27,7 @@
  * strct   = PangoLanguage
  * realStrct=
  * clss    = PgLanguage
+ * template for:
  * extend  = 
  * prefixes:
  * 	- pango_language_

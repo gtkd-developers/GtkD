@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Internationalization
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_

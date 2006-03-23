@@ -27,6 +27,7 @@
  * strct   = GQueue
  * realStrct=
  * clss    = QueueG
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_queue_

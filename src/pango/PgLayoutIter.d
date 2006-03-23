@@ -27,6 +27,7 @@
  * strct   = PangoLayoutIter
  * realStrct=
  * clss    = PgLayoutIter
+ * template for:
  * extend  = 
  * prefixes:
  * 	- pango_layout_iter_

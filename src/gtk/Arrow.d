@@ -27,6 +27,7 @@
  * strct   = GtkArrow
  * realStrct=
  * clss    = Arrow
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_arrow_

@@ -27,6 +27,7 @@
  * strct   = GtkIMMulticontext
  * realStrct=
  * clss    = IMMulticontext
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_im_multicontext_

@@ -27,6 +27,7 @@
  * strct   = GtkTooltips
  * realStrct=
  * clss    = Tooltips
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_tooltips_

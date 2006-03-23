@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Str
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_
@@ -51,7 +52,6 @@ private import lib.glib;
 private import std.c.stdio;
 private import glib.StringG;
 private import std.c.string;
-private import std.stdio;
 
 /**
  * Description
@@ -95,22 +95,15 @@ public class Str
 	public static char* toStringz(char[] s)
 	in
 	{
-//		if ( s !is null )
-//		{
-//			writefln("s = >%s<", s);
-//		}
 	}
 	out (result)
 	{
-//		if (result)
-//		{
-//			writefln("s = >%s<", cast(char*)*result);
-//			
-//			writefln("strlen(result) = %s s.length = %s",strlen(result),s.length);
-//					
-//			assert(strlen(result) == s.length);
-//			assert(memcmp(result, s, s.length) == 0);
-//		}
+		//	if (result)
+		//	{
+			//		// TODO this one fails in some case???
+			//		assert(strlen(result) == s.length);
+			//		assert(memcmp(result, s, s.length) == 0);
+		//	}
 	}
 	body
 	{
@@ -118,7 +111,7 @@ public class Str
 		
 		if (s.length == 0)
 		{
-			return "";
+			copy = "";
 		}
 		else
 		{
@@ -129,6 +122,41 @@ public class Str
 		}
 		
 		return copy;
+	}
+	
+	public static char** toStringzArray(char[][] args)
+	{
+		if ( args is null )
+		{
+			return null;
+		}
+		char** argv = new char*[args.length];
+		int argc = 0;
+		foreach (char[] p; args)
+		{
+			argv[argc++] = cast(char*)p;
+		}
+		argv[argc] = null;
+		
+		return argv;
+	}
+	
+	public static char[][] toStringArray(char** args)
+	{
+		if ( args is null )
+		{
+			return null;
+		}
+		char[][] argv;
+		
+		char* arg = *args;
+		while( arg !is null )
+		{
+			argv ~= toString(arg);
+			++args;
+		}
+		
+		return argv;
 	}
 	
 	

@@ -27,6 +27,7 @@
  * strct   = AtkObjectFactory
  * realStrct=
  * clss    = ObjectFactory
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_object_factory_

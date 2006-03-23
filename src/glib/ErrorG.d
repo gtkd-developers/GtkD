@@ -27,6 +27,7 @@
  * strct   = GError
  * realStrct=
  * clss    = ErrorG
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_error_

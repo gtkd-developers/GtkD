@@ -27,6 +27,7 @@
  * strct   = GMainLoop
  * realStrct=
  * clss    = MainLoop
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_main_loop_

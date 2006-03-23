@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Memory
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_

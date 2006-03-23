@@ -27,6 +27,7 @@
  * strct   = GtkCellRenderer
  * realStrct=GtkCellRendererProgress
  * clss    = CellRendererProgress
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_cell_renderer_progress_

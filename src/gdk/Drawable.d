@@ -27,6 +27,7 @@
  * strct   = GdkDrawable
  * realStrct=
  * clss    = Drawable
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_drawble_

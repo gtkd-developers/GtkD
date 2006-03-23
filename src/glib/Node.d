@@ -27,6 +27,7 @@
  * strct   = GNode
  * realStrct=
  * clss    = Node
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_node_

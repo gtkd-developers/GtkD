@@ -27,6 +27,7 @@
  * strct   = GDate
  * realStrct=
  * clss    = Date
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_date_

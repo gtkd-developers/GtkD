@@ -27,6 +27,7 @@
  * strct   = GtkHRuler
  * realStrct=
  * clss    = HRuler
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_hruler_

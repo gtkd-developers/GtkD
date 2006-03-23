@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = MemorySlice
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_slice_

@@ -27,6 +27,7 @@
  * strct   = GtkHButtonBox
  * realStrct=
  * clss    = HButtonBox
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_hbutton_box_

@@ -27,6 +27,7 @@
  * strct   = GtkTextBuffer
  * realStrct=
  * clss    = TextBuffer
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_text_buffer_

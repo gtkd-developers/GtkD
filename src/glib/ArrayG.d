@@ -27,6 +27,7 @@
  * strct   = GArray
  * realStrct=
  * clss    = ArrayG
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_array_

@@ -27,6 +27,7 @@
  * strct   = GtkTextMark
  * realStrct=
  * clss    = TextMark
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_text_mark_

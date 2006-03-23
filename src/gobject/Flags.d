@@ -27,6 +27,7 @@
  * strct   = GFlagsValue
  * realStrct=
  * clss    = Flags
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_flags_

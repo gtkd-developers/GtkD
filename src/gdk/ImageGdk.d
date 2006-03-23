@@ -27,6 +27,7 @@
  * strct   = GdkImage
  * realStrct=
  * clss    = ImageGdk
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_image_

@@ -27,6 +27,7 @@
  * strct   = GtkCalendar
  * realStrct=
  * clss    = Calendar
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_calendar_

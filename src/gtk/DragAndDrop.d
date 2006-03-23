@@ -27,6 +27,7 @@
  * strct   = GdkDragContext
  * realStrct=
  * clss    = DragAndDrop
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_drag_

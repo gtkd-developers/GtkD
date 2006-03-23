@@ -1393,10 +1393,12 @@ public struct GStaticRWLock;
 	 * gchar*message;
 	 * human-readable informative error message.
 	 */
-	public struct GError;
-	// GQuark domain;
-	// int code;
-	// char *message;
+	public struct GError
+{
+		GQuark domain;
+		int code;
+		char *message;
+	}
 	
 	
 	/**

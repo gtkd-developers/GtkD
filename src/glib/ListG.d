@@ -27,6 +27,7 @@
  * strct   = GList
  * realStrct=
  * clss    = ListG
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_list_

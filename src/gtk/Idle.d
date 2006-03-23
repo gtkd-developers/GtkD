@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Idle
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_idle_

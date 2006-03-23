@@ -27,6 +27,7 @@
  * strct   = GtkImage
  * realStrct=
  * clss    = Image
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_image_

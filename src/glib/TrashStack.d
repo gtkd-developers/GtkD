@@ -27,6 +27,7 @@
  * strct   = GTrashStack
  * realStrct=
  * clss    = TrashStack
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_trash_stack_

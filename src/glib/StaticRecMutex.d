@@ -27,6 +27,7 @@
  * strct   = GStaticRecMutex
  * realStrct=
  * clss    = StaticRecMutex
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_static_rec_mutex_

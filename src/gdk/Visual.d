@@ -27,6 +27,7 @@
  * strct   = GdkVisual
  * realStrct=
  * clss    = Visual
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_visual_

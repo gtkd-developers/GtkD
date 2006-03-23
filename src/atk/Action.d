@@ -27,6 +27,7 @@
  * strct   = AtkAction
  * realStrct=
  * clss    = Action
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_action_

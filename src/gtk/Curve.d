@@ -27,6 +27,7 @@
  * strct   = GtkCurve
  * realStrct=
  * clss    = Curve
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_curve_

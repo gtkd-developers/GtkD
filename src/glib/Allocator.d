@@ -27,6 +27,7 @@
  * strct   = GAllocator
  * realStrct=
  * clss    = Allocator
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_allocator_

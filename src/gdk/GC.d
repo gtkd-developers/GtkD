@@ -27,6 +27,7 @@
  * strct   = GdkGC
  * realStrct=
  * clss    = GC
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_gc_

@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = Atomic
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_atomic_

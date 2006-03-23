@@ -561,7 +561,14 @@ public struct Funct
 			{
 				if ( parmsType[0]==strctPointer )
 				{
-					gtkCall ~= DuitClass.toVar(convParms.strct.dup);
+					if ( convParms.templ.length == 0 )
+					{
+						gtkCall ~= DuitClass.toVar(convParms.strct.dup);
+					}
+					else
+					{
+						gtkCall ~= "get"~convParms.clss~"Struct()";
+					}
 				}
 				else if ( parms[0].length>0 )
 				{

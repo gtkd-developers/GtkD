@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = State
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_state_

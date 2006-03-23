@@ -27,6 +27,7 @@
  * strct   = AtkTable
  * realStrct=
  * clss    = Table
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_table_

@@ -27,6 +27,7 @@
  * strct   = GtkCheckButton
  * realStrct=
  * clss    = CheckButton
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_check_button_

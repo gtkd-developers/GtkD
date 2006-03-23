@@ -27,6 +27,7 @@
  * strct   = GtkRadioAction
  * realStrct=
  * clss    = RadioAction
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_radio_action_

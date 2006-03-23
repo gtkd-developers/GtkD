@@ -27,6 +27,7 @@
  * strct   = GtkMessageDialog
  * realStrct=
  * clss    = MessageDialog
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_message_dialog_

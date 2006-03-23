@@ -27,6 +27,7 @@
  * strct   = GRelation
  * realStrct=
  * clss    = Relation
+ * template for:
  * extend  = 
  * prefixes:
  * 	- g_relation_

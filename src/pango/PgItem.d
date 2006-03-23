@@ -27,6 +27,7 @@
  * strct   = PangoItem
  * realStrct=
  * clss    = PgItem
+ * template for:
  * extend  = 
  * prefixes:
  * 	- pango_item_

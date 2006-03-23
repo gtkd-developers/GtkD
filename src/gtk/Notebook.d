@@ -27,6 +27,7 @@
  * strct   = GtkNotebook
  * realStrct=
  * clss    = Notebook
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_notebook_

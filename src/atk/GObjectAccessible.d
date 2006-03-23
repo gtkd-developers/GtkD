@@ -27,6 +27,7 @@
  * strct   = AtkGObjectAccessible
  * realStrct=
  * clss    = GObjectAccessible
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_gobject_accessible

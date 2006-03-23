@@ -27,6 +27,7 @@
  * strct   = GtkBin
  * realStrct=
  * clss    = Bin
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_bin_

@@ -27,6 +27,7 @@
  * strct   = AtkValue
  * realStrct=
  * clss    = ValueAtk
+ * template for:
  * extend  = 
  * prefixes:
  * 	- atk_value_

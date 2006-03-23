@@ -27,6 +27,7 @@
  * strct   = GtkRcStyle
  * realStrct=
  * clss    = RcStyle
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_rc_

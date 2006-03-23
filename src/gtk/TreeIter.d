@@ -27,6 +27,7 @@
  * strct   = GtkTreeIter
  * realStrct=
  * clss    = TreeIter
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_tree_iter_

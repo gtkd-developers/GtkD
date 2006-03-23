@@ -27,6 +27,7 @@
  * strct   = GtkComboBox
  * realStrct=
  * clss    = ComboBox
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_combo_box_
@@ -41,6 +42,8 @@
  * 	- glib.Str
  * 	- gtk.TreeModel
  * 	- gtk.TreeIter
+ * 	- gtk.CellRenderer
+ * 	- gtk.CellLayout
  * structWrap:
  * 	- AtkObject* -> ObjectAtk
  * 	- GtkTreeIter* -> TreeIter
@@ -58,9 +61,8 @@ private import atk.ObjectAtk;
 private import glib.Str;
 private import gtk.TreeModel;
 private import gtk.TreeIter;
-
-private import gtk.CellLayout;
 private import gtk.CellRenderer;
+private import gtk.CellLayout;
 
 /**
  * Description
@@ -92,7 +94,6 @@ public class ComboBox : Bin
 	/** the main Gtk struct */
 	protected GtkComboBox* gtkComboBox;
 	
-	mixin CellLayout!(GtkComboBox);
 	
 	public GtkComboBox* getComboBoxStruct()
 	{
@@ -115,6 +116,9 @@ public class ComboBox : Bin
 		this.gtkComboBox = gtkComboBox;
 	}
 	
+	// add the CellLayout capabilities
+	mixin CellLayout!(GtkComboBox);
+	
 	/**
 	 * Creates a new empty GtkComboBox.
 	 * If text is true then
@@ -123,7 +127,8 @@ public class ComboBox : Bin
 	 * a text combo box, you should only manipulate its data source with the
 	 * following convenience functions: gtk_combo_box_append_text(),
 	 * gtk_combo_box_insert_text(), gtk_combo_box_prepend_text() and
-	 * gtk_combo_box_remove_text().	 * Returns:
+	 * gtk_combo_box_remove_text().
+	 * Returns:
 	 *  A new GtkComboBox.
 	 * Since 2.4
 	 */

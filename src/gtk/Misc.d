@@ -27,6 +27,7 @@
  * strct   = GtkMisc
  * realStrct=
  * clss    = Misc
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_misc_

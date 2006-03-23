@@ -27,6 +27,7 @@
  * strct   = PangoLayout
  * realStrct=
  * clss    = PgLayout
+ * template for:
  * extend  = 
  * prefixes:
  * 	- pango_layout_

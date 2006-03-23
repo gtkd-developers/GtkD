@@ -27,6 +27,7 @@
  * strct   = 
  * realStrct=
  * clss    = RGB
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_

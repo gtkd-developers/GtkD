@@ -27,6 +27,7 @@
  * strct   = GdkEvent
  * realStrct=
  * clss    = Event
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_event_

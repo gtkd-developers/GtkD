@@ -27,6 +27,7 @@
  * strct   = GtkCellEditable
  * realStrct=
  * clss    = CellEditable
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_cell_editable_

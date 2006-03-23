@@ -27,6 +27,7 @@
  * strct   = GdkDevice
  * realStrct=
  * clss    = Device
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gdk_device_

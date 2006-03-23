@@ -27,6 +27,7 @@
  * strct   = GtkTreeView
  * realStrct=
  * clss    = TreeView
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_tree_view_

@@ -27,6 +27,7 @@
  * strct   = GtkBox
  * realStrct=
  * clss    = Box
+ * template for:
  * extend  = 
  * prefixes:
  * 	- gtk_box_
