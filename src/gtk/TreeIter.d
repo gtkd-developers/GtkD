@@ -37,6 +37,7 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.TreeIter
+ * 	- TreeModel
  * structWrap:
  * 	- GtkTreeIter* -> TreeIter
  * local aliases:
@@ -50,6 +51,7 @@ private import lib.gtk;
 
 private import glib.Str;
 private import gtk.TreeIter;
+private import gtk.TreeModel;
 
 /**
  * Description

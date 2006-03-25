@@ -1908,6 +1908,7 @@ prefix: gtk_tree_iter_
 import: glib.Str
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
+import: gtk.TreeModel
 
 code: start
     /**
@@ -2220,7 +2221,7 @@ outFile: TreeModelFilter
 
 file: GtkCellLayout.html
 struct: GtkCellLayout
-class: CellLayout
+class: CellLayoutT
 template: TStruct
 prefix: gtk_cell_layout_
 prefix: gtk_
@@ -2228,7 +2229,7 @@ import: glib.Str
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
 import: glib.Str
-outFile: CellLayout
+outFile: CellLayoutT
 
 file: GtkCellRenderer.html
 struct: GtkCellRenderer
@@ -2613,8 +2614,8 @@ import: gtk.CellLayout
 
 nocode: gtk_combo_box_new
 nocode:gtk_combo_box_new_text
-code: start
 
+code: start
 	// add the CellLayout capabilities
 	mixin CellLayout!(GtkComboBox);
 

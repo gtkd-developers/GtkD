@@ -1514,7 +1514,7 @@ extern(C)
 	void function(GtkTreeModelFilter* filter)gtk_tree_model_filter_refilter;
 	void function(GtkTreeModelFilter* filter)gtk_tree_model_filter_clear_cache;
 	
-	// gtk.CellLayout
+	// gtk.CellLayoutT
 	
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gboolean expand)gtk_cell_layout_pack_start;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gboolean expand)gtk_cell_layout_pack_end;

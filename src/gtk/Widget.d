@@ -58,6 +58,8 @@
  * 	- gtk.Clipboard
  * 	- gdk.Display
  * 	- gdk.Screen
+ * 	- lib.gdk
+ * 	- gdk.Cursor
  * 	- pango.PgLayout
  * 	- pango.PgContext
  * 	- pango.PgFontDescription
@@ -94,7 +96,6 @@ module gtk.Widget;
 private import gtk.typedefs;
 
 private import lib.gtk;
-private import lib.gdk;
 
 private import glib.Str;
 private import atk.ObjectAtk;
@@ -109,7 +110,6 @@ private import gtk.Style;
 private import gdk.Bitmap;
 private import gtk.RcStyle;
 private import gdk.Color;
-private import gdk.Cursor;
 private import gdk.Pixbuf;
 private import gtk.Adjustment;
 private import gdk.Region;
@@ -118,6 +118,8 @@ private import gtk.Settings;
 private import gtk.Clipboard;
 private import gdk.Display;
 private import gdk.Screen;
+private import lib.gdk;
+private import gdk.Cursor;
 private import pango.PgLayout;
 private import pango.PgContext;
 private import pango.PgFontDescription;
@@ -218,7 +220,7 @@ public class Widget : ObjectGtk
 	void setCursor(Cursor cursor)
 	{
 		int* pt =cast(int*)getStruct();
-		pt += 48/4;
+		pt += 58/4;
 		gdk_window_set_cursor(cast(GdkWindow*)(*pt), cursor.getCursorStruct());
 	}
 	
@@ -230,7 +232,7 @@ public class Widget : ObjectGtk
 	public void resetCursor()
 	{
 		int* pt =cast(int*)getStruct();
-		pt += 48/4;
+		pt += 58/4;
 		gdk_window_set_cursor(cast(GdkWindow*)(*pt), null);
 	}
 	

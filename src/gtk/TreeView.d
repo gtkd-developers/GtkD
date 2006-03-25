@@ -47,6 +47,7 @@
  * 	- gdk.Rectangle
  * 	- gdk.Window
  * 	- gdk.Pixmap
+ * 	- gtk.TreeIter
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixmap* -> Pixmap
@@ -75,10 +76,10 @@ private import gtk.TreeViewColumn;
 private import gtk.CellRenderer;
 private import glib.ListG;
 private import gtk.TreePath;
-private import gtk.TreeIter;
 private import gdk.Rectangle;
 private import gdk.Window;
 private import gdk.Pixmap;
+private import gtk.TreeIter;
 
 /**
  * Description

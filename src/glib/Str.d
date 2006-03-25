@@ -78,8 +78,8 @@ private import std.c.string;
  */
 public class Str
 {
-const static char[10] digits    = "0123456789";			/// 0..9
-
+	
+	const static char[10] digits    = "0123456789";			/// 0..9
 	
 	/*************************************************
 	 * Convert C-style 0 terminated string s to char[] string.
@@ -161,12 +161,12 @@ const static char[10] digits    = "0123456789";			/// 0..9
 		return argv;
 	}
 	
-	char[] toString(bool b)
+	public static char[] toString(bool b)
 	{
 		return b ? "true" : "false";
 	}
 	
-	char[] toString(char c)
+	public static char[] toString(char c)
 	{
 		char[] result = new char[2];
 		result[0] = c;
@@ -174,10 +174,10 @@ const static char[10] digits    = "0123456789";			/// 0..9
 		return result[0 .. 1];
 	}
 	
-	char[] toString(ubyte ub)  { return toString(cast(uint) ub); } /// ditto
-	char[] toString(ushort us) { return toString(cast(uint) us); } /// ditto
+	public static char[] toString(ubyte ub)  { return toString(cast(uint) ub); } /// ditto
+	public static char[] toString(ushort us) { return toString(cast(uint) us); } /// ditto
 	
-	char[] toString(uint u)
+	public static char[] toString(uint u)
 	{   char[uint.sizeof * 3] buffer = void;
 	int ndigits;
 	char c;
@@ -202,7 +202,7 @@ const static char[10] digits    = "0123456789";			/// 0..9
 	return result;
 }
 
-char[] toString(ulong u)
+public static char[] toString(ulong u)
 {   char[ulong.sizeof * 3] buffer;
 int ndigits;
 char c;
@@ -223,10 +223,10 @@ result[] = buffer[buffer.length - ndigits .. buffer.length];
 return result;
 }
 
-char[] toString(byte b)  { return toString(cast(int) b); } /// ditto
-char[] toString(short s) { return toString(cast(int) s); } /// ditto
+public static char[] toString(byte b)  { return toString(cast(int) b); } /// ditto
+public static char[] toString(short s) { return toString(cast(int) s); } /// ditto
 
-char[] toString(int i)
+public static char[] toString(int i)
 {   char[1 + int.sizeof * 3] buffer;
 char c;
 char[] result;

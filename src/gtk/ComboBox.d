@@ -62,7 +62,7 @@ private import glib.Str;
 private import gtk.TreeModel;
 private import gtk.TreeIter;
 private import gtk.CellRenderer;
-private import gtk.CellLayout;
+private import gtk.CellLayoutT;
 
 /**
  * Description
@@ -117,7 +117,7 @@ public class ComboBox : Bin
 	}
 	
 	// add the CellLayout capabilities
-	mixin CellLayout!(GtkComboBox);
+	mixin CellLayoutT!(GtkComboBox);
 	
 	/**
 	 * Creates a new empty GtkComboBox.
