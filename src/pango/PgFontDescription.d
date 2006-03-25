@@ -134,6 +134,18 @@ public class PgFontDescription
 	}
 	
 	/**
+	 * Creates a nwe font description and set the family nd the size
+	 * param: family Family
+	 * param: size Size
+	 */
+	public this(char[] family, int size)
+	{
+		this();
+		setFamily("Sans");
+		setSize(size * PANGO_SCALE);
+	}
+	
+	/**
 	 */
 	
 	

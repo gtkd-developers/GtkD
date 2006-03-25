@@ -88,6 +88,7 @@ alias: time_t uint
 alias: tm* void*
 
 alias: function funct
+alias: Function Funct
 alias: default defaulx
 alias: foreach foreac
 alias: package p

@@ -136,6 +136,20 @@ public class PgLayout
 	}
 	
 	/**
+	 * Sets the text of the layout.
+	 * layout:
+	 *  a PangoLayout
+	 * text:
+	 *  a UTF-8 string
+	 */
+	public void setText(char[] text)
+	{
+		// void pango_layout_set_text (PangoLayout *layout,  const char *text,  int length);
+		pango_layout_set_text(pangoLayout, Str.toStringz(text), text.length);
+	}
+	
+	
+	/**
 	 */
 	
 	

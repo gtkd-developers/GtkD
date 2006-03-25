@@ -2071,6 +2071,22 @@ structWrap: GdkWindow* Window
 #structWrap: GtkTreeViewDropPosition* TreeViewDropPosition
 import: gdk.Pixmap
 structWrap: GdkPixmap* Pixmap
+import: gtk.TreeIter
+
+code: start
+	/**
+	 * Expands the row of the iter.
+	 * @param iter
+	 * @param openAll
+	 * @return
+	 */
+	int expandRow(TreeIter iter, TreeModel model, int openAll)
+	{
+		return expandRow(model.getPath(iter), openAll);
+	}
+
+code: end
+
 outFile: TreeView
 
 file: gtk-GtkTreeView-drag-and-drop.html
@@ -4136,6 +4152,8 @@ import: gdk.Display
 structWrap: GdkDisplay* Display
 import: gdk.Screen
 structWrap: GdkScreen* Screen
+import: lib.gdk
+import: gdk.Cursor
 
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
@@ -4190,7 +4208,41 @@ code: start
 		pt += 52/4;
 		return new Drawable(cast(GdkDrawable*)(*pt));
 	}
+
+	/**
+	 * Sets  the cursor.
+	 * @param cursor the new cursor
+	 * \bug the cursor changes to the parent widget also
+	 */
+	void setCursor(Cursor cursor)
+	{
+		int* pt =cast(int*)getStruct();
+		pt += 58/4;
+		gdk_window_set_cursor(cast(GdkWindow*)(*pt), cursor.getCursorStruct());
+	}
 	
+	/**
+	 * Resets the cursor.
+	 * don't know if this is implemented by GTK+. Seems that it's not
+	 * \bug does nothing
+	 */
+	public void resetCursor()
+	{
+		int* pt =cast(int*)getStruct();
+		pt += 58/4;
+		gdk_window_set_cursor(cast(GdkWindow*)(*pt), null);
+	}
+
+	/**
+	 * Modifies the font for this widget.
+	 * This just calls modifyFont(new PgFontDescription(family,size));
+	 */
+	public void modifyFont(char[] family, int size)
+	{
+		modifyFont(new PgFontDescription(family,size));
+	}
+	
+
 
 code: end
 

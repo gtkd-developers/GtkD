@@ -19,29 +19,34 @@
 module duit.TestDrawingArea;
 
 private import gtk.VBox;
-	private import std.stdio;
-	
-	private import std.math;
-	
-	private import gtk.Widget;
-	private import gtk.MenuItem;
-	private import gtk.ComboBox;
-	private import gtk.Menu;
-	private import gtk.Adjustment;
-	private import gtk.HBox;
-	private import gdk.Pixbuf;
-	//private import gdk.Point;
-	private import gdk.Color;
-	private import gdk.Drawable;
-	private import gdk.GC;
-	private import pango.PgFontDescription;	
-	
-	private import gtk.DrawingArea;
-	private import gtk.Image;
-	private import gtk.SpinButton;
-	
-	//private import event.Event;
-	
+private import gdk.Font;
+private import pango.PgContext;
+private import pango.PgLayout;
+private import gdk.ImageGdk;
+		
+private import std.stdio;
+
+private import std.math;
+
+private import gtk.Widget;
+private import gtk.MenuItem;
+private import gtk.ComboBox;
+private import gtk.Menu;
+private import gtk.Adjustment;
+private import gtk.HBox;
+private import gdk.Pixbuf;
+//private import gdk.Point;
+private import gdk.Color;
+private import gdk.Drawable;
+private import gdk.GC;
+private import pango.PgFontDescription;	
+
+private import gtk.DrawingArea;
+private import gtk.Image;
+private import gtk.SpinButton;
+
+//private import event.Event;
+
 	
 /**
  * This tests the DUI drawing area widget
@@ -89,8 +94,6 @@ class TestDrawingArea : VBox
 		primOption.setActive(0);
 		primOption.addOnChanged(&drawingArea.onPrimOptionChanged);
 
-
-		
 		packStart(drawingArea,true,true,0);
 		
 		HBox hbox = new HBox(false,4);
@@ -280,11 +283,6 @@ private import gtk.typedefs;
 					
 
 		
-private import gdk.Font;
-private import pango.PgContext;
-private import pango.PgLayout;
-private import gdk.ImageGdk;
-		
 		public void drawPrimitive(GC gc, Drawable d, int x, int y)
 		{
 			int width = spin.getValueAsInt();
@@ -324,10 +322,9 @@ private import gdk.ImageGdk;
 				case "Pango text":
 					PgContext pc = getPangoContext();
 					PgLayout l = new PgLayout(pc);
-					l.setText("Duit with D", 11);
-					PgFontDescription fd = l.getFontDescription();
-					//PgFontDescription fd = new PgFontDescription("Davis");
-					fd.setSize(width);
+					l.setText("Duit with D");
+					//PgFontDescription fd = l.getFontDescription();
+					PgFontDescription fd = new PgFontDescription("Sans", width);
 					l.setFontDescription(fd);
 					
 					d.drawLayout(gc, x,y,l);

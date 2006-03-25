@@ -346,6 +346,9 @@ import: std.c.string
 prefix: g_
 
 code: start
+
+const static char[10] digits    = "0123456789";			/// 0..9
+
 /*************************************************
  * Convert C-style 0 terminated string s to char[] string.
  * copied from phobos
@@ -426,6 +429,93 @@ body
 		return argv;
 	}
 
+	char[] toString(bool b)
+	{
+		return b ? "true" : "false";
+	}
+	
+	char[] toString(char c)
+	{
+		char[] result = new char[2];
+		result[0] = c;
+		result[1] = 0;
+		return result[0 .. 1];
+	}
+
+	char[] toString(ubyte ub)  { return toString(cast(uint) ub); } /// ditto
+	char[] toString(ushort us) { return toString(cast(uint) us); } /// ditto
+	
+	char[] toString(uint u)
+	{   char[uint.sizeof * 3] buffer = void;
+		int ndigits;
+		char c;
+		char[] result;
+	
+		ndigits = 0;
+		if (u < 10)
+		// Avoid storage allocation for simple stuff
+		result = digits[u .. u + 1];
+		else
+		{
+		while (u)
+		{
+			c = (u % 10) + '0';
+			u /= 10;
+			ndigits++;
+			buffer[buffer.length - ndigits] = c;
+		}
+		result = new char[ndigits];
+		result[] = buffer[buffer.length - ndigits .. buffer.length];
+		}
+		return result;
+	}
+
+	char[] toString(ulong u)
+	{   char[ulong.sizeof * 3] buffer;
+		int ndigits;
+		char c;
+		char[] result;
+	
+		if (u < 0x1_0000_0000)
+		return toString(cast(uint)u);
+		ndigits = 0;
+		while (u)
+		{
+		c = (u % 10) + '0';
+		u /= 10;
+		ndigits++;
+		buffer[buffer.length - ndigits] = c;
+		}
+		result = new char[ndigits];
+		result[] = buffer[buffer.length - ndigits .. buffer.length];
+		return result;
+	}
+
+	char[] toString(byte b)  { return toString(cast(int) b); } /// ditto
+	char[] toString(short s) { return toString(cast(int) s); } /// ditto
+	
+	char[] toString(int i)
+	{   char[1 + int.sizeof * 3] buffer;
+		char c;
+		char[] result;
+	
+		if (i >= 0)
+		return toString(cast(uint)i);
+	
+		uint u = -i;
+		int ndigits = 1;
+		while (u)
+		{
+		c = (u % 10) + '0';
+		u /= 10;
+		buffer[buffer.length - ndigits] = c;
+		ndigits++;
+		}
+		buffer[buffer.length - ndigits] = '-';
+		result = new char[ndigits];
+		result[] = buffer[buffer.length - ndigits .. buffer.length];
+		return result;
+	}
 
 code: end
 

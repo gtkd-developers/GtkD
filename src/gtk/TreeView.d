@@ -75,6 +75,7 @@ private import gtk.TreeViewColumn;
 private import gtk.CellRenderer;
 private import glib.ListG;
 private import gtk.TreePath;
+private import gtk.TreeIter;
 private import gdk.Rectangle;
 private import gdk.Window;
 private import gdk.Pixmap;
@@ -113,6 +114,17 @@ public class TreeView : Container
 	{
 		super(cast(GtkContainer*)gtkTreeView);
 		this.gtkTreeView = gtkTreeView;
+	}
+	
+	/**
+	 * Expands the row of the iter.
+	 * @param iter
+	 * @param openAll
+	 * @return
+	 */
+	int expandRow(TreeIter iter, TreeModel model, int openAll)
+	{
+		return expandRow(model.getPath(iter), openAll);
 	}
 	
 	/**

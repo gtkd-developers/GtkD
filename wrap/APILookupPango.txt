@@ -223,6 +223,22 @@ import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
 import: glib.Str
 
+code: start
+
+	/**
+	 * Creates a nwe font description and set the family nd the size
+	 * param: family Family
+	 * param: size Size
+	 */
+	public this(char[] family, int size)
+	{
+		this();
+		setFamily("Sans");
+		setSize(size * PANGO_SCALE);
+	}
+
+code: end
+
 outFile: PgFontDescription
 
 struct: PangoFontMetrics
@@ -612,6 +628,22 @@ structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
 import: glib.Str
+
+code: start
+	/**
+	 * Sets the text of the layout.
+	 * layout:
+	 *  a PangoLayout
+	 * text:
+	 *  a UTF-8 string
+	 */
+	public void setText(char[] text)
+	{
+		// void pango_layout_set_text (PangoLayout *layout,  const char *text,  int length);
+		pango_layout_set_text(pangoLayout, Str.toStringz(text), text.length);
+	}
+	
+code: end
 
 outFile: PgLayout
 

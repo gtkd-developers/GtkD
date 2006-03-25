@@ -94,6 +94,7 @@ module gtk.Widget;
 private import gtk.typedefs;
 
 private import lib.gtk;
+private import lib.gdk;
 
 private import glib.Str;
 private import atk.ObjectAtk;
@@ -108,6 +109,7 @@ private import gtk.Style;
 private import gdk.Bitmap;
 private import gtk.RcStyle;
 private import gdk.Color;
+private import gdk.Cursor;
 private import gdk.Pixbuf;
 private import gtk.Adjustment;
 private import gdk.Region;
@@ -207,6 +209,40 @@ public class Widget : ObjectGtk
 		pt += 52/4;
 		return new Drawable(cast(GdkDrawable*)(*pt));
 	}
+	
+	/**
+	 * Sets  the cursor.
+	 * @param cursor the new cursor
+	 * \bug the cursor changes to the parent widget also
+	 */
+	void setCursor(Cursor cursor)
+	{
+		int* pt =cast(int*)getStruct();
+		pt += 48/4;
+		gdk_window_set_cursor(cast(GdkWindow*)(*pt), cursor.getCursorStruct());
+	}
+	
+	/**
+	 * Resets the cursor.
+	 * don't know if this is implemented by GTK+. Seems that it's not
+	 * \bug does nothing
+	 */
+	public void resetCursor()
+	{
+		int* pt =cast(int*)getStruct();
+		pt += 48/4;
+		gdk_window_set_cursor(cast(GdkWindow*)(*pt), null);
+	}
+	
+	/**
+	 * Modifies the font for this widget.
+	 * This just calls modifyFont(new PgFontDescription(family,size));
+	 */
+	public void modifyFont(char[] family, int size)
+	{
+		modifyFont(new PgFontDescription(family,size));
+	}
+	
 	
 	
 	/**
