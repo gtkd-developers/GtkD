@@ -320,9 +320,10 @@ private import gtk.typedefs;
 					break;
 				
 				case "Pango text":
-					PgContext pc = getPangoContext();
-					PgLayout l = new PgLayout(pc);
-					l.setText("Duit with D");
+					//PgContext pc = getPangoContext();
+					//PgLayout l = new PgLayout(pc);
+					PgLayout l = createPangoLayout("Duit with D");
+					//l.setText("Duit with D");
 					//PgFontDescription fd = l.getFontDescription();
 					PgFontDescription fd = new PgFontDescription("Sans", width);
 					l.setFontDescription(fd);

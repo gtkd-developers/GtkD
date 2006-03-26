@@ -93,7 +93,8 @@ private import gtk.CellLayoutT;
  * gtk_combo_box_get_active_text().
  */
 private import gtk.Bin;
-public class ComboBox : Bin , CellLayoutIF
+public class ComboBox : Bin
+, CellLayoutIF
 {
 	
 	/** the main Gtk struct */

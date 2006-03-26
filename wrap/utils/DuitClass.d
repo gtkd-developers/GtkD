@@ -40,6 +40,7 @@ module utils.DuitClass;
 //debug = signalFunction;
 //debug = stockItems;
 //debug = gTypes;
+debug = implements;
 
 //version = noGtkBody;
 
@@ -413,10 +414,10 @@ public class DuitClass
 				text ~= "private import "~duitParentNamePrefix~"."~duitParentName~";\n";
 			}
 			text ~= getClassHeader(convParms, duitParentName);
-			char[] implements = getImplements();
+			char[] implements = getImplements(convParms, duitParentName);
 			if ( implements.length > 0 )
 			{
-				text ~= getImplements();
+				text ~= implements;
 			}
 			text ~= "{";
 		}
@@ -670,9 +671,18 @@ public class DuitClass
 	 *    	clss = 	
 	 * Returns: 
 	 */
-	private char[] getImplements()
+	private char[] getImplements(ConvParms* convParms, char[] parentName)
 	{
-		return "";
+		char[] impls;
+		foreach ( int count, char[] impl ; convParms.impl )
+		{
+			if ( count > 0 || parentName.length > 0)
+			{
+				impls ~= ", ";
+			}
+			impls ~= impl;
+		}
+		return impls;
 	}
 	
 	private char[][] getProperties()

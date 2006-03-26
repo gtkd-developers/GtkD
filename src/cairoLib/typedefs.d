@@ -482,9 +482,8 @@ public struct cairo_path_data_t
 	{
 		cairo_path_data_type_t type;
 		int length;
-	} header;
+	} ;
 	struct {
 		double x, y;
-	} point;
-}
+	} ;
 }
