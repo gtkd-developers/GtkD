@@ -27,8 +27,10 @@
  * strct   = GdkBitmap
  * realStrct=
  * clss    = Bitmap
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_bitmap_
  * omit structs:

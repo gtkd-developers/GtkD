@@ -27,8 +27,10 @@
  * strct   = GtkRuler
  * realStrct=
  * clss    = Ruler
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_ruler_
  * 	- gtk_

@@ -32,8 +32,10 @@ public struct ConvParms
 	public char[] strct;
 	public char[] realStrct;
 	public char[] clss;
+	public char[] interf;
 	public char[][] templ;
 	public char[] extend;
+	public char[][] impl;
 	public char[][] prefixes;
 	public bit strictPrefix;	/// include only function that match the prefix
 	public char[][] imprts;
@@ -55,9 +57,11 @@ public struct ConvParms
 		strct.length = 0;
 		realStrct.length = 0;
 		clss.length = 0;
+		interf.length = 0;
 		extend.length = 0;
 		prefixes.length = 0;
 		templ.length = 0;
+		impl.length = 0;
 		strictPrefix = false;
 		imprts.length = 0;
 		structWrap = clear();
@@ -81,6 +85,7 @@ public struct ConvParms
 		text ~= "\n * strct   = "~strct;
 		text ~= "\n * realStrct="~realStrct;
 		text ~= "\n * clss    = "~clss;
+		text ~= "\n * interf  = "~interf;
 		text ~= "\n * template for:";
 		foreach ( char[] tp ; templ )
 		{
@@ -89,6 +94,12 @@ public struct ConvParms
 		
 		text ~= "\n * extend  = "~extend;
 		
+		text ~= "\n * implements:";
+		foreach ( char[] ip ; impl )
+		{
+			text ~= "\n * \t- "~ip;
+		}
+
 		text ~= "\n * prefixes:";
 		foreach ( char[] prefix ; prefixes )
 		{

@@ -27,8 +27,10 @@
  * strct   = GtkScrollbar
  * realStrct=
  * clss    = Scrollbar
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_scrollbar_
  * 	- gtk_

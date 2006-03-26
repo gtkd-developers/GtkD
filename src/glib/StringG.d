@@ -27,8 +27,10 @@
  * strct   = GString
  * realStrct=
  * clss    = StringG
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_string_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = GtkCellRenderer
  * realStrct=GtkCellRendererToggle
  * clss    = CellRendererToggle
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_cell_renderer_toggle_
  * 	- gtk_

@@ -27,8 +27,10 @@
  * strct   = PangoFontMetrics
  * realStrct=
  * clss    = PgFontMetrics
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- pango_font_metrics_
  * omit structs:

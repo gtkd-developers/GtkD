@@ -27,8 +27,10 @@
  * strct   = GMainLoop
  * realStrct=
  * clss    = MainLoop
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_main_loop_
  * omit structs:

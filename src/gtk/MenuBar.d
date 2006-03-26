@@ -27,8 +27,10 @@
  * strct   = GtkMenuBar
  * realStrct=
  * clss    = MenuBar
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_menu_bar_
  * 	- gtk_

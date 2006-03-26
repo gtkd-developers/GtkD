@@ -27,8 +27,10 @@
  * strct   = GtkTreeIter
  * realStrct=
  * clss    = TreeIter
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_tree_iter_
  * omit structs:
@@ -37,7 +39,7 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.TreeIter
- * 	- TreeModel
+ * 	- gtk.TreeModel
  * structWrap:
  * 	- GtkTreeIter* -> TreeIter
  * local aliases:

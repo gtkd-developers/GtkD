@@ -27,8 +27,10 @@
  * strct   = GTimer
  * realStrct=
  * clss    = Timer
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_timer
  * omit structs:

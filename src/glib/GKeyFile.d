@@ -27,8 +27,10 @@
  * strct   = GKeyFile
  * realStrct=
  * clss    = KeyFile
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_key_file_
  * omit structs:

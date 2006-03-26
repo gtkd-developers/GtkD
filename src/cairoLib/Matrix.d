@@ -27,8 +27,10 @@
  * strct   = cairo_matrix_t
  * realStrct=
  * clss    = Matrix
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- cairo_matrix_
  * omit structs:

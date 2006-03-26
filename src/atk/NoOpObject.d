@@ -27,8 +27,10 @@
  * strct   = AtkNoOpObject
  * realStrct=
  * clss    = NoOpObject
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_no_op_object_
  * omit structs:

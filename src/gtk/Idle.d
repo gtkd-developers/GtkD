@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = Idle
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_idle_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = Signals
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_signal_
  * omit structs:

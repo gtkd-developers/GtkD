@@ -27,8 +27,10 @@
  * strct   = GRand
  * realStrct=
  * clss    = RandG
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_
  * omit structs:

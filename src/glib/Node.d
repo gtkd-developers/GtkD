@@ -27,8 +27,10 @@
  * strct   = GNode
  * realStrct=
  * clss    = Node
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_node_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = GOptionContext
  * realStrct=
  * clss    = OptionContext
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_option_context_
  * omit structs:

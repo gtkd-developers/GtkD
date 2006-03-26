@@ -27,8 +27,10 @@
  * strct   = GIOChannel
  * realStrct=
  * clss    = IOChannel
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_io_channel_
  * omit structs:

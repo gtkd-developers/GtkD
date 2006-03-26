@@ -27,8 +27,10 @@
  * strct   = GtkBindingSet
  * realStrct=
  * clss    = BindingSet
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_binding_set_
  * 	- gtk_bindings_

@@ -27,8 +27,10 @@
  * strct   = GdkPixbufLoader
  * realStrct=
  * clss    = PixbufLoader
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_pixbuf_loader_
  * omit structs:

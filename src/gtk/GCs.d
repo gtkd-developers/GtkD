@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = GCs
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_gc_
  * 	- gtk_

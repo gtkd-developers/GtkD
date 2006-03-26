@@ -27,8 +27,10 @@
  * strct   = GdkDisplayManager
  * realStrct=
  * clss    = DisplayManager
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_display_manager_
  * omit structs:

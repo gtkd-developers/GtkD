@@ -27,8 +27,10 @@
  * strct   = GValueArray
  * realStrct=
  * clss    = ValueArray
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_value_array_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = GtkTable
  * realStrct=
  * clss    = Table
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_table_
  * 	- gtk_

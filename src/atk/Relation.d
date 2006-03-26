@@ -27,8 +27,10 @@
  * strct   = AtkRelation
  * realStrct=
  * clss    = Relation
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_relation_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = AtkComponent
  * realStrct=
  * clss    = Component
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_component_
  * omit structs:

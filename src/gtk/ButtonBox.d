@@ -27,8 +27,10 @@
  * strct   = GtkButtonBox
  * realStrct=
  * clss    = ButtonBox
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_button_box_
  * 	- gtk_

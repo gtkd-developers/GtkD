@@ -27,8 +27,10 @@
  * strct   = GError
  * realStrct=
  * clss    = ErrorG
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_error_
  * omit structs:

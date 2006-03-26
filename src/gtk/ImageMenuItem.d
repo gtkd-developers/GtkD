@@ -27,8 +27,10 @@
  * strct   = GtkImageMenuItem
  * realStrct=
  * clss    = ImageMenuItem
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_image_menu_item_
  * 	- gtk_

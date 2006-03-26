@@ -27,8 +27,10 @@
  * strct   = cairo_font_options_t
  * realStrct=
  * clss    = FontOption
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- cairo_font_options_
  * omit structs:

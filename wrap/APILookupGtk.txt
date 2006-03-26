@@ -2229,6 +2229,7 @@ import: glib.Str
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
 import: glib.Str
+interface: CellLayoutIF
 outFile: CellLayoutT
 
 file: GtkCellRenderer.html
@@ -2595,6 +2596,7 @@ file: GtkComboBox.html
 
 struct: GtkComboBox
 class: ComboBox
+implements: CellLayoutIF
 import: atk.ObjectAtk
 structWrap: AtkObject* ObjectAtk
 prefix: gtk_combo_box_
@@ -2610,14 +2612,15 @@ structWrap: GtkTreeModel* TreeModel
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gtk.CellRenderer
-import: gtk.CellLayout
+import: gtk.CellLayoutIF
+import: gtk.CellLayoutT
 
 nocode: gtk_combo_box_new
 nocode:gtk_combo_box_new_text
 
 code: start
 	// add the CellLayout capabilities
-	mixin CellLayout!(GtkComboBox);
+	mixin CellLayoutT!(GtkComboBox);
 
 	/**
 	 * Creates a new empty GtkComboBox.

@@ -27,8 +27,10 @@
  * strct   = GHashTable
  * realStrct=
  * clss    = HashTable
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_hash_table_
  * omit structs:

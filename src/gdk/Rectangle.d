@@ -27,8 +27,10 @@
  * strct   = GdkRectangle
  * realStrct=
  * clss    = Rectangle
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_rectangle_
  * omit structs:

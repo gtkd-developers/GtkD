@@ -27,8 +27,10 @@
  * strct   = GtkSeparatorMenuItem
  * realStrct=
  * clss    = SeparatorMenuItem
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_separator_menu_item_
  * 	- gtk_

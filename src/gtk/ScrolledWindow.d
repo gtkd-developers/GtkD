@@ -27,8 +27,10 @@
  * strct   = GtkScrolledWindow
  * realStrct=
  * clss    = ScrolledWindow
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_scrolled_window_
  * 	- gtk_

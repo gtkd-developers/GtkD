@@ -27,8 +27,10 @@
  * strct   = AtkAction
  * realStrct=
  * clss    = Action
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_action_
  * omit structs:

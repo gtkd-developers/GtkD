@@ -27,8 +27,10 @@
  * strct   = GtkRange
  * realStrct=
  * clss    = Range
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_range_
  * 	- gtk_

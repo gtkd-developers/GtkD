@@ -27,8 +27,10 @@
  * strct   = AtkStreamableContent
  * realStrct=
  * clss    = StreamableContent
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_streamable_content_
  * omit structs:

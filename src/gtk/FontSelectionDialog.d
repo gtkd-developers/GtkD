@@ -27,8 +27,10 @@
  * strct   = GtkFontSelectionDialog
  * realStrct=
  * clss    = FontSelectionDialog
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_font_selection_dialog_
  * 	- gtk_

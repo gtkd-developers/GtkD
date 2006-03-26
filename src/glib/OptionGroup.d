@@ -27,8 +27,10 @@
  * strct   = GOptionGroup
  * realStrct=
  * clss    = OptionGroup
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_option_group_
  * omit structs:

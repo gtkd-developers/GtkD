@@ -27,8 +27,10 @@
  * strct   = GtkTreeRowReference
  * realStrct=
  * clss    = TreeRowReference
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_tree_row_reference_
  * omit structs:

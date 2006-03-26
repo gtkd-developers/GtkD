@@ -27,8 +27,10 @@
  * strct   = GtkAccelLabel
  * realStrct=
  * clss    = AccelLabel
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_accel_label_
  * 	- gtk_

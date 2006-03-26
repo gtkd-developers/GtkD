@@ -27,8 +27,10 @@
  * strct   = GEnumValue
  * realStrct=
  * clss    = Enums
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_enum_
  * omit structs:

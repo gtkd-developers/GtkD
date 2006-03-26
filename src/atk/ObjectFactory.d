@@ -27,8 +27,10 @@
  * strct   = AtkObjectFactory
  * realStrct=
  * clss    = ObjectFactory
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_object_factory_
  * omit structs:

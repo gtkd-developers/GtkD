@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = Atomic
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_atomic_
  * omit structs:

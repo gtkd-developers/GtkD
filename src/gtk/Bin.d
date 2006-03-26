@@ -27,8 +27,10 @@
  * strct   = GtkBin
  * realStrct=
  * clss    = Bin
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_bin_
  * 	- gtk_

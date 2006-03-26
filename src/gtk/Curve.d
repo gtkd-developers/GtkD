@@ -27,8 +27,10 @@
  * strct   = GtkCurve
  * realStrct=
  * clss    = Curve
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_curve_
  * 	- gtk_

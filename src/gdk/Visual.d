@@ -27,8 +27,10 @@
  * strct   = GdkVisual
  * realStrct=
  * clss    = Visual
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_visual_
  * omit structs:

@@ -241,6 +241,7 @@ private import gtk.IconView;
 private import gtk.TreeSortable;
 private import gtk.TreeModelSort;
 private import gtk.TreeModelFilter;
+private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 private import gtk.CellRenderer;
 private import gtk.CellEditable;

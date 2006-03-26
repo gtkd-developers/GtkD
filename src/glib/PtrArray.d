@@ -27,8 +27,10 @@
  * strct   = GPtrArray
  * realStrct=
  * clss    = PtrArray
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_ptr_array_
  * omit structs:

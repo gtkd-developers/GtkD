@@ -27,8 +27,10 @@
  * strct   = GtkActionGroup
  * realStrct=
  * clss    = ActionGroup
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_action_group_
  * 	- gtk_

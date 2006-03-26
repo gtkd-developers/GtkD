@@ -27,8 +27,10 @@
  * strct   = GtkFileChooserDialog
  * realStrct=
  * clss    = FileChooserDialog
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_file_chooser_dialog_
  * 	- gtk_

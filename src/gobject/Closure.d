@@ -27,8 +27,10 @@
  * strct   = GClosure
  * realStrct=
  * clss    = Closure
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_closure_
  * omit structs:

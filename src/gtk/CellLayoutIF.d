@@ -23,13 +23,12 @@
 /*
  * Conversion parameters:
  * outPack = gtk
- * outFile = CellLayoutT
+ * outFile = CellLayoutIF
  * strct   = GtkCellLayout
  * realStrct=
  * clss    = CellLayoutT
- * interf  = 
+ * interf  = CellLayoutIF
  * template for:
- * 	- TStruct
  * extend  = 
  * implements:
  * prefixes:
@@ -47,7 +46,7 @@
  * local aliases:
  */
 
-module gtk.CellLayoutT;
+module gtk.CellLayoutIF;
 
 private import gtk.typedefs;
 
@@ -63,17 +62,14 @@ private import glib.Str;
  * want to provide a GtkTreeViewColumn-like API for packing cells, setting
  * attributes and data funcs.
  */
-public template CellLayoutT(TStruct)
+public interface CellLayoutIF
 {
 	
-	/** the main Gtk struct */
-	protected GtkCellLayout* gtkCellLayout;
 	
+	public GtkCellLayout* getCellLayoutTStruct();
 	
-	public GtkCellLayout* getCellLayoutTStruct()
-	{
-		return cast(GtkCellLayout*)getStruct();
-	}
+	/** the main Gtk struct as a void* */
+	protected void* getStruct();
 	
 	
 	/**
@@ -95,11 +91,7 @@ public template CellLayoutT(TStruct)
 	 *  TRUE if cell is to be given extra space allocated to cell_layout.
 	 * Since 2.4
 	 */
-	public void packStart(CellRenderer cell, int expand)
-	{
-		// void gtk_cell_layout_pack_start (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  gboolean expand);
-		gtk_cell_layout_pack_start(getCellLayoutTStruct(), (cell is null) ? null : cell.getCellRendererStruct(), expand);
-	}
+	public void packStart(CellRenderer cell, int expand);
 	
 	/**
 	 * Adds the cell to the end of cell_layout. If expand is FALSE, then the
@@ -114,11 +106,7 @@ public template CellLayoutT(TStruct)
 	 *  TRUE if cell is to be given extra space allocated to cell_layout.
 	 * Since 2.4
 	 */
-	public void packEnd(CellRenderer cell, int expand)
-	{
-		// void gtk_cell_layout_pack_end (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  gboolean expand);
-		gtk_cell_layout_pack_end(getCellLayoutTStruct(), (cell is null) ? null : cell.getCellRendererStruct(), expand);
-	}
+	public void packEnd(CellRenderer cell, int expand);
 	
 	/**
 	 * Re-inserts cell at position. Note that cell has already to be packed
@@ -131,11 +119,7 @@ public template CellLayoutT(TStruct)
 	 *  New position to insert cell at.
 	 * Since 2.4
 	 */
-	public void reorder(CellRenderer cell, int position)
-	{
-		// void gtk_cell_layout_reorder (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  gint position);
-		gtk_cell_layout_reorder(getCellLayoutTStruct(), (cell is null) ? null : cell.getCellRendererStruct(), position);
-	}
+	public void reorder(CellRenderer cell, int position);
 	
 	/**
 	 * Unsets all the mappings on all renderers on cell_layout and
@@ -144,11 +128,7 @@ public template CellLayoutT(TStruct)
 	 *  A GtkCellLayout.
 	 * Since 2.4
 	 */
-	public void clear()
-	{
-		// void gtk_cell_layout_clear (GtkCellLayout *cell_layout);
-		gtk_cell_layout_clear(getCellLayoutTStruct());
-	}
+	public void clear();
 	
 	/**
 	 * Sets the attributes in list as the attributes of cell_layout. The
@@ -163,11 +143,7 @@ public template CellLayoutT(TStruct)
 	 *  A NULL-terminated list of attributes.
 	 * Since 2.4
 	 */
-	public void setAttributes(CellRenderer cell, ... )
-	{
-		// void gtk_cell_layout_set_attributes (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  ...);
-		gtk_cell_layout_set_attributes(getCellLayoutTStruct(), (cell is null) ? null : cell.getCellRendererStruct());
-	}
+	public void setAttributes(CellRenderer cell, ... );
 	
 	/**
 	 * Adds an attribute mapping to the list in cell_layout. The column is the
@@ -185,11 +161,7 @@ public template CellLayoutT(TStruct)
 	 *  The column position on the model to get the attribute from.
 	 * Since 2.4
 	 */
-	public void addAttribute(CellRenderer cell, char[] attribute, int column)
-	{
-		// void gtk_cell_layout_add_attribute (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  const gchar *attribute,  gint column);
-		gtk_cell_layout_add_attribute(getCellLayoutTStruct(), (cell is null) ? null : cell.getCellRendererStruct(), Str.toStringz(attribute), column);
-	}
+	public void addAttribute(CellRenderer cell, char[] attribute, int column);
 	
 	/**
 	 * Sets the GtkCellLayoutDataFunc to use for cell_layout. This function
@@ -208,11 +180,7 @@ public template CellLayoutT(TStruct)
 	 *  The destroy notification for func_data.
 	 * Since 2.4
 	 */
-	public void setCellDataFunc(CellRenderer cell, GtkCellLayoutDataFunc func, void* funcData, GDestroyNotify destroy)
-	{
-		// void gtk_cell_layout_set_cell_data_func  (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  GtkCellLayoutDataFunc func,  gpointer func_data,  GDestroyNotify destroy);
-		gtk_cell_layout_set_cell_data_func(getCellLayoutTStruct(), (cell is null) ? null : cell.getCellRendererStruct(), func, funcData, destroy);
-	}
+	public void setCellDataFunc(CellRenderer cell, GtkCellLayoutDataFunc func, void* funcData, GDestroyNotify destroy);
 	
 	/**
 	 * Clears all existing attributes previously set with
@@ -223,9 +191,5 @@ public template CellLayoutT(TStruct)
 	 *  A GtkCellRenderer to clear the attribute mapping on.
 	 * Since 2.4
 	 */
-	public void clearAttributes(CellRenderer cell)
-	{
-		// void gtk_cell_layout_clear_attributes  (GtkCellLayout *cell_layout,  GtkCellRenderer *cell);
-		gtk_cell_layout_clear_attributes(getCellLayoutTStruct(), (cell is null) ? null : cell.getCellRendererStruct());
-	}
+	public void clearAttributes(CellRenderer cell);
 }

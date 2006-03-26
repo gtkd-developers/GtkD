@@ -27,8 +27,10 @@
  * strct   = GtkTreeSelection
  * realStrct=
  * clss    = TreeSelection
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_tree_selection_
  * 	- gtk_

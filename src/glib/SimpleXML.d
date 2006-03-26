@@ -27,8 +27,10 @@
  * strct   = GMarkupParseContext
  * realStrct=
  * clss    = SimpleXML
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_markup_parse_context_
  * omit structs:

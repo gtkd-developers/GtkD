@@ -27,8 +27,10 @@
  * strct   = GtkAccessible
  * realStrct=
  * clss    = Accessible
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_accessible_
  * 	- gtk_

@@ -27,8 +27,10 @@
  * strct   = AtkRegistry
  * realStrct=
  * clss    = Registry
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_registry_
  * omit structs:

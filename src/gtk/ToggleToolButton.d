@@ -27,8 +27,10 @@
  * strct   = GtkToggleToolButton
  * realStrct=
  * clss    = ToggleToolButton
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_toggle_tool_button_
  * 	- gtk_

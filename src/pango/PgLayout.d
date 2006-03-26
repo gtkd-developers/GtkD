@@ -27,8 +27,10 @@
  * strct   = PangoLayout
  * realStrct=
  * clss    = PgLayout
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- pango_layout_
  * omit structs:

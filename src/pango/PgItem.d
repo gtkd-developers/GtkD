@@ -27,8 +27,10 @@
  * strct   = PangoItem
  * realStrct=
  * clss    = PgItem
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- pango_item_
  * omit structs:

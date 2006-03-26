@@ -27,8 +27,10 @@
  * strct   = GRelation
  * realStrct=
  * clss    = Relation
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_relation_
  * omit structs:

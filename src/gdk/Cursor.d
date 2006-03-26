@@ -27,8 +27,10 @@
  * strct   = GdkCursor
  * realStrct=
  * clss    = Cursor
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_cursor_
  * omit structs:

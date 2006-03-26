@@ -27,8 +27,10 @@
  * strct   = GMemChunk
  * realStrct=
  * clss    = MemoryChunk
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_mem_chunk_
  * omit structs:

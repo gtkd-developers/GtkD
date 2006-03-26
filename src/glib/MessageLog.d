@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = MessageLog
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_
  * omit structs:

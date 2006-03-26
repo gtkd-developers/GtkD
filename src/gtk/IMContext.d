@@ -27,8 +27,10 @@
  * strct   = GtkIMContext
  * realStrct=
  * clss    = IMContext
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_im_context_
  * 	- gtk_

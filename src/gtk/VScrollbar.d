@@ -27,8 +27,10 @@
  * strct   = GtkVScrollbar
  * realStrct=
  * clss    = VScrollbar
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_vscrollbar_
  * 	- gtk_

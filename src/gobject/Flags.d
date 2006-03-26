@@ -27,8 +27,10 @@
  * strct   = GFlagsValue
  * realStrct=
  * clss    = Flags
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_flags_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = GObject
  * realStrct=
  * clss    = ObjectG
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_object_
  * omit structs:

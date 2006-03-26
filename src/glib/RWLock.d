@@ -27,8 +27,10 @@
  * strct   = GStaticRWLock
  * realStrct=
  * clss    = RWLock
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_static_rw_lock_
  * omit structs:

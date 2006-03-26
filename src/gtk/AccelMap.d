@@ -27,8 +27,10 @@
  * strct   = GtkAccelMap
  * realStrct=
  * clss    = AccelMap
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_accel_map_
  * 	- gtk_

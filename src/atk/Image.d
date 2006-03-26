@@ -27,8 +27,10 @@
  * strct   = AtkImage
  * realStrct=
  * clss    = Image
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_image_
  * omit structs:

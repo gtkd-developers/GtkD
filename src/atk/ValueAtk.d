@@ -27,8 +27,10 @@
  * strct   = AtkValue
  * realStrct=
  * clss    = ValueAtk
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_value_
  * omit structs:

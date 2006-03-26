@@ -27,8 +27,10 @@
  * strct   = GAsyncQueue
  * realStrct=
  * clss    = AsyncQueue
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_async_queue_
  * omit structs:

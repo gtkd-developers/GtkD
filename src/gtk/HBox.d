@@ -27,8 +27,10 @@
  * strct   = GtkHBox
  * realStrct=
  * clss    = HBox
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_hbox_
  * 	- gtk_

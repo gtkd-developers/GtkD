@@ -430,7 +430,7 @@ public class GtkWrapper : WrapperIF
 		
 		char[] key = defReader.next();
 		
-		char[] keys = " file text struct realStruct class template extend prefix strictPrefix"
+		char[] keys = " file text struct realStruct class template interface extend implements prefix strictPrefix"
 					  " openFile mergeFile closeFile outFile"
 					  " copy import structWrap alias"
 					  " noprefix nostruct nocode"
@@ -450,6 +450,7 @@ public class GtkWrapper : WrapperIF
 				case "realStruct": convParms.realStrct = defReader.getValue(); break;
 				case "class": convParms.clss = defReader.getValue(); break;
 				case "extend": convParms.extend = defReader.getValue(); break;
+				case "implements": convParms.impl ~= defReader.getValue(); break;
 				case "template": convParms.templ ~= defReader.getValue(); break;
 				case "prefix": convParms.prefixes ~= defReader.getValue(); break;
 				case "strictPrefix": convParms.strictPrefix = defReader.getValueBit(); break;
@@ -478,8 +479,27 @@ public class GtkWrapper : WrapperIF
 					closeFile(text, duitClass, convParms);
 					text.length = 0;
 					break;
+				case "interface":
+					convParms.interf = defReader.getValue();
+					char[] saveClass = convParms.clss.dup;
+					char[][] saveTempl = convParms.templ.dup;
+					convParms.templ.length = 0;
+					convParms.outFile = convParms.interf;
+					buildText ~= "\nprivate import "
+							~convParms.outPack~"."
+							~defReader.getValue()~";";
+					outFile(outPack, text, convParms);
+					convParms.clss = saveClass;
+					convParms.templ = saveTempl;
+					// mark not interface (anymore)
+					convParms.interf = "";
+					// as outFile is always the last definition
+					// there is no need to restore it
+					break;
 				case "outFile": 
-					buildText ~= "\nprivate import "~convParms.outPack~"."~defReader.getValue()~";";
+					buildText ~= "\nprivate import "
+							~convParms.outPack~"."
+							~defReader.getValue()~";";
 					outFile(outPack, text, convParms);
 					break;
 				case "file": 
@@ -549,7 +569,10 @@ public class GtkWrapper : WrapperIF
 		{
 			std.file.write(duitClass.getOutFile(outputRoot),duitText);
 		}
-		convParms.clearAll();
+		if ( convParms.interf.length == 0 )
+		{
+			convParms.clearAll();
+		}
 		
 		externalDeclarations ~= duitClass.getExternalDeclarations();
 		collectedAliases ~=	duitClass.getAliases();

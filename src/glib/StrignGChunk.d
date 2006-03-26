@@ -27,8 +27,10 @@
  * strct   = GStringChunk
  * realStrct=
  * clss    = StringGChunk
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_string_chunk_
  * omit structs:

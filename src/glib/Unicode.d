@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = Unicode
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_
  * omit structs:

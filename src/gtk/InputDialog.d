@@ -27,8 +27,10 @@
  * strct   = GtkInputDialog
  * realStrct=
  * clss    = InputDialog
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_input_dialog_
  * 	- gtk_

@@ -27,8 +27,10 @@
  * strct   = GdkEvent
  * realStrct=
  * clss    = Event
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_event_
  * omit structs:

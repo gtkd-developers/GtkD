@@ -27,8 +27,10 @@
  * strct   = GtkType
  * realStrct=
  * clss    = Types
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_type_
  * 	- gtk_

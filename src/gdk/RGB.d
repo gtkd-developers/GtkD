@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = RGB
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_
  * omit structs:

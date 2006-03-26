@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = StateSet
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_state_set_
  * omit structs:

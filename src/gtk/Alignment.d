@@ -27,8 +27,10 @@
  * strct   = GtkAlignment
  * realStrct=
  * clss    = Alignment
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_alignment_
  * 	- gtk_

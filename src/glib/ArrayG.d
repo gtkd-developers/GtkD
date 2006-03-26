@@ -27,8 +27,10 @@
  * strct   = GArray
  * realStrct=
  * clss    = ArrayG
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_array_
  * omit structs:

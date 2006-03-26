@@ -27,8 +27,10 @@
  * strct   = PangoTabArray
  * realStrct=
  * clss    = PgTabArray
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- pango_tab_array_
  * omit structs:

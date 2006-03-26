@@ -27,8 +27,10 @@
  * strct   = GtkContainer
  * realStrct=
  * clss    = Container
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_container_
  * 	- gtk_

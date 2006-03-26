@@ -27,8 +27,10 @@
  * strct   = GByteArray
  * realStrct=
  * clss    = ByteArray
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_byte_array_
  * omit structs:

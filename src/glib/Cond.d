@@ -27,8 +27,10 @@
  * strct   = GCond
  * realStrct=
  * clss    = Cond
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_cond_
  * omit structs:

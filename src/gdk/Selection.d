@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = Selection
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_selection_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = GValue
  * realStrct=
  * clss    = Value
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_value_
  * omit structs:

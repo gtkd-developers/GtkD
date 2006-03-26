@@ -27,8 +27,10 @@
  * strct   = GtkVBox
  * realStrct=
  * clss    = VBox
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_vbox_
  * 	- gtk_

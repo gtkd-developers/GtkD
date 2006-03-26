@@ -27,8 +27,10 @@
  * strct   = GtkWindow
  * realStrct=
  * clss    = Window
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_window_
  * 	- gtk_

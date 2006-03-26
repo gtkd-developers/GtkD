@@ -27,8 +27,10 @@
  * strct   = GList
  * realStrct=
  * clss    = ListG
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_list_
  * omit structs:

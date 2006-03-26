@@ -27,8 +27,10 @@
  * strct   = GtkMessageDialog
  * realStrct=
  * clss    = MessageDialog
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_message_dialog_
  * 	- gtk_

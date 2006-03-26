@@ -27,8 +27,10 @@
  * strct   = GdkColor
  * realStrct=
  * clss    = Color
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_color_
  * omit structs:

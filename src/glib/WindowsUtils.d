@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = WindowsUtils
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_win32_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = GtkMenuShell
  * realStrct=
  * clss    = MenuShell
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_menu_shell_
  * 	- gtk_

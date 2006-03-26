@@ -27,8 +27,10 @@
  * strct   = GCompletion
  * realStrct=
  * clss    = StringCompletion
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_completion_
  * omit structs:

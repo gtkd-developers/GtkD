@@ -27,8 +27,10 @@
  * strct   = GtkVScale
  * realStrct=
  * clss    = VScale
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_vscale_
  * 	- gtk_

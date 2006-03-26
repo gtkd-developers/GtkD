@@ -27,8 +27,10 @@
  * strct   = AtkTable
  * realStrct=
  * clss    = Table
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_table_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = GtkFixed
  * realStrct=
  * clss    = Fixed
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_fixed_
  * 	- gtk_

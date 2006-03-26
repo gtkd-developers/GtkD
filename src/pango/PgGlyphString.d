@@ -27,8 +27,10 @@
  * strct   = PangoGlyphString
  * realStrct=
  * clss    = PgGlyphString
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- pango_glyph_string_
  * omit structs:

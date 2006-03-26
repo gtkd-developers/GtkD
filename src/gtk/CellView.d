@@ -27,8 +27,10 @@
  * strct   = GtkCellView
  * realStrct=
  * clss    = CellView
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_cell_view_
  * 	- gtk_

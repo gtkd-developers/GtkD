@@ -27,8 +27,10 @@
  * strct   = GdkGC
  * realStrct=
  * clss    = GC
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_gc_
  * omit structs:

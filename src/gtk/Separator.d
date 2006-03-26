@@ -27,8 +27,10 @@
  * strct   = GtkSeparator
  * realStrct=
  * clss    = Separator
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_separator
  * 	- gtk_

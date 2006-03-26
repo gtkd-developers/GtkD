@@ -27,8 +27,10 @@
  * strct   = cairo_pattern_t
  * realStrct=
  * clss    = Pattern
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- cairo_pattern_
  * omit structs:

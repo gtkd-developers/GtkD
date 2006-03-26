@@ -27,8 +27,10 @@
  * strct   = GtkSettings
  * realStrct=
  * clss    = Settings
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_settings_
  * 	- gtk_

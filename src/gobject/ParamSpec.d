@@ -27,8 +27,10 @@
  * strct   = GParamSpec
  * realStrct=
  * clss    = ParamSpec
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_param_spec_
  * omit structs:

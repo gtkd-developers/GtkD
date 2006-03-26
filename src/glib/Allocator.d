@@ -27,8 +27,10 @@
  * strct   = GAllocator
  * realStrct=
  * clss    = Allocator
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_allocator_
  * omit structs:

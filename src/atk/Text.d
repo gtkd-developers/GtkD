@@ -27,8 +27,10 @@
  * strct   = AtkText
  * realStrct=
  * clss    = Text
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_text_
  * omit structs:

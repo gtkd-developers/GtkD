@@ -27,8 +27,10 @@
  * strct   = GtkCellRenderer
  * realStrct=
  * clss    = CellRenderer
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_cell_renderer_
  * 	- gtk_

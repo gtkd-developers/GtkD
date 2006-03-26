@@ -27,8 +27,10 @@
  * strct   = GtkDrawingArea
  * realStrct=
  * clss    = DrawingArea
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_drawing_area_
  * 	- gtk_

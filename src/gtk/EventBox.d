@@ -27,8 +27,10 @@
  * strct   = GtkEventBox
  * realStrct=
  * clss    = EventBox
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_event_box_
  * 	- gtk_

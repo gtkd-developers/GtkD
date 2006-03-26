@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = ShellUtils
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_shell_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = Child
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_child_
  * omit structs:

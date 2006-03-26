@@ -27,8 +27,10 @@
  * strct   = GtkIconInfo
  * realStrct=
  * clss    = IconInfo
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_icon_info_
  * omit structs:

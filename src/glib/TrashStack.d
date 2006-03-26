@@ -27,8 +27,10 @@
  * strct   = GTrashStack
  * realStrct=
  * clss    = TrashStack
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_trash_stack_
  * omit structs:

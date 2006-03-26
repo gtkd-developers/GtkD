@@ -27,8 +27,10 @@
  * strct   = GtkWindowGroup
  * realStrct=
  * clss    = WindowGroup
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_window_group_
  * 	- gtk_

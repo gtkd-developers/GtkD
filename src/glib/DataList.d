@@ -27,8 +27,10 @@
  * strct   = GData
  * realStrct=
  * clss    = DataList
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_datalist_
  * omit structs:

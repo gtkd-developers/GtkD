@@ -27,8 +27,10 @@
  * strct   = GtkTreeModel
  * realStrct=
  * clss    = TreeModel
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_tree_model_
  * omit structs:

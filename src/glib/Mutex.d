@@ -27,8 +27,10 @@
  * strct   = GMutex
  * realStrct=
  * clss    = Mutex
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_mutex_
  * omit structs:

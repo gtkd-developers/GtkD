@@ -27,8 +27,10 @@
  * strct   = AtkObject
  * realStrct=
  * clss    = ObjectAtk
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_object_
  * omit structs:

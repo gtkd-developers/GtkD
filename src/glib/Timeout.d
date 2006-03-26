@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = Timeout
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_timeout_
  * omit structs:

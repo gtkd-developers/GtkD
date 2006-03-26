@@ -27,8 +27,10 @@
  * strct   = GtkRadioToolButton
  * realStrct=
  * clss    = RadioToolButton
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_radio_tool_button_
  * 	- gtk_

@@ -27,8 +27,10 @@
  * strct   = GtkItem
  * realStrct=
  * clss    = Item
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_item_
  * 	- gtk_

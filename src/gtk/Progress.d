@@ -27,8 +27,10 @@
  * strct   = GtkProgress
  * realStrct=
  * clss    = Progress
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_progress_
  * 	- gtk_

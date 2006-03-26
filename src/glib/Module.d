@@ -27,8 +27,10 @@
  * strct   = GModule
  * realStrct=
  * clss    = Module
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_module_
  * omit structs:

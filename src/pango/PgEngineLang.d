@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = PgEngineLang
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- script_engine_lang_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = GThreadPool
  * realStrct=
  * clss    = ThreadPool
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_thread_pool_
  * omit structs:

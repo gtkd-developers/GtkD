@@ -27,8 +27,10 @@
  * strct   = GMainContext
  * realStrct=
  * clss    = MainContext
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_main_context_
  * omit structs:

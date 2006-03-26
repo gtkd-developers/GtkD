@@ -27,8 +27,10 @@
  * strct   = GdkWindow
  * realStrct=
  * clss    = Window
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_window_
  * omit structs:

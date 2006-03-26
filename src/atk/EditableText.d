@@ -27,8 +27,10 @@
  * strct   = AtkEditableText
  * realStrct=
  * clss    = EditableText
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_editable_text
  * omit structs:

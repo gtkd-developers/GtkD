@@ -27,8 +27,10 @@
  * strct   = GtkFileChooser
  * realStrct=
  * clss    = FileChooser
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_file_chooser_
  * 	- gtk_

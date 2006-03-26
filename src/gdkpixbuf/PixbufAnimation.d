@@ -27,8 +27,10 @@
  * strct   = GdkPixbufAnimation
  * realStrct=
  * clss    = PixbufAnimation
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_pixbuf_animation_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = GDate
  * realStrct=
  * clss    = Date
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_date_
  * omit structs:

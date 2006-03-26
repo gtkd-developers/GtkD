@@ -27,8 +27,10 @@
  * strct   = GTypePlugin
  * realStrct=
  * clss    = TypePlugin
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_type_plugin_
  * omit structs:

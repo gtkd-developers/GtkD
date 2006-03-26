@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = PgCoverage
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- pango_coverage_
  * omit structs:

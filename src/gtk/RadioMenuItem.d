@@ -27,8 +27,10 @@
  * strct   = GtkRadioMenuItem
  * realStrct=
  * clss    = RadioMenuItem
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_radio_menu_item_
  * 	- gtk_

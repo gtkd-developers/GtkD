@@ -27,8 +27,10 @@
  * strct   = GTuples
  * realStrct=
  * clss    = Tuples
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_tuples_
  * omit structs:

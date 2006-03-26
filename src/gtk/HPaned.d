@@ -27,8 +27,10 @@
  * strct   = GtkHPaned
  * realStrct=
  * clss    = HPaned
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_hpaned_
  * 	- gtk_

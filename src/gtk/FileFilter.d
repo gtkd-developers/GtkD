@@ -27,8 +27,10 @@
  * strct   = GtkFileFilter
  * realStrct=
  * clss    = FileFilter
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_file_filter_
  * 	- gtk_

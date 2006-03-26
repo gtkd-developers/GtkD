@@ -27,8 +27,10 @@
  * strct   = GtkExpander
  * realStrct=
  * clss    = Expander
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_expander_
  * 	- gtk_

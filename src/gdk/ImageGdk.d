@@ -27,8 +27,10 @@
  * strct   = GdkImage
  * realStrct=
  * clss    = ImageGdk
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_image_
  * omit structs:

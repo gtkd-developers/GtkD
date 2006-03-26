@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = Input
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_input_
  * omit structs:

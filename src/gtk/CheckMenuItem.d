@@ -27,8 +27,10 @@
  * strct   = GtkCheckMenuItem
  * realStrct=
  * clss    = CheckMenuItem
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_check_menu_item_
  * 	- gtk_

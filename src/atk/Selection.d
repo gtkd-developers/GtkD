@@ -27,8 +27,10 @@
  * strct   = AtkSelection
  * realStrct=
  * clss    = Selection
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_selection_
  * omit structs:

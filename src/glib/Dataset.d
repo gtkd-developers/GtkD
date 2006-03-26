@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = Dataset
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_dataset_
  * omit structs:

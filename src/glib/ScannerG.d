@@ -27,8 +27,10 @@
  * strct   = GScanner
  * realStrct=
  * clss    = ScannerG
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_scanner
  * omit structs:

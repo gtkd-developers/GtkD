@@ -27,8 +27,10 @@
  * strct   = GQuark
  * realStrct=
  * clss    = Quark
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_quark_
  * omit structs:

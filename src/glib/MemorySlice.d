@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = MemorySlice
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_slice_
  * omit structs:

@@ -27,8 +27,11 @@
  * strct   = GtkComboBox
  * realStrct=
  * clss    = ComboBox
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
+ * 	- CellLayoutIF
  * prefixes:
  * 	- gtk_combo_box_
  * 	- gtk_
@@ -43,7 +46,8 @@
  * 	- gtk.TreeModel
  * 	- gtk.TreeIter
  * 	- gtk.CellRenderer
- * 	- gtk.CellLayout
+ * 	- gtk.CellLayoutIF
+ * 	- gtk.CellLayoutT
  * structWrap:
  * 	- AtkObject* -> ObjectAtk
  * 	- GtkTreeIter* -> TreeIter
@@ -62,6 +66,7 @@ private import glib.Str;
 private import gtk.TreeModel;
 private import gtk.TreeIter;
 private import gtk.CellRenderer;
+private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 
 /**
@@ -88,7 +93,7 @@ private import gtk.CellLayoutT;
  * gtk_combo_box_get_active_text().
  */
 private import gtk.Bin;
-public class ComboBox : Bin
+public class ComboBox : Bin , CellLayoutIF
 {
 	
 	/** the main Gtk struct */

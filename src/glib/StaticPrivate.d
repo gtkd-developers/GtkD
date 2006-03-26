@@ -27,8 +27,10 @@
  * strct   = GStaticPrivate
  * realStrct=
  * clss    = StaticPrivate
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_static_private_
  * omit structs:

@@ -27,8 +27,10 @@
  * strct   = GdkDisplay
  * realStrct=
  * clss    = Display
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_display_
  * omit structs:

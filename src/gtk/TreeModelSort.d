@@ -27,8 +27,10 @@
  * strct   = GtkTreeModelSort
  * realStrct=
  * clss    = TreeModelSort
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_tree_model_sort_
  * 	- gtk_

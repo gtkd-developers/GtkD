@@ -27,8 +27,10 @@
  * strct   = GtkVButtonBox
  * realStrct=
  * clss    = VButtonBox
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_vbutton_box_
  * 	- gtk_

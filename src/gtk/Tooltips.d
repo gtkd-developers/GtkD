@@ -27,8 +27,10 @@
  * strct   = GtkTooltips
  * realStrct=
  * clss    = Tooltips
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_tooltips_
  * 	- gtk_

@@ -27,8 +27,10 @@
  * strct   = GSource
  * realStrct=
  * clss    = Source
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_source_
  * omit structs:

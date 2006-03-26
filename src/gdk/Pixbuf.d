@@ -27,8 +27,10 @@
  * strct   = GdkPixbuf
  * realStrct=
  * clss    = Pixbuf
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_pixbuf_
  * omit structs:

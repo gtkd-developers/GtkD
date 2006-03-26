@@ -27,8 +27,10 @@
  * strct   = GTree
  * realStrct=
  * clss    = BBTree
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_tree_
  * omit structs:

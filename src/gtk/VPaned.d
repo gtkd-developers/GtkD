@@ -27,8 +27,10 @@
  * strct   = GtkVPaned
  * realStrct=
  * clss    = VPaned
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_vpaned_
  * 	- gtk_

@@ -27,8 +27,10 @@
  * strct   = GtkToggleAction
  * realStrct=
  * clss    = ToggleAction
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_toggle_action_
  * 	- gtk_

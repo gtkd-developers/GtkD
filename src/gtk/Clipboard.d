@@ -27,8 +27,10 @@
  * strct   = GtkClipboard
  * realStrct=
  * clss    = Clipboard
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_clipboard_
  * 	- gtk_

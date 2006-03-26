@@ -27,8 +27,10 @@
  * strct   = GtkWidget
  * realStrct=
  * clss    = Widget
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_widget_
  * 	- gtk_

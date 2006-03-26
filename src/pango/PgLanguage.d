@@ -27,8 +27,10 @@
  * strct   = PangoLanguage
  * realStrct=
  * clss    = PgLanguage
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- pango_language_
  * omit structs:

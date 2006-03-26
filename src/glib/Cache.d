@@ -27,8 +27,10 @@
  * strct   = GCache
  * realStrct=
  * clss    = Cache
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_cache_
  * omit structs:

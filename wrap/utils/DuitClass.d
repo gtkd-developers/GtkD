@@ -68,7 +68,10 @@ public class DuitClass
 	private int countBlock = 0;
 
 	ConvParms* convParms;
-	
+
+	bool isInterface;
+	char[] iFaceChar = "";
+
 	private char[] parentName;				/// gtk parent struct
 	private char[] duitParentName;			/// duit parent name
 	private char[] duitParentNamePrefix;	/// duit parent name package
@@ -175,15 +178,18 @@ public class DuitClass
 	public void openDuitClass(char[] inAPI, ConvParms* convParms)
 	{
 		this.inAPI = inAPI;
+		isInterface = convParms.interf.length > 0;
+		if ( isInterface ) iFaceChar = ";";
+		else iFaceChar = "";
 		HtmlStrip stripper = new HtmlStrip();
 		inLines = std.string.splitlines(stripper.strip(inAPI));
 		//writefln("new API\n%s",inAPI);
 
 		functionSignatures = getCleanSigns();
 		gtkStructs = getCleanSigns();
-		
+
 		this.convParms = convParms;
-		
+
 		collectedAliases.length = 0;
 		collectedEnums.length = 0;
 		stockEnums.length = 0;
@@ -360,7 +366,11 @@ public class DuitClass
 	private char[] getClassHeader(ConvParms* convParms, char[] parentName)
 	{
 		char[] h;
-		if ( convParms.templ.length == 0 )
+		if ( convParms.interf.length > 0 )
+		{
+			h = "public interface "~convParms.interf;
+		}
+		else if ( convParms.templ.length == 0 )
 		{
 			h = "public class "~convParms.clss;
 		}
@@ -385,7 +395,6 @@ public class DuitClass
 		return h;
 	}
 
-	
 	/**
 	 * Create the class header.
 	 * If the class name is empty this is not a class so no header is created
@@ -441,49 +450,65 @@ public class DuitClass
 								: convParms.strct;
 			char[] var = toVar(gtkStruct.dup);
 			text ~= "";
-			text ~= "/** the main Gtk struct */";
-			text ~= "protected "~gtkStruct~"* "~var~";";
-			text ~= "";
-			
-			
-			
+			if ( !isInterface )
+			{
+				text ~= "/** the main Gtk struct */";
+				text ~= "protected "~gtkStruct~"* "~var~";";
+				text ~= "";
+			}
+
 			if ( convParms.clss.length > 0 )
 			{
 				text ~= "";
-				text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()";
-				text ~= "{";
+				
 				if ( convParms.templ.length > 0 )
 				{
-					text ~= "return cast("~gtkStruct~"*)getStruct();";
-					text ~= "}";
+					text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()"~iFaceChar;
+					if ( !isInterface )
+					{
+						text ~= "{";
+						text ~= "return cast("~gtkStruct~"*)getStruct();";
+						text ~= "}";
+					}
 					text ~= "";
 				}
 				else
 				{
-					text ~= "return " ~ var ~ ';';
-					text ~= "}";
-					text ~= "";
+					text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()"~iFaceChar;
+					if ( !isInterface )
+					{
+						text ~= "{";
+						text ~= "return " ~ var ~ ';';
+						text ~= "}";
+						text ~= "";
+					}
 					text ~= "";
 					text ~= "/** the main Gtk struct as a void* */";
-					text ~= "protected void* getStruct()";
-					text ~= "{";
-					text ~= "return cast(void*)" ~ var ~ ';';
-					text ~= "}";
+					text ~= "protected void* getStruct()"~iFaceChar;
+					if ( !isInterface )
+					{
+						text ~= "{";
+						text ~= "return cast(void*)" ~ var ~ ';';
+						text ~= "}";
+					}
 					text ~= "";
 					if ( "GObject" != convParms.strct )
 					{
 						// GObject has a specific constructor for the struct
-						text ~= "/**";
-						text ~= " * Sets our main struct and passes it to the parent class";
-						text ~= " */";
-						text ~= "public this ("~gtkStruct~"* "~var~")";
-						text ~= "{";
-						if ( parentName.length > 0 )
+						if ( !isInterface )
 						{
-							text ~= "super("~castToParent(var)~");";
+							text ~= "/**";
+							text ~= " * Sets our main struct and passes it to the parent class";
+							text ~= " */";
+							text ~= "public this ("~gtkStruct~"* "~var~")"~iFaceChar;
+							text ~= "{";
+							if ( parentName.length > 0 )
+							{
+								text ~= "super("~castToParent(var)~");";
+							}
+							text ~= "this."~var~" = "~var~";";
+							text ~= "}";
 						}
-						text ~= "this."~var~" = "~var~";";
-						text ~= "}";
 					}
 				}
 			}
@@ -732,56 +757,62 @@ public class DuitClass
 	
 	void addExternCallback(inout char[][] text, Funct fun, char[] duitSignal, char[] dlg)
 	{
-		text ~= "extern(C) static void callBack"~duitSignal~"("
-				~fun.getCallbackParameters(0, convParms, wrapper.getAliases())
-				~")";
-		text ~= "{";
-		text ~= "	bit consumed = false;";
-		text ~= "";
-		text ~= "	foreach ( "~dlg~" dlg ; "~getClassVar(convParms)~".on"~duitSignal~"Listeners )";
-		text ~= "	{";
-		char[] dlgCall = "dlg("~fun.getCallbackVars(convParms, wrapper.getAliases())~");";
-		//if ( dlgCall == "dlg(widget, container);" )
-		//{
-		//	// special case
-		//	dlgCall = "dlg(new Widget(widget), container);";
-		//}
-		text ~= "		"~dlgCall;
-		text ~= "	}";
-		text ~= "	";
-		text ~= "	return consumed;";
-		text ~= "}";
-		text ~= "";
+		if ( !isInterface )
+		{
+			text ~= "extern(C) static void callBack"~duitSignal~"("
+					~fun.getCallbackParameters(0, convParms, wrapper.getAliases())
+					~")";
+			text ~= "{";
+			text ~= "	bit consumed = false;";
+			text ~= "";
+			text ~= "	foreach ( "~dlg~" dlg ; "~getClassVar(convParms)~".on"~duitSignal~"Listeners )";
+			text ~= "	{";
+			char[] dlgCall = "dlg("~fun.getCallbackVars(convParms, wrapper.getAliases())~");";
+			//if ( dlgCall == "dlg(widget, container);" )
+			//{
+			//	// special case
+			//	dlgCall = "dlg(new Widget(widget), container);";
+			//}
+			text ~= "		"~dlgCall;
+			text ~= "	}";
+			text ~= "	";
+			text ~= "	return consumed;";
+			text ~= "}";
+			text ~= "";
+		}
 	}
 	
 	void addAddListener(inout char[][] text, char[] signalName, char[] duitSignalName, char[] dlg)
 	{
-		text ~= "void addOn"~duitSignalName~"("~dlg~" dlg)";
-		text ~= "{";
-		text ~= "if ( !(\""~signalName~"\" in connectedSignals) )";
-		text ~= "{";
-		
-		// TODO move this to the config files or read it from the Gtk docs (how?)
-		switch ( signalName )
+		text ~= "void addOn"~duitSignalName~"("~dlg~" dlg)"~iFaceChar;
+		if ( !isInterface )
 		{
-			case  "button-press-event": text ~= "addEvents(GdkEventMask.GDK_BUTTON_PRESS_MASK);"; break;
-			case  "button-release-event": text ~= "addEvents(GdkEventMask.GDK_BUTTON_RELEASE_MASK);"; break;
-			case  "motion-notify-event": text ~= "addEvents(GdkEventMask.GDK_POINTER_MOTION_MASK);"; break;
-			default:
-				break;
+			text ~= "{";
+			text ~= "if ( !(\""~signalName~"\" in connectedSignals) )";
+			text ~= "{";
+			
+			// TODO move this to the config files or read it from the Gtk docs (how?)
+			switch ( signalName )
+			{
+				case  "button-press-event": text ~= "addEvents(GdkEventMask.GDK_BUTTON_PRESS_MASK);"; break;
+				case  "button-release-event": text ~= "addEvents(GdkEventMask.GDK_BUTTON_RELEASE_MASK);"; break;
+				case  "motion-notify-event": text ~= "addEvents(GdkEventMask.GDK_POINTER_MOTION_MASK);"; break;
+				default:
+					break;
+			}
+	
+			text ~= "	Signals.connectData(";
+			text ~= "			getStruct(), ";
+			text ~= "			\""~signalName~"\", ";
+			text ~= "			cast(GCallback)&callBack"~duitSignalName~", ";
+			text ~= "			this, ";
+			text ~= "			null, ";
+			text ~= "			GConnectFlags.AFTER);";
+			text ~= "	connectedSignals[\""~signalName~"\"] = 1;";
+			text ~= "}";
+			text ~= "on"~duitSignalName~"Listeners ~= dlg;";
+			text ~= "}";
 		}
-
-		text ~= "	Signals.connectData(";
-		text ~= "			getStruct(), ";
-		text ~= "			\""~signalName~"\", ";
-		text ~= "			cast(GCallback)&callBack"~duitSignalName~", ";
-		text ~= "			this, ";
-		text ~= "			null, ";
-		text ~= "			GConnectFlags.AFTER);";
-		text ~= "	connectedSignals[\""~signalName~"\"] = 1;";
-		text ~= "}";
-		text ~= "on"~duitSignalName~"Listeners ~= dlg;";
-		text ~= "}";
 	}
 	
 
@@ -853,7 +884,10 @@ public class DuitClass
 			text ~= "// imports for the signal processing"; 
 			text ~= "private import gobject.Signals;";
 			text ~= "private import gdk.typedefs;";
-			text ~= "int[char[]] connectedSignals;";
+			if ( !isInterface )
+			{
+				text ~= "int[char[]] connectedSignals;";
+			}
 			text ~= "";
 
 			needSignalImports = false;
@@ -921,7 +955,9 @@ public class DuitClass
 		}
 		else if ( startsWith(lines[1], "typedef enum") )
 		{
-			if ( !convParms.strictPrefix )
+			if ( !convParms.strictPrefix 
+				&& !isInterface
+				)
 			{
 				collectEnums(lines, convParms);
 			}
@@ -930,32 +966,46 @@ public class DuitClass
 				|| startsWith(lines[1], "struct")
 				)
 		{
-			if ( !convParms.strictPrefix )
+			if ( !convParms.strictPrefix 
+				&& !isInterface
+				)
 			{
 				collectStructs(lines, convParms);
 			}
 		}
 		else if ( startsWith(lines[0], "union") )
 		{
-			if ( !convParms.strictPrefix )
+			if ( !convParms.strictPrefix 
+				&& !isInterface
+				)
 			{
 				collectUnions(lines, convParms);
 			}
 		}
 		else if ( startsWith(lines[1], "typedef") )
 		{
-			if ( !convParms.strictPrefix )
+			if ( !convParms.strictPrefix 
+				&& !isInterface
+				)
 			{
 				collectAliases(lines, convParms);
 			}
 		}
 		else if ( startsWith(lines[0], "GTK_STOCK_") )
 		{
-			collectStockItems(lines, convParms);
+			if ( !isInterface )
+			{
+				collectStockItems(lines, convParms);
+			}
 		}
-		else if ( startsWith(lines[0], "G_TYPE_") && convParms.outFile == "Type" )
+		else if ( startsWith(lines[0], "G_TYPE_") 
+				&& convParms.outFile == "Type" 
+				)
 		{
-			collectGTypes(lines, convParms);
+			if ( !isInterface )
+			{
+				collectGTypes(lines, convParms);
+			}
 		}
 
 		return member;
@@ -1647,22 +1697,25 @@ public class DuitClass
 				debug(functName) writefln("funct name = %s", fun.name);
 				if ( fun.name.length==0 || fun.name[0] == '(' )
 				{
-					if ( !convParms.strictPrefix )
+					if ( !isInterface )
 					{
-						collectedFuncts ~= "";
-						// comment
-						if ( wrapper.includeComments() )
+						if ( !convParms.strictPrefix )
 						{
-							collectedFuncts ~= "/*";
-							while ( line<lines.length )
+							collectedFuncts ~= "";
+							// comment
+							if ( wrapper.includeComments() )
 							{
-								collectedFuncts ~= " * "~lines[line++];
+								collectedFuncts ~= "/*";
+								while ( line<lines.length )
+								{
+									collectedFuncts ~= " * "~lines[line++];
+								}
+								collectedFuncts ~= " */";
+								collectedFuncts ~= "// "~funct;
 							}
-							collectedFuncts ~= " */";
-							collectedFuncts ~= "// "~funct;
+							// body
+							collectedFuncts ~= getFunction(funct, convParms);
 						}
-						// body
-						collectedFuncts ~= getFunction(funct, convParms);
 					}
 				}
 				else // the regular function
@@ -1693,7 +1746,10 @@ public class DuitClass
 					}
 					else
 					{
-						externalDeclarations ~= fun.getExternal(convParms, wrapper.getAliases());
+						if ( !isInterface )
+						{
+							externalDeclarations ~= fun.getExternal(convParms, wrapper.getAliases());
+						}
 						// body
 						if ( !convParms.omitCode(fun.name) )
 						{
@@ -1701,31 +1757,34 @@ public class DuitClass
 							char[] duitDeclaration = stringToDuit(rawDeclaration,convParms,wrapper.getAliases());
 							debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, duitDeclaration);
 							addComments();
-							member ~= duitDeclaration;
-							member ~= "{";
-							member ~= "// "~funct;
-							version( noGtkBody )
+							member ~= duitDeclaration~iFaceChar;
+							if ( !isInterface )
 							{
-//								switch ( fun.typeWrap )
-//								{
-//									case "void": break;
-//									case "int", "uint", "bit", "long", "ulong"
-//										member ~= "return 0;";
-//										break;
-//										
-//									case "int", "uint", "bit", "long", "ulong"
-//										member ~= "return 0;";
-//										break;
-//										
-//									case "char[]": member ~= "return "";"; break;
-//									default: member ~= "return null;"; break;
-//								}
+								member ~= "{";
+								member ~= "// "~funct;
+								version( noGtkBody )
+								{
+//									switch ( fun.typeWrap )
+//									{
+//										case "void": break;
+//										case "int", "uint", "bit", "long", "ulong"
+//											member ~= "return 0;";
+//											break;
+//											
+//										case "int", "uint", "bit", "long", "ulong"
+//											member ~= "return 0;";
+//											break;
+//											
+//										case "char[]": member ~= "return "";"; break;
+//										default: member ~= "return null;"; break;
+//									}
+								}
+								else
+								{
+									member ~= fun.bod(convParms, wrapper.getAliases());
+								}
+								member ~= "}";
 							}
-							else
-							{
-								member ~= fun.bod(convParms, wrapper.getAliases());
-							}
-							member ~= "}";
 							checkIfDupFunction(fun);
 							checkIfGtkStructs(fun);
 						}
@@ -1856,11 +1915,9 @@ public class DuitClass
 				check(parm);
 			}
 		}
-		
 	}
 	
 	/**
-	 * Warps a function definition
 	 * Params:
 	 *    	line = 	The API line of the function
 	 *    	convParms = 	the Conversion parameters

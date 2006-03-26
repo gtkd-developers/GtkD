@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = Spawn
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_spawn_
  * omit structs:

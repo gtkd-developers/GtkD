@@ -27,8 +27,10 @@
  * strct   = GtkTreeSortable
  * realStrct=
  * clss    = TreeSortable
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_tree_sortable_
  * 	- gtk_

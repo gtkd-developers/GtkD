@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = Version
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- glib_
  * omit structs:

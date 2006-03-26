@@ -27,8 +27,10 @@
  * strct   = GdkRegion
  * realStrct=
  * clss    = Region
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_region_
  * omit structs:

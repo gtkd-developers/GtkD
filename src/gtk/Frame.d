@@ -27,8 +27,10 @@
  * strct   = GtkFrame
  * realStrct=
  * clss    = Frame
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_frame_
  * 	- gtk_

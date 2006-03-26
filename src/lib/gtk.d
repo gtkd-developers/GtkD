@@ -1516,6 +1516,9 @@ extern(C)
 	
 	// gtk.CellLayoutT
 	
+	
+	// gtk.CellLayoutT
+	
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gboolean expand)gtk_cell_layout_pack_start;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gboolean expand)gtk_cell_layout_pack_end;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gint position)gtk_cell_layout_reorder;

@@ -27,8 +27,10 @@
  * strct   = GtkLayout
  * realStrct=
  * clss    = Layout
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_layout_
  * 	- gtk_

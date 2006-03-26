@@ -27,8 +27,10 @@
  * strct   = AtkHypertext
  * realStrct=
  * clss    = Hypertext
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- atk_hypertext
  * omit structs:

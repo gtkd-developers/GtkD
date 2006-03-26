@@ -27,8 +27,10 @@
  * strct   = GtkImage
  * realStrct=
  * clss    = Image
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gtk_image_
  * 	- gtk_

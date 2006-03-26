@@ -27,8 +27,10 @@
  * strct   = GThread
  * realStrct=
  * clss    = Thread
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- g_thread_
  * omit structs:

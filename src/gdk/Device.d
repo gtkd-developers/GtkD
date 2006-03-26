@@ -27,8 +27,10 @@
  * strct   = GdkDevice
  * realStrct=
  * clss    = Device
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- gdk_device_
  * omit structs:

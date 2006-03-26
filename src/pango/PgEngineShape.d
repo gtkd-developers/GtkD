@@ -27,8 +27,10 @@
  * strct   = 
  * realStrct=
  * clss    = PgEngineShape
+ * interf  = 
  * template for:
  * extend  = 
+ * implements:
  * prefixes:
  * 	- script_engine_shape_
  * omit structs:
