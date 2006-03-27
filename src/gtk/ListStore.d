@@ -39,6 +39,7 @@
  * omit code:
  * 	- gtk_list_store_set
  * imports:
+ * 	- GtkTreeModel
  * 	- glib.Str
  * 	- gtk.TreeIter
  * 	- gobject.Value
@@ -55,6 +56,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import gtk.TreeModel;
 private import glib.Str;
 private import gtk.TreeIter;
 private import gobject.Value;

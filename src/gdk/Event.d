@@ -100,6 +100,18 @@ public class Event
 		this.gdkEvent = gdkEvent;
 	}
 	
+	public static bool isDoubleClick(GdkEventButton* eventButton, int buttonNumber=1)
+	{
+		return eventButton.button==buttonNumber
+		&& eventButton.type == EventType.DOUBLE_BUTTON_PRESS;
+	}
+	
+	public static bool isTrippleClick(GdkEventButton* eventButton, int buttonNumber=1)
+	{
+		return eventButton.button==buttonNumber
+		&& eventButton.type == EventType.TRIPPLE_BUTTON_PRESS;
+	}
+	
 	/**
 	 */
 	

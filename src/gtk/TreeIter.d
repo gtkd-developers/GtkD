@@ -40,6 +40,9 @@
  * 	- glib.Str
  * 	- gtk.TreeIter
  * 	- gtk.TreeModel
+ * 	- gtk.TreePath
+ * 	- gtk.TreeIterError
+ * 	- gobject.Value;
  * structWrap:
  * 	- GtkTreeIter* -> TreeIter
  * local aliases:
@@ -54,6 +57,9 @@ private import lib.gtk;
 private import glib.Str;
 private import gtk.TreeIter;
 private import gtk.TreeModel;
+private import gtk.TreePath;
+private import gtk.TreeIterError;
+private import gobject.Value;;
 
 /**
  * Description
@@ -213,6 +219,34 @@ public class TreeIter
 	}
 	
 	/**
+	 * this will be set only when the iter
+	 * is created from the model.
+	 */
+	GtkTreeModel *gtkTreeModel;
+	
+	public void setModel(GtkTreeModel *gtkTreeModel)
+	{
+		this.gtkTreeModel = gtkTreeModel;
+	}
+	
+	public void setModel(TreeModel treeModel)
+	{
+		this.gtkTreeModel = treeModel.getTreeModelStruct();
+	}
+	
+	public this(TreeModel treeModel, TreePath treePath)
+	{
+		this();
+		setModel(treeModel);
+		if ( gtk_tree_model_get_iter_from_string(
+		treeModel.getTreeModelStruct(),
+		getTreeIterStruct(), Str.toStringz(treePath.toString())) )
+		{
+			// ???
+		}
+	}
+	
+	/**
 	 * creates a new tree iteractor.
 	 * used TreeView.createIter and TreeView.append() to create iteractor for a tree or list
 	 */
@@ -220,6 +254,56 @@ public class TreeIter
 	{
 		this(new GtkTreeIter);
 	}
+	
+	
+	/**
+	 * Get Value
+	 * @param iter
+	 * @param column
+	 * @param value
+	 */
+	void getValue(int column, Value value)
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getValue","Tree model not set");
+		}
+		gtk_tree_model_get_value(gtkTreeModel, gtkTreeIter, column, value.getValueStruct());
+	}
+	
+	/**
+	 * Get the value of a column as a string
+	 * @para column the column number
+	 * @return a string representing the value of the column
+	 */
+	char[] getValueString(int column)
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getValueString","Tree model not set");
+		}
+		Value value = new Value();
+		gtk_tree_model_get_value(gtkTreeModel, gtkTreeIter, column, value.getValueStruct());
+		//printf("TreeIter.getValuaString = %.*s\n", value.getString().toString());
+		return value.getString();
+	}
+	
+	/**
+	 * Get the value of a column as an int
+	 * @para column the column number
+	 * @return a string representing the value of the column
+	 */
+	int getValueInt(int column)
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getValueInt", "Tree model not set");
+		}
+		Value value = new Value();
+		gtk_tree_model_get_value(gtkTreeModel, gtkTreeIter, column, value.getValueStruct());
+		return value.getInt();
+	}
+	
 	
 	
 	/**

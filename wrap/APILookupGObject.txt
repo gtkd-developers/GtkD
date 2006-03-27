@@ -221,6 +221,12 @@ structWrap: GObject* ObjectG
 import: gdk.Pixbuf
 
 code: start
+
+	public this()
+	{
+		this(new GValue);
+	}
+	
 	this(Pixbuf pixbuf)
 	{
 		GValue* v = new GValue;

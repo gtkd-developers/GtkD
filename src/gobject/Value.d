@@ -103,6 +103,11 @@ public class Value
 		this.gValue = gValue;
 	}
 	
+	public this()
+	{
+		this(new GValue);
+	}
+	
 	this(Pixbuf pixbuf)
 	{
 		GValue* v = new GValue;

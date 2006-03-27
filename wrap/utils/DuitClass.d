@@ -409,16 +409,19 @@ public class DuitClass
 		if ( convParms.clss.length > 0 )
 		{
 			getParent();
-			if ( duitParentName.length > 0 )
+			if ( duitParentName.length > 0 
+				&& duitParentNamePrefix.length > 0
+				)
 			{
 				text ~= "private import "~duitParentNamePrefix~"."~duitParentName~";\n";
 			}
-			text ~= getClassHeader(convParms, duitParentName);
-			char[] implements = getImplements(convParms, duitParentName);
-			if ( implements.length > 0 )
-			{
-				text ~= implements;
-			}
+			text ~= getClassHeader(convParms, duitParentName)
+					~ getImplements(convParms, duitParentName);
+//			char[] implements = getImplements(convParms, duitParentName);
+//			if ( implements.length > 0 )
+//			{
+//				text ~= implements;
+//			}
 			text ~= "{";
 		}
 
@@ -679,6 +682,10 @@ public class DuitClass
 			if ( count > 0 || parentName.length > 0)
 			{
 				impls ~= ", ";
+			}
+			else if ( count == 0 || parentName.length == 0)
+			{
+				impls ~= "/+implements+/ ";
 			}
 			impls ~= impl;
 		}
@@ -1285,8 +1292,8 @@ public class DuitClass
 						switch (v[0..3])
 						{
 							case "2BI": v = "TOO_"~v[1..v.length]; break;
-							case "2BU": v = "TWO_"~v[1..v.length]; break;
-							case "3BU": v = "THREE_"~v[1..v.length]; break;
+							case "2BU": v = "DOUBLE_"~v[1..v.length]; break;
+							case "3BU": v = "TRIPPLE_"~v[1..v.length]; break;
 							default:
 								// nothing
 								break;

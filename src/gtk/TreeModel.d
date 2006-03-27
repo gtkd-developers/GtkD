@@ -220,6 +220,28 @@ public class TreeModel
 	}
 	
 	/**
+	 * Get the value of a column as a char array.
+	 * this is the same calling getValue and get the string from the value object
+	 */
+	char[] getValueString(TreeIter iter, int column)
+	{
+		Value value = new Value();
+		getValue(iter, column, value);
+		return value.getString();
+	}
+	
+	/**
+	 * Get the value of a column as a char array.
+	 * this is the same calling getValue and get the int from the value object
+	 */
+	int getValueInt(TreeIter iter, int column)
+	{
+		Value value = new Value();
+		getValue(iter, column, value);
+		return value.getInt();
+	}
+	
+	/**
 	 */
 	
 	// imports for the signal processing

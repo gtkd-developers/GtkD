@@ -1253,6 +1253,9 @@ extern(C)
 	void function(GObject* proxy, GtkTreePath* path)gtk_tree_row_reference_deleted;
 	void function(GObject* proxy, GtkTreePath* path, GtkTreeIter* iter, gint* newOrder)gtk_tree_row_reference_reordered;
 	
+	// gtk.TreeIterError
+	
+	
 	// gtk.TreeSelection
 	
 	void function(GtkTreeSelection* selection, GtkSelectionMode type)gtk_tree_selection_set_mode;

@@ -115,6 +115,17 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Move the window to an absolute position.
+	 * just calls move(int, int).
+	 * convinience because GdkEvent structs return the position coords as doubles
+	 */
+	public void move(double x, double y)
+	{
+		move(cast(int)x, cast(int)y);
+	}
+	
+	
+	/**
 	 */
 	
 	// imports for the signal processing

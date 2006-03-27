@@ -232,6 +232,7 @@ private import gtk.TreeModel;
 private import gtk.TreeIter;
 private import gtk.TreePath;
 private import gtk.TreeRowReference;
+private import gtk.TreeIterError;
 private import gtk.TreeSelection;
 private import gtk.TreeViewColumn;
 private import gtk.TreeView;

@@ -618,6 +618,22 @@ import: gdk.Screen
 structWrap: GdkScreen* Screen
 import: gobject.Value
 structWrap: GValue* Value
+
+code: start
+	public static bool isDoubleClick(GdkEventButton* eventButton, int buttonNumber=1)
+	{
+		return eventButton.button==buttonNumber 
+				&& eventButton.type == EventType.DOUBLE_BUTTON_PRESS;
+	}
+
+	public static bool isTrippleClick(GdkEventButton* eventButton, int buttonNumber=1)
+	{
+		return eventButton.button==buttonNumber 
+				&& eventButton.type == EventType.TRIPPLE_BUTTON_PRESS;
+	}
+
+code: end
+
 outFile: Event
 
 file: gdk-Event-Structures.html
