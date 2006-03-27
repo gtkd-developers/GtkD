@@ -252,7 +252,7 @@ public enum GdkFunction
 	NOR,
 	SET
 }
-alias GdkFunction Function;
+alias GdkFunction Funct;
 
 /**
  * Determines how primitives are drawn.
