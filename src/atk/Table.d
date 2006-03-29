@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Table
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -377,7 +379,7 @@ public class Table
 	 *  a gint representing the number of columns, or 0
 	 * if value does not implement this interface.
 	 */
-	public int getN_Columns()
+	public int getNColumns()
 	{
 		// gint atk_table_get_n_columns (AtkTable *table);
 		return atk_table_get_n_columns(atkTable);
@@ -391,7 +393,7 @@ public class Table
 	 *  a gint representing the number of rows, or 0
 	 * if value does not implement this interface.
 	 */
-	public int getN_Rows()
+	public int getNRows()
 	{
 		// gint atk_table_get_n_rows (AtkTable *table);
 		return atk_table_get_n_rows(atkTable);

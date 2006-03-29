@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = InputDialog
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:

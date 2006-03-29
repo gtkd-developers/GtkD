@@ -252,7 +252,7 @@ public enum GdkFunction
 	NOR,
 	SET
 }
-alias GdkFunction Funct;
+alias GdkFunction Function;
 
 /**
  * Determines how primitives are drawn.
@@ -1667,10 +1667,10 @@ public struct GdkGCValues;
 // GdkPixmap *stipple;
 // GdkPixmap *clipMask;
 // GdkSubwindowMode subwindowMode;
-// int tsX_Origin;
-// int tsY_Origin;
-// int clipX_Origin;
-// int clipY_Origin;
+// int tsXOrigin;
+// int tsYOrigin;
+// int clipXOrigin;
+// int clipYOrigin;
 // int graphicsExposures;
 // int lineWidth;
 // GdkLineStyle lineStyle;

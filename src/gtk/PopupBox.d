@@ -1,45 +1,67 @@
 /*
- * This file is part of dui.
- * 
- * dui is free software; you can redistribute it and/or modify
+ * This file is part of duit.
+ *
+ * duit is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
- * 
- * dui is distributed in the hope that it will be useful,
+ *
+ * duit is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
- * along with dui; if not, write to the Free Software
+ * along with duit; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
+ 
+// generated automatically - do not change
+// find conversion definition on APILookup.txt
+// implement new conversion functionalities on the wrap.utils pakage
 
-module dui.PopupBox;
+/*
+ * Conversion parameters:
+ * outPack = gtk
+ * outFile = PopupBox
+ * strct   = 
+ * realStrct=
+ * clss    = PopupBox
+ * interf  = 
+ * class Code: Yes
+ * interface Code: No
+ * template for:
+ * extend  = 
+ * implements:
+ * prefixes:
+ * omit structs:
+ * omit prefixes:
+ * omit code:
+ * imports:
+ * 	- gtk.typedefs
+ * 	- gtk.MessageDialog;
+ * 	- gtk.Window;
+ * 	- gtk.typedefs
+ * structWrap:
+ * local aliases:
+ */
 
-private import gtk.MessageDialog;
-private import gtk.Window;
-private import gtk.StockItem;
+module gtk.PopupBox;
 
 private import gtk.typedefs;
-	
+
+private import lib.gtk;
+
+private import gtk.typedefs;
+private import gtk.MessageDialog;;
+private import gtk.Window;;
+private import gtk.typedefs;
+
 /**
- * A factory for common message dialogs.
- * プログラミング言語 D<BR>
- * プログラミング言語 D<BR>
- * 
- * 
- * Provides methods to create popup dialogs of type:<BR>
- * - information<BR>
- * - error<BR>
- * - yes/no<BR>
- * - yes/no/cancel<BR>
- * \todo - popup String input dialog
- * 
  */
 public class PopupBox
 {
+	
 	/**
 	 * Create an information popup dialog.
 	 * @param message The message to show on the dialog
@@ -59,9 +81,9 @@ public class PopupBox
 	public static void information(Window parent, char[] message, char[] title)
 	{
 		MessageDialog d = new MessageDialog(parent, 0,
-										MessageType.INFO,
-										ButtonsType.NONE ,
-										message);
+		MessageType.INFO,
+		ButtonsType.NONE ,
+		message);
 		d.setTitle(title);
 		d.addButton("gtk-dialog-info",GtkResponseType.GTK_RESPONSE_OK);
 		d.run();
@@ -88,9 +110,9 @@ public class PopupBox
 	public static void error(Window parent, char[] message, char[] title)
 	{
 		MessageDialog d = new MessageDialog(parent, 0,
-										MessageType.ERROR,
-										ButtonsType.NONE ,
-										message);
+		MessageType.ERROR,
+		ButtonsType.NONE ,
+		message);
 		d.setTitle(title);
 		d.addButton("gtk-dialog-error",ResponseType.GTK_RESPONSE_CANCEL);
 		d.run();
@@ -118,10 +140,10 @@ public class PopupBox
 	public static bool yesNo(Window parent, char[] message, char[] title)
 	{
 		MessageDialog d = new MessageDialog(
-				parent, 0,
-				MessageType.QUESTION,
-				ButtonsType.NONE ,
-				message);
+		parent, 0,
+		MessageType.QUESTION,
+		ButtonsType.NONE ,
+		message);
 		d.setTitle(title);
 		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);
 		d.addButton("gtk-yes",ResponseType.GTK_RESPONSE_YES);
@@ -129,7 +151,7 @@ public class PopupBox
 		d.destroy();
 		return responce == ResponseType.GTK_RESPONSE_YES;
 	}
-
+	
 	
 	/**
 	 * Create an 'yes', 'no' or 'cancel' popup dialog.
@@ -150,10 +172,10 @@ public class PopupBox
 	public static ResponseType yesNoCancel(Window parent, char[] message, char[] title)
 	{
 		MessageDialog d = new MessageDialog(
-				parent, 0,
-				MessageType.QUESTION,
-				ButtonsType.NONE ,
-				message);
+		parent, 0,
+		MessageType.QUESTION,
+		ButtonsType.NONE ,
+		message);
 		d.setTitle(title);
 		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);
 		d.addButton("gtk-yes",ResponseType.GTK_RESPONSE_YES);
@@ -162,5 +184,7 @@ public class PopupBox
 		d.destroy();
 		return responce;
 	}
-
+	
+	/**
+	 */
 }

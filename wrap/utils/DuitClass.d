@@ -518,17 +518,34 @@ public class DuitClass
 			}
 		}
 		
-		if ( convParms.classCode.length > 0 )
+		addStaticClassCode(convParms, text);
+		
+		return text;
+	
+	}
+
+	/**
+	 * Adds the class code from the conversion parameters.
+	 * If current output is a interface the body functions
+	 * will be removed (at least we'll try to remove it)
+	 * Params:
+	 *    	convParms = 	
+	 */
+	private void addStaticClassCode(ConvParms* convParms, inout char[][] text)
+	{
+		char[] code;
+		
+		if ( isInterface ) code = convParms.interfaceCode;
+		else code = convParms.classCode;
+		
+		if ( code.length > 0 )
 		{
 			text ~= "";
-			foreach ( char[] line ; std.string.splitlines(convParms.classCode))
+			foreach ( char[] line ; std.string.splitlines(code))
 			{
 				text ~= std.string.strip(line);
 			}
 		}
-		
-		return text;
-	
 	}
 	
 	private char[] castToParent(char[] var)
@@ -2300,7 +2317,7 @@ public class DuitClass
 			
 			if ( c > '\0' )
 			{
-				pc = c;
+				pc = gToken[pos];
 				converted ~= c;
 			}
 			++pos;

@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = PixbufFormat
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -340,7 +342,7 @@ public class PixbufFormat
 	 * See Also
 	 *  GdkPixbufLoader.
 	 */
-	public static GdkPixbufFormat* vvv(char[] filename, int* width, int* height)
+	public static GdkPixbufFormat* ccc (char[] filename, int* width, int* height)
 	{
 		// GdkPixbufFormat* gdk_pixbuf_get_file_info (const gchar *filename,  gint *width,  gint *height);
 		return gdk_pixbuf_get_file_info(Str.toStringz(filename), width, height);

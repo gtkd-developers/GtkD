@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Dialog
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:

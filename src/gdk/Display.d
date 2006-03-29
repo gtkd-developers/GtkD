@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Display
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -198,7 +200,7 @@ public class Display : ObjectG
 	 *  number of screens.
 	 * Since 2.2
 	 */
-	public int getN_Screens()
+	public int getNScreens()
 	{
 		// gint gdk_display_get_n_screens (GdkDisplay *display);
 		return gdk_display_get_n_screens(gdkDisplay);

@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Pixbuf
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -728,7 +730,7 @@ public class Pixbuf
 	 * Returns:
 	 *  Number of channels.
 	 */
-	public int getN_Channels()
+	public int getNChannels()
 	{
 		// int gdk_pixbuf_get_n_channels (const GdkPixbuf *pixbuf);
 		return gdk_pixbuf_get_n_channels(gdkPixbuf);

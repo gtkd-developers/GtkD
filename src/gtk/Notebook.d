@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Notebook
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -112,6 +114,13 @@ public class Notebook : Container
 	{
 		return appendPage(child, new Label(tabLabel));
 	}
+	
+	void setCurrentPage(Widget child)
+	{
+		gtk_notebook_set_current_page(gtkNotebook,gtk_notebook_page_num(gtkNotebook, child.getWidgetStruct()));
+	}
+	
+	
 	
 	/**
 	 */
@@ -650,7 +659,7 @@ public class Notebook : Container
 	 *  the number of pages in the notebook.
 	 * Since 2.2
 	 */
-	public int getN_Pages()
+	public int getNPages()
 	{
 		// gint gtk_notebook_get_n_pages (GtkNotebook *notebook);
 		return gtk_notebook_get_n_pages(gtkNotebook);

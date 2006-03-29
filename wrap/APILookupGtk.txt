@@ -804,6 +804,140 @@ code: end
 
 outFile: MessageDialog
 
+file: 
+class: PopupBox
+import: gtk.typedefs
+import: gtk.MessageDialog;
+import: gtk.Window;
+
+import: gtk.typedefs
+
+code: start
+	/**
+	 * Create an information popup dialog.
+	 * @param message The message to show on the dialog
+	 * @param title The title of the dialog
+	 */
+	public static void information(char[] message, char[] title)
+	{
+		information(null, message, title);
+	}
+	
+	/**
+	 * Create an information popup dialog.
+	 * @param parent The parent window of this popup dialog
+	 * @param message The message to show on the dialog
+	 * @param title The title of the dialog
+	 */
+	public static void information(Window parent, char[] message, char[] title)
+	{
+		MessageDialog d = new MessageDialog(parent, 0,
+										MessageType.INFO,
+										ButtonsType.NONE ,
+										message);
+		d.setTitle(title);
+		d.addButton("gtk-dialog-info",GtkResponseType.GTK_RESPONSE_OK);
+		d.run();
+		d.destroy();
+	}
+	
+	
+	/**
+	 * Create an error popup dialog.
+	 * @param message The message to show on the dialog
+	 * @param title The title of the dialog
+	 */
+	public static void error(char[] message, char[] title)
+	{
+		error(null, message, title);
+	}
+	
+	/**
+	 * Create an error popup dialog.
+	 * @param parent The parent window of this popup dialog
+	 * @param message The message to show on the dialog
+	 * @param title The title of the dialog
+	 */
+	public static void error(Window parent, char[] message, char[] title)
+	{
+		MessageDialog d = new MessageDialog(parent, 0,
+										MessageType.ERROR,
+										ButtonsType.NONE ,
+										message);
+		d.setTitle(title);
+		d.addButton("gtk-dialog-error",ResponseType.GTK_RESPONSE_CANCEL);
+		d.run();
+		d.destroy();
+	}
+	
+	
+	
+	/**
+	 * Create an 'yes' or 'no' popup dialog.
+	 * @param message The message to show on the dialog
+	 * @param title The title of the dialog
+	 */
+	public static bool yesNo(char[] message, char[] title)
+	{
+		return yesNo(null, message, title);
+	}
+	
+	/**
+	 * Create an 'yes' or 'no' popup dialog.
+	 * @param parent The parent window of this popup dialog
+	 * @param message The message to show on the dialog
+	 * @param title The title of the dialog
+	 */
+	public static bool yesNo(Window parent, char[] message, char[] title)
+	{
+		MessageDialog d = new MessageDialog(
+				parent, 0,
+				MessageType.QUESTION,
+				ButtonsType.NONE ,
+				message);
+		d.setTitle(title);
+		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);
+		d.addButton("gtk-yes",ResponseType.GTK_RESPONSE_YES);
+		int responce = d.run();
+		d.destroy();
+		return responce == ResponseType.GTK_RESPONSE_YES;
+	}
+
+	
+	/**
+	 * Create an 'yes', 'no' or 'cancel' popup dialog.
+	 * @param message The message to show on the dialog
+	 * @param title The title of the dialog
+	 */
+	public static ResponseType yesNoCancel(char[] message, char[] title)
+	{
+		return yesNoCancel(null, message, title);
+	}
+	
+	/**
+	 * Create an 'yes', 'no' or 'cancel' popup dialog.
+	 * @param parent The parent window of this popup dialog
+	 * @param message The message to show on the dialog
+	 * @param title The title of the dialog
+	 */
+	public static ResponseType yesNoCancel(Window parent, char[] message, char[] title)
+	{
+		MessageDialog d = new MessageDialog(
+				parent, 0,
+				MessageType.QUESTION,
+				ButtonsType.NONE ,
+				message);
+		d.setTitle(title);
+		d.addButton("gtk-no",ResponseType.GTK_RESPONSE_NO);
+		d.addButton("gtk-yes",ResponseType.GTK_RESPONSE_YES);
+		d.addButton("gtk-cancel",ResponseType.GTK_RESPONSE_CANCEL);
+		ResponseType responce = cast(ResponseType)d.run();
+		d.destroy();
+		return responce;
+	}
+code: end
+outFile: PopupBox
+
 file: GtkWindow.html
 struct: GtkWindow
 class: Window
@@ -1812,7 +1946,20 @@ code: start
 		);
 			
 	}
-	
+
+	/**
+	 * Obtain the entire text 
+	 * @return The text char[]
+	 */
+	char[] getText()
+	{
+		TextIter start = new TextIter();
+		TextIter end = new TextIter();
+		getBounds(start,end);
+		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
+	}
+
+
 code: end
 
 outFile: TextBuffer
@@ -1881,6 +2028,61 @@ import: gtk.TextChildAnchor
 structWrap: GtkTextChildAnchor* TextChildAnchor
 import: glib.ListG
 structWrap: GList* ListG
+
+code: start
+	/**
+	 * Get the text line at the pixel y
+	 */
+	char[] getLineTextAt(gint y)
+	{
+		
+		TextIter iter = new TextIter();
+		int windowX;
+		int windowY;
+		bufferToWindowCoords(TextWindowType.TEXT, 0, y, &windowX, &windowY);
+
+		gtk_text_view_get_line_at_y(gtkTextView, iter.getTextIterStruct(), y+y-windowY, null);
+		
+		TextIter iterEnd = new TextIter();
+		TextBuffer buffer = getBuffer();
+		buffer.getIterAtOffset(iterEnd, iter.getOffset()+iter.getCharsInLine());
+		return buffer.getText(iter, iterEnd, false);
+	}
+
+	/**
+	 * Simply appends some on the cursor position
+	 * @param text the text to append
+	 */
+	void insertText(char[] text)
+	{
+		TextBuffer buf = getBuffer();
+		buf.insertAtCursor(text);
+	}
+
+	/**
+	 * Simply appends some text to this view
+	 * @param text the text to append
+	 */
+	void appendText(char[] text, bool ensureVisible=true)
+	body
+	{
+		TextBuffer buf = getBuffer();
+		TextIter iter = new TextIter();
+		buf.getEndIter(iter);
+		buf.insert(iter, text);
+		if ( ensureVisible )
+		{
+			gdouble within_margin = 0.0;
+			bit use_align = false;
+			gdouble xalign = 0.0;
+			gdouble yalign = 0.0;
+			scrollToMark(buf.createMark("",iter,true), within_margin, use_align, xalign, yalign);
+		}
+	}
+
+
+code: end
+
 outFile: TextView
 
 struct: GtkTextChildAnchor
@@ -1911,6 +2113,25 @@ structWrap: GtkTreePath* TreePath
 import: gobject.Value
 structWrap: GValue* Value
 
+interfaceCode: start
+	/**
+	 * Get the value of a column as a char array.
+	 * this is the same calling getValue and get the string from the value object
+	 */
+	char[] getValueString(TreeIter iter, int column);
+
+	/**
+	 * Get the value of a column as a char array.
+	 * this is the same calling getValue and get the int from the value object
+	 */
+	int getValueInt(TreeIter iter, int column);
+
+	void setValue(TreeIter iter, int column, char[] value);
+
+	void setValue(TreeIter iter, int column, int value);
+
+interfaceCode: end
+
 code: start
 	/**
 	 * Get the value of a column as a char array.
@@ -1936,6 +2157,7 @@ code: start
 
 code: end
 
+#interface: TreeModelIF
 outFile: TreeModel
 
 struct: GtkTreeIter
@@ -2337,6 +2559,75 @@ code: start
 		return result;
 	}
 	
+
+	
+	/**
+	 * gets the first selected iter or null if no rows are selected
+	 */
+	TreeIter getSelectedIter()
+	{
+		TreeIter iter = new TreeIter();
+		TreeSelection selection = getSelection();
+		TreeModel model = getModel();
+		TreePath[] paths = selection.getSelectedRows(model);
+		if ( paths.length > 0 )
+		{
+			model.getIter(iter,paths[0]);
+		}
+		return iter;
+	}
+	
+	TreeIter[] getSelectedIters()
+	{
+		TreeIter[] iters;
+		
+		TreeIter iter = new TreeIter();
+		TreeSelection selection = getSelection();
+		TreeModel model = getModel();
+		TreePath[] paths = selection.getSelectedRows(model);
+		foreach ( TreePath p; selection.getSelectedRows(model) )
+		{
+			//iters.length = iters.length+1;
+			//iters[iters.length-1] = model.getIter(iter,p);
+			// iters ~= model.getIter(iter,p); >>> compile error can only concatenate arrays ???
+			if ( model.getIter(iter,p) )
+			{
+				iters ~= iter;
+				iter = new TreeIter();
+			}
+		}
+		
+		//printf("TreeView.getSelectedIters iters.lenght = %d\n", iters.length);
+		return iters;
+	}
+
+	/**
+	 * Inserts a column and sets it's attributes
+	 * @param position
+	 * @param title
+	 * @param renderer
+	 * @param editable
+	 * @return number of columns including the new one
+	 */
+	gint insertEditableColumn(int position, char[] title, CellRenderer renderer, bit editable)
+	{
+		// OK, this is a trick because of my ignorance on how to pass variable argument lists
+		if ( position < 0 )
+		{
+			position = getColumns().length();
+		}
+		int tot = gtk_tree_view_insert_column_with_attributes(
+			gtkTreeView, 
+			position, 
+			Str.toStringz(title),
+			renderer.getCellRendererStruct(),
+			Str.toStringz("text"),position,//v1.getV(),
+			Str.toStringz("editable"),2,0);//v.getV(),0);
+		return tot;
+	}
+
+
+	
 code: end
 
 outFile: TreeView
@@ -2579,7 +2870,7 @@ outFile: TreeNode
 file: GtkListStore.html
 struct: GtkListStore
 class: ListStore
-extend: TreeModel
+extend: GtkTreeModel
 prefix: gtk_list_store_
 prefix: gtk_
 import: gtk.TreeModel
@@ -2656,6 +2947,18 @@ code: start
 		}
 	}
 
+	void setValue(TreeIter iter, int column, char[] value)
+	{
+		Value v = new Value(value);
+		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+		//gtk_list_store_set_value(obj(), iter.getIter(), column, (GValue*)cChar(value));
+	}
+	
+	void setValue(TreeIter iter, int column, int value)
+	{
+		Value v = new Value(value);
+		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+	}
 
 code: end
 outFile: ListStore
@@ -2677,7 +2980,7 @@ import: gtk.TreeNode
 import: gdk.Pixbuf;
 import: gobject.Value;
 import: glib.Str
-
+import: gtk.TreeModel
 
 nocode: gtk_tree_store_set
 
@@ -2720,6 +3023,11 @@ code: start
 	void setValue(TreeIter iter, int column, char[] value)
 	{
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
+	}
+
+	void setValue(TreeIter iter, int column, int value)
+	{
+		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, (new Value(value)).getValueStruct() , -1);
 	}
 
 
@@ -2919,6 +3227,7 @@ file: GtkComboBoxEntry.html
 
 struct: GtkComboBoxEntry
 class: ComboBoxEntry
+implements: CellLayoutIF
 prefix: gtk_combo_box_entry_
 #noprefix: gtk_combo_box_entry_new_text
 #noprefix: gtk_combo_box_append_text
@@ -2927,11 +3236,17 @@ prefix: gtk_combo_box_entry_
 #noprefix: gtk_combo_box_remove_text
 import: gtk.TreeModel
 structWrap: GtkTreeModel* TreeModel
+import: glib.Str
+import: gtk.CellRenderer
+import: gtk.CellLayoutIF
+import: gtk.CellLayoutT
 
 nocode: gtk_combo_box_entry_new
 nocode: gtk_combo_box_entry_new_text
 
 code: start
+
+	mixin CellLayoutT!(GtkComboBoxEntry);
 	/**
 	 * Creates a new GtkComboBoxEntry which has a GtkEntry as child. After
 	 * construction, you should set a model using gtk_combo_box_set_model() and a
@@ -2982,6 +3297,26 @@ import: gtk.AccelGroup
 structWrap: GtkAccelGroup* AccelGroup
 import: glib.ListG
 structWrap: GList* ListG
+
+code: start
+	public void append(Widget widget)
+	{
+		super.append(widget);
+		return this;
+	}
+
+	/**
+	 * Popups up this menu
+	 * @param button ??? you can pass a button number here
+	 * @param activateTime ??? you can pass the time from an event here
+	 */
+	void popup(guint button, guint32 activateTime)
+	{
+		popup(null, null, null, null, button, activateTime);
+	}
+	
+
+code: end
 outFile: Menu
 
 file: GtkMenuBar.html
@@ -2996,7 +3331,7 @@ import: gtk.MenuItem;
 structWrap: GtkMenu* Menu
 structWrap: GtkMenuItem* MenuItem
 code: start
-	Menu append(char[] label, bit rightJustify=false)
+	Menu append(char[] label, bool rightJustify=false)
 	{
 		MenuItem item = new MenuItem(label);
 		super.append(item);
@@ -3039,12 +3374,21 @@ code: start
 	
 	
 	/**
-	 * Creates a new Item associated with a "activate" delagate and with a action code
+	 * Creates a new Item associated with a "activate" delegate and with a action code
 	 */
 	public this(void delegate(MenuItem) dlg, char[] label, char[] action, bit mnemonic=true)
 	{
 		this(label, mnemonic);
 		this.actionLabel = action;
+		addOnActivate(dlg);
+	}
+
+	/**
+	 * Creates a new Item associated with a "activate" delegate
+	 */
+	public this(void delegate(MenuItem) dlg, char[] label, bit mnemonic=true)
+	{
+		this(label, mnemonic);
 		addOnActivate(dlg);
 	}
 
@@ -3303,6 +3647,22 @@ code: start
 		// GtkToolbarStyle gtk_toolbar_get_style (GtkToolbar *toolbar);
 		return gtk_toolbar_get_style(gtkToolbar);
 	}
+
+	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
+	{
+		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, callback, userData, position);
+	}
+
+	public Widget insertStock(char[] stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
+	{
+		return insertStock(stockId, tooltipText, tooltipPrivateText, null, null, position);
+	}
+	
+	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
+	{
+		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, null, null, position);
+	}
+
 code: end
 outFile: Toolbar
 
@@ -3882,6 +4242,13 @@ alias GtkNotebookTab NotebookTab;
 		return appendPage(child, new Label(tabLabel));
 	}
 
+	void setCurrentPage(Widget child)
+	{
+		gtk_notebook_set_current_page(gtkNotebook,gtk_notebook_page_num(gtkNotebook, child.getWidgetStruct()));
+	}
+	
+
+
 code: end
 outFile: Notebook
 
@@ -4311,6 +4678,14 @@ class: ObjectGtk
 prefix: gtk_object_
 prefix: gtk_
 import: glib.Str
+
+code: star
+	public static char[] getId(StockID id)
+	{
+		return StockDesc[id];
+	}
+code: end
+
 outFile: ObjectGtk
 
 file: GtkPaned.html
@@ -4418,7 +4793,7 @@ structWrap: PangoContext* PgContext
 import: pango.PgFontDescription
 structWrap: PangoFontDescription* PgFontDescription
 import: gdk.Drawable
-
+import: gtk.Tooltips
 
 code: start
 
@@ -4498,6 +4873,17 @@ code: start
 		modifyFont(new PgFontDescription(family,size));
 	}
 	
+	/**
+	 * Sets this widget tooltip
+	 * @param tipText the tooltip
+	 * @param tipPrivate a private text
+	 */
+	void setTooltip(char[] tipText, char[] tipPrivate)
+	{
+		Tooltips tt = new Tooltips();
+		tt.setTip(this, tipText, tipPrivate);
+	}
+
 
 
 code: end

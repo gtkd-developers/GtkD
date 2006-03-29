@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Hyperlink
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -224,7 +226,7 @@ public class Hyperlink : ObjectG
 	 * Returns:
 	 *  the number of anchors associated with this hyperlink
 	 */
-	public int _GetN_Anchors()
+	public int _GetNAnchors()
 	{
 		// gint atk_hyperlink_get_n_anchors (AtkHyperlink *link_);
 		return atk_hyperlink_get_n_anchors(atkHyperlink);

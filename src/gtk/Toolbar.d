@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Toolbar
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -111,6 +113,21 @@ public class Toolbar : Container
 	{
 		// GtkToolbarStyle gtk_toolbar_get_style (GtkToolbar *toolbar);
 		return gtk_toolbar_get_style(gtkToolbar);
+	}
+	
+	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
+	{
+		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, callback, userData, position);
+	}
+	
+	public Widget insertStock(char[] stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
+	{
+		return insertStock(stockId, tooltipText, tooltipPrivateText, null, null, position);
+	}
+	
+	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
+	{
+		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, null, null, position);
 	}
 	
 	/**
@@ -320,7 +337,7 @@ public class Toolbar : Container
 	 *  the number of items on the toolbar
 	 * Since 2.4
 	 */
-	public int getN_Items()
+	public int getNItems()
 	{
 		// gint gtk_toolbar_get_n_items (GtkToolbar *toolbar);
 		return gtk_toolbar_get_n_items(gtkToolbar);

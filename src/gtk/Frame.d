@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Frame
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:

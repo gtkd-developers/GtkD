@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = TextView
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -116,6 +118,57 @@ public class TextView : Container
 		super(cast(GtkContainer*)gtkTextView);
 		this.gtkTextView = gtkTextView;
 	}
+	
+	/**
+	 * Get the text line at the pixel y
+	 */
+	char[] getLineTextAt(gint y)
+	{
+		
+		TextIter iter = new TextIter();
+		int windowX;
+		int windowY;
+		bufferToWindowCoords(TextWindowType.TEXT, 0, y, &windowX, &windowY);
+		
+		gtk_text_view_get_line_at_y(gtkTextView, iter.getTextIterStruct(), y+y-windowY, null);
+		
+		TextIter iterEnd = new TextIter();
+		TextBuffer buffer = getBuffer();
+		buffer.getIterAtOffset(iterEnd, iter.getOffset()+iter.getCharsInLine());
+		return buffer.getText(iter, iterEnd, false);
+	}
+	
+	/**
+	 * Simply appends some on the cursor position
+	 * @param text the text to append
+	 */
+	void insertText(char[] text)
+	{
+		TextBuffer buf = getBuffer();
+		buf.insertAtCursor(text);
+	}
+	
+	/**
+	 * Simply appends some text to this view
+	 * @param text the text to append
+	 */
+	void appendText(char[] text, bool ensureVisible=true)
+	body
+	{
+		TextBuffer buf = getBuffer();
+		TextIter iter = new TextIter();
+		buf.getEndIter(iter);
+		buf.insert(iter, text);
+		if ( ensureVisible )
+		{
+			gdouble within_margin = 0.0;
+			bit use_align = false;
+			gdouble xalign = 0.0;
+			gdouble yalign = 0.0;
+			scrollToMark(buf.createMark("",iter,true), within_margin, use_align, xalign, yalign);
+		}
+	}
+	
 	
 	/**
 	 */

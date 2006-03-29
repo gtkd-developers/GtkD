@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Hypertext
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -140,7 +142,7 @@ public class Hypertext
 	 * Returns:
 	 *  the number of links within this hypertext document
 	 */
-	public int _GetN_Links()
+	public int _GetNLinks()
 	{
 		// gint atk_hypertext_get_n_links (AtkHypertext *hypertext);
 		return atk_hypertext_get_n_links(atkHypertext);

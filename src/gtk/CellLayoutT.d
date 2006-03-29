@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = CellLayoutT
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * 	- TStruct
  * extend  = 

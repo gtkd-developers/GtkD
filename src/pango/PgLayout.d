@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = PgLayout
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -1110,7 +1112,7 @@ public class PgLayout
 	 * Returns:
 	 *  FALSE if x_pos was outside the line, TRUE if inside
 	 */
-	public static int lineX_ToIndex(PangoLayoutLine* line, int xPos, int* index, int* trailing)
+	public static int lineXToIndex(PangoLayoutLine* line, int xPos, int* index, int* trailing)
 	{
 		// gboolean pango_layout_line_x_to_index (PangoLayoutLine *line,  int x_pos,  int *index_,  int *trailing);
 		return pango_layout_line_x_to_index(line, xPos, index, trailing);
@@ -1146,7 +1148,7 @@ public class PgLayout
 	 * n_ranges:
 	 *  The number of ranges stored in ranges.
 	 */
-	public static void lineGetX_Ranges(PangoLayoutLine* line, int startIndex, int endIndex, int** ranges, int* nRanges)
+	public static void lineGetXRanges(PangoLayoutLine* line, int startIndex, int endIndex, int** ranges, int* nRanges)
 	{
 		// void pango_layout_line_get_x_ranges (PangoLayoutLine *line,  int start_index,  int end_index,  int **ranges,  int *n_ranges);
 		pango_layout_line_get_x_ranges(line, startIndex, endIndex, ranges, nRanges);

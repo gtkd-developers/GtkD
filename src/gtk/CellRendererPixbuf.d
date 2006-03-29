@@ -28,6 +28,8 @@
  * realStrct=GtkCellRendererPixbuf
  * clss    = CellRendererPixbuf
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:

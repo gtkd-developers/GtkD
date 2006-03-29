@@ -434,7 +434,7 @@ public class GtkWrapper : WrapperIF
 					  " openFile mergeFile closeFile outFile"
 					  " copy import structWrap alias"
 					  " noprefix nostruct nocode"
-					  " code"
+					  " code interfaceCode"
 					  ;
 		
 		while ( std.string.find(keys, key) > 0 )
@@ -465,6 +465,9 @@ public class GtkWrapper : WrapperIF
 					break;
 				case "code": 
 					convParms.classCode ~= loadText("code");
+					break;
+				case "interfaceCode": 
+					convParms.interfaceCode ~= loadText("interfaceCode");
 					break;
 				
 				case "openFile": 

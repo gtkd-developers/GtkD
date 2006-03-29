@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Text
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -592,7 +594,7 @@ public class Text
 	 *  The number of selected regions, or -1 if a failure
 	 *  occurred.
 	 */
-	public int getN_Selections()
+	public int getNSelections()
 	{
 		// gint atk_text_get_n_selections (AtkText *text);
 		return atk_text_get_n_selections(atkText);

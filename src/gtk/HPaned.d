@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = HPaned
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:

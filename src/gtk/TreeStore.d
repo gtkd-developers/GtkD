@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = TreeStore
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = GtkTreeModel
  * implements:
@@ -46,6 +48,7 @@
  * 	- gdk.Pixbuf;
  * 	- gobject.Value;
  * 	- glib.Str
+ * 	- gtk.TreeModel
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -65,6 +68,7 @@ private import gtk.TreeNode;
 private import gdk.Pixbuf;;
 private import gobject.Value;;
 private import glib.Str;
+private import gtk.TreeModel;
 
 /**
  * Description
@@ -141,6 +145,11 @@ public class TreeStore : TreeModel
 	void setValue(TreeIter iter, int column, char[] value)
 	{
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
+	}
+	
+	void setValue(TreeIter iter, int column, int value)
+	{
+		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, (new Value(value)).getValueStruct() , -1);
 	}
 	
 	

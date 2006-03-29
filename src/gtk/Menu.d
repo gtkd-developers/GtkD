@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Menu
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -134,6 +136,23 @@ public class Menu : MenuShell
 		super(cast(GtkMenuShell*)gtkMenu);
 		this.gtkMenu = gtkMenu;
 	}
+	
+	public void append(Widget widget)
+	{
+		super.append(widget);
+		return this;
+	}
+	
+	/**
+	 * Popups up this menu
+	 * @param button ??? you can pass a button number here
+	 * @param activateTime ??? you can pass the time from an event here
+	 */
+	void popup(guint button, guint32 activateTime)
+	{
+		popup(null, null, null, null, button, activateTime);
+	}
+	
 	
 	/**
 	 */

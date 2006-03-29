@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = StreamableContent
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -94,7 +96,7 @@ public class StreamableContent
 	 * Returns:
 	 *  a gint which is the number of mime types supported by the object.
 	 */
-	public int getN_MimeTypes()
+	public int getNMimeTypes()
 	{
 		// gint atk_streamable_content_get_n_mime_types  (AtkStreamableContent *streamable);
 		return atk_streamable_content_get_n_mime_types(atkStreamableContent);

@@ -787,7 +787,7 @@ public struct GParamSpecUnichar;
 public struct GParamSpecValueArray;
 // GParamSpec parentInstance;
 // GParamSpec *elementSpec;
-// uint fixedN_Elements;
+// uint fixedNElements;
 
 
 /**
@@ -810,7 +810,7 @@ public struct GParamSpecOverride;
  */
 public struct GParamSpecGType;
 // GParamSpec parentInstance;
-// GType isA_Type;
+// GType isAType;
 
 
 /**

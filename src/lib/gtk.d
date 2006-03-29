@@ -509,6 +509,9 @@ extern(C)
 	void function(GtkMessageDialog* messageDialog, gchar* messageFormat, ... )gtk_message_dialog_format_secondary_text;
 	void function(GtkMessageDialog* messageDialog, gchar* messageFormat, ... )gtk_message_dialog_format_secondary_markup;
 	
+	// gtk.PopupBox
+	
+	
 	// gtk.Window
 	
 	GtkWidget* function(GtkWindowType type)gtk_window_new;

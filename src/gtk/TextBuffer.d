@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = TextBuffer
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -388,6 +390,18 @@ public class TextBuffer : ObjectG
 		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),propertyValue.getBitmapStruct(),null)
 		);
 		
+	}
+	
+	/**
+	 * Obtain the entire text
+	 * @return The text char[]
+	 */
+	char[] getText()
+	{
+		TextIter start = new TextIter();
+		TextIter end = new TextIter();
+		getBounds(start,end);
+		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
 	}
 	
 	

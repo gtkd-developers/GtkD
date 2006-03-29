@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = ObjectG
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -167,6 +169,16 @@ public class ObjectG
 			std.gc.removeRoot(data);
 			//writefln("objectg.destroy exit");
 		}
+	}
+	
+	public void setProperty(char[] propertyName, int value)
+	{
+		setProperty(propertyName, new Value(value));
+	}
+	
+	public void setProperty(char[] propertyName, char[] value)
+	{
+		setProperty(propertyName, new Value(value));
 	}
 	
 	

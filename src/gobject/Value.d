@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Value
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -116,6 +118,19 @@ public class Value
 		v.data1.v_pointer = cast(void*)(pixbuf.getPixbufStruct());
 		this(v);
 	}
+	
+	this(char[] value)
+	{
+		this();
+		setString(value);
+	}
+	
+	this(int value)
+	{
+		this();
+		setInt(value);
+	}
+	
 	
 	/**
 	 * Description
@@ -1646,9 +1661,9 @@ public class Value
 	 * See Also
 	 * GParamSpec, GValue, g_object_class_install_property().
 	 */
-	public static ParamSpec gParamSpecGtype(char[] name, char[] nick, char[] blurb, GType isA_Type, GParamFlags flags)
+	public static ParamSpec gParamSpecGtype(char[] name, char[] nick, char[] blurb, GType isAType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_gtype (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType is_a_type,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isA_Type, flags) );
+		return new ParamSpec( g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isAType, flags) );
 	}
 }

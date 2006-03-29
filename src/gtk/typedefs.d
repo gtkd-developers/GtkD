@@ -2245,7 +2245,7 @@ public struct GtkTreeModelIface;
 // int *newOrder);
 // /+* Virtual Table +/
 // GtkTreeModelFlags (* getFlags) (GtkTreeModel *treeModel);
-// int (* getN_Columns) (GtkTreeModel *treeModel);
+// int (* getNColumns) (GtkTreeModel *treeModel);
 // GType (* getColumnType) (GtkTreeModel *treeModel,
 // int index);
 // int (* getIter) (GtkTreeModel *treeModel,
@@ -2264,7 +2264,7 @@ public struct GtkTreeModelIface;
 // GtkTreeIter *parent);
 // int (* iterHasChild) (GtkTreeModel *treeModel,
 // GtkTreeIter *iter);
-// int (* iterN_Children) (GtkTreeModel *treeModel,
+// int (* iterNChildren) (GtkTreeModel *treeModel,
 // GtkTreeIter *iter);
 // int (* iterNthChild) (GtkTreeModel *treeModel,
 // GtkTreeIter *iter,
@@ -2807,7 +2807,7 @@ public struct GtkFileSelection;
 // GtkWidget *fileopEntry;
 // char *fileopFile;
 // void* cmplState;
-// GtkWidget *fileopC_Dir;
+// GtkWidget *fileopCDir;
 // GtkWidget *fileopDelFile;
 // GtkWidget *fileopRenFile;
 // GtkWidget *buttonArea;

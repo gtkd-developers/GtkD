@@ -336,8 +336,8 @@ public struct cairo_font_extents_t;
 // double ascent;
 // double descent;
 // double height;
-// double maxX_Advance;
-// double maxY_Advance;
+// double maxXAdvance;
+// double maxYAdvance;
 
 
 /**
@@ -486,5 +486,4 @@ public struct cairo_path_data_t
 	struct {
 		double x, y;
 	} ;
-
 }

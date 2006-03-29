@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Widget
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -66,6 +68,7 @@
  * 	- pango.PgContext
  * 	- pango.PgFontDescription
  * 	- gdk.Drawable
+ * 	- gtk.Tooltips
  * structWrap:
  * 	- AtkObject* -> ObjectAtk
  * 	- GList* -> ListG
@@ -126,6 +129,7 @@ private import pango.PgLayout;
 private import pango.PgContext;
 private import pango.PgFontDescription;
 private import gdk.Drawable;
+private import gtk.Tooltips;
 
 /**
  * Description
@@ -245,6 +249,17 @@ public class Widget : ObjectGtk
 	public void modifyFont(char[] family, int size)
 	{
 		modifyFont(new PgFontDescription(family,size));
+	}
+	
+	/**
+	 * Sets this widget tooltip
+	 * @param tipText the tooltip
+	 * @param tipPrivate a private text
+	 */
+	void setTooltip(char[] tipText, char[] tipPrivate)
+	{
+		Tooltips tt = new Tooltips();
+		tt.setTip(this, tipText, tipPrivate);
 	}
 	
 	

@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = MenuItem
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -110,12 +112,21 @@ public class MenuItem : Item
 	
 	
 	/**
-	 * Creates a new Item associated with a "activate" delagate and with a action code
+	 * Creates a new Item associated with a "activate" delegate and with a action code
 	 */
 	public this(void delegate(MenuItem) dlg, char[] label, char[] action, bit mnemonic=true)
 	{
 		this(label, mnemonic);
 		this.actionLabel = action;
+		addOnActivate(dlg);
+	}
+	
+	/**
+	 * Creates a new Item associated with a "activate" delegate
+	 */
+	public this(void delegate(MenuItem) dlg, char[] label, bit mnemonic=true)
+	{
+		this(label, mnemonic);
 		addOnActivate(dlg);
 	}
 	

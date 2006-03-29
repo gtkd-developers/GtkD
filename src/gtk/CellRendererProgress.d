@@ -28,6 +28,8 @@
  * realStrct=GtkCellRendererProgress
  * clss    = CellRendererProgress
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:

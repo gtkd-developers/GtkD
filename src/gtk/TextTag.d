@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = TextTag
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:

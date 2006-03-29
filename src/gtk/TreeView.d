@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = TreeView
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -171,6 +173,75 @@ public class TreeView : Container
 		
 		return result;
 	}
+	
+	
+	
+	/**
+	 * gets the first selected iter or null if no rows are selected
+	 */
+	TreeIter getSelectedIter()
+	{
+		TreeIter iter = new TreeIter();
+		TreeSelection selection = getSelection();
+		TreeModel model = getModel();
+		TreePath[] paths = selection.getSelectedRows(model);
+		if ( paths.length > 0 )
+		{
+			model.getIter(iter,paths[0]);
+		}
+		return iter;
+	}
+	
+	TreeIter[] getSelectedIters()
+	{
+		TreeIter[] iters;
+		
+		TreeIter iter = new TreeIter();
+		TreeSelection selection = getSelection();
+		TreeModel model = getModel();
+		TreePath[] paths = selection.getSelectedRows(model);
+		foreach ( TreePath p; selection.getSelectedRows(model) )
+		{
+			//iters.length = iters.length+1;
+			//iters[iters.length-1] = model.getIter(iter,p);
+			// iters ~= model.getIter(iter,p); >>> compile error can only concatenate arrays ???
+			if ( model.getIter(iter,p) )
+			{
+				iters ~= iter;
+				iter = new TreeIter();
+			}
+		}
+		
+		//printf("TreeView.getSelectedIters iters.lenght = %d\n", iters.length);
+		return iters;
+	}
+	
+	/**
+	 * Inserts a column and sets it's attributes
+	 * @param position
+	 * @param title
+	 * @param renderer
+	 * @param editable
+	 * @return number of columns including the new one
+	 */
+	gint insertEditableColumn(int position, char[] title, CellRenderer renderer, bit editable)
+	{
+		// OK, this is a trick because of my ignorance on how to pass variable argument lists
+		if ( position < 0 )
+		{
+			position = getColumns().length();
+		}
+		int tot = gtk_tree_view_insert_column_with_attributes(
+		gtkTreeView,
+		position,
+		Str.toStringz(title),
+		renderer.getCellRendererStruct(),
+		Str.toStringz("text"),position,//v1.getV(),
+		Str.toStringz("editable"),2,0);//v.getV(),0);
+		return tot;
+	}
+	
+	
 	
 	
 	/**
@@ -1887,46 +1958,6 @@ public class TreeView : Container
 	
 	
 	
-	
-	/**
-	 * gets the first selected iter or null if no rows are selected
-	 */
-	TreeIter getSelectedIter()
-	{
-		TreeIter iter = new TreeIter();
-		TreeSelection selection = getSelection();
-		TreeModel model = getModel();
-		TreePath[] paths = selection.getSelectedRows(model);
-		if ( paths.length > 0 )
-		{
-			model.getIter(iter,paths[0]);
-		}
-		return iter;
-	}
-	
-	TreeIter[] getSelectedIters()
-	{
-		TreeIter[] iters;
-		
-		TreeIter iter = new TreeIter();
-		TreeSelection selection = getSelection();
-		TreeModel model = getModel();
-		TreePath[] paths = selection.getSelectedRows(model);
-		foreach ( TreePath p; selection.getSelectedRows(model) )
-		{
-			//iters.length = iters.length+1;
-			//iters[iters.length-1] = model.getIter(iter,p);
-			// iters ~= model.getIter(iter,p); >>> compile error can only concatenate arrays ???
-			if ( model.getIter(iter,p) )
-			{
-				iters ~= iter;
-				iter = new TreeIter();
-			}
-		}
-		
-		//printf("TreeView.getSelectedIters iters.lenght = %d\n", iters.length);
-		return iters;
-	}
 	
 	
 	

@@ -57,7 +57,7 @@ extern(C)
 	GType function(GType type)g_type_parent;
 	guint function(GType type)g_type_depth;
 	GType function(GType leafType, GType rootType)g_type_next_base;
-	gboolean function(GType type, GType isA_Type)g_type_is_a;
+	gboolean function(GType type, GType isAType)g_type_is_a;
 	gpointer function(GType type)g_type_class_ref;
 	gpointer function(GType type)g_type_class_peek;
 	gpointer function(GType type)g_type_class_peek_static;
@@ -264,7 +264,7 @@ extern(C)
 	GParamSpec* function(gchar* name, gchar* nick, gchar* blurb, gunichar defaultValue, GParamFlags flags)g_param_spec_unichar;
 	GParamSpec* function(gchar* name, gchar* nick, gchar* blurb, GParamSpec* elementSpec, GParamFlags flags)g_param_spec_value_array;
 	GParamSpec* function(gchar* name, GParamSpec* overridden)g_param_spec_override;
-	GParamSpec* function(gchar* name, gchar* nick, gchar* blurb, GType isA_Type, GParamFlags flags)g_param_spec_gtype;
+	GParamSpec* function(gchar* name, gchar* nick, gchar* blurb, GType isAType, GParamFlags flags)g_param_spec_gtype;
 	
 	// gobject.ParamSpec
 	

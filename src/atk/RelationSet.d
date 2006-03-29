@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = RelationSet
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -154,7 +156,7 @@ public class RelationSet : ObjectG
 	 * Returns:
 	 *  an integer representing the number of relations in the set.
 	 */
-	public int atkRelationSetGetN_Relations()
+	public int atkRelationSetGetNRelations()
 	{
 		// gint atk_relation_set_get_n_relations  (AtkRelationSet *set);
 		return atk_relation_set_get_n_relations(atkRelationSet);

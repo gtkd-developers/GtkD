@@ -201,6 +201,7 @@ private import gtk.Types;
 private import gtk.Dialog;
 private import gtk.Invisible;
 private import gtk.MessageDialog;
+private import gtk.PopupBox;
 private import gtk.Window;
 private import gtk.MainWindow;
 private import gtk.WindowGroup;

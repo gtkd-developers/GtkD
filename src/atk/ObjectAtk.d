@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = ObjectAtk
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -357,7 +359,7 @@ public class ObjectAtk : ObjectG
 	 *  an integer representing the number of accessible children
 	 * of the accessible.
 	 */
-	public int getN_AccessibleChildren()
+	public int getNAccessibleChildren()
 	{
 		// gint atk_object_get_n_accessible_children  (AtkObject *accessible);
 		return atk_object_get_n_accessible_children(atkObject);

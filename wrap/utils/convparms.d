@@ -44,7 +44,8 @@ public struct ConvParms
 	public char[][] noPrefixes;
 	public char[][] noCode;		/// insert the external declaration but not the wrapping code
 	public char[][char[]] aliases;
-	public char[] classCode;	/// any valid D code to be copied to the final Duit class
+	public char[] classCode;		/// any valid D code to be copied to the final Duit class
+	public char[] interfaceCode;	/// any valid D code to be copied to the final Duit interface
 	public char[][] text;		/// text to be added to the text read from the file
 
 	public void clearAll()
@@ -70,6 +71,7 @@ public struct ConvParms
 		noStructs.length = 0;
 		aliases = clear();
 		classCode.length = 0;
+		interfaceCode.length = 0;
 		text.length = 0;
 
 	}
@@ -86,6 +88,8 @@ public struct ConvParms
 		text ~= "\n * realStrct="~realStrct;
 		text ~= "\n * clss    = "~clss;
 		text ~= "\n * interf  = "~interf;
+		text ~= "\n * class Code: " ~ (classCode.length>0 ? "Yes" : "No");
+		text ~= "\n * interface Code: " ~ (interfaceCode.length>0 ? "Yes" : "No");
 		text ~= "\n * template for:";
 		foreach ( char[] tp ; templ )
 		{

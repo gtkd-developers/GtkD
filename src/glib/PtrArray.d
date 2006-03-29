@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = PtrArray
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:

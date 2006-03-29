@@ -28,9 +28,12 @@
  * realStrct=
  * clss    = ComboBoxEntry
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- CellLayoutIF
  * prefixes:
  * 	- gtk_combo_box_entry_
  * omit structs:
@@ -40,6 +43,10 @@
  * 	- gtk_combo_box_entry_new_text
  * imports:
  * 	- gtk.TreeModel
+ * 	- glib.Str
+ * 	- gtk.CellRenderer
+ * 	- gtk.CellLayoutIF
+ * 	- gtk.CellLayoutT
  * structWrap:
  * 	- GtkTreeModel* -> TreeModel
  * local aliases:
@@ -52,6 +59,10 @@ private import gtk.typedefs;
 private import lib.gtk;
 
 private import gtk.TreeModel;
+private import glib.Str;
+private import gtk.CellRenderer;
+private import gtk.CellLayoutIF;
+private import gtk.CellLayoutT;
 
 /**
  * Description
@@ -68,7 +79,7 @@ private import gtk.TreeModel;
  * with gtk_combo_box_entry_new_text().
  */
 private import gtk.ComboBox;
-public class ComboBoxEntry : ComboBox
+public class ComboBoxEntry : ComboBox, CellLayoutIF
 {
 	
 	/** the main Gtk struct */
@@ -96,6 +107,7 @@ public class ComboBoxEntry : ComboBox
 		this.gtkComboBoxEntry = gtkComboBoxEntry;
 	}
 	
+	mixin CellLayoutT!(GtkComboBoxEntry);
 	/**
 	 * Creates a new GtkComboBoxEntry which has a GtkEntry as child. After
 	 * construction, you should set a model using gtk_combo_box_set_model() and a

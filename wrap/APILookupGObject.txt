@@ -170,7 +170,18 @@ code: start
 			//writefln("objectg.destroy exit");
 		}
 	}
+
+	public void setProperty(char[] propertyName, int value)
+	{
+		setProperty(propertyName, new Value(value));
+	}
 	
+	public void setProperty(char[] propertyName, char[] value)
+	{
+		setProperty(propertyName, new Value(value));
+	}
+	
+
 code: end
 
 outFile: ObjectG
@@ -235,8 +246,21 @@ code: start
 		v.data1.v_pointer = cast(void*)(pixbuf.getPixbufStruct());
 		this(v);
 	}
+	
+	this(char[] value)
+	{
+		this();
+		setString(value);
+	}
 
-ode: end
+	this(int value)
+	{
+		this();
+		setInt(value);
+	}
+	
+
+code: end
 
 openFile: Value
 

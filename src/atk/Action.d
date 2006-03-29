@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Action
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -130,7 +132,7 @@ public class Action
 	 *  a the number of actions, or 0 if action does not
 	 * implement this interface.
 	 */
-	public int getN_Actions()
+	public int getNActions()
 	{
 		// gint atk_action_get_n_actions (AtkAction *action);
 		return atk_action_get_n_actions(atkAction);

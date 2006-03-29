@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = ObjectGtk
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -132,6 +134,11 @@ public class ObjectGtk : ObjectG
 	{
 		super(cast(GObject*)gtkObject);
 		this.gtkObject = gtkObject;
+	}
+	
+	public static char[] getId(StockID id)
+	{
+		return StockDesc[id];
 	}
 	
 	/**

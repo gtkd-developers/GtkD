@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = ListStore
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = GtkTreeModel
  * implements:
@@ -39,7 +41,7 @@
  * omit code:
  * 	- gtk_list_store_set
  * imports:
- * 	- GtkTreeModel
+ * 	- gtk.TreeModel
  * 	- glib.Str
  * 	- gtk.TreeIter
  * 	- gobject.Value
@@ -219,6 +221,18 @@ public class ListStore : TreeModel
 		}
 	}
 	
+	void setValue(TreeIter iter, int column, char[] value)
+	{
+		Value v = new Value(value);
+		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+		//gtk_list_store_set_value(obj(), iter.getIter(), column, (GValue*)cChar(value));
+	}
+	
+	void setValue(TreeIter iter, int column, int value)
+	{
+		Value v = new Value(value);
+		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
+	}
 	
 	/**
 	 */

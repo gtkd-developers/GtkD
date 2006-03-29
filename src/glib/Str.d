@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Str
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:

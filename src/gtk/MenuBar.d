@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = MenuBar
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -91,7 +93,7 @@ public class MenuBar : MenuShell
 		this.gtkMenuBar = gtkMenuBar;
 	}
 	
-	Menu append(char[] label, bit rightJustify=false)
+	Menu append(char[] label, bool rightJustify=false)
 	{
 		MenuItem item = new MenuItem(label);
 		super.append(item);

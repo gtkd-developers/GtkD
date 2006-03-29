@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = Type
  * interf  = 
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -251,10 +253,10 @@ public class Type
 	 * Returns:
 	 *  TRUE if type is_a is_a_type holds true.
 	 */
-	public static int isA(GType type, GType isA_Type)
+	public static int isA(GType type, GType isAType)
 	{
 		// gboolean g_type_is_a (GType type,  GType is_a_type);
-		return g_type_is_a(type, isA_Type);
+		return g_type_is_a(type, isAType);
 	}
 	
 	/**

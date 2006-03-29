@@ -28,6 +28,8 @@
  * realStrct=
  * clss    = TreeIterError
  * interf  = 
+ * class Code: Yes
+ * interface Code: No
  * template for:
  * extend  = Error
  * implements:
@@ -61,4 +63,7 @@ public class TreeIterError : Error
 	{
 		super("TreeIter."~method~" : "~message);
 	}
+	
+	/**
+	 */
 }
