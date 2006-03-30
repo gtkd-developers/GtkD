@@ -153,11 +153,25 @@ public class Dialog : Window
 		this.gtkDialog = gtkDialog;
 	}
 	
+	public Widget addButton(StockID stockID, int responseId)
+	{
+		return addButton(StockDesc[stockID], responseId);
+	}
+	
+	
 	public void addButtons(char[][] buttonsText, ResponseType[] responses)
 	{
 		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
 		{
 			addButton(buttonsText[i], responses[i]);
+		}
+	}
+	
+	public void addButtons(StockID[] stockIDs, ResponseType[] responses)
+	{
+		for ( int i=0 ; i<stockIDs.length && i<responses.length ; i++)
+		{
+			addButton(stockIDs[i], responses[i]);
 		}
 	}
 	

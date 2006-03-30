@@ -83,6 +83,11 @@ public class Spawn
 	int stdOut;
 	int stdErr;
 	
+	// for commandLineSync
+	int exitStatus;
+	char* strOutput;
+	char* strError;
+	
 	
 	void delegate(int, int) externalWatch;
 	
@@ -232,6 +237,41 @@ public class Spawn
 	{
 		if ( standardError is null ) return true;
 		return feof(standardError) != 0;
+	}
+	
+	char[] getOutputString()
+	{
+		return Str.toString(strOutput);
+	}
+	
+	char[] getErrorString()
+	{
+		return Str.toString(strError);
+	}
+	
+	int getExitStatus()
+	{
+		return exitStatus;
+	}
+	
+	public int commandLineSync()
+	{
+		char[] commandLine;
+		foreach ( int count, char[] arg; argv)
+		{
+			if ( count > 0 )
+			{
+				commandLine ~= ' ';
+			}
+			commandLine ~= arg;
+		}
+		return g_spawn_command_line_sync(
+		
+		Str.toStringz(commandLine),
+		&strOutput,
+		&strError,
+		&exitStatus,
+		&error);
 	}
 	
 	

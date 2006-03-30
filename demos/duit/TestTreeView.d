@@ -77,6 +77,7 @@ static char**  book_closed_xpm = [
  *  method (){ new A;}<br>
  * }<br>
  */
+ private import std.stdio;
 class TestTreeView : ScrolledWindow
 {
 	Image image;		
@@ -99,14 +100,21 @@ class TestTreeView : ScrolledWindow
 		TreeView treeView = setup();
 		addWithViewport(treeView);
 		
-		//Dispatcher.getDispatcher().addTreeViewListener(this,treeView);
-
+		treeView.addOnRowActivated(&rowActivatedCallback);
+		treeView.addOnMoveCursor(&moveCursorCallBack);
 	}
 	
-	void rowActivatedCallback(TreeView treeView, TreePath path, TreeViewColumn column)
+	void rowActivatedCallback(TreePath path, TreeViewColumn column, TreeView treeView)
 	{
 		printf("rowActivateCallback for %X \n",treeView);
 		printf("rowActivateCallback for path %.*s\n",path.toString());
+	}
+	
+	int moveCursorCallBack(GtkMovementStep step, int direction, TreeView treeView)
+	{
+		printf("moveCursorCallBack for %X \n",treeView);
+		printf("moveCursorCallBack row = %d \n",direction);
+		return false;
 	}
 	
 	TreeIter [12] h;

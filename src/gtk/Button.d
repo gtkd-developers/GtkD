@@ -194,6 +194,13 @@ public class Button : Bin
 		addOnClicked(dlg);
 	}
 	
+	public this(char[] label, void delegate(Button) dlg, char[] action)
+	{
+		this(label);
+		setAction(action);
+		addOnClicked(dlg);
+	}
+	
 	
 	/**
 	 */

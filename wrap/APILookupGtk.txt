@@ -664,11 +664,26 @@ import: gdk.Screen
 structWrap: GdkScreen* Screen
 
 code: start
+
+	public Widget addButton(StockID stockID, int responseId)
+	{
+		return addButton(StockDesc[stockID], responseId);
+	}
+	
+
 	public void addButtons(char[][] buttonsText, ResponseType[] responses)
 	{
 		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
 		{
 			addButton(buttonsText[i], responses[i]);
+		}
+	}
+	
+	public void addButtons(StockID[] stockIDs, ResponseType[] responses)
+	{
+		for ( int i=0 ; i<stockIDs.length && i<responses.length ; i++)
+		{
+			addButton(stockIDs[i], responses[i]);
 		}
 	}
 	
@@ -1342,7 +1357,15 @@ code: start
 		this(label, mnemonic);
 		addOnClicked(dlg);
 	}
+
+	public this(char[] label, void delegate(Button) dlg, char[] action)
+	{
+		this(label);
+		setAction(action);
+		addOnClicked(dlg);
+	}
 	
+
 code: end
 outFile: Button
 
@@ -1959,6 +1982,25 @@ code: start
 		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
 	}
 
+	/**
+	 * Create a new tag for this buffer
+	 * @param tagName can be null for no name
+	 * @param propertyName
+	 * @param propertyValue
+	 * @param propertyName2
+	 * @param propertyValue2
+	 */
+	TextTag createTag(char[] tagName, 
+			char[] propertyName, char[] propertyValue, 
+			char[] propertyName2, int propertyValue2)
+	{
+		return new TextTag(
+		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), 
+			Str.toStringz(propertyName), Str.toStringz(propertyValue), 
+			Str.toStringz(propertyName2), propertyValue2, null)
+		);
+	}
+	
 
 code: end
 
@@ -2029,7 +2071,16 @@ structWrap: GtkTextChildAnchor* TextChildAnchor
 import: glib.ListG
 structWrap: GList* ListG
 
+#text: start
+#gtk_text_view_get_type ()
+#
+#GType         gtk_text_view_get_type           ();
+#<hr>
+#text: end
+
+
 code: start
+
 	/**
 	 * Get the text line at the pixel y
 	 */
@@ -2132,6 +2183,8 @@ interfaceCode: start
 
 interfaceCode: end
 
+nocode: gtk_tree_model_get_iter
+
 code: start
 	/**
 	 * Get the value of a column as a char array.
@@ -2153,6 +2206,24 @@ code: start
 		Value value = new Value();
 		getValue(iter, column, value);
 		return value.getInt();
+	}
+
+		/**
+	 * Sets iter to a valid iterator pointing to path.
+	 * tree_model:
+	 *  A GtkTreeModel.
+	 * iter:
+	 *  The uninitialized GtkTreeIter.
+	 * path:
+	 *  The GtkTreePath.
+	 * Returns:
+	 *  TRUE, if iter was set.
+	 */
+	public int getIter(TreeIter iter, TreePath path)
+	{
+		// gboolean gtk_tree_model_get_iter (GtkTreeModel *tree_model,  GtkTreeIter *iter,  GtkTreePath *path);
+		iter.setModel(this);
+		return gtk_tree_model_get_iter(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), (path is null) ? null : path.getTreePathStruct());
 	}
 
 code: end
@@ -2260,6 +2331,81 @@ code: start
 		gtk_tree_model_get_value(gtkTreeModel, gtkTreeIter, column, value.getValueStruct());
 		return value.getInt();
 	}
+
+	TreePath getTreePath()
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getTreePath","Tree model not set");
+		}
+		return new TreePath(gtk_tree_model_get_path(gtkTreeModel, gtkTreeIter));
+	}
+
+		/**
+	 * This return the path visible to the user.
+	 */
+	char[] getVisiblePath(char[] separator)
+	{
+		char[] vPath;
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getVisiblePath", "Tree model not set");
+		}
+
+		vPath = getValueString(0);
+		TreeIter parent = getParent();
+		while ( parent !is  null )
+		{
+			//printf("TreeIter.getVisiblePath parent = %.*s\n",parent.getValueString(0).toString());
+			vPath = parent.getValueString(0) ~ separator ~ vPath;
+			parent = parent.getParent();
+		}
+		
+		//printf("TreeIter.getVisiblePath = %.*s\n", vPath.toString());
+		
+		return vPath;
+	}
+	
+	/**
+	 * Gets the parent of this iter
+	 * @param child
+	 * @return the parent iter or null if can't get parent or an error occured
+	 */
+	TreeIter getParent()
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getParent", "Tree model not set");
+		}
+		TreeIter parent = new TreeIter();
+		bool gotParent = gtk_tree_model_iter_parent(gtkTreeModel, parent.getTreeIterStruct(), gtkTreeIter) == 0 ? false : true;
+		if ( !gotParent )
+		{
+			return null;
+		}
+		parent.setModel(gtkTreeModel);
+		return parent;
+	}
+
+
+	TreeIter getGrandParent()
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getGrandParent", "Tree model not set");
+		}
+		TreeIter grandParent = this;
+		TreeIter parent = grandParent.getParent();
+		while ( parent !is null )
+		{
+			grandParent = parent;
+			parent = grandParent.getParent();
+		}
+		
+		return grandParent;
+	}
+
+
 
 	
 
@@ -2998,8 +3144,11 @@ code: start
 	public this (GType[] types)
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		this(cast(GtkTreeStore*)gtk_tree_store_newv(types.length, types) );
+		this(cast(GtkTreeStore*)gtk_tree_store_newv(
+				types.length, cast(GType*)(&types[0])) 
+			);
 	}
+	
 	
 
 	/**
@@ -3179,6 +3328,11 @@ nocode: gtk_combo_box_new
 nocode:gtk_combo_box_new_text
 
 code: start
+
+	private int count = 0;
+	public int maxCount = 0;
+	
+
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkComboBox);
 
@@ -3208,6 +3362,75 @@ code: start
 			this(cast(GtkComboBox*)gtk_combo_box_new() );
 		}
 	}
+
+	public void setActiveText(char[] text, bool insert=false)
+	{
+		int currActive = getActive();
+		int active = 0;
+		setActive(active);
+		bool found = false;
+		while ( !found && active==getActive)
+		{
+			found = text==getActiveText();
+			++active;
+		}
+		if ( !found )
+		{
+			if ( insert )
+			{
+				appendText(text);
+				setActive(active);
+			}
+			else
+			{
+				//setActive(currActive);
+				setActive(-1);
+			}
+		}
+	}
+
+
+	int getIndex(char[] text)
+	{
+		TreeIter iter = new TreeIter();
+		TreeModel model = getModel();
+		int index = 0;
+		bit found = false;
+		bit end = false;
+		if ( model.getIterFirst(iter) )
+		{
+			while ( !end && iter !is  null && !found )
+			{
+				found = iter.getValueString(0) == text;
+				if ( !found )
+				{
+					end = !model.iterNext(iter);
+					++index;
+				}
+			}
+		}
+		else
+		{
+			end = true;
+		}
+		return end ? -1 : index;
+	}
+
+	void prependOrReplaceText(char[] text)
+	{
+		int index = getIndex(text);
+		if ( index > 0 )
+		{
+			removeText(index);
+			prependText(text);
+		}
+		else if ( index == -1 )
+		{
+			prependText(text);
+		}
+	}
+
+
 code: end
 outFile: ComboBox
 
@@ -3297,12 +3520,12 @@ import: gtk.AccelGroup
 structWrap: GtkAccelGroup* AccelGroup
 import: glib.ListG
 structWrap: GList* ListG
+import: gtk.MenuItem
 
 code: start
 	public void append(Widget widget)
 	{
 		super.append(widget);
-		return this;
 	}
 
 	/**
@@ -3315,6 +3538,37 @@ code: start
 		popup(null, null, null, null, button, activateTime);
 	}
 	
+	/**
+	 * Creates and append a submenu to this menu.
+	 * This menu item that actualy has the sub menu is also created.
+	 * @param label the sub menu item label
+	 * @return the new menu
+	 */
+	Menu appendSubmenu(char[] label)
+	{
+		MenuItem item = new MenuItem(label);
+		append(item);
+		Menu submenu = new Menu();
+		item.setSubmenu(submenu);
+		return submenu;
+	}
+
+	void appendSubmenu(char[] label, Menu submenu)
+	{
+		MenuItem item = new MenuItem(label);
+		append(item);
+		item.setSubmenu(submenu);
+	}
+
+	Menu prependSubmenu(char[] label)
+	{
+		MenuItem item = new MenuItem(label);
+		prepend(item);
+		Menu submenu = new Menu();
+		item.setSubmenu(submenu);
+		return submenu;
+	}
+
 
 code: end
 outFile: Menu
@@ -3339,6 +3593,11 @@ code: start
 		Menu menu= new Menu();
 		item.setSubmenu(menu);
 		return menu;
+	}
+
+	public void append(Widget widget)
+	{
+		super.append(widget);
 	}
 code: end
 outFile: MenuBar
@@ -3372,6 +3631,18 @@ code: start
 		return actionLabel;
 	}
 	
+	/**
+	 * Creates a new menu item with a label and a listener and a action.
+	 * used for backward compatibily with DUI.
+	 */
+	this(char[] label, void delegate(MenuItem)dlg, char[] action)
+	{
+		this(label);
+		this.actionLabel = action;
+		addOnActivate(dlg);
+	}
+	
+
 	
 	/**
 	 * Creates a new Item associated with a "activate" delegate and with a action code
@@ -3631,8 +3902,10 @@ prefix: gtk_toolbar_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
+import: gtk.Button
 structWrap: GtkWidget* Widget
 nocode: gtk_toolbar_get_style
+
 code: start
 	/**
 	 * Retrieves whether the toolbar has text, icons, or both . See
@@ -3661,6 +3934,22 @@ code: start
 	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
 	{
 		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, null, null, position);
+	}
+
+	Button insertButton(StockID stockID,
+			char[] tooltipText, char[] tooltipPrivateText,
+			gint position)
+	{
+		Button button = new Button(
+				cast(GtkButton*)gtk_toolbar_insert_stock(
+					gtkToolbar,
+					Str.toStringz(StockDesc[stockID]),
+					Str.toStringz(tooltipText), 
+					Str.toStringz(tooltipPrivateText), 
+					null, null, 
+					position)
+			);
+		return button;
 	}
 
 code: end
@@ -4115,6 +4404,45 @@ struct: GtkAlignment
 class: Alignment
 prefix: gtk_alignment_
 prefix: gtk_
+import: gtk.Widget
+
+code: start
+	public static Alignment center(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment north(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment south(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 1.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment east(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment west(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+code: end
 outFile: Alignment
 
 file: GtkAspectFrame.html
@@ -4196,6 +4524,22 @@ class: HPaned
 prefix: gtk_hpaned_
 prefix: gtk_
 structWrap: GtkWidget* Widget
+import: gtk.Widget
+
+code: start
+	/**
+	 * Creates a new HPaned and adds two widgets as it's children
+	 * @param child1
+	 * @param child2
+	 */
+	this(Widget child1, Widget child2)
+	{
+		this();
+		add1(child1);
+		add2(child2);
+	}
+	
+code: end
 outFile: HPaned
 
 file: GtkVPaned.html
@@ -4203,6 +4547,22 @@ struct: GtkVPaned
 class: VPaned
 prefix: gtk_vpaned_
 prefix: gtk_
+import: gtk.Widget
+
+code: start
+	/**
+	 * Creates a new HPaned and adds two widgets as it's children
+	 * @param child1
+	 * @param child2
+	 */
+	this(Widget child1, Widget child2)
+	{
+		this();
+		add1(child1);
+		add2(child2);
+	}
+	
+code: end
 outFile: VPaned
 
 file: GtkLayout.html
@@ -4260,7 +4620,18 @@ structWrap: GtkWidget* Widget
 prefix: gtk_table_
 prefix: gtk_
 
+nocode: gtk_table_new
+
 code: start
+
+	int row;
+	int col;
+	int maxRows;
+	int maxCols;
+
+	public AttachOptions defaultXOption = AttachOptions.SHRINK;
+	public AttachOptions defaultYOption = AttachOptions.SHRINK;
+	
 	/**
 	 * Removes all children and resizes the table to 1,1
 	 */
@@ -4270,6 +4641,49 @@ code: start
 		resize(1,1);
 	}
 	
+	/**
+	 * Used to create a new table widget. An initial size must be given by
+	 * specifying how many rows and columns the table should have, although
+	 * this can be changed later with gtk_table_resize(). rows and columns
+	 * must both be in the range 0 .. 65535.
+	 * rows:
+	 * The number of rows the new table should have.
+	 * columns:
+	 * The number of columns the new table should have.
+	 * homogeneous:
+	 * If set to TRUE, all table cells are resized to the size of the cell
+	 * containing the largest widget.
+	 * Returns:
+	 * A pointer to the the newly created table widget.
+	 */
+	public this (uint rows, uint columns, int homogeneous)
+	{
+		// GtkWidget* gtk_table_new (guint rows,  guint columns,  gboolean homogeneous);
+		this(cast(GtkTable*)gtk_table_new(rows, columns, homogeneous) );
+		row = 0;
+		col = 0;
+		maxRows = rows;
+		maxCols = columns;
+	}
+	
+
+	/**
+	 * Attach a new widget creating a new row if necessary
+	 */
+	void attach(Widget child)
+	{
+		attach(child, col, col + 1, row, row + 1,
+				defaultXOption, defaultYOption,
+				getDefaultColSpacing(), getDefaultRowSpacing());
+		++col;
+		if (col >= maxCols)
+		{
+			col = 0;
+			++row;
+		}
+	}
+
+
 code: end
 outFile: Table
 
@@ -4695,6 +5109,16 @@ prefix: gtk_paned_
 prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+
+code: start
+
+	public void add(Widget child1, Widget child2)
+	{
+		add1(child1);
+		add2(child2);
+	}
+
+code: end
 outFile: Paned
 
 file: GtkRange.html

@@ -28,7 +28,7 @@
  * realStrct=
  * clss    = Paned
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -125,6 +125,12 @@ public class Paned : Container
 	{
 		super(cast(GtkContainer*)gtkPaned);
 		this.gtkPaned = gtkPaned;
+	}
+	
+	public void add(Widget child1, Widget child2)
+	{
+		add1(child1);
+		add2(child2);
 	}
 	
 	/**

@@ -45,6 +45,7 @@
  * 	- gdk.Screen
  * 	- gtk.AccelGroup
  * 	- glib.ListG
+ * 	- gtk.MenuItem
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkScreen* -> Screen
@@ -64,6 +65,7 @@ private import gtk.Widget;
 private import gdk.Screen;
 private import gtk.AccelGroup;
 private import glib.ListG;
+private import gtk.MenuItem;
 
 /**
  * Description
@@ -140,7 +142,6 @@ public class Menu : MenuShell
 	public void append(Widget widget)
 	{
 		super.append(widget);
-		return this;
 	}
 	
 	/**
@@ -151,6 +152,37 @@ public class Menu : MenuShell
 	void popup(guint button, guint32 activateTime)
 	{
 		popup(null, null, null, null, button, activateTime);
+	}
+	
+	/**
+	 * Creates and append a submenu to this menu.
+	 * This menu item that actualy has the sub menu is also created.
+	 * @param label the sub menu item label
+	 * @return the new menu
+	 */
+	Menu appendSubmenu(char[] label)
+	{
+		MenuItem item = new MenuItem(label);
+		append(item);
+		Menu submenu = new Menu();
+		item.setSubmenu(submenu);
+		return submenu;
+	}
+	
+	void appendSubmenu(char[] label, Menu submenu)
+	{
+		MenuItem item = new MenuItem(label);
+		append(item);
+		item.setSubmenu(submenu);
+	}
+	
+	Menu prependSubmenu(char[] label)
+	{
+		MenuItem item = new MenuItem(label);
+		prepend(item);
+		Menu submenu = new Menu();
+		item.setSubmenu(submenu);
+		return submenu;
 	}
 	
 	

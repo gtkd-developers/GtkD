@@ -306,6 +306,81 @@ public class TreeIter
 		return value.getInt();
 	}
 	
+	TreePath getTreePath()
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getTreePath","Tree model not set");
+		}
+		return new TreePath(gtk_tree_model_get_path(gtkTreeModel, gtkTreeIter));
+	}
+	
+	/**
+	 * This return the path visible to the user.
+	 */
+	char[] getVisiblePath(char[] separator)
+	{
+		char[] vPath;
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getVisiblePath", "Tree model not set");
+		}
+		
+		vPath = getValueString(0);
+		TreeIter parent = getParent();
+		while ( parent !is  null )
+		{
+			//printf("TreeIter.getVisiblePath parent = %.*s\n",parent.getValueString(0).toString());
+			vPath = parent.getValueString(0) ~ separator ~ vPath;
+			parent = parent.getParent();
+		}
+		
+		//printf("TreeIter.getVisiblePath = %.*s\n", vPath.toString());
+		
+		return vPath;
+	}
+	
+	/**
+	 * Gets the parent of this iter
+	 * @param child
+	 * @return the parent iter or null if can't get parent or an error occured
+	 */
+	TreeIter getParent()
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getParent", "Tree model not set");
+		}
+		TreeIter parent = new TreeIter();
+		bool gotParent = gtk_tree_model_iter_parent(gtkTreeModel, parent.getTreeIterStruct(), gtkTreeIter) == 0 ? false : true;
+		if ( !gotParent )
+		{
+			return null;
+		}
+		parent.setModel(gtkTreeModel);
+		return parent;
+	}
+	
+	
+	TreeIter getGrandParent()
+	{
+		if ( gtkTreeModel  is  null )
+		{
+			throw new TreeIterError("getGrandParent", "Tree model not set");
+		}
+		TreeIter grandParent = this;
+		TreeIter parent = grandParent.getParent();
+		while ( parent !is null )
+		{
+			grandParent = parent;
+			parent = grandParent.getParent();
+		}
+		
+		return grandParent;
+	}
+	
+	
+	
 	
 	
 	/**

@@ -1226,6 +1226,7 @@ public class DuitClass
 			)
 		{
 			duitEnumName = enumName[3..enumName.length];
+			if ( duitEnumName == "Function" ) duitEnumName = "Funct";
 		}
 		else if ( startsWith(enumName, "G") )
 		{

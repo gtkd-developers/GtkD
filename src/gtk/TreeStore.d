@@ -120,9 +120,15 @@ public class TreeStore : TreeModel
 	public this (GType[] types)
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		this(cast(GtkTreeStore*)gtk_tree_store_newv(types.length, types) );
+		g_type_init();
+		this(
+			cast(GtkTreeStore*)gtk_tree_store_newv(
+				types.length, cast(GType*)(&types[0])
+			)
+		);
 	}
 	
+private import lib.gobject;
 	
 	/**
 	 * Creates a top level iteractor.

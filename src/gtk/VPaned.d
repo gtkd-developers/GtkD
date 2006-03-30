@@ -28,7 +28,7 @@
  * realStrct=
  * clss    = VPaned
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,6 +40,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- gtk.Widget
  * structWrap:
  * local aliases:
  */
@@ -50,6 +51,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import gtk.Widget;
 
 /**
  * Description
@@ -86,6 +88,19 @@ public class VPaned : Paned
 		super(cast(GtkPaned*)gtkVPaned);
 		this.gtkVPaned = gtkVPaned;
 	}
+	
+	/**
+	 * Creates a new HPaned and adds two widgets as it's children
+	 * @param child1
+	 * @param child2
+	 */
+	this(Widget child1, Widget child2)
+	{
+		this();
+		add1(child1);
+		add2(child2);
+	}
+	
 	
 	/**
 	 */

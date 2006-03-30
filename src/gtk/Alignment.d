@@ -28,7 +28,7 @@
  * realStrct=
  * clss    = Alignment
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,6 +40,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- gtk.Widget
  * structWrap:
  * local aliases:
  */
@@ -50,6 +51,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import gtk.Widget;
 
 /**
  * Description
@@ -92,6 +94,42 @@ public class Alignment : Bin
 		super(cast(GtkBin*)gtkAlignment);
 		this.gtkAlignment = gtkAlignment;
 	}
+	
+	public static Alignment center(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment north(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment south(Widget widget)
+	{
+		Alignment a = new Alignment(0.5, 1.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment east(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
+	public static Alignment west(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+	
 	
 	/**
 	 */

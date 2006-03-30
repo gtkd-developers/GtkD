@@ -404,6 +404,25 @@ public class TextBuffer : ObjectG
 		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, start.getTextIterStruct(), end.getTextIterStruct(), true));
 	}
 	
+	/**
+	 * Create a new tag for this buffer
+	 * @param tagName can be null for no name
+	 * @param propertyName
+	 * @param propertyValue
+	 * @param propertyName2
+	 * @param propertyValue2
+	 */
+	TextTag createTag(char[] tagName,
+	char[] propertyName, char[] propertyValue,
+	char[] propertyName2, int propertyValue2)
+	{
+		return new TextTag(
+		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName),
+		Str.toStringz(propertyName), Str.toStringz(propertyValue),
+		Str.toStringz(propertyName2), propertyValue2, null)
+		);
+	}
+	
 	
 	/**
 	 */

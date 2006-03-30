@@ -103,6 +103,11 @@ public class MenuBar : MenuShell
 		return menu;
 	}
 	
+	public void append(Widget widget)
+	{
+		super.append(widget);
+	}
+	
 	/**
 	 */
 	

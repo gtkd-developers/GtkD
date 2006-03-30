@@ -39,6 +39,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_table_new
  * imports:
  * 	- gtk.Widget
  * structWrap:
@@ -99,6 +100,14 @@ public class Table : Container
 		this.gtkTable = gtkTable;
 	}
 	
+	int row;
+	int col;
+	int maxRows;
+	int maxCols;
+	
+	public AttachOptions defaultXOption = AttachOptions.SHRINK;
+	public AttachOptions defaultYOption = AttachOptions.SHRINK;
+	
 	/**
 	 * Removes all children and resizes the table to 1,1
 	 */
@@ -107,13 +116,6 @@ public class Table : Container
 		super.removeAll();
 		resize(1,1);
 	}
-	
-	
-	/**
-	 */
-	
-	
-	
 	
 	/**
 	 * Used to create a new table widget. An initial size must be given by
@@ -134,7 +136,36 @@ public class Table : Container
 	{
 		// GtkWidget* gtk_table_new (guint rows,  guint columns,  gboolean homogeneous);
 		this(cast(GtkTable*)gtk_table_new(rows, columns, homogeneous) );
+		row = 0;
+		col = 0;
+		maxRows = rows;
+		maxCols = columns;
 	}
+	
+	
+	/**
+	 * Attach a new widget creating a new row if necessary
+	 */
+	void attach(Widget child)
+	{
+		attach(child, col, col + 1, row, row + 1,
+		defaultXOption, defaultYOption,
+		getDefaultColSpacing(), getDefaultRowSpacing());
+		++col;
+		if (col >= maxCols)
+		{
+			col = 0;
+			++row;
+		}
+	}
+	
+	
+	/**
+	 */
+	
+	
+	
+	
 	
 	/**
 	 * If you need to change a table's size after it has been created, this function allows you to do so.

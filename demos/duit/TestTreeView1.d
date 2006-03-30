@@ -69,6 +69,7 @@ public class TestTreeView1 : VBox
 		TreeView treeView2 = setup2();
 		populate(testTreeStore2);
 
+		treeView2.addOnMoveCursor(&moveCursorCallback);
 		packStart(image, false, false, 1);
 		ScrolledWindow sw = new ScrolledWindow(null, null);
 		sw.add(treeView1);
@@ -83,6 +84,17 @@ public class TestTreeView1 : VBox
 		
 	}
 	
+	int moveCursorCallback(GtkMovementStep step, int i, TreeView tree)
+	{
+		TreeIter iter = tree.getSelectedIter();
+		iter.setModel(tree.getModel());
+		Value v = new Value();
+		iter.getValue(1, v);
+		writefln("cursor on %s", v);
+		return false;
+	}
+	
+
 	
 	void populate(TreeStore treeStore)
 	{

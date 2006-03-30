@@ -110,6 +110,18 @@ public class MenuItem : Item
 		return actionLabel;
 	}
 	
+	/**
+	 * Creates a new menu item with a label and a listener and a action.
+	 * used for backward compatibily with DUI.
+	 */
+	this(char[] label, void delegate(MenuItem)dlg, char[] action)
+	{
+		this(label);
+		this.actionLabel = action;
+		addOnActivate(dlg);
+	}
+	
+	
 	
 	/**
 	 * Creates a new Item associated with a "activate" delegate and with a action code

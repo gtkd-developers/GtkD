@@ -123,6 +123,10 @@ public class ComboBox : Bin, CellLayoutIF
 		this.gtkComboBox = gtkComboBox;
 	}
 	
+	private int count = 0;
+	public int maxCount = 0;
+	
+	
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkComboBox);
 	
@@ -152,6 +156,74 @@ public class ComboBox : Bin, CellLayoutIF
 			this(cast(GtkComboBox*)gtk_combo_box_new() );
 		}
 	}
+	
+	public void setActiveText(char[] text, bool insert=false)
+	{
+		int currActive = getActive();
+		int active = 0;
+		setActive(active);
+		bool found = false;
+		while ( !found && active==getActive)
+		{
+			found = text==getActiveText();
+			++active;
+		}
+		if ( !found )
+		{
+			if ( insert )
+			{
+				appendText(text);
+				setActive(active);
+			}
+			else
+			{
+				//setActive(currActive);
+				setActive(-1);
+			}
+		}
+	}
+	
+	
+	int getIndex(char[] text)
+	{
+		TreeIter iter = new TreeIter();
+		TreeModel model = getModel();
+		int index = 0;
+		bit found = false;
+		bit end = false;
+		if ( model.getIterFirst(iter) )
+		{
+			while ( !end && iter !is  null && !found )
+			{
+				found = iter.getValueString(0) == text;
+				if ( !found )
+				{
+					end = !model.iterNext(iter);
+					++index;
+				}
+			}
+		}
+		else
+		{
+			end = true;
+		}
+		return end ? -1 : index;
+	}
+	
+	void prependOrReplaceText(char[] text)
+	{
+		int index = getIndex(text);
+		if ( index > 0 )
+		{
+			removeText(index);
+			prependText(text);
+		}
+		else if ( index == -1 )
+		{
+			prependText(text);
+		}
+	}
+	
 	
 	/**
 	 */

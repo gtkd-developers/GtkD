@@ -28,7 +28,7 @@
  * realStrct=
  * clss    = HPaned
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -40,6 +40,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
  * local aliases:
@@ -51,6 +52,7 @@ private import gtk.typedefs;
 
 private import lib.gtk;
 
+private import gtk.Widget;
 
 /**
  * Description
@@ -87,6 +89,19 @@ public class HPaned : Paned
 		super(cast(GtkPaned*)gtkHPaned);
 		this.gtkHPaned = gtkHPaned;
 	}
+	
+	/**
+	 * Creates a new HPaned and adds two widgets as it's children
+	 * @param child1
+	 * @param child2
+	 */
+	this(Widget child1, Widget child2)
+	{
+		this();
+		add1(child1);
+		add2(child2);
+	}
+	
 	
 	/**
 	 */

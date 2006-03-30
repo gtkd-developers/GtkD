@@ -43,6 +43,7 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
+ * 	- gtk.Button
  * structWrap:
  * 	- GtkWidget* -> Widget
  * local aliases:
@@ -56,6 +57,7 @@ private import lib.gtk;
 
 private import glib.Str;
 private import gtk.Widget;
+private import gtk.Button;
 
 /**
  * Description
@@ -128,6 +130,22 @@ public class Toolbar : Container
 	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
 	{
 		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, null, null, position);
+	}
+	
+	Button insertButton(StockID stockID,
+	char[] tooltipText, char[] tooltipPrivateText,
+	gint position)
+	{
+		Button button = new Button(
+		cast(GtkButton*)gtk_toolbar_insert_stock(
+		gtkToolbar,
+		Str.toStringz(StockDesc[stockID]),
+		Str.toStringz(tooltipText),
+		Str.toStringz(tooltipPrivateText),
+		null, null,
+		position)
+		);
+		return button;
 	}
 	
 	/**
