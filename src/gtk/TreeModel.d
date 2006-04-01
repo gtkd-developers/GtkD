@@ -41,6 +41,7 @@
  * 	- gtk_tree_path_
  * 	- gtk_tree_iter_
  * omit code:
+ * 	- gtk_tree_model_get_iter
  * imports:
  * 	- glib.Str
  * 	- gtk.TreeIter
@@ -194,8 +195,7 @@ private import gobject.Value;
 	 *  }
  * }
  */
-private import gobject.ObjectG;
-public class TreeModel : ObjectG
+public class TreeModel
 {
 	
 	/** the main Gtk struct */
@@ -219,7 +219,6 @@ public class TreeModel : ObjectG
 	 */
 	public this (GtkTreeModel* gtkTreeModel)
 	{
-		super(cast(GObject*)gtkTreeModel);
 		this.gtkTreeModel = gtkTreeModel;
 	}
 	
@@ -492,6 +491,7 @@ public class TreeModel : ObjectG
 		// GType gtk_tree_model_get_column_type (GtkTreeModel *tree_model,  gint index_);
 		return gtk_tree_model_get_column_type(gtkTreeModel, index);
 	}
+	
 	
 	/**
 	 * Sets iter to a valid iterator pointing to path_string, if it
