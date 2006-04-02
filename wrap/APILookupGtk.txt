@@ -5471,16 +5471,6 @@ outFile: ItemFactory
 #prefix: gtk_
 #outFile: 
 
-file: GtkProgress.html
-struct: GtkProgress
-class: Progress
-prefix: gtk_progress_
-prefix: gtk_
-import: glib.Str
-import: gtk.Adjustment
-structWrap: GtkAdjustment* Adjustment
-outFile: Progress
-
 #file: GtkText.html
 #struct: 
 #class: 
@@ -5509,3 +5499,12 @@ outFile: Progress
 #prefix: gtk_
 #outFile: 
 
+file: GtkProgress.html
+struct: GtkProgress
+class: Progress
+prefix: gtk_progress_
+prefix: gtk_
+import: glib.Str
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
+outFile: Progress

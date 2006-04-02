@@ -10,8 +10,8 @@ version( build )
 {
 	pragma (nolink);
 
-	version (Windows)     pragma (target, "DUIT.lib"  );
-	version (linux)   pragma (target, "libDUIT.a" );
+	version (Windows)     pragma (target, "Duit.lib"  );
+	version (linux)   pragma (target, "libDuit.a" );
 }
 
 
@@ -346,7 +346,8 @@ private import gtk.VRuler;
 private import gtk.ItemFactory;
 private import gtk.Progress;
 
-private import lib.lib;
+private import lib.paths.d;
+private import lib.Loader.d;
 private import lib.glib;
 private import lib.gobject;
 private import lib.cairoLib;

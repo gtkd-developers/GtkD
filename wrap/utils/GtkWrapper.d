@@ -46,7 +46,7 @@ debug=wrapFile;
 //debug=wrapParameter;
 //debug=createPackage;
 //debug=aliases;
-//debug = lookup;
+debug = lookup;
 
 private import utils.WrapperIF;
 
@@ -165,8 +165,8 @@ public class GtkWrapper : WrapperIF
 			"\n{"
 			"\n	pragma (nolink);"
 			"\n"
-			"\n	version (Windows)     pragma (target, \"DUIT.lib\"  );"
-			"\n	version (linux)   pragma (target, \"libDUIT.a\" );"
+			"\n	version (Windows)     pragma (target, \"Duit.lib\"  );"
+			"\n	version (linux)   pragma (target, \"libDuit.a\" );"
 			"\n}"
 			"\n"
 			;
@@ -283,7 +283,10 @@ public class GtkWrapper : WrapperIF
 						if ( outPack !is null )
 						{
 							buildText ~= "\n";
-							buildTextLibs ~= "private import lib."~outPack~";\n";
+							if ( outPack != "lib" )
+							{
+								buildTextLibs ~= "private import lib."~outPack~";\n";
+							}
 							status = wrapFile(pack, outPack);
 						}
 						if ( nextPack.length>0 && outPack!=nextPack )
@@ -442,9 +445,13 @@ public class GtkWrapper : WrapperIF
 			debug(wrapParameter)writefln("wrapFile [%s] = %s", key, defReader.getValue());
 			switch ( key )
 			{
-				case "copy": status = copyFile(apiLookupDefinitionBaseDirectory, 
-												std.path.join("src",outPack), 
-												defReader.getValue()); 
+				case "copy": status = copyFile(
+							apiLookupDefinitionBaseDirectory, 
+							std.path.join("src",outPack), 
+							defReader.getValue()); 
+					buildTextLibs ~= "private import "
+								~outPack
+								~"."~defReader.getValue()~";\n";
 					break;
 				case "struct": convParms.strct = defReader.getValue(); break;
 				case "realStruct": convParms.realStrct = defReader.getValue(); break;

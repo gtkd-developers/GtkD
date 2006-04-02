@@ -207,7 +207,11 @@ import: glib.Str
 openFile: PixbufFormat
 
 file: gdk-pixbuf-file-loading.html
-prefix: gdk_pixbuf_get_file_info 
+prefix: gdk_pixbuf_
 strictPrefix: Y
+
+nocode: gdk_pixbuf_new_from_file 
+nocode: gdk_pixbuf_new_from_file_at_size
+nocode: gdk_pixbuf_new_from_file_at_scale
 closeFile:  PixbufFormat
 

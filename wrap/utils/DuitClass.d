@@ -40,7 +40,7 @@ module utils.DuitClass;
 //debug = signalFunction;
 //debug = stockItems;
 //debug = gTypes;
-debug = implements;
+//debug = implements;
 
 //version = noGtkBody;
 
