@@ -131,7 +131,7 @@ public class TestTreeView1 : VBox
 				
 				GType[] columns;
 				columns ~= Pixbuf.getType();
-				columns ~= 16<<2;
+				columns ~= GType.STRING;
 				super(columns);
 				
 			}

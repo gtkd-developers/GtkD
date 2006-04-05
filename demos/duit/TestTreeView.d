@@ -86,11 +86,11 @@ class TestTreeView : ScrolledWindow
 	enum columns
 	{
 		//duiObject = DUIType.PIXBUF,
-		duiObject = 16<<2,
-		gtkObject = 16<<2,
-		desc = 16<<2,
-		percentDone = 16<<2,
-		author = 16<<2
+		duiObject = GType.STRING,
+		gtkObject = GType.STRING,
+		desc = GType.STRING,
+		percentDone = GType.STRING,
+		author = GType.STRING
 	}
 	
 	this()
