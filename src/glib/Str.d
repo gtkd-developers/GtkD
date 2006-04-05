@@ -39,7 +39,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.c.stdio
+ * 	- std.stdio
  * 	- glib.StringG
  * 	- std.c.string
  * structWrap:
@@ -53,7 +53,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import std.c.stdio;
+private import std.stdio;
 private import glib.StringG;
 private import std.c.string;
 

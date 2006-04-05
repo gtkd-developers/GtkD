@@ -25,7 +25,7 @@
 
 module lib.gobject;
 
-private import std.c.stdio;
+private import std.stdio;
 private import gobject.typedefs;
 private import lib.Loader;
 private import lib.paths;

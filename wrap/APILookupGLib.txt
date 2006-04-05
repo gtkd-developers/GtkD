@@ -339,7 +339,7 @@ outFile: MessageLog
 
 file: glib-String-Utility-Functions.html
 class: Str
-import: std.c.stdio
+import: std.stdio
 import: glib.StringG
 structWrap: GString* StringG
 import: std.c.string
@@ -627,7 +627,7 @@ prefix: g_spawn_
 #import: glib.Error*
 #structWrap: GError** Error*
 import: glib.Str
-import: std.c.stdio;
+import: std.stdio
 import: std.c.string;
 nocode: g_spawn_async_with_pipes
 
@@ -848,7 +848,7 @@ outFile: Spawn
 
 file: glib-File-Utilities.html
 class: FileUtils
-import: std.c.stdio
+import: std.stdio
 import: glib.Str
 prefix: g_
 #import: glib.ErrorG

@@ -37,6 +37,10 @@ private import gtk.Adjustment;
 
 private import std.stdio;
 
+private import gtk.Idle;
+private import gtk.Timeout;
+		
+
 /**
  * This tests the DUI drawing area widget
  */
@@ -83,7 +87,7 @@ class TestIdle : VBox
 		callType.setActive(1);
 		callType.addOnChanged(&drawingArea.onCallTypeChanged);
 
-		timeoutSpin = new SpinButton(new Adjustment(200.0, 50.0, 1000.0, 10.0, 100.0, 1.0),1,0);
+		timeoutSpin = new SpinButton(new Adjustment(200.0, 10.0, 1000.0, 10.0, 100.0, 1.0),1,0);
 		timeoutSpin.addOnValueChanged(&drawingArea.onTimeoutSpinValueChanged);
 		Box controlBox = new HBox(false, 7);
 		
@@ -98,9 +102,6 @@ class TestIdle : VBox
 	class TestDrawing : DrawingArea
 	{
 
-		private import gtk.Idle;
-		private import gtk.Timeout;
-		
 		Idle mainIdle;
 		Timeout mainTimeout;
 		

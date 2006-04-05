@@ -25,7 +25,7 @@
 
 module lib.gtk;
 
-private import std.c.stdio;
+private import std.stdio;
 private import gtk.typedefs;
 private import lib.Loader;
 private import lib.paths;

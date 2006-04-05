@@ -39,7 +39,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- std.c.stdio
+ * 	- std.stdio
  * 	- glib.Str
  * structWrap:
  * local aliases:
@@ -51,7 +51,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
-private import std.c.stdio;
+private import std.stdio;
 private import glib.Str;
 
 /**

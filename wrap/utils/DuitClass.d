@@ -1063,7 +1063,7 @@ public class DuitClass
 				if ( posf>pos )
 				{
 					gTypes ~= lines[0][7..lines[0].length]
-							~ " = 2<<"~lines[defLine][pos+1..posf]
+							~ " = "~lines[defLine][pos+1..posf]~"<<2"
 							~ ",";
 				}
 			}

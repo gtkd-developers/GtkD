@@ -693,7 +693,7 @@ public class GtkWrapper : WrapperIF
 		externalText ~= 
 "\nmodule lib."~loaderTableName~";"
 "\n"
-"\nprivate import std.c.stdio;"
+"\nprivate import std.stdio;"
 "\nprivate import "~loaderTableName~".typedefs;"~
 "\nprivate import lib.Loader;"
 "\nprivate import lib.paths;"

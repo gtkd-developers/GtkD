@@ -43,7 +43,7 @@
  * 	- glib.ErrorG
  * 	- glib.MainLoop
  * 	- glib.Str
- * 	- std.c.stdio;
+ * 	- std.stdio
  * 	- std.c.string;
  * structWrap:
  * 	- GMainLoop* -> MainLoop
@@ -59,7 +59,7 @@ private import lib.glib;
 private import glib.ErrorG;
 private import glib.MainLoop;
 private import glib.Str;
-private import std.c.stdio;;
+private import std.stdio;
 private import std.c.string;;
 
 /**

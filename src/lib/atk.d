@@ -25,7 +25,7 @@
 
 module lib.atk;
 
-private import std.c.stdio;
+private import std.stdio;
 private import atk.typedefs;
 private import lib.Loader;
 private import lib.paths;

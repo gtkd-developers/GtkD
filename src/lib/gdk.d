@@ -25,7 +25,7 @@
 
 module lib.gdk;
 
-private import std.c.stdio;
+private import std.stdio;
 private import gdk.typedefs;
 private import lib.Loader;
 private import lib.paths;

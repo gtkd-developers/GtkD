@@ -25,7 +25,7 @@
 
 module lib.cairoLib;
 
-private import std.c.stdio;
+private import std.stdio;
 private import cairoLib.typedefs;
 private import lib.Loader;
 private import lib.paths;
