@@ -463,27 +463,6 @@ public typedef extern(C) cairo_status_t  function (void*, char*, uint) cairo_wri
  */
 // void (*cairo_destroy_func_t) (void *data);
 public typedef extern(C) void  function (void*) cairo_destroy_func_t;
-/**
- * cairo_path_data_t is used to represent the path data inside a
- * cairo_path_t.
- * The data structure is designed to try to balance the demands of
- * efficiency and ease-of-use. A path is represented as an array of
- * cairo_path_data_t, which is a union of headers and points.
- * Each portion of the path is represented by one or more elements in
- * the array, (one header followed by 0 or more points). The length
- * value of the header is the number of array elements for the current
- * portion including the header, (ie. length == 1 + # of points), and
- * where the number of points for each element type must be as
- * follows:
- */
-public struct cairo_path_data_t
-{
-	union
-	{
-		cairo_path_data_type_t type;
-		int length;
-	};
-	struct {
-		double x, y;
-	};
-}
+
+// skipped union cairo_path_data_t
+

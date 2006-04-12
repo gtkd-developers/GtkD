@@ -18,14 +18,16 @@
 
 module gtk.HelloWorld;
 
-private import gtk.Window;
+private import gtk.MainWindow;
+private import gtk.Label;
 private import gtk.Duit;
 
-class HelloWorld : Window
+class HelloWorld : MainWindow
 {
 	this()
 	{
-		super("Hello World");
+		super("Duit");
+		add(new Label("Hello World"));
 		showAll();
 	}
 }

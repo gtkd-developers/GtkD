@@ -31,6 +31,7 @@ module utils.DuitClass;
 //debug = declaration;
 //debug = structs;
 //debug = enums;
+debug = unions;
 //debug = enumPrefix;
 //debug = parmType;
 //debug = parmName;
@@ -1374,16 +1375,23 @@ public class DuitClass
 	private void collectUnions(char[][] lines, ConvParms* convParms)
 	{
 		char[] unionName = lines[0][6..lines[0].length];
-		debug(enums)writefln("union %s", unionName);
+		if ( unionName == "cairo_path_data_t" )
+		{
+			collectedUnions ~= "";
+			collectedUnions ~= "// skipped union "~unionName;
+			collectedUnions ~= "";
+			return;
+		}
+		debug(unions)writefln("union %s", unionName);
 		char[][] values;
 		int pos = 3;
 		while ( pos<lines.length && lines[pos][0] != '}' )
 		{
-			debug(enums)writefln("\tunion line %s", lines[pos]);
+			debug(unions)writefln("\tunion line %s", lines[pos]);
 			char[] value = std.string.strip(lines[pos++].dup);
-			debug(enums)writefln("\traw       %s", value);
+			debug(unions)writefln("\traw       %s", value);
 			value = stringToDuit(value, convParms, wrapper.getAliases());
-			debug(enums)writefln("\tprocessed %s", value);
+			debug(unions)writefln("\tprocessed %s", value);
 			values ~= value;
 		}
 		++pos;
@@ -1402,7 +1410,7 @@ public class DuitClass
 		collectedUnions ~= "{";
 		foreach ( char[] value ; values )
 		{
-			debug(enums)writefln("\t\t%s", value);
+			debug(unions)writefln("\t\t%s", value);
 			collectedUnions ~= value;
 		}
 		collectedUnions ~= "}";

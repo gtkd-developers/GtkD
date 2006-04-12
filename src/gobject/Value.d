@@ -39,6 +39,8 @@
  * 	- GValue
  * omit prefixes:
  * omit code:
+ * 	- g_value_init
+ * 	- g_value_reset
  * imports:
  * 	- glib.Str
  * 	- gobject.Value
@@ -122,14 +124,48 @@ public class Value
 	this(char[] value)
 	{
 		this();
+		init(GType.STRING);
 		setString(value);
 	}
 	
 	this(int value)
 	{
 		this();
+		init(GType.INT);
 		setInt(value);
 	}
+	
+	/**
+	 * Initializes value with the default value of type.
+	 * value:
+	 * A zero-filled (uninitialized) GValue structure.
+	 * g_type:
+	 * Type the GValue should hold values of.
+	 * Returns:
+	 * the GValue structure that has been passed in
+	 */
+	public Value init(GType gType)
+	{
+		// GValue* g_value_init (GValue *value,  GType g_type);
+		g_value_init(gValue, gType);
+		return this;
+	}
+	
+	/**
+	 * Clears the current value in value and resets it to the default value
+	 * (as if the value had just been initialized).
+	 * value:
+	 * An initialized GValue structure.
+	 * Returns:
+	 * the GValue structure that has been passed in
+	 */
+	public Value reset()
+	{
+		// GValue* g_value_reset (GValue *value);
+		g_value_reset(gValue);
+		return this;
+	}
+	
 	
 	
 	/**
@@ -154,20 +190,6 @@ public class Value
 	
 	
 	
-	/**
-	 * Initializes value with the default value of type.
-	 * value:
-	 * A zero-filled (uninitialized) GValue structure.
-	 * g_type:
-	 * Type the GValue should hold values of.
-	 * Returns:
-	 * the GValue structure that has been passed in
-	 */
-	public Value init(GType gType)
-	{
-		// GValue* g_value_init (GValue *value,  GType g_type);
-		return new Value( g_value_init(gValue, gType) );
-	}
 	
 	/**
 	 * Copies the value of src_value into dest_value.
@@ -182,19 +204,6 @@ public class Value
 		g_value_copy(gValue, (destValue is null) ? null : destValue.getValueStruct());
 	}
 	
-	/**
-	 * Clears the current value in value and resets it to the default value
-	 * (as if the value had just been initialized).
-	 * value:
-	 * An initialized GValue structure.
-	 * Returns:
-	 * the GValue structure that has been passed in
-	 */
-	public Value reset()
-	{
-		// GValue* g_value_reset (GValue *value);
-		return new Value( g_value_reset(gValue) );
-	}
 	
 	/**
 	 * Clears the current value in value and "unsets" the type,

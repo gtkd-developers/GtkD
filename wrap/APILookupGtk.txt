@@ -1040,10 +1040,10 @@ public class MainWindow : Window
 	protected int windowDelete(Event event, Widget widget)
 	{
 		--countTotalMainWindows;
-		printf("MainWindows.windowDelete count = %d\n", countTotalMainWindows);
+		//printf("MainWindows.windowDelete count = %d\n", countTotalMainWindows);
 		if ( exit(0, false) || countTotalMainWindows==0 )
 		{
-			Duit.exit(0);
+			Duit.mainQuit();
 			return false;
 		}
 		return false;
@@ -3045,7 +3045,7 @@ code: start
 	public this (GType[] types)
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		this(cast(GtkListStore*)gtk_list_store_newv(types.length, types) );
+		this(cast(GtkListStore*)gtk_list_store_newv(types.length, cast(GType*)(&types[0])) );
 	}
 	
 	/**
@@ -4810,6 +4810,12 @@ code: start
 		this(null, null);
 	}
 	
+	public this(Widget widget)
+	{
+		this();
+		addWithViewport(widget);
+	}
+	
 	/**
 	 * Creates a new scrolled window. The two arguments are the scrolled
 	 * window's adjustments; these will be shared with the scrollbars and the
@@ -5272,7 +5278,7 @@ code: start
 	void setCursor(Cursor cursor)
 	{
 		int* pt =cast(int*)getStruct();
-		pt += 58/4;
+		pt += 52/4;
 		gdk_window_set_cursor(cast(GdkWindow*)(*pt), cursor.getCursorStruct());
 	}
 	
@@ -5284,7 +5290,7 @@ code: start
 	public void resetCursor()
 	{
 		int* pt =cast(int*)getStruct();
-		pt += 58/4;
+		pt += 52/4;
 		gdk_window_set_cursor(cast(GdkWindow*)(*pt), null);
 	}
 

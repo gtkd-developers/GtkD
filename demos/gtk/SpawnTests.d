@@ -22,39 +22,143 @@ private import glib.Spawn;
 private import gtk.Duit;
 private import std.stdio;
 
+private import gtk.TextView;
+private import gtk.TextBuffer;
+private import gtk.TextIter;
+private import gtk.Box;
+private import gtk.VBox;
+private import gtk.ScrolledWindow;
+
+private import gtk.MainWindow;
+
+private import gtk.Button;
+private import gtk.Image;
+
+private import std.string;
+
+class SpawnWindow : MainWindow
+{
+	
+	TextView viewInput;
+	TextView viewOutput;
+	TextView viewError;
+
+	this()
+	{
+		super("Spawn testing");
+		setupWindow();
+		setSizeRequest(400,400);
+		showAll();
+	}
+	
+	private void setupWindow()
+	{
+		Box main = new VBox(false, 2);
+		
+		viewInput = new TextView();
+		viewOutput = new TextView();
+		viewError = new TextView();
+		
+		main.packStart(new ScrolledWindow(viewInput), false, false, 2);
+		Button button = new Button("exec", &execInput);
+		main.packStart(button, false, false, 4);
+		main.packStart(new ScrolledWindow(viewOutput), true, true, 2);
+		main.packStart(new ScrolledWindow(viewError), false, false, 2);
+	
+		setBorderWidth(7);
+		add(main);
+	}
+	
+	private void execInput(Button button)
+	{
+		char[][] args = std.string.split(viewInput.getBuffer().getText());
+		exec(args);
+	}
+	
+	private bool exec(char[][] args)
+	{
+		foreach ( int i, char[] arg ; args)
+		{
+			writefln("[%s] %s", i, arg);
+		}
+		Spawn spawn = new Spawn(args[0]);
+		if (args.length > 1 )
+		{
+			foreach ( char[] arg ; args )
+			{
+				spawn.addParm(arg);
+			}
+		}
+		spawn.addParm(null);
+		return exec(spawn);
+	}
+	
+	private bool exec(Spawn spawn)
+	{
+		int result = spawn.execAsyncWithPipes();
+	
+		int outCount;
+		int errCount;
+		
+		TextBuffer bufferOutput = viewOutput.getBuffer();
+		TextBuffer bufferError = viewError.getBuffer();
+		TextIter iterOut = new TextIter();
+		TextIter iterError = new TextIter();
+		
+		while ( !spawn.endOfOutput() )
+		{
+			bufferOutput.getEndIter(iterOut);
+			viewOutput.getBuffer().insert(iterOut, spawn.readLine()~"\n");
+		}
+		
+		while ( !spawn.endOfError() )
+		{
+			bufferError.getEndIter(iterError);
+			viewError.getBuffer().insert(iterError, spawn.readLineError()~"\n");
+		}
+
+		bufferError.getEndIter(iterError);
+		viewError.getBuffer().insert(iterError, spawn.getLastError()~"\n");
+
+		writefln("exit loop");
+		
+		spawn.close();
+		return true;
+	}
+	
+	public void setInput(char[][] args)
+	{
+		TextBuffer inBuffer = viewInput.getBuffer();
+		char[] t;
+		foreach ( int count, char[] arg; args)
+		{
+			if ( count > 0 ) t ~= " ";
+			t ~= arg;
+		}
+		inBuffer.setText(t);
+	}
+	
+	public void setInput(char[] arg)
+	{
+		viewInput.getBuffer().setText(arg);
+	}
+
+	
+}
+
 void main(char[][] args)
 {
-	//Duit.init(args);
-	Spawn spawn;
-	
-	//Spawn spawn = new Spawn("/home/ruimt/devel/D1/Leds/leds");
+	Duit.init(args);
+
+	SpawnWindow sw = new SpawnWindow();
 	if ( args.length > 1 )
 	{
-		spawn = new Spawn(args[1..args.length]);
+		sw.setInput(args[1..args.length]);
 	}
 	else
 	{
-		spawn = new Spawn("/bin/ls");
-	}
-	//spawn.addParm("--version");
-	int result = spawn.execAsyncWithPipes();
-
-	int outCount;
-	int errCount;
-	
-	while ( !spawn.endOfOutput() )
-	{
-		writefln("[out %d] %s",outCount++, spawn.readLine());
+		sw.setInput("/bin/ls");
 	}
 	
-	while ( !spawn.endOfError() )
-	{
-		writefln("[err %d] %s",errCount++, spawn.readLineError());
-	}
-	
-	writefln("exit loop");
-	
-	spawn.close();
-	
-//	Duit.main();
+	Duit.main();
 }

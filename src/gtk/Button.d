@@ -200,8 +200,8 @@ public class Button : Bin
 		setAction(action);
 		addOnClicked(dlg);
 	}
-	
-	
+
+
 	/**
 	 */
 	

@@ -226,7 +226,7 @@ public class Widget : ObjectGtk
 	void setCursor(Cursor cursor)
 	{
 		int* pt =cast(int*)getStruct();
-		pt += 58/4;
+		pt += 52/4;
 		gdk_window_set_cursor(cast(GdkWindow*)(*pt), cursor.getCursorStruct());
 	}
 	
@@ -238,7 +238,7 @@ public class Widget : ObjectGtk
 	public void resetCursor()
 	{
 		int* pt =cast(int*)getStruct();
-		pt += 58/4;
+		pt += 52/4;
 		gdk_window_set_cursor(cast(GdkWindow*)(*pt), null);
 	}
 	

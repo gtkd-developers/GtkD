@@ -231,6 +231,9 @@ import: gobject.ObjectG
 structWrap: GObject* ObjectG
 import: gdk.Pixbuf
 
+nocode: g_value_init
+nocode: g_value_reset
+
 code: start
 
 	public this()
@@ -250,15 +253,49 @@ code: start
 	this(char[] value)
 	{
 		this();
+		init(GType.STRING);
 		setString(value);
 	}
 
 	this(int value)
 	{
 		this();
+		init(GType.INT);
 		setInt(value);
 	}
 	
+	/**
+	 * Initializes value with the default value of type.
+	 * value:
+	 * A zero-filled (uninitialized) GValue structure.
+	 * g_type:
+	 * Type the GValue should hold values of.
+	 * Returns:
+	 * the GValue structure that has been passed in
+	 */
+	public Value init(GType gType)
+	{
+		// GValue* g_value_init (GValue *value,  GType g_type);
+		g_value_init(gValue, gType);
+		return this;
+	}
+	
+	/**
+	 * Clears the current value in value and resets it to the default value
+	 * (as if the value had just been initialized).
+	 * value:
+	 * An initialized GValue structure.
+	 * Returns:
+	 * the GValue structure that has been passed in
+	 */
+	public Value reset()
+	{
+		// GValue* g_value_reset (GValue *value);
+		g_value_reset(gValue);
+		return this;
+	}
+	
+
 
 code: end
 

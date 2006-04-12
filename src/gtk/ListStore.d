@@ -173,7 +173,7 @@ public class ListStore : TreeModel
 	public this (GType[] types)
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		this(cast(GtkListStore*)gtk_list_store_newv(types.length, types) );
+		this(cast(GtkListStore*)gtk_list_store_newv(types.length, cast(GType*)(&types[0])) );
 	}
 	
 	/**

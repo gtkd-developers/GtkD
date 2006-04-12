@@ -127,6 +127,12 @@ public class ScrolledWindow : Bin
 		this(null, null);
 	}
 	
+	public this(Widget widget)
+	{
+		this();
+		addWithViewport(widget);
+	}
+	
 	/**
 	 * Creates a new scrolled window. The two arguments are the scrolled
 	 * window's adjustments; these will be shared with the scrollbars and the

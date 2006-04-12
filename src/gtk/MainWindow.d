@@ -87,10 +87,10 @@ public class MainWindow : Window
 	protected int windowDelete(Event event, Widget widget)
 	{
 		--countTotalMainWindows;
-		printf("MainWindows.windowDelete count = %d\n", countTotalMainWindows);
+		//printf("MainWindows.windowDelete count = %d\n", countTotalMainWindows);
 		if ( exit(0, false) || countTotalMainWindows==0 )
 		{
-			Duit.exit(0);
+			Duit.mainQuit();
 			return false;
 		}
 		return false;

@@ -908,7 +908,11 @@ class TestWindow : MainWindow
 		{
 			this()
 			{
-				static GType [3] columns = [16<<2,16<<2,16<<2]; 
+				static GType [3] columns = [
+								GType.STRING,
+								GType.STRING,
+								GType.STRING
+								]; 
 				super(columns);
 			}
 		}
@@ -941,8 +945,8 @@ class TestWindow : MainWindow
 		testListStore.append(iterTop);
 		char[][] vals3;
 		vals3 ~= "Friend of Duit 3";
-		vals3 ~= "Denmark";
-		vals3 ~= "Denmark";
+		vals3 ~= "Norway";
+		vals3 ~= "Norway";
 		testListStore.set(iterTop,cols,vals3);
 
 		TreeView treeView = new TreeView(testListStore);
