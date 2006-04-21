@@ -98,6 +98,8 @@
 
 module gtk.Widget;
 
+private import std.stdio;
+
 private import gtk.typedefs;
 
 private import lib.gtk;
@@ -320,7 +322,6 @@ public class Widget : ObjectGtk
 	extern(C) static void callBackButtonPress(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
 	{
 		bit consumed = false;
-		
 		foreach ( gboolean delegate(GdkEventButton*, Widget) dlg ; widget.onButtonPressListeners )
 		{
 			dlg(event, widget);
@@ -329,10 +330,15 @@ public class Widget : ObjectGtk
 		return consumed;
 	}
 	
+	static int p=0;
+	
 	gboolean delegate(GdkEventButton*, Widget)[] onButtonReleaseListeners;
 	void addOnButtonRelease(gboolean delegate(GdkEventButton*, Widget) dlg)
 	{
-		if ( !("button-release-event" in connectedSignals) )
+		if ( p++ < 1 )
+		{
+			
+		//if ( !("button-release-event" in connectedSignals) )
 		{
 			addEvents(GdkEventMask.GDK_BUTTON_RELEASE_MASK);
 			Signals.connectData(
@@ -345,11 +351,12 @@ public class Widget : ObjectGtk
 			connectedSignals["button-release-event"] = 1;
 		}
 		onButtonReleaseListeners ~= dlg;
+		}
 	}
 	extern(C) static void callBackButtonRelease(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
 	{
 		bit consumed = false;
-		
+
 		foreach ( gboolean delegate(GdkEventButton*, Widget) dlg ; widget.onButtonReleaseListeners )
 		{
 			dlg(event, widget);

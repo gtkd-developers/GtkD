@@ -61,6 +61,7 @@ private import glib.Str;
 private import gtk.ToolItem;
 private import gtk.Widget;
 private import gtk.Tooltips;
+private import gtk.Menu;
 
 /**
  * Description
@@ -149,10 +150,13 @@ public class MenuToolButton : ToolButton
 	 *  the new GtkMenuToolButton
 	 * Since 2.6
 	 */
-	public static ToolItem newMenuToolButton(Widget iconWidget, char[] label)
+	public this(Widget iconWidget, char[] label)
 	{
 		// GtkToolItem* gtk_menu_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
-		return new ToolItem( gtk_menu_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label)) );
+		this( cast(GtkMenuToolButton*)gtk_menu_tool_button_new(
+			(iconWidget is null) ? null : iconWidget.getWidgetStruct(), 
+			Str.toStringz(label))
+		);
 	}
 	
 	/**
@@ -165,12 +169,15 @@ public class MenuToolButton : ToolButton
 	 *  the new GtkMenuToolButton
 	 * Since 2.6
 	 */
-	public static ToolItem newFromStock(char[] stockId)
+	public this(StockID stockId)
 	{
 		// GtkToolItem* gtk_menu_tool_button_new_from_stock  (const gchar *stock_id);
-		return new ToolItem( gtk_menu_tool_button_new_from_stock(Str.toStringz(stockId)) );
+		this( 
+			cast(GtkMenuToolButton*)gtk_menu_tool_button_new_from_stock(
+			Str.toStringz(StockDesc[stockId]))
+		);
 	}
-	
+
 	/**
 	 * Sets the GtkMenu that is popped up when the user clicks on the arrow.
 	 * If menu is NULL, the arrow button becomes insensitive.
@@ -194,11 +201,12 @@ public class MenuToolButton : ToolButton
 	 *  the GtkMenu associated with GtkMenuToolButton
 	 * Since 2.6
 	 */
-	public Widget getMenu()
+	public Menu getMenu()
 	{
 		// GtkWidget* gtk_menu_tool_button_get_menu (GtkMenuToolButton *button);
-		return new Widget( gtk_menu_tool_button_get_menu(gtkMenuToolButton) );
+		return new Menu( cast(GtkMenu*)gtk_menu_tool_button_get_menu(gtkMenuToolButton) );
 	}
+	
 	
 	/**
 	 * Sets the GtkTooltips object to be used for arrow button which
@@ -237,5 +245,22 @@ public class MenuToolButton : ToolButton
 	{
 		// void gtk_menu_tool_button_set_arrow_tooltip  (GtkMenuToolButton *button,  GtkTooltips *tooltips,  const gchar *tip_text,  const gchar *tip_private);
 		gtk_menu_tool_button_set_arrow_tooltip(gtkMenuToolButton, (tooltips is null) ? null : tooltips.getTooltipsStruct(), Str.toStringz(tipText), Str.toStringz(tipPrivate));
+	}
+	
+	/**
+	 * Sets the toolTip for the arrow
+	 * Params:
+	 *    	tipText = 	
+	 *    	tipPrivate = 	
+	 */
+	public void setArrowTooltip(char[] tipText, char[] tipPrivate)
+	{
+		Tooltips tooltips = new Tooltips();
+		gtk_menu_tool_button_set_arrow_tooltip(
+			gtkMenuToolButton, 
+			(tooltips is null) ? null : tooltips.getTooltipsStruct(), 
+			Str.toStringz(tipText), 
+			Str.toStringz(tipPrivate)
+			);
 	}
 }

@@ -140,7 +140,7 @@ public class Str
 		int argc = 0;
 		foreach (char[] p; args)
 		{
-			argv[argc++] = cast(char*)p;
+			argv[argc++] = cast(char*)(p~'\0');
 		}
 		argv[argc] = null;
 		

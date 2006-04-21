@@ -4000,6 +4000,86 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Tooltips
 structWrap: GtkTooltips* Tooltips
+import: gtk.Menu
+
+
+nocode: gtk_menu_tool_button_new
+nocode: gtk_menu_tool_button_new_from_stock
+nocode: gtk_menu_tool_button_get_menu
+
+code: start
+	/**
+	 * Creates a new GtkMenuToolButton using icon_widget as icon and
+	 * label as label.
+	 * icon_widget:
+	 *  a widget that will be used as icon widget, or NULL
+	 * label:
+	 *  a string that will be used as label, or NULL
+	 * Returns:
+	 *  the new GtkMenuToolButton
+	 * Since 2.6
+	 */
+	public this(Widget iconWidget, char[] label)
+	{
+		// GtkToolItem* gtk_menu_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
+		this( cast(GtkMenuToolButton*)gtk_menu_tool_button_new(
+			(iconWidget is null) ? null : iconWidget.getWidgetStruct(), 
+			Str.toStringz(label))
+		);
+	}
+	
+	/**
+	 * Creates a new GtkMenuToolButton.
+	 * The new GtkMenuToolButton will contain an icon and label from
+	 * the stock item indicated by stock_id.
+	 * stock_id:
+	 *  the name of a stock item
+	 * Returns:
+	 *  the new GtkMenuToolButton
+	 * Since 2.6
+	 */
+	public this(StockID stockId)
+	{
+		// GtkToolItem* gtk_menu_tool_button_new_from_stock  (const gchar *stock_id);
+		this( 
+			cast(GtkMenuToolButton*)gtk_menu_tool_button_new_from_stock(
+			Str.toStringz(StockDesc[stockId]))
+		);
+	}
+
+	/**
+	 * Gets the GtkMenu associated with GtkMenuToolButton.
+	 * button:
+	 *  a GtkMenuToolButton
+	 * Returns:
+	 *  the GtkMenu associated with GtkMenuToolButton
+	 * Since 2.6
+	 */
+	public Menu getMenu()
+	{
+		// GtkWidget* gtk_menu_tool_button_get_menu (GtkMenuToolButton *button);
+		return new Menu( cast(GtkMenu*)gtk_menu_tool_button_get_menu(gtkMenuToolButton) );
+	}
+	
+	/**
+	 * Sets the toolTip for the arrow
+	 * Params:
+	 *    	tipText = 	
+	 *    	tipPrivate = 	
+	 */
+	public void setArrowTooltip(char[] tipText, char[] tipPrivate)
+	{
+		Tooltips tooltips = new Tooltips();
+		gtk_menu_tool_button_set_arrow_tooltip(
+			gtkMenuToolButton, 
+			(tooltips is null) ? null : tooltips.getTooltipsStruct(), 
+			Str.toStringz(tipText), 
+			Str.toStringz(tipPrivate)
+			);
+	}
+
+code: end
+
 outFile: MenuToolButton
 
 file: GtkToggleToolButton.html

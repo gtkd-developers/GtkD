@@ -26,6 +26,7 @@ private import gtk.Button;
 private import gtk.VBox;
 private import gtk.Duit;
 private import std.stdio;
+private import gtk.Image;
 
 private import gdk.typedefs;
 private import gobject.Signals;
@@ -52,6 +53,9 @@ public class OtherTests : Window
 			writefln("\nliterally clicked");
 		});
 		
+		button.addOnPressed(&mousePressed);
+		//addOnButtonPress(&mousePressed);
+		
 		box.add(button);
 		byeLabel = new Label("Bye-bye World");
 		box.add(byeLabel);
@@ -63,6 +67,12 @@ public class OtherTests : Window
 		addOnDelete(&onDeleteEvent);
 		
 		timeout = new Timeout(1000, &changeLabel);
+	}
+	
+	void mousePressed(Button widget)
+	{
+		writefln("mousePressed");
+		return false;
 	}
 	
 	bit changeLabel()

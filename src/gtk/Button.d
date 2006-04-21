@@ -171,6 +171,7 @@ public class Button : Bin
 		if ( hideLabel )
 		{
 			this();
+			removeAll();
 			Image image = new Image(stockID,currentIconSize);
 			add(image);
 		}

@@ -50,21 +50,21 @@ class SpawnWindow : MainWindow
 		setSizeRequest(400,400);
 		showAll();
 	}
-	
+
 	private void setupWindow()
 	{
 		Box main = new VBox(false, 2);
-		
+
 		viewInput = new TextView();
 		viewOutput = new TextView();
 		viewError = new TextView();
-		
+
 		main.packStart(new ScrolledWindow(viewInput), false, false, 2);
 		Button button = new Button("exec", &execInput);
 		main.packStart(button, false, false, 4);
 		main.packStart(new ScrolledWindow(viewOutput), true, true, 2);
 		main.packStart(new ScrolledWindow(viewError), false, false, 2);
-	
+
 		setBorderWidth(7);
 		add(main);
 	}
@@ -95,6 +95,10 @@ class SpawnWindow : MainWindow
 	
 	private bool exec(Spawn spawn)
 	{
+		
+		viewOutput.getBuffer().setText("");
+		viewError.getBuffer().setText("");
+		
 		int result = spawn.execAsyncWithPipes();
 	
 		int outCount;

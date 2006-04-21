@@ -404,7 +404,7 @@ body
 		int argc = 0;
 		foreach (char[] p; args)
 		{
-			argv[argc++] = cast(char*)p;
+			argv[argc++] = cast(char*)(p~'\0');
 		}
 		argv[argc] = null;
 		
@@ -636,7 +636,7 @@ code: start
 	char[] workingDirectory = ".";
 	char[][] argv;
 	char[][] envp;
-	GSpawnFlags flags;
+	GSpawnFlags flags = SpawnFlags.SEARCH_PATH;
 	GSpawnChildSetupFunc childSetup; 
 	void* userData;
 	GPid childPid;

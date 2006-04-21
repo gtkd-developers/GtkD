@@ -148,6 +148,7 @@ public class TextView : Container
 		buf.insertAtCursor(text);
 	}
 	
+private import glib.Str;
 	/**
 	 * Simply appends some text to this view
 	 * @param text the text to append
@@ -157,6 +158,7 @@ public class TextView : Container
 	{
 		TextBuffer buf = getBuffer();
 		TextIter iter = new TextIter();
+		buf = getBuffer();
 		buf.getEndIter(iter);
 		buf.insert(iter, text);
 		if ( ensureVisible )

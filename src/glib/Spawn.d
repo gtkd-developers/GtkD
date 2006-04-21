@@ -71,7 +71,7 @@ public class Spawn
 	char[] workingDirectory = ".";
 	char[][] argv;
 	char[][] envp;
-	GSpawnFlags flags;
+	GSpawnFlags flags = SpawnFlags.SEARCH_PATH;
 	GSpawnChildSetupFunc childSetup;
 	void* userData;
 	GPid childPid;
@@ -168,17 +168,17 @@ public class Spawn
 	public int execAsyncWithPipes()
 	{
 		int result = g_spawn_async_with_pipes(
-		Str.toStringz(workingDirectory),
-		Str.toStringzArray(argv),
-		Str.toStringzArray(envp),
-		flags,
-		childSetup,
-		userData,
-		&childPid,
-		&stdIn,
-		&stdOut,
-		&stdErr,
-		&error
+			Str.toStringz(workingDirectory),
+			Str.toStringzArray(argv),
+			Str.toStringzArray(envp),
+			flags,
+			childSetup,
+			userData,
+			&childPid,
+			&stdIn,
+			&stdOut,
+			&stdErr,
+			&error
 		);
 		
 		if ( result != 0 )
