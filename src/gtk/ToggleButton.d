@@ -160,7 +160,7 @@ public class ToggleButton : Button
 			cast(GCallback)&callBackToggled,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;

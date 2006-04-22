@@ -443,7 +443,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackApplyTag,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["apply-tag"] = 1;
 		}
 		onApplyTagListeners ~= dlg;
@@ -471,7 +471,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackBeginUserAction,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["begin-user-action"] = 1;
 		}
 		onBeginUserActionListeners ~= dlg;
@@ -499,7 +499,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -527,7 +527,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackDeleteRange,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["delete-range"] = 1;
 		}
 		onDeleteRangeListeners ~= dlg;
@@ -555,7 +555,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackEndUserAction,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["end-user-action"] = 1;
 		}
 		onEndUserActionListeners ~= dlg;
@@ -583,7 +583,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackInsertChildAnchor,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["insert-child-anchor"] = 1;
 		}
 		onInsertChildAnchorListeners ~= dlg;
@@ -611,7 +611,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackInsertPixbuf,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["insert-pixbuf"] = 1;
 		}
 		onInsertPixbufListeners ~= dlg;
@@ -639,7 +639,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackInsertText,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["insert-text"] = 1;
 		}
 		onInsertTextListeners ~= dlg;
@@ -667,7 +667,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackMarkDeleted,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["mark-deleted"] = 1;
 		}
 		onMarkDeletedListeners ~= dlg;
@@ -695,7 +695,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackMarkSet,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["mark-set"] = 1;
 		}
 		onMarkSetListeners ~= dlg;
@@ -723,7 +723,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackModifiedChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["modified-changed"] = 1;
 		}
 		onModifiedChangedListeners ~= dlg;
@@ -751,7 +751,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackRemoveTag,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["remove-tag"] = 1;
 		}
 		onRemoveTagListeners ~= dlg;

@@ -129,7 +129,7 @@ public class Editable
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -157,7 +157,7 @@ public class Editable
 			cast(GCallback)&callBackDeleteText,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["delete-text"] = 1;
 		}
 		onDeleteTextListeners ~= dlg;
@@ -185,7 +185,7 @@ public class Editable
 			cast(GCallback)&callBackInsertText,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["insert-text"] = 1;
 		}
 		onInsertTextListeners ~= dlg;

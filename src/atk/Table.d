@@ -116,7 +116,7 @@ public class Table
 			cast(GCallback)&callBackColumnDeleted,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["column-deleted"] = 1;
 		}
 		onColumnDeletedListeners ~= dlg;
@@ -144,7 +144,7 @@ public class Table
 			cast(GCallback)&callBackColumnInserted,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["column-inserted"] = 1;
 		}
 		onColumnInsertedListeners ~= dlg;
@@ -172,7 +172,7 @@ public class Table
 			cast(GCallback)&callBackColumnReordered,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["column-reordered"] = 1;
 		}
 		onColumnReorderedListeners ~= dlg;
@@ -200,7 +200,7 @@ public class Table
 			cast(GCallback)&callBackModelChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["model-changed"] = 1;
 		}
 		onModelChangedListeners ~= dlg;
@@ -228,7 +228,7 @@ public class Table
 			cast(GCallback)&callBackRowDeleted,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["row-deleted"] = 1;
 		}
 		onRowDeletedListeners ~= dlg;
@@ -256,7 +256,7 @@ public class Table
 			cast(GCallback)&callBackRowInserted,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["row-inserted"] = 1;
 		}
 		onRowInsertedListeners ~= dlg;
@@ -284,7 +284,7 @@ public class Table
 			cast(GCallback)&callBackRowReordered,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["row-reordered"] = 1;
 		}
 		onRowReorderedListeners ~= dlg;

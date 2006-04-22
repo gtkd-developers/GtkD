@@ -109,7 +109,7 @@ public class ColorButton : Button
 			cast(GCallback)&callBackColorSet,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["color-set"] = 1;
 		}
 		onColorSetListeners ~= dlg;

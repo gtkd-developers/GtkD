@@ -126,7 +126,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackConnectProxy,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["connect-proxy"] = 1;
 		}
 		onConnectProxyListeners ~= dlg;
@@ -154,7 +154,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackDisconnectProxy,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["disconnect-proxy"] = 1;
 		}
 		onDisconnectProxyListeners ~= dlg;
@@ -182,7 +182,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackPostActivate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["post-activate"] = 1;
 		}
 		onPostActivateListeners ~= dlg;
@@ -210,7 +210,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackPreActivate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["pre-activate"] = 1;
 		}
 		onPreActivateListeners ~= dlg;

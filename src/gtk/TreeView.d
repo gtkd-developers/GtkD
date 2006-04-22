@@ -263,7 +263,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackColumnsChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["columns-changed"] = 1;
 		}
 		onColumnsChangedListeners ~= dlg;
@@ -291,7 +291,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackCursorChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["cursor-changed"] = 1;
 		}
 		onCursorChangedListeners ~= dlg;
@@ -319,7 +319,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackExpandCollapseCursorRow,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["expand-collapse-cursor-row"] = 1;
 		}
 		onExpandCollapseCursorRowListeners ~= dlg;
@@ -347,7 +347,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackMoveCursor,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -375,7 +375,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackRowActivated,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["row-activated"] = 1;
 		}
 		onRowActivatedListeners ~= dlg;
@@ -403,7 +403,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackRowCollapsed,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["row-collapsed"] = 1;
 		}
 		onRowCollapsedListeners ~= dlg;
@@ -431,7 +431,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackRowExpanded,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["row-expanded"] = 1;
 		}
 		onRowExpandedListeners ~= dlg;
@@ -459,7 +459,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSelectAll,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["select-all"] = 1;
 		}
 		onSelectAllListeners ~= dlg;
@@ -487,7 +487,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSelectCursorParent,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["select-cursor-parent"] = 1;
 		}
 		onSelectCursorParentListeners ~= dlg;
@@ -515,7 +515,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSelectCursorRow,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["select-cursor-row"] = 1;
 		}
 		onSelectCursorRowListeners ~= dlg;
@@ -543,7 +543,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSetScrollAdjustments,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
@@ -571,7 +571,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackStartInteractiveSearch,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["start-interactive-search"] = 1;
 		}
 		onStartInteractiveSearchListeners ~= dlg;
@@ -599,7 +599,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackTestCollapseRow,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["test-collapse-row"] = 1;
 		}
 		onTestCollapseRowListeners ~= dlg;
@@ -627,7 +627,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackTestExpandRow,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["test-expand-row"] = 1;
 		}
 		onTestExpandRowListeners ~= dlg;
@@ -655,7 +655,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackToggleCursorRow,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["toggle-cursor-row"] = 1;
 		}
 		onToggleCursorRowListeners ~= dlg;
@@ -683,7 +683,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackUnselectAll,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["unselect-all"] = 1;
 		}
 		onUnselectAllListeners ~= dlg;

@@ -111,7 +111,7 @@ public class Scale : Range
 			cast(GCallback)&callBackFormatValue,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["format-value"] = 1;
 		}
 		onFormatValueListeners ~= dlg;

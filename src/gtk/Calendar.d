@@ -114,7 +114,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackDaySelected,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["day-selected"] = 1;
 		}
 		onDaySelectedListeners ~= dlg;
@@ -142,7 +142,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackDaySelectedDoubleClick,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["day-selected-double-click"] = 1;
 		}
 		onDaySelectedDoubleClickListeners ~= dlg;
@@ -170,7 +170,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackMonthChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["month-changed"] = 1;
 		}
 		onMonthChangedListeners ~= dlg;
@@ -198,7 +198,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackNextMonth,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["next-month"] = 1;
 		}
 		onNextMonthListeners ~= dlg;
@@ -226,7 +226,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackNextYear,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["next-year"] = 1;
 		}
 		onNextYearListeners ~= dlg;
@@ -254,7 +254,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackPrevMonth,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["prev-month"] = 1;
 		}
 		onPrevMonthListeners ~= dlg;
@@ -282,7 +282,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackPrevYear,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["prev-year"] = 1;
 		}
 		onPrevYearListeners ~= dlg;

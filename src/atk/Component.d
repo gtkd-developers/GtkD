@@ -108,7 +108,7 @@ public class Component
 			cast(GCallback)&callBackBoundsChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["bounds-changed"] = 1;
 		}
 		onBoundsChangedListeners ~= dlg;

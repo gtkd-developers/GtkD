@@ -107,7 +107,7 @@ public class Selection
 			cast(GCallback)&callBackSelectionChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["selection-changed"] = 1;
 		}
 		onSelectionChangedListeners ~= dlg;

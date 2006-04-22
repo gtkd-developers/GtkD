@@ -113,7 +113,7 @@ public class TextTagTable : ObjectG
 			cast(GCallback)&callBackTagAdded,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["tag-added"] = 1;
 		}
 		onTagAddedListeners ~= dlg;
@@ -141,7 +141,7 @@ public class TextTagTable : ObjectG
 			cast(GCallback)&callBackTagChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["tag-changed"] = 1;
 		}
 		onTagChangedListeners ~= dlg;
@@ -169,7 +169,7 @@ public class TextTagTable : ObjectG
 			cast(GCallback)&callBackTagRemoved,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["tag-removed"] = 1;
 		}
 		onTagRemovedListeners ~= dlg;

@@ -220,7 +220,7 @@ public class RadioButton : CheckButton
 			cast(GCallback)&callBackGroupChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["group-changed"] = 1;
 		}
 		onGroupChangedListeners ~= dlg;

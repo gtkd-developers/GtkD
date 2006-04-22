@@ -116,7 +116,7 @@ public class Plug : Window
 			cast(GCallback)&callBackEmbedded,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["embedded"] = 1;
 		}
 		onEmbeddedListeners ~= dlg;

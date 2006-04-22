@@ -136,11 +136,20 @@ public class Str
 		{
 			return null;
 		}
-		char** argv = new char*[args.length];
+		
+		foreach ( int i, char[] arg ; args)
+		{
+			writefln("Stro.toStringArray [%s] >%s<", i, arg);
+		}
+
+		
+		
+		char** argv = new char*[args.length+1];
 		int argc = 0;
 		foreach (char[] p; args)
 		{
-			argv[argc++] = cast(char*)(p~'\0');
+			writefln("Str.toStringzArray put .%s.", p);
+			argv[argc++] = toStringz(p);
 		}
 		argv[argc] = null;
 		

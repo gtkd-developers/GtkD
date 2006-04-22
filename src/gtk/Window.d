@@ -146,7 +146,7 @@ public class Window : Bin
 			cast(GCallback)&callBackActivateDefault,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["activate-default"] = 1;
 		}
 		onActivateDefaultListeners ~= dlg;
@@ -174,7 +174,7 @@ public class Window : Bin
 			cast(GCallback)&callBackActivateFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["activate-focus"] = 1;
 		}
 		onActivateFocusListeners ~= dlg;
@@ -202,7 +202,7 @@ public class Window : Bin
 			cast(GCallback)&callBackFrame,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["frame-event"] = 1;
 		}
 		onFrameListeners ~= dlg;
@@ -230,7 +230,7 @@ public class Window : Bin
 			cast(GCallback)&callBackKeysChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["keys-changed"] = 1;
 		}
 		onKeysChangedListeners ~= dlg;
@@ -258,7 +258,7 @@ public class Window : Bin
 			cast(GCallback)&callBackMoveFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-focus"] = 1;
 		}
 		onMoveFocusListeners ~= dlg;
@@ -286,7 +286,7 @@ public class Window : Bin
 			cast(GCallback)&callBackSetFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["set-focus"] = 1;
 		}
 		onSetFocusListeners ~= dlg;

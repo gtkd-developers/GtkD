@@ -111,7 +111,7 @@ public class TextAttributes
 			cast(GCallback)&callBack,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["event"] = 1;
 		}
 		onListeners ~= dlg;

@@ -132,7 +132,7 @@ public class EntryCompletion : ObjectG
 			cast(GCallback)&callBackActionActivated,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["action-activated"] = 1;
 		}
 		onActionActivatedListeners ~= dlg;
@@ -160,7 +160,7 @@ public class EntryCompletion : ObjectG
 			cast(GCallback)&callBackInsertPrefix,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["insert-prefix"] = 1;
 		}
 		onInsertPrefixListeners ~= dlg;
@@ -188,7 +188,7 @@ public class EntryCompletion : ObjectG
 			cast(GCallback)&callBackMatchSelected,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["match-selected"] = 1;
 		}
 		onMatchSelectedListeners ~= dlg;

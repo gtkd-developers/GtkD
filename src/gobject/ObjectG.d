@@ -201,7 +201,7 @@ public class ObjectG
 			cast(GCallback)&callBackNotify,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["notify"] = 1;
 		}
 		onNotifyListeners ~= dlg;

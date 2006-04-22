@@ -141,7 +141,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackChangeCurrentPage,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["change-current-page"] = 1;
 		}
 		onChangeCurrentPageListeners ~= dlg;
@@ -169,7 +169,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackFocusTab,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["focus-tab"] = 1;
 		}
 		onFocusTabListeners ~= dlg;
@@ -197,7 +197,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackMoveFocusOut,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-focus-out"] = 1;
 		}
 		onMoveFocusOutListeners ~= dlg;
@@ -225,7 +225,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackSelectPage,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["select-page"] = 1;
 		}
 		onSelectPageListeners ~= dlg;
@@ -253,7 +253,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackSwitchPage,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["switch-page"] = 1;
 		}
 		onSwitchPageListeners ~= dlg;

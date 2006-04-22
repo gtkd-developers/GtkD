@@ -118,7 +118,7 @@ public class Curve : DrawingArea
 			cast(GCallback)&callBackCurveTypeChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["curve-type-changed"] = 1;
 		}
 		onCurveTypeChangedListeners ~= dlg;

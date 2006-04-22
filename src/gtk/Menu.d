@@ -205,7 +205,7 @@ public class Menu : MenuShell
 			cast(GCallback)&callBackMoveScroll,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-scroll"] = 1;
 		}
 		onMoveScrollListeners ~= dlg;

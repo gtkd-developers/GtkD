@@ -198,7 +198,7 @@ public class TreeSelection : ObjectG
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;

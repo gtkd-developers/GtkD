@@ -145,7 +145,7 @@ public class CellRenderer : ObjectGtk
 			cast(GCallback)&callBackEditingCanceled,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["editing-canceled"] = 1;
 		}
 		onEditingCanceledListeners ~= dlg;
@@ -173,7 +173,7 @@ public class CellRenderer : ObjectGtk
 			cast(GCallback)&callBackEditingStarted,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["editing-started"] = 1;
 		}
 		onEditingStartedListeners ~= dlg;

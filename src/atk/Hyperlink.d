@@ -105,7 +105,7 @@ public class Hyperlink : ObjectG
 			cast(GCallback)&callBackLinkActivated,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["link-activated"] = 1;
 		}
 		onLinkActivatedListeners ~= dlg;

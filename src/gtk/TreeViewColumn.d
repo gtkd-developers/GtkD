@@ -150,7 +150,7 @@ public class TreeViewColumn : ObjectGtk
 			cast(GCallback)&callBackClicked,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["clicked"] = 1;
 		}
 		onClickedListeners ~= dlg;

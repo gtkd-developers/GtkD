@@ -112,7 +112,7 @@ public class ToggleToolButton : ToolButton
 			cast(GCallback)&callBackToggled,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;

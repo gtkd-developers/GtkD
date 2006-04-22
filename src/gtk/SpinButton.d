@@ -153,7 +153,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackChangeValue,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["change-value"] = 1;
 		}
 		onChangeValueListeners ~= dlg;
@@ -181,7 +181,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackInput,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["input"] = 1;
 		}
 		onInputListeners ~= dlg;
@@ -209,7 +209,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackOutput,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["output"] = 1;
 		}
 		onOutputListeners ~= dlg;
@@ -237,7 +237,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackValueChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["value-changed"] = 1;
 		}
 		onValueChangedListeners ~= dlg;

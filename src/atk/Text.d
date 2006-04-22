@@ -117,7 +117,7 @@ public class Text
 			cast(GCallback)&callBackTextAttributesChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["text-attributes-changed"] = 1;
 		}
 		onTextAttributesChangedListeners ~= dlg;
@@ -145,7 +145,7 @@ public class Text
 			cast(GCallback)&callBackTextCaretMoved,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["text-caret-moved"] = 1;
 		}
 		onTextCaretMovedListeners ~= dlg;
@@ -173,7 +173,7 @@ public class Text
 			cast(GCallback)&callBackTextChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["text-changed"] = 1;
 		}
 		onTextChangedListeners ~= dlg;
@@ -201,7 +201,7 @@ public class Text
 			cast(GCallback)&callBackTextSelectionChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["text-selection-changed"] = 1;
 		}
 		onTextSelectionChangedListeners ~= dlg;

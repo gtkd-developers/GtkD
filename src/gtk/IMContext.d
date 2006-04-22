@@ -110,7 +110,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackCommit,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["commit"] = 1;
 		}
 		onCommitListeners ~= dlg;
@@ -138,7 +138,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackDeleteSurrounding,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["delete-surrounding"] = 1;
 		}
 		onDeleteSurroundingListeners ~= dlg;
@@ -166,7 +166,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackPreeditChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["preedit-changed"] = 1;
 		}
 		onPreeditChangedListeners ~= dlg;
@@ -194,7 +194,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackPreeditEnd,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["preedit-end"] = 1;
 		}
 		onPreeditEndListeners ~= dlg;
@@ -222,7 +222,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackPreeditStart,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["preedit-start"] = 1;
 		}
 		onPreeditStartListeners ~= dlg;
@@ -250,7 +250,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackRetrieveSurrounding,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["retrieve-surrounding"] = 1;
 		}
 		onRetrieveSurroundingListeners ~= dlg;

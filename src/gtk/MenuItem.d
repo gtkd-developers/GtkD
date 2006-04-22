@@ -197,7 +197,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackActivate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;
@@ -225,7 +225,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackActivateItem,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["activate-item"] = 1;
 		}
 		onActivateItemListeners ~= dlg;
@@ -253,7 +253,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackToggleSizeAllocate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["toggle-size-allocate"] = 1;
 		}
 		onToggleSizeAllocateListeners ~= dlg;
@@ -281,7 +281,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackToggleSizeRequest,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["toggle-size-request"] = 1;
 		}
 		onToggleSizeRequestListeners ~= dlg;

@@ -184,7 +184,7 @@ public class Container : Widget
 			cast(GCallback)&callBackAdd,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["add"] = 1;
 		}
 		onAddListeners ~= dlg;
@@ -212,7 +212,7 @@ public class Container : Widget
 			cast(GCallback)&callBackCheckResize,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["check-resize"] = 1;
 		}
 		onCheckResizeListeners ~= dlg;
@@ -240,7 +240,7 @@ public class Container : Widget
 			cast(GCallback)&callBackRemove,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["remove"] = 1;
 		}
 		onRemoveListeners ~= dlg;
@@ -268,7 +268,7 @@ public class Container : Widget
 			cast(GCallback)&callBackSetFocusChild,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["set-focus-child"] = 1;
 		}
 		onSetFocusChildListeners ~= dlg;

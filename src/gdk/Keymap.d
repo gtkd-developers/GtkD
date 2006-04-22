@@ -160,7 +160,7 @@ public class Keymap : ObjectG
 			cast(GCallback)&callBackDirectionChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["direction-changed"] = 1;
 		}
 		onDirectionChangedListeners ~= dlg;
@@ -188,7 +188,7 @@ public class Keymap : ObjectG
 			cast(GCallback)&callBackKeysChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["keys-changed"] = 1;
 		}
 		onKeysChangedListeners ~= dlg;

@@ -117,7 +117,7 @@ public class ToolItem : Bin
 			cast(GCallback)&callBackCreateMenuProxy,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["create-menu-proxy"] = 1;
 		}
 		onCreateMenuProxyListeners ~= dlg;
@@ -145,7 +145,7 @@ public class ToolItem : Bin
 			cast(GCallback)&callBackSetTooltip,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["set-tooltip"] = 1;
 		}
 		onSetTooltipListeners ~= dlg;
@@ -173,7 +173,7 @@ public class ToolItem : Bin
 			cast(GCallback)&callBackToolbarReconfigured,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["toolbar-reconfigured"] = 1;
 		}
 		onToolbarReconfiguredListeners ~= dlg;

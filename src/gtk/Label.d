@@ -213,7 +213,7 @@ public class Label : Misc
 			cast(GCallback)&callBackCopyClipboard,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["copy-clipboard"] = 1;
 		}
 		onCopyClipboardListeners ~= dlg;
@@ -241,7 +241,7 @@ public class Label : Misc
 			cast(GCallback)&callBackMoveCursor,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -269,7 +269,7 @@ public class Label : Misc
 			cast(GCallback)&callBackPopulatePopup,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["populate-popup"] = 1;
 		}
 		onPopulatePopupListeners ~= dlg;

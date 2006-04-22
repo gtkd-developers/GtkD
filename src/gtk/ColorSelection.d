@@ -112,7 +112,7 @@ public class ColorSelection : VBox
 			cast(GCallback)&callBackColorChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["color-changed"] = 1;
 		}
 		onColorChangedListeners ~= dlg;

@@ -160,7 +160,7 @@ public class ObjectGtk : ObjectG
 			cast(GCallback)&callBackDestroy,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["destroy"] = 1;
 		}
 		onDestroyListeners ~= dlg;

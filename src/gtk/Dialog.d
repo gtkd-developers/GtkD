@@ -195,7 +195,7 @@ public class Dialog : Window
 			cast(GCallback)&callBackClose,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["close"] = 1;
 		}
 		onCloseListeners ~= dlg;
@@ -223,7 +223,7 @@ public class Dialog : Window
 			cast(GCallback)&callBackResponse,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["response"] = 1;
 		}
 		onResponseListeners ~= dlg;

@@ -138,7 +138,7 @@ public class Screen : ObjectG
 			cast(GCallback)&callBackSizeChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["size-changed"] = 1;
 		}
 		onSizeChangedListeners ~= dlg;

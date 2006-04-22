@@ -99,7 +99,7 @@ public class Hypertext
 			cast(GCallback)&callBackLinkSelected,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["link-selected"] = 1;
 		}
 		onLinkSelectedListeners ~= dlg;

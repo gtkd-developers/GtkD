@@ -118,7 +118,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackActiveDescendantChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["active-descendant-changed"] = 1;
 		}
 		onActiveDescendantChangedListeners ~= dlg;
@@ -146,7 +146,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackChildrenChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["children-changed"] = 1;
 		}
 		onChildrenChangedListeners ~= dlg;
@@ -174,7 +174,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["focus-event"] = 1;
 		}
 		onFocusListeners ~= dlg;
@@ -202,7 +202,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackPropertyChange,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["property-change"] = 1;
 		}
 		onPropertyChangeListeners ~= dlg;
@@ -230,7 +230,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackStateChange,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["state-change"] = 1;
 		}
 		onStateChangeListeners ~= dlg;
@@ -258,7 +258,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackVisibleDataChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["visible-data-changed"] = 1;
 		}
 		onVisibleDataChangedListeners ~= dlg;

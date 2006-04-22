@@ -122,7 +122,7 @@ public class Statusbar : HBox
 			cast(GCallback)&callBackTextPopped,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["text-popped"] = 1;
 		}
 		onTextPoppedListeners ~= dlg;
@@ -150,7 +150,7 @@ public class Statusbar : HBox
 			cast(GCallback)&callBackTextPushed,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["text-pushed"] = 1;
 		}
 		onTextPushedListeners ~= dlg;

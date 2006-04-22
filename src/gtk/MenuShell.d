@@ -111,7 +111,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackActivateCurrent,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["activate-current"] = 1;
 		}
 		onActivateCurrentListeners ~= dlg;
@@ -139,7 +139,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackCancel,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["cancel"] = 1;
 		}
 		onCancelListeners ~= dlg;
@@ -167,7 +167,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackCycleFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["cycle-focus"] = 1;
 		}
 		onCycleFocusListeners ~= dlg;
@@ -195,7 +195,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackDeactivate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["deactivate"] = 1;
 		}
 		onDeactivateListeners ~= dlg;
@@ -223,7 +223,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackMoveCurrent,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-current"] = 1;
 		}
 		onMoveCurrentListeners ~= dlg;
@@ -251,7 +251,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackSelectionDone,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["selection-done"] = 1;
 		}
 		onSelectionDoneListeners ~= dlg;

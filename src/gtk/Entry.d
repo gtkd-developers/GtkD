@@ -124,7 +124,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackActivate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;
@@ -152,7 +152,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackBackspace,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["backspace"] = 1;
 		}
 		onBackspaceListeners ~= dlg;
@@ -180,7 +180,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackCopyClipboard,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["copy-clipboard"] = 1;
 		}
 		onCopyClipboardListeners ~= dlg;
@@ -208,7 +208,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackCutClipboard,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["cut-clipboard"] = 1;
 		}
 		onCutClipboardListeners ~= dlg;
@@ -236,7 +236,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackDeleteFromCursor,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["delete-from-cursor"] = 1;
 		}
 		onDeleteFromCursorListeners ~= dlg;
@@ -264,7 +264,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackInsertAtCursor,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["insert-at-cursor"] = 1;
 		}
 		onInsertAtCursorListeners ~= dlg;
@@ -292,7 +292,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackMoveCursor,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -320,7 +320,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackPasteClipboard,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["paste-clipboard"] = 1;
 		}
 		onPasteClipboardListeners ~= dlg;
@@ -348,7 +348,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackPopulatePopup,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["populate-popup"] = 1;
 		}
 		onPopulatePopupListeners ~= dlg;
@@ -376,7 +376,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackToggleOverwrite,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["toggle-overwrite"] = 1;
 		}
 		onToggleOverwriteListeners ~= dlg;

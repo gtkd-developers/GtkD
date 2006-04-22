@@ -105,7 +105,7 @@ public class Viewport : Bin
 			cast(GCallback)&callBackSetScrollAdjustments,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;

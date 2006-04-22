@@ -123,7 +123,7 @@ public class TextTag : ObjectG
 			cast(GCallback)&callBack,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["event"] = 1;
 		}
 		onListeners ~= dlg;

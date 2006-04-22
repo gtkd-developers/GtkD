@@ -130,7 +130,7 @@ public class AccelGroup : ObjectG
 			cast(GCallback)&callBackAccelActivate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["accel-activate"] = 1;
 		}
 		onAccelActivateListeners ~= dlg;
@@ -158,7 +158,7 @@ public class AccelGroup : ObjectG
 			cast(GCallback)&callBackAccelChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["accel-changed"] = 1;
 		}
 		onAccelChangedListeners ~= dlg;

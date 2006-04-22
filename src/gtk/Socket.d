@@ -153,7 +153,7 @@ public class Socket : Container
 			cast(GCallback)&callBackPlugAdded,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["plug-added"] = 1;
 		}
 		onPlugAddedListeners ~= dlg;
@@ -181,7 +181,7 @@ public class Socket : Container
 			cast(GCallback)&callBackPlugRemoved,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["plug-removed"] = 1;
 		}
 		onPlugRemovedListeners ~= dlg;

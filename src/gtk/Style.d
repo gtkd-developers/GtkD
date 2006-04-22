@@ -128,7 +128,7 @@ public class Style : ObjectG
 			cast(GCallback)&callBackRealize,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["realize"] = 1;
 		}
 		onRealizeListeners ~= dlg;
@@ -156,7 +156,7 @@ public class Style : ObjectG
 			cast(GCallback)&callBackUnrealize,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["unrealize"] = 1;
 		}
 		onUnrealizeListeners ~= dlg;

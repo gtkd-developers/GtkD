@@ -98,8 +98,6 @@
 
 module gtk.Widget;
 
-private import std.stdio;
-
 private import gtk.typedefs;
 
 private import lib.gtk;
@@ -285,7 +283,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackAccelClosuresChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["accel-closures-changed"] = 1;
 		}
 		onAccelClosuresChangedListeners ~= dlg;
@@ -314,7 +312,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackButtonPress,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["button-press-event"] = 1;
 		}
 		onButtonPressListeners ~= dlg;
@@ -322,6 +320,7 @@ public class Widget : ObjectGtk
 	extern(C) static void callBackButtonPress(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
 	{
 		bit consumed = false;
+		
 		foreach ( gboolean delegate(GdkEventButton*, Widget) dlg ; widget.onButtonPressListeners )
 		{
 			dlg(event, widget);
@@ -330,15 +329,10 @@ public class Widget : ObjectGtk
 		return consumed;
 	}
 	
-	static int p=0;
-	
 	gboolean delegate(GdkEventButton*, Widget)[] onButtonReleaseListeners;
 	void addOnButtonRelease(gboolean delegate(GdkEventButton*, Widget) dlg)
 	{
-		if ( p++ < 1 )
-		{
-			
-		//if ( !("button-release-event" in connectedSignals) )
+		if ( !("button-release-event" in connectedSignals) )
 		{
 			addEvents(GdkEventMask.GDK_BUTTON_RELEASE_MASK);
 			Signals.connectData(
@@ -347,16 +341,15 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackButtonRelease,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["button-release-event"] = 1;
 		}
 		onButtonReleaseListeners ~= dlg;
-		}
 	}
 	extern(C) static void callBackButtonRelease(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
 	{
 		bit consumed = false;
-
+		
 		foreach ( gboolean delegate(GdkEventButton*, Widget) dlg ; widget.onButtonReleaseListeners )
 		{
 			dlg(event, widget);
@@ -376,7 +369,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackCanActivateAccel,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["can-activate-accel"] = 1;
 		}
 		onCanActivateAccelListeners ~= dlg;
@@ -404,7 +397,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackChildNotify,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["child-notify"] = 1;
 		}
 		onChildNotifyListeners ~= dlg;
@@ -432,7 +425,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackClient,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["client-event"] = 1;
 		}
 		onClientListeners ~= dlg;
@@ -460,7 +453,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackConfigure,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["configure-event"] = 1;
 		}
 		onConfigureListeners ~= dlg;
@@ -488,7 +481,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDelete,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["delete-event"] = 1;
 		}
 		onDeleteListeners ~= dlg;
@@ -516,7 +509,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDestroy,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["destroy-event"] = 1;
 		}
 		onDestroyListeners ~= dlg;
@@ -544,7 +537,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDirectionChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["direction-changed"] = 1;
 		}
 		onDirectionChangedListeners ~= dlg;
@@ -572,7 +565,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragBegin,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["drag-begin"] = 1;
 		}
 		onDragBeginListeners ~= dlg;
@@ -600,7 +593,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragDataDelete,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["drag-data-delete"] = 1;
 		}
 		onDragDataDeleteListeners ~= dlg;
@@ -628,7 +621,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragDataGet,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["drag-data-get"] = 1;
 		}
 		onDragDataGetListeners ~= dlg;
@@ -656,7 +649,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragDataReceived,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["drag-data-received"] = 1;
 		}
 		onDragDataReceivedListeners ~= dlg;
@@ -684,7 +677,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragDrop,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["drag-drop"] = 1;
 		}
 		onDragDropListeners ~= dlg;
@@ -712,7 +705,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragEnd,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["drag-end"] = 1;
 		}
 		onDragEndListeners ~= dlg;
@@ -740,7 +733,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragLeave,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["drag-leave"] = 1;
 		}
 		onDragLeaveListeners ~= dlg;
@@ -768,7 +761,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragMotion,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["drag-motion"] = 1;
 		}
 		onDragMotionListeners ~= dlg;
@@ -796,7 +789,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackEnterNotify,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["enter-notify-event"] = 1;
 		}
 		onEnterNotifyListeners ~= dlg;
@@ -824,7 +817,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBack,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["event"] = 1;
 		}
 		onListeners ~= dlg;
@@ -852,7 +845,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackEventAfter,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["event-after"] = 1;
 		}
 		onEventAfterListeners ~= dlg;
@@ -880,7 +873,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackExpose,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["expose-event"] = 1;
 		}
 		onExposeListeners ~= dlg;
@@ -908,7 +901,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["focus"] = 1;
 		}
 		onFocusListeners ~= dlg;
@@ -936,7 +929,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackFocusIn,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["focus-in-event"] = 1;
 		}
 		onFocusInListeners ~= dlg;
@@ -964,7 +957,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackFocusOut,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["focus-out-event"] = 1;
 		}
 		onFocusOutListeners ~= dlg;
@@ -992,7 +985,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackGrabBroken,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["grab-broken-event"] = 1;
 		}
 		onGrabBrokenListeners ~= dlg;
@@ -1020,7 +1013,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackGrabFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["grab-focus"] = 1;
 		}
 		onGrabFocusListeners ~= dlg;
@@ -1048,7 +1041,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackGrabNotify,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["grab-notify"] = 1;
 		}
 		onGrabNotifyListeners ~= dlg;
@@ -1076,7 +1069,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackHide,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["hide"] = 1;
 		}
 		onHideListeners ~= dlg;
@@ -1104,7 +1097,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackHierarchyChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["hierarchy-changed"] = 1;
 		}
 		onHierarchyChangedListeners ~= dlg;
@@ -1132,7 +1125,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackKeyPress,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["key-press-event"] = 1;
 		}
 		onKeyPressListeners ~= dlg;
@@ -1160,7 +1153,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackKeyRelease,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["key-release-event"] = 1;
 		}
 		onKeyReleaseListeners ~= dlg;
@@ -1188,7 +1181,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackLeaveNotify,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["leave-notify-event"] = 1;
 		}
 		onLeaveNotifyListeners ~= dlg;
@@ -1216,7 +1209,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackMap,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["map"] = 1;
 		}
 		onMapListeners ~= dlg;
@@ -1244,7 +1237,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackMapEvent,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["map-event"] = 1;
 		}
 		onMapEventListeners ~= dlg;
@@ -1272,7 +1265,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackMnemonicActivate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["mnemonic-activate"] = 1;
 		}
 		onMnemonicActivateListeners ~= dlg;
@@ -1301,7 +1294,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackMotionNotify,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["motion-notify-event"] = 1;
 		}
 		onMotionNotifyListeners ~= dlg;
@@ -1329,7 +1322,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackNoExpose,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["no-expose-event"] = 1;
 		}
 		onNoExposeListeners ~= dlg;
@@ -1357,7 +1350,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackParentSet,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["parent-set"] = 1;
 		}
 		onParentSetListeners ~= dlg;
@@ -1385,7 +1378,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackPopupMenu,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["popup-menu"] = 1;
 		}
 		onPopupMenuListeners ~= dlg;
@@ -1413,7 +1406,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackPropertyNotify,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["property-notify-event"] = 1;
 		}
 		onPropertyNotifyListeners ~= dlg;
@@ -1441,7 +1434,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackProximityIn,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["proximity-in-event"] = 1;
 		}
 		onProximityInListeners ~= dlg;
@@ -1469,7 +1462,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackProximityOut,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["proximity-out-event"] = 1;
 		}
 		onProximityOutListeners ~= dlg;
@@ -1497,7 +1490,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackRealize,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["realize"] = 1;
 		}
 		onRealizeListeners ~= dlg;
@@ -1525,7 +1518,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackScreenChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["screen-changed"] = 1;
 		}
 		onScreenChangedListeners ~= dlg;
@@ -1553,7 +1546,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackScroll,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["scroll-event"] = 1;
 		}
 		onScrollListeners ~= dlg;
@@ -1581,7 +1574,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSelectionClear,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["selection-clear-event"] = 1;
 		}
 		onSelectionClearListeners ~= dlg;
@@ -1609,7 +1602,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSelectionGet,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["selection-get"] = 1;
 		}
 		onSelectionGetListeners ~= dlg;
@@ -1637,7 +1630,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSelectionNotify,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["selection-notify-event"] = 1;
 		}
 		onSelectionNotifyListeners ~= dlg;
@@ -1665,7 +1658,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSelectionReceived,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["selection-received"] = 1;
 		}
 		onSelectionReceivedListeners ~= dlg;
@@ -1693,7 +1686,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSelectionRequest,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["selection-request-event"] = 1;
 		}
 		onSelectionRequestListeners ~= dlg;
@@ -1721,7 +1714,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackShow,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["show"] = 1;
 		}
 		onShowListeners ~= dlg;
@@ -1749,7 +1742,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackShowHelp,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["show-help"] = 1;
 		}
 		onShowHelpListeners ~= dlg;
@@ -1777,7 +1770,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSizeAllocate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["size-allocate"] = 1;
 		}
 		onSizeAllocateListeners ~= dlg;
@@ -1805,7 +1798,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSizeRequest,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["size-request"] = 1;
 		}
 		onSizeRequestListeners ~= dlg;
@@ -1833,7 +1826,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackStateChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["state-changed"] = 1;
 		}
 		onStateChangedListeners ~= dlg;
@@ -1861,7 +1854,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackStyleSet,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["style-set"] = 1;
 		}
 		onStyleSetListeners ~= dlg;
@@ -1889,7 +1882,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackUnmap,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["unmap"] = 1;
 		}
 		onUnmapListeners ~= dlg;
@@ -1917,7 +1910,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackUnmapEvent,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["unmap-event"] = 1;
 		}
 		onUnmapEventListeners ~= dlg;
@@ -1945,7 +1938,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackUnrealize,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["unrealize"] = 1;
 		}
 		onUnrealizeListeners ~= dlg;
@@ -1973,7 +1966,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackVisibilityNotify,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["visibility-notify-event"] = 1;
 		}
 		onVisibilityNotifyListeners ~= dlg;
@@ -2001,7 +1994,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackWindowState,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["window-state-event"] = 1;
 		}
 		onWindowStateListeners ~= dlg;

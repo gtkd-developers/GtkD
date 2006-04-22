@@ -152,7 +152,7 @@ public class Paned : Container
 			cast(GCallback)&callBackAcceptPosition,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["accept-position"] = 1;
 		}
 		onAcceptPositionListeners ~= dlg;
@@ -180,7 +180,7 @@ public class Paned : Container
 			cast(GCallback)&callBackCancelPosition,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["cancel-position"] = 1;
 		}
 		onCancelPositionListeners ~= dlg;
@@ -208,7 +208,7 @@ public class Paned : Container
 			cast(GCallback)&callBackCycleChildFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["cycle-child-focus"] = 1;
 		}
 		onCycleChildFocusListeners ~= dlg;
@@ -236,7 +236,7 @@ public class Paned : Container
 			cast(GCallback)&callBackCycleHandleFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["cycle-handle-focus"] = 1;
 		}
 		onCycleHandleFocusListeners ~= dlg;
@@ -264,7 +264,7 @@ public class Paned : Container
 			cast(GCallback)&callBackMoveHandle,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-handle"] = 1;
 		}
 		onMoveHandleListeners ~= dlg;
@@ -292,7 +292,7 @@ public class Paned : Container
 			cast(GCallback)&callBackToggleHandleFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["toggle-handle-focus"] = 1;
 		}
 		onToggleHandleFocusListeners ~= dlg;

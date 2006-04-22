@@ -122,7 +122,7 @@ public class InputDialog : Dialog
 			cast(GCallback)&callBackDisableDevice,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["disable-device"] = 1;
 		}
 		onDisableDeviceListeners ~= dlg;
@@ -150,7 +150,7 @@ public class InputDialog : Dialog
 			cast(GCallback)&callBackEnableDevice,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["enable-device"] = 1;
 		}
 		onEnableDeviceListeners ~= dlg;

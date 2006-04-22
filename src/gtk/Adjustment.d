@@ -116,7 +116,7 @@ public class Adjustment : ObjectGtk
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -144,7 +144,7 @@ public class Adjustment : ObjectGtk
 			cast(GCallback)&callBackValueChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["value-changed"] = 1;
 		}
 		onValueChangedListeners ~= dlg;

@@ -337,7 +337,7 @@ public class FileChooser
 			cast(GCallback)&callBackConfirmOverwrite,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["confirm-overwrite"] = 1;
 		}
 		onConfirmOverwriteListeners ~= dlg;
@@ -365,7 +365,7 @@ public class FileChooser
 			cast(GCallback)&callBackCurrentFolderChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["current-folder-changed"] = 1;
 		}
 		onCurrentFolderChangedListeners ~= dlg;
@@ -393,7 +393,7 @@ public class FileChooser
 			cast(GCallback)&callBackFileActivated,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["file-activated"] = 1;
 		}
 		onFileActivatedListeners ~= dlg;
@@ -421,7 +421,7 @@ public class FileChooser
 			cast(GCallback)&callBackSelectionChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["selection-changed"] = 1;
 		}
 		onSelectionChangedListeners ~= dlg;
@@ -449,7 +449,7 @@ public class FileChooser
 			cast(GCallback)&callBackUpdatePreview,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["update-preview"] = 1;
 		}
 		onUpdatePreviewListeners ~= dlg;

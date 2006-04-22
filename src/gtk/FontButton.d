@@ -106,7 +106,7 @@ public class FontButton : Button
 			cast(GCallback)&callBackFontSet,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["font-set"] = 1;
 		}
 		onFontSetListeners ~= dlg;

@@ -148,7 +148,6 @@ public class TextView : Container
 		buf.insertAtCursor(text);
 	}
 	
-private import glib.Str;
 	/**
 	 * Simply appends some text to this view
 	 * @param text the text to append
@@ -158,7 +157,6 @@ private import glib.Str;
 	{
 		TextBuffer buf = getBuffer();
 		TextIter iter = new TextIter();
-		buf = getBuffer();
 		buf.getEndIter(iter);
 		buf.insert(iter, text);
 		if ( ensureVisible )
@@ -191,7 +189,7 @@ private import glib.Str;
 			cast(GCallback)&callBackBackspace,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["backspace"] = 1;
 		}
 		onBackspaceListeners ~= dlg;
@@ -219,7 +217,7 @@ private import glib.Str;
 			cast(GCallback)&callBackCopyClipboard,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["copy-clipboard"] = 1;
 		}
 		onCopyClipboardListeners ~= dlg;
@@ -247,7 +245,7 @@ private import glib.Str;
 			cast(GCallback)&callBackCutClipboard,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["cut-clipboard"] = 1;
 		}
 		onCutClipboardListeners ~= dlg;
@@ -275,7 +273,7 @@ private import glib.Str;
 			cast(GCallback)&callBackDeleteFromCursor,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["delete-from-cursor"] = 1;
 		}
 		onDeleteFromCursorListeners ~= dlg;
@@ -303,7 +301,7 @@ private import glib.Str;
 			cast(GCallback)&callBackInsertAtCursor,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["insert-at-cursor"] = 1;
 		}
 		onInsertAtCursorListeners ~= dlg;
@@ -331,7 +329,7 @@ private import glib.Str;
 			cast(GCallback)&callBackMoveCursor,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -359,7 +357,7 @@ private import glib.Str;
 			cast(GCallback)&callBackMoveFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-focus"] = 1;
 		}
 		onMoveFocusListeners ~= dlg;
@@ -387,7 +385,7 @@ private import glib.Str;
 			cast(GCallback)&callBackMoveViewport,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-viewport"] = 1;
 		}
 		onMoveViewportListeners ~= dlg;
@@ -415,7 +413,7 @@ private import glib.Str;
 			cast(GCallback)&callBackPageHorizontally,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["page-horizontally"] = 1;
 		}
 		onPageHorizontallyListeners ~= dlg;
@@ -443,7 +441,7 @@ private import glib.Str;
 			cast(GCallback)&callBackPasteClipboard,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["paste-clipboard"] = 1;
 		}
 		onPasteClipboardListeners ~= dlg;
@@ -471,7 +469,7 @@ private import glib.Str;
 			cast(GCallback)&callBackPopulatePopup,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["populate-popup"] = 1;
 		}
 		onPopulatePopupListeners ~= dlg;
@@ -499,7 +497,7 @@ private import glib.Str;
 			cast(GCallback)&callBackSelectAll,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["select-all"] = 1;
 		}
 		onSelectAllListeners ~= dlg;
@@ -527,7 +525,7 @@ private import glib.Str;
 			cast(GCallback)&callBackSetAnchor,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["set-anchor"] = 1;
 		}
 		onSetAnchorListeners ~= dlg;
@@ -555,7 +553,7 @@ private import glib.Str;
 			cast(GCallback)&callBackSetScrollAdjustments,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
@@ -583,7 +581,7 @@ private import glib.Str;
 			cast(GCallback)&callBackToggleOverwrite,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["toggle-overwrite"] = 1;
 		}
 		onToggleOverwriteListeners ~= dlg;

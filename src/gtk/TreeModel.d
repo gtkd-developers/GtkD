@@ -281,7 +281,7 @@ public class TreeModel
 			cast(GCallback)&callBackRowChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["row-changed"] = 1;
 		}
 		onRowChangedListeners ~= dlg;
@@ -309,7 +309,7 @@ public class TreeModel
 			cast(GCallback)&callBackRowDeleted,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["row-deleted"] = 1;
 		}
 		onRowDeletedListeners ~= dlg;
@@ -337,7 +337,7 @@ public class TreeModel
 			cast(GCallback)&callBackRowHasChildToggled,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["row-has-child-toggled"] = 1;
 		}
 		onRowHasChildToggledListeners ~= dlg;
@@ -365,7 +365,7 @@ public class TreeModel
 			cast(GCallback)&callBackRowInserted,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["row-inserted"] = 1;
 		}
 		onRowInsertedListeners ~= dlg;
@@ -393,7 +393,7 @@ public class TreeModel
 			cast(GCallback)&callBackRowsReordered,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["rows-reordered"] = 1;
 		}
 		onRowsReorderedListeners ~= dlg;

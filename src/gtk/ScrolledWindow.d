@@ -185,7 +185,7 @@ public class ScrolledWindow : Bin
 			cast(GCallback)&callBackMoveFocusOut,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-focus-out"] = 1;
 		}
 		onMoveFocusOutListeners ~= dlg;
@@ -213,7 +213,7 @@ public class ScrolledWindow : Bin
 			cast(GCallback)&callBackScrollChild,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["scroll-child"] = 1;
 		}
 		onScrollChildListeners ~= dlg;

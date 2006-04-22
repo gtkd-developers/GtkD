@@ -990,7 +990,7 @@ public class GtkWrapper : WrapperIF
 
 int main()
 {
-	GtkWrapper wrapper = new GtkWrapper("/home/ruimt/devel/D1/Duit/wrap/");
+	GtkWrapper wrapper = new GtkWrapper("/home/ruimt/devel/D1/Duit/trunk/wrap/");
 	int status = wrapper.process("APILookup.txt");
 	wrapper.printErrors();
 	if ( wrapper.errors.length == 0 )

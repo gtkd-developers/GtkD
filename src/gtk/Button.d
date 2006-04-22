@@ -171,7 +171,6 @@ public class Button : Bin
 		if ( hideLabel )
 		{
 			this();
-			removeAll();
 			Image image = new Image(stockID,currentIconSize);
 			add(image);
 		}
@@ -201,8 +200,8 @@ public class Button : Bin
 		setAction(action);
 		addOnClicked(dlg);
 	}
-
-
+	
+	
 	/**
 	 */
 	
@@ -222,7 +221,7 @@ public class Button : Bin
 			cast(GCallback)&callBackActivate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;
@@ -250,7 +249,7 @@ public class Button : Bin
 			cast(GCallback)&callBackClicked,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["clicked"] = 1;
 		}
 		onClickedListeners ~= dlg;
@@ -278,7 +277,7 @@ public class Button : Bin
 			cast(GCallback)&callBackEnter,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["enter"] = 1;
 		}
 		onEnterListeners ~= dlg;
@@ -306,7 +305,7 @@ public class Button : Bin
 			cast(GCallback)&callBackLeave,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["leave"] = 1;
 		}
 		onLeaveListeners ~= dlg;
@@ -334,7 +333,7 @@ public class Button : Bin
 			cast(GCallback)&callBackPressed,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["pressed"] = 1;
 		}
 		onPressedListeners ~= dlg;
@@ -362,7 +361,7 @@ public class Button : Bin
 			cast(GCallback)&callBackReleased,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["released"] = 1;
 		}
 		onReleasedListeners ~= dlg;

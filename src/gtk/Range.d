@@ -105,7 +105,7 @@ public class Range : Widget
 			cast(GCallback)&callBackAdjustBounds,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["adjust-bounds"] = 1;
 		}
 		onAdjustBoundsListeners ~= dlg;
@@ -133,7 +133,7 @@ public class Range : Widget
 			cast(GCallback)&callBackChangeValue,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["change-value"] = 1;
 		}
 		onChangeValueListeners ~= dlg;
@@ -161,7 +161,7 @@ public class Range : Widget
 			cast(GCallback)&callBackMoveSlider,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-slider"] = 1;
 		}
 		onMoveSliderListeners ~= dlg;
@@ -189,7 +189,7 @@ public class Range : Widget
 			cast(GCallback)&callBackValueChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["value-changed"] = 1;
 		}
 		onValueChangedListeners ~= dlg;

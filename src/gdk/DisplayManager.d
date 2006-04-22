@@ -116,7 +116,7 @@ public class DisplayManager : ObjectG
 			cast(GCallback)&callBackDisplayOpened,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["display-opened"] = 1;
 		}
 		onDisplayOpenedListeners ~= dlg;

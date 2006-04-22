@@ -102,9 +102,7 @@ public class TreeStore : TreeModel
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (
-	GtkTreeStore*
-	gtkTreeStore)
+	public this (GtkTreeStore* gtkTreeStore)
 	{
 		super(cast(GtkTreeModel*)gtkTreeStore);
 		this.gtkTreeStore = gtkTreeStore;

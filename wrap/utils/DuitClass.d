@@ -842,7 +842,8 @@ public class DuitClass
 			text ~= "			cast(GCallback)&callBack"~duitSignalName~", ";
 			text ~= "			this, ";
 			text ~= "			null, ";
-			text ~= "			GConnectFlags.AFTER);";
+			//text ~= "			GConnectFlags.AFTER);";
+			text ~= "			0);";
 			text ~= "	connectedSignals[\""~signalName~"\"] = 1;";
 			text ~= "}";
 			text ~= "on"~duitSignalName~"Listeners ~= dlg;";

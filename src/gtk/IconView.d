@@ -123,7 +123,7 @@ public class IconView : Container
 			cast(GCallback)&callBackActivateCursorItem,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["activate-cursor-item"] = 1;
 		}
 		onActivateCursorItemListeners ~= dlg;
@@ -151,7 +151,7 @@ public class IconView : Container
 			cast(GCallback)&callBackItemActivated,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["item-activated"] = 1;
 		}
 		onItemActivatedListeners ~= dlg;
@@ -179,7 +179,7 @@ public class IconView : Container
 			cast(GCallback)&callBackMoveCursor,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -207,7 +207,7 @@ public class IconView : Container
 			cast(GCallback)&callBackSelectAll,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["select-all"] = 1;
 		}
 		onSelectAllListeners ~= dlg;
@@ -235,7 +235,7 @@ public class IconView : Container
 			cast(GCallback)&callBackSelectCursorItem,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["select-cursor-item"] = 1;
 		}
 		onSelectCursorItemListeners ~= dlg;
@@ -263,7 +263,7 @@ public class IconView : Container
 			cast(GCallback)&callBackSelectionChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["selection-changed"] = 1;
 		}
 		onSelectionChangedListeners ~= dlg;
@@ -291,7 +291,7 @@ public class IconView : Container
 			cast(GCallback)&callBackSetScrollAdjustments,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
@@ -319,7 +319,7 @@ public class IconView : Container
 			cast(GCallback)&callBackToggleCursorItem,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["toggle-cursor-item"] = 1;
 		}
 		onToggleCursorItemListeners ~= dlg;
@@ -347,7 +347,7 @@ public class IconView : Container
 			cast(GCallback)&callBackUnselectAll,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["unselect-all"] = 1;
 		}
 		onUnselectAllListeners ~= dlg;

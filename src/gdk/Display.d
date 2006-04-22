@@ -128,7 +128,7 @@ public class Display : ObjectG
 			cast(GCallback)&callBackClosed,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["closed"] = 1;
 		}
 		onClosedListeners ~= dlg;

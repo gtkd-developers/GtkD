@@ -140,7 +140,7 @@ public class Action : ObjectG
 			cast(GCallback)&callBackActivate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;

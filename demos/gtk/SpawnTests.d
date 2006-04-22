@@ -79,14 +79,14 @@ class SpawnWindow : MainWindow
 	{
 		foreach ( int i, char[] arg ; args)
 		{
-			writefln("[%s] %s", i, arg);
+			writefln("[%s] >%s<", i, arg);
 		}
 		Spawn spawn = new Spawn(args[0]);
 		if (args.length > 1 )
 		{
-			foreach ( char[] arg ; args )
+			for( int i=1 ; i<args.length ; i++ )
 			{
-				spawn.addParm(arg);
+				spawn.addParm(args[i]);
 			}
 		}
 		spawn.addParm(null);

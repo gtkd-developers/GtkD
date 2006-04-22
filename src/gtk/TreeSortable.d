@@ -103,7 +103,7 @@ public class TreeSortable
 			cast(GCallback)&callBackSortColumnChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["sort-column-changed"] = 1;
 		}
 		onSortColumnChangedListeners ~= dlg;

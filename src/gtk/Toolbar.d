@@ -167,7 +167,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackFocusHomeOrEnd,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["focus-home-or-end"] = 1;
 		}
 		onFocusHomeOrEndListeners ~= dlg;
@@ -195,7 +195,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackMoveFocus,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["move-focus"] = 1;
 		}
 		onMoveFocusListeners ~= dlg;
@@ -223,7 +223,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackOrientationChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["orientation-changed"] = 1;
 		}
 		onOrientationChangedListeners ~= dlg;
@@ -251,7 +251,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackPopupContextMenu,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["popup-context-menu"] = 1;
 		}
 		onPopupContextMenuListeners ~= dlg;
@@ -279,7 +279,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackStyleChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["style-changed"] = 1;
 		}
 		onStyleChangedListeners ~= dlg;

@@ -121,7 +121,7 @@ public class HandleBox : Bin
 			cast(GCallback)&callBackChildAttached,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["child-attached"] = 1;
 		}
 		onChildAttachedListeners ~= dlg;
@@ -149,7 +149,7 @@ public class HandleBox : Bin
 			cast(GCallback)&callBackChildDetached,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["child-detached"] = 1;
 		}
 		onChildDetachedListeners ~= dlg;

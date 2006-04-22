@@ -104,7 +104,7 @@ public class Item : Bin
 			cast(GCallback)&callBackDeselect,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["deselect"] = 1;
 		}
 		onDeselectListeners ~= dlg;
@@ -132,7 +132,7 @@ public class Item : Bin
 			cast(GCallback)&callBackSelect,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["select"] = 1;
 		}
 		onSelectListeners ~= dlg;
@@ -160,7 +160,7 @@ public class Item : Bin
 			cast(GCallback)&callBackToggle,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["toggle"] = 1;
 		}
 		onToggleListeners ~= dlg;

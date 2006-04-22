@@ -113,7 +113,7 @@ public class CellRendererText : CellRenderer
 			cast(GCallback)&callBackEdited,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["edited"] = 1;
 		}
 		onEditedListeners ~= dlg;

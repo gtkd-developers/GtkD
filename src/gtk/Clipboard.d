@@ -169,7 +169,7 @@ public class Clipboard : ObjectG
 			cast(GCallback)&callBackOwnerChange,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["owner-change"] = 1;
 		}
 		onOwnerChangeListeners ~= dlg;

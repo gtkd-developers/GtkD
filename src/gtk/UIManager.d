@@ -260,7 +260,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackActionsChanged,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["actions-changed"] = 1;
 		}
 		onActionsChangedListeners ~= dlg;
@@ -288,7 +288,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackAddWidget,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["add-widget"] = 1;
 		}
 		onAddWidgetListeners ~= dlg;
@@ -316,7 +316,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackConnectProxy,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["connect-proxy"] = 1;
 		}
 		onConnectProxyListeners ~= dlg;
@@ -344,7 +344,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackDisconnectProxy,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["disconnect-proxy"] = 1;
 		}
 		onDisconnectProxyListeners ~= dlg;
@@ -372,7 +372,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackPostActivate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["post-activate"] = 1;
 		}
 		onPostActivateListeners ~= dlg;
@@ -400,7 +400,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackPreActivate,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["pre-activate"] = 1;
 		}
 		onPreActivateListeners ~= dlg;

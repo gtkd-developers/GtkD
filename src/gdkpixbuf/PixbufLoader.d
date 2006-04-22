@@ -180,7 +180,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackAreaPrepared,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["area-prepared"] = 1;
 		}
 		onAreaPreparedListeners ~= dlg;
@@ -208,7 +208,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackAreaUpdated,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["area-updated"] = 1;
 		}
 		onAreaUpdatedListeners ~= dlg;
@@ -236,7 +236,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackClosed,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["closed"] = 1;
 		}
 		onClosedListeners ~= dlg;
@@ -264,7 +264,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackSizePrepared,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["size-prepared"] = 1;
 		}
 		onSizePreparedListeners ~= dlg;

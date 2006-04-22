@@ -105,7 +105,7 @@ public class CellEditable
 			cast(GCallback)&callBackEditingDone,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["editing-done"] = 1;
 		}
 		onEditingDoneListeners ~= dlg;
@@ -133,7 +133,7 @@ public class CellEditable
 			cast(GCallback)&callBackRemoveWidget,
 			this,
 			null,
-			GConnectFlags.AFTER);
+			0);
 			connectedSignals["remove-widget"] = 1;
 		}
 		onRemoveWidgetListeners ~= dlg;

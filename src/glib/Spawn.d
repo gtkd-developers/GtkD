@@ -167,6 +167,16 @@ public class Spawn
 	 */
 	public int execAsyncWithPipes()
 	{
+		char** command = Str.toStringzArray(argv);
+		char* parm = *command;
+		
+		while ( parm != null )
+		{
+			printf("parm = >>>%s<\n", parm);
+			++command;
+			parm = *command;
+		}
+		
 		int result = g_spawn_async_with_pipes(
 			Str.toStringz(workingDirectory),
 			Str.toStringzArray(argv),
