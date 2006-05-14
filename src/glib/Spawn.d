@@ -62,6 +62,8 @@ private import glib.Str;
 private import std.stdio;
 private import std.c.string;;
 
+private import std.thread;
+
 /**
  * Description
  */
@@ -109,6 +111,12 @@ public class Spawn
 		this.envp = envp;
 	}
 	
+	/**
+	 * Adds a delegate to be notified on the end of the child process.
+	 * Params:
+	 *    	delegate(int = 	
+	 *    	dlg = 	
+	 */
 	public void addChildWatch(void delegate(int,int) dlg)
 	{
 		externalWatch = dlg;
@@ -165,8 +173,14 @@ public class Spawn
 	/**
 	 * Executes the prepared process
 	 */
-	public int execAsyncWithPipes()
+	public int execAsyncWithPipes(
+		void delegate(int, int, char[], char[])endChild=null,
+		bool delegate(char[])outReader=null,
+		bool delegate(char[])errReader=null,
+		)
 	{
+		writefln("Spawn.execAsyncWithPipes 1");
+		writefln("Spawn.execAsyncWithPipes argv.length = %s",argv.length);
 		char** command = Str.toStringzArray(argv);
 		char* parm = *command;
 		
@@ -197,10 +211,53 @@ public class Spawn
 			standardInput = fdopen(stdIn, "w");
 			standardOutput = fdopen(stdOut, "r");
 			standardError = fdopen(stdErr, "r");
+			
+			if ( outReader !is null )
+			{
+				//(new SpawnOutRead(outReader)).start();
+				readLoop(outReader);
+			}
 		}
 		
 		return result;
 	}
+	
+	int readLoop(bool delegate(char[])outReader)
+	{
+		writefln("SpawnOutRead.run 1");
+		while ( !endOfOutput() )
+		{
+			writefln("SpawnOutRead.run 2");
+			char[] line = readLine();
+			writefln("\t%s", line);
+			outReader(line);
+			writefln("SpawnOutRead.run 3");
+		}
+		writefln("SpawnOutRead.readLoop 4");
+		if ( externalWatch !is null )
+		{
+			writefln("Spawn.readLoop 2");
+			externalWatch(childPid, 0);
+		}
+		return 0;
+	}
+	
+//	class SpawnOutRead : Thread
+//	{
+//		bool delegate(char[])outReader;
+//		this(bool delegate(char[])outReader)
+//		{
+//			this.outReader = outReader;
+//		}
+//		
+//		int run()
+//		{
+//			return readLoop(outReader);
+//		}
+//	}
+	
+	
+
 	
 	public char[] readLine(int max=4096)
 	{
@@ -230,10 +287,13 @@ public class Spawn
 	
 	extern(C) static void childWatchCallback(int pid, int status, Spawn spawn)
 	{
+		writefln("Spawn.childWatchCallback 1");
 		if ( spawn.externalWatch !is null )
 		{
+		writefln("Spawn.childWatchCallback 2");
 			spawn.externalWatch(pid, status);
 		}
+		writefln("Spawn.childWatchCallback 3");
 		spawn.close();
 	}
 	

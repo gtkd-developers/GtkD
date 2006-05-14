@@ -82,15 +82,22 @@ class SpawnWindow : MainWindow
 			writefln("[%s] >%s<", i, arg);
 		}
 		Spawn spawn = new Spawn(args[0]);
+		spawn.addChildWatch(&childEnded);
 		if (args.length > 1 )
 		{
 			for( int i=1 ; i<args.length ; i++ )
 			{
+				writefln("SpawnTests.exec adding parameter [%s] %s",i,args[i]);
 				spawn.addParm(args[i]);
 			}
 		}
-		spawn.addParm(null);
+		//spawn.addParm(null);
 		return exec(spawn);
+	}
+	
+	void childEnded(int process, int status)
+	{
+		writefln("process %s ended with status %s", process, status);
 	}
 	
 	private bool exec(Spawn spawn)

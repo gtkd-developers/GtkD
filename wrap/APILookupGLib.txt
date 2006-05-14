@@ -674,6 +674,12 @@ code: start
 		this.envp = envp;
 	}
 	
+	/**
+	 * Adds a delegate to be notified on the end of the child process.
+	 * Params:
+	 *    	delegate(int = 	
+	 *    	dlg = 	
+	 */
 	public void addChildWatch(void delegate(int,int) dlg)
 	{
 		externalWatch = dlg;

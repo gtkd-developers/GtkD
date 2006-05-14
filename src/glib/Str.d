@@ -139,7 +139,7 @@ public class Str
 		
 		foreach ( int i, char[] arg ; args)
 		{
-			writefln("Stro.toStringArray [%s] >%s<", i, arg);
+			writefln("Str.toStringArray [%s] >%s<", i, arg);
 		}
 
 		
@@ -148,7 +148,7 @@ public class Str
 		int argc = 0;
 		foreach (char[] p; args)
 		{
-			writefln("Str.toStringzArray put .%s.", p);
+			writefln("Str.toStringzArray put \"%s\"", p);
 			argv[argc++] = toStringz(p);
 		}
 		argv[argc] = null;
