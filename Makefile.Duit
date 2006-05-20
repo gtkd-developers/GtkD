@@ -4,616 +4,744 @@
 #
 
 
-all: htmlstrip gtkwrap duitGLib testStringG testGLib duitGObject duitPango duitGdk duitGdkPixbuf duitCairo cairoDemo duitGtk duitAtk HelloWorld DuitTests duit DrawRects SpawnTests
+all: duit
 
 list:
 	@echo List of targets 
-	@echo htmlstrip
-	@echo gtkwrap
-	@echo duitGLib
-	@echo testStringG
-	@echo testGLib
-	@echo duitGObject
-	@echo duitPango
-	@echo duitGdk
-	@echo duitGdkPixbuf
-	@echo duitCairo
-	@echo cairoDemo
-	@echo duitGtk
-	@echo duitAtk
-	@echo HelloWorld
-	@echo DuitTests
 	@echo duit
-	@echo DrawRects
-	@echo SpawnTests
 
-
-##########################
-### definitions for htmlstrip
-##########################
-COMP_htmlstrip = dmd
-COMP_FLAGS_htmlstrip =  -c -version=standAlone -od/home/ruimt/devel/D1/Duit/trunk/obj/wrap -op
-COMP_IMPORT_htmlstrip = -I/home/ruimt/devel/D1/Duit/trunk/wrap:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/wrap:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_htmlstrip=-ldl -pthread -lstdc++ -lphobos
-LINK_htmlstrip=gcc
-
-##########################
-### definitions for gtkwrap
-##########################
-COMP_gtkwrap = dmd
-COMP_FLAGS_gtkwrap =  -c -od/home/ruimt/devel/D1/Duit/trunk/obj/wrap -op
-COMP_IMPORT_gtkwrap = -I/home/ruimt/devel/D1/Duit/trunk/wrap:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_gtkwrap=-ldl -pthread -lstdc++ -lphobos
-LINK_gtkwrap=gcc
-
-##########################
-### definitions for duitGLib
-##########################
-COMP_duitGLib = dmd
-COMP_FLAGS_duitGLib =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/src -op
-COMP_IMPORT_duitGLib = -I/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_duitGLib=-ldl -pthread -lstdc++ -lphobos
-LINK_duitGLib=ar rcs
-
-##########################
-### definitions for testStringG
-##########################
-COMP_testStringG = dmd
-COMP_FLAGS_testStringG =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/test -op
-COMP_IMPORT_testStringG = -I/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_testStringG=-ldl -pthread -lstdc++ -lphobos -L/home/ruimt/devel/D1/Duit -lduitGLib -lphobos
-LINK_testStringG=gcc
-
-##########################
-### definitions for testGLib
-##########################
-COMP_testGLib = dmd
-COMP_FLAGS_testGLib =  -c -od/home/ruimt/devel/D1/Duit/trunk/obj/test -op
-COMP_IMPORT_testGLib = -I/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_testGLib=-ldl -pthread -lstdc++ -lphobos -L/home/ruimt/devel/D1/Duit -lduitGLib -lphobos
-LINK_testGLib=gcc
-
-##########################
-### definitions for duitGObject
-##########################
-COMP_duitGObject = dmd
-COMP_FLAGS_duitGObject =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/src -op
-COMP_IMPORT_duitGObject = -I/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_duitGObject=-ldl -pthread -lstdc++ -lphobos
-LINK_duitGObject=ar rcs
-
-##########################
-### definitions for duitPango
-##########################
-COMP_duitPango = dmd
-COMP_FLAGS_duitPango =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/src -op
-COMP_IMPORT_duitPango = -I/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_duitPango=-ldl -pthread -lstdc++ -lphobos
-LINK_duitPango=ar rcs
-
-##########################
-### definitions for duitGdk
-##########################
-COMP_duitGdk = dmd
-COMP_FLAGS_duitGdk =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/src -op
-COMP_IMPORT_duitGdk = -I/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_duitGdk=-ldl -pthread -lstdc++ -lphobos
-LINK_duitGdk=ar rcs
-
-##########################
-### definitions for duitGdkPixbuf
-##########################
-COMP_duitGdkPixbuf = dmd
-COMP_FLAGS_duitGdkPixbuf =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/src -op
-COMP_IMPORT_duitGdkPixbuf = -I/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_duitGdkPixbuf=-ldl -pthread -lstdc++ -lphobos
-LINK_duitGdkPixbuf=ar rcs
-
-##########################
-### definitions for duitCairo
-##########################
-COMP_duitCairo = dmd
-COMP_FLAGS_duitCairo =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/src -op
-COMP_IMPORT_duitCairo = -I/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_duitCairo=-ldl -pthread -lstdc++ -lphobos
-LINK_duitCairo=ar rcs
-
-##########################
-### definitions for cairoDemo
-##########################
-COMP_cairoDemo = dmd
-COMP_FLAGS_cairoDemo =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/demos -op
-COMP_IMPORT_cairoDemo = -I/home/ruimt/devel/D1/Duit/trunk/demos:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_cairoDemo=-ldl -pthread -lstdc++ -lphobos -L/home/ruimt/devel/D1/Duit/ -lduitCairo -lphobos
-LINK_cairoDemo=gcc
-
-##########################
-### definitions for duitGtk
-##########################
-COMP_duitGtk = dmd
-COMP_FLAGS_duitGtk =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/src -op
-COMP_IMPORT_duitGtk = -I/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_duitGtk=-ldl -pthread -lstdc++ -lphobos
-LINK_duitGtk=ar rcs
-
-##########################
-### definitions for duitAtk
-##########################
-COMP_duitAtk = dmd
-COMP_FLAGS_duitAtk =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/src -op
-COMP_IMPORT_duitAtk = -I/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_duitAtk=-ldl -pthread -lstdc++ -lphobos
-LINK_duitAtk=ar rcs
-
-##########################
-### definitions for HelloWorld
-##########################
-COMP_HelloWorld = dmd
-COMP_FLAGS_HelloWorld =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/demos -op
-COMP_IMPORT_HelloWorld = -I/home/ruimt/devel/D1/Duit/trunk/demos:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_HelloWorld=-ldl -pthread -lstdc++ -lphobos -L/home/ruimt/devel/D1/Duit/ -lduitGtk -lduitGObject -lduitAtk -lduitGLib -lduitGdk -lduitGdkPixbuf -lduitPango -lphobos
-LINK_HelloWorld=gcc
-
-##########################
-### definitions for DuitTests
-##########################
-COMP_DuitTests = dmd
-COMP_FLAGS_DuitTests =  -c -gc -od/home/ruimt/devel/D1/Duit/trunk/obj/demos -op
-COMP_IMPORT_DuitTests = -I/home/ruimt/devel/D1/Duit/trunk/demos:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/devel/D1/Duit/trunk/demos:/home/ruimt/dmd/src/phobos
-LINK_LIBS_DuitTests=-ldl -pthread -lstdc++ -lphobos -L/home/ruimt/devel/D1/Duit/ -lduit -lphobos
-LINK_DuitTests=gcc
 
 ##########################
 ### definitions for duit
 ##########################
 COMP_duit = dmd
-COMP_FLAGS_duit =  -c -gc -profile -od/home/ruimt/devel/D1/Duit/trunk/obj/src -op
-COMP_IMPORT_duit = -I/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
+COMP_FLAGS_duit =  -c -gc -profile -od../obj/src -op
+COMP_IMPORT_duit = -I/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src
 LINK_LIBS_duit=-ldl -pthread -lstdc++ -lphobos
 LINK_duit=ar rcs
-
-##########################
-### definitions for DrawRects
-##########################
-COMP_DrawRects = dmd
-COMP_FLAGS_DrawRects =  -c -gc -O -od/home/ruimt/devel/D1/Duit/trunk/obj/demos -op
-COMP_IMPORT_DrawRects = -I/home/ruimt/devel/D1/Duit/trunk/demos:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_DrawRects=-ldl -pthread -lstdc++ -lphobos -L/home/ruimt/devel/D1/Duit/ -lduitGObject -lduitAtk -lduitGLib -lduitGdk -lduitGObject -lduitGdkPixbuf -lphobos
-LINK_DrawRects=gcc
-
-##########################
-### definitions for SpawnTests
-##########################
-COMP_SpawnTests = dmd
-COMP_FLAGS_SpawnTests =  -c -od/home/ruimt/devel/D1/Duit/trunk/obj/demos -op
-COMP_IMPORT_SpawnTests = -I/home/ruimt/devel/D1/Duit/trunk/demos:/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/dmd/src/phobos
-LINK_LIBS_SpawnTests=-ldl -pthread -lstdc++ -lphobos -L/home/ruimt/devel/D1/Duit/ -lduit -lphobos -lduitGLib 
-LINK_SpawnTests=gcc
 
 ##########################################
 ### no changes should be required beyond  this line
 ##########################################
 
 
-clean: cleanhtmlstrip cleangtkwrap cleanduitGLib cleantestStringG cleantestGLib cleanduitGObject cleanduitPango cleanduitGdk cleanduitGdkPixbuf cleanduitCairo cleancairoDemo cleanduitGtk cleanduitAtk cleanHelloWorld cleanDuitTests cleanduit cleanDrawRects cleanSpawnTests
+SRC_duit = \
+	atk/Action.d \
+	atk/Component.d \
+	atk/Document.d \
+	atk/EditableText.d \
+	atk/GObjectAccessible.d \
+	atk/Hyperlink.d \
+	atk/Hypertext.d \
+	atk/Image.d \
+	atk/NoOpObject.d \
+	atk/NoOpObjectFactory.d \
+	atk/ObjectAtk.d \
+	atk/ObjectFactory.d \
+	atk/Registry.d \
+	atk/Relation.d \
+	atk/RelationSet.d \
+	atk/Selection.d \
+	atk/State.d \
+	atk/StateSet.d \
+	atk/StreamableContent.d \
+	atk/Table.d \
+	atk/Text.d \
+	atk/Util.d \
+	atk/ValueAtk.d \
+	atk/typedefs.d \
+	cairoLib/Cairo.d \
+	cairoLib/FontFace.d \
+	cairoLib/FontOption.d \
+	cairoLib/Matrix.d \
+	cairoLib/Pattern.d \
+	cairoLib/ScaledFont.d \
+	cairoLib/Status.d \
+	cairoLib/Surface.d \
+	cairoLib/Types.d \
+	cairoLib/Version.d \
+	cairoLib/typedefs.d \
+	gdk/Bitmap.d \
+	gdk/Color.d \
+	gdk/Colormap.d \
+	gdk/Cursor.d \
+	gdk/Device.d \
+	gdk/Display.d \
+	gdk/DisplayManager.d \
+	gdk/DragContext.d \
+	gdk/Drawable.d \
+	gdk/Event.d \
+	gdk/EventStruct.d \
+	gdk/Font.d \
+	gdk/GC.d \
+	gdk/Gdk.d \
+	gdk/ImageGdk.d \
+	gdk/Input.d \
+	gdk/Keymap.d \
+	gdk/Pixbuf.d \
+	gdk/Pixmap.d \
+	gdk/RGB.d \
+	gdk/Rectangle.d \
+	gdk/Region.d \
+	gdk/Screen.d \
+	gdk/Selection.d \
+	gdk/Threads.d \
+	gdk/Visual.d \
+	gdk/Window.d \
+	gdk/typedefs.d \
+	gdkpixbuf/PixbufAnimation.d \
+	gdkpixbuf/PixbufFormat.d \
+	gdkpixbuf/PixbufLoader.d \
+	gdkpixbuf/Pixdata.d \
+	gdkpixbuf/typedefs.d \
+	glib/Allocator.d \
+	glib/ArrayG.d \
+	glib/AsyncQueue.d \
+	glib/Atomic.d \
+	glib/BBTree.d \
+	glib/ByteArray.d \
+	glib/Cache.d \
+	glib/CharacterSet.d \
+	glib/Child.d \
+	glib/Cond.d \
+	glib/DataList.d \
+	glib/Dataset.d \
+	glib/Date.d \
+	glib/ErrorG.d \
+	glib/FileUtils.d \
+	glib/GKeyFile.d \
+	glib/GLib.d \
+	glib/HashTable.d \
+	glib/IOChannel.d \
+	glib/Internationalization.d \
+	glib/KeyFile.d \
+	glib/ListG.d \
+	glib/ListSG.d \
+	glib/MainContext.d \
+	glib/MainLoop.d \
+	glib/Memory.d \
+	glib/MemoryChunk.d \
+	glib/MemorySlice.d \
+	glib/MessageLog.d \
+	glib/Messages.d \
+	glib/Module.d \
+	glib/Mutex.d \
+	glib/Node.d \
+	glib/OptionContext.d \
+	glib/OptionGroup.d \
+	glib/Pattern.d \
+	glib/Private.d \
+	glib/PtrArray.d \
+	glib/Quark.d \
+	glib/QueueG.d \
+	glib/RWLock.d \
+	glib/RandG.d \
+	glib/Relation.d \
+	glib/ScannerG.d \
+	glib/ShellUtils.d \
+	glib/SimpleXML.d \
+	glib/Source.d \
+	glib/Spawn.d \
+	glib/StaticPrivate.d \
+	glib/StaticRecMutex.d \
+	glib/Str.d \
+	glib/StrignGChunk.d \
+	glib/StringCompletion.d \
+	glib/StringG.d \
+	glib/StringGChunk.d \
+	glib/Thread.d \
+	glib/ThreadPool.d \
+	glib/Timeout.d \
+	glib/Timer.d \
+	glib/TrashStack.d \
+	glib/Tuples.d \
+	glib/Unicode.d \
+	glib/Util.d \
+	glib/Version.d \
+	glib/WindowsUtils.d \
+	glib/typedefs.d \
+	gobject/Boxed.d \
+	gobject/CClosure.d \
+	gobject/Closure.d \
+	gobject/Enums.d \
+	gobject/Flags.d \
+	gobject/ObjectG.d \
+	gobject/ParamSpec.d \
+	gobject/Signals.d \
+	gobject/Type.d \
+	gobject/TypeModule.d \
+	gobject/TypePlugin.d \
+	gobject/Value.d \
+	gobject/ValueArray.d \
+	gobject/typedefs.d \
+	gtk/AboutDialog.d \
+	gtk/AccelGroup.d \
+	gtk/AccelLabel.d \
+	gtk/AccelMap.d \
+	gtk/Accessible.d \
+	gtk/Action.d \
+	gtk/ActionGroup.d \
+	gtk/Adjustment.d \
+	gtk/Alignment.d \
+	gtk/Arrow.d \
+	gtk/AspectFrame.d \
+	gtk/Bin.d \
+	gtk/BindingSet.d \
+	gtk/Box.d \
+	gtk/Button.d \
+	gtk/ButtonBox.d \
+	gtk/Calendar.d \
+	gtk/CellEditable.d \
+	gtk/CellLayoutIF.d \
+	gtk/CellLayoutT.d \
+	gtk/CellRenderer.d \
+	gtk/CellRendererCombo.d \
+	gtk/CellRendererPixbuf.d \
+	gtk/CellRendererProgress.d \
+	gtk/CellRendererText.d \
+	gtk/CellRendererToggle.d \
+	gtk/CellView.d \
+	gtk/CheckButton.d \
+	gtk/CheckMenuItem.d \
+	gtk/Clipboard.d \
+	gtk/ColorButton.d \
+	gtk/ColorSelection.d \
+	gtk/ColorSelectionDialog.d \
+	gtk/ComboBox.d \
+	gtk/ComboBoxEntry.d \
+	gtk/Container.d \
+	gtk/Curve.d \
+	gtk/Dialog.d \
+	gtk/DragAndDrop.d \
+	gtk/DrawingArea.d \
+	gtk/Duit.d \
+	gtk/Editable.d \
+	gtk/Entry.d \
+	gtk/EntryCompletion.d \
+	gtk/EventBox.d \
+	gtk/Expander.d \
+	gtk/FileChooser.d \
+	gtk/FileChooserButton.d \
+	gtk/FileChooserDialog.d \
+	gtk/FileChooserWidget.d \
+	gtk/FileFilter.d \
+	gtk/FileSelection.d \
+	gtk/Fixed.d \
+	gtk/FontButton.d \
+	gtk/FontSelection.d \
+	gtk/FontSelectionDialog.d \
+	gtk/Frame.d \
+	gtk/GCs.d \
+	gtk/GammaCurve.d \
+	gtk/HBox.d \
+	gtk/HButtonBox.d \
+	gtk/HPaned.d \
+	gtk/HRuler.d \
+	gtk/HScale.d \
+	gtk/HScrollbar.d \
+	gtk/HSeparator.d \
+	gtk/HandleBox.d \
+	gtk/IMContext.d \
+	gtk/IMContextSimple.d \
+	gtk/IMMulticontext.d \
+	gtk/IconInfo.d \
+	gtk/IconSource.d \
+	gtk/IconTheme.d \
+	gtk/IconView.d \
+	gtk/Idle.d \
+	gtk/Image.d \
+	gtk/ImageMenuItem.d \
+	gtk/InputDialog.d \
+	gtk/Invisible.d \
+	gtk/Item.d \
+	gtk/ItemFactory.d \
+	gtk/Label.d \
+	gtk/Layout.d \
+	gtk/ListStore.d \
+	gtk/MainWindow.d \
+	gtk/Menu.d \
+	gtk/MenuBar.d \
+	gtk/MenuItem.d \
+	gtk/MenuShell.d \
+	gtk/MenuToolButton.d \
+	gtk/MessageDialog.d \
+	gtk/Misc.d \
+	gtk/Notebook.d \
+	gtk/ObjectGtk.d \
+	gtk/Paned.d \
+	gtk/Plug.d \
+	gtk/PopupBox.d \
+	gtk/Progress.d \
+	gtk/ProgressBar.d \
+	gtk/RadioAction.d \
+	gtk/RadioButton.d \
+	gtk/RadioMenuItem.d \
+	gtk/RadioToolButton.d \
+	gtk/Range.d \
+	gtk/RcStyle.d \
+	gtk/Ruler.d \
+	gtk/Scale.d \
+	gtk/Scrollbar.d \
+	gtk/ScrolledWindow.d \
+	gtk/Selections.d \
+	gtk/Separator.d \
+	gtk/SeparatorMenuItem.d \
+	gtk/SeparatorToolItem.d \
+	gtk/Settings.d \
+	gtk/Signals.d \
+	gtk/SizeGroup.d \
+	gtk/Socket.d \
+	gtk/SpinButton.d \
+	gtk/StandardEnumerations.d \
+	gtk/Statusbar.d \
+	gtk/StockItem.d \
+	gtk/Style.d \
+	gtk/Table.d \
+	gtk/TearoffMenuItem.d \
+	gtk/TextAttributes.d \
+	gtk/TextBuffer.d \
+	gtk/TextChildAnchor.d \
+	gtk/TextIter.d \
+	gtk/TextMark.d \
+	gtk/TextTag.d \
+	gtk/TextTagTable.d \
+	gtk/TextView.d \
+	gtk/Timeout.d \
+	gtk/ToggleAction.d \
+	gtk/ToggleButton.d \
+	gtk/ToggleToolButton.d \
+	gtk/ToolButton.d \
+	gtk/ToolItem.d \
+	gtk/Toolbar.d \
+	gtk/Tooltips.d \
+	gtk/TreeDragSource.d \
+	gtk/TreeIter.d \
+	gtk/TreeIterError.d \
+	gtk/TreeModel.d \
+	gtk/TreeModelFilter.d \
+	gtk/TreeModelSort.d \
+	gtk/TreeNode.d \
+	gtk/TreePath.d \
+	gtk/TreeRowReference.d \
+	gtk/TreeSelection.d \
+	gtk/TreeSortable.d \
+	gtk/TreeStore.d \
+	gtk/TreeView.d \
+	gtk/TreeViewColumn.d \
+	gtk/Types.d \
+	gtk/UIManager.d \
+	gtk/VBox.d \
+	gtk/VButtonBox.d \
+	gtk/VPaned.d \
+	gtk/VRuler.d \
+	gtk/VScale.d \
+	gtk/VScrollbar.d \
+	gtk/VSeparator.d \
+	gtk/Version.d \
+	gtk/Viewport.d \
+	gtk/Widget.d \
+	gtk/Window.d \
+	gtk/WindowGroup.d \
+	gtk/typedefs.d \
+	lib/Loader.d \
+	lib/atk.d \
+	lib/cairoLib.d \
+	lib/gdk.d \
+	lib/gdkpixbuf.d \
+	lib/glib.d \
+	lib/gobject.d \
+	lib/gtk.d \
+	lib/pango.d \
+	lib/paths.d \
+	pango/PgAttribute.d \
+	pango/PgAttributeList.d \
+	pango/PgContext.d \
+	pango/PgCoverage.d \
+	pango/PgEngine.d \
+	pango/PgEngineLang.d \
+	pango/PgEngineShape.d \
+	pango/PgFontDescription.d \
+	pango/PgFontFace.d \
+	pango/PgFontFamily.d \
+	pango/PgFontMap.d \
+	pango/PgFontMetrics.d \
+	pango/PgFontsetSimple.d \
+	pango/PgGlyphString.d \
+	pango/PgItem.d \
+	pango/PgLanguage.d \
+	pango/PgLayout.d \
+	pango/PgLayoutIter.d \
+	pango/PgScriptIter.d \
+	pango/PgTabArray.d \
+	pango/typedefs.d 
 
-cleanhtmlstrip:
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/wrap/utils/HtmlStrip.o
+duit: duit_OBJ_DIR duit_COMP duit_LINK
 
-cleangtkwrap:
-	rm utils/DefReader.o
-	rm utils/DuitClass.o
-	rm utils/GtkWrapper.o
-	rm utils/HtmlStrip.o
-	rm utils/WrapperIF.o
-	rm utils/convparms.o
-	rm utils/funct.o
+duit_OBJ_DIR:
 
-cleanduitGLib:
-	rm glib/Allocator.o
-	rm glib/ArrayG.o
-	rm glib/AsyncQueue.o
-	rm glib/Atomic.o
-	rm glib/BBTree.o
-	rm glib/ByteArray.o
-	rm glib/Cache.o
-	rm glib/CharacterSet.o
-	rm glib/Child.o
-	rm glib/Cond.o
-	rm glib/DataList.o
-	rm glib/Dataset.o
-	rm glib/Date.o
-	rm glib/ErrorG.o
-	rm glib/FileUtils.o
-	rm glib/GKeyFile.o
-	rm glib/GLib.o
-	rm glib/HashTable.o
-	rm glib/IOChannel.o
-	rm glib/Internationalization.o
-	rm glib/KeyFile.o
-	rm glib/ListG.o
-	rm glib/ListSG.o
-	rm glib/MainContext.o
-	rm glib/MainLoop.o
-	rm glib/Memory.o
-	rm glib/MemoryChunk.o
-	rm glib/MemorySlice.o
-	rm glib/MessageLog.o
-	rm glib/Messages.o
-	rm glib/Module.o
-	rm glib/Mutex.o
-	rm glib/Node.o
-	rm glib/OptionContext.o
-	rm glib/OptionGroup.o
-	rm glib/Pattern.o
-	rm glib/Private.o
-	rm glib/PtrArray.o
-	rm glib/Quark.o
-	rm glib/QueueG.o
-	rm glib/RWLock.o
-	rm glib/RandG.o
-	rm glib/Relation.o
-	rm glib/ScannerG.o
-	rm glib/ShellUtils.o
-	rm glib/SimpleXML.o
-	rm glib/Source.o
-	rm glib/Spawn.o
-	rm glib/StaticPrivate.o
-	rm glib/StaticRecMutex.o
-	rm glib/Str.o
-	rm glib/StrignGChunk.o
-	rm glib/StringCompletion.o
-	rm glib/StringG.o
-	rm glib/StringGChunk.o
-	rm glib/Thread.o
-	rm glib/ThreadPool.o
-	rm glib/Timeout.o
-	rm glib/Timer.o
-	rm glib/TrashStack.o
-	rm glib/Tuples.o
-	rm glib/Unicode.o
-	rm glib/Util.o
-	rm glib/Version.o
-	rm glib/WindowsUtils.o
-	rm glib/typedefs.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/Loader.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/paths.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/glib.o
 
-cleantestStringG:
-	rm 
+duit_COMP:
+	cd src; \
+	$(COMP_duit) $(SRC_duit) $(COMP_FLAGS_duit) $(COMP_IMPORT_duit)
 
-cleantestGLib:
-	rm 
+duit_LINK:
+	cd \
+	obj/src; \
+	$(LINK_duit) \
+	../../libduit.a \
+	atk/Action.o \
+	atk/Component.o \
+	atk/Document.o \
+	atk/EditableText.o \
+	atk/GObjectAccessible.o \
+	atk/Hyperlink.o \
+	atk/Hypertext.o \
+	atk/Image.o \
+	atk/NoOpObject.o \
+	atk/NoOpObjectFactory.o \
+	atk/ObjectAtk.o \
+	atk/ObjectFactory.o \
+	atk/Registry.o \
+	atk/Relation.o \
+	atk/RelationSet.o \
+	atk/Selection.o \
+	atk/State.o \
+	atk/StateSet.o \
+	atk/StreamableContent.o \
+	atk/Table.o \
+	atk/Text.o \
+	atk/Util.o \
+	atk/ValueAtk.o \
+	atk/typedefs.o \
+	cairoLib/Cairo.o \
+	cairoLib/FontFace.o \
+	cairoLib/FontOption.o \
+	cairoLib/Matrix.o \
+	cairoLib/Pattern.o \
+	cairoLib/ScaledFont.o \
+	cairoLib/Status.o \
+	cairoLib/Surface.o \
+	cairoLib/Types.o \
+	cairoLib/Version.o \
+	cairoLib/typedefs.o \
+	gdk/Bitmap.o \
+	gdk/Color.o \
+	gdk/Colormap.o \
+	gdk/Cursor.o \
+	gdk/Device.o \
+	gdk/Display.o \
+	gdk/DisplayManager.o \
+	gdk/DragContext.o \
+	gdk/Drawable.o \
+	gdk/Event.o \
+	gdk/EventStruct.o \
+	gdk/Font.o \
+	gdk/GC.o \
+	gdk/Gdk.o \
+	gdk/ImageGdk.o \
+	gdk/Input.o \
+	gdk/Keymap.o \
+	gdk/Pixbuf.o \
+	gdk/Pixmap.o \
+	gdk/RGB.o \
+	gdk/Rectangle.o \
+	gdk/Region.o \
+	gdk/Screen.o \
+	gdk/Selection.o \
+	gdk/Threads.o \
+	gdk/Visual.o \
+	gdk/Window.o \
+	gdk/typedefs.o \
+	gdkpixbuf/PixbufAnimation.o \
+	gdkpixbuf/PixbufFormat.o \
+	gdkpixbuf/PixbufLoader.o \
+	gdkpixbuf/Pixdata.o \
+	gdkpixbuf/typedefs.o \
+	glib/Allocator.o \
+	glib/ArrayG.o \
+	glib/AsyncQueue.o \
+	glib/Atomic.o \
+	glib/BBTree.o \
+	glib/ByteArray.o \
+	glib/Cache.o \
+	glib/CharacterSet.o \
+	glib/Child.o \
+	glib/Cond.o \
+	glib/DataList.o \
+	glib/Dataset.o \
+	glib/Date.o \
+	glib/ErrorG.o \
+	glib/FileUtils.o \
+	glib/GKeyFile.o \
+	glib/GLib.o \
+	glib/HashTable.o \
+	glib/IOChannel.o \
+	glib/Internationalization.o \
+	glib/KeyFile.o \
+	glib/ListG.o \
+	glib/ListSG.o \
+	glib/MainContext.o \
+	glib/MainLoop.o \
+	glib/Memory.o \
+	glib/MemoryChunk.o \
+	glib/MemorySlice.o \
+	glib/MessageLog.o \
+	glib/Messages.o \
+	glib/Module.o \
+	glib/Mutex.o \
+	glib/Node.o \
+	glib/OptionContext.o \
+	glib/OptionGroup.o \
+	glib/Pattern.o \
+	glib/Private.o \
+	glib/PtrArray.o \
+	glib/Quark.o \
+	glib/QueueG.o \
+	glib/RWLock.o \
+	glib/RandG.o \
+	glib/Relation.o \
+	glib/ScannerG.o \
+	glib/ShellUtils.o \
+	glib/SimpleXML.o \
+	glib/Source.o \
+	glib/Spawn.o \
+	glib/StaticPrivate.o \
+	glib/StaticRecMutex.o \
+	glib/Str.o \
+	glib/StrignGChunk.o \
+	glib/StringCompletion.o \
+	glib/StringG.o \
+	glib/StringGChunk.o \
+	glib/Thread.o \
+	glib/ThreadPool.o \
+	glib/Timeout.o \
+	glib/Timer.o \
+	glib/TrashStack.o \
+	glib/Tuples.o \
+	glib/Unicode.o \
+	glib/Util.o \
+	glib/Version.o \
+	glib/WindowsUtils.o \
+	glib/typedefs.o \
+	gobject/Boxed.o \
+	gobject/CClosure.o \
+	gobject/Closure.o \
+	gobject/Enums.o \
+	gobject/Flags.o \
+	gobject/ObjectG.o \
+	gobject/ParamSpec.o \
+	gobject/Signals.o \
+	gobject/Type.o \
+	gobject/TypeModule.o \
+	gobject/TypePlugin.o \
+	gobject/Value.o \
+	gobject/ValueArray.o \
+	gobject/typedefs.o \
+	gtk/AboutDialog.o \
+	gtk/AccelGroup.o \
+	gtk/AccelLabel.o \
+	gtk/AccelMap.o \
+	gtk/Accessible.o \
+	gtk/Action.o \
+	gtk/ActionGroup.o \
+	gtk/Adjustment.o \
+	gtk/Alignment.o \
+	gtk/Arrow.o \
+	gtk/AspectFrame.o \
+	gtk/Bin.o \
+	gtk/BindingSet.o \
+	gtk/Box.o \
+	gtk/Button.o \
+	gtk/ButtonBox.o \
+	gtk/Calendar.o \
+	gtk/CellEditable.o \
+	gtk/CellLayout.o \
+	gtk/CellLayoutIF.o \
+	gtk/CellLayoutT.o \
+	gtk/CellRenderer.o \
+	gtk/CellRendererCombo.o \
+	gtk/CellRendererPixbuf.o \
+	gtk/CellRendererProgress.o \
+	gtk/CellRendererText.o \
+	gtk/CellRendererToggle.o \
+	gtk/CellView.o \
+	gtk/CheckButton.o \
+	gtk/CheckMenuItem.o \
+	gtk/Clipboard.o \
+	gtk/ColorButton.o \
+	gtk/ColorSelection.o \
+	gtk/ColorSelectionDialog.o \
+	gtk/ComboBox.o \
+	gtk/ComboBoxEntry.o \
+	gtk/Container.o \
+	gtk/Curve.o \
+	gtk/Dialog.o \
+	gtk/DragAndDrop.o \
+	gtk/DrawingArea.o \
+	gtk/Duit.o \
+	gtk/Editable.o \
+	gtk/Entry.o \
+	gtk/EntryCompletion.o \
+	gtk/EventBox.o \
+	gtk/Expander.o \
+	gtk/FileChooser.o \
+	gtk/FileChooserButton.o \
+	gtk/FileChooserDialog.o \
+	gtk/FileChooserWidget.o \
+	gtk/FileFilter.o \
+	gtk/FileSelection.o \
+	gtk/Fixed.o \
+	gtk/FontButton.o \
+	gtk/FontSelection.o \
+	gtk/FontSelectionDialog.o \
+	gtk/Frame.o \
+	gtk/GCs.o \
+	gtk/GammaCurve.o \
+	gtk/HBox.o \
+	gtk/HButtonBox.o \
+	gtk/HPaned.o \
+	gtk/HRuler.o \
+	gtk/HScale.o \
+	gtk/HScrollbar.o \
+	gtk/HSeparator.o \
+	gtk/HandleBox.o \
+	gtk/IMContext.o \
+	gtk/IMContextSimple.o \
+	gtk/IMMulticontext.o \
+	gtk/IconInfo.o \
+	gtk/IconSource.o \
+	gtk/IconTheme.o \
+	gtk/IconView.o \
+	gtk/Idle.o \
+	gtk/Image.o \
+	gtk/ImageMenuItem.o \
+	gtk/InputDialog.o \
+	gtk/Invisible.o \
+	gtk/Item.o \
+	gtk/ItemFactory.o \
+	gtk/Label.o \
+	gtk/Layout.o \
+	gtk/ListStore.o \
+	gtk/MainWindow.o \
+	gtk/Menu.o \
+	gtk/MenuBar.o \
+	gtk/MenuItem.o \
+	gtk/MenuShell.o \
+	gtk/MenuToolButton.o \
+	gtk/MessageDialog.o \
+	gtk/Misc.o \
+	gtk/Notebook.o \
+	gtk/ObjectGtk.o \
+	gtk/Paned.o \
+	gtk/Plug.o \
+	gtk/PopupBox.o \
+	gtk/Progress.o \
+	gtk/ProgressBar.o \
+	gtk/RadioAction.o \
+	gtk/RadioButton.o \
+	gtk/RadioMenuItem.o \
+	gtk/RadioToolButton.o \
+	gtk/Range.o \
+	gtk/RcStyle.o \
+	gtk/Ruler.o \
+	gtk/Scale.o \
+	gtk/Scrollbar.o \
+	gtk/ScrolledWindow.o \
+	gtk/Selections.o \
+	gtk/Separator.o \
+	gtk/SeparatorMenuItem.o \
+	gtk/SeparatorToolItem.o \
+	gtk/Settings.o \
+	gtk/Signals.o \
+	gtk/SizeGroup.o \
+	gtk/Socket.o \
+	gtk/SpinButton.o \
+	gtk/StandardEnumerations.o \
+	gtk/Statusbar.o \
+	gtk/StockItem.o \
+	gtk/Style.o \
+	gtk/Table.o \
+	gtk/TearoffMenuItem.o \
+	gtk/TextAttributes.o \
+	gtk/TextBuffer.o \
+	gtk/TextChildAnchor.o \
+	gtk/TextIter.o \
+	gtk/TextMark.o \
+	gtk/TextTag.o \
+	gtk/TextTagTable.o \
+	gtk/TextView.o \
+	gtk/Timeout.o \
+	gtk/ToggleAction.o \
+	gtk/ToggleButton.o \
+	gtk/ToggleToolButton.o \
+	gtk/ToolButton.o \
+	gtk/ToolItem.o \
+	gtk/Toolbar.o \
+	gtk/Tooltips.o \
+	gtk/TreeDragSource.o \
+	gtk/TreeIter.o \
+	gtk/TreeIterError.o \
+	gtk/TreeModel.o \
+	gtk/TreeModelFilter.o \
+	gtk/TreeModelSort.o \
+	gtk/TreeNode.o \
+	gtk/TreePath.o \
+	gtk/TreeRowReference.o \
+	gtk/TreeSelection.o \
+	gtk/TreeSortable.o \
+	gtk/TreeStore.o \
+	gtk/TreeView.o \
+	gtk/TreeViewColumn.o \
+	gtk/Types.o \
+	gtk/UIManager.o \
+	gtk/VBox.o \
+	gtk/VButtonBox.o \
+	gtk/VPaned.o \
+	gtk/VRuler.o \
+	gtk/VScale.o \
+	gtk/VScrollbar.o \
+	gtk/VSeparator.o \
+	gtk/Version.o \
+	gtk/Viewport.o \
+	gtk/Widget.o \
+	gtk/Window.o \
+	gtk/WindowGroup.o \
+	gtk/typedefs.o \
+	lib/Loader.o \
+	lib/atk.o \
+	lib/cairoLib.o \
+	lib/gdk.o \
+	lib/gdkpixbuf.o \
+	lib/glib.o \
+	lib/gobject.o \
+	lib/gtk.o \
+	lib/pango.o \
+	lib/paths.o \
+	pango/PgAttribute.o \
+	pango/PgAttributeList.o \
+	pango/PgContext.o \
+	pango/PgCoverage.o \
+	pango/PgEngine.o \
+	pango/PgEngineLang.o \
+	pango/PgEngineShape.o \
+	pango/PgFontDescription.o \
+	pango/PgFontFace.o \
+	pango/PgFontFamily.o \
+	pango/PgFontMap.o \
+	pango/PgFontMetrics.o \
+	pango/PgFontsetSimple.o \
+	pango/PgGlyphString.o \
+	pango/PgItem.o \
+	pango/PgLanguage.o \
+	pango/PgLayout.o \
+	pango/PgLayoutIter.o \
+	pango/PgScriptIter.o \
+	pango/PgTabArray.o \
+	pango/typedefs.o
 
-cleanduitGObject:
-	rm gobject/Boxed.o
-	rm gobject/CClosure.o
-	rm gobject/Closure.o
-	rm gobject/Enums.o
-	rm gobject/Flags.o
-	rm gobject/ObjectG.o
-	rm gobject/ParamSpec.o
-	rm gobject/Signals.o
-	rm gobject/Type.o
-	rm gobject/TypeModule.o
-	rm gobject/TypePlugin.o
-	rm gobject/Value.o
-	rm gobject/ValueArray.o
-	rm gobject/typedefs.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/Loader.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/paths.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/gobject.o
 
-cleanduitPango:
-	rm pango/PgAttribute.o
-	rm pango/PgAttributeList.o
-	rm pango/PgContext.o
-	rm pango/PgCoverage.o
-	rm pango/PgEngine.o
-	rm pango/PgEngineLang.o
-	rm pango/PgEngineShape.o
-	rm pango/PgFontDescription.o
-	rm pango/PgFontFace.o
-	rm pango/PgFontFamily.o
-	rm pango/PgFontMap.o
-	rm pango/PgFontMetrics.o
-	rm pango/PgFontsetSimple.o
-	rm pango/PgGlyphString.o
-	rm pango/PgItem.o
-	rm pango/PgLanguage.o
-	rm pango/PgLayout.o
-	rm pango/PgLayoutIter.o
-	rm pango/PgScriptIter.o
-	rm pango/PgTabArray.o
-	rm pango/typedefs.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/Loader.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/paths.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/pango.o
 
-cleanduitGdk:
-	rm gdk/Bitmap.o
-	rm gdk/Color.o
-	rm gdk/Colormap.o
-	rm gdk/Cursor.o
-	rm gdk/Device.o
-	rm gdk/Display.o
-	rm gdk/DisplayManager.o
-	rm gdk/DragContext.o
-	rm gdk/Drawable.o
-	rm gdk/Event.o
-	rm gdk/EventStruct.o
-	rm gdk/Font.o
-	rm gdk/GC.o
-	rm gdk/Gdk.o
-	rm gdk/ImageGdk.o
-	rm gdk/Input.o
-	rm gdk/Keymap.o
-	rm gdk/Pixbuf.o
-	rm gdk/Pixmap.o
-	rm gdk/RGB.o
-	rm gdk/Rectangle.o
-	rm gdk/Region.o
-	rm gdk/Screen.o
-	rm gdk/Selection.o
-	rm gdk/Threads.o
-	rm gdk/Visual.o
-	rm gdk/Window.o
-	rm gdk/typedefs.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/Loader.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/paths.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/gdk.o
-
-cleanduitGdkPixbuf:
-	rm gdkpixbuf/PixbufAnimation.o
-	rm gdkpixbuf/PixbufFormat.o
-	rm gdkpixbuf/PixbufLoader.o
-	rm gdkpixbuf/Pixdata.o
-	rm gdkpixbuf/typedefs.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/Loader.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/paths.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/gdkpixbuf.o
-
-cleanduitCairo:
-	rm cairoLib/Cairo.o
-	rm cairoLib/FontFace.o
-	rm cairoLib/FontOption.o
-	rm cairoLib/Matrix.o
-	rm cairoLib/Pattern.o
-	rm cairoLib/ScaledFont.o
-	rm cairoLib/Status.o
-	rm cairoLib/Surface.o
-	rm cairoLib/Types.o
-	rm cairoLib/Version.o
-	rm cairoLib/typedefs.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/Loader.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/paths.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/cairoLib.o
-
-cleancairoDemo:
-	rm 
-
-cleanduitGtk:
-	rm gtk/AboutDialog.o
-	rm gtk/AccelGroup.o
-	rm gtk/AccelLabel.o
-	rm gtk/AccelMap.o
-	rm gtk/Accessible.o
-	rm gtk/Action.o
-	rm gtk/ActionGroup.o
-	rm gtk/Adjustment.o
-	rm gtk/Alignment.o
-	rm gtk/Arrow.o
-	rm gtk/AspectFrame.o
-	rm gtk/Bin.o
-	rm gtk/BindingSet.o
-	rm gtk/Box.o
-	rm gtk/Button.o
-	rm gtk/ButtonBox.o
-	rm gtk/Calendar.o
-	rm gtk/CellEditable.o
-	rm gtk/CellLayout.o
-	rm gtk/CellLayoutIF.o
-	rm gtk/CellLayoutT.o
-	rm gtk/CellRenderer.o
-	rm gtk/CellRendererCombo.o
-	rm gtk/CellRendererPixbuf.o
-	rm gtk/CellRendererProgress.o
-	rm gtk/CellRendererText.o
-	rm gtk/CellRendererToggle.o
-	rm gtk/CellView.o
-	rm gtk/CheckButton.o
-	rm gtk/CheckMenuItem.o
-	rm gtk/Clipboard.o
-	rm gtk/ColorButton.o
-	rm gtk/ColorSelection.o
-	rm gtk/ColorSelectionDialog.o
-	rm gtk/ComboBox.o
-	rm gtk/ComboBoxEntry.o
-	rm gtk/Container.o
-	rm gtk/Curve.o
-	rm gtk/Dialog.o
-	rm gtk/DragAndDrop.o
-	rm gtk/DrawingArea.o
-	rm gtk/Duit.o
-	rm gtk/Editable.o
-	rm gtk/Entry.o
-	rm gtk/EntryCompletion.o
-	rm gtk/EventBox.o
-	rm gtk/Expander.o
-	rm gtk/FileChooser.o
-	rm gtk/FileChooserButton.o
-	rm gtk/FileChooserDialog.o
-	rm gtk/FileChooserWidget.o
-	rm gtk/FileFilter.o
-	rm gtk/FileSelection.o
-	rm gtk/Fixed.o
-	rm gtk/FontButton.o
-	rm gtk/FontSelection.o
-	rm gtk/FontSelectionDialog.o
-	rm gtk/Frame.o
-	rm gtk/GCs.o
-	rm gtk/GammaCurve.o
-	rm gtk/HBox.o
-	rm gtk/HButtonBox.o
-	rm gtk/HPaned.o
-	rm gtk/HRuler.o
-	rm gtk/HScale.o
-	rm gtk/HScrollbar.o
-	rm gtk/HSeparator.o
-	rm gtk/HandleBox.o
-	rm gtk/IMContext.o
-	rm gtk/IMContextSimple.o
-	rm gtk/IMMulticontext.o
-	rm gtk/IconInfo.o
-	rm gtk/IconSource.o
-	rm gtk/IconTheme.o
-	rm gtk/IconView.o
-	rm gtk/Idle.o
-	rm gtk/Image.o
-	rm gtk/ImageMenuItem.o
-	rm gtk/InputDialog.o
-	rm gtk/Invisible.o
-	rm gtk/Item.o
-	rm gtk/ItemFactory.o
-	rm gtk/Label.o
-	rm gtk/Layout.o
-	rm gtk/ListStore.o
-	rm gtk/MainWindow.o
-	rm gtk/Menu.o
-	rm gtk/MenuBar.o
-	rm gtk/MenuItem.o
-	rm gtk/MenuShell.o
-	rm gtk/MenuToolButton.o
-	rm gtk/MessageDialog.o
-	rm gtk/Misc.o
-	rm gtk/Notebook.o
-	rm gtk/ObjectGtk.o
-	rm gtk/Paned.o
-	rm gtk/Plug.o
-	rm gtk/PopupBox.o
-	rm gtk/Progress.o
-	rm gtk/ProgressBar.o
-	rm gtk/RadioAction.o
-	rm gtk/RadioButton.o
-	rm gtk/RadioMenuItem.o
-	rm gtk/RadioToolButton.o
-	rm gtk/Range.o
-	rm gtk/RcStyle.o
-	rm gtk/Ruler.o
-	rm gtk/Scale.o
-	rm gtk/Scrollbar.o
-	rm gtk/ScrolledWindow.o
-	rm gtk/Selections.o
-	rm gtk/Separator.o
-	rm gtk/SeparatorMenuItem.o
-	rm gtk/SeparatorToolItem.o
-	rm gtk/Settings.o
-	rm gtk/Signals.o
-	rm gtk/SizeGroup.o
-	rm gtk/Socket.o
-	rm gtk/SpinButton.o
-	rm gtk/StandardEnumerations.o
-	rm gtk/Statusbar.o
-	rm gtk/StockItem.o
-	rm gtk/Style.o
-	rm gtk/Table.o
-	rm gtk/TearoffMenuItem.o
-	rm gtk/TextAttributes.o
-	rm gtk/TextBuffer.o
-	rm gtk/TextChildAnchor.o
-	rm gtk/TextIter.o
-	rm gtk/TextMark.o
-	rm gtk/TextTag.o
-	rm gtk/TextTagTable.o
-	rm gtk/TextView.o
-	rm gtk/Timeout.o
-	rm gtk/ToggleAction.o
-	rm gtk/ToggleButton.o
-	rm gtk/ToggleToolButton.o
-	rm gtk/ToolButton.o
-	rm gtk/ToolItem.o
-	rm gtk/Toolbar.o
-	rm gtk/Tooltips.o
-	rm gtk/TreeDragSource.o
-	rm gtk/TreeIter.o
-	rm gtk/TreeIterError.o
-	rm gtk/TreeModel.o
-	rm gtk/TreeModelFilter.o
-	rm gtk/TreeModelSort.o
-	rm gtk/TreeNode.o
-	rm gtk/TreePath.o
-	rm gtk/TreeRowReference.o
-	rm gtk/TreeSelection.o
-	rm gtk/TreeSortable.o
-	rm gtk/TreeStore.o
-	rm gtk/TreeView.o
-	rm gtk/TreeViewColumn.o
-	rm gtk/Types.o
-	rm gtk/UIManager.o
-	rm gtk/VBox.o
-	rm gtk/VButtonBox.o
-	rm gtk/VPaned.o
-	rm gtk/VRuler.o
-	rm gtk/VScale.o
-	rm gtk/VScrollbar.o
-	rm gtk/VSeparator.o
-	rm gtk/Version.o
-	rm gtk/Viewport.o
-	rm gtk/Widget.o
-	rm gtk/Window.o
-	rm gtk/WindowGroup.o
-	rm gtk/typedefs.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/Loader.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/paths.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/gtk.o
-
-cleanduitAtk:
-	rm atk/Action.o
-	rm atk/Component.o
-	rm atk/Document.o
-	rm atk/EditableText.o
-	rm atk/GObjectAccessible.o
-	rm atk/Hyperlink.o
-	rm atk/Hypertext.o
-	rm atk/Image.o
-	rm atk/NoOpObject.o
-	rm atk/NoOpObjectFactory.o
-	rm atk/ObjectAtk.o
-	rm atk/ObjectFactory.o
-	rm atk/Registry.o
-	rm atk/Relation.o
-	rm atk/RelationSet.o
-	rm atk/Selection.o
-	rm atk/State.o
-	rm atk/StateSet.o
-	rm atk/StreamableContent.o
-	rm atk/Table.o
-	rm atk/Text.o
-	rm atk/Util.o
-	rm atk/ValueAtk.o
-	rm atk/typedefs.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/Loader.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/paths.o
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/src/lib/atk.o
-
-cleanHelloWorld:
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/demos/gtk/HelloWorld.o
-
-cleanDuitTests:
-	rm duit/TEditableCells.o
-	rm duit/TTextView.o
-	rm duit/TestAspectFrame.o
-	rm duit/TestDrawingArea.o
-	rm duit/TestEntries.o
-	rm duit/TestIdle.o
-	rm duit/TestImage.o
-	rm duit/TestScales.o
-	rm duit/TestStock.o
-	rm duit/TestText.o
-	rm duit/TestTreeView.o
-	rm duit/TestTreeView1.o
-	rm duit/TestWindow.o
+clean: cleanduit
 
 cleanduit:
 	rm atk/Action.o
@@ -965,10 +1093,4 @@ cleanduit:
 	rm pango/PgScriptIter.o
 	rm pango/PgTabArray.o
 	rm pango/typedefs.o
-
-cleanDrawRects:
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/demos/gtk/DrawRect.o
-
-cleanSpawnTests:
-	rm /home/ruimt/devel/D1/Duit/trunk/obj/demos/gtk/SpawnTests.o
 
