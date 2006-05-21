@@ -1029,9 +1029,13 @@ class TestWindow : MainWindow
 	
 }
 
-void main(char [][]args)
+private import lib.Loader;
+
+void main(char[][] args)
 {
 
+	Linker.dumpFailedLoads();
+	
 	Duit.init(args);
 
 	TestWindow window = new TestWindow();

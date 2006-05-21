@@ -81,28 +81,86 @@ public class Linker
 	const int RTLD_DEEPBIND = 0x00008;  // 
 	const int RTLD_GLOBAL = 0x00100;     // Make object available to whole program
 
+	static char[][][char[]] loadFailures;
+	
+	/**
+	 * Gets all the failed loads for a specific library.
+	 * This is filled in only if the default onFailure method is used durin load
+	 * returns: An array of the names hat failed to load for a specific library
+	 *          or null if none was found
+	 */
+	public static char[][] getLoadFailures(char[] libName)
+	{
+		if ( libName in loadFailures )
+		{
+			return loadFailures[libName];
+		}
+		else
+		{
+			return null;
+		}
+	}
+	
+	/**
+	 * Gets all libraries loaded.
+	 * This is filled in only if the default onFailure method is used durin load
+	 * returns: An array of the library names
+	 */
+	public static char[][] getLoadLibraries()
+	{
+		return loadFailures.keys;
+	}
+	
+	/**
+	 * Checks if any symbol failed to load
+	 * Returns: true is ALL symbols loaded
+	 */
+	public static bool isPerfectLoad()
+	{
+		return loadFailures.keys.length == 0;
+	}
+	
+	public static void dumpFailedLoads()
+	{
+		foreach ( char[] lib ; Linker.getLoadLibraries() )
+		{
+			foreach ( char[] symbol ; Linker.getLoadFailures(lib) )
+			{
+				writefln("failed (%s) %s", lib, symbol);
+			}
+		}
+	}
 	
 	private HANDLE  handle;
-	private static char[]  lib;
+	private char[]  libraryName;
 
 	// private bool continueOnFail = false;
 	
-	alias void function( char[] ) failureFN;
+	alias void function( char[] libraryName, char[] symbolName, char[] message=null) failureFN;
 	
 	private failureFN onLoadFailure;
 
 	// -----------------------------------------------------
 
-	this( char[] lib )
+	this( char[] libraryName )
 	{
-		this.lib = lib;
+		this(libraryName, &(Linker.defaultFail));
+	}
+	
+	// ---------------------------------------
+
+	this (char[] libraryName, failureFN fn )
+	{
+		this.libraryName = libraryName;
+		onLoadFailure = fn;
+
 		version(Windows)
 		{
-			 handle = LoadLibraryA( this.lib ~ "\0" );
+			 handle = LoadLibraryA( this.libraryName ~ "\0" );
 		} 
 		version(linux)
 		{
-			handle = dlopen( this.lib ~ "\0", RTLD_NOW);
+			handle = dlopen( this.libraryName ~ "\0", RTLD_NOW);
 			// clear the error buffer
 			dlerror();
 		}
@@ -114,32 +172,13 @@ public class Linker
 			
 		if (handle is null)
 		{
-			throw new Exception("Library load failed: " ~ lib);
+			throw new Exception("Library load failed: " ~ libraryName);
 		}
 		else
 		{
-			writefln("Loaded lib = %s", lib);
+			writefln("Loaded lib = %s", libraryName);
 		}
 
-		if (onLoadFailure is null)
-		{
-			onLoadFailure = &(Linker.defaultFail);
-		}
-	}
-	
-	// ---------------------------------------
-
-	this (char[] lib, failureFN fn )
-	{
-		if (fn is null)
-		{
-			onLoadFailure = &(Linker.defaultFail);
-		}
-		else
-		{
-			onLoadFailure = fn;
-		}
-		this(lib);
 	}
 
 	// ----------------------------------------
@@ -161,25 +200,29 @@ public class Linker
 		{}
 	}
 
-	/* *************************************
-
-		Default function to call on failure
-		
-	 ************************************** */
-
-	
-	static void defaultFail( char[] message )
+	/**
+	 * Default on load fail.
+	 * Logs the symbols that failed to load
+	 */
+	static void defaultFail( char[] libraryName, char[] symbolName, char[] message=null )
 	{	
-		writefln("failed to load (%s): %s",Linker.lib , message );
-		//throw new Exception("Function failed to load from library: " ~ Linker.lib);
+		//writefln("failed to load (%s): %s",libraryName , message );
+		
+		if ( !(libraryName in loadFailures) )
+		{
+			char[][] cc;
+			loadFailures[libraryName] = cc;
+		}
+		
+		loadFailures[libraryName] ~= symbolName.dup;	// need dup?
+		
+		//throw new Exception("Function failed to load from library: " ~ libraryName);
 	}	
 
-	/* **************************************
-
-		link functions to function pointers
- 
-     **************************************** */
-
+	/**
+	 * Loads all the simbols for this library
+	 * symbols: All the simbol names to be loaded
+	 */
 	void link( inout Symbol[] symbols )
 	{
 		foreach( Symbol link; symbols ) 
@@ -188,8 +231,9 @@ public class Linker
 			debug(loadSymbol) writefln("Loaded...", link.name);
 			if (*link.pointer is null)
 			{
-				onLoadFailure( link.name );
+				onLoadFailure( libraryName, link.name );
 			}
 		}
 	}
+
 }

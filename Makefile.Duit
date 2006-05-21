@@ -4,12 +4,32 @@
 #
 
 
-all: duit
+all: HelloWorld DuitTests duit
 
 list:
 	@echo List of targets 
+	@echo HelloWorld
+	@echo DuitTests
 	@echo duit
 
+
+##########################
+### definitions for HelloWorld
+##########################
+COMP_HelloWorld = dmd
+COMP_FLAGS_HelloWorld =  -c -gc -od../obj/demos -op
+COMP_IMPORT_HelloWorld = -I/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/devel/D1/Duit/trunk/src
+LINK_LIBS_HelloWorld=-L../.. -ldl -pthread -lstdc++ -lphobos -lduit -lphobos
+LINK_HelloWorld=gcc
+
+##########################
+### definitions for DuitTests
+##########################
+COMP_DuitTests = dmd
+COMP_FLAGS_DuitTests =  -c -gc -od../obj/demos -op
+COMP_IMPORT_DuitTests = -I/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/devel/D1/Duit/trunk/src:/home/ruimt/devel/D1/Duit/trunk/demos
+LINK_LIBS_DuitTests=-L../.. -ldl -pthread -lstdc++ -lphobos -L/home/ruimt/devel/D1/Duit/ -lduit -lphobos
+LINK_DuitTests=gcc
 
 ##########################
 ### definitions for duit
@@ -17,12 +37,82 @@ list:
 COMP_duit = dmd
 COMP_FLAGS_duit =  -c -gc -profile -od../obj/src -op
 COMP_IMPORT_duit = -I/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src
-LINK_LIBS_duit=-ldl -pthread -lstdc++ -lphobos
+LINK_LIBS_duit=-L../.. -ldl -pthread -lstdc++ -lphobos
 LINK_duit=ar rcs
 
 ##########################################
 ### no changes should be required beyond  this line
 ##########################################
+
+
+SRC_HelloWorld = \
+	gtk/HelloWorld.d 
+
+HelloWorld: HelloWorld_OBJ_DIR HelloWorld_COMP HelloWorld_LINK
+
+HelloWorld_OBJ_DIR:
+
+
+HelloWorld_COMP:
+	cd demos; \
+	$(COMP_HelloWorld) $(SRC_HelloWorld) $(COMP_FLAGS_HelloWorld) $(COMP_IMPORT_HelloWorld)
+
+HelloWorld_LINK:
+	cd \
+	obj/demos; \
+	\$(LINK_HelloWorld) \
+	/home/ruimt/devel/D1/Duit/trunk/obj/demos/gtk/HelloWorld.o \
+	-o \
+	/home/ruimt/devel/D1/Duit/trunk/HelloWorld \
+	$(LINK_LIBS_HelloWorld)
+
+
+
+SRC_DuitTests = \
+	duit/TEditableCells.d \
+	duit/TTextView.d \
+	duit/TestAspectFrame.d \
+	duit/TestDrawingArea.d \
+	duit/TestEntries.d \
+	duit/TestIdle.d \
+	duit/TestImage.d \
+	duit/TestScales.d \
+	duit/TestStock.d \
+	duit/TestText.d \
+	duit/TestTreeView.d \
+	duit/TestTreeView1.d \
+	duit/TestWindow.d 
+
+DuitTests: DuitTests_OBJ_DIR DuitTests_COMP DuitTests_LINK
+
+DuitTests_OBJ_DIR:
+
+
+DuitTests_COMP:
+	cd demos; \
+	$(COMP_DuitTests) $(SRC_DuitTests) $(COMP_FLAGS_DuitTests) $(COMP_IMPORT_DuitTests)
+
+DuitTests_LINK:
+	cd \
+	obj/demos; \
+	\$(LINK_DuitTests) \
+	duit/TEditableCells.o \
+	duit/TTextView.o \
+	duit/TestAspectFrame.o \
+	duit/TestDrawingArea.o \
+	duit/TestEntries.o \
+	duit/TestIdle.o \
+	duit/TestImage.o \
+	duit/TestScales.o \
+	duit/TestStock.o \
+	duit/TestText.o \
+	duit/TestTreeView.o \
+	duit/TestTreeView1.o \
+	duit/TestWindow.o \
+	-o \
+	/home/ruimt/devel/D1/Duit/trunk/DuitTests \
+	$(LINK_LIBS_DuitTests)
+
 
 
 SRC_duit = \
@@ -741,7 +831,25 @@ duit_LINK:
 
 
 
-clean: cleanduit
+clean: cleanHelloWorld cleanDuitTests cleanduit
+
+cleanHelloWorld:
+	rm /home/ruimt/devel/D1/Duit/trunk/obj/demos/gtk/HelloWorld.o
+
+cleanDuitTests:
+	rm duit/TEditableCells.o
+	rm duit/TTextView.o
+	rm duit/TestAspectFrame.o
+	rm duit/TestDrawingArea.o
+	rm duit/TestEntries.o
+	rm duit/TestIdle.o
+	rm duit/TestImage.o
+	rm duit/TestScales.o
+	rm duit/TestStock.o
+	rm duit/TestText.o
+	rm duit/TestTreeView.o
+	rm duit/TestTreeView1.o
+	rm duit/TestWindow.o
 
 cleanduit:
 	rm atk/Action.o
