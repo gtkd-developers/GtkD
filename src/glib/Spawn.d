@@ -62,6 +62,8 @@ private import glib.Str;
 private import std.stdio;
 private import std.c.string;;
 
+private import std.thread;
+
 /**
  * Description
  */
@@ -88,8 +90,8 @@ public class Spawn
 	char* strOutput;
 	char* strError;
 	
-	
-	void delegate(int, int) externalWatch;
+	alias bool delegate(Spawn) ChildWatch;
+	ChildWatch externalWatch;
 	
 	/**
 	 * Creates a Spawn for execution.
@@ -115,7 +117,7 @@ public class Spawn
 	 *    	delegate(int =
 	 *    	dlg =
 	 */
-	public void addChildWatch(void delegate(int,int) dlg)
+	public void addChildWatch(ChildWatch dlg)
 	{
 		externalWatch = dlg;
 	}
@@ -171,7 +173,10 @@ public class Spawn
 	/**
 	 * Executes the prepared process
 	 */
-	public int execAsyncWithPipes()
+	public int execAsyncWithPipes(
+		ChildWatch externalWatch = null,
+		bool delegate(char[]) readOutput = null, 
+		bool delegate(char[]) readError = null )
 	{
 		int result = g_spawn_async_with_pipes(
 		Str.toStringz(workingDirectory),
@@ -189,33 +194,62 @@ public class Spawn
 		
 		if ( result != 0 )
 		{
+			this.externalWatch = externalWatch;
 			g_child_watch_add(childPid, cast(GChildWatchFunc)(&childWatchCallback), this);
 			standardInput = fdopen(stdIn, "w");
 			standardOutput = fdopen(stdOut, "r");
 			standardError = fdopen(stdErr, "r");
+			
+			if ( readOutput !is null )
+			{
+				(new ReadFile(standardOutput, readOutput)).start();
+			}
+			if ( readError !is null )
+			{
+				(new ReadFile(standardError, readError)).start();
+			}
 		}
 		
 		return result;
 	}
 	
-	public char[] readLine(int max=4096)
+	class ReadFile : Thread
 	{
-		if ( stdOut != 0 )
+		bool delegate(char[]) read;
+		FILE* file;
+		
+		int lineCount;
+		
+		this(FILE* file, bool delegate (char[]) read )
 		{
-			return readLine(standardOutput, max);
+			this.file = file;
+			this.read = read;
+		}
+		
+		public int run()
+		{
+			char[] line = readLine(file);
+			while( line !is null )
+			{
+				++lineCount;
+				writefln("Spawn.ReadFile.run line (%s) ========== >>>%s<<<", lineCount, line);
+				read(line);
+				line = readLine(file);
+			}
+			return 0;
 		}
 	}
 	
-	public char[] readLineError(int max=4096)
+	private char[] readLine(FILE* stream, int max=4096)
 	{
-		if ( stdErr != 0 )
+		if ( feof(stream) )
 		{
-			return readLine(standardError, max);
+			if ( externalWatch !is null )
+			{
+				externalWatch(this);
+			}
+			return null;
 		}
-	}
-	
-	private char[] readLine(FILE* stream, int max)
-	{
 		char[] line;
 		line.length = max+1;
 		fgets(&line[0], max, stream);
@@ -226,9 +260,11 @@ public class Spawn
 	
 	extern(C) static void childWatchCallback(int pid, int status, Spawn spawn)
 	{
+		writefln("Spawn.childWatchCallback %s %s", pid, status);
+		spawn.exitStatus = status;
 		if ( spawn.externalWatch !is null )
 		{
-			spawn.externalWatch(pid, status);
+			spawn.externalWatch(spawn);
 		}
 		spawn.close();
 	}
