@@ -27,6 +27,7 @@ module lib.glib;
 
 private import std.stdio;
 private import glib.typedefs;
+private import gthread.typedefs;
 private import lib.Loader;
 private import lib.paths;
 
@@ -137,76 +138,6 @@ extern(C)
 	gboolean function(guint tag)g_source_remove;
 	gboolean function(GSourceFuncs* funcs, gpointer userData)g_source_remove_by_funcs_user_data;
 	gboolean function(gpointer userData)g_source_remove_by_user_data;
-	
-	// glib.Thread
-	
-	void function(GThreadFunctions* vtable)g_thread_init;
-	gboolean function()g_thread_supported;
-	GThread* function(GThreadFunc func, gpointer data, gboolean joinable, GError** error)g_thread_create;
-	GThread* function(GThreadFunc func, gpointer data, gulong stackSize, gboolean joinable, gboolean bound, GThreadPriority priority, GError** error)g_thread_create_full;
-	GThread* function()g_thread_self;
-	gpointer function(GThread* thread)g_thread_join;
-	void function(GThread* thread, GThreadPriority priority)g_thread_set_priority;
-	void function()g_thread_yield;
-	void function(gpointer retval)g_thread_exit;
-	void function(GFunc threadFunc, gpointer userData)g_thread_foreach;
-	void function(GStaticMutex* mutex)g_static_mutex_init;
-	void function(GStaticMutex* mutex)g_static_mutex_lock;
-	gboolean function(GStaticMutex* mutex)g_static_mutex_trylock;
-	void function(GStaticMutex* mutex)g_static_mutex_unlock;
-	GMutex* function(GStaticMutex* mutex)g_static_mutex_get_mutex;
-	void function(GStaticMutex* mutex)g_static_mutex_free;
-	
-	// glib.Mutex
-	
-	GMutex* function()g_mutex_new;
-	void function(GMutex* mutex)g_mutex_lock;
-	gboolean function(GMutex* mutex)g_mutex_trylock;
-	void function(GMutex* mutex)g_mutex_unlock;
-	void function(GMutex* mutex)g_mutex_free;
-	
-	// glib.StaticRecMutex
-	
-	void function(GStaticRecMutex* mutex)g_static_rec_mutex_init;
-	void function(GStaticRecMutex* mutex)g_static_rec_mutex_lock;
-	gboolean function(GStaticRecMutex* mutex)g_static_rec_mutex_trylock;
-	void function(GStaticRecMutex* mutex)g_static_rec_mutex_unlock;
-	void function(GStaticRecMutex* mutex, guint depth)g_static_rec_mutex_lock_full;
-	guint function(GStaticRecMutex* mutex)g_static_rec_mutex_unlock_full;
-	void function(GStaticRecMutex* mutex)g_static_rec_mutex_free;
-	
-	// glib.RWLock
-	
-	void function(GStaticRWLock* lock)g_static_rw_lock_init;
-	void function(GStaticRWLock* lock)g_static_rw_lock_reader_lock;
-	gboolean function(GStaticRWLock* lock)g_static_rw_lock_reader_trylock;
-	void function(GStaticRWLock* lock)g_static_rw_lock_reader_unlock;
-	void function(GStaticRWLock* lock)g_static_rw_lock_writer_lock;
-	gboolean function(GStaticRWLock* lock)g_static_rw_lock_writer_trylock;
-	void function(GStaticRWLock* lock)g_static_rw_lock_writer_unlock;
-	void function(GStaticRWLock* lock)g_static_rw_lock_free;
-	
-	// glib.Cond
-	
-	GCond* function()g_cond_new;
-	void function(GCond* cond)g_cond_signal;
-	void function(GCond* cond)g_cond_broadcast;
-	void function(GCond* cond, GMutex* mutex)g_cond_wait;
-	gboolean function(GCond* cond, GMutex* mutex, GTimeVal* absTime)g_cond_timed_wait;
-	void function(GCond* cond)g_cond_free;
-	
-	// glib.Private
-	
-	GPrivate* function(GDestroyNotify destructor)g_private_new;
-	gpointer function(GPrivate* privateKey)g_private_get;
-	void function(GPrivate* privateKey, gpointer data)g_private_set;
-	
-	// glib.StaticPrivate
-	
-	void function(GStaticPrivate* privateKey)g_static_private_init;
-	gpointer function(GStaticPrivate* privateKey)g_static_private_get;
-	void function(GStaticPrivate* privateKey, gpointer data, GDestroyNotify notify)g_static_private_set;
-	void function(GStaticPrivate* privateKey)g_static_private_free;
 	
 	// glib.ThreadPool
 	
@@ -1218,55 +1149,6 @@ Symbol[] glibLinks =
 	{ "g_source_remove",  cast(void**)& g_source_remove},
 	{ "g_source_remove_by_funcs_user_data",  cast(void**)& g_source_remove_by_funcs_user_data},
 	{ "g_source_remove_by_user_data",  cast(void**)& g_source_remove_by_user_data},
-	{ "g_thread_init",  cast(void**)& g_thread_init},
-	{ "g_thread_supported",  cast(void**)& g_thread_supported},
-	{ "g_thread_create",  cast(void**)& g_thread_create},
-	{ "g_thread_create_full",  cast(void**)& g_thread_create_full},
-	{ "g_thread_self",  cast(void**)& g_thread_self},
-	{ "g_thread_join",  cast(void**)& g_thread_join},
-	{ "g_thread_set_priority",  cast(void**)& g_thread_set_priority},
-	{ "g_thread_yield",  cast(void**)& g_thread_yield},
-	{ "g_thread_exit",  cast(void**)& g_thread_exit},
-	{ "g_thread_foreach",  cast(void**)& g_thread_foreach},
-	{ "g_static_mutex_init",  cast(void**)& g_static_mutex_init},
-	{ "g_static_mutex_lock",  cast(void**)& g_static_mutex_lock},
-	{ "g_static_mutex_trylock",  cast(void**)& g_static_mutex_trylock},
-	{ "g_static_mutex_unlock",  cast(void**)& g_static_mutex_unlock},
-	{ "g_static_mutex_get_mutex",  cast(void**)& g_static_mutex_get_mutex},
-	{ "g_static_mutex_free",  cast(void**)& g_static_mutex_free},
-	{ "g_mutex_new",  cast(void**)& g_mutex_new},
-	{ "g_mutex_lock",  cast(void**)& g_mutex_lock},
-	{ "g_mutex_trylock",  cast(void**)& g_mutex_trylock},
-	{ "g_mutex_unlock",  cast(void**)& g_mutex_unlock},
-	{ "g_mutex_free",  cast(void**)& g_mutex_free},
-	{ "g_static_rec_mutex_init",  cast(void**)& g_static_rec_mutex_init},
-	{ "g_static_rec_mutex_lock",  cast(void**)& g_static_rec_mutex_lock},
-	{ "g_static_rec_mutex_trylock",  cast(void**)& g_static_rec_mutex_trylock},
-	{ "g_static_rec_mutex_unlock",  cast(void**)& g_static_rec_mutex_unlock},
-	{ "g_static_rec_mutex_lock_full",  cast(void**)& g_static_rec_mutex_lock_full},
-	{ "g_static_rec_mutex_unlock_full",  cast(void**)& g_static_rec_mutex_unlock_full},
-	{ "g_static_rec_mutex_free",  cast(void**)& g_static_rec_mutex_free},
-	{ "g_static_rw_lock_init",  cast(void**)& g_static_rw_lock_init},
-	{ "g_static_rw_lock_reader_lock",  cast(void**)& g_static_rw_lock_reader_lock},
-	{ "g_static_rw_lock_reader_trylock",  cast(void**)& g_static_rw_lock_reader_trylock},
-	{ "g_static_rw_lock_reader_unlock",  cast(void**)& g_static_rw_lock_reader_unlock},
-	{ "g_static_rw_lock_writer_lock",  cast(void**)& g_static_rw_lock_writer_lock},
-	{ "g_static_rw_lock_writer_trylock",  cast(void**)& g_static_rw_lock_writer_trylock},
-	{ "g_static_rw_lock_writer_unlock",  cast(void**)& g_static_rw_lock_writer_unlock},
-	{ "g_static_rw_lock_free",  cast(void**)& g_static_rw_lock_free},
-	{ "g_cond_new",  cast(void**)& g_cond_new},
-	{ "g_cond_signal",  cast(void**)& g_cond_signal},
-	{ "g_cond_broadcast",  cast(void**)& g_cond_broadcast},
-	{ "g_cond_wait",  cast(void**)& g_cond_wait},
-	{ "g_cond_timed_wait",  cast(void**)& g_cond_timed_wait},
-	{ "g_cond_free",  cast(void**)& g_cond_free},
-	{ "g_private_new",  cast(void**)& g_private_new},
-	{ "g_private_get",  cast(void**)& g_private_get},
-	{ "g_private_set",  cast(void**)& g_private_set},
-	{ "g_static_private_init",  cast(void**)& g_static_private_init},
-	{ "g_static_private_get",  cast(void**)& g_static_private_get},
-	{ "g_static_private_set",  cast(void**)& g_static_private_set},
-	{ "g_static_private_free",  cast(void**)& g_static_private_free},
 	{ "g_thread_pool_new",  cast(void**)& g_thread_pool_new},
 	{ "g_thread_pool_push",  cast(void**)& g_thread_pool_push},
 	{ "g_thread_pool_set_max_threads",  cast(void**)& g_thread_pool_set_max_threads},

@@ -694,7 +694,13 @@ public class GtkWrapper : WrapperIF
 "\nmodule lib."~loaderTableName~";"
 "\n"
 "\nprivate import std.stdio;"
-"\nprivate import "~loaderTableName~".typedefs;"~
+"\nprivate import "~loaderTableName~".typedefs;"
+;
+		if ( loaderTableName == "glib" )
+		{
+			externalText ~= "\nprivate import gthread.typedefs;";
+		}
+		externalText ~= 
 "\nprivate import lib.Loader;"
 "\nprivate import lib.paths;"
 "\n"
@@ -813,6 +819,10 @@ public class GtkWrapper : WrapperIF
 					"\npublic alias int time_t;"
 					"\n"
 					;
+		}
+		else if ( "gthread" == outPack )
+		{
+			def ~= "\nimport glib.typedefs;\n\n";
 		}
 		else if ( "gobject" == outPack )
 		{

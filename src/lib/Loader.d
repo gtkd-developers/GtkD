@@ -63,6 +63,8 @@ public struct Symbol
 	void**	pointer;	// Address of the procedure pointer variable
 }
 
+private import lib.paths;
+
 /*
  * Linker : simple class to handle the loading 
  * of the library and exported functions
@@ -132,7 +134,10 @@ public class Linker
 	}
 	
 	private HANDLE  handle;
+	private HANDLE alternateHandle;
+	
 	private char[]  libraryName;
+	private char[]  alternateLibraryName;
 
 	// private bool continueOnFail = false;
 	
@@ -142,25 +147,34 @@ public class Linker
 
 	// -----------------------------------------------------
 
-	this( char[] libraryName )
+	this( char[] libraryName, char[] alternateLibraryName=null )
 	{
-		this(libraryName, &(Linker.defaultFail));
+		this(libraryName, alternateLibraryName, &(Linker.defaultFail));
 	}
 	
 	// ---------------------------------------
 
-	this (char[] libraryName, failureFN fn )
+	this (char[] libraryName, char[] alternateLibraryName, failureFN fn )
 	{
 		this.libraryName = libraryName;
+		this.alternateLibraryName = alternateLibraryName;
 		onLoadFailure = fn;
 
 		version(Windows)
 		{
-			 handle = LoadLibraryA( this.libraryName ~ "\0" );
+			handle = LoadLibraryA( this.libraryName ~ "\0" );
+			if ( alternateLibraryName !is null )
+			{
+				alternateHandle = LoadLibraryA( this.alternateLibraryName ~ "\0" );
+			}
 		} 
 		version(linux)
 		{
 			handle = dlopen( this.libraryName ~ "\0", RTLD_NOW);
+			if ( alternateLibraryName !is null )
+			{
+				alternateHandle = dlopen( this.alternateLibraryName ~ "\0", RTLD_NOW);
+			}
 			// clear the error buffer
 			dlerror();
 		}
@@ -228,10 +242,19 @@ public class Linker
 		foreach( Symbol link; symbols ) 
 		{
 			*link.pointer = getSymbol(handle, link.name~"\0");
-			debug(loadSymbol) writefln("Loaded...", link.name);
+			debug(loadSymbol) writefln("Loaded...", libraryName, " ", link.name);
 			if (*link.pointer is null)
 			{
-				onLoadFailure( libraryName, link.name );
+				// if gthread try on glib
+				if ( alternateHandle !is null )
+				{
+					*link.pointer = getSymbol(alternateHandle, link.name~"\0");
+					writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
+				}
+				if (*link.pointer is null)
+				{
+					onLoadFailure( libraryName, link.name );
+				}
 			}
 		}
 	}

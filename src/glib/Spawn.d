@@ -43,6 +43,7 @@
  * 	- glib.ErrorG
  * 	- glib.MainLoop
  * 	- glib.Str
+ * 	- std.thread
  * 	- std.stdio
  * 	- std.c.string;
  * structWrap:
@@ -59,10 +60,9 @@ private import lib.glib;
 private import glib.ErrorG;
 private import glib.MainLoop;
 private import glib.Str;
+private import std.thread;
 private import std.stdio;
 private import std.c.string;;
-
-private import std.thread;
 
 /**
  * Description
@@ -174,9 +174,9 @@ public class Spawn
 	 * Executes the prepared process
 	 */
 	public int execAsyncWithPipes(
-		ChildWatch externalWatch = null,
-		bool delegate(char[]) readOutput = null, 
-		bool delegate(char[]) readError = null )
+	ChildWatch externalWatch = null,
+	bool delegate(char[]) readOutput = null,
+	bool delegate(char[]) readError = null )
 	{
 		int result = g_spawn_async_with_pipes(
 		Str.toStringz(workingDirectory),
@@ -260,7 +260,7 @@ public class Spawn
 	
 	extern(C) static void childWatchCallback(int pid, int status, Spawn spawn)
 	{
-		writefln("Spawn.childWatchCallback %s %s", pid, status);
+		//writefln("Spawn.childWatchCallback %s %s", pid, status);
 		spawn.exitStatus = status;
 		if ( spawn.externalWatch !is null )
 		{
@@ -268,6 +268,7 @@ public class Spawn
 		}
 		spawn.close();
 	}
+	
 	
 	public bool endOfOutput()
 	{

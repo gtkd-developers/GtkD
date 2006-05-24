@@ -119,9 +119,9 @@ import: glib.MainLoop
 structWrap: GMainLLoop* MainLoop
 import: glib.Source
 structWrap: GSource* Source
-import: glib.Cond
+import: gthread.Cond
 structWrap: GCond* Cond
-import: glib.Mutex
+import: gthread.Mutex
 structWrap: GMutex* Mutex
 import: glib.ThreadPool
 structWrap: GThreadPoll* ThreadPoll
@@ -178,80 +178,86 @@ structWrap: GMainContext* MainContext
 outFile: Source
 
 
-file: glib-Threads.html
-struct: GThread
-class: Thread
-import: glib.ErrorG
-import: glib.Mutex
-structWrap: GMutex* Mutex
-import: glib.Source
-structWrap: GSource* Source
-import: glib.Dataset
-structWrap: GDataset* Dataset
-import: glib.ListG
-structWrap: GList* ListG
-prefix: g_thread_
-noprefix: g_mutex_
-noprefix: g_static_rec_mutex_
-noprefix: g_static_rw_lock_
-noprefix: g_cond_
-noprefix: g_private_
-noprefix: g_static_private_
-#import: glib.ThreadFunctions
-#structWrap: GThreadFunctions* ThreadFunctions
-import: glib.Thread
-structWrap: GThread* Thread
-#import: glib.Error*
-#structWrap: GError** Error*
-#import: glib.StaticMutex
-#structWrap: GStaticMutex* StaticMutex
-outFile: Thread
+file: /home/ruimt/data/down/GTK/API/glib/glib-Threads.html
+#struct: GThread
+#class: Thread
+#import: glib.ErrorG
+#import: gthread.Mutex
+#structWrap: GMutex* Mutex
+#import: glib.Source
+#structWrap: GSource* Source
+#import: glib.Dataset
+#structWrap: GDataset* Dataset
+#import: glib.ListG
+#structWrap: GList* ListG
+#prefix: g_thread_
+#noprefix: g_mutex_
+#noprefix: g_static_rec_mutex_
+#noprefix: g_static_rw_lock_
+#noprefix: g_cond_
+#noprefix: g_private_
+#noprefix: g_static_private_
+##import: glib.ThreadFunctions
+##structWrap: GThreadFunctions* ThreadFunctions
+#structWrap: GThread* Thread
+##import: glib.Error*
+##structWrap: GError** Error*
+##import: glib.StaticMutex
+##structWrap: GStaticMutex* StaticMutex
+#outFile: Thread
 
-struct: GMutex
-class: Mutex
-prefix: g_mutex_
-strictPrefix: Yes
-outFile: Mutex
+#struct: GMutex
+#class: Mutex
+#prefix: g_mutex_
+#strictPrefix: Yes
+#outFile: Mutex
 
-struct: GStaticRecMutex
-class: StaticRecMutex
-prefix: g_static_rec_mutex_
-strictPrefix: Yes
-outFile: StaticRecMutex
+#struct: GStaticRecMutex
+#class: StaticRecMutex
+#prefix: g_static_rec_mutex_
+#strictPrefix: Yes
+#outFile: StaticRecMutex
 
-struct: GStaticRWLock
-class: RWLock
-prefix: g_static_rw_lock_
-strictPrefix: Yes
-outFile: RWLock
+#struct: GStaticRWLock
+#class: RWLock
+#prefix: g_static_rw_lock_
+#strictPrefix: Yes
+#outFile: RWLock
 
-struct: GCond
-class: Cond
-import: glib.Date
-structWrap: GDate* Date
-prefix: g_cond_
-strictPrefix: Yes
-import: glib.Mutex
-structWrap: GMutex* Mutex
-#import: glib.TimeVal
-#structWrap: GTimeVal* TimeVal
-outFile: Cond
+#struct: GCond
+#class: Cond
+#import: glib.Date
+#structWrap: GDate* Date
+#prefix: g_cond_
+#strictPrefix: Yes
+#import: gthread.Mutex
+#structWrap: GMutex* Mutex
+##import: glib.TimeVal
+##structWrap: GTimeVal* TimeVal
+#outFile: Cond
 
-struct: GPrivate
-class: Private
-import: glib.Dataset
-structWrap: GDataset* Dataset
-prefix: g_private_
-strictPrefix: Yes
-outFile: Private
+#struct: GPrivate
+#class: Private
+#import: glib.Dataset
+#structWrap: GDataset* Dataset
+#prefix: g_private_
+#strictPrefix: Yes
+#outFile: Private
 
-struct: GStaticPrivate
-class: StaticPrivate
-import: glib.Dataset
-structWrap: GDataset* Dataset
-prefix: g_static_private_
-strictPrefix: Yes
-outFile: StaticPrivate
+#struct: GStaticPrivate
+#class: StaticPrivate
+#import: glib.Dataset
+#structWrap: GDataset* Dataset
+#prefix: g_static_private_
+#strictPrefix: Yes
+#outFile: StaticPrivate
+
+
+
+
+
+
+
 
 
 file: glib-Thread-Pools.html
@@ -627,6 +633,7 @@ prefix: g_spawn_
 #import: glib.Error*
 #structWrap: GError** Error*
 import: glib.Str
+import: std.thread
 import: std.stdio
 import: std.c.string;
 nocode: g_spawn_async_with_pipes
@@ -653,8 +660,8 @@ code: start
 	char* strOutput;
 	char* strError;
 	
-	
-	void delegate(int, int) externalWatch;
+	alias bool delegate(Spawn) ChildWatch;
+	ChildWatch externalWatch;
 	
 	/**
 	 * Creates a Spawn for execution.
@@ -677,10 +684,10 @@ code: start
 	/**
 	 * Adds a delegate to be notified on the end of the child process.
 	 * Params:
-	 *    	delegate(int = 	
-	 *    	dlg = 	
+	 *    	delegate(int =
+	 *    	dlg =
 	 */
-	public void addChildWatch(void delegate(int,int) dlg)
+	public void addChildWatch(ChildWatch dlg)
 	{
 		externalWatch = dlg;
 	}
@@ -736,51 +743,83 @@ code: start
 	/**
 	 * Executes the prepared process
 	 */
-	public int execAsyncWithPipes()
+	public int execAsyncWithPipes(
+		ChildWatch externalWatch = null,
+		bool delegate(char[]) readOutput = null, 
+		bool delegate(char[]) readError = null )
 	{
 		int result = g_spawn_async_with_pipes(
-				Str.toStringz(workingDirectory), 
-				Str.toStringzArray(argv), 
-				Str.toStringzArray(envp),
-				flags, 
-				childSetup, 
-				userData, 
-				&childPid, 
-				&stdIn, 
-				&stdOut, 
-				&stdErr, 
-				&error
-			);
-
+		Str.toStringz(workingDirectory),
+		Str.toStringzArray(argv),
+		Str.toStringzArray(envp),
+		flags,
+		childSetup,
+		userData,
+		&childPid,
+		&stdIn,
+		&stdOut,
+		&stdErr,
+		&error
+		);
+		
 		if ( result != 0 )
 		{
+			this.externalWatch = externalWatch;
 			g_child_watch_add(childPid, cast(GChildWatchFunc)(&childWatchCallback), this);
 			standardInput = fdopen(stdIn, "w");
 			standardOutput = fdopen(stdOut, "r");
 			standardError = fdopen(stdErr, "r");
+			
+			if ( readOutput !is null )
+			{
+				(new ReadFile(standardOutput, readOutput)).start();
+			}
+			if ( readError !is null )
+			{
+				(new ReadFile(standardError, readError)).start();
+			}
 		}
-
+		
 		return result;
 	}
 	
-	public char[] readLine(int max=4096)
+	class ReadFile : Thread
 	{
-		if ( stdOut != 0 )
+		bool delegate(char[]) read;
+		FILE* file;
+		
+		int lineCount;
+		
+		this(FILE* file, bool delegate (char[]) read )
 		{
-			return readLine(standardOutput, max);
+			this.file = file;
+			this.read = read;
+		}
+		
+		public int run()
+		{
+			char[] line = readLine(file);
+			while( line !is null )
+			{
+				++lineCount;
+				writefln("Spawn.ReadFile.run line (%s) ========== >>>%s<<<", lineCount, line);
+				read(line);
+				line = readLine(file);
+			}
+			return 0;
 		}
 	}
-
-	public char[] readLineError(int max=4096)
+	
+	private char[] readLine(FILE* stream, int max=4096)
 	{
-		if ( stdErr != 0 )
+		if ( feof(stream) )
 		{
-			return readLine(standardError, max);
+			if ( externalWatch !is null )
+			{
+				externalWatch(this);
+			}
+			return null;
 		}
-	}
-
-	private char[] readLine(FILE* stream, int max)
-	{
 		char[] line;
 		line.length = max+1;
 		fgets(&line[0], max, stream);
@@ -791,12 +830,15 @@ code: start
 	
 	extern(C) static void childWatchCallback(int pid, int status, Spawn spawn)
 	{
+		//writefln("Spawn.childWatchCallback %s %s", pid, status);
+		spawn.exitStatus = status;
 		if ( spawn.externalWatch !is null )
 		{
-			spawn.externalWatch(pid, status);
+			spawn.externalWatch(spawn);
 		}
 		spawn.close();
 	}
+	
 
 	public bool endOfOutput()
 	{
@@ -1016,7 +1058,7 @@ struct: GStringChunk
 class: StringGChunk
 prefix: g_string_chunk_
 import: glib.Str
-outFile: StrignGChunk
+outFile: StringGChunk
 
 file: glib-Arrays.html
 struct: GArray

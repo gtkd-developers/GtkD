@@ -23,15 +23,23 @@
 /*
  * Conversion parameters:
  * outPack = glib
- * outFile = StrignGChunk
+ * outFile = StringGChunk
  * strct   = GStringChunk
+ * realStrct=
  * clss    = StringGChunk
+ * interf  = 
+ * class Code: No
+ * interface Code: No
+ * template for:
+ * extend  = 
+ * implements:
  * prefixes:
  * 	- g_string_chunk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * local aliases:
  */
@@ -42,6 +50,7 @@ private import glib.typedefs;
 
 private import lib.glib;
 
+private import glib.Str;
 
 /**
  * Description
@@ -125,7 +134,7 @@ public class StringGChunk
 	public char[] insert(char[] string)
 	{
 		// gchar* g_string_chunk_insert (GStringChunk *chunk,  const gchar *string);
-		return std.string.toString(g_string_chunk_insert(gStringChunk, std.string.toStringz(string)) );
+		return Str.toString(g_string_chunk_insert(gStringChunk, Str.toStringz(string)) );
 	}
 	
 	/**
@@ -148,7 +157,7 @@ public class StringGChunk
 	public char[] insertConst(char[] string)
 	{
 		// gchar* g_string_chunk_insert_const (GStringChunk *chunk,  const gchar *string);
-		return std.string.toString(g_string_chunk_insert_const(gStringChunk, std.string.toStringz(string)) );
+		return Str.toString(g_string_chunk_insert_const(gStringChunk, Str.toStringz(string)) );
 	}
 	
 	/**
@@ -170,7 +179,7 @@ public class StringGChunk
 	public char[] insertLen(char[] string, int len)
 	{
 		// gchar* g_string_chunk_insert_len (GStringChunk *chunk,  const gchar *string,  gssize len);
-		return std.string.toString(g_string_chunk_insert_len(gStringChunk, std.string.toStringz(string), len) );
+		return Str.toString(g_string_chunk_insert_len(gStringChunk, Str.toStringz(string), len) );
 	}
 	
 	/**

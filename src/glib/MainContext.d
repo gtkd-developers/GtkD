@@ -41,8 +41,8 @@
  * imports:
  * 	- glib.MainLoop
  * 	- glib.Source
- * 	- glib.Cond
- * 	- glib.Mutex
+ * 	- gthread.Cond
+ * 	- gthread.Mutex
  * 	- glib.ThreadPool
  * 	- glib.MainContext
  * structWrap:
@@ -63,8 +63,8 @@ private import lib.glib;
 
 private import glib.MainLoop;
 private import glib.Source;
-private import glib.Cond;
-private import glib.Mutex;
+private import gthread.Cond;
+private import gthread.Mutex;
 private import glib.ThreadPool;
 private import glib.MainContext;
 

@@ -113,62 +113,6 @@ public alias ushort GDateYear;
  */
 public alias uint GQuark;
 /**
- * Possible errors of thread related functions.
- * G_THREAD_ERROR_AGAIN
- * a thread couldn't be created due to resource
- * shortage. Try again later.
- */
-public enum GThreadError
-{
-	AGAIN /+* Resource temporarily unavailable +/
-}
-alias GThreadError ThreadError;
-
-/**
- * Specifies the priority of a thread.
- * Note
- * It is not guaranteed, that threads with different priorities really
- * behave accordingly. On some systems (e.g. Linux) there are no thread
- * priorities. On other systems (e.g. Solaris) there doesn't seem to be
- * different scheduling for different priorities. All in all try to avoid
- * being dependent on priorities.
- * G_THREAD_PRIORITY_LOW
- * a priority lower than normal
- * G_THREAD_PRIORITY_NORMAL
- * the default priority
- * G_THREAD_PRIORITY_HIGH
- * a priority higher than normal
- * G_THREAD_PRIORITY_URGENT
- * the highest priority
- */
-public enum GThreadPriority
-{
-	LOW,
-	NORMAL,
-	HIGH,
-	URGENT
-}
-alias GThreadPriority ThreadPriority;
-
-/**
- * The possible stati of a one-time initialization function controlled by a GOnce struct.
- * G_ONCE_STATUS_NOTCALLED
- * the function has not been called yet.
- * G_ONCE_STATUS_PROGRESS
- * the function call is currently in progress.
- * G_ONCE_STATUS_READY
- * the function has been called.
- * Since 2.4
- */
-public enum GOnceStatus
-{
-	NOTCALLED,
-	PROGRESS,
-	READY
-}
-alias GOnceStatus OnceStatus;
-
-/**
  * Flags passed to g_module_open(). Note that these flags are
  * not supported on all platforms.
  * G_MODULE_BIND_LAZY
@@ -1118,902 +1062,741 @@ public struct GSourceCallbackFuncs;
 
 
 /**
- * This function table is used by g_thread_init() to initialize the
- * thread system. The functions in that table are directly used by their
- * g_* prepended counterparts, that are described here, e.g. if you call
- * g_mutex_new() then mutex_new() from the table provided to
- * g_thread_init() will be called.
- * Note
- * This struct should only be used, if you know, what you are doing.
+ * Main Gtk struct.
+ * The GThreadPool struct represents a thread pool. It has six public
+ * read-only members, but the underlying struct is bigger, so you must not copy
+ * this struct.
+ * GFuncfunc;
+ * the function to execute in the threads of this pool
+ * gpointeruser_data;
+ * the user data for the threads of this pool
+ * gbooleanexclusive;
+ * are all threads exclusive to this pool
  */
-public struct GThreadFunctions;
-// GMutex* (*mutexNew) (void);
-// void (*mutexLock) (GMutex *mutex);
-// int (*mutexTrylock) (GMutex *mutex);
-// void (*mutexUnlock) (GMutex *mutex);
-// void (*mutexFree) (GMutex *mutex);
-// GCond* (*condNew) (void);
-// void (*condSignal) (GCond *cond);
-// void (*condBroadcast) (GCond *cond);
-// void (*condWait) (GCond *cond,
-// GMutex *mutex);
-// int (*condTimedWait) (GCond *cond,
-// GMutex *mutex,
-// GTimeVal *endTime);
-// void (*condFree) (GCond *cond);
-// GPrivate* (*privateNew) (GDestroyNotify destructor);
-// void* (*privateGet) (GPrivate *privateKey);
-// void (*privateSet) (GPrivate *privateKey,
-// void* data);
-// void (*threadCreate) (GThreadFunc func,
-// void* data,
-// uint stackSize,
-// int joinable,
-// int bound,
-// GThreadPriority priority,
-// void* thread,
-// GError **error);
-// void (*threadYield) (void);
-// void (*threadJoin) (void* thread);
-// void (*threadExit) (void);
-// void (*threadSetPriority)(void* thread,
-// GThreadPriority priority);
-// void (*threadSelf) (void* thread);
-// int (*threadEqual) (void* thread1,
-// void* thread2);
+public struct GThreadPool;
+// GFunc func;
+// void* userData;
+// int exclusive;
 
 
 /**
  * Main Gtk struct.
- * The GThread struct represents a running thread. It has three public
- * read-only members, but the underlying struct is bigger, so you must
- * not copy this struct.
- * Note
- * Resources for a joinable thread are not fully released until
- * g_thread_join() is called for that thread.
+ * The GAsyncQueue struct is an opaque data structure, which represents
+ * an asynchronous queue. It should only be accessed through the
+ * g_async_queue_* functions.
  */
-public struct GThread;
+public struct GAsyncQueue;
 
 
 /**
- * The GMutex struct is an opaque data structure to represent a mutex
- * (mutual exclusion). It can be used to protect data against shared
- * access. Take for example the following function:
- * Example3.A function which will not work in a threaded environment
+ * Main Gtk struct.
+ * The GModule struct is an opaque data structure to represent a
+ * Dynamically-Loaded Module.
+ * It should only be accessed via the following functions.
  */
-public struct GMutex;
+public struct GModule;
 
 
 /**
- * A GStaticMutex works like a GMutex, but it has one significant
- * advantage. It doesn't need to be created at run-time like a GMutex,
- * but can be defined at compile-time. Here is a shorter, easier and
- * safer version of our give_me_next_number() example:
- * Example6.Using GStaticMutex to simplify thread-safe programming
+ * A set of functions used to perform memory allocation. The same GMemVTable must
+ * be used for all allocations in the same program; a call to g_mem_set_vtable(),
+ * if it exists, should be prior to any use of GLib.
+ * malloc()
+ * function to use for allocating memory.
+ * realloc()
+ * function to use for reallocating memory.
+ * free()
+ * function to use to free memory.
+ * calloc()
+ * function to use for allocating zero-filled memory.
+ * try_malloc()
+ * function to use for allocating memory without a default error handler.
+ * try_realloc()
+ * function to use for reallocating memory without a default error handler.
  */
-public struct GStaticMutex;
+public struct GMemVTable;
+// void* (*malloc) (uint nBytes);
+// void* (*realloc) (void* mem,
+// uint nBytes);
+// void (*free) (void* mem);
+// /+* optional; set to NULL if not used ! +/
+// void* (*calloc) (uint nBlocks,
+// uint nBlockBytes);
+// void* (*tryMalloc) (uint nBytes);
+// void* (*tryRealloc) (void* mem,
+// uint nBytes);
 
 
 /**
- * A GStaticRecMutex works like a GStaticMutex, but it can be locked
- * multiple times by one thread. If you enter it n times, however, you
- * have to unlock it n times again to let other threads lock it. An
- * exception is the function g_static_rec_mutex_unlock_full(), that
- * allows you to unlock a GStaticRecMutex completely returning the depth,
- * i.e. the number of times this mutex was locked. The depth can later be
- * used to restore the state by calling g_static_rec_mutex_lock_full().
- * Even though GStaticRecMutex is not opaque, it should only be used with
- * the following functions.
- * All of the g_static_rec_mutex_* functions can also
- * be used, if g_thread_init() has not been called.
+ * Main Gtk struct.
+ * A data structure representing an IO Channel. The fields should be considered
+ * private and should only be accessed with the following functions.
  */
-public struct GStaticRecMutex;
+public struct GIOChannel;
 
 
 /**
- * The GStaticRWLock struct represents a read-write lock. A read-write
- * lock can be used for protecting data, that some portions of code only
- * read from, while others also write. In such situations it is
- * desirable, that several readers can read at once, whereas of course
- * only one writer may write at a time. Take a look at the following
- * example:
- * Example8.An array with access functions
+ * A table of functions used to handle different types of GIOChannel in a
+ * generic way.
  */
-public struct GStaticRWLock;
+public struct GIOFuncs;
+// GIOStatus (*ioRead) (GIOChannel *channel,
+// char *buf,
+// uint count,
+// uint *bytesRead,
+// GError **err);
+// GIOStatus (*ioWrite) (GIOChannel *channel,
+// char *buf,
+// uint count,
+// uint *bytesWritten,
+// GError **err);
+// GIOStatus (*ioSeek) (GIOChannel *channel,
+// long offset,
+// GSeekType type,
+// GError **err);
+// GIOStatus (*ioClose) (GIOChannel *channel,
+// GError **err);
+// GSource* (*ioCreateWatch) (GIOChannel *channel,
+// GIOCondition condition);
+// void (*ioFree) (GIOChannel *channel);
+// GIOStatus (*ioSetFlags) (GIOChannel *channel,
+// GIOFlags flags,
+// GError **err);
+// GIOFlags (*ioGetFlags) (GIOChannel *channel);
 
 
 /**
- * The GCond struct is an opaque data structure to represent a
- * condition. A GCond is an object, that threads can block on, if they
- * find a certain condition to be false. If other threads change the
- * state of this condition they can signal the GCond, such that the
- * waiting thread is woken up.
- * Example9.Using GCond to block a thread until a condition is satisfied
- * GCond* data_cond = NULL; /+* Must be initialized somewhere +/
- * GMutex* data_mutex = NULL; /+* Must be initialized somewhere +/
- * gpointer current_data = NULL;
- * void push_data (gpointer data)
- * {
-	 */
-	public struct GCond;
-	
-	
-	/**
-	 * The GPrivate struct is an opaque data structure to represent a thread
-	 * private data key. Threads can thereby obtain and set a pointer, which
-	 * is private to the current thread.
-	 * Take our give_me_next_number() example from above.
-	 * Now we don't want current_number to be shared
-	 * between the threads, but to be private to each thread. This can be
-	 * done as follows:
-	 * Example10.Using GPrivate for per-thread data
-	 */
-	public struct GPrivate;
-	
-	
-	/**
-	 * A GStaticPrivate works almost like a GPrivate, but it has one
-	 * significant advantage. It doesn't need to be created at run-time like
-	 * a GPrivate, but can be defined at compile-time. This is similar to
-	 * the difference between GMutex and GStaticMutex. Now look at our
-	 * give_me_next_number() example with GStaticPrivate:
-	 * Example11.Using GStaticPrivate for per-thread data
-	 */
-	public struct GStaticPrivate;
-	
-	
-	/**
-	 * A GOnce struct controls a one-time initialization
-	 * function. Any one-time initialization function must have its own unique
-	 * GOnce struct.
-	 * volatileGOnceStatusstatus;
-	 * the status of the GOnce
-	 * volatilegpointerretval;
-	 * the value returned by the call to the function, if status
-	 */
-	public struct GOnce
+ * Main Gtk struct.
+ * The GError structure contains
+ * information about an error that has occurred.
+ * GQuarkdomain;
+ * error domain, e.g. G_FILE_ERROR.
+ * gintcode;
+ * error code, e.g. G_FILE_ERROR_NOENT.
+ * gchar*message;
+ * human-readable informative error message.
+ */
+public struct GError
 {
-		GOnceStatus status;
-		void* retval;
-	}
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GThreadPool struct represents a thread pool. It has six public
-	 * read-only members, but the underlying struct is bigger, so you must not copy
-	 * this struct.
-	 * GFuncfunc;
-	 * the function to execute in the threads of this pool
-	 * gpointeruser_data;
-	 * the user data for the threads of this pool
-	 * gbooleanexclusive;
-	 * are all threads exclusive to this pool
-	 */
-	public struct GThreadPool;
-	// GFunc func;
-	// void* userData;
-	// int exclusive;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GAsyncQueue struct is an opaque data structure, which represents
-	 * an asynchronous queue. It should only be accessed through the
-	 * g_async_queue_* functions.
-	 */
-	public struct GAsyncQueue;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GModule struct is an opaque data structure to represent a
-	 * Dynamically-Loaded Module.
-	 * It should only be accessed via the following functions.
-	 */
-	public struct GModule;
-	
-	
-	/**
-	 * A set of functions used to perform memory allocation. The same GMemVTable must
-	 * be used for all allocations in the same program; a call to g_mem_set_vtable(),
-	 * if it exists, should be prior to any use of GLib.
-	 * malloc()
-	 * function to use for allocating memory.
-	 * realloc()
-	 * function to use for reallocating memory.
-	 * free()
-	 * function to use to free memory.
-	 * calloc()
-	 * function to use for allocating zero-filled memory.
-	 * try_malloc()
-	 * function to use for allocating memory without a default error handler.
-	 * try_realloc()
-	 * function to use for reallocating memory without a default error handler.
-	 */
-	public struct GMemVTable;
-	// void* (*malloc) (uint nBytes);
-	// void* (*realloc) (void* mem,
-	// uint nBytes);
-	// void (*free) (void* mem);
-	// /+* optional; set to NULL if not used ! +/
-	// void* (*calloc) (uint nBlocks,
-	// uint nBlockBytes);
-	// void* (*tryMalloc) (uint nBytes);
-	// void* (*tryRealloc) (void* mem,
-	// uint nBytes);
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * A data structure representing an IO Channel. The fields should be considered
-	 * private and should only be accessed with the following functions.
-	 */
-	public struct GIOChannel;
-	
-	
-	/**
-	 * A table of functions used to handle different types of GIOChannel in a
-	 * generic way.
-	 */
-	public struct GIOFuncs;
-	// GIOStatus (*ioRead) (GIOChannel *channel,
-	// char *buf,
-	// uint count,
-	// uint *bytesRead,
-	// GError **err);
-	// GIOStatus (*ioWrite) (GIOChannel *channel,
-	// char *buf,
-	// uint count,
-	// uint *bytesWritten,
-	// GError **err);
-	// GIOStatus (*ioSeek) (GIOChannel *channel,
-	// long offset,
-	// GSeekType type,
-	// GError **err);
-	// GIOStatus (*ioClose) (GIOChannel *channel,
-	// GError **err);
-	// GSource* (*ioCreateWatch) (GIOChannel *channel,
-	// GIOCondition condition);
-	// void (*ioFree) (GIOChannel *channel);
-	// GIOStatus (*ioSetFlags) (GIOChannel *channel,
-	// GIOFlags flags,
-	// GError **err);
-	// GIOFlags (*ioGetFlags) (GIOChannel *channel);
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GError structure contains
-	 * information about an error that has occurred.
-	 * GQuarkdomain;
-	 * error domain, e.g. G_FILE_ERROR.
-	 * gintcode;
-	 * error code, e.g. G_FILE_ERROR_NOENT.
-	 * gchar*message;
-	 * human-readable informative error message.
-	 */
-	public struct GError
+	GQuark domain;
+	int code;
+	char *message;
+}
+
+
+/**
+ * The GIConv struct wraps an
+ * iconv() conversion descriptor. It contains private data
+ * and should only be accessed using the following functions.
+ */
+public struct GIConv;
+
+
+/**
+ * Represents a precise time, with seconds and microseconds.
+ * Similar to the struct timeval returned by
+ * the gettimeofday() UNIX call.
+ * glongtv_sec;
+ * seconds.
+ * glongtv_usec;
+ * microseconds.
+ */
+public struct GTimeVal
 {
-		GQuark domain;
-		int code;
-		char *message;
-	}
-	
-	
-	/**
-	 * The GIConv struct wraps an
-	 * iconv() conversion descriptor. It contains private data
-	 * and should only be accessed using the following functions.
-	 */
-	public struct GIConv;
-	
-	
-	/**
-	 * Represents a precise time, with seconds and microseconds.
-	 * Similar to the struct timeval returned by
-	 * the gettimeofday() UNIX call.
-	 * glongtv_sec;
-	 * seconds.
-	 * glongtv_usec;
-	 * microseconds.
-	 */
-	public struct GTimeVal
+	int tvSec;
+	int tvUsec;
+}
+
+
+/**
+ * Main Gtk struct.
+ * Represents a day between January 1, Year 1 and a few thousand years in
+ * the future. None of its members should be accessed directly. If the
+ * GDate is obtained from g_date_new(), it will
+ * be safe to mutate but invalid and thus not safe for calendrical computations.
+ * If it's declared on the stack, it will contain garbage so must be
+ * initialized with g_date_clear(). g_date_clear() makes the date invalid
+ * but sane. An invalid date doesn't represent a day, it's "empty." A
+ * date becomes valid after you set it to a Julian day or you set a day,
+ * month, and year.
+ * guintjulian_days:32;
+ * the Julian representation of the date
+ * guintjulian:1;
+ * this bit is set if julian_days is valid
+ * guintdmy:1;
+ * this is set if day, month and year are valid
+ * guintday:6;
+ * the day of the day-month-year representation of the date, as
+ */
+public struct GDate;
+// uint julianDays : 32; /+* julian days representation - we use a
+// * bitfield hoping that 64 bit platforms
+// * will pack this whole struct inn one big
+// * int
+// +/
+// uint julian : 1; /+* julian is valid +/
+// uint dmy : 1; /+* dmy is valid +/
+// /+* DMY representation +/
+// uint day : 6;
+// uint month : 4;
+// uint year : 16;
+
+
+/**
+ * Main Gtk struct.
+ * The GRand struct is an opaque data structure. It should only be
+ * accessed through the g_rand_* functions.
+ */
+public struct GRand;
+
+
+/**
+ * Associates a string with a bit flag.
+ * Used in g_parse_debug_string().
+ * gchar*key;
+ * the string
+ * guintvalue;
+ * the flag
+ */
+public struct GDebugKey
 {
-		int tvSec;
-		int tvUsec;
-	}
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * Represents a day between January 1, Year 1 and a few thousand years in
-	 * the future. None of its members should be accessed directly. If the
-	 * GDate is obtained from g_date_new(), it will
-	 * be safe to mutate but invalid and thus not safe for calendrical computations.
-	 * If it's declared on the stack, it will contain garbage so must be
-	 * initialized with g_date_clear(). g_date_clear() makes the date invalid
-	 * but sane. An invalid date doesn't represent a day, it's "empty." A
-	 * date becomes valid after you set it to a Julian day or you set a day,
-	 * month, and year.
-	 * guintjulian_days:32;
-	 * the Julian representation of the date
-	 * guintjulian:1;
-	 * this bit is set if julian_days is valid
-	 * guintdmy:1;
-	 * this is set if day, month and year are valid
-	 * guintday:6;
-	 * the day of the day-month-year representation of the date, as
-	 */
-	public struct GDate;
-	// uint julianDays : 32; /+* julian days representation - we use a
-	// * bitfield hoping that 64 bit platforms
-	// * will pack this whole struct inn one big
-	// * int
-	// +/
-	// uint julian : 1; /+* julian is valid +/
-	// uint dmy : 1; /+* dmy is valid +/
-	// /+* DMY representation +/
-	// uint day : 6;
-	// uint month : 4;
-	// uint year : 16;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GRand struct is an opaque data structure. It should only be
-	 * accessed through the g_rand_* functions.
-	 */
-	public struct GRand;
-	
-	
-	/**
-	 * Associates a string with a bit flag.
-	 * Used in g_parse_debug_string().
-	 * gchar*key;
-	 * the string
-	 * guintvalue;
-	 * the flag
-	 */
-	public struct GDebugKey
+	char *key;
+	uint value;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The data structure representing a lexical scanner.
+ * You should set input_name after creating
+ * the scanner, since it is used by the default message handler when
+ * displaying warnings and errors. If you are scanning a file, the file
+ * name would be a good choice.
+ * The user_data and
+ * max_parse_errors fields are not used.
+ * If you need to associate extra data with the scanner you can place them here.
+ * If you want to use your own message handler you can set the
+ * msg_handler field. The type of the message
+ * handler function is declared by GScannerMsgFunc.
+ */
+public struct GScanner;
+// /+* unused fields +/
+// void* userData;
+// uint maxParseErrors;
+// /+* _Error() increments this field +/
+// uint parseErrors;
+// /+* name of input stream, featured by the defaulx message handler +/
+// char *inputName;
+// /+* quarked data +/
+// GData *qdata;
+// /+* link into the scanner configuration +/
+// GScannerConfig *config;
+// /+* fields filled inn after _GetNextToken() +/
+// GTokenType token;
+// GTokenValue value;
+// uint line;
+// uint position;
+// /+* fields filled inn after _PeekNextToken() +/
+// GTokenType nextToken;
+// GTokenValue nextValue;
+// uint nextLine;
+// uint nextPosition;
+// /+* to be considered private +/
+// GHashTable *symbolTable;
+// int inputFd;
+// char *text;
+// char *textEnd;
+// char *buffer;
+// uint scopeId;
+// /+* handler funct for _Warn and _Error +/
+// GScannerMsgFunc msgHandler;
+
+
+/**
+ * Specifies the GScanner settings.
+ * cset_skip_characters specifies which characters
+ * should be skipped by the scanner (the default is the whitespace characters:
+ * space, tab, carriage-return and line-feed).
+ * cset_identifier_first specifies the characters
+ * which can start identifiers (the default is G_CSET_a_2_z, "_", and
+ * G_CSET_A_2_Z).
+ * cset_identifier_nth specifies the characters
+ * which can be used in identifiers, after the first character (the default
+ * is G_CSET_a_2_z, "_0123456789", G_CSET_A_2_Z, G_CSET_LATINS,
+ * G_CSET_LATINC).
+ * cpair_comment_single specifies the characters
+ * at the start and end of single-line comments. The default is "#\n" which
+ * means that single-line comments start with a '#' and continue until a '\n'
+ * (end of line).
+ * case_sensitive specifies if symbols are
+ * case sensitive (the default is FALSE).
+ * skip_comment_multi specifies if multi-line
+ * comments are skipped and not returned as tokens (the default is TRUE).
+ * skip_comment_single specifies if single-line
+ * comments are skipped and not returned as tokens (the default is TRUE).
+ * scan_comment_multi specifies if multi-line
+ * comments are recognized (the default is TRUE).
+ * scan_identifier specifies if identifiers
+ * are recognized (the default is TRUE).
+ * scan_identifier_1char specifies if single-character
+ * identifiers are recognized (the default is FALSE).
+ * scan_identifier_NULL specifies if
+ * NULL is reported as G_TOKEN_IDENTIFIER_NULL.
+ * (the default is FALSE).
+ * scan_symbols specifies if symbols are
+ * recognized (the default is TRUE).
+ * scan_binary specifies if binary numbers
+ * are recognized (the default is FALSE).
+ * scan_octal specifies if octal numbers
+ * are recognized (the default is TRUE).
+ * scan_float specifies if floating point numbers
+ * are recognized (the default is TRUE).
+ * scan_hex specifies if hexadecimal numbers
+ * are recognized (the default is TRUE).
+ * scan_hex_dollar specifies if '$' is recognized
+ * as a prefix for hexadecimal numbers (the default is FALSE).
+ * scan_string_sq specifies if strings can be
+ * enclosed in single quotes (the default is TRUE).
+ * scan_string_dq specifies if strings can be
+ * enclosed in double quotes (the default is TRUE).
+ * numbers_2_int specifies if binary, octal and
+ * hexadecimal numbers are reported as G_TOKEN_INT (the default is TRUE).
+ * int_2_float specifies if all numbers are
+ * reported as G_TOKEN_FLOAT (the default is FALSE).
+ * identifier_2_string specifies if identifiers
+ * are reported as strings (the default is FALSE).
+ * char_2_token specifies if characters
+ * are reported by setting token = ch or as G_TOKEN_CHAR
+ * (the default is TRUE).
+ * symbol_2_token specifies if symbols
+ * are reported by setting token = v_symbol or as
+ * G_TOKEN_SYMBOL (the default is FALSE).
+ * scope_0_fallback specifies if a symbol
+ * is searched for in the default scope in addition to the current scope
+ * (the default is FALSE).
+ */
+public struct GScannerConfig;
+// /+* Character sets
+// +/
+// char *csetSkipCharacters; /+* default: " \t\n" +/
+// char *csetIdentifierFirst;
+// char *csetIdentifierNth;
+// char *cpairCommentSingle; /+* default: "#\n" +/
+// /+* Should symbol lookup work case sensitive?
+// +/
+// uint caseSensitive : 1;
+// /+* Boolean values to be adjusted "on the fly"
+// * to configure scanning behaviour.
+// +/
+// uint skipCommentMulti : 1; /+* C like comment +/
+// uint skipCommentSingle : 1; /+* single line comment +/
+// uint scanCommentMulti : 1; /+* scan multi line comments? +/
+// uint scanIdentifier : 1;
+// uint scanIdentifier1char : 1;
+// uint scanIdentifierNULL : 1;
+// uint scanSymbols : 1;
+// uint scanBinary : 1;
+// uint scanOctal : 1;
+// uint scanFloat : 1;
+// uint scanHex : 1; /+* `0x0ff0' +/
+// uint scanHexDollar : 1; /+* `$0ff0' +/
+// uint scanStringSq : 1; /+* string: 'anything' +/
+// uint scanStringDq : 1; /+* string: "\\-escapes!\n" +/
+// uint numbers2_Int : 1; /+* bin, octal, hex => int +/
+// uint int2_Float : 1; /+* int => G_TOKEN_FLOAT? +/
+// uint identifier2_String : 1;
+// uint char2_Token : 1; /+* return G_TOKEN_CHAR? +/
+// uint symbol2_Token : 1;
+// uint scope0_Fallback : 1; /+* try scope 0 on lookups? +/
+// uint storeInt64 : 1; /+* use value.vInt64 rather than vInt +/
+// uint paddingDummy;
+
+
+/**
+ * Main Gtk struct.
+ * The data structure used for automatic completion.
+ * GList*items;
+ * list of target items (strings or data structures).
+ * GCompletionFuncfunc;
+ * function which is called to get the string associated with a target
+ */
+public struct GCompletion;
+// GList* items;
+// GCompletionFunc func;
+// char* prefix;
+// GList* cache;
+// GCompletionStrncmpFunc strncmpFunc;
+
+
+/**
+ * Main Gtk struct.
+ * Opaque datatype that records a start time.
+ */
+public struct GTimer;
+
+
+/**
+ * An opaque structure representing an opened directory.
+ */
+public struct GDir;
+
+
+/**
+ * The GMappedFile represents a file mapping created with
+ * g_mapped_file_new(). It has only private members and should
+ * not be accessed directly.
+ */
+public struct GMappedFile;
+
+
+/**
+ * Main Gtk struct.
+ * A GOptionContext struct defines which options
+ * are accepted by the commandline option parser. The struct has only private
+ * fields and should not be directly accessed.
+ */
+public struct GOptionContext;
+
+
+/**
+ * A GOptionEntry defines a single option.
+ * To have an effect, they must be added to a GOptionGroup with
+ * g_option_context_add_main_entries() or g_option_group_add_entries().
+ * constgchar*long_name;
+ * The long name of an option can be used to specify it
+ */
+public struct GOptionEntry;
+// char *longName;
+// char shortName;
+// int flags;
+// GOptionArg arg;
+// void* argData;
+// char *description;
+// char *argDescription;
+
+
+/**
+ * A GOptionGroup struct defines the options in a single
+ * group. The struct has only private fields and should not be directly accessed.
+ * All options in a group share the same translation function. Libaries which
+ * need to parse commandline options are expected to provide a function for
+ * getting a GOptionGroup holding their options, which
+ * the application can then add to its GOptionContext.
+ */
+public struct GOptionGroup;
+
+
+/**
+ * Main Gtk struct.
+ * A GPatternSpec is the 'compiled' form of a pattern.
+ * This structure is opaque and its fields cannot be accessed directly.
+ */
+public struct GPatternSpec;
+
+
+/**
+ * Main Gtk struct.
+ * A parse context is used to parse a stream of bytes that you expect to
+ * contain marked-up text. See g_markup_parse_context_new(),
+ * GMarkupParser, and so on for more details.
+ */
+public struct GMarkupParseContext;
+
+
+/**
+ * Any of the fields in GMarkupParser can be NULL, in which case they
+ * will be ignored. Except for the error function, any of these
+ * callbacks can set an error; in particular the
+ * G_MARKUP_ERROR_UNKNOWN_ELEMENT, G_MARKUP_ERROR_UNKNOWN_ATTRIBUTE,
+ * and G_MARKUP_ERROR_INVALID_CONTENT errors are intended to be set
+ * from these callbacks. If you set an error from a callback,
+ * g_markup_parse_context_parse() will report that error back to its caller.
+ * start_element()
+ * Callback to invoke when the opening tag of an element
+ * is seen.
+ * end_element()
+ * Callback to invoke when the closing tag of an element is seen
+ * text()
+ * Callback to invoke when some text is seen (text is always
+ * inside an element)
+ * passthrough()
+ * Callback to invoke for comments, processing
+ * instructions and doctype declarations; if you're re-writing the parsed document, write the
+ * passthrough text back out in the same position
+ * error()
+ * Callback to invoke when an error occurs
+ */
+public struct GMarkupParser;
+// /+* Called for open tags <foo bar="baz"> +/
+// void (*startElement) (GMarkupParseContext *context,
+// char *elementName,
+// char **attributeNames,
+// char **attributeValues,
+// void* userData,
+// GError **error);
+// /+* Called for close tags </foo> +/
+// void (*endElement) (GMarkupParseContext *context,
+// char *elementName,
+// void* userData,
+// GError **error);
+// /+* Called for character data +/
+// /+* text is not nul-terminated +/
+// void (*text) (GMarkupParseContext *context,
+// char *text,
+// uint textLen,
+// void* userData,
+// GError **error);
+// /+* Called for strings that should be re-saved verbatim inn this same
+// * position, but are not otherwise interpretable. At the moment
+// * this includes comments and processing instructions.
+// +/
+// /+* text is not nul-terminated. +/
+// void (*passthrough) (GMarkupParseContext *context,
+// char *passthroughText,
+// uint textLen,
+// void* userData,
+// GError **error);
+// /+* Called on error, including one set by other
+// * methods inn the vtable. The GError should not be freed.
+// +/
+// void (*error) (GMarkupParseContext *context,
+// GError *error,
+// void* userData);
+
+
+/**
+ * Main Gtk struct.
+ * The GKeyFile struct contains only private fields
+ * and should not be used directly.
+ */
+public struct GKeyFile;
+
+
+/**
+ * Main Gtk struct.
+ * Warning
+ * GMemChunk is deprecated and should not be used in newly-written code.
+ * The GMemChunk struct is an opaque data structure representing a memory
+ * chunk. It should be accessed only through the use of the following functions.
+ */
+public struct GMemChunk;
+
+
+/**
+ * Main Gtk struct.
+ * The GList struct is used for each element in a doubly-linked list.
+ * gpointerdata;
+ * holds the element's data, which can be a pointer to any kind of data,
+ */
+public struct GList;
+// void* data;
+// GList *next;
+// GList *prev;
+
+
+/**
+ * Main Gtk struct.
+ * The GSList struct is used for each element in the singly-linked list.
+ * gpointerdata;
+ * holds the element's data, which can be a pointer to any kind of data,
+ */
+public struct GSList;
+// void* data;
+// GSList *next;
+
+
+/**
+ * Main Gtk struct.
+ * Contains the public fields of a Queue.
+ * GList*head;
+ * a pointer to the first element of the queue.
+ * GList*tail;
+ * a pointer to the last element of the queue.
+ * guintlength;
+ * the number of elements in the queue.
+ */
+public struct GQueue;
+// GList *head;
+// GList *tail;
+// uint length;
+
+
+/**
+ * Main Gtk struct.
+ * Each piece of memory that is pushed onto the stack
+ * is cast to a GTrashStack*.
+ * GTrashStack*next;
+ * pointer to the previous element of the stack,
+ * gets stored in the first sizeof (gpointer)
+ * bytes of the element.
+ */
+public struct GTrashStack;
+// GTrashStack *next;
+
+
+/**
+ * Main Gtk struct.
+ * The GHashTable struct is an opaque data structure to represent a
+ * Hash Table.
+ * It should only be accessed via the following functions.
+ */
+public struct GHashTable;
+
+
+/**
+ * Main Gtk struct.
+ * The GString struct contains the public fields of a GString.
+ * The str field points to the character data.
+ * It may move as text is added.
+ * The len field contains the length of the string,
+ * not including the terminating nul byte.
+ * The str field is nul-terminated and so can be used as an ordinary C
+ * string. But it may be moved when text is appended or inserted into the
+ * string.
+ */
+public struct GString
 {
-		char *key;
-		uint value;
-	}
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The data structure representing a lexical scanner.
-	 * You should set input_name after creating
-	 * the scanner, since it is used by the default message handler when
-	 * displaying warnings and errors. If you are scanning a file, the file
-	 * name would be a good choice.
-	 * The user_data and
-	 * max_parse_errors fields are not used.
-	 * If you need to associate extra data with the scanner you can place them here.
-	 * If you want to use your own message handler you can set the
-	 * msg_handler field. The type of the message
-	 * handler function is declared by GScannerMsgFunc.
-	 */
-	public struct GScanner;
-	// /+* unused fields +/
-	// void* userData;
-	// uint maxParseErrors;
-	// /+* _Error() increments this field +/
-	// uint parseErrors;
-	// /+* name of input stream, featured by the defaulx message handler +/
-	// char *inputName;
-	// /+* quarked data +/
-	// GData *qdata;
-	// /+* link into the scanner configuration +/
-	// GScannerConfig *config;
-	// /+* fields filled inn after _GetNextToken() +/
-	// GTokenType token;
-	// GTokenValue value;
-	// uint line;
-	// uint position;
-	// /+* fields filled inn after _PeekNextToken() +/
-	// GTokenType nextToken;
-	// GTokenValue nextValue;
-	// uint nextLine;
-	// uint nextPosition;
-	// /+* to be considered private +/
-	// GHashTable *symbolTable;
-	// int inputFd;
-	// char *text;
-	// char *textEnd;
-	// char *buffer;
-	// uint scopeId;
-	// /+* handler funct for _Warn and _Error +/
-	// GScannerMsgFunc msgHandler;
-	
-	
-	/**
-	 * Specifies the GScanner settings.
-	 * cset_skip_characters specifies which characters
-	 * should be skipped by the scanner (the default is the whitespace characters:
-	 * space, tab, carriage-return and line-feed).
-	 * cset_identifier_first specifies the characters
-	 * which can start identifiers (the default is G_CSET_a_2_z, "_", and
-	 * G_CSET_A_2_Z).
-	 * cset_identifier_nth specifies the characters
-	 * which can be used in identifiers, after the first character (the default
-	 * is G_CSET_a_2_z, "_0123456789", G_CSET_A_2_Z, G_CSET_LATINS,
-	 * G_CSET_LATINC).
-	 * cpair_comment_single specifies the characters
-	 * at the start and end of single-line comments. The default is "#\n" which
-	 * means that single-line comments start with a '#' and continue until a '\n'
-	 * (end of line).
-	 * case_sensitive specifies if symbols are
-	 * case sensitive (the default is FALSE).
-	 * skip_comment_multi specifies if multi-line
-	 * comments are skipped and not returned as tokens (the default is TRUE).
-	 * skip_comment_single specifies if single-line
-	 * comments are skipped and not returned as tokens (the default is TRUE).
-	 * scan_comment_multi specifies if multi-line
-	 * comments are recognized (the default is TRUE).
-	 * scan_identifier specifies if identifiers
-	 * are recognized (the default is TRUE).
-	 * scan_identifier_1char specifies if single-character
-	 * identifiers are recognized (the default is FALSE).
-	 * scan_identifier_NULL specifies if
-	 * NULL is reported as G_TOKEN_IDENTIFIER_NULL.
-	 * (the default is FALSE).
-	 * scan_symbols specifies if symbols are
-	 * recognized (the default is TRUE).
-	 * scan_binary specifies if binary numbers
-	 * are recognized (the default is FALSE).
-	 * scan_octal specifies if octal numbers
-	 * are recognized (the default is TRUE).
-	 * scan_float specifies if floating point numbers
-	 * are recognized (the default is TRUE).
-	 * scan_hex specifies if hexadecimal numbers
-	 * are recognized (the default is TRUE).
-	 * scan_hex_dollar specifies if '$' is recognized
-	 * as a prefix for hexadecimal numbers (the default is FALSE).
-	 * scan_string_sq specifies if strings can be
-	 * enclosed in single quotes (the default is TRUE).
-	 * scan_string_dq specifies if strings can be
-	 * enclosed in double quotes (the default is TRUE).
-	 * numbers_2_int specifies if binary, octal and
-	 * hexadecimal numbers are reported as G_TOKEN_INT (the default is TRUE).
-	 * int_2_float specifies if all numbers are
-	 * reported as G_TOKEN_FLOAT (the default is FALSE).
-	 * identifier_2_string specifies if identifiers
-	 * are reported as strings (the default is FALSE).
-	 * char_2_token specifies if characters
-	 * are reported by setting token = ch or as G_TOKEN_CHAR
-	 * (the default is TRUE).
-	 * symbol_2_token specifies if symbols
-	 * are reported by setting token = v_symbol or as
-	 * G_TOKEN_SYMBOL (the default is FALSE).
-	 * scope_0_fallback specifies if a symbol
-	 * is searched for in the default scope in addition to the current scope
-	 * (the default is FALSE).
-	 */
-	public struct GScannerConfig;
-	// /+* Character sets
-	// +/
-	// char *csetSkipCharacters; /+* default: " \t\n" +/
-	// char *csetIdentifierFirst;
-	// char *csetIdentifierNth;
-	// char *cpairCommentSingle; /+* default: "#\n" +/
-	// /+* Should symbol lookup work case sensitive?
-	// +/
-	// uint caseSensitive : 1;
-	// /+* Boolean values to be adjusted "on the fly"
-	// * to configure scanning behaviour.
-	// +/
-	// uint skipCommentMulti : 1; /+* C like comment +/
-	// uint skipCommentSingle : 1; /+* single line comment +/
-	// uint scanCommentMulti : 1; /+* scan multi line comments? +/
-	// uint scanIdentifier : 1;
-	// uint scanIdentifier1char : 1;
-	// uint scanIdentifierNULL : 1;
-	// uint scanSymbols : 1;
-	// uint scanBinary : 1;
-	// uint scanOctal : 1;
-	// uint scanFloat : 1;
-	// uint scanHex : 1; /+* `0x0ff0' +/
-	// uint scanHexDollar : 1; /+* `$0ff0' +/
-	// uint scanStringSq : 1; /+* string: 'anything' +/
-	// uint scanStringDq : 1; /+* string: "\\-escapes!\n" +/
-	// uint numbers2_Int : 1; /+* bin, octal, hex => int +/
-	// uint int2_Float : 1; /+* int => G_TOKEN_FLOAT? +/
-	// uint identifier2_String : 1;
-	// uint char2_Token : 1; /+* return G_TOKEN_CHAR? +/
-	// uint symbol2_Token : 1;
-	// uint scope0_Fallback : 1; /+* try scope 0 on lookups? +/
-	// uint storeInt64 : 1; /+* use value.vInt64 rather than vInt +/
-	// uint paddingDummy;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The data structure used for automatic completion.
-	 * GList*items;
-	 * list of target items (strings or data structures).
-	 * GCompletionFuncfunc;
-	 * function which is called to get the string associated with a target
-	 */
-	public struct GCompletion;
-	// GList* items;
-	// GCompletionFunc func;
-	// char* prefix;
-	// GList* cache;
-	// GCompletionStrncmpFunc strncmpFunc;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * Opaque datatype that records a start time.
-	 */
-	public struct GTimer;
-	
-	
-	/**
-	 * An opaque structure representing an opened directory.
-	 */
-	public struct GDir;
-	
-	
-	/**
-	 * The GMappedFile represents a file mapping created with
-	 * g_mapped_file_new(). It has only private members and should
-	 * not be accessed directly.
-	 */
-	public struct GMappedFile;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * A GOptionContext struct defines which options
-	 * are accepted by the commandline option parser. The struct has only private
-	 * fields and should not be directly accessed.
-	 */
-	public struct GOptionContext;
-	
-	
-	/**
-	 * A GOptionEntry defines a single option.
-	 * To have an effect, they must be added to a GOptionGroup with
-	 * g_option_context_add_main_entries() or g_option_group_add_entries().
-	 * constgchar*long_name;
-	 * The long name of an option can be used to specify it
-	 */
-	public struct GOptionEntry;
-	// char *longName;
-	// char shortName;
-	// int flags;
-	// GOptionArg arg;
-	// void* argData;
-	// char *description;
-	// char *argDescription;
-	
-	
-	/**
-	 * A GOptionGroup struct defines the options in a single
-	 * group. The struct has only private fields and should not be directly accessed.
-	 * All options in a group share the same translation function. Libaries which
-	 * need to parse commandline options are expected to provide a function for
-	 * getting a GOptionGroup holding their options, which
-	 * the application can then add to its GOptionContext.
-	 */
-	public struct GOptionGroup;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * A GPatternSpec is the 'compiled' form of a pattern.
-	 * This structure is opaque and its fields cannot be accessed directly.
-	 */
-	public struct GPatternSpec;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * A parse context is used to parse a stream of bytes that you expect to
-	 * contain marked-up text. See g_markup_parse_context_new(),
-	 * GMarkupParser, and so on for more details.
-	 */
-	public struct GMarkupParseContext;
-	
-	
-	/**
-	 * Any of the fields in GMarkupParser can be NULL, in which case they
-	 * will be ignored. Except for the error function, any of these
-	 * callbacks can set an error; in particular the
-	 * G_MARKUP_ERROR_UNKNOWN_ELEMENT, G_MARKUP_ERROR_UNKNOWN_ATTRIBUTE,
-	 * and G_MARKUP_ERROR_INVALID_CONTENT errors are intended to be set
-	 * from these callbacks. If you set an error from a callback,
-	 * g_markup_parse_context_parse() will report that error back to its caller.
-	 * start_element()
-	 * Callback to invoke when the opening tag of an element
-	 * is seen.
-	 * end_element()
-	 * Callback to invoke when the closing tag of an element is seen
-	 * text()
-	 * Callback to invoke when some text is seen (text is always
-	 * inside an element)
-	 * passthrough()
-	 * Callback to invoke for comments, processing
-	 * instructions and doctype declarations; if you're re-writing the parsed document, write the
-	 * passthrough text back out in the same position
-	 * error()
-	 * Callback to invoke when an error occurs
-	 */
-	public struct GMarkupParser;
-	// /+* Called for open tags <foo bar="baz"> +/
-	// void (*startElement) (GMarkupParseContext *context,
-	// char *elementName,
-	// char **attributeNames,
-	// char **attributeValues,
-	// void* userData,
-	// GError **error);
-	// /+* Called for close tags </foo> +/
-	// void (*endElement) (GMarkupParseContext *context,
-	// char *elementName,
-	// void* userData,
-	// GError **error);
-	// /+* Called for character data +/
-	// /+* text is not nul-terminated +/
-	// void (*text) (GMarkupParseContext *context,
-	// char *text,
-	// uint textLen,
-	// void* userData,
-	// GError **error);
-	// /+* Called for strings that should be re-saved verbatim inn this same
-	// * position, but are not otherwise interpretable. At the moment
-	// * this includes comments and processing instructions.
-	// +/
-	// /+* text is not nul-terminated. +/
-	// void (*passthrough) (GMarkupParseContext *context,
-	// char *passthroughText,
-	// uint textLen,
-	// void* userData,
-	// GError **error);
-	// /+* Called on error, including one set by other
-	// * methods inn the vtable. The GError should not be freed.
-	// +/
-	// void (*error) (GMarkupParseContext *context,
-	// GError *error,
-	// void* userData);
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GKeyFile struct contains only private fields
-	 * and should not be used directly.
-	 */
-	public struct GKeyFile;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * Warning
-	 * GMemChunk is deprecated and should not be used in newly-written code.
-	 * The GMemChunk struct is an opaque data structure representing a memory
-	 * chunk. It should be accessed only through the use of the following functions.
-	 */
-	public struct GMemChunk;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GList struct is used for each element in a doubly-linked list.
-	 * gpointerdata;
-	 * holds the element's data, which can be a pointer to any kind of data,
-	 */
-	public struct GList;
-	// void* data;
-	// GList *next;
-	// GList *prev;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GSList struct is used for each element in the singly-linked list.
-	 * gpointerdata;
-	 * holds the element's data, which can be a pointer to any kind of data,
-	 */
-	public struct GSList;
-	// void* data;
-	// GSList *next;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * Contains the public fields of a Queue.
-	 * GList*head;
-	 * a pointer to the first element of the queue.
-	 * GList*tail;
-	 * a pointer to the last element of the queue.
-	 * guintlength;
-	 * the number of elements in the queue.
-	 */
-	public struct GQueue;
-	// GList *head;
-	// GList *tail;
-	// uint length;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * Each piece of memory that is pushed onto the stack
-	 * is cast to a GTrashStack*.
-	 * GTrashStack*next;
-	 * pointer to the previous element of the stack,
-	 * gets stored in the first sizeof (gpointer)
-	 * bytes of the element.
-	 */
-	public struct GTrashStack;
-	// GTrashStack *next;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GHashTable struct is an opaque data structure to represent a
-	 * Hash Table.
-	 * It should only be accessed via the following functions.
-	 */
-	public struct GHashTable;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GString struct contains the public fields of a GString.
-	 * The str field points to the character data.
-	 * It may move as text is added.
-	 * The len field contains the length of the string,
-	 * not including the terminating nul byte.
-	 * The str field is nul-terminated and so can be used as an ordinary C
-	 * string. But it may be moved when text is appended or inserted into the
-	 * string.
-	 */
-	public struct GString
+	char *str;
+	uint len;
+	uint allocatedLen;
+}
+
+
+/**
+ * Main Gtk struct.
+ * An opaque data structure representing String Chunks.
+ * It should only be accessed by using the following functions.
+ */
+public struct GStringChunk;
+
+
+/**
+ * Main Gtk struct.
+ * Contains the public fields of an Array.
+ * gchar*data;
+ * a pointer to the element data. The data may be moved as elements are
+ * added to the GArray.
+ * guintlen;
+ * the number of elements in the GArray.
+ */
+public struct GArray
 {
-		char *str;
-		uint len;
-		uint allocatedLen;
-	}
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * An opaque data structure representing String Chunks.
-	 * It should only be accessed by using the following functions.
-	 */
-	public struct GStringChunk;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * Contains the public fields of an Array.
-	 * gchar*data;
-	 * a pointer to the element data. The data may be moved as elements are
-	 * added to the GArray.
-	 * guintlen;
-	 * the number of elements in the GArray.
-	 */
-	public struct GArray
+	char *data;
+	uint len;
+}
+
+
+/**
+ * Main Gtk struct.
+ * Contains the public fields of a pointer array.
+ * gpointer*pdata;
+ * points to the array of pointers, which may be moved when the array grows.
+ * guintlen;
+ * number of pointers in the array.
+ */
+public struct GPtrArray
 {
-		char *data;
-		uint len;
-	}
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * Contains the public fields of a pointer array.
-	 * gpointer*pdata;
-	 * points to the array of pointers, which may be moved when the array grows.
-	 * guintlen;
-	 * number of pointers in the array.
-	 */
-	public struct GPtrArray
+	void* *pdata;
+	uint len;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GByteArray struct allows access to the public fields of a GByteArray.
+ * guint8*data;
+ * a pointer to the element data. The data may be moved as elements are
+ * added to the GByteArray.
+ * guintlen;
+ * the number of elements in the GByteArray.
+ */
+public struct GByteArray
 {
-		void* *pdata;
-		uint len;
-	}
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GByteArray struct allows access to the public fields of a GByteArray.
-	 * guint8*data;
-	 * a pointer to the element data. The data may be moved as elements are
-	 * added to the GByteArray.
-	 * guintlen;
-	 * the number of elements in the GByteArray.
-	 */
-	public struct GByteArray
+	byte *data;
+	uint len;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GTree struct is an opaque data structure representing a
+ * Balanced Binary Tree.
+ * It should be accessed only by using the following functions.
+ */
+public struct GTree;
+
+
+/**
+ * Main Gtk struct.
+ * The GNode struct represents one node in a
+ * N-ary Tree.
+ * The data field contains the actual data of the node.
+ * The next and prev
+ * fields point to the node's siblings (a sibling is another GNode with the
+ * same parent).
+ * The parent field points to the parent of the GNode,
+ * or is NULL if the GNode is the root of the tree.
+ * The children field points to the first child of the
+ * GNode. The other children are accessed by using the
+ * next pointer of each child.
+ */
+public struct GNode;
+// void* data;
+// GNode *next;
+// GNode *prev;
+// GNode *parent;
+// GNode *children;
+
+
+/**
+ * Main Gtk struct.
+ * The GData struct is an opaque data structure to represent a
+ * Keyed Data List.
+ * It should only be accessed via the following functions.
+ */
+public struct GData;
+
+
+/**
+ * Main Gtk struct.
+ * The GRelation struct is an opaque data structure to represent a
+ * Relation.
+ * It should only be accessed via the following functions.
+ */
+public struct GRelation;
+
+
+/**
+ * The GTuples struct is used to return records (or tuples) from the
+ * GRelation by g_relation_select().
+ * It only contains one public member - the number of records that matched.
+ * To access the matched records, you must use g_tuples_index().
+ * guintlen;
+ * the number of records that matched.
+ */
+public struct GTuples
 {
-		byte *data;
-		uint len;
-	}
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GTree struct is an opaque data structure representing a
-	 * Balanced Binary Tree.
-	 * It should be accessed only by using the following functions.
-	 */
-	public struct GTree;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GNode struct represents one node in a
-	 * N-ary Tree.
-	 * The data field contains the actual data of the node.
-	 * The next and prev
-	 * fields point to the node's siblings (a sibling is another GNode with the
-	 * same parent).
-	 * The parent field points to the parent of the GNode,
-	 * or is NULL if the GNode is the root of the tree.
-	 * The children field points to the first child of the
-	 * GNode. The other children are accessed by using the
-	 * next pointer of each child.
-	 */
-	public struct GNode;
-	// void* data;
-	// GNode *next;
-	// GNode *prev;
-	// GNode *parent;
-	// GNode *children;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GData struct is an opaque data structure to represent a
-	 * Keyed Data List.
-	 * It should only be accessed via the following functions.
-	 */
-	public struct GData;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GRelation struct is an opaque data structure to represent a
-	 * Relation.
-	 * It should only be accessed via the following functions.
-	 */
-	public struct GRelation;
-	
-	
-	/**
-	 * The GTuples struct is used to return records (or tuples) from the
-	 * GRelation by g_relation_select().
-	 * It only contains one public member - the number of records that matched.
-	 * To access the matched records, you must use g_tuples_index().
-	 * guintlen;
-	 * the number of records that matched.
-	 */
-	public struct GTuples
-{
-		uint len;
-	}
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * The GCache struct is an opaque data structure containing information about
-	 * a GCache. It should only be accessed via the following functions.
-	 */
-	public struct GCache;
-	
-	
-	/**
-	 * Main Gtk struct.
-	 * Warning
-	 * GAllocator is deprecated and should not be used in newly-written code.
-	 * The GAllocator struct contains private data. and
-	 * should only be accessed using the following functions.
-	 */
-	public struct GAllocator;
-	
+	uint len;
+}
+
+
+/**
+ * Main Gtk struct.
+ * The GCache struct is an opaque data structure containing information about
+ * a GCache. It should only be accessed via the following functions.
+ */
+public struct GCache;
+
+
+/**
+ * Main Gtk struct.
+ * Warning
+ * GAllocator is deprecated and should not be used in newly-written code.
+ * The GAllocator struct contains private data. and
+ * should only be accessed using the following functions.
+ */
+public struct GAllocator;
+
 
 /*
  * Checks the version of the GLib library.
@@ -2124,113 +1907,6 @@ public struct GStaticRWLock;
  */
 // TODO
 // #define g_main_set_poll_func(func)
-
-/*
- * The G_LOCK_* macros provide a convenient interface to GStaticMutex
- * with the advantage that they will expand to nothing in programs
- * compiled against a thread-disabled GLib, saving code and memory
- * there. G_LOCK_DEFINE defines a lock. It can appear, where variable
- * definitions may appear in programs, i.e. in the first block of a
- * function or outside of functions. The name parameter will be mangled
- * to get the name of the GStaticMutex. This means, that you can use
- * names of existing variables as the parameter, e.g. the name of the
- * variable you intent to protect with the lock. Look at our
- * give_me_next_number() example using the G_LOCK_* macros:
- * Example7.Using the G_LOCK_* convenience macros
- * G_LOCK_DEFINE (current_number);
- * int give_me_next_number ()
- *  {
-	 *  static int current_number = 0;
-	 *  int ret_val;
-	 *  G_LOCK (current_number);
-	 *  ret_val = current_number = calc_next_number (current_number);
-	 *  G_UNLOCK (current_number);
-	 *  return ret_val;
- *  }
- * name:
- * the name of the lock.
- */
-// TODO
-// #define G_LOCK_DEFINE(name)
-
-/*
- * This works like G_LOCK_DEFINE, but it creates a static object.
- * name:
- * the name of the lock.
- */
-// TODO
-// #define G_LOCK_DEFINE_STATIC(name)
-
-/*
- * This declares a lock, that is defined with G_LOCK_DEFINE in another module.
- * name:
- * the name of the lock.
- */
-// TODO
-// #define G_LOCK_EXTERN(name)
-
-/*
- * Works like g_mutex_lock(), but for a lock defined with G_LOCK_DEFINE.
- * name:
- * the name of the lock.
- */
-// TODO
-// #define G_LOCK(name)
-
-/*
- * Works like g_mutex_trylock(), but for a lock defined with G_LOCK_DEFINE.
- * name:
- * the name of the lock.
- * Returns:
- * TRUE, if the lock could be locked.
- */
-// TODO
-// #define G_TRYLOCK(name)
-
-/*
- * Works like g_mutex_unlock(), but for a lock defined with G_LOCK_DEFINE.
- * name:
- * the name of the lock.
- */
-// TODO
-// #define G_UNLOCK(name)
-
-/*
- * The first call to this routine by a process with a given GOnce struct calls
- * func with the given argument. Thereafter, subsequent calls to g_once() with
- * the same GOnce struct do not call func again, but return the stored result
- * of the first call. On return from g_once(), the status of once will be
- * G_ONCE_STATUS_READY.
- * For example, a mutex or a thread-specific data key must be created exactly
- * once. In a threaded environment, calling g_once() ensures that the
- * initialization is serialized across multiple threads.
- * Note
- * Calling g_once() recursively on the same GOnce struct in func will lead
- * to a deadlock.
- * gpointer
- * get_debug_flags()
- * {
-	 *  static GOnce my_once = G_ONCE_INIT;
-	 *  g_once (my_once, parse_debug_flags, NULL);
-	 *  return my_once.retval;
- * }
- * once:
- * a GOnce structure
- * func:
- * the GThreadFunc function associated to once. This function is
- *  called only once, regardless of the number of times it and its
- *  associated GOnce struct are passed to g_once() .
- * arg:
- *  data to be passed to func
- * Since 2.4
- * See Also
- * GThreadPool
- * Thread pools.
- * GAsyncQueue
- * Send asynchronous messages between threads.
- */
-// TODO
-// #define g_once(once, func, arg)
 
 /*
  * Allocates n_structs elements of type struct_type.
@@ -3332,18 +3008,6 @@ public typedef extern(C) void  function () GSourceDummyMarshal;
  */
 // gboolean (*GSourceFunc) (gpointer data);
 public typedef extern(C) int  function (void*) GSourceFunc;
-
-/*
- * Specifies the type of the func functions passed to
- * g_thread_create() or g_thread_create_full().
- * data:
- * data passed to the thread.
- * Returns:
- * the return value of the thread, which will be returned by
- * g_thread_join().
- */
-// gpointer (*GThreadFunc) (gpointer data);
-public typedef extern(C) void*  function (void*) GThreadFunc;
 
 /*
  * Specifies the type of the module initialization function.

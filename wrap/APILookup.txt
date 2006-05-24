@@ -126,6 +126,7 @@ outputRoot: /home/ruimt/devel/D1/Duit/trunk/
 
 # define the packages to process
 package: glib glib
+package: gthread gthread
 package: gobject gobject
 package: cairo cairoLib
 package: pango pango
@@ -161,6 +162,7 @@ copy: paths.d
 copy: Loader.d
 
 lookup: APILookupGLib.txt
+lookup: APILookupGThread.txt
 lookup: APILookupGObject.txt
 lookup: APILookupCairo.txt
 lookup: APILookupPango.txt
