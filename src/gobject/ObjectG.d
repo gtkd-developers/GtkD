@@ -171,6 +171,157 @@ public class ObjectG
 		}
 	}
 	
+	//debug = objectstore;
+	//
+	//debug(objectstore)
+	//{
+		//	private import std.stdio;
+	//}
+	//
+	//	/**
+	//	 * Maps Gtk structures to Duit Objects
+	//	 */
+	//	private static ObjectStore objectStore;
+	//
+	//	/**
+	//	 * Creates the statis ObjectStore object
+	//	 */
+	//	static this()
+	//	{
+		//		objectStore = new ObjectStore();
+	//	}
+	//
+	//	/**
+	//	 * Sets our main struct and passes store it on the gobject.
+	//	 * Adds a gabage collector root to the gtk+ struct so it doesn't get collect
+	//	 * adds the object to the objectStore
+	//	 */
+	//	public this (GObject* gObject)
+	//	{
+		//		this.gObject = gObject;
+		//		if ( gObject !is  null )
+		//		{
+			//			//writefln("ObjectG.this\n");
+			//			objectStore.putObject(this, gObject);
+			//			setDestroyNotify("GObject",gObject);
+		//		}
+	//	}
+	//
+	//
+	//
+	//	/**
+	//	 * Maintains the map from Gtk structures to Duit objects
+	//	 */
+	//	private static class ObjectStore
+	//	{
+		//		static ObjectG[void*] objectStore;
+		//
+		//		/**
+		//		 * Puts a new gtk struct to Duit objects
+		//		 */
+		//		void putObject(ObjectG objectG, GObject* gtkStruct)
+		//		{
+			//			objectStore[gtkStruct] = objectG;
+			//			debug(objectstore)
+			//			{
+				//				writefln("ObjectStore.putObject gtkStruct = %s (total=%s)", gtkStruct, objectStore.length);
+			//			}
+		//		}
+		//
+		//		/**
+		//		 * Gets a Duit object from a gtk struct.
+		//		 * Returns: the Duit object or null if not found
+		//		 */
+		//		ObjectG getObject(GObject* gtkStruct)
+		//		{
+			//			ObjectG objectG = null;
+			//			synchronized ( this )
+			//			{
+				//				if ( gtkStruct in objectStore )
+				//				{
+					//					objectG = objectStore[gtkStruct];
+				//				}
+			//			}
+			//			debug(objectstore)
+			//			{
+				//				//writefln("ObjectStore.removeObject objectStore.length = %s", objectStore.length);
+				//				//writefln("ObjectStore.getObject gtkStruct = %s", gtkStruct);
+				//				if ( objectG is null )
+				//				{
+					//					writefln("ObjectStore.getObject not found");
+				//				}
+				//				else
+				//				{
+					//					writefln("ObjectStore.getObject %s (total = %s)", objectG, objectStore.length);
+				//				}
+			//			}
+			//			return objectG;
+		//		}
+		//
+		//		/**
+		//		 * Removes an entry from the gtk struct to Duit object map
+		//		 */
+		//		void removeObject(GObject* gtkStruct)
+		//		{
+			//			debug(objectstore)
+			//			{
+				//				writefln("ObjectStore.removeObject gtkStruct = %s", gtkStruct);
+				//				ObjectG objectG = getObject(gtkStruct);
+				//				if ( objectG is null )
+				//				{
+					//					writefln("ObjectStore.removeObject not found");
+				//				}
+				//				else
+				//				{
+					//					writefln("ObjectStore.removeObject %s",
+					//					objectG);
+				//				}
+			//			}
+			//			objectStore.remove(gtkStruct);
+			//			//objectStore.rehash;
+			//			debug(objectstore)
+			//			{
+				//				writefln("ObjectStore.removeObject objectStore.length = %s", objectStore.length);
+			//			}
+		//		}
+	//	}
+	//
+	//	/**
+	//	 * Gets a Duit object from a Gtk Structure if the Duit object was already created for the structure
+	//	 */
+	//	public static ObjectG getStoredObject(GObject* gtkStruct)
+	//	{
+		//		return objectStore.getObject(gtkStruct);
+	//	}
+	//
+	//	/**
+	//	 * Sets a pointer on this object's has table
+	//	 * @param key the data identifier
+	//	 * @param data a pointer
+	//	 */
+	//	private void setDestroyNotify(char[] key, gpointer data)
+	//	{
+		//		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
+		//		//std.gc.addRoot(data);
+		//
+		//		g_object_set_data_full(gObject, Str.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
+	//	}
+	//
+	//	private extern(C)
+	//	{
+		//		static void destroyNotify(gpointer data)
+		//		{
+			//			//printf("objectg.destroy entry\n");
+			//			//printf("objectg.destroy\n");
+			//			//writefln("removing gc.root to %s",data);
+			//			//std.gc.removeRoot(data);
+			//
+			//			objectStore.removeObject(cast(GObject*)data);
+			//			//objectStore.removeObject(cast(GObject*)*data);
+			//
+			//			//printf("objectg.destroy exit\n");
+		//		}
+	//	}
 	public void setProperty(char[] propertyName, int value)
 	{
 		setProperty(propertyName, new Value(value));

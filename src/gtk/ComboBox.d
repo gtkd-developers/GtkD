@@ -188,6 +188,7 @@ public class ComboBox : Bin, CellLayoutIF
 	{
 		TreeIter iter = new TreeIter();
 		TreeModel model = getModel();
+		iter.setModel(model);
 		int index = 0;
 		bit found = false;
 		bit end = false;

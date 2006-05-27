@@ -3394,6 +3394,7 @@ code: start
 	{
 		TreeIter iter = new TreeIter();
 		TreeModel model = getModel();
+		iter.setModel(model);
 		int index = 0;
 		bit found = false;
 		bit end = false;
@@ -5380,6 +5381,7 @@ code: start
 	 */
 	public void modifyFont(char[] family, int size)
 	{
+		if ( size < 0 ) size = -size;	// hack to workaround leds bug - TO BE REMOVED
 		modifyFont(new PgFontDescription(family,size));
 	}
 	
