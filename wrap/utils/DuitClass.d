@@ -1562,7 +1562,17 @@ public class DuitClass
 			}
 			else //if ( structDef.length > 0 )
 			{
-				collectedStructs ~= "public struct "~structName~";";
+				switch ( structName )
+				{
+					// TODO "public struct GdkEventClient;" comfuses DMD!!!???
+					case "GdkEventClient":
+						collectedStructs ~= "public struct "~structName~"{}";
+						break;
+						
+					default:
+						collectedStructs ~= "public struct "~structName~";";
+						break;
+				}
 				foreach ( char[] def; structDef )
 				{
 					collectedStructs ~= "// "~stringToDuit(def, convParms, wrapper.getAliases());

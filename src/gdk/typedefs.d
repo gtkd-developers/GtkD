@@ -2477,7 +2477,7 @@ public struct GdkEventProximity
  * data element, i.e. 8, 16, or 32. 8-bit data uses the b array of the data
  * union, 16-bit data uses the s array, and 32-bit data uses the l array.
  */
-public struct GdkEventClient;
+public struct GdkEventClient{}
 // GdkEventType type;
 // GdkWindow *window;
 // byte sendEvent;
