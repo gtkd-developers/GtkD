@@ -44,6 +44,7 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.Button
+ * 	- gtk.ToolItem
  * structWrap:
  * 	- GtkWidget* -> Widget
  * local aliases:
@@ -58,8 +59,8 @@ private import lib.gtk;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.Button;
-
 private import gtk.ToolItem;
+
 /**
  * Description
  * A toolbar is created with a call to gtk_toolbar_new().
@@ -116,6 +117,11 @@ public class Toolbar : Container
 	{
 		// GtkToolbarStyle gtk_toolbar_get_style (GtkToolbar *toolbar);
 		return gtk_toolbar_get_style(gtkToolbar);
+	}
+	
+	public void insert (ToolItem toolItem, int pos=-1)
+	{
+		gtk_toolbar_insert(gtkToolbar, toolItem.getToolItemStruct(), pos);
 	}
 	
 	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
@@ -329,11 +335,6 @@ public class Toolbar : Container
 	{
 		// void gtk_toolbar_insert (GtkToolbar *toolbar,  GtkToolItem *item,  gint pos);
 		gtk_toolbar_insert(gtkToolbar, item, pos);
-	}
-	
-	public void insert(ToolItem toolItem, int pos=-1)
-	{
-		gtk_toolbar_insert(gtkToolbar, toolItem.getToolItemStruct(), pos);
 	}
 	
 	/**

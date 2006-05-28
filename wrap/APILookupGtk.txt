@@ -3904,6 +3904,7 @@ prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 import: gtk.Button
+import: gtk.ToolItem
 structWrap: GtkWidget* Widget
 nocode: gtk_toolbar_get_style
 
@@ -3922,6 +3923,11 @@ code: start
 		return gtk_toolbar_get_style(gtkToolbar);
 	}
 
+	public void insert (ToolItem toolItem, int pos=-1)
+	{
+		gtk_toolbar_insert(gtkToolbar, toolItem.getToolItemStruct(), pos);
+	}
+	
 	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
 	{
 		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, callback, userData, position);

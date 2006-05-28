@@ -107,6 +107,7 @@ private import glib.Str;
  * worry about reference counting for widgets and toplevel windows, unless you
  * explicitly call g_object_ref() yourself.
  */
+ private import std.stdio;
 private import gobject.ObjectG;
 public class ObjectGtk : ObjectG
 {
@@ -138,6 +139,7 @@ public class ObjectGtk : ObjectG
 	
 	public static char[] getId(StockID id)
 	{
+		writefln("ObjectGtk.getId for %s", id);
 		return StockDesc[id];
 	}
 	
