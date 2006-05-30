@@ -26,6 +26,7 @@
  * outFile = Screen
  * strct   = GdkScreen
  * realStrct=
+ * ctorStrct=
  * clss    = Screen
  * interf  = 
  * class Code: No

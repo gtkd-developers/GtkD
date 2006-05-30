@@ -26,6 +26,7 @@
  * outFile = GObjectAccessible
  * strct   = AtkGObjectAccessible
  * realStrct=
+ * ctorStrct=
  * clss    = GObjectAccessible
  * interf  = 
  * class Code: No

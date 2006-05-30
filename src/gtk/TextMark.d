@@ -26,6 +26,7 @@
  * outFile = TextMark
  * strct   = GtkTextMark
  * realStrct=
+ * ctorStrct=
  * clss    = TextMark
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = PgItem
  * strct   = PangoItem
  * realStrct=
+ * ctorStrct=
  * clss    = PgItem
  * interf  = 
  * class Code: No

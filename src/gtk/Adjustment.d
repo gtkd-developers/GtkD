@@ -26,6 +26,7 @@
  * outFile = Adjustment
  * strct   = GtkAdjustment
  * realStrct=
+ * ctorStrct=
  * clss    = Adjustment
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = ButtonBox
  * strct   = GtkButtonBox
  * realStrct=
+ * ctorStrct=
  * clss    = ButtonBox
  * interf  = 
  * class Code: Yes

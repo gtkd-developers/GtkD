@@ -26,6 +26,7 @@
  * outFile = PixbufLoader
  * strct   = GdkPixbufLoader
  * realStrct=
+ * ctorStrct=
  * clss    = PixbufLoader
  * interf  = 
  * class Code: Yes

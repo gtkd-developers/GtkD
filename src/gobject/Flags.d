@@ -26,6 +26,7 @@
  * outFile = Flags
  * strct   = GFlagsValue
  * realStrct=
+ * ctorStrct=
  * clss    = Flags
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = PgFontMetrics
  * strct   = PangoFontMetrics
  * realStrct=
+ * ctorStrct=
  * clss    = PgFontMetrics
  * interf  = 
  * class Code: No

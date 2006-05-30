@@ -26,6 +26,7 @@
  * outFile = RadioMenuItem
  * strct   = GtkRadioMenuItem
  * realStrct=
+ * ctorStrct=
  * clss    = RadioMenuItem
  * interf  = 
  * class Code: Yes

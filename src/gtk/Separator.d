@@ -26,6 +26,7 @@
  * outFile = Separator
  * strct   = GtkSeparator
  * realStrct=
+ * ctorStrct=
  * clss    = Separator
  * interf  = 
  * class Code: No

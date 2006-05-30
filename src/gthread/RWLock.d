@@ -26,6 +26,7 @@
  * outFile = RWLock
  * strct   = GStaticRWLock
  * realStrct=
+ * ctorStrct=
  * clss    = RWLock
  * interf  = 
  * class Code: No

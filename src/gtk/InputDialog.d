@@ -26,6 +26,7 @@
  * outFile = InputDialog
  * strct   = GtkInputDialog
  * realStrct=
+ * ctorStrct=
  * clss    = InputDialog
  * interf  = 
  * class Code: No

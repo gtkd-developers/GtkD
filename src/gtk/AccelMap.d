@@ -26,6 +26,7 @@
  * outFile = AccelMap
  * strct   = GtkAccelMap
  * realStrct=
+ * ctorStrct=
  * clss    = AccelMap
  * interf  = 
  * class Code: No

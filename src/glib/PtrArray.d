@@ -26,6 +26,7 @@
  * outFile = PtrArray
  * strct   = GPtrArray
  * realStrct=
+ * ctorStrct=
  * clss    = PtrArray
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = StaticPrivate
  * strct   = GStaticPrivate
  * realStrct=
+ * ctorStrct=
  * clss    = StaticPrivate
  * interf  = 
  * class Code: No

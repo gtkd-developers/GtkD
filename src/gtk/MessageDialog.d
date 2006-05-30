@@ -26,6 +26,7 @@
  * outFile = MessageDialog
  * strct   = GtkMessageDialog
  * realStrct=
+ * ctorStrct=
  * clss    = MessageDialog
  * interf  = 
  * class Code: Yes

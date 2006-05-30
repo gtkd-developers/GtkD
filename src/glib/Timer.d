@@ -26,6 +26,7 @@
  * outFile = Timer
  * strct   = GTimer
  * realStrct=
+ * ctorStrct=
  * clss    = Timer
  * interf  = 
  * class Code: No

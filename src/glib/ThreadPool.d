@@ -26,6 +26,7 @@
  * outFile = ThreadPool
  * strct   = GThreadPool
  * realStrct=
+ * ctorStrct=
  * clss    = ThreadPool
  * interf  = 
  * class Code: No

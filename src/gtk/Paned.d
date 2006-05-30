@@ -26,6 +26,7 @@
  * outFile = Paned
  * strct   = GtkPaned
  * realStrct=
+ * ctorStrct=
  * clss    = Paned
  * interf  = 
  * class Code: Yes

@@ -26,6 +26,7 @@
  * outFile = MenuToolButton
  * strct   = GtkMenuToolButton
  * realStrct=
+ * ctorStrct=GtkToolItem
  * clss    = MenuToolButton
  * interf  = 
  * class Code: Yes

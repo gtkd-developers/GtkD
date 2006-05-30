@@ -26,6 +26,7 @@
  * outFile = PixbufAnimation
  * strct   = GdkPixbufAnimation
  * realStrct=
+ * ctorStrct=
  * clss    = PixbufAnimation
  * interf  = 
  * class Code: No

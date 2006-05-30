@@ -26,6 +26,7 @@
  * outFile = StreamableContent
  * strct   = AtkStreamableContent
  * realStrct=
+ * ctorStrct=
  * clss    = StreamableContent
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Style
  * strct   = GtkStyle
  * realStrct=
+ * ctorStrct=
  * clss    = Style
  * interf  = 
  * class Code: No

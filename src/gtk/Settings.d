@@ -26,6 +26,7 @@
  * outFile = Settings
  * strct   = GtkSettings
  * realStrct=
+ * ctorStrct=
  * clss    = Settings
  * interf  = 
  * class Code: No

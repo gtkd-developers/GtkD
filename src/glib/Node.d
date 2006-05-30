@@ -26,6 +26,7 @@
  * outFile = Node
  * strct   = GNode
  * realStrct=
+ * ctorStrct=
  * clss    = Node
  * interf  = 
  * class Code: No

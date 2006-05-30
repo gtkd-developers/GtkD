@@ -26,6 +26,7 @@
  * outFile = SeparatorToolItem
  * strct   = GtkSeparatorToolItem
  * realStrct=
+ * ctorStrct=GtkToolItem
  * clss    = SeparatorToolItem
  * interf  = 
  * class Code: No
@@ -103,10 +104,10 @@ public class SeparatorToolItem : ToolItem
 	 *  the new GtkSeparatorToolItem
 	 * Since 2.4
 	 */
-	public static ToolItem newSeparatorToolItem()
+	public this ()
 	{
 		// GtkToolItem* gtk_separator_tool_item_new (void);
-		return new ToolItem( gtk_separator_tool_item_new() );
+		this(cast(GtkSeparatorToolItem*)gtk_separator_tool_item_new() );
 	}
 	
 	/**

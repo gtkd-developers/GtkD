@@ -26,6 +26,7 @@
  * outFile = Pattern
  * strct   = cairo_pattern_t
  * realStrct=
+ * ctorStrct=
  * clss    = Pattern
  * interf  = 
  * class Code: No

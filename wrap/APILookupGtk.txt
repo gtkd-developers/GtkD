@@ -1269,9 +1269,9 @@ code: start
 
 	private static IconSize currentIconSize = IconSize.BUTTON;
 
+	/** An arbitrary string to be used by the application */
 	private char[] action;
-	
-	
+
 	public static void setIconSize(IconSize iconSize)
 	{
 		currentIconSize = iconSize;
@@ -3972,10 +3972,26 @@ import: gtk.Tooltips
 structWrap: GtkTooltips* Tooltips
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+
+code: start
+	/**
+	 * Sets this widget tooltip
+	 * @param tipText the tooltip
+	 * @param tipPrivate a private text
+	 */
+	void setTooltip(char[] tipText, char[] tipPrivate)
+	{
+		Tooltips tt = new Tooltips();
+		tt.setTip(this, tipText, tipPrivate);
+	}
+
+code: end
+
 outFile: ToolItem
 
 file: GtkSeparatorToolItem.html
 struct: GtkSeparatorToolItem
+ctorStruct: GtkToolItem
 class: SeparatorToolItem
 prefix: gtk_separator_tool_item_
 prefix: gtk_
@@ -3985,18 +4001,43 @@ outFile: SeparatorToolItem
 
 file: GtkToolButton.html
 struct: GtkToolButton
+ctorStruct: GtkToolItem
 class: ToolButton
 prefix: gtk_tool_button_
 prefix: gtk_
 import: glib.Str
 import: gtk.ToolItem
-structWrap: GtkToolItem* ToolItem
+#structWrap: GtkToolItem* ToolItem
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+
+code: start
+	/** An arbitrary string to be used by the application */
+	private char[] action;
+
+	public void setAction(char[] action)
+	{
+		this.action = action.dup;
+	}
+	
+	public char[] getAction()
+	{
+		return action;
+	}
+
+	public this (StockID stockID)
+	{
+		this(StockDesc[stockID]);
+	}
+	
+
+code: end
+
 outFile: ToolButton
 
 file: GtkMenuToolButton.html
 struct: GtkMenuToolButton
+ctorStruct: GtkToolItem
 class: MenuToolButton
 prefix: gtk_menu_tool_button_
 prefix: gtk_
@@ -4091,6 +4132,7 @@ outFile: MenuToolButton
 
 file: GtkToggleToolButton.html
 struct: GtkToggleToolButton
+ctorStruct: GtkToolItem
 class: ToggleToolButton
 prefix: gtk_toggle_tool_button_
 prefix: gtk_
@@ -4101,6 +4143,7 @@ outFile: ToggleToolButton
 
 file: GtkRadioToolButton.html
 struct: GtkRadioToolButton
+ctorStruct: GtkToolItem
 class: RadioToolButton
 prefix: gtk_radio_tool_button_
 prefix: gtk_

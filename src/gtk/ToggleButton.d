@@ -26,6 +26,7 @@
  * outFile = ToggleButton
  * strct   = GtkToggleButton
  * realStrct=
+ * ctorStrct=
  * clss    = ToggleButton
  * interf  = 
  * class Code: Yes

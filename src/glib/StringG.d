@@ -26,6 +26,7 @@
  * outFile = StringG
  * strct   = GString
  * realStrct=
+ * ctorStrct=
  * clss    = StringG
  * interf  = 
  * class Code: No

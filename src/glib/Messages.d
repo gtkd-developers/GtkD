@@ -26,6 +26,7 @@
  * outFile = Messages
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Messages
  * interf  = 
  * class Code: No

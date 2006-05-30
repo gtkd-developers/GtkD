@@ -26,6 +26,7 @@
  * outFile = Allocator
  * strct   = GAllocator
  * realStrct=
+ * ctorStrct=
  * clss    = Allocator
  * interf  = 
  * class Code: No

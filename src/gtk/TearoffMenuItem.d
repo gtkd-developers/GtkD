@@ -26,6 +26,7 @@
  * outFile = TearoffMenuItem
  * strct   = GtkTearoffMenuItem
  * realStrct=
+ * ctorStrct=
  * clss    = TearoffMenuItem
  * interf  = 
  * class Code: No

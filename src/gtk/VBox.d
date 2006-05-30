@@ -26,6 +26,7 @@
  * outFile = VBox
  * strct   = GtkVBox
  * realStrct=
+ * ctorStrct=
  * clss    = VBox
  * interf  = 
  * class Code: No

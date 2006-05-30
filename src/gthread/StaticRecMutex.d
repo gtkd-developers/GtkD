@@ -26,6 +26,7 @@
  * outFile = StaticRecMutex
  * strct   = GStaticRecMutex
  * realStrct=
+ * ctorStrct=
  * clss    = StaticRecMutex
  * interf  = 
  * class Code: No

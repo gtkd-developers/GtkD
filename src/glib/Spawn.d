@@ -26,6 +26,7 @@
  * outFile = Spawn
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Spawn
  * interf  = 
  * class Code: Yes

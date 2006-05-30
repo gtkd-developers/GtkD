@@ -26,6 +26,7 @@
  * outFile = Unicode
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Unicode
  * interf  = 
  * class Code: No

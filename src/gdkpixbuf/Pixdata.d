@@ -26,6 +26,7 @@
  * outFile = Pixdata
  * strct   = GdkPixdata
  * realStrct=
+ * ctorStrct=
  * clss    = Pixdata
  * interf  = 
  * class Code: No

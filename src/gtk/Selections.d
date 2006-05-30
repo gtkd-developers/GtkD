@@ -26,6 +26,7 @@
  * outFile = Selections
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Selections
  * interf  = 
  * class Code: No

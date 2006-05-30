@@ -26,6 +26,7 @@
  * outFile = State
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = State
  * interf  = 
  * class Code: No

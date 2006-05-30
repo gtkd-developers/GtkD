@@ -26,6 +26,7 @@
  * outFile = EventBox
  * strct   = GtkEventBox
  * realStrct=
+ * ctorStrct=
  * clss    = EventBox
  * interf  = 
  * class Code: No

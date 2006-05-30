@@ -26,6 +26,7 @@
  * outFile = Relation
  * strct   = AtkRelation
  * realStrct=
+ * ctorStrct=
  * clss    = Relation
  * interf  = 
  * class Code: No

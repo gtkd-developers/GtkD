@@ -26,6 +26,7 @@
  * outFile = Scale
  * strct   = GtkScale
  * realStrct=
+ * ctorStrct=
  * clss    = Scale
  * interf  = 
  * class Code: No

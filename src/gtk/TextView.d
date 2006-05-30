@@ -26,6 +26,7 @@
  * outFile = TextView
  * strct   = GtkTextView
  * realStrct=
+ * ctorStrct=
  * clss    = TextView
  * interf  = 
  * class Code: Yes

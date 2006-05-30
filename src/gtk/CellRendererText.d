@@ -26,6 +26,7 @@
  * outFile = CellRendererText
  * strct   = GtkCellRenderer
  * realStrct=GtkCellRendererText
+ * ctorStrct=
  * clss    = CellRendererText
  * interf  = 
  * class Code: No

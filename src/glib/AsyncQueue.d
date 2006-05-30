@@ -26,6 +26,7 @@
  * outFile = AsyncQueue
  * strct   = GAsyncQueue
  * realStrct=
+ * ctorStrct=
  * clss    = AsyncQueue
  * interf  = 
  * class Code: No

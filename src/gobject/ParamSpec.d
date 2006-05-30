@@ -26,6 +26,7 @@
  * outFile = ParamSpec
  * strct   = GParamSpec
  * realStrct=
+ * ctorStrct=
  * clss    = ParamSpec
  * interf  = 
  * class Code: No

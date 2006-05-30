@@ -26,6 +26,7 @@
  * outFile = HSeparator
  * strct   = GtkHSeparator
  * realStrct=
+ * ctorStrct=
  * clss    = HSeparator
  * interf  = 
  * class Code: No

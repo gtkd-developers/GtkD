@@ -26,6 +26,7 @@
  * outFile = MainLoop
  * strct   = GMainLoop
  * realStrct=
+ * ctorStrct=
  * clss    = MainLoop
  * interf  = 
  * class Code: Yes

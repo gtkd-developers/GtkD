@@ -26,6 +26,7 @@
  * outFile = TreeModelSort
  * strct   = GtkTreeModelSort
  * realStrct=
+ * ctorStrct=
  * clss    = TreeModelSort
  * interf  = 
  * class Code: No

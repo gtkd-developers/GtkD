@@ -26,6 +26,7 @@
  * outFile = Registry
  * strct   = AtkRegistry
  * realStrct=
+ * ctorStrct=
  * clss    = Registry
  * interf  = 
  * class Code: No

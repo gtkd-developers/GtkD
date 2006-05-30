@@ -26,6 +26,7 @@
  * outFile = PgTabArray
  * strct   = PangoTabArray
  * realStrct=
+ * ctorStrct=
  * clss    = PgTabArray
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = IMContext
  * strct   = GtkIMContext
  * realStrct=
+ * ctorStrct=
  * clss    = IMContext
  * interf  = 
  * class Code: No

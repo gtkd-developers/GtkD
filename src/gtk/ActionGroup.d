@@ -26,6 +26,7 @@
  * outFile = ActionGroup
  * strct   = GtkActionGroup
  * realStrct=
+ * ctorStrct=
  * clss    = ActionGroup
  * interf  = 
  * class Code: No

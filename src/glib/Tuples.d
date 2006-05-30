@@ -26,6 +26,7 @@
  * outFile = Tuples
  * strct   = GTuples
  * realStrct=
+ * ctorStrct=
  * clss    = Tuples
  * interf  = 
  * class Code: No

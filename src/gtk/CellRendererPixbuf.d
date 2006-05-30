@@ -26,6 +26,7 @@
  * outFile = CellRendererPixbuf
  * strct   = GtkCellRenderer
  * realStrct=GtkCellRendererPixbuf
+ * ctorStrct=
  * clss    = CellRendererPixbuf
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = TreeIterError
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = TreeIterError
  * interf  = 
  * class Code: Yes

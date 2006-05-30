@@ -26,6 +26,7 @@
  * outFile = Widget
  * strct   = GtkWidget
  * realStrct=
+ * ctorStrct=
  * clss    = Widget
  * interf  = 
  * class Code: Yes

@@ -26,6 +26,7 @@
  * outFile = ShellUtils
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = ShellUtils
  * interf  = 
  * class Code: No

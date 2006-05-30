@@ -26,6 +26,7 @@
  * outFile = Surface
  * strct   = cairo_surface_t
  * realStrct=
+ * ctorStrct=
  * clss    = Surface
  * interf  = 
  * class Code: No

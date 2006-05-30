@@ -26,6 +26,7 @@
  * outFile = PgCoverage
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = PgCoverage
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = EditableText
  * strct   = AtkEditableText
  * realStrct=
+ * ctorStrct=
  * clss    = EditableText
  * interf  = 
  * class Code: No

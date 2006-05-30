@@ -26,6 +26,7 @@
  * outFile = ListSG
  * strct   = GSList
  * realStrct=
+ * ctorStrct=
  * clss    = ListSG
  * interf  = 
  * class Code: No

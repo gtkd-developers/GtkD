@@ -26,6 +26,7 @@
  * outFile = PgContext
  * strct   = PangoContext
  * realStrct=
+ * ctorStrct=
  * clss    = PgContext
  * interf  = 
  * class Code: No

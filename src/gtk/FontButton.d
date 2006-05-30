@@ -26,6 +26,7 @@
  * outFile = FontButton
  * strct   = GtkFontButton
  * realStrct=
+ * ctorStrct=
  * clss    = FontButton
  * interf  = 
  * class Code: No

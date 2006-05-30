@@ -26,6 +26,7 @@
  * outFile = Color
  * strct   = GdkColor
  * realStrct=
+ * ctorStrct=
  * clss    = Color
  * interf  = 
  * class Code: Yes

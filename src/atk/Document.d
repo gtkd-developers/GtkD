@@ -26,6 +26,7 @@
  * outFile = Document
  * strct   = AtkDocument
  * realStrct=
+ * ctorStrct=
  * clss    = Document
  * interf  = 
  * class Code: No

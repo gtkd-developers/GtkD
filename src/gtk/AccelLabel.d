@@ -26,6 +26,7 @@
  * outFile = AccelLabel
  * strct   = GtkAccelLabel
  * realStrct=
+ * ctorStrct=
  * clss    = AccelLabel
  * interf  = 
  * class Code: No

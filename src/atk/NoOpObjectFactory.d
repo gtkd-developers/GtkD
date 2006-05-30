@@ -26,6 +26,7 @@
  * outFile = NoOpObjectFactory
  * strct   = AtkNoOpObjectFactory
  * realStrct=
+ * ctorStrct=
  * clss    = NoOpObjectFactory
  * interf  = 
  * class Code: No

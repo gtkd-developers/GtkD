@@ -26,6 +26,7 @@
  * outFile = Box
  * strct   = GtkBox
  * realStrct=
+ * ctorStrct=
  * clss    = Box
  * interf  = 
  * class Code: No

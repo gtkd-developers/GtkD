@@ -26,6 +26,7 @@
  * outFile = TextTag
  * strct   = GtkTextTag
  * realStrct=
+ * ctorStrct=
  * clss    = TextTag
  * interf  = 
  * class Code: No

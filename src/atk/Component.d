@@ -26,6 +26,7 @@
  * outFile = Component
  * strct   = AtkComponent
  * realStrct=
+ * ctorStrct=
  * clss    = Component
  * interf  = 
  * class Code: No

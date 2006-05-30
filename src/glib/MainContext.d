@@ -26,6 +26,7 @@
  * outFile = MainContext
  * strct   = GMainContext
  * realStrct=
+ * ctorStrct=
  * clss    = MainContext
  * interf  = 
  * class Code: No

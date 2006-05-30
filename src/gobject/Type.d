@@ -26,6 +26,7 @@
  * outFile = Type
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Type
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Viewport
  * strct   = GtkViewport
  * realStrct=
+ * ctorStrct=
  * clss    = Viewport
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = TypePlugin
  * strct   = GTypePlugin
  * realStrct=
+ * ctorStrct=
  * clss    = TypePlugin
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Value
  * strct   = GValue
  * realStrct=
+ * ctorStrct=
  * clss    = Value
  * interf  = 
  * class Code: Yes

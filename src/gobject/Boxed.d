@@ -26,6 +26,7 @@
  * outFile = Boxed
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Boxed
  * interf  = 
  * class Code: No

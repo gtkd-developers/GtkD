@@ -26,6 +26,7 @@
  * outFile = ByteArray
  * strct   = GByteArray
  * realStrct=
+ * ctorStrct=
  * clss    = ByteArray
  * interf  = 
  * class Code: No

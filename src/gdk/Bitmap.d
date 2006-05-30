@@ -26,6 +26,7 @@
  * outFile = Bitmap
  * strct   = GdkBitmap
  * realStrct=
+ * ctorStrct=
  * clss    = Bitmap
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Scrollbar
  * strct   = GtkScrollbar
  * realStrct=
+ * ctorStrct=
  * clss    = Scrollbar
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = FileFilter
  * strct   = GtkFileFilter
  * realStrct=
+ * ctorStrct=
  * clss    = FileFilter
  * interf  = 
  * class Code: No

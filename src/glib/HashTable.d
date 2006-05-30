@@ -26,6 +26,7 @@
  * outFile = HashTable
  * strct   = GHashTable
  * realStrct=
+ * ctorStrct=
  * clss    = HashTable
  * interf  = 
  * class Code: No

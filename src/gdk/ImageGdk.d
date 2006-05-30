@@ -26,6 +26,7 @@
  * outFile = ImageGdk
  * strct   = GdkImage
  * realStrct=
+ * ctorStrct=
  * clss    = ImageGdk
  * interf  = 
  * class Code: No

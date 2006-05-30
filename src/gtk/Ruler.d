@@ -26,6 +26,7 @@
  * outFile = Ruler
  * strct   = GtkRuler
  * realStrct=
+ * ctorStrct=
  * clss    = Ruler
  * interf  = 
  * class Code: No

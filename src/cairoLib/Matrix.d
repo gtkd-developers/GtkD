@@ -26,6 +26,7 @@
  * outFile = Matrix
  * strct   = cairo_matrix_t
  * realStrct=
+ * ctorStrct=
  * clss    = Matrix
  * interf  = 
  * class Code: No

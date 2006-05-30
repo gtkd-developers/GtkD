@@ -26,6 +26,7 @@
  * outFile = TreeIter
  * strct   = GtkTreeIter
  * realStrct=
+ * ctorStrct=
  * clss    = TreeIter
  * interf  = 
  * class Code: Yes

@@ -26,6 +26,7 @@
  * outFile = Toolbar
  * strct   = GtkToolbar
  * realStrct=
+ * ctorStrct=
  * clss    = Toolbar
  * interf  = 
  * class Code: Yes

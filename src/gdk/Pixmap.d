@@ -26,6 +26,7 @@
  * outFile = Pixmap
  * strct   = GdkPixmap
  * realStrct=
+ * ctorStrct=
  * clss    = Pixmap
  * interf  = 
  * class Code: No

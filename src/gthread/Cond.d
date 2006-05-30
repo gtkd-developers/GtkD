@@ -26,6 +26,7 @@
  * outFile = Cond
  * strct   = GCond
  * realStrct=
+ * ctorStrct=
  * clss    = Cond
  * interf  = 
  * class Code: No

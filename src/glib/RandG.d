@@ -26,6 +26,7 @@
  * outFile = RandG
  * strct   = GRand
  * realStrct=
+ * ctorStrct=
  * clss    = RandG
  * interf  = 
  * class Code: No

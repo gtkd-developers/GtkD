@@ -26,6 +26,7 @@
  * outFile = PgLanguage
  * strct   = PangoLanguage
  * realStrct=
+ * ctorStrct=
  * clss    = PgLanguage
  * interf  = 
  * class Code: No

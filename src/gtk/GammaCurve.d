@@ -26,6 +26,7 @@
  * outFile = GammaCurve
  * strct   = GtkGammaCurve
  * realStrct=
+ * ctorStrct=
  * clss    = GammaCurve
  * interf  = 
  * class Code: No

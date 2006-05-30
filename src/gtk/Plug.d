@@ -26,6 +26,7 @@
  * outFile = Plug
  * strct   = GtkPlug
  * realStrct=
+ * ctorStrct=
  * clss    = Plug
  * interf  = 
  * class Code: No

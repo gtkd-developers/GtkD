@@ -26,6 +26,7 @@
  * outFile = Types
  * strct   = GtkType
  * realStrct=
+ * ctorStrct=
  * clss    = Types
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = PgFontsetSimple
  * strct   = PangoFontsetSimple
  * realStrct=
+ * ctorStrct=
  * clss    = PgFontsetSimple
  * interf  = 
  * class Code: No

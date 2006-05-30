@@ -26,6 +26,7 @@
  * outFile = StringGChunk
  * strct   = GStringChunk
  * realStrct=
+ * ctorStrct=
  * clss    = StringGChunk
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Signals
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Signals
  * interf  = 
  * class Code: No

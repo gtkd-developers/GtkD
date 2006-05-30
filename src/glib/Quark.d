@@ -26,6 +26,7 @@
  * outFile = Quark
  * strct   = GQuark
  * realStrct=
+ * ctorStrct=
  * clss    = Quark
  * interf  = 
  * class Code: No

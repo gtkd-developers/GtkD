@@ -26,6 +26,7 @@
  * outFile = GKeyFile
  * strct   = GKeyFile
  * realStrct=
+ * ctorStrct=
  * clss    = KeyFile
  * interf  = 
  * class Code: No

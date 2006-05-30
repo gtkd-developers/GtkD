@@ -26,6 +26,7 @@
  * outFile = StandardEnumerations
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = StandardEnumerations
  * interf  = 
  * class Code: No

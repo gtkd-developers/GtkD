@@ -26,6 +26,7 @@
  * outFile = RcStyle
  * strct   = GtkRcStyle
  * realStrct=
+ * ctorStrct=
  * clss    = RcStyle
  * interf  = 
  * class Code: No

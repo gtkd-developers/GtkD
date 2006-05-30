@@ -26,6 +26,7 @@
  * outFile = EntryCompletion
  * strct   = GtkEntryCompletion
  * realStrct=
+ * ctorStrct=
  * clss    = EntryCompletion
  * interf  = 
  * class Code: No

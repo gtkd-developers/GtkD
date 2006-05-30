@@ -26,6 +26,7 @@
  * outFile = TreeRowReference
  * strct   = GtkTreeRowReference
  * realStrct=
+ * ctorStrct=
  * clss    = TreeRowReference
  * interf  = 
  * class Code: No

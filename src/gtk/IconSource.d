@@ -26,6 +26,7 @@
  * outFile = IconSource
  * strct   = GtkIconSource
  * realStrct=
+ * ctorStrct=
  * clss    = IconSource
  * interf  = 
  * class Code: No

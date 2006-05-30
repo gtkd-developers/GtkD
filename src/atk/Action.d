@@ -26,6 +26,7 @@
  * outFile = Action
  * strct   = AtkAction
  * realStrct=
+ * ctorStrct=
  * clss    = Action
  * interf  = 
  * class Code: No

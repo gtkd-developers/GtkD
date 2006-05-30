@@ -26,6 +26,7 @@
  * outFile = CellView
  * strct   = GtkCellView
  * realStrct=
+ * ctorStrct=
  * clss    = CellView
  * interf  = 
  * class Code: Yes

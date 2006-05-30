@@ -26,6 +26,7 @@
  * outFile = VSeparator
  * strct   = GtkVSeparator
  * realStrct=
+ * ctorStrct=
  * clss    = VSeparator
  * interf  = 
  * class Code: No

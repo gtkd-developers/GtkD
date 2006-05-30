@@ -26,6 +26,7 @@
  * outFile = Gdk
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Gdk
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = SimpleXML
  * strct   = GMarkupParseContext
  * realStrct=
+ * ctorStrct=
  * clss    = SimpleXML
  * interf  = 
  * class Code: No

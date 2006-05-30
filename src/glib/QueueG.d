@@ -26,6 +26,7 @@
  * outFile = QueueG
  * strct   = GQueue
  * realStrct=
+ * ctorStrct=
  * clss    = QueueG
  * interf  = 
  * class Code: No

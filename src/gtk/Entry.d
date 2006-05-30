@@ -26,6 +26,7 @@
  * outFile = Entry
  * strct   = GtkEntry
  * realStrct=
+ * ctorStrct=
  * clss    = Entry
  * interf  = 
  * class Code: Yes

@@ -26,6 +26,7 @@
  * outFile = WindowsUtils
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = WindowsUtils
  * interf  = 
  * class Code: No

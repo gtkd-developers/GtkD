@@ -26,6 +26,7 @@
  * outFile = ScaledFont
  * strct   = cairo_scaled_font_t
  * realStrct=
+ * ctorStrct=
  * clss    = ScaledFont
  * interf  = 
  * class Code: No

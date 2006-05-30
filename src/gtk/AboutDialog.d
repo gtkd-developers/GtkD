@@ -26,6 +26,7 @@
  * outFile = AboutDialog
  * strct   = GtkAboutDialog
  * realStrct=
+ * ctorStrct=
  * clss    = AboutDialog
  * interf  = 
  * class Code: No

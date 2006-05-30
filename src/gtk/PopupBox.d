@@ -26,6 +26,7 @@
  * outFile = PopupBox
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = PopupBox
  * interf  = 
  * class Code: Yes

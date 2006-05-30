@@ -26,6 +26,7 @@
  * outFile = TreeNode
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = 
  * interf  = 
  * class Code: Yes

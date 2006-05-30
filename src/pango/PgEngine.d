@@ -26,6 +26,7 @@
  * outFile = PgEngine
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = PgEngine
  * interf  = 
  * class Code: No

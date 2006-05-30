@@ -26,6 +26,7 @@
  * outFile = DisplayManager
  * strct   = GdkDisplayManager
  * realStrct=
+ * ctorStrct=
  * clss    = DisplayManager
  * interf  = 
  * class Code: No

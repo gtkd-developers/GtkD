@@ -26,6 +26,7 @@
  * outFile = Curve
  * strct   = GtkCurve
  * realStrct=
+ * ctorStrct=
  * clss    = Curve
  * interf  = 
  * class Code: No

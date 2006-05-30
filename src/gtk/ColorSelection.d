@@ -26,6 +26,7 @@
  * outFile = ColorSelection
  * strct   = GtkColorSelection
  * realStrct=
+ * ctorStrct=
  * clss    = ColorSelection
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = MemorySlice
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = MemorySlice
  * interf  = 
  * class Code: No

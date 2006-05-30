@@ -26,6 +26,7 @@
  * outFile = ScannerG
  * strct   = GScanner
  * realStrct=
+ * ctorStrct=
  * clss    = ScannerG
  * interf  = 
  * class Code: No

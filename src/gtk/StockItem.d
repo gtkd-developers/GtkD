@@ -26,6 +26,7 @@
  * outFile = StockItem
  * strct   = GtkStockItem
  * realStrct=
+ * ctorStrct=
  * clss    = StockItem
  * interf  = 
  * class Code: No

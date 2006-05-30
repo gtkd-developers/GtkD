@@ -26,6 +26,7 @@
  * outFile = ListStore
  * strct   = GtkListStore
  * realStrct=
+ * ctorStrct=
  * clss    = ListStore
  * interf  = 
  * class Code: Yes

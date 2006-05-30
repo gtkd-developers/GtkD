@@ -26,6 +26,7 @@
  * outFile = AccelGroup
  * strct   = GtkAccelGroup
  * realStrct=
+ * ctorStrct=
  * clss    = AccelGroup
  * interf  = 
  * class Code: No

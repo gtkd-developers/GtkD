@@ -26,6 +26,7 @@
  * outFile = ToggleToolButton
  * strct   = GtkToggleToolButton
  * realStrct=
+ * ctorStrct=GtkToolItem
  * clss    = ToggleToolButton
  * interf  = 
  * class Code: No
@@ -137,10 +138,10 @@ public class ToggleToolButton : ToolButton
 	 *  a newly created GtkToggleToolButton
 	 * Since 2.4
 	 */
-	public static ToolItem newToggleToolButton()
+	public this ()
 	{
 		// GtkToolItem* gtk_toggle_tool_button_new (void);
-		return new ToolItem( gtk_toggle_tool_button_new() );
+		this(cast(GtkToggleToolButton*)gtk_toggle_tool_button_new() );
 	}
 	
 	/**
@@ -154,10 +155,10 @@ public class ToggleToolButton : ToolButton
 	 *  A new GtkToggleToolButton
 	 * Since 2.4
 	 */
-	public static ToolItem newFromStock(char[] stockId)
+	public this (char[] stockId)
 	{
 		// GtkToolItem* gtk_toggle_tool_button_new_from_stock  (const gchar *stock_id);
-		return new ToolItem( gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId)) );
+		this(cast(GtkToggleToolButton*)gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId)) );
 	}
 	
 	/**

@@ -26,6 +26,7 @@
  * outFile = ItemFactory
  * strct   = GtkItemFactory
  * realStrct=
+ * ctorStrct=
  * clss    = ItemFactory
  * interf  = 
  * class Code: No

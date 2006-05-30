@@ -26,6 +26,7 @@
  * outFile = TreeStore
  * strct   = GtkTreeStore
  * realStrct=
+ * ctorStrct=
  * clss    = TreeStore
  * interf  = 
  * class Code: Yes

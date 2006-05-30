@@ -26,6 +26,7 @@
  * outFile = CharacterSet
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = CharacterSet
  * interf  = 
  * class Code: No

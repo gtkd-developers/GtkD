@@ -26,6 +26,7 @@
  * outFile = Editable
  * strct   = GtkEditable
  * realStrct=
+ * ctorStrct=
  * clss    = Editable
  * interf  = 
  * class Code: No

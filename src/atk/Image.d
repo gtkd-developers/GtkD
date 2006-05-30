@@ -26,6 +26,7 @@
  * outFile = Image
  * strct   = AtkImage
  * realStrct=
+ * ctorStrct=
  * clss    = Image
  * interf  = 
  * class Code: No

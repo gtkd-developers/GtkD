@@ -26,6 +26,7 @@
  * outFile = TreeModel
  * strct   = GtkTreeModel
  * realStrct=
+ * ctorStrct=
  * clss    = TreeModel
  * interf  = 
  * class Code: Yes

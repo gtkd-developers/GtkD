@@ -26,6 +26,7 @@
  * outFile = RadioToolButton
  * strct   = GtkRadioToolButton
  * realStrct=
+ * ctorStrct=GtkToolItem
  * clss    = RadioToolButton
  * interf  = 
  * class Code: No
@@ -113,10 +114,10 @@ public class RadioToolButton : ToggleToolButton
 	 *  The new GtkRadioToolButton
 	 * Since 2.4
 	 */
-	public static ToolItem newRadioToolButton(ListSG group)
+	public this (ListSG group)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new (GSList *group);
-		return new ToolItem( gtk_radio_tool_button_new((group is null) ? null : group.getListSGStruct()) );
+		this(cast(GtkRadioToolButton*)gtk_radio_tool_button_new((group is null) ? null : group.getListSGStruct()) );
 	}
 	
 	/**
@@ -131,10 +132,10 @@ public class RadioToolButton : ToggleToolButton
 	 *  The new GtkRadioToolItem
 	 * Since 2.4
 	 */
-	public static ToolItem newFromStock(ListSG group, char[] stockId)
+	public this (ListSG group, char[] stockId)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new_from_stock  (GSList *group,  const gchar *stock_id);
-		return new ToolItem( gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), Str.toStringz(stockId)) );
+		this(cast(GtkRadioToolButton*)gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), Str.toStringz(stockId)) );
 	}
 	
 	/**
@@ -145,10 +146,10 @@ public class RadioToolButton : ToggleToolButton
 	 *  The new GtkRadioToolButton
 	 * Since 2.4
 	 */
-	public ToolItem newFromWidget()
+	public this ()
 	{
 		// GtkToolItem* gtk_radio_tool_button_new_from_widget  (GtkRadioToolButton *group);
-		return new ToolItem( gtk_radio_tool_button_new_from_widget(gtkRadioToolButton) );
+		this(cast(GtkRadioToolButton*)gtk_radio_tool_button_new_from_widget(gtkRadioToolButton) );
 	}
 	
 	/**
@@ -163,10 +164,10 @@ public class RadioToolButton : ToggleToolButton
 	 *  A new GtkRadioToolButton
 	 * Since 2.4
 	 */
-	public ToolItem newWithStockFromWidget(char[] stockId)
+	public this (char[] stockId)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new_with_stock_from_widget  (GtkRadioToolButton *group,  const gchar *stock_id);
-		return new ToolItem( gtk_radio_tool_button_new_with_stock_from_widget(gtkRadioToolButton, Str.toStringz(stockId)) );
+		this(cast(GtkRadioToolButton*)gtk_radio_tool_button_new_with_stock_from_widget(gtkRadioToolButton, Str.toStringz(stockId)) );
 	}
 	
 	/**

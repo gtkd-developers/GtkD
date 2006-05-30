@@ -26,6 +26,7 @@
  * outFile = Dataset
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Dataset
  * interf  = 
  * class Code: No

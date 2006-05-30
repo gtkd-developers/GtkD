@@ -26,6 +26,7 @@
  * outFile = HPaned
  * strct   = GtkHPaned
  * realStrct=
+ * ctorStrct=
  * clss    = HPaned
  * interf  = 
  * class Code: Yes

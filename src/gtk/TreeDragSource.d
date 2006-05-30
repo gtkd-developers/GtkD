@@ -26,6 +26,7 @@
  * outFile = TreeDragSource
  * strct   = GtkTreeDragSource
  * realStrct=
+ * ctorStrct=
  * clss    = TreeDragSource
  * interf  = 
  * class Code: No

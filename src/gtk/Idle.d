@@ -26,6 +26,7 @@
  * outFile = Idle
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Idle
  * interf  = 
  * class Code: Yes

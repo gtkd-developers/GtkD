@@ -26,6 +26,7 @@
  * outFile = PgFontFace
  * strct   = PangoFontFace
  * realStrct=
+ * ctorStrct=
  * clss    = PgFontFace
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = CheckButton
  * strct   = GtkCheckButton
  * realStrct=
+ * ctorStrct=
  * clss    = CheckButton
  * interf  = 
  * class Code: Yes

@@ -26,6 +26,7 @@
  * outFile = ValueAtk
  * strct   = AtkValue
  * realStrct=
+ * ctorStrct=
  * clss    = ValueAtk
  * interf  = 
  * class Code: No

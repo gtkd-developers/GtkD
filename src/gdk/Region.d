@@ -26,6 +26,7 @@
  * outFile = Region
  * strct   = GdkRegion
  * realStrct=
+ * ctorStrct=
  * clss    = Region
  * interf  = 
  * class Code: No

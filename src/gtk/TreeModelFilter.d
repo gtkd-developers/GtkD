@@ -26,6 +26,7 @@
  * outFile = TreeModelFilter
  * strct   = GtkTreeModelFilter
  * realStrct=
+ * ctorStrct=
  * clss    = TreeModelFilter
  * interf  = 
  * class Code: No

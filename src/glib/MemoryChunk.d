@@ -26,6 +26,7 @@
  * outFile = MemoryChunk
  * strct   = GMemChunk
  * realStrct=
+ * ctorStrct=
  * clss    = MemoryChunk
  * interf  = 
  * class Code: No

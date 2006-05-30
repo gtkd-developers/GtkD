@@ -26,6 +26,7 @@
  * outFile = MenuItem
  * strct   = GtkMenuItem
  * realStrct=
+ * ctorStrct=
  * clss    = MenuItem
  * interf  = 
  * class Code: Yes

@@ -26,6 +26,7 @@
  * outFile = FileChooserDialog
  * strct   = GtkFileChooserDialog
  * realStrct=
+ * ctorStrct=
  * clss    = FileChooserDialog
  * interf  = 
  * class Code: Yes

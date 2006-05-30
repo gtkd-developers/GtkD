@@ -26,6 +26,7 @@
  * outFile = DrawingArea
  * strct   = GtkDrawingArea
  * realStrct=
+ * ctorStrct=
  * clss    = DrawingArea
  * interf  = 
  * class Code: No

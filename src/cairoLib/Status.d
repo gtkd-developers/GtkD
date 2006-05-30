@@ -26,6 +26,7 @@
  * outFile = Status
  * strct   = cairo_status_t
  * realStrct=
+ * ctorStrct=
  * clss    = Status
  * interf  = 
  * class Code: No

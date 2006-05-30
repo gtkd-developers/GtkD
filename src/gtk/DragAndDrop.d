@@ -26,6 +26,7 @@
  * outFile = DragAndDrop
  * strct   = GdkDragContext
  * realStrct=
+ * ctorStrct=
  * clss    = DragAndDrop
  * interf  = 
  * class Code: No

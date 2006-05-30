@@ -26,6 +26,7 @@
  * outFile = VScrollbar
  * strct   = GtkVScrollbar
  * realStrct=
+ * ctorStrct=
  * clss    = VScrollbar
  * interf  = 
  * class Code: No

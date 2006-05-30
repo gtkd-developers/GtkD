@@ -26,6 +26,7 @@
  * outFile = Pixbuf
  * strct   = GdkPixbuf
  * realStrct=
+ * ctorStrct=
  * clss    = Pixbuf
  * interf  = 
  * class Code: No

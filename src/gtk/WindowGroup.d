@@ -26,6 +26,7 @@
  * outFile = WindowGroup
  * strct   = GtkWindowGroup
  * realStrct=
+ * ctorStrct=
  * clss    = WindowGroup
  * interf  = 
  * class Code: No

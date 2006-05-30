@@ -26,6 +26,7 @@
  * outFile = VScale
  * strct   = GtkVScale
  * realStrct=
+ * ctorStrct=
  * clss    = VScale
  * interf  = 
  * class Code: No

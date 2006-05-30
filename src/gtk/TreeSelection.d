@@ -26,6 +26,7 @@
  * outFile = TreeSelection
  * strct   = GtkTreeSelection
  * realStrct=
+ * ctorStrct=
  * clss    = TreeSelection
  * interf  = 
  * class Code: Yes

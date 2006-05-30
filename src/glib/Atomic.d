@@ -26,6 +26,7 @@
  * outFile = Atomic
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Atomic
  * interf  = 
  * class Code: No

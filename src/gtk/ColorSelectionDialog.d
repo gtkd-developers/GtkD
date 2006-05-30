@@ -26,6 +26,7 @@
  * outFile = ColorSelectionDialog
  * strct   = GtkColorSelectionDialog
  * realStrct=
+ * ctorStrct=
  * clss    = ColorSelectionDialog
  * interf  = 
  * class Code: No

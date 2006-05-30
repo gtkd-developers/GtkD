@@ -26,6 +26,7 @@
  * outFile = HBox
  * strct   = GtkHBox
  * realStrct=
+ * ctorStrct=
  * clss    = HBox
  * interf  = 
  * class Code: No

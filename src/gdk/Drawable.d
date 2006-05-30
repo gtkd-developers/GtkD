@@ -26,6 +26,7 @@
  * outFile = Drawable
  * strct   = GdkDrawable
  * realStrct=
+ * ctorStrct=
  * clss    = Drawable
  * interf  = 
  * class Code: Yes

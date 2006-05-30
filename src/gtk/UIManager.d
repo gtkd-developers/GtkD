@@ -26,6 +26,7 @@
  * outFile = UIManager
  * strct   = GtkUIManager
  * realStrct=
+ * ctorStrct=
  * clss    = UIManager
  * interf  = 
  * class Code: No

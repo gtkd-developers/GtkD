@@ -26,9 +26,10 @@
  * outFile = ToolButton
  * strct   = GtkToolButton
  * realStrct=
+ * ctorStrct=GtkToolItem
  * clss    = ToolButton
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -44,7 +45,6 @@
  * 	- gtk.ToolItem
  * 	- gtk.Widget
  * structWrap:
- * 	- GtkToolItem* -> ToolItem
  * 	- GtkWidget* -> Widget
  * local aliases:
  */
@@ -106,6 +106,25 @@ public class ToolButton : ToolItem
 		this.gtkToolButton = gtkToolButton;
 	}
 	
+	/** An arbitrary string to be used by the application */
+	private char[] action;
+	
+	public void setAction(char[] action)
+	{
+		this.action = action.dup;
+	}
+	
+	public char[] getAction()
+	{
+		return action;
+	}
+	
+	public this (StockID stockID)
+	{
+		this(StockDesc[stockID]);
+	}
+	
+	
 	/**
 	 */
 	
@@ -155,10 +174,10 @@ public class ToolButton : ToolItem
 	 *  A new GtkToolButton
 	 * Since 2.4
 	 */
-	public static ToolItem newToolButton(Widget iconWidget, char[] label)
+	public this (Widget iconWidget, char[] label)
 	{
 		// GtkToolItem* gtk_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
-		return new ToolItem( gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label)) );
+		this(cast(GtkToolButton*)gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label)) );
 	}
 	
 	/**
@@ -172,10 +191,10 @@ public class ToolButton : ToolItem
 	 *  A new GtkToolButton
 	 * Since 2.4
 	 */
-	public static ToolItem newFromStock(char[] stockId)
+	public this (char[] stockId)
 	{
 		// GtkToolItem* gtk_tool_button_new_from_stock (const gchar *stock_id);
-		return new ToolItem( gtk_tool_button_new_from_stock(Str.toStringz(stockId)) );
+		this(cast(GtkToolButton*)gtk_tool_button_new_from_stock(Str.toStringz(stockId)) );
 	}
 	
 	/**

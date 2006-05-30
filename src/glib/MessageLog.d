@@ -26,6 +26,7 @@
  * outFile = MessageLog
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = MessageLog
  * interf  = 
  * class Code: No

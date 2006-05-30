@@ -26,6 +26,7 @@
  * outFile = Dialog
  * strct   = GtkDialog
  * realStrct=
+ * ctorStrct=
  * clss    = Dialog
  * interf  = 
  * class Code: Yes

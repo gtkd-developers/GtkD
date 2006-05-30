@@ -26,6 +26,7 @@
  * outFile = Text
  * strct   = AtkText
  * realStrct=
+ * ctorStrct=
  * clss    = Text
  * interf  = 
  * class Code: No

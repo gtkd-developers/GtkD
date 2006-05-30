@@ -26,6 +26,7 @@
  * outFile = Cache
  * strct   = GCache
  * realStrct=
+ * ctorStrct=
  * clss    = Cache
  * interf  = 
  * class Code: No

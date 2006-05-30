@@ -26,6 +26,7 @@
  * outFile = VRuler
  * strct   = GtkVRuler
  * realStrct=
+ * ctorStrct=
  * clss    = VRuler
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = PgGlyphString
  * strct   = PangoGlyphString
  * realStrct=
+ * ctorStrct=
  * clss    = PgGlyphString
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Arrow
  * strct   = GtkArrow
  * realStrct=
+ * ctorStrct=
  * clss    = Arrow
  * interf  = 
  * class Code: No

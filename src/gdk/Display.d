@@ -26,6 +26,7 @@
  * outFile = Display
  * strct   = GdkDisplay
  * realStrct=
+ * ctorStrct=
  * clss    = Display
  * interf  = 
  * class Code: No

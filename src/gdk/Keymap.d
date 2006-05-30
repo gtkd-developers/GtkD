@@ -26,6 +26,7 @@
  * outFile = Keymap
  * strct   = GdkKeymap
  * realStrct=
+ * ctorStrct=
  * clss    = Keymap
  * interf  = 
  * class Code: No

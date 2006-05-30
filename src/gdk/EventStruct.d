@@ -26,6 +26,7 @@
  * outFile = EventStruct
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = 
  * interf  = 
  * class Code: No

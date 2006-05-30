@@ -26,6 +26,7 @@
  * outFile = Image
  * strct   = GtkImage
  * realStrct=
+ * ctorStrct=
  * clss    = Image
  * interf  = 
  * class Code: Yes

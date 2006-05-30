@@ -26,6 +26,7 @@
  * outFile = ErrorG
  * strct   = GError
  * realStrct=
+ * ctorStrct=
  * clss    = ErrorG
  * interf  = 
  * class Code: No

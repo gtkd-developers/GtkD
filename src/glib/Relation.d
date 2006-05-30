@@ -26,6 +26,7 @@
  * outFile = Relation
  * strct   = GRelation
  * realStrct=
+ * ctorStrct=
  * clss    = Relation
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Thread
  * strct   = GThread
  * realStrct=
+ * ctorStrct=
  * clss    = Thread
  * interf  = 
  * class Code: No

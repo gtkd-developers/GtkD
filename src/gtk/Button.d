@@ -26,6 +26,7 @@
  * outFile = Button
  * strct   = GtkButton
  * realStrct=
+ * ctorStrct=
  * clss    = Button
  * interf  = 
  * class Code: Yes
@@ -105,8 +106,8 @@ public class Button : Bin
 	
 	private static IconSize currentIconSize = IconSize.BUTTON;
 	
+	/** An arbitrary string to be used by the application */
 	private char[] action;
-	
 	
 	public static void setIconSize(IconSize iconSize)
 	{

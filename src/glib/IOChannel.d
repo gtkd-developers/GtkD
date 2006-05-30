@@ -26,6 +26,7 @@
  * outFile = IOChannel
  * strct   = GIOChannel
  * realStrct=
+ * ctorStrct=
  * clss    = IOChannel
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = CheckMenuItem
  * strct   = GtkCheckMenuItem
  * realStrct=
+ * ctorStrct=
  * clss    = CheckMenuItem
  * interf  = 
  * class Code: Yes

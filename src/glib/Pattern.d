@@ -26,6 +26,7 @@
  * outFile = Pattern
  * strct   = GPatternSpec
  * realStrct=
+ * ctorStrct=
  * clss    = Pattern
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Table
  * strct   = GtkTable
  * realStrct=
+ * ctorStrct=
  * clss    = Table
  * interf  = 
  * class Code: Yes

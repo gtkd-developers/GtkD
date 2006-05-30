@@ -26,6 +26,7 @@
  * outFile = StateSet
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = StateSet
  * interf  = 
  * class Code: No

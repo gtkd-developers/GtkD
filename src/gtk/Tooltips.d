@@ -26,6 +26,7 @@
  * outFile = Tooltips
  * strct   = GtkTooltips
  * realStrct=
+ * ctorStrct=
  * clss    = Tooltips
  * interf  = 
  * class Code: No

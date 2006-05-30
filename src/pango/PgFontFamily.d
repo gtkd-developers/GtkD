@@ -26,6 +26,7 @@
  * outFile = PgFontFamily
  * strct   = PangoFontFamily
  * realStrct=
+ * ctorStrct=
  * clss    = PgFontFamily
  * interf  = 
  * class Code: No

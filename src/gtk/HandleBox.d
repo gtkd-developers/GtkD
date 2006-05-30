@@ -26,6 +26,7 @@
  * outFile = HandleBox
  * strct   = GtkHandleBox
  * realStrct=
+ * ctorStrct=
  * clss    = HandleBox
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = TreePath
  * strct   = GtkTreePath
  * realStrct=
+ * ctorStrct=
  * clss    = TreePath
  * interf  = 
  * class Code: Yes

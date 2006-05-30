@@ -26,6 +26,7 @@
  * outFile = AspectFrame
  * strct   = GtkAspectFrame
  * realStrct=
+ * ctorStrct=
  * clss    = AspectFrame
  * interf  = 
  * class Code: No

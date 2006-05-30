@@ -26,6 +26,7 @@
  * outFile = Rectangle
  * strct   = GdkRectangle
  * realStrct=
+ * ctorStrct=
  * clss    = Rectangle
  * interf  = 
  * class Code: No

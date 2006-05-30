@@ -26,6 +26,7 @@
  * outFile = FontFace
  * strct   = cairo_font_face_t
  * realStrct=
+ * ctorStrct=
  * clss    = FontFace
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Statusbar
  * strct   = GtkStatusbar
  * realStrct=
+ * ctorStrct=
  * clss    = Statusbar
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = TextChildAnchor
  * strct   = GtkTextChildAnchor
  * realStrct=
+ * ctorStrct=
  * clss    = TextChildAnchor
  * interf  = 
  * class Code: No

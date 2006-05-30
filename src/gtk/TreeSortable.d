@@ -26,6 +26,7 @@
  * outFile = TreeSortable
  * strct   = GtkTreeSortable
  * realStrct=
+ * ctorStrct=
  * clss    = TreeSortable
  * interf  = 
  * class Code: No

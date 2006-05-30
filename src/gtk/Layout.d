@@ -26,6 +26,7 @@
  * outFile = Layout
  * strct   = GtkLayout
  * realStrct=
+ * ctorStrct=
  * clss    = Layout
  * interf  = 
  * class Code: No

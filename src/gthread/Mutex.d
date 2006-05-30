@@ -26,6 +26,7 @@
  * outFile = Mutex
  * strct   = GMutex
  * realStrct=
+ * ctorStrct=
  * clss    = Mutex
  * interf  = 
  * class Code: No

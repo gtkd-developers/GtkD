@@ -26,6 +26,7 @@
  * outFile = TrashStack
  * strct   = GTrashStack
  * realStrct=
+ * ctorStrct=
  * clss    = TrashStack
  * interf  = 
  * class Code: No

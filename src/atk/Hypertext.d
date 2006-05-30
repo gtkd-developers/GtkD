@@ -26,6 +26,7 @@
  * outFile = Hypertext
  * strct   = AtkHypertext
  * realStrct=
+ * ctorStrct=
  * clss    = Hypertext
  * interf  = 
  * class Code: No

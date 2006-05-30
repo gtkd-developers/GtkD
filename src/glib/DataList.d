@@ -26,6 +26,7 @@
  * outFile = DataList
  * strct   = GData
  * realStrct=
+ * ctorStrct=
  * clss    = DataList
  * interf  = 
  * class Code: No

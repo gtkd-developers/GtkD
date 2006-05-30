@@ -26,6 +26,7 @@
  * outFile = Calendar
  * strct   = GtkCalendar
  * realStrct=
+ * ctorStrct=
  * clss    = Calendar
  * interf  = 
  * class Code: No

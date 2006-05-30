@@ -26,6 +26,7 @@
  * outFile = TreeViewColumn
  * strct   = GtkTreeViewColumn
  * realStrct=
+ * ctorStrct=
  * clss    = TreeViewColumn
  * interf  = 
  * class Code: Yes

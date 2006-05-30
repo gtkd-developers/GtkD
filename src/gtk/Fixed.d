@@ -26,6 +26,7 @@
  * outFile = Fixed
  * strct   = GtkFixed
  * realStrct=
+ * ctorStrct=
  * clss    = Fixed
  * interf  = 
  * class Code: No

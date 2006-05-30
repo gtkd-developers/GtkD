@@ -26,6 +26,7 @@
  * outFile = Frame
  * strct   = GtkFrame
  * realStrct=
+ * ctorStrct=
  * clss    = Frame
  * interf  = 
  * class Code: Yes

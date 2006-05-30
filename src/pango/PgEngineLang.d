@@ -26,6 +26,7 @@
  * outFile = PgEngineLang
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = PgEngineLang
  * interf  = 
  * class Code: No

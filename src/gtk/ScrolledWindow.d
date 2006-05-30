@@ -26,6 +26,7 @@
  * outFile = ScrolledWindow
  * strct   = GtkScrolledWindow
  * realStrct=
+ * ctorStrct=
  * clss    = ScrolledWindow
  * interf  = 
  * class Code: Yes

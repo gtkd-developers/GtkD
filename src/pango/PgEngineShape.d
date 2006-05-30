@@ -26,6 +26,7 @@
  * outFile = PgEngineShape
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = PgEngineShape
  * interf  = 
  * class Code: No

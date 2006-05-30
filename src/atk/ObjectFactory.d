@@ -26,6 +26,7 @@
  * outFile = ObjectFactory
  * strct   = AtkObjectFactory
  * realStrct=
+ * ctorStrct=
  * clss    = ObjectFactory
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = GLib
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Version
  * interf  = 
  * class Code: No

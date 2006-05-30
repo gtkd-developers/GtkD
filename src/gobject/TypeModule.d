@@ -26,6 +26,7 @@
  * outFile = TypeModule
  * strct   = GTypeModule
  * realStrct=
+ * ctorStrct=
  * clss    = TypeModule
  * interf  = 
  * class Code: No

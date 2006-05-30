@@ -26,6 +26,7 @@
  * outFile = Invisible
  * strct   = GtkInvisible
  * realStrct=
+ * ctorStrct=
  * clss    = Invisible
  * interf  = 
  * class Code: No

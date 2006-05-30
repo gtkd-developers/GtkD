@@ -26,6 +26,7 @@
  * outFile = PgAttribute
  * strct   = PangoAttribute
  * realStrct=
+ * ctorStrct=
  * clss    = PgAttribute
  * interf  = 
  * class Code: No

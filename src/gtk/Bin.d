@@ -26,6 +26,7 @@
  * outFile = Bin
  * strct   = GtkBin
  * realStrct=
+ * ctorStrct=
  * clss    = Bin
  * interf  = 
  * class Code: No

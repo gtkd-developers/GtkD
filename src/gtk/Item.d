@@ -26,6 +26,7 @@
  * outFile = Item
  * strct   = GtkItem
  * realStrct=
+ * ctorStrct=
  * clss    = Item
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = MainWindow
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = 
  * interf  = 
  * class Code: Yes

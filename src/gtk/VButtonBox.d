@@ -26,6 +26,7 @@
  * outFile = VButtonBox
  * strct   = GtkVButtonBox
  * realStrct=
+ * ctorStrct=
  * clss    = VButtonBox
  * interf  = 
  * class Code: Yes

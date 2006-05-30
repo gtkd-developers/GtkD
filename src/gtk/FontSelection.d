@@ -26,6 +26,7 @@
  * outFile = FontSelection
  * strct   = GtkFontSelection
  * realStrct=
+ * ctorStrct=
  * clss    = FontSelection
  * interf  = 
  * class Code: No

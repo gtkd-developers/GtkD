@@ -26,6 +26,7 @@
  * outFile = OptionContext
  * strct   = GOptionContext
  * realStrct=
+ * ctorStrct=
  * clss    = OptionContext
  * interf  = 
  * class Code: No

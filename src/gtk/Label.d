@@ -26,6 +26,7 @@
  * outFile = Label
  * strct   = GtkLabel
  * realStrct=
+ * ctorStrct=
  * clss    = Label
  * interf  = 
  * class Code: Yes

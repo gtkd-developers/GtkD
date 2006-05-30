@@ -26,6 +26,7 @@
  * outFile = FontOption
  * strct   = cairo_font_options_t
  * realStrct=
+ * ctorStrct=
  * clss    = FontOption
  * interf  = 
  * class Code: No

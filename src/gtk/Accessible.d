@@ -26,6 +26,7 @@
  * outFile = Accessible
  * strct   = GtkAccessible
  * realStrct=
+ * ctorStrct=
  * clss    = Accessible
  * interf  = 
  * class Code: No

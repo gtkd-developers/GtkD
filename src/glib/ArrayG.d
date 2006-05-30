@@ -26,6 +26,7 @@
  * outFile = ArrayG
  * strct   = GArray
  * realStrct=
+ * ctorStrct=
  * clss    = ArrayG
  * interf  = 
  * class Code: No

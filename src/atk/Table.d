@@ -26,6 +26,7 @@
  * outFile = Table
  * strct   = AtkTable
  * realStrct=
+ * ctorStrct=
  * clss    = Table
  * interf  = 
  * class Code: No

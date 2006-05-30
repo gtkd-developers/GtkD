@@ -26,6 +26,7 @@
  * outFile = ImageMenuItem
  * strct   = GtkImageMenuItem
  * realStrct=
+ * ctorStrct=
  * clss    = ImageMenuItem
  * interf  = 
  * class Code: Yes

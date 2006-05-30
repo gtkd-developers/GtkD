@@ -26,6 +26,7 @@
  * outFile = RGB
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = RGB
  * interf  = 
  * class Code: No

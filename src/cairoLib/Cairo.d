@@ -26,6 +26,7 @@
  * outFile = Cairo
  * strct   = cairo_t
  * realStrct=
+ * ctorStrct=
  * clss    = Cairo
  * interf  = 
  * class Code: No

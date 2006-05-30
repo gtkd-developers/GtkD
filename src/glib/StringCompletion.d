@@ -26,6 +26,7 @@
  * outFile = StringCompletion
  * strct   = GCompletion
  * realStrct=
+ * ctorStrct=
  * clss    = StringCompletion
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Socket
  * strct   = GtkSocket
  * realStrct=
+ * ctorStrct=
  * clss    = Socket
  * interf  = 
  * class Code: No

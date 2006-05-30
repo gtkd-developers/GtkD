@@ -26,6 +26,7 @@
  * outFile = GCs
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = GCs
  * interf  = 
  * class Code: No

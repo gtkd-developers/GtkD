@@ -26,6 +26,7 @@
  * outFile = Enums
  * strct   = GEnumValue
  * realStrct=
+ * ctorStrct=
  * clss    = Enums
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Private
  * strct   = GPrivate
  * realStrct=
+ * ctorStrct=
  * clss    = Private
  * interf  = 
  * class Code: No

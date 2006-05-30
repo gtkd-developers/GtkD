@@ -26,6 +26,7 @@
  * outFile = RadioButton
  * strct   = GtkRadioButton
  * realStrct=
+ * ctorStrct=
  * clss    = RadioButton
  * interf  = 
  * class Code: Yes

@@ -26,6 +26,7 @@
  * outFile = Source
  * strct   = GSource
  * realStrct=
+ * ctorStrct=
  * clss    = Source
  * interf  = 
  * class Code: No

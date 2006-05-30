@@ -26,6 +26,7 @@
  * outFile = RadioAction
  * strct   = GtkRadioAction
  * realStrct=
+ * ctorStrct=
  * clss    = RadioAction
  * interf  = 
  * class Code: No

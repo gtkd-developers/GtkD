@@ -26,6 +26,7 @@
  * outFile = TextBuffer
  * strct   = GtkTextBuffer
  * realStrct=
+ * ctorStrct=
  * clss    = TextBuffer
  * interf  = 
  * class Code: Yes

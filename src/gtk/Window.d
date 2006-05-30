@@ -26,6 +26,7 @@
  * outFile = Window
  * strct   = GtkWindow
  * realStrct=
+ * ctorStrct=
  * clss    = Window
  * interf  = 
  * class Code: Yes

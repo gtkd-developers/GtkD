@@ -26,6 +26,7 @@
  * outFile = ValueArray
  * strct   = GValueArray
  * realStrct=
+ * ctorStrct=
  * clss    = ValueArray
  * interf  = 
  * class Code: No

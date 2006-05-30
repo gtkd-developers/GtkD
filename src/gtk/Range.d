@@ -26,6 +26,7 @@
  * outFile = Range
  * strct   = GtkRange
  * realStrct=
+ * ctorStrct=
  * clss    = Range
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = HScale
  * strct   = GtkHScale
  * realStrct=
+ * ctorStrct=
  * clss    = HScale
  * interf  = 
  * class Code: No

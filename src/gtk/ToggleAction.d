@@ -26,6 +26,7 @@
  * outFile = ToggleAction
  * strct   = GtkToggleAction
  * realStrct=
+ * ctorStrct=
  * clss    = ToggleAction
  * interf  = 
  * class Code: No

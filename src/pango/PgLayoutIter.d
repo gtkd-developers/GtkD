@@ -26,6 +26,7 @@
  * outFile = PgLayoutIter
  * strct   = PangoLayoutIter
  * realStrct=
+ * ctorStrct=
  * clss    = PgLayoutIter
  * interf  = 
  * class Code: No

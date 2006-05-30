@@ -26,6 +26,7 @@
  * outFile = Device
  * strct   = GdkDevice
  * realStrct=
+ * ctorStrct=
  * clss    = Device
  * interf  = 
  * class Code: No

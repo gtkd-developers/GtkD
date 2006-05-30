@@ -26,6 +26,7 @@
  * outFile = HScrollbar
  * strct   = GtkHScrollbar
  * realStrct=
+ * ctorStrct=
  * clss    = HScrollbar
  * interf  = 
  * class Code: No

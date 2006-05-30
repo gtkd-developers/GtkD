@@ -26,6 +26,7 @@
  * outFile = ComboBoxEntry
  * strct   = GtkComboBoxEntry
  * realStrct=
+ * ctorStrct=
  * clss    = ComboBoxEntry
  * interf  = 
  * class Code: Yes

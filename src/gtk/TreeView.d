@@ -26,6 +26,7 @@
  * outFile = TreeView
  * strct   = GtkTreeView
  * realStrct=
+ * ctorStrct=
  * clss    = TreeView
  * interf  = 
  * class Code: Yes

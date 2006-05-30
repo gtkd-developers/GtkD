@@ -26,6 +26,7 @@
  * outFile = Container
  * strct   = GtkContainer
  * realStrct=
+ * ctorStrct=
  * clss    = Container
  * interf  = 
  * class Code: Yes

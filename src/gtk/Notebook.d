@@ -26,6 +26,7 @@
  * outFile = Notebook
  * strct   = GtkNotebook
  * realStrct=
+ * ctorStrct=
  * clss    = Notebook
  * interf  = 
  * class Code: Yes

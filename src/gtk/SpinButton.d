@@ -26,6 +26,7 @@
  * outFile = SpinButton
  * strct   = GtkSpinButton
  * realStrct=
+ * ctorStrct=
  * clss    = SpinButton
  * interf  = 
  * class Code: No

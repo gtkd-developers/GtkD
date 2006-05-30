@@ -26,6 +26,7 @@
  * outFile = HRuler
  * strct   = GtkHRuler
  * realStrct=
+ * ctorStrct=
  * clss    = HRuler
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = FileUtils
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = FileUtils
  * interf  = 
  * class Code: No

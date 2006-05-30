@@ -26,6 +26,7 @@
  * outFile = TextTagTable
  * strct   = GtkTextTagTable
  * realStrct=
+ * ctorStrct=
  * clss    = TextTagTable
  * interf  = 
  * class Code: No

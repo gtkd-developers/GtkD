@@ -26,6 +26,7 @@
  * outFile = ProgressBar
  * strct   = GtkProgressBar
  * realStrct=
+ * ctorStrct=
  * clss    = ProgressBar
  * interf  = 
  * class Code: No

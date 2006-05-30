@@ -26,6 +26,7 @@
  * outFile = ObjectAtk
  * strct   = AtkObject
  * realStrct=
+ * ctorStrct=
  * clss    = ObjectAtk
  * interf  = 
  * class Code: No

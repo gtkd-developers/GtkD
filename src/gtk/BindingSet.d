@@ -26,6 +26,7 @@
  * outFile = BindingSet
  * strct   = GtkBindingSet
  * realStrct=
+ * ctorStrct=
  * clss    = BindingSet
  * interf  = 
  * class Code: No

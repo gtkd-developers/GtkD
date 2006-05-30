@@ -31,6 +31,7 @@ public struct ConvParms
 	public char[] outFile;
 	public char[] strct;
 	public char[] realStrct;
+	public char[] ctorStrct;	/// the ToolItem derivates all retrun GtkToolItem
 	public char[] clss;
 	public char[] interf;
 	public char[][] templ;
@@ -57,6 +58,7 @@ public struct ConvParms
 		outFile.length = 0;
 		strct.length = 0;
 		realStrct.length = 0;
+		ctorStrct.length = 0;
 		clss.length = 0;
 		interf.length = 0;
 		extend.length = 0;
@@ -86,6 +88,7 @@ public struct ConvParms
 		text ~= "\n * outFile = "~outFile;
 		text ~= "\n * strct   = "~strct;
 		text ~= "\n * realStrct="~realStrct;
+		text ~= "\n * ctorStrct="~ctorStrct;
 		text ~= "\n * clss    = "~clss;
 		text ~= "\n * interf  = "~interf;
 		text ~= "\n * class Code: " ~ (classCode.length>0 ? "Yes" : "No");

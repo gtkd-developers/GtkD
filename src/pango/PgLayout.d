@@ -26,6 +26,7 @@
  * outFile = PgLayout
  * strct   = PangoLayout
  * realStrct=
+ * ctorStrct=
  * clss    = PgLayout
  * interf  = 
  * class Code: Yes

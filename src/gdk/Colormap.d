@@ -26,6 +26,7 @@
  * outFile = Colormap
  * strct   = GdkColormap
  * realStrct=
+ * ctorStrct=
  * clss    = Colormap
  * interf  = 
  * class Code: No

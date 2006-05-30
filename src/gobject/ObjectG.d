@@ -26,6 +26,7 @@
  * outFile = ObjectG
  * strct   = GObject
  * realStrct=
+ * ctorStrct=
  * clss    = ObjectG
  * interf  = 
  * class Code: Yes

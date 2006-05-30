@@ -26,6 +26,7 @@
  * outFile = CellRendererProgress
  * strct   = GtkCellRenderer
  * realStrct=GtkCellRendererProgress
+ * ctorStrct=
  * clss    = CellRendererProgress
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = TextAttributes
  * strct   = GtkTextAttributes
  * realStrct=
+ * ctorStrct=
  * clss    = TextAttributes
  * interf  = 
  * class Code: No

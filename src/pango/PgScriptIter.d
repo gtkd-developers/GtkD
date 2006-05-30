@@ -26,6 +26,7 @@
  * outFile = PgScriptIter
  * strct   = PangoScriptIter
  * realStrct=
+ * ctorStrct=
  * clss    = PgScriptIter
  * interf  = 
  * class Code: No

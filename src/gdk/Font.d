@@ -26,6 +26,7 @@
  * outFile = Font
  * strct   = GdkFont
  * realStrct=
+ * ctorStrct=
  * clss    = Font
  * interf  = 
  * class Code: Yes

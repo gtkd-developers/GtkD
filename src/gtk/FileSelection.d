@@ -26,6 +26,7 @@
  * outFile = FileSelection
  * strct   = GtkFileSelection
  * realStrct=
+ * ctorStrct=
  * clss    = FileSelection
  * interf  = 
  * class Code: No

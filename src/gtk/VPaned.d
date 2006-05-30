@@ -26,6 +26,7 @@
  * outFile = VPaned
  * strct   = GtkVPaned
  * realStrct=
+ * ctorStrct=
  * clss    = VPaned
  * interf  = 
  * class Code: Yes

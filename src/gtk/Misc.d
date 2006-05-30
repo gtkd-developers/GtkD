@@ -26,6 +26,7 @@
  * outFile = Misc
  * strct   = GtkMisc
  * realStrct=
+ * ctorStrct=
  * clss    = Misc
  * interf  = 
  * class Code: No

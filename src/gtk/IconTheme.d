@@ -26,6 +26,7 @@
  * outFile = IconTheme
  * strct   = GtkIconTheme
  * realStrct=
+ * ctorStrct=
  * clss    = IconTheme
  * interf  = 
  * class Code: No

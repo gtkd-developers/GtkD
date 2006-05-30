@@ -26,6 +26,7 @@
  * outFile = ListG
  * strct   = GList
  * realStrct=
+ * ctorStrct=
  * clss    = ListG
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = CellLayoutIF
  * strct   = GtkCellLayout
  * realStrct=
+ * ctorStrct=
  * clss    = CellLayoutT
  * interf  = CellLayoutIF
  * class Code: No

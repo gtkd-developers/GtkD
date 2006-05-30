@@ -26,6 +26,7 @@
  * outFile = SeparatorMenuItem
  * strct   = GtkSeparatorMenuItem
  * realStrct=
+ * ctorStrct=
  * clss    = SeparatorMenuItem
  * interf  = 
  * class Code: No

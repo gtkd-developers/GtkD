@@ -26,6 +26,7 @@
  * outFile = ColorButton
  * strct   = GtkColorButton
  * realStrct=
+ * ctorStrct=
  * clss    = ColorButton
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = Alignment
  * strct   = GtkAlignment
  * realStrct=
+ * ctorStrct=
  * clss    = Alignment
  * interf  = 
  * class Code: Yes

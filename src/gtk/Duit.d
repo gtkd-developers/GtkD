@@ -26,6 +26,7 @@
  * outFile = Duit
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Duit
  * interf  = 
  * class Code: Yes

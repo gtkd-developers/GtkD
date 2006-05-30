@@ -26,6 +26,7 @@
  * outFile = PgFontMap
  * strct   = PangoFontMap
  * realStrct=
+ * ctorStrct=
  * clss    = PgFontMap
  * interf  = 
  * class Code: No

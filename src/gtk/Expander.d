@@ -26,6 +26,7 @@
  * outFile = Expander
  * strct   = GtkExpander
  * realStrct=
+ * ctorStrct=
  * clss    = Expander
  * interf  = 
  * class Code: Yes

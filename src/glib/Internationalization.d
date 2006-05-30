@@ -26,6 +26,7 @@
  * outFile = Internationalization
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Internationalization
  * interf  = 
  * class Code: No

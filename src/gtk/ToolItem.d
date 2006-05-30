@@ -26,9 +26,10 @@
  * outFile = ToolItem
  * strct   = GtkToolItem
  * realStrct=
+ * ctorStrct=
  * clss    = ToolItem
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -96,6 +97,17 @@ public class ToolItem : Bin
 	{
 		super(cast(GtkBin*)gtkToolItem);
 		this.gtkToolItem = gtkToolItem;
+	}
+	
+	/**
+	 * Sets this widget tooltip
+	 * @param tipText the tooltip
+	 * @param tipPrivate a private text
+	 */
+	void setTooltip(char[] tipText, char[] tipPrivate)
+	{
+		Tooltips tt = new Tooltips();
+		tt.setTip(this, tipText, tipPrivate);
 	}
 	
 	/**

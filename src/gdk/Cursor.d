@@ -26,6 +26,7 @@
  * outFile = Cursor
  * strct   = GdkCursor
  * realStrct=
+ * ctorStrct=
  * clss    = Cursor
  * interf  = 
  * class Code: No

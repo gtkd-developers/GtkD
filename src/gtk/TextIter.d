@@ -26,6 +26,7 @@
  * outFile = TextIter
  * strct   = GtkTextIter
  * realStrct=
+ * ctorStrct=
  * clss    = TextIter
  * interf  = 
  * class Code: Yes

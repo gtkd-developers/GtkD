@@ -26,6 +26,7 @@
  * outFile = Event
  * strct   = GdkEvent
  * realStrct=
+ * ctorStrct=
  * clss    = Event
  * interf  = 
  * class Code: Yes

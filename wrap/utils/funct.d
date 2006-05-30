@@ -363,11 +363,14 @@ public struct Funct
 	{
 		char[] dec;
 		debug(ctor)writefln("declaration ctor strct = %s",convParms.strct);
+		debug(ctor)writefln("declaration ctor realStrct = %s",convParms.realStrct);
 		debug(ctor)writefln("declaration ctor type = %s",type);
 		debug(ctor)writefln("declaration ctor name = %s",name);
 		convName = DuitClass.idsToDuit(name, convParms, aliases);
 		if ( convParms.strct.length>0 
-			&& (type == strctPointer 
+			&& DuitClass.startsWith(convName, "new")
+			&& ( (type == strctPointer 
+					|| type == convParms.ctorStrct~"*")
 				|| /* special GObject case */
 					(type == "gpointer" && convParms.strct == "GObject")
 				|| /* special Gtk... that return a GtkWidget pointer */
@@ -375,7 +378,6 @@ public struct Funct
 				|| /* special Gtk... that return a GtkWidget pointer */
 					(type == "GtkObject*" && convParms.strct == "GtkAdjustment")
 				) 
-			&& DuitClass.startsWith(convName, "new")
 			)
 		{
 			dec = "public this (";

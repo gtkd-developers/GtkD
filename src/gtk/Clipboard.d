@@ -26,6 +26,7 @@
  * outFile = Clipboard
  * strct   = GtkClipboard
  * realStrct=
+ * ctorStrct=
  * clss    = Clipboard
  * interf  = 
  * class Code: No

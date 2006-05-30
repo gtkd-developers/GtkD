@@ -26,6 +26,7 @@
  * outFile = Progress
  * strct   = GtkProgress
  * realStrct=
+ * ctorStrct=
  * clss    = Progress
  * interf  = 
  * class Code: No

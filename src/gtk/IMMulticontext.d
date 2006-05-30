@@ -26,6 +26,7 @@
  * outFile = IMMulticontext
  * strct   = GtkIMMulticontext
  * realStrct=
+ * ctorStrct=
  * clss    = IMMulticontext
  * interf  = 
  * class Code: No

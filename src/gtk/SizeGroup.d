@@ -26,6 +26,7 @@
  * outFile = SizeGroup
  * strct   = GtkSizeGroup
  * realStrct=
+ * ctorStrct=
  * clss    = SizeGroup
  * interf  = 
  * class Code: No

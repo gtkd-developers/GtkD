@@ -26,6 +26,7 @@
  * outFile = BBTree
  * strct   = GTree
  * realStrct=
+ * ctorStrct=
  * clss    = BBTree
  * interf  = 
  * class Code: No

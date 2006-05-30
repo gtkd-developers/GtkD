@@ -26,6 +26,7 @@
  * outFile = MenuBar
  * strct   = GtkMenuBar
  * realStrct=
+ * ctorStrct=
  * clss    = MenuBar
  * interf  = 
  * class Code: Yes

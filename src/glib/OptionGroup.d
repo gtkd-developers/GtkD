@@ -26,6 +26,7 @@
  * outFile = OptionGroup
  * strct   = GOptionGroup
  * realStrct=
+ * ctorStrct=
  * clss    = OptionGroup
  * interf  = 
  * class Code: No

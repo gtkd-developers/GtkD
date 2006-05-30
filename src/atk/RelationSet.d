@@ -26,6 +26,7 @@
  * outFile = RelationSet
  * strct   = AtkRelationSet
  * realStrct=
+ * ctorStrct=
  * clss    = RelationSet
  * interf  = 
  * class Code: No

@@ -26,6 +26,7 @@
  * outFile = HButtonBox
  * strct   = GtkHButtonBox
  * realStrct=
+ * ctorStrct=
  * clss    = HButtonBox
  * interf  = 
  * class Code: Yes

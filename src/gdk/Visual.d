@@ -26,6 +26,7 @@
  * outFile = Visual
  * strct   = GdkVisual
  * realStrct=
+ * ctorStrct=
  * clss    = Visual
  * interf  = 
  * class Code: No

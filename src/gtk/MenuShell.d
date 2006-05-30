@@ -26,6 +26,7 @@
  * outFile = MenuShell
  * strct   = GtkMenuShell
  * realStrct=
+ * ctorStrct=
  * clss    = MenuShell
  * interf  = 
  * class Code: No

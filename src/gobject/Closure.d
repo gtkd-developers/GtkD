@@ -26,6 +26,7 @@
  * outFile = Closure
  * strct   = GClosure
  * realStrct=
+ * ctorStrct=
  * clss    = Closure
  * interf  = 
  * class Code: No

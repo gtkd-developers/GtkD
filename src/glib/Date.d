@@ -26,6 +26,7 @@
  * outFile = Date
  * strct   = GDate
  * realStrct=
+ * ctorStrct=
  * clss    = Date
  * interf  = 
  * class Code: No

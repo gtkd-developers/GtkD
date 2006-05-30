@@ -26,6 +26,7 @@
  * outFile = CellEditable
  * strct   = GtkCellEditable
  * realStrct=
+ * ctorStrct=
  * clss    = CellEditable
  * interf  = 
  * class Code: No

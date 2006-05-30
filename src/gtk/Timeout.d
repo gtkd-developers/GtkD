@@ -26,6 +26,7 @@
  * outFile = Timeout
  * strct   = 
  * realStrct=
+ * ctorStrct=
  * clss    = Timeout
  * interf  = 
  * class Code: Yes
