@@ -43,15 +43,17 @@ class TestEntries : Table
 	this()
 	{
 		super(3,2,false);
-		printf("Success... TestEntries.super()\n");
+
 		// create the main test widget
 		entry = new Entry("Change me!");
 		attach(new Label("Input text"),0,1,0,1,AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
 		attach(entry,1,2,0,1,AttachOptions.EXPAND,AttachOptions.EXPAND,4,4);
+		
 		// create a button that will print the content of the entry to stdout
 		Button testButton = new Button("Show entry", &showEntry);
 		attach(testButton,2,3,0,1,AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
 		//testButton.setTooltip("This is just a test",null);
+		
 		// create a button that will change the entry display mode to invisible
 		// i.e. like a password entry
 		CheckButton entryVisible = new CheckButton("Visible", &entryVisible);
@@ -67,53 +69,16 @@ class TestEntries : Table
 	void showEntry(Button button)
 	{
 		printf("text field contains %s\n",Str.toStringz(entry.getText()));
-		
 	}
 
 	void entryEditable(CheckButton button)
 	{
-		//CheckButton cb = cast(CheckButton)button;
-		//printf("cb = %X\n",cb);
-		//entry.setEditable(cb.getActive());
 		entry.setEditable(button.getActive());
 	}
 	
 	void entryVisible(CheckButton button)
 	{
-		//CheckButton cb = new CheckButton(button);
-		//entry.setVisibility(cb.getActive());
 		entry.setVisibility(button.getActive());
 	}
-	
-//	/**
-//	 * This will be executed when the any of the buttons is pressed
-//	 */
-//	void buttonClickedCallback(Button button, char [] action)
-//	{
-//		switch ( action )
-//		{
-//			case "EntryEditable":
-//				CheckButton cb = new CheckButton(button);
-//				entry.setEditable(cb.getActive());
-//			break;
-//			case "EntryVisible":
-//				CheckButton cb = new CheckButton(button);
-//				if ( cb !is  null )
-//				{
-//					entry.setVisibility(cb.getActive());
-//				}
-//				else
-//				{
-//					printf("CB IS NULL !!!!!!!!!!!!!!!!!!!");
-//				}
-//			break;
-//			case "ShowEntry1":
-//			break;
-//			default:
-//				printf("TestEntries.action %.*s received\n",action);
-//			break;
-//			
-//		}
-//	}
 
 }

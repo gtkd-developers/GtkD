@@ -210,6 +210,10 @@ file: gdk-pixbuf-file-loading.html
 prefix: gdk_pixbuf_
 strictPrefix: Y
 
+noprefix: gdk_pixbuf_new_from_file
+noprefix: gdk_pixbuf_new_from_file_at_size
+noprefix: gdk_pixbuf_new_from_file_at_scale
+
 nocode: gdk_pixbuf_new_from_file 
 nocode: gdk_pixbuf_new_from_file_at_size
 nocode: gdk_pixbuf_new_from_file_at_scale

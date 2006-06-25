@@ -5013,6 +5013,23 @@ struct: GtkDrawingArea
 class: DrawingArea
 prefix: gtk_drawing_area_
 prefix: gtk_
+
+code: start
+	/**
+	 * Create a new DrawingArea and sets the SizeRequest
+	 * Params:
+	 *    	width = 	
+	 *    	height = 	
+	 * Returns: 
+	 */
+	this(int width, int height)
+	{
+		this();
+		setSizeRequest(width, height);
+	}
+	
+code: end
+
 outFile: DrawingArea
 
 file: GtkEventBox.html

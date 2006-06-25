@@ -29,7 +29,7 @@
  * ctorStrct=
  * clss    = DrawingArea
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -134,6 +134,20 @@ public class DrawingArea : Widget
 		super(cast(GtkWidget*)gtkDrawingArea);
 		this.gtkDrawingArea = gtkDrawingArea;
 	}
+	
+	/**
+	 * Create a new DrawingArea and sets the SizeRequest
+	 * Params:
+	 *    	width =
+	 *    	height =
+	 * Returns:
+	 */
+	this(int width, int height)
+	{
+		this();
+		setSizeRequest(width, height);
+	}
+	
 	
 	/**
 	 */

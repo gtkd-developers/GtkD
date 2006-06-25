@@ -134,6 +134,8 @@ package: atk atk
 package: gdk-pixbuf gdkpixbuf
 package: gdk gdk
 package: gtk gtk
+package: glgdk glgdk
+package: glgtk glgtk
 # define other packages to create
 src: lib
 
@@ -161,13 +163,16 @@ wrap: lib
 copy: paths.d
 copy: Loader.d
 
-lookup: APILookupGLib.txt
-lookup: APILookupGThread.txt
-lookup: APILookupGObject.txt
-lookup: APILookupCairo.txt
-lookup: APILookupPango.txt
-lookup: APILookupAtk.txt
+#lookup: APILookupGLib.txt
+#lookup: APILookupGThread.txt
+#lookup: APILookupGObject.txt
+#lookup: APILookupCairo.txt
+#lookup: APILookupPango.txt
+#lookup: APILookupAtk.txt
 lookup: APILookupGdkPixbuf.txt
-lookup: APILookupGdk.txt
-lookup: APILookupGtk.txt
+#lookup: APILookupGdk.txt
+#lookup: APILookupGtk.txt
+lookup: APILookupGLd.txt
+lookup: APILookupGLt.txt
 
+htod: wrap/HTODopenGL.txt

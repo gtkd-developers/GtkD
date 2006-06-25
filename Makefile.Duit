@@ -19,7 +19,7 @@ list:
 COMP_HelloWorld = dmd
 COMP_FLAGS_HelloWorld =  -c -gc -od../obj/demos -op
 COMP_IMPORT_HelloWorld = -I/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/devel/D1/Duit/trunk/src
-LINK_LIBS_HelloWorld=-L../.. -ldl -pthread -lstdc++ -lphobos -lduit -lphobos
+LINK_LIBS_HelloWorld=-L../.. -ldl -pthread -lstdc++ -lphobos -L../.. -lduit -lphobos
 LINK_HelloWorld=gcc
 
 ##########################
@@ -37,7 +37,7 @@ LINK_DuitTests=gcc
 COMP_duit = dmd
 COMP_FLAGS_duit =  -c -gc -profile -od../obj/src -op
 COMP_IMPORT_duit = -I/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src
-LINK_LIBS_duit=-L../.. -ldl -pthread -lstdc++ -lphobos
+LINK_LIBS_duit=-L../.. -ldl -pthread -lstdc++ -lphobos -gthread
 LINK_duit=ar rcs
 
 ##########################################
@@ -58,9 +58,7 @@ HelloWorld_COMP:
 	$(COMP_HelloWorld) $(SRC_HelloWorld) $(COMP_FLAGS_HelloWorld) $(COMP_IMPORT_HelloWorld)
 
 HelloWorld_LINK:
-	cd \
-	obj/demos; \
-	\$(LINK_HelloWorld) \
+	$(LINK_HelloWorld) \
 	/home/ruimt/devel/D1/Duit/trunk/obj/demos/gtk/HelloWorld.o \
 	-o \
 	/home/ruimt/devel/D1/Duit/trunk/HelloWorld \
@@ -93,9 +91,7 @@ DuitTests_COMP:
 	$(COMP_DuitTests) $(SRC_DuitTests) $(COMP_FLAGS_DuitTests) $(COMP_IMPORT_DuitTests)
 
 DuitTests_LINK:
-	cd \
-	obj/demos; \
-	\$(LINK_DuitTests) \
+	$(LINK_DuitTests) \
 	duit/TEditableCells.o \
 	duit/TTextView.o \
 	duit/TestAspectFrame.o \
@@ -193,7 +189,6 @@ SRC_duit = \
 	glib/Cache.d \
 	glib/CharacterSet.d \
 	glib/Child.d \
-	glib/Cond.d \
 	glib/DataList.d \
 	glib/Dataset.d \
 	glib/Date.d \
@@ -204,7 +199,6 @@ SRC_duit = \
 	glib/HashTable.d \
 	glib/IOChannel.d \
 	glib/Internationalization.d \
-	glib/KeyFile.d \
 	glib/ListG.d \
 	glib/ListSG.d \
 	glib/MainContext.d \
@@ -215,16 +209,13 @@ SRC_duit = \
 	glib/MessageLog.d \
 	glib/Messages.d \
 	glib/Module.d \
-	glib/Mutex.d \
 	glib/Node.d \
 	glib/OptionContext.d \
 	glib/OptionGroup.d \
 	glib/Pattern.d \
-	glib/Private.d \
 	glib/PtrArray.d \
 	glib/Quark.d \
 	glib/QueueG.d \
-	glib/RWLock.d \
 	glib/RandG.d \
 	glib/Relation.d \
 	glib/ScannerG.d \
@@ -232,14 +223,10 @@ SRC_duit = \
 	glib/SimpleXML.d \
 	glib/Source.d \
 	glib/Spawn.d \
-	glib/StaticPrivate.d \
-	glib/StaticRecMutex.d \
 	glib/Str.d \
-	glib/StrignGChunk.d \
 	glib/StringCompletion.d \
 	glib/StringG.d \
 	glib/StringGChunk.d \
-	glib/Thread.d \
 	glib/ThreadPool.d \
 	glib/Timeout.d \
 	glib/Timer.d \
@@ -247,9 +234,16 @@ SRC_duit = \
 	glib/Tuples.d \
 	glib/Unicode.d \
 	glib/Util.d \
-	glib/Version.d \
 	glib/WindowsUtils.d \
 	glib/typedefs.d \
+	gthread/Cond.d \
+	gthread/Mutex.d \
+	gthread/Private.d \
+	gthread/RWLock.d \
+	gthread/StaticPrivate.d \
+	gthread/StaticRecMutex.d \
+	gthread/Thread.d \
+	gthread/typedefs.d \
 	gobject/Boxed.d \
 	gobject/CClosure.d \
 	gobject/Closure.d \
@@ -440,6 +434,7 @@ SRC_duit = \
 	lib/gdkpixbuf.d \
 	lib/glib.d \
 	lib/gobject.d \
+	lib/gthread.d \
 	lib/gtk.d \
 	lib/pango.d \
 	lib/paths.d \
@@ -475,8 +470,6 @@ duit_COMP:
 	$(COMP_duit) $(SRC_duit) $(COMP_FLAGS_duit) $(COMP_IMPORT_duit)
 
 duit_LINK:
-	cd \
-	obj/src; \
 	$(LINK_duit) \
 	../../libduit.a \
 	atk/Action.o \
@@ -567,7 +560,6 @@ duit_LINK:
 	glib/HashTable.o \
 	glib/IOChannel.o \
 	glib/Internationalization.o \
-	glib/KeyFile.o \
 	glib/ListG.o \
 	glib/ListSG.o \
 	glib/MainContext.o \
@@ -602,7 +594,6 @@ duit_LINK:
 	glib/StringCompletion.o \
 	glib/StringG.o \
 	glib/StringGChunk.o \
-	glib/Thread.o \
 	glib/ThreadPool.o \
 	glib/Timeout.o \
 	glib/Timer.o \
@@ -610,9 +601,16 @@ duit_LINK:
 	glib/Tuples.o \
 	glib/Unicode.o \
 	glib/Util.o \
-	glib/Version.o \
 	glib/WindowsUtils.o \
 	glib/typedefs.o \
+	gthread/Cond.o \
+	gthread/Mutex.o \
+	gthread/Private.o \
+	gthread/RWLock.o \
+	gthread/StaticPrivate.o \
+	gthread/StaticRecMutex.o \
+	gthread/Thread.o \
+	gthread/typedefs.o \
 	gobject/Boxed.o \
 	gobject/CClosure.o \
 	gobject/Closure.o \
@@ -804,6 +802,7 @@ duit_LINK:
 	lib/gdkpixbuf.o \
 	lib/glib.o \
 	lib/gobject.o \
+	lib/gthread.o \
 	lib/gtk.o \
 	lib/pango.o \
 	lib/paths.o \
@@ -940,7 +939,6 @@ cleanduit:
 	rm glib/HashTable.o
 	rm glib/IOChannel.o
 	rm glib/Internationalization.o
-	rm glib/KeyFile.o
 	rm glib/ListG.o
 	rm glib/ListSG.o
 	rm glib/MainContext.o
@@ -975,7 +973,6 @@ cleanduit:
 	rm glib/StringCompletion.o
 	rm glib/StringG.o
 	rm glib/StringGChunk.o
-	rm glib/Thread.o
 	rm glib/ThreadPool.o
 	rm glib/Timeout.o
 	rm glib/Timer.o
@@ -983,9 +980,16 @@ cleanduit:
 	rm glib/Tuples.o
 	rm glib/Unicode.o
 	rm glib/Util.o
-	rm glib/Version.o
 	rm glib/WindowsUtils.o
 	rm glib/typedefs.o
+	rm gthread/Cond.o
+	rm gthread/Mutex.o
+	rm gthread/Private.o
+	rm gthread/RWLock.o
+	rm gthread/StaticPrivate.o
+	rm gthread/StaticRecMutex.o
+	rm gthread/Thread.o
+	rm gthread/typedefs.o
 	rm gobject/Boxed.o
 	rm gobject/CClosure.o
 	rm gobject/Closure.o
@@ -1177,6 +1181,7 @@ cleanduit:
 	rm lib/gdkpixbuf.o
 	rm lib/glib.o
 	rm lib/gobject.o
+	rm lib/gthread.o
 	rm lib/gtk.o
 	rm lib/pango.o
 	rm lib/paths.o

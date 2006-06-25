@@ -97,9 +97,6 @@ extern(C)
 	gboolean function(GdkPixbufFormat* format)gdk_pixbuf_format_is_disabled;
 	void function(GdkPixbufFormat* format, gboolean disabled)gdk_pixbuf_format_set_disabled;
 	gchar* function(GdkPixbufFormat* format)gdk_pixbuf_format_get_license;
-	GdkPixbuf* function(char* filename, GError** error)gdk_pixbuf_new_from_file;
-	GdkPixbuf* function(char* filename, int width, int height, GError** error)gdk_pixbuf_new_from_file_at_size;
-	GdkPixbuf* function(char* filename, int width, int height, gboolean preserveAspectRatio, GError** error)gdk_pixbuf_new_from_file_at_scale;
 	GdkPixbufFormat* function(gchar* filename, gint* width, gint* height)gdk_pixbuf_get_file_info;
 
 
@@ -147,9 +144,6 @@ Symbol[] gdkpixbufLinks =
 	{ "gdk_pixbuf_format_is_disabled",  cast(void**)& gdk_pixbuf_format_is_disabled},
 	{ "gdk_pixbuf_format_set_disabled",  cast(void**)& gdk_pixbuf_format_set_disabled},
 	{ "gdk_pixbuf_format_get_license",  cast(void**)& gdk_pixbuf_format_get_license},
-	{ "gdk_pixbuf_new_from_file",  cast(void**)& gdk_pixbuf_new_from_file},
-	{ "gdk_pixbuf_new_from_file_at_size",  cast(void**)& gdk_pixbuf_new_from_file_at_size},
-	{ "gdk_pixbuf_new_from_file_at_scale",  cast(void**)& gdk_pixbuf_new_from_file_at_scale},
 	{ "gdk_pixbuf_get_file_info",  cast(void**)& gdk_pixbuf_get_file_info},
 
 ];

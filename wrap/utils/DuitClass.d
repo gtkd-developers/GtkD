@@ -315,9 +315,9 @@ public class DuitClass
 	 *    	outputRoot = 	
 	 * Returns: 
 	 */
-	public char[] getOutFile(char[] outputRoot)
+	public char[] getOutFile(char[] outputRoot, char[] srcOut)
 	{
-		char[] outF = std.path.join(outputRoot, "src");
+		char[] outF = std.path.join(outputRoot, srcOut);
 		outF = std.path.join(outF, convParms.outPack);
 		outF = std.path.join(outF, (convParms.clss.length>0 ? convParms.outFile : convParms.outFile));
 		return outF~".d";
@@ -670,10 +670,10 @@ public class DuitClass
 	public char[] convertClassName(char[] gName, inout char[] prefix)
 	{
 		char[] conv;
-		if ( startsWith(gName, "Gtk") )			prefix = "Gtk";
+		if ( startsWith(gName, "Gtk") )		prefix = "Gtk";
 		else if ( startsWith(gName, "Gdk") )	prefix = "Gdk";
 		else if ( startsWith(gName, "Atk") )	prefix = "Atk";
-		else if ( startsWith(gName, "G") )		prefix = "G";
+		else if ( startsWith(gName, "G") )	prefix = "G";
 		
 		conv = gName[prefix.length..gName.length];
 		if ( conv == "Object" )
@@ -1178,6 +1178,7 @@ public class DuitClass
 			bool v = upper.length-n == 4
 					&& ( upper[n..n+4]=="TYPE"
 						 || upper[n..n+4]=="FLAG"
+						 || upper[n..n+4]=="MODE"
 						);
 			debug(enumPrefix) if (v) writefln("\t ended by isSuffix");
 			return v;

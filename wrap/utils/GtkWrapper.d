@@ -26,6 +26,7 @@ struct WError
 	int code;
 	char[] message;
 	
+	
 	static WError* create(int lineNumber, int code, char[] message)
 	{
 		WError* error = new WError;
@@ -49,6 +50,7 @@ debug=wrapFile;
 debug = lookup;
 
 private import utils.WrapperIF;
+private import utils.HTODConvert;
 
 /**
  * converts and wrap the GTK libs
@@ -66,8 +68,10 @@ public class GtkWrapper : WrapperIF
 	
 	private char[] buildText;	/// to build the build.d 
 	private char[] buildTextLibs;	/// to build the build.d libs 
-	
-	public char[] license =
+
+	char[] srcOut;		/// the src output directory
+
+	public static char[] license =
 "/*"
 "\n * This file is part of duit."
 "\n * "
@@ -147,6 +151,7 @@ public class GtkWrapper : WrapperIF
 	this(char[] apiLookupDefinitionBaseDirectory)
 	{
 		this.apiLookupDefinitionBaseDirectory = apiLookupDefinitionBaseDirectory;
+		srcOut = "src";
 	}
 	
 	
@@ -276,6 +281,7 @@ public class GtkWrapper : WrapperIF
 					case "addFuncts": lookupFuncts ~= loadTextMultiLine("addFuncts"); defReader.next();break;
 					case "addUnions": lookupUnions ~= loadTextMultiLine("addUnions"); defReader.next();break;
 					case "addConstants": lookupConstants ~= loadTextMultiLine("addConstants"); defReader.next();break;
+					case "srcout": srcOut = defReader.getValue(); break;
 					case "wrap":
 						pack = defReader.getValue();
 						outPack = packages[pack];
@@ -305,6 +311,12 @@ public class GtkWrapper : WrapperIF
 						debug(lookup)writefln("lookup on file %s (%s=%s)", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
 						break;
 
+					case "htod":
+						// not as clean as lookup...
+						new HTODConvert(defReader.getValue());
+						defReader.next();
+						break;
+						
 					default:
 						if ( defReader.getKey().length == 0 )
 						{
@@ -438,6 +450,7 @@ public class GtkWrapper : WrapperIF
 					  " copy import structWrap alias"
 					  " noprefix nostruct nocode"
 					  " code interfaceCode"
+					  " srcout"
 					  ;
 		
 		while ( std.string.find(keys, key) > 0 )
@@ -447,12 +460,13 @@ public class GtkWrapper : WrapperIF
 			{
 				case "copy": status = copyFile(
 							apiLookupDefinitionBaseDirectory, 
-							std.path.join("src",outPack), 
+							std.path.join(srcOut,outPack), 
 							defReader.getValue()); 
 					buildTextLibs ~= "private import "
 								~outPack
 								~"."~defReader.getValue()~";\n";
 					break;
+				case "srcout": srcOut = defReader.getValue(); break;
 				case "struct": convParms.strct = defReader.getValue(); break;
 				case "realStruct": convParms.realStrct = defReader.getValue(); break;
 				case "ctorStruct": convParms.ctorStrct = defReader.getValue(); break;
@@ -578,7 +592,7 @@ public class GtkWrapper : WrapperIF
 		char[] duitText = duitClass.closeDuitClass(text, convParms);
 		if ( duitClass.getError() == 0 )
 		{
-			std.file.write(duitClass.getOutFile(outputRoot),duitText);
+			std.file.write(duitClass.getOutFile(outputRoot, srcOut),duitText);
 		}
 		if ( convParms.interf.length == 0 )
 		{
@@ -630,7 +644,7 @@ public class GtkWrapper : WrapperIF
 			this.packages[packages[0]] = packages[1];
 			try
 			{
-				std.file.mkdir(std.path.join(std.path.join(outputRoot,"src"), packages[1]));
+				std.file.mkdir(std.path.join(std.path.join(outputRoot,srcOut), packages[1]));
 			}
 			catch ( Exception e)
 			{
@@ -773,7 +787,7 @@ public class GtkWrapper : WrapperIF
 		
 		externalText ~= "\n];";
 		
-		char[] pathname = std.path.join("src","lib");
+		char[] pathname = std.path.join(srcOut,"lib");
 		
 		std.file.write(std.path.join(pathname,loaderTableName~".d"),externalText);
 	}
@@ -909,6 +923,20 @@ public class GtkWrapper : WrapperIF
 			//def ~= "\nalias GtkSignalRunType.G_SIGNAL_NO_HOOKS G_SIGNAL_NO_HOOKS;";
 		}
 		
+		else if ( "glgdk" == outPack )
+		{
+			def ~= "\nimport glib.typedefs;\n\n";
+			def ~= "\nimport gdk.typedefs;\n\n";
+			def ~= "\nalias uint VisualID;\n\n";
+		}
+		
+		else if ( "glgtk" == outPack )
+		{
+			def ~= "\nimport glib.typedefs;\n\n";
+			def ~= "\nimport glgdk.typedefs;\n\n";
+			def ~= "\nimport gtk.typedefs;\n\n";
+		}
+		
 		char[] tabs = "";
 
 				
@@ -970,7 +998,7 @@ public class GtkWrapper : WrapperIF
 		DuitClass.append(def, collectedConstants, tabs);
 		tabs = "";
 
-		char[] pathname = std.path.join("src", outPack);
+		char[] pathname = std.path.join(srcOut, outPack);
 		std.file.write(std.path.join(pathname,"typedefs.d"),def);
 
 		lookupAliases.length = 0;
@@ -994,8 +1022,6 @@ public class GtkWrapper : WrapperIF
 		gTypes.length = 0;
 
 	}
-
-	
 
 }
 

@@ -1300,9 +1300,9 @@ alias GtkCellRendererState CellRendererState;
  */
 public enum GtkCellRendererMode
 {
-	INERT,
-	ACTIVATABLE,
-	EDITABLE
+	MODE_INERT,
+	MODE_ACTIVATABLE,
+	MODE_EDITABLE
 }
 alias GtkCellRendererMode CellRendererMode;
 
