@@ -169,7 +169,7 @@ copy: Loader.d
 #lookup: APILookupCairo.txt
 #lookup: APILookupPango.txt
 #lookup: APILookupAtk.txt
-lookup: APILookupGdkPixbuf.txt
+#lookup: APILookupGdkPixbuf.txt
 #lookup: APILookupGdk.txt
 #lookup: APILookupGtk.txt
 lookup: APILookupGLd.txt

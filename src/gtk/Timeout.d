@@ -150,9 +150,8 @@ public class Timeout
 	 * Params:
 	 *    	delegate() =
 	 *    	fireNow =
-	 * Returns:
 	 */
-	public int addListener(bit delegate() dlg, bit fireNow=false)
+	public void addListener(bit delegate() dlg, bit fireNow=false)
 	{
 		timeoutListeners ~= dlg;
 		if ( fireNow )

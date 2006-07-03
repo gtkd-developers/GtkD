@@ -151,7 +151,7 @@ public class Idle
 	 *    	fireNow =
 	 * Returns:
 	 */
-	public int addListener(bit delegate() dlg, bit fireNow=false)
+	public void addListener(bit delegate() dlg, bit fireNow=false)
 	{
 		idleListeners ~= dlg;
 		if ( fireNow )
