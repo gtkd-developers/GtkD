@@ -230,7 +230,7 @@ public class Spawn
 		public int run()
 		{
 			char[] line = readLine(file);
-			while( line !is null )
+			//while( line !is null )
 			{
 				++lineCount;
 				writefln("Spawn.ReadFile.run line (%s) ========== >>>%s<<<", lineCount, line);

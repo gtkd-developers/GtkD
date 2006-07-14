@@ -175,4 +175,4 @@ copy: Loader.d
 lookup: APILookupGLd.txt
 lookup: APILookupGLt.txt
 
-htod: wrap/HTODopenGL.txt
+#htod: wrap/HTODopenGL.txt
