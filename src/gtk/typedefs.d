@@ -23,22 +23,22 @@
 module gtk.typedefs;
 
 
-import glib.typedefs;
+public import glib.typedefs;
 
 
-import gobject.typedefs;
+public import gobject.typedefs;
 
 
-import pango.typedefs;
+public import pango.typedefs;
 
 
-import atk.typedefs;
+public import atk.typedefs;
 
 
-import gdkpixbuf.typedefs;
+public import gdkpixbuf.typedefs;
 
 
-import gdk.typedefs;
+public import gdk.typedefs;
 
 
 alias void GtkAccelGroupEntry;

@@ -23,16 +23,16 @@
 module gdk.typedefs;
 
 
-import glib.typedefs;
+public import glib.typedefs;
 
 
-import gobject.typedefs;
+public import gobject.typedefs;
 
 
-import pango.typedefs;
+public import pango.typedefs;
 
 
-import gdkpixbuf.typedefs;
+public import gdkpixbuf.typedefs;
 
 
 

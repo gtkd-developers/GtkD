@@ -837,16 +837,16 @@ public class GtkWrapper : WrapperIF
 		}
 		else if ( "gthread" == outPack )
 		{
-			def ~= "\nimport glib.typedefs;\n\n";
+			def ~= "\npublic import glib.typedefs;\n\n";
 		}
 		else if ( "gobject" == outPack )
 		{
-			def ~= "\nimport glib.typedefs;\n\n";
+			def ~= "\npublic import glib.typedefs;\n\n";
 		}
 		else if ( "cairoLib" == outPack )
 		{
-			def ~= "\nimport glib.typedefs;\n\n";
-			//def ~= "\nimport std.c.windows.windows;\n\n";
+			def ~= "\npublic import glib.typedefs;\n\n";
+			//def ~= "\npublic import std.c.windows.windows;\n\n";
 			def ~= "\nprivate alias void* HDC;\n\n";
 			def ~= "\nstruct Display;\n\n";
 			def ~= "\nstruct Visual;\n\n";
@@ -858,10 +858,10 @@ public class GtkWrapper : WrapperIF
 		
 		else if ( "pango" == outPack )
 		{
-			def ~= "\nimport glib.typedefs;\n\n";
-			def ~= "\nimport gobject.typedefs;\n\n";
+			def ~= "\npublic import glib.typedefs;\n\n";
+			def ~= "\npublic import gobject.typedefs;\n\n";
 			def ~= "\n";
-			//def ~= "\nimport std.c.windows.windows;\n\n";
+			//def ~= "\npublic import std.c.windows.windows;\n\n";
 			def ~=
 					//"\n/* The pango Basic Types */"
 					"\npublic alias void FcPattern;"
@@ -877,8 +877,8 @@ public class GtkWrapper : WrapperIF
 		}
 		else if ( "atk" == outPack )
 		{
-			def ~= "\nimport glib.typedefs;\n\n";
-			def ~= "\nimport gobject.typedefs;\n\n";
+			def ~= "\npublic import glib.typedefs;\n\n";
+			def ~= "\npublic import gobject.typedefs;\n\n";
 			def ~= "\npublic alias void* AtkFocusHandler;\n\n";
 			def ~= "\npublic struct AtkStateSet;\n\n";
 			def ~= "\npublic struct AtkRectangle;\n\n";
@@ -886,18 +886,18 @@ public class GtkWrapper : WrapperIF
 		}
 		else if ( "gdkpixbuf" == outPack )
 		{
-			def ~= "\nimport glib.typedefs;\n\n";
-			def ~= "\nimport gobject.typedefs;\n\n";
-			def ~= "\nimport gdk.typedefs;\n\n";
-			def ~= "\nimport pango.typedefs;\n\n";
+			def ~= "\npublic import glib.typedefs;\n\n";
+			def ~= "\npublic import gobject.typedefs;\n\n";
+			def ~= "\npublic import gdk.typedefs;\n\n";
+			def ~= "\npublic import pango.typedefs;\n\n";
 			def ~= "\n";
 		}
 		else if ( "gdk" == outPack )
 		{
-			def ~= "\nimport glib.typedefs;\n\n";
-			def ~= "\nimport gobject.typedefs;\n\n";
-			def ~= "\nimport pango.typedefs;\n\n";
-			def ~= "\nimport gdkpixbuf.typedefs;\n\n";
+			def ~= "\npublic import glib.typedefs;\n\n";
+			def ~= "\npublic import gobject.typedefs;\n\n";
+			def ~= "\npublic import pango.typedefs;\n\n";
+			def ~= "\npublic import gdkpixbuf.typedefs;\n\n";
 			def ~= "\n";
 			def ~= "\nalias void* GdkAtom;";
 			def ~= "\nalias void* GdkNativeWindow;";
@@ -906,12 +906,12 @@ public class GtkWrapper : WrapperIF
 		
 		else if ( "gtk" == outPack )
 		{
-			def ~= "\nimport glib.typedefs;\n\n";
-			def ~= "\nimport gobject.typedefs;\n\n";
-			def ~= "\nimport pango.typedefs;\n\n";
-			def ~= "\nimport atk.typedefs;\n\n";
-			def ~= "\nimport gdkpixbuf.typedefs;\n\n";
-			def ~= "\nimport gdk.typedefs;\n\n";
+			def ~= "\npublic import glib.typedefs;\n\n";
+			def ~= "\npublic import gobject.typedefs;\n\n";
+			def ~= "\npublic import pango.typedefs;\n\n";
+			def ~= "\npublic import atk.typedefs;\n\n";
+			def ~= "\npublic import gdkpixbuf.typedefs;\n\n";
+			def ~= "\npublic import gdk.typedefs;\n\n";
 			def ~= "\nalias void GtkAccelGroupEntry;\n\n";
 			def ~= "\nalias void GtkContainerClass;\n\n";
 			def ~= "\n";
@@ -925,16 +925,16 @@ public class GtkWrapper : WrapperIF
 		
 		else if ( "glgdk" == outPack )
 		{
-			def ~= "\nimport glib.typedefs;\n\n";
-			def ~= "\nimport gdk.typedefs;\n\n";
+			def ~= "\npublic import glib.typedefs;\n\n";
+			def ~= "\npublic import gdk.typedefs;\n\n";
 			def ~= "\nalias uint VisualID;\n\n";
 		}
 		
 		else if ( "glgtk" == outPack )
 		{
-			def ~= "\nimport glib.typedefs;\n\n";
-			def ~= "\nimport glgdk.typedefs;\n\n";
-			def ~= "\nimport gtk.typedefs;\n\n";
+			def ~= "\npublic import glib.typedefs;\n\n";
+			def ~= "\npublic import glgdk.typedefs;\n\n";
+			def ~= "\npublic import gtk.typedefs;\n\n";
 		}
 		
 		char[] tabs = "";

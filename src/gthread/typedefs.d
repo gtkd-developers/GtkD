@@ -23,7 +23,7 @@
 module gthread.typedefs;
 
 
-import glib.typedefs;
+public import glib.typedefs;
 
 /**
  * Possible errors of thread related functions.

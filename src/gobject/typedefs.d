@@ -23,7 +23,7 @@
 module gobject.typedefs;
 
 
-import glib.typedefs;
+public import glib.typedefs;
 
 
 

@@ -149,7 +149,6 @@ public class Idle
 	 * Params:
 	 *    	delegate() =
 	 *    	fireNow =
-	 * Returns:
 	 */
 	public void addListener(bit delegate() dlg, bit fireNow=false)
 	{

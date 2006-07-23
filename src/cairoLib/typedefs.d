@@ -23,7 +23,7 @@
 module cairoLib.typedefs;
 
 
-import glib.typedefs;
+public import glib.typedefs;
 
 
 private alias void* HDC;

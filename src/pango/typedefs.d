@@ -23,10 +23,10 @@
 module pango.typedefs;
 
 
-import glib.typedefs;
+public import glib.typedefs;
 
 
-import gobject.typedefs;
+public import gobject.typedefs;
 
 
 
