@@ -233,8 +233,12 @@ public class Spawn
 			while( line !is null )
 			{
 				++lineCount;
-				writefln("Spawn.ReadFile.run line (%s) ========== >>>%s<<<", lineCount, line);
-				read(line);
+				//writefln("Spawn.ReadFile.run line (%s) ========== >>>%s<<<", lineCount, line);
+				printf("Spawn.ReadFile.run line (%d) ========== >>>%.*s<<<", lineCount, line);
+				if ( read !is null )
+				{
+					read(line);
+				}
 				line = readLine(file);
 			}
 			return 0;
@@ -253,9 +257,19 @@ public class Spawn
 		}
 		char[] line;
 		line.length = max+1;
-		fgets(&line[0], max, stream);
+		char* lineP = fgets(&line[0], max, stream);
+		if ( lineP is null )
+		{
+			return "";
+		}
 		int l = strlen(&line[0]);
 		if ( l > 0 ) --l;
+		printf("\nreadLine\n");
+		foreach ( char c ; line )
+		{
+			printf("%c", c);
+		}
+		printf("\n\n");
 		return line[0..l];
 	}
 	
