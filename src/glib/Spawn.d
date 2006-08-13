@@ -234,7 +234,7 @@ public class Spawn
 			{
 				++lineCount;
 				//writefln("Spawn.ReadFile.run line (%s) ========== >>>%s<<<", lineCount, line);
-				printf("Spawn.ReadFile.run line (%d) ========== >>>%.*s<<<", lineCount, line);
+				//printf("Spawn.ReadFile.run line (%d) ========== >>>%.*s<<<", lineCount, line);
 				if ( read !is null )
 				{
 					read(line);
@@ -264,12 +264,12 @@ public class Spawn
 		}
 		int l = strlen(&line[0]);
 		if ( l > 0 ) --l;
-		printf("\nreadLine\n");
-		foreach ( char c ; line )
-		{
-			printf("%c", c);
-		}
-		printf("\n\n");
+		//printf("\nreadLine\n");
+		//foreach ( char c ; line )
+		//{
+			//        printf("%c", c);
+		//}
+		//printf("\n\n");
 		return line[0..l];
 	}
 	

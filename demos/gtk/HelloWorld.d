@@ -32,8 +32,13 @@ class HelloWorld : MainWindow
 	}
 }
 
+private import lib.Loader;
+
 void main(char[][] args)
 {
+	
+//	Linker.dumpFailedLoads();
+	
 	Duit.init(args);
 	new HelloWorld();
 	Duit.main();
