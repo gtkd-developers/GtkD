@@ -347,23 +347,6 @@ private import gtk.VRuler;
 private import gtk.ItemFactory;
 private import gtk.Progress;
 
-private import glgdk.GLdInit;
-private import glgdk.GLQuery;
-private import glgdk.GLConfig;
-private import glgdk.GLContext;
-private import glgdk.GLDrawable;
-private import glgdk.GLPixmap;
-private import glgdk.GLWindow;
-private import glgdk.GLFont;
-private import glgdk.GLDraw;
-private import glgdk.GLTokens;
-private import glgdk.GLdVersion;
-
-private import glgtk.GLtInit;
-private import glgtk.GLWidget;
-private import glgtk.GLtVersion;
-private import glgtk.GLCapability;
-
 private import lib.paths.d;
 private import lib.Loader.d;
 private import lib.glib;
@@ -375,5 +358,3 @@ private import lib.atk;
 private import lib.gdkpixbuf;
 private import lib.gdk;
 private import lib.gtk;
-private import lib.glgdk;
-private import lib.glgtk;

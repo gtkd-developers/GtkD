@@ -1,1 +1,2 @@
-compd s/atk s/cairoLib s/gdk s/glib s/gobject s/gdkthread s/gtk s/lib s/pango -I s;/dmd/src/phobos -lib duit.lib
+del duit.lib
+compd src/atk src/cairoLib src/gdk src/glib src/gobject src/gthread src/gtk src/lib src/pango -I src;/dmd/src/phobos -lib duit

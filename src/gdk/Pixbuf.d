@@ -50,6 +50,7 @@ module gdk.Pixbuf;
 private import gdk.typedefs;
 
 private import lib.gdk;
+private import lib.gdkpixbuf;
 
 private import glib.Str;
 

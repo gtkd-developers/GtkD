@@ -37,9 +37,10 @@ private import lib.Loader;
 void main(char[][] args)
 {
 	
-//	Linker.dumpFailedLoads();
+	Linker.dumpFailedLoads();
 	
 	Duit.init(args);
 	new HelloWorld();
 	Duit.main();
+
 }
