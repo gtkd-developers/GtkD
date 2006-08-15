@@ -1,1 +1,1 @@
-compd demos/duit -o DuitTests -I s -l duit -L . -c -L \dmd\lib\ -l phobos
+compd demos/duit -o DuitTests -I src -c -L .+\dmd\lib\+phobos+duit
