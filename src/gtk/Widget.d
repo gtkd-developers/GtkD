@@ -250,7 +250,8 @@ public class Widget : ObjectGtk
 	public void modifyFont(char[] family, int size)
 	{
 		if ( size < 0 ) size = -size;	// hack to workaround leds bug - TO BE REMOVED
-		modifyFont(new PgFontDescription(family,size));
+		modifyFont(PangoFontDescription.fromString(family ~ " " ~ string));
+
 	}
 	
 	/**
