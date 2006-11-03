@@ -15,7 +15,7 @@
  */
  
 module lib.Loader;
-
+private import std.file;
 //debug = loadLib;
 //debug = loadSymbol;
 
@@ -170,7 +170,12 @@ public class Linker
 		} 
 		version(linux)
 		{
+			
 			handle = dlopen( this.libraryName ~ "\0", RTLD_NOW);
+			if (handle is null) {
+				// non-dev libraries tend to be called xxxx.so.0
+				handle = dlopen( this.libraryName ~ ".0\0", RTLD_NOW);
+			} 
 			if ( alternateLibraryName !is null )
 			{
 				alternateHandle = dlopen( this.alternateLibraryName ~ "\0", RTLD_NOW);
