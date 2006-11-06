@@ -51,7 +51,7 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.PANGO:		"libpango-1.0-0.dll",
 	LIBRARY.GLGDK:		"libgdkglext-win32-1.0-0.dll",
 	LIBRARY.GLGTK:		"libgtkglext-win32-1.0-0.dll",
-	LIBRARY.GL:			"opengl32.dll",
+	LIBRARY.GL:		"opengl32.dll",
 	LIBRARY.GLU:		"glu32.dll"
 	];
 }
@@ -72,7 +72,7 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.PANGO:		"libpango-1.0.so",
 	LIBRARY.GLGDK:		"libgdkglext-x11-1.0.so",
 	LIBRARY.GLGTK:		"libgtkglext-x11-1.0.so",
-	LIBRARY.GL:			"libGL.so",
+	LIBRARY.GL:		"libGL.so",
 	LIBRARY.GLU:		"libGLU.so",
 	LIBRARY.GLEXT:		"libGL.so"
 	];

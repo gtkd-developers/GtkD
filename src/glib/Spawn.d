@@ -65,6 +65,7 @@ private import std.thread;
 private import std.stdio;
 private import std.c.string;;
 
+
 /**
  * Description
  */
@@ -311,8 +312,18 @@ public class Spawn
 	{
 		return exitStatus;
 	}
+
+	import std.string;
 	
-	public int commandLineSync()
+	/**
+	 * Executes a command synchronasly and 
+	 * optionally calls delegates for sysout, syserr and end of job
+	 * 
+	 */
+	public int commandLineSync(
+		ChildWatch externalWatch = null,
+		bool delegate(char[]) readOutput = null,
+		bool delegate(char[]) readError = null )
 	{
 		char[] commandLine;
 		foreach ( int count, char[] arg; argv)
@@ -323,20 +334,32 @@ public class Spawn
 			}
 			commandLine ~= arg;
 		}
-		return g_spawn_command_line_sync(
-		
-		Str.toStringz(commandLine),
-		&strOutput,
-		&strError,
-		&exitStatus,
-		&error);
+		int status = g_spawn_command_line_sync(
+				Str.toStringz(commandLine),
+				&strOutput,
+				&strError,
+				&exitStatus,
+				&error);
+		if ( readOutput != null )
+		{
+			foreach ( char[] line ; std.string.splitlines(toString(strOutput)) )
+			{
+				readOutput(line);
+			}
+		}
+		if ( readError != null )
+		{
+			foreach ( char[] line ; std.string.splitlines(toString(strError)) )
+			{
+				readError(line);
+			}
+		}
+		if ( externalWatch != null )
+		{
+			externalWatch(this);
+		}
+		return status;
 	}
-	
-	
-	
-	
-	/**
-	 */
 	
 	
 	
@@ -410,7 +433,7 @@ public class Spawn
 		// gboolean g_spawn_sync (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gchar **standard_output,  gchar **standard_error,  gint *exit_status,  GError **error);
 		return g_spawn_sync(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, standardOutput, standardError, exitStatus, error);
 	}
-	
+
 	/**
 	 * A simple version of g_spawn_async() that parses a command line with
 	 * g_shell_parse_argv() and passes it to g_spawn_async(). Runs a

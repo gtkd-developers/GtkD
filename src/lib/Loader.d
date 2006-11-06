@@ -172,10 +172,14 @@ public class Linker
 		{
 			
 			handle = dlopen( this.libraryName ~ "\0", RTLD_NOW);
-			if (handle is null) {
+			debug(loadLib)writefln("########## (1)loading %s == %s", libraryName, handle);
+
+			if (handle is null)
+			{
 				// non-dev libraries tend to be called xxxx.so.0
 				handle = dlopen( this.libraryName ~ ".0\0", RTLD_NOW);
 			} 
+
 			if ( alternateLibraryName !is null )
 			{
 				alternateHandle = dlopen( this.alternateLibraryName ~ "\0", RTLD_NOW);
@@ -195,7 +199,7 @@ public class Linker
 		}
 		else
 		{
-			writefln("Loaded lib = %s", libraryName);
+			debug(loadLib)writefln("Loaded lib = %s", libraryName);
 		}
 
 	}
@@ -254,7 +258,7 @@ public class Linker
 				if ( alternateHandle !is null )
 				{
 					*link.pointer = getSymbol(alternateHandle, link.name~"\0");
-					writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
+					debug(loadSymbol)writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
 				}
 				if (*link.pointer is null)
 				{

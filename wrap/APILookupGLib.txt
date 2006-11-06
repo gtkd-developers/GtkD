@@ -880,8 +880,37 @@ code: start
 	{
 		return exitStatus;
 	}
+
+// old version
+//	public int commandLineSync()
+//	{
+//		char[] commandLine;
+//		foreach ( int count, char[] arg; argv)
+//		{
+//			if ( count > 0 )
+//			{
+//				commandLine ~= ' ';
+//			}
+//			commandLine ~= arg;
+//		}
+//		return g_spawn_command_line_sync(
+//		
+//			Str.toStringz(commandLine), 
+//			&strOutput, 
+//			&strError, 
+//			&exitStatus, 
+//			&error);
+//	}
 	
-	public int commandLineSync()
+	/**
+	 * Executes a command synchronasly and 
+	 * optionally calls delegates for sysout, syserr and end of job
+	 * 
+	 */
+	public int commandLineSync(
+		ChildWatch externalWatch = null,
+		bool delegate(char[]) readOutput = null,
+		bool delegate(char[]) readError = null )
 	{
 		char[] commandLine;
 		foreach ( int count, char[] arg; argv)
@@ -892,13 +921,31 @@ code: start
 			}
 			commandLine ~= arg;
 		}
-		return g_spawn_command_line_sync(
-		
-			Str.toStringz(commandLine), 
-			&strOutput, 
-			&strError, 
-			&exitStatus, 
-			&error);
+		int status = g_spawn_command_line_sync(
+				Str.toStringz(commandLine),
+				&strOutput,
+				&strError,
+				&exitStatus,
+				&error);
+		if ( readOutput != null )
+		{
+			foreach ( char[] line ; splitlines(toString(strOutput)) )
+			{
+				readOutput(line);
+			}
+		}
+		if ( readError != null )
+		{
+			foreach ( char[] line ; splitlines(toString(strError)) )
+			{
+				readError(line);
+			}
+		}
+		if ( externalWatch != null )
+		{
+			externalWatch(this);
+		}
+		return status;
 	}
 	
 

@@ -109,7 +109,7 @@ private import gtk.TreeStore;
 private import gdk.Pixbuf;
 private import gtk.ComboBox;
 
-private import gtk.TreePath;
+priv ate import gtk.TreePath;
 private import gtk.CellRenderer;
 private import gtk.CellRendererPixbuf;
 
