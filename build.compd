@@ -1,0 +1,17 @@
+#!/usr/local/bin/compd
+
+src/atk
+src/cairoLib
+src/gdk
+src/glib
+src/gobject
+src/gthread
+src/gtk
+src/lib
+src/pango
+-Isrc
+-oliblibduit
+-ldl
+-lstdc++ 
+-lphobos 
+
