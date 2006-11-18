@@ -1,5 +1,5 @@
 #!/bin/sh
-../../compd \
+compd \
 	demos/duit \
 	-o DuitTests \
 	-c \
