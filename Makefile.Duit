@@ -18,7 +18,7 @@ list:
 ##########################
 COMP_HelloWorld = dmd
 COMP_FLAGS_HelloWorld =  -c -gc -od../obj/demos -op
-COMP_IMPORT_HelloWorld = -I/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/devel/D1/Duit/trunk/src
+COMP_IMPORT_HelloWorld = -I/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/test:/home/ruimt/devel/D1/Duit/trunk/src
 LINK_LIBS_HelloWorld=-L../.. -ldl -pthread -lstdc++ -lphobos -L../.. -lduit -lphobos
 LINK_HelloWorld=gcc
 
@@ -36,7 +36,7 @@ LINK_DuitTests=gcc
 ##########################
 COMP_duit = dmd
 COMP_FLAGS_duit =  -c -gc -profile -od../obj/src -op
-COMP_IMPORT_duit = -I/home/ruimt/dmd/src/phobos:/home/ruimt/devel/D1/Duit/trunk/src
+COMP_IMPORT_duit = -I/dmd/src/phobos:/usr/src/duit/src
 LINK_LIBS_duit=-L../.. -ldl -pthread -lstdc++ -lphobos -gthread
 LINK_duit=ar rcs
 
@@ -466,10 +466,22 @@ duit_OBJ_DIR:
 
 
 duit_COMP:
+	mkdir -p obj/src/atk  ; \
+	mkdir -p obj/src/build  ; \
+	mkdir -p obj/src/cairoLib ; \
+	mkdir -p obj/src/gdk  ; \
+	mkdir -p obj/src/gdkpixbuf  ; \
+	mkdir -p obj/src/glib  ; \
+	mkdir -p obj/src/gobject  ; \
+	mkdir -p obj/src/gthread  ; \
+	mkdir -p obj/src/gtk  ; \
+	mkdir -p obj/src/lib  ; \
+	mkdir -p obj/src/pango; \
 	cd src; \
 	$(COMP_duit) $(SRC_duit) $(COMP_FLAGS_duit) $(COMP_IMPORT_duit)
 
 duit_LINK:
+	cd obj/src; \
 	$(LINK_duit) \
 	../../libduit.a \
 	atk/Action.o \
@@ -549,7 +561,6 @@ duit_LINK:
 	glib/Cache.o \
 	glib/CharacterSet.o \
 	glib/Child.o \
-	glib/Cond.o \
 	glib/DataList.o \
 	glib/Dataset.o \
 	glib/Date.o \
@@ -570,16 +581,13 @@ duit_LINK:
 	glib/MessageLog.o \
 	glib/Messages.o \
 	glib/Module.o \
-	glib/Mutex.o \
 	glib/Node.o \
 	glib/OptionContext.o \
 	glib/OptionGroup.o \
 	glib/Pattern.o \
-	glib/Private.o \
 	glib/PtrArray.o \
 	glib/Quark.o \
 	glib/QueueG.o \
-	glib/RWLock.o \
 	glib/RandG.o \
 	glib/Relation.o \
 	glib/ScannerG.o \
@@ -587,10 +595,7 @@ duit_LINK:
 	glib/SimpleXML.o \
 	glib/Source.o \
 	glib/Spawn.o \
-	glib/StaticPrivate.o \
-	glib/StaticRecMutex.o \
 	glib/Str.o \
-	glib/StrignGChunk.o \
 	glib/StringCompletion.o \
 	glib/StringG.o \
 	glib/StringGChunk.o \
@@ -643,7 +648,6 @@ duit_LINK:
 	gtk/ButtonBox.o \
 	gtk/Calendar.o \
 	gtk/CellEditable.o \
-	gtk/CellLayout.o \
 	gtk/CellLayoutIF.o \
 	gtk/CellLayoutT.o \
 	gtk/CellRenderer.o \
@@ -928,7 +932,6 @@ cleanduit:
 	rm glib/Cache.o
 	rm glib/CharacterSet.o
 	rm glib/Child.o
-	rm glib/Cond.o
 	rm glib/DataList.o
 	rm glib/Dataset.o
 	rm glib/Date.o
@@ -949,12 +952,10 @@ cleanduit:
 	rm glib/MessageLog.o
 	rm glib/Messages.o
 	rm glib/Module.o
-	rm glib/Mutex.o
 	rm glib/Node.o
 	rm glib/OptionContext.o
 	rm glib/OptionGroup.o
 	rm glib/Pattern.o
-	rm glib/Private.o
 	rm glib/PtrArray.o
 	rm glib/Quark.o
 	rm glib/QueueG.o

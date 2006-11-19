@@ -1,0 +1,11 @@
+INSTALL
+--------------------------------
+
+Install instructions for duit
+a) make sure you have installed dool 
+http://svn.dsource.org/projects/dool
+
+** you really only need compd from this.
+
+b) build dool (using compd)
+#compd build.compd
