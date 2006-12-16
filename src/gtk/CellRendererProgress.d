@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCellRendererProgress.html
  * outPack = gtk
  * outFile = CellRendererProgress
  * strct   = GtkCellRenderer
@@ -49,7 +50,7 @@
 
 module gtk.CellRendererProgress;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -57,6 +58,9 @@ private import gtk.CellRenderer;
 
 /**
  * Description
+ * GtkCellRendererProgress renders a numeric value as a progress par in a cell.
+ * Additionally, it can display a text on top of the progress bar.
+ * The GtkCellRendererProgress cell renderer was added in GTK+ 2.6.
  */
 private import gtk.CellRenderer;
 public class CellRendererProgress : CellRenderer

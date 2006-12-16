@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Message-Logging.html
  * outPack = glib
  * outFile = MessageLog
  * strct   = 
@@ -47,7 +48,7 @@
 
 module glib.MessageLog;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -172,6 +173,9 @@ public class MessageLog
 	 * When a message with any of these levels is logged the program terminates.
 	 * You can only set the levels defined by GLib to be fatal.
 	 * G_LOG_LEVEL_ERROR is always fatal.
+	 * You can also make some message levels
+	 * fatal at runtime by setting the G_DEBUG environment variable (see
+	 * Running GLib Applications).
 	 * fatal_mask:
 	 * the mask containing bits set for each level of error which is
 	 * to be fatal.

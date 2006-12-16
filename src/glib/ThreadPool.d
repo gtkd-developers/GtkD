@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Thread-Pools.html
  * outPack = glib
  * outFile = ThreadPool
  * strct   = GThreadPool
@@ -50,7 +51,7 @@
 
 module glib.ThreadPool;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -321,6 +322,11 @@ public class ThreadPool
 	 * Sets the function used to sort the list of tasks. This allows the
 	 * tasks to be processed by a priority determined by func, and not
 	 * just in the order in which they were added to the pool.
+	 * Note, if the maximum number of threads is more than 1, the order
+	 * that threads are executed can not be guranteed 100%. Threads are
+	 * scheduled by the operating system and are executed at random. It
+	 * cannot be assumed that threads are executed in the order they are
+	 * created.
 	 * pool:
 	 *  a GThreadPool
 	 * func:

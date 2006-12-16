@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Version-Information.html
  * outPack = glib
  * outFile = GLib
  * strct   = 
@@ -47,7 +48,7 @@
 
 module glib.GLib;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

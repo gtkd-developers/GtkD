@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkToggleAction.html
  * outPack = gtk
  * outFile = ToggleAction
  * strct   = GtkToggleAction
@@ -48,7 +49,7 @@
 
 module gtk.ToggleAction;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -93,7 +94,7 @@ public class ToggleAction : Action
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ToggleAction)[] onToggledListeners;
@@ -107,7 +108,7 @@ public class ToggleAction : Action
 			cast(GCallback)&callBackToggled,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;
@@ -211,22 +212,16 @@ public class ToggleAction : Action
 	 *  whether the action should have proxies like a radio action.
 	 * Since 2.4
 	 * Property Details
-	 * The "draw-as-radio" property
-	 *  "draw-as-radio" gboolean : Read / Write
-	 * Whether the proxies for this action look like radio action proxies.
+	 * The "active" property
+	 *  "active" gboolean : Read / Write
+	 * If the toggle action should be active in or not.
 	 * Default value: FALSE
-	 * Signal Details
-	 * The "toggled" signal
-	 * void user_function (GtkToggleAction *toggleaction,
-	 *  gpointer user_data) : Run first
-	 * toggleaction:
-	 * the object which received the signal.
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * Since 2.10
 	 */
 	public int getDrawAsRadio()
 	{
 		// gboolean gtk_toggle_action_get_draw_as_radio  (GtkToggleAction *action);
 		return gtk_toggle_action_get_draw_as_radio(gtkToggleAction);
 	}
+	
 }

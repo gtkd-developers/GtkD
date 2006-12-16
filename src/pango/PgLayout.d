@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = pango-Layout-Objects.html
  * outPack = pango
  * outFile = PgLayout
  * strct   = PangoLayout
@@ -81,7 +82,7 @@
 
 module pango.PgLayout;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
@@ -165,7 +166,9 @@ public class PgLayout
 	 * context:
 	 *  a PangoContext
 	 * Returns:
-	 *  the new PangoLayout, with a reference count of one.
+	 *  the newly allocated PangoLayout, with a reference
+	 *  count of one, which should be freed with
+	 *  g_object_unref().
 	 */
 	public this (PgContext context)
 	{
@@ -180,7 +183,9 @@ public class PgLayout
 	 * src:
 	 *  a PangoLayout
 	 * Returns:
-	 *  the new PangoLayout.
+	 *  the newly allocated PangoLayout, with a reference
+	 *  count of one, which should be freed with
+	 *  g_object_unref().
 	 */
 	public PgLayout copy()
 	{
@@ -222,11 +227,13 @@ public class PgLayout
 	 * layout:
 	 *  a PangoLayout
 	 * text:
-	 *  a UTF-8 string
+	 *  a valid UTF-8 string
 	 * length:
-	 *  the length of text, in bytes. -1 indicates that
+	 *  maximum length of text, in bytes. -1 indicates that
 	 *  the string is nul-terminated and the length should be
-	 *  calculated.
+	 *  calculated. The text will also be truncated on
+	 *  encountaring a nul-termination even when length is
+	 *  positive.
 	 */
 	public void setText(char[] text, int length)
 	{
@@ -359,8 +366,8 @@ public class PgLayout
 	 * layout:
 	 *  a PangoLayout.
 	 * width:
-	 *  the desired width, or -1 to indicate that no wrapping should be
-	 *  performed.
+	 *  the desired width in Pango units, or -1 to indicate that no
+	 *  wrapping should be performed.
 	 */
 	public void setWidth(int width)
 	{
@@ -373,7 +380,7 @@ public class PgLayout
 	 * layout:
 	 *  a PangoLayout
 	 * Returns:
-	 *  the width.
+	 *  the width, or -1 if no width set.
 	 */
 	public int getWidth()
 	{
@@ -732,7 +739,7 @@ public class PgLayout
 	 *  between 0 and pango_layout_get_line_count(layout) - 1)
 	 * x_pos:
 	 *  location to store resulting position within line
-	 *  (in thousandths of a device unit)
+	 *  (PANGO_SCALE units per device unit)
 	 */
 	public void indexToLineX(int index, int trailing, int* line, int* xPos)
 	{
@@ -799,12 +806,12 @@ public class PgLayout
 	
 	/**
 	 * Computes a new cursor position from an old position and
-	 * a count of positions to move visually. If count is positive,
+	 * a count of positions to move visually. If direction is positive,
 	 * then the new strong cursor position will be one position
-	 * to the right of the old cursor position. If count is position
+	 * to the right of the old cursor position. If direction is negative,
 	 * then the new strong cursor position will be one position
 	 * to the left of the old cursor position.
-	 * In the presence of bidirection text, the correspondence
+	 * In the presence of bidirectional text, the correspondence
 	 * between logical and visual order will depend on the direction
 	 * of the current run, and there may be jumps when the cursor
 	 * is moved off of the end of a run.
@@ -848,9 +855,13 @@ public class PgLayout
 	
 	/**
 	 * Computes the logical and ink extents of layout. Logical extents
-	 * are usually what you want for positioning things. The extents
-	 * are given in layout coordinates; layout coordinates begin at the
-	 * top left corner of the layout.
+	 * are usually what you want for positioning things. Note that both extents
+	 * may have non-zero x and y. You may want to use those to offset where you
+	 * render the layout. Not doing that is a very typical bug that shows up as
+	 * right-to-left layouts not being correctly positioned in a layout with
+	 * a set width.
+	 * The extents are given in layout coordinates and in Pango units; layout
+	 * coordinates begin at the top left corner of the layout.
 	 * layout:
 	 *  a PangoLayout
 	 * ink_rect:
@@ -888,7 +899,7 @@ public class PgLayout
 	
 	/**
 	 * Determines the logical width and height of a PangoLayout
-	 * in Pango units. (device units divided by PANGO_SCALE). This
+	 * in Pango units. (device units scaled by PANGO_SCALE). This
 	 * is simply a convenience function around pango_layout_get_extents().
 	 * layout:
 	 *  a PangoLayout
@@ -906,8 +917,9 @@ public class PgLayout
 	/**
 	 * Determines the logical width and height of a PangoLayout
 	 * in device units. (pango_layout_get_size() returns the width
-	 * and height in thousandths of a device unit.) This
-	 * is simply a convenience function around pango_layout_get_extents().
+	 * and height scaled by PANGO_SCALE.) This
+	 * is simply a convenience function around
+	 * pango_layout_get_pixel_extents().
 	 * layout:
 	 *  a PangoLayout
 	 * width:
@@ -974,7 +986,8 @@ public class PgLayout
 	 * layout:
 	 *  a PangoLayout
 	 * Returns:
-	 *  the new PangoLayoutIter.
+	 *  the new PangoLayoutIter that should be freed using
+	 *  pango_layout_iter_free().
 	 */
 	public PgLayoutIter getIter()
 	{

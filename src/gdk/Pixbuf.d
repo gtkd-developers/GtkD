@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Pixbufs.html
  * outPack = gdk
  * outFile = Pixbuf
  * strct   = GdkPixbuf
@@ -47,10 +48,9 @@
 
 module gdk.Pixbuf;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
-private import lib.gdkpixbuf;
 
 private import glib.Str;
 
@@ -299,7 +299,7 @@ public class Pixbuf
 	
 	/**
 	 * Warning
-	 * gdk_pixbuf_render_to_drawable is deprecated and should not be used in newly-written code. This function is obsolete. Use gdk_draw_pixbuf() instead.
+	 * gdk_pixbuf_render_to_drawable has been deprecated since version 2.4 and should not be used in newly-written code. This function is obsolete. Use gdk_draw_pixbuf() instead.
 	 * Renders a rectangular portion of a pixbuf to a drawable while using the
 	 * specified GC. This is done using GdkRGB, so the specified drawable must have
 	 * the GdkRGB visual and colormap. Note that this function will ignore the
@@ -344,7 +344,7 @@ public class Pixbuf
 	
 	/**
 	 * Warning
-	 * gdk_pixbuf_render_to_drawable_alpha is deprecated and should not be used in newly-written code. This function is obsolete. Use gdk_draw_pixbuf() instead.
+	 * gdk_pixbuf_render_to_drawable_alpha has been deprecated since version 2.4 and should not be used in newly-written code. This function is obsolete. Use gdk_draw_pixbuf() instead.
 	 * Renders a rectangular portion of a pixbuf to a drawable. The destination
 	 * drawable must have a colormap. All windows have a colormap, however, pixmaps
 	 * only have colormap by default if they were created with a non-NULL window argument.
@@ -938,7 +938,7 @@ public class Pixbuf
 	
 	
 	/**
-	 * Saves pixbuf to a file in type, which is currently "jpeg", "png", "ico" or "bmp".
+	 * Saves pixbuf to a file in type, which is currently "jpeg", "png", "tiff", "ico" or "bmp".
 	 * If error is set, FALSE will be returned.
 	 * See gdk_pixbuf_save() for more details.
 	 * pixbuf:
@@ -1046,7 +1046,7 @@ public class Pixbuf
 	
 	/**
 	 * Saves pixbuf to a callback in format type, which is currently "jpeg",
-	 * "png", "ico" or "bmp". If error is set, FALSE will be returned. See
+	 * "png", "tiff", "ico" or "bmp". If error is set, FALSE will be returned. See
 	 * gdk_pixbuf_save_to_callback() for more details.
 	 * pixbuf:
 	 *  a GdkPixbuf.
@@ -1075,7 +1075,7 @@ public class Pixbuf
 	
 	/**
 	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
-	 * "png", "ico" or "bmp". This is a convenience function that uses
+	 * "png", "tiff", "ico" or "bmp". This is a convenience function that uses
 	 * gdk_pixbuf_save_to_callback() to do the real work. Note that the buffer
 	 * is not nul-terminated and may contain embedded nuls.
 	 * If error is set, FALSE will be returned and string will be set to
@@ -1106,7 +1106,7 @@ public class Pixbuf
 	
 	/**
 	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
-	 * "png", "ico" or "bmp". See gdk_pixbuf_save_to_buffer() for more details.
+	 * "tiff", "png", "ico" or "bmp". See gdk_pixbuf_save_to_buffer() for more details.
 	 * pixbuf:
 	 *  a GdkPixbuf.
 	 * buffer:

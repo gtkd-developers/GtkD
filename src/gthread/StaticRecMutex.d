@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gthread
  * outFile = StaticRecMutex
  * strct   = GStaticRecMutex
@@ -46,7 +47,7 @@
 
 module gthread.StaticRecMutex;
 
-private import gthread.typedefs;
+private import gthread.gthreadtypes;
 
 private import lib.gthread;
 
@@ -56,26 +57,28 @@ private import lib.gthread;
  * Threads act almost like processes, but unlike processes all threads of
  * one process share the same memory. This is good, as it provides easy
  * communication between the involved threads via this shared memory, and
- * it is bad, because strange things (so called Heisenbugs) might happen,
- * when the program is not carefully designed. Especially bad is, that due
- * to the concurrent nature of threads no assumptions on the order of
- * execution of different threads can be done unless explicitly forced by
- * the programmer through synchronization primitives.
+ * it is bad, because strange things (so called "Heisenbugs") might
+ * happen if the program is not carefully designed. In particular, due to
+ * the concurrent nature of threads, no assumptions on the order of
+ * execution of code running in different threads can be made, unless
+ * order is explicitly forced by the programmer through synchronization
+ * primitives.
  * The aim of the thread related functions in GLib is to provide a
  * portable means for writing multi-threaded software. There are
  * primitives for mutexes to protect the access to portions of memory
  * (GMutex, GStaticMutex, G_LOCK_DEFINE, GStaticRecMutex and
- * GStaticRWLock), there are primitives for condition variables to allow
- * synchronization of threads (GCond) and finally there are primitives
- * for thread-private data, that every thread has a private instance of
+ * GStaticRWLock). There are primitives for condition variables to allow
+ * synchronization of threads (GCond). There are primitives
+ * for thread-private data - data that every thread has a private instance of
  * (GPrivate, GStaticPrivate). Last but definitely not least there are
  * primitives to portably create and manage threads (GThread).
- * You must call g_thread_init() before executing any other GLib functions
- * in a threaded GLib program. After that, GLib is completely thread safe
- * (all global data is automatically locked). But individual data structure
- * instances are not automatically locked for performance reasons. So e.g.
- * you must coordinate accesses to the same GHashTable from multiple threads.
- * The two notable exceptions from this rule are GMainLoop and GAsyncQueue,
+ * You must call g_thread_init() before executing any other GLib
+ * functions in a threaded GLib program. After that, GLib is completely
+ * thread safe (all global data is automatically locked), but individual
+ * data structure instances are not automatically locked for performance
+ * reasons. So, for example you must coordinate accesses to the same
+ * GHashTable from multiple threads. The two notable exceptions from
+ * this rule are GMainLoop and GAsyncQueue,
  * which are threadsafe and needs no further
  * application-level locking to be accessed from multiple threads.
  */
@@ -151,7 +154,7 @@ public class StaticRecMutex
 	
 	
 	/**
-	 * A GStaticRecMutex must be initialized with this function, before it
+	 * A GStaticRecMutex must be initialized with this function before it
 	 * can be used. Alternatively you can initialize it with
 	 * G_STATIC_REC_MUTEX_INIT.
 	 * mutex:
@@ -194,11 +197,11 @@ public class StaticRecMutex
 	}
 	
 	/**
-	 * Unlocks mutex. Another threads can, however, only lock mutex when it
-	 * has been unlocked as many times, as it had been locked before. If
-	 * mutex is completely unlocked and another thread is blocked in a
-	 * g_static_rec_mutex_lock() call for mutex, it will be woken and can
-	 * lock mutex itself.
+	 * Unlocks mutex. Another thread can will be allowed to lock mutex only
+	 * when it has been unlocked as many times as it had been locked
+	 * before. If mutex is completely unlocked and another thread is blocked
+	 * in a g_static_rec_mutex_lock() call for mutex, it will be woken and
+	 * can lock mutex itself.
 	 * mutex:
 	 * a GStaticRecMutex to unlock.
 	 */
@@ -224,7 +227,7 @@ public class StaticRecMutex
 	/**
 	 * Completely unlocks mutex. If another thread is blocked in a
 	 * g_static_rec_mutex_lock() call for mutex, it will be woken and can
-	 * lock mutex itself. This function returns the number of times, that
+	 * lock mutex itself. This function returns the number of times that
 	 * mutex has been locked by the current thread. To restore the state
 	 * before the call to g_static_rec_mutex_unlock_full() you can call
 	 * g_static_rec_mutex_lock_full() with the depth returned by this

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkScrollbar.html
  * outPack = gtk
  * outFile = Scrollbar
  * strct   = GtkScrollbar
@@ -47,7 +48,7 @@
 
 module gtk.Scrollbar;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkRange.html
  * outPack = gtk
  * outFile = Range
  * strct   = GtkRange
@@ -49,7 +50,7 @@
 
 module gtk.Range;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -92,7 +93,7 @@ public class Range : Widget
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gdouble, Range)[] onAdjustBoundsListeners;
@@ -106,7 +107,7 @@ public class Range : Widget
 			cast(GCallback)&callBackAdjustBounds,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["adjust-bounds"] = 1;
 		}
 		onAdjustBoundsListeners ~= dlg;
@@ -134,7 +135,7 @@ public class Range : Widget
 			cast(GCallback)&callBackChangeValue,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["change-value"] = 1;
 		}
 		onChangeValueListeners ~= dlg;
@@ -162,7 +163,7 @@ public class Range : Widget
 			cast(GCallback)&callBackMoveSlider,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-slider"] = 1;
 		}
 		onMoveSliderListeners ~= dlg;
@@ -190,7 +191,7 @@ public class Range : Widget
 			cast(GCallback)&callBackValueChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["value-changed"] = 1;
 		}
 		onValueChangedListeners ~= dlg;
@@ -363,16 +364,82 @@ public class Range : Widget
 	 *  a GtkRange
 	 * value:
 	 *  new value of the range
-	 * Property Details
-	 * The "adjustment" property
-	 *  "adjustment" GtkAdjustment : Read / Write / Construct
-	 * The GtkAdjustment that contains the current value of this range object.
 	 */
 	public void setValue(double value)
 	{
 		// void gtk_range_set_value (GtkRange *range,  gdouble value);
 		gtk_range_set_value(gtkRange, value);
 	}
+	
+	
+	/**
+	 * Sets the sensitivity policy for the stepper that points to the
+	 * 'lower' end of the GtkRange's adjustment.
+	 * range:
+	 *  a GtkRange
+	 * sensitivity:
+	 *  the lower stepper's sensitivity policy.
+	 * Since 2.10
+	 */
+	public void setLowerStepperSensitivity(GtkSensitivityType sensitivity)
+	{
+		// void gtk_range_set_lower_stepper_sensitivity  (GtkRange *range,  GtkSensitivityType sensitivity);
+		gtk_range_set_lower_stepper_sensitivity(gtkRange, sensitivity);
+	}
+	
+	/**
+	 * Gets the sensitivity policy for the stepper that points to the
+	 * 'lower' end of the GtkRange's adjustment.
+	 * range:
+	 *  a GtkRange
+	 * Returns:
+	 *  The lower stepper's sensitivity policy.
+	 * Since 2.10
+	 */
+	public GtkSensitivityType getLowerStepperSensitivity()
+	{
+		// GtkSensitivityType gtk_range_get_lower_stepper_sensitivity  (GtkRange *range);
+		return gtk_range_get_lower_stepper_sensitivity(gtkRange);
+	}
+	
+	/**
+	 * Sets the sensitivity policy for the stepper that points to the
+	 * 'upper' end of the GtkRange's adjustment.
+	 * range:
+	 *  a GtkRange
+	 * sensitivity:
+	 *  the upper stepper's sensitivity policy.
+	 * Since 2.10
+	 */
+	public void setUpperStepperSensitivity(GtkSensitivityType sensitivity)
+	{
+		// void gtk_range_set_upper_stepper_sensitivity  (GtkRange *range,  GtkSensitivityType sensitivity);
+		gtk_range_set_upper_stepper_sensitivity(gtkRange, sensitivity);
+	}
+	
+	/**
+	 * Gets the sensitivity policy for the stepper that points to the
+	 * 'upper' end of the GtkRange's adjustment.
+	 * range:
+	 *  a GtkRange
+	 * Returns:
+	 *  The upper stepper's sensitivity policy.
+	 * Since 2.10
+	 * Property Details
+	 * The "adjustment" property
+	 *  "adjustment" GtkAdjustment : Read / Write / Construct
+	 * The GtkAdjustment that contains the current value of this range object.
+	 */
+	public GtkSensitivityType getUpperStepperSensitivity()
+	{
+		// GtkSensitivityType gtk_range_get_upper_stepper_sensitivity  (GtkRange *range);
+		return gtk_range_get_upper_stepper_sensitivity(gtkRange);
+	}
+	
+	
+	
+	
+	
 	
 	
 	

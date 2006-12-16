@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gobject
  * outFile = CClosure
  * strct   = GCClosure
@@ -54,7 +55,7 @@
 
 module gobject.CClosure;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 

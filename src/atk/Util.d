@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkUtil.html
  * outPack = atk
  * outFile = Util
  * strct   = 
@@ -47,7 +48,7 @@
 
 module atk.Util;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
@@ -55,9 +56,9 @@ private import glib.Str;
 
 /**
  * Description
- * This is a utility class which supports the adding and removal of event
- * listeners. The adding and removing of the listeners must be done in the
- * same thread. The file also contains a number of utility functions.
+ * A set of ATK utility functions which are used to support event registration of
+ * various types, and obtaining the 'root' accessible of a process and
+ * information about the current ATK implementation and toolkit version.
  */
 public class Util
 {
@@ -99,12 +100,13 @@ public class Util
 	 * This function should be called by an implementation of the
 	 * ATK interface if any specific work needs to be done to enable
 	 * focus tracking.
-	 * add_function:
+	 * init:
+	 *  Function to be called for focus tracker initialization
 	 */
-	public static void focusTrackerInit(AtkEventListenerInit addFunction)
+	public static void focusTrackerInit(AtkEventListenerInit init)
 	{
-		// void atk_focus_tracker_init (AtkEventListenerInit add_function);
-		atk_focus_tracker_init(addFunction);
+		// void atk_focus_tracker_init (AtkEventListenerInit init);
+		atk_focus_tracker_init(init);
 	}
 	
 	/**
@@ -194,7 +196,9 @@ public class Util
 	/**
 	 * Gets the currently focused object.
 	 * Returns:
+	 * Returns:
 	 *  the currently focused object for the current application
+	 * Since ATK 1.6
 	 */
 	public static AtkObject* getFocusObject()
 	{

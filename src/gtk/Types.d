@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Types.html
  * outPack = gtk
  * outFile = Types
  * strct   = GtkType
@@ -48,7 +49,7 @@
 
 module gtk.Types;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

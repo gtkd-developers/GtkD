@@ -25,17 +25,47 @@
 ###
 #
 
+
+addTypedefs: start
+
+public import glib.glibtypes;
+public import glgdk.glgdktypes;
+public import gtk.gtktypes;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
 # must start with wrap
 
 wrap: glgtk
-srcout: srcgl
+srcout: src
 
 ###########################################################
 ### GL ####################################################
 ###########################################################
 
-
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gtkglinit.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gtkglinit.html
 
 #struct: GMutex
 class: GLtInit
@@ -43,7 +73,7 @@ prefix: gtk_gl_
 outFile: GLtInit
 
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gtkglwidget.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gtkglwidget.html
 
 #struct: GtkGLWidget
 class: GLWidget
@@ -78,7 +108,7 @@ code: end
 
 outFile: GLWidget
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gtkglversion.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gtkglversion.html
 
 #struct: GtkGLVersion
 class: GLtVersion

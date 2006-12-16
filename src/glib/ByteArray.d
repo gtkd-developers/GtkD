@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Byte-Arrays.html
  * outPack = glib
  * outFile = ByteArray
  * strct   = GByteArray
@@ -48,7 +49,7 @@
 
 module glib.ByteArray;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

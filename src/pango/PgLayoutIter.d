@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = pango
  * outFile = PgLayoutIter
  * strct   = PangoLayoutIter
@@ -75,7 +76,7 @@
 
 module pango.PgLayoutIter;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 

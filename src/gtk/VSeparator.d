@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkVSeparator.html
  * outPack = gtk
  * outFile = VSeparator
  * strct   = GtkVSeparator
@@ -47,7 +48,7 @@
 
 module gtk.VSeparator;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

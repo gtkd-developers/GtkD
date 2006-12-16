@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkBox.html
  * outPack = gtk
  * outFile = Box
  * strct   = GtkBox
@@ -49,7 +50,7 @@
 
 module gtk.Box;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -152,7 +153,7 @@ public class Box : Container
 	 * padding:
 	 * extra space in pixels to put between this child and its
 	 * neighbors, over and above the global amount specified by
-	 * spacing in GtkBox-struct. If child is a
+	 * spacing in GtkBox. If child is a
 	 * widget at one of the reference ends of box, then padding pixels are also put
 	 * between child and the reference edge of box.
 	 */
@@ -183,7 +184,7 @@ public class Box : Container
 	 * padding:
 	 * extra space in pixels to put between this child and its
 	 * neighbors, over and above the global amount specified by
-	 * spacing in GtkBox-struct. If child is a
+	 * spacing in GtkBox. If child is a
 	 * widget at one of the reference ends of box, then padding pixels are also put
 	 * between child and the reference edge of box.
 	 */
@@ -199,7 +200,7 @@ public class Box : Container
 	 * start of box.
 	 * Parameters for how to pack the child widget,
 	 * expand, fill,
-	 * and padding in GtkBoxChild-struct, are given their default
+	 * and padding in GtkBoxChild, are given their default
 	 * values, TRUE, TRUE, and 0, respectively.
 	 * box:
 	 * a GtkBox.
@@ -218,7 +219,7 @@ public class Box : Container
 	 * reference to the end of box.
 	 * Parameters for how to pack the child widget,
 	 * expand, fill,
-	 * and padding in GtkBoxChild-struct, are given their default
+	 * and padding in GtkBoxChild, are given their default
 	 * values, TRUE, TRUE, and 0, respectively.
 	 * box:
 	 * a GtkBox.
@@ -247,7 +248,7 @@ public class Box : Container
 	
 	/**
 	 * Sets the homogeneous field of
-	 * GtkBox-struct, controlling whether or not all children of box are
+	 * GtkBox, controlling whether or not all children of box are
 	 * given equal space in the box.
 	 * box:
 	 * a GtkBox.
@@ -275,7 +276,7 @@ public class Box : Container
 	}
 	
 	/**
-	 * Sets the spacing field of GtkBox-struct,
+	 * Sets the spacing field of GtkBox,
 	 * which is the number of pixels to place between children of box.
 	 * box:
 	 * a GtkBox.
@@ -291,7 +292,7 @@ public class Box : Container
 	/**
 	 * Moves child to a new position in the list of box children. The
 	 * list is the children field of
-	 * GtkBox-struct, and contains both widgets packed GTK_PACK_START as
+	 * GtkBox, and contains both widgets packed GTK_PACK_START as
 	 * well as widgets packed GTK_PACK_END, in the order that these widgets
 	 * were added to box.
 	 * A widget's position in the box children list determines where the
@@ -304,7 +305,7 @@ public class Box : Container
 	 * the GtkWidget to move.
 	 * position:
 	 * the new position for child in the
-	 * children list of GtkBox-struct, starting
+	 * children list of GtkBox, starting
 	 * from 0. If negative, indicates the end of the list.
 	 */
 	public void reorderChild(Widget child, int position)
@@ -321,16 +322,16 @@ public class Box : Container
 	 * the GtkWidget of the child to query.
 	 * expand:
 	 * the returned value of the expand
-	 * field in GtkBoxChild-struct.
+	 * field in GtkBoxChild.
 	 * fill:
 	 * the returned value of the fill field
-	 * in GtkBoxChild-struct.
+	 * in GtkBoxChild.
 	 * padding:
 	 * the returned value of the padding
-	 * field in GtkBoxChild-struct.
+	 * field in GtkBoxChild.
 	 * pack_type:
 	 * the returned value of the pack
-	 * field in GtkBoxChild-struct.
+	 * field in GtkBoxChild.
 	 */
 	public void queryChildPacking(Widget child, int* expand, int* fill, uint* padding, GtkPackType* packType)
 	{
@@ -346,16 +347,16 @@ public class Box : Container
 	 * the GtkWidget of the child to set.
 	 * expand:
 	 * the new value of the expand field
-	 * in GtkBoxChild-struct.
+	 * in GtkBoxChild.
 	 * fill:
 	 * the new value of the fill field in
-	 * GtkBoxChild-struct.
+	 * GtkBoxChild.
 	 * padding:
 	 * the new value of the padding
-	 * field in GtkBoxChild-struct.
+	 * field in GtkBoxChild.
 	 * pack_type:
 	 * the new value of the pack field
-	 * in GtkBoxChild-struct.
+	 * in GtkBoxChild.
 	 * Property Details
 	 * The "homogeneous" property
 	 *  "homogeneous" gboolean : Read / Write

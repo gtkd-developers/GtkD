@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gobject-GParamSpec.html
  * outPack = gobject
  * outFile = ParamSpec
  * strct   = GParamSpec
@@ -53,7 +54,7 @@
 
 module gobject.ParamSpec;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 

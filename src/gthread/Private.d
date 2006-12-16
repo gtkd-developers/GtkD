@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gthread
  * outFile = Private
  * strct   = GPrivate
@@ -48,7 +49,7 @@
 
 module gthread.Private;
 
-private import gthread.typedefs;
+private import gthread.gthreadtypes;
 
 private import lib.gthread;
 
@@ -59,26 +60,28 @@ private import glib.Dataset;
  * Threads act almost like processes, but unlike processes all threads of
  * one process share the same memory. This is good, as it provides easy
  * communication between the involved threads via this shared memory, and
- * it is bad, because strange things (so called Heisenbugs) might happen,
- * when the program is not carefully designed. Especially bad is, that due
- * to the concurrent nature of threads no assumptions on the order of
- * execution of different threads can be done unless explicitly forced by
- * the programmer through synchronization primitives.
+ * it is bad, because strange things (so called "Heisenbugs") might
+ * happen if the program is not carefully designed. In particular, due to
+ * the concurrent nature of threads, no assumptions on the order of
+ * execution of code running in different threads can be made, unless
+ * order is explicitly forced by the programmer through synchronization
+ * primitives.
  * The aim of the thread related functions in GLib is to provide a
  * portable means for writing multi-threaded software. There are
  * primitives for mutexes to protect the access to portions of memory
  * (GMutex, GStaticMutex, G_LOCK_DEFINE, GStaticRecMutex and
- * GStaticRWLock), there are primitives for condition variables to allow
- * synchronization of threads (GCond) and finally there are primitives
- * for thread-private data, that every thread has a private instance of
+ * GStaticRWLock). There are primitives for condition variables to allow
+ * synchronization of threads (GCond). There are primitives
+ * for thread-private data - data that every thread has a private instance of
  * (GPrivate, GStaticPrivate). Last but definitely not least there are
  * primitives to portably create and manage threads (GThread).
- * You must call g_thread_init() before executing any other GLib functions
- * in a threaded GLib program. After that, GLib is completely thread safe
- * (all global data is automatically locked). But individual data structure
- * instances are not automatically locked for performance reasons. So e.g.
- * you must coordinate accesses to the same GHashTable from multiple threads.
- * The two notable exceptions from this rule are GMainLoop and GAsyncQueue,
+ * You must call g_thread_init() before executing any other GLib
+ * functions in a threaded GLib program. After that, GLib is completely
+ * thread safe (all global data is automatically locked), but individual
+ * data structure instances are not automatically locked for performance
+ * reasons. So, for example you must coordinate accesses to the same
+ * GHashTable from multiple threads. The two notable exceptions from
+ * this rule are GMainLoop and GAsyncQueue,
  * which are threadsafe and needs no further
  * application-level locking to be accessed from multiple threads.
  */
@@ -184,15 +187,15 @@ public class Private
 	 * pointer keyed to this instance of GPrivate is non-NULL, the
 	 * destructor is called with this pointer as the argument.
 	 * Note
-	 * destructor is working quite differently from notify in
+	 * destructor is used quite differently from notify in
 	 * g_static_private_set().
 	 * Note
-	 * A GPrivate can not be freed. Reuse it instead, if you can to avoid
-	 * shortage or use GStaticPrivate.
+	 * A GPrivate can not be freed. Reuse it instead, if you can, to avoid
+	 * shortage, or use GStaticPrivate.
 	 * Note
-	 * This function will abort, if g_thread_init() has not been called yet.
+	 * This function will abort if g_thread_init() has not been called yet.
 	 * destructor:
-	 * a function to handle the data keyed to GPrivate, when a
+	 * a function to destroy the data keyed to GPrivate when a
 	 * thread ends.
 	 * Returns:
 	 * a new GPrivate.
@@ -204,11 +207,11 @@ public class Private
 	}
 	
 	/**
-	 * Returns the pointer keyed to private_key for the current thread. This
-	 * pointer is NULL, when g_private_set() hasn't been called for the
-	 * current private_key and thread yet.
-	 * This function can also be used, if g_thread_init() has not yet been
-	 * called and will return the value of private_key casted to gpointer then.
+	 * Returns the pointer keyed to private_key for the current thread.
+	 * If g_private_set() hasn't been called for the
+	 * current private_key and thread yet, this pointer will be NULL.
+	 * This function can be used even if g_thread_init() has not yet been
+	 * called, and, in that case, will return the value of private_key casted to gpointer.
 	 * private_key:
 	 * a GPrivate.
 	 * Returns:
@@ -222,8 +225,8 @@ public class Private
 	
 	/**
 	 * Sets the pointer keyed to private_key for the current thread.
-	 * This function can also be used, if g_thread_init() has not yet been
-	 * called and will set private_key to data casted to GPrivate* then.
+	 * This function can be used even if g_thread_init() has not yet been
+	 * called, and, in that case, will set private_key to data casted to GPrivate*.
 	 * private_key:
 	 * a GPrivate.
 	 * data:

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-General.html
  * outPack = gdk
  * outFile = Gdk
  * strct   = 
@@ -51,7 +52,7 @@
 
 module gdk.Gdk;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

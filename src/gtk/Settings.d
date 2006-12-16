@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkSettings.html
  * outPack = gtk
  * outFile = Settings
  * strct   = GtkSettings
@@ -56,7 +57,7 @@
 
 module gtk.Settings;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -301,16 +302,30 @@ public class Settings : ObjectG
 	 * v_double:
 	 * origin:
 	 * Property Details
-	 * The "gtk-alternative-button-order" property
-	 *  "gtk-alternative-button-order" gboolean : Read / Write
-	 * Whether buttons in dialogs should use the alternative button order.
-	 * Default value: FALSE
+	 * The "color-hash" property
+	 *  "color-hash" GHashTable : Read
+	 * Holds a hash table representation of the gtk-color-scheme setting,
+	 * mapping color names to GdkColors.
+	 * Since 2.10
 	 */
 	public void setDoubleProperty(char[] name, double vDouble, char[] origin)
 	{
 		// void gtk_settings_set_double_property  (GtkSettings *settings,  const gchar *name,  gdouble v_double,  const gchar *origin);
 		gtk_settings_set_double_property(gtkSettings, Str.toStringz(name), vDouble, Str.toStringz(origin));
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

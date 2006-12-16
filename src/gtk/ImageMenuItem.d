@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkImageMenuItem.html
  * outPack = gtk
  * outFile = ImageMenuItem
  * strct   = GtkImageMenuItem
@@ -54,7 +55,7 @@
 
 module gtk.ImageMenuItem;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

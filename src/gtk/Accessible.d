@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkAccessible.html
  * outPack = gtk
  * outFile = Accessible
  * strct   = GtkAccessible
@@ -47,7 +48,7 @@
 
 module gtk.Accessible;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = pango
  * outFile = PgFontsetSimple
  * strct   = PangoFontsetSimple
@@ -76,7 +77,7 @@
 
 module pango.PgFontsetSimple;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
@@ -235,12 +236,16 @@ public class PgFontsetSimple
 	
 	
 	
+	
+	
+	
 	/**
 	 * Creates a new PangoFontsetSimple for the given language.
 	 * language:
 	 *  a PangoLanguage tag
 	 * Returns:
-	 *  a newly-allocated PangoFontsetSimple.
+	 *  the newly allocated PangoFontsetSimple, which should
+	 *  be freed with g_object_unref().
 	 */
 	public this (PgLanguage language)
 	{

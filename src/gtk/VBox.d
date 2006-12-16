@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkVBox.html
  * outPack = gtk
  * outFile = VBox
  * strct   = GtkVBox
@@ -47,7 +48,7 @@
 
 module gtk.VBox;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

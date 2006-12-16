@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-gtkfilefilter.html
  * outPack = gtk
  * outFile = FileFilter
  * strct   = GtkFileFilter
@@ -48,7 +49,7 @@
 
 module gtk.FileFilter;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

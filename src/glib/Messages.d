@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Warnings-and-Assertions.html
  * outPack = glib
  * outFile = Messages
  * strct   = 
@@ -47,7 +48,7 @@
 
 module glib.Messages;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

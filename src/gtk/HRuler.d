@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkHRuler.html
  * outPack = gtk
  * outFile = HRuler
  * strct   = GtkHRuler
@@ -47,7 +48,7 @@
 
 module gtk.HRuler;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

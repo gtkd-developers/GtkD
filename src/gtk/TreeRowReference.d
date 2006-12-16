@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gtk
  * outFile = TreeRowReference
  * strct   = GtkTreeRowReference
@@ -54,7 +55,7 @@
 
 module gtk.TreeRowReference;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -225,7 +226,7 @@ public class TreeRowReference
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreePath, TreeIter, TreeRowReference)[] onRowChangedListeners;
@@ -239,18 +240,18 @@ public class TreeRowReference
 			cast(GCallback)&callBackRowChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-changed"] = 1;
 		}
 		onRowChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowChanged(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, TreeRowReference treeRowReference)
+	extern(C) static void callBackRowChanged(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeRowReference treeRowReference)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, TreeRowReference) dlg ; treeRowReference.onRowChangedListeners )
 		{
-			dlg(new TreePath(arg1), new TreeIter(arg2), treeRowReference);
+			dlg(new TreePath(path), new TreeIter(iter), treeRowReference);
 		}
 		
 		return consumed;
@@ -267,18 +268,18 @@ public class TreeRowReference
 			cast(GCallback)&callBackRowDeleted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-deleted"] = 1;
 		}
 		onRowDeletedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowDeleted(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, TreeRowReference treeRowReference)
+	extern(C) static void callBackRowDeleted(GtkTreeModel* treeModelStruct, GtkTreePath* path, TreeRowReference treeRowReference)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeRowReference) dlg ; treeRowReference.onRowDeletedListeners )
 		{
-			dlg(new TreePath(arg1), treeRowReference);
+			dlg(new TreePath(path), treeRowReference);
 		}
 		
 		return consumed;
@@ -295,18 +296,18 @@ public class TreeRowReference
 			cast(GCallback)&callBackRowHasChildToggled,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-has-child-toggled"] = 1;
 		}
 		onRowHasChildToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, TreeRowReference treeRowReference)
+	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeRowReference treeRowReference)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, TreeRowReference) dlg ; treeRowReference.onRowHasChildToggledListeners )
 		{
-			dlg(new TreePath(arg1), new TreeIter(arg2), treeRowReference);
+			dlg(new TreePath(path), new TreeIter(iter), treeRowReference);
 		}
 		
 		return consumed;
@@ -323,18 +324,18 @@ public class TreeRowReference
 			cast(GCallback)&callBackRowInserted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-inserted"] = 1;
 		}
 		onRowInsertedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowInserted(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, TreeRowReference treeRowReference)
+	extern(C) static void callBackRowInserted(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeRowReference treeRowReference)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, TreeRowReference) dlg ; treeRowReference.onRowInsertedListeners )
 		{
-			dlg(new TreePath(arg1), new TreeIter(arg2), treeRowReference);
+			dlg(new TreePath(path), new TreeIter(iter), treeRowReference);
 		}
 		
 		return consumed;
@@ -351,18 +352,18 @@ public class TreeRowReference
 			cast(GCallback)&callBackRowsReordered,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["rows-reordered"] = 1;
 		}
 		onRowsReorderedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowsReordered(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, gpointer arg3, TreeRowReference treeRowReference)
+	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, gpointer arg3, TreeRowReference treeRowReference)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, gpointer, TreeRowReference) dlg ; treeRowReference.onRowsReorderedListeners )
 		{
-			dlg(new TreePath(arg1), new TreeIter(arg2), arg3, treeRowReference);
+			dlg(new TreePath(path), new TreeIter(iter), arg3, treeRowReference);
 		}
 		
 		return consumed;
@@ -396,8 +397,8 @@ public class TreeRowReference
 	
 	
 	/**
-	 * Creates a row reference based on path. This reference will keep pointing to
-	 * the node pointed to by path, so long as it exists. It listens to all
+	 * Creates a row reference based on path. This reference will keep pointing
+	 * to the node pointed to by path, so long as it exists. It listens to all
 	 * signals emitted by model, and updates its path appropriately. If path
 	 * isn't a valid path in model, then NULL is returned.
 	 * model:
@@ -415,8 +416,8 @@ public class TreeRowReference
 	
 	/**
 	 * You do not need to use this function. Creates a row reference based on
-	 * path. This reference will keep pointing to the node pointed to by path, so
-	 * long as it exists. If path isn't a valid path in model, then NULL is
+	 * path. This reference will keep pointing to the node pointed to by path,
+	 * so long as it exists. If path isn't a valid path in model, then NULL is
 	 * returned. However, unlike references created with
 	 * gtk_tree_row_reference_new(), it does not listen to the model for changes.
 	 * The creator of the row reference must do this explicitly using
@@ -430,7 +431,7 @@ public class TreeRowReference
 	 * Further more, passing the same object as model and proxy
 	 * doesn't work for reasons of internal implementation.
 	 * This type of row reference is primarily meant by structures that need to
-	 * carefully monitor exactly when a row_reference updates itself, and is not
+	 * carefully monitor exactly when a row reference updates itself, and is not
 	 * generally needed by most applications.
 	 * proxy:
 	 *  A proxy GObject
@@ -448,12 +449,11 @@ public class TreeRowReference
 	}
 	
 	/**
-	 * Returns the model which reference is monitoring in order to appropriately
-	 * the path.
+	 * Returns the model that the row reference is monitoring.
 	 * reference:
 	 *  A GtkTreeRowReference
 	 * Returns:
-	 *  The model, or NULL.
+	 *  the model
 	 * Since 2.8
 	 */
 	public TreeModel getModel()

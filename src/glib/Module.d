@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Dynamic-Loading-of-Modules.html
  * outPack = glib
  * outFile = Module
  * strct   = GModule
@@ -49,7 +50,7 @@
 
 module glib.Module;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

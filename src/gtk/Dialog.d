@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkDialog.html
  * outPack = gtk
  * outFile = Dialog
  * strct   = GtkDialog
@@ -54,7 +55,7 @@
 
 module gtk.Dialog;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -182,7 +183,7 @@ public class Dialog : Window
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Dialog)[] onCloseListeners;
@@ -196,7 +197,7 @@ public class Dialog : Window
 			cast(GCallback)&callBackClose,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["close"] = 1;
 		}
 		onCloseListeners ~= dlg;
@@ -224,7 +225,7 @@ public class Dialog : Window
 			cast(GCallback)&callBackResponse,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["response"] = 1;
 		}
 		onResponseListeners ~= dlg;

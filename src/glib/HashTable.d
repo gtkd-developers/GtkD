@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Hash-Tables.html
  * outPack = glib
  * outFile = HashTable
  * strct   = GHashTable
@@ -48,7 +49,7 @@
 
 module glib.HashTable;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -370,6 +371,35 @@ public class HashTable
 	{
 		// guint g_hash_table_foreach_steal (GHashTable *hash_table,  GHRFunc func,  gpointer user_data);
 		return g_hash_table_foreach_steal(gHashTable, func, userData);
+	}
+	
+	/**
+	 * Removes all keys and their associated values from a GHashTable.
+	 * If the GHashTable was created using g_hash_table_new_full(), the keys
+	 * and values are freed using the supplied destroy functions, otherwise you
+	 * have to make sure that any dynamically allocated values are freed
+	 * yourself.
+	 * hash_table:
+	 *  a GHashTable
+	 * Since 2.12
+	 */
+	public void removeAll()
+	{
+		// void g_hash_table_remove_all (GHashTable *hash_table);
+		g_hash_table_remove_all(gHashTable);
+	}
+	
+	/**
+	 * Removes all keys and their associated values from a GHashTable
+	 * without calling the key and value destroy functions.
+	 * hash_table:
+	 *  a GHashTable.
+	 * Since 2.12
+	 */
+	public void stealAll()
+	{
+		// void g_hash_table_steal_all (GHashTable *hash_table);
+		g_hash_table_steal_all(gHashTable);
 	}
 	
 	

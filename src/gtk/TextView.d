@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTextView.html
  * outPack = gtk
  * outFile = TextView
  * strct   = GtkTextView
@@ -69,7 +70,7 @@
 
 module gtk.TextView;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -176,7 +177,7 @@ public class TextView : Container
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TextView)[] onBackspaceListeners;
@@ -190,7 +191,7 @@ public class TextView : Container
 			cast(GCallback)&callBackBackspace,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["backspace"] = 1;
 		}
 		onBackspaceListeners ~= dlg;
@@ -218,7 +219,7 @@ public class TextView : Container
 			cast(GCallback)&callBackCopyClipboard,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["copy-clipboard"] = 1;
 		}
 		onCopyClipboardListeners ~= dlg;
@@ -246,7 +247,7 @@ public class TextView : Container
 			cast(GCallback)&callBackCutClipboard,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["cut-clipboard"] = 1;
 		}
 		onCutClipboardListeners ~= dlg;
@@ -274,7 +275,7 @@ public class TextView : Container
 			cast(GCallback)&callBackDeleteFromCursor,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["delete-from-cursor"] = 1;
 		}
 		onDeleteFromCursorListeners ~= dlg;
@@ -302,7 +303,7 @@ public class TextView : Container
 			cast(GCallback)&callBackInsertAtCursor,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["insert-at-cursor"] = 1;
 		}
 		onInsertAtCursorListeners ~= dlg;
@@ -330,7 +331,7 @@ public class TextView : Container
 			cast(GCallback)&callBackMoveCursor,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -358,7 +359,7 @@ public class TextView : Container
 			cast(GCallback)&callBackMoveFocus,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-focus"] = 1;
 		}
 		onMoveFocusListeners ~= dlg;
@@ -386,7 +387,7 @@ public class TextView : Container
 			cast(GCallback)&callBackMoveViewport,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-viewport"] = 1;
 		}
 		onMoveViewportListeners ~= dlg;
@@ -414,7 +415,7 @@ public class TextView : Container
 			cast(GCallback)&callBackPageHorizontally,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["page-horizontally"] = 1;
 		}
 		onPageHorizontallyListeners ~= dlg;
@@ -442,7 +443,7 @@ public class TextView : Container
 			cast(GCallback)&callBackPasteClipboard,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["paste-clipboard"] = 1;
 		}
 		onPasteClipboardListeners ~= dlg;
@@ -470,7 +471,7 @@ public class TextView : Container
 			cast(GCallback)&callBackPopulatePopup,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["populate-popup"] = 1;
 		}
 		onPopulatePopupListeners ~= dlg;
@@ -498,7 +499,7 @@ public class TextView : Container
 			cast(GCallback)&callBackSelectAll,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["select-all"] = 1;
 		}
 		onSelectAllListeners ~= dlg;
@@ -526,7 +527,7 @@ public class TextView : Container
 			cast(GCallback)&callBackSetAnchor,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["set-anchor"] = 1;
 		}
 		onSetAnchorListeners ~= dlg;
@@ -554,7 +555,7 @@ public class TextView : Container
 			cast(GCallback)&callBackSetScrollAdjustments,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
@@ -582,7 +583,7 @@ public class TextView : Container
 			cast(GCallback)&callBackToggleOverwrite,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toggle-overwrite"] = 1;
 		}
 		onToggleOverwriteListeners ~= dlg;

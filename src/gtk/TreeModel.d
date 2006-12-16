@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTreeModel.html
  * outPack = gtk
  * outFile = TreeModel
  * strct   = GtkTreeModel
@@ -57,7 +58,7 @@
 
 module gtk.TreeModel;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -268,7 +269,7 @@ public class TreeModel
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreePath, TreeIter, TreeModel)[] onRowChangedListeners;
@@ -282,18 +283,18 @@ public class TreeModel
 			cast(GCallback)&callBackRowChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-changed"] = 1;
 		}
 		onRowChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowChanged(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, TreeModel treeModel)
+	extern(C) static void callBackRowChanged(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModel treeModel)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, TreeModel) dlg ; treeModel.onRowChangedListeners )
 		{
-			dlg(new TreePath(arg1), new TreeIter(arg2), treeModel);
+			dlg(new TreePath(path), new TreeIter(iter), treeModel);
 		}
 		
 		return consumed;
@@ -310,18 +311,18 @@ public class TreeModel
 			cast(GCallback)&callBackRowDeleted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-deleted"] = 1;
 		}
 		onRowDeletedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowDeleted(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, TreeModel treeModel)
+	extern(C) static void callBackRowDeleted(GtkTreeModel* treeModelStruct, GtkTreePath* path, TreeModel treeModel)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeModel) dlg ; treeModel.onRowDeletedListeners )
 		{
-			dlg(new TreePath(arg1), treeModel);
+			dlg(new TreePath(path), treeModel);
 		}
 		
 		return consumed;
@@ -338,18 +339,18 @@ public class TreeModel
 			cast(GCallback)&callBackRowHasChildToggled,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-has-child-toggled"] = 1;
 		}
 		onRowHasChildToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, TreeModel treeModel)
+	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModel treeModel)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, TreeModel) dlg ; treeModel.onRowHasChildToggledListeners )
 		{
-			dlg(new TreePath(arg1), new TreeIter(arg2), treeModel);
+			dlg(new TreePath(path), new TreeIter(iter), treeModel);
 		}
 		
 		return consumed;
@@ -366,18 +367,18 @@ public class TreeModel
 			cast(GCallback)&callBackRowInserted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-inserted"] = 1;
 		}
 		onRowInsertedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowInserted(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, TreeModel treeModel)
+	extern(C) static void callBackRowInserted(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeModel treeModel)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, TreeModel) dlg ; treeModel.onRowInsertedListeners )
 		{
-			dlg(new TreePath(arg1), new TreeIter(arg2), treeModel);
+			dlg(new TreePath(path), new TreeIter(iter), treeModel);
 		}
 		
 		return consumed;
@@ -394,18 +395,18 @@ public class TreeModel
 			cast(GCallback)&callBackRowsReordered,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["rows-reordered"] = 1;
 		}
 		onRowsReorderedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowsReordered(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, gpointer arg3, TreeModel treeModel)
+	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, gpointer arg3, TreeModel treeModel)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, gpointer, TreeModel) dlg ; treeModel.onRowsReorderedListeners )
 		{
-			dlg(new TreePath(arg1), new TreeIter(arg2), arg3, treeModel);
+			dlg(new TreePath(path), new TreeIter(iter), arg3, treeModel);
 		}
 		
 		return consumed;
@@ -580,9 +581,9 @@ public class TreeModel
 	}
 	
 	/**
-	 * Sets iter to point to the first child of parent. If parent has no children,
-	 * FALSE is returned and iter is set to be invalid. parent will remain a valid
-	 * node after this function has been called.
+	 * Sets iter to point to the first child of parent. If parent has no
+	 * children, FALSE is returned and iter is set to be invalid. parent
+	 * will remain a valid node after this function has been called.
 	 * If parent is NULL returns the first node, equivalent to
 	 * gtk_tree_model_get_iter_first (tree_model, iter);
 	 * tree_model:
@@ -696,8 +697,8 @@ public class TreeModel
 	 * Lets the tree ref the node. This is an optional method for models to
 	 * implement. To be more specific, models may ignore this call as it exists
 	 * primarily for performance reasons.
-	 * This function is primarily meant as a way for views to let caching model know
-	 * when nodes are being displayed (and hence, whether or not to cache that
+	 * This function is primarily meant as a way for views to let caching model
+	 * know when nodes are being displayed (and hence, whether or not to cache that
 	 * node.) For example, a file-system based model would not want to keep the
 	 * entire file-hierarchy in memory, just the sections that are currently being
 	 * displayed by every current view.
@@ -771,8 +772,9 @@ public class TreeModel
 	}
 	
 	/**
-	 * Calls func on each node in model in a depth-first fashion. If func returns
-	 * TRUE, then the tree ceases to be walked, and gtk_tree_model_foreach() returns.
+	 * Calls func on each node in model in a depth-first fashion.
+	 * If func returns TRUE, then the tree ceases to be walked, and
+	 * gtk_tree_model_foreach() returns.
 	 * model:
 	 *  A GtkTreeModel
 	 * func:
@@ -834,9 +836,9 @@ public class TreeModel
 	
 	/**
 	 * Emits the "row_deleted" signal on tree_model. This should be called by
-	 * models after a row has been removed. The location pointed to by path should
-	 * be the location that the row previously was at. It may not be a valid
-	 * location anymore.
+	 * models after a row has been removed. The location pointed to by path
+	 * should be the location that the row previously was at. It may not be a
+	 * valid location anymore.
 	 * tree_model:
 	 *  A GtkTreeModel
 	 * path:
@@ -854,23 +856,28 @@ public class TreeModel
 	 * tree_model:
 	 *  A GtkTreeModel
 	 * path:
-	 *  A GtkTreePath pointing to the tree node whose children have been reordered
+	 *  A GtkTreePath pointing to the tree node whose children have been
+	 *  reordered
 	 * iter:
-	 *  A valid GtkTreeIter pointing to the node whose children have been reordered, or NULL if the depth of path is 0.
+	 *  A valid GtkTreeIter pointing to the node whose children have been
+	 *  reordered, or NULL if the depth of path is 0.
 	 * new_order:
 	 *  an array of integers mapping the current position of each child
 	 *  to its old position before the re-ordering,
 	 *  i.e. new_order[newpos] = oldpos.
 	 * Signal Details
 	 * The "row-changed" signal
-	 * void user_function (GtkTreeModel *treemodel,
-	 *  GtkTreePath *arg1,
-	 *  GtkTreeIter *arg2,
+	 * void user_function (GtkTreeModel *tree_model,
+	 *  GtkTreePath *path,
+	 *  GtkTreeIter *iter,
 	 *  gpointer user_data) : Run last
-	 * treemodel:
-	 * the object which received the signal.
-	 * arg1:
-	 * arg2:
+	 * This signal is emitted when a row in the model has changed.
+	 * tree_model:
+	 *  the GtkTreeModel on which the signal is emitted
+	 * path:
+	 *  a GtkTreePath identifying the changed row
+	 * iter:
+	 *  a valid GtkTreeIter pointing to the changed row
 	 * user_data:
 	 * user data set when the signal handler was connected.
 	 */

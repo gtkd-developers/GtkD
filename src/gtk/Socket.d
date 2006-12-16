@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkSocket.html
  * outPack = gtk
  * outFile = Socket
  * strct   = GtkSocket
@@ -47,7 +48,7 @@
 
 module gtk.Socket;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -140,7 +141,7 @@ public class Socket : Container
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Socket)[] onPlugAddedListeners;
@@ -154,7 +155,7 @@ public class Socket : Container
 			cast(GCallback)&callBackPlugAdded,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["plug-added"] = 1;
 		}
 		onPlugAddedListeners ~= dlg;
@@ -182,7 +183,7 @@ public class Socket : Container
 			cast(GCallback)&callBackPlugRemoved,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["plug-removed"] = 1;
 		}
 		onPlugRemovedListeners ~= dlg;

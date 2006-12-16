@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = pango-Fonts.html
  * outPack = pango
  * outFile = PgFontDescription
  * strct   = PangoFontDescription
@@ -81,7 +82,7 @@
 
 module pango.PgFontDescription;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
@@ -168,8 +169,8 @@ public class PgFontDescription
 	/**
 	 * Creates a new font description structure with all fields unset.
 	 * Returns:
-	 *  the newly-created PangoFontDescription. Use
-	 * pango_font_description_free() to free the result.
+	 *  the newly allocated PangoFontDescription, which
+	 *  should be freed using pango_font_description_free().
 	 */
 	public this ()
 	{
@@ -182,8 +183,8 @@ public class PgFontDescription
 	 * desc:
 	 *  a PangoFontDescription
 	 * Returns:
-	 *  a newly-allocated PangoFontDescription. This value
-	 *  must be freed using pango_font_description_free().
+	 *  the newly allocated PangoFontDescription, which should
+	 *  be freed with pango_font_description_free().
 	 */
 	public PangoFontDescription* copy()
 	{
@@ -199,8 +200,8 @@ public class PgFontDescription
 	 * desc:
 	 *  a PangoFontDescription
 	 * Returns:
-	 *  a newly-allocated PangoFontDescription. This value
-	 *  must be freed using pango_font_description_free().
+	 *  the newly allocated PangoFontDescription, which should
+	 *  be freed with pango_font_description_free().
 	 */
 	public PangoFontDescription* copyStatic()
 	{
@@ -308,7 +309,9 @@ public class PgFontDescription
 	 * desc:
 	 *  a PangoFontDescription.
 	 * Returns:
-	 *  The family name field. (Will be NULL if not previously set.)
+	 *  the family name field for the font description, or
+	 *  NULL if not previously set. This has the same life-time
+	 *  as the font description itself and should not be freed.
 	 */
 	public char[] getFamily()
 	{
@@ -466,14 +469,15 @@ public class PgFontDescription
 	
 	/**
 	 * Gets the size field of a font description.
-	 * See pango_font_description_get_size().
+	 * See pango_font_description_set_size().
 	 * desc:
 	 *  a PangoFontDescription
 	 * Returns:
 	 *  the size field for the font description in points or device units.
 	 *  You must call pango_font_description_get_size_is_absolute()
 	 *  to find out which is the case. Returns 0 if the size field has not
-	 *  previously been set. pango_font_description_get_set_fields() to
+	 *  previously been set or it has been set to 0 explicitly.
+	 *  Use pango_font_description_get_set_fields() to
 	 *  find out if the field was explicitely set or not.
 	 */
 	public int getSize()
@@ -514,6 +518,42 @@ public class PgFontDescription
 	{
 		// gboolean pango_font_description_get_size_is_absolute  (const PangoFontDescription *desc);
 		return pango_font_description_get_size_is_absolute(pangoFontDescription);
+	}
+	
+	/**
+	 * Sets the gravity field of a font description. The gravity field
+	 * specifies how the glyphs should be rotated. If gravity is
+	 * PANGO_GRAVITY_AUTO, this actually unsets the gravity mask on
+	 * the font description.
+	 * This function is seldom useful to the user. Gravity should normally
+	 * be set on a PangoContext.
+	 * desc:
+	 *  a PangoFontDescription
+	 * gravity:
+	 *  the gravity for the font description.
+	 * Since 1.16
+	 */
+	public void setGravity(PangoGravity gravity)
+	{
+		// void pango_font_description_set_gravity  (PangoFontDescription *desc,  PangoGravity gravity);
+		pango_font_description_set_gravity(pangoFontDescription, gravity);
+	}
+	
+	/**
+	 * Gets the gravity field of a font description. See
+	 * pango_font_description_set_gravity().
+	 * desc:
+	 *  a PangoFontDescription
+	 * Returns:
+	 *  the gravity field for the font description. Use
+	 *  pango_font_description_get_set_fields() to find out if
+	 *  the field was explicitely set or not.
+	 * Since 1.16
+	 */
+	public PangoGravity getGravity()
+	{
+		// PangoGravity pango_font_description_get_gravity  (const PangoFontDescription *desc);
+		return pango_font_description_get_gravity(pangoFontDescription);
 	}
 	
 	/**
@@ -608,9 +648,10 @@ public class PgFontDescription
 	 * Creates a new font description from a string representation in the
 	 * form "[FAMILY-LIST] [STYLE-OPTIONS] [SIZE]", where FAMILY-LIST is a
 	 * comma separated list of families optionally terminated by a comma,
-	 * STYLE_OPTIONS is a whitespace separated list of words where each
-	 * WORD describes one of style, variant, weight, or stretch, and SIZE
-	 * is an decimal number (size in points). Any one of the options may
+	 * STYLE_OPTIONS is a whitespace separated list of words where each WORD
+	 * describes one of style, variant, weight, stretch, or gravity, and SIZE
+	 * is a decimal number (size in points) or optionally followed by the
+	 * unit modifier "px" for absolute size. Any one of the options may
 	 * be absent. If FAMILY-LIST is absent, then the family_name field of
 	 * the resulting font description will be initialized to NULL. If
 	 * STYLE-OPTIONS is missing, then all style options will be set to the
@@ -695,7 +736,9 @@ public class PgFontDescription
 	}
 	
 	/**
-	 * Returns a description of the font.
+	 * Returns a description of the font, with font size set in points.
+	 * Use pango_font_describe_with_absolute_size() if you want the font
+	 * size in device units.
 	 * font:
 	 *  a PangoFont
 	 * Returns:
@@ -705,6 +748,22 @@ public class PgFontDescription
 	{
 		// PangoFontDescription* pango_font_describe (PangoFont *font);
 		return pango_font_describe(font);
+	}
+	
+	/**
+	 * Returns a description of the font, with absolute font size set
+	 * (in device units). Use pango_font_describe() if you want the font
+	 * size in points.
+	 * font:
+	 *  a PangoFont
+	 * Returns:
+	 *  a newly-allocated PangoFontDescription object.
+	 * Since 1.14
+	 */
+	public static PangoFontDescription* pangoFontDescribeWithAbsoluteSize(PangoFont* font)
+	{
+		// PangoFontDescription* pango_font_describe_with_absolute_size  (PangoFont *font);
+		return pango_font_describe_with_absolute_size(font);
 	}
 	
 	/**

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Atomic-Operations.html
  * outPack = glib
  * outFile = Atomic
  * strct   = 
@@ -46,7 +47,7 @@
 
 module glib.Atomic;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -63,9 +64,11 @@ private import lib.glib;
  * counting a very fast operation.
  * Note
  * You must not directly read integers or pointers concurrently accessed
- * by other threads with with the following functions directly. Always use
- * g_atomic_int_get() and g_atomic_pointer_get() respectively. They are
- * acting as a memory barrier.
+ * by multiple threads, but use the atomic accessor functions instead.
+ * That is, always use g_atomic_int_get() and g_atomic_pointer_get() for
+ * read outs.
+ * They provide the neccessary synchonization mechanisms like memory
+ * barriers to access memory locations concurrently.
  * Note
  * If you are using those functions for anything apart from simple
  * reference counting, you should really be aware of the implications of

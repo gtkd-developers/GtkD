@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gtk
  * outFile = TreeNode
  * strct   = 
@@ -45,7 +46,7 @@
 
 module gtk.TreeNode;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

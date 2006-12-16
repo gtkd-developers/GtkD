@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Accelerator-Maps.html
  * outPack = gtk
  * outFile = AccelMap
  * strct   = GtkAccelMap
@@ -50,7 +51,7 @@
 
 module gtk.AccelMap;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -94,7 +95,7 @@ public class AccelMap : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], guint, GdkModifierType, AccelMap)[] onChangedListeners;
@@ -108,7 +109,7 @@ public class AccelMap : ObjectG
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;

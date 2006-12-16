@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Unicode-Manipulation.html
  * outPack = glib
  * outFile = Unicode
  * strct   = 
@@ -48,7 +49,7 @@
 
 module glib.Unicode;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -64,6 +65,11 @@ private import glib.Str;
  * functions, functions to perform normalization, case conversion and
  * collation on UTF-8 strings and finally functions to convert between
  * the UTF-8, UTF-16 and UCS-4 encodings of Unicode.
+ * The implementations of the Unicode functions in GLib are based
+ * on the Unicode Character Data tables, which are available from
+ * www.unicode.org.
+ * GLib 2.8 supports Unicode 4.0, GLib 2.10 supports Unicode 4.1,
+ * GLib 2.12 supports Unicode 5.0.
  */
 public class Unicode
 {
@@ -302,6 +308,25 @@ public class Unicode
 	}
 	
 	/**
+	 * Determines if a character is typically rendered in a double-width
+	 * cell under legacy East Asian locales. If a character is wide according to
+	 * g_unichar_iswide(), then it is also reported wide with this function, but
+	 * the converse is not necessarily true. See the
+	 * Unicode Standard
+	 * Annex 11 for details.
+	 * c:
+	 *  a Unicode character
+	 * Returns:
+	 *  TRUE if the character is wide in legacy East Asian locales
+	 * Since 2.12
+	 */
+	public static int unicharIswideCjk(gunichar c)
+	{
+		// gboolean g_unichar_iswide_cjk (gunichar c);
+		return g_unichar_iswide_cjk(c);
+	}
+	
+	/**
 	 * Converts a character to uppercase.
 	 * c:
 	 *  a Unicode character
@@ -466,6 +491,24 @@ public class Unicode
 	
 	
 	/**
+	 * Looks up the GUnicodeScript for a particular character (as defined
+	 * by Unicode Standard Annex 24). No check is made for ch being a
+	 * valid Unicode character; if you pass in invalid character, the
+	 * result is undefined.
+	 * ch:
+	 *  a Unicode character
+	 * Returns:
+	 *  the GUnicodeScript for the character.
+	 * Since 2.14
+	 */
+	public static GUnicodeScript unicharGetScript(gunichar ch)
+	{
+		// GUnicodeScript g_unichar_get_script (gunichar ch);
+		return g_unichar_get_script(ch);
+	}
+	
+	
+	/**
 	 * Converts a sequence of bytes encoded as UTF-8 to a Unicode character.
 	 * If p does not point to a valid UTF-8 encoded character, results are
 	 * undefined. If you are not sure that the bytes are complete
@@ -581,7 +624,7 @@ public class Unicode
 	/**
 	 * Given a position p with a UTF-8 encoded string str, find the start
 	 * of the previous UTF-8 character starting before p. Returns NULL if no
-	 * UTF-8 characters are present in p before str.
+	 * UTF-8 characters are present in str before p.
 	 * p does not have to be at the beginning of a UTF-8 character. No check
 	 * is made to see if the character found is actually valid other than
 	 * it starts with an appropriate byte.

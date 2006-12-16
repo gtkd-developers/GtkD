@@ -26,7 +26,8 @@
 module lib.gdk;
 
 private import std.stdio;
-private import gdk.typedefs;
+private import gdk.gdktypes;
+private import cairoLib.cairoLibtypes;
 private import lib.Loader;
 private import lib.paths;
 
@@ -112,6 +113,8 @@ extern(C)
 	gboolean function(GdkDisplay* display, GdkAtom selection)gdk_display_request_selection_notification;
 	gboolean function(GdkDisplay* display)gdk_display_supports_clipboard_persistence;
 	void function(GdkDisplay* display, GdkWindow* clipboardWindow, guint32 time, GdkAtom* targets, gint nTargets)gdk_display_store_clipboard;
+	gboolean function(GdkDisplay* display)gdk_display_supports_shapes;
+	gboolean function(GdkDisplay* display)gdk_display_supports_input_shapes;
 	
 	// gdk.DisplayManager
 	
@@ -132,6 +135,7 @@ extern(C)
 	GdkVisual* function(GdkScreen* screen)gdk_screen_get_rgb_visual;
 	GdkColormap* function(GdkScreen* screen)gdk_screen_get_rgba_colormap;
 	GdkVisual* function(GdkScreen* screen)gdk_screen_get_rgba_visual;
+	gboolean function(GdkScreen* screen)gdk_screen_is_composited;
 	GdkWindow* function(GdkScreen* screen)gdk_screen_get_root_window;
 	GdkDisplay* function(GdkScreen* screen)gdk_screen_get_display;
 	gint function(GdkScreen* screen)gdk_screen_get_number;
@@ -148,6 +152,12 @@ extern(C)
 	gint function(GdkScreen* screen, GdkWindow* window)gdk_screen_get_monitor_at_window;
 	void function(GdkScreen* screen, GdkEvent* event)gdk_screen_broadcast_client_message;
 	gboolean function(GdkScreen* screen, gchar* name, GValue* value)gdk_screen_get_setting;
+	cairo_font_options_t* function(GdkScreen* screen)gdk_screen_get_font_options;
+	void function(GdkScreen* screen, cairo_font_options_t* options)gdk_screen_set_font_options;
+	gdouble function(GdkScreen* screen)gdk_screen_get_resolution;
+	void function(GdkScreen* screen, gdouble dpi)gdk_screen_set_resolution;
+	GdkWindow* function(GdkScreen* screen)gdk_screen_get_active_window;
+	GList* function(GdkScreen* screen)gdk_screen_get_window_stack;
 	gboolean function(GdkScreen* screen, gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, gpointer userData, gint* childPid, GError** error)gdk_spawn_on_screen;
 	gboolean function(GdkScreen* screen, gchar* workingDirectory, gchar** argv, gchar** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, gpointer userData, gint* childPid, gint* standardInput, gint* standardOutput, gint* standardError, GError** error)gdk_spawn_on_screen_with_pipes;
 	gboolean function(GdkScreen* screen, gchar* commandLine, GError** error)gdk_spawn_command_line_on_screen;
@@ -169,7 +179,7 @@ extern(C)
 	gboolean function(GdkRegion* region)gdk_region_empty;
 	gboolean function(GdkRegion* region1, GdkRegion* region2)gdk_region_equal;
 	gboolean function(GdkRegion* region, int x, int y)gdk_region_point_in;
-	GdkOverlapType function(GdkRegion* region, GdkRectangle* rect)gdk_region_rect_in;
+	GdkOverlapType function(GdkRegion* region, GdkRectangle* rectangle)gdk_region_rect_in;
 	void function(GdkRegion* region, gint dx, gint dy)gdk_region_offset;
 	void function(GdkRegion* region, gint dx, gint dy)gdk_region_shrink;
 	void function(GdkRegion* region, GdkRectangle* rect)gdk_region_union_with_rect;
@@ -298,6 +308,51 @@ extern(C)
 	void function(GdkImage* image, gint x, gint y, guint32 pixel)gdk_image_put_pixel;
 	guint32 function(GdkImage* image, gint x, gint y)gdk_image_get_pixel;
 	
+	// gdk.Pixbuf
+	
+	void function(GdkPixbuf* pixbuf, GdkBitmap* bitmap, int srcX, int srcY, int destX, int destY, int width, int height, int alphaThreshold)gdk_pixbuf_render_threshold_alpha;
+	void function(GdkPixbuf* pixbuf, GdkDrawable* drawable, GdkGC* gc, int srcX, int srcY, int destX, int destY, int width, int height, GdkRgbDither dither, int xDither, int yDither)gdk_pixbuf_render_to_drawable;
+	void function(GdkPixbuf* pixbuf, GdkDrawable* drawable, int srcX, int srcY, int destX, int destY, int width, int height, GdkPixbufAlphaMode alphaMode, int alphaThreshold, GdkRgbDither dither, int xDither, int yDither)gdk_pixbuf_render_to_drawable_alpha;
+	void function(GdkPixbuf* pixbuf, GdkPixmap** pixmapReturn, GdkBitmap** maskReturn, int alphaThreshold)gdk_pixbuf_render_pixmap_and_mask;
+	void function(GdkPixbuf* pixbuf, GdkColormap* colormap, GdkPixmap** pixmapReturn, GdkBitmap** maskReturn, int alphaThreshold)gdk_pixbuf_render_pixmap_and_mask_for_colormap;
+	GdkPixbuf* function(GdkPixbuf* dest, GdkDrawable* src, GdkColormap* cmap, int srcX, int srcY, int destX, int destY, int width, int height)gdk_pixbuf_get_from_drawable;
+	GdkPixbuf* function(GdkPixbuf* dest, GdkImage* src, GdkColormap* cmap, int srcX, int srcY, int destX, int destY, int width, int height)gdk_pixbuf_get_from_image;
+	GType function()gdk_pixbuf_get_type;
+	GdkPixbuf* function(guchar* data, GdkColorspace colorspace, gboolean hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, gpointer destroyFnData)gdk_pixbuf_new_from_data;
+	GdkPixbuf* function(char** data)gdk_pixbuf_new_from_xpm_data;
+	GdkPixbuf* function(gint dataLength, guint8* data, gboolean copyPixels, GError** error)gdk_pixbuf_new_from_inline;
+	GdkPixbuf* function(GdkPixbuf* srcPixbuf, int srcX, int srcY, int width, int height)gdk_pixbuf_new_subpixbuf;
+	GdkPixbuf* function(GdkPixbuf* pixbuf)gdk_pixbuf_copy;
+	GdkColorspace function(GdkPixbuf* pixbuf)gdk_pixbuf_get_colorspace;
+	int function(GdkPixbuf* pixbuf)gdk_pixbuf_get_n_channels;
+	gboolean function(GdkPixbuf* pixbuf)gdk_pixbuf_get_has_alpha;
+	int function(GdkPixbuf* pixbuf)gdk_pixbuf_get_bits_per_sample;
+	guchar* function(GdkPixbuf* pixbuf)gdk_pixbuf_get_pixels;
+	int function(GdkPixbuf* pixbuf)gdk_pixbuf_get_width;
+	int function(GdkPixbuf* pixbuf)gdk_pixbuf_get_height;
+	int function(GdkPixbuf* pixbuf)gdk_pixbuf_get_rowstride;
+	gchar* function(GdkPixbuf* pixbuf, gchar* key)gdk_pixbuf_get_option;
+	GdkPixbuf* function(char* filename, GError** error)gdk_pixbuf_new_from_file;
+	GdkPixbuf* function(char* filename, int width, int height, GError** error)gdk_pixbuf_new_from_file_at_size;
+	GdkPixbuf* function(char* filename, int width, int height, gboolean preserveAspectRatio, GError** error)gdk_pixbuf_new_from_file_at_scale;
+	gboolean function(GdkPixbuf* pixbuf, char* filename, char* type, char** optionKeys, char** optionValues, GError** error)gdk_pixbuf_savev;
+	gboolean function(GdkPixbuf* pixbuf, char* filename, char* type, GError** error, ... )gdk_pixbuf_save;
+	gboolean function(GdkPixbuf* pixbuf, GdkPixbufSaveFunc saveFunc, gpointer userData, char* type, GError** error, ... )gdk_pixbuf_save_to_callback;
+	gboolean function(GdkPixbuf* pixbuf, GdkPixbufSaveFunc saveFunc, gpointer userData, char* type, char** optionKeys, char** optionValues, GError** error)gdk_pixbuf_save_to_callbackv;
+	gboolean function(GdkPixbuf* pixbuf, gchar** buffer, gsize* bufferSize, char* type, GError** error, ... )gdk_pixbuf_save_to_buffer;
+	gboolean function(GdkPixbuf* pixbuf, gchar** buffer, gsize* bufferSize, char* type, char** optionKeys, char** optionValues, GError** error)gdk_pixbuf_save_to_bufferv;
+	GdkPixbuf* function(GdkPixbuf* src, int destWidth, int destHeight, GdkInterpType interpType)gdk_pixbuf_scale_simple;
+	void function(GdkPixbuf* src, GdkPixbuf* dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType)gdk_pixbuf_scale;
+	GdkPixbuf* function(GdkPixbuf* src, int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, guint32 color1, guint32 color2)gdk_pixbuf_composite_color_simple;
+	void function(GdkPixbuf* src, GdkPixbuf* dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType, int overallAlpha)gdk_pixbuf_composite;
+	void function(GdkPixbuf* src, GdkPixbuf* dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType, int overallAlpha, int checkX, int checkY, int checkSize, guint32 color1, guint32 color2)gdk_pixbuf_composite_color;
+	GdkPixbuf* function(GdkPixbuf* src, GdkPixbufRotation angle)gdk_pixbuf_rotate_simple;
+	GdkPixbuf* function(GdkPixbuf* src, gboolean horizontal)gdk_pixbuf_flip;
+	GdkPixbuf* function(GdkPixbuf* pixbuf, gboolean substituteColor, guchar r, guchar g, guchar b)gdk_pixbuf_add_alpha;
+	void function(GdkPixbuf* srcPixbuf, int srcX, int srcY, int width, int height, GdkPixbuf* destPixbuf, int destX, int destY)gdk_pixbuf_copy_area;
+	void function(GdkPixbuf* src, GdkPixbuf* dest, gfloat saturation, gboolean pixelate)gdk_pixbuf_saturate_and_pixelate;
+	void function(GdkPixbuf* pixbuf, guint32 pixel)gdk_pixbuf_fill;
+	
 	// gdk.Colormap
 	
 	GdkColormap* function(GdkVisual* visual, gboolean allocate)gdk_colormap_new;
@@ -322,7 +377,7 @@ extern(C)
 	void function(GdkColor* color)gdk_color_free;
 	gint function(GdkColormap* colormap, GdkColor* color)gdk_color_white;
 	gint function(GdkColormap* colormap, GdkColor* color)gdk_color_black;
-	gint function(gchar* spec, GdkColor* color)gdk_color_parse;
+	gboolean function(gchar* spec, GdkColor* color)gdk_color_parse;
 	gint function(GdkColormap* colormap, GdkColor* color)gdk_color_alloc;
 	gint function(GdkColormap* colormap, GdkColor* color)gdk_color_change;
 	gboolean function(GdkColor* colora, GdkColor* colorb)gdk_color_equal;
@@ -423,6 +478,7 @@ extern(C)
 	void function(GdkWindow* window, GdkWindowEdge edge, gint button, gint rootX, gint rootY, guint32 timestamp)gdk_window_begin_resize_drag;
 	void function(GdkWindow* window, gint button, gint rootX, gint rootY, guint32 timestamp)gdk_window_begin_move_drag;
 	void function(GdkGeometry* geometry, guint flags, gint width, gint height, gint* newWidth, gint* newHeight)gdk_window_constrain_size;
+	void function(GdkWindow* window)gdk_window_beep;
 	void function(GdkWindow* window, GdkRectangle* rectangle)gdk_window_begin_paint_rect;
 	void function(GdkWindow* window, GdkRegion* region)gdk_window_begin_paint_region;
 	void function(GdkWindow* window)gdk_window_end_paint;
@@ -447,6 +503,10 @@ extern(C)
 	void function(GdkWindow* window, GdkRegion* shapeRegion, gint offsetX, gint offsetY)gdk_window_shape_combine_region;
 	void function(GdkWindow* window)gdk_window_set_child_shapes;
 	void function(GdkWindow* window)gdk_window_merge_child_shapes;
+	void function(GdkWindow* window, GdkBitmap* mask, gint x, gint y)gdk_window_input_shape_combine_mask;
+	void function(GdkWindow* window, GdkRegion* shapeRegion, gint offsetX, gint offsetY)gdk_window_input_shape_combine_region;
+	void function(GdkWindow* window)gdk_window_set_child_input_shapes;
+	void function(GdkWindow* window)gdk_window_merge_child_input_shapes;
 	gboolean function(GdkWindow* window, gboolean useStatic)gdk_window_set_static_gravities;
 	void function(GdkWindow* window, gint x, gint y, gint minWidth, gint minHeight, gint maxWidth, gint maxHeight, gint flags)gdk_window_set_hints;
 	void function(GdkWindow* window, gchar* title)gdk_window_set_title;
@@ -459,6 +519,7 @@ extern(C)
 	void function(GdkWindow* window, GList* pixbufs)gdk_window_set_icon_list;
 	void function(GdkWindow* window, gboolean modal)gdk_window_set_modal_hint;
 	void function(GdkWindow* window, GdkWindowTypeHint hint)gdk_window_set_type_hint;
+	GdkWindowTypeHint function(GdkWindow* window)gdk_window_get_type_hint;
 	void function(GdkWindow* window, gboolean skipsTaskbar)gdk_window_set_skip_taskbar_hint;
 	void function(GdkWindow* window, gboolean skipsPager)gdk_window_set_skip_pager_hint;
 	void function(GdkWindow* window, gboolean urgent)gdk_window_set_urgency_hint;
@@ -592,15 +653,6 @@ extern(C)
 	gboolean function(GdkDevice* device, gdouble* axes, GdkAxisUse use, gdouble* value)gdk_device_get_axis;
 	void function(GdkWindow* window, gint mask, GdkExtensionMode mode)gdk_input_set_extension_events;
 
-	// gdk.Pixbuf
-	
-	void function(GdkPixbuf* pixbuf, GdkBitmap* bitmap, int srcX, int srcY, int destX, int destY, int width, int height, int alphaThreshold)gdk_pixbuf_render_threshold_alpha;
-	void function(GdkPixbuf* pixbuf, GdkDrawable* drawable, GdkGC* gc, int srcX, int srcY, int destX, int destY, int width, int height, GdkRgbDither dither, int xDither, int yDither)gdk_pixbuf_render_to_drawable;
-	void function(GdkPixbuf* pixbuf, GdkDrawable* drawable, int srcX, int srcY, int destX, int destY, int width, int height, GdkPixbufAlphaMode alphaMode, int alphaThreshold, GdkRgbDither dither, int xDither, int yDither)gdk_pixbuf_render_to_drawable_alpha;
-	void function(GdkPixbuf* pixbuf, GdkPixmap** pixmapReturn, GdkBitmap** maskReturn, int alphaThreshold)gdk_pixbuf_render_pixmap_and_mask;
-	void function(GdkPixbuf* pixbuf, GdkColormap* colormap, GdkPixmap** pixmapReturn, GdkBitmap** maskReturn, int alphaThreshold)gdk_pixbuf_render_pixmap_and_mask_for_colormap;
-	GdkPixbuf* function(GdkPixbuf* dest, GdkDrawable* src, GdkColormap* cmap, int srcX, int srcY, int destX, int destY, int width, int height)gdk_pixbuf_get_from_drawable;
-	GdkPixbuf* function(GdkPixbuf* dest, GdkImage* src, GdkColormap* cmap, int srcX, int srcY, int destX, int destY, int width, int height)gdk_pixbuf_get_from_image;
 
 }
 
@@ -667,6 +719,8 @@ Symbol[] gdkLinks =
 	{ "gdk_display_request_selection_notification",  cast(void**)& gdk_display_request_selection_notification},
 	{ "gdk_display_supports_clipboard_persistence",  cast(void**)& gdk_display_supports_clipboard_persistence},
 	{ "gdk_display_store_clipboard",  cast(void**)& gdk_display_store_clipboard},
+	{ "gdk_display_supports_shapes",  cast(void**)& gdk_display_supports_shapes},
+	{ "gdk_display_supports_input_shapes",  cast(void**)& gdk_display_supports_input_shapes},
 	{ "gdk_display_manager_get",  cast(void**)& gdk_display_manager_get},
 	{ "gdk_display_manager_get_default_display",  cast(void**)& gdk_display_manager_get_default_display},
 	{ "gdk_display_manager_set_default_display",  cast(void**)& gdk_display_manager_set_default_display},
@@ -681,6 +735,7 @@ Symbol[] gdkLinks =
 	{ "gdk_screen_get_rgb_visual",  cast(void**)& gdk_screen_get_rgb_visual},
 	{ "gdk_screen_get_rgba_colormap",  cast(void**)& gdk_screen_get_rgba_colormap},
 	{ "gdk_screen_get_rgba_visual",  cast(void**)& gdk_screen_get_rgba_visual},
+	{ "gdk_screen_is_composited",  cast(void**)& gdk_screen_is_composited},
 	{ "gdk_screen_get_root_window",  cast(void**)& gdk_screen_get_root_window},
 	{ "gdk_screen_get_display",  cast(void**)& gdk_screen_get_display},
 	{ "gdk_screen_get_number",  cast(void**)& gdk_screen_get_number},
@@ -697,6 +752,12 @@ Symbol[] gdkLinks =
 	{ "gdk_screen_get_monitor_at_window",  cast(void**)& gdk_screen_get_monitor_at_window},
 	{ "gdk_screen_broadcast_client_message",  cast(void**)& gdk_screen_broadcast_client_message},
 	{ "gdk_screen_get_setting",  cast(void**)& gdk_screen_get_setting},
+	{ "gdk_screen_get_font_options",  cast(void**)& gdk_screen_get_font_options},
+	{ "gdk_screen_set_font_options",  cast(void**)& gdk_screen_set_font_options},
+	{ "gdk_screen_get_resolution",  cast(void**)& gdk_screen_get_resolution},
+	{ "gdk_screen_set_resolution",  cast(void**)& gdk_screen_set_resolution},
+	{ "gdk_screen_get_active_window",  cast(void**)& gdk_screen_get_active_window},
+	{ "gdk_screen_get_window_stack",  cast(void**)& gdk_screen_get_window_stack},
 	{ "gdk_spawn_on_screen",  cast(void**)& gdk_spawn_on_screen},
 	{ "gdk_spawn_on_screen_with_pipes",  cast(void**)& gdk_spawn_on_screen_with_pipes},
 	{ "gdk_spawn_command_line_on_screen",  cast(void**)& gdk_spawn_command_line_on_screen},
@@ -822,7 +883,48 @@ Symbol[] gdkLinks =
 	{ "gdk_image_set_colormap",  cast(void**)& gdk_image_set_colormap},
 	{ "gdk_image_put_pixel",  cast(void**)& gdk_image_put_pixel},
 	{ "gdk_image_get_pixel",  cast(void**)& gdk_image_get_pixel},
-	
+	{ "gdk_pixbuf_render_threshold_alpha",  cast(void**)& gdk_pixbuf_render_threshold_alpha},
+	{ "gdk_pixbuf_render_to_drawable",  cast(void**)& gdk_pixbuf_render_to_drawable},
+	{ "gdk_pixbuf_render_to_drawable_alpha",  cast(void**)& gdk_pixbuf_render_to_drawable_alpha},
+	{ "gdk_pixbuf_render_pixmap_and_mask",  cast(void**)& gdk_pixbuf_render_pixmap_and_mask},
+	{ "gdk_pixbuf_render_pixmap_and_mask_for_colormap",  cast(void**)& gdk_pixbuf_render_pixmap_and_mask_for_colormap},
+	{ "gdk_pixbuf_get_from_drawable",  cast(void**)& gdk_pixbuf_get_from_drawable},
+	{ "gdk_pixbuf_get_from_image",  cast(void**)& gdk_pixbuf_get_from_image},
+	{ "gdk_pixbuf_get_type",  cast(void**)& gdk_pixbuf_get_type},
+	{ "gdk_pixbuf_new_from_data",  cast(void**)& gdk_pixbuf_new_from_data},
+	{ "gdk_pixbuf_new_from_xpm_data",  cast(void**)& gdk_pixbuf_new_from_xpm_data},
+	{ "gdk_pixbuf_new_from_inline",  cast(void**)& gdk_pixbuf_new_from_inline},
+	{ "gdk_pixbuf_new_subpixbuf",  cast(void**)& gdk_pixbuf_new_subpixbuf},
+	{ "gdk_pixbuf_copy",  cast(void**)& gdk_pixbuf_copy},
+	{ "gdk_pixbuf_get_colorspace",  cast(void**)& gdk_pixbuf_get_colorspace},
+	{ "gdk_pixbuf_get_n_channels",  cast(void**)& gdk_pixbuf_get_n_channels},
+	{ "gdk_pixbuf_get_has_alpha",  cast(void**)& gdk_pixbuf_get_has_alpha},
+	{ "gdk_pixbuf_get_bits_per_sample",  cast(void**)& gdk_pixbuf_get_bits_per_sample},
+	{ "gdk_pixbuf_get_pixels",  cast(void**)& gdk_pixbuf_get_pixels},
+	{ "gdk_pixbuf_get_width",  cast(void**)& gdk_pixbuf_get_width},
+	{ "gdk_pixbuf_get_height",  cast(void**)& gdk_pixbuf_get_height},
+	{ "gdk_pixbuf_get_rowstride",  cast(void**)& gdk_pixbuf_get_rowstride},
+	{ "gdk_pixbuf_get_option",  cast(void**)& gdk_pixbuf_get_option},
+	{ "gdk_pixbuf_new_from_file",  cast(void**)& gdk_pixbuf_new_from_file},
+	{ "gdk_pixbuf_new_from_file_at_size",  cast(void**)& gdk_pixbuf_new_from_file_at_size},
+	{ "gdk_pixbuf_new_from_file_at_scale",  cast(void**)& gdk_pixbuf_new_from_file_at_scale},
+	{ "gdk_pixbuf_savev",  cast(void**)& gdk_pixbuf_savev},
+	{ "gdk_pixbuf_save",  cast(void**)& gdk_pixbuf_save},
+	{ "gdk_pixbuf_save_to_callback",  cast(void**)& gdk_pixbuf_save_to_callback},
+	{ "gdk_pixbuf_save_to_callbackv",  cast(void**)& gdk_pixbuf_save_to_callbackv},
+	{ "gdk_pixbuf_save_to_buffer",  cast(void**)& gdk_pixbuf_save_to_buffer},
+	{ "gdk_pixbuf_save_to_bufferv",  cast(void**)& gdk_pixbuf_save_to_bufferv},
+	{ "gdk_pixbuf_scale_simple",  cast(void**)& gdk_pixbuf_scale_simple},
+	{ "gdk_pixbuf_scale",  cast(void**)& gdk_pixbuf_scale},
+	{ "gdk_pixbuf_composite_color_simple",  cast(void**)& gdk_pixbuf_composite_color_simple},
+	{ "gdk_pixbuf_composite",  cast(void**)& gdk_pixbuf_composite},
+	{ "gdk_pixbuf_composite_color",  cast(void**)& gdk_pixbuf_composite_color},
+	{ "gdk_pixbuf_rotate_simple",  cast(void**)& gdk_pixbuf_rotate_simple},
+	{ "gdk_pixbuf_flip",  cast(void**)& gdk_pixbuf_flip},
+	{ "gdk_pixbuf_add_alpha",  cast(void**)& gdk_pixbuf_add_alpha},
+	{ "gdk_pixbuf_copy_area",  cast(void**)& gdk_pixbuf_copy_area},
+	{ "gdk_pixbuf_saturate_and_pixelate",  cast(void**)& gdk_pixbuf_saturate_and_pixelate},
+	{ "gdk_pixbuf_fill",  cast(void**)& gdk_pixbuf_fill},
 	{ "gdk_colormap_new",  cast(void**)& gdk_colormap_new},
 	{ "gdk_colormap_ref",  cast(void**)& gdk_colormap_ref},
 	{ "gdk_colormap_unref",  cast(void**)& gdk_colormap_unref},
@@ -931,6 +1033,7 @@ Symbol[] gdkLinks =
 	{ "gdk_window_begin_resize_drag",  cast(void**)& gdk_window_begin_resize_drag},
 	{ "gdk_window_begin_move_drag",  cast(void**)& gdk_window_begin_move_drag},
 	{ "gdk_window_constrain_size",  cast(void**)& gdk_window_constrain_size},
+	{ "gdk_window_beep",  cast(void**)& gdk_window_beep},
 	{ "gdk_window_begin_paint_rect",  cast(void**)& gdk_window_begin_paint_rect},
 	{ "gdk_window_begin_paint_region",  cast(void**)& gdk_window_begin_paint_region},
 	{ "gdk_window_end_paint",  cast(void**)& gdk_window_end_paint},
@@ -955,6 +1058,10 @@ Symbol[] gdkLinks =
 	{ "gdk_window_shape_combine_region",  cast(void**)& gdk_window_shape_combine_region},
 	{ "gdk_window_set_child_shapes",  cast(void**)& gdk_window_set_child_shapes},
 	{ "gdk_window_merge_child_shapes",  cast(void**)& gdk_window_merge_child_shapes},
+	{ "gdk_window_input_shape_combine_mask",  cast(void**)& gdk_window_input_shape_combine_mask},
+	{ "gdk_window_input_shape_combine_region",  cast(void**)& gdk_window_input_shape_combine_region},
+	{ "gdk_window_set_child_input_shapes",  cast(void**)& gdk_window_set_child_input_shapes},
+	{ "gdk_window_merge_child_input_shapes",  cast(void**)& gdk_window_merge_child_input_shapes},
 	{ "gdk_window_set_static_gravities",  cast(void**)& gdk_window_set_static_gravities},
 	{ "gdk_window_set_hints",  cast(void**)& gdk_window_set_hints},
 	{ "gdk_window_set_title",  cast(void**)& gdk_window_set_title},
@@ -967,6 +1074,7 @@ Symbol[] gdkLinks =
 	{ "gdk_window_set_icon_list",  cast(void**)& gdk_window_set_icon_list},
 	{ "gdk_window_set_modal_hint",  cast(void**)& gdk_window_set_modal_hint},
 	{ "gdk_window_set_type_hint",  cast(void**)& gdk_window_set_type_hint},
+	{ "gdk_window_get_type_hint",  cast(void**)& gdk_window_get_type_hint},
 	{ "gdk_window_set_skip_taskbar_hint",  cast(void**)& gdk_window_set_skip_taskbar_hint},
 	{ "gdk_window_set_skip_pager_hint",  cast(void**)& gdk_window_set_skip_pager_hint},
 	{ "gdk_window_set_urgency_hint",  cast(void**)& gdk_window_set_urgency_hint},
@@ -1075,14 +1183,5 @@ Symbol[] gdkLinks =
 	{ "gdk_device_free_history",  cast(void**)& gdk_device_free_history},
 	{ "gdk_device_get_axis",  cast(void**)& gdk_device_get_axis},
 	{ "gdk_input_set_extension_events",  cast(void**)& gdk_input_set_extension_events},
-
-	{ "gdk_pixbuf_render_threshold_alpha",  cast(void**)& gdk_pixbuf_render_threshold_alpha},
-	{ "gdk_pixbuf_render_to_drawable",  cast(void**)& gdk_pixbuf_render_to_drawable},
-	{ "gdk_pixbuf_render_to_drawable_alpha",  cast(void**)& gdk_pixbuf_render_to_drawable_alpha},
-	{ "gdk_pixbuf_render_pixmap_and_mask",  cast(void**)& gdk_pixbuf_render_pixmap_and_mask},
-	{ "gdk_pixbuf_render_pixmap_and_mask_for_colormap",  cast(void**)& gdk_pixbuf_render_pixmap_and_mask_for_colormap},
-	{ "gdk_pixbuf_get_from_drawable",  cast(void**)& gdk_pixbuf_get_from_drawable},
-	{ "gdk_pixbuf_get_from_image",  cast(void**)& gdk_pixbuf_get_from_image},
-	
 
 ];

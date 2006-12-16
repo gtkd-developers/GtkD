@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Resource-Files.html
  * outPack = gtk
  * outFile = RcStyle
  * strct   = GtkRcStyle
@@ -58,7 +59,7 @@
 
 module gtk.RcStyle;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -107,38 +108,37 @@ private import gtk.RcStyle;
  * and class declarations. As an example
  * of such a statement:
  * widget "mywindow.*.GtkEntry" style "my-entry-class"
- * attaches the style "my-entry-class"
- * to all widgets whose widget class
- * matches the pattern
- * "mywindow.*.GtkEntry".
- * The patterns here are given in the standard shell glob
- * syntax. The "?" wildcard matches
- * any character, while "*" matches
- * zero or more of any character. The three types of
- * matching are against the widget path, the
- * class path and the class
- * hierarchy. Both the widget and the class paths consists of a
- * "." separated list of all the
- * parents of the widget and the widget itself from
- * outermost to innermost. The difference is that in
- * the widget path, the name assigned by
- * gtk_widget_set_name() is used
- * if present, otherwise the class name of the widget, while
- * for the class path, the class name is always used.
- * So, if you have a GtkEntry named
- * "myentry", inside of a of a window
- * named "mywindow", then the
- * widget path is: "mwindow.GtkHBox.myentry"
+ * attaches the style "my-entry-class" to all
+ * widgets whose widget path matches the
+ * pattern "mywindow.*.GtkEntry".
+ * That is, all GtkEntry widgets which are part of a GtkWindow named
+ * "mywindow".
+ * The patterns here are given in the standard shell glob syntax.
+ * The "?" wildcard matches any character, while
+ * "*" matches zero or more of any character.
+ * The three types of matching are against the widget path, the
+ * class path and the class hierarchy. Both the
+ * widget path and the class path consist of a "."
+ * separated list of all the parents of the widget and the widget itself
+ * from outermost to innermost. The difference is that in the widget path,
+ * the name assigned by gtk_widget_set_name() is used if present, otherwise
+ * the class name of the widget, while for the class path, the class name is
+ * always used.
+ * Since GTK+ 2.10,widget_class paths can also contain
+ * <classname> substrings, which are matching
+ * the class with the given name and any derived classes. For instance,
+ * widget_class "*<GtkMenuItem>.GtkLabel" style "my-style"
+ * will match GtkLabel widgets which are contained in any kind of menu item.
+ * So, if you have a GtkEntry named "myentry", inside of a
+ * horizontal box in a window named "mywindow", then the
+ * widget path is: "mywindow.GtkHBox.myentry"
  * while the class path is: "GtkWindow.GtkHBox.GtkEntry".
- * Matching against class is a little different. The pattern
- * match is done against all class names in the widgets
- * class hierarchy (not the layout hierarchy) in sequence, so the
- * pattern:
+ * Matching against class is a little different. The pattern match is done
+ * against all class names in the widgets class hierarchy (not the layout
+ * hierarchy) in sequence, so the pattern:
  * class "GtkButton" style "my-style"
- * will match not just GtkButton widgets,
- * but also GtkToggleButton and
- * GtkCheckButton widgets, since
- * those classes derive from GtkButton.
+ * will match not just GtkButton widgets, but also GtkToggleButton and
+ * GtkCheckButton widgets, since those classes derive from GtkButton.
  * Additionally, a priority can be specified for each pattern, and styles
  * override other styles first by priority, then by pattern type and then
  * by order of specification (later overrides earlier). The priorities
@@ -156,6 +156,49 @@ private import gtk.RcStyle;
  * should be used for styles an application sets
  * up, and gtk is used for styles
  * that GTK+ creates internally.
+ * <hr>
+ * Optimizing RC Style Matches
+ * Everytime a widget is created and added to the layout hierarchy of a GtkWindow
+ * ("anchored" to be exact), a list of matching RC styles out of all RC styles read
+ * in so far is composed.
+ * For this, every RC style is matched against the widgets class path,
+ * the widgets name path and widgets inheritance hierarchy.
+ * As a consequence, significant slowdown can be caused by utilization of many
+ * RC styles and by using RC style patterns that are slow or complicated to match
+ * against a given widget.
+ * The following ordered list provides a number of advices (prioritized by
+ * effectiveness) to reduce the performance overhead associated with RC style
+ * matches:
+ *  Move RC styles for specific applications into RC files dedicated to those
+ *  applications and parse application specific RC files only from
+ *  applications that are affected by them.
+ *  This reduces the overall amount of RC styles that have to be considered
+ *  for a match across a group of applications.
+ *  Merge multiple styles which use the same matching rule, for instance:
+ *  style "Foo" { foo_content }
+ *  class "X" style "Foo"
+ *  style "Bar" { bar_content }
+ *  class "X" style "Bar"
+ *  is faster to match as:
+ *  style "FooBar" { foo_content bar_content }
+ *  class "X" style "FooBar"
+ *  Use of wildcards should be avoided, this can reduce the individual RC style
+ *  match to a single integer comparison in most cases.
+ *  To avoid complex recursive matching, specification of full class names
+ *  (for class matches) or full path names (for
+ *  widget and widget_class matches)
+ *  is to be preferred over shortened names
+ *  containing "*" or "?".
+ *  If at all necessary, wildcards should only be used at the tail or head
+ *  of a pattern. This reduces the match complexity to a string comparison
+ *  per RC style.
+ *  When using wildcards, use of "?" should be preferred
+ *  over "*". This can reduce the matching complexity from
+ *  O(n^2) to O(n). For example "Gtk*Box" can be turned into
+ *  "Gtk?Box" and will still match GtkHBox and GtkVBox.
+ *  The use of "*" wildcards should be restricted as much
+ *  as possible, because matching "A*B*C*RestString" can
+ *  result in matching complexities of O(n^2) worst case.
  * <hr>
  * Toplevel declarations
  * An RC file is a text file which is composed of a sequence
@@ -204,9 +247,9 @@ private import gtk.RcStyle;
  * Specifies a style or binding set for a particular
  *  group of widgets by matching on the class pathname.
  * setting = value
- * Specifies a value for a setting. Note that
- *  settings in RC files are overwritten by system-wide settings which are managed by
- *  an XSettings manager.
+ * Specifies a value for a setting.
+ *  Note that settings in RC files are overwritten by system-wide settings
+ *  (which are managed by an XSettings manager on X11).
  * <hr>
  * Styles
  * A RC style is specified by a style
@@ -265,6 +308,9 @@ private import gtk.RcStyle;
  *  pango_font_description_from_string().
  * stock["stock-id"] = { icon source specifications }
  *  Defines the icon for a stock item.
+ * color["color-name"] = color specification
+ *  Since 2.10, this element can be used to defines symbolic colors. See below for
+ *  the syntax of color specifications.
  * engine "engine" { engine-specific
  * settings }
  *  Defines the engine to be used when drawing with this style.
@@ -294,8 +340,7 @@ private import gtk.RcStyle;
  *  A color used for the background of widgets that have
  *  been set insensitive with gtk_widget_set_sensitive().
  * Colors can be specified as a string containing a color name (GTK+ knows
- * all names from the X color database
- * /usr/lib/X11/rgb.txt),
+ * all names from the X color database /usr/lib/X11/rgb.txt),
  * in one of the hexadecimal forms #rrrrggggbbbb,
  * #rrrgggbbb, #rrggbb,
  * or #rgb, where r,
@@ -305,6 +350,29 @@ private import gtk.RcStyle;
  * b}, where r,
  * g and b are either integers in
  * the range 0-65535 or floats in the range 0.0-1.0.
+ * Since 2.10, colors can also be specified by refering to a symbolic color, as
+ * follows: @color-name, or by using expressions to combine
+ * colors. The following expressions are currently supported:
+ * mix (factor, color1, color2)
+ *  Computes a new color by mixing color1 and
+ *  color2. The factor
+ *  determines how close the new color is to color1.
+ *  A factor of 1.0 gives pure color1, a factor of
+ *  0.0 gives pure color2.
+ * shade (factor, color)
+ *  Computes a lighter or darker variant of color.
+ *  A factor of 1.0 leaves the color unchanged, smaller
+ *  factors yield darker colors, larger factors yield lighter colors.
+ * lighter (color)
+ *  This is an abbreviation for
+ *  shade (1.3, color).
+ * darker (color)
+ *  This is an abbreviation for
+ *  shade (0.7, color).
+ * Here are some examples of color expressions:
+ *  mix (0.5, "red", "blue")
+ *  shade (1.5, mix (0.3, "#0abbc0", { 0.3, 0.5, 0.9 }))
+ *  lighter (@foreground)
  * In a stock definition, icon sources are specified as a
  * 4-tuple of image filename or icon name, text direction, widget state, and size, in that
  * order. Each icon source specifies an image filename or icon name to use with a given
@@ -367,7 +435,11 @@ private import gtk.RcStyle;
  * series of modifiers followed by the name of a key. The
  * modifiers can be:
  * <alt>
+ * <ctl>
  * <control>
+ * <meta>
+ * <hyper>
+ * <super>
  * <mod1>
  * <mod2>
  * <mod3>
@@ -377,7 +449,10 @@ private import gtk.RcStyle;
  * <shft>
  * <shift>
  * <shft> is an alias for
- * <shift> and
+ * <shift>,
+ * <ctl> is an alias for
+ * <control>,
+ *  and
  * <alt> is an alias for
  * <mod1>.
  * The action that is bound to the key is a sequence

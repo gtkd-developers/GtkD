@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Quarks.html
  * outPack = glib
  * outFile = Quark
  * strct   = GQuark
@@ -48,7 +49,7 @@
 
 module glib.Quark;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

@@ -21,7 +21,7 @@ module duit.TestTreeView;
 private import gtk.ScrolledWindow;
 	
 	
-private import gtk.typedefs;
+private import gtk.gtktypes;
 private import gtk.TreeView;
 private import gtk.TreePath;
 private import gtk.TreeViewColumn;
@@ -211,11 +211,11 @@ class TestTreeView : ScrolledWindow
 				//this.nCols = nCols;
 				static GType [5] columns = [
 					//DUIType.PIXBUF,
-					16<<2,
-					16<<2,
-					16<<2,
-					16<<2,
-					16<<2]; 
+					GType.STRING,
+					GType.STRING,
+					GType.STRING,
+					GType.STRING,
+					GType.STRING]; 
 				super(columns);
 				
 			}

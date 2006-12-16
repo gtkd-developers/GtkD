@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkFrame.html
  * outPack = gtk
  * outFile = Frame
  * strct   = GtkFrame
@@ -50,7 +51,7 @@
 
 module gtk.Frame;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkEditableText.html
  * outPack = atk
  * outFile = EditableText
  * strct   = AtkEditableText
@@ -47,7 +48,7 @@
 
 module atk.EditableText;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 

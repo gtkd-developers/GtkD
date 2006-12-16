@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCellView.html
  * outPack = gtk
  * outFile = CellView
  * strct   = GtkCellView
@@ -60,7 +61,7 @@
 
 module gtk.CellView;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -269,6 +270,7 @@ public class CellView : Widget
 		// GList* gtk_cell_view_get_cell_renderers  (GtkCellView *cell_view);
 		return new ListG( gtk_cell_view_get_cell_renderers(gtkCellView) );
 	}
+	
 	
 	
 }

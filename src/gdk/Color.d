@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gdk
  * outFile = Color
  * strct   = GdkColor
@@ -51,7 +52,7 @@
 
 module gdk.Color;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 
@@ -322,7 +323,7 @@ public class Color
 	 */
 	public static int parse(char[] spec, Color color)
 	{
-		// gint gdk_color_parse (const gchar *spec,  GdkColor *color);
+		// gboolean gdk_color_parse (const gchar *spec,  GdkColor *color);
 		return gdk_color_parse(Str.toStringz(spec), (color is null) ? null : color.getColorStruct());
 	}
 	

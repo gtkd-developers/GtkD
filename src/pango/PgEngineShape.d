@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = PangoEngineShape.html
  * outPack = pango
  * outFile = PgEngineShape
  * strct   = 
@@ -46,13 +47,16 @@
 
 module pango.PgEngineShape;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
 
 /**
  * Description
+ * The shape engines are rendering-system dependent
+ * engines that convert character strings into glyph strings.
+ * These engines are used in pango_shape().
  */
 public class PgEngineShape
 {

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkInputDialog.html
  * outPack = gtk
  * outFile = InputDialog
  * strct   = GtkInputDialog
@@ -47,7 +48,7 @@
 
 module gtk.InputDialog;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -109,7 +110,7 @@ public class InputDialog : Dialog
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(GdkDevice*, InputDialog)[] onDisableDeviceListeners;
@@ -123,7 +124,7 @@ public class InputDialog : Dialog
 			cast(GCallback)&callBackDisableDevice,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["disable-device"] = 1;
 		}
 		onDisableDeviceListeners ~= dlg;
@@ -151,7 +152,7 @@ public class InputDialog : Dialog
 			cast(GCallback)&callBackEnableDevice,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["enable-device"] = 1;
 		}
 		onEnableDeviceListeners ~= dlg;

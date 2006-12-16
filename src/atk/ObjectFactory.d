@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkObjectFactory.html
  * outPack = atk
  * outFile = ObjectFactory
  * strct   = AtkObjectFactory
@@ -48,7 +49,7 @@
 
 module atk.ObjectFactory;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 

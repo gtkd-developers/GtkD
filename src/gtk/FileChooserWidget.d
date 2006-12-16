@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkFileChooserWidget.html
  * outPack = gtk
  * outFile = FileChooserWidget
  * strct   = GtkFileChooserWidget
@@ -52,7 +53,7 @@
 
 module gtk.FileChooserWidget;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

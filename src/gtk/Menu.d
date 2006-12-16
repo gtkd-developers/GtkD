@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkMenu.html
  * outPack = gtk
  * outFile = Menu
  * strct   = GtkMenu
@@ -57,7 +58,7 @@
 
 module gtk.Menu;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -192,7 +193,7 @@ public class Menu : MenuShell
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkScrollType, Menu)[] onMoveScrollListeners;
@@ -206,7 +207,7 @@ public class Menu : MenuShell
 			cast(GCallback)&callBackMoveScroll,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-scroll"] = 1;
 		}
 		onMoveScrollListeners ~= dlg;
@@ -508,7 +509,7 @@ public class Menu : MenuShell
 	 * the GtkWidget that the menu will be attached to.
 	 * detacher:
 	 * the user supplied callback function that will be called when
-	 * the menu calls gtk_menu_detach(), or NULL
+	 * the menu calls gtk_menu_detach().
 	 */
 	public void attachToWidget(Widget attachWidget, GtkMenuDetachFunc detacher)
 	{
@@ -543,10 +544,10 @@ public class Menu : MenuShell
 	}
 	
 	/**
+	 * Returns a list of the menus which are attached to this widget.
+	 * This list is owned by GTK+ and must not be modified.
 	 * widget:
 	 *  a GtkWidget
-	 * * Returns a list of the menus which are attached to this widget.
-	 * This list is owned by GTK+ and must not be modified.
 	 * Returns:
 	 *  the list of menus attached to his widget.
 	 * Since 2.6
@@ -585,6 +586,8 @@ public class Menu : MenuShell
 		// void gtk_menu_set_monitor (GtkMenu *menu,  gint monitor_num);
 		gtk_menu_set_monitor(gtkMenu, monitorNum);
 	}
+	
+	
 	
 	
 	

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkAdjustment.html
  * outPack = gtk
  * outFile = Adjustment
  * strct   = GtkAdjustment
@@ -49,7 +50,7 @@
 
 module gtk.Adjustment;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -103,7 +104,7 @@ public class Adjustment : ObjectGtk
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Adjustment)[] onChangedListeners;
@@ -117,7 +118,7 @@ public class Adjustment : ObjectGtk
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -145,7 +146,7 @@ public class Adjustment : ObjectGtk
 			cast(GCallback)&callBackValueChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["value-changed"] = 1;
 		}
 		onValueChangedListeners ~= dlg;

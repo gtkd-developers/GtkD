@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = cairo-cairo-matrix-t.html
  * outPack = cairoLib
  * outFile = Matrix
  * strct   = cairo_matrix_t
@@ -48,7 +49,7 @@
 
 module cairoLib.Matrix;
 
-private import cairoLib.typedefs;
+private import cairoLib.cairoLibtypes;
 
 private import lib.cairoLib;
 
@@ -281,7 +282,7 @@ public class Matrix
 	
 	/**
 	 * Transforms the distance vector (dx,dy) by matrix. This is
-	 * similar to cairo_matrix_transform() except that the translation
+	 * similar to cairo_matrix_transform_point() except that the translation
 	 * components of the transformation are ignored. The calculation of
 	 * the returned vector is as follows:
 	 * dx2 = dx1 * a + dy1 * c;
@@ -311,8 +312,6 @@ public class Matrix
 	 *  X position. An in/out parameter
 	 * y:
 	 *  Y position. An in/out parameter
-	 * <<Utilities
-	 * Error handling>>
 	 */
 	public void transformPoint(double* x, double* y)
 	{

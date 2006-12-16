@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkMessageDialog.html
  * outPack = gtk
  * outFile = MessageDialog
  * strct   = GtkMessageDialog
@@ -52,7 +53,7 @@
 
 module gtk.MessageDialog;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -196,7 +197,7 @@ public class MessageDialog : Dialog
 			// GtkWidget* gtk_message_dialog_new_with_markup  (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
 			this(
 			cast(GtkMessageDialog*)gtk_message_dialog_new_with_markup(
-			parent.getWindowStruct(),
+			parent is null ? null : parent.getWindowStruct(),
 			flags,
 			type,
 			buttons,
@@ -211,7 +212,7 @@ public class MessageDialog : Dialog
 			// GtkWidget* gtk_message_dialog_new (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
 			this(
 			cast(GtkMessageDialog*)gtk_message_dialog_new(
-			parent.getWindowStruct(),
+			parent is null ? null : parent.getWindowStruct(),
 			flags,
 			type,
 			buttons,
@@ -246,6 +247,20 @@ public class MessageDialog : Dialog
 	{
 		// void gtk_message_dialog_set_markup (GtkMessageDialog *message_dialog,  const gchar *str);
 		gtk_message_dialog_set_markup(gtkMessageDialog, Str.toStringz(str));
+	}
+	
+	/**
+	 * Sets the dialog's image to image.
+	 * dialog:
+	 *  a GtkMessageDialog
+	 * image:
+	 *  the image
+	 * Since 2.10
+	 */
+	public void setImage(GtkWidget* image)
+	{
+		// void gtk_message_dialog_set_image (GtkMessageDialog *dialog,  GtkWidget *image);
+		gtk_message_dialog_set_image(gtkMessageDialog, image);
 	}
 	
 	/**
@@ -300,6 +315,11 @@ public class MessageDialog : Dialog
 		// void gtk_message_dialog_format_secondary_markup  (GtkMessageDialog *message_dialog,  const gchar *message_format,  ...);
 		gtk_message_dialog_format_secondary_markup(gtkMessageDialog, Str.toStringz(messageFormat));
 	}
+	
+	
+	
+	
+	
 	
 	
 }

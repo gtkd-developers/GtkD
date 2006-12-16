@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkFontSelectionDialog.html
  * outPack = gtk
  * outFile = FontSelectionDialog
  * strct   = GtkFontSelectionDialog
@@ -50,7 +51,7 @@
 
 module gtk.FontSelectionDialog;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -62,8 +63,7 @@ private import gdk.Font;
  * The GtkFontSelectionDialog widget is a dialog box for selecting a font.
  * To set the font which is initially selected, use
  * gtk_font_selection_dialog_set_font_name().
- * To get the selected font use gtk_font_selection_dialog_get_font()
- * or gtk_font_selection_dialog_get_font_name().
+ * To get the selected font use gtk_font_selection_dialog_get_font_name().
  * To change the text which is shown in the preview area, use
  * gtk_font_selection_dialog_set_preview_text().
  */
@@ -129,11 +129,17 @@ public class FontSelectionDialog : Dialog
 	}
 	
 	/**
-	 * Gets the currently-selected font name.
+	 * Gets the currently-selected font name. Note that this can be a different
+	 * string than what you set with gtk_font_selection_dialog_set_font_name(), as
+	 * the font selection widget may normalize font names and thus return a string
+	 * with a different structure. For example, "Helvetica Italic Bold 12" could be
+	 * normalized to "Helvetica Bold Italic 12". Use pango_font_description_equal()
+	 * if you want to compare two font descriptions.
 	 * fsd:
-	 * a GtkFontSelectionDialog.
+	 *  a GtkFontSelectionDialog
 	 * Returns:
-	 * the currently-selected font name, or NULL if no font is selected.
+	 *  A string with the name of the current font, or NULL if no font
+	 * is selected. You must free this string with g_free().
 	 */
 	public char[] getFontName()
 	{

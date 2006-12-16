@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCellRenderer.html
  * outPack = gtk
  * outFile = CellRenderer
  * strct   = GtkCellRenderer
@@ -58,7 +59,7 @@
 
 module gtk.CellRenderer;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -132,7 +133,7 @@ public class CellRenderer : ObjectGtk
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(CellRenderer)[] onEditingCanceledListeners;
@@ -146,7 +147,7 @@ public class CellRenderer : ObjectGtk
 			cast(GCallback)&callBackEditingCanceled,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["editing-canceled"] = 1;
 		}
 		onEditingCanceledListeners ~= dlg;
@@ -174,7 +175,7 @@ public class CellRenderer : ObjectGtk
 			cast(GCallback)&callBackEditingStarted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["editing-started"] = 1;
 		}
 		onEditingStartedListeners ~= dlg;
@@ -306,7 +307,7 @@ public class CellRenderer : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_cell_renderer_editing_canceled is deprecated and should not be used in newly-written code. Use gtk_cell_renderer_stop_editing() instead
+	 * gtk_cell_renderer_editing_canceled has been deprecated since version 2.6 and should not be used in newly-written code. Use gtk_cell_renderer_stop_editing() instead
 	 * Causes the cell renderer to emit the "editing-canceled" signal. This
 	 * function is for use only by implementations of cell renderers that need to
 	 * notify the client program that an editing process was canceled and the

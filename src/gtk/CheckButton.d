@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCheckButton.html
  * outPack = gtk
  * outFile = CheckButton
  * strct   = GtkCheckButton
@@ -52,7 +53,7 @@
 
 module gtk.CheckButton;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

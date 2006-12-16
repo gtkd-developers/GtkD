@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkMenuBar.html
  * outPack = gtk
  * outFile = MenuBar
  * strct   = GtkMenuBar
@@ -53,7 +54,7 @@
 
 module gtk.MenuBar;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

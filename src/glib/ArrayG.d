@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Arrays.html
  * outPack = glib
  * outFile = ArrayG
  * strct   = GArray
@@ -49,7 +50,7 @@
 
 module glib.ArrayG;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

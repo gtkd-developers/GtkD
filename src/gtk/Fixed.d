@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkFixed.html
  * outPack = gtk
  * outFile = Fixed
  * strct   = GtkFixed
@@ -49,7 +50,7 @@
 
 module gtk.Fixed;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

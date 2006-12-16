@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Commandline-option-parser.html
  * outPack = glib
  * outFile = OptionContext
  * strct   = GOptionContext
@@ -51,7 +52,7 @@
 
 module glib.OptionContext;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -124,6 +125,7 @@ private import glib.Str;
  * main (int argc, char *argv[])
  * {
 	 *  GError *error = NULL;
+	 *  GOptionContext *context;
 	 *  context = g_option_context_new ("- test tree model performance");
 	 *  g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	 *  g_option_context_add_group (context, gtk_get_option_group (TRUE));
@@ -167,9 +169,24 @@ public class OptionContext
 	
 	/**
 	 * Creates a new option context.
+	 * The parameter_string can serve multiple purposes. It can be used
+	 * to add descriptions for "rest" arguments, which are not parsed by
+	 * the GOptionContext, typically something like "FILES" or
+	 * "FILE1 FILE2...". If you are using G_OPTION_REMAINING for
+	 * collecting "rest" arguments, GLib handles this automatically by
+	 * using the arg_description of the corresponding GOptionEntry in
+	 * the usage summary.
+	 * Another usage is to give a short summary of the program
+	 * functionality, like " - frob the strings", which will be displayed
+	 * in the same line as the usage. For a longer description of the
+	 * program functionality that should be displayed as a paragraph
+	 * below the usage line, use g_option_context_set_summary().
+	 * Note that the parameter_string is translated (see
+	 * g_option_context_set_translate_func()).
 	 * parameter_string:
 	 *  a string which is displayed in
-	 *  the first line of --help output, after
+	 *  the first line of --help output, after the
+	 *  usage summary
 	 *  programname [OPTION...]
 	 * Returns:
 	 *  a newly created GOptionContext, which must be
@@ -180,6 +197,114 @@ public class OptionContext
 	{
 		// GOptionContext* g_option_context_new (const gchar *parameter_string);
 		this(cast(GOptionContext*)g_option_context_new(Str.toStringz(parameterString)) );
+	}
+	
+	/**
+	 * Adds a string to be displayed in --help output
+	 * before the list of options. This is typically a summary of the
+	 * program functionality.
+	 * Note that the summary is translated (see
+	 * g_option_context_set_translate_func()).
+	 * context:
+	 *  a GOptionContext
+	 * summary:
+	 *  a string to be shown in --help output
+	 *  before the list of options, or NULL
+	 * Since 2.12
+	 */
+	public void setSummary(char[] summary)
+	{
+		// void g_option_context_set_summary (GOptionContext *context,  const gchar *summary);
+		g_option_context_set_summary(gOptionContext, Str.toStringz(summary));
+	}
+	
+	/**
+	 * Returns the summary. See g_option_context_set_summary().
+	 * context:
+	 *  a GOptionContext
+	 * Returns:
+	 *  the summary
+	 * Since 2.12
+	 */
+	public char[] getSummary()
+	{
+		// const gchar* g_option_context_get_summary (GOptionContext *context);
+		return Str.toString(g_option_context_get_summary(gOptionContext) );
+	}
+	
+	/**
+	 * Adds a string to be displayed in --help output
+	 * after the list of options. This text often includes a bug reporting
+	 * address.
+	 * Note that the summary is translated (see
+	 * g_option_context_set_translate_func()).
+	 * context:
+	 *  a GOptionContext
+	 * description:
+	 *  a string to be shown in --help output
+	 *  after the list of options, or NULL
+	 * Since 2.12
+	 */
+	public void setDescription(char[] description)
+	{
+		// void g_option_context_set_description  (GOptionContext *context,  const gchar *description);
+		g_option_context_set_description(gOptionContext, Str.toStringz(description));
+	}
+	
+	/**
+	 * Returns the description. See g_option_context_set_description().
+	 * context:
+	 *  a GOptionContext
+	 * Returns:
+	 *  the description
+	 * Since 2.12
+	 */
+	public char[] getDescription()
+	{
+		// const gchar* g_option_context_get_description  (GOptionContext *context);
+		return Str.toString(g_option_context_get_description(gOptionContext) );
+	}
+	
+	
+	/**
+	 * Sets the function which is used to translate the contexts
+	 * user-visible strings, for --help output.
+	 * If func is NULL, strings are not translated.
+	 * Note that option groups have their own translation functions,
+	 * this function only affects the parameter_string (see g_option_context_nex()),
+	 * the summary (see g_option_context_set_summary()) and the description
+	 * (see g_option_context_set_description()).
+	 * If you are using gettext(), you only need to set the translation
+	 * domain, see g_context_group_set_translation_domain().
+	 * context:
+	 *  a GOptionContext
+	 * func:
+	 *  the GTranslateFunc, or NULL
+	 * data:
+	 *  user data to pass to func, or NULL
+	 * destroy_notify:
+	 *  a function which gets called to free data, or NULL
+	 * Since 2.12
+	 */
+	public void setTranslateFunc(GTranslateFunc func, void* data, GDestroyNotify destroyNotify)
+	{
+		// void g_option_context_set_translate_func  (GOptionContext *context,  GTranslateFunc func,  gpointer data,  GDestroyNotify destroy_notify);
+		g_option_context_set_translate_func(gOptionContext, func, data, destroyNotify);
+	}
+	
+	/**
+	 * A convenience function to use gettext() for translating
+	 * user-visible strings.
+	 * context:
+	 *  a GOptionContext
+	 * domain:
+	 *  the domain to use
+	 * Since 2.12
+	 */
+	public void setTranslationDomain(char[] domain)
+	{
+		// void g_option_context_set_translation_domain  (GOptionContext *context,  const gchar *domain);
+		g_option_context_set_translation_domain(gOptionContext, Str.toStringz(domain));
 	}
 	
 	/**
@@ -372,7 +497,6 @@ public class OptionContext
 		// GOptionGroup* g_option_context_get_main_group  (GOptionContext *context);
 		return new OptionGroup( g_option_context_get_main_group(gOptionContext) );
 	}
-	
 	
 	
 	

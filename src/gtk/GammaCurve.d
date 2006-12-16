@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkGammaCurve.html
  * outPack = gtk
  * outFile = GammaCurve
  * strct   = GtkGammaCurve
@@ -47,7 +48,7 @@
 
 module gtk.GammaCurve;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

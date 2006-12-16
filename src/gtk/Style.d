@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkStyle.html
  * outPack = gtk
  * outFile = Style
  * strct   = GtkStyle
@@ -64,7 +65,7 @@
 
 module gtk.Style;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -115,7 +116,7 @@ public class Style : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Style)[] onRealizeListeners;
@@ -129,7 +130,7 @@ public class Style : ObjectG
 			cast(GCallback)&callBackRealize,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["realize"] = 1;
 		}
 		onRealizeListeners ~= dlg;
@@ -157,7 +158,7 @@ public class Style : ObjectG
 			cast(GCallback)&callBackUnrealize,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["unrealize"] = 1;
 		}
 		onUnrealizeListeners ~= dlg;
@@ -204,6 +205,9 @@ public class Style : ObjectG
 	 * it to a particular visual and colormap. The process may
 	 * involve the creation of a new style if the style has already
 	 * been attached to a window with a different style and colormap.
+	 * Since this function may return a new object, you have to use it
+	 * in the following way:
+	 * style = gtk_style_attach (style, window)
 	 * style:
 	 *  a GtkStyle.
 	 * window:
@@ -221,7 +225,10 @@ public class Style : ObjectG
 	}
 	
 	/**
+	 * Detaches a style from a window. If the style is not attached
+	 * to any windows anymore, it is unrealized. See gtk_style_attach().
 	 * style:
+	 *  a GtkStyle
 	 */
 	public void detach()
 	{
@@ -290,6 +297,28 @@ public class Style : ObjectG
 		gtk_style_apply_default_background(gtkStyle, (window is null) ? null : window.getWindowStruct(), setBg, stateType, (area is null) ? null : area.getRectangleStruct(), x, y, width, height);
 	}
 	
+	
+	/**
+	 * Looks up color_name in the style's logical color mappings,
+	 * filling in color and returning TRUE if found, otherwise
+	 * returning FALSE. Do not cache the found mapping, because
+	 * it depends on the GtkStyle and might change when a theme
+	 * switch occurs.
+	 * style:
+	 *  a GtkStyle
+	 * color_name:
+	 *  the name of the logical color to look up
+	 * color:
+	 *  the GdkColor to fill in
+	 * Returns:
+	 *  TRUE if the mapping was found.
+	 * Since 2.10
+	 */
+	public int lookupColor(char[] colorName, GdkColor* color)
+	{
+		// gboolean gtk_style_lookup_color (GtkStyle *style,  const gchar *color_name,  GdkColor *color);
+		return gtk_style_lookup_color(gtkStyle, Str.toStringz(colorName), color);
+	}
 	
 	/**
 	 * style:
@@ -1400,18 +1429,33 @@ public class Style : ObjectG
 	}
 	
 	/**
+	 * Draws a slider in the given rectangle on window using the
+	 * given style and orientation.
 	 * style:
+	 *  a GtkStyle
 	 * window:
+	 *  a GdkWindow
 	 * state_type:
+	 *  a state
 	 * shadow_type:
+	 *  a shadow
 	 * area:
+	 *  clip rectangle, or NULL if the
+	 *  output should not be clipped
 	 * widget:
+	 *  the widget (may be NULL)
 	 * detail:
+	 *  a style detail (may be NULL)
 	 * x:
+	 *  the x origin of the rectangle in which to draw a slider
 	 * y:
+	 *  the y origin of the rectangle in which to draw a slider
 	 * width:
+	 *  the width of the rectangle in which to draw a slider
 	 * height:
+	 *  the height of the rectangle in which to draw a slider
 	 * orientation:
+	 *  the orientation to be used
 	 */
 	public void paintSlider(Window window, GtkStateType stateType, GtkShadowType shadowType, Rectangle area, Widget widget, char[] detail, int x, int y, int width, int height, GtkOrientation orientation)
 	{
@@ -1550,16 +1594,29 @@ public class Style : ObjectG
 	}
 	
 	/**
+	 * Draws a layout on window using the given parameters.
 	 * style:
+	 *  a GtkStyle
 	 * window:
+	 *  a GdkWindow
 	 * state_type:
+	 *  a state
 	 * use_text:
+	 *  whether to use the text or foreground
+	 *  graphics context of style
 	 * area:
+	 *  clip rectangle, or NULL if the
+	 *  output should not be clipped
 	 * widget:
+	 *  the widget (may be NULL)
 	 * detail:
+	 *  a style detail (may be NULL)
 	 * x:
+	 *  x origin
 	 * y:
+	 *  y origin
 	 * layout:
+	 *  the layout to draw
 	 */
 	public void paintLayout(Window window, GtkStateType stateType, int useText, Rectangle area, Widget widget, char[] detail, int x, int y, PangoLayout* layout)
 	{

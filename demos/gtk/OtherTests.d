@@ -28,7 +28,7 @@ private import gtk.Duit;
 private import std.stdio;
 private import gtk.Image;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 private import gobject.Signals;
 private import gtk.Timeout;
 
@@ -97,7 +97,7 @@ public class OtherTests : Window
 		with (new AboutDialog())
 		{
 			
-			char** names = new char*[2];
+			char** names = (new char*[2]).ptr;
 			int i = 0;
 			names[i++] = cast(char*)"Antonio Monteiro (binding/wrapping/proxying/decorating for D)";
 			names[i++] = cast(char*)"www.gtk.org (base C library)";

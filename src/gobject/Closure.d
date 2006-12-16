@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gobject-Closures.html
  * outPack = gobject
  * outFile = Closure
  * strct   = GClosure
@@ -55,7 +56,7 @@
 
 module gobject.Closure;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 

@@ -26,10 +26,10 @@ private import std.file;
 private import std.string;
 private import std.process;
 
-//debug = flow;
+debug = flow;
 //debug = processLine;
 //debug = getDType;
-debug = functions;
+//debug = functions;
 
 public class Ranges
 {
@@ -349,7 +349,7 @@ public class HTODConvert
 "\n"
 "\n"
 "private import std.stdio;\n"
-"private import "~pack~".typedefs;\n"
+"private import "~pack~"."~pack~"types;\n"
 "private import lib.Loader;\n"
 "private import lib.paths;\n"
 "\n"

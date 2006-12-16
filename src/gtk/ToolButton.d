@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkToolButton.html
  * outPack = gtk
  * outFile = ToolButton
  * strct   = GtkToolButton
@@ -51,7 +52,7 @@
 
 module gtk.ToolButton;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -109,12 +110,12 @@ public class ToolButton : ToolItem
 	/** An arbitrary string to be used by the application */
 	private char[] action;
 	
-	public void setAction(char[] action)
+	public void setActionName(char[] action)
 	{
 		this.action = action.dup;
 	}
 	
-	public char[] getAction()
+	public char[] getActionName()
 	{
 		return action;
 	}
@@ -130,7 +131,7 @@ public class ToolButton : ToolItem
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ToolButton)[] onClickedListeners;
@@ -144,7 +145,7 @@ public class ToolButton : ToolItem
 			cast(GCallback)&callBackClicked,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["clicked"] = 1;
 		}
 		onClickedListeners ~= dlg;

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkFontButton.html
  * outPack = gtk
  * outFile = FontButton
  * strct   = GtkFontButton
@@ -48,7 +49,7 @@
 
 module gtk.FontButton;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -93,7 +94,7 @@ public class FontButton : Button
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(FontButton)[] onFontSetListeners;
@@ -107,7 +108,7 @@ public class FontButton : Button
 			cast(GCallback)&callBackFontSet,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["font-set"] = 1;
 		}
 		onFontSetListeners ~= dlg;

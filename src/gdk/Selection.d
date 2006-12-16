@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Selections.html
  * outPack = gdk
  * outFile = Selection
  * strct   = 
@@ -50,7 +51,7 @@
 
 module gdk.Selection;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gthread
  * outFile = Thread
  * strct   = GThread
@@ -62,7 +63,7 @@
 
 module gthread.Thread;
 
-private import gthread.typedefs;
+private import gthread.gthreadtypes;
 
 private import lib.gthread;
 
@@ -77,26 +78,28 @@ private import glib.ListG;
  * Threads act almost like processes, but unlike processes all threads of
  * one process share the same memory. This is good, as it provides easy
  * communication between the involved threads via this shared memory, and
- * it is bad, because strange things (so called Heisenbugs) might happen,
- * when the program is not carefully designed. Especially bad is, that due
- * to the concurrent nature of threads no assumptions on the order of
- * execution of different threads can be done unless explicitly forced by
- * the programmer through synchronization primitives.
+ * it is bad, because strange things (so called "Heisenbugs") might
+ * happen if the program is not carefully designed. In particular, due to
+ * the concurrent nature of threads, no assumptions on the order of
+ * execution of code running in different threads can be made, unless
+ * order is explicitly forced by the programmer through synchronization
+ * primitives.
  * The aim of the thread related functions in GLib is to provide a
  * portable means for writing multi-threaded software. There are
  * primitives for mutexes to protect the access to portions of memory
  * (GMutex, GStaticMutex, G_LOCK_DEFINE, GStaticRecMutex and
- * GStaticRWLock), there are primitives for condition variables to allow
- * synchronization of threads (GCond) and finally there are primitives
- * for thread-private data, that every thread has a private instance of
+ * GStaticRWLock). There are primitives for condition variables to allow
+ * synchronization of threads (GCond). There are primitives
+ * for thread-private data - data that every thread has a private instance of
  * (GPrivate, GStaticPrivate). Last but definitely not least there are
  * primitives to portably create and manage threads (GThread).
- * You must call g_thread_init() before executing any other GLib functions
- * in a threaded GLib program. After that, GLib is completely thread safe
- * (all global data is automatically locked). But individual data structure
- * instances are not automatically locked for performance reasons. So e.g.
- * you must coordinate accesses to the same GHashTable from multiple threads.
- * The two notable exceptions from this rule are GMainLoop and GAsyncQueue,
+ * You must call g_thread_init() before executing any other GLib
+ * functions in a threaded GLib program. After that, GLib is completely
+ * thread safe (all global data is automatically locked), but individual
+ * data structure instances are not automatically locked for performance
+ * reasons. So, for example you must coordinate accesses to the same
+ * GHashTable from multiple threads. The two notable exceptions from
+ * this rule are GMainLoop and GAsyncQueue,
  * which are threadsafe and needs no further
  * application-level locking to be accessed from multiple threads.
  */
@@ -141,19 +144,20 @@ public class Thread
 	 * the thread system by calling g_thread_init(). Most of the time you
 	 * will only have to call g_thread_init (NULL).
 	 * Note
-	 * You should only call g_thread_init() with a non-NULL parameter if you
+	 * Do not call g_thread_init() with a non-NULL parameter unless you
 	 * really know what you are doing.
 	 * Note
 	 * g_thread_init() must not be called directly or indirectly as a
-	 * callback from GLib. Also no mutexes may be currently locked, while
+	 * callback from GLib. Also no mutexes may be currently locked while
 	 * calling g_thread_init().
 	 * g_thread_init() might only be called once. On the second call
-	 * it will abort with an error. If you want to make sure, that the thread
-	 * system is initialized, you can do that too:
+	 * it will abort with an error. If you want to make sure that the thread
+	 * system is initialized, you can do this:
 	 * if (!g_thread_supported ()) g_thread_init (NULL);
-	 * After that line either the thread system is initialized or the program
-	 * will abort, if no thread system is available in GLib, i.e. either
-	 * G_THREADS_ENABLED is not defined or G_THREADS_IMPL_NONE is defined.
+	 * After that line, either the thread system is initialized or, if no
+	 * thread system is available in GLib (i.e. either G_THREADS_ENABLED is
+	 * not defined or G_THREADS_IMPL_NONE is defined), the program will
+	 * abort.
 	 * If no thread system is available and vtable is NULL or if not all
 	 * elements of vtable are non-NULL, then g_thread_init() will abort.
 	 * Note
@@ -172,8 +176,8 @@ public class Thread
 	}
 	
 	/**
-	 * This function returns, whether the thread system is initialized or
-	 * not.
+	 * This function returns TRUE if the thread system is initialized, and
+	 * FALSE if it is not.
 	 * Note
 	 * This function is actually a macro. Apart from taking the address of it
 	 * you can however use it as if it was a function.
@@ -192,8 +196,8 @@ public class Thread
 	/**
 	 * This function creates a new thread with the default priority.
 	 * If joinable is TRUE, you can wait for this threads termination
-	 * calling g_thread_join(). Otherwise the thread will just disappear, when
-	 * ready.
+	 * calling g_thread_join(). Otherwise the thread will just disappear when
+	 * it terminates.
 	 * The new thread executes the function func with the argument
 	 * data. If the thread was created successfully, it is returned.
 	 * error can be NULL to ignore errors, or non-NULL to report errors. The
@@ -217,30 +221,32 @@ public class Thread
 	
 	/**
 	 * This function creates a new thread with the priority priority. If the
-	 * underlying thread implementation supports it, the thread gets a stack size
-	 * of stack_size or the default value for the current platform, if stack_size is 0.
+	 * underlying thread implementation supports it, the thread gets a stack
+	 * size of stack_size or the default value for the current platform, if
+	 * stack_size is 0.
 	 * If joinable is TRUE, you can wait for this threads termination
-	 * calling g_thread_join(). Otherwise the thread will just disappear, when
-	 * ready. If bound is TRUE, this thread will be scheduled in the system
-	 * scope, otherwise the implementation is free to do scheduling in the
-	 * process scope. The first variant is more expensive resource-wise, but
-	 * generally faster. On some systems (e.g. Linux) all threads are bound.
+	 * calling g_thread_join(). Otherwise the thread will just disappear when
+	 * it terminates. If bound is TRUE, this thread will be scheduled in
+	 * the system scope, otherwise the implementation is free to do
+	 * scheduling in the process scope. The first variant is more expensive
+	 * resource-wise, but generally faster. On some systems (e.g. Linux) all
+	 * threads are bound.
 	 * The new thread executes the function func with the argument
 	 * data. If the thread was created successfully, it is returned.
 	 * error can be NULL to ignore errors, or non-NULL to report errors. The
 	 * error is set, if and only if the function returns NULL.
 	 * Note
-	 * It is not guaranteed, that threads with different priorities really
+	 * It is not guaranteed that threads with different priorities really
 	 * behave accordingly. On some systems (e.g. Linux) there are no thread
 	 * priorities. On other systems (e.g. Solaris) there doesn't seem to be
 	 * different scheduling for different priorities. All in all try to avoid
 	 * being dependent on priorities. Use G_THREAD_PRIORITY_NORMAL here as a
 	 * default.
 	 * Note
-	 * Only use g_thread_create_full(), when you really can't use
+	 * Only use g_thread_create_full() if you really can't use
 	 * g_thread_create() instead. g_thread_create() does not take
-	 * stack_size, bound and priority as arguments, as they should only be
-	 * used for cases, where it is inevitable.
+	 * stack_size, bound, and priority as arguments, as they should only
+	 * be used in cases in which it is unavoidable.
 	 * func:
 	 * a function to execute in the new thread.
 	 * data:
@@ -296,7 +302,7 @@ public class Thread
 	/**
 	 * Changes the priority of thread to priority.
 	 * Note
-	 * It is not guaranteed, that threads with different priorities really
+	 * It is not guaranteed that threads with different priorities really
 	 * behave accordingly. On some systems (e.g. Linux) there are no thread
 	 * priorities. On other systems (e.g. Solaris) there doesn't seem to be
 	 * different scheduling for different priorities. All in all try to avoid
@@ -315,8 +321,8 @@ public class Thread
 	/**
 	 * Gives way to other threads waiting to be scheduled.
 	 * This function is often used as a method to make busy wait less
-	 * evil. But in most cases, you will encounter, there are better methods
-	 * to do that. So in general you shouldn't use that function.
+	 * evil. But in most cases you will encounter, there are better methods
+	 * to do that. So in general you shouldn't use this function.
 	 */
 	public static void yield()
 	{
@@ -327,7 +333,7 @@ public class Thread
 	/**
 	 * Exits the current thread. If another thread is waiting for that thread
 	 * using g_thread_join() and the current thread is joinable, the waiting
-	 * thread will be woken up and getting retval as the return value of
+	 * thread will be woken up and get retval as the return value of
 	 * g_thread_join(). If the current thread is not joinable, retval is
 	 * ignored. Calling
 	 * g_thread_exit (retval);

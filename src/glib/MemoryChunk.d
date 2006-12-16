@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Memory-Chunks.html
  * outPack = glib
  * outFile = MemoryChunk
  * strct   = GMemChunk
@@ -47,7 +48,7 @@
 
 module glib.MemoryChunk;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

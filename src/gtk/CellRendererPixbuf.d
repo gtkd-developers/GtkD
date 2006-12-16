@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCellRendererPixbuf.html
  * outPack = gtk
  * outFile = CellRendererPixbuf
  * strct   = GtkCellRenderer
@@ -49,7 +50,7 @@
 
 module gtk.CellRendererPixbuf;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

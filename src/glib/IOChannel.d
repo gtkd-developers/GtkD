@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-IO-Channels.html
  * outPack = glib
  * outFile = IOChannel
  * strct   = GIOChannel
@@ -54,7 +55,7 @@
 
 module glib.IOChannel;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -139,6 +140,12 @@ public class IOChannel
 	 * If you want to read raw binary data without interpretation, then
 	 * call the g_io_channel_set_encoding() function with NULL for the
 	 * encoding argument.
+	 * This function is available in GLib on Windows, too, but you should
+	 * avoid using it on Windows. The domain of file descriptors and sockets
+	 * overlap. There is no way for GLib to know which one you mean in case
+	 * the argument you pass to this function happens to be both a valid file
+	 * descriptor and socket. If that happens a warning is issued, and GLib
+	 * assumes that it is the file descriptor you mean.
 	 * fd:
 	 * a file descriptor.
 	 * Returns:
@@ -151,7 +158,8 @@ public class IOChannel
 	}
 	
 	/**
-	 * Returns the file descriptor of the UNIX GIOChannel.
+	 * Returns the file descriptor of the GIOChannel.
+	 * On Windows this function returns the file descriptor or socket of the GIOChannel.
 	 * channel:
 	 * a GIOChannel, created with g_io_channel_unix_new().
 	 * Returns:
@@ -161,6 +169,69 @@ public class IOChannel
 	{
 		// gint g_io_channel_unix_get_fd (GIOChannel *channel);
 		return g_io_channel_unix_get_fd(gIOChannel);
+	}
+	
+	/**
+	 * Creates a new GIOChannel given a file descriptor on Windows. This works for
+	 * file descriptors from the C runtime.
+	 * This function works for file descriptors as returned by the open(),
+	 * creat(), pipe() and fileno() calls in the Microsoft C runtime. In
+	 * order to meaningfully use this function your code should use the same
+	 * C runtime as GLib uses, which is msvcrt.dll. Note that in current
+	 * Microsoft compilers it is near impossible to convince it to build code
+	 * that would use msvcrt.dll. The last Microsoft compiler version that
+	 * supported using msvcrt.dll as the C runtime was version 6. The GNU
+	 * compiler and toolchain for Windows, also known as Mingw, fully
+	 * supports msvcrt.dll.
+	 * If you have created a GIOChannel for a file descriptor and started
+	 * watching (polling) it, you shouldn't call read() on the file
+	 * descriptor. This is because adding polling for a file descriptor is
+	 * implemented in GLib on Windows by starting a thread that sits blocked
+	 * in a read() from the file descriptor most of the time. All reads from
+	 * the file descriptor should be done by this internal GLib thread. Your
+	 * code should call only g_io_channel_read().
+	 * This function is available only in GLib on Windows.
+	 * fd:
+	 * a C library file descriptor.
+	 * Returns:
+	 * a new GIOChannel.
+	 */
+	public static IOChannel win32_NewFd(int fd)
+	{
+		// GIOChannel* g_io_channel_win32_new_fd (gint fd);
+		return new IOChannel( g_io_channel_win32_new_fd(fd) );
+	}
+	
+	/**
+	 * Creates a new GIOChannel given a socket on Windows.
+	 * This function works for sockets created by Winsock. It's available
+	 * only in GLib on Windows.
+	 * Polling a GSource created to watch a channel for a socket puts the
+	 * socket in non-blocking mode. This is a side-effect of the
+	 * implementation and unavoidable.
+	 * socket:
+	 * Returns:
+	 * a new GIOChannel.
+	 */
+	public static IOChannel win32_NewSocket(int socket)
+	{
+		// GIOChannel* g_io_channel_win32_new_socket (gint socket);
+		return new IOChannel( g_io_channel_win32_new_socket(socket) );
+	}
+	
+	/**
+	 * Creates a new GIOChannel given a window handle on Windows.
+	 * This function creates a GIOChannel that can be used to poll for
+	 * Windows messages for the window in question.
+	 * hwnd:
+	 * a window handle.
+	 * Returns:
+	 * a new GIOChannel.
+	 */
+	public static IOChannel win32_NewMessages(uint hwnd)
+	{
+		// GIOChannel* g_io_channel_win32_new_messages (guint hwnd);
+		return new IOChannel( g_io_channel_win32_new_messages(hwnd) );
 	}
 	
 	/**
@@ -473,6 +544,9 @@ public class IOChannel
 	 * when there's data available for reading. g_io_add_watch() is a simpler
 	 * interface to this same functionality, for the case where you want to add the
 	 * source to the default main loop at the default priority.
+	 * On Windows, polling a GSource created to watch a channel for a socket
+	 * puts the socket in non-blocking mode. This is a side-effect of the
+	 * implementation and unavoidable.
 	 * channel:
 	 * a GIOChannel to watch
 	 * condition:

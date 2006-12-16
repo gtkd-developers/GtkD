@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTreeSelection.html
  * outPack = gtk
  * outFile = TreeSelection
  * strct   = GtkTreeSelection
@@ -59,7 +60,7 @@
 
 module gtk.TreeSelection;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -185,7 +186,7 @@ public class TreeSelection : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeSelection)[] onChangedListeners;
@@ -199,7 +200,7 @@ public class TreeSelection : ObjectG
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Date-and-Time-Functions.html
  * outPack = glib
  * outFile = Date
  * strct   = GDate
@@ -48,7 +49,7 @@
 
 module glib.Date;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -165,6 +166,38 @@ public class Date
 	{
 		// void g_time_val_add (GTimeVal *time_,  glong microseconds);
 		g_time_val_add(time, microseconds);
+	}
+	
+	/**
+	 * Converts a string containing an ISO 8601 encoded date and time
+	 * to a GTimeVal and puts it into time_.
+	 * iso_date:
+	 *  a ISO 8601 encoded date string
+	 * time_:
+	 *  a GTimeVal
+	 * Returns:
+	 *  TRUE if the conversion was successful.
+	 * Since 2.12
+	 */
+	public static int gTimeValFromIso8601(char[] isoDate, GTimeVal* time)
+	{
+		// gboolean g_time_val_from_iso8601 (const gchar *iso_date,  GTimeVal *time_);
+		return g_time_val_from_iso8601(Str.toStringz(isoDate), time);
+	}
+	
+	/**
+	 * Converts time_ into a ISO 8601 encoded string, relative to the
+	 * Coordinated Universal Time (UTC).
+	 * time_:
+	 *  a GTimeVal
+	 * Returns:
+	 *  a newly allocated string containing a ISO 8601 date
+	 * Since 2.12
+	 */
+	public static char[] gTimeValToIso8601(GTimeVal* time)
+	{
+		// gchar* g_time_val_to_iso8601 (GTimeVal *time_);
+		return Str.toString(g_time_val_to_iso8601(time) );
 	}
 	
 	
@@ -770,9 +803,17 @@ public class Date
 	
 	/**
 	 * Generates a printed representation of the date, in a locale-specific
-	 * way. Works just like the standard C strftime()
-	 * function, but only accepts date-related formats; time-related formats
-	 * give undefined results. Date must be valid.
+	 * way. Works just like the platform's C library
+	 * strftime() function, but only accepts
+	 * date-related formats; time-related formats give undefined
+	 * results. Date must be valid. Unlike strftime()
+	 * (which uses the locale encoding), works on a UTF-8 format string and
+	 * stores a UTF-8 result.
+	 * This function does not provide any conversion specifiers in addition
+	 * to those implemented by the platform's C library. For example, don't
+	 * expect that using g_date_strftime() would make
+	 * the F provided by the C99 strftime() work on
+	 * Windows where the C library only complies to C89.
 	 * s:
 	 * destination buffer.
 	 * slen:

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = pango-Text-Processing.html
  * outPack = pango
  * outFile = PgContext
  * strct   = PangoContext
@@ -81,7 +82,7 @@
 
 module pango.PgContext;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
@@ -142,6 +143,8 @@ public class PgContext : ObjectG
 	
 	/**
 	 */
+	
+	
 	
 	
 	
@@ -248,7 +251,8 @@ public class PgContext : ObjectG
 	 * gdk_pango_context_get_for_screen(), and
 	 * gtk_widget_get_pango_context().
 	 * Returns:
-	 *  the new PangoContext
+	 *  the newly allocated PangoContext, which should
+	 *  be freed with g_object_unref().
 	 */
 	public this ()
 	{
@@ -370,6 +374,53 @@ public class PgContext : ObjectG
 	{
 		// void pango_context_set_base_dir (PangoContext *context,  PangoDirection direction);
 		pango_context_set_base_dir(pangoContext, direction);
+	}
+	
+	/**
+	 * Retrieves the base gravity for the context. See
+	 * pango_context_set_base_gravity().
+	 * context:
+	 *  a PangoContext
+	 * Returns:
+	 *  the base gravity for the context.
+	 * Since 1.16
+	 */
+	public PangoGravity getBaseGravity()
+	{
+		// PangoGravity pango_context_get_base_gravity (PangoContext *context);
+		return pango_context_get_base_gravity(pangoContext);
+	}
+	
+	/**
+	 * Sets the base gravity for the context.
+	 * The base gravity is used in laying vertical text out.
+	 * context:
+	 *  a PangoContext
+	 * gravity:
+	 *  the new base gravity
+	 * Since 1.16
+	 */
+	public void setBaseGravity(PangoGravity gravity)
+	{
+		// void pango_context_set_base_gravity (PangoContext *context,  PangoGravity gravity);
+		pango_context_set_base_gravity(pangoContext, gravity);
+	}
+	
+	/**
+	 * Retrieves the gravity for the context. This is similar to
+	 * pango_context_get_base_gravity(), except for when the base gravity
+	 * is PANGO_GRAVITY_AUTO for which pango_matrix_to_gravity() is used
+	 * to return the gravity from the current context matrix.
+	 * context:
+	 *  a PangoContext
+	 * Returns:
+	 *  the resolved gravity for the context.
+	 * Since 1.16
+	 */
+	public PangoGravity getGravity()
+	{
+		// PangoGravity pango_context_get_gravity (PangoContext *context);
+		return pango_context_get_gravity(pangoContext);
 	}
 	
 	/**
@@ -550,8 +601,24 @@ public class PgContext : ObjectG
 	}
 	
 	/**
+	 * Converts a PangoGravity value to its rotation value.
+	 * gravity:
+	 *  gravity to query
+	 * Returns:
+	 *  the rotation value corresponding to gravity,
+	 * or zero if gravity is PANGO_GRAVITY_AUTO
+	 * Since 1.16
+	 */
+	public static double pangoGravityToRotation(PangoGravity gravity)
+	{
+		// double pango_gravity_to_rotation (PangoGravity gravity);
+		return pango_gravity_to_rotation(gravity);
+	}
+	
+	/**
 	 * Determines possible line, word, and character breaks
-	 * for a string of Unicode text.
+	 * for a string of Unicode text with a single analysis. For most
+	 * purposes you may want to use pango_get_log_attrs().
 	 * text:
 	 *  the text to process
 	 * length:
@@ -575,8 +642,8 @@ public class PgContext : ObjectG
 	 * text contains N characters, it has N+1 positions, including the
 	 * last position at the end of the text. text should be an entire
 	 * paragraph; logical attributes can't be computed without context
-	 * (for example you need to see spaces on either side of a word to know the
-	 * word is a word).
+	 * (for example you need to see spaces on either side of a word to know
+	 * the word is a word).
 	 * text:
 	 *  text to process
 	 * length:
@@ -624,11 +691,11 @@ public class PgContext : ObjectG
 	/**
 	 * This is the default break algorithm, used if no language
 	 * engine overrides it. Normally you should use pango_break()
-	 * instead; this function is mostly useful for chaining up
-	 * from a language engine override. Unlike pango_break(),
+	 * instead. Unlike pango_break(),
 	 * analysis can be NULL, but only do that if you know what
-	 * you're doing. (If you need an analysis to pass to pango_break(),
-	 * you need to pango_itemize() or use pango_get_log_attrs().)
+	 * you're doing. If you need an analysis to pass to pango_break(),
+	 * you need to pango_itemize(). In most cases however you should
+	 * simply use pango_get_log_attrs().
 	 * text:
 	 *  text to break
 	 * length:
@@ -663,7 +730,7 @@ public class PgContext : ObjectG
 	 */
 	public static void pangoShape(char[] text, int length, PangoAnalysis* analysis, PangoGlyphString* glyphs)
 	{
-		// void pango_shape (const gchar *text,  gint length,  PangoAnalysis *analysis,  PangoGlyphString *glyphs);
+		// void pango_shape (const gchar *text,  gint length,  const PangoAnalysis *analysis,  PangoGlyphString *glyphs);
 		pango_shape(Str.toStringz(text), length, analysis, glyphs);
 	}
 }

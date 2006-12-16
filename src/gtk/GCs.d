@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Graphics-Contexts.html
  * outPack = gtk
  * outFile = GCs
  * strct   = 
@@ -51,7 +52,7 @@
 
 module gtk.GCs;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

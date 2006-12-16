@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkHypertext.html
  * outPack = atk
  * outFile = Hypertext
  * strct   = AtkHypertext
@@ -46,13 +47,18 @@
 
 module atk.Hypertext;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
 
 /**
  * Description
+ * An interface used for objects which implement linking between multiple
+ * resource or content locations, or multiple 'markers' within a single
+ * document. A Hypertext instance is associated with one or more Hyperlinks,
+ * which are associated with particular offsets within the Hypertext's included
+ * content. While this interface is derived from Text, there is no requirement that Hypertext instances have textual content; they may implement Image as well, and Hyperlinks need not have non-zero text offsets.
  */
 public class Hypertext
 {
@@ -86,7 +92,7 @@ public class Hypertext
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gint, Hypertext)[] onLinkSelectedListeners;
@@ -100,7 +106,7 @@ public class Hypertext
 			cast(GCallback)&callBackLinkSelected,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["link-selected"] = 1;
 		}
 		onLinkSelectedListeners ~= dlg;
@@ -172,6 +178,8 @@ public class Hypertext
 	 * the index of the hyperlink which is selected
 	 * user_data:
 	 * user data set when the signal handler was connected.
+	 * See Also
+	 * AtkHyperlink
 	 */
 	public int _GetLinkIndex(int charIndex)
 	{

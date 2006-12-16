@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkRuler.html
  * outPack = gtk
  * outFile = Ruler
  * strct   = GtkRuler
@@ -47,7 +48,7 @@
 
 module gtk.Ruler;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -123,9 +124,9 @@ public class Ruler : Widget
 	 * ruler:
 	 * the gtkruler
 	 * lower:
-	 * the upper limit of the ruler
-	 * upper:
 	 * the lower limit of the ruler
+	 * upper:
+	 * the upper limit of the ruler
 	 * position:
 	 * the mark on the ruler
 	 * max_size:

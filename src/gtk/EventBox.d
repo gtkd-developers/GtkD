@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkEventBox.html
  * outPack = gtk
  * outFile = EventBox
  * strct   = GtkEventBox
@@ -47,7 +48,7 @@
 
 module gtk.EventBox;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -141,7 +142,7 @@ public class EventBox : Bin
 	/**
 	 * Set whether the event box uses a visible or invisible child
 	 * window. The default is to use visible windows.
-	 * In an invisible window event box, the window that that the
+	 * In an invisible window event box, the window that the
 	 * event box creates is a GDK_INPUT_ONLY window, which
 	 * means that it is invisible and only serves to receive
 	 * events.

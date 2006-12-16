@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTable.html
  * outPack = gtk
  * outFile = Table
  * strct   = GtkTable
@@ -50,7 +51,7 @@
 
 module gtk.Table;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -237,7 +238,7 @@ public class Table : Container
 	}
 	
 	/**
-	 * Changes the space between a given table row and its surrounding rows.
+	 * Changes the space between a given table row and the subsequent row.
 	 * table:
 	 * a GtkTable containing the row whose properties you wish to change.
 	 * row:
@@ -252,7 +253,8 @@ public class Table : Container
 	}
 	
 	/**
-	 * Alters the amount of space between a given table column and the adjacent columns.
+	 * Alters the amount of space between a given table column and the following
+	 * column.
 	 * table:
 	 * a GtkTable.
 	 * column:

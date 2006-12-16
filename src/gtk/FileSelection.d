@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkFileSelection.html
  * outPack = gtk
  * outFile = FileSelection
  * strct   = GtkFileSelection
@@ -48,7 +49,7 @@
 
 module gtk.FileSelection;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkScrolledWindow.html
  * outPack = gtk
  * outFile = ScrolledWindow
  * strct   = GtkScrolledWindow
@@ -52,7 +53,7 @@
 
 module gtk.ScrolledWindow;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -172,7 +173,7 @@ public class ScrolledWindow : Bin
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkDirectionType, ScrolledWindow)[] onMoveFocusOutListeners;
@@ -186,7 +187,7 @@ public class ScrolledWindow : Bin
 			cast(GCallback)&callBackMoveFocusOut,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-focus-out"] = 1;
 		}
 		onMoveFocusOutListeners ~= dlg;
@@ -214,7 +215,7 @@ public class ScrolledWindow : Bin
 			cast(GCallback)&callBackScrollChild,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["scroll-child"] = 1;
 		}
 		onScrollChildListeners ~= dlg;
@@ -342,13 +343,17 @@ public class ScrolledWindow : Bin
 	}
 	
 	/**
+	 * Sets the placement of the contents with respect to the scrollbars
+	 * for the scrolled window.
+	 * See also gtk_scrolled_window_get_placement() and
+	 * gtk_scrolled_window_unset_placement().
 	 * Determines the location of the child widget with respect to the
 	 * scrollbars. The default is GTK_CORNER_TOP_LEFT, meaning the child is
 	 * in the top left, with the scrollbars underneath and to the right.
 	 * Other values in GtkCornerType are GTK_CORNER_TOP_RIGHT,
 	 * GTK_CORNER_BOTTOM_LEFT, and GTK_CORNER_BOTTOM_RIGHT.
 	 * scrolled_window:
-	 * A GtkScrolledWindow.
+	 *  a GtkScrolledWindow
 	 * window_placement:
 	 * Position of the child window.
 	 */
@@ -356,6 +361,22 @@ public class ScrolledWindow : Bin
 	{
 		// void gtk_scrolled_window_set_placement  (GtkScrolledWindow *scrolled_window,  GtkCornerType window_placement);
 		gtk_scrolled_window_set_placement(gtkScrolledWindow, windowPlacement);
+	}
+	
+	/**
+	 * Unsets the placement of the contents with respect to the scrollbars
+	 * for the scrolled window. If no window placement is set for a scrolled
+	 * window, it obeys the "gtk-scrolled-window-placement" XSETTING.
+	 * See also gtk_scrolled_window_set_placement() and
+	 * gtk_scrolled_window_get_placement().
+	 * scrolled_window:
+	 *  a GtkScrolledWindow
+	 * Since 2.10
+	 */
+	public void unsetPlacement()
+	{
+		// void gtk_scrolled_window_unset_placement  (GtkScrolledWindow *scrolled_window);
+		gtk_scrolled_window_unset_placement(gtkScrolledWindow);
 	}
 	
 	/**
@@ -399,12 +420,14 @@ public class ScrolledWindow : Bin
 	}
 	
 	/**
-	 * Gets the placement of the scrollbars for the scrolled window. See
-	 * gtk_scrolled_window_set_placement().
+	 * Gets the placement of the contents with respect to the scrollbars
+	 * for the scrolled window. See gtk_scrolled_window_set_placement().
 	 * scrolled_window:
 	 *  a GtkScrolledWindow
 	 * Returns:
 	 *  the current placement value.
+	 * See also gtk_scrolled_window_set_placement() and
+	 * gtk_scrolled_window_unset_placement().
 	 */
 	public GtkCornerType getPlacement()
 	{
@@ -445,6 +468,7 @@ public class ScrolledWindow : Bin
 		// GtkShadowType gtk_scrolled_window_get_shadow_type  (GtkScrolledWindow *scrolled_window);
 		return gtk_scrolled_window_get_shadow_type(gtkScrolledWindow);
 	}
+	
 	
 	
 	

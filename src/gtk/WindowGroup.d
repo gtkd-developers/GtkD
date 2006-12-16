@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkWindowGroup.html
  * outPack = gtk
  * outFile = WindowGroup
  * strct   = GtkWindowGroup
@@ -49,7 +50,7 @@
 
 module gtk.WindowGroup;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

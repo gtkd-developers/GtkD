@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Keyed-Data-Lists.html
  * outPack = glib
  * outFile = DataList
  * strct   = GData
@@ -49,7 +50,7 @@
 
 module glib.DataList;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -227,6 +228,7 @@ public class DataList
 	 *  3; giving two possible boolean flags).
 	 *  A value for flags that doesn't fit within the mask is
 	 *  an error.
+	 * Since 2.8
 	 */
 	public static void setFlags(GData** datalist, uint flags)
 	{
@@ -244,6 +246,7 @@ public class DataList
 	 *  3: giving two possible boolean flags).
 	 *  A value for flags that doesn't fit within the mask is
 	 *  an error.
+	 * Since 2.8
 	 */
 	public static void unsetFlags(GData** datalist, uint flags)
 	{
@@ -258,6 +261,7 @@ public class DataList
 	 *  pointer to the location that holds a list
 	 * Returns:
 	 *  the flags of the datalist
+	 * Since 2.8
 	 */
 	public static uint getFlags(GData** datalist)
 	{

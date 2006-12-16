@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Threads.html
  * outPack = gdk
  * outFile = Threads
  * strct   = 
@@ -45,7 +46,7 @@
 
 module gdk.Threads;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 
@@ -62,6 +63,9 @@ private import lib.gdk;
  * global lock controlled by gdk_threads_enter()/gdk_threads_leave()
  * which protects all use of GTK+. That is, only one thread can use GTK+
  * at any given time.
+ * Unfortunately the above holds with the X11 backend only. With the
+ * Win32 backend, GDK calls should not be attempted from multiple threads
+ * at all.
  * You must call g_thread_init() and gdk_threads_init() before executing
  * any other GTK+ or GDK functions in a threaded GTK+ program.
  * Idles, timeouts, and input functions are executed outside

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTreeSortable.html
  * outPack = gtk
  * outFile = TreeSortable
  * strct   = GtkTreeSortable
@@ -47,7 +48,7 @@
 
 module gtk.TreeSortable;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -90,7 +91,7 @@ public class TreeSortable
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeSortable)[] onSortColumnChangedListeners;
@@ -104,7 +105,7 @@ public class TreeSortable
 			cast(GCallback)&callBackSortColumnChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["sort-column-changed"] = 1;
 		}
 		onSortColumnChangedListeners ~= dlg;

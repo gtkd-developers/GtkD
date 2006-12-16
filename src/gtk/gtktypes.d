@@ -20,32 +20,23 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-module gtk.typedefs;
+module gtk.gtktypes;
 
-
-public import glib.typedefs;
-
-
-public import gobject.typedefs;
-
-
-public import pango.typedefs;
-
-
-public import atk.typedefs;
-
-
-public import gdkpixbuf.typedefs;
-
-
-public import gdk.typedefs;
-
-
+public import glib.glibtypes;
+public import gobject.gobjecttypes;
+public import pango.pangotypes;
+public import atk.atktypes;
+public import gdkpixbuf.gdkpixbuftypes;
+public import gdk.gdktypes;
 alias void GtkAccelGroupEntry;
-
-
 alias void GtkContainerClass;
 
+//alias GTokenType.G_TOKEN_LAST G_TOKEN_LAST;";
+//alias GtkSignalRunType.G_SIGNAL_RUN_FIRST G_SIGNAL_RUN_FIRST;
+//alias GtkSignalRunType.G_SIGNAL_RUN_LAST G_SIGNAL_RUN_LAST;
+//alias GtkSignalRunType.G_SIGNAL_NO_RECURSE G_SIGNAL_NO_RECURSE;
+//alias GtkSignalRunType.G_SIGNAL_ACTION G_SIGNAL_ACTION;
+//alias GtkSignalRunType.G_SIGNAL_NO_HOOKS G_SIGNAL_NO_HOOKS;
 
 
 /**
@@ -253,6 +244,8 @@ public enum GtkRcTokenType
 	STOCK,
 	LTR,
 	RTL,
+	COLOR,
+	UNBIND,
 	LAST
 }
 alias GtkRcTokenType RcTokenType;
@@ -297,13 +290,16 @@ alias GtkAnchorType AnchorType;
  * Represents a left pointing arrow.
  * GTK_ARROW_RIGHT
  * Represents a right pointing arrow.
+ * GTK_ARROW_NONE
+ * No arrow. Since 2.10.
  */
 public enum GtkArrowType
 {
 	UP,
 	DOWN,
 	LEFT,
-	RIGHT
+	RIGHT,
+	NONE
 }
 alias GtkArrowType ArrowType;
 
@@ -713,9 +709,9 @@ alias GtkSelectionMode SelectionMode;
  * GTK_SHADOW_OUT
  * The outline is bevelled outwards like a button.
  * GTK_SHADOW_ETCHED_IN
- * The outline itself is an inward bevel, but the frame
- * does
+ * The outline has a sunken 3d appearance.
  * GTK_SHADOW_ETCHED_OUT
+ * The outline has a raised 3d appearance
  */
 public enum GtkShadowType
 {
@@ -1015,13 +1011,15 @@ alias GtkResponseType ResponseType;
  * Question requiring a choice
  * GTK_MESSAGE_ERROR
  * Fatal error message
+ * GTK_MESSAGE_OTHER
  */
 public enum GtkMessageType
 {
 	INFO,
 	WARNING,
 	QUESTION,
-	ERROR
+	ERROR,
+	OTHER
 }
 alias GtkMessageType MessageType;
 
@@ -1076,6 +1074,7 @@ alias GtkButtonsType ButtonsType;
  * GTK_IMAGE_ANIMATION
  * the widget contains a GdkPixbufAnimation
  * GTK_IMAGE_ICON_NAME
+ * the widget contains a named icon.
  */
 public enum GtkImageType
 {
@@ -1170,6 +1169,14 @@ public enum GtkTextSearchFlags
 }
 alias GtkTextSearchFlags TextSearchFlags;
 
+public enum GtkTextBufferTargetInfo
+{
+	BUFFER_CONTENTS = G_MAXUINT - 0,
+	RICH_TEXT = G_MAXUINT - 1,
+	TEXT = G_MAXUINT - 2
+}
+alias GtkTextBufferTargetInfo TextBufferTargetInfo;
+
 /**
  * Describes a type of line wrapping.
  * GTK_WRAP_NONE
@@ -1237,6 +1244,14 @@ alias GtkTreeViewColumnSizing TreeViewColumnSizing;
 
 /**
  * An enum for determining where a dropped row goes.
+ * GTK_TREE_VIEW_DROP_BEFORE
+ * dropped row is inserted before
+ * GTK_TREE_VIEW_DROP_AFTER
+ * dropped row is inserted after
+ * GTK_TREE_VIEW_DROP_INTO_OR_BEFORE
+ * dropped row becomes a child or is inserted before
+ * GTK_TREE_VIEW_DROP_INTO_OR_AFTER
+ * dropped row becomes a child or is inserted after
  */
 public enum GtkTreeViewDropPosition
 {
@@ -1251,6 +1266,30 @@ public enum GtkTreeViewDropPosition
 }
 alias GtkTreeViewDropPosition TreeViewDropPosition;
 
+public enum GtkTreeViewGridLines
+{
+	NONE,
+	HORIZONTAL,
+	VERTICAL,
+	BOTH
+}
+alias GtkTreeViewGridLines TreeViewGridLines;
+
+/**
+ * An enum for determining where a dropped item goes.
+ * GTK_ICON_VIEW_NO_DROP
+ * no drop possible
+ * GTK_ICON_VIEW_DROP_INTO
+ * dropped item replaces the item
+ * GTK_ICON_VIEW_DROP_LEFT
+ * droppped item is inserted to the left
+ * GTK_ICON_VIEW_DROP_RIGHT
+ * dropped item is inserted to the right
+ * GTK_ICON_VIEW_DROP_ABOVE
+ * dropped item is inserted above
+ * GTK_ICON_VIEW_DROP_BELOW
+ * dropped item is inserted below
+ */
 public enum GtkIconViewDropPosition
 {
 	NO_DROP,
@@ -1435,7 +1474,8 @@ alias GtkFileChooserConfirmation FileChooserConfirmation;
 public enum GtkFileChooserError
 {
 	NONEXISTENT,
-	BAD_FILENAME
+	BAD_FILENAME,
+	ALREADY_EXISTS
 }
 alias GtkFileChooserError FileChooserError;
 
@@ -1509,9 +1549,8 @@ alias GtkObjectFlags ObjectFlags;
 
 /**
  * Warning
- * GtkArgFlags is deprecated and should not be used in newly-written code.
+ * GtkArgFlags is deprecated and should not be used in newly-written code. Use corresponding GParamSpec features instead
  * Possible flags indicating how an argument should be treated.
- * Deprecated in favor of GParamSpec features.
  * GTK_ARG_READABLE
  * the argument is readable. (i.e. can be queried)
  * GTK_ARG_WRITABLE
@@ -1536,6 +1575,20 @@ public enum GtkArgFlags
 	CHILD_ARG = 1 << 4
 }
 alias GtkArgFlags ArgFlags;
+
+/**
+ * Determines how GTK+ handles the sensitivity of stepper arrows
+ * at the end of range widgets.
+ * GTK_SENSITIVITY_AUTO
+ * The arrow is made insensitive if the
+ */
+public enum GtkSensitivityType
+{
+	AUTO,
+	ON,
+	OFF
+}
+alias GtkSensitivityType SensitivityType;
 
 /**
  * Tells about certain properties of the widget.
@@ -1618,32 +1671,35 @@ struct GtkTextIter {
  * Main Gtk struct.
  * An object representing and maintaining a group of accelerators.
  */
-public struct GtkAccelGroup;
+public struct GtkAccelGroup{}
 
 
-public struct GtkAccelKey;
+public struct GtkAccelKey{}
 // uint accelKey;
+// gtk-Keyboard-Accelerators.html
 // GdkModifierType accelMods;
+// gtk-Keyboard-Accelerators.html
 // uint accelFlags : 16;
+// gtk-Keyboard-Accelerators.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkAccelMap;
+public struct GtkAccelMap{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkClipboard;
+public struct GtkClipboard{}
 
 
 /**
  * Contains information found when looking up an icon in
  * an icon theme.
  */
-public struct GtkIconInfo;
+public struct GtkIconInfo{}
 
 
 /**
@@ -1656,30 +1712,35 @@ public struct GtkIconInfo;
  * object and set the icon theme name explicitely using
  * gtk_icon_theme_set_custom_theme().
  */
-public struct GtkIconTheme;
+public struct GtkIconTheme{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkStockItem;
+public struct GtkStockItem{}
 // char *stockId;
+// gtk-Stock-Items.html
 // char *label;
+// gtk-Stock-Items.html
 // GdkModifierType modifier;
+// gtk-Stock-Items.html
 // uint keyval;
+// gtk-Stock-Items.html
 // char *translationDomain;
+// gtk-Stock-Items.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkIconSource;
+public struct GtkIconSource{}
 
 
-public struct GtkIconFactory;
+public struct GtkIconFactory{}
 
 
-public struct GtkIconSet;
+public struct GtkIconSet{}
 
 
 /**
@@ -1689,107 +1750,200 @@ public struct GtkIconSet;
  * This can later be composited together with other
  * GtkRcStyle structures to form a GtkStyle.
  */
-public struct GtkRcStyle;
+public struct GtkRcStyle{}
 // char *name;
+// gtk-Resource-Files.html
 // char *bgPixmapName[5];
+// gtk-Resource-Files.html
 // PangoFontDescription *fontDesc;
+// gtk-Resource-Files.html
 // GtkRcFlags colorFlags[5];
+// gtk-Resource-Files.html
 // GdkColor fg[5];
+// gtk-Resource-Files.html
 // GdkColor bg[5];
+// gtk-Resource-Files.html
 // GdkColor text[5];
+// gtk-Resource-Files.html
 // GdkColor base[5];
+// gtk-Resource-Files.html
 // int xthickness;
+// gtk-Resource-Files.html
 // int ythickness;
+// gtk-Resource-Files.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkSettings;
+public struct GtkSettings{}
 
 
-public struct GtkSettingsValue;
+public struct GtkSettingsValue{}
 // /+* origin should be something like "filename:linenumber" for rc files,
+// GtkSettings.html
 // * or e.g. "XProperty" for other sources
+// GtkSettings.html
 // +/
+// GtkSettings.html
 // char *origin;
+// GtkSettings.html
 // /+* valid types are LONG, DOUBLE and STRING corresponding to the token parsed,
+// GtkSettings.html
 // * or a GSTRING holding an unparsed statement
+// GtkSettings.html
 // +/
+// GtkSettings.html
 // GValue value;
+// GtkSettings.html
 
 
 /**
  * Main Gtk struct.
+ * A binding set maintains a list of activatable key bindings.
+ * A single binding set can match multiple types of widgets.
+ * Similar to styles, widgets can be mapped by widget name paths, widget class paths or widget class types.
+ * When a binding within a set is matched upon activation, an action signal is emitted on
+ * the target widget to carry out the actual activation.
+ * gchar*set_name;
  */
-public struct GtkBindingSet;
+public struct GtkBindingSet{}
 // char *setName;
+// gtk-Bindings.html
 // int priority;
+// gtk-Bindings.html
 // GSList *widgetPathPspecs;
+// gtk-Bindings.html
 // GSList *widgetClassPspecs;
+// gtk-Bindings.html
 // GSList *classBranchPspecs;
+// gtk-Bindings.html
 // GtkBindingEntry *entries;
+// gtk-Bindings.html
 // GtkBindingEntry *current;
+// gtk-Bindings.html
 // uint parsed : 1; /+* From RC content +/
+// gtk-Bindings.html
 
 
-public struct GtkBindingEntry;
+/**
+ * Each key binding element of a binding sets binding list is represented by a GtkBindingEntry.
+ * guintkeyval;
+ */
+public struct GtkBindingEntry{}
 // /+* key portion
+// gtk-Bindings.html
 // +/
+// gtk-Bindings.html
 // uint keyval;
+// gtk-Bindings.html
 // GdkModifierType modifiers;
+// gtk-Bindings.html
 // GtkBindingSet *bindingSet;
+// gtk-Bindings.html
 // uint destroyed : 1;
+// gtk-Bindings.html
 // uint inEmission : 1;
+// gtk-Bindings.html
+// uint marksUnbound : 1;
+// gtk-Bindings.html
 // GtkBindingEntry *setNext;
+// gtk-Bindings.html
 // GtkBindingEntry *hashNext;
+// gtk-Bindings.html
 // GtkBindingSignal *signals;
+// gtk-Bindings.html
 
 
-public struct GtkBindingSignal;
+/**
+ * A GtkBindingSignal stores the necessary information to activate a widget
+ * in response to a key press via a signal emission.
+ * GtkBindingSignal*next;
+ */
+public struct GtkBindingSignal{}
 // GtkBindingSignal *next;
+// gtk-Bindings.html
 // char *signalName;
+// gtk-Bindings.html
 // uint nArgs;
+// gtk-Bindings.html
 // GtkBindingArg *args;
+// gtk-Bindings.html
 
 
-public struct GtkBindingArg;
+/**
+ * A GtkBindingArg holds the data associated with an argument for a
+ * key binding signal emission as stored in GtkBindingSignal.
+ * GTypearg_type;
+ * implementation detail
+ */
+public struct GtkBindingArg{}
 // GType argType;
+// gtk-Bindings.html
 // unio {
+	// gtk-Bindings.html
 	// int longData;
+	// gtk-Bindings.html
 	// double doubleData;
+	// gtk-Bindings.html
 	// char *stringData;
+	// gtk-Bindings.html
 // } d;
+// gtk-Bindings.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkStyle;
+public struct GtkStyle{}
 // GdkColor fg[5];
+// GtkStyle.html
 // GdkColor bg[5];
+// GtkStyle.html
 // GdkColor light[5];
+// GtkStyle.html
 // GdkColor dark[5];
+// GtkStyle.html
 // GdkColor mid[5];
+// GtkStyle.html
 // GdkColor text[5];
+// GtkStyle.html
 // GdkColor base[5];
+// GtkStyle.html
 // GdkColor textAa[5]; /+* Halfway between text/base +/
+// GtkStyle.html
 // GdkColor black;
+// GtkStyle.html
 // GdkColor white;
+// GtkStyle.html
 // PangoFontDescription *fontDesc;
+// GtkStyle.html
 // int xthickness;
+// GtkStyle.html
 // int ythickness;
+// GtkStyle.html
 // GdkGC *fgGc[5];
+// GtkStyle.html
 // GdkGC *bgGc[5];
+// GtkStyle.html
 // GdkGC *lightGc[5];
+// GtkStyle.html
 // GdkGC *darkGc[5];
+// GtkStyle.html
 // GdkGC *midGc[5];
+// GtkStyle.html
 // GdkGC *textGc[5];
+// GtkStyle.html
 // GdkGC *baseGc[5];
+// GtkStyle.html
 // GdkGC *textAaGc[5];
+// GtkStyle.html
 // GdkGC *blackGc;
+// GtkStyle.html
 // GdkGC *whiteGc;
+// GtkStyle.html
 // GdkPixmap *bgPixmap[5];
+// GtkStyle.html
 
 
 public struct GtkBorder
@@ -1801,13 +1955,19 @@ public struct GtkBorder
 }
 
 
-public struct GtkRcProperty;
+public struct GtkRcProperty{}
 // /+* quark-ified property identifier like "GtkScrollbar::spacing" +/
+// GtkStyle.html
 // GQuark typeName;
+// GtkStyle.html
 // GQuark propertyName;
+// GtkStyle.html
 // /+* fields similar to GtkSettingsValue +/
+// GtkStyle.html
 // char *origin;
+// GtkStyle.html
 // GValue value;
+// GtkStyle.html
 
 
 /**
@@ -1836,19 +1996,24 @@ public struct GtkTargetEntry
  * an efficient form. This structure should be treated as
  * opaque.
  */
-public struct GtkTargetList;
+public struct GtkTargetList{}
 // GList *list;
+// gtk-Selections.html
 // uint refCount;
+// gtk-Selections.html
 
 
 /**
  * Internally used structure in the drag-and-drop and
  * selection handling code.
  */
-public struct GtkTargetPair;
+public struct GtkTargetPair{}
 // GdkAtom target;
+// gtk-Selections.html
 // uint flags;
+// gtk-Selections.html
 // uint info;
+// gtk-Selections.html
 
 
 /**
@@ -1856,35 +2021,63 @@ public struct GtkTargetPair;
  * GtkArg is deprecated and should not be used in newly-written code.
  * This is a structure that we use to pass in typed values (and names).
  */
-public struct GtkArg;
+public struct GtkArg{}
 // GtkType type;
+// gtk-Types.html
 // char *name;
+// gtk-Types.html
 // /+* this unio only defines the required storage types for
+// gtk-Types.html
 // * the possibile values, thus there is no int enumData field,
+// gtk-Types.html
 // * because that would just be a mere alias for int intData.
+// gtk-Types.html
 // * use the GTK_VALUE_*() and GTK_RETLOC_*() macros to access
+// gtk-Types.html
 // * the discrete memebers.
+// gtk-Types.html
 // +/
+// gtk-Types.html
 // unio {
+	// gtk-Types.html
 	// /+* flat values +/
+	// gtk-Types.html
 	// char charData;
+	// gtk-Types.html
 	// char ucharData;
+	// gtk-Types.html
 	// int boolData;
+	// gtk-Types.html
 	// int intData;
+	// gtk-Types.html
 	// uint uintData;
+	// gtk-Types.html
 	// int longData;
+	// gtk-Types.html
 	// uint ulongData;
+	// gtk-Types.html
 	// float floatData;
+	// gtk-Types.html
 	// double doubleData;
+	// gtk-Types.html
 	// char *stringData;
+	// gtk-Types.html
 	// GtkObject *objectData;
+	// gtk-Types.html
 	// void* pointerData;
+	// gtk-Types.html
 	// /+* structured values +/
+	// gtk-Types.html
 	// struct {
+		// gtk-Types.html
 		// GtkSignalFunc f;
+		// gtk-Types.html
 		// void* d;
+		// gtk-Types.html
 	// } signalData;
+	// gtk-Types.html
 // } d;
+// gtk-Types.html
 
 
 /**
@@ -1897,15 +2090,23 @@ public struct GtkArg;
  * function for an instance of the object. reserved_1 is used for
  * GtkEnumValue to hold the enumerated values.
  */
-public struct GtkTypeInfo;
+public struct GtkTypeInfo{}
 // char *typeName;
+// gtk-Types.html
 // uint objectSize;
+// gtk-Types.html
 // uint classSize;
+// gtk-Types.html
 // GtkClassInitFunc classInitFunc;
+// gtk-Types.html
 // GtkObjectInitFunc objectInitFunc;
+// gtk-Types.html
 // void* reserved1;
+// gtk-Types.html
 // void* reserved2;
+// gtk-Types.html
 // GtkClassInitFunc baseClassInitFunc;
+// gtk-Types.html
 
 
 /**
@@ -1916,34 +2117,36 @@ public struct GtkTypeInfo;
  * dividing GtkHSeparator in the dialog. It is treated exactly the same
  * as any other GtkHButtonBox.
  */
-public struct GtkDialog;
+public struct GtkDialog{}
 // GtkWidget *vbox;
+// GtkDialog.html
 // GtkWidget *actionArea;
+// GtkDialog.html
 
 
 /**
  * Main Gtk struct.
- * The GtkInvisible-struct struct contains no public fields.
+ * The GtkInvisible struct contains no public fields.
  */
-public struct GtkInvisible;
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkMessageDialog;
+public struct GtkInvisible{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkWindow;
+public struct GtkMessageDialog{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkWindowGroup;
+public struct GtkWindow{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkWindowGroup{}
 
 
 /**
@@ -1951,15 +2154,15 @@ public struct GtkWindowGroup;
  * The GtkAboutDialog struct contains
  * only private fields and should not be directly accessed.
  */
-public struct GtkAboutDialog;
+public struct GtkAboutDialog{}
 
 
 /**
  * Main Gtk struct.
- * The GtkAccelLabel-struct struct contains private data only, and
+ * The GtkAccelLabel struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkAccelLabel;
+public struct GtkAccelLabel{}
 
 
 /**
@@ -1967,7 +2170,7 @@ public struct GtkAccelLabel;
  * This struct contain private data only and should be accessed by the functions
  * below.
  */
-public struct GtkImage;
+public struct GtkImage{}
 
 
 /**
@@ -1975,36 +2178,36 @@ public struct GtkImage;
  * This should not be accessed directly. Use the accessor functions as
  * described below.
  */
-public struct GtkLabel;
+public struct GtkLabel{}
 
 
 /**
  * Main Gtk struct.
- * The GtkProgressBar-struct struct contains private data only,
+ * The GtkProgressBar struct contains private data only,
  * and should be accessed using the functions below.
  */
-public struct GtkProgressBar;
+public struct GtkProgressBar{}
 
 
 /**
  * Main Gtk struct.
  * Contains private data that should be modified with the functions described below.
  */
-public struct GtkStatusbar;
+public struct GtkStatusbar{}
 
 
 /**
  * Main Gtk struct.
  * This should not be accessed directly. Use the accessor functions below.
  */
-public struct GtkButton;
+public struct GtkButton{}
 
 
 /**
  * Main Gtk struct.
  * toggle_button is a GtkToggleButton representing the actual toggle button that composes the check button.
  */
-public struct GtkCheckButton;
+public struct GtkCheckButton{}
 
 
 /**
@@ -2012,44 +2215,44 @@ public struct GtkCheckButton;
  * Contains only private data that should be read and manipulated using the
  * functions below.
  */
-public struct GtkRadioButton;
+public struct GtkRadioButton{}
 
 
 /**
  * Main Gtk struct.
  * The GtkToggleButton struct contains private data only, and should be manipulated using the functions below.
  */
-public struct GtkToggleButton;
+public struct GtkToggleButton{}
 
 
 /**
  * Main Gtk struct.
- * The GtkEntry-struct struct contains only private data.
+ * The GtkEntry struct contains only private data.
  */
-public struct GtkEntry;
+public struct GtkEntry{}
 
 
 /**
  * Main Gtk struct.
  * The GtkEntryCompletion struct contains only private data.
  */
-public struct GtkEntryCompletion;
+public struct GtkEntryCompletion{}
 
 
 /**
  * Main Gtk struct.
- * The GtkHScale-struct struct contains private data only, and
+ * The GtkHScale struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkHScale;
+public struct GtkHScale{}
 
 
 /**
  * Main Gtk struct.
- * The GtkVScale-struct struct contains private data only, and
+ * The GtkVScale struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkVScale;
+public struct GtkVScale{}
 
 
 /**
@@ -2058,7 +2261,7 @@ public struct GtkVScale;
  * widget, and can be used accordingly. All other fields contain private data
  * and should only be modified using the functions below.
  */
-public struct GtkSpinButton;
+public struct GtkSpinButton{}
 
 
 /**
@@ -2069,25 +2272,25 @@ public struct GtkSpinButton;
  * guint selection_start;
  * the starting position of the selected characters
  */
-public struct GtkEditable;
+public struct GtkEditable{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTextMark;
+public struct GtkTextMark{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTextBuffer;
+public struct GtkTextBuffer{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTextTag;
+public struct GtkTextTag{}
 
 
 /**
@@ -2115,70 +2318,118 @@ public struct GtkTextTag;
  * guinteditable:1;
  * guintrealized:1;
  */
-public struct GtkTextAttributes;
+public struct GtkTextAttributes{}
 // GtkTextAppearance appearance;
+// GtkTextTag.html
 // GtkJustification justification;
+// GtkTextTag.html
 // GtkTextDirection direction;
+// GtkTextTag.html
 // /+* Individual chunks of this can be set/unset as a group +/
+// GtkTextTag.html
 // PangoFontDescription *font;
+// GtkTextTag.html
 // double fontScale;
+// GtkTextTag.html
 // int leftMargin;
+// GtkTextTag.html
 // int indent;
+// GtkTextTag.html
 // int rightMargin;
+// GtkTextTag.html
 // int pixelsAboveLines;
+// GtkTextTag.html
 // int pixelsBelowLines;
+// GtkTextTag.html
 // int pixelsInsideWrap;
+// GtkTextTag.html
 // PangoTabArray *tabs;
+// GtkTextTag.html
 // GtkWrapMode wrapMode; /+* How to handle wrap-around for this tag.
+// GtkTextTag.html
 // * Must be GTK_WRAPMODE_CHAR,
+// GtkTextTag.html
 // * GTK_WRAPMODE_NONE, GTK_WRAPMODE_WORD
+// GtkTextTag.html
 // +/
+// GtkTextTag.html
 // PangoLanguage *language;
+// GtkTextTag.html
 // /+* hide the text +/
+// GtkTextTag.html
 // uint invisible : 1;
+// GtkTextTag.html
 // /+* Background is fit to full line height rather than
+// GtkTextTag.html
 // * baseline +/- ascent/descent (font height)
+// GtkTextTag.html
 // +/
+// GtkTextTag.html
 // uint bgFullHeight : 1;
+// GtkTextTag.html
 // /+* can edit this text +/
+// GtkTextTag.html
 // uint editable : 1;
+// GtkTextTag.html
 // /+* colors are allocated etc. +/
+// GtkTextTag.html
 // uint realized : 1;
+// GtkTextTag.html
 
 
-public struct GtkTextAppearance;
+public struct GtkTextAppearance{}
 // GdkColor bgColor;
+// GtkTextTag.html
 // GdkColor fgColor;
+// GtkTextTag.html
 // GdkBitmap *bgStipple;
+// GtkTextTag.html
 // GdkBitmap *fgStipple;
+// GtkTextTag.html
 // /+* super/subscript rise, can be negative +/
+// GtkTextTag.html
 // int rise;
+// GtkTextTag.html
 // uint underline : 4; /+* PangoUnderline +/
+// GtkTextTag.html
 // uint strikethrough : 1;
+// GtkTextTag.html
 // /+* Whether to use background-related values; this is irrelevant for
+// GtkTextTag.html
 // * the values struct when inn a tag, but is used for the composite
+// GtkTextTag.html
 // * values struct; it's true if any of the tags being composited
+// GtkTextTag.html
 // * had background stuff set.
+// GtkTextTag.html
 // +/
+// GtkTextTag.html
 // uint drawBg : 1;
+// GtkTextTag.html
 // /+* These are only used when we are actually laying out and rendering
+// GtkTextTag.html
 // * a paragraph; not when a GtkTextAppearance is part of a
+// GtkTextTag.html
 // * GtkTextAttributes.
+// GtkTextTag.html
 // +/
+// GtkTextTag.html
 // uint insideSelection : 1;
+// GtkTextTag.html
 // uint isText : 1;
+// GtkTextTag.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTextTagTable;
+public struct GtkTextTagTable{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTextView;
+public struct GtkTextView{}
 
 
 /**
@@ -2187,13 +2438,13 @@ public struct GtkTextView;
  * characters). The anchor can have multiple widgets anchored, to allow for
  * multiple views.
  */
-public struct GtkTextChildAnchor;
+public struct GtkTextChildAnchor{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTreeModel;
+public struct GtkTreeModel{}
 
 
 /**
@@ -2219,127 +2470,195 @@ public struct GtkTreeIter
 }
 
 
-public struct GtkTreePath;
+public struct GtkTreePath{}
 
 
-public struct GtkTreeRowReference;
+public struct GtkTreeRowReference{}
 
 
-public struct GtkTreeModelIface;
+public struct GtkTreeModelIface{}
 // GTypeInterface gIface;
+// GtkTreeModel.html
 // /+* Signals +/
+// GtkTreeModel.html
 // void (* rowChanged) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreePath *path,
+// GtkTreeModel.html
 // GtkTreeIter *iter);
+// GtkTreeModel.html
 // void (* rowInserted) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreePath *path,
+// GtkTreeModel.html
 // GtkTreeIter *iter);
+// GtkTreeModel.html
 // void (* rowHasChildToggled) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreePath *path,
+// GtkTreeModel.html
 // GtkTreeIter *iter);
+// GtkTreeModel.html
 // void (* rowDeleted) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreePath *path);
+// GtkTreeModel.html
 // void (* rowsReordered) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreePath *path,
+// GtkTreeModel.html
 // GtkTreeIter *iter,
+// GtkTreeModel.html
 // int *newOrder);
+// GtkTreeModel.html
 // /+* Virtual Table +/
+// GtkTreeModel.html
 // GtkTreeModelFlags (* getFlags) (GtkTreeModel *treeModel);
+// GtkTreeModel.html
 // int (* getNColumns) (GtkTreeModel *treeModel);
+// GtkTreeModel.html
 // GType (* getColumnType) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // int index);
+// GtkTreeModel.html
 // int (* getIter) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreeIter *iter,
+// GtkTreeModel.html
 // GtkTreePath *path);
+// GtkTreeModel.html
 // GtkTreePath *(* getPath) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreeIter *iter);
+// GtkTreeModel.html
 // void (* getValue) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreeIter *iter,
+// GtkTreeModel.html
 // int column,
+// GtkTreeModel.html
 // GValue *value);
+// GtkTreeModel.html
 // int (* iterNext) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreeIter *iter);
+// GtkTreeModel.html
 // int (* iterChildren) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreeIter *iter,
+// GtkTreeModel.html
 // GtkTreeIter *parent);
+// GtkTreeModel.html
 // int (* iterHasChild) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreeIter *iter);
+// GtkTreeModel.html
 // int (* iterNChildren) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreeIter *iter);
+// GtkTreeModel.html
 // int (* iterNthChild) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreeIter *iter,
+// GtkTreeModel.html
 // GtkTreeIter *parent,
+// GtkTreeModel.html
 // int n);
+// GtkTreeModel.html
 // int (* iterParent) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreeIter *iter,
+// GtkTreeModel.html
 // GtkTreeIter *child);
+// GtkTreeModel.html
 // void (* refNode) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreeIter *iter);
+// GtkTreeModel.html
 // void (* unrefNode) (GtkTreeModel *treeModel,
+// GtkTreeModel.html
 // GtkTreeIter *iter);
+// GtkTreeModel.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTreeSelection;
+public struct GtkTreeSelection{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTreeViewColumn;
+public struct GtkTreeViewColumn{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTreeView;
+public struct GtkTreeView{}
 
 
 /**
  * A private struct for internal use only. The definition of this
  * structure is not publically available.
  */
-public struct GtkTreeViewPrivate;
+public struct GtkTreeViewPrivate{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTreeDragSource;
+public struct GtkTreeDragSource{}
 
 
-public struct GtkTreeDragSourceIface;
+public struct GtkTreeDragSourceIface{}
 // GTypeInterface gIface;
+// gtk-GtkTreeView-drag-and-drop.html
 // /+* VTable - not signals +/
+// gtk-GtkTreeView-drag-and-drop.html
 // int (* rowDraggable) (GtkTreeDragSource *dragSource,
+// gtk-GtkTreeView-drag-and-drop.html
 // GtkTreePath *path);
+// gtk-GtkTreeView-drag-and-drop.html
 // int (* dragDataGet) (GtkTreeDragSource *dragSource,
+// gtk-GtkTreeView-drag-and-drop.html
 // GtkTreePath *path,
+// gtk-GtkTreeView-drag-and-drop.html
 // GtkSelectionData *selectionData);
+// gtk-GtkTreeView-drag-and-drop.html
 // int (* dragDataDelete) (GtkTreeDragSource *dragSource,
+// gtk-GtkTreeView-drag-and-drop.html
 // GtkTreePath *path);
+// gtk-GtkTreeView-drag-and-drop.html
 
 
-public struct GtkTreeDragDest;
+public struct GtkTreeDragDest{}
 
 
-public struct GtkTreeDragDestIface;
+public struct GtkTreeDragDestIface{}
 // GTypeInterface gIface;
+// gtk-GtkTreeView-drag-and-drop.html
 // /+* VTable - not signals +/
+// gtk-GtkTreeView-drag-and-drop.html
 // int (* dragDataReceived) (GtkTreeDragDest *dragDest,
+// gtk-GtkTreeView-drag-and-drop.html
 // GtkTreePath *dest,
+// gtk-GtkTreeView-drag-and-drop.html
 // GtkSelectionData *selectionData);
+// gtk-GtkTreeView-drag-and-drop.html
 // int (* rowDropPossible) (GtkTreeDragDest *dragDest,
+// gtk-GtkTreeView-drag-and-drop.html
 // GtkTreePath *destPath,
+// gtk-GtkTreeView-drag-and-drop.html
 // GtkSelectionData *selectionData);
+// gtk-GtkTreeView-drag-and-drop.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkCellView;
+public struct GtkCellView{}
 
 
 /**
@@ -2347,158 +2666,208 @@ public struct GtkCellView;
  * The GtkIconView struct contains only
  * private fields and should not be directly accessed.
  */
-public struct GtkIconView;
+public struct GtkIconView{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTreeSortable;
+public struct GtkTreeSortable{}
 
 
-public struct GtkTreeSortableIface;
+public struct GtkTreeSortableIface{}
 // GTypeInterface gIface;
+// GtkTreeSortable.html
 // /+* signals +/
+// GtkTreeSortable.html
 // void (* sortColumnChanged) (GtkTreeSortable *sortable);
+// GtkTreeSortable.html
 // /+* virtual table +/
+// GtkTreeSortable.html
 // int (* getSortColumnId) (GtkTreeSortable *sortable,
+// GtkTreeSortable.html
 // int *sortColumnId,
+// GtkTreeSortable.html
 // GtkSortType *order);
+// GtkTreeSortable.html
 // void (* setSortColumnId) (GtkTreeSortable *sortable,
+// GtkTreeSortable.html
 // int sortColumnId,
+// GtkTreeSortable.html
 // GtkSortType order);
+// GtkTreeSortable.html
 // void (* setSortFunc) (GtkTreeSortable *sortable,
+// GtkTreeSortable.html
 // int sortColumnId,
+// GtkTreeSortable.html
 // GtkTreeIterCompareFunc func,
+// GtkTreeSortable.html
 // void* data,
+// GtkTreeSortable.html
 // GtkDestroyNotify destroy);
+// GtkTreeSortable.html
 // void (* setDefaultSortFunc) (GtkTreeSortable *sortable,
+// GtkTreeSortable.html
 // GtkTreeIterCompareFunc func,
+// GtkTreeSortable.html
 // void* data,
+// GtkTreeSortable.html
 // GtkDestroyNotify destroy);
+// GtkTreeSortable.html
 // int (* hasDefaultSortFunc) (GtkTreeSortable *sortable);
+// GtkTreeSortable.html
 
 
 /**
  * Main Gtk struct.
  * This should not be accessed directly. Use the accessor functions below.
  */
-public struct GtkTreeModelSort;
+public struct GtkTreeModelSort{}
 
 
 /**
  * Main Gtk struct.
  * The GtkTreeModelFilter struct contains only private fields.
  */
-public struct GtkTreeModelFilter;
+public struct GtkTreeModelFilter{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkCellLayout;
+public struct GtkCellLayout{}
 
 
-public struct GtkCellLayoutIface;
+public struct GtkCellLayoutIface{}
 // GTypeInterface gIface;
+// GtkCellLayout.html
 // /+* Virtual Table +/
+// GtkCellLayout.html
 // void (* packStart) (GtkCellLayout *cellLayout,
+// GtkCellLayout.html
 // GtkCellRenderer *cell,
+// GtkCellLayout.html
 // int expand);
+// GtkCellLayout.html
 // void (* packEnd) (GtkCellLayout *cellLayout,
+// GtkCellLayout.html
 // GtkCellRenderer *cell,
+// GtkCellLayout.html
 // int expand);
+// GtkCellLayout.html
 // void (* clear) (GtkCellLayout *cellLayout);
+// GtkCellLayout.html
 // void (* addAttribute) (GtkCellLayout *cellLayout,
+// GtkCellLayout.html
 // GtkCellRenderer *cell,
+// GtkCellLayout.html
 // char *attribute,
+// GtkCellLayout.html
 // int column);
+// GtkCellLayout.html
 // void (* setCellDataFunc) (GtkCellLayout *cellLayout,
+// GtkCellLayout.html
 // GtkCellRenderer *cell,
+// GtkCellLayout.html
 // GtkCellLayoutDataFunc func,
+// GtkCellLayout.html
 // void* funcData,
+// GtkCellLayout.html
 // GDestroyNotify destroy);
+// GtkCellLayout.html
 // void (* clearAttributes) (GtkCellLayout *cellLayout,
+// GtkCellLayout.html
 // GtkCellRenderer *cell);
+// GtkCellLayout.html
 // void (* reorder) (GtkCellLayout *cellLayout,
+// GtkCellLayout.html
 // GtkCellRenderer *cell,
+// GtkCellLayout.html
 // int position);
+// GtkCellLayout.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkCellRenderer;
+public struct GtkCellRenderer{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkCellEditable;
+public struct GtkCellEditable{}
 
 
-public struct GtkCellEditableIface;
+public struct GtkCellEditableIface{}
 // GTypeInterface gIface;
+// GtkCellEditable.html
 // /+* signals +/
+// GtkCellEditable.html
 // void (* editingDone) (GtkCellEditable *cellEditable);
+// GtkCellEditable.html
 // void (* removeWidget) (GtkCellEditable *cellEditable);
+// GtkCellEditable.html
 // /+* virtual table +/
+// GtkCellEditable.html
 // void (* startEditing) (GtkCellEditable *cellEditable,
+// GtkCellEditable.html
 // GdkEvent *event);
+// GtkCellEditable.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkCellRendererCombo;
+public struct GtkCellRendererCombo{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkCellRendererPixbuf;
+public struct GtkCellRendererPixbuf{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkCellRendererProgress;
+public struct GtkCellRendererProgress{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkCellRendererText;
+public struct GtkCellRendererText{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkCellRendererToggle;
+public struct GtkCellRendererToggle{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkListStore;
+public struct GtkListStore{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkTreeStore;
+public struct GtkTreeStore{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkComboBox;
+public struct GtkComboBox{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkComboBoxEntry;
+public struct GtkComboBoxEntry{}
 
 
 /**
@@ -2506,37 +2875,37 @@ public struct GtkComboBoxEntry;
  * The GtkMenu struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkMenu;
+public struct GtkMenu{}
 
 
 /**
  * Main Gtk struct.
  * The GtkMenuBar struct contains the following fields. (These fields should be considered read-only. They should never be set by an application.)
  */
-public struct GtkMenuBar;
+public struct GtkMenuBar{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkMenuItem;
+public struct GtkMenuItem{}
 
 
 /**
  * Main Gtk struct.
- * The GtkMenuShell-struct struct contains the following fields.
+ * The GtkMenuShell struct contains the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
  * GList *children;
  * The list of GtkMenuItem objects contained by this GtkMenuShell.
  */
-public struct GtkMenuShell;
+public struct GtkMenuShell{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkImageMenuItem;
+public struct GtkImageMenuItem{}
 
 
 /**
@@ -2544,34 +2913,34 @@ public struct GtkImageMenuItem;
  * The structure contains only private data that must be accessed through
  * the interface functions.
  */
-public struct GtkRadioMenuItem;
+public struct GtkRadioMenuItem{}
 
 
 /**
  * Main Gtk struct.
- * The GtkCheckMenuItem-struct struct contains the following fields.
+ * The GtkCheckMenuItem struct contains the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
  * guint active;
  * TRUE if the check box is active.
  */
-public struct GtkCheckMenuItem;
+public struct GtkCheckMenuItem{}
 
 
 /**
  * Main Gtk struct.
- * The GtkSeparatorMenuItem-struct struct contains private data only, and
+ * The GtkSeparatorMenuItem struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkSeparatorMenuItem;
+public struct GtkSeparatorMenuItem{}
 
 
 /**
  * Main Gtk struct.
- * The GtkTearoffMenuItem-struct struct contains private data only, and
+ * The GtkTearoffMenuItem struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkTearoffMenuItem;
+public struct GtkTearoffMenuItem{}
 
 
 /**
@@ -2579,24 +2948,34 @@ public struct GtkTearoffMenuItem;
  * The GtkToolbar struct only contains private data and should only be
  * accessed through the function described below.
  */
-public struct GtkToolbar;
+public struct GtkToolbar{}
 // int numChildren;
+// GtkToolbar.html
 // GList *children;
+// GtkToolbar.html
 // GtkOrientation orientation;
+// GtkToolbar.html
 // GtkToolbarStyle style;
+// GtkToolbar.html
 // GtkIconSize iconSize;
+// GtkToolbar.html
 // GtkTooltips *tooltips;
+// GtkToolbar.html
 
 
 /**
  * Warning
  * GtkToolbarChild is deprecated and should not be used in newly-written code.
  */
-public struct GtkToolbarChild;
+public struct GtkToolbarChild{}
 // GtkToolbarChildType type;
+// GtkToolbar.html
 // GtkWidget *widget;
+// GtkToolbar.html
 // GtkWidget *icon;
+// GtkToolbar.html
 // GtkWidget *label;
+// GtkToolbar.html
 
 
 /**
@@ -2604,7 +2983,7 @@ public struct GtkToolbarChild;
  * The GtkToolItem struct contains only private data. It should only be
  * accessed through the functions described below.
  */
-public struct GtkToolItem;
+public struct GtkToolItem{}
 
 
 /**
@@ -2612,7 +2991,7 @@ public struct GtkToolItem;
  * The GtkSeparatorToolItem struct contains only private data and
  * should only be accessed through the functions described below.
  */
-public struct GtkSeparatorToolItem;
+public struct GtkSeparatorToolItem{}
 
 
 /**
@@ -2620,25 +2999,25 @@ public struct GtkSeparatorToolItem;
  * The GtkToolButton struct contains only private. It should only be
  * accessed with the function described below.
  */
-public struct GtkToolButton;
+public struct GtkToolButton{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkMenuToolButton;
+public struct GtkMenuToolButton{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkToggleToolButton;
+public struct GtkToggleToolButton{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkRadioToolButton;
+public struct GtkRadioToolButton{}
 
 
 /**
@@ -2646,7 +3025,7 @@ public struct GtkRadioToolButton;
  * The GtkUIManager struct contains only private
  * members and should not be accessed directly.
  */
-public struct GtkUIManager;
+public struct GtkUIManager{}
 
 
 /**
@@ -2654,7 +3033,7 @@ public struct GtkUIManager;
  * The GtkActionGroup struct contains only private
  * members and should not be accessed directly.
  */
-public struct GtkActionGroup;
+public struct GtkActionGroup{}
 
 
 /**
@@ -2663,17 +3042,21 @@ public struct GtkActionGroup;
  * constgchar*name;
  * The name of the action.
  * constgchar*stock_id;
- * The stock id for the action.
- * constgchar*label;
- * The label for the action. This field should typically be marked for
+ * The stock id for the action, or the name of an icon from the icon
  */
-public struct GtkActionEntry;
+public struct GtkActionEntry{}
 // char *name;
+// GtkActionGroup.html
 // char *stockId;
+// GtkActionGroup.html
 // char *label;
+// GtkActionGroup.html
 // char *accelerator;
+// GtkActionGroup.html
 // char *tooltip;
+// GtkActionGroup.html
 // GCallback callback;
+// GtkActionGroup.html
 
 
 /**
@@ -2682,18 +3065,23 @@ public struct GtkActionEntry;
  * constgchar*name;
  * The name of the action.
  * constgchar*stock_id;
- * The stock id for the action.
- * constgchar*label;
- * The label for the action. This field should typically be marked for
+ * The stock id for the action, or the name of an icon from the icon
  */
-public struct GtkToggleActionEntry;
+public struct GtkToggleActionEntry{}
 // char *name;
+// GtkActionGroup.html
 // char *stockId;
+// GtkActionGroup.html
 // char *label;
+// GtkActionGroup.html
 // char *accelerator;
+// GtkActionGroup.html
 // char *tooltip;
+// GtkActionGroup.html
 // GCallback callback;
+// GtkActionGroup.html
 // int isActive;
+// GtkActionGroup.html
 
 
 /**
@@ -2702,9 +3090,7 @@ public struct GtkToggleActionEntry;
  * constgchar*name;
  * The name of the action.
  * constgchar*stock_id;
- * The stock id for the action.
- * constgchar*label;
- * The label for the action. This field should typically be marked for
+ * The stock id for the action, or the name of an icon from the icon
  */
 public struct GtkRadioActionEntry
 {
@@ -2722,7 +3108,7 @@ public struct GtkRadioActionEntry
  * The GtkAction struct contains only private members
  * and should not be accessed directly.
  */
-public struct GtkAction;
+public struct GtkAction{}
 
 
 /**
@@ -2730,7 +3116,7 @@ public struct GtkAction;
  * The GtkToggleAction struct contains only
  * private members and should not be accessed directly.
  */
-public struct GtkToggleAction;
+public struct GtkToggleAction{}
 
 
 /**
@@ -2738,26 +3124,28 @@ public struct GtkToggleAction;
  * The GtkRadioAction struct contains
  * only private members and should not be accessed directly.
  */
-public struct GtkRadioAction;
+public struct GtkRadioAction{}
 
 
 /**
  * Main Gtk struct.
+ * The GtkColorButton struct has only private fields and
+ * should not be used directly.
  */
-public struct GtkColorButton;
+public struct GtkColorButton{}
 
 
 /**
  * Main Gtk struct.
- * The GtkColorSelection-struct struct contains private data only,
+ * The GtkColorSelection struct contains private data only,
  * and should be accessed using the functions below.
  */
-public struct GtkColorSelection;
+public struct GtkColorSelection{}
 
 
 /**
  * Main Gtk struct.
- * The GtkColorSelectionDialog-struct struct contains the following fields.
+ * The GtkColorSelectionDialog struct contains the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
  * GtkWidget *colorsel;
@@ -2776,7 +3164,7 @@ public struct GtkColorSelection;
  * The help button widget contained within the dialog.
  * Connect a handler for the clicked event.
  */
-public struct GtkColorSelectionDialog;
+public struct GtkColorSelectionDialog{}
 
 
 /**
@@ -2791,52 +3179,72 @@ public struct GtkColorSelectionDialog;
  * *fileop_c_dir, *fileop_del_file, *fileop_ren_file;
  * the buttons that appear at the top of the file selection dialog. These "operation buttons" can be hidden and redisplayed with gtk_file_selection_hide_fileop_buttons() and gtk_file_selection_show_fileop_buttons() respectively.
  */
-public struct GtkFileSelection;
+public struct GtkFileSelection{}
 // GtkWidget *dirList;
+// GtkFileSelection.html
 // GtkWidget *fileList;
+// GtkFileSelection.html
 // GtkWidget *selectionEntry;
+// GtkFileSelection.html
 // GtkWidget *selectionText;
+// GtkFileSelection.html
 // GtkWidget *mainVbox;
+// GtkFileSelection.html
 // GtkWidget *okButton;
+// GtkFileSelection.html
 // GtkWidget *cancelButton;
+// GtkFileSelection.html
 // GtkWidget *helpButton;
+// GtkFileSelection.html
 // GtkWidget *historyPulldown;
+// GtkFileSelection.html
 // GtkWidget *historyMenu;
+// GtkFileSelection.html
 // GList *historyList;
+// GtkFileSelection.html
 // GtkWidget *fileopDialog;
+// GtkFileSelection.html
 // GtkWidget *fileopEntry;
+// GtkFileSelection.html
 // char *fileopFile;
+// GtkFileSelection.html
 // void* cmplState;
+// GtkFileSelection.html
 // GtkWidget *fileopCDir;
+// GtkFileSelection.html
 // GtkWidget *fileopDelFile;
+// GtkFileSelection.html
 // GtkWidget *fileopRenFile;
+// GtkFileSelection.html
 // GtkWidget *buttonArea;
+// GtkFileSelection.html
 // GtkWidget *actionArea;
+// GtkFileSelection.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkFileChooser;
+public struct GtkFileChooser{}
 
 
 /**
  * Main Gtk struct.
  * This should not be accessed directly. Use the accessor functions below.
  */
-public struct GtkFileChooserButton;
+public struct GtkFileChooserButton{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkFileChooserDialog;
+public struct GtkFileChooserDialog{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkFileChooserWidget;
+public struct GtkFileChooserWidget{}
 
 
 /**
@@ -2844,7 +3252,7 @@ public struct GtkFileChooserWidget;
  * The GtkFileFilter struct contains
  * only private fields and should not be directly accessed.
  */
-public struct GtkFileFilter;
+public struct GtkFileFilter{}
 
 
 /**
@@ -2854,18 +3262,25 @@ public struct GtkFileFilter;
  * GtkFileFilterFlagscontains;
  * Flags indicating which of the following fields need
  */
-public struct GtkFileFilterInfo;
+public struct GtkFileFilterInfo{}
 // GtkFileFilterFlags contains;
+// gtk-gtkfilefilter.html
 // char *filename;
+// gtk-gtkfilefilter.html
 // char *uri;
+// gtk-gtkfilefilter.html
 // char *displayName;
+// gtk-gtkfilefilter.html
 // char *mimeType;
+// gtk-gtkfilefilter.html
 
 
 /**
  * Main Gtk struct.
+ * The GtkFontButton struct has only private members and should not be used
+ * directly.
  */
-public struct GtkFontButton;
+public struct GtkFontButton{}
 
 
 /**
@@ -2873,7 +3288,7 @@ public struct GtkFontButton;
  * The GtkFontSelection struct contains private data only, and should
  * only be accessed using the functions below.
  */
-public struct GtkFontSelection;
+public struct GtkFontSelection{}
 
 
 /**
@@ -2886,72 +3301,75 @@ public struct GtkFontSelection;
  * GtkWidget*cancel_button;
  * The Cancel button of the dialog
  */
-public struct GtkFontSelectionDialog;
+public struct GtkFontSelectionDialog{}
 // GtkWidget *okButton;
+// GtkFontSelectionDialog.html
 // GtkWidget *applyButton;
+// GtkFontSelectionDialog.html
 // GtkWidget *cancelButton;
+// GtkFontSelectionDialog.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkInputDialog;
+public struct GtkInputDialog{}
 
 
 /**
  * Main Gtk struct.
- * The GtkAlignment-struct struct contains private data only, and should
+ * The GtkAlignment struct contains private data only, and should
  * be accessed using the functions below.
  */
-public struct GtkAlignment;
+public struct GtkAlignment{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkAspectFrame;
+public struct GtkAspectFrame{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkHBox;
+public struct GtkHBox{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkVBox;
+public struct GtkVBox{}
 
 
 /**
  * Main Gtk struct.
  * GtkHButtonBox does not contain any public fields.
  */
-public struct GtkHButtonBox;
+public struct GtkHButtonBox{}
 
 
 /**
  * Main Gtk struct.
  * GtkVButtonBox does not contain any public fields.
  */
-public struct GtkVButtonBox;
+public struct GtkVButtonBox{}
 
 
 /**
  * Main Gtk struct.
- * The GtkFixed-struct struct contains the following fields.
+ * The GtkFixed struct contains the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
  * GList *children;
  * a list of GtkFixedChild elements, containing the child widgets and
  * their positions.
  */
-public struct GtkFixed;
+public struct GtkFixed{}
 
 
 /**
- * The GtkFixedChild-struct struct contains the following fields.
+ * The GtkFixedChild struct contains the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
  * GtkWidget *widget;
@@ -2963,41 +3381,45 @@ public struct GtkFixed;
  * the vertical position of the widget within the GtkFixed
  * container.
  */
-public struct GtkFixedChild;
+public struct GtkFixedChild{}
 // GtkWidget *widget;
+// GtkFixed.html
 // int x;
+// GtkFixed.html
 // int y;
+// GtkFixed.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkHPaned;
+public struct GtkHPaned{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkVPaned;
+public struct GtkVPaned{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkLayout;
+public struct GtkLayout{}
 // GdkWindow *binWindow;
+// GtkLayout.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkNotebook;
+public struct GtkNotebook{}
 
 
 /**
  * The GtkNotebookPage is an opaque implementation detail of GtkNotebook.
  */
-public struct GtkNotebookPage;
+public struct GtkNotebookPage{}
 
 
 /**
@@ -3006,7 +3428,7 @@ public struct GtkNotebookPage;
  * children is a GList of all the widgets the table contains. rows and columns are pointers to GtkTableRowCol structures, which contain the default spacing and expansion details for the GtkTable's rows and columns, respectively.
  * nrows and ncols are 16bit integers storing the number of rows and columns the table has.
  */
-public struct GtkTable;
+public struct GtkTable{}
 
 
 /**
@@ -3020,62 +3442,74 @@ public struct GtkTable;
  * xpadding and ypadding
  * specify the space between this widget and the surrounding table cells.
  */
-public struct GtkTableChild;
+public struct GtkTableChild{}
 // GtkWidget *widget;
+// GtkTable.html
 // ushort leftAttach;
+// GtkTable.html
 // ushort rightAttach;
+// GtkTable.html
 // ushort topAttach;
+// GtkTable.html
 // ushort bottomAttach;
+// GtkTable.html
 // ushort xpadding;
+// GtkTable.html
 // ushort ypadding;
+// GtkTable.html
 // uint xexpand : 1;
+// GtkTable.html
 // uint yexpand : 1;
+// GtkTable.html
 // uint xshrink : 1;
+// GtkTable.html
 // uint yshrink : 1;
+// GtkTable.html
 // uint xfill : 1;
+// GtkTable.html
 // uint yfill : 1;
+// GtkTable.html
 
 
 /**
  * These fields should be considered read-only and not be modified directly.
  */
-public struct GtkTableRowCol;
-// ushort requisition;
-// ushort allocation;
-// ushort spacing;
-// uint needExpand : 1;
-// uint needShrink : 1;
-// uint expand : 1;
-// uint shrink : 1;
-// uint empty : 1;
+public struct GtkTableRowCol
+{
+	ushort requisition;
+	ushort allocation;
+	ushort spacing;
+	uint bitfield;
+	//uint needExpand : 1;
+}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkExpander;
+public struct GtkExpander{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkFrame;
+public struct GtkFrame{}
 
 
 /**
  * Main Gtk struct.
- * The GtkHSeparator-struct struct contains private data only, and
+ * The GtkHSeparator struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkHSeparator;
+public struct GtkHSeparator{}
 
 
 /**
  * Main Gtk struct.
- * The GtkVSeparator-struct struct contains private data only, and
+ * The GtkVSeparator struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkVSeparator;
+public struct GtkVSeparator{}
 
 
 /**
@@ -3083,7 +3517,7 @@ public struct GtkVSeparator;
  * The GtkHScrollbar struct contains private data and should be accessed
  * using the functions below.
  */
-public struct GtkHScrollbar;
+public struct GtkHScrollbar{}
 
 
 /**
@@ -3091,7 +3525,7 @@ public struct GtkHScrollbar;
  * The GtkVScrollbar struct contains private data and should be accessed
  * using the functions below.
  */
-public struct GtkVScrollbar;
+public struct GtkVScrollbar{}
 
 
 /**
@@ -3099,14 +3533,16 @@ public struct GtkVScrollbar;
  * There are no public fields in the GtkScrolledWindow struct; it should
  * only be accessed using the functions below.
  */
-public struct GtkScrolledWindow;
+public struct GtkScrolledWindow{}
 // GtkWidget *hscrollbar;
+// GtkScrolledWindow.html
 // GtkWidget *vscrollbar;
+// GtkScrolledWindow.html
 
 
 /**
  * Main Gtk struct.
- * The GtkAdjustment-struct struct contains the following fields.
+ * The GtkAdjustment struct contains the following fields.
  * gdouble lower;
  * the minimum value.
  * gdouble upper;
@@ -3125,20 +3561,16 @@ public struct GtkScrolledWindow;
  * the page size.
  * In a GtkScrollbar this is the size of the area which is currently visible.
  */
-public struct GtkAdjustment;
+public struct GtkAdjustment{}
 
 
 /**
  * Main Gtk struct.
- * The GtkArrow-struct containes the following fields.
+ * The GtkArrow struct containes the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
- * gint16 arrow_type;
- * the direction of the arrow, one of GtkArrowType.
- * gint16 shadow_type;
- * the style of the arrow, one of GtkShadowType.
  */
-public struct GtkArrow;
+public struct GtkArrow{}
 
 
 /**
@@ -3157,7 +3589,7 @@ public struct GtkArrow;
  * are 0-11) while selected_day is one-based
  * (i.e. allowed values are 1-31).
  */
-public struct GtkCalendar;
+public struct GtkCalendar{}
 
 
 /**
@@ -3165,20 +3597,20 @@ public struct GtkCalendar;
  * The GtkDrawingArea struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkDrawingArea;
+public struct GtkDrawingArea{}
 
 
 /**
  * Main Gtk struct.
- * The GtkEventBox-struct struct contains private data only, and
+ * The GtkEventBox struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkEventBox;
+public struct GtkEventBox{}
 
 
 /**
  * Main Gtk struct.
- * The GtkHandleBox-struct struct contains the following fields.
+ * The GtkHandleBox struct contains the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
  * GtkShadowType shadow_type;
@@ -3194,76 +3626,80 @@ public struct GtkEventBox;
  * A boolean value indicating whether the handlebox's
  * child is attached or detached.
  */
-public struct GtkHandleBox;
+public struct GtkHandleBox{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkIMContextSimple;
+public struct GtkIMContextSimple{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkIMMulticontext;
+public struct GtkIMMulticontext{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkSizeGroup;
+public struct GtkSizeGroup{}
 
 
 /**
  * Main Gtk struct.
  * Holds information about a group of tooltips. Fields should be changed using the functions provided, rather than directly accessing the struct's members.
  */
-public struct GtkTooltips;
+public struct GtkTooltips{}
 
 
 /**
  * tooltips is the GtkTooltips group that this tooltip belongs to. widget is the GtkWidget that this tooltip data is associated with. tip_text is a string containing the tooltip message itself.
  * tip_private is a string that is not shown as the default tooltip. Instead, this message may be more informative and go towards forming a context-sensitive help system for your application. (FIXME: how to actually "switch on" private tips?)
  */
-public struct GtkTooltipsData;
+public struct GtkTooltipsData{}
 // GtkTooltips *tooltips;
+// GtkTooltips.html
 // GtkWidget *widget;
+// GtkTooltips.html
 // char *tipText;
+// GtkTooltips.html
 // char *tipPrivate;
+// GtkTooltips.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkViewport;
+public struct GtkViewport{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkAccessible;
+public struct GtkAccessible{}
 
 
 /**
  * Main Gtk struct.
- * The GtkBin-struct struct contains the following fields.
+ * The GtkBin struct contains the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
  * GtkWidget *child;
  * the child widget.
  */
-public struct GtkBin;
+public struct GtkBin{}
 
 
 /**
  * Main Gtk struct.
- * The GtkBox-struct describes an instance of GtkBox and contains the following fields.
+ * The GtkBox describes an instance of GtkBox and contains the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
  * GList * children;
  * a list of children belonging the GtkBox. The data is a list of
- * structures of type GtkBoxChild-struct.
+ * structures of type GtkBoxChild.
  * gint16 spacing;
  * the number of pixels to put between children of the GtkBox, zero
  * by default. Use gtk_box_set_spacing() to set this field.
@@ -3272,20 +3708,23 @@ public struct GtkBin;
  * the GtkBox; FALSE by default. Use gtk_box_set_homogeneous() to set this
  * field.
  */
-public struct GtkBox;
+public struct GtkBox{}
 // GList *children;
+// GtkBox.html
 // short spacing;
+// GtkBox.html
 // uint homogeneous : 1;
+// GtkBox.html
 
 
 /**
- * The GtkBoxChild-struct holds a child widget of GtkBox and describes
+ * The GtkBoxChild holds a child widget of GtkBox and describes
  * how the child is to be packed into the GtkBox. Use
  * gtk_box_query_child_packing() and gtk_box_set_child_packing() to query
  * and reset the padding,
  * expand, fill,
  * and pack fields.
- * GtkBoxChild-struct contains the following fields. (These fields
+ * GtkBoxChild contains the following fields. (These fields
  * should be considered read-only. They should never be directly set by an
  * application.)
  * GtkWidget * widget;
@@ -3308,39 +3747,45 @@ public struct GtkBox;
  * GtkPackType indicating whether the child is packed with reference to
  * the start (top/left) or end (bottom/right) of the GtkBox.
  */
-public struct GtkBoxChild;
+public struct GtkBoxChild{}
 // GtkWidget *widget;
+// GtkBox.html
 // ushort padding;
+// GtkBox.html
 // uint expand : 1;
+// GtkBox.html
 // uint fill : 1;
+// GtkBox.html
 // uint pack : 1;
+// GtkBox.html
 // uint isSecondary : 1;
+// GtkBox.html
 
 
 /**
  * Main Gtk struct.
  * This is a read-only struct; no members should be modified directly.
  */
-public struct GtkButtonBox;
+public struct GtkButtonBox{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkContainer;
+public struct GtkContainer{}
 
 
 /**
  * Main Gtk struct.
- * The GtkItem-struct struct contains private data only, and
+ * The GtkItem struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkItem;
+public struct GtkItem{}
 
 
 /**
  * Main Gtk struct.
- * The GtkMisc-struct struct contains the following fields.
+ * The GtkMisc struct contains the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
  * gfloat xalign;
@@ -3354,31 +3799,31 @@ public struct GtkItem;
  * the amount of space to add on the top and bottom of the widget,
  * in pixels.
  */
-public struct GtkMisc;
+public struct GtkMisc{}
 
 
 /**
  * Main Gtk struct.
  * The object itself. You should never use these members directly -
  */
-public struct GtkObject;
+public struct GtkObject{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkPaned;
+public struct GtkPaned{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkRange;
+public struct GtkRange{}
 
 
 /**
  * Main Gtk struct.
- * The GtkScale-struct struct contains the following fields.
+ * The GtkScale struct contains the following fields.
  * (These fields should be considered read-only. They should never be set by
  * an application.)
  * guint draw_value;
@@ -3388,7 +3833,7 @@ public struct GtkRange;
  * the position in which the textual value is displayed, selected from
  * GtkPositionType.
  */
-public struct GtkScale;
+public struct GtkScale{}
 
 
 /**
@@ -3397,14 +3842,14 @@ public struct GtkScale;
  * Style Property Details
  * The "fixed-slider-length" style property
  */
-public struct GtkScrollbar;
+public struct GtkScrollbar{}
 
 
 /**
  * Main Gtk struct.
- * The GtkSeparator-struct struct contains private data only.
+ * The GtkSeparator struct contains private data only.
  */
-public struct GtkSeparator;
+public struct GtkSeparator{}
 
 
 /**
@@ -3412,27 +3857,47 @@ public struct GtkSeparator;
  * GtkStyle*style;
  * The style for the widget. The style contains the colors the widget should be
  */
-public struct GtkWidget;
+public struct GtkWidget{}
 // /+* The style for the widget. The style contains the
+// GtkWidget.html
 // * colors the widget should be drawn inn for each state
+// GtkWidget.html
 // * along with graphics contexts used to draw with and
+// GtkWidget.html
 // * the font to use for text.
+// GtkWidget.html
 // +/
+// GtkWidget.html
 // GtkStyle *style;
+// GtkWidget.html
 // /+* The widget's desired size.
+// GtkWidget.html
 // +/
+// GtkWidget.html
 // GtkRequisition requisition;
+// GtkWidget.html
 // /+* The widget's allocated size.
+// GtkWidget.html
 // +/
+// GtkWidget.html
 // GtkAllocation allocation;
+// GtkWidget.html
 // /+* The widget's window or its parent window if it does
+// GtkWidget.html
 // * not have a window. (Which will be indicated by the
+// GtkWidget.html
 // * GTK_NO_WINDOW flag being set).
+// GtkWidget.html
 // +/
+// GtkWidget.html
 // GdkWindow *window;
+// GtkWidget.html
 // /+* The widget's parent.
+// GtkWidget.html
 // +/
+// GtkWidget.html
 // GtkWidget *parent;
+// GtkWidget.html
 
 
 /**
@@ -3446,16 +3911,25 @@ public struct GtkWidget;
  * handles the emission.
  * Implementation of this signal is optional.
  */
-public struct GtkWidgetClass;
+public struct GtkWidgetClass{}
 // /+* The object class structure needs to be the first
+// GtkWidget.html
 // * element inn the widget class structure inn order for
+// GtkWidget.html
 // * the class mechanism to work correctly. This allows a
+// GtkWidget.html
 // * GtkWidgetClass pointer to be cast to a GtkObjectClass
+// GtkWidget.html
 // * pointer.
+// GtkWidget.html
 // +/
+// GtkWidget.html
 // GtkObjectClass parentClass;
+// GtkWidget.html
 // uint activateSignal;
+// GtkWidget.html
 // uint setScrollAdjustmentsSignal;
+// GtkWidget.html
 
 
 /**
@@ -3495,41 +3969,53 @@ public struct GtkAllocation
 }
 
 
-public struct GtkSelectionData;
+public struct GtkSelectionData{}
 // GdkAtom selection;
+// GtkWidget.html
 // GdkAtom target;
+// GtkWidget.html
 // GdkAtom type;
+// GtkWidget.html
 // int format;
+// GtkWidget.html
 // char *data;
+// GtkWidget.html
 // int length;
+// GtkWidget.html
 // GdkDisplay *display;
+// GtkWidget.html
 
 
-public struct GtkWidgetAuxInfo;
-// int x;
-// int y;
-// int width;
-// int height;
-// uint xSet : 1;
-// uint ySet : 1;
+public struct GtkWidgetAuxInfo
+{
+	int x;
+	int y;
+	int width;
+	int height;
+	uint bitfield;
+	//uint xSet : 1;
+}
 
 
-public struct GtkWidgetShapeInfo;
+public struct GtkWidgetShapeInfo{}
 // short offsetX;
+// GtkWidget.html
 // short offsetY;
+// GtkWidget.html
 // GdkBitmap *shapeMask;
+// GtkWidget.html
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkIMContext;
+public struct GtkIMContext{}
 
 
 /**
  * Main Gtk struct.
  */
-public struct GtkPlug;
+public struct GtkPlug{}
 
 
 /**
@@ -3538,15 +4024,15 @@ public struct GtkPlug;
  * field. (This field should be considered read-only. It should
  * never be set by an application.)
  */
-public struct GtkSocket;
+public struct GtkSocket{}
 
 
 /**
  * Main Gtk struct.
- * The GtkCurve-struct struct contains private data only, and
+ * The GtkCurve struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkCurve;
+public struct GtkCurve{}
 
 
 /**
@@ -3554,7 +4040,7 @@ public struct GtkCurve;
  * The GtkGammaCurve struct contains private data only, and
  * should be accessed using the functions below.
  */
-public struct GtkGammaCurve;
+public struct GtkGammaCurve{}
 
 
 /**
@@ -3562,20 +4048,27 @@ public struct GtkGammaCurve;
  * All distances are in 1/72nd's of an inch. (According to Adobe thats a point, but
  * points are really 1/72.27 in.)
  */
-public struct GtkRuler;
+public struct GtkRuler{}
 
 
 /**
  * This should be points_per_unit. This is the size of the unit in 1/72nd's of an inch and has nothing to do with screen pixels.
  */
-public struct GtkRulerMetric;
+public struct GtkRulerMetric{}
 // char *metricName;
+// GtkRuler.html
 // char *abbrev;
+// GtkRuler.html
 // /+* This should be pointsPerUnit. This is the size of the unit
+// GtkRuler.html
 // * inn 1/72nd's of an inch and has nothing to do with screen pixels +/
+// GtkRuler.html
 // double pixelsPerUnit;
+// GtkRuler.html
 // double rulerScale[10];
+// GtkRuler.html
 // int subdivide[5]; /+* five possible modes of subdivision +/
+// GtkRuler.html
 
 
 /**
@@ -3583,7 +4076,7 @@ public struct GtkRulerMetric;
  * The GtkHRuler struct contains private data and should be accessed
  * with the functions below.
  */
-public struct GtkHRuler;
+public struct GtkHRuler{}
 
 
 /**
@@ -3591,7 +4084,7 @@ public struct GtkHRuler;
  * The GtkVRuler struct contains private data and should be accessed
  * using the functions below.
  */
-public struct GtkVRuler;
+public struct GtkVRuler{}
 
 
 /**
@@ -3599,57 +4092,85 @@ public struct GtkVRuler;
  * Warning
  * GtkItemFactory is deprecated and should not be used in newly-written code.
  */
-public struct GtkItemFactory;
+public struct GtkItemFactory{}
 
 
 /**
  * Warning
  * GtkItemFactoryEntry is deprecated and should not be used in newly-written code.
  */
-public struct GtkItemFactoryEntry;
+public struct GtkItemFactoryEntry{}
 // char *path;
+// GtkItemFactory.html
 // char *accelerator;
+// GtkItemFactory.html
 // GtkItemFactoryCallback callback;
+// GtkItemFactory.html
 // uint callbackAction;
+// GtkItemFactory.html
 // /+* possible values:
+// GtkItemFactory.html
 // * NULL -> "<Item>"
+// GtkItemFactory.html
 // * "" -> "<Item>"
+// GtkItemFactory.html
 // * "<Title>" -> create a title item
+// GtkItemFactory.html
 // * "<Item>" -> create a simple item
+// GtkItemFactory.html
 // * "<ImageItem>" -> create an item holding an image
+// GtkItemFactory.html
 // * "<StockItem>" -> create an item holding a stock image
+// GtkItemFactory.html
 // * "<CheckItem>" -> create a check item
+// GtkItemFactory.html
 // * "<ToggleItem>" -> create a toggle item
+// GtkItemFactory.html
 // * "<RadioItem>" -> create a radio item
+// GtkItemFactory.html
 // * <path> -> path of a radio item to link against
+// GtkItemFactory.html
 // * "<Separator>" -> create a separator
+// GtkItemFactory.html
 // * "<Tearoff>" -> create a tearoff separator
+// GtkItemFactory.html
 // * "<Branch>" -> create an item to hold sub items
+// GtkItemFactory.html
 // * "<LastBranch>" -> create a right justified item to hold sub items
+// GtkItemFactory.html
 // +/
+// GtkItemFactory.html
 // char *itemType;
+// GtkItemFactory.html
 // /+* Extra data for some item types:
+// GtkItemFactory.html
 // * ImageItem -> pointer to inlined pixbuf stream
+// GtkItemFactory.html
 // * StockItem -> name of stock item
+// GtkItemFactory.html
 // +/
+// GtkItemFactory.html
 // void* extraData;
+// GtkItemFactory.html
 
 
 /**
  * Warning
  * GtkItemFactoryItem is deprecated and should not be used in newly-written code.
  */
-public struct GtkItemFactoryItem;
+public struct GtkItemFactoryItem{}
 // char *path;
+// GtkItemFactory.html
 // GSList *widgets;
+// GtkItemFactory.html
 
 
 /**
  * Main Gtk struct.
- * The GtkProgress-struct struct contains private data only.
+ * The GtkProgress struct contains private data only.
  * and should be accessed using the functions below.
  */
-public struct GtkProgress;
+public struct GtkProgress{}
 
 
 /*
@@ -4435,7 +4956,7 @@ public struct GtkProgress;
 
 /*
  * Warning
- * gtk_menu_append is deprecated and should not be used in newly-written code.
+ * gtk_menu_append is deprecated and should not be used in newly-written code. Use gtk_menu_shell_append() instead.
  * Adds a new GtkMenuItem to the end of the menu's item list.
  * menu:
  * a GtkMenu.
@@ -4447,7 +4968,7 @@ public struct GtkProgress;
 
 /*
  * Warning
- * gtk_menu_prepend is deprecated and should not be used in newly-written code.
+ * gtk_menu_prepend is deprecated and should not be used in newly-written code. Use gtk_menu_shell_prepend() instead.
  * Adds a new GtkMenuItem to the beginning of the menu's item list.
  * menu:
  * a GtkMenu.
@@ -4459,7 +4980,7 @@ public struct GtkProgress;
 
 /*
  * Warning
- * gtk_menu_insert is deprecated and should not be used in newly-written code.
+ * gtk_menu_insert is deprecated and should not be used in newly-written code. Use gtk_menu_shell_insert() instead.
  * Adds a new GtkMenuItem to the menu's item list at the position
  * indicated by position.
  * menu:
@@ -4468,14 +4989,14 @@ public struct GtkProgress;
  * The GtkMenuItem to add.
  * pos:
  * The position in the item list where child is added.
- * Positions are numbered from 0 to n-1.
+ *  Positions are numbered from 0 to n-1.
  */
 // TODO
 // #define gtk_menu_insert(menu,child,pos)	gtk_menu_shell_insert ((GtkMenuShell *)(menu),(child),(pos))
 
 /*
  * Warning
- * gtk_menu_bar_append is deprecated and should not be used in newly-written code.
+ * gtk_menu_bar_append is deprecated and should not be used in newly-written code. Use gtk_menu_shell_append() instead.
  * Adds a new GtkMenuItem to the end of the GtkMenuBar
  * menu:
  * a GtkMenuBar
@@ -4487,7 +5008,7 @@ public struct GtkProgress;
 
 /*
  * Warning
- * gtk_menu_bar_prepend is deprecated and should not be used in newly-written code.
+ * gtk_menu_bar_prepend is deprecated and should not be used in newly-written code. Use gtk_menu_shell_prepend() instead.
  * Adds a new GtkMenuItem to the beginning of the GtkMenuBar
  * menu:
  * a GtkMenuBar
@@ -4499,7 +5020,7 @@ public struct GtkProgress;
 
 /*
  * Warning
- * gtk_menu_bar_insert is deprecated and should not be used in newly-written code.
+ * gtk_menu_bar_insert is deprecated and should not be used in newly-written code. Use gtk_menu_shell_insert() instead.
  * Adds a new GtkMenuItem to the GtkMenuBar at the position defined by position
  * menu:
  * a GtkMenuBar
@@ -4585,13 +5106,15 @@ public struct GtkProgress;
 // #define GTK_OBJECT_FLAGS(obj)		 (GTK_OBJECT (obj)->flags)
 
 /*
+ * Warning
+ * GTK_OBJECT_FLOATING is deprecated and should not be used in newly-written code.
  * Evaluates to TRUE if the object still has its floating reference count.
  * See the overview documentation for GtkObject.
  * obj:
  * the object to examine.
  */
 // TODO
-// #define GTK_OBJECT_FLOATING(obj)	 ((GTK_OBJECT_FLAGS (obj)  GTK_FLOATING) != 0)
+// #define GTK_OBJECT_FLOATING(obj)	 (g_object_is_floating (obj))
 
 /*
  * Warning
@@ -5011,6 +5534,16 @@ public typedef extern(C) void  function (GtkClipboard*, GdkPixbuf*, void*) GtkCl
 public typedef extern(C) void  function (GtkClipboard*, GdkAtom*, int, void*) GtkClipboardTargetsReceivedFunc;
 
 /*
+ * clipboard:
+ * format:
+ * text:
+ * length:
+ * data:
+ */
+// void (*GtkClipboardRichTextReceivedFunc)  (GtkClipboard *clipboard,  GdkAtom format,  const guint8 *text,  gsize length,  gpointer data);
+public typedef extern(C) void  function (GtkClipboard*, GdkAtom, guint8*, uint, void*) GtkClipboardRichTextReceivedFunc;
+
+/*
  * A function that will be called to provide the contents of the selection.
  * If multiple types of data were advertised, the requested type can
  * be determined from the info parameter or by checking the target field
@@ -5152,6 +5685,32 @@ public typedef extern(C) int  function (GtkEntryCompletion*, char[], GtkTreeIter
 public typedef extern(C) int  function (gunichar, void*) GtkTextCharPredicate;
 
 /*
+ * register_buffer:
+ * content_buffer:
+ * iter:
+ * data:
+ * length:
+ * create_tags:
+ * user_data:
+ * error:
+ * Returns:
+ */
+// gboolean (*GtkTextBufferDeserializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GtkTextIter *iter,  const guint8 *data,  gsize length,  gboolean create_tags,  gpointer user_data,  GError **error);
+public typedef extern(C) int  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, guint8*, uint, int, void*, GError**) GtkTextBufferDeserializeFunc;
+
+/*
+ * register_buffer:
+ * content_buffer:
+ * start:
+ * end:
+ * length:
+ * user_data:
+ * Returns:
+ */
+// guint8* (*GtkTextBufferSerializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length,  gpointer user_data);
+public typedef extern(C) byte*  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, GtkTextIter*, gsize*, void*) GtkTextBufferSerializeFunc;
+
+/*
  * tag:
  * data:
  */
@@ -5286,6 +5845,14 @@ public typedef extern(C) int  function (GtkTreeModel*, int, char[], GtkTreeIter*
 
 /*
  * tree_view:
+ * search_dialog:
+ * user_data:
+ */
+// void (*GtkTreeViewSearchPositionFunc)  (GtkTreeView *tree_view,  GtkWidget *search_dialog,  gpointer user_data);
+public typedef extern(C) void  function (GtkTreeView*, GtkWidget*, void*) GtkTreeViewSearchPositionFunc;
+
+/*
+ * tree_view:
  * path:
  * children:
  * user_data:
@@ -5314,6 +5881,7 @@ public typedef extern(C) int  function (GtkTreeModel*, GtkTreeIter*, void*) GtkT
  * A function used by gtk_icon_view_selected_foreach() to map all
  * selected rows. It will be called on every selected row in the view.
  * icon_view:
+ * a GtkIconView
  * path:
  * The GtkTreePath of a selected row
  * data:
@@ -5461,6 +6029,29 @@ public typedef extern(C) void  function (GdkScreen*, GdkColor*, int) GtkColorSel
  */
 // gboolean (*GtkFileFilterFunc) (const GtkFileFilterInfo *filter_info,  gpointer data);
 public typedef extern(C) int  function (GtkFileFilterInfo*, void*) GtkFileFilterFunc;
+
+/*
+ * A function used by GtkNotebook when a detachable tab is dropped
+ * in the root window, it's used to create a window containing a notebook
+ * where the tab will be attached. This function will also be responsible
+ * of moving/resizing the window and adding the necessary properties to
+ * the notebook (i.e.: group-id).
+ * If the function returns NULL, the drag will be cancelled.
+ * source:
+ * The source GtkNotebook of the drag operation
+ * page:
+ * the child GtkWidget affected
+ * x:
+ * the X coordinate where the drop happens
+ * y:
+ * the Y coordinate where the drop happens
+ * data:
+ * user data
+ * Returns:
+ * The created GtkNotebook where the tab will be attached, or NULL to cancel the drag
+ */
+// GtkNotebook* (*GtkNotebookWindowCreationFunc)  (GtkNotebook *source,  GtkWidget *page,  gint x,  gint y,  gpointer data);
+public typedef extern(C) GtkNotebook*  function (GtkNotebook*, GtkWidget*, int, int, void*) GtkNotebookWindowCreationFunc;
 
 /*
  * The type of the callback functions used for e.g. iterating over
@@ -5744,6 +6335,7 @@ enum StockID
 	
 	/**
 	 * The "Indent" item.
+	 * RTL variant
 	 * Since 2.4
 	 */
 	INDENT,
@@ -5881,6 +6473,30 @@ enum StockID
 	OPEN,
 	
 	/**
+	 * The "Landscape Orientation" item.
+	 * Since 2.10
+	 */
+	ORIENTATION_LANDSCAPE,
+	
+	/**
+	 * The "Portrait Orientation" item.
+	 * Since 2.10
+	 */
+	ORIENTATION_PORTRAIT,
+	
+	/**
+	 * The "Reverse Landscape Orientation" item.
+	 * Since 2.10
+	 */
+	ORIENTATION_REVERSE_LANDSCAPE,
+	
+	/**
+	 * The "Reverse Portrait Orientation" item.
+	 * Since 2.10
+	 */
+	ORIENTATION_REVERSE_PORTRAIT,
+	
+	/**
 	 * The "Paste" item.
 	 */
 	PASTE,
@@ -5943,6 +6559,12 @@ enum StockID
 	SAVE_AS,
 	
 	/**
+	 * The "Select All" item.
+	 * Since 2.10
+	 */
+	SELECT_ALL,
+	
+	/**
 	 * The "Color" item.
 	 */
 	SELECT_COLOR,
@@ -5996,6 +6618,7 @@ enum StockID
 	
 	/**
 	 * The "Unindent" item.
+	 * RTL variant
 	 * Since 2.4
 	 */
 	UNINDENT,
@@ -6093,6 +6716,10 @@ char[][] StockDesc =
 	"gtk-no",
 	"gtk-ok",
 	"gtk-open",
+	"gtk-orientation-landscape",
+	"gtk-orientation-portrait",
+	"gtk-orientation-reverse-landscape",
+	"gtk-orientation-reverse-portrait",
 	"gtk-paste",
 	"gtk-preferences",
 	"gtk-print",
@@ -6105,6 +6732,7 @@ char[][] StockDesc =
 	"gtk-revert-to-saved",
 	"gtk-save",
 	"gtk-save-as",
+	"gtk-select-all",
 	"gtk-select-color",
 	"gtk-select-font",
 	"gtk-sort-ascending",

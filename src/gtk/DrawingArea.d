@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkDrawingArea.html
  * outPack = gtk
  * outFile = DrawingArea
  * strct   = GtkDrawingArea
@@ -47,7 +48,7 @@
 
 module gtk.DrawingArea;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

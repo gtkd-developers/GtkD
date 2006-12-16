@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-pixbuf-animation.html
  * outPack = gdkpixbuf
  * outFile = PixbufAnimation
  * strct   = GdkPixbufAnimation
@@ -51,7 +52,7 @@
 
 module gdkpixbuf.PixbufAnimation;
 
-private import gdkpixbuf.typedefs;
+private import gdkpixbuf.gdkpixbuftypes;
 
 private import lib.gdkpixbuf;
 

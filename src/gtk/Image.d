@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkImage.html
  * outPack = gtk
  * outFile = Image
  * strct   = GtkImage
@@ -58,7 +59,7 @@
 
 module gtk.Image;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -182,7 +183,7 @@ public class Image : Misc
 	public this (StockID stockID, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_stock (const gchar *stock_id,  GtkIconSize size);
-		this(cast(GtkImage*)gtk_image_new_from_stock(StockDesc[stockID], size) );
+		this(cast(GtkImage*)gtk_image_new_from_stock(StockDesc[stockID].ptr, size) );
 	}
 	
 	/**
@@ -466,6 +467,10 @@ public class Image : Misc
 	 * The GtkImage does not assume a reference to the
 	 * animation; you still need to unref it if you own references.
 	 * GtkImage will add its own reference rather than adopting yours.
+	 * Note that the animation frames are shown using a timeout with
+	 * G_PRIORITY_DEFAULT. When using animations to indicate busyness,
+	 * keep in mind that the animation will only be shown if the main loop
+	 * is not busy with something that has a higher priority.
 	 * animation:
 	 *  an animation
 	 * Returns:

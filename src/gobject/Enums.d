@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gobject-Enumeration-and-Flag-Types.html
  * outPack = gobject
  * outFile = Enums
  * strct   = GEnumValue
@@ -48,7 +49,7 @@
 
 module gobject.Enums;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 
@@ -169,16 +170,13 @@ public class Enums
 	 * than to write one yourself using g_enum_register_static().
 	 * name:
 	 * A nul-terminated string used as the name of the new type.
-	 * const_static_values:
-	 * An array of GEnumValue structs for the possible
-	 *  enumeration values. The array is terminated by a struct with all
-	 *  members being 0.
+	 * _static_values:
 	 * Returns:
 	 * The new type identifier.
 	 */
 	public static GType registerStatic(char[] name, GEnumValue* _StaticValues)
 	{
-		// GType g_enum_register_static (const gchar *name,  const GEnumValue *const_static_values);
+		// GType g_enum_register_static (const gchar *name,  const GEnumValue *const _static_values);
 		return g_enum_register_static(Str.toStringz(name), _StaticValues);
 	}
 	
@@ -203,14 +201,11 @@ public class Enums
  * the type identifier of the type being completed
  * info:
  * the GTypeInfo struct to be filled in
- * const_values:
- * An array of GEnumValue structs for the possible
- *  enumeration values. The array is terminated by a struct with all
- *  members being 0.
+ * _values:
  */
 public static void completeTypeInfo(GType type, GTypeInfo* info, GEnumValue* _Values)
 {
-	// void g_enum_complete_type_info (GType g_enum_type,  GTypeInfo *info,  const GEnumValue *const_values);
+	// void g_enum_complete_type_info (GType g_enum_type,  GTypeInfo *info,  const GEnumValue *const _values);
 	g_enum_complete_type_info(type, info, _Values);
 }
 

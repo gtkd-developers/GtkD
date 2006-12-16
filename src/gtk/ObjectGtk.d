@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkObject.html
  * outPack = gtk
  * outFile = ObjectGtk
  * strct   = GtkObject
@@ -48,7 +49,7 @@
 
 module gtk.ObjectGtk;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -61,22 +62,18 @@ private import glib.Str;
  * non-widget objects such as GtkAdjustment. GtkObject predates
  * GObject; non-widgets that derive from GtkObject rather than
  * GObject do so for backward compatibility reasons.
- * The most interesting difference between GtkObject and GObject is the
- * "floating" reference count. A GObject is created with a reference count of 1,
- * owned by the creator of the GObject. (The owner of a reference is the code
- * section that has the right to call g_object_unref() in order to remove that
- * reference.) A GtkObject is created with a reference count of 1 also, but it
- * isn't owned by anyone; calling g_object_unref() on the newly-created GtkObject
- * is incorrect. Instead, the initial reference count of a GtkObject is "floating".
- * The floating reference can be removed by anyone at any time, by calling
- * gtk_object_sink(). gtk_object_sink() does nothing if an object is already
- * sunk (has no floating reference).
+ * GtkObjects are created with a "floating" reference count.
+ * This means that the initial reference is not owned by anyone. Calling
+ * g_object_unref() on a newly-created GtkObject is incorrect, the floating
+ * reference has to be removed first. This can be done by anyone at any time,
+ * by calling g_object_ref_sink() to convert the floating reference into a
+ * regular reference. g_object_ref_sink() returns a new reference if an object
+ * is already sunk (has no floating reference).
  * When you add a widget to its parent container, the parent container
  * will do this:
- *  g_object_ref (G_OBJECT (child_widget));
- *  gtk_object_sink (GTK_OBJECT (child_widget));
- * This means that the container now owns a reference to the child widget (since
- * it called g_object_ref()), and the child widget has no floating reference.
+ *  g_object_ref_sink (G_OBJECT (child_widget));
+ * This means that the container now owns a reference to the child widget
+ * and the child widget has no floating reference.
  * The purpose of the floating reference is to keep the child widget alive
  * until you add it to a parent container:
  *  button = gtk_button_new ();
@@ -147,7 +144,7 @@ public class ObjectGtk : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ObjectGtk)[] onDestroyListeners;
@@ -161,7 +158,7 @@ public class ObjectGtk : ObjectG
 			cast(GCallback)&callBackDestroy,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["destroy"] = 1;
 		}
 		onDestroyListeners ~= dlg;
@@ -211,6 +208,8 @@ public class ObjectGtk : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_object_sink has been deprecated since version 2.10 and should not be used in newly-written code. Use g_object_ref_sink() instead
 	 * Removes the floating reference from a GtkObject, if it exists;
 	 * otherwise does nothing. See the GtkObject overview documentation at
 	 * the top of the page.

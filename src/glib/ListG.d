@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Doubly-Linked-Lists.html
  * outPack = glib
  * outFile = ListG
  * strct   = GList
@@ -47,7 +48,7 @@
 
 module glib.ListG;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

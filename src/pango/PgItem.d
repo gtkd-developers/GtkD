@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = pango
  * outFile = PgItem
  * strct   = PangoItem
@@ -75,7 +76,7 @@
 
 module pango.PgItem;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
@@ -139,6 +140,8 @@ public class PgItem
 	
 	
 	
+	
+	
 	/**
 	 * Free a PangoItem and all associated memory.
 	 * item:
@@ -155,7 +158,8 @@ public class PgItem
 	 * item:
 	 *  a PangoItem
 	 * Returns:
-	 *  the new PangoItem
+	 *  the newly allocated PangoItem, which should
+	 *  be freed with pango_item_free().
 	 */
 	public PangoItem* copy()
 	{
@@ -166,7 +170,8 @@ public class PgItem
 	/**
 	 * Creates a new PangoItem structure initialized to default values.
 	 * Returns:
-	 *  the new PangoItem
+	 *  the newly allocated PangoItem, which should
+	 *  be freed with pango_item_free().
 	 */
 	public this ()
 	{
@@ -192,13 +197,18 @@ public class PgItem
 	 * split_offset:
 	 *  number of chars between start of orig and split_index
 	 * Returns:
-	 *  new item representing text before split_index
+	 *  new item representing text before split_index, which
+	 *  should be freed with pango_item_free().
 	 */
 	public PangoItem* split(int splitIndex, int splitOffset)
 	{
 		// PangoItem* pango_item_split (PangoItem *orig,  int split_index,  int split_offset);
 		return pango_item_split(pangoItem, splitIndex, splitOffset);
 	}
+	
+	
+	
+	
 	
 	
 	

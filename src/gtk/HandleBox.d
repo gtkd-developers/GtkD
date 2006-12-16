@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkHandleBox.html
  * outPack = gtk
  * outFile = HandleBox
  * strct   = GtkHandleBox
@@ -47,7 +48,7 @@
 
 module gtk.HandleBox;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -108,7 +109,7 @@ public class HandleBox : Bin
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkWidget*, HandleBox)[] onChildAttachedListeners;
@@ -122,7 +123,7 @@ public class HandleBox : Bin
 			cast(GCallback)&callBackChildAttached,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["child-attached"] = 1;
 		}
 		onChildAttachedListeners ~= dlg;
@@ -150,7 +151,7 @@ public class HandleBox : Bin
 			cast(GCallback)&callBackChildDetached,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["child-detached"] = 1;
 		}
 		onChildDetachedListeners ~= dlg;

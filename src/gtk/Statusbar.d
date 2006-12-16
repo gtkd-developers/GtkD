@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkStatusbar.html
  * outPack = gtk
  * outFile = Statusbar
  * strct   = GtkStatusbar
@@ -48,7 +49,7 @@
 
 module gtk.Statusbar;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -109,7 +110,7 @@ public class Statusbar : HBox
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(guint, char[], Statusbar)[] onTextPoppedListeners;
@@ -123,7 +124,7 @@ public class Statusbar : HBox
 			cast(GCallback)&callBackTextPopped,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["text-popped"] = 1;
 		}
 		onTextPoppedListeners ~= dlg;
@@ -151,7 +152,7 @@ public class Statusbar : HBox
 			cast(GCallback)&callBackTextPushed,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["text-pushed"] = 1;
 		}
 		onTextPushedListeners ~= dlg;

@@ -19,6 +19,8 @@
 module utils.DefReader;
 
 
+//debug=file;
+
 /**
  * Reads and processes the API defintion file
  * Stores global values:
@@ -53,9 +55,23 @@ public class DefReader
 	this ( char[] fileName )
 	{
 		this.fileName = fileName;
+		debug(file)writefln("DefReader.ctor fileName = %s", fileName);
 		lines = std.string.splitlines(cast(char[]) std.file.read(fileName));
 	}
 
+	public char[] toString()
+	{
+		char[] str;
+		str ~= "\n[DefReader]"
+				~ "\nfileName = "~fileName
+				~ "\ncurrLine = "~std.string.toString(currLine)
+				~ "\nfullLine = "~fullLine
+				~ "\nkey      = "~key
+				~ "\nvalue    + "~value
+				;
+		return str;
+	}
+	
 	char[] getFileName()
 	{
 		return fileName;

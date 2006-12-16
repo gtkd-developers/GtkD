@@ -18,7 +18,7 @@
 
 module duit.TestScales;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 private import gtk.Table;
 
 private import gtk.VScale;

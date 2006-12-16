@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Colormaps-and-Colors.html
  * outPack = gdk
  * outFile = Colormap
  * strct   = GdkColormap
@@ -55,7 +56,7 @@
 
 module gdk.Colormap;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

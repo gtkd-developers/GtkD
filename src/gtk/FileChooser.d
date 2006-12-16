@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkFileChooser.html
  * outPack = gtk
  * outFile = FileChooser
  * strct   = GtkFileChooser
@@ -56,7 +57,7 @@
 
 module gtk.FileChooser;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -148,7 +149,7 @@ private import gtk.FileFilter;
 	 *  g_free (filename);
 	 *  gtk_image_set_from_pixbuf (GTK_IMAGE (preview), pixbuf);
 	 *  if (pixbuf)
-	 *  gdk_pixbuf_unref (pixbuf);
+	 *  gobject_unref (pixbuf);
 	 *  gtk_file_chooser_set_preview_widget_active (file_chooser, have_preview);
  * }
  * <hr>
@@ -187,17 +188,25 @@ private import gtk.FileFilter;
  * Signal name
  * Default key combinations
  * location-popup
- * 		 Control-L;
- * 		 /
+ * 		 Control-L (empty path);
+ * 		 / (path of "/")[a];
+ * 		 ~ (path of "~")
  * up-folder
- * 		 Alt-Up[a]
+ * 		 Alt-Up[b]
  * 		 ;
  * 		 Backspace
  * down-folder
  * Alt-Down
  * home-folder
  * Alt-Home
+ * desktop-folder
+ * Alt-D
+ * quick-bookmark
+ * Alt-1 through Alt-0
  * [a]
+ * 		 Both the individual / key and the
+ * 		 numeric keypad's "divide" key are supported.
+ * [b]
  * 		 Both the individual Up key and the numeric
  * 		 keypad's Up key are supported.
  * 	 You can change these defaults to something else. For
@@ -227,10 +236,12 @@ private import gtk.FileFilter;
  * 	 put in the text entry for the file name. By default this is bound to
  * 	 Control-L
  * 	 with a path string of "" (the empty
- * 	 string); it is also bound to / with a
+ * 	 string). It is also bound to / with a
  * 	 path string of "/"
  * 	 (a slash): this lets you type / and
- * 	 immediately type a path name.
+ * 	 immediately type a path name. On Unix systems, this is bound to
+ * 	 ~ (tilde) with a path string
+ * 	 of "~" itself for access to home directories.
  * chooser:
  * 		the object which received the signal.
  * path:
@@ -291,6 +302,40 @@ private import gtk.FileFilter;
  * 		the object which received the signal.
  * user_data:
  * 		user data set when the signal handler was connected.
+ * The "GtkFileChooserDefault::desktop-folder" signal
+ *  void user_function (GtkFileChooserDefault *chooser,
+ *  gpointer user_data);
+ * 	 This is used to make the file chooser show the user's Desktop
+ * 	 folder in the file list. By default this is bound to
+ * 	 Alt-D.
+ * chooser:
+ * 		the object which received the signal.
+ * user_data:
+ * 		user data set when the signal handler was connected.
+ * The "GtkFileChooserDefault::quick-bookmark" signal
+ *  void user_function (GtkFileChooserDefault *chooser,
+ *  gint bookmark_index,
+ *  gpointer user_data);
+ * 	 This is used to make the file chooser switch to the bookmark
+ * 	 specified in the bookmark_index parameter.
+ * 	 For example, if you have three bookmarks, you can pass 0, 1, 2 to
+ * 	 this signal to switch to each of them, respectively. By default this is bound to
+ * 	 Alt-1,
+ * 	 Alt-2,
+ * 	 etc. until
+ * 	 Alt-0. Note
+ * 	 that in the default binding,
+ * 	 that Alt-1 is
+ * 	 actually defined to switch to the bookmark at index 0, and so on
+ * 	 successively;
+ * 	 Alt-0 is
+ * 	 defined to switch to the bookmark at index 10.
+ * chooser:
+ * 		the object which received the signal.
+ * bookmark_indes:
+ * 		index of the bookmark to switch to; the indices start at 0.
+ * user_data:
+ * 		user data set when the signal handler was connected.
  */
 public class FileChooser
 {
@@ -324,7 +369,7 @@ public class FileChooser
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	GtkFileChooserConfirmation delegate(FileChooser)[] onConfirmOverwriteListeners;
@@ -338,7 +383,7 @@ public class FileChooser
 			cast(GCallback)&callBackConfirmOverwrite,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["confirm-overwrite"] = 1;
 		}
 		onConfirmOverwriteListeners ~= dlg;
@@ -366,7 +411,7 @@ public class FileChooser
 			cast(GCallback)&callBackCurrentFolderChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["current-folder-changed"] = 1;
 		}
 		onCurrentFolderChangedListeners ~= dlg;
@@ -394,7 +439,7 @@ public class FileChooser
 			cast(GCallback)&callBackFileActivated,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["file-activated"] = 1;
 		}
 		onFileActivatedListeners ~= dlg;
@@ -422,7 +467,7 @@ public class FileChooser
 			cast(GCallback)&callBackSelectionChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["selection-changed"] = 1;
 		}
 		onSelectionChangedListeners ~= dlg;
@@ -450,7 +495,7 @@ public class FileChooser
 			cast(GCallback)&callBackUpdatePreview,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["update-preview"] = 1;
 		}
 		onUpdatePreviewListeners ~= dlg;
@@ -472,18 +517,6 @@ public class FileChooser
 	
 	
 	
-	
-	/**
-	 * Registers an error quark for GtkFileChooser if necessary.
-	 * Returns:
-	 *  The error quark used for GtkFileChooser errors.
-	 * Since 2.4
-	 */
-	public static GQuark errorQuark()
-	{
-		// GQuark gtk_file_chooser_error_quark (void);
-		return gtk_file_chooser_error_quark();
-	}
 	
 	/**
 	 * Sets the type of operation that the chooser is performing; the
@@ -558,8 +591,7 @@ public class FileChooser
 	/**
 	 * Sets whether multiple files can be selected in the file selector. This is
 	 * only relevant if the action is set to be GTK_FILE_CHOOSER_ACTION_OPEN or
-	 * GTK_FILE_CHOOSER_ACTION_SAVE. It cannot be set with either of the folder
-	 * actions.
+	 * GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
 	 * chooser:
 	 *  a GtkFileChooser
 	 * select_multiple:
@@ -838,6 +870,13 @@ public class FileChooser
 	/**
 	 * Gets the current folder of chooser as a local filename.
 	 * See gtk_file_chooser_set_current_folder().
+	 * Note that this is the folder that the file chooser is currently displaying
+	 * (e.g. "/home/username/Documents"), which is not the same
+	 * as the currently-selected folder if the chooser is in
+	 * GTK_FILE_CHOOSER_SELECT_FOLDER mode
+	 * (e.g. "/home/username/Documents/selected-folder/". To get the
+	 * currently-selected folder in that mode, use gtk_file_chooser_get_uri() as the
+	 * usual way to get the selection.
 	 * chooser:
 	 *  a GtkFileChooser
 	 * Returns:
@@ -990,6 +1029,13 @@ public class FileChooser
 	/**
 	 * Gets the current folder of chooser as an URI.
 	 * See gtk_file_chooser_set_current_folder_uri().
+	 * Note that this is the folder that the file chooser is currently displaying
+	 * (e.g. "file:///home/username/Documents"), which is not the same
+	 * as the currently-selected folder if the chooser is in
+	 * GTK_FILE_CHOOSER_SELECT_FOLDER mode
+	 * (e.g. "file:///home/username/Documents/selected-folder/". To get the
+	 * currently-selected folder in that mode, use gtk_file_chooser_get_uri() as the
+	 * usual way to get the selection.
 	 * chooser:
 	 *  a GtkFileChooser
 	 * Returns:

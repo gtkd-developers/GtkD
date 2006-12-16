@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkMenuShell.html
  * outPack = gtk
  * outFile = MenuShell
  * strct   = GtkMenuShell
@@ -49,7 +50,7 @@
 
 module gtk.MenuShell;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -98,7 +99,7 @@ public class MenuShell : Container
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gboolean, MenuShell)[] onActivateCurrentListeners;
@@ -112,7 +113,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackActivateCurrent,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["activate-current"] = 1;
 		}
 		onActivateCurrentListeners ~= dlg;
@@ -140,7 +141,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackCancel,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["cancel"] = 1;
 		}
 		onCancelListeners ~= dlg;
@@ -168,7 +169,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackCycleFocus,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["cycle-focus"] = 1;
 		}
 		onCycleFocusListeners ~= dlg;
@@ -196,7 +197,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackDeactivate,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["deactivate"] = 1;
 		}
 		onDeactivateListeners ~= dlg;
@@ -224,7 +225,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackMoveCurrent,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-current"] = 1;
 		}
 		onMoveCurrentListeners ~= dlg;
@@ -252,7 +253,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackSelectionDone,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["selection-done"] = 1;
 		}
 		onSelectionDoneListeners ~= dlg;

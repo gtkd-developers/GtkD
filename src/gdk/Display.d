@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GdkDisplay.html
  * outPack = gdk
  * outFile = Display
  * strct   = GdkDisplay
@@ -57,7 +58,7 @@
 
 module gdk.Display;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 
@@ -115,7 +116,7 @@ public class Display : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gboolean, Display)[] onClosedListeners;
@@ -129,7 +130,7 @@ public class Display : ObjectG
 			cast(GCallback)&callBackClosed,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["closed"] = 1;
 		}
 		onClosedListeners ~= dlg;
@@ -702,6 +703,36 @@ public class Display : ObjectG
 	 * n_targets:
 	 *  length of the targets array
 	 * Since 2.6
+	 */
+	public void storeClipboard(Window clipboardWindow, uint time, GdkAtom* targets, int nTargets)
+	{
+		// void gdk_display_store_clipboard (GdkDisplay *display,  GdkWindow *clipboard_window,  guint32 time_,  GdkAtom *targets,  gint n_targets);
+		gdk_display_store_clipboard(gdkDisplay, (clipboardWindow is null) ? null : clipboardWindow.getWindowStruct(), time, targets, nTargets);
+	}
+	
+	/**
+	 * Returns TRUE if gdk_window_shape_combine_mask() can
+	 * be used to create shaped windows on display.
+	 * display:
+	 *  a GdkDisplay
+	 * Returns:
+	 *  TRUE if shaped windows are supported
+	 * Since 2.10
+	 */
+	public int supportsShapes()
+	{
+		// gboolean gdk_display_supports_shapes (GdkDisplay *display);
+		return gdk_display_supports_shapes(gdkDisplay);
+	}
+	
+	/**
+	 * Returns TRUE if gdk_window_input_shape_combine_mask() can
+	 * be used to modify the input shape of windows on display.
+	 * display:
+	 *  a GdkDisplay
+	 * Returns:
+	 *  TRUE if windows with modified input shape are supported
+	 * Since 2.10
 	 * Signal Details
 	 * The "closed" signal
 	 * void user_function (GdkDisplay *display,
@@ -717,9 +748,9 @@ public class Display : ObjectG
 	 * user data set when the signal handler was connected.
 	 * Since 2.2
 	 */
-	public void storeClipboard(Window clipboardWindow, uint time, GdkAtom* targets, int nTargets)
+	public int supportsInputShapes()
 	{
-		// void gdk_display_store_clipboard (GdkDisplay *display,  GdkWindow *clipboard_window,  guint32 time_,  GdkAtom *targets,  gint n_targets);
-		gdk_display_store_clipboard(gdkDisplay, (clipboardWindow is null) ? null : clipboardWindow.getWindowStruct(), time, targets, nTargets);
+		// gboolean gdk_display_supports_input_shapes  (GdkDisplay *display);
+		return gdk_display_supports_input_shapes(gdkDisplay);
 	}
 }

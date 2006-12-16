@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Strings.html
  * outPack = glib
  * outFile = StringG
  * strct   = GString
@@ -48,7 +49,7 @@
 
 module glib.StringG;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

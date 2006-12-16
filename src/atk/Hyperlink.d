@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkHyperlink.html
  * outPack = atk
  * outFile = Hyperlink
  * strct   = AtkHyperlink
@@ -47,7 +48,7 @@
 
 module atk.Hyperlink;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
@@ -55,8 +56,11 @@ private import glib.Str;
 
 /**
  * Description
- * An ATK object which encapsulates a link or set of links in a hypertext document.
- * It implements the AtkAction interface.
+ * An ATK object which encapsulates a link or set of links
+ * (for instance in the case of client-side image maps) in a hypertext document.
+ * It may implement the AtkAction interface. AtkHyperlink may also be used
+ * to refer to inline embedded content, since it allows specification of a start
+ * and end offset within the host AtkHypertext object.
  */
 private import gobject.ObjectG;
 public class Hyperlink : ObjectG
@@ -92,7 +96,7 @@ public class Hyperlink : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Hyperlink)[] onLinkActivatedListeners;
@@ -106,7 +110,7 @@ public class Hyperlink : ObjectG
 			cast(GCallback)&callBackLinkActivated,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["link-activated"] = 1;
 		}
 		onLinkActivatedListeners ~= dlg;
@@ -235,10 +239,15 @@ public class Hyperlink : ObjectG
 	
 	/**
 	 * Determines whether this AtkHyperlink is selected
+	 * Returns:
 	 * link_:
 	 *  an AtkHyperlink
 	 * Returns:
 	 *  True is the AtkHyperlink is selected, False otherwise
+	 * Since ATK 1.4
+	 * @Deprecated: This method is deprecated since ATK version 1.8.
+	 * Please use ATK_STATE_SELECTED to indicate when a hyperlink within a
+	 * Hypertext container is selected.
 	 * Property Details
 	 * The "end-index" property
 	 *  "end-index" gint : Read

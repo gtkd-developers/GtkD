@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gobject-Type-Information.html
  * outPack = gobject
  * outFile = Type
  * strct   = 
@@ -51,7 +52,7 @@
 
 module gobject.Type;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 
@@ -183,7 +184,7 @@ public class Type
 	}
 	
 	/**
-	 * Lookup the type ID from a given type name, returns 0 if no type has been registered under this name
+	 * Lookup the type ID from a given type name, returning 0 if no type has been registered under this name
 	 * (this is the preferred method to find out by name whether a specific type has been registered yet).
 	 * name:
 	 *  Type name to lookup.
@@ -277,7 +278,7 @@ public class Type
 	
 	/**
 	 * This function is essentially the same as g_type_class_ref(), except that
-	 * the classes reference count isn't incremented. Therefore, this function
+	 * the classes reference count isn't incremented. As a consequence, this function
 	 * may return NULL if the class of the type passed in does not currently
 	 * exist (hasn't been referenced before).
 	 * type:
@@ -323,9 +324,9 @@ public class Type
 	}
 	
 	/**
-	 * This is a convenience function, often needed in class initializers.
-	 * It essentially takes the immediate parent type of the class passed in,
-	 * and returns the class structure thereof. Since derived classes hold
+	 * This is a convenience function often needed in class initializers.
+	 * It returns the class structure of the immediate parent type of the class passed in.
+	 * Since derived classes hold
 	 * a reference count on their parent classes as long as they are instantiated,
 	 * the returned class will always exist. This function is essentially
 	 * equivalent to:
@@ -374,6 +375,7 @@ public class Type
 	 * class structure for an instantiatable type
 	 * private_size:
 	 * size of private structure.
+	 * Since 2.4
 	 */
 	public static void classAddPrivate(void* gClass, uint privateSize)
 	{
@@ -389,8 +391,8 @@ public class Type
 	 * iface_type:
 	 *  An interface ID which this class conforms to.
 	 * Returns:
-	 *  The GTypeInterface structure of iface_type, or NULL if the
-	 *  class is not instantiated.
+	 *  The GTypeInterface structure of iface_type if implemented
+	 *  by instance_class, NULL otherwise
 	 */
 	public static void* interfacePeek(void* instanceClass, GType ifaceType)
 	{
@@ -447,7 +449,7 @@ public class Type
 	 * g_type:
 	 * an interface type
 	 * Returns:
-	 * the default vtable for the interface; or NULL
+	 * the default vtable for the interface, or NULL
 	 *  if the type is not currently in use.
 	 * Since 2.4
 	 */
@@ -592,7 +594,7 @@ public class Type
 	 * instances (if not abstract). The value of flags determines the nature
 	 * (e.g. abstract or not) of the type.
 	 * parent_type:
-	 * 	Type which this type will be derived from.
+	 * 	Type from which this type will be derived.
 	 * type_name:
 	 * 	0-terminated string used as the name of the new type.
 	 * info:
@@ -609,13 +611,42 @@ public class Type
 	}
 	
 	/**
+	 * Registers type_name as the name of a new static type derived from
+	 * parent_type. The value of flags determines the nature (e.g.
+	 * abstract or not) of the type. It works by filling a GTypeInfo
+	 * struct and calling g_type_info_register_static().
+	 * parent_type:
+	 * 	Type from which this type will be derived.
+	 * type_name:
+	 * 	0-terminated string used as the name of the new type.
+	 * class_size:
+	 *  Size of the class structure (see GTypeInfo)
+	 * class_init:
+	 * 	Location of the class initialization function (see GTypeInfo)
+	 * instance_size:
+	 * Size of the instance structure (see GTypeInfo)
+	 * instance_init:
+	 * Location of the instance initialization function (see GTypeInfo)
+	 * flags:
+	 * 	Bitwise combination of GTypeFlags values.
+	 * Returns:
+	 * 	The new type identifier.
+	 * Since 2.12
+	 */
+	public static GType registerStaticSimple(GType parentType, char[] typeName, uint classSize, GClassInitFunc classInit, uint instanceSize, GInstanceInitFunc instanceInit, GTypeFlags flags)
+	{
+		// GType g_type_register_static_simple (GType parent_type,  const gchar *type_name,  guint class_size,  GClassInitFunc class_init,  guint instance_size,  GInstanceInitFunc instance_init,  GTypeFlags flags);
+		return g_type_register_static_simple(parentType, Str.toStringz(typeName), classSize, classInit, instanceSize, instanceInit, flags);
+	}
+	
+	/**
 	 * Registers type_name as the name of a new dynamic type derived from
 	 * parent_type. The type system uses the information contained in the
 	 * GTypePlugin structure pointed to by plugin to manage the type and its
 	 * instances (if not abstract). The value of flags determines the nature
 	 * (e.g. abstract or not) of the type.
 	 * parent_type:
-	 * 	Type which this type will be derived from.
+	 * 	Type from which this type will be derived.
 	 * type_name:
 	 * 	0-terminated string used as the name of the new type.
 	 * plugin:
@@ -775,7 +806,7 @@ public class Type
 	/**
 	 * Creates and initializes an instance of type if type is valid and can
 	 * be instantiated. The type system only performs basic allocation and
-	 * structure setups for instances, actual instance creation should happen
+	 * structure setups for instances: actual instance creation should happen
 	 * through functions supplied by the type's fundamental type implementation.
 	 * So use of g_type_create_instance() is reserved for implementators of
 	 * fundamental types only. E.g. instances of the GObject hierarchy
@@ -860,8 +891,8 @@ public class Type
 	
 	/**
 	 * Adds a function to be called after an interface vtable is
-	 * initialized for any class. That is, after the interface_init
-	 * member of GInterfaceInfo has been called.
+	 * initialized for any class (i.e. after the interface_init
+	 * member of GInterfaceInfo has been called).
 	 * This function is useful when you want to check an invariant
 	 * that depends on the interfaces of a class. For instance,
 	 * the implementation of GObject uses this facility to check
@@ -898,7 +929,7 @@ public class Type
 	
 	/**
 	 * Returns the location of the GTypeValueTable associated with type.
-	 * Note, this function should only be used from source code
+	 * Note that this function should only be used from source code
 	 * that implements or has internal knowledge of the implementation of
 	 * type.
 	 * type:
@@ -912,6 +943,7 @@ public class Type
 		// GTypeValueTable* g_type_value_table_peek (GType type);
 		return g_type_value_table_peek(type);
 	}
+	
 	
 	
 	

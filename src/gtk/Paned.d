@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkPaned.html
  * outPack = gtk
  * outFile = Paned
  * strct   = GtkPaned
@@ -49,7 +50,7 @@
 
 module gtk.Paned;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -139,7 +140,7 @@ public class Paned : Container
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(Paned)[] onAcceptPositionListeners;
@@ -153,7 +154,7 @@ public class Paned : Container
 			cast(GCallback)&callBackAcceptPosition,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["accept-position"] = 1;
 		}
 		onAcceptPositionListeners ~= dlg;
@@ -181,7 +182,7 @@ public class Paned : Container
 			cast(GCallback)&callBackCancelPosition,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["cancel-position"] = 1;
 		}
 		onCancelPositionListeners ~= dlg;
@@ -209,7 +210,7 @@ public class Paned : Container
 			cast(GCallback)&callBackCycleChildFocus,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["cycle-child-focus"] = 1;
 		}
 		onCycleChildFocusListeners ~= dlg;
@@ -237,7 +238,7 @@ public class Paned : Container
 			cast(GCallback)&callBackCycleHandleFocus,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["cycle-handle-focus"] = 1;
 		}
 		onCycleHandleFocusListeners ~= dlg;
@@ -265,7 +266,7 @@ public class Paned : Container
 			cast(GCallback)&callBackMoveHandle,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-handle"] = 1;
 		}
 		onMoveHandleListeners ~= dlg;
@@ -293,7 +294,7 @@ public class Paned : Container
 			cast(GCallback)&callBackToggleHandleFocus,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toggle-handle-focus"] = 1;
 		}
 		onToggleHandleFocusListeners ~= dlg;

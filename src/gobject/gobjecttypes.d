@@ -20,10 +20,10 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-module gobject.typedefs;
+module gobject.gobjecttypes;
 
 
-public import glib.typedefs;
+public import glib.glibtypes;
 
 
 
@@ -51,11 +51,6 @@ enum GType
 	BOXED = 18<<2,
 	PARAM = 19<<2,
 	OBJECT = 20<<2,
-	RESERVED_GLIB_FIRST = 21<<2,
-	RESERVED_GLIB_LAST = 31<<2,
-	RESERVED_BSE_FIRST = 32<<2,
-	RESERVED_BSE_LAST = 48<<2,
-	RESERVED_USER_FIRST = 49<<2,
 
 }
 
@@ -235,47 +230,61 @@ struct GValue
 /**
  * An opaque structure used as the base of all interface types.
  */
-public struct GTypeInterface;
+public struct GTypeInterface{}
 
 
 /**
  * An opaque structure used as the base of all type instances.
  */
-public struct GTypeInstance;
+public struct GTypeInstance{}
 
 
 /**
  * An opaque structure used as the base of all classes.
  */
-public struct GTypeClass;
+public struct GTypeClass{}
 
 
 /**
  * This structure is used to provide the type system with the information
  * required to initialize and destruct (finalize) a type's class and
- * instances thereof.
+ * its instances.
  * The initialized structure is passed to the g_type_register_static() function
  * (or is copied into the provided GTypeInfo structure in the
  * g_type_plugin_complete_type_info()). The type system will perform a deep
- * copy of this structure, so it's memory does not need to be persistent
+ * copy of this structure, so its memory does not need to be persistent
  * across invocation of g_type_register_static().
  * guint16class_size;
  */
-public struct GTypeInfo;
+public struct GTypeInfo{}
 // /+* interface types, classed types, instantiated types +/
+// gobject-Type-Information.html
 // ushort classSize;
+// gobject-Type-Information.html
 // GBaseInitFunc baseInit;
+// gobject-Type-Information.html
 // GBaseFinalizeFunc baseFinalize;
+// gobject-Type-Information.html
 // /+* interface types, classed types, instantiated types +/
+// gobject-Type-Information.html
 // GClassInitFunc classInit;
+// gobject-Type-Information.html
 // GClassFinalizeFunc classFinalize;
+// gobject-Type-Information.html
 // void* classData;
+// gobject-Type-Information.html
 // /+* instantiated types +/
+// gobject-Type-Information.html
 // ushort instanceSize;
+// gobject-Type-Information.html
 // ushort nPreallocs;
+// gobject-Type-Information.html
 // GInstanceInitFunc instanceInit;
+// gobject-Type-Information.html
 // /+* value handling +/
+// gobject-Type-Information.html
 // GTypeValueTable *valueTable;
+// gobject-Type-Information.html
 
 
 /**
@@ -284,19 +293,28 @@ public struct GTypeInfo;
  * GTypeFundamentalFlagstype_flags;
  * GTypeFundamentalFlags describing the characteristics of the fundamental type
  */
-public struct GTypeFundamentalInfo;
+public struct GTypeFundamentalInfo{}
 // GTypeFundamentalFlags typeFlags;
+// gobject-Type-Information.html
 
 
 /**
  * A structure that provides information to the type system which is
  * used specifically for managing interface types.
  * GInterfaceInitFuncinterface_init;
+ * location of the interface initialization function
+ * GInterfaceFinalizeFuncinterface_finalize;
+ * location of the interface finalization function
+ * gpointerinterface_data;
+ * user-supplied data passed to the interface init/finalize functions
  */
-public struct GInterfaceInfo;
+public struct GInterfaceInfo{}
 // GInterfaceInitFunc interfaceInit;
+// gobject-Type-Information.html
 // GInterfaceFinalizeFunc interfaceFinalize;
+// gobject-Type-Information.html
 // void* interfaceData;
+// gobject-Type-Information.html
 
 
 /**
@@ -304,23 +322,39 @@ public struct GInterfaceInfo;
  * to serve as a container for values of a type.
  * value_init()
  */
-public struct GTypeValueTable;
+public struct GTypeValueTable{}
 // void (*valueInit) (GValue *value);
+// gobject-Type-Information.html
 // void (*valueFree) (GValue *value);
+// gobject-Type-Information.html
 // void (*valueCopy) ( GValue *srcValue,
+// gobject-Type-Information.html
 // GValue *destValue);
+// gobject-Type-Information.html
 // /+* varargs functionality (optional) +/
+// gobject-Type-Information.html
 // void* (*valuePeekPointer) ( GValue *value);
+// gobject-Type-Information.html
 // char *collectFormat;
+// gobject-Type-Information.html
 // char* (*collectValue) (GValue *value,
+// gobject-Type-Information.html
 // uint nCollectValues,
+// gobject-Type-Information.html
 // GTypeCValue *collectValues,
+// gobject-Type-Information.html
 // uint collectFlags);
+// gobject-Type-Information.html
 // char *lcopyFormat;
+// gobject-Type-Information.html
 // char* (*lcopyValue) ( GValue *value,
+// gobject-Type-Information.html
 // uint nCollectValues,
+// gobject-Type-Information.html
 // GTypeCValue *collectValues,
+// gobject-Type-Information.html
 // uint collectFlags);
+// gobject-Type-Information.html
 
 
 /**
@@ -335,11 +369,15 @@ public struct GTypeValueTable;
  * guintinstance_size;
  * the size of the instance structure.
  */
-public struct GTypeQuery;
+public struct GTypeQuery{}
 // GType type;
+// gobject-Type-Information.html
 // char *typeName;
+// gobject-Type-Information.html
 // uint classSize;
+// gobject-Type-Information.html
 // uint instanceSize;
+// gobject-Type-Information.html
 
 
 /**
@@ -348,7 +386,7 @@ public struct GTypeQuery;
  * for objects that implement the GTypePlugin
  * interface.
  */
-public struct GTypePlugin;
+public struct GTypePlugin{}
 
 
 /**
@@ -361,11 +399,15 @@ public struct GTypePlugin;
  * GTypePluginCompleteTypeInfocomplete_type_info;
  * Fills in the GTypeInfo and
  */
-public struct GTypePluginClass;
+public struct GTypePluginClass{}
 // GTypePluginUse usePlugin;
+// GTypePlugin.html
 // GTypePluginUnuse unusePlugin;
+// GTypePlugin.html
 // GTypePluginCompleteTypeInfo completeTypeInfo;
+// GTypePlugin.html
 // GTypePluginCompleteInterfaceInfo completeInterfaceInfo;
+// GTypePlugin.html
 
 
 /**
@@ -389,10 +431,13 @@ public struct GTypeModule
  * load()
  * loads the module and registers one or more types using
  */
-public struct GTypeModuleClass;
+public struct GTypeModuleClass{}
 // GObjectClass parentClass;
+// GTypeModule.html
 // int (* load) (GTypeModule *modul);
+// GTypeModule.html
 // void (* unload) (GTypeModule *modul);
+// GTypeModule.html
 
 
 /**
@@ -400,7 +445,7 @@ public struct GTypeModuleClass;
  * All the fields in the GObject structure are private
  * to the GObject implementation and should never be accessed directly.
  */
-public struct GObject;
+public struct GObject{}
 
 
 /**
@@ -410,29 +455,51 @@ public struct GObject;
  * static GObject*
  * my_singleton_constructor (GType type,
  */
-public struct GObjectClass;
+public struct GObjectClass{}
 // GTypeClass gTypeClass;
+// gobject-The-Base-Object-Type.html
 // /+* overridable methods +/
+// gobject-The-Base-Object-Type.html
 // GObject* (*constructor) (GType type,
+// gobject-The-Base-Object-Type.html
 // uint nConstructProperties,
+// gobject-The-Base-Object-Type.html
 // GObjectConstructParam *constructProperties);
+// gobject-The-Base-Object-Type.html
 // void (*setProperty) (GObject *object,
+// gobject-The-Base-Object-Type.html
 // uint propertyId,
+// gobject-The-Base-Object-Type.html
 // GValue *value,
+// gobject-The-Base-Object-Type.html
 // GParamSpec *pspec);
+// gobject-The-Base-Object-Type.html
 // void (*getProperty) (GObject *object,
+// gobject-The-Base-Object-Type.html
 // uint propertyId,
+// gobject-The-Base-Object-Type.html
 // GValue *value,
+// gobject-The-Base-Object-Type.html
 // GParamSpec *pspec);
+// gobject-The-Base-Object-Type.html
 // void (*dispose) (GObject *object);
+// gobject-The-Base-Object-Type.html
 // void (*finalize) (GObject *object);
+// gobject-The-Base-Object-Type.html
 // /+* seldomly overidden +/
+// gobject-The-Base-Object-Type.html
 // void (*dispatchPropertiesChanged) (GObject *object,
+// gobject-The-Base-Object-Type.html
 // uint nPspecs,
+// gobject-The-Base-Object-Type.html
 // GParamSpec **pspecs);
+// gobject-The-Base-Object-Type.html
 // /+* signals +/
+// gobject-The-Base-Object-Type.html
 // void (*notify) (GObject *object,
+// gobject-The-Base-Object-Type.html
 // GParamSpec *pspec);
+// gobject-The-Base-Object-Type.html
 
 
 /**
@@ -444,9 +511,11 @@ public struct GObjectClass;
  * GValue*value;
  * the value to set the parameter to
  */
-public struct GObjectConstructParam;
+public struct GObjectConstructParam{}
 // GParamSpec *pspec;
+// gobject-The-Base-Object-Type.html
 // GValue *value;
+// gobject-The-Base-Object-Type.html
 
 
 /**
@@ -457,9 +526,25 @@ public struct GObjectConstructParam;
  * GValuevalue;
  * the parameter value
  */
-public struct GParameter;
+public struct GParameter{}
 // char *name;
+// gobject-The-Base-Object-Type.html
 // GValue value;
+// gobject-The-Base-Object-Type.html
+
+
+/**
+ * All the fields in the GInitiallyUnowned structure
+ * are private to the GInitiallyUnowned implementation and should never be
+ * accessed directly.
+ */
+public struct GInitiallyUnowned{}
+
+
+/**
+ * The class structure for the GInitiallyUnowned type.
+ */
+public struct GInitiallyUnownedClass{}
 
 
 /**
@@ -477,12 +562,17 @@ public struct GParameter;
  * an array of GEnumValue structs describing the
  * individual values.
  */
-public struct GEnumClass;
+public struct GEnumClass{}
 // GTypeClass gTypeClass;
+// gobject-Enumeration-and-Flag-Types.html
 // int minimum;
+// gobject-Enumeration-and-Flag-Types.html
 // int maximum;
+// gobject-Enumeration-and-Flag-Types.html
 // uint nValues;
+// gobject-Enumeration-and-Flag-Types.html
 // GEnumValue *values;
+// gobject-Enumeration-and-Flag-Types.html
 
 
 /**
@@ -498,11 +588,15 @@ public struct GEnumClass;
  * an array of GFlagsValue structs describing the
  * individual values.
  */
-public struct GFlagsClass;
+public struct GFlagsClass{}
 // GTypeClass gTypeClass;
+// gobject-Enumeration-and-Flag-Types.html
 // uint mask;
+// gobject-Enumeration-and-Flag-Types.html
 // uint nValues;
+// gobject-Enumeration-and-Flag-Types.html
 // GFlagsValue *values;
+// gobject-Enumeration-and-Flag-Types.html
 
 
 /**
@@ -511,9 +605,9 @@ public struct GFlagsClass;
  * nickname.
  * gintvalue;
  * the enum value
- * gchar*value_name;
+ * constgchar*value_name;
  * the name of the value
- * gchar*value_nick;
+ * constgchar*value_nick;
  * the nickname of the value
  */
 public struct GEnumValue
@@ -529,9 +623,9 @@ public struct GEnumValue
  * nickname.
  * guintvalue;
  * the flags value
- * gchar*value_name;
+ * constgchar*value_name;
  * the name of the value
- * gchar*value_nick;
+ * constgchar*value_nick;
  * the nickname of the value
  */
 public struct GFlagsValue
@@ -548,9 +642,11 @@ public struct GFlagsValue
  * private GParamSpec portion
  * gbooleandefault_value;
  */
-public struct GParamSpecBoolean;
+public struct GParamSpecBoolean{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // int defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -559,11 +655,15 @@ public struct GParamSpecBoolean;
  * private GParamSpec portion
  * gint8minimum;
  */
-public struct GParamSpecChar;
+public struct GParamSpecChar{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // byte minimum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // byte maximum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // byte defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -572,11 +672,15 @@ public struct GParamSpecChar;
  * private GParamSpec portion
  * guint8minimum;
  */
-public struct GParamSpecUChar;
+public struct GParamSpecUChar{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // byte minimum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // byte maximum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // byte defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -585,11 +689,15 @@ public struct GParamSpecUChar;
  * private GParamSpec portion
  * gintminimum;
  */
-public struct GParamSpecInt;
+public struct GParamSpecInt{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // int minimum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // int maximum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // int defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -598,11 +706,15 @@ public struct GParamSpecInt;
  * private GParamSpec portion
  * guintminimum;
  */
-public struct GParamSpecUInt;
+public struct GParamSpecUInt{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // uint minimum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // uint maximum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // uint defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -611,11 +723,15 @@ public struct GParamSpecUInt;
  * private GParamSpec portion
  * glongminimum;
  */
-public struct GParamSpecLong;
+public struct GParamSpecLong{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // int minimum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // int maximum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // int defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -624,11 +740,15 @@ public struct GParamSpecLong;
  * private GParamSpec portion
  * gulongminimum;
  */
-public struct GParamSpecULong;
+public struct GParamSpecULong{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // uint minimum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // uint maximum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // uint defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -637,11 +757,15 @@ public struct GParamSpecULong;
  * private GParamSpec portion
  * gint64minimum;
  */
-public struct GParamSpecInt64;
+public struct GParamSpecInt64{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // long minimum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // long maximum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // long defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -650,11 +774,15 @@ public struct GParamSpecInt64;
  * private GParamSpec portion
  * guint64minimum;
  */
-public struct GParamSpecUInt64;
+public struct GParamSpecUInt64{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // ulong minimum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // ulong maximum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // ulong defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -663,12 +791,17 @@ public struct GParamSpecUInt64;
  * private GParamSpec portion
  * gfloatminimum;
  */
-public struct GParamSpecFloat;
+public struct GParamSpecFloat{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // float minimum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // float maximum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // float defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 // float epsilon;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -677,12 +810,17 @@ public struct GParamSpecFloat;
  * private GParamSpec portion
  * gdoubleminimum;
  */
-public struct GParamSpecDouble;
+public struct GParamSpecDouble{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // double minimum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // double maximum;
+// gobject-Standard-Parameter-and-Value-Types.html
 // double defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 // double epsilon;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -694,10 +832,13 @@ public struct GParamSpecDouble;
  * the GEnumClass for the enum
  * gintdefault_value;
  */
-public struct GParamSpecEnum;
+public struct GParamSpecEnum{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // GEnumClass *enumClass;
+// gobject-Standard-Parameter-and-Value-Types.html
 // int defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -709,10 +850,13 @@ public struct GParamSpecEnum;
  * the GFlagsClass for the flags
  * guintdefault_value;
  */
-public struct GParamSpecFlags;
+public struct GParamSpecFlags{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // GFlagsClass *flagsClass;
+// gobject-Standard-Parameter-and-Value-Types.html
 // uint defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -722,14 +866,21 @@ public struct GParamSpecFlags;
  * private GParamSpec portion
  * gchar*default_value;
  */
-public struct GParamSpecString;
+public struct GParamSpecString{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // char *defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 // char *csetFirst;
+// gobject-Standard-Parameter-and-Value-Types.html
 // char *csetNth;
+// gobject-Standard-Parameter-and-Value-Types.html
 // char substitutor;
+// gobject-Standard-Parameter-and-Value-Types.html
 // uint nullFoldIfEmpty : 1;
+// gobject-Standard-Parameter-and-Value-Types.html
 // uint ensureNonNull : 1;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -738,8 +889,9 @@ public struct GParamSpecString;
  * GParamSpecparent_instance;
  * private GParamSpec portion
  */
-public struct GParamSpecParam;
+public struct GParamSpecParam{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -747,8 +899,9 @@ public struct GParamSpecParam;
  * GParamSpecparent_instance;
  * private GParamSpec portion
  */
-public struct GParamSpecBoxed;
+public struct GParamSpecBoxed{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -756,8 +909,9 @@ public struct GParamSpecBoxed;
  * GParamSpecparent_instance;
  * private GParamSpec portion
  */
-public struct GParamSpecPointer;
+public struct GParamSpecPointer{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -765,8 +919,9 @@ public struct GParamSpecPointer;
  * GParamSpecparent_instance;
  * private GParamSpec portion
  */
-public struct GParamSpecObject;
+public struct GParamSpecObject{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -775,19 +930,24 @@ public struct GParamSpecObject;
  * private GParamSpec portion
  * gunichardefault_value;
  */
-public struct GParamSpecUnichar;
+public struct GParamSpecUnichar{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // gunichar defaultValue;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
  * A GParamSpec derived structure that contains the meta data for GValueArray properties.
  * GParamSpecparent_instance;
  */
-public struct GParamSpecValueArray;
+public struct GParamSpecValueArray{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // GParamSpec *elementSpec;
+// gobject-Standard-Parameter-and-Value-Types.html
 // uint fixedNElements;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -801,16 +961,18 @@ public struct GParamSpecValueArray;
  * unless you are implementing a new base type similar to GObject.
  * Since 2.4
  */
-public struct GParamSpecOverride;
+public struct GParamSpecOverride{}
 
 
 /**
  * A GParamSpec derived structure that contains the meta data for GType properties.
  * GParamSpecparent_instance;
  */
-public struct GParamSpecGType;
+public struct GParamSpecGType{}
 // GParamSpec parentInstance;
+// gobject-Standard-Parameter-and-Value-Types.html
 // GType isAType;
+// gobject-Standard-Parameter-and-Value-Types.html
 
 
 /**
@@ -821,12 +983,17 @@ public struct GParamSpecGType;
  * private GTypeInstance portion
  * gchar*name;
  */
-public struct GParamSpec;
+public struct GParamSpec{}
 // GTypeInstance gTypeInstance;
+// gobject-GParamSpec.html
 // char *name;
+// gobject-GParamSpec.html
 // GParamFlags flags;
+// gobject-GParamSpec.html
 // GType valueType;
+// gobject-GParamSpec.html
 // GType ownerType; /+* class or interface using this property +/
+// gobject-GParamSpec.html
 
 
 /**
@@ -840,18 +1007,29 @@ public struct GParamSpec;
  * finalize()
  * The instance finalization function (optional), should chain
  */
-public struct GParamSpecClass;
+public struct GParamSpecClass{}
 // GTypeClass gTypeClass;
+// gobject-GParamSpec.html
 // GType valueType;
+// gobject-GParamSpec.html
 // void (*finalize) (GParamSpec *pspec);
+// gobject-GParamSpec.html
 // /+* GParam methods +/
+// gobject-GParamSpec.html
 // void (*valueSetDefault) (GParamSpec *pspec,
+// gobject-GParamSpec.html
 // GValue *value);
+// gobject-GParamSpec.html
 // int (*valueValidate) (GParamSpec *pspec,
+// gobject-GParamSpec.html
 // GValue *value);
+// gobject-GParamSpec.html
 // int (*valuesCmp) (GParamSpec *pspec,
+// gobject-GParamSpec.html
 // GValue *value1,
+// gobject-GParamSpec.html
 // GValue *value2);
+// gobject-GParamSpec.html
 
 
 /**
@@ -875,21 +1053,35 @@ public struct GParamSpecClass;
  * value_set_default()
  * Resets a value to the default value for pspec
  */
-public struct GParamSpecTypeInfo;
+public struct GParamSpecTypeInfo{}
 // /+* type system portion +/
+// gobject-GParamSpec.html
 // ushort instanceSize; /+* obligatory +/
+// gobject-GParamSpec.html
 // ushort nPreallocs; /+* optional +/
+// gobject-GParamSpec.html
 // void (*instanceInit) (GParamSpec *pspec); /+* optional +/
+// gobject-GParamSpec.html
 // /+* class portion +/
+// gobject-GParamSpec.html
 // GType valueType; /+* obligatory +/
+// gobject-GParamSpec.html
 // void (*finalize) (GParamSpec *pspec); /+* optional +/
+// gobject-GParamSpec.html
 // void (*valueSetDefault) (GParamSpec *pspec, /+* recommended +/
+// gobject-GParamSpec.html
 // GValue *value);
+// gobject-GParamSpec.html
 // int (*valueValidate) (GParamSpec *pspec, /+* optional +/
+// gobject-GParamSpec.html
 // GValue *value);
+// gobject-GParamSpec.html
 // int (*valuesCmp) (GParamSpec *pspec, /+* recommended +/
+// gobject-GParamSpec.html
 // GValue *value1,
+// gobject-GParamSpec.html
 // GValue *value2);
+// gobject-GParamSpec.html
 
 
 /**
@@ -898,7 +1090,7 @@ public struct GParamSpecTypeInfo;
  * system uses such a pool to store the GParamSpecs of the properties all object
  * types.
  */
-public struct GParamSpecPool;
+public struct GParamSpecPool{}
 
 
 /**
@@ -906,10 +1098,13 @@ public struct GParamSpecPool;
  * to callbacks during a signal emission.
  * guintsignal_id;
  */
-public struct GSignalInvocationHint;
+public struct GSignalInvocationHint{}
 // uint signalId;
+// gobject-Signals.html
 // GQuark detail;
+// gobject-Signals.html
 // GSignalFlags runType;
+// gobject-Signals.html
 
 
 /**
@@ -917,14 +1112,21 @@ public struct GSignalInvocationHint;
  * filled in by the g_signal_query() function.
  * guintsignal_id;
  */
-public struct GSignalQuery;
+public struct GSignalQuery{}
 // uint signalId;
+// gobject-Signals.html
 // char *signalName;
+// gobject-Signals.html
 // GType itype;
+// gobject-Signals.html
 // GSignalFlags signalFlags;
+// gobject-Signals.html
 // GType returnType; /+* mangled with G_SIGNAL_TYPE_STATIC_SCOPE flag +/
+// gobject-Signals.html
 // uint nParams;
+// gobject-Signals.html
 // GType *paramTypes; /+* mangled with G_SIGNAL_TYPE_STATIC_SCOPE flag +/
+// gobject-Signals.html
 
 
 /**
@@ -933,9 +1135,11 @@ public struct GSignalQuery;
  * volatile	guintin_marshal:1;
  * Indicates whether the closure is currently being invoked with
  */
-public struct GClosure;
-// uint inMarshal : 1;
-// uint isInvalid : 1;
+public struct GClosure
+{
+	uint bitfield;
+	//uint inMarshal : 1;
+}
 
 
 /**
@@ -945,9 +1149,11 @@ public struct GClosure;
  * gpointercallback;
  * the callback function
  */
-public struct GCClosure;
+public struct GCClosure{}
 // GClosure closure;
+// gobject-Closures.html
 // void* callback;
+// gobject-Closures.html
 
 
 /**
@@ -955,14 +1161,16 @@ public struct GCClosure;
  * A GValueArray contains an array of GValue elements.
  * guintn_values;
  */
-public struct GValueArray;
+public struct GValueArray{}
 // uint nValues;
+// gobject-Value-arrays.html
 // GValue *values;
+// gobject-Value-arrays.html
 
 
 /*
  * Returns the fundamental type which is the ancestor of type.
- * Fundamental types are types that serve as fundaments for the derived types,
+ * Fundamental types are types that serve as ultimate bases for the derived types,
  * thus they are the roots of distinct inheritance hierarchies.
  * type:
  * A GType value.
@@ -1009,7 +1217,7 @@ public struct GValueArray;
 // #define G_TYPE_IS_FUNDAMENTAL(type) ((type) <= G_TYPE_FUNDAMENTAL_MAX)
 
 /*
- * Returns TRUE if type is a value type which can be used for
+ * Returns TRUE if type is a value type and can be used with
  * g_value_init().
  * type:
  * A GType value.
@@ -1062,7 +1270,7 @@ public struct GValueArray;
 
 /*
  * Returns TRUE if type is an interface type.
- * Interface types are types that provide pure APIs, the implementation
+ * An interface type provides a pure API, the implementation
  * of which is provided by another type (which is then said to conform
  * to the interface). GLib interfaces are somewhat analogous to Java
  * interfaces and C++ classes containing only pure virtual functions,
@@ -1143,6 +1351,7 @@ public struct GValueArray;
  * the type identifying which private data to retrieve.
  * c_type:
  * The C type for the private structure.
+ * Since 2.4
  */
 // TODO
 // #define G_TYPE_INSTANCE_GET_PRIVATE(instance, g_type, c_type) ((c_type*) g_type_instance_get_private ((GTypeInstance*) (instance), (g_type)))
@@ -1248,7 +1457,7 @@ public struct GValueArray;
  * Since 2.4
  */
 // TODO
-// #define G_DEFINE_TYPE(TN, t_n, T_P) G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+// #define G_DEFINE_TYPE(TN, t_n, T_P)			 G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
 
 /*
  * A convenience macro for type implementations.
@@ -1266,7 +1475,7 @@ public struct GValueArray;
  * Since 2.4
  */
 // TODO
-// #define G_DEFINE_TYPE_WITH_CODE(TN, t_n, T_P, _C_) G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, 0, _C_)
+// #define G_DEFINE_TYPE_WITH_CODE(TN, t_n, T_P, _C_)	 _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, 0) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
 
 /*
  * A convenience macro for type implementations.
@@ -1282,7 +1491,7 @@ public struct GValueArray;
  * Since 2.4
  */
 // TODO
-// #define G_DEFINE_ABSTRACT_TYPE(TN, t_n, T_P) G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT, {})
+// #define G_DEFINE_ABSTRACT_TYPE(TN, t_n, T_P)		 G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT, {})
 
 /*
  * A convenience macro for type implementations.
@@ -1301,7 +1510,7 @@ public struct GValueArray;
  * Since 2.4
  */
 // TODO
-// #define G_DEFINE_ABSTRACT_TYPE_WITH_CODE(TN, t_n, T_P, _C_) G_DEFINE_TYPE_EXTENDED (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT, _C_)
+// #define G_DEFINE_ABSTRACT_TYPE_WITH_CODE(TN, t_n, T_P, _C_) _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, G_TYPE_FLAG_ABSTRACT) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
 
 /*
  * A convenience macro to ease interface addition in the _C_ section
@@ -1366,21 +1575,15 @@ public struct GValueArray;
  * The only pieces which have to be manually provided are the definitions of the
  * instance and class structure and the definitions of the instance and class
  * init functions.
- * TypeName:
- * The name of the new type, in Camel case.
- * type_name:
- * The name of the new type, in lowercase, with words
- *  separated by '_'.
- * TYPE_PARENT:
- * The GType of the parent type.
- * flags:
- * GTypeFlags to pass to g_type_register_static()
- * CODE:
- * Custom code that gets inserted in the *_get_type() function.
+ * TN:
+ * t_n:
+ * T_P:
+ * _f_:
+ * _C_:
  * Since 2.4
  */
 // TODO
-// #define G_DEFINE_TYPE_EXTENDED(TypeName, type_name, TYPE_PARENT, flags, CODE)
+// #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)	 _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
 
 /*
  * Returns a boolean value of FALSE or TRUE indicating whether
@@ -1496,10 +1699,10 @@ public struct GValueArray;
  * has been changed. Note that getting this signal doesn't guarantee that the
  * value of the property has actually changed, it may also be emitted when
  * the setter for the property is called to reinstate the previous value.
- * gobject:
- * the object which received the signal.
  * pspec:
  * the GParamSpec of the property which changed
+ * gobject:
+ * the object which received the signal.
  * user_data:
  * user data set when the signal handler was connected.
  * See Also
@@ -2149,6 +2352,15 @@ public struct GValueArray;
 // #define G_PARAM_SPEC_GTYPE(pspec) (G_TYPE_CHECK_INSTANCE_CAST ((pspec), G_TYPE_PARAM_GTYPE, GParamSpecGType))
 
 /*
+ * Returns whether the given GValue can hold values of type G_TYPE_GTYPE.
+ * value:
+ *  a valid GValue structure
+ * Since 2.12
+ */
+// TODO
+// #define G_VALUE_HOLDS_GTYPE(value)	 (G_TYPE_CHECK_VALUE_TYPE ((value), G_TYPE_GTYPE))
+
+/*
  * Returns whether type "is a" G_TYPE_PARAM.
  * type:
  * a GType ID
@@ -2360,7 +2572,7 @@ public struct GValueArray;
  * of the class structures of derived types. It is called as part of the
  * initialization process of all derived classes and should reallocate
  * or reset all dynamic class members copied over from the parent class.
- * Therefore class members, e.g. strings, that are not sufficiently
+ * For example, class members (such as strings) that are not sufficiently
  * handled by a plain memory copy of the parent class into the derived class
  * have to be altered. See GClassInitFunc() for a discussion of the class
  * intialization process.
@@ -2450,8 +2662,8 @@ public typedef extern(C) void  function (void*) GBaseFinalizeFunc;
  * TypeAClass (derived classes reference their parent classes, see
  * g_type_class_ref() on this).
  * Initialization of TypeAClass roughly involves zero-initializing its fields,
- * then calling its GBaseInitFunc() type_a_base_class_init() that allocates
- * its dynamic members (dynamic_string) and finally calling its GClassInitFunc()
+ * then calling its GBaseInitFunc() type_a_base_class_init() to allocate
+ * its dynamic members (dynamic_string), and finally calling its GClassInitFunc()
  * type_a_class_init() to initialize its static members (static_integer).
  * The first step in the initialization process of TypeBClass is then
  * a plain memory copy of the contents of TypeAClass into TypeBClass and
@@ -2496,7 +2708,7 @@ public typedef extern(C) void  function (void*, void*) GClassFinalizeFunc;
  * instance of a type. This function initializes all instance members and
  * allocates any resources required by it.
  * Initialization of a derived instance involves calling all its parent
- * types instance initializers, therefore the class member of the instance
+ * types instance initializers, so the class member of the instance
  * is altered during its initialization to always point to the class that
  * belongs to the type the current initializer was introduced for.
  * instance:

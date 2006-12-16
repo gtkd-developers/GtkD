@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-GtkTreeView-drag-and-drop.html
  * outPack = gtk
  * outFile = TreeDragSource
  * strct   = GtkTreeDragSource
@@ -51,7 +52,7 @@
 
 module gtk.TreeDragSource;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

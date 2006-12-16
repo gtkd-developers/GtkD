@@ -25,6 +25,41 @@
 ###
 #
 
+
+addTypedefs: start
+
+public import glib.glibtypes;
+public import gobject.gobjecttypes;
+public import pango.pangotypes;
+public import gdkpixbuf.gdkpixbuftypes;
+
+alias void* GdkAtom;
+alias void* GdkNativeWindow;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
 # must start with wrap
 
 wrap: gdk
@@ -92,6 +127,7 @@ file: GdkScreen.html
 struct: GdkScreen
 class: Screen
 prefix: gdk_screen_
+import: cairoLib.cairoLibtypes
 import: glib.Str
 import: gdk.Screen
 structWrap: GdkScreen* Screen
@@ -255,7 +291,7 @@ code: start
 	public void drawPolygon(GC gc, int filled, GdkPoint[] points)
 	{
 		// void gdk_draw_polygon (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  GdkPoint *points,  gint npoints);
-		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, &points[0], points.length);
+		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, points.ptr, points.length);
 	}
 code: end
 

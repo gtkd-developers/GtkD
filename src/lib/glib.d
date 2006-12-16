@@ -26,8 +26,8 @@
 module lib.glib;
 
 private import std.stdio;
-private import glib.typedefs;
-private import gthread.typedefs;
+private import glib.glibtypes;
+private import gthread.gthreadtypes;
 private import lib.Loader;
 private import lib.paths;
 
@@ -74,7 +74,8 @@ extern(C)
 	void function(GMainLoop* loop)g_main_loop_quit;
 	gboolean function(GMainLoop* loop)g_main_loop_is_running;
 	GMainContext* function(GMainLoop* loop)g_main_loop_get_context;
-	int function()g_main_depth;
+	gint function()g_main_depth;
+	GSource* function()g_main_current_source;
 	GSource* function()g_idle_source_new;
 	guint function(GSourceFunc funct, gpointer data)g_idle_add;
 	guint function(gint priority, GSourceFunc funct, gpointer data, GDestroyNotify notify)g_idle_add_full;
@@ -108,8 +109,10 @@ extern(C)
 	// glib.Timeout
 	
 	GSource* function(guint interval)g_timeout_source_new;
+	GSource* function(guint interval)g_timeout_source_new_seconds;
 	guint function(guint interval, GSourceFunc funct, gpointer data)g_timeout_add;
 	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify)g_timeout_add_full;
+	guint function(guint interval, GSourceFunc funct, gpointer data)g_timeout_add_seconds;
 	
 	// glib.Child
 	
@@ -122,8 +125,10 @@ extern(C)
 	GSource* function(GSourceFuncs* sourceFuncs, guint structSize)g_source_new;
 	GSource* function(GSource* source)g_source_ref;
 	void function(GSource* source)g_source_unref;
+	void function(GSource* source, GSourceFuncs* funcs)g_source_set_funcs;
 	guint function(GSource* source, GMainContext* context)g_source_attach;
 	void function(GSource* source)g_source_destroy;
+	gboolean function(GSource* source)g_source_is_destroyed;
 	void function(GSource* source, gint priority)g_source_set_priority;
 	gint function(GSource* source)g_source_get_priority;
 	void function(GSource* source, gboolean canRecurse)g_source_set_can_recurse;
@@ -209,6 +214,9 @@ extern(C)
 	
 	GIOChannel* function(int fd)g_io_channel_unix_new;
 	gint function(GIOChannel* channel)g_io_channel_unix_get_fd;
+	GIOChannel* function(gint fd)g_io_channel_win32_new_fd;
+	GIOChannel* function(gint socket)g_io_channel_win32_new_socket;
+	GIOChannel* function(guint hwnd)g_io_channel_win32_new_messages;
 	void function(GIOChannel* channel)g_io_channel_init;
 	GIOChannel* function(gchar* filename, gchar* mode, GError** error)g_io_channel_new_file;
 	GIOStatus function(GIOChannel* channel, gchar* buf, gsize count, gsize* bytesRead, GError** error)g_io_channel_read_chars;
@@ -328,6 +336,7 @@ extern(C)
 	gint function(gchar* s1, gchar* s2)g_strcasecmp;
 	gint function(gchar* s1, gchar* s2, guint n)g_strncasecmp;
 	gchar* function(gchar* string)g_strreverse;
+	gint64 function(gchar* nptr, gchar** endptr, guint base)g_ascii_strtoll;
 	guint64 function(gchar* nptr, gchar** endptr, guint base)g_ascii_strtoull;
 	gdouble function(gchar* nptr, gchar** endptr)g_ascii_strtod;
 	gchar* function(gchar* buffer, gint bufLen, gdouble d)g_ascii_dtostr;
@@ -382,6 +391,7 @@ extern(C)
 	gboolean function(gunichar c)g_unichar_istitle;
 	gboolean function(gunichar c)g_unichar_isdefined;
 	gboolean function(gunichar c)g_unichar_iswide;
+	gboolean function(gunichar c)g_unichar_iswide_cjk;
 	gunichar function(gunichar c)g_unichar_toupper;
 	gunichar function(gunichar c)g_unichar_tolower;
 	gunichar function(gunichar c)g_unichar_totitle;
@@ -392,6 +402,7 @@ extern(C)
 	void function(gunichar* string, gsize len)g_unicode_canonical_ordering;
 	gunichar* function(gunichar ch, gsize* resultLen)g_unicode_canonical_decomposition;
 	gboolean function(gunichar ch, gunichar* mirroredCh)g_unichar_get_mirror_char;
+	GUnicodeScript function(gunichar ch)g_unichar_get_script;
 	gunichar function(gchar* p)g_utf8_get_char;
 	gunichar function(gchar* p, gssize maxLen)g_utf8_get_char_validated;
 	gchar* function(gchar* str, glong offset)g_utf8_offset_to_pointer;
@@ -431,6 +442,8 @@ extern(C)
 	void function(GTimeVal* result)g_get_current_time;
 	void function(gulong microseconds)g_usleep;
 	void function(GTimeVal* time, glong microseconds)g_time_val_add;
+	gboolean function(gchar* isoDate, GTimeVal* time)g_time_val_from_iso8601;
+	gchar* function(GTimeVal* time)g_time_val_to_iso8601;
 	GDate* function()g_date_new;
 	GDate* function(GDateDay day, GDateMonth month, GDateYear year)g_date_new_dmy;
 	GDate* function(guint32 julianDay)g_date_new_julian;
@@ -635,6 +648,12 @@ extern(C)
 	// glib.OptionContext
 	
 	GOptionContext* function(gchar* parameterString)g_option_context_new;
+	void function(GOptionContext* context, gchar* summary)g_option_context_set_summary;
+	gchar* function(GOptionContext* context)g_option_context_get_summary;
+	void function(GOptionContext* context, gchar* description)g_option_context_set_description;
+	gchar* function(GOptionContext* context)g_option_context_get_description;
+	void function(GOptionContext* context, GTranslateFunc func, gpointer data, GDestroyNotify destroyNotify)g_option_context_set_translate_func;
+	void function(GOptionContext* context, gchar* domain)g_option_context_set_translation_domain;
 	void function(GOptionContext* context)g_option_context_free;
 	gboolean function(GOptionContext* context, gint* argc, gchar*** argv, GError** error)g_option_context_parse;
 	void function(GOptionContext* context, gboolean helpEnabled)g_option_context_set_help_enabled;
@@ -696,20 +715,24 @@ extern(C)
 	gchar* function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale, GError** error)g_key_file_get_locale_string;
 	gboolean function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error)g_key_file_get_boolean;
 	gint function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error)g_key_file_get_integer;
+	gdouble function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error)g_key_file_get_double;
 	gchar** function(GKeyFile* keyFile, gchar* groupName, gchar* key, gsize* length, GError** error)g_key_file_get_string_list;
 	gchar** function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale, gsize* length, GError** error)g_key_file_get_locale_string_list;
 	gboolean* function(GKeyFile* keyFile, gchar* groupName, gchar* key, gsize* length, GError** error)g_key_file_get_boolean_list;
 	gint* function(GKeyFile* keyFile, gchar* groupName, gchar* key, gsize* length, GError** error)g_key_file_get_integer_list;
+	gdouble* function(GKeyFile* keyFile, gchar* groupName, gchar* key, gsize* length, GError** error)g_key_file_get_double_list;
 	gchar* function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error)g_key_file_get_comment;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* value)g_key_file_set_value;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* string)g_key_file_set_string;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale, gchar* string)g_key_file_set_locale_string;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gboolean value)g_key_file_set_boolean;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gint value)g_key_file_set_integer;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar*[] list, gsize length)g_key_file_set_string_list;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale, gchar*[] list, gsize length)g_key_file_set_locale_string_list;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gdouble value)g_key_file_set_double;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key)g_key_file_set_string_list;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale)g_key_file_set_locale_string_list;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gboolean[] list, gsize length)g_key_file_set_boolean_list;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gint[] list, gsize length)g_key_file_set_integer_list;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gdouble[] list, gsize length)g_key_file_set_double_list;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* comment, GError** error)g_key_file_set_comment;
 	void function(GKeyFile* keyFile, gchar* groupName, GError** error)g_key_file_remove_group;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error)g_key_file_remove_key;
@@ -872,6 +895,8 @@ extern(C)
 	gboolean function(GHashTable* hashTable, gconstpointer key)g_hash_table_steal;
 	guint function(GHashTable* hashTable, GHRFunc func, gpointer userData)g_hash_table_foreach_remove;
 	guint function(GHashTable* hashTable, GHRFunc func, gpointer userData)g_hash_table_foreach_steal;
+	void function(GHashTable* hashTable)g_hash_table_remove_all;
+	void function(GHashTable* hashTable)g_hash_table_steal_all;
 	void function(GHashTable* hashTable)g_hash_table_destroy;
 	GHashTable* function(GHashTable* hashTable)g_hash_table_ref;
 	void function(GHashTable* hashTable)g_hash_table_unref;
@@ -1098,6 +1123,7 @@ Symbol[] glibLinks =
 	{ "g_main_loop_is_running",  cast(void**)& g_main_loop_is_running},
 	{ "g_main_loop_get_context",  cast(void**)& g_main_loop_get_context},
 	{ "g_main_depth",  cast(void**)& g_main_depth},
+	{ "g_main_current_source",  cast(void**)& g_main_current_source},
 	{ "g_idle_source_new",  cast(void**)& g_idle_source_new},
 	{ "g_idle_add",  cast(void**)& g_idle_add},
 	{ "g_idle_add_full",  cast(void**)& g_idle_add_full},
@@ -1125,16 +1151,20 @@ Symbol[] glibLinks =
 	{ "g_main_context_add_poll",  cast(void**)& g_main_context_add_poll},
 	{ "g_main_context_remove_poll",  cast(void**)& g_main_context_remove_poll},
 	{ "g_timeout_source_new",  cast(void**)& g_timeout_source_new},
+	{ "g_timeout_source_new_seconds",  cast(void**)& g_timeout_source_new_seconds},
 	{ "g_timeout_add",  cast(void**)& g_timeout_add},
 	{ "g_timeout_add_full",  cast(void**)& g_timeout_add_full},
+	{ "g_timeout_add_seconds",  cast(void**)& g_timeout_add_seconds},
 	{ "g_child_watch_source_new",  cast(void**)& g_child_watch_source_new},
 	{ "g_child_watch_add",  cast(void**)& g_child_watch_add},
 	{ "g_child_watch_add_full",  cast(void**)& g_child_watch_add_full},
 	{ "g_source_new",  cast(void**)& g_source_new},
 	{ "g_source_ref",  cast(void**)& g_source_ref},
 	{ "g_source_unref",  cast(void**)& g_source_unref},
+	{ "g_source_set_funcs",  cast(void**)& g_source_set_funcs},
 	{ "g_source_attach",  cast(void**)& g_source_attach},
 	{ "g_source_destroy",  cast(void**)& g_source_destroy},
+	{ "g_source_is_destroyed",  cast(void**)& g_source_is_destroyed},
 	{ "g_source_set_priority",  cast(void**)& g_source_set_priority},
 	{ "g_source_get_priority",  cast(void**)& g_source_get_priority},
 	{ "g_source_set_can_recurse",  cast(void**)& g_source_set_can_recurse},
@@ -1205,6 +1235,9 @@ Symbol[] glibLinks =
 	{ "g_mem_profile",  cast(void**)& g_mem_profile},
 	{ "g_io_channel_unix_new",  cast(void**)& g_io_channel_unix_new},
 	{ "g_io_channel_unix_get_fd",  cast(void**)& g_io_channel_unix_get_fd},
+	{ "g_io_channel_win32_new_fd",  cast(void**)& g_io_channel_win32_new_fd},
+	{ "g_io_channel_win32_new_socket",  cast(void**)& g_io_channel_win32_new_socket},
+	{ "g_io_channel_win32_new_messages",  cast(void**)& g_io_channel_win32_new_messages},
 	{ "g_io_channel_init",  cast(void**)& g_io_channel_init},
 	{ "g_io_channel_new_file",  cast(void**)& g_io_channel_new_file},
 	{ "g_io_channel_read_chars",  cast(void**)& g_io_channel_read_chars},
@@ -1312,6 +1345,7 @@ Symbol[] glibLinks =
 	{ "g_strcasecmp",  cast(void**)& g_strcasecmp},
 	{ "g_strncasecmp",  cast(void**)& g_strncasecmp},
 	{ "g_strreverse",  cast(void**)& g_strreverse},
+	{ "g_ascii_strtoll",  cast(void**)& g_ascii_strtoll},
 	{ "g_ascii_strtoull",  cast(void**)& g_ascii_strtoull},
 	{ "g_ascii_strtod",  cast(void**)& g_ascii_strtod},
 	{ "g_ascii_dtostr",  cast(void**)& g_ascii_dtostr},
@@ -1360,6 +1394,7 @@ Symbol[] glibLinks =
 	{ "g_unichar_istitle",  cast(void**)& g_unichar_istitle},
 	{ "g_unichar_isdefined",  cast(void**)& g_unichar_isdefined},
 	{ "g_unichar_iswide",  cast(void**)& g_unichar_iswide},
+	{ "g_unichar_iswide_cjk",  cast(void**)& g_unichar_iswide_cjk},
 	{ "g_unichar_toupper",  cast(void**)& g_unichar_toupper},
 	{ "g_unichar_tolower",  cast(void**)& g_unichar_tolower},
 	{ "g_unichar_totitle",  cast(void**)& g_unichar_totitle},
@@ -1370,6 +1405,7 @@ Symbol[] glibLinks =
 	{ "g_unicode_canonical_ordering",  cast(void**)& g_unicode_canonical_ordering},
 	{ "g_unicode_canonical_decomposition",  cast(void**)& g_unicode_canonical_decomposition},
 	{ "g_unichar_get_mirror_char",  cast(void**)& g_unichar_get_mirror_char},
+	{ "g_unichar_get_script",  cast(void**)& g_unichar_get_script},
 	{ "g_utf8_get_char",  cast(void**)& g_utf8_get_char},
 	{ "g_utf8_get_char_validated",  cast(void**)& g_utf8_get_char_validated},
 	{ "g_utf8_offset_to_pointer",  cast(void**)& g_utf8_offset_to_pointer},
@@ -1403,6 +1439,8 @@ Symbol[] glibLinks =
 	{ "g_get_current_time",  cast(void**)& g_get_current_time},
 	{ "g_usleep",  cast(void**)& g_usleep},
 	{ "g_time_val_add",  cast(void**)& g_time_val_add},
+	{ "g_time_val_from_iso8601",  cast(void**)& g_time_val_from_iso8601},
+	{ "g_time_val_to_iso8601",  cast(void**)& g_time_val_to_iso8601},
 	{ "g_date_new",  cast(void**)& g_date_new},
 	{ "g_date_new_dmy",  cast(void**)& g_date_new_dmy},
 	{ "g_date_new_julian",  cast(void**)& g_date_new_julian},
@@ -1580,6 +1618,12 @@ Symbol[] glibLinks =
 	{ "g_shell_quote",  cast(void**)& g_shell_quote},
 	{ "g_shell_unquote",  cast(void**)& g_shell_unquote},
 	{ "g_option_context_new",  cast(void**)& g_option_context_new},
+	{ "g_option_context_set_summary",  cast(void**)& g_option_context_set_summary},
+	{ "g_option_context_get_summary",  cast(void**)& g_option_context_get_summary},
+	{ "g_option_context_set_description",  cast(void**)& g_option_context_set_description},
+	{ "g_option_context_get_description",  cast(void**)& g_option_context_get_description},
+	{ "g_option_context_set_translate_func",  cast(void**)& g_option_context_set_translate_func},
+	{ "g_option_context_set_translation_domain",  cast(void**)& g_option_context_set_translation_domain},
 	{ "g_option_context_free",  cast(void**)& g_option_context_free},
 	{ "g_option_context_parse",  cast(void**)& g_option_context_parse},
 	{ "g_option_context_set_help_enabled",  cast(void**)& g_option_context_set_help_enabled},
@@ -1629,20 +1673,24 @@ Symbol[] glibLinks =
 	{ "g_key_file_get_locale_string",  cast(void**)& g_key_file_get_locale_string},
 	{ "g_key_file_get_boolean",  cast(void**)& g_key_file_get_boolean},
 	{ "g_key_file_get_integer",  cast(void**)& g_key_file_get_integer},
+	{ "g_key_file_get_double",  cast(void**)& g_key_file_get_double},
 	{ "g_key_file_get_string_list",  cast(void**)& g_key_file_get_string_list},
 	{ "g_key_file_get_locale_string_list",  cast(void**)& g_key_file_get_locale_string_list},
 	{ "g_key_file_get_boolean_list",  cast(void**)& g_key_file_get_boolean_list},
 	{ "g_key_file_get_integer_list",  cast(void**)& g_key_file_get_integer_list},
+	{ "g_key_file_get_double_list",  cast(void**)& g_key_file_get_double_list},
 	{ "g_key_file_get_comment",  cast(void**)& g_key_file_get_comment},
 	{ "g_key_file_set_value",  cast(void**)& g_key_file_set_value},
 	{ "g_key_file_set_string",  cast(void**)& g_key_file_set_string},
 	{ "g_key_file_set_locale_string",  cast(void**)& g_key_file_set_locale_string},
 	{ "g_key_file_set_boolean",  cast(void**)& g_key_file_set_boolean},
 	{ "g_key_file_set_integer",  cast(void**)& g_key_file_set_integer},
+	{ "g_key_file_set_double",  cast(void**)& g_key_file_set_double},
 	{ "g_key_file_set_string_list",  cast(void**)& g_key_file_set_string_list},
 	{ "g_key_file_set_locale_string_list",  cast(void**)& g_key_file_set_locale_string_list},
 	{ "g_key_file_set_boolean_list",  cast(void**)& g_key_file_set_boolean_list},
 	{ "g_key_file_set_integer_list",  cast(void**)& g_key_file_set_integer_list},
+	{ "g_key_file_set_double_list",  cast(void**)& g_key_file_set_double_list},
 	{ "g_key_file_set_comment",  cast(void**)& g_key_file_set_comment},
 	{ "g_key_file_remove_group",  cast(void**)& g_key_file_remove_group},
 	{ "g_key_file_remove_key",  cast(void**)& g_key_file_remove_key},
@@ -1781,6 +1829,8 @@ Symbol[] glibLinks =
 	{ "g_hash_table_steal",  cast(void**)& g_hash_table_steal},
 	{ "g_hash_table_foreach_remove",  cast(void**)& g_hash_table_foreach_remove},
 	{ "g_hash_table_foreach_steal",  cast(void**)& g_hash_table_foreach_steal},
+	{ "g_hash_table_remove_all",  cast(void**)& g_hash_table_remove_all},
+	{ "g_hash_table_steal_all",  cast(void**)& g_hash_table_steal_all},
 	{ "g_hash_table_destroy",  cast(void**)& g_hash_table_destroy},
 	{ "g_hash_table_ref",  cast(void**)& g_hash_table_ref},
 	{ "g_hash_table_unref",  cast(void**)& g_hash_table_unref},

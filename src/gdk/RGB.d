@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-GdkRGB.html
  * outPack = gdk
  * outFile = RGB
  * strct   = 
@@ -56,7 +57,7 @@
 
 module gdk.RGB;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gtk
  * outFile = MainWindow
  * strct   = 
@@ -49,7 +50,7 @@
 
 module gtk.MainWindow;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

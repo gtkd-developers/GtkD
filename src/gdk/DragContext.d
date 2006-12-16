@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Drag-and-Drop.html
  * outPack = gdk
  * outFile = DragContext
  * strct   = GdkDragContext
@@ -56,7 +57,7 @@
 
 module gdk.DragContext;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

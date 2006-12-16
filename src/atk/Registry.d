@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkRegistry.html
  * outPack = atk
  * outFile = Registry
  * strct   = AtkRegistry
@@ -46,13 +47,18 @@
 
 module atk.Registry;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
 
 /**
  * Description
+ * The AtkRegistry is normally used to create appropriate ATK "peers" for user
+ * interface components. Application developers usually need only interact with
+ * the AtkRegistry by associating appropriate ATK implementation classes with
+ * GObject classes via the atk_registry_set_factory_type call, passing the
+ * appropriate GType for application custom widget classes.
  */
 private import gobject.ObjectG;
 public class Registry : ObjectG

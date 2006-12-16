@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTextBuffer.html
  * outPack = gtk
  * outFile = TextBuffer
  * strct   = GtkTextBuffer
@@ -79,7 +80,7 @@
 
 module gtk.TextBuffer;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -430,7 +431,7 @@ public class TextBuffer : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TextTag, TextIter, TextIter, TextBuffer)[] onApplyTagListeners;
@@ -444,7 +445,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackApplyTag,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["apply-tag"] = 1;
 		}
 		onApplyTagListeners ~= dlg;
@@ -472,7 +473,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackBeginUserAction,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["begin-user-action"] = 1;
 		}
 		onBeginUserActionListeners ~= dlg;
@@ -500,7 +501,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -528,7 +529,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackDeleteRange,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["delete-range"] = 1;
 		}
 		onDeleteRangeListeners ~= dlg;
@@ -556,7 +557,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackEndUserAction,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["end-user-action"] = 1;
 		}
 		onEndUserActionListeners ~= dlg;
@@ -584,7 +585,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackInsertChildAnchor,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["insert-child-anchor"] = 1;
 		}
 		onInsertChildAnchorListeners ~= dlg;
@@ -612,7 +613,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackInsertPixbuf,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["insert-pixbuf"] = 1;
 		}
 		onInsertPixbufListeners ~= dlg;
@@ -640,7 +641,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackInsertText,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["insert-text"] = 1;
 		}
 		onInsertTextListeners ~= dlg;
@@ -668,7 +669,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackMarkDeleted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["mark-deleted"] = 1;
 		}
 		onMarkDeletedListeners ~= dlg;
@@ -696,7 +697,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackMarkSet,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["mark-set"] = 1;
 		}
 		onMarkSetListeners ~= dlg;
@@ -724,7 +725,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackModifiedChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["modified-changed"] = 1;
 		}
 		onModifiedChangedListeners ~= dlg;
@@ -752,7 +753,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackRemoveTag,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["remove-tag"] = 1;
 		}
 		onRemoveTagListeners ~= dlg;
@@ -1313,6 +1314,20 @@ public class TextBuffer : ObjectG
 	}
 	
 	/**
+	 * Indicates whether the buffer has some text currently selected.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * Returns:
+	 *  TRUE if the there is text selected
+	 * Since 2.10
+	 */
+	public int getHasSelection()
+	{
+		// gboolean gtk_text_buffer_get_has_selection  (GtkTextBuffer *buffer);
+		return gtk_text_buffer_get_has_selection(gtkTextBuffer);
+	}
+	
+	/**
 	 * This function moves the "insert" and "selection_bound" marks
 	 * simultaneously. If you move them to the same place in two steps
 	 * with gtk_text_buffer_move_mark(), you will temporarily select a
@@ -1781,16 +1796,334 @@ public class TextBuffer : ObjectG
 	 *  a GtkTextBuffer
 	 * clipboard:
 	 *  a GtkClipboard added to buffer by gtk_text_buffer_add_selection_clipboard().
-	 * Property Details
-	 * The "tag-table" property
-	 *  "tag-table" GtkTextTagTable : Read / Write / Construct Only
-	 * Text Tag Table.
 	 */
 	public void removeSelectionClipboard(Clipboard clipboard)
 	{
 		// void gtk_text_buffer_remove_selection_clipboard  (GtkTextBuffer *buffer,  GtkClipboard *clipboard);
 		gtk_text_buffer_remove_selection_clipboard(gtkTextBuffer, (clipboard is null) ? null : clipboard.getClipboardStruct());
 	}
+	
+	
+	
+	/**
+	 * This function deserializes rich text in format format and inserts
+	 * it at iter.
+	 * formats to be used must be registered using
+	 * gtk_text_buffer_register_deserialize_format() or
+	 * gtk_text_buffer_register_deserialize_tagset() beforehand.
+	 * register_buffer:
+	 *  the GtkTextBuffer format is registered with
+	 * content_buffer:
+	 *  the GtkTextBuffer to deserialize into
+	 * format:
+	 *  the rich text format to use for deserializing
+	 * iter:
+	 *  insertion point for the deserialized text
+	 * data:
+	 *  data to deserialize
+	 * length:
+	 *  length of data
+	 * error:
+	 *  return loaction for a GError
+	 * Returns:
+	 *  TRUE on success, FALSE otherwise.
+	 * Since 2.10
+	 */
+	public int deserialize(TextBuffer contentBuffer, GdkAtom format, TextIter iter, byte* data, uint length, GError** error)
+	{
+		// gboolean gtk_text_buffer_deserialize (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GdkAtom format,  GtkTextIter *iter,  const guint8 *data,  gsize length,  GError **error);
+		return gtk_text_buffer_deserialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (iter is null) ? null : iter.getTextIterStruct(), data, length, error);
+	}
+	
+	/**
+	 * This functions returns the value set with
+	 * gtk_text_buffer_deserialize_set_can_create_tags()
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * format:
+	 *  a GdkAtom representing a registered rich text format
+	 * Returns:
+	 *  whether deserializing this format may create tags
+	 * Since 2.10
+	 */
+	public int deserializeGetCanCreateTags(GdkAtom format)
+	{
+		// gboolean gtk_text_buffer_deserialize_get_can_create_tags  (GtkTextBuffer *buffer,  GdkAtom format);
+		return gtk_text_buffer_deserialize_get_can_create_tags(gtkTextBuffer, format);
+	}
+	
+	/**
+	 * Use this function to allow a rich text deserialization function to
+	 * create new tags in the receiving buffer. Note that using this
+	 * function is almost always a bad idea, because the rich text
+	 * functions you register should know how to map the rich text format
+	 * they handler to your text buffers set of tags.
+	 * The ability of creating new (arbitrary!) tags in the receiving buffer
+	 * is meant for special rich text formats like the internal one that
+	 * is registered using gtk_text_buffer_register_deserialize_tagset(),
+	 * because that format is essentially a dump of the internal structure
+	 * of the source buffer, including its tag names.
+	 * You should allow creation of tags only if you know what you are
+	 * doing, e.g. if you defined a tagset name for your application
+	 * suite's text buffers and you know that it's fine to receive new
+	 * tags from these buffers, because you know that your application can
+	 * handle the newly created tags.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * format:
+	 *  a GdkAtom representing a registered rich text format
+	 * can_create_tags:
+	 *  whether deserializing this format may create tags
+	 * Since 2.10
+	 */
+	public void deserializeSetCanCreateTags(GdkAtom format, int canCreateTags)
+	{
+		// void gtk_text_buffer_deserialize_set_can_create_tags  (GtkTextBuffer *buffer,  GdkAtom format,  gboolean can_create_tags);
+		gtk_text_buffer_deserialize_set_can_create_tags(gtkTextBuffer, format, canCreateTags);
+	}
+	
+	/**
+	 * This function returns the list of targets this text buffer can
+	 * provide for copying and as DND source. The targets in the list are
+	 * added with info values from the GtkTextBufferTargetInfo enum,
+	 * using gtk_target_list_add_rich_text_targets() and
+	 * gtk_target_list_add_text_targets()
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * Returns:
+	 *  the GtkTargetList
+	 * Since 2.10
+	 */
+	public GtkTargetList* getCopyTargetList()
+	{
+		// GtkTargetList* gtk_text_buffer_get_copy_target_list  (GtkTextBuffer *buffer);
+		return gtk_text_buffer_get_copy_target_list(gtkTextBuffer);
+	}
+	
+	/**
+	 * This function returns the rich text deserialize formats registered
+	 * with buffer using gtk_text_buffer_register_deserialize_format() or
+	 * gtk_text_buffer_register_deserialize_tagset()
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * n_formats:
+	 *  return location for the number of formats
+	 * Returns:
+	 *  an array of GdkAtoms representing the registered
+	 *  formats.
+	 * Since 2.10
+	 */
+	public GdkAtom* getDeserializeFormats(int* nFormats)
+	{
+		// GdkAtom* gtk_text_buffer_get_deserialize_formats  (GtkTextBuffer *buffer,  gint *n_formats);
+		return gtk_text_buffer_get_deserialize_formats(gtkTextBuffer, nFormats);
+	}
+	
+	/**
+	 * This function returns the list of targets this text buffer supports
+	 * for pasting and as DND destination. The targets in the list are
+	 * added with info values from the GtkTextBufferTargetInfo enum,
+	 * using gtk_target_list_add_rich_text_targets() and
+	 * gtk_target_list_add_text_targets()
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * Returns:
+	 *  the GtkTargetList
+	 * Since 2.10
+	 */
+	public GtkTargetList* getPasteTargetList()
+	{
+		// GtkTargetList* gtk_text_buffer_get_paste_target_list  (GtkTextBuffer *buffer);
+		return gtk_text_buffer_get_paste_target_list(gtkTextBuffer);
+	}
+	
+	/**
+	 * This function returns the rich text serialize formats registered
+	 * with buffer using gtk_text_buffer_register_serialize_format() or
+	 * gtk_text_buffer_register_serialize_tagset()
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * n_formats:
+	 *  return location for the number of formats
+	 * Returns:
+	 *  an array of GdkAtoms representing the registered
+	 *  formats.
+	 * Since 2.10
+	 */
+	public GdkAtom* getSerializeFormats(int* nFormats)
+	{
+		// GdkAtom* gtk_text_buffer_get_serialize_formats  (GtkTextBuffer *buffer,  gint *n_formats);
+		return gtk_text_buffer_get_serialize_formats(gtkTextBuffer, nFormats);
+	}
+	
+	/**
+	 * This function registers a rich text deserialization function along with
+	 * its mime_type with the passed buffer.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * mime_type:
+	 *  the format's mime-type
+	 * function:
+	 *  the deserialize function to register
+	 * user_data:
+	 *  function's user_data
+	 * user_data_destroy:
+	 *  a function to call when user_data is no longer needed
+	 * Returns:
+	 *  the GdkAtom that corresponds to the newly registered
+	 *  format's mime-type.
+	 * Since 2.10
+	 */
+	public GdkAtom registerDeserializeFormat(char[] mimeType, GtkTextBufferDeserializeFunc funct, void* userData, GDestroyNotify userDataDestroy)
+	{
+		// GdkAtom gtk_text_buffer_register_deserialize_format  (GtkTextBuffer *buffer,  const gchar *mime_type,  GtkTextBufferDeserializeFunc function,  gpointer user_data,  GDestroyNotify user_data_destroy);
+		return gtk_text_buffer_register_deserialize_format(gtkTextBuffer, Str.toStringz(mimeType), funct, userData, userDataDestroy);
+	}
+	
+	/**
+	 * This function registers GTK+'s internal rich text serialization
+	 * format with the passed buffer. See
+	 * gtk_text_buffer_register_serialize_tagset() for details.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * tagset_name:
+	 *  an optional tagset name, on NULL
+	 * Returns:
+	 *  the GdkAtom that corresponds to the newly registered
+	 *  format's mime-type.
+	 * Since 2.10
+	 */
+	public GdkAtom registerDeserializeTagset(char[] tagsetName)
+	{
+		// GdkAtom gtk_text_buffer_register_deserialize_tagset  (GtkTextBuffer *buffer,  const gchar *tagset_name);
+		return gtk_text_buffer_register_deserialize_tagset(gtkTextBuffer, Str.toStringz(tagsetName));
+	}
+	
+	/**
+	 * This function registers a rich text serialization function along with
+	 * its mime_type with the passed buffer.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * mime_type:
+	 *  the format's mime-type
+	 * function:
+	 *  the serialize function to register
+	 * user_data:
+	 *  function's user_data
+	 * user_data_destroy:
+	 *  a function to call when user_data is no longer needed
+	 * Returns:
+	 *  the GdkAtom that corresponds to the newly registered
+	 *  format's mime-type.
+	 * Since 2.10
+	 */
+	public GdkAtom registerSerializeFormat(char[] mimeType, GtkTextBufferSerializeFunc funct, void* userData, GDestroyNotify userDataDestroy)
+	{
+		// GdkAtom gtk_text_buffer_register_serialize_format  (GtkTextBuffer *buffer,  const gchar *mime_type,  GtkTextBufferSerializeFunc function,  gpointer user_data,  GDestroyNotify user_data_destroy);
+		return gtk_text_buffer_register_serialize_format(gtkTextBuffer, Str.toStringz(mimeType), funct, userData, userDataDestroy);
+	}
+	
+	/**
+	 * This function registers GTK+'s internal rich text serialization
+	 * format with the passed buffer. The internal format does not comply
+	 * to any standard rich text format and only works between GtkTextBuffer
+	 * instances. It is capable of serializing all of a text buffer's tags
+	 * and embedded pixbufs.
+	 * This function is just a wrapper around
+	 * gtk_text_buffer_register_serialize_format(). The mime_type used
+	 * for registering is "application/x-gtk-text-buffer-rich-text", or
+	 * "application/x-gtk-text-buffer-rich-text;format=tagset_name" if a
+	 * tagset_name was passed.
+	 * The tagset_name can be used to restrict the transfer of rich text
+	 * to buffers with compatible sets of tags, in order to avoid unknown
+	 * tags from being pasted. It is probably the common case to pass an
+	 * identifier != NULL here, since the NULL tagset requires the
+	 * receiving buffer to deal with with pasting of arbitrary tags.
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * tagset_name:
+	 *  an optional tagset name, on NULL
+	 * Returns:
+	 *  the GdkAtom that corresponds to the newly registered
+	 *  format's mime-type.
+	 * Since 2.10
+	 */
+	public GdkAtom registerSerializeTagset(char[] tagsetName)
+	{
+		// GdkAtom gtk_text_buffer_register_serialize_tagset  (GtkTextBuffer *buffer,  const gchar *tagset_name);
+		return gtk_text_buffer_register_serialize_tagset(gtkTextBuffer, Str.toStringz(tagsetName));
+	}
+	
+	
+	/**
+	 * This function serializes the portion of text between start
+	 * and end in the rich text format represented by format.
+	 * formats to be used must be registered using
+	 * gtk_text_buffer_register_serialize_format() or
+	 * gtk_text_buffer_register_serialize_tagset() beforehand.
+	 * register_buffer:
+	 *  the GtkTextBuffer format is registered with
+	 * content_buffer:
+	 *  the GtkTextBuffer to serialize
+	 * format:
+	 *  the rich text format to use for serializing
+	 * start:
+	 *  start of block of text to serialize
+	 * end:
+	 *  end of block of test to serialize
+	 * length:
+	 *  return location for the length of the serialized data
+	 * Returns:
+	 *  the serialized data, encoded as format
+	 * Since 2.10
+	 */
+	public byte* serialize(TextBuffer contentBuffer, GdkAtom format, TextIter start, TextIter end, uint* length)
+	{
+		// guint8* gtk_text_buffer_serialize (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GdkAtom format,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length);
+		return gtk_text_buffer_serialize(gtkTextBuffer, (contentBuffer is null) ? null : contentBuffer.getTextBufferStruct(), format, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), length);
+	}
+	
+	/**
+	 * This function unregisters a rich text format that was previously
+	 * registered using gtk_text_buffer_register_deserialize_format() or
+	 * gtk_text_buffer_register_deserialize_tagset()
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * format:
+	 *  a GdkAtom representing a registered rich text format.
+	 * Since 2.10
+	 */
+	public void unregisterDeserializeFormat(GdkAtom format)
+	{
+		// void gtk_text_buffer_unregister_deserialize_format  (GtkTextBuffer *buffer,  GdkAtom format);
+		gtk_text_buffer_unregister_deserialize_format(gtkTextBuffer, format);
+	}
+	
+	/**
+	 * This function unregisters a rich text format that was previously
+	 * registered using gtk_text_buffer_register_serialize_format() or
+	 * gtk_text_buffer_register_serialize_tagset()
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * format:
+	 *  a GdkAtom representing a registered rich text format.
+	 * Since 2.10
+	 * Property Details
+	 * The "copy-target-list" property
+	 *  "copy-target-list" GtkTargetList : Read
+	 * The list of targets this buffer supports for clipboard copying
+	 * and as DND source.
+	 * Since 2.10
+	 */
+	public void unregisterSerializeFormat(GdkAtom format)
+	{
+		// void gtk_text_buffer_unregister_serialize_format  (GtkTextBuffer *buffer,  GdkAtom format);
+		gtk_text_buffer_unregister_serialize_format(gtkTextBuffer, format);
+	}
+	
+	
+	
+	
 	
 	
 	

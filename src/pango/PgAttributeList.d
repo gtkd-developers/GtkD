@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = pango
  * outFile = PgAttributeList
  * strct   = PangoAttrList
@@ -47,7 +48,7 @@
 
 module pango.PgAttributeList;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 

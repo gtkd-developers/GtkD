@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkVScale.html
  * outPack = gtk
  * outFile = VScale
  * strct   = GtkVScale
@@ -49,7 +50,7 @@
 
 module gtk.VScale;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

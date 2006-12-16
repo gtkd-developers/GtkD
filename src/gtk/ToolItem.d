@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkToolItem.html
  * outPack = gtk
  * outFile = ToolItem
  * strct   = GtkToolItem
@@ -52,7 +53,7 @@
 
 module gtk.ToolItem;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -115,7 +116,7 @@ public class ToolItem : Bin
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(ToolItem)[] onCreateMenuProxyListeners;
@@ -129,7 +130,7 @@ public class ToolItem : Bin
 			cast(GCallback)&callBackCreateMenuProxy,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["create-menu-proxy"] = 1;
 		}
 		onCreateMenuProxyListeners ~= dlg;
@@ -157,7 +158,7 @@ public class ToolItem : Bin
 			cast(GCallback)&callBackSetTooltip,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["set-tooltip"] = 1;
 		}
 		onSetTooltipListeners ~= dlg;
@@ -185,7 +186,7 @@ public class ToolItem : Bin
 			cast(GCallback)&callBackToolbarReconfigured,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toolbar-reconfigured"] = 1;
 		}
 		onToolbarReconfiguredListeners ~= dlg;

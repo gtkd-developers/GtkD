@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Visuals.html
  * outPack = gdk
  * outFile = Visual
  * strct   = GdkVisual
@@ -52,7 +53,7 @@
 
 module gdk.Visual;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

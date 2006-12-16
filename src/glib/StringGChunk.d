@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-String-Chunks.html
  * outPack = glib
  * outFile = StringGChunk
  * strct   = GStringChunk
@@ -47,7 +48,7 @@
 
 module glib.StringGChunk;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

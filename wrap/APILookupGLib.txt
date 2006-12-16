@@ -25,6 +25,66 @@
 ###
 #
 
+
+addTypedefs: start
+/* The GLib Basic Types */
+public alias int gint;
+public alias uint guint;
+public alias int gboolean;
+public alias void* gpointer;
+public alias void* gconstpointer;
+public alias char gchar;
+public alias char guchar;
+public alias short gshort;
+public alias ushort gushort;
+public alias int glong;
+public alias uint gulong;
+public alias byte gint8;
+public alias byte guint8;
+public alias short gint16;
+public alias ushort guint16;
+public alias int gint32;
+public alias long gint64;
+public alias uint guint32;
+public alias ulong guint64;
+public alias float gfloat;
+public alias double gdouble;
+public alias uint gsize;
+public alias int gssize;
+public alias void* va_list;
+public alias dchar unichar;
+public alias wchar unichar2;
+//public alias dchar gunichar;
+//public alias wchar gunichar2;
+public alias int time_t;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+
+const uint G_MAXUINT = 4294967295;
+
+addConstants: end
+
+
 # must start with wrap
 
 wrap: glib
@@ -397,7 +457,7 @@ body
 		copy[s.length] = 0;
 	}
 	
-	return copy;
+	return copy.ptr;
 }
 
 	public static char** toStringzArray(char[][] args)
@@ -406,7 +466,7 @@ body
 		{
 			return null;
 		}
-		char** argv = new char*[args.length];
+		char** argv = (new char*[args.length]).ptr;
 		int argc = 0;
 		foreach (char[] p; args)
 		{
@@ -635,6 +695,7 @@ prefix: g_spawn_
 import: glib.Str
 import: std.thread
 import: std.stdio
+import: std.string;
 import: std.c.string;
 nocode: g_spawn_async_with_pipes
 
@@ -826,12 +887,12 @@ code: start
 		}
 		char[] line;
 		line.length = max+1;
-		char* lineP = fgets(&line[0], max, stream);
+		char* lineP = fgets(line.ptr, max, stream);
 		if ( lineP is null )
 		{
 			return "";
 		}
-		int l = strlen(&line[0]);
+		int l = strlen(line.ptr);
 		if ( l > 0 ) --l;
 		//printf("\nreadLine\n");
 		//foreach ( char c ; line )
@@ -929,14 +990,14 @@ code: start
 				&error);
 		if ( readOutput != null )
 		{
-			foreach ( char[] line ; splitlines(toString(strOutput)) )
+			foreach ( char[] line ; splitlines(Str.toString(strOutput)) )
 			{
 				readOutput(line);
 			}
 		}
 		if ( readError != null )
 		{
-			foreach ( char[] line ; splitlines(toString(strError)) )
+			foreach ( char[] line ; splitlines(Str.toString(strError)) )
 			{
 				readError(line);
 			}

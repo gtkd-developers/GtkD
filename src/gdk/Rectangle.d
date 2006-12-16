@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Points-Rectangles-and-Regions.html
  * outPack = gdk
  * outFile = Rectangle
  * strct   = GdkRectangle
@@ -49,7 +50,7 @@
 
 module gdk.Rectangle;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 
@@ -104,14 +105,15 @@ public class Rectangle
 	
 	/**
 	 * Calculates the intersection of two rectangles.
+	 * It is allowed for dest to be the same as either src1 or src2.
 	 * src1:
-	 * a GdkRectangle.
+	 *  a GdkRectangle
 	 * src2:
-	 * a GdkRectangle.
+	 *  a GdkRectangle
 	 * dest:
-	 * the intersection of src1 and src2.
+	 *  return location for the intersection of src1 and src2
 	 * Returns:
-	 * TRUE if the rectangles intersect.
+	 *  TRUE if the rectangles intersect.
 	 */
 	public int intersect(Rectangle src2, Rectangle dest)
 	{
@@ -123,12 +125,13 @@ public class Rectangle
 	 * Calculates the union of two rectangles.
 	 * The union of rectangles src1 and src2 is the smallest rectangle which
 	 * includes both src1 and src2 within it.
+	 * It is allowed for dest to be the same as either src1 or src2.
 	 * src1:
-	 * a GdkRectangle.
+	 *  a GdkRectangle
 	 * src2:
-	 * a GdkRectangle.
+	 *  a GdkRectangle
 	 * dest:
-	 * the union of src1 and src2.
+	 *  return location for the union of src1 and src2
 	 */
 	public void unio(Rectangle src2, Rectangle dest)
 	{

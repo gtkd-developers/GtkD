@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = cairo-Version-Information.html
  * outPack = cairoLib
  * outFile = Version
  * strct   = 
@@ -46,7 +47,7 @@
 
 module cairoLib.Version;
 
-private import cairoLib.typedefs;
+private import cairoLib.cairoLibtypes;
 
 private import lib.cairoLib;
 
@@ -123,6 +124,10 @@ public class Version
 	
 	
 	
+	
+	
+	
+	
 	/**
 	 * Returns the version of the cairo library encoded in a single
 	 * integer as per CAIRO_VERSION_ENCODE. The encoding ensures that
@@ -148,8 +153,6 @@ public static int cairoVersion()
  * CAIRO_VERSION_STRING and CAIRO_VERSION.
  * Returns:
  *  a string containing the version.
- * <<Error handling
- * Types>>
  */
 public static char[] cairoVersionString()
 {

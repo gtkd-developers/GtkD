@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GdkDisplayManager.html
  * outPack = gdk
  * outFile = DisplayManager
  * strct   = GdkDisplayManager
@@ -54,7 +55,7 @@
 
 module gdk.DisplayManager;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 
@@ -103,7 +104,7 @@ public class DisplayManager : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Display, DisplayManager)[] onDisplayOpenedListeners;
@@ -117,7 +118,7 @@ public class DisplayManager : ObjectG
 			cast(GCallback)&callBackDisplayOpened,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["display-opened"] = 1;
 		}
 		onDisplayOpenedListeners ~= dlg;

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkViewport.html
  * outPack = gtk
  * outFile = Viewport
  * strct   = GtkViewport
@@ -49,7 +50,7 @@
 
 module gtk.Viewport;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -92,7 +93,7 @@ public class Viewport : Bin
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Adjustment, Adjustment, Viewport)[] onSetScrollAdjustmentsListeners;
@@ -106,7 +107,7 @@ public class Viewport : Bin
 			cast(GCallback)&callBackSetScrollAdjustments,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;

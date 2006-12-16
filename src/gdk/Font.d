@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Fonts.html
  * outPack = gdk
  * outFile = Font
  * strct   = GdkFont
@@ -52,7 +53,7 @@
 
 module gdk.Font;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

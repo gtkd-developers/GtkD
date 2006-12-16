@@ -25,6 +25,40 @@
 ###
 #
 
+
+addTypedefs: start
+
+public import glib.glibtypes;
+public import gobject.gobjecttypes;
+public import gdk.gdktypes;
+public alias void* AtkFocusHandler;
+public struct AtkStateSet;
+public struct AtkRectangle;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
 # must start with wrap
 
 wrap: gdk-pixbuf

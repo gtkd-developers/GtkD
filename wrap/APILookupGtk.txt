@@ -26,6 +26,34 @@
 #
 
 # must start with wrap
+
+
+
+addTypedefs: start
+public import glib.glibtypes;
+public import gobject.gobjecttypes;
+public import pango.pangotypes;
+public import atk.atktypes;
+public import gdkpixbuf.gdkpixbuftypes;
+public import gdk.gdktypes;
+alias void GtkAccelGroupEntry;
+alias void GtkContainerClass;
+
+//alias GTokenType.G_TOKEN_LAST G_TOKEN_LAST;";
+//alias GtkSignalRunType.G_SIGNAL_RUN_FIRST G_SIGNAL_RUN_FIRST;
+//alias GtkSignalRunType.G_SIGNAL_RUN_LAST G_SIGNAL_RUN_LAST;
+//alias GtkSignalRunType.G_SIGNAL_NO_RECURSE G_SIGNAL_NO_RECURSE;
+//alias GtkSignalRunType.G_SIGNAL_ACTION G_SIGNAL_ACTION;
+//alias GtkSignalRunType.G_SIGNAL_NO_HOOKS G_SIGNAL_NO_HOOKS;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
 addStructs: start
 
 	struct GtkTextIter {
@@ -52,6 +80,21 @@ addStructs: start
 	}
 
 addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
+
 wrap: gtk
 
 ###########################################################
@@ -85,9 +128,9 @@ structWrap: GtkObject* ObjectGtk
 #structWrap: GdkModifierType* ModifierType
 import: glib.Str
 import: lib.gtk
-import: gtk.typedefs
+import: gtk.gtktypes
 import: lib.gtk
-import: gtk.typedefs
+import: gtk.gtktypes
 	 
 
 code: start
@@ -97,7 +140,7 @@ code: start
 	 */
 	public static void init(char[][] args)
 	{
-		char** argv = new char*[args.length];
+		char** argv = (new char*[args.length]).ptr;
 		int argc = 0;
 		foreach (char[] p; args)
 		{
@@ -786,7 +829,7 @@ code: start
 			// GtkWidget* gtk_message_dialog_new_with_markup  (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
 			this(
 				cast(GtkMessageDialog*)gtk_message_dialog_new_with_markup(
-						parent.getWindowStruct(), 
+						parent is null ? null : parent.getWindowStruct(), 
 						flags, 
 						type, 
 						buttons, 
@@ -801,7 +844,7 @@ code: start
 			// GtkWidget* gtk_message_dialog_new (GtkWindow *parent,  GtkDialogFlags flags,  GtkMessageType type,  GtkButtonsType buttons,  const gchar *message_format,  ...);
 			this(
 				cast(GtkMessageDialog*)gtk_message_dialog_new(
-						parent.getWindowStruct(), 
+						parent is null ? null : parent.getWindowStruct(), 
 						flags, 
 						type, 
 						buttons, 
@@ -819,11 +862,11 @@ outFile: MessageDialog
 
 file: 
 class: PopupBox
-import: gtk.typedefs
+import: gtk.gtktypes
 import: gtk.MessageDialog;
 import: gtk.Window;
 
-import: gtk.typedefs
+import: gtk.gtktypes
 
 code: start
 	/**
@@ -844,12 +887,12 @@ code: start
 	 */
 	public static void information(Window parent, char[] message, char[] title)
 	{
-		MessageDialog d = new MessageDialog(parent, 0,
+		MessageDialog d = new MessageDialog(parent, cast(GtkDialogFlags)0,
 										MessageType.INFO,
-										ButtonsType.NONE ,
+										ButtonsType.OK ,
 										message);
 		d.setTitle(title);
-		d.addButton("gtk-dialog-info",GtkResponseType.GTK_RESPONSE_OK);
+		//d.addButton("gtk-dialog-info",GtkResponseType.GTK_RESPONSE_OK);
 		d.run();
 		d.destroy();
 	}
@@ -873,12 +916,12 @@ code: start
 	 */
 	public static void error(Window parent, char[] message, char[] title)
 	{
-		MessageDialog d = new MessageDialog(parent, 0,
+		MessageDialog d = new MessageDialog(parent, cast(GtkDialogFlags)0,
 										MessageType.ERROR,
-										ButtonsType.NONE ,
+										ButtonsType.CANCEL ,
 										message);
 		d.setTitle(title);
-		d.addButton("gtk-dialog-error",ResponseType.GTK_RESPONSE_CANCEL);
+		//d.addButton("gtk-dialog-error",ResponseType.GTK_RESPONSE_CANCEL);
 		d.run();
 		d.destroy();
 	}
@@ -904,7 +947,7 @@ code: start
 	public static bool yesNo(Window parent, char[] message, char[] title)
 	{
 		MessageDialog d = new MessageDialog(
-				parent, 0,
+				parent, cast(GtkDialogFlags)0,
 				MessageType.QUESTION,
 				ButtonsType.NONE ,
 				message);
@@ -936,7 +979,7 @@ code: start
 	public static ResponseType yesNoCancel(Window parent, char[] message, char[] title)
 	{
 		MessageDialog d = new MessageDialog(
-				parent, 0,
+				parent, cast(GtkDialogFlags)0,
 				MessageType.QUESTION,
 				ButtonsType.NONE ,
 				message);
@@ -1150,7 +1193,7 @@ code: start
 	public this (StockID stockID, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_stock (const gchar *stock_id,  GtkIconSize size);
-		this(cast(GtkImage*)gtk_image_new_from_stock(StockDesc[stockID], size) );
+		this(cast(GtkImage*)gtk_image_new_from_stock(StockDesc[stockID].ptr, size) );
 	}
 	
 	/**
@@ -1255,7 +1298,7 @@ import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Image
-import: gtk.typedefs
+import: gtk.gtktypes
 import: gtk.Button
 
 nocode: gtk_button_new_with_mnemonic
@@ -1279,12 +1322,12 @@ code: start
 		return currentIconSize;
 	}
 
-	public void setAction(char[] action)
+	public void setActionName(char[] action)
 	{
 		this.action = action.dup;
 	}
 	
-	public char[] getAction()
+	public char[] getActionName()
 	{
 		return action;
 	}
@@ -1338,7 +1381,7 @@ code: start
 		}
 		else
 		{
-			this(cast(GtkButton*)gtk_button_new_from_stock(StockDesc[stockID]) );
+			this(cast(GtkButton*)gtk_button_new_from_stock(StockDesc[stockID].ptr) );
 		}
 		
 	}
@@ -1359,7 +1402,7 @@ code: start
 	public this(char[] label, void delegate(Button) dlg, char[] action)
 	{
 		this(label);
-		setAction(action);
+		setActionName(action);
 		addOnClicked(dlg);
 	}
 	
@@ -3043,7 +3086,7 @@ code: start
 	public this (GType[] types)
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		this(cast(GtkListStore*)gtk_list_store_newv(types.length, cast(GType*)(&types[0])) );
+		this(cast(GtkListStore*)gtk_list_store_newv(types.length, cast(GType*)(types.ptr)) );
 	}
 	
 	/**
@@ -3143,7 +3186,7 @@ code: start
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
 		this(cast(GtkTreeStore*)gtk_tree_store_newv(
-				types.length, cast(GType*)(&types[0])) 
+				types.length, cast(GType*)(types.ptr)) 
 			);
 	}
 	
@@ -3621,7 +3664,7 @@ code: start
 	private char[] actionLabel;
 	
 	/** Gets the application set action code */
-	public char[] getAction()
+	public char[] getActionName()
 	{
 		if ( actionLabel is null )
 		{
@@ -4013,12 +4056,12 @@ code: start
 	/** An arbitrary string to be used by the application */
 	private char[] action;
 
-	public void setAction(char[] action)
+	public void setActionName(char[] action)
 	{
 		this.action = action.dup;
 	}
 	
-	public char[] getAction()
+	public char[] getActionName()
 	{
 		return action;
 	}
@@ -5160,7 +5203,7 @@ code: start
 		{
 			button =  new Button(stocks[i]);
 			bBox.packEnd(button, false, false, 7);
-			button.setAction(actions[i]);
+			button.setActionName(actions[i]);
 			button.addOnClicked(onClicked);
 		}
 		return bBox;

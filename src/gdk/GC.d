@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Graphics-Contexts.html
  * outPack = gdk
  * outFile = GC
  * strct   = GdkGC
@@ -64,7 +65,7 @@
 
 module gdk.GC;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = pango
  * outFile = PgFontMap
  * strct   = PangoFontMap
@@ -76,7 +77,7 @@
 
 module pango.PgFontMap;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
@@ -135,6 +136,9 @@ public class PgFontMap
 	
 	/**
 	 */
+	
+	
+	
 	
 	
 	

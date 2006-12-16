@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gtk
  * outFile = Idle
  * strct   = 
@@ -46,7 +47,7 @@
 
 module gtk.Idle;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -235,7 +236,7 @@ public class Idle
 	
 	/**
 	 * Warning
-	 * gtk_idle_add is deprecated and should not be used in newly-written code. Use g_idle_add() instead.
+	 * gtk_idle_add has been deprecated since version 2.4 and should not be used in newly-written code. Use g_idle_add() instead.
 	 * Causes the mainloop to call the given function whenever no events with
 	 * higher priority are to be processed. The default priority is
 	 * GTK_PRIORITY_DEFAULT, which is rather low.
@@ -254,7 +255,7 @@ public class Idle
 	
 	/**
 	 * Warning
-	 * gtk_idle_add_priority is deprecated and should not be used in newly-written code. Use g_idle_add_full() instead.
+	 * gtk_idle_add_priority has been deprecated since version 2.4 and should not be used in newly-written code. Use g_idle_add_full() instead.
 	 * Like gtk_idle_add() this function allows you to have a function called
 	 * when the event loop is idle. The difference is that you can give a
 	 * priority different from GTK_PRIORITY_DEFAULT to the idle function.
@@ -277,7 +278,7 @@ public class Idle
 	
 	/**
 	 * Warning
-	 * gtk_idle_add_full is deprecated and should not be used in newly-written code. Use g_idle_add_full() instead.
+	 * gtk_idle_add_full has been deprecated since version 2.4 and should not be used in newly-written code. Use g_idle_add_full() instead.
 	 * Like gtk_idle_add() this function allows you to have a function called
 	 * when the event loop is idle. The difference is that you can give a
 	 * priority different from GTK_PRIORITY_DEFAULT to the idle function.
@@ -304,7 +305,7 @@ public class Idle
 	
 	/**
 	 * Warning
-	 * gtk_idle_remove is deprecated and should not be used in newly-written code. Use g_source_remove() instead.
+	 * gtk_idle_remove has been deprecated since version 2.4 and should not be used in newly-written code. Use g_source_remove() instead.
 	 * Removes the idle function with the given id.
 	 * idle_handler_id:
 	 * Identifies the idle function to remove.
@@ -317,7 +318,7 @@ public class Idle
 	
 	/**
 	 * Warning
-	 * gtk_idle_remove_by_data is deprecated and should not be used in newly-written code. Use g_idle_remove_by_data() instead.
+	 * gtk_idle_remove_by_data has been deprecated since version 2.4 and should not be used in newly-written code. Use g_idle_remove_by_data() instead.
 	 * Removes the idle function identified by the user data.
 	 * data:
 	 * remove the idle function which was registered with this user data.

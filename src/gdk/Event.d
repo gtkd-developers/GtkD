@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Events.html
  * outPack = gdk
  * outFile = Event
  * strct   = GdkEvent
@@ -57,7 +58,7 @@
 
 module gdk.Event;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

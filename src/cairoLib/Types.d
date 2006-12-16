@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = cairo-Types.html
  * outPack = cairoLib
  * outFile = Types
  * strct   = 
@@ -46,7 +47,7 @@
 
 module cairoLib.Types;
 
-private import cairoLib.typedefs;
+private import cairoLib.cairoLibtypes;
 
 private import lib.cairoLib;
 

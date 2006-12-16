@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gtk
  * outFile = TreePath
  * strct   = GtkTreePath
@@ -52,7 +53,7 @@
 
 module gtk.TreePath;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -242,7 +243,7 @@ public class TreePath
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreePath, GtkTreeIter*, TreePath)[] onRowChangedListeners;
@@ -256,18 +257,18 @@ public class TreePath
 			cast(GCallback)&callBackRowChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-changed"] = 1;
 		}
 		onRowChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowChanged(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, TreePath treePath)
+	extern(C) static void callBackRowChanged(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreePath treePath)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, GtkTreeIter*, TreePath) dlg ; treePath.onRowChangedListeners )
 		{
-			dlg(new TreePath(arg1), arg2, treePath);
+			dlg(new TreePath(path), iter, treePath);
 		}
 		
 		return consumed;
@@ -284,18 +285,18 @@ public class TreePath
 			cast(GCallback)&callBackRowDeleted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-deleted"] = 1;
 		}
 		onRowDeletedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowDeleted(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, TreePath treePath)
+	extern(C) static void callBackRowDeleted(GtkTreeModel* treeModelStruct, GtkTreePath* path, TreePath treePath)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, TreePath) dlg ; treePath.onRowDeletedListeners )
 		{
-			dlg(new TreePath(arg1), treePath);
+			dlg(new TreePath(path), treePath);
 		}
 		
 		return consumed;
@@ -312,18 +313,18 @@ public class TreePath
 			cast(GCallback)&callBackRowHasChildToggled,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-has-child-toggled"] = 1;
 		}
 		onRowHasChildToggledListeners ~= dlg;
 	}
-	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, TreePath treePath)
+	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreePath treePath)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, GtkTreeIter*, TreePath) dlg ; treePath.onRowHasChildToggledListeners )
 		{
-			dlg(new TreePath(arg1), arg2, treePath);
+			dlg(new TreePath(path), iter, treePath);
 		}
 		
 		return consumed;
@@ -340,18 +341,18 @@ public class TreePath
 			cast(GCallback)&callBackRowInserted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-inserted"] = 1;
 		}
 		onRowInsertedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowInserted(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, TreePath treePath)
+	extern(C) static void callBackRowInserted(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreePath treePath)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, GtkTreeIter*, TreePath) dlg ; treePath.onRowInsertedListeners )
 		{
-			dlg(new TreePath(arg1), arg2, treePath);
+			dlg(new TreePath(path), iter, treePath);
 		}
 		
 		return consumed;
@@ -368,18 +369,18 @@ public class TreePath
 			cast(GCallback)&callBackRowsReordered,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["rows-reordered"] = 1;
 		}
 		onRowsReorderedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowsReordered(GtkTreeModel* treemodelStruct, GtkTreePath* arg1, GtkTreeIter* arg2, gpointer arg3, TreePath treePath)
+	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, gpointer arg3, TreePath treePath)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TreePath, GtkTreeIter*, gpointer, TreePath) dlg ; treePath.onRowsReorderedListeners )
 		{
-			dlg(new TreePath(arg1), arg2, arg3, treePath);
+			dlg(new TreePath(path), iter, arg3, treePath);
 		}
 		
 		return consumed;
@@ -551,7 +552,8 @@ public class TreePath
 	}
 	
 	/**
-	 * Moves the path to point to the previous node at the current depth, if it exists.
+	 * Moves the path to point to the previous node at the current depth,
+	 * if it exists.
 	 * path:
 	 *  A GtkTreePath.
 	 * Returns:

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkBin.html
  * outPack = gtk
  * outFile = Bin
  * strct   = GtkBin
@@ -49,7 +50,7 @@
 
 module gtk.Bin;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

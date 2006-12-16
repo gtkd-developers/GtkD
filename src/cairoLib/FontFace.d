@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = cairo-cairo-font-face-t.html
  * outPack = cairoLib
  * outFile = FontFace
  * strct   = cairo_font_face_t
@@ -46,7 +47,7 @@
 
 module cairoLib.FontFace;
 
-private import cairoLib.typedefs;
+private import cairoLib.cairoLibtypes;
 
 private import lib.cairoLib;
 
@@ -164,12 +165,26 @@ public class FontFace
 	 * Returns:
 	 *  CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if a
 	 * slot could not be allocated for the user data.
-	 * <<Fonts
-	 * Scaled Fonts>>
 	 */
 	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
 	{
 		// cairo_status_t cairo_font_face_set_user_data  (cairo_font_face_t *font_face,  const cairo_user_data_key_t *key,  void *user_data,  cairo_destroy_func_t destroy);
 		return cairo_font_face_set_user_data(cairo_font_face, key, userData, destroy);
+	}
+	
+	
+	/**
+	 * This function returns the type of the backend used to create
+	 * a font face. See cairo_font_type_t for available types.
+	 * font_face:
+	 *  a cairo_font_face_t
+	 * Returns:
+	 *  The type of font_face.
+	 * Since 1.2
+	 */
+	public cairo_font_type_t getType()
+	{
+		// cairo_font_type_t cairo_font_face_get_type (cairo_font_face_t *font_face);
+		return cairo_font_face_get_type(cairo_font_face);
 	}
 }

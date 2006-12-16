@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Relations-and-Tuples.html
  * outPack = glib
  * outFile = Relation
  * strct   = GRelation
@@ -51,7 +52,7 @@
 
 module glib.Relation;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -152,8 +153,8 @@ public class Relation
 	 * relation:
 	 * a GRelation.
 	 * ...:
-	 * the fields of the record to add. This must match the number of
-	 * fields in the GRelation.
+	 * the fields of the record to add. These must match the number of
+	 * fields in the GRelation, and of type gpointer or gconstpointer.
 	 */
 	public void insert(... )
 	{

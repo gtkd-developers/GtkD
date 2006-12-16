@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = cairo-Error-handling.html
  * outPack = cairoLib
  * outFile = Status
  * strct   = cairo_status_t
@@ -47,7 +48,7 @@
 
 module cairoLib.Status;
 
-private import cairoLib.typedefs;
+private import cairoLib.cairoLibtypes;
 
 private import lib.cairoLib;
 
@@ -116,8 +117,6 @@ public class Status
 	 * functions have been called as necessary). If there are active cairo
 	 * objects, this call is likely to cause a crash, (eg. an assertion
 	 * failure due to a hash table being destroyed when non-empty).
-	 * <<cairo_matrix_t
-	 * Version Information>>
 	 */
 	public static void cairoDebugResetStaticData()
 	{

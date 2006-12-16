@@ -45,13 +45,13 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GDKPIXBUF:	"libgdk_pixbuf-2.0-0.dll",
 	LIBRARY.GLIB: 		"libglib-2.0-0.dll",
 	LIBRARY.GMODULE: 	"libgmodule-2.0-0.dll",
-	LIBRARY.GOBJECT:	"libgobject-2.0-0.dll",
-	LIBRARY.GTHREAD:	"libgthread-2.0-0.dll",
+	LIBRARY.GOBJECT:		"libgobject-2.0-0.dll",
+	LIBRARY.GTHREAD:		"libgthread-2.0-0.dll",
 	LIBRARY.GTK:		"libgtk-win32-2.0-0.dll",
 	LIBRARY.PANGO:		"libpango-1.0-0.dll",
 	LIBRARY.GLGDK:		"libgdkglext-win32-1.0-0.dll",
 	LIBRARY.GLGTK:		"libgtkglext-win32-1.0-0.dll",
-	LIBRARY.GL:		"opengl32.dll",
+	LIBRARY.GL:			"opengl32.dll",
 	LIBRARY.GLU:		"glu32.dll"
 	];
 }
@@ -65,14 +65,14 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GDK:		"libgdk-x11-2.0.so",
 	LIBRARY.GDKPIXBUF:	"libgdk_pixbuf-2.0.so",
 	LIBRARY.GLIB:		"libglib-2.0.so",
-	LIBRARY.GMODULE:	"libgmodule-2.0.so",
-	LIBRARY.GOBJECT:	"libgobject-2.0.so",
-	LIBRARY.GTHREAD:	"libgthread-2.0.so",
+	LIBRARY.GMODULE:		"libgmodule-2.0.so",
+	LIBRARY.GOBJECT:		"libgobject-2.0.so",
+	LIBRARY.GTHREAD:		"libgthread-2.0.so",
 	LIBRARY.GTK:		"libgtk-x11-2.0.so",
 	LIBRARY.PANGO:		"libpango-1.0.so",
 	LIBRARY.GLGDK:		"libgdkglext-x11-1.0.so",
 	LIBRARY.GLGTK:		"libgtkglext-x11-1.0.so",
-	LIBRARY.GL:		"libGL.so",
+	LIBRARY.GL:			"libGL.so",
 	LIBRARY.GLU:		"libGLU.so",
 	LIBRARY.GLEXT:		"libGL.so"
 	];

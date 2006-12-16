@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTextMark.html
  * outPack = gtk
  * outFile = TextMark
  * strct   = GtkTextMark
@@ -50,7 +51,7 @@
 
 module gtk.TextMark;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

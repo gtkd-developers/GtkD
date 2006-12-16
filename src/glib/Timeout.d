@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = glib
  * outFile = Timeout
  * strct   = 
@@ -52,7 +53,7 @@
 
 module glib.Timeout;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -177,6 +178,7 @@ public class Timeout
 	
 	
 	
+	
 	/**
 	 * Creates a new timeout source.
 	 * The source will not initially be associated with any GMainContext
@@ -194,6 +196,25 @@ public class Timeout
 	}
 	
 	/**
+	 * Creates a new timeout source.
+	 * The source will not initially be associated with any GMainContext
+	 * and must be added to one with g_source_attach() before it will be
+	 * executed.
+	 * The scheduling granularity/accuracy of this timeout source will be
+	 * in seconds.
+	 * interval:
+	 *  the timeout interval in seconds
+	 * Returns:
+	 *  the newly-created timeout source
+	 * Since 2.14
+	 */
+	public static Source sourceNewSeconds(uint interval)
+	{
+		// GSource* g_timeout_source_new_seconds (guint interval);
+		return new Source( g_timeout_source_new_seconds(interval) );
+	}
+	
+	/**
 	 * Sets a function to be called at regular intervals, with the default
 	 * priority, G_PRIORITY_DEFAULT. The function is called repeatedly
 	 * until it returns FALSE, at which point the timeout is automatically
@@ -204,6 +225,10 @@ public class Timeout
 	 * After each call to the timeout function, the time of the next
 	 * timeout is recalculated based on the current time and the given interval
 	 * (it does not try to 'catch up' time lost in delays).
+	 * If you want to have a timer in the "seconds" range and do not care
+	 * about the exact time of the first call of the timer, use the
+	 * g_timeout_add_seconds() function; this function allows for more
+	 * optimizations and more efficient system power usage.
 	 * interval:
 	 *  the time between calls to the function, in milliseconds
 	 *  (1/1000ths of a second)
@@ -252,6 +277,46 @@ public class Timeout
 		// guint g_timeout_add_full (gint priority,  guint interval,  GSourceFunc function,  gpointer data,  GDestroyNotify notify);
 		return g_timeout_add_full(priority, interval, funct, data, notify);
 	}
+	
+	/**
+	 * Sets a function to be called at regular intervals, with the default
+	 * priority, G_PRIORITY_DEFAULT. The function is called repeatedly
+	 * until it returns FALSE, at which point the timeout is automatically
+	 * destroyed and the function will not be called again.
+	 * Unlike g_timeout_add(), this function operates at whole second granularity.
+	 * The initial starting point of the timer is determined by the implementation
+	 * and the implementation is expected to group multiple timers together so that
+	 * they fire all at the same time.
+	 * To allow this grouping, the interval to the first timer is rounded
+	 * and can deviate up to one second from the specified interval.
+	 * Subsequent timer iterations will generally run at the specified interval.
+	 * Note that timeout functions may be delayed, due to the processing of other
+	 * event sources. Thus they should not be relied on for precise timing.
+	 * After each call to the timeout function, the time of the next
+	 * timeout is recalculated based on the current time and the given interval
+	 * If you want timing more precise than whole seconds, use g_timeout_add()
+	 * instead.
+	 * The grouping of timers to fire at the same time results in a more power
+	 * and CPU efficient behavior so if your timer is in multiples of seconds
+	 * and you don't require the first timer exactly 1 second from now, the
+	 * use of g_timeout_add_second() is prefered over g_timeout_add().
+	 * interval:
+	 *  the time between calls to the function, in seconds
+	 * function:
+	 *  function to call
+	 * data:
+	 *  data to pass to function
+	 * Returns:
+	 *  the ID (greater than 0) of the event source.
+	 * Since 2.14
+	 */
+	public static uint addSeconds(uint interval, GSourceFunc funct, void* data)
+	{
+		// guint g_timeout_add_seconds (guint interval,  GSourceFunc function,  gpointer data);
+		return g_timeout_add_seconds(interval, funct, data);
+	}
+	
+	
 	
 	
 	

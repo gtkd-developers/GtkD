@@ -18,7 +18,7 @@
 
 module duit.TestStock;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import gtk.ScrolledWindow;
 	

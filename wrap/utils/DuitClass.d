@@ -31,7 +31,7 @@ module utils.DuitClass;
 //debug = declaration;
 //debug = structs;
 //debug = enums;
-debug = unions;
+//debug = unions;
 //debug = enumPrefix;
 //debug = parmType;
 //debug = parmName;
@@ -225,7 +225,7 @@ public class DuitClass
 		duitText ~= ";\n\n";
 
 		// moved to class level
-		duitText ~= "private import "~convParms.outPack ~ ".typedefs;\n\n";
+		duitText ~= "private import "~convParms.outPack ~ "."~convParms.outPack~"types;\n\n";
 		duitText ~= "private import lib."~convParms.outPack ~ ";\n\n";
 		
 		// moved back to class level
@@ -427,7 +427,7 @@ public class DuitClass
 		}
 
 		// moved from module level
-		//text ~= "private import "~convParms.outPack ~ ".typedefs;\n\n";
+		//text ~= "private import "~convParms.outPack ~ "."~convParms.outPack~"types;\n\n";
 		//text ~= "private import lib."~convParms.outPack ~ ";\n\n";
 		
 		// moved to module level - AND BACK AGAIN
@@ -667,7 +667,7 @@ public class DuitClass
 		return parentName;
 	}
 	
-	public char[] convertClassName(char[] gName, inout char[] prefix)
+	private char[] convertClassName(char[] gName, inout char[] prefix)
 	{
 		char[] conv;
 		if ( startsWith(gName, "Gtk") )		prefix = "Gtk";
@@ -682,7 +682,10 @@ public class DuitClass
 		}
 		debug(getParent)writefln("convertClassName %s >>> %s", gName, conv);
 		prefix = std.string.tolower(prefix);
-		if ( prefix == "g") prefix = "gobject";
+		if ( prefix == "g")
+		{
+			prefix = "gobject";
+		}
 		return conv;
 	}
 
@@ -842,8 +845,9 @@ public class DuitClass
 			text ~= "			cast(GCallback)&callBack"~duitSignalName~", ";
 			text ~= "			this, ";
 			text ~= "			null, ";
-			//text ~= "			GConnectFlags.AFTER);";
-			text ~= "			0);";
+			//text ~= "			ConnectFlags.AFTER);";
+			text ~= "			cast(ConnectFlags)0);";
+			//text ~= "			0);";
 			text ~= "	connectedSignals[\""~signalName~"\"] = 1;";
 			text ~= "}";
 			text ~= "on"~duitSignalName~"Listeners ~= dlg;";
@@ -908,7 +912,7 @@ public class DuitClass
 	/**
 	 * adding:
 	 * "private import gobject.Signals;"
-	 * "private import gdk.typedefs;"
+	 * "private import gdk.gdktypes;"
 	 * Params:
 	 *    	text = 	
 	 */
@@ -919,7 +923,7 @@ public class DuitClass
 			text ~= "";
 			text ~= "// imports for the signal processing"; 
 			text ~= "private import gobject.Signals;";
-			text ~= "private import gdk.typedefs;";
+			text ~= "private import gdk.gdktypes;";
 			if ( !isInterface )
 			{
 				text ~= "int[char[]] connectedSignals;";
@@ -1053,7 +1057,7 @@ public class DuitClass
 		debug(gTypes)writefln("gype lines\n\t%s\n\t%s\n\t%s",lines[0],lines[1],lines[2]);
 		int defLine = 1;
 		if ( lines.length > 0 
-			&& std.string.find(lines[defLine],"G_TYPE_MAKE_FUNDAMENTAL") 
+			&& std.string.find(lines[defLine],"G_TYPE_MAKE_FUNDAMENTAL")>=0 
 			&& endsWith(lines[defLine],")")
 			&& std.string.find(lines[defLine],"<<") < 0 
 			)
@@ -1238,12 +1242,15 @@ public class DuitClass
 		//char[] enumName = removeUnderscore(lines[0][5..lines[0].length]);
 		debug(enums)writefln("enum %s", enumName);
 		char[][] values;
+		// skipp until the start of the enumerations
 		int pos = 1;
 		while ( pos<lines.length 
 				&& !endsWith(std.string.strip(lines[pos]),'{') 
+				&& !startsWith(std.string.strip(lines[pos]),'{') 
 				&& !startsWith(lines[pos], "typedef enum {")
 				)
 		{
+			debug(enums)writefln("\tskipp line: %s", lines[pos]);
 			++pos;
 		}
 		++pos;
@@ -1435,7 +1442,7 @@ public class DuitClass
 		}
 		if ( includeStruct )
 		{
-			char[][] structDef;
+			char[][] structDef;	/// all elements of the struct
 			bit invalidDStruct = false;
 			int pos = 1;
 			if ( lines[1][lines[1].length-1] == '{' )
@@ -1445,12 +1452,13 @@ public class DuitClass
 				{
 					//invalidDStruct = true;
 					structDef ~= lines[pos].dup;
-					if ( std.string.find(lines[pos], ":") >= 0 )
-					{
-						invalidDStruct = true;
-						debug(structs)writefln("- INVALID >>>%s<<<", lines[pos]);
-					}
-					else if ( std.string.find(lines[pos], "[") >= 0 )
+					//if ( std.string.find(lines[pos], ":") >= 0 )
+					//{
+					//	invalidDStruct = true;
+					//	debug(structs)writefln("- INVALID >>>%s<<<", lines[pos]);
+					//}
+					//else 
+					if ( std.string.find(lines[pos], "[") >= 0 )
 					{
 						invalidDStruct = true;
 						debug(structs)writefln("- INVALID ([)>>>%s<<<", lines[pos]);
@@ -1536,9 +1544,28 @@ public class DuitClass
 				&& structDef.length>0 )
 			{
 				collectedStructs ~= "public struct "~structName~"\n{";
+
+				bool bitField = false;	// if we are in a bit field
+				
 				foreach ( char[] def; structDef )
 				{
-					collectedStructs ~= stringToDuit(def, convParms, wrapper.getAliases());
+					char[] elem = stringToDuit(def, convParms, wrapper.getAliases());
+					if ( std.string.find(def, ":") >= 0 )
+					{
+						if ( !bitField )
+						{
+							bitField = true;
+							// just assume uint for now
+							// TODO get the type
+							collectedStructs ~= "\tuint bitfield;";
+							collectedStructs ~= "//" ~ elem;
+						}
+					}
+					else
+					{
+						bitField = false;
+						collectedStructs ~= elem;
+					}
 				}
 				collectedStructs ~= "\n}";
 //				char[] duitStructName;
@@ -1571,12 +1598,13 @@ public class DuitClass
 						break;
 						
 					default:
-						collectedStructs ~= "public struct "~structName~";";
+						collectedStructs ~= "public struct "~structName~"{}";
 						break;
 				}
 				foreach ( char[] def; structDef )
 				{
 					collectedStructs ~= "// "~stringToDuit(def, convParms, wrapper.getAliases());
+					collectedStructs ~= "// "~convParms.inFile;
 				}
 			}
 			collectedStructs ~= "";
@@ -1951,8 +1979,8 @@ public class DuitClass
 								break;
 						}
 					}
-					writefln("import: %s.%s", pack, dName);
-					writefln("structWrap: %s %s", strct, dName);
+					debug(structs)writefln("import: %s.%s", pack, dName);
+					debug(structs)writefln("structWrap: %s %s", strct, dName);
 				}
 			}
 		}
@@ -2383,7 +2411,8 @@ public class DuitClass
 	}
 	
 	/**
-	 * Consumes "const" and "unsigned" adding "u" to the type when "unsigned" is found uchar will become just char
+	 * Consumes "const" and "unsigned" adding "u" to the type when "unsigned" is found 
+	 * (? uchar will become just char)
 	 * Params:
 	 *    	type = 	
 	 *    	p = 	
@@ -2394,17 +2423,17 @@ public class DuitClass
 		if ( type == "const" )
 		{
 			DuitClass.skipBlank(p, text);
-			type = DuitClass.untilBlank(p, text);
+			type = untilBlank(p, text);
 		}
 		if ( type == "unsigned" )
 		{
 			DuitClass.skipBlank(p, text);
-			type = "u" ~ DuitClass.untilBlank(p, text);
+			type = "u" ~ untilBlank(p, text);
 		}
-		if ( type == "uchar" )
-		{
-			type = "char";
-		}
+//		if ( type == "uchar" )
+//		{
+//			type = "char";
+//		}
 	}
 	
 

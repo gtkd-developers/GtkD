@@ -79,6 +79,7 @@ alias: gssize int
 alias: va_list void*
 alias: unichar dchar
 alias: unichar2 wchar
+alias: uchar ubyte
 
 #alias: gunichar dchar
 #alias: gunichar2 wchar
@@ -122,7 +123,7 @@ enumType: G_PARAM_CONSTRUCT_ONLY ParamFlags.CONSTRUCT_ONLY
 # define the lookup and destination directories
 # "src" and "obj" will be added to outputRoot
 inputRoot: /home/ruimt/data/down/GTK/API/
-outputRoot: /home/ruimt/devel/D1/Duit/trunk/
+outputRoot: /home/ruimt/devel/D/Duit/trunk/
 
 # define the packages to process
 package: glib glib
@@ -140,6 +141,18 @@ package: glgtk glgtk
 src: lib
 
 # define package by package, file by file
+# sections with extra definitions for the typedefs.d package file
+# these sections start with "<token>: start"
+# and end with "<token>: end"
+# addTypedefs	// any definition on the top of the file
+# addAliases	// aliases definitions 
+# addEnums	// enum definitions 
+# addStructs	// struct definitions 
+# addTypes	// type definitions 
+# addFuncts	// functs definitions 
+# addUnions	// unions definitions 
+# addConstants	// constants definitions 
+
 # wrap: the current package
 # file: the current file - must be the first no a new processing group
 # struct: the main strcuture to be wrapped

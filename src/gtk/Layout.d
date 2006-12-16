@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkLayout.html
  * outPack = gtk
  * outFile = Layout
  * strct   = GtkLayout
@@ -51,7 +52,7 @@
 
 module gtk.Layout;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -105,7 +106,7 @@ public class Layout : Container
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Adjustment, Adjustment, Layout)[] onSetScrollAdjustmentsListeners;
@@ -119,7 +120,7 @@ public class Layout : Container
 			cast(GCallback)&callBackSetScrollAdjustments,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;

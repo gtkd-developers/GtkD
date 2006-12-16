@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Images.html
  * outPack = gdk
  * outFile = ImageGdk
  * strct   = GdkImage
@@ -52,7 +53,7 @@
 
 module gdk.ImageGdk;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

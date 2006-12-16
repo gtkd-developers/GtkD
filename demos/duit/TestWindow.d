@@ -22,7 +22,7 @@ private import gtk.Version;
 private import gtk.Table;
 
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 private import gtk.Duit;
 private import gtk.MainWindow;
 private import gtk.Adjustment;
@@ -284,7 +284,7 @@ class TestWindow : MainWindow
 	{
 		this()
 		{
-			char** names = new char*[2];
+			char** names = (new char*[2]).ptr;
 			int i = 0;
 			names[i++] = cast(char*)"Antonio Monteiro (binding/wrapping/proxying/decorating for D)";
 			names[i++] = cast(char*)"www.gtk.org (base C library)";
@@ -298,7 +298,7 @@ class TestWindow : MainWindow
 	
 	void onMenuActivate(MenuItem menuItem)
 	{
-		char[] action = menuItem.getAction();
+		char[] action = menuItem.getActionName();
 		switch( action )
 		{
 			case "help.about":
@@ -476,8 +476,8 @@ class TestWindow : MainWindow
 			//int* i = cast(int*)pixbufGetType();
 			
 			GType[] columns;
-			columns ~= 16<<2;
-			columns ~= 16<<2;
+			columns ~= GType.STRING;
+			columns ~= GType.STRING;
 			super(columns);
 		}
 		

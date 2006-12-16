@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCheckMenuItem.html
  * outPack = gtk
  * outFile = CheckMenuItem
  * strct   = GtkCheckMenuItem
@@ -50,7 +51,7 @@
 
 module gtk.CheckMenuItem;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -123,7 +124,7 @@ public class CheckMenuItem : MenuItem
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(CheckMenuItem)[] onToggledListeners;
@@ -137,7 +138,7 @@ public class CheckMenuItem : MenuItem
 			cast(GCallback)&callBackToggled,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;

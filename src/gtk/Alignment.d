@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkAlignment.html
  * outPack = gtk
  * outFile = Alignment
  * strct   = GtkAlignment
@@ -48,7 +49,7 @@
 
 module gtk.Alignment;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

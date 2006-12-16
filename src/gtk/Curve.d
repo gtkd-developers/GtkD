@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCurve.html
  * outPack = gtk
  * outFile = Curve
  * strct   = GtkCurve
@@ -47,7 +48,7 @@
 
 module gtk.Curve;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -105,7 +106,7 @@ public class Curve : DrawingArea
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Curve)[] onCurveTypeChangedListeners;
@@ -119,7 +120,7 @@ public class Curve : DrawingArea
 			cast(GCallback)&callBackCurveTypeChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["curve-type-changed"] = 1;
 		}
 		onCurveTypeChangedListeners ~= dlg;

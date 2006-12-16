@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkIMContext.html
  * outPack = gtk
  * outFile = IMContext
  * strct   = GtkIMContext
@@ -52,7 +53,7 @@
 
 module gtk.IMContext;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -97,7 +98,7 @@ public class IMContext : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], IMContext)[] onCommitListeners;
@@ -111,7 +112,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackCommit,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["commit"] = 1;
 		}
 		onCommitListeners ~= dlg;
@@ -139,7 +140,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackDeleteSurrounding,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["delete-surrounding"] = 1;
 		}
 		onDeleteSurroundingListeners ~= dlg;
@@ -167,7 +168,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackPreeditChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["preedit-changed"] = 1;
 		}
 		onPreeditChangedListeners ~= dlg;
@@ -195,7 +196,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackPreeditEnd,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["preedit-end"] = 1;
 		}
 		onPreeditEndListeners ~= dlg;
@@ -223,7 +224,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackPreeditStart,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["preedit-start"] = 1;
 		}
 		onPreeditStartListeners ~= dlg;
@@ -251,7 +252,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackRetrieveSurrounding,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["retrieve-surrounding"] = 1;
 		}
 		onRetrieveSurroundingListeners ~= dlg;

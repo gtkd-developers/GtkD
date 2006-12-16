@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = cairo-Patterns.html
  * outPack = cairoLib
  * outFile = Pattern
  * strct   = cairo_pattern_t
@@ -46,7 +47,7 @@
 
 module cairoLib.Pattern;
 
-private import cairoLib.typedefs;
+private import cairoLib.cairoLibtypes;
 
 private import lib.cairoLib;
 
@@ -327,8 +328,14 @@ public class Pattern
 	
 	
 	/**
+	 * Sets the mode to be used for drawing outside the area of a pattern.
+	 * See cairo_extend_t for details on the semantics of each extend
+	 * strategy.
 	 * pattern:
+	 *  a cairo_pattern_t
 	 * extend:
+	 *  a cairo_extend_t describing how the area outside of the
+	 * pattern will be drawn
 	 */
 	public void setExtend(cairo_extend_t extend)
 	{
@@ -337,8 +344,13 @@ public class Pattern
 	}
 	
 	/**
+	 * Gets the current extend mode for a pattern. See cairo_extend_t
+	 * for details on the semantics of each extend strategy.
 	 * pattern:
+	 *  a cairo_pattern_t
 	 * Returns:
+	 *  the current extend strategy used for drawing the
+	 * pattern.
 	 */
 	public cairo_extend_t getExtend()
 	{
@@ -403,12 +415,26 @@ public class Pattern
 	 *  a cairo_pattern_t
 	 * matrix:
 	 *  return value for the matrix
-	 * <<Paths
-	 * Transformations>>
 	 */
 	public void getMatrix(cairo_matrix_t* matrix)
 	{
 		// void cairo_pattern_get_matrix (cairo_pattern_t *pattern,  cairo_matrix_t *matrix);
 		cairo_pattern_get_matrix(cairo_pattern, matrix);
+	}
+	
+	
+	/**
+	 * This function returns the type a pattern.
+	 * See cairo_pattern_type_t for available types.
+	 * pattern:
+	 *  a cairo_pattern_t
+	 * Returns:
+	 *  The type of pattern.
+	 * Since 1.2
+	 */
+	public cairo_pattern_type_t getType()
+	{
+		// cairo_pattern_type_t cairo_pattern_get_type (cairo_pattern_t *pattern);
+		return cairo_pattern_get_type(cairo_pattern);
 	}
 }

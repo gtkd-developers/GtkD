@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Asynchronous-Queues.html
  * outPack = glib
  * outFile = AsyncQueue
  * strct   = GAsyncQueue
@@ -50,7 +51,7 @@
 
 module glib.AsyncQueue;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

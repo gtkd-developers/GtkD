@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = glib
  * outFile = MainContext
  * strct   = GMainContext
@@ -58,7 +59,7 @@
 
 module glib.MainContext;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -544,6 +545,11 @@ public class MainContext
 		// void g_main_context_remove_poll (GMainContext *context,  GPollFD *fd);
 		g_main_context_remove_poll(gMainContext, fd);
 	}
+	
+	
+	
+	
+	
 	
 	
 	

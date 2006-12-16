@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Miscellaneous-Utility-Functions.html
  * outPack = glib
  * outFile = Util
  * strct   = 
@@ -49,7 +50,7 @@
 
 module glib.Util;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -197,6 +198,12 @@ public class Util
 	 * Returns:
 	 *  a NULL-terminated list of strings which must be freed
 	 * with g_strfreev().
+	 * Programs that want to be portable to Windows should typically use
+	 * this function and g_getenv() instead of using the environ array
+	 * from the C library directly. On Windows, the strings in the environ
+	 * array are in system codepage encoding, while in most of the typical
+	 * use cases for environment variables in GLib-using programs you want
+	 * the UTF-8 encoding that this function and g_getenv() provide.
 	 * Since 2.8
 	 */
 	public static char** listenv()
@@ -712,13 +719,13 @@ public class Util
 	}
 	
 	/**
-	 * Parses a string containing debugging options separated
-	 * by ':' into a guint containing bit flags. This is used
+	 * Parses a string containing debugging options
+	 * into a guint containing bit flags. This is used
 	 * within GDK and GTK+ to parse the debug options passed on the
 	 * command line or through environment variables.
 	 * string:
-	 *  a list of debug options separated by ':' or "all"
-	 *  to set all flags.
+	 *  a list of debug options separated by colons, spaces, or
+	 * commas; or the string "all" to set all flags.
 	 * keys:
 	 *  pointer to an array of GDebugKey which associate
 	 *  strings with bit flags.

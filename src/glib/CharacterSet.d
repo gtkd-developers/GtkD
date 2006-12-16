@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Character-Set-Conversion.html
  * outPack = glib
  * outFile = CharacterSet
  * strct   = 
@@ -52,7 +53,7 @@
 
 module glib.CharacterSet;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -370,7 +371,8 @@ public class CharacterSet
 	}
 	
 	/**
-	 * Converts an absolute filename to an escaped ASCII-encoded URI.
+	 * Converts an absolute filename to an escaped ASCII-encoded URI, with the path
+	 * component following Section 3.3. of RFC 2396.
 	 * filename:
 	 *  an absolute filename specified in the GLib file name encoding,
 	 *  which is the on-disk file name bytes on Unix, and UTF-8 on
@@ -424,13 +426,16 @@ public class CharacterSet
 	}
 	
 	/**
-	 * Converts a filename into a valid UTF-8 string. The
-	 * conversion is not necessarily reversible, so you
-	 * should keep the original around and use the return
-	 * value of this function only for display purposes.
-	 * Unlike g_filename_to_utf8(), the result is guaranteed
-	 * to be non-NULL even if the filename actually isn't in the GLib
-	 * file name encoding.
+	 * Converts a filename into a valid UTF-8 string. The conversion is
+	 * not necessarily reversible, so you should keep the original around
+	 * and use the return value of this function only for display purposes.
+	 * Unlike g_filename_to_utf8(), the result is guaranteed to be non-NULL
+	 * even if the filename actually isn't in the GLib file name encoding.
+	 * If GLib can not make sense of the encoding of filename, as a last resort it
+	 * replaces unknown characters with U+FFFD, the Unicode replacement character.
+	 * You can search the result for the UTF-8 encoding of this character (which is
+	 * "\357\277\275" in octal notation) to find out if filename was in an invalid
+	 * encoding.
 	 * If you know the whole pathname of the file you should use
 	 * g_filename_display_basename(), since that allows location-based
 	 * translation of filenames.
@@ -451,7 +456,12 @@ public class CharacterSet
 	 * Returns the display basename for the particular filename, guaranteed
 	 * to be valid UTF-8. The display name might not be identical to the filename,
 	 * for instance there might be problems converting it to UTF-8, and some files
-	 * can be translated in the display
+	 * can be translated in the display.
+	 * If GLib can not make sense of the encoding of filename, as a last resort it
+	 * replaces unknown characters with U+FFFD, the Unicode replacement character.
+	 * You can search the result for the UTF-8 encoding of this character (which is
+	 * "\357\277\275" in octal notation) to find out if filename was in an invalid
+	 * encoding.
 	 * You must pass the whole absolute pathname to this functions so that
 	 * translation of well known locations can be done.
 	 * This function is preferred over g_filename_display_name() if you know the

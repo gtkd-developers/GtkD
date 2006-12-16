@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkEntryCompletion.html
  * outPack = gtk
  * outFile = EntryCompletion
  * strct   = GtkEntryCompletion
@@ -52,7 +53,7 @@
 
 module gtk.EntryCompletion;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -119,7 +120,7 @@ public class EntryCompletion : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gint, EntryCompletion)[] onActionActivatedListeners;
@@ -133,7 +134,7 @@ public class EntryCompletion : ObjectG
 			cast(GCallback)&callBackActionActivated,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["action-activated"] = 1;
 		}
 		onActionActivatedListeners ~= dlg;
@@ -161,7 +162,7 @@ public class EntryCompletion : ObjectG
 			cast(GCallback)&callBackInsertPrefix,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["insert-prefix"] = 1;
 		}
 		onInsertPrefixListeners ~= dlg;
@@ -189,7 +190,7 @@ public class EntryCompletion : ObjectG
 			cast(GCallback)&callBackMatchSelected,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["match-selected"] = 1;
 		}
 		onMatchSelectedListeners ~= dlg;
@@ -278,7 +279,7 @@ public class EntryCompletion : ObjectG
 	 *  The user data for func.
 	 * func_notify:
 	 *  Destroy notifier for func_data.
-	 * Since 2.4.
+	 * Since 2.4
 	 */
 	public void setMatchFunc(GtkEntryCompletionMatchFunc func, void* funcData, GDestroyNotify funcNotify)
 	{

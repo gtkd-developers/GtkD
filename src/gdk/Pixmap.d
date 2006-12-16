@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Bitmaps-and-Pixmaps.html
  * outPack = gdk
  * outFile = Pixmap
  * strct   = GdkPixmap
@@ -56,7 +57,7 @@
 
 module gdk.Pixmap;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

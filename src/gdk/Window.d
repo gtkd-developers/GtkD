@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Windows.html
  * outPack = gdk
  * outFile = Window
  * strct   = GdkWindow
@@ -64,7 +65,7 @@
 
 module gdk.Window;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 
@@ -793,6 +794,20 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * Emits a short beep associated to window in the appropriate
+	 * display, if supported. Otherwise, emits a short beep on
+	 * the display just as gdk_display_beep().
+	 * window:
+	 *  a toplevel GdkWindow
+	 * Since 2.12
+	 */
+	public void beep()
+	{
+		// void gdk_window_beep (GdkWindow *window);
+		gdk_window_beep(gdkWindow);
+	}
+	
+	/**
 	 * A convenience wrapper around gdk_window_begin_paint_region() which
 	 * creates a rectangular region for you. See
 	 * gdk_window_begin_paint_region() for details.
@@ -1211,6 +1226,7 @@ public class Window : Drawable
 	 * very old X servers, and occasionally the implementation will be
 	 * buggy. On servers without the shape extension, this function
 	 * will do nothing.
+	 * On the Win32 platform the functionality is always present.
 	 * This function works on both toplevel and child windows.
 	 * window:
 	 *  a GdkWindow
@@ -1239,6 +1255,7 @@ public class Window : Drawable
 	 * very old X servers, and occasionally the implementation will be
 	 * buggy. On servers without the shape extension, this function
 	 * will do nothing.
+	 * On the Win32 platform, this functionality is always present.
 	 * This function works on both toplevel and child windows.
 	 * window:
 	 *  a GdkWindow
@@ -1284,6 +1301,99 @@ public class Window : Drawable
 	{
 		// void gdk_window_merge_child_shapes (GdkWindow *window);
 		gdk_window_merge_child_shapes(gdkWindow);
+	}
+	
+	/**
+	 * Like gdk_window_shape_combine_mask(), but the shape applies
+	 * only to event handling. Mouse events which happen while
+	 * the pointer position corresponds to an unset bit in the
+	 * mask will be passed on the window below window.
+	 * An input shape is typically used with RGBA windows.
+	 * The alpha channel of the window defines which pixels are
+	 * invisible and allows for nicely antialiased borders,
+	 * and the input shape controls where the window is
+	 * "clickable".
+	 * On the X11 platform, this requires version 1.1 of the
+	 * shape extension.
+	 * On the Win32 platform, this functionality is not present and the
+	 * function does nothing.
+	 * window:
+	 *  a GdkWindow
+	 * mask:
+	 *  shape mask
+	 * x:
+	 *  X position of shape mask with respect to window
+	 * y:
+	 *  Y position of shape mask with respect to window
+	 * Since 2.10
+	 */
+	public void inputShapeCombineMask(Bitmap mask, int x, int y)
+	{
+		// void gdk_window_input_shape_combine_mask  (GdkWindow *window,  GdkBitmap *mask,  gint x,  gint y);
+		gdk_window_input_shape_combine_mask(gdkWindow, (mask is null) ? null : mask.getBitmapStruct(), x, y);
+	}
+	
+	/**
+	 * Like gdk_window_shape_combine_region(), but the shape applies
+	 * only to event handling. Mouse events which happen while
+	 * the pointer position corresponds to an unset bit in the
+	 * mask will be passed on the window below window.
+	 * An input shape is typically used with RGBA windows.
+	 * The alpha channel of the window defines which pixels are
+	 * invisible and allows for nicely antialiased borders,
+	 * and the input shape controls where the window is
+	 * "clickable".
+	 * On the X11 platform, this requires version 1.1 of the
+	 * shape extension.
+	 * On the Win32 platform, this functionality is not present and the
+	 * function does nothing.
+	 * window:
+	 *  a GdkWindow
+	 * shape_region:
+	 *  region of window to be non-transparent
+	 * offset_x:
+	 *  X position of shape_region in window coordinates
+	 * offset_y:
+	 *  Y position of shape_region in window coordinates
+	 * Since 2.10
+	 */
+	public void inputShapeCombineRegion(Region shapeRegion, int offsetX, int offsetY)
+	{
+		// void gdk_window_input_shape_combine_region  (GdkWindow *window,  GdkRegion *shape_region,  gint offset_x,  gint offset_y);
+		gdk_window_input_shape_combine_region(gdkWindow, (shapeRegion is null) ? null : shapeRegion.getRegionStruct(), offsetX, offsetY);
+	}
+	
+	/**
+	 * Sets the input shape mask of window to the union of input shape masks
+	 * for all children of window, ignoring the input shape mask of window
+	 * itself. Contrast with gdk_window_merge_child_input_shapes() which includes
+	 * the input shape mask of window in the masks to be merged.
+	 * window:
+	 *  a GdkWindow
+	 * Since 2.10
+	 */
+	public void setChildInputShapes()
+	{
+		// void gdk_window_set_child_input_shapes  (GdkWindow *window);
+		gdk_window_set_child_input_shapes(gdkWindow);
+	}
+	
+	/**
+	 * Merges the input shape masks for any child windows into the
+	 * input shape mask for window. i.e. the union of all input masks
+	 * for window and its children will become the new input mask
+	 * for window. See gdk_window_input_shape_combine_mask().
+	 * This function is distinct from gdk_window_set_child_input_shapes()
+	 * because it includes window's input shape mask in the set of
+	 * shapes to be merged.
+	 * window:
+	 *  a GdkWindow
+	 * Since 2.10
+	 */
+	public void mergeChildInputShapes()
+	{
+		// void gdk_window_merge_child_input_shapes  (GdkWindow *window);
+		gdk_window_merge_child_input_shapes(gdkWindow);
 	}
 	
 	/**
@@ -1558,6 +1668,20 @@ public class Window : Drawable
 	}
 	
 	/**
+	 * This function returns the type hint set for a window.
+	 * window:
+	 *  A toplevel GdkWindow
+	 * Returns:
+	 *  The type hint set for window
+	 * Since 2.10
+	 */
+	public GdkWindowTypeHint getTypeHint()
+	{
+		// GdkWindowTypeHint gdk_window_get_type_hint (GdkWindow *window);
+		return gdk_window_get_type_hint(gdkWindow);
+	}
+	
+	/**
 	 * Toggles whether a window should appear in a task list or window
 	 * list. If a window's semantic type as specified with
 	 * gdk_window_set_type_hint() already fully describes the window, this
@@ -1714,7 +1838,8 @@ public class Window : Drawable
 	
 	/**
 	 * Obtains the current pointer position and modifier state.
-	 * The position is given in coordinates relative to window.
+	 * The position is given in coordinates relative to the upper left
+	 * corner of window.
 	 * window:
 	 *  a GdkWindow
 	 * x:
@@ -1981,9 +2106,10 @@ public class Window : Drawable
 	
 	
 	/**
-	 * This function isn't really good for much. It sets the traditional
-	 * Motif window manager hint for which operations the window manager
-	 * should allow on a toplevel window. However, few window managers do
+	 * Sets hints about the window management functions to make available
+	 * via buttons on the window frame.
+	 * On the X backend, this function sets the traditional Motif window
+	 * manager hint for this purpose. However, few window managers do
 	 * anything reliable or interesting with this hint. Many ignore it
 	 * entirely.
 	 * The functions argument is the logical OR of values from the
@@ -2005,7 +2131,7 @@ public class Window : Drawable
 	
 	/**
 	 * Obtains a list of all toplevel windows known to GDK on the default
-	 * screen (see gdk_window_get_toplevels_for_screen()).
+	 * screen (see gdk_screen_get_toplevel_windows()).
 	 * A toplevel window is a child of the root window (see
 	 * gdk_get_default_root_window()).
 	 * The returned list should be freed with g_list_free(), but

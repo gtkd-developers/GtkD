@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkValue.html
  * outPack = atk
  * outFile = ValueAtk
  * strct   = AtkValue
@@ -48,7 +49,7 @@
 
 module atk.ValueAtk;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
@@ -147,5 +148,21 @@ public class ValueAtk
 	{
 		// gboolean atk_value_set_current_value (AtkValue *obj,  const GValue *value);
 		return atk_value_set_current_value(atkValue, (value is null) ? null : value.getValueStruct());
+	}
+	
+	/**
+	 * Gets the minimum increment by which the value of this object may be changed. If zero,
+	 * the minimum increment is undefined, which may mean that it is limited only by the
+	 * floating point precision of the platform.
+	 * obj:
+	 *  a GObject instance that implements AtkValueIface
+	 * value:
+	 *  a GValue representing the minimum increment by which the accessible value may be changed
+	 * Since ATK 1.12
+	 */
+	public void getMinimumIncrement(Value value)
+	{
+		// void atk_value_get_minimum_increment (AtkValue *obj,  GValue *value);
+		atk_value_get_minimum_increment(atkValue, (value is null) ? null : value.getValueStruct());
 	}
 }

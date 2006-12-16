@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GTypeModule.html
  * outPack = gobject
  * outFile = TypeModule
  * strct   = GTypeModule
@@ -51,7 +52,7 @@
 
 module gobject.TypeModule;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 
@@ -70,7 +71,9 @@ private import gobject.Flags;
  * types and interface implementations are in use, the module is kept
  * loaded. When the types and interfaces are gone, the module may be
  * unloaded. If the types and interfaces become used again, the module
- * will be reloaded.
+ * will be reloaded. Note that the last unref can not happen in module
+ * code, since that would lead to the caller's code being unloaded before
+ * g_object_unref() returns to it.
  * Keeping track of whether the module should be loaded or not is done by
  * using a use count - it starts at zero, and whenever it is greater than
  * zero, the module is loaded. The use count is maintained internally by
@@ -223,17 +226,14 @@ public class TypeModule : ObjectG
 	 *  a GTypeModule
 	 * name:
 	 *  name for the type
-	 * const_static_values:
-	 * an array of GEnumValue structs for the possible
-	 *  enumeration values. The array is terminated by a struct with all
-	 *  members being 0.
+	 * _static_values:
 	 * Returns:
 	 * the new or existing type ID
 	 * Since 2.6
 	 */
 	public GType registerEnum(char[] name, Enums _StaticValues)
 	{
-		// GType g_type_module_register_enum (GTypeModule *module,  const gchar *name,  const GEnumValue *const_static_values);
+		// GType g_type_module_register_enum (GTypeModule *module,  const gchar *name,  const GEnumValue *const _static_values);
 		return g_type_module_register_enum(gTypeModule, Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getEnumsStruct());
 	}
 	
@@ -248,10 +248,7 @@ public class TypeModule : ObjectG
 	 *  a GTypeModule
 	 * name:
 	 *  name for the type
-	 * const_static_values:
-	 * an array of GFlagsValue structs for the possible
-	 *  flags values. The array is terminated by a struct with all
-	 *  members being 0.
+	 * _static_values:
 	 * Returns:
 	 * the new or existing type ID
 	 * Since 2.6
@@ -263,7 +260,7 @@ public class TypeModule : ObjectG
 	 */
 	public GType registerFlags(char[] name, Flags _StaticValues)
 	{
-		// GType g_type_module_register_flags (GTypeModule *module,  const gchar *name,  const GFlagsValue *const_static_values);
+		// GType g_type_module_register_flags (GTypeModule *module,  const gchar *name,  const GFlagsValue *const _static_values);
 		return g_type_module_register_flags(gTypeModule, Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
 	}
 }

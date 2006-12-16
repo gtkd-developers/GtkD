@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Error-Reporting.html
  * outPack = glib
  * outFile = ErrorG
  * strct   = GError
@@ -48,7 +49,7 @@
 
 module glib.ErrorG;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

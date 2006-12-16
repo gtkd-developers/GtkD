@@ -25,6 +25,36 @@
 ###
 #
 
+
+addTypedefs: start
+
+public import glib.glibtypes;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
+
 # must start with wrap
 
 addStructs: start

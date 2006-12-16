@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gobject-Boxed-Types.html
  * outPack = gobject
  * outFile = Boxed
  * strct   = 
@@ -47,7 +48,7 @@
 
 module gobject.Boxed;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 

@@ -20,8 +20,8 @@ module duit.TTextView;
 
 private import gtk.Window;
 
-private import gtk.typedefs;
-private import gdk.typedefs;
+private import gtk.gtktypes;
+private import gdk.gdktypes;
 
 private import gtk.Widget;
 private import gtk.TextView;

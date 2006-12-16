@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkRelation.html
  * outPack = atk
  * outFile = Relation
  * strct   = AtkRelation
@@ -49,7 +50,7 @@
 
 module atk.Relation;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
@@ -188,7 +189,7 @@ public class Relation : ObjectG
 	 *  an AtkRelation
 	 * target:
 	 *  an AtkObject
-	 * Since 1.9
+	 * Since ATK 1.9
 	 * Property Details
 	 * The "relation-type" property
 	 *  "relation-type" AtkRelationType : Read / Write

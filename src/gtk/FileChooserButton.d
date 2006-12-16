@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkFileChooserButton.html
  * outPack = gtk
  * outFile = FileChooserButton
  * strct   = GtkFileChooserButton
@@ -54,7 +55,7 @@
 
 module gtk.FileChooserButton;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -233,17 +234,51 @@ public class FileChooserButton : HBox
 	 * n_chars:
 	 *  the new width, in characters.
 	 * Since 2.6
-	 * Property Details
-	 * The "dialog" property
-	 *  "dialog" GtkFileChooserDialog : Write / Construct Only
-	 * Instance of the GtkFileChooserDialog associated with the button.
-	 * Since 2.6
 	 */
 	public void setWidthChars(int nChars)
 	{
 		// void gtk_file_chooser_button_set_width_chars  (GtkFileChooserButton *button,  gint n_chars);
 		gtk_file_chooser_button_set_width_chars(gtkFileChooserButton, nChars);
 	}
+	
+	/**
+	 * Returns whether the button grabs focus when it is clicked with the mouse.
+	 * See gtk_file_chooser_button_set_focus_on_click().
+	 * button:
+	 *  a GtkFileChooserButton
+	 * Returns:
+	 *  TRUE if the button grabs focus when it is clicked with
+	 *  the mouse.
+	 * Since 2.10
+	 */
+	public int getFocusOnClick()
+	{
+		// gboolean gtk_file_chooser_button_get_focus_on_click  (GtkFileChooserButton *button);
+		return gtk_file_chooser_button_get_focus_on_click(gtkFileChooserButton);
+	}
+	
+	/**
+	 * Sets whether the button will grab focus when it is clicked with the mouse.
+	 * Making mouse clicks not grab focus is useful in places like toolbars where
+	 * you don't want the keyboard focus removed from the main area of the
+	 * application.
+	 * button:
+	 *  a GtkFileChooserButton
+	 * focus_on_click:
+	 *  whether the button grabs focus when clicked with the mouse
+	 * Since 2.10
+	 * Property Details
+	 * The "dialog" property
+	 *  "dialog" GtkFileChooserDialog : Write / Construct Only
+	 * Instance of the GtkFileChooserDialog associated with the button.
+	 * Since 2.6
+	 */
+	public void setFocusOnClick(int focusOnClick)
+	{
+		// void gtk_file_chooser_button_set_focus_on_click  (GtkFileChooserButton *button,  gboolean focus_on_click);
+		gtk_file_chooser_button_set_focus_on_click(gtkFileChooserButton, focusOnClick);
+	}
+	
 	
 	
 }

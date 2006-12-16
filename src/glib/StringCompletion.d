@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Automatic-String-Completion.html
  * outPack = glib
  * outFile = StringCompletion
  * strct   = GCompletion
@@ -49,7 +50,7 @@
 
 module glib.StringCompletion;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

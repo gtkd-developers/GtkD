@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkAction.html
  * outPack = atk
  * outFile = Action
  * strct   = AtkAction
@@ -47,7 +48,7 @@
 
 module atk.Action;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 

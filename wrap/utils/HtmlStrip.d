@@ -23,6 +23,7 @@
 module utils.HtmlStrip;
 
 //debug=amper;
+//debug=file;
 
 public class HtmlStrip
 {
@@ -150,6 +151,7 @@ public class HtmlStrip
 	
 	char[] stripFile(char[] filename)
 	{
+		debug(file)writefln("HtmlStrip.stripFile filename = %s", filename);
 		char[] text = cast(char[])std.file.read(filename);
 		
 		//writefln("Original html:\n%s", text);

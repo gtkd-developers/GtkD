@@ -20,10 +20,10 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-module gthread.typedefs;
+module gthread.gthreadtypes;
 
 
-public import glib.typedefs;
+public import glib.glibtypes;
 
 /**
  * Possible errors of thread related functions.
@@ -40,7 +40,7 @@ alias GThreadError ThreadError;
 /**
  * Specifies the priority of a thread.
  * Note
- * It is not guaranteed, that threads with different priorities really
+ * It is not guaranteed that threads with different priorities really
  * behave accordingly. On some systems (e.g. Linux) there are no thread
  * priorities. On other systems (e.g. Solaris) there doesn't seem to be
  * different scheduling for different priorities. All in all try to avoid
@@ -64,7 +64,7 @@ public enum GThreadPriority
 alias GThreadPriority ThreadPriority;
 
 /**
- * The possible stati of a one-time initialization function controlled by a GOnce struct.
+ * The possible statuses of a one-time initialization function controlled by a GOnce struct.
  * G_ONCE_STATUS_NOTCALLED
  * the function has not been called yet.
  * G_ONCE_STATUS_PROGRESS
@@ -84,48 +84,82 @@ alias GOnceStatus OnceStatus;
 
 /**
  * This function table is used by g_thread_init() to initialize the
- * thread system. The functions in that table are directly used by their
- * g_* prepended counterparts, that are described here, e.g. if you call
- * g_mutex_new() then mutex_new() from the table provided to
+ * thread system. The functions in the table are directly used by their
+ * g_* prepended counterparts (described in this document). For example,
+ * if you call g_mutex_new() then mutex_new() from the table provided to
  * g_thread_init() will be called.
  * Note
- * This struct should only be used, if you know, what you are doing.
+ * Do not use this struct unless you know what you are doing.
  */
-public struct GThreadFunctions;
+public struct GThreadFunctions{}
 // GMutex* (*mutexNew) (void);
+//
 // void (*mutexLock) (GMutex *mutex);
+//
 // int (*mutexTrylock) (GMutex *mutex);
+//
 // void (*mutexUnlock) (GMutex *mutex);
+//
 // void (*mutexFree) (GMutex *mutex);
+//
 // GCond* (*condNew) (void);
+//
 // void (*condSignal) (GCond *cond);
+//
 // void (*condBroadcast) (GCond *cond);
+//
 // void (*condWait) (GCond *cond,
+//
 // GMutex *mutex);
+//
 // int (*condTimedWait) (GCond *cond,
+//
 // GMutex *mutex,
+//
 // GTimeVal *endTime);
+//
 // void (*condFree) (GCond *cond);
+//
 // GPrivate* (*privateNew) (GDestroyNotify destructor);
+//
 // void* (*privateGet) (GPrivate *privateKey);
+//
 // void (*privateSet) (GPrivate *privateKey,
+//
 // void* data);
+//
 // void (*threadCreate) (GThreadFunc func,
+//
 // void* data,
+//
 // uint stackSize,
+//
 // int joinable,
+//
 // int bound,
+//
 // GThreadPriority priority,
+//
 // void* thread,
+//
 // GError **error);
+//
 // void (*threadYield) (void);
+//
 // void (*threadJoin) (void* thread);
+//
 // void (*threadExit) (void);
+//
 // void (*threadSetPriority)(void* thread,
+//
 // GThreadPriority priority);
+//
 // void (*threadSelf) (void* thread);
+//
 // int (*threadEqual) (void* thread1,
+//
 // void* thread2);
+//
 
 
 /**
@@ -137,7 +171,7 @@ public struct GThreadFunctions;
  * Resources for a joinable thread are not fully released until
  * g_thread_join() is called for that thread.
  */
-public struct GThread;
+public struct GThread{}
 
 
 /**
@@ -146,7 +180,7 @@ public struct GThread;
  * access. Take for example the following function:
  * Example3.A function which will not work in a threaded environment
  */
-public struct GMutex;
+public struct GMutex{}
 
 
 /**
@@ -156,43 +190,44 @@ public struct GMutex;
  * safer version of our give_me_next_number() example:
  * Example6.Using GStaticMutex to simplify thread-safe programming
  */
-public struct GStaticMutex;
+public struct GStaticMutex{}
 
 
 /**
  * A GStaticRecMutex works like a GStaticMutex, but it can be locked
- * multiple times by one thread. If you enter it n times, however, you
- * have to unlock it n times again to let other threads lock it. An
- * exception is the function g_static_rec_mutex_unlock_full(), that
- * allows you to unlock a GStaticRecMutex completely returning the depth,
- * i.e. the number of times this mutex was locked. The depth can later be
- * used to restore the state by calling g_static_rec_mutex_lock_full().
+ * multiple times by one thread. If you enter it n times, you have to
+ * unlock it n times again to let other threads lock it. An exception is
+ * the function g_static_rec_mutex_unlock_full(): that allows you to
+ * unlock a GStaticRecMutex completely returning the depth, (i.e. the
+ * number of times this mutex was locked). The depth can later be used to
+ * restore the state of the GStaticRecMutex by calling
+ * g_static_rec_mutex_lock_full().
  * Even though GStaticRecMutex is not opaque, it should only be used with
  * the following functions.
- * All of the g_static_rec_mutex_* functions can also
- * be used, if g_thread_init() has not been called.
+ * All of the g_static_rec_mutex_* functions can
+ * be used even if g_thread_init() has not been called.
  */
-public struct GStaticRecMutex;
+public struct GStaticRecMutex{}
 
 
 /**
  * The GStaticRWLock struct represents a read-write lock. A read-write
- * lock can be used for protecting data, that some portions of code only
+ * lock can be used for protecting data that some portions of code only
  * read from, while others also write. In such situations it is
- * desirable, that several readers can read at once, whereas of course
+ * desirable that several readers can read at once, whereas of course
  * only one writer may write at a time. Take a look at the following
  * example:
  * Example8.An array with access functions
  */
-public struct GStaticRWLock;
+public struct GStaticRWLock{}
 
 
 /**
- * The GCond struct is an opaque data structure to represent a
- * condition. A GCond is an object, that threads can block on, if they
- * find a certain condition to be false. If other threads change the
- * state of this condition they can signal the GCond, such that the
- * waiting thread is woken up.
+ * The GCond struct is an opaque data structure that represents a
+ * condition. Threads can block on a GCond if they find a certain
+ * condition to be false. If other threads change the state of this
+ * condition they signal the GCond, and that causes the waiting threads
+ * to be woken up.
  * Example9.Using GCond to block a thread until a condition is satisfied
  * GCond* data_cond = NULL; /+* Must be initialized somewhere +/
  * GMutex* data_mutex = NULL; /+* Must be initialized somewhere +/
@@ -200,58 +235,58 @@ public struct GStaticRWLock;
  * void push_data (gpointer data)
  * {
 	 */
-	public struct GCond;
-	
-	
-	/**
-	 * The GPrivate struct is an opaque data structure to represent a thread
-	 * private data key. Threads can thereby obtain and set a pointer, which
-	 * is private to the current thread.
-	 * Take our give_me_next_number() example from above.
-	 * Now we don't want current_number to be shared
-	 * between the threads, but to be private to each thread. This can be
-	 * done as follows:
-	 * Example10.Using GPrivate for per-thread data
-	 */
-	public struct GPrivate;
-	
-	
-	/**
-	 * A GStaticPrivate works almost like a GPrivate, but it has one
-	 * significant advantage. It doesn't need to be created at run-time like
-	 * a GPrivate, but can be defined at compile-time. This is similar to
-	 * the difference between GMutex and GStaticMutex. Now look at our
-	 * give_me_next_number() example with GStaticPrivate:
-	 * Example11.Using GStaticPrivate for per-thread data
-	 */
-	public struct GStaticPrivate;
-	
-	
-	/**
-	 * A GOnce struct controls a one-time initialization
-	 * function. Any one-time initialization function must have its own unique
-	 * GOnce struct.
-	 * volatileGOnceStatusstatus;
-	 * the status of the GOnce
-	 * volatilegpointerretval;
-	 * the value returned by the call to the function, if status
-	 */
-	public struct GOnce
+public struct GCond{}
+
+
+/**
+ * The GPrivate struct is an opaque data structure to represent a thread
+ * private data key. Threads can thereby obtain and set a pointer which
+ * is private to the current thread.
+ * Take our give_me_next_number() example from above.
+ * Suppose we don't want current_number to be shared
+ * between the threads, but instead to be private to each thread. This can be
+ * done as follows:
+ * Example10.Using GPrivate for per-thread data
+ */
+public struct GPrivate{}
+
+
+/**
+ * A GStaticPrivate works almost like a GPrivate, but it has one
+ * significant advantage. It doesn't need to be created at run-time like
+ * a GPrivate, but can be defined at compile-time. This is similar to
+ * the difference between GMutex and GStaticMutex. Now look at our
+ * give_me_next_number() example with GStaticPrivate:
+ * Example11.Using GStaticPrivate for per-thread data
+ */
+public struct GStaticPrivate{}
+
+
+/**
+ * A GOnce struct controls a one-time initialization
+ * function. Any one-time initialization function must have its own unique
+ * GOnce struct.
+ * volatileGOnceStatusstatus;
+ * the status of the GOnce
+ * volatilegpointerretval;
+ * the value returned by the call to the function, if status
+ */
+public struct GOnce
 {
-		GOnceStatus status;
-		void* retval;
-	}
-	
+	GOnceStatus status;
+	void* retval;
+}
+
 
 /*
  * The G_LOCK_* macros provide a convenient interface to GStaticMutex
  * with the advantage that they will expand to nothing in programs
  * compiled against a thread-disabled GLib, saving code and memory
- * there. G_LOCK_DEFINE defines a lock. It can appear, where variable
+ * there. G_LOCK_DEFINE defines a lock. It can appear anywhere variable
  * definitions may appear in programs, i.e. in the first block of a
  * function or outside of functions. The name parameter will be mangled
- * to get the name of the GStaticMutex. This means, that you can use
- * names of existing variables as the parameter, e.g. the name of the
+ * to get the name of the GStaticMutex. This means that you can use
+ * names of existing variables as the parameter - e.g. the name of the
  * variable you intent to protect with the lock. Look at our
  * give_me_next_number() example using the G_LOCK_* macros:
  * Example7.Using the G_LOCK_* convenience macros

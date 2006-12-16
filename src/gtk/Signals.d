@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Signals.html
  * outPack = gtk
  * outFile = Signals
  * strct   = 
@@ -51,7 +52,7 @@
 
 module gtk.Signals;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

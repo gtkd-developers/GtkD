@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkIconTheme.html
  * outPack = gtk
  * outFile = IconTheme
  * strct   = GtkIconTheme
@@ -59,7 +60,7 @@
 
 module gtk.IconTheme;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -126,7 +127,7 @@ private import glib.ListG;
  * if (!pixbuf)
  *  {
 	 *  g_warning ("Couldn't load icon: %s", error->message);
-	 *  g_error_free (message);
+	 *  g_error_free (error);
  *  }
  * else
  *  {
@@ -168,7 +169,7 @@ public class IconTheme : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(IconTheme)[] onChangedListeners;
@@ -182,7 +183,7 @@ public class IconTheme : ObjectG
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -455,8 +456,8 @@ public class IconTheme : ObjectG
 	 * Lists the icons in the current icon theme. Only a subset
 	 * of the icons can be listed by providing a context string.
 	 * The set of values for the context string is system dependent,
-	 * but will typically include such values as 'apps' and
-	 * 'mimetypes'.
+	 * but will typically include such values as "Applications" and
+	 * "MimeTypes".
 	 * icon_theme:
 	 *  a GtkIconTheme
 	 * context:

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Timers.html
  * outPack = glib
  * outFile = Timer
  * strct   = GTimer
@@ -47,7 +48,7 @@
 
 module glib.Timer;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -149,9 +150,9 @@ public class Timer
 	 * timer:
 	 * a GTimer.
 	 * microseconds:
-	 * fractional part of seconds elapsed, in microseconds
-	 *  (that is, the total number of microseconds elapsed, modulo
-	 *  1000000)
+	 * return location for the fractional part of seconds elapsed,
+	 *  in microseconds (that is, the total number of microseconds elapsed, modulo
+	 *  1000000), or NULL
 	 * Returns:
 	 * seconds elapsed as a floating point value, including
 	 *  any fractional part.

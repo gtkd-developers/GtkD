@@ -23,7 +23,7 @@ private import gtk.VBox;
 	
 private import gobject.Value;
 	
-private import gtk.typedefs;
+private import gtk.gtktypes;
 private import gtk.Image;
 private import gtk.TreeView;
 private import gtk.TreeStore;
@@ -175,7 +175,7 @@ public class TestTreeView1 : VBox
 				
 				GType[] columns;
 				columns ~= Pixbuf.getType();
-				columns ~= 16 << 2;
+				columns ~= GType.STRING;
 				super(columns);
 				
 			}

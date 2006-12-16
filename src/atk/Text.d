@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkText.html
  * outPack = atk
  * outFile = Text
  * strct   = AtkText
@@ -47,7 +48,7 @@
 
 module atk.Text;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
@@ -104,7 +105,7 @@ public class Text
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Text)[] onTextAttributesChangedListeners;
@@ -118,7 +119,7 @@ public class Text
 			cast(GCallback)&callBackTextAttributesChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["text-attributes-changed"] = 1;
 		}
 		onTextAttributesChangedListeners ~= dlg;
@@ -146,7 +147,7 @@ public class Text
 			cast(GCallback)&callBackTextCaretMoved,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["text-caret-moved"] = 1;
 		}
 		onTextCaretMovedListeners ~= dlg;
@@ -174,7 +175,7 @@ public class Text
 			cast(GCallback)&callBackTextChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["text-changed"] = 1;
 		}
 		onTextChangedListeners ~= dlg;
@@ -202,7 +203,7 @@ public class Text
 			cast(GCallback)&callBackTextSelectionChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["text-selection-changed"] = 1;
 		}
 		onTextSelectionChangedListeners ~= dlg;
@@ -533,6 +534,7 @@ public class Text
 	
 	/**
 	 * Get the ranges of text in the specified bounding box.
+	 * Returns:
 	 * text:
 	 *  an AtkText
 	 * rect:
@@ -546,6 +548,7 @@ public class Text
 	 * Returns:
 	 *  Array of AtkTextRange. The last element of the array returned
 	 *  by this function will be NULL.
+	 * Since ATK 1.3
 	 */
 	public AtkTextRange** getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)
 	{
@@ -567,6 +570,7 @@ public class Text
 	 *  Specify whether coordinates are relative to the screen or widget window.
 	 * rect:
 	 *  A pointer to a AtkTextRectangle which is filled in by this function.
+	 * Since ATK 1.3
 	 */
 	public void getRangeExtents(int startOffset, int endOffset, AtkCoordType coordType, AtkTextRectangle* rect)
 	{
@@ -580,6 +584,7 @@ public class Text
 	 * and is NULL terminated.
 	 * ranges:
 	 *  A pointer to an array of AtkTextRange which is to be freed.
+	 * Since ATK 1.3
 	 */
 	public static void freeRanges(AtkTextRange** ranges)
 	{

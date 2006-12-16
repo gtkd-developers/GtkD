@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gthread
  * outFile = StaticPrivate
  * strct   = GStaticPrivate
@@ -48,7 +49,7 @@
 
 module gthread.StaticPrivate;
 
-private import gthread.typedefs;
+private import gthread.gthreadtypes;
 
 private import lib.gthread;
 
@@ -59,26 +60,28 @@ private import glib.Dataset;
  * Threads act almost like processes, but unlike processes all threads of
  * one process share the same memory. This is good, as it provides easy
  * communication between the involved threads via this shared memory, and
- * it is bad, because strange things (so called Heisenbugs) might happen,
- * when the program is not carefully designed. Especially bad is, that due
- * to the concurrent nature of threads no assumptions on the order of
- * execution of different threads can be done unless explicitly forced by
- * the programmer through synchronization primitives.
+ * it is bad, because strange things (so called "Heisenbugs") might
+ * happen if the program is not carefully designed. In particular, due to
+ * the concurrent nature of threads, no assumptions on the order of
+ * execution of code running in different threads can be made, unless
+ * order is explicitly forced by the programmer through synchronization
+ * primitives.
  * The aim of the thread related functions in GLib is to provide a
  * portable means for writing multi-threaded software. There are
  * primitives for mutexes to protect the access to portions of memory
  * (GMutex, GStaticMutex, G_LOCK_DEFINE, GStaticRecMutex and
- * GStaticRWLock), there are primitives for condition variables to allow
- * synchronization of threads (GCond) and finally there are primitives
- * for thread-private data, that every thread has a private instance of
+ * GStaticRWLock). There are primitives for condition variables to allow
+ * synchronization of threads (GCond). There are primitives
+ * for thread-private data - data that every thread has a private instance of
  * (GPrivate, GStaticPrivate). Last but definitely not least there are
  * primitives to portably create and manage threads (GThread).
- * You must call g_thread_init() before executing any other GLib functions
- * in a threaded GLib program. After that, GLib is completely thread safe
- * (all global data is automatically locked). But individual data structure
- * instances are not automatically locked for performance reasons. So e.g.
- * you must coordinate accesses to the same GHashTable from multiple threads.
- * The two notable exceptions from this rule are GMainLoop and GAsyncQueue,
+ * You must call g_thread_init() before executing any other GLib
+ * functions in a threaded GLib program. After that, GLib is completely
+ * thread safe (all global data is automatically locked), but individual
+ * data structure instances are not automatically locked for performance
+ * reasons. So, for example you must coordinate accesses to the same
+ * GHashTable from multiple threads. The two notable exceptions from
+ * this rule are GMainLoop and GAsyncQueue,
  * which are threadsafe and needs no further
  * application-level locking to be accessed from multiple threads.
  */
@@ -197,7 +200,7 @@ public class StaticPrivate
 	
 	/**
 	 * Works like g_private_get() only for a GStaticPrivate.
-	 * This function also works, if g_thread_init() has not yet been called.
+	 * This function works even if g_thread_init() has not yet been called.
 	 * private_key:
 	 * a GStaticPrivate.
 	 * Returns:
@@ -213,19 +216,19 @@ public class StaticPrivate
 	 * Sets the pointer keyed to private_key for the current thread and the
 	 * function notify to be called with that pointer (NULL or non-NULL),
 	 * whenever the pointer is set again or whenever the current thread ends.
-	 * This function also works, if g_thread_init() has not yet been
+	 * This function works even if g_thread_init() has not yet been
 	 * called. If g_thread_init() is called later, the data keyed to
 	 * private_key will be inherited only by the main thread, i.e. the one that
 	 * called g_thread_init().
 	 * Note
-	 * notify is working quite differently from destructor in
+	 * notify is used quite differently from destructor in
 	 * g_private_new().
 	 * private_key:
 	 * a GStaticPrivate.
 	 * data:
 	 * the new pointer.
 	 * notify:
-	 * a function to be called with the pointer, whenever the
+	 * a function to be called with the pointer whenever the
 	 * current thread ends or sets this pointer again.
 	 */
 	public void set(void* data, GDestroyNotify notify)

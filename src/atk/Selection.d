@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkSelection.html
  * outPack = atk
  * outFile = Selection
  * strct   = AtkSelection
@@ -46,7 +47,7 @@
 
 module atk.Selection;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
@@ -94,7 +95,7 @@ public class Selection
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Selection)[] onSelectionChangedListeners;
@@ -108,7 +109,7 @@ public class Selection
 			cast(GCallback)&callBackSelectionChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["selection-changed"] = 1;
 		}
 		onSelectionChangedListeners ~= dlg;

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Glob-style-pattern-matching.html
  * outPack = glib
  * outFile = Pattern
  * strct   = GPatternSpec
@@ -49,7 +50,7 @@
 
 module glib.Pattern;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

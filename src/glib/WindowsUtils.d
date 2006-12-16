@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Windows-Compatibility-Functions.html
  * outPack = glib
  * outFile = WindowsUtils
  * strct   = 
@@ -47,7 +48,7 @@
 
 module glib.WindowsUtils;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -167,15 +168,12 @@ public class WindowsUtils
 	 * Returns version information for the Windows operating system the
 	 * code is running on. See MSDN documentation for the GetVersion()
 	 * function. To summarize, the most significant bit is one on Win9x,
-	 * and zero on NT-based systems. The least significant byte is 4 on
-	 * Windows NT 4, 5 on Windows XP. Software that needs really detailled
-	 * version and feature information should use Win32 API like
+	 * and zero on NT-based systems. Since version 2.14, GLib works only
+	 * on NT-based systems, so checking whether your are running on Win9x
+	 * in your own software is moot. The least significant byte is 4 on
+	 * Windows NT 4, and 5 on Windows XP. Software that needs really
+	 * detailled version and feature information should use Win32 API like
 	 * GetVersionEx() and VerifyVersionInfo().
-	 * If there is an environment variable G_WIN32_PRETEND_WIN9X
-	 * defined (with any value), this function always returns a version
-	 * code for Windows 9x. This is mainly an internal debugging aid for
-	 * GTK+ and GLib developers, to be able to check the code paths for
-	 * Windows 9x.
 	 * Returns:
 	 *  The version information.
 	 * Since 2.6

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCellEditable.html
  * outPack = gtk
  * outFile = CellEditable
  * strct   = GtkCellEditable
@@ -49,7 +50,7 @@
 
 module gtk.CellEditable;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -92,7 +93,7 @@ public class CellEditable
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(CellEditable)[] onEditingDoneListeners;
@@ -106,7 +107,7 @@ public class CellEditable
 			cast(GCallback)&callBackEditingDone,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["editing-done"] = 1;
 		}
 		onEditingDoneListeners ~= dlg;
@@ -134,7 +135,7 @@ public class CellEditable
 			cast(GCallback)&callBackRemoveWidget,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["remove-widget"] = 1;
 		}
 		onRemoveWidgetListeners ~= dlg;

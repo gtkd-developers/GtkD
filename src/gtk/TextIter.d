@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-GtkTextIter.html
  * outPack = gtk
  * outFile = TextIter
  * strct   = GtkTextIter
@@ -63,7 +64,7 @@
 
 module gtk.TextIter;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -1263,7 +1264,7 @@ public class TextIter
 	
 	/**
 	 * Moves up to count visible cursor positions. See
-	 * gtk_text_iter_forward_cursor_position() for details.
+	 * gtk_text_iter_backward_cursor_position() for details.
 	 * iter:
 	 *  a GtkTextIter
 	 * count:

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Memory-Slices.html
  * outPack = glib
  * outFile = MemorySlice
  * strct   = 
@@ -46,7 +47,7 @@
 
 module glib.MemorySlice;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -116,6 +117,9 @@ public class MemorySlice
 	 * Allocates a block of memory from the slice allocator.
 	 * The block adress handed out is guaranteed to be aligned
 	 * to at least 2 * sizeof (void*).
+	 * Note that the underlying slice allocation mechanism can
+	 * be changed with the G_SLICE=always-malloc
+	 * environment variable.
 	 * block_size:
 	 * the number of bytes to allocate
 	 * Returns:
@@ -131,6 +135,9 @@ public class MemorySlice
 	/**
 	 * Allocates a block of memory via g_slice_alloc()
 	 * and initialize the returned memory to 0.
+	 * Note that the underlying slice allocation mechanism can
+	 * be changed with the G_SLICE=always-malloc
+	 * environment variable.
 	 * block_size:
 	 * the number of bytes to allocate
 	 * Returns:
@@ -147,6 +154,8 @@ public class MemorySlice
 	 * Frees a block of memory. The memory must have been allocated via
 	 * g_slice_alloc() or g_slice_alloc0()
 	 * and the block_size has to match the size specified upon allocation.
+	 * Note that the exact release behaviour can be changed with the
+	 * G_DEBUG=gc-friendly environment variable.
 	 * block_size:
 	 * the size of the block
 	 * mem_block:
@@ -165,6 +174,8 @@ public class MemorySlice
 	 * g_slice_alloc() or g_slice_alloc0()
 	 * and linked together by a next pointer (similar to GSList). The offset
 	 * of the next field in each block is passed as third argument.
+	 * Note that the exact release behaviour can be changed with the
+	 * G_DEBUG=gc-friendly environment variable.
 	 * block_size:
 	 * the size of the blocks
 	 * mem_chain:

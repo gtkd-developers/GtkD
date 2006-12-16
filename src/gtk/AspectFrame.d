@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkAspectFrame.html
  * outPack = gtk
  * outFile = AspectFrame
  * strct   = GtkAspectFrame
@@ -48,7 +49,7 @@
 
 module gtk.AspectFrame;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

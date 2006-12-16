@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTextTagTable.html
  * outPack = gtk
  * outFile = TextTagTable
  * strct   = GtkTextTagTable
@@ -52,7 +53,7 @@
 
 module gtk.TextTagTable;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -100,7 +101,7 @@ public class TextTagTable : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TextTag, TextTagTable)[] onTagAddedListeners;
@@ -114,7 +115,7 @@ public class TextTagTable : ObjectG
 			cast(GCallback)&callBackTagAdded,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["tag-added"] = 1;
 		}
 		onTagAddedListeners ~= dlg;
@@ -142,7 +143,7 @@ public class TextTagTable : ObjectG
 			cast(GCallback)&callBackTagChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["tag-changed"] = 1;
 		}
 		onTagChangedListeners ~= dlg;
@@ -170,7 +171,7 @@ public class TextTagTable : ObjectG
 			cast(GCallback)&callBackTagRemoved,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["tag-removed"] = 1;
 		}
 		onTagRemovedListeners ~= dlg;

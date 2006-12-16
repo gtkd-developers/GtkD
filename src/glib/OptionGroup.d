@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = glib
  * outFile = OptionGroup
  * strct   = GOptionGroup
@@ -51,7 +52,7 @@
 
 module glib.OptionGroup;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -124,6 +125,7 @@ private import glib.Str;
  * main (int argc, char *argv[])
  * {
 	 *  GError *error = NULL;
+	 *  GOptionContext *context;
 	 *  context = g_option_context_new ("- test tree model performance");
 	 *  g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	 *  g_option_context_add_group (context, gtk_get_option_group (TRUE));
@@ -160,6 +162,13 @@ public class OptionGroup
 	
 	/**
 	 */
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	
@@ -277,7 +286,6 @@ public class OptionGroup
 		// void g_option_group_set_error_hook (GOptionGroup *group,  GOptionErrorFunc error_func);
 		g_option_group_set_error_hook(gOptionGroup, errorFunc);
 	}
-	
 	
 	/**
 	 * Sets the function which is used to translate user-visible

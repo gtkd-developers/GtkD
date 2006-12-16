@@ -25,6 +25,39 @@
 ###
 #
 
+
+addTypedefs: start
+
+public import glib.glibtypes;
+public import gobject.gobjecttypes;
+public alias void* AtkFocusHandler;
+public struct AtkStateSet;
+public struct AtkRectangle;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
 # must start with wrap
 
 wrap: atk
@@ -109,6 +142,8 @@ struct: AtkObject
 class: ObjectAtk
 prefix: atk_object_
 import: glib.Str
+import: atk.StateSet
+structWrap: AtkStateSet* StateSet
 outFile: ObjectAtk
 
 file: AtkObjectFactory.html
@@ -155,6 +190,7 @@ import: glib.Str
 outFile: State
 
 file: atk-AtkStateSet.html
+struct: AtkStateSet
 class: StateSet
 prefix: atk_state_set_
 import: glib.Str

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkExpander.html
  * outPack = gtk
  * outFile = Expander
  * strct   = GtkExpander
@@ -52,7 +53,7 @@
 
 module gtk.Expander;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -158,7 +159,7 @@ public class Expander : Bin
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Expander)[] onActivateListeners;
@@ -172,7 +173,7 @@ public class Expander : Bin
 			cast(GCallback)&callBackActivate,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;

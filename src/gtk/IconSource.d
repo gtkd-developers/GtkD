@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Themeable-Stock-Images.html
  * outPack = gtk
  * outFile = IconSource
  * strct   = GtkIconSource
@@ -56,7 +57,7 @@
 
 module gtk.IconSource;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

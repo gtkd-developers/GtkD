@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkRadioAction.html
  * outPack = gtk
  * outFile = RadioAction
  * strct   = GtkRadioAction
@@ -50,7 +51,7 @@
 
 module gtk.RadioAction;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -97,7 +98,7 @@ public class RadioAction : ToggleAction
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkRadioAction*, RadioAction)[] onChangedListeners;
@@ -111,7 +112,7 @@ public class RadioAction : ToggleAction
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -202,16 +203,34 @@ public class RadioAction : ToggleAction
 	 * Returns:
 	 *  The value of the currently active group member
 	 * Since 2.4
-	 * Property Details
-	 * The "group" property
-	 *  "group" GtkRadioAction : Write
-	 * Sets a new group for a radio action.
-	 * Since 2.4
 	 */
 	public int getCurrentValue()
 	{
 		// gint gtk_radio_action_get_current_value  (GtkRadioAction *action);
 		return gtk_radio_action_get_current_value(gtkRadioAction);
 	}
+	
+	/**
+	 * Sets the currently active group member to the member with value
+	 * property current_value.
+	 * action:
+	 *  a GtkRadioAction
+	 * current_value:
+	 *  the new value
+	 * Since 2.10
+	 * Property Details
+	 * The "current-value" property
+	 *  "current-value" gint : Read / Write
+	 * The value property of the currently active member of the group to which
+	 * this action belongs.
+	 * Default value: 0
+	 * Since 2.10
+	 */
+	public void setCurrentValue(int currentValue)
+	{
+		// void gtk_radio_action_set_current_value  (GtkRadioAction *action,  gint current_value);
+		gtk_radio_action_set_current_value(gtkRadioAction, currentValue);
+	}
+	
 	
 }

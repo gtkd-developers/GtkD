@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkMenuToolButton.html
  * outPack = gtk
  * outFile = MenuToolButton
  * strct   = GtkMenuToolButton
@@ -58,7 +59,7 @@
 
 module gtk.MenuToolButton;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -181,7 +182,7 @@ public class MenuToolButton : ToolButton
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(MenuToolButton)[] onShowMenuListeners;
@@ -195,7 +196,7 @@ public class MenuToolButton : ToolButton
 			cast(GCallback)&callBackShowMenu,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["show-menu"] = 1;
 		}
 		onShowMenuListeners ~= dlg;

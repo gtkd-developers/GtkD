@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Keyboard-Accelerators.html
  * outPack = gtk
  * outFile = AccelGroup
  * strct   = GtkAccelGroup
@@ -56,7 +57,7 @@
 
 module gtk.AccelGroup;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -117,7 +118,7 @@ public class AccelGroup : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(ObjectG, guint, GdkModifierType, AccelGroup)[] onAccelActivateListeners;
@@ -131,7 +132,7 @@ public class AccelGroup : ObjectG
 			cast(GCallback)&callBackAccelActivate,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["accel-activate"] = 1;
 		}
 		onAccelActivateListeners ~= dlg;
@@ -159,7 +160,7 @@ public class AccelGroup : ObjectG
 			cast(GCallback)&callBackAccelChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["accel-changed"] = 1;
 		}
 		onAccelChangedListeners ~= dlg;
@@ -485,10 +486,12 @@ public class AccelGroup : ObjectG
 	/**
 	 * Sets the modifiers that will be considered significant for keyboard
 	 * accelerators. The default mod mask is GDK_CONTROL_MASK |
-	 * GDK_SHIFT_MASK | GDK_MOD1_MASK, that is, Control, Shift, and Alt.
-	 * Other modifiers will by default be ignored by GtkAccelGroup.
-	 * You must include at least the three default modifiers in any
-	 * value you pass to this function.
+	 * GDK_SHIFT_MASK | GDK_MOD1_MASK | GDK_SUPER_MASK |
+	 * GDK_HYPER_MASK | GDK_META_MASK, that is, Control, Shift, Alt,
+	 * Super, Hyper and Meta. Other modifiers will by default be ignored
+	 * by GtkAccelGroup.
+	 * You must include at least the three modifiers Control, Shift
+	 * and Alt in any value you pass to this function.
 	 * The default mod mask should be changed on application startup,
 	 * before using any accelerator groups.
 	 * default_mod_mask:

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Memory-Allocators.html
  * outPack = glib
  * outFile = Allocator
  * strct   = GAllocator
@@ -47,7 +48,7 @@
 
 module glib.Allocator;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

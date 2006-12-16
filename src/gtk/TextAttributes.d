@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gtk
  * outFile = TextAttributes
  * strct   = GtkTextAttributes
@@ -48,7 +49,7 @@
 
 module gtk.TextAttributes;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -98,7 +99,7 @@ public class TextAttributes
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes)[] onListeners;
@@ -112,7 +113,7 @@ public class TextAttributes
 			cast(GCallback)&callBack,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["event"] = 1;
 		}
 		onListeners ~= dlg;

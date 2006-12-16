@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkSizeGroup.html
  * outPack = gtk
  * outFile = SizeGroup
  * strct   = GtkSizeGroup
@@ -49,7 +50,7 @@
 
 module gtk.SizeGroup;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -166,12 +167,12 @@ public class SizeGroup : ObjectG
 	}
 	
 	/**
-	 * Sets whether invisible widgets should be ignored when
+	 * Sets whether unmapped widgets should be ignored when
 	 * calculating the size.
 	 * size_group:
 	 *  a GtkSizeGroup
 	 * ignore_hidden:
-	 *  whether hidden widgets should be ignored
+	 *  whether unmapped widgets should be ignored
 	 *  when calculating the size
 	 * Since 2.8
 	 */
@@ -218,18 +219,33 @@ public class SizeGroup : ObjectG
 	 *  a GtkSizeGrup
 	 * widget:
 	 *  the GtkWidget to remove
-	 * Property Details
-	 * The "ignore-hidden" property
-	 *  "ignore-hidden" gboolean : Read / Write
-	 * If TRUE, hidden widgets are ignored when determining
-	 * the size of the group.
-	 * Default value: FALSE
-	 * Since 2.8
 	 */
 	public void removeWidget(Widget widget)
 	{
 		// void gtk_size_group_remove_widget (GtkSizeGroup *size_group,  GtkWidget *widget);
 		gtk_size_group_remove_widget(gtkSizeGroup, (widget is null) ? null : widget.getWidgetStruct());
+	}
+	
+	/**
+	 * Returns the list of widgets associated with size_group.
+	 * size_group:
+	 *  a GtkSizeGrup
+	 * Returns:
+	 *  a GSList of widgets. The list is owned by GTK+
+	 *  and should not be modified.
+	 * Since 2.10
+	 * Property Details
+	 * The "ignore-hidden" property
+	 *  "ignore-hidden" gboolean : Read / Write
+	 * If TRUE, unmapped widgets are ignored when determining
+	 * the size of the group.
+	 * Default value: FALSE
+	 * Since 2.8
+	 */
+	public GSList* getWidgets()
+	{
+		// GSList* gtk_size_group_get_widgets (GtkSizeGroup *size_group);
+		return gtk_size_group_get_widgets(gtkSizeGroup);
 	}
 	
 }

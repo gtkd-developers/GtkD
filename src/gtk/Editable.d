@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkEditable.html
  * outPack = gtk
  * outFile = Editable
  * strct   = GtkEditable
@@ -48,7 +49,7 @@
 
 module gtk.Editable;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -116,7 +117,7 @@ public class Editable
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Editable)[] onChangedListeners;
@@ -130,7 +131,7 @@ public class Editable
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -158,7 +159,7 @@ public class Editable
 			cast(GCallback)&callBackDeleteText,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["delete-text"] = 1;
 		}
 		onDeleteTextListeners ~= dlg;
@@ -186,7 +187,7 @@ public class Editable
 			cast(GCallback)&callBackInsertText,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["insert-text"] = 1;
 		}
 		onInsertTextListeners ~= dlg;

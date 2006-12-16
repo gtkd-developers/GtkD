@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Spawning-Processes.html
  * outPack = glib
  * outFile = Spawn
  * strct   = 
@@ -46,6 +47,7 @@
  * 	- glib.Str
  * 	- std.thread
  * 	- std.stdio
+ * 	- std.string;
  * 	- std.c.string;
  * structWrap:
  * 	- GMainLoop* -> MainLoop
@@ -54,7 +56,7 @@
 
 module glib.Spawn;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -63,8 +65,8 @@ private import glib.MainLoop;
 private import glib.Str;
 private import std.thread;
 private import std.stdio;
+private import std.string;;
 private import std.c.string;;
-
 
 /**
  * Description
@@ -258,12 +260,12 @@ public class Spawn
 		}
 		char[] line;
 		line.length = max+1;
-		char* lineP = fgets(&line[0], max, stream);
+		char* lineP = fgets(line.ptr, max, stream);
 		if ( lineP is null )
 		{
 			return "";
 		}
-		int l = strlen(&line[0]);
+		int l = strlen(line.ptr);
 		if ( l > 0 ) --l;
 		//printf("\nreadLine\n");
 		//foreach ( char c ; line )
@@ -312,18 +314,37 @@ public class Spawn
 	{
 		return exitStatus;
 	}
-
-	import std.string;
+	
+	// old version
+	//	public int commandLineSync()
+	//	{
+		//		char[] commandLine;
+		//		foreach ( int count, char[] arg; argv)
+		//		{
+			//			if ( count > 0 )
+			//			{
+				//				commandLine ~= ' ';
+			//			}
+			//			commandLine ~= arg;
+		//		}
+		//		return g_spawn_command_line_sync(
+		//
+		//			Str.toStringz(commandLine),
+		//			&strOutput,
+		//			&strError,
+		//			&exitStatus,
+		//			&error);
+	//	}
 	
 	/**
-	 * Executes a command synchronasly and 
+	 * Executes a command synchronasly and
 	 * optionally calls delegates for sysout, syserr and end of job
-	 * 
+	 *
 	 */
 	public int commandLineSync(
-		ChildWatch externalWatch = null,
-		bool delegate(char[]) readOutput = null,
-		bool delegate(char[]) readError = null )
+	ChildWatch externalWatch = null,
+	bool delegate(char[]) readOutput = null,
+	bool delegate(char[]) readError = null )
 	{
 		char[] commandLine;
 		foreach ( int count, char[] arg; argv)
@@ -335,21 +356,21 @@ public class Spawn
 			commandLine ~= arg;
 		}
 		int status = g_spawn_command_line_sync(
-				Str.toStringz(commandLine),
-				&strOutput,
-				&strError,
-				&exitStatus,
-				&error);
+		Str.toStringz(commandLine),
+		&strOutput,
+		&strError,
+		&exitStatus,
+		&error);
 		if ( readOutput != null )
 		{
-			foreach ( char[] line ; std.string.splitlines(toString(strOutput)) )
+			foreach ( char[] line ; splitlines(Str.toString(strOutput)) )
 			{
 				readOutput(line);
 			}
 		}
 		if ( readError != null )
 		{
-			foreach ( char[] line ; std.string.splitlines(toString(strError)) )
+			foreach ( char[] line ; splitlines(Str.toString(strError)) )
 			{
 				readError(line);
 			}
@@ -360,6 +381,12 @@ public class Spawn
 		}
 		return status;
 	}
+	
+	
+	
+	
+	/**
+	 */
 	
 	
 	
@@ -433,7 +460,7 @@ public class Spawn
 		// gboolean g_spawn_sync (const gchar *working_directory,  gchar **argv,  gchar **envp,  GSpawnFlags flags,  GSpawnChildSetupFunc child_setup,  gpointer user_data,  gchar **standard_output,  gchar **standard_error,  gint *exit_status,  GError **error);
 		return g_spawn_sync(Str.toStringz(workingDirectory), argv, envp, flags, childSetup, userData, standardOutput, standardError, exitStatus, error);
 	}
-
+	
 	/**
 	 * A simple version of g_spawn_async() that parses a command line with
 	 * g_shell_parse_argv() and passes it to g_spawn_async(). Runs a

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkTable.html
  * outPack = atk
  * outFile = Table
  * strct   = AtkTable
@@ -47,7 +48,7 @@
 
 module atk.Table;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
@@ -103,7 +104,7 @@ public class Table
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gint, gint, Table)[] onColumnDeletedListeners;
@@ -117,7 +118,7 @@ public class Table
 			cast(GCallback)&callBackColumnDeleted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["column-deleted"] = 1;
 		}
 		onColumnDeletedListeners ~= dlg;
@@ -145,7 +146,7 @@ public class Table
 			cast(GCallback)&callBackColumnInserted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["column-inserted"] = 1;
 		}
 		onColumnInsertedListeners ~= dlg;
@@ -173,7 +174,7 @@ public class Table
 			cast(GCallback)&callBackColumnReordered,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["column-reordered"] = 1;
 		}
 		onColumnReorderedListeners ~= dlg;
@@ -201,7 +202,7 @@ public class Table
 			cast(GCallback)&callBackModelChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["model-changed"] = 1;
 		}
 		onModelChangedListeners ~= dlg;
@@ -229,7 +230,7 @@ public class Table
 			cast(GCallback)&callBackRowDeleted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-deleted"] = 1;
 		}
 		onRowDeletedListeners ~= dlg;
@@ -257,7 +258,7 @@ public class Table
 			cast(GCallback)&callBackRowInserted,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-inserted"] = 1;
 		}
 		onRowInsertedListeners ~= dlg;
@@ -285,7 +286,7 @@ public class Table
 			cast(GCallback)&callBackRowReordered,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-reordered"] = 1;
 		}
 		onRowReorderedListeners ~= dlg;

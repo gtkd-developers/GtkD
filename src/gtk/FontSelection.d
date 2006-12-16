@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkFontSelection.html
  * outPack = gtk
  * outFile = FontSelection
  * strct   = GtkFontSelection
@@ -50,7 +51,7 @@
 
 module gtk.FontSelection;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -65,8 +66,7 @@ private import gdk.Font;
  * selecting fonts.
  * To set the font which is initially selected, use
  * gtk_font_selection_set_font_name().
- * To get the selected font use gtk_font_selection_get_font()
- * or gtk_font_selection_get_font_name().
+ * To get the selected font use gtk_font_selection_get_font_name().
  * To change the text which is shown in the preview area, use
  * gtk_font_selection_set_preview_text().
  */
@@ -130,14 +130,17 @@ public class FontSelection : VBox
 	}
 	
 	/**
-	 * Gets the currently-selected font name.
+	 * Gets the currently-selected font name. Note that this can be a different
+	 * string than what you set with gtk_font_selection_set_font_name(), as
+	 * the font selection widget may normalize font names and thus return a string
+	 * with a different structure. For example, "Helvetica Italic Bold 12" could be
+	 * normalized to "Helvetica Bold Italic 12". Use pango_font_description_equal()
+	 * if you want to compare two font descriptions.
 	 * fontsel:
-	 * a GtkFontSelection.
+	 *  a GtkFontSelection
 	 * Returns:
-	 * the name of the currently selected font, or NULL if
-	 *  no font is selected. You should g_free() the returned font name
-	 *  after you are done with it.
-	 * A newly allocated string with the currently-se
+	 *  A string with the name of the current font, or NULL if no font
+	 * is selected. You must free this string with g_free().
 	 */
 	public char[] getFontName()
 	{
@@ -146,13 +149,17 @@ public class FontSelection : VBox
 	}
 	
 	/**
-	 * Sets the currently-selected font.
+	 * Sets the currently-selected font. Note that the fontsel needs to know the
+	 * screen in which it will appear for this to work; this can be guaranteed by
+	 * simply making sure that the fontsel is inserted in a toplevel window before
+	 * you call this function.
 	 * fontsel:
-	 * a GtkFontSelection.
+	 *  a GtkFontSelection
 	 * fontname:
-	 * a fontname.
+	 *  a font name like "Helvetica 12" or "Times Bold 18"
 	 * Returns:
-	 * TRUE if the font was found.
+	 *  TRUE if the font could be set successfully; FALSE if no such
+	 * font exists or if the fontsel doesn't belong to a particular screen yet.
 	 */
 	public int setFontName(char[] fontname)
 	{

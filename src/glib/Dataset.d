@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Datasets.html
  * outPack = glib
  * outFile = Dataset
  * strct   = 
@@ -47,7 +48,7 @@
 
 module glib.Dataset;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

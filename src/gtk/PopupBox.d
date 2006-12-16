@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gtk
  * outFile = PopupBox
  * strct   = 
@@ -39,24 +40,24 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- gtk.typedefs
+ * 	- gtk.gtktypes
  * 	- gtk.MessageDialog;
  * 	- gtk.Window;
- * 	- gtk.typedefs
+ * 	- gtk.gtktypes
  * structWrap:
  * local aliases:
  */
 
 module gtk.PopupBox;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 private import gtk.MessageDialog;;
 private import gtk.Window;;
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 /**
  */
@@ -81,12 +82,12 @@ public class PopupBox
 	 */
 	public static void information(Window parent, char[] message, char[] title)
 	{
-		MessageDialog d = new MessageDialog(parent, 0,
+		MessageDialog d = new MessageDialog(parent, cast(GtkDialogFlags)0,
 		MessageType.INFO,
-		ButtonsType.NONE ,
+		ButtonsType.OK ,
 		message);
 		d.setTitle(title);
-		d.addButton("gtk-dialog-info",GtkResponseType.GTK_RESPONSE_OK);
+		//d.addButton("gtk-dialog-info",GtkResponseType.GTK_RESPONSE_OK);
 		d.run();
 		d.destroy();
 	}
@@ -110,12 +111,12 @@ public class PopupBox
 	 */
 	public static void error(Window parent, char[] message, char[] title)
 	{
-		MessageDialog d = new MessageDialog(parent, 0,
+		MessageDialog d = new MessageDialog(parent, cast(GtkDialogFlags)0,
 		MessageType.ERROR,
-		ButtonsType.NONE ,
+		ButtonsType.CANCEL ,
 		message);
 		d.setTitle(title);
-		d.addButton("gtk-dialog-error",ResponseType.GTK_RESPONSE_CANCEL);
+		//d.addButton("gtk-dialog-error",ResponseType.GTK_RESPONSE_CANCEL);
 		d.run();
 		d.destroy();
 	}
@@ -141,7 +142,7 @@ public class PopupBox
 	public static bool yesNo(Window parent, char[] message, char[] title)
 	{
 		MessageDialog d = new MessageDialog(
-		parent, 0,
+		parent, cast(GtkDialogFlags)0,
 		MessageType.QUESTION,
 		ButtonsType.NONE ,
 		message);
@@ -173,7 +174,7 @@ public class PopupBox
 	public static ResponseType yesNoCancel(Window parent, char[] message, char[] title)
 	{
 		MessageDialog d = new MessageDialog(
-		parent, 0,
+		parent, cast(GtkDialogFlags)0,
 		MessageType.QUESTION,
 		ButtonsType.NONE ,
 		message);

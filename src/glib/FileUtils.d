@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-File-Utilities.html
  * outPack = glib
  * outFile = FileUtils
  * strct   = 
@@ -48,7 +49,7 @@
 
 module glib.FileUtils;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -217,11 +218,12 @@ public class FileUtils
 	
 	/**
 	 * Opens a temporary file. See the mkstemp() documentation
-	 * on most UNIX-like systems. This is a portability wrapper, which simply calls
-	 * mkstemp() on systems that have it, and implements
-	 * it in GLib otherwise.
-	 * The parameter is a string that should match the rules for
-	 * mkstemp(), i.e. end in "XXXXXX". The X string will
+	 * on most UNIX-like systems.
+	 * The parameter is a string that should follow the rules for
+	 * mkstemp() templates, i.e. contain the string "XXXXXX".
+	 * g_mkstemp() is slightly more flexible than mkstemp()
+	 * in that the sequence does not have to occur at the very end of the
+	 * template. The X string will
 	 * be modified to form the name of a file that didn't exist.
 	 * The string should be in the GLib file name encoding. Most importantly,
 	 * on Windows it should be in UTF-8.
@@ -242,8 +244,8 @@ public class FileUtils
 	/**
 	 * Opens a file for writing in the preferred directory for temporary
 	 * files (as returned by g_get_tmp_dir()).
-	 * tmpl should be a string in the GLib file name encoding ending with
-	 * six 'X' characters, as the parameter to g_mkstemp() (or mkstemp()).
+	 * tmpl should be a string in the GLib file name encoding containing
+	 * a sequence of six 'X' characters, as the parameter to g_mkstemp().
 	 * However, unlike these functions, the template should only be a
 	 * basename, no directory components are allowed. If template is
 	 * NULL, a default template is used.
@@ -253,7 +255,8 @@ public class FileUtils
 	 * string should be freed with g_free() when not needed any longer.
 	 * The returned name is in the GLib file name encoding.
 	 * tmpl:
-	 *  Template for file name, as in g_mkstemp(), basename only
+	 *  Template for file name, as in g_mkstemp(), basename only,
+	 *  or NULL, to a default template
 	 * name_used:
 	 *  location to store actual name used
 	 * error:
@@ -582,6 +585,10 @@ public class FileUtils
 	 * thus works for both files and directories. Note however, that on
 	 * Windows, it is in general not possible to remove a file that is
 	 * open to some process, or mapped into memory.
+	 * If this function fails on Windows you can't infer too much from the
+	 * errno value. rmdir() is tried regardless of what caused remove() to
+	 * fail. Any errno value set by remove() will be overwritten by that
+	 * set by rmdir().
 	 * filename:
 	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
 	 * Returns:

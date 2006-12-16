@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gobject-Signals.html
  * outPack = gobject
  * outFile = Signals
  * strct   = 
@@ -54,7 +55,7 @@
 
 module gobject.Signals;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 
@@ -142,7 +143,8 @@ public class Signals
 	 *  G_SIGNAL_RUN_FIRST or G_SIGNAL_RUN_LAST.
 	 * class_offset:
 	 * The offset of the function pointer in the class structure
-	 *  for this type. Used to invoke a class method generically.
+	 *  for this type. Used to invoke a class method generically. Pass 0 to
+	 *  not associate a class method with this signal.
 	 * accumulator:
 	 * the accumulator for this signal; may be NULL.
 	 * accu_data:
@@ -179,7 +181,7 @@ public class Signals
 	 *  the default handler is to be invoked. You should at least specify
 	 *  G_SIGNAL_RUN_FIRST or G_SIGNAL_RUN_LAST.
 	 * class_closure:
-	 * The closure to invoke on signal emission.
+	 * The closure to invoke on signal emission; may be NULL.
 	 * accumulator:
 	 * the accumulator for this signal; may be NULL.
 	 * accu_data:
@@ -216,7 +218,7 @@ public class Signals
 	 *  the default handler is to be invoked. You should at least specify
 	 *  G_SIGNAL_RUN_FIRST or G_SIGNAL_RUN_LAST.
 	 * class_closure:
-	 * The closure to invoke on signal emission.
+	 * The closure to invoke on signal emission; may be NULL.
 	 * accumulator:
 	 * the accumulator for this signal; may be NULL.
 	 * accu_data:

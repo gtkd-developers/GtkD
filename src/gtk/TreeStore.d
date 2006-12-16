@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTreeStore.html
  * outPack = gtk
  * outFile = TreeStore
  * strct   = GtkTreeStore
@@ -58,7 +59,7 @@
 
 module gtk.TreeStore;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -122,7 +123,7 @@ public class TreeStore : TreeModel
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
 		this(cast(GtkTreeStore*)gtk_tree_store_newv(
-		types.length, cast(GType*)(&types[0]))
+		types.length, cast(GType*)(types.ptr))
 		);
 	}
 	
@@ -449,6 +450,66 @@ public class TreeStore : TreeModel
 	{
 		// void gtk_tree_store_insert_after (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent,  GtkTreeIter *sibling);
 		gtk_tree_store_insert_after(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct(), (sibling is null) ? null : sibling.getTreeIterStruct());
+	}
+	
+	/**
+	 * Creates a new row at position. iter will be changed to point to this
+	 * new row. If position is larger than the number of rows on the list, then
+	 * the new row will be appended to the list. The row will be filled with
+	 * the values given to this function.
+	 * Calling
+	 * gtk_tree_store_insert_with_values (tree_store, iter, position, ...)
+	 * has the same effect as calling
+	 * gtk_tree_store_insert (tree_store, iter, position);
+	 * gtk_tree_store_set (tree_store, iter, ...);
+	 * with the different that the former will only emit a row_inserted signal,
+	 * while the latter will emit row_inserted, row_changed and if the tree store
+	 * is sorted, rows_reordered. Since emitting the rows_reordered signal
+	 * repeatedly can affect the performance of the program,
+	 * gtk_tree_store_insert_with_values() should generally be preferred when
+	 * inserting rows in a sorted tree store.
+	 * tree_store:
+	 *  A GtkTreeStore
+	 * iter:
+	 *  An unset GtkTreeIter to set the new row, or NULL.
+	 * parent:
+	 *  A valid GtkTreeIter, or NULL
+	 * position:
+	 *  position to insert the new row
+	 * ...:
+	 *  pairs of column number and value, terminated with -1
+	 * Since 2.10
+	 */
+	public void insertWithValues(TreeIter iter, TreeIter parent, int position, ... )
+	{
+		// void gtk_tree_store_insert_with_values  (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent,  gint position,  ...);
+		gtk_tree_store_insert_with_values(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct(), position);
+	}
+	
+	/**
+	 * A variant of gtk_tree_store_insert_with_values() which takes
+	 * the columns and values as two arrays, instead of varargs. This
+	 * function is mainly intended for language bindings.
+	 * tree_store:
+	 *  A GtkTreeStore
+	 * iter:
+	 *  An unset GtkTreeIter to set the new row, or NULL.
+	 * parent:
+	 *  A valid GtkTreeIter, or NULL
+	 * position:
+	 *  position to insert the new row
+	 * columns:
+	 *  an array of column numbers
+	 * values:
+	 *  an array of GValues
+	 * n_values:
+	 *  the length of the columns and values arrays
+	 * Since 2.10
+	 */
+	public void insertWithValuesv(TreeIter iter, TreeIter parent, int position, int* columns, Value values, int nValues)
+	{
+		// void gtk_tree_store_insert_with_valuesv  (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent,  gint position,  gint *columns,  GValue *values,  gint n_values);
+		gtk_tree_store_insert_with_valuesv(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct(), position, columns, (values is null) ? null : values.getValueStruct(), nValues);
 	}
 	
 	/**

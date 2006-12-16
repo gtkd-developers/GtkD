@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCellRendererToggle.html
  * outPack = gtk
  * outFile = CellRendererToggle
  * strct   = GtkCellRenderer
@@ -50,7 +51,7 @@
 
 module gtk.CellRendererToggle;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -98,7 +99,7 @@ public class CellRendererToggle : CellRenderer
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], CellRendererToggle)[] onToggledListeners;
@@ -112,7 +113,7 @@ public class CellRendererToggle : CellRenderer
 			cast(GCallback)&callBackToggled,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;
@@ -211,6 +212,7 @@ public class CellRendererToggle : CellRenderer
 		// void gtk_cell_renderer_toggle_set_active  (GtkCellRendererToggle *toggle,  gboolean setting);
 		gtk_cell_renderer_toggle_set_active(toggle, setting);
 	}
+	
 	
 	
 	

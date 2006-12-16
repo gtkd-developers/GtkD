@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTextTag.html
  * outPack = gtk
  * outFile = TextTag
  * strct   = GtkTextTag
@@ -55,7 +56,7 @@
 
 module gtk.TextTag;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -110,7 +111,7 @@ public class TextTag : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(ObjectG, Event, TextIter, TextTag)[] onListeners;
@@ -124,7 +125,7 @@ public class TextTag : ObjectG
 			cast(GCallback)&callBack,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["event"] = 1;
 		}
 		onListeners ~= dlg;

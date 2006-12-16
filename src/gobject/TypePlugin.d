@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GTypePlugin.html
  * outPack = gobject
  * outFile = TypePlugin
  * strct   = GTypePlugin
@@ -48,7 +49,7 @@
 
 module gobject.TypePlugin;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 

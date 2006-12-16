@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkToolbar.html
  * outPack = gtk
  * outFile = Toolbar
  * strct   = GtkToolbar
@@ -53,7 +54,7 @@
 
 module gtk.Toolbar;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -161,7 +162,7 @@ public class Toolbar : Container
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(gboolean, Toolbar)[] onFocusHomeOrEndListeners;
@@ -175,7 +176,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackFocusHomeOrEnd,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["focus-home-or-end"] = 1;
 		}
 		onFocusHomeOrEndListeners ~= dlg;
@@ -203,7 +204,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackMoveFocus,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-focus"] = 1;
 		}
 		onMoveFocusListeners ~= dlg;
@@ -231,7 +232,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackOrientationChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["orientation-changed"] = 1;
 		}
 		onOrientationChangedListeners ~= dlg;
@@ -259,7 +260,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackPopupContextMenu,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["popup-context-menu"] = 1;
 		}
 		onPopupContextMenuListeners ~= dlg;
@@ -287,7 +288,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackStyleChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["style-changed"] = 1;
 		}
 		onStyleChangedListeners ~= dlg;
@@ -520,7 +521,7 @@ public class Toolbar : Container
 	
 	
 	/**
-	 * Retrieves the icon size fo the toolbar. See gtk_toolbar_set_icon_size().
+	 * Retrieves the icon size for the toolbar. See gtk_toolbar_set_icon_size().
 	 * toolbar:
 	 *  a GtkToolbar
 	 * Returns:
@@ -913,12 +914,14 @@ public class Toolbar : Container
 	
 	/**
 	 * Warning
-	 * gtk_toolbar_set_icon_size is deprecated and should not be used in newly-written code. Applications should respect the user preferences for
-	 *  the size of icons in toolbars.
+	 * gtk_toolbar_set_icon_size is deprecated and should not be used in newly-written code.
 	 * This function sets the size of stock icons in the toolbar. You
 	 * can call it both before you add the icons and after they've been
 	 * added. The size you set will override user preferences for the default
 	 * icon size.
+	 * This should only be used for special-purpose toolbars, normal
+	 * application toolbars should respect the user preferences for the
+	 * size of icons.
 	 * toolbar:
 	 *  A GtkToolbar
 	 * icon_size:
@@ -951,16 +954,25 @@ public class Toolbar : Container
 	 * toolbar:
 	 *  a GtkToolbar
 	 * Property Details
-	 * The "orientation" property
-	 *  "orientation" GtkOrientation : Read / Write
-	 * The orientation of the toolbar.
-	 * Default value: GTK_ORIENTATION_HORIZONTAL
+	 * The "icon-size" property
+	 *  "icon-size" GtkIconSize : Read / Write
+	 * The size of the icons in a toolbar is normally determined by
+	 * the toolbar-icon-size setting. When this property is set, it
+	 * overrides the setting.
+	 * This should only be used for special-purpose toolbars, normal
+	 * application toolbars should respect the user preferences for the
+	 * size of icons.
+	 * Default value: GTK_ICON_SIZE_LARGE_TOOLBAR
+	 * Since 2.10
 	 */
 	public void unsetStyle()
 	{
 		// void gtk_toolbar_unset_style (GtkToolbar *toolbar);
 		gtk_toolbar_unset_style(gtkToolbar);
 	}
+	
+	
+	
 	
 	
 	

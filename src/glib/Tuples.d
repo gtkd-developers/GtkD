@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = glib
  * outFile = Tuples
  * strct   = GTuples
@@ -46,7 +47,7 @@
 
 module glib.Tuples;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

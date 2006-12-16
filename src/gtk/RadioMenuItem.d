@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkRadioMenuItem.html
  * outPack = gtk
  * outFile = RadioMenuItem
  * strct   = GtkRadioMenuItem
@@ -54,7 +55,7 @@
 
 module gtk.RadioMenuItem;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -189,7 +190,7 @@ public class RadioMenuItem : CheckMenuItem
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(RadioMenuItem)[] onGroupChangedListeners;
@@ -203,7 +204,7 @@ public class RadioMenuItem : CheckMenuItem
 			cast(GCallback)&callBackGroupChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["group-changed"] = 1;
 		}
 		onGroupChangedListeners ~= dlg;

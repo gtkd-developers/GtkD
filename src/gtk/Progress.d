@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkProgress.html
  * outPack = gtk
  * outFile = Progress
  * strct   = GtkProgress
@@ -50,7 +51,7 @@
 
 module gtk.Progress;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -313,20 +314,19 @@ public class Progress : Widget
 	 * a GtkProgress.
 	 * value:
 	 * the current progress value.
-	 * min:
-	 * the minimum progress value.
+	 * hmin:
 	 * max:
 	 * the maximum progress value.
 	 * Property Details
 	 * The "activity-mode" property
 	 *  "activity-mode" gboolean : Read / Write
-	 * If TRUE the GtkProgress is in activity mode, meaning that it signals something is happening, but not how much of the activity is finished. This is used when you're doing something that you don't know how long it will take.
+	 * If TRUE, the GtkProgress is in activity mode, meaning that it signals something is happening, but not how much of the activity is finished. This is used when you're doing something but don't know how long it will take.
 	 * Default value: FALSE
 	 */
-	public void configure(double value, double min, double max)
+	public void configure(double value, double hmin, double max)
 	{
-		// void gtk_progress_configure (GtkProgress *progress,  gdouble value,  gdouble min,  gdouble max);
-		gtk_progress_configure(gtkProgress, value, min, max);
+		// void gtk_progress_configure (GtkProgress *progress,  gdouble value,  gdouble hmin,  gdouble max);
+		gtk_progress_configure(gtkProgress, value, hmin, max);
 	}
 	
 	

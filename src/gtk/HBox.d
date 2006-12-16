@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkHBox.html
  * outPack = gtk
  * outFile = HBox
  * strct   = GtkHBox
@@ -47,7 +48,7 @@
 
 module gtk.HBox;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

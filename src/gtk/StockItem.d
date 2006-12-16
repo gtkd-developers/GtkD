@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Stock-Items.html
  * outPack = gtk
  * outFile = StockItem
  * strct   = GtkStockItem
@@ -52,7 +53,7 @@
 
 module gtk.StockItem;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -217,6 +218,11 @@ public class StockItem
 		// void gtk_stock_set_translate_func (const gchar *domain,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
 		gtk_stock_set_translate_func(Str.toStringz(domain), func, data, notify);
 	}
+	
+	
+	
+	
+	
 	
 	
 	

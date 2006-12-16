@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkListStore.html
  * outPack = gtk
  * outFile = ListStore
  * strct   = GtkListStore
@@ -55,7 +56,7 @@
 
 module gtk.ListStore;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -132,6 +133,17 @@ private import glib.Str;
  * that GtkTreeIters can be cached while the row exists. Thus, if
  * access to a particular row is needed often and your code is expected to
  * run on older versions of GTK+, it is worth keeping the iter around.
+ * Atomic Operations
+ * It is important to note that only the methods gtk_list_store_insert_with_values and
+ * gtk_list_store_insert_with_valuesv are atomic, in the sense that the row is being appended
+ * to the store and the values filled in in a single operation with regard to GtkTreeModel signaling.
+ * In contrast, using e.g. gtk_list_store_append and then gtk_list_store_set will first create a row,
+ * which triggers the "row_inserted" GtkTreeModel signal on GtkListStore. The row, however, is still
+ * empty, and any signal handler connecting to "row_inserted" on this particular store should be prepared
+ * for the situation that the row might be empty.
+ * This is especially important if you are wrapping the GtkListStore inside a GtkTreeModelFilter and are
+ * using a GtkTreeModelFilterVisibleFunc. Using any of the non-atomic operations to append rows to the GtkListStore
+ * will cause the GtkTreeModelFilterVisibleFunc to be visited with an empty row first; the function must be prepared for that.
  */
 private import gtk.TreeModel;
 public class ListStore : TreeModel
@@ -174,7 +186,7 @@ public class ListStore : TreeModel
 	public this (GType[] types)
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		this(cast(GtkListStore*)gtk_list_store_newv(types.length, cast(GType*)(&types[0])) );
+		this(cast(GtkListStore*)gtk_list_store_newv(types.length, cast(GType*)(types.ptr)) );
 	}
 	
 	/**
@@ -409,7 +421,7 @@ public class ListStore : TreeModel
 	 * gtk_list_store_insert_with_values(list_store, iter, position...)
 	 * has the same effect as calling
 	 * gtk_list_store_insert (list_store, iter, position);
-	 * gtk_list_store_set (list_store_iter, ...);
+	 * gtk_list_store_set (list_store, iter, ...);
 	 * with the difference that the former will only emit a row_inserted signal,
 	 * while the latter will emit row_inserted, row_changed and, if the list store
 	 * is sorted, rows_reordered. Since emitting the rows_reordered signal
@@ -419,7 +431,7 @@ public class ListStore : TreeModel
 	 * list_store:
 	 *  A GtkListStore
 	 * iter:
-	 *  An unset GtkTreeIter to set to the new row
+	 *  An unset GtkTreeIter to set to the new row, or NULL.
 	 * position:
 	 *  position to insert the new row
 	 * ...:
@@ -440,7 +452,7 @@ public class ListStore : TreeModel
 	 * list_store:
 	 *  A GtkListStore
 	 * iter:
-	 *  An unset GtkTreeIter to set to the new row
+	 *  An unset GtkTreeIter to set to the new row, or NULL.
 	 * position:
 	 *  position to insert the new row
 	 * columns:

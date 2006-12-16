@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gobject-Value-arrays.html
  * outPack = gobject
  * outFile = ValueArray
  * strct   = GValueArray
@@ -50,7 +51,7 @@
 
 module gobject.ValueArray;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 

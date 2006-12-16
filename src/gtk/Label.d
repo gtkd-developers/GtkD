@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkLabel.html
  * outPack = gtk
  * outFile = Label
  * strct   = GtkLabel
@@ -52,7 +53,7 @@
 
 module gtk.Label;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -200,7 +201,7 @@ public class Label : Misc
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Label)[] onCopyClipboardListeners;
@@ -214,7 +215,7 @@ public class Label : Misc
 			cast(GCallback)&callBackCopyClipboard,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["copy-clipboard"] = 1;
 		}
 		onCopyClipboardListeners ~= dlg;
@@ -242,7 +243,7 @@ public class Label : Misc
 			cast(GCallback)&callBackMoveCursor,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -270,7 +271,7 @@ public class Label : Misc
 			cast(GCallback)&callBackPopulatePopup,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["populate-popup"] = 1;
 		}
 		onPopulatePopupListeners ~= dlg;
@@ -478,6 +479,11 @@ public class Label : Misc
 	 * Toggles line wrapping within the GtkLabel widget. TRUE makes it break
 	 * lines if text exceeds the widget's size. FALSE lets the text get cut off
 	 * by the edge of the widget if it exceeds the widget size.
+	 * Note that setting line wrapping to TRUE does not make the label
+	 * wrap at its parent container's width, because GTK+ widgets
+	 * conceptually can't make their requisition depend on the parent
+	 * container's size. For a label that wraps at a specific position,
+	 * set the label's width using gtk_widget_set_size_request().
 	 * label:
 	 *  a GtkLabel
 	 * wrap:
@@ -487,6 +493,22 @@ public class Label : Misc
 	{
 		// void gtk_label_set_line_wrap (GtkLabel *label,  gboolean wrap);
 		gtk_label_set_line_wrap(gtkLabel, wrap);
+	}
+	
+	/**
+	 * If line wrapping is on (see gtk_label_set_line_wrap()) this controls how
+	 * the line wrapping is done. The default is PANGO_WRAP_WORD which means
+	 * wrap on word boundaries.
+	 * label:
+	 *  a GtkLabel
+	 * wrap_mode:
+	 *  the line wrapping mode
+	 * Since 2.10
+	 */
+	public void setLineWrapMode(PangoWrapMode wrapMode)
+	{
+		// void gtk_label_set_line_wrap_mode (GtkLabel *label,  PangoWrapMode wrap_mode);
+		gtk_label_set_line_wrap_mode(gtkLabel, wrapMode);
 	}
 	
 	
@@ -752,6 +774,20 @@ public class Label : Misc
 	}
 	
 	/**
+	 * Returns line wrap mode used by the label. See gtk_label_set_line_wrap_mode().
+	 * label:
+	 *  a GtkLabel
+	 * Returns:
+	 *  TRUE if the lines of the label are automatically wrapped.
+	 * Since 2.10
+	 */
+	public PangoWrapMode getLineWrapMode()
+	{
+		// PangoWrapMode gtk_label_get_line_wrap_mode (GtkLabel *label);
+		return gtk_label_get_line_wrap_mode(gtkLabel);
+	}
+	
+	/**
 	 * Retrieves the target of the mnemonic (keyboard shortcut) of this
 	 * label. See gtk_label_set_mnemonic_widget().
 	 * label:
@@ -927,6 +963,7 @@ public class Label : Misc
 		// void gtk_label_set_angle (GtkLabel *label,  gdouble angle);
 		gtk_label_set_angle(gtkLabel, angle);
 	}
+	
 	
 	
 	

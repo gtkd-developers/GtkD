@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkComboBoxEntry.html
  * outPack = gtk
  * outFile = ComboBoxEntry
  * strct   = GtkComboBoxEntry
@@ -55,7 +56,7 @@
 
 module gtk.ComboBoxEntry;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -75,6 +76,12 @@ private import gtk.CellLayoutT;
  * must always have a text column (see gtk_combo_box_entry_set_text_column()),
  * and the entry will show the content of the text column in the selected row. To
  * get the text from the entry, use gtk_combo_box_get_active_text().
+ * The changed signal will be emitted while typing into a GtkComboBoxEntry,
+ * as well as when selecting an item from the GtkComboBoxEntry's list. Use
+ * gtk_combo_box_get_active() or gtk_combo_box_get_active_iter() to discover
+ * whether an item was actually selected from the list.
+ * Connect to the activate signal of the GtkEntry (use gtk_bin_get_child()) to
+ * detect when the user actually finishes entering text.
  * The convenience API to construct simple text-only GtkComboBoxes can
  * also be used with GtkComboBoxEntrys which have been constructed
  * with gtk_combo_box_entry_new_text().
@@ -165,7 +172,7 @@ public class ComboBoxEntry : ComboBox, CellLayoutIF
 	 *  A GtkComboBoxEntry.
 	 * text_column:
 	 *  A column in model to get the strings from.
-	 * Since 2.4.
+	 * Since 2.4
 	 */
 	public void setTextColumn(int textColumn)
 	{

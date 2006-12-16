@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = glib
  * outFile = Child
  * strct   = 
@@ -50,7 +51,7 @@
 
 module glib.Child;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -183,6 +184,9 @@ public class Child
 	
 	
 	
+	
+	
+	
 	/**
 	 * Creates a new child_watch source.
 	 * The source will not initially be associated with any GMainContext
@@ -191,7 +195,7 @@ public class Child
 	 * Note that child watch sources can only be used in conjunction with
 	 * g_spawn... when the G_SPAWN_DO_NOT_REAP_CHILD
 	 * flag is used.
-	 * Note that on platforms where GPid must be explicitely closed
+	 * Note that on platforms where GPid must be explicitly closed
 	 * (see g_spawn_close_pid()) pid must not be closed while the
 	 * source is still active. Typically, you will want to call
 	 * g_spawn_close_pid() in the callback function for the source.
@@ -215,7 +219,7 @@ public class Child
 	/**
 	 * Sets a function to be called when the child indicated by pid exits, at a
 	 * default priority, G_PRIORITY_DEFAULT.
-	 * Note that on platforms where GPid must be explicitely closed
+	 * Note that on platforms where GPid must be explicitly closed
 	 * (see g_spawn_close_pid()) pid must not be closed while the
 	 * source is still active. Typically, you will want to call
 	 * g_spawn_close_pid() in the callback function for the source.
@@ -239,7 +243,7 @@ public class Child
 	/**
 	 * Sets a function to be called when the child indicated by pid exits, at a
 	 * default priority, G_PRIORITY_DEFAULT.
-	 * Note that on platforms where GPid must be explicitely closed
+	 * Note that on platforms where GPid must be explicitly closed
 	 * (see g_spawn_close_pid()) pid must not be closed while the
 	 * source is still active. Typically, you will want to call
 	 * g_spawn_close_pid() in the callback function for the source.
@@ -264,6 +268,8 @@ public class Child
 		// guint g_child_watch_add_full (gint priority,  GPid pid,  GChildWatchFunc function,  gpointer data,  GDestroyNotify notify);
 		return g_child_watch_add_full(priority, pid, funct, data, notify);
 	}
+	
+	
 	
 	
 	

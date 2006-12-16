@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-pixbuf-Module-Interface.html
  * outPack = gdkpixbuf
  * outFile = PixbufFormat
  * strct   = GdkPixbufFormat
@@ -51,7 +52,7 @@
 
 module gdkpixbuf.PixbufFormat;
 
-private import gdkpixbuf.typedefs;
+private import gdkpixbuf.gdkpixbuftypes;
 
 private import lib.gdkpixbuf;
 
@@ -297,10 +298,10 @@ public class PixbufFormat
 	}
 	
 	/**
-	 * Returns information about the license of the image loader
-	 * for the format. The returned string should be a shorthand for
-	 * a wellknown license, e.g. "LGPL", "GPL", "QPL", "GPL/QPL",
-	 * or "other" to indicate some other license.
+	 * Returns information about the license of the image loader for the format. The
+	 * returned string should be a shorthand for a wellknown license, e.g. "LGPL",
+	 * "GPL", "QPL", "GPL/QPL", or "other" to indicate some other license. This
+	 * string should be freed with g_free() when it's no longer needed.
 	 * format:
 	 *  a GdkPixbufFormat
 	 * Returns:

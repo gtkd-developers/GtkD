@@ -25,23 +25,55 @@
 ###
 #
 
+
+addTypedefs: start
+
+public import glib.glibtypes;
+public import gdk.gdktypes;
+alias uint VisualID;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
+
 # must start with wrap
 
 wrap: glgdk
-srcout: srcgl
+srcout: src
 
 ###########################################################
 ### GL ####################################################
 ###########################################################
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkglinit.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglinit.html
 
 #struct: GMutex
 class: GLdInit
 prefix: gdk_gl_
 outFile: GLdInit
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkglquery.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglquery.html
 
 #struct: GMutex
 class: GLQuery
@@ -51,7 +83,7 @@ import: gdk.Display
 structWrap: GdkDisplay* Display
 outFile: GLQuery
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkglconfig.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglconfig.html
 
 struct: GdkGLConfig
 class: GLConfig
@@ -88,7 +120,7 @@ code: end
 
 outFile: GLConfig
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkglcontext.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglcontext.html
 
 struct: GdkGLContext
 class: GLContext
@@ -97,7 +129,7 @@ import: glgdk.GLDrawable
 structWrap: GdkGLDrawable* GLDrawable
 outFile: GLContext
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkgldrawable.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkgldrawable.html
 
 struct: GdkGLDrawable
 class: GLDrawable
@@ -106,7 +138,7 @@ import: glgdk.GLContext
 structWrap: GdkGLContext* GLContext
 outFile: GLDrawable
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkglpixmap.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglpixmap.html
 
 struct: GdkGLPixmap
 class: GLPixmap
@@ -115,7 +147,7 @@ import: glgdk.GLConfig
 structWrap: GdkGLCondif* GLConfig
 outFile: GLPixmap
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkglwindow.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglwindow.html
 
 struct: GdkGLWindow
 class: GLWindow
@@ -124,7 +156,7 @@ import: glgdk.GLConfig
 structWrap: GdkGLCondif* GLConfig
 outFile: GLWindow
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkglfont.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglfont.html
 
 #struct: GdkGL
 class: GLFont
@@ -136,21 +168,21 @@ import: pango.PgFontDescription
 structWrap: PangoFontDescription* PgFontDescription
 outFile: GLFont
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkglshapes.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglshapes.html
 
 #struct: GdkGL
 class: GLDraw
 prefix: gdk_gl_draw_
 outFile: GLDraw
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkgltokens.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkgltokens.html
 
 #struct: GdkGL
 class: GLTokens
 prefix: gdk_gl_tokens_
 outFile: GLTokens
 
-#file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkglx.html
+#file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglx.html
 #
 ##struct: GdkGLX11
 #class: GLX11
@@ -167,7 +199,7 @@ outFile: GLTokens
 #structWrap: GdkGLWindow* GLWindow
 #outFile: GLX11
 
-file: /home/ruimt/data/down/gtkglext-1.1.0/docs/reference/gtkglext/html/gtkglext-gdkglversion.html
+file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglversion.html
 
 #struct: GdkGLVersion
 class: GLdVersion

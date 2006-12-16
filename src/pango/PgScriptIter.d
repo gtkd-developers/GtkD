@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = pango-Scripts.html
  * outPack = pango
  * outFile = PgScriptIter
  * strct   = PangoScriptIter
@@ -76,7 +77,7 @@
 
 module pango.PgScriptIter;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
@@ -217,7 +218,8 @@ public class PgScriptIter
 	 *  length of text, or -1 if text is nul-terminated.
 	 * Returns:
 	 *  the new script iterator, initialized
-	 *  to point at the first range in the text. If the string is
+	 *  to point at the first range in the text, which should be
+	 *  freed with pango_script_iter_free(). If the string is
 	 *  empty, it will point at an empty range.
 	 * Since 1.4
 	 */

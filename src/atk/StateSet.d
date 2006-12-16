@@ -22,9 +22,10 @@
 
 /*
  * Conversion parameters:
+ * inFile  = atk-AtkStateSet.html
  * outPack = atk
  * outFile = StateSet
- * strct   = 
+ * strct   = AtkStateSet
  * realStrct=
  * ctorStrct=
  * clss    = StateSet
@@ -47,7 +48,7 @@
 
 module atk.StateSet;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
@@ -61,6 +62,30 @@ private import glib.Str;
 public class StateSet
 {
 	
+	/** the main Gtk struct */
+	protected AtkStateSet* atkStateSet;
+	
+	
+	public AtkStateSet* getStateSetStruct()
+	{
+		return atkStateSet;
+	}
+	
+	
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)atkStateSet;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (AtkStateSet* atkStateSet)
+	{
+		this.atkStateSet = atkStateSet;
+	}
+	
 	/**
 	 */
 	
@@ -69,10 +94,10 @@ public class StateSet
 	 * Returns:
 	 *  a new AtkStateSet
 	 */
-	public static AtkStateSet* newStateSet()
+	public this ()
 	{
 		// AtkStateSet* atk_state_set_new (void);
-		return atk_state_set_new();
+		this(cast(AtkStateSet*)atk_state_set_new() );
 	}
 	
 	/**
@@ -82,10 +107,10 @@ public class StateSet
 	 * Returns:
 	 *  TRUE if set has no states set, otherwise FALSE
 	 */
-	public static int isEmpty(AtkStateSet* set)
+	public int isEmpty()
 	{
 		// gboolean atk_state_set_is_empty (AtkStateSet *set);
-		return atk_state_set_is_empty(set);
+		return atk_state_set_is_empty(atkStateSet);
 	}
 	
 	/**
@@ -98,10 +123,10 @@ public class StateSet
 	 * Returns:
 	 *  TRUE if the state for type is not already in set.
 	 */
-	public static int addState(AtkStateSet* set, AtkStateType type)
+	public int addState(AtkStateType type)
 	{
 		// gboolean atk_state_set_add_state (AtkStateSet *set,  AtkStateType type);
-		return atk_state_set_add_state(set, type);
+		return atk_state_set_add_state(atkStateSet, type);
 	}
 	
 	/**
@@ -113,10 +138,10 @@ public class StateSet
 	 * n_types:
 	 *  The number of elements in the array
 	 */
-	public static void addStates(AtkStateSet* set, AtkStateType* types, int nTypes)
+	public void addStates(AtkStateType* types, int nTypes)
 	{
 		// void atk_state_set_add_states (AtkStateSet *set,  AtkStateType *types,  gint n_types);
-		atk_state_set_add_states(set, types, nTypes);
+		atk_state_set_add_states(atkStateSet, types, nTypes);
 	}
 	
 	/**
@@ -124,10 +149,10 @@ public class StateSet
 	 * set:
 	 *  an AtkStateSet
 	 */
-	public static void clearStates(AtkStateSet* set)
+	public void clearStates()
 	{
 		// void atk_state_set_clear_states (AtkStateSet *set);
-		atk_state_set_clear_states(set);
+		atk_state_set_clear_states(atkStateSet);
 	}
 	
 	/**
@@ -139,10 +164,10 @@ public class StateSet
 	 * Returns:
 	 *  TRUE if type is the state type is in set.
 	 */
-	public static int containsState(AtkStateSet* set, AtkStateType type)
+	public int containsState(AtkStateType type)
 	{
 		// gboolean atk_state_set_contains_state (AtkStateSet *set,  AtkStateType type);
-		return atk_state_set_contains_state(set, type);
+		return atk_state_set_contains_state(atkStateSet, type);
 	}
 	
 	/**
@@ -157,10 +182,10 @@ public class StateSet
 	 * Returns:
 	 *  TRUE if all the states for type are in set.
 	 */
-	public static int containsStates(AtkStateSet* set, AtkStateType* types, int nTypes)
+	public int containsStates(AtkStateType* types, int nTypes)
 	{
 		// gboolean atk_state_set_contains_states (AtkStateSet *set,  AtkStateType *types,  gint n_types);
-		return atk_state_set_contains_states(set, types, nTypes);
+		return atk_state_set_contains_states(atkStateSet, types, nTypes);
 	}
 	
 	/**
@@ -172,10 +197,10 @@ public class StateSet
 	 * Returns:
 	 *  TRUE if type was the state type is in set.
 	 */
-	public static int removeState(AtkStateSet* set, AtkStateType type)
+	public int removeState(AtkStateType type)
 	{
 		// gboolean atk_state_set_remove_state (AtkStateSet *set,  AtkStateType type);
-		return atk_state_set_remove_state(set, type);
+		return atk_state_set_remove_state(atkStateSet, type);
 	}
 	
 	/**
@@ -188,10 +213,10 @@ public class StateSet
 	 * Returns:
 	 *  a new AtkStateSet which is the intersection of the two sets.
 	 */
-	public static AtkStateSet* andSets(AtkStateSet* set, AtkStateSet* compareSet)
+	public AtkStateSet* andSets(AtkStateSet* compareSet)
 	{
 		// AtkStateSet* atk_state_set_and_sets (AtkStateSet *set,  AtkStateSet *compare_set);
-		return atk_state_set_and_sets(set, compareSet);
+		return atk_state_set_and_sets(atkStateSet, compareSet);
 	}
 	
 	/**
@@ -204,10 +229,10 @@ public class StateSet
 	 *  a new AtkStateSet which is the union of the two sets,
 	 * returning NULL is empty.
 	 */
-	public static AtkStateSet* orSets(AtkStateSet* set, AtkStateSet* compareSet)
+	public AtkStateSet* orSets(AtkStateSet* compareSet)
 	{
 		// AtkStateSet* atk_state_set_or_sets (AtkStateSet *set,  AtkStateSet *compare_set);
-		return atk_state_set_or_sets(set, compareSet);
+		return atk_state_set_or_sets(atkStateSet, compareSet);
 	}
 	
 	/**
@@ -222,9 +247,9 @@ public class StateSet
 	 *  a new AtkStateSet which contains the states which are
 	 * in exactly one of the two sets.
 	 */
-	public static AtkStateSet* xorSets(AtkStateSet* set, AtkStateSet* compareSet)
+	public AtkStateSet* xorSets(AtkStateSet* compareSet)
 	{
 		// AtkStateSet* atk_state_set_xor_sets (AtkStateSet *set,  AtkStateSet *compare_set);
-		return atk_state_set_xor_sets(set, compareSet);
+		return atk_state_set_xor_sets(atkStateSet, compareSet);
 	}
 }

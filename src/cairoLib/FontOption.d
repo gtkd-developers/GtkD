@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = cairo-Font-Options.html
  * outPack = cairoLib
  * outFile = FontOption
  * strct   = cairo_font_options_t
@@ -46,7 +47,7 @@
 
 module cairoLib.FontOption;
 
-private import cairoLib.typedefs;
+private import cairoLib.cairoLibtypes;
 
 private import lib.cairoLib;
 
@@ -307,8 +308,6 @@ public class FontOption
 	 *  a cairo_font_options_t
 	 * Returns:
 	 *  the metrics hinting mode for the font options object
-	 * <<Scaled Fonts
-	 * FreeType Fonts>>
 	 */
 	public cairo_hint_metrics_t getHintMetrics()
 	{

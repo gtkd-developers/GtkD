@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-String-Utility-Functions.html
  * outPack = glib
  * outFile = Str
  * strct   = 
@@ -50,7 +51,7 @@
 
 module glib.Str;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -128,7 +129,7 @@ public class Str
 			copy[s.length] = 0;
 		}
 		
-		return copy;
+		return copy.ptr;
 	}
 	
 	public static char** toStringzArray(char[][] args)
@@ -137,7 +138,7 @@ public class Str
 		{
 			return null;
 		}
-		char** argv = new char*[args.length];
+		char** argv = (new char*[args.length]).ptr;
 		int argc = 0;
 		foreach (char[] p; args)
 		{
@@ -992,9 +993,8 @@ public static int asciiXdigitValue(char c)
  * s2:
  *  string to compare with s1.
  * Returns:
- *  an integer less than, equal to, or greater than
- *  zero if s1 is found, respectively, to be less than,
- *  to match, or to be greater than s2.
+ *  0 if the strings match, a negative value if s1 < s2,
+ *  or a positive value if s1 > s2.
  */
 public static int asciiStrcasecmp(char[] s1, char[] s2)
 {
@@ -1018,10 +1018,8 @@ public static int asciiStrcasecmp(char[] s1, char[] s2)
  * n:
  *  number of characters to compare.
  * Returns:
- *  an integer less than, equal to, or greater than zero
- *  if the first n bytes of s1 is found, respectively,
- *  to be less than, to match, or to be greater than the
- *  first n bytes of s2.
+ *  0 if the strings match, a negative value if s1 < s2,
+ *  or a positive value if s1 > s2.
  */
 public static int asciiStrncasecmp(char[] s1, char[] s2, uint n)
 {
@@ -1242,6 +1240,38 @@ public static char[] strreverse(char[] string)
 {
 	// gchar* g_strreverse (gchar *string);
 	return Str.toString(g_strreverse(Str.toStringz(string)) );
+}
+
+/**
+ * Converts a string to a gint64 value.
+ * This function behaves like the standard strtoll() function
+ * does in the C locale. It does this without actually
+ * changing the current locale, since that would not be
+ * thread-safe.
+ * This function is typically used when reading configuration
+ * files or other non-user input that should be locale independent.
+ * To handle input from the user you should normally use the
+ * locale-sensitive system strtoll() function.
+ * If the correct value would cause overflow, G_MAXINT64 or G_MININT64
+ * is returned, and ERANGE is stored in errno. If the base is
+ * outside the valid range, zero is returned, and EINVAL is stored
+ * in errno. If the string conversion fails, zero is returned, and
+ * endptr returns nptr (if endptr is non-NULL).
+ * nptr:
+ *  the string to convert to a numeric value.
+ * endptr:
+ *  if non-NULL, it returns the character after
+ *  the last character used in the conversion.
+ * base:
+ *  to be used for the conversion, 2..36 or 0
+ * Returns:
+ *  the gint64 value or zero on error.
+ * Since 2.12
+ */
+public static long asciiStrtoll(char[] nptr, char** endptr, uint base)
+{
+	// gint64 g_ascii_strtoll (const gchar *nptr,  gchar **endptr,  guint base);
+	return g_ascii_strtoll(Str.toStringz(nptr), endptr, base);
 }
 
 /**

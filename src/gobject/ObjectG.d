@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gobject-The-Base-Object-Type.html
  * outPack = gobject
  * outFile = ObjectG
  * strct   = GObject
@@ -55,7 +56,7 @@
 
 module gobject.ObjectG;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 
@@ -72,11 +73,12 @@ private import glib.Str;
  * The GObject class provides methods for object construction and destruction,
  * property access methods, and signal support.
  * Signals are described in detail in Signals(3).
- * The initial reference a GObject is created with is flagged as a
- * floating reference.
+ * GInitiallyUnowned is derived from GObject. The only difference between
+ * the two is that the initial reference of a GInitiallyUnowned is flagged
+ * as a floating reference.
  * This means that it is not specifically claimed to be "owned" by
  * any code portion. The main motivation for providing floating references is
- * C convenience. In particular, it allowes code to be written as:
+ * C convenience. In particular, it allows code to be written as:
  * Example1.
  *  container = create_container();
  *  container_add_child (container, create_child());
@@ -96,7 +98,7 @@ private import glib.Str;
  * For already sunken objects (objects that don't have a floating reference
  * anymore), g_object_ref_sink() is equivalent to g_object_ref() and returns
  * a new reference.
- * Since floating references are useful allmost exclusively for C convenience,
+ * Since floating references are useful almost exclusively for C convenience,
  * language bindings that provide automated reference and memory ownership
  * maintenance (such as smart pointers or garbage collection) therefore don't
  * need to expose floating references in their API.
@@ -339,7 +341,7 @@ public class ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ParamSpec, ObjectG)[] onNotifyListeners;
@@ -353,7 +355,7 @@ public class ObjectG
 			cast(GCallback)&callBackNotify,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["notify"] = 1;
 		}
 		onNotifyListeners ~= dlg;
@@ -581,7 +583,7 @@ public class ObjectG
 	 * object:
 	 * a GObject
 	 * Returns:
-	 * object
+	 * the same object
 	 */
 	public static void* ref(void* object)
 	{
@@ -590,8 +592,9 @@ public class ObjectG
 	}
 	
 	/**
-	 * Decreases the reference count if object.
-	 * When its reference count drops to 0, the object is finalized (i.e. its memory is freed).
+	 * Decreases the reference count of object.
+	 * When its reference count drops to 0, the object is finalized
+	 * (i.e. its memory is freed).
 	 * object:
 	 * a GObject
 	 */
@@ -605,6 +608,11 @@ public class ObjectG
 	 * Increase the reference count of object, and possibly remove the
 	 * floating reference, if object
 	 * has a floating reference.
+	 * In other words, if the object is floating, then this call "assumes
+	 * ownership" of the floating reference, converting it to a normal reference
+	 * by clearing the floating flag while leaving the reference count unchanged.
+	 * If the object is not floating, then this call adds a new normal reference
+	 * increasing the reference count by one.
 	 * object:
 	 * a GObject
 	 * Returns:
@@ -616,6 +624,9 @@ public class ObjectG
 		// gpointer g_object_ref_sink (gpointer object);
 		return g_object_ref_sink(object);
 	}
+	
+	
+	
 	
 	/**
 	 * Checks wether object has a floating
@@ -636,8 +647,8 @@ public class ObjectG
 	 * This function is intended for GObject implementations to re-enforce a
 	 * floating object reference.
 	 * Doing this is seldomly required, all
-	 * GObjects are created with a floating reference which usually
-	 * just needs to be sunken by calling g_object_ref_sink().
+	 * GInitiallyUnowneds are created with a floating reference which
+	 * usually just needs to be sunken by calling g_object_ref_sink().
 	 * object:
 	 * a GObject
 	 * Since 2.10
@@ -748,6 +759,7 @@ public class ObjectG
 	 *  the last reference.
 	 * data:
 	 * data to pass to notify
+	 * Since 2.8
 	 */
 	public void addToggleRef(GToggleNotify notify, void* data)
 	{
@@ -766,6 +778,7 @@ public class ObjectG
 	 *  the last reference.
 	 * data:
 	 * data to pass to notify
+	 * Since 2.8
 	 */
 	public void removeToggleRef(GToggleNotify notify, void* data)
 	{

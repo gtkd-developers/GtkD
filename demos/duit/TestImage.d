@@ -31,7 +31,7 @@ private import gtk.Image;
 
 private import gtk.Window;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import std.stdio;
 
@@ -78,12 +78,12 @@ class TestImage : VBox
 		// so here it is
 		char[][] pngs;
 		
-		pngs ~= "/home/ruimt/devel/D1/DUI/images/duiIcon_t.xpm";
-		pngs ~= "/home/ruimt/devel/D1/DUI/images/duiLogo.gif";
-		pngs ~= "/home/ruimt/devel/D1/DUI/images/duiLogo.xpm";
-		pngs ~= "/home/ruimt/devel/D1/DUI/images/duiLogo_2.xpm";
-		pngs ~= "/home/ruimt/devel/D1/DUI/images/duiLogo_4.xpm";
-		pngs ~= "/home/ruimt/devel/D1/DUI/images/duiLogo_8.xpm";
+		pngs ~= "/home/ruimt/devel/D/DUI/images/duiIcon_t.xpm";
+		pngs ~= "/home/ruimt/devel/D/DUI/images/duiLogo.gif";
+		pngs ~= "/home/ruimt/devel/D/DUI/images/duiLogo.xpm";
+		pngs ~= "/home/ruimt/devel/D/DUI/images/duiLogo_2.xpm";
+		pngs ~= "/home/ruimt/devel/D/DUI/images/duiLogo_4.xpm";
+		pngs ~= "/home/ruimt/devel/D/DUI/images/duiLogo_8.xpm";
 
 		return loadTable(pngs);
 	}

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkSpinButton.html
  * outPack = gtk
  * outFile = SpinButton
  * strct   = GtkSpinButton
@@ -51,7 +52,7 @@
 
 module gtk.SpinButton;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -140,7 +141,7 @@ public class SpinButton : Entry
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkScrollType, SpinButton)[] onChangeValueListeners;
@@ -154,7 +155,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackChangeValue,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["change-value"] = 1;
 		}
 		onChangeValueListeners ~= dlg;
@@ -182,7 +183,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackInput,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["input"] = 1;
 		}
 		onInputListeners ~= dlg;
@@ -210,7 +211,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackOutput,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["output"] = 1;
 		}
 		onOutputListeners ~= dlg;
@@ -238,7 +239,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackValueChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["value-changed"] = 1;
 		}
 		onValueChangedListeners ~= dlg;
@@ -248,6 +249,34 @@ public class SpinButton : Entry
 		bit consumed = false;
 		
 		foreach ( void delegate(SpinButton) dlg ; spinButton.onValueChangedListeners )
+		{
+			dlg(spinButton);
+		}
+		
+		return consumed;
+	}
+	
+	void delegate(SpinButton)[] onWrappedListeners;
+	void addOnWrapped(void delegate(SpinButton) dlg)
+	{
+		if ( !("wrapped" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"wrapped",
+			cast(GCallback)&callBackWrapped,
+			this,
+			null,
+			cast(ConnectFlags)0);
+			connectedSignals["wrapped"] = 1;
+		}
+		onWrappedListeners ~= dlg;
+	}
+	extern(C) static void callBackWrapped(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
+	{
+		bit consumed = false;
+		
+		foreach ( void delegate(SpinButton) dlg ; spinButton.onWrappedListeners )
 		{
 			dlg(spinButton);
 		}
@@ -612,6 +641,7 @@ public class SpinButton : Entry
 		// gboolean gtk_spin_button_get_wrap (GtkSpinButton *spin_button);
 		return gtk_spin_button_get_wrap(gtkSpinButton);
 	}
+	
 	
 	
 	

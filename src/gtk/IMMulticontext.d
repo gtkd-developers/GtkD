@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkIMMulticontext.html
  * outPack = gtk
  * outFile = IMMulticontext
  * strct   = GtkIMMulticontext
@@ -51,7 +52,7 @@
 
 module gtk.IMMulticontext;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

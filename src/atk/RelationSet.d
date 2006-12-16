@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkRelationSet.html
  * outPack = atk
  * outFile = RelationSet
  * strct   = AtkRelationSet
@@ -48,7 +49,7 @@
 
 module atk.RelationSet;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
@@ -56,6 +57,12 @@ private import glib.PtrArray;
 
 /**
  * Description
+ * The AtkRelationSet held by an object establishes its relationships with
+ * objects beyond the normal "parent/child" hierarchical relationships that all
+ * user interface objects have. AtkRelationSets establish whether objects are
+ * labelled or controlled by other components, share group membership with other
+ * components (for instance within a radio-button group), or share content which
+ * "flows" between them, among other types of possible relationships.
  */
 private import gobject.ObjectG;
 public class RelationSet : ObjectG
@@ -204,7 +211,7 @@ public class RelationSet : ObjectG
 	 *  an AtkRelationType
 	 * target:
 	 *  an AtkObject
-	 * Since 1.9
+	 * Since ATK 1.9
 	 */
 	public void atkRelationSetAddRelationByType(AtkRelationType relationship, AtkObject* target)
 	{

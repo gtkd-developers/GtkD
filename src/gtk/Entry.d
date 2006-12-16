@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkEntry.html
  * outPack = gtk
  * outFile = Entry
  * strct   = GtkEntry
@@ -50,7 +51,7 @@
 
 module gtk.Entry;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -111,7 +112,7 @@ public class Entry : Widget
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Entry)[] onActivateListeners;
@@ -125,7 +126,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackActivate,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;
@@ -153,7 +154,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackBackspace,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["backspace"] = 1;
 		}
 		onBackspaceListeners ~= dlg;
@@ -181,7 +182,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackCopyClipboard,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["copy-clipboard"] = 1;
 		}
 		onCopyClipboardListeners ~= dlg;
@@ -209,7 +210,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackCutClipboard,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["cut-clipboard"] = 1;
 		}
 		onCutClipboardListeners ~= dlg;
@@ -237,7 +238,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackDeleteFromCursor,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["delete-from-cursor"] = 1;
 		}
 		onDeleteFromCursorListeners ~= dlg;
@@ -265,7 +266,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackInsertAtCursor,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["insert-at-cursor"] = 1;
 		}
 		onInsertAtCursorListeners ~= dlg;
@@ -293,7 +294,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackMoveCursor,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -321,7 +322,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackPasteClipboard,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["paste-clipboard"] = 1;
 		}
 		onPasteClipboardListeners ~= dlg;
@@ -349,7 +350,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackPopulatePopup,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["populate-popup"] = 1;
 		}
 		onPopulatePopupListeners ~= dlg;
@@ -377,7 +378,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackToggleOverwrite,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toggle-overwrite"] = 1;
 		}
 		onToggleOverwriteListeners ~= dlg;
@@ -397,9 +398,9 @@ public class Entry : Widget
 	
 	
 	/**
-	 * Creates a new GtkEntry widget.
+	 * Creates a new entry.
 	 * Returns:
-	 * a new GtkEntry.
+	 *  a new GtkEntry.
 	 */
 	public this ()
 	{
@@ -639,6 +640,21 @@ public class Entry : Widget
 	}
 	
 	/**
+	 * This function returns the entry's inner-border property. See
+	 * gtk_entry_set_inner_border() for more information.
+	 * entry:
+	 *  a GtkEntry
+	 * Returns:
+	 *  the entry's GtkBorder, or NULL if none was set.
+	 * Since 2.10
+	 */
+	public GtkBorder* getInnerBorder()
+	{
+		// const GtkBorder* gtk_entry_get_inner_border (GtkEntry *entry);
+		return gtk_entry_get_inner_border(gtkEntry);
+	}
+	
+	/**
 	 * Gets the value set by gtk_entry_set_width_chars().
 	 * entry:
 	 *  a GtkEntry
@@ -681,6 +697,26 @@ public class Entry : Widget
 	{
 		// void gtk_entry_set_has_frame (GtkEntry *entry,  gboolean setting);
 		gtk_entry_set_has_frame(gtkEntry, setting);
+	}
+	
+	/**
+	 * Sets entry's inner-border property to border, or clears it if NULL
+	 * is passed. The inner-border is the area around the entry's text, but
+	 * inside its frame.
+	 * If set, this property overrides the inner-border style property.
+	 * Overriding the style-provided border is useful when you want to do
+	 * in-place editing of some text in a canvas or list widget, where
+	 * pixel-exact positioning of the entry is important.
+	 * entry:
+	 *  a GtkEntry
+	 * border:
+	 *  a GtkBorder, or NULL
+	 * Since 2.10
+	 */
+	public void setInnerBorder(GtkBorder* border)
+	{
+		// void gtk_entry_set_inner_border (GtkEntry *entry,  const GtkBorder *border);
+		gtk_entry_set_inner_border(gtkEntry, border);
 	}
 	
 	/**
@@ -864,11 +900,12 @@ public class Entry : Widget
 	/**
 	 * Sets completion to be the auxiliary completion object to use with entry.
 	 * All further configuration of the completion mechanism is done on
-	 * completion using the GtkEntryCompletion API.
+	 * completion using the GtkEntryCompletion API. Completion is disabled if
+	 * completion is set to NULL.
 	 * entry:
 	 *  A GtkEntry.
 	 * completion:
-	 *  The GtkEntryCompletion.
+	 *  The GtkEntryCompletion or NULL.
 	 * Since 2.4
 	 */
 	public void setCompletion(EntryCompletion completion)
@@ -895,6 +932,8 @@ public class Entry : Widget
 		// GtkEntryCompletion* gtk_entry_get_completion  (GtkEntry *entry);
 		return new EntryCompletion( gtk_entry_get_completion(gtkEntry) );
 	}
+	
+	
 	
 	
 	

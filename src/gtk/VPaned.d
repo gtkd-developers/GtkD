@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkVPaned.html
  * outPack = gtk
  * outFile = VPaned
  * strct   = GtkVPaned
@@ -48,7 +49,7 @@
 
 module gtk.VPaned;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

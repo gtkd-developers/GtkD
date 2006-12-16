@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkItemFactory.html
  * outPack = gtk
  * outFile = ItemFactory
  * strct   = GtkItemFactory
@@ -55,7 +56,7 @@
 
 module gtk.ItemFactory;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -110,7 +111,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_new is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_new has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Creates a new GtkItemFactory.
 	 * Beware that the returned object does not have a floating reference.
 	 * container_type:
@@ -133,7 +134,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_construct is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_construct has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Initializes an item factory.
 	 * ifactory:
 	 *  a GtkItemFactory
@@ -155,7 +156,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_add_foreign is deprecated and should not be used in newly-written code. The recommended API for this purpose are the functions
+	 * gtk_item_factory_add_foreign has been deprecated since version 2.4 and should not be used in newly-written code. The recommended API for this purpose are the functions
 	 * gtk_menu_item_set_accel_path() and gtk_widget_set_accel_path(); don't
 	 * use gtk_item_factory_add_foreign() in new code, since it is likely to
 	 * be removed in the future.
@@ -184,7 +185,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_from_widget is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_from_widget is deprecated and should not be used in newly-written code. 2.4
 	 * Obtains the item factory from which a widget was created.
 	 * widget:
 	 *  a widget
@@ -199,7 +200,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_path_from_widget is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_path_from_widget has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * If widget has been created by an item factory, returns the full path
 	 * to it. (The full path of a widget is the concatenation of the factory
 	 * path specified in gtk_item_factory_new() with the path specified in the
@@ -219,7 +220,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_get_item is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_get_item has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Obtains the menu item which corresponds to path.
 	 * If the widget corresponding to path is a menu item which opens a
 	 * submenu, then the item is returned. If you are interested in the submenu,
@@ -240,7 +241,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_get_widget is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_get_widget has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Obtains the widget which corresponds to path.
 	 * If the widget corresponding to path is a menu item which opens a
 	 * submenu, then the submenu is returned. If you are interested in the menu
@@ -261,7 +262,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_get_widget_by_action is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_get_widget_by_action has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Obtains the widget which was constructed from the GtkItemFactoryEntry
 	 * with the given action.
 	 * If there are multiple items with the same action, the result is
@@ -283,7 +284,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_get_item_by_action is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_get_item_by_action has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Obtains the menu item which was constructed from the first
 	 * GtkItemFactoryEntry with the given action.
 	 * ifactory:
@@ -303,7 +304,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_create_item is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_create_item has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Creates an item for entry.
 	 * ifactory:
 	 *  a GtkItemFactory
@@ -323,7 +324,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_create_items is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_create_items has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Creates the menu items from the entries.
 	 * ifactory:
 	 *  a GtkItemFactory
@@ -343,7 +344,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_create_items_ac is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_create_items_ac has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Creates the menu items from the entries.
 	 * ifactory:
 	 *  a GtkItemFactory
@@ -365,7 +366,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_delete_item is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_delete_item has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Deletes the menu item which was created for path by the given
 	 * item factory.
 	 * ifactory:
@@ -381,7 +382,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_delete_entry is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_delete_entry has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Deletes the menu item which was created from entry by the given
 	 * item factory.
 	 * ifactory:
@@ -397,7 +398,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_delete_entries is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_delete_entries has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Deletes the menu items which were created from the entries by the given
 	 * item factory.
 	 * ifactory:
@@ -415,7 +416,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_popup is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_popup has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Pops up the menu constructed from the item factory at (x, y).
 	 * The mouse_button parameter should be the mouse button pressed to initiate
 	 * the menu popup. If the menu popup was initiated by something other than
@@ -445,7 +446,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_popup_with_data is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_popup_with_data has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Pops up the menu constructed from the item factory at (x, y). Callbacks
 	 * can access the popup_data while the menu is posted via
 	 * gtk_item_factory_popup_data() and gtk_item_factory_popup_data_from_widget().
@@ -482,7 +483,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_popup_data is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_popup_data has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Obtains the popup_data which was passed to
 	 * gtk_item_factory_popup_with_data(). This data is available until the menu
 	 * is popped down again.
@@ -499,7 +500,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_popup_data_from_widget is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_popup_data_from_widget has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Obtains the popup_data which was passed to
 	 * gtk_item_factory_popup_with_data(). This data is available until the menu
 	 * is popped down again.
@@ -518,7 +519,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_from_path is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_from_path has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Finds an item factory which has been constructed using the
 	 * "<name>" prefix of path as the path argument
 	 * for gtk_item_factory_new().
@@ -537,7 +538,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factories_path_delete is deprecated and should not be used in newly-written code.
+	 * gtk_item_factories_path_delete has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Deletes all widgets constructed from the specified path.
 	 * ifactory_path:
 	 *  a factory path to prepend to path. May be NULL if path
@@ -553,7 +554,7 @@ public class ItemFactory : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_item_factory_set_translate_func is deprecated and should not be used in newly-written code.
+	 * gtk_item_factory_set_translate_func has been deprecated since version 2.4 and should not be used in newly-written code.
 	 * Sets a function to be used for translating the path elements before they
 	 * are displayed.
 	 * ifactory:

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkRadioToolButton.html
  * outPack = gtk
  * outFile = RadioToolButton
  * strct   = GtkRadioToolButton
@@ -52,7 +53,7 @@
 
 module gtk.RadioToolButton;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkWindow.html
  * outPack = gtk
  * outFile = Window
  * strct   = GtkWindow
@@ -61,7 +62,7 @@
 
 module gtk.Window;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -133,7 +134,7 @@ public class Window : Bin
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Window)[] onActivateDefaultListeners;
@@ -147,7 +148,7 @@ public class Window : Bin
 			cast(GCallback)&callBackActivateDefault,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["activate-default"] = 1;
 		}
 		onActivateDefaultListeners ~= dlg;
@@ -175,7 +176,7 @@ public class Window : Bin
 			cast(GCallback)&callBackActivateFocus,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["activate-focus"] = 1;
 		}
 		onActivateFocusListeners ~= dlg;
@@ -203,7 +204,7 @@ public class Window : Bin
 			cast(GCallback)&callBackFrame,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["frame-event"] = 1;
 		}
 		onFrameListeners ~= dlg;
@@ -231,7 +232,7 @@ public class Window : Bin
 			cast(GCallback)&callBackKeysChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["keys-changed"] = 1;
 		}
 		onKeysChangedListeners ~= dlg;
@@ -259,7 +260,7 @@ public class Window : Bin
 			cast(GCallback)&callBackMoveFocus,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-focus"] = 1;
 		}
 		onMoveFocusListeners ~= dlg;
@@ -287,7 +288,7 @@ public class Window : Bin
 			cast(GCallback)&callBackSetFocus,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["set-focus"] = 1;
 		}
 		onSetFocusListeners ~= dlg;
@@ -904,7 +905,7 @@ public class Window : Bin
 	 * a second time; use gtk_window_present() to move the already-open dialog
 	 * where the user can see it.
 	 * If you are calling this function in response to a user interaction,
-	 * it is preferable to use gdk_window_present_with_time().
+	 * it is preferable to use gtk_window_present_with_time().
 	 * window:
 	 *  a GtkWindow
 	 */
@@ -1209,6 +1210,28 @@ public class Window : Bin
 	}
 	
 	/**
+	 * By default, windows have a close button in the window frame. Some
+	 * window managers allow GTK+ to
+	 * disable this button. If you set the deletable property to FALSE
+	 * using this function, GTK+ will do its best to convince the window
+	 * manager not to show a close button. Depending on the system, this
+	 * function may not have any effect when called on a window that is
+	 * already visible, so you should call it before calling gtk_window_show().
+	 * On Windows, this function always works, since there's no window manager
+	 * policy involved.
+	 * window:
+	 *  a GtkWindow
+	 * setting:
+	 *  TRUE to decorate the window as deletable
+	 * Since 2.10
+	 */
+	public void setDeletable(int setting)
+	{
+		// void gtk_window_set_deletable (GtkWindow *window,  gboolean setting);
+		gtk_window_set_deletable(gtkWindow, setting);
+	}
+	
+	/**
 	 * (Note: this is a special-purpose function intended for the framebuffer
 	 *  port; see gtk_window_set_has_frame(). It will have no effect on the
 	 *  window border drawn by the window manager, which is the normal
@@ -1242,7 +1265,7 @@ public class Window : Bin
 	 * window->window, accessible in window->frame. Using the signal
 	 * frame_event you can receive all events targeted at the frame.
 	 * This function is used by the linux-fb port to implement managed
-	 * windows, but it could concievably be used by X-programs that
+	 * windows, but it could conceivably be used by X-programs that
 	 * want to do their own window decorations.
 	 * window:
 	 *  a GtkWindow
@@ -1400,6 +1423,21 @@ public class Window : Bin
 	{
 		// gboolean gtk_window_get_decorated (GtkWindow *window);
 		return gtk_window_get_decorated(gtkWindow);
+	}
+	
+	/**
+	 * Returns whether the window has been set to have a close button
+	 * via gtk_window_set_deletable().
+	 * window:
+	 *  a GtkWindow
+	 * Returns:
+	 *  TRUE if the window has been set to have a close button
+	 * Since 2.10
+	 */
+	public int getDeletable()
+	{
+		// gboolean gtk_window_get_deletable (GtkWindow *window);
+		return gtk_window_get_deletable(gtkWindow);
 	}
 	
 	/**
@@ -1793,6 +1831,22 @@ public class Window : Bin
 	}
 	
 	/**
+	 * Returns the group for window or the default group, if
+	 * window is NULL or if window does not have an explicit
+	 * window group.
+	 * window:
+	 *  a GtkWindow, or NULL
+	 * Returns:
+	 *  the GtkWindowGroup for a window or the default group
+	 * Since 2.10
+	 */
+	public GtkWindowGroup* getGroup()
+	{
+		// GtkWindowGroup* gtk_window_get_group (GtkWindow *window);
+		return gtk_window_get_group(gtkWindow);
+	}
+	
+	/**
 	 * Asks the window manager to move
 	 * window to the given position. Window managers are free to ignore
 	 * this; most window managers ignore requests for initial window
@@ -1816,7 +1870,8 @@ public class Window : Bin
 	 * reference point. So, to place a window in the bottom right corner
 	 * you would first set gravity to south east, then write:
 	 * gtk_window_move (window, gdk_screen_width() - window_width,
-	 * gdk_screen_height() - window_height).
+	 * gdk_screen_height() - window_height) (note that this
+	 * example does not take multi-head scenarios into account).
 	 * The Extended Window Manager Hints specification at
 	 * http://www.freedesktop.org/Standards/wm-spec has a
 	 * nice table of gravities in the "implementation notes" section.
@@ -2091,12 +2146,11 @@ public class Window : Bin
 	}
 	
 	/**
-	 * By default, after showing the first GtkWindow for each GdkScreen,
-	 * GTK+ calls gdk_screen_notify_startup_complete(). Call this
-	 * function to disable the automatic startup notification. You might
-	 * do this if your first window is a splash screen, and you want to
-	 * delay notification until after your real main window has been
-	 * shown, for example.
+	 * By default, after showing the first GtkWindow, GTK+ calls
+	 * gdk_notify_startup_complete(). Call this function to disable
+	 * the automatic startup notification. You might do this if your
+	 * first window is a splash screen, and you want to delay notification
+	 * until after your real main window has been shown, for example.
 	 * In that example, you would disable startup notification
 	 * temporarily, show your splash screen, then re-enable it so that
 	 * showing the main window would automatically result in notification.
@@ -2155,6 +2209,8 @@ public class Window : Bin
 		// void gtk_decorated_window_move_resize_window  (GtkWindow *window,  gint x,  gint y,  gint width,  gint height);
 		gtk_decorated_window_move_resize_window(gtkWindow, x, y, width, height);
 	}
+	
+	
 	
 	
 	

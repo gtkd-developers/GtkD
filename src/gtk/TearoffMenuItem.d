@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTearoffMenuItem.html
  * outPack = gtk
  * outFile = TearoffMenuItem
  * strct   = GtkTearoffMenuItem
@@ -47,7 +48,7 @@
 
 module gtk.TearoffMenuItem;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

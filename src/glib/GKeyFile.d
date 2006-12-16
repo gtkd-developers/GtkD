@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Key-value-file-parser.html
  * outPack = glib
  * outFile = GKeyFile
  * strct   = GKeyFile
@@ -48,7 +49,7 @@
 
 module glib.GKeyFile;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -502,6 +503,32 @@ public class KeyFile
 	}
 	
 	/**
+	 * Returns the value associated with key under group_name as an
+	 * integer. If group_name is NULL, the start_group is used.
+	 * If key cannot be found then the return value is undefined and
+	 * error is set to G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if
+	 * the value associated with key cannot be interpreted as a double
+	 * then the return value is also undefined and error is set to
+	 * G_KEY_FILE_ERROR_INVALID_VALUE.
+	 * key_file:
+	 *  a GKeyFile
+	 * group_name:
+	 *  a group name
+	 * key:
+	 *  a key
+	 * error:
+	 *  return location for a GError
+	 * Returns:
+	 *  the value associated with the key as a double.
+	 * Since 2.12
+	 */
+	public double getDouble(char[] groupName, char[] key, GError** error)
+	{
+		// gdouble g_key_file_get_double (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
+		return g_key_file_get_double(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
+	}
+	
+	/**
 	 * Returns the values associated with key under group_name.
 	 * In the event the key cannot be found, NULL is returned and
 	 * error is set to G_KEY_FILE_ERROR_KEY_NOT_FOUND. In the
@@ -615,6 +642,34 @@ public class KeyFile
 	{
 		// gint* g_key_file_get_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
 		return g_key_file_get_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), length, error);
+	}
+	
+	/**
+	 * Returns the values associated with key under group_name as
+	 * doubles. If group_name is NULL, the start group is used.
+	 * If key cannot be found then the return value is undefined and
+	 * error is set to G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if
+	 * the values associated with key cannot be interpreted as doubles
+	 * then the return value is also undefined and error is set to
+	 * G_KEY_FILE_ERROR_INVALID_VALUE.
+	 * key_file:
+	 *  a GKeyFile
+	 * group_name:
+	 *  a group name
+	 * key:
+	 *  a key
+	 * length:
+	 *  the number of doubles returned
+	 * error:
+	 *  return location for a GError
+	 * Returns:
+	 *  the values associated with the key as a double
+	 * Since 2.12
+	 */
+	public double* getDoubleList(char[] groupName, char[] key, uint* length, GError** error)
+	{
+		// gdouble* g_key_file_get_double_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gsize *length,  GError **error);
+		return g_key_file_get_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), length, error);
 	}
 	
 	/**
@@ -742,6 +797,26 @@ public class KeyFile
 	}
 	
 	/**
+	 * Associates a new double value with key under group_name.
+	 * If key cannot be found then it is created. If group_name
+	 * is NULL, the start group is used.
+	 * key_file:
+	 *  a GKeyFile
+	 * group_name:
+	 *  a group name
+	 * key:
+	 *  a key
+	 * value:
+	 *  an double value
+	 * Since 2.12
+	 */
+	public void setDouble(char[] groupName, char[] key, double value)
+	{
+		// void g_key_file_set_double (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gdouble value);
+		g_key_file_set_double(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), value);
+	}
+	
+	/**
 	 * Associates a list of string values for key under group_name.
 	 * If key cannot be found then it is created. If group_name
 	 * cannot be found then it is created.
@@ -751,16 +826,12 @@ public class KeyFile
 	 *  a group name
 	 * key:
 	 *  a key
-	 * list:
-	 *  an array of locale string values
-	 * length:
-	 *  number of locale string values in list
 	 * Since 2.6
 	 */
-	public void setStringList(char[] groupName, char[] key, char*[] list, uint length)
+	public void setStringList(char[] groupName, char[] key)
 	{
-		// void g_key_file_set_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *const list[],  gsize length);
-		g_key_file_set_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
+		// void g_key_file_set_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key);
+		g_key_file_set_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key));
 	}
 	
 	/**
@@ -775,16 +846,12 @@ public class KeyFile
 	 *  a key
 	 * locale:
 	 *  a locale
-	 * list:
-	 *  a NULL-terminated array of locale string values
-	 * length:
-	 *  the length of list
 	 * Since 2.6
 	 */
-	public void setLocaleStringList(char[] groupName, char[] key, char[] locale, char*[] list, uint length)
+	public void setLocaleStringList(char[] groupName, char[] key, char[] locale)
 	{
-		// void g_key_file_set_locale_string_list  (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  const gchar *const list[],  gsize length);
-		g_key_file_set_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), list, length);
+		// void g_key_file_set_locale_string_list  (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale);
+		g_key_file_set_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale));
 	}
 	
 	/**
@@ -828,6 +895,28 @@ public class KeyFile
 	{
 		// void g_key_file_set_integer_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gint list[],  gsize length);
 		g_key_file_set_integer_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
+	}
+	
+	/**
+	 * Associates a list of double values with key under
+	 * group_name. If key cannot be found then it is created.
+	 * If group_name is NULL the start group is used.
+	 * key_file:
+	 *  a GKeyFile
+	 * group_name:
+	 *  a group name
+	 * key:
+	 *  a key
+	 * list:
+	 *  an array of double values
+	 * length:
+	 *  number of double values in list
+	 * Since 2.12
+	 */
+	public void setDoubleList(char[] groupName, char[] key, double[] list, uint length)
+	{
+		// void g_key_file_set_double_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  gdouble list[],  gsize length);
+		g_key_file_set_double_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
 	}
 	
 	/**

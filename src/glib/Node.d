@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-N-ary-Trees.html
  * outPack = glib
  * outFile = Node
  * strct   = GNode
@@ -49,7 +50,7 @@
 
 module glib.Node;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

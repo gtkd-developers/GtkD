@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Clipboards.html
  * outPack = gtk
  * outFile = Clipboard
  * strct   = GtkClipboard
@@ -56,7 +57,7 @@
 
 module gtk.Clipboard;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -156,7 +157,7 @@ public class Clipboard : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(GdkEvent*, Clipboard)[] onOwnerChangeListeners;
@@ -170,7 +171,7 @@ public class Clipboard : ObjectG
 			cast(GCallback)&callBackOwnerChange,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["owner-change"] = 1;
 		}
 		onOwnerChangeListeners ~= dlg;
@@ -186,6 +187,7 @@ public class Clipboard : ObjectG
 		
 		return consumed;
 	}
+	
 	
 	
 	
@@ -494,6 +496,32 @@ public class Clipboard : ObjectG
 	}
 	
 	/**
+	 * Requests the contents of the clipboard as rich text. When the rich
+	 * text is later received, callback will be called.
+	 * The text parameter to callback will contain the resulting rich
+	 * text if the request succeeded, or NULL if it failed. The length
+	 * parameter will contain text's length. This function can fail for
+	 * various reasons, in particular if the clipboard was empty or if the
+	 * contents of the clipboard could not be converted into rich text form.
+	 * clipboard:
+	 *  a GtkClipboard
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * callback:
+	 *  a function to call when the text is received,
+	 *  or the retrieval fails. (It will always be called
+	 *  one way or the other.)
+	 * user_data:
+	 *  user data to pass to callback.
+	 * Since 2.10
+	 */
+	public void requestRichText(GtkTextBuffer* buffer, GtkClipboardRichTextReceivedFunc callback, void* userData)
+	{
+		// void gtk_clipboard_request_rich_text (GtkClipboard *clipboard,  GtkTextBuffer *buffer,  GtkClipboardRichTextReceivedFunc callback,  gpointer user_data);
+		gtk_clipboard_request_rich_text(gtkClipboard, buffer, callback, userData);
+	}
+	
+	/**
 	 * Requests the contents of the clipboard using the given target.
 	 * This function waits for the data to be received using the main
 	 * loop, so events, timeouts, etc, may be dispatched during the wait.
@@ -558,6 +586,33 @@ public class Clipboard : ObjectG
 	}
 	
 	/**
+	 * Requests the contents of the clipboard as rich text. This function
+	 * waits for the data to be received using the main loop, so events,
+	 * timeouts, etc, may be dispatched during the wait.
+	 * clipboard:
+	 *  a GtkClipboard
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * format:
+	 *  return location for the format of the returned data
+	 * length:
+	 *  return location for the length of the returned data
+	 * Returns:
+	 *  a newly-allocated binary block of data which must
+	 *  be freed with g_free(), or NULL if retrieving
+	 *  the selection data failed. (This could happen
+	 *  for various reasons, in particular if the
+	 *  clipboard was empty or if the contents of the
+	 *  clipboard could not be converted into text form.)
+	 * Since 2.10
+	 */
+	public byte* waitForRichText(GtkTextBuffer* buffer, GdkAtom* format, uint* length)
+	{
+		// guint8* gtk_clipboard_wait_for_rich_text  (GtkClipboard *clipboard,  GtkTextBuffer *buffer,  GdkAtom *format,  gsize *length);
+		return gtk_clipboard_wait_for_rich_text(gtkClipboard, buffer, format, length);
+	}
+	
+	/**
 	 * Test to see if there is text available to be pasted
 	 * This is done by requesting the TARGETS atom and checking
 	 * if it contains any of the supported text targets. This function
@@ -596,6 +651,29 @@ public class Clipboard : ObjectG
 	{
 		// gboolean gtk_clipboard_wait_is_image_available  (GtkClipboard *clipboard);
 		return gtk_clipboard_wait_is_image_available(gtkClipboard);
+	}
+	
+	/**
+	 * Test to see if there is rich text available to be pasted
+	 * This is done by requesting the TARGETS atom and checking
+	 * if it contains any of the supported rich text targets. This function
+	 * waits for the data to be received using the main loop, so events,
+	 * timeouts, etc, may be dispatched during the wait.
+	 * This function is a little faster than calling
+	 * gtk_clipboard_wait_for_rich_text() since it doesn't need to retrieve
+	 * the actual text.
+	 * clipboard:
+	 *  a GtkClipboard
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * Returns:
+	 *  TRUE is there is rich text available, FALSE otherwise.
+	 * Since 2.10
+	 */
+	public int waitIsRichTextAvailable(GtkTextBuffer* buffer)
+	{
+		// gboolean gtk_clipboard_wait_is_rich_text_available  (GtkClipboard *clipboard,  GtkTextBuffer *buffer);
+		return gtk_clipboard_wait_is_rich_text_available(gtkClipboard, buffer);
 	}
 	
 	/**

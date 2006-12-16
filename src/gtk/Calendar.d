@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCalendar.html
  * outPack = gtk
  * outFile = Calendar
  * strct   = GtkCalendar
@@ -47,7 +48,7 @@
 
 module gtk.Calendar;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -101,7 +102,7 @@ public class Calendar : Widget
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Calendar)[] onDaySelectedListeners;
@@ -115,7 +116,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackDaySelected,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["day-selected"] = 1;
 		}
 		onDaySelectedListeners ~= dlg;
@@ -143,7 +144,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackDaySelectedDoubleClick,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["day-selected-double-click"] = 1;
 		}
 		onDaySelectedDoubleClickListeners ~= dlg;
@@ -171,7 +172,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackMonthChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["month-changed"] = 1;
 		}
 		onMonthChangedListeners ~= dlg;
@@ -199,7 +200,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackNextMonth,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["next-month"] = 1;
 		}
 		onNextMonthListeners ~= dlg;
@@ -227,7 +228,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackNextYear,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["next-year"] = 1;
 		}
 		onNextYearListeners ~= dlg;
@@ -255,7 +256,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackPrevMonth,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["prev-month"] = 1;
 		}
 		onPrevMonthListeners ~= dlg;
@@ -283,7 +284,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackPrevYear,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["prev-year"] = 1;
 		}
 		onPrevYearListeners ~= dlg;
@@ -449,7 +450,7 @@ public class Calendar : Widget
 	
 	/**
 	 * Warning
-	 * gtk_calendar_freeze is deprecated and should not be used in newly-written code.
+	 * gtk_calendar_freeze has been deprecated since version 2.8 and should not be used in newly-written code.
 	 * Does nothing. Previously locked the display of the calendar until
 	 * it was thawed with gtk_calendar_thaw().
 	 * calendar:
@@ -463,7 +464,7 @@ public class Calendar : Widget
 	
 	/**
 	 * Warning
-	 * gtk_calendar_thaw is deprecated and should not be used in newly-written code.
+	 * gtk_calendar_thaw has been deprecated since version 2.8 and should not be used in newly-written code.
 	 * Does nothing. Previously defrosted a calendar; all the changes made
 	 * since the last gtk_calendar_freeze() were displayed.
 	 * calendar:

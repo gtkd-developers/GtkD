@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GdkScreen.html
  * outPack = gdk
  * outFile = Screen
  * strct   = GdkScreen
@@ -40,6 +41,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- cairoLib.cairoLibtypes
  * 	- glib.Str
  * 	- gdk.Screen
  * 	- gdk.Colormap
@@ -65,10 +67,11 @@
 
 module gdk.Screen;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 
+private import cairoLib.cairoLibtypes;
 private import glib.Str;
 private import gdk.Screen;
 private import gdk.Colormap;
@@ -125,8 +128,36 @@ public class Screen : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
+	
+	void delegate(Screen)[] onCompositedChangedListeners;
+	void addOnCompositedChanged(void delegate(Screen) dlg)
+	{
+		if ( !("composited-changed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"composited-changed",
+			cast(GCallback)&callBackCompositedChanged,
+			this,
+			null,
+			cast(ConnectFlags)0);
+			connectedSignals["composited-changed"] = 1;
+		}
+		onCompositedChangedListeners ~= dlg;
+	}
+	extern(C) static void callBackCompositedChanged(GdkScreen* screenStruct, Screen screen)
+	{
+		bit consumed = false;
+		
+		foreach ( void delegate(Screen) dlg ; screen.onCompositedChangedListeners )
+		{
+			dlg(screen);
+		}
+		
+		return consumed;
+	}
 	
 	void delegate(Screen)[] onSizeChangedListeners;
 	void addOnSizeChanged(void delegate(Screen) dlg)
@@ -139,7 +170,7 @@ public class Screen : ObjectG
 			cast(GCallback)&callBackSizeChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["size-changed"] = 1;
 		}
 		onSizeChangedListeners ~= dlg;
@@ -303,6 +334,25 @@ public class Screen : ObjectG
 	{
 		// GdkVisual* gdk_screen_get_rgba_visual (GdkScreen *screen);
 		return new Visual( gdk_screen_get_rgba_visual(gdkScreen) );
+	}
+	
+	/**
+	 * Returns whether windows with an RGBA visual can reasonably
+	 * be expected to have their alpha channel drawn correctly on
+	 * the screen.
+	 * On X11 this function returns whether a compositing manager is
+	 * compositing screen.
+	 * screen:
+	 *  a GdkScreen
+	 * Returns:
+	 *  Whether windows with RGBA visuals can reasonably be
+	 * expected to have their alpha channels drawn correctly on the screen.
+	 * Since 2.10
+	 */
+	public int isComposited()
+	{
+		// gboolean gdk_screen_is_composited (GdkScreen *screen);
+		return gdk_screen_is_composited(gdkScreen);
 	}
 	
 	/**
@@ -574,6 +624,122 @@ public class Screen : ObjectG
 	}
 	
 	/**
+	 * Gets any options previously set with gdk_screen_set_font_options().
+	 * screen:
+	 *  a GdkScreen
+	 * Returns:
+	 *  the current font options, or NULL if no default
+	 *  font options have been set.
+	 * Since 2.10
+	 */
+	public cairo_font_options_t* getFontOptions()
+	{
+		// const cairo_font_options_t* gdk_screen_get_font_options  (GdkScreen *screen);
+		return gdk_screen_get_font_options(gdkScreen);
+	}
+	
+	/**
+	 * Sets the default font options for the screen. These
+	 * options will be set on any PangoContext's newly created
+	 * with gdk_pango_context_get_for_screen(). Changing the
+	 * default set of font options does not affect contexts that
+	 * have already been created.
+	 * screen:
+	 *  a GdkScreen
+	 * options:
+	 *  a cairo_font_options_t, or NULL to unset any
+	 *  previously set default font options.
+	 * Since 2.10
+	 */
+	public void setFontOptions(cairo_font_options_t* options)
+	{
+		// void gdk_screen_set_font_options (GdkScreen *screen,  const cairo_font_options_t *options);
+		gdk_screen_set_font_options(gdkScreen, options);
+	}
+	
+	/**
+	 * Gets the resolution for font handling on the screen; see
+	 * gdk_screen_set_resolution() for full details.
+	 * screen:
+	 *  a GdkScreen
+	 * Returns:
+	 *  the current resolution, or -1 if no resolution
+	 * has been set.
+	 * Since 2.10
+	 */
+	public double getResolution()
+	{
+		// gdouble gdk_screen_get_resolution (GdkScreen *screen);
+		return gdk_screen_get_resolution(gdkScreen);
+	}
+	
+	/**
+	 * Sets the resolution for font handling on the screen. This is a
+	 * scale factor between points specified in a PangoFontDescription
+	 * and cairo units. The default value is 96, meaning that a 10 point
+	 * font will be 13 units high. (10 * 96. / 72. = 13.3).
+	 * screen:
+	 *  a GdkScreen
+	 * dpi:
+	 *  the resolution in "dots per inch". (Physical inches aren't actually
+	 *  involved; the terminology is conventional.)
+	 * Since 2.10
+	 */
+	public void setResolution(double dpi)
+	{
+		// void gdk_screen_set_resolution (GdkScreen *screen,  gdouble dpi);
+		gdk_screen_set_resolution(gdkScreen, dpi);
+	}
+	
+	/**
+	 * Returns the screen's currently active window.
+	 * On X11, this is done by inspecting the _NET_ACTIVE_WINDOW property
+	 * on the root window, as described in the Extended Window
+	 * Manager Hints. If there is no currently currently active
+	 * window, or the window manager does not support the
+	 * _NET_ACTIVE_WINDOW hint, this function returns NULL.
+	 * On other platforms, this function may return NULL, depending on whether
+	 * it is implementable on that platform.
+	 * The returned window should be unrefed using g_object_unref() when
+	 * no longer needed.
+	 * screen:
+	 *  a GdkScreen
+	 * Returns:
+	 *  the currently active window, or NULL.
+	 * Since 2.10
+	 */
+	public Window getActiveWindow()
+	{
+		// GdkWindow* gdk_screen_get_active_window (GdkScreen *screen);
+		return new Window( gdk_screen_get_active_window(gdkScreen) );
+	}
+	
+	/**
+	 * Returns a GList of GdkWindows representing the current
+	 * window stack.
+	 * On X11, this is done by inspecting the _NET_CLIENT_LIST_STACKING
+	 * property on the root window, as described in the Extended Window
+	 * Manager Hints. If the window manager does not support the
+	 * _NET_CLIENT_LIST_STACKING hint, this function returns NULL.
+	 * On other platforms, this function may return NULL, depending on whether
+	 * it is implementable on that platform.
+	 * The returned list is newly allocated and owns references to the
+	 * windows it contains, so it should be freed using g_list_free() and
+	 * its windows unrefed using g_object_unref() when no longer needed.
+	 * screen:
+	 *  a GdkScreen
+	 * Returns:
+	 *  a list of GdkWindows for the current window stack,
+	 *  or NULL.
+	 * Since 2.10
+	 */
+	public ListG getWindowStack()
+	{
+		// GList* gdk_screen_get_window_stack (GdkScreen *screen);
+		return new ListG( gdk_screen_get_window_stack(gdkScreen) );
+	}
+	
+	/**
 	 * Like g_spawn_async(), except the child process is spawned in such
 	 * an environment that on calling gdk_display_open() it would be
 	 * returned a GdkDisplay with screen as the default screen.
@@ -669,21 +835,16 @@ public class Screen : ObjectG
 	 * Returns:
 	 *  TRUE on success, FALSE if error is set.
 	 * Since 2.4
-	 * Signal Details
-	 * The "size-changed" signal
-	 * void user_function (GdkScreen *screen,
-	 *  gpointer user_data) : Run last
-	 * The ::size_changed signal is emitted when the pixel width or
-	 * height of a screen changes.
-	 * screen:
-	 *  the object on which the signal is emitted
-	 * user_data:
-	 * user data set when the signal handler was connected.
-	 * Since 2.2
+	 * Property Details
+	 * The "font-options" property
+	 *  "font-options" gpointer : Read / Write
+	 * The default font options for the screen.
 	 */
 	public int gdkSpawnCommandLineOnScreen(char[] commandLine, GError** error)
 	{
 		// gboolean gdk_spawn_command_line_on_screen  (GdkScreen *screen,  const gchar *command_line,  GError **error);
 		return gdk_spawn_command_line_on_screen(gdkScreen, Str.toStringz(commandLine), error);
 	}
+	
+	
 }

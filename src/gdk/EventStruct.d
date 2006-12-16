@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Event-Structures.html
  * outPack = gdk
  * outFile = EventStruct
  * strct   = 
@@ -45,7 +46,7 @@
 
 module gdk.EventStruct;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

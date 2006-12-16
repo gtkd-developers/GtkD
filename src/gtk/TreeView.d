@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTreeView.html
  * outPack = gtk
  * outFile = TreeView
  * strct   = GtkTreeView
@@ -69,7 +70,7 @@
 
 module gtk.TreeView;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -250,7 +251,7 @@ public class TreeView : Container
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeView)[] onColumnsChangedListeners;
@@ -264,12 +265,12 @@ public class TreeView : Container
 			cast(GCallback)&callBackColumnsChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["columns-changed"] = 1;
 		}
 		onColumnsChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackColumnsChanged(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static void callBackColumnsChanged(GtkTreeView* treeViewStruct, TreeView treeView)
 	{
 		bit consumed = false;
 		
@@ -292,12 +293,12 @@ public class TreeView : Container
 			cast(GCallback)&callBackCursorChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["cursor-changed"] = 1;
 		}
 		onCursorChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackCursorChanged(GtkTreeView* treeviewStruct, TreeView treeView)
+	extern(C) static void callBackCursorChanged(GtkTreeView* treeViewStruct, TreeView treeView)
 	{
 		bit consumed = false;
 		
@@ -320,7 +321,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackExpandCollapseCursorRow,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["expand-collapse-cursor-row"] = 1;
 		}
 		onExpandCollapseCursorRowListeners ~= dlg;
@@ -348,7 +349,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackMoveCursor,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -376,7 +377,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackRowActivated,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-activated"] = 1;
 		}
 		onRowActivatedListeners ~= dlg;
@@ -404,18 +405,18 @@ public class TreeView : Container
 			cast(GCallback)&callBackRowCollapsed,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-collapsed"] = 1;
 		}
 		onRowCollapsedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowCollapsed(GtkTreeView* treeviewStruct, GtkTreeIter* arg1, GtkTreePath* arg2, TreeView treeView)
+	extern(C) static void callBackRowCollapsed(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onRowCollapsedListeners )
 		{
-			dlg(arg1, new TreePath(arg2), treeView);
+			dlg(iter, new TreePath(path), treeView);
 		}
 		
 		return consumed;
@@ -432,18 +433,18 @@ public class TreeView : Container
 			cast(GCallback)&callBackRowExpanded,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["row-expanded"] = 1;
 		}
 		onRowExpandedListeners ~= dlg;
 	}
-	extern(C) static void callBackRowExpanded(GtkTreeView* treeviewStruct, GtkTreeIter* arg1, GtkTreePath* arg2, TreeView treeView)
+	extern(C) static void callBackRowExpanded(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onRowExpandedListeners )
 		{
-			dlg(arg1, new TreePath(arg2), treeView);
+			dlg(iter, new TreePath(path), treeView);
 		}
 		
 		return consumed;
@@ -460,7 +461,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSelectAll,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["select-all"] = 1;
 		}
 		onSelectAllListeners ~= dlg;
@@ -488,7 +489,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSelectCursorParent,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["select-cursor-parent"] = 1;
 		}
 		onSelectCursorParentListeners ~= dlg;
@@ -516,7 +517,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSelectCursorRow,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["select-cursor-row"] = 1;
 		}
 		onSelectCursorRowListeners ~= dlg;
@@ -544,7 +545,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSetScrollAdjustments,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
@@ -572,7 +573,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackStartInteractiveSearch,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["start-interactive-search"] = 1;
 		}
 		onStartInteractiveSearchListeners ~= dlg;
@@ -600,18 +601,18 @@ public class TreeView : Container
 			cast(GCallback)&callBackTestCollapseRow,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["test-collapse-row"] = 1;
 		}
 		onTestCollapseRowListeners ~= dlg;
 	}
-	extern(C) static void callBackTestCollapseRow(GtkTreeView* treeviewStruct, GtkTreeIter* arg1, GtkTreePath* arg2, TreeView treeView)
+	extern(C) static void callBackTestCollapseRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
 	{
 		bit consumed = false;
 		
 		foreach ( gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onTestCollapseRowListeners )
 		{
-			dlg(arg1, new TreePath(arg2), treeView);
+			dlg(iter, new TreePath(path), treeView);
 		}
 		
 		return consumed;
@@ -628,18 +629,18 @@ public class TreeView : Container
 			cast(GCallback)&callBackTestExpandRow,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["test-expand-row"] = 1;
 		}
 		onTestExpandRowListeners ~= dlg;
 	}
-	extern(C) static void callBackTestExpandRow(GtkTreeView* treeviewStruct, GtkTreeIter* arg1, GtkTreePath* arg2, TreeView treeView)
+	extern(C) static void callBackTestExpandRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
 	{
 		bit consumed = false;
 		
 		foreach ( gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onTestExpandRowListeners )
 		{
-			dlg(arg1, new TreePath(arg2), treeView);
+			dlg(iter, new TreePath(path), treeView);
 		}
 		
 		return consumed;
@@ -656,7 +657,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackToggleCursorRow,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toggle-cursor-row"] = 1;
 		}
 		onToggleCursorRowListeners ~= dlg;
@@ -684,7 +685,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackUnselectAll,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["unselect-all"] = 1;
 		}
 		onUnselectAllListeners ~= dlg;
@@ -867,6 +868,20 @@ public class TreeView : Container
 	}
 	
 	/**
+	 * Returns whether all header columns are clickable.
+	 * tree_view:
+	 *  A GtkTreeView.
+	 * Returns:
+	 *  TRUE if all header columns are clickable, otherwise FALSE
+	 * Since 2.10
+	 */
+	public int getHeadersClickable()
+	{
+		// gboolean gtk_tree_view_get_headers_clickable  (GtkTreeView *tree_view);
+		return gtk_tree_view_get_headers_clickable(gtkTreeView);
+	}
+	
+	/**
 	 * Allow the column title buttons to be clicked.
 	 * tree_view:
 	 *  A GtkTreeView.
@@ -972,7 +987,7 @@ public class TreeView : Container
 	 * Creates a new GtkTreeViewColumn and inserts it into the tree_view at
 	 * position. If position is -1, then the newly created column is inserted at
 	 * the end. The column is initialized with the attributes given. If tree_view
-	 * has "fixed_height" mode enabled, then column must have its sizing
+	 * has "fixed_height" mode enabled, then the new column will have its sizing
 	 * property set to be GTK_TREE_VIEW_COLUMN_FIXED.
 	 * tree_view:
 	 *  A GtkTreeView
@@ -998,7 +1013,7 @@ public class TreeView : Container
 	 * with the given cell renderer and a GtkCellDataFunc to set cell renderer
 	 * attributes (normally using data from the model). See also
 	 * gtk_tree_view_column_set_cell_data_func(), gtk_tree_view_column_pack_start().
-	 * If tree_view has "fixed_height" mode enabled, then column must have its
+	 * If tree_view has "fixed_height" mode enabled, then the new column will have its
 	 * "sizing" property set to be GTK_TREE_VIEW_COLUMN_FIXED.
 	 * tree_view:
 	 *  a GtkTreeView
@@ -1799,6 +1814,74 @@ public class TreeView : Container
 	}
 	
 	/**
+	 * Returns the GtkEntry which is currently in use as interactive search
+	 * entry for tree_view. In case the built-in entry is being used, NULL
+	 * will be returned.
+	 * tree_view:
+	 *  A GtkTreeView
+	 * Returns:
+	 *  the entry currently in use as search entry.
+	 * Since 2.10
+	 */
+	public GtkEntry* getSearchEntry()
+	{
+		// GtkEntry* gtk_tree_view_get_search_entry (GtkTreeView *tree_view);
+		return gtk_tree_view_get_search_entry(gtkTreeView);
+	}
+	
+	/**
+	 * Sets the entry which the interactive search code will use for this
+	 * tree_view. This is useful when you want to provide a search entry
+	 * in our interface at all time at a fixed position. Passing NULL for
+	 * entry will make the interactive search code use the built-in popup
+	 * entry again.
+	 * tree_view:
+	 *  A GtkTreeView
+	 * entry:
+	 *  the entry the interactive search code of tree_view should use or NULL
+	 * Since 2.10
+	 */
+	public void setSearchEntry(GtkEntry* entry)
+	{
+		// void gtk_tree_view_set_search_entry (GtkTreeView *tree_view,  GtkEntry *entry);
+		gtk_tree_view_set_search_entry(gtkTreeView, entry);
+	}
+	
+	
+	/**
+	 * Returns the positioning function currently in use.
+	 * tree_view:
+	 *  A GtkTreeView
+	 * Returns:
+	 *  the currently used function for positioning the search dialog.
+	 * Since 2.10
+	 */
+	public GtkTreeViewSearchPositionFunc getSearchPositionFunc()
+	{
+		// GtkTreeViewSearchPositionFunc gtk_tree_view_get_search_position_func  (GtkTreeView *tree_view);
+		return gtk_tree_view_get_search_position_func(gtkTreeView);
+	}
+	
+	/**
+	 * Sets the function to use when positioning the seach dialog.
+	 * tree_view:
+	 *  A GtkTreeView
+	 * func:
+	 *  the function to use to position the search dialog, or NULL
+	 *  to use the default search position function
+	 * data:
+	 *  user data to pass to func, or NULL
+	 * destroy:
+	 *  Destroy notifier for data, or NULL
+	 * Since 2.10
+	 */
+	public void setSearchPositionFunc(GtkTreeViewSearchPositionFunc func, void* data, GDestroyNotify destroy)
+	{
+		// void gtk_tree_view_set_search_position_func  (GtkTreeView *tree_view,  GtkTreeViewSearchPositionFunc func,  gpointer data,  GDestroyNotify destroy);
+		gtk_tree_view_set_search_position_func(gtkTreeView, func, data, destroy);
+	}
+	
+	/**
 	 * Returns whether fixed height mode is turned on for tree_view.
 	 * tree_view:
 	 *  a GtkTreeView
@@ -1939,17 +2022,120 @@ public class TreeView : Container
 	 * destroy:
 	 *  destroy notifier for data, or NULL
 	 * Since 2.6
-	 * Property Details
-	 * The "enable-search" property
-	 *  "enable-search" gboolean : Read / Write
-	 * View allows user to search through columns interactively.
-	 * Default value: TRUE
 	 */
 	public void setRowSeparatorFunc(GtkTreeViewRowSeparatorFunc func, void* data, GtkDestroyNotify destroy)
 	{
 		// void gtk_tree_view_set_row_separator_func  (GtkTreeView *tree_view,  GtkTreeViewRowSeparatorFunc func,  gpointer data,  GtkDestroyNotify destroy);
 		gtk_tree_view_set_row_separator_func(gtkTreeView, func, data, destroy);
 	}
+	
+	/**
+	 * Returns whether rubber banding is turned on for tree_view. If the
+	 * selection mode is GTK_SELECTION_MULTIPLE, rubber banding will allow the
+	 * user to select multiple rows by dragging the mouse.
+	 * tree_view:
+	 *  a GtkTreeView
+	 * Returns:
+	 *  TRUE if rubber banding in tree_view is enabled.
+	 * Since 2.10
+	 */
+	public int getRubberBanding()
+	{
+		// gboolean gtk_tree_view_get_rubber_banding  (GtkTreeView *tree_view);
+		return gtk_tree_view_get_rubber_banding(gtkTreeView);
+	}
+	
+	/**
+	 * Enables or disables rubber banding in tree_view. If the selection mode
+	 * is GTK_SELECTION_MULTIPLE, rubber banding will allow the user to select
+	 * multiple rows by dragging the mouse.
+	 * tree_view:
+	 *  a GtkTreeView
+	 * enable:
+	 *  TRUE to enable rubber banding
+	 * Since 2.10
+	 */
+	public void setRubberBanding(int enable)
+	{
+		// void gtk_tree_view_set_rubber_banding  (GtkTreeView *tree_view,  gboolean enable);
+		gtk_tree_view_set_rubber_banding(gtkTreeView, enable);
+	}
+	
+	/**
+	 * Returns whether or not tree lines are drawn in tree_view.
+	 * tree_view:
+	 *  a GtkTreeView.
+	 * Returns:
+	 *  TRUE if tree lines are drawn in tree_view, FALSE
+	 * otherwise.
+	 * Since 2.10
+	 */
+	public int getEnableTreeLines()
+	{
+		// gboolean gtk_tree_view_get_enable_tree_lines  (GtkTreeView *tree_view);
+		return gtk_tree_view_get_enable_tree_lines(gtkTreeView);
+	}
+	
+	/**
+	 * Sets whether to draw lines interconnecting the expanders in tree_view.
+	 * This does not have any visible effects for lists.
+	 * tree_view:
+	 *  a GtkTreeView
+	 * enabled:
+	 *  TRUE to enable tree line drawing, FALSE otherwise.
+	 * Since 2.10
+	 */
+	public void setEnableTreeLines(int enabled)
+	{
+		// void gtk_tree_view_set_enable_tree_lines  (GtkTreeView *tree_view,  gboolean enabled);
+		gtk_tree_view_set_enable_tree_lines(gtkTreeView, enabled);
+	}
+	
+	
+	/**
+	 * Returns which grid lines are enabled in tree_view.
+	 * tree_view:
+	 *  a GtkTreeView
+	 * Returns:
+	 *  a GtkTreeViewGridLines value indicating which grid lines
+	 * are enabled.
+	 * Since 2.10
+	 */
+	public GtkTreeViewGridLines getGridLines()
+	{
+		// GtkTreeViewGridLines gtk_tree_view_get_grid_lines  (GtkTreeView *tree_view);
+		return gtk_tree_view_get_grid_lines(gtkTreeView);
+	}
+	
+	/**
+	 * Sets which grid lines to draw in tree_view.
+	 * tree_view:
+	 *  a GtkTreeView
+	 * grid_lines:
+	 *  a GtkTreeViewGridLines value indicating which grid lines to
+	 * enable.
+	 * Since 2.10
+	 * Property Details
+	 * The "enable-grid-lines" property
+	 *  "enable-grid-lines" GtkTreeViewGridLines : Read / Write
+	 * Whether grid lines should be drawn in the tree view.
+	 * Default value: GTK_TREE_VIEW_GRID_LINES_NONE
+	 */
+	public void setGridLines(GtkTreeViewGridLines gridLines)
+	{
+		// void gtk_tree_view_set_grid_lines (GtkTreeView *tree_view,  GtkTreeViewGridLines grid_lines);
+		gtk_tree_view_set_grid_lines(gtkTreeView, gridLines);
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

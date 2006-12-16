@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkIMContextSimple.html
  * outPack = gtk
  * outFile = IMContextSimple
  * strct   = GtkIMContextSimple
@@ -49,7 +50,7 @@
 
 module gtk.IMContextSimple;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

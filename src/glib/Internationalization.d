@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-I18N.html
  * outPack = glib
  * outFile = Internationalization
  * strct   = 
@@ -47,7 +48,7 @@
 
 module glib.Internationalization;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkNoOpObjectFactory.html
  * outPack = atk
  * outFile = NoOpObjectFactory
  * strct   = AtkNoOpObjectFactory
@@ -48,7 +49,7 @@
 
 module atk.NoOpObjectFactory;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 

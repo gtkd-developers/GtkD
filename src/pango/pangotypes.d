@@ -20,19 +20,25 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-module pango.typedefs;
+module pango.pangotypes;
 
 
-public import glib.typedefs;
+public import glib.glibtypes;
+public import gobject.gobjecttypes;
 
+//public import std.c.windows.windows;
 
-public import gobject.typedefs;
-
-
-
+///* The pango Basic Types */
 public alias void FcPattern;
 public alias void FcCharSet;
+//public alias void LOGFONT;
+//struct Display;
+//struct FT_Bitmap;
 struct FT_Face;
+//struct XftDraw;
+//struct XftColor;
+
+
 const int PANGO_SCALE = 1024;
 const double PANGO_SCALE_XX_SMALL = 0.5787037037037;	/// The scale factor for three shrinking steps (1 / (1.2 * 1.2 * 1.2)).
 const double PANGO_SCALE_X_SMALL  = 0.6444444444444;	/// The scale factor for two shrinking steps (1 / (1.2 * 1.2)).
@@ -82,11 +88,8 @@ public alias PangoGlyphItem PangoLayoutRun;
  * The PANGO_DIRECTION_TTB_LTR, PANGO_DIRECTION_TTB_RTL
  * values come from an earlier interpretation of this
  * enumeration as the writing direction of a block of
- * text and are no longer used; See the Text module of the
- * CSS3 spec for how vertical text is planned to be handled
- * in a future version of Pango. The explanation of why
- * PANGO_DIRECTION_TTB_LTR is treated as PANGO_DIRECTION_RTL
- * can be found there as well.
+ * text and are no longer used; See PangoGravity for how
+ * vertical text is handled in Pango.
  * PANGO_DIRECTION_LTR
  */
 public enum PangoDirection
@@ -98,6 +101,25 @@ public enum PangoDirection
 	WEAK_LTR,
 	WEAK_RTL,
 	NEUTRAL
+}
+/**
+ * The PangoGravity type represents the orientation of glyphs in a segment
+ * of text. This is useful when rendering vertical text layouts. In
+ * those situations, the layout is rotated using a non-identity PangoMatrix,
+ * and then glyph orientation is controlled using PangoGravity.
+ * Not every value in this enumeration makes sense for every usage of
+ * PangoGravity; for example, PANGO_GRAVITY_AUTO only can be passed to
+ * pango_context_set_base_gravity() and can only be returned by
+ * pango_context_get_base_gravity().
+ * PANGO_GRAVITY_SOUTH
+ */
+public enum PangoGravity
+{
+	SOUTH,
+	EAST,
+	NORTH,
+	WEST,
+	AUTO
 }
 /**
  * An enumeration specifying the various slant styles possible for a font.
@@ -142,15 +164,23 @@ public enum PangoVariant
  * An enumeration specifying the width of the font relative to other designs
  * within a family.
  * PANGO_STRETCH_ULTRA_CONDENSED
+ * ultra condensed width
  * PANGO_STRETCH_EXTRA_CONDENSED
+ * extra condensed width
  * PANGO_STRETCH_CONDENSED
+ * condensed width
  * PANGO_STRETCH_SEMI_CONDENSED
+ * semi condensed width
  * PANGO_STRETCH_NORMAL
  * the normal width
  * PANGO_STRETCH_SEMI_EXPANDED
+ * semi expanded width
  * PANGO_STRETCH_EXPANDED
+ * expanded width
  * PANGO_STRETCH_EXTRA_EXPANDED
+ * extra expanded width
  * PANGO_STRETCH_ULTRA_EXPANDED
+ * ultra expanded width
  */
 public enum PangoStretch
 {
@@ -179,6 +209,8 @@ public enum PangoStretch
  * the font stretch is specified.
  * PANGO_FONT_MASK_SIZE
  * the font size is specified.
+ * PANGO_FONT_MASK_GRAVITY
+ * the font gravity is specified (Since: 1.16.)
  */
 public enum PangoFontMask
 {
@@ -187,7 +219,8 @@ public enum PangoFontMask
 	VARIANT = 1 << 2,
 	WEIGHT = 1 << 3,
 	STRETCH = 1 << 4,
-	SIZE = 1 << 5
+	SIZE = 1 << 5,
+	GRAVITY = 1 << 6
 }
 /**
  * The PangoAttrType
@@ -197,6 +230,7 @@ public enum PangoFontMask
  * values are given below. The type of structure used to store the
  * attribute is listed in parentheses after the description.
  * PANGO_ATTR_INVALID
+ * does not happen
  * PANGO_ATTR_LANGUAGE
  * language (PangoAttrLanguage)
  * PANGO_ATTR_FAMILY
@@ -210,7 +244,7 @@ public enum PangoFontMask
  * PANGO_ATTR_STRETCH
  * font stretch (PangoAttrInt)
  * PANGO_ATTR_SIZE
- * font size in points divided by PANGO_SCALE (PangoAttrInt)
+ * font size in points scaled by PANGO_SCALE (PangoAttrInt)
  * PANGO_ATTR_FONT_DESC
  * font description (PangoAttrFontDesc)
  * PANGO_ATTR_FOREGROUND
@@ -230,9 +264,13 @@ public enum PangoFontMask
  * PANGO_ATTR_FALLBACK
  * whether fallback is enabled (PangoAttrInt)
  * PANGO_ATTR_LETTER_SPACING
+ * letter spacing (PangoAttrInt)
  * PANGO_ATTR_UNDERLINE_COLOR
+ * underline color (PangoAttrColor)
  * PANGO_ATTR_STRIKETHROUGH_COLOR
+ * strikethrough color (PangoAttrColor)
  * PANGO_ATTR_ABSOLUTE_SIZE
+ * font size in pixels scaled by PANGO_SCALE (PangoAttrInt)
  */
 public enum PangoAttrType
 {
@@ -345,11 +383,14 @@ public enum PangoAlignment
 }
 /**
  * The PangoScript enumeration identifies different writing
- * systems. The values correspond to the names defined in the
- * Unicode standard. (See Unicode Standard Annex
- * 24: Script names).
+ * systems. The values correspond to the names as defined in the
+ * Unicode standard.
+ * Note that new types may be added in the future. Applications should be ready
+ * to handle unknown values.
+ * See Unicode Standard Annex
+ * 24: Script names.
  * PANGO_SCRIPT_INVALID_CODE
- * a value never used for any Unicode character
+ * a value never returned from pango_script_for_unichar()
  * PANGO_SCRIPT_COMMON
  * a character used by multiple different scripts
  * PANGO_SCRIPT_INHERITED
@@ -420,10 +461,17 @@ public enum PangoScript
 	TIFINAGH, /+* Tfng +/
 	SYLOTI_NAGRI, /+* Sylo +/
 	OLD_PERSIAN, /+* Xpeo +/
-	KHAROSHTHI /+* Khar +/
+	KHAROSHTHI, /+* Khar +/
+	/+* Unicode-5.0 additions +/
+	UNKNOWN, /+* Zzzz +/
+	BALINESE, /+* Bali +/
+	CUNEIFORM, /+* Xsux +/
+	PHOENICIAN, /+* Phnx +/
+	PHAGS_PA, /+* Phag +/
+	NKO /+* Nkoo +/
 }
 /**
- * Used to indicate how well a font can represent a particular ISO 10646
+ * Used to indicate how well a font can represent a particular Unicode
  * character point for a particular script.
  * PANGO_COVERAGE_NONE
  * The character is not representable with the font.
@@ -443,7 +491,7 @@ public enum PangoCoverageLevel
  * The PangoContext structure stores global information
  * used to control the itemization process.
  */
-public struct PangoContext;
+public struct PangoContext{}
 
 
 /**
@@ -452,11 +500,15 @@ public struct PangoContext;
  * gintoffset;
  * the offset of the segment from the beginning of the
  */
-public struct PangoItem;
+public struct PangoItem{}
 // int offset;
+// pango-Text-Processing.html
 // int length;
+// pango-Text-Processing.html
 // int numChars;
+// pango-Text-Processing.html
 // PangoAnalysis analysis;
+// pango-Text-Processing.html
 
 
 /**
@@ -468,66 +520,111 @@ public struct PangoItem;
  * PangoEngineLang*lang_engine;
  * the engine for doing rendering-system-independent processing.
  * PangoFont*font;
- * guint8level;
+ * the font for this segment.
+ * guintlevel:8;
  * the bidrectional level for this segment.
+ * guintgravity:3;
+ * the glyph orientation for this segment.
+ * guintcentered_baseline:1;
+ * whether this segment should be shifted to center around
+ * the baseline.
  * PangoLanguage*language;
+ * the detected language for this segment.
  * GSList*extra_attrs;
+ * extra attributes for this segment.
  */
-public struct PangoAnalysis;
+public struct PangoAnalysis{}
 // PangoEngineShape *shapeEngine;
+// pango-Text-Processing.html
 // PangoEngineLang *langEngine;
+// pango-Text-Processing.html
 // PangoFont *font;
-// byte level;
+// pango-Text-Processing.html
+// uint level : 8;
+// pango-Text-Processing.html
+// uint gravity : 3; /+* PangoGravity +/
+// pango-Text-Processing.html
+// uint centeredBaseline : 1; /+* int +/
+// pango-Text-Processing.html
 // PangoLanguage *language;
+// pango-Text-Processing.html
 // GSList *extraAttrs;
+// pango-Text-Processing.html
 
 
 /**
  * The PangoLogAttr structure stores information
  * about the attributes of a single character.
  * guintis_line_break:1;
+ * if set, can break line in front of character
  * guintis_mandatory_break:1;
+ * if set, must break line in front of character
  * guintis_char_break:1;
+ * if set, can break here when doing character wrapping
  * guintis_white:1;
+ * is whitespace character
  * guintis_cursor_position:1;
- * guintis_word_start:1;
- * guintis_word_end:1;
- * guintis_sentence_boundary:1;
- * guintis_sentence_start:1;
- * guintis_sentence_end:1;
- * guintbackspace_deletes_character:1;
- * If set, backspace deletes one character
+ * if set, cursor can appear in front of character.
  */
-public struct PangoLogAttr;
+public struct PangoLogAttr{}
 // uint isLineBreak : 1; /+* Can break line inn front of character +/
+// pango-Text-Processing.html
 // uint isMandatoryBreak : 1; /+* Must break line inn front of character +/
+// pango-Text-Processing.html
 // uint isCharBreak : 1; /+* Can break here when doing char wrap +/
+// pango-Text-Processing.html
 // uint isWhite : 1; /+* Whitespace character +/
+// pango-Text-Processing.html
 // /+* cursor can appear inn front of character (i.e. this is a grapheme
+// pango-Text-Processing.html
 // * boundary, or the first character inn the text)
+// pango-Text-Processing.html
 // +/
+// pango-Text-Processing.html
 // uint isCursorPosition : 1;
+// pango-Text-Processing.html
 // /+* Note that inn degenerate cases, you could have both start/end set on
+// pango-Text-Processing.html
 // * some text, most likely for sentences (e.g. no space after a period, so
+// pango-Text-Processing.html
 // * the next sentence starts right away)
+// pango-Text-Processing.html
 // +/
+// pango-Text-Processing.html
 // uint isWordStart : 1; /+* first character inn a word +/
+// pango-Text-Processing.html
 // uint isWordEnd : 1; /+* is first non-word char after a word +/
+// pango-Text-Processing.html
 // /+* There are two ways to divide sentences. The first assigns all
+// pango-Text-Processing.html
 // * intersentence whitespace/control/format chars to some sentence,
+// pango-Text-Processing.html
 // * so all chars are inn some sentence; isSentenceBoundary denotes
+// pango-Text-Processing.html
 // * the boundaries there. The second way doesn't assign
+// pango-Text-Processing.html
 // * between-sentence spaces, etc. to any sentence, so
+// pango-Text-Processing.html
 // * isSentenceStart/isSentenceEnd mark the boundaries of those
+// pango-Text-Processing.html
 // * sentences.
+// pango-Text-Processing.html
 // +/
+// pango-Text-Processing.html
 // uint isSentenceBoundary : 1;
+// pango-Text-Processing.html
 // uint isSentenceStart : 1; /+* first character inn a sentence +/
+// pango-Text-Processing.html
 // uint isSentenceEnd : 1; /+* first non-sentence char after a sentence +/
+// pango-Text-Processing.html
 // /+* if set, backspace deletes one character rather than
+// pango-Text-Processing.html
 // * the entire grapheme cluster
+// pango-Text-Processing.html
 // +/
+// pango-Text-Processing.html
 // uint backspaceDeletesCharacter : 1;
+// pango-Text-Processing.html
 
 
 /**
@@ -543,11 +640,15 @@ public struct PangoLogAttr;
  * intheight;
  * height of the rectangle.
  */
-public struct PangoRectangle;
+public struct PangoRectangle{}
 // int x;
+// pango-Glyph-Storage.html
 // int y;
+// pango-Glyph-Storage.html
 // int width;
+// pango-Glyph-Storage.html
 // int height;
+// pango-Glyph-Storage.html
 
 
 /**
@@ -558,13 +659,19 @@ public struct PangoRectangle;
  * y_device = x_user * matrix->yx + y_user * matrix->yy + matrix->y0;
  * doublexx;
  */
-public struct PangoMatrix;
+public struct PangoMatrix{}
 // double xx;
+// pango-Glyph-Storage.html
 // double xy;
+// pango-Glyph-Storage.html
 // double yx;
+// pango-Glyph-Storage.html
 // double yy;
+// pango-Glyph-Storage.html
 // double x0;
+// pango-Glyph-Storage.html
 // double y0;
+// pango-Glyph-Storage.html
 
 
 /**
@@ -578,10 +685,13 @@ public struct PangoMatrix;
  * PangoGlyphVisAttrattr;
  * the visual attributes of the glyph.
  */
-public struct PangoGlyphInfo;
+public struct PangoGlyphInfo{}
 // PangoGlyph glyph;
+// pango-Glyph-Storage.html
 // PangoGlyphGeometry geometry;
+// pango-Glyph-Storage.html
 // PangoGlyphVisAttr attr;
+// pango-Glyph-Storage.html
 
 
 /**
@@ -594,21 +704,27 @@ public struct PangoGlyphInfo;
  * PangoGlyphUnity_offset;
  * vertical offset from nominal character position.
  */
-public struct PangoGlyphGeometry;
+public struct PangoGlyphGeometry{}
 // PangoGlyphUnit width;
+// pango-Glyph-Storage.html
 // PangoGlyphUnit xOffset;
+// pango-Glyph-Storage.html
 // PangoGlyphUnit yOffset;
+// pango-Glyph-Storage.html
 
 
 /**
  * The PangoGlyphVisAttr is used to communicate information between
- * the shaping phase and the rendering phase. It's contents
- * are still evolving.
- * guint is_cluster_start : 1;
+ * the shaping phase and the rendering phase. More attributes may be
+ * added in the future.
+ * guintis_cluster_start:1;
  * set for the first logical glyph in each cluster. (Clusters
  */
-public struct PangoGlyphVisAttr;
-// uint isClusterStart : 1;
+public struct PangoGlyphVisAttr
+{
+	uint bitfield;
+	//uint isClusterStart : 1;
+}
 
 
 /**
@@ -626,15 +742,23 @@ public struct PangoGlyphVisAttr;
  * cluster. The indices are relative to the start of the text
  * corresponding to the PangoGlyphString.
  */
-public struct PangoGlyphString;
+public struct PangoGlyphString{}
 // int numGlyphs;
+// pango-Glyph-Storage.html
 // PangoGlyphInfo *glyphs;
+// pango-Glyph-Storage.html
 // /+* This is a memory inefficient way of representing the information
+// pango-Glyph-Storage.html
 // * here - each value gives the byte index within the text
+// pango-Glyph-Storage.html
 // * corresponding to the glyph string of the start of the cluster to
+// pango-Glyph-Storage.html
 // * which the glyph belongs.
+// pango-Glyph-Storage.html
 // +/
+// pango-Glyph-Storage.html
 // int *logClusters;
+// pango-Glyph-Storage.html
 
 
 /**
@@ -646,9 +770,11 @@ public struct PangoGlyphString;
  * PangoItem*item;
  * a PangoItem structure that provides information
  */
-public struct PangoGlyphItem;
+public struct PangoGlyphItem{}
 // PangoItem *item;
+// pango-Glyph-Storage.html
 // PangoGlyphString *glyphs;
+// pango-Glyph-Storage.html
 
 
 /**
@@ -658,7 +784,7 @@ public struct PangoGlyphItem;
  * what fonts are available on the system and also for specifying
  * the characteristics of a font to load.
  */
-public struct PangoFontDescription;
+public struct PangoFontDescription{}
 
 
 /**
@@ -667,17 +793,28 @@ public struct PangoFontDescription;
  * structure are private to implementations of a font backend. See
  * the documentation of the corresponding getters for documentation
  * of their meaning.
+ * guintref_count;
+ * reference count. Used internally. See pango_font_metrics_ref()
  */
-public struct PangoFontMetrics;
+public struct PangoFontMetrics{}
 // uint refCount;
+// pango-Fonts.html
 // int ascent;
+// pango-Fonts.html
 // int descent;
+// pango-Fonts.html
 // int approximateCharWidth;
+// pango-Fonts.html
 // int approximateDigitWidth;
+// pango-Fonts.html
 // int underlinePosition;
+// pango-Fonts.html
 // int underlineThickness;
+// pango-Fonts.html
 // int strikethroughPosition;
+// pango-Fonts.html
 // int strikethroughThickness;
+// pango-Fonts.html
 
 
 /**
@@ -693,7 +830,7 @@ public struct PangoFontMetrics;
  * The PangoFont structure contains one member
  * which the implementation fills in.
  */
-public struct PangoFont;
+public struct PangoFont{}
 
 
 /**
@@ -701,14 +838,14 @@ public struct PangoFont;
  * font faces. The faces in a family share a common design, but differ in
  * slant, weight, width and other aspects.
  */
-public struct PangoFontFamily;
+public struct PangoFontFamily{}
 
 
 /**
  * The PangoFontFace structure is used to represent a group of fonts with
  * the same family, slant, weight, width, but varying sizes.
  */
-public struct PangoFontFace;
+public struct PangoFontFace{}
 
 
 /**
@@ -723,29 +860,42 @@ public struct PangoFontFace;
  * The PangoFontMap structure contains one member which the implementation
  * fills in.
  */
-public struct PangoFontMap;
+public struct PangoFontMap{}
 
 
 /**
  * The PangoFontMapClass structure holds the virtual functions for
  * a particular PangoFontMap implementation.
  * GObjectClassparent_class;
+ * parent GObjectClass.
  * load_font()
  * a function to load a font with a given description. See
  */
-public struct PangoFontMapClass;
+public struct PangoFontMapClass{}
 // GObjectClass parentClass;
+// pango-Fonts.html
 // PangoFont * (*loadFont) (PangoFontMap *fontmap,
+// pango-Fonts.html
 // PangoContext *context,
+// pango-Fonts.html
 // PangoFontDescription *desc);
+// pango-Fonts.html
 // void (*listFamilies) (PangoFontMap *fontmap,
+// pango-Fonts.html
 // PangoFontFamily ***families,
+// pango-Fonts.html
 // int *nFamilies);
+// pango-Fonts.html
 // PangoFontset *(*loadFontset) (PangoFontMap *fontmap,
+// pango-Fonts.html
 // PangoContext *context,
+// pango-Fonts.html
 // PangoFontDescription *desc,
+// pango-Fonts.html
 // PangoLanguage *language);
+// pango-Fonts.html
 // char *shapeEngineType;
+// pango-Fonts.html
 
 
 /**
@@ -756,25 +906,34 @@ public struct PangoFontMapClass;
  * a particular Unicode character, and for finding a composite
  * set of metrics for the entire fontset.
  */
-public struct PangoFontset;
+public struct PangoFontset{}
 
 
 /**
  * The PangoFontsetClass structure holds the virtual functions for
  * a particular PangoFontset implementation.
  * GObjectClassparent_class;
+ * parent GObjectClass.
  * get_font()
  * a function to get the font in the fontset that contains the
  */
-public struct PangoFontsetClass;
+public struct PangoFontsetClass{}
 // GObjectClass parentClass;
+// pango-Fonts.html
 // PangoFont * (*getFont) (PangoFontset *fontset,
+// pango-Fonts.html
 // uint wc);
+// pango-Fonts.html
 // PangoFontMetrics *(*getMetrics) (PangoFontset *fontset);
+// pango-Fonts.html
 // PangoLanguage * (*getLanguage) (PangoFontset *fontset);
+// pango-Fonts.html
 // void (*foreac) (PangoFontset *fontset,
+// pango-Fonts.html
 // PangoFontsetForeachFunc func,
+// pango-Fonts.html
 // void* data);
+// pango-Fonts.html
 
 
 /**
@@ -783,7 +942,7 @@ public struct PangoFontsetClass;
  * which the creator provides when constructing the
  * PangoFontsetSimple.
  */
-public struct PangoFontsetSimple;
+public struct PangoFontsetSimple{}
 
 
 /**
@@ -798,12 +957,17 @@ public struct PangoFontsetSimple;
  * destroy()
  * function to free an attribute of this type (see pango_attribute_destroy())
  * equal()
+ * function to check two attributes of this type for equality (see pango_attribute_equal())
  */
-public struct PangoAttrClass;
+public struct PangoAttrClass{}
 // PangoAttrType type;
+// pango-Text-Attributes.html
 // PangoAttribute * (*copy) ( PangoAttribute *attr);
+// pango-Text-Attributes.html
 // void (*destroy) (PangoAttribute *attr);
+// pango-Text-Attributes.html
 // int (*equal) ( PangoAttribute *attr1, PangoAttribute *attr2);
+// pango-Text-Attributes.html
 
 
 /**
@@ -836,9 +1000,11 @@ public struct PangoAttribute
  * char*value;
  * the string which is the value of the attribute
  */
-public struct PangoAttrString;
+public struct PangoAttrString{}
 // PangoAttribute attr;
+// pango-Text-Attributes.html
 // char *value;
+// pango-Text-Attributes.html
 
 
 /**
@@ -849,9 +1015,11 @@ public struct PangoAttrString;
  * PangoLanguage*value;
  * the PangoLanguage which is the value of the attribute
  */
-public struct PangoAttrLanguage;
+public struct PangoAttrLanguage{}
 // PangoAttribute attr;
+// pango-Text-Attributes.html
 // PangoLanguage *value;
+// pango-Text-Attributes.html
 
 
 /**
@@ -862,9 +1030,11 @@ public struct PangoAttrLanguage;
  * PangoColorcolor;
  * the PangoColor which is the value of the attribute
  */
-public struct PangoAttrColor;
+public struct PangoAttrColor{}
 // PangoAttribute attr;
+// pango-Text-Attributes.html
 // PangoColor color;
+// pango-Text-Attributes.html
 
 
 /**
@@ -875,9 +1045,11 @@ public struct PangoAttrColor;
  * intvalue;
  * the value of the attribute
  */
-public struct PangoAttrInt;
+public struct PangoAttrInt{}
 // PangoAttribute attr;
+// pango-Text-Attributes.html
 // int value;
+// pango-Text-Attributes.html
 
 
 /**
@@ -888,9 +1060,11 @@ public struct PangoAttrInt;
  * doublevalue;
  * the value of the attribute
  */
-public struct PangoAttrFloat;
+public struct PangoAttrFloat{}
 // PangoAttribute attr;
+// pango-Text-Attributes.html
 // double value;
+// pango-Text-Attributes.html
 
 
 /**
@@ -901,9 +1075,11 @@ public struct PangoAttrFloat;
  * PangoFontDescription*desc;
  * the font description which is the value of this attribute
  */
-public struct PangoAttrFontDesc;
+public struct PangoAttrFontDesc{}
 // PangoAttribute attr;
+// pango-Text-Attributes.html
 // PangoFontDescription *desc;
+// pango-Text-Attributes.html
 
 
 /**
@@ -916,16 +1092,25 @@ public struct PangoAttrFontDesc;
  * PangoRectanglelogical_rect;
  * the logical rectangle to restrict to
  * gpointerdata;
+ * user data set (see pango_attr_shape_new_with_data())
  * PangoAttrDataCopyFunccopy_func;
+ * copy function for the user data
  * GDestroyNotifydestroy_func;
+ * destroy function for the user data
  */
-public struct PangoAttrShape;
+public struct PangoAttrShape{}
 // PangoAttribute attr;
+// pango-Text-Attributes.html
 // PangoRectangle inkRect;
+// pango-Text-Attributes.html
 // PangoRectangle logicalRect;
+// pango-Text-Attributes.html
 // void* data;
+// pango-Text-Attributes.html
 // PangoAttrDataCopyFunc copyFunc;
+// pango-Text-Attributes.html
 // GDestroyNotify destroyFunc;
+// pango-Text-Attributes.html
 
 
 /**
@@ -936,10 +1121,13 @@ public struct PangoAttrShape;
  * intsize;
  * size of font, in units of 1/PANGO_SCALE of a point (for
  */
-public struct PangoAttrSize;
+public struct PangoAttrSize{}
 // PangoAttribute attr;
+// pango-Text-Attributes.html
 // int size;
+// pango-Text-Attributes.html
 // uint absolute : 1;
+// pango-Text-Attributes.html
 
 
 /**
@@ -962,7 +1150,7 @@ public struct PangoColor
  * PangoLanguage pointers can be efficiently
  * copied and compared with each other.
  */
-public struct PangoLanguage;
+public struct PangoLanguage{}
 
 
 /**
@@ -976,7 +1164,7 @@ public struct PangoLanguage;
  * of text. In general, you should not use a single PangoAttrList
  * for more than one paragraph of text.
  */
-public struct PangoAttrList;
+public struct PangoAttrList{}
 
 
 /**
@@ -988,7 +1176,7 @@ public struct PangoAttrList;
  * style change, the range of the current style segment and the
  * attributes currently in effect can be queried.
  */
-public struct PangoAttrIterator;
+public struct PangoAttrIterator{}
 
 
 /**
@@ -996,7 +1184,7 @@ public struct PangoAttrIterator;
  * A PangoTabArray struct contains an array
  * of tab stops. Each tab stop has an alignment and a position.
  */
-public struct PangoTabArray;
+public struct PangoTabArray{}
 
 
 /**
@@ -1016,7 +1204,7 @@ public struct PangoTabArray;
  * The PangoLayout structure is opaque, and has no user-visible
  * fields.
  */
-public struct PangoLayout;
+public struct PangoLayout{}
 
 
 /**
@@ -1025,7 +1213,7 @@ public struct PangoLayout;
  * The PangoLayoutIter structure is opaque, and
  * has no user-visible fields.
  */
-public struct PangoLayoutIter;
+public struct PangoLayoutIter{}
 
 
 /**
@@ -1049,13 +1237,19 @@ public struct PangoLayoutIter;
  * guintresolved_dir:3;
  * the resolved PangoDirection of the line
  */
-public struct PangoLayoutLine;
+public struct PangoLayoutLine{}
 // PangoLayout *layout;
+// pango-Layout-Objects.html
 // int startIndex; /+* start of line as byte index into layout->text +/
+// pango-Layout-Objects.html
 // int length; /+* length of line inn bytes +/
+// pango-Layout-Objects.html
 // GSList *runs;
+// pango-Layout-Objects.html
 // uint isParagraphStart : 1; /+* TRUE if this is the first line of the paragraph +/
-// uint resolvedDir : 3; /+* Resolved direction of line +/
+// pango-Layout-Objects.html
+// uint resolvedDir : 3; /+* Resolved PangoDirection of line +/
+// pango-Layout-Objects.html
 
 
 /**
@@ -1063,14 +1257,14 @@ public struct PangoLayoutLine;
  * A PangoScriptIter is used to iterate through a string
  * and identify ranges in different scripts.
  */
-public struct PangoScriptIter;
+public struct PangoScriptIter{}
 
 
 /**
- * The PangoCoverage structure represents a map from ISO-10646 character
- * point to PangoCoverageLevel. It is an opaque structure with no public fields.
+ * The PangoCoverage structure represents a map from Unicode characters
+ * to PangoCoverageLevel. It is an opaque structure with no public fields.
  */
-public struct PangoCoverage;
+public struct PangoCoverage{}
 
 
 /**
@@ -1083,14 +1277,21 @@ public struct PangoCoverage;
  * constgchar*render_type;
  * a string identifying the render type.
  * PangoEngineScriptInfo*scripts;
+ * array of scripts this engine supports.
  * gintn_scripts;
+ * number of items in scripts.
  */
-public struct PangoEngineInfo;
+public struct PangoEngineInfo{}
 // char *id;
+// pango-Engines.html
 // char *engineType;
+// pango-Engines.html
 // char *renderType;
+// pango-Engines.html
 // PangoEngineScriptInfo *scripts;
+// pango-Engines.html
 // int nScripts;
+// pango-Engines.html
 
 
 /**
@@ -1100,22 +1301,24 @@ public struct PangoEngineInfo;
  * PangoScriptscript;
  * a PangoScript. The value PANGO_SCRIPT_COMMON has
  */
-public struct PangoEngineScriptInfo;
+public struct PangoEngineScriptInfo{}
 // PangoScript script;
+// pango-Engines.html
 // char *langs;
+// pango-Engines.html
 
 
 /**
  * PangoEngine is the base class for all types of language and
  * script specific engines. It has no functionality by itself.
  */
-public struct PangoEngine;
+public struct PangoEngine{}
 
 
 /**
  * Class structure for PangoEngine
  */
-public struct PangoEngineClass;
+public struct PangoEngineClass{}
 
 
 /**
@@ -1126,20 +1329,26 @@ public struct PangoEngineClass;
  * Thai to implement the dictionary-based word boundary
  * lookups needed for that language.
  */
-public struct PangoEngineLang;
+public struct PangoEngineLang{}
 
 
 /**
  * Class structure for PangoEngineLang
  * script_break()
  */
-public struct PangoEngineLangClass;
+public struct PangoEngineLangClass{}
 // void (*scriptBreak) (PangoEngineLang *engine,
+// PangoEngineLang.html
 // char *text,
+// PangoEngineLang.html
 // int len,
+// PangoEngineLang.html
 // PangoAnalysis *analysis,
+// PangoEngineLang.html
 // PangoLogAttr *attrs,
+// PangoEngineLang.html
 // int attrsLen);
+// PangoEngineLang.html
 
 
 /**
@@ -1149,36 +1358,62 @@ public struct PangoEngineLangClass;
  * A PangoEngineShape implementation is then specific to both
  * a particular rendering system or group of rendering systems
  * and to a particular script. For instance, there is one
- * PangoEngineShape implementation to handling shaping Arabic
+ * PangoEngineShape implementation to handle shaping Arabic
  * for Fontconfig-based backends.
  */
-public struct PangoEngineShape;
+public struct PangoEngineShape{}
 
 
 /**
  * Class structure for PangoEngineShape
  * script_shape()
  */
-public struct PangoEngineShapeClass;
+public struct PangoEngineShapeClass{}
 // void (*scriptShape) (PangoEngineShape *engine,
+// PangoEngineShape.html
 // PangoFont *font,
+// PangoEngineShape.html
 // char *text,
+// PangoEngineShape.html
 // int length,
+// PangoEngineShape.html
 // PangoAnalysis *analysis,
+// PangoEngineShape.html
 // PangoGlyphString *glyphs);
+// PangoEngineShape.html
 // PangoCoverageLevel (*covers) (PangoEngineShape *engine,
+// PangoEngineShape.html
 // PangoFont *font,
+// PangoEngineShape.html
 // PangoLanguage *language,
+// PangoEngineShape.html
 // gunichar wc);
+// PangoEngineShape.html
 
 
 /*
- * Converts a dimension to device units.
+ * Converts a dimension to device units by rounding.
  * d:
  * a dimension in Pango units.
  */
 // TODO
 // #define PANGO_PIXELS(d) (((int)(d) + 512) >> 10)
+
+/*
+ * Converts a dimension to device units by flooring.
+ * d:
+ * a dimension in Pango units.
+ */
+// TODO
+// #define PANGO_PIXELS_FLOOR(d) (((int)(d)) >> 10)
+
+/*
+ * Converts a dimension to device units by ceiling.
+ * d:
+ * a dimension in Pango units.
+ */
+// TODO
+// #define PANGO_PIXELS_CEIL(d) (((int)(d) + 1023) >> 10)
 
 /*
  * Extracts the ascent from a PangoRectangle
@@ -1225,6 +1460,17 @@ public struct PangoEngineShapeClass;
  */
 // TODO
 // #define PANGO_RBEARING(rect) ((rect).x + (rect).width)
+
+/*
+ * Returns a PangoGlyph value that means no glyph was found for wc.
+ * The way this unknown glyphs are rendered is backend specific. For example,
+ * a box with the hexadecimal Unicode code-point of the character written in it
+ * is what is done in the most common backends.
+ * wc:
+ * a Unicode character
+ */
+// TODO
+// #define PANGO_GET_UNKNOWN_GLYPH(wc) ((PangoGlyph)(wc)|PANGO_GLYPH_UNKNOWN_FLAG)
 
 /*
  * Casts a GObject to a PangoFont.

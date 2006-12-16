@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkSeparatorMenuItem.html
  * outPack = gtk
  * outFile = SeparatorMenuItem
  * strct   = GtkSeparatorMenuItem
@@ -47,7 +48,7 @@
 
 module gtk.SeparatorMenuItem;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

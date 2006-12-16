@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = pango-Engines.html
  * outPack = pango
  * outFile = PgEngine
  * strct   = 
@@ -47,7 +48,7 @@
 
 module pango.PgEngine;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 

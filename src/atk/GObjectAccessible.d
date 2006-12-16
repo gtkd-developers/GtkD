@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkGObjectAccessible.html
  * outPack = atk
  * outFile = GObjectAccessible
  * strct   = AtkGObjectAccessible
@@ -48,7 +49,7 @@
 
 module atk.GObjectAccessible;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 

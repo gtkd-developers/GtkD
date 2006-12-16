@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Balanced-Binary-Trees.html
  * outPack = glib
  * outFile = BBTree
  * strct   = GTree
@@ -50,7 +51,7 @@
 
 module glib.BBTree;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

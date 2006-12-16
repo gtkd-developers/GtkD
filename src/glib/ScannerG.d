@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Lexical-Scanner.html
  * outPack = glib
  * outFile = ScannerG
  * strct   = GScanner
@@ -50,7 +51,7 @@
 
 module glib.ScannerG;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -61,8 +62,6 @@ private import glib.Str;
  * Description
  * The GScanner and its associated functions provide a general purpose
  * lexical scanner.
- * FIXME: really needs an example and more detail, but I don't completely
- * understand it myself. Look at gtkrc.c for some code using the scanner.
  */
 public class ScannerG
 {
@@ -150,7 +149,7 @@ public class ScannerG
 	 */
 	public void _InputText(char[] text, uint textLen)
 	{
-		// void g_scanner_input_text (GScanner *scanner,  const	gchar *text,  guint text_len);
+		// void g_scanner_input_text (GScanner *scanner,  const gchar *text,  guint text_len);
 		g_scanner_input_text(gScanner, Str.toStringz(text), textLen);
 	}
 	
@@ -161,6 +160,13 @@ public class ScannerG
 	 * next_value,
 	 * next_line, and
 	 * next_position fields of the GScanner structure.
+	 * Note that, while the token is not removed from the input stream (i.e.
+	 * the next call to g_scanner_get_next_token() will return the same token),
+	 * it will not be reevaluated. This can lead to surprising results when
+	 * changing scope after peeking for the next token. Getting the next token
+	 * after switching the scope will return whatever was peeked before,
+	 * regardless of any symbols that may have been added or removed in the
+	 * new scope.
 	 * scanner:
 	 * a GScanner.
 	 * Returns:

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Selections.html
  * outPack = gtk
  * outFile = Selections
  * strct   = 
@@ -54,7 +55,7 @@
 
 module gtk.Selections;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -107,11 +108,13 @@ public class Selections
 	 * Increases the reference count of a GtkTargetList by one.
 	 * list:
 	 *  a GtkTargetList
+	 * Returns:
+	 *  the passed in GtkTargetList.
 	 */
-	public static void targetListRef(GtkTargetList* list)
+	public static GtkTargetList* targetListRef(GtkTargetList* list)
 	{
-		// void gtk_target_list_ref (GtkTargetList *list);
-		gtk_target_list_ref(list);
+		// GtkTargetList* gtk_target_list_ref (GtkTargetList *list);
+		return gtk_target_list_ref(list);
 	}
 	
 	/**
@@ -207,6 +210,28 @@ public class Selections
 	}
 	
 	/**
+	 * Appends the rich text targets registered with
+	 * gtk_text_buffer_register_serialize_format() or
+	 * gtk_text_buffer_register_deserialize_format() to the target list. All
+	 * targets are added with the same info.
+	 * list:
+	 *  a GtkTargetList
+	 * info:
+	 *  an ID that will be passed back to the application
+	 * deserializable:
+	 *  if TRUE, then deserializable rich text formats
+	 *  will be added, serializable formats otherwise.
+	 * buffer:
+	 *  a GtkTextBuffer.
+	 * Since 2.10
+	 */
+	public static void targetListAddRichTextTargets(GtkTargetList* list, uint info, int deserializable, GtkTextBuffer* buffer)
+	{
+		// void gtk_target_list_add_rich_text_targets  (GtkTargetList *list,  guint info,  gboolean deserializable,  GtkTextBuffer *buffer);
+		gtk_target_list_add_rich_text_targets(list, info, deserializable, buffer);
+	}
+	
+	/**
 	 * Removes a target from a target list.
 	 * list:
 	 *  a GtkTargetList
@@ -234,6 +259,40 @@ public class Selections
 	{
 		// gboolean gtk_target_list_find (GtkTargetList *list,  GdkAtom target,  guint *info);
 		return gtk_target_list_find(list, target, info);
+	}
+	
+	/**
+	 * This function frees a target table as returned by
+	 * gtk_target_table_new_from_list()
+	 * targets:
+	 *  a GtkTargetEntry array
+	 * n_targets:
+	 *  the number of entries in the array
+	 * Since 2.10
+	 */
+	public static void targetTableFree(GtkTargetEntry* targets, int nTargets)
+	{
+		// void gtk_target_table_free (GtkTargetEntry *targets,  gint n_targets);
+		gtk_target_table_free(targets, nTargets);
+	}
+	
+	/**
+	 * This function creates an GtkTargetEntry array that contains the
+	 * same targets as the passed list. The returned table is newly
+	 * allocated and should be freed using gtk_target_table_free() when no
+	 * longer needed.
+	 * list:
+	 *  a GtkTargetList
+	 * n_targets:
+	 *  return location for the number ot targets in the table
+	 * Returns:
+	 *  the new table.
+	 * Since 2.10
+	 */
+	public static GtkTargetEntry* targetTableNewFromList(GtkTargetList* list, int* nTargets)
+	{
+		// GtkTargetEntry* gtk_target_table_new_from_list  (GtkTargetList *list,  gint *n_targets);
+		return gtk_target_table_new_from_list(list, nTargets);
 	}
 	
 	/**
@@ -536,6 +595,120 @@ public class Selections
 	}
 	
 	/**
+	 * Given a GtkSelectionData object holding a list of targets,
+	 * determines if any of the targets in targets can be used to
+	 * provide a list or URIs.
+	 * selection_data:
+	 *  a GtkSelectionData object
+	 * Returns:
+	 *  TRUE if selection_data holds a list of targets,
+	 *  and a suitable target for text is included, otherwise FALSE.
+	 * Since 2.10
+	 */
+	public static int selectionDataTargetsIncludeUri(GtkSelectionData* selectionData)
+	{
+		// gboolean gtk_selection_data_targets_include_uri  (GtkSelectionData *selection_data);
+		return gtk_selection_data_targets_include_uri(selectionData);
+	}
+	
+	/**
+	 * Given a GtkSelectionData object holding a list of targets,
+	 * determines if any of the targets in targets can be used to
+	 * provide rich text.
+	 * selection_data:
+	 *  a GtkSelectionData object
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * Returns:
+	 *  TRUE if selection_data holds a list of targets,
+	 *  and a suitable target for rich text is included,
+	 *  otherwise FALSE.
+	 * Since 2.10
+	 */
+	public static int selectionDataTargetsIncludeRichText(GtkSelectionData* selectionData, GtkTextBuffer* buffer)
+	{
+		// gboolean gtk_selection_data_targets_include_rich_text  (GtkSelectionData *selection_data,  GtkTextBuffer *buffer);
+		return gtk_selection_data_targets_include_rich_text(selectionData, buffer);
+	}
+	
+	/**
+	 * Determines if any of the targets in targets can be used to
+	 * provide a GdkPixbuf.
+	 * targets:
+	 *  an array of GdkAtoms
+	 * n_targets:
+	 *  the length of targets
+	 * writable:
+	 *  whether to accept only targets for which GTK+ knows
+	 *  how to convert a pixbuf into the format
+	 * Returns:
+	 *  TRUE if targets include a suitable target for images,
+	 *  otherwise FALSE.
+	 * Since 2.10
+	 */
+	public static int targetsIncludeImage(GdkAtom* targets, int nTargets, int writable)
+	{
+		// gboolean gtk_targets_include_image (GdkAtom *targets,  gint n_targets,  gboolean writable);
+		return gtk_targets_include_image(targets, nTargets, writable);
+	}
+	
+	/**
+	 * Determines if any of the targets in targets can be used to
+	 * provide text.
+	 * targets:
+	 *  an array of GdkAtoms
+	 * n_targets:
+	 *  the length of targets
+	 * Returns:
+	 *  TRUE if targets include a suitable target for text,
+	 *  otherwise FALSE.
+	 * Since 2.10
+	 */
+	public static int targetsIncludeText(GdkAtom* targets, int nTargets)
+	{
+		// gboolean gtk_targets_include_text (GdkAtom *targets,  gint n_targets);
+		return gtk_targets_include_text(targets, nTargets);
+	}
+	
+	/**
+	 * Determines if any of the targets in targets can be used to
+	 * provide an uri list.
+	 * targets:
+	 *  an array of GdkAtoms
+	 * n_targets:
+	 *  the length of targets
+	 * Returns:
+	 *  TRUE if targets include a suitable target for uri lists,
+	 *  otherwise FALSE.
+	 * Since 2.10
+	 */
+	public static int targetsIncludeUri(GdkAtom* targets, int nTargets)
+	{
+		// gboolean gtk_targets_include_uri (GdkAtom *targets,  gint n_targets);
+		return gtk_targets_include_uri(targets, nTargets);
+	}
+	
+	/**
+	 * Determines if any of the targets in targets can be used to
+	 * provide rich text.
+	 * targets:
+	 *  an array of GdkAtoms
+	 * n_targets:
+	 *  the length of targets
+	 * buffer:
+	 *  a GtkTextBuffer
+	 * Returns:
+	 *  TRUE if targets include a suitable target for rich text,
+	 *  otherwise FALSE.
+	 * Since 2.10
+	 */
+	public static int targetsIncludeRichText(GdkAtom* targets, int nTargets, GtkTextBuffer* buffer)
+	{
+		// gboolean gtk_targets_include_rich_text (GdkAtom *targets,  gint n_targets,  GtkTextBuffer *buffer);
+		return gtk_targets_include_rich_text(targets, nTargets, buffer);
+	}
+	
+	/**
 	 * Removes all handlers and unsets ownership of all
 	 * selections for a widget. Called when widget is being
 	 * destroyed. This function will not generally be
@@ -551,7 +724,7 @@ public class Selections
 	
 	/**
 	 * Warning
-	 * gtk_selection_clear is deprecated and should not be used in newly-written code. Instead of calling this function, chain up from
+	 * gtk_selection_clear has been deprecated since version 2.4 and should not be used in newly-written code. Instead of calling this function, chain up from
 	 * your selection_clear_event handler. Calling this function
 	 * from any other context is illegal.
 	 * The default handler for the GtkWidget::selection_clear_event

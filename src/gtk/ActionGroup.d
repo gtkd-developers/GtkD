@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkActionGroup.html
  * outPack = gtk
  * outFile = ActionGroup
  * strct   = GtkActionGroup
@@ -52,7 +53,7 @@
 
 module gtk.ActionGroup;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -113,7 +114,7 @@ public class ActionGroup : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Action, GtkWidget*, ActionGroup)[] onConnectProxyListeners;
@@ -127,7 +128,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackConnectProxy,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["connect-proxy"] = 1;
 		}
 		onConnectProxyListeners ~= dlg;
@@ -155,7 +156,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackDisconnectProxy,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["disconnect-proxy"] = 1;
 		}
 		onDisconnectProxyListeners ~= dlg;
@@ -183,7 +184,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackPostActivate,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["post-activate"] = 1;
 		}
 		onPostActivateListeners ~= dlg;
@@ -211,7 +212,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackPreActivate,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["pre-activate"] = 1;
 		}
 		onPreActivateListeners ~= dlg;

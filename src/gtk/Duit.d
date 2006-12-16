@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-General.html
  * outPack = gtk
  * outFile = Duit
  * strct   = 
@@ -49,9 +50,9 @@
  * 	- gtk.ObjectGtk
  * 	- glib.Str
  * 	- lib.gtk
- * 	- gtk.typedefs
+ * 	- gtk.gtktypes
  * 	- lib.gtk
- * 	- gtk.typedefs
+ * 	- gtk.gtktypes
  * structWrap:
  * 	- GdkEvent* -> Event
  * 	- GtkObject* -> ObjectGtk
@@ -61,7 +62,7 @@
 
 module gtk.Duit;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -70,9 +71,9 @@ private import gtk.Widget;
 private import gtk.ObjectGtk;
 private import glib.Str;
 private import lib.gtk;
-private import gtk.typedefs;
+private import gtk.gtktypes;
 private import lib.gtk;
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 /**
  * Description
@@ -128,7 +129,7 @@ public class Duit
 	 */
 	public static void init(char[][] args)
 	{
-		char** argv = new char*[args.length];
+		char** argv = (new char*[args.length]).ptr;
 		int argc = 0;
 		foreach (char[] p; args)
 		{
@@ -333,7 +334,7 @@ public class Duit
 	 * This function will shut down the GUI and free all resources allocated
 	 * for GTK+.
 	 * error_code:
-	 * Return value to pass to the caller. This is dependend on the
+	 * Return value to pass to the caller. This is dependent on the
 	 * target system but at least on Unix systems 0 means success.
 	 */
 	public static void exit(int errorCode)
@@ -613,7 +614,7 @@ public class Duit
 	
 	/**
 	 * Warning
-	 * gtk_input_add_full is deprecated and should not be used in newly-written code. Use g_io_add_watch_full() instead.
+	 * gtk_input_add_full has been deprecated since version 2.4 and should not be used in newly-written code. Use g_io_add_watch_full() instead.
 	 * Registers a function to be called when a condition becomes true
 	 * on a file descriptor.
 	 * source:
@@ -640,7 +641,7 @@ public class Duit
 	
 	/**
 	 * Warning
-	 * gtk_input_remove is deprecated and should not be used in newly-written code. Use g_source_remove() instead.
+	 * gtk_input_remove has been deprecated since version 2.4 and should not be used in newly-written code. Use g_source_remove() instead.
 	 * Removes the function with the given id.
 	 * input_handler_id:
 	 * Identifies the function to remove.

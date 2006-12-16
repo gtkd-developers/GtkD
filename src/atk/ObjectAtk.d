@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkObject.html
  * outPack = atk
  * outFile = ObjectAtk
  * strct   = AtkObject
@@ -41,17 +42,20 @@
  * omit code:
  * imports:
  * 	- glib.Str
+ * 	- atk.StateSet
  * structWrap:
+ * 	- AtkStateSet* -> StateSet
  * local aliases:
  */
 
 module atk.ObjectAtk;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
 private import glib.Str;
+private import atk.StateSet;
 
 /**
  * Description
@@ -105,7 +109,7 @@ public class ObjectAtk : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gpointer, ObjectAtk)[] onActiveDescendantChangedListeners;
@@ -119,7 +123,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackActiveDescendantChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["active-descendant-changed"] = 1;
 		}
 		onActiveDescendantChangedListeners ~= dlg;
@@ -147,7 +151,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackChildrenChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["children-changed"] = 1;
 		}
 		onChildrenChangedListeners ~= dlg;
@@ -175,7 +179,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackFocus,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["focus-event"] = 1;
 		}
 		onFocusListeners ~= dlg;
@@ -203,7 +207,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackPropertyChange,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["property-change"] = 1;
 		}
 		onPropertyChangeListeners ~= dlg;
@@ -231,7 +235,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackStateChange,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["state-change"] = 1;
 		}
 		onStateChangeListeners ~= dlg;
@@ -259,7 +263,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackVisibleDataChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["visible-data-changed"] = 1;
 		}
 		onVisibleDataChangedListeners ~= dlg;
@@ -398,12 +402,14 @@ public class ObjectAtk : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * atk_object_get_layer is deprecated and should not be used in newly-written code. Use atk_component_get_layer instead.
 	 * Gets the layer of the accessible.
+	 * Returns:
 	 * accessible:
 	 *  an AtkObject
 	 * Returns:
 	 *  an AtkLayer which is the layer of the accessible
-	 * Deprecated: Use atk_component_get_layer instead.
 	 */
 	public AtkLayer getLayer()
 	{
@@ -412,15 +418,17 @@ public class ObjectAtk : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * atk_object_get_mdi_zorder is deprecated and should not be used in newly-written code. Use atk_component_get_mdi_zorder instead.
 	 * Gets the zorder of the accessible. The value G_MININT will be returned
 	 * if the layer of the accessible is not ATK_LAYER_MDI.
+	 * Returns:
 	 * accessible:
 	 *  an AtkObject
 	 * Returns:
 	 *  a gint which is the zorder of the accessible, i.e. the depth at
 	 * which the component is shown in relation to other components in the same
 	 * container.
-	 * Deprecated: Use atk_component_get_mdi_zorder instead.
 	 */
 	public int getMdiZorder()
 	{
@@ -450,10 +458,10 @@ public class ObjectAtk : ObjectG
 	 *  a reference to an AtkStateSet which is the state
 	 * set of the accessible
 	 */
-	public AtkStateSet* refStateSet()
+	public StateSet refStateSet()
 	{
 		// AtkStateSet* atk_object_ref_state_set (AtkObject *accessible);
-		return atk_object_ref_state_set(atkObject);
+		return new StateSet( atk_object_ref_state_set(atkObject) );
 	}
 	
 	/**
@@ -614,6 +622,25 @@ public class ObjectAtk : ObjectG
 	{
 		// gboolean atk_object_remove_relationship (AtkObject *object,  AtkRelationType relationship,  AtkObject *target);
 		return atk_object_remove_relationship(atkObject, relationship, target);
+	}
+	
+	/**
+	 * Get a list of properties applied to this object as a whole, as an AtkAttributeSet consisting of
+	 * name-value pairs. As such these attributes may be considered weakly-typed properties or annotations,
+	 * as distinct from strongly-typed object data available via other get/set methods.
+	 * Not all objects have explicit "name-value pair" AtkAttributeSet properties.
+	 * Returns:
+	 * accessible:
+	 *  An AtkObject.
+	 * Returns:
+	 *  an AtkAttributeSet consisting of all explicit properties/annotations applied to
+	 * the object, or an empty set if the object has no name-value pair attributes assigned to it.
+	 * Since ATK 1.12
+	 */
+	public AtkAttributeSet* getAttributes()
+	{
+		// AtkAttributeSet* atk_object_get_attributes (AtkObject *accessible);
+		return atk_object_get_attributes(atkObject);
 	}
 	
 	/**

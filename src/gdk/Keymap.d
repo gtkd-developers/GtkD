@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Keyboard-Handling.html
  * outPack = gdk
  * outFile = Keymap
  * strct   = GdkKeymap
@@ -51,7 +52,7 @@
 
 module gdk.Keymap;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 
@@ -147,7 +148,7 @@ public class Keymap : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Keymap)[] onDirectionChangedListeners;
@@ -161,7 +162,7 @@ public class Keymap : ObjectG
 			cast(GCallback)&callBackDirectionChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["direction-changed"] = 1;
 		}
 		onDirectionChangedListeners ~= dlg;
@@ -189,7 +190,7 @@ public class Keymap : ObjectG
 			cast(GCallback)&callBackKeysChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["keys-changed"] = 1;
 		}
 		onKeysChangedListeners ~= dlg;
@@ -306,13 +307,14 @@ public class Keymap : ObjectG
 	 * group:
 	 *  active keyboard group
 	 * keyval:
-	 *  return location for keyval
+	 *  return location for keyval, or NULL
 	 * effective_group:
-	 *  return location for effective group
+	 *  return location for effective group, or NULL
 	 * level:
-	 *  return location for level
+	 *  return location for level, or NULL
 	 * consumed_modifiers:
-	 *  return location for modifiers that were used to determine the group or level
+	 *  return location for modifiers that were used to
+	 *  determine the group or level, or NULL
 	 * Returns:
 	 *  TRUE if there was a keyval bound to the keycode/state/group
 	 */

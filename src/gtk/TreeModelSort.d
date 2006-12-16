@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTreeModelSort.html
  * outPack = gtk
  * outFile = TreeModelSort
  * strct   = GtkTreeModelSort
@@ -54,7 +55,7 @@
 
 module gtk.TreeModelSort;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

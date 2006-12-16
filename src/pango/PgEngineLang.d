@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = PangoEngineLang.html
  * outPack = pango
  * outFile = PgEngineLang
  * strct   = 
@@ -46,13 +47,16 @@
 
 module pango.PgEngineLang;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
 
 /**
  * Description
+ * The language engines are rendering-system independent
+ * engines that determine line, word, and character breaks for character strings.
+ * These engines are used in pango_break().
  */
 public class PgEngineLang
 {

@@ -20,20 +20,15 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-module gdkpixbuf.typedefs;
+module gdkpixbuf.gdkpixbuftypes;
 
 
-public import glib.typedefs;
-
-
-public import gobject.typedefs;
-
-
-public import gdk.typedefs;
-
-
-public import pango.typedefs;
-
+public import glib.glibtypes;
+public import gobject.gobjecttypes;
+public import gdk.gdktypes;
+public alias void* AtkFocusHandler;
+public struct AtkStateSet;
+public struct AtkRectangle;
 
 /**
  * An enumeration containing three sets of flags for a GdkPixdata struct:
@@ -107,28 +102,45 @@ alias GdkPixbufFormatFlags PixbufFormatFlags;
  * serialization and streaming.
  * guint32magic;
  */
-public struct GdkPixdata;
+public struct GdkPixdata{}
 // uint magic; /+* GDK_PIXBUF_MAGIC_NUMBER +/
+// gdk-pixbuf-inline.html
 // int length; /+* <1 to disable length checks, otherwise:
+// gdk-pixbuf-inline.html
 // * GDK_PIXDATA_HEADER_LENGTH + pixelData length
+// gdk-pixbuf-inline.html
 // +/
+// gdk-pixbuf-inline.html
 // uint pixdataType; /+* GdkPixdataType +/
+// gdk-pixbuf-inline.html
 // uint rowstride;
+// gdk-pixbuf-inline.html
 // uint width;
+// gdk-pixbuf-inline.html
 // uint height;
+// gdk-pixbuf-inline.html
 // byte *pixelData;
+// gdk-pixbuf-inline.html
 
 
 /**
  * Main Gtk struct.
+ * And opaque struct representing an animation.
  */
-public struct GdkPixbufAnimation;
+public struct GdkPixbufAnimation{}
 
 
-public struct GdkPixbufAnimationIter;
+/**
+ * And opaque struct representing an iterator which points to a
+ * certain position in an animation.
+ */
+public struct GdkPixbufAnimationIter{}
 
 
-public struct GdkPixbufSimpleAnim;
+/**
+ * An
+ */
+public struct GdkPixbufSimpleAnim{}
 
 
 /**
@@ -136,7 +148,7 @@ public struct GdkPixbufSimpleAnim;
  * The GdkPixbufLoader struct contains only private
  * fields.
  */
-public struct GdkPixbufLoader;
+public struct GdkPixbufLoader{}
 
 
 /**
@@ -164,16 +176,25 @@ public struct GdkPixbufLoader;
  * gchar*license;
  * a string containing license information, typically set to
  */
-public struct GdkPixbufFormat;
+public struct GdkPixbufFormat{}
 // char *name;
+// gdk-pixbuf-Module-Interface.html
 // GdkPixbufModulePattern *signature;
+// gdk-pixbuf-Module-Interface.html
 // char *domain;
+// gdk-pixbuf-Module-Interface.html
 // char *description;
+// gdk-pixbuf-Module-Interface.html
 // char **mimeTypes;
+// gdk-pixbuf-Module-Interface.html
 // char **extensions;
+// gdk-pixbuf-Module-Interface.html
 // uint flags;
+// gdk-pixbuf-Module-Interface.html
 // int disabled;
+// gdk-pixbuf-Module-Interface.html
 // char *license;
+// gdk-pixbuf-Module-Interface.html
 
 
 /**
@@ -193,100 +214,153 @@ public struct GdkPixbufFormat;
  * where the prefix is NULL.
  * GdkPixbufModulePattern *signature[] = {
 	 */
-	public struct GdkPixbufModulePattern;
-	// unsigned char *prefix;
-	// unsigned char *mask;
-	// int relevance;
-	
-	
-	/**
-	 * A GdkPixbufModule contains the necessary functions to load and save
-	 * images in a certain file format.
-	 * A GdkPixbufModule can be loaded dynamically from a GModule.
-	 * Each loadable module must contain a GdkPixbufModuleFillVtableFunc function
-	 * named fill_vtable, which will get called when the module
-	 * is loaded and must set the function pointers of the GdkPixbufModule.
-	 * char*module_name;
-	 * the name of the module, usually the same as the
-	 */
-	public struct GdkPixbufModule;
-	// char *moduleName;
-	// char *modulePath;
-	// GModule *modul;
-	// GdkPixbufFormat *info;
-	// GdkPixbuf *(* load) (FILE *f,
-	// GError **error);
-	// GdkPixbuf *(* loadXpmData) ( char **data);
-	// /+* Incremental loading +/
-	// void* (* beginLoad) (GdkPixbufModuleSizeFunc sizeFunc,
-	// GdkPixbufModulePreparedFunc prepareFunc,
-	// GdkPixbufModuleUpdatedFunc updateFunc,
-	// void* userData,
-	// GError **error);
-	// int (* stopLoad) (void* context,
-	// GError **error);
-	// int (* loadIncrement) (void* context,
-	// char *buf,
-	// uint size,
-	// GError **error);
-	// /+* Animation loading +/
-	// GdkPixbufAnimation *(* loadAnimation) (FILE *f,
-	// GError **error);
-	// /+* Saving +/
-	// int (* save) (FILE *f,
-	// GdkPixbuf *pixbuf,
-	// char **paramKeys,
-	// char **paramValues,
-	// GError **error);
-	// int (*saveToCallback) (GdkPixbufSaveFunc saveFunc,
-	// void* userData,
-	// GdkPixbuf *pixbuf,
-	// char **optionKeys,
-	// char **optionValues,
-	// GError **error);
-	
-	
-	/**
-	 * Modules supporting animations must derive a type from
-	 * GdkPixbufAnimation, providing suitable implementations of the
-	 * virtual functions.
-	 * GObjectClassparent_class;
-	 * is_static_image()
-	 * returns whether the given animation is just a static image.
-	 * get_static_image()
-	 * returns a static image representing the given animation.
-	 * get_size()
-	 * fills width and height with the frame size of the animation.
-	 * get_iter()
-	 * returns an iterator for the given animation.
-	 */
-	public struct GdkPixbufAnimationClass;
-	// GObjectClass parentClass;
-	// int (*isStaticImage) (GdkPixbufAnimation *anim);
-	// GdkPixbuf* (*getStaticImage) (GdkPixbufAnimation *anim);
-	// void (*getSize) (GdkPixbufAnimation *anim,
-	// int *width,
-	// int *height);
-	// GdkPixbufAnimationIter* (*getIter) (GdkPixbufAnimation *anim,
-	// GTimeVal *startTime);
-	
-	
-	/**
-	 * Modules supporting animations must derive a type from
-	 * GdkPixbufAnimationIter, providing suitable implementations of the
-	 * virtual functions.
-	 * GObjectClassparent_class;
-	 * get_delay_time()
-	 * returns the time in milliseconds that the current frame
-	 */
-	public struct GdkPixbufAnimationIterClass;
-	// GObjectClass parentClass;
-	// int (*getDelayTime) (GdkPixbufAnimationIter *iter);
-	// GdkPixbuf* (*getPixbuf) (GdkPixbufAnimationIter *iter);
-	// int (*onCurrentlyLoadingFrame) (GdkPixbufAnimationIter *iter);
-	// int (*advance) (GdkPixbufAnimationIter *iter,
-	// GTimeVal *currentTime);
-	
+public struct GdkPixbufModulePattern{}
+// char *prefix;
+// gdk-pixbuf-Module-Interface.html
+// char *mask;
+// gdk-pixbuf-Module-Interface.html
+// int relevance;
+// gdk-pixbuf-Module-Interface.html
+
+
+/**
+ * A GdkPixbufModule contains the necessary functions to load and save
+ * images in a certain file format.
+ * A GdkPixbufModule can be loaded dynamically from a GModule.
+ * Each loadable module must contain a GdkPixbufModuleFillVtableFunc function
+ * named fill_vtable, which will get called when the module
+ * is loaded and must set the function pointers of the GdkPixbufModule.
+ * char*module_name;
+ * the name of the module, usually the same as the
+ */
+public struct GdkPixbufModule{}
+// char *moduleName;
+// gdk-pixbuf-Module-Interface.html
+// char *modulePath;
+// gdk-pixbuf-Module-Interface.html
+// GModule *modul;
+// gdk-pixbuf-Module-Interface.html
+// GdkPixbufFormat *info;
+// gdk-pixbuf-Module-Interface.html
+// GdkPixbuf *(* load) (FILE *f,
+// gdk-pixbuf-Module-Interface.html
+// GError **error);
+// gdk-pixbuf-Module-Interface.html
+// GdkPixbuf *(* loadXpmData) ( char **data);
+// gdk-pixbuf-Module-Interface.html
+// /+* Incremental loading +/
+// gdk-pixbuf-Module-Interface.html
+// void* (* beginLoad) (GdkPixbufModuleSizeFunc sizeFunc,
+// gdk-pixbuf-Module-Interface.html
+// GdkPixbufModulePreparedFunc prepareFunc,
+// gdk-pixbuf-Module-Interface.html
+// GdkPixbufModuleUpdatedFunc updateFunc,
+// gdk-pixbuf-Module-Interface.html
+// void* userData,
+// gdk-pixbuf-Module-Interface.html
+// GError **error);
+// gdk-pixbuf-Module-Interface.html
+// int (* stopLoad) (void* context,
+// gdk-pixbuf-Module-Interface.html
+// GError **error);
+// gdk-pixbuf-Module-Interface.html
+// int (* loadIncrement) (void* context,
+// gdk-pixbuf-Module-Interface.html
+// char *buf,
+// gdk-pixbuf-Module-Interface.html
+// uint size,
+// gdk-pixbuf-Module-Interface.html
+// GError **error);
+// gdk-pixbuf-Module-Interface.html
+// /+* Animation loading +/
+// gdk-pixbuf-Module-Interface.html
+// GdkPixbufAnimation *(* loadAnimation) (FILE *f,
+// gdk-pixbuf-Module-Interface.html
+// GError **error);
+// gdk-pixbuf-Module-Interface.html
+// /+* Saving +/
+// gdk-pixbuf-Module-Interface.html
+// int (* save) (FILE *f,
+// gdk-pixbuf-Module-Interface.html
+// GdkPixbuf *pixbuf,
+// gdk-pixbuf-Module-Interface.html
+// char **paramKeys,
+// gdk-pixbuf-Module-Interface.html
+// char **paramValues,
+// gdk-pixbuf-Module-Interface.html
+// GError **error);
+// gdk-pixbuf-Module-Interface.html
+// int (*saveToCallback) (GdkPixbufSaveFunc saveFunc,
+// gdk-pixbuf-Module-Interface.html
+// void* userData,
+// gdk-pixbuf-Module-Interface.html
+// GdkPixbuf *pixbuf,
+// gdk-pixbuf-Module-Interface.html
+// char **optionKeys,
+// gdk-pixbuf-Module-Interface.html
+// char **optionValues,
+// gdk-pixbuf-Module-Interface.html
+// GError **error);
+// gdk-pixbuf-Module-Interface.html
+
+
+/**
+ * Modules supporting animations must derive a type from
+ * GdkPixbufAnimation, providing suitable implementations of the
+ * virtual functions.
+ * GObjectClassparent_class;
+ * the parent class
+ * is_static_image()
+ * returns whether the given animation is just a static image.
+ * get_static_image()
+ * returns a static image representing the given animation.
+ * get_size()
+ * fills width and height with the frame size of the animation.
+ * get_iter()
+ * returns an iterator for the given animation.
+ */
+public struct GdkPixbufAnimationClass{}
+// GObjectClass parentClass;
+// gdk-pixbuf-Module-Interface.html
+// int (*isStaticImage) (GdkPixbufAnimation *anim);
+// gdk-pixbuf-Module-Interface.html
+// GdkPixbuf* (*getStaticImage) (GdkPixbufAnimation *anim);
+// gdk-pixbuf-Module-Interface.html
+// void (*getSize) (GdkPixbufAnimation *anim,
+// gdk-pixbuf-Module-Interface.html
+// int *width,
+// gdk-pixbuf-Module-Interface.html
+// int *height);
+// gdk-pixbuf-Module-Interface.html
+// GdkPixbufAnimationIter* (*getIter) (GdkPixbufAnimation *anim,
+// gdk-pixbuf-Module-Interface.html
+// GTimeVal *startTime);
+// gdk-pixbuf-Module-Interface.html
+
+
+/**
+ * Modules supporting animations must derive a type from
+ * GdkPixbufAnimationIter, providing suitable implementations of the
+ * virtual functions.
+ * GObjectClassparent_class;
+ * the parent class
+ * get_delay_time()
+ * returns the time in milliseconds that the current frame
+ */
+public struct GdkPixbufAnimationIterClass{}
+// GObjectClass parentClass;
+// gdk-pixbuf-Module-Interface.html
+// int (*getDelayTime) (GdkPixbufAnimationIter *iter);
+// gdk-pixbuf-Module-Interface.html
+// GdkPixbuf* (*getPixbuf) (GdkPixbufAnimationIter *iter);
+// gdk-pixbuf-Module-Interface.html
+// int (*onCurrentlyLoadingFrame) (GdkPixbufAnimationIter *iter);
+// gdk-pixbuf-Module-Interface.html
+// int (*advance) (GdkPixbufAnimationIter *iter,
+// gdk-pixbuf-Module-Interface.html
+// GTimeVal *currentTime);
+// gdk-pixbuf-Module-Interface.html
+
 
 /*
  * Defines the type of the function used to set the vtable of a

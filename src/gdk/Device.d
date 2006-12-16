@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Input-Devices.html
  * outPack = gdk
  * outFile = Device
  * strct   = GdkDevice
@@ -52,7 +53,7 @@
 
 module gdk.Device;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

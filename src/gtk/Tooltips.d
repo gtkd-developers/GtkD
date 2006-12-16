@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTooltips.html
  * outPack = gtk
  * outFile = Tooltips
  * strct   = GtkTooltips
@@ -52,7 +53,7 @@
 
 module gtk.Tooltips;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -175,7 +176,7 @@ public class Tooltips : ObjectGtk
 	 * tooltips:
 	 * a GtkTooltips.
 	 * delay:
-	 * an integer value representing seconds (FIXME: double-check this).
+	 * an integer value representing milliseconds.
 	 */
 	public void setDelay(uint delay)
 	{

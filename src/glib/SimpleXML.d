@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Simple-XML-Subset-Parser.html
  * outPack = glib
  * outFile = SimpleXML
  * strct   = GMarkupParseContext
@@ -50,7 +51,7 @@
 
 module glib.SimpleXML;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

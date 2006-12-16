@@ -18,6 +18,15 @@
 
 module utils.GtkWrapper;
 
+//debug=copyFile;
+//debug=wrapFile;
+//debug=wrapParameter;
+//debug=createPackage;
+//debug=aliases;
+//debug=lookup;
+//debug=file;
+debug=writeFile;
+
 struct WError
 {
 	private import std.stdio;
@@ -42,12 +51,6 @@ struct WError
 	}
 }
 
-//debug=copyFile;
-debug=wrapFile;
-//debug=wrapParameter;
-//debug=createPackage;
-//debug=aliases;
-debug = lookup;
 
 private import utils.WrapperIF;
 private import utils.HTODConvert;
@@ -138,6 +141,7 @@ public class GtkWrapper : WrapperIF
 	private char[][] collectedUnions;	/// public, module level definitions of unions
 	private char[][] collectedConstants;/// public, module level type contants
 	
+	private char[][] lookupTypedefs;	/// lookup file definitions to be included on the typedefs.d
 	private char[][] lookupAliases;		/// lookup file aliases definitions 
 	private char[][] lookupEnums;		/// lookup file enum definitions 
 	private char[][] lookupStructs;		/// lookup file struct definitions 
@@ -274,6 +278,7 @@ public class GtkWrapper : WrapperIF
 				debug(lookup)writefln("(%s) %s=%s", defReader.getFileName(), defReader.getKey(), defReader.getValue() );
 				switch ( defReader.getKey() )
 				{
+					case "addTypedefs": lookupTypedefs ~= loadTextMultiLine("addTypedefs"); defReader.next();break;
 					case "addAliases": lookupAliases ~= loadTextMultiLine("addAliases"); defReader.next();break;
 					case "addEnums": lookupEnums ~= loadTextMultiLine("addEnums"); defReader.next();break;
 					case "addStructs": lookupStructs ~= loadTextMultiLine("addStructs"); defReader.next();break;
@@ -416,8 +421,9 @@ public class GtkWrapper : WrapperIF
 	
 	private int copyFile(char[] fromDir, char[] toDir, char[] fileName)
 	{
+		debug(writeFile)writefln("GtkWrapper.copyFile %s", fileName);
 		int status = ERR_NONE;
-		
+		debug(file)writefln("(1)GtkWrapper.copyFile %s %s", fromDir, fileName);
 		void[] text = std.file.read(std.path.join(fromDir, fileName));
 		try
 		{
@@ -435,6 +441,7 @@ public class GtkWrapper : WrapperIF
 	
 	private int wrapFile(char[] pack, char[] outPack)
 	{
+		debug(file)writefln("GtkWrapper.wrapFile pack=%s outPack=%s", pack, outPack);
 		int status = ERR_NONE;
 
 		DuitClass duitClass;
@@ -533,10 +540,14 @@ public class GtkWrapper : WrapperIF
 					{
 						if ( DuitClass.startsWith(convParms.inFile,"/") )
 						{
+							debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", convParms.toString());
+							debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", defReader.toString());
+							debug(file)writefln("(2)GtkWrapper.wrapFile %s", convParms.inFile);
 							text = cast(char[]) std.file.read(convParms.inFile);
 						}
 						else
 						{
+							debug(file)writefln("(3)GtkWrapper.wrapFile %s", convParms.inFile);
 							text = cast(char[]) std.file.read(std.path.join(std.path.join(inputRoot,pack),convParms.inFile));
 						}
 					}
@@ -589,6 +600,7 @@ public class GtkWrapper : WrapperIF
 	
 	private void closeFile(char[] text, DuitClass duitClass, ConvParms* convParms)
 	{
+		debug(writeFile)writefln("GtkWrapper.closeFile %s", duitClass.getOutFile(outputRoot, srcOut));
 		char[] duitText = duitClass.closeDuitClass(text, convParms);
 		if ( duitClass.getError() == 0 )
 		{
@@ -709,11 +721,15 @@ public class GtkWrapper : WrapperIF
 "\nmodule lib."~loaderTableName~";"
 "\n"
 "\nprivate import std.stdio;"
-"\nprivate import "~loaderTableName~".typedefs;"
+"\nprivate import "~loaderTableName~"." ~loaderTableName~"types;"
 ;
 		if ( loaderTableName == "glib" )
 		{
-			externalText ~= "\nprivate import gthread.typedefs;";
+			externalText ~= "\nprivate import gthread.gthreadtypes;";
+		}
+		if ( loaderTableName == "gdk" )
+		{
+			externalText ~= "\nprivate import cairoLib.cairoLibtypes;";
 		}
 		externalText ~= 
 "\nprivate import lib.Loader;"
@@ -797,147 +813,12 @@ public class GtkWrapper : WrapperIF
 	{
 
 		char[] def = license;
-		def ~= "module "~outPack~".typedefs;\n\n";
+		def ~= "module "~outPack~"."~outPack~"types;\n\n";
 
-		if ( "glib" == outPack )
-		{
-			def ~=
-					"\n/* The GLib Basic Types */"
-					"\npublic alias int gint;"
-					"\npublic alias uint guint;"
-					"\npublic alias int gboolean;"
-					"\npublic alias void* gpointer;"
-					"\npublic alias void* gconstpointer;"
-					"\npublic alias char gchar;"
-					"\npublic alias char guchar;"
-					"\npublic alias short gshort;"
-					"\npublic alias ushort gushort;"
-					"\npublic alias int glong;"
-					"\npublic alias uint gulong;"
-					"\npublic alias byte gint8;"
-					"\npublic alias byte guint8;"
-					"\npublic alias short gint16;"
-					"\npublic alias ushort guint16;"
-					"\npublic alias int gint32;"
-					"\npublic alias long gint64;"
-					"\npublic alias uint guint32;"
-					"\npublic alias ulong guint64;"
-					"\npublic alias float gfloat;"
-					"\npublic alias double gdouble;"
-					"\npublic alias uint gsize;"
-					"\npublic alias int gssize;"
-					"\npublic alias void* va_list;"
-					"\npublic alias dchar unichar;"
-					"\npublic alias wchar unichar2;"
-					//"\npublic alias dchar gunichar;"
-					//"\npublic alias wchar gunichar2;"
-					"\npublic alias int time_t;"
-					"\n"
-					;
-		}
-		else if ( "gthread" == outPack )
-		{
-			def ~= "\npublic import glib.typedefs;\n\n";
-		}
-		else if ( "gobject" == outPack )
-		{
-			def ~= "\npublic import glib.typedefs;\n\n";
-		}
-		else if ( "cairoLib" == outPack )
-		{
-			def ~= "\npublic import glib.typedefs;\n\n";
-			//def ~= "\npublic import std.c.windows.windows;\n\n";
-			def ~= "\nprivate alias void* HDC;\n\n";
-			def ~= "\nstruct Display;\n\n";
-			def ~= "\nstruct Visual;\n\n";
-			def ~= "\nstruct Screen;\n\n";
-			def ~= "\nprivate alias void* Drawable;\n\n";
-			def ~= "\nprivate alias void* Pixmap;\n\n";
-			def ~= "\npublic alias bool cairo_bool_t;\n\n";
-		}
-		
-		else if ( "pango" == outPack )
-		{
-			def ~= "\npublic import glib.typedefs;\n\n";
-			def ~= "\npublic import gobject.typedefs;\n\n";
-			def ~= "\n";
-			//def ~= "\npublic import std.c.windows.windows;\n\n";
-			def ~=
-					//"\n/* The pango Basic Types */"
-					"\npublic alias void FcPattern;"
-					"\npublic alias void FcCharSet;"
-					//"\npublic alias void LOGFONT;"
-					//"\nstruct Display;"
-					//"\nstruct FT_Bitmap;"
-					"\nstruct FT_Face;"
-					//"\nstruct XftDraw;"
-					//"\nstruct XftColor;"
-					//"\n"
-					;
-		}
-		else if ( "atk" == outPack )
-		{
-			def ~= "\npublic import glib.typedefs;\n\n";
-			def ~= "\npublic import gobject.typedefs;\n\n";
-			def ~= "\npublic alias void* AtkFocusHandler;\n\n";
-			def ~= "\npublic struct AtkStateSet;\n\n";
-			def ~= "\npublic struct AtkRectangle;\n\n";
-			def ~= "\n";
-		}
-		else if ( "gdkpixbuf" == outPack )
-		{
-			def ~= "\npublic import glib.typedefs;\n\n";
-			def ~= "\npublic import gobject.typedefs;\n\n";
-			def ~= "\npublic import gdk.typedefs;\n\n";
-			def ~= "\npublic import pango.typedefs;\n\n";
-			def ~= "\n";
-		}
-		else if ( "gdk" == outPack )
-		{
-			def ~= "\npublic import glib.typedefs;\n\n";
-			def ~= "\npublic import gobject.typedefs;\n\n";
-			def ~= "\npublic import pango.typedefs;\n\n";
-			def ~= "\npublic import gdkpixbuf.typedefs;\n\n";
-			def ~= "\n";
-			def ~= "\nalias void* GdkAtom;";
-			def ~= "\nalias void* GdkNativeWindow;";
-			def ~= "\n";
-		}
-		
-		else if ( "gtk" == outPack )
-		{
-			def ~= "\npublic import glib.typedefs;\n\n";
-			def ~= "\npublic import gobject.typedefs;\n\n";
-			def ~= "\npublic import pango.typedefs;\n\n";
-			def ~= "\npublic import atk.typedefs;\n\n";
-			def ~= "\npublic import gdkpixbuf.typedefs;\n\n";
-			def ~= "\npublic import gdk.typedefs;\n\n";
-			def ~= "\nalias void GtkAccelGroupEntry;\n\n";
-			def ~= "\nalias void GtkContainerClass;\n\n";
-			def ~= "\n";
-			//def ~= "\nalias GTokenType.G_TOKEN_LAST G_TOKEN_LAST;";
-			//def ~= "\nalias GtkSignalRunType.G_SIGNAL_RUN_FIRST G_SIGNAL_RUN_FIRST;";
-			//def ~= "\nalias GtkSignalRunType.G_SIGNAL_RUN_LAST G_SIGNAL_RUN_LAST;";
-			//def ~= "\nalias GtkSignalRunType.G_SIGNAL_NO_RECURSE G_SIGNAL_NO_RECURSE;";
-			//def ~= "\nalias GtkSignalRunType.G_SIGNAL_ACTION G_SIGNAL_ACTION;";
-			//def ~= "\nalias GtkSignalRunType.G_SIGNAL_NO_HOOKS G_SIGNAL_NO_HOOKS;";
-		}
-		
-		else if ( "glgdk" == outPack )
-		{
-			def ~= "\npublic import glib.typedefs;\n\n";
-			def ~= "\npublic import gdk.typedefs;\n\n";
-			def ~= "\nalias uint VisualID;\n\n";
-		}
-		
-		else if ( "glgtk" == outPack )
-		{
-			def ~= "\npublic import glib.typedefs;\n\n";
-			def ~= "\npublic import glgdk.typedefs;\n\n";
-			def ~= "\npublic import gtk.typedefs;\n\n";
-		}
-		
 		char[] tabs = "";
+		
+		DuitClass.append(def, lookupTypedefs, tabs);
+		
 
 				
 		if ( gTypes.length > 0 )
@@ -999,8 +880,9 @@ public class GtkWrapper : WrapperIF
 		tabs = "";
 
 		char[] pathname = std.path.join(srcOut, outPack);
-		std.file.write(std.path.join(pathname,"typedefs.d"),def);
+		std.file.write(std.path.join(pathname,outPack~"types.d"),def);
 
+		lookupTypedefs.length = 0;
 		lookupAliases.length = 0;
 		lookupEnums.length = 0;
 		lookupStructs.length = 0;
@@ -1027,7 +909,7 @@ public class GtkWrapper : WrapperIF
 
 int main()
 {
-	GtkWrapper wrapper = new GtkWrapper("/home/ruimt/devel/D1/Duit/trunk/wrap/");
+	GtkWrapper wrapper = new GtkWrapper("/home/ruimt/devel/D/Duit/trunk/wrap/");
 	int status = wrapper.process("APILookup.txt");
 	wrapper.printErrors();
 	if ( wrapper.errors.length == 0 )

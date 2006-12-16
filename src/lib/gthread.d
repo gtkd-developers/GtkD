@@ -26,7 +26,7 @@
 module lib.gthread;
 
 private import std.stdio;
-private import gthread.typedefs;
+private import gthread.gthreadtypes;
 private import lib.Loader;
 private import lib.paths;
 

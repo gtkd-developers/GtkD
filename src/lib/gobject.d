@@ -26,7 +26,7 @@
 module lib.gobject;
 
 private import std.stdio;
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 private import lib.Loader;
 private import lib.paths;
 
@@ -76,6 +76,7 @@ extern(C)
 	gpointer function(GType type, GQuark quark)g_type_get_qdata;
 	void function(GType type, GTypeQuery* query)g_type_query;
 	GType function(GType parentType, gchar* typeName, GTypeInfo* info, GTypeFlags flags)g_type_register_static;
+	GType function(GType parentType, gchar* typeName, guint classSize, GClassInitFunc classInit, guint instanceSize, GInstanceInitFunc instanceInit, GTypeFlags flags)g_type_register_static_simple;
 	GType function(GType parentType, gchar* typeName, GTypePlugin* plugin, GTypeFlags flags)g_type_register_dynamic;
 	GType function(GType typeId, gchar* typeName, GTypeInfo* info, GTypeFundamentalInfo* finfo, GTypeFlags flags)g_type_register_fundamental;
 	void function(GType instanceType, GType interfaceType, GInterfaceInfo* info)g_type_add_interface_static;
@@ -260,11 +261,13 @@ extern(C)
 	void function(GValue* value, gpointer vObject)g_value_take_object;
 	void function(GValue* value, gpointer vObject)g_value_set_object_take_ownership;
 	gpointer function(GValue* value)g_value_get_object;
-	GObject* function(GValue* value)g_value_dup_object;
+	gpointer function(GValue* value)g_value_dup_object;
 	GParamSpec* function(gchar* name, gchar* nick, gchar* blurb, gunichar defaultValue, GParamFlags flags)g_param_spec_unichar;
 	GParamSpec* function(gchar* name, gchar* nick, gchar* blurb, GParamSpec* elementSpec, GParamFlags flags)g_param_spec_value_array;
 	GParamSpec* function(gchar* name, GParamSpec* overridden)g_param_spec_override;
 	GParamSpec* function(gchar* name, gchar* nick, gchar* blurb, GType isAType, GParamFlags flags)g_param_spec_gtype;
+	GType function(GValue* value)g_value_get_gtype;
+	void function(GValue* value, GType vGtype)g_value_set_gtype;
 	
 	// gobject.ParamSpec
 	
@@ -422,6 +425,7 @@ Symbol[] gobjectLinks =
 	{ "g_type_get_qdata",  cast(void**)& g_type_get_qdata},
 	{ "g_type_query",  cast(void**)& g_type_query},
 	{ "g_type_register_static",  cast(void**)& g_type_register_static},
+	{ "g_type_register_static_simple",  cast(void**)& g_type_register_static_simple},
 	{ "g_type_register_dynamic",  cast(void**)& g_type_register_dynamic},
 	{ "g_type_register_fundamental",  cast(void**)& g_type_register_fundamental},
 	{ "g_type_add_interface_static",  cast(void**)& g_type_add_interface_static},
@@ -590,6 +594,8 @@ Symbol[] gobjectLinks =
 	{ "g_param_spec_value_array",  cast(void**)& g_param_spec_value_array},
 	{ "g_param_spec_override",  cast(void**)& g_param_spec_override},
 	{ "g_param_spec_gtype",  cast(void**)& g_param_spec_gtype},
+	{ "g_value_get_gtype",  cast(void**)& g_value_get_gtype},
+	{ "g_value_set_gtype",  cast(void**)& g_value_set_gtype},
 	{ "g_param_spec_ref",  cast(void**)& g_param_spec_ref},
 	{ "g_param_spec_unref",  cast(void**)& g_param_spec_unref},
 	{ "g_param_spec_sink",  cast(void**)& g_param_spec_sink},

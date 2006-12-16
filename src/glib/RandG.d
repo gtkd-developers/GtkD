@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Random-Numbers.html
  * outPack = glib
  * outFile = RandG
  * strct   = GRand
@@ -47,7 +48,7 @@
 
 module glib.RandG;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

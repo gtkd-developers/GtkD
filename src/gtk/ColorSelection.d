@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkColorSelection.html
  * outPack = gtk
  * outFile = ColorSelection
  * strct   = GtkColorSelection
@@ -50,7 +51,7 @@
 
 module gtk.ColorSelection;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -99,7 +100,7 @@ public class ColorSelection : VBox
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ColorSelection)[] onColorChangedListeners;
@@ -113,7 +114,7 @@ public class ColorSelection : VBox
 			cast(GCallback)&callBackColorChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["color-changed"] = 1;
 		}
 		onColorChangedListeners ~= dlg;

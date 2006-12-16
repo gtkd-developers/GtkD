@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkAboutDialog.html
  * outPack = gtk
  * outFile = AboutDialog
  * strct   = GtkAboutDialog
@@ -52,7 +53,7 @@
 
 module gtk.AboutDialog;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

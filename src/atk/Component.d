@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkComponent.html
  * outPack = atk
  * outFile = Component
  * strct   = AtkComponent
@@ -46,7 +47,7 @@
 
 module atk.Component;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
@@ -95,7 +96,7 @@ public class Component
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(AtkRectangle*, Component)[] onBoundsChangedListeners;
@@ -109,7 +110,7 @@ public class Component
 			cast(GCallback)&callBackBoundsChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["bounds-changed"] = 1;
 		}
 		onBoundsChangedListeners ~= dlg;
@@ -356,6 +357,22 @@ public class Component
 	 *  height to set for component
 	 * Returns:
 	 *  TRUE or FALSE whether the size was set or not
+	 */
+	public int setSize(int width, int height)
+	{
+		// gboolean atk_component_set_size (AtkComponent *component,  gint width,  gint height);
+		return atk_component_set_size(atkComponent, width, height);
+	}
+	
+	/**
+	 * Returns the alpha value (i.e. the opacity) for this
+	 * component, on a scale from 0 (fully transparent) to 1.0
+	 * (fully opaque).
+	 * component:
+	 *  an AtkComponent
+	 * Returns:
+	 *  An alpha value from 0 to 1.0, inclusive.
+	 * Since ATK 1.12
 	 * Signal Details
 	 * The "bounds-changed" signal
 	 * void user_function (AtkComponent *atkcomponent,
@@ -370,9 +387,9 @@ public class Component
 	 * user_data:
 	 * user data set when the signal handler was connected.
 	 */
-	public int setSize(int width, int height)
+	public double getAlpha()
 	{
-		// gboolean atk_component_set_size (AtkComponent *component,  gint width,  gint height);
-		return atk_component_set_size(atkComponent, width, height);
+		// gdouble atk_component_get_alpha (AtkComponent *component);
+		return atk_component_get_alpha(atkComponent);
 	}
 }

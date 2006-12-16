@@ -18,7 +18,7 @@
 //
 //module duit.TEditableCells;
 //
-//private import gtk.typedefs;
+//private import gtk.gtktypes;
 //
 //private import gtk.Window;
 //

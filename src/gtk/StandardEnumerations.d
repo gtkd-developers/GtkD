@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Standard-Enumerations.html
  * outPack = gtk
  * outFile = StandardEnumerations
  * strct   = 
@@ -45,7 +46,7 @@
 
 module gtk.StandardEnumerations;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

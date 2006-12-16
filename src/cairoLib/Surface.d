@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = cairo-cairo-surface-t.html
  * outPack = cairoLib
  * outFile = Surface
  * strct   = cairo_surface_t
@@ -48,7 +49,7 @@
 
 module cairoLib.Surface;
 
-private import cairoLib.typedefs;
+private import cairoLib.cairoLibtypes;
 
 private import lib.cairoLib;
 
@@ -92,31 +93,19 @@ public class Surface
 	 */
 	
 	/**
-	 * Description
-	 */
-	
-	/**
-	 * Description
-	 */
-	
-	/**
-	 * Description
-	 */
-	
-	/**
-	 * Description
-	 */
-	
-	/**
-	 * Description
 	 */
 	
 	
 	
 	/**
 	 * Create a new surface that is as compatible as possible with an
-	 * existing surface. The new surface will use the same backend as
-	 * other unless that is not possible for some reason.
+	 * existing surface. For example the new surface will have the same
+	 * fallback resolution and font options as other. Generally, the new
+	 * surface will also use the same backend as other, unless that is
+	 * not possible for some reason. The type of the returned surface may
+	 * be examined with cairo_surface_get_type().
+	 * Initially the surface contents are all 0 (transparent if contents
+	 * have transparency, black otherwise.)
 	 * other:
 	 *  an existing surface used to select the backend of the new surface
 	 * content:
@@ -209,6 +198,21 @@ public class Surface
 	}
 	
 	/**
+	 * surface:
+	 *  a cairo_surface_t
+	 * Returns:
+	 *  The content type of surface which indicates whether
+	 * the surface contains color and/or alpha information. See
+	 * cairo_content_t.
+	 * Since 1.2
+	 */
+	public cairo_content_t getContent()
+	{
+		// cairo_content_t cairo_surface_get_content (cairo_surface_t *surface);
+		return cairo_surface_get_content(cairo_surface);
+	}
+	
+	/**
 	 * Attach user data to surface. To remove user data from a surface,
 	 * call this function with the key that was used to set it and NULL
 	 * for data.
@@ -267,6 +271,9 @@ public class Surface
 	 * Like cairo_surface_mark_dirty(), but drawing has been done only to
 	 * the specified rectangle, so that cairo can retain cached contents
 	 * for other parts of the surface.
+	 * Any cached clip set on the surface will be reset by this function,
+	 * to make sure that future cairo calls have the clip set that they
+	 * expect.
 	 * surface:
 	 *  a cairo_surface_t
 	 * x:
@@ -308,8 +315,8 @@ public class Surface
 	 * API. Setting a transformation via cairo_translate() isn't
 	 * sufficient to do this, since functions like
 	 * cairo_device_to_user() will expose the hidden offset.
-	 * Note that the offset only affects drawing to the surface, not using
-	 * the surface in a surface pattern.
+	 * Note that the offset affects drawing to the surface as well as
+	 * using the surface in a source pattern.
 	 * surface:
 	 *  a cairo_surface_t
 	 * x_offset:
@@ -324,6 +331,55 @@ public class Surface
 	}
 	
 	/**
+	 * This function returns the previous device offset set by
+	 * cairo_surface_set_device_offset().
+	 * surface:
+	 *  a cairo_surface_t
+	 * x_offset:
+	 *  the offset in the X direction, in device units
+	 * y_offset:
+	 *  the offset in the Y direction, in device units
+	 * Since 1.2
+	 */
+	public void getDeviceOffset(double* xOffset, double* yOffset)
+	{
+		// void cairo_surface_get_device_offset (cairo_surface_t *surface,  double *x_offset,  double *y_offset);
+		cairo_surface_get_device_offset(cairo_surface, xOffset, yOffset);
+	}
+	
+	/**
+	 * Set the horizontal and vertical resolution for image fallbacks.
+	 * When certain operations aren't supported natively by a backend,
+	 * cairo will fallback by rendering operations to an image and then
+	 * overlaying that image onto the output. For backends that are
+	 * natively vector-oriented, this function can be used to set the
+	 * resolution used for these image fallbacks, (larger values will
+	 * result in more detailed images, but also larger file sizes).
+	 * Some examples of natively vector-oriented backends are the ps, pdf,
+	 * and svg backends.
+	 * For backends that are natively raster-oriented, image fallbacks are
+	 * still possible, but they are always performed at the native
+	 * device resolution. So this function has no effect on those
+	 * backends.
+	 * NOTE: The fallback resolution only takes effect at the time of
+	 * completing a page (with cairo_show_page() or cairo_copy_page()) so
+	 * there is currently no way to have more than one fallback resolution
+	 * in effect on a single page.
+	 * surface:
+	 *  a cairo_surface_t
+	 * x_pixels_per_inch:
+	 *  horizontal setting for pixels per inch
+	 * y_pixels_per_inch:
+	 *  vertical setting for pixels per inch
+	 * Since 1.2
+	 */
+	public void setFallbackResolution(double xPixelsPerInch, double yPixelsPerInch)
+	{
+		// void cairo_surface_set_fallback_resolution  (cairo_surface_t *surface,  double x_pixels_per_inch,  double y_pixels_per_inch);
+		cairo_surface_set_fallback_resolution(cairo_surface, xPixelsPerInch, yPixelsPerInch);
+	}
+	
+	/**
 	 * Checks whether an error has previously occurred for this
 	 * surface.
 	 * surface:
@@ -333,8 +389,6 @@ public class Surface
 	 * CAIRO_STATUS_NO_MEMORY, CAIRO_STATUS_READ_ERROR,
 	 * CAIRO_STATUS_INVALID_CONTENT, CAIRO_STATUS_INVALUE_FORMAT, or
 	 * CAIRO_STATUS_INVALID_VISUAL.
-	 * <<Surfaces
-	 * Image Surfaces>>
 	 */
 	public cairo_status_t status()
 	{
@@ -344,10 +398,27 @@ public class Surface
 	
 	
 	/**
+	 * This function returns the type of the backend used to create
+	 * a surface. See cairo_surface_type_t for available types.
+	 * surface:
+	 *  a cairo_surface_t
+	 * Returns:
+	 *  The type of surface.
+	 * Since 1.2
+	 */
+	public cairo_surface_type_t getType()
+	{
+		// cairo_surface_type_t cairo_surface_get_type (cairo_surface_t *surface);
+		return cairo_surface_get_type(cairo_surface);
+	}
+	
+	
+	/**
 	 * Creates an image surface of the specified format and
-	 * dimensions. The initial contents of the surface is undefined; you
-	 * must explicitely clear the buffer, using, for example,
-	 * cairo_rectangle() and cairo_fill() if you want it cleared.
+	 * dimensions. Initially the surface contents are all
+	 * 0. (Specifically, within each pixel, each color or alpha channel
+	 * belonging to format will be 0. The contents of bits within a pixel,
+	 * but not belonging to the given format are undefined).
 	 * format:
 	 *  format of pixels in the surface to create
 	 * width:
@@ -396,11 +467,43 @@ public class Surface
 	 * This function always returns a valid pointer, but it will return a
 	 * pointer to a "nil" surface if an error such as out of memory
 	 * occurs. You can use cairo_surface_status() to check for this.
+	 * See cairo_surface_set_user_data() for a means of attaching a
+	 * destroy-notification fallback to the surface if necessary.
 	 */
-	public static cairo_surface_t* imageSurfaceCreateForData(char[] data, cairo_format_t format, int width, int height, int stride)
+	public static cairo_surface_t* imageSurfaceCreateForData(ubyte* data, cairo_format_t format, int width, int height, int stride)
 	{
 		// cairo_surface_t* cairo_image_surface_create_for_data  (unsigned char *data,  cairo_format_t format,  int width,  int height,  int stride);
-		return cairo_image_surface_create_for_data(Str.toStringz(data), format, width, height, stride);
+		return cairo_image_surface_create_for_data(data, format, width, height, stride);
+	}
+	
+	/**
+	 * Get a pointer to the data of the image surface, for direct
+	 * inspection or modification.
+	 * surface:
+	 *  a cairo_image_surface_t
+	 * Returns:
+	 *  a pointer to the image data of this surface or NULL
+	 * if surface is not an image surface.
+	 * Since 1.2
+	 */
+	public ubyte* imageSurfaceGetData()
+	{
+		// unsigned char* cairo_image_surface_get_data (cairo_surface_t *surface);
+		return cairo_image_surface_get_data(cairo_surface);
+	}
+	
+	/**
+	 * Get the format of the surface.
+	 * surface:
+	 *  a cairo_image_surface_t
+	 * Returns:
+	 *  the format of the surface
+	 * Since 1.2
+	 */
+	public cairo_format_t imageSurfaceGetFormat()
+	{
+		// cairo_format_t cairo_image_surface_get_format  (cairo_surface_t *surface);
+		return cairo_image_surface_get_format(cairo_surface);
 	}
 	
 	/**
@@ -422,8 +525,6 @@ public class Surface
 	 *  a cairo_image_surface_t
 	 * Returns:
 	 *  the height of the surface in pixels.
-	 * <<cairo_surface_t
-	 * Glitz Surfaces>>
 	 */
 	public int imageSurfaceGetHeight()
 	{
@@ -432,276 +533,19 @@ public class Surface
 	}
 	
 	/**
-	 * filename:
-	 * width_in_points:
-	 * height_in_points:
-	 * Returns:
-	 */
-	public static cairo_surface_t* pdfSurfaceCreate(char[] filename, double widthInPoints, double heightInPoints)
-	{
-		// cairo_surface_t* cairo_pdf_surface_create (const char *filename,  double width_in_points,  double height_in_points);
-		return cairo_pdf_surface_create(Str.toStringz(filename), widthInPoints, heightInPoints);
-	}
-	
-	/**
-	 * write_func:
-	 * closure:
-	 * width_in_points:
-	 * height_in_points:
-	 * Returns:
-	 */
-	public static cairo_surface_t* pdfSurfaceCreateForStream(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)
-	{
-		// cairo_surface_t* cairo_pdf_surface_create_for_stream  (cairo_write_func_t write_func,  void *closure,  double width_in_points,  double height_in_points);
-		return cairo_pdf_surface_create_for_stream(writeFunc, closure, widthInPoints, heightInPoints);
-	}
-	
-	/**
+	 * Get the stride of the image surface in bytes
 	 * surface:
-	 * x_dpi:
-	 * y_dpi:
-	 * <<Glitz Surfaces
-	 * PNG Support>>
-	 */
-	public void pdfSurfaceSetDpi(double xDpi, double yDpi)
-	{
-		// void cairo_pdf_surface_set_dpi (cairo_surface_t *surface,  double x_dpi,  double y_dpi);
-		cairo_pdf_surface_set_dpi(cairo_surface, xDpi, yDpi);
-	}
-	
-	/**
-	 * Creates a new image surface and initializes the contents to the
-	 * given PNG file.
-	 * filename:
-	 *  name of PNG file to load
+	 *  a cairo_image_surface_t
 	 * Returns:
-	 *  a new cairo_surface_t initialized with the contents
-	 * of the PNG file, or a "nil" surface if any error occurred. A nil
-	 * surface can be checked for with cairo_surface_status(surface) which
-	 * may return one of the following values:
-	 * CAIRO_STATUS_NO_MEMORY
-	 * CAIRO_STATUS_FILE_NOT_FOUND
-	 * CAIRO_STATUS_READ_ERROR
+	 *  the stride of the image surface in bytes (or 0 if
+	 * surface is not an image surface). The stride is the distance in
+	 * bytes from the beginning of one row of the image data to the
+	 * beginning of the next row.
+	 * Since 1.2
 	 */
-	public static cairo_surface_t* imageSurfaceCreateFromPng(char[] filename)
+	public int imageSurfaceGetStride()
 	{
-		// cairo_surface_t* cairo_image_surface_create_from_png  (const char *filename);
-		return cairo_image_surface_create_from_png(Str.toStringz(filename));
-	}
-	
-	
-	/**
-	 * Creates a new image surface from PNG data read incrementally
-	 * via the read_func function.
-	 * read_func:
-	 *  function called to read the data of the file
-	 * closure:
-	 *  data to pass to read_func.
-	 * Returns:
-	 *  a new cairo_surface_t initialized with the contents
-	 * of the PNG file or NULL if the data read is not a valid PNG image or
-	 * memory could not be allocated for the operation.
-	 */
-	public static cairo_surface_t* imageSurfaceCreateFromPngStream(cairo_read_func_t readFunc, void* closure)
-	{
-		// cairo_surface_t* cairo_image_surface_create_from_png_stream  (cairo_read_func_t read_func,  void *closure);
-		return cairo_image_surface_create_from_png_stream(readFunc, closure);
-	}
-	
-	/**
-	 * Writes the contents of surface to a new file filename as a PNG
-	 * image.
-	 * surface:
-	 *  a cairo_surface_t with pixel contents
-	 * filename:
-	 *  the name of a file to write to
-	 * Returns:
-	 *  CAIRO_STATUS_SUCCESS if the PNG file was written
-	 * successfully. Otherwise, CAIRO_STATUS_NO_MEMORY if memory could not
-	 * be allocated for the operation or
-	 * CAIRO_STATUS_SURFACE_TYPE_MISMATCH if the surface does not have
-	 * pixel contents, or CAIRO_STATUS_WRITE_ERROR if an I/O error occurs
-	 * while attempting to write the file.
-	 */
-	public cairo_status_t writeToPng(char[] filename)
-	{
-		// cairo_status_t cairo_surface_write_to_png (cairo_surface_t *surface,  const char *filename);
-		return cairo_surface_write_to_png(cairo_surface, Str.toStringz(filename));
-	}
-	
-	
-	/**
-	 * Writes the image surface to the write function.
-	 * surface:
-	 *  a cairo_surface_t with pixel contents
-	 * write_func:
-	 *  a cairo_write_func_t
-	 * closure:
-	 *  closure data for the write function
-	 * Returns:
-	 *  CAIRO_STATUS_SUCCESS if the PNG file was written
-	 * successfully. Otherwise, CAIRO_STATUS_NO_MEMORY is returned if
-	 * memory could not be allocated for the operation,
-	 * CAIRO_STATUS_SURFACE_TYPE_MISMATCH if the surface does not have
-	 * pixel contents.
-	 * <<PDF Surfaces
-	 * PostScript Surfaces>>
-	 */
-	public cairo_status_t writeToPngStream(cairo_write_func_t writeFunc, void* closure)
-	{
-		// cairo_status_t cairo_surface_write_to_png_stream  (cairo_surface_t *surface,  cairo_write_func_t write_func,  void *closure);
-		return cairo_surface_write_to_png_stream(cairo_surface, writeFunc, closure);
-	}
-	
-	/**
-	 * filename:
-	 * width_in_points:
-	 * height_in_points:
-	 * Returns:
-	 */
-	public static cairo_surface_t* psSurfaceCreate(char[] filename, double widthInPoints, double heightInPoints)
-	{
-		// cairo_surface_t* cairo_ps_surface_create (const char *filename,  double width_in_points,  double height_in_points);
-		return cairo_ps_surface_create(Str.toStringz(filename), widthInPoints, heightInPoints);
-	}
-	
-	/**
-	 * write_func:
-	 * closure:
-	 * width_in_points:
-	 * height_in_points:
-	 * Returns:
-	 */
-	public static cairo_surface_t* psSurfaceCreateForStream(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)
-	{
-		// cairo_surface_t* cairo_ps_surface_create_for_stream  (cairo_write_func_t write_func,  void *closure,  double width_in_points,  double height_in_points);
-		return cairo_ps_surface_create_for_stream(writeFunc, closure, widthInPoints, heightInPoints);
-	}
-	
-	/**
-	 * Set horizontal and vertical resolution for image fallbacks. When
-	 * the postscript backend needs to fall back to image overlays, it
-	 * will use this resolution.
-	 * surface:
-	 *  a postscript cairo_surface_t
-	 * x_dpi:
-	 *  horizontal dpi
-	 * y_dpi:
-	 *  vertical dpi
-	 * <<PNG Support
-	 * Win32 Surfaces>>
-	 */
-	public void psSurfaceSetDpi(double xDpi, double yDpi)
-	{
-		// void cairo_ps_surface_set_dpi (cairo_surface_t *surface,  double x_dpi,  double y_dpi);
-		cairo_ps_surface_set_dpi(cairo_surface, xDpi, yDpi);
-	}
-	
-	/**
-	 * hdc:
-	 * Returns:
-	 * <<PostScript Surfaces
-	 * XLib Surfaces>>
-	 */
-	public static cairo_surface_t* win32_SurfaceCreate(HDC hdc)
-	{
-		// cairo_surface_t* cairo_win32_surface_create (HDC hdc);
-		return cairo_win32_surface_create(hdc);
-	}
-	
-	/**
-	 * Creates an Xlib surface that draws to the given drawable.
-	 * The way that colors are represented in the drawable is specified
-	 * by the provided visual.
-	 * NOTE: If drawable is a Window, then the function
-	 * cairo_xlib_surface_set_size must be called whenever the size of the
-	 * window changes.
-	 * dpy:
-	 *  an X Display
-	 * drawable:
-	 *  an X Drawable, (a Pixmap or a Window)
-	 * visual:
-	 *  the visual to use for drawing to drawable. The depth
-	 *  of the visual must match the depth of the drawable.
-	 *  Currently, only TrueColor visuals are fully supported.
-	 * width:
-	 *  the current width of drawable.
-	 * height:
-	 *  the current height of drawable.
-	 * Returns:
-	 *  the newly created surface
-	 */
-	public static cairo_surface_t* xlibSurfaceCreate(Display* dpy, Drawable drawable, Visual* visual, int width, int height)
-	{
-		// cairo_surface_t* cairo_xlib_surface_create (Display *dpy,  Drawable drawable,  Visual *visual,  int width,  int height);
-		return cairo_xlib_surface_create(dpy, drawable, visual, width, height);
-	}
-	
-	/**
-	 * Creates an Xlib surface that draws to the given bitmap.
-	 * This will be drawn to as a CAIRO_FORMAT_A1 object.
-	 * dpy:
-	 *  an X Display
-	 * bitmap:
-	 *  an X Drawable, (a depth-1 Pixmap)
-	 * screen:
-	 *  the X Screen associated with bitmap
-	 * width:
-	 *  the current width of bitmap.
-	 * height:
-	 *  the current height of bitmap.
-	 * Returns:
-	 *  the newly created surface
-	 */
-	public static cairo_surface_t* xlibSurfaceCreateForBitmap(Display* dpy, Pixmap bitmap, Screen* screen, int width, int height)
-	{
-		// cairo_surface_t* cairo_xlib_surface_create_for_bitmap  (Display *dpy,  Pixmap bitmap,  Screen *screen,  int width,  int height);
-		return cairo_xlib_surface_create_for_bitmap(dpy, bitmap, screen, width, height);
-	}
-	
-	/**
-	 * Informs cairo of the new size of the X Drawable underlying the
-	 * surface. For a surface created for a Window (rather than a Pixmap),
-	 * this function must be called each time the size of the window
-	 * changes. (For a subwindow, you are normally resizing the window
-	 * yourself, but for a toplevel window, it is necessary to listen for
-	 * ConfigureNotify events.)
-	 * A Pixmap can never change size, so it is never necessary to call
-	 * this function on a surface created for a Pixmap.
-	 * surface:
-	 *  a cairo_surface_t for the XLib backend
-	 * width:
-	 *  the new width of the surface
-	 * height:
-	 *  the new height of the surface
-	 */
-	public void xlibSurfaceSetSize(int width, int height)
-	{
-		// void cairo_xlib_surface_set_size (cairo_surface_t *surface,  int width,  int height);
-		cairo_xlib_surface_set_size(cairo_surface, width, height);
-	}
-	
-	/**
-	 * Informs cairo of a new X Drawable underlying the
-	 * surface. The drawable must match the display, screen
-	 * and format of the existing drawable or the application
-	 * will get X protocol errors and will probably terminate.
-	 * No checks are done by this function to ensure this
-	 * compatibility.
-	 * surface:
-	 *  a cairo_surface_t for the XLib backend
-	 * drawable:
-	 *  the new drawable for the surface
-	 * width:
-	 *  the width of the new drawable
-	 * height:
-	 *  the height of the new drawable
-	 * <<Win32 Surfaces
-	 * Utilities>>
-	 */
-	public void xlibSurfaceSetDrawable(Drawable drawable, int width, int height)
-	{
-		// void cairo_xlib_surface_set_drawable (cairo_surface_t *surface,  Drawable drawable,  int width,  int height);
-		cairo_xlib_surface_set_drawable(cairo_surface, drawable, width, height);
+		// int cairo_image_surface_get_stride (cairo_surface_t *surface);
+		return cairo_image_surface_get_stride(cairo_surface);
 	}
 }

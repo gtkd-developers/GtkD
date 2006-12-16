@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Cursors.html
  * outPack = gdk
  * outFile = Cursor
  * strct   = GdkCursor
@@ -57,7 +58,7 @@
 
 module gdk.Cursor;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

@@ -20,23 +20,14 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-module atk.typedefs;
+module atk.atktypes;
 
 
-public import glib.typedefs;
-
-
-public import gobject.typedefs;
-
-
+public import glib.glibtypes;
+public import gobject.gobjecttypes;
 public alias void* AtkFocusHandler;
-
-
 public struct AtkStateSet;
-
-
 public struct AtkRectangle;
-
 
 
 /**
@@ -154,6 +145,9 @@ public enum AtkRole
 	PAGE,
 	SECTION,
 	REDUNDANT_OBJECT,
+	FORM,
+	LINK,
+	INPUT_METHOD_WINDOW,
 	LAST_DEFINED
 }
 /**
@@ -177,7 +171,6 @@ public enum AtkLayer
 /**
  * Describes the type of the relation
  * ATK_RELATION_NULL
- * ATK_RELATION_CONTROLLED_BY
  */
 public enum AtkRelationType
 {
@@ -195,6 +188,8 @@ public enum AtkRelationType
 	EMBEDDED_BY,
 	POPUP_FOR,
 	PARENT_WINDOW_OF,
+	DESCRIBED_BY,
+	DESCRIPTION_FOR,
 	LAST_DEFINED
 }
 /**
@@ -239,10 +234,14 @@ public enum AtkStateType
 	INVALID_ENTRY,
 	SUPPORTS_AUTOCOMPLETION,
 	SELECTABLE_TEXT,
+	DEFAULT,
+	ANIMATED,
+	VISITED,
 	LAST_DEFINED
 }
 /**
  * Text boundary types used for specifying boundaries for regions of text
+ * ATK_TEXT_BOUNDARY_CHAR
  */
 public enum AtkTextBoundary
 {
@@ -326,86 +325,95 @@ public enum AtkKeyEventType
  * Main Gtk struct.
  * The AtkAction structure does not contain any fields.
  */
-public struct AtkAction;
+public struct AtkAction{}
 
 
 /**
  * Main Gtk struct.
  * The AtkComponent structure does not contain any fields.
  */
-public struct AtkComponent;
+public struct AtkComponent{}
 
 
 /**
  * Main Gtk struct.
  * The AtkDocument structure does not contain any fields.
  */
-public struct AtkDocument;
+public struct AtkDocument{}
 
 
 /**
  * Main Gtk struct.
  * The AtkEditableText structure does not contain any fields.
  */
-public struct AtkEditableText;
+public struct AtkEditableText{}
 
 
 /**
  * Main Gtk struct.
  * The AtkGObjectAccessible structure should not be accessed directly.
  */
-public struct AtkGObjectAccessible;
+public struct AtkGObjectAccessible{}
 
 
 /**
  * Main Gtk struct.
  * The AtkHyperlink structure should not be accessed directly.
  */
-public struct AtkHyperlink;
+public struct AtkHyperlink{}
 
 
 /**
  * Main Gtk struct.
  * The AtkHypertext structure does not contain any fields.
  */
-public struct AtkHypertext;
+public struct AtkHypertext{}
 
 
 /**
  * Main Gtk struct.
  * The AtkImage structure does not contain any fields.
  */
-public struct AtkImage;
+public struct AtkImage{}
 
 
 /**
  * Main Gtk struct.
  * The AtkNoOpObject structure should not be accessed directly.
  */
-public struct AtkNoOpObject;
+public struct AtkNoOpObject{}
 
 
 /**
  * Main Gtk struct.
  * The AtkNoOpObjectFactory structure should not be accessed directly.
  */
-public struct AtkNoOpObjectFactory;
+public struct AtkNoOpObjectFactory{}
 
 
 /**
  * Main Gtk struct.
  * The AtkObject structure should not be accessed directly.
  */
-public struct AtkObject;
+public struct AtkObject{}
 
 
 /**
  * The AtkImplementor structure does not contain any fields.
  */
-public struct AtkImplementor;
+public struct AtkImplementor{}
 
 
 /**
+ * note: For most properties the old_value field of AtkPropertyValues will
+ * not contain a valid value.
+ * Currently, the only property for which old_value is used is
+ * accessible-state; for instance if there is a focus state the
+ * property change handler will be called for the object which lost the focus
+ * with the old_value containing an AtkState value corresponding to focused
+ * and the property change handler will be called for the object which
+ * received the focus with the new_value containing an AtkState value
+ * corresponding to focused.
  * The Atk PropertyValue structure is used when notifying a change in property.
  * Currently, the only property for which old_value is used is
  * accessible-state; for instance if there is a focus change the
@@ -414,78 +422,86 @@ public struct AtkImplementor;
  * and the property change handler will be called for the object which
  * received the focus with the new_value containing the AtkState value
  * corresponding to focused.
+ * constgchar*property_name;
  */
-public struct AtkPropertyValues;
+public struct AtkPropertyValues{}
 // char *propertyName;
+// AtkObject.html
 // GValue oldValue;
+// AtkObject.html
 // GValue newValue;
+// AtkObject.html
 
 
 /**
  * Main Gtk struct.
  * The AtkObjectFactory structure should not be accessed directly.
  */
-public struct AtkObjectFactory;
+public struct AtkObjectFactory{}
 
 
 /**
  * Main Gtk struct.
  * The AtkRegistry structure should not be accessed directly.
  */
-public struct AtkRegistry;
+public struct AtkRegistry{}
 
 
 /**
  * Main Gtk struct.
  * The AtkRelation structure should not be accessed directly.
  */
-public struct AtkRelation;
+public struct AtkRelation{}
 
 
 /**
  * Main Gtk struct.
  * The AtkRelationSet structure should not be accessed directly.
  */
-public struct AtkRelationSet;
+public struct AtkRelationSet{}
 
 
 /**
  * Main Gtk struct.
  * The AtkAction structure does not contain any fields.
  */
-public struct AtkSelection;
+public struct AtkSelection{}
 
 
 /**
  * Main Gtk struct.
  * The AtkStreamableContent structure does not contain any fields.
  */
-public struct AtkStreamableContent;
+public struct AtkStreamableContent{}
 
 
 /**
  * Main Gtk struct.
  * The AtkTable structure does not contain any fields.
  */
-public struct AtkTable;
+public struct AtkTable{}
 
 
 /**
  * Main Gtk struct.
  * The AtkText structure does not contain any fields.
  */
-public struct AtkText;
+public struct AtkText{}
 
 
 /**
  * A structure used to describe a text range.
  * AtkTextRectanglebounds;
  */
-public struct AtkTextRange;
+public struct AtkTextRange{}
 // AtkTextRectangle bounds;
+// AtkText.html
 // int startOffset;
+// AtkText.html
 // int endOffset;
+// AtkText.html
 // char* content;
+// AtkText.html
 
 
 /**
@@ -513,13 +529,14 @@ public struct AtkAttribute
 
 
 /**
- * The AtkObject structure should not be accessed directly.
+ * The AtkUtil struct does not contain any fields.
  */
-public struct AtkUtil;
+public struct AtkUtil{}
 
 
 /**
- * The AtkKeyEventStruct describes a keyboard event.
+ * Encapsulates information about a key event.
+ * ginttype;
  */
 public struct AtkKeyEventStruct
 {
@@ -537,14 +554,16 @@ public struct AtkKeyEventStruct
  * Main Gtk struct.
  * The AtkValue structure does not contain any fields.
  */
-public struct AtkValue;
+public struct AtkValue{}
 
 
 /*
  * An AtkFunction is a function definition used for padding which has been added
  * to class and interface structures to allow for expansion in the future.
  * data:
+ * a gpointer to parameter data.
  * Returns:
+ * Nothing useful, this is only a dummy prototype.
  */
 // gboolean (*AtkFunction) (gpointer data);
 public typedef extern(C) int  function (void*) AtkFunction;
@@ -557,35 +576,46 @@ public typedef extern(C) int  function (void*) AtkFunction;
  * Param2:
  *  an AtkPropertyValues
  */
-// void (*AtkPropertyChangeHandler) (AtkObject*,  AtkPropertyValues*);
-public typedef extern(C) void  function (AtkObject*,) AtkPropertyChangeHandler;
+// void (*AtkPropertyChangeHandler) (AtkObject *,  AtkPropertyValues *);
+public typedef extern(C) void  function (AtkObject*, AtkPropertyValues*) AtkPropertyChangeHandler;
 
 /*
- * An AtkEventListener is user specified function which is called when an event,
- * such as receiving focus, occurs. The parameter of the AtkEventListener is the
- * AtkObject on which the event occurred.
- * Param1:
- * an AtkObject
+ * A function which is called when an object emits a matching event,
+ * as used in atk_add_focus_tracker.
+ * Currently the only events for which object-specific handlers are
+ * supported are events of type "focus:". Most clients of ATK will prefer to
+ * attach signal handlers for the various ATK signals instead.
+ * see: atk_add_focus_tracker.
+ * obj:
+ *  An AtkObject instance for whom the callback will be called when
+ * the specified event (e.g. 'focus:') takes place.
  */
-// void (*AtkEventListener) (AtkObject*);
+// void (*AtkEventListener) (AtkObject *obj);
 public typedef extern(C) void  function (AtkObject*) AtkEventListener;
 
 /*
- * An AtkEventListenerInit is an initialization function in an implementation
- * of the ATK interface used to perform implementation-specific initialization
- * when enabling focus tracking.
+ * An AtkEventListenerInit function is a special function that is
+ * called in order to initialize the per-object event registration system
+ * used by AtkEventListener, if any preparation is required.
+ * see: atk_focus_tracker_init.
  */
 // void (*AtkEventListenerInit) (void);
 public typedef extern(C) void  function () AtkEventListenerInit;
 
 /*
- * An AtkKeySnoopFunc is a function which is called when a keyboard event occurs.
+ * An AtkKeySnoopFunc is a type of callback which is called whenever a key event occurs,
+ * if registered via atk_add_key_event_listener. It allows for pre-emptive
+ * interception of key events via the return code as described below.
  * event:
- * keyboard event
+ *  an AtkKeyEventStruct containing information about the key event for which
+ * notification is being given.
  * func_data:
- * a data gpointer for the function
+ *  a block of data which will be passed to the event listener, on notification.
  * Returns:
- * return code
+ *  TRUE (nonzero) if the event emission should be stopped and the event
+ * discarded without being passed to the normal GUI recipient; FALSE (zero) if the
+ * event dispatch to the client application should proceed as normal.
+ * see: atk_add_key_event_listener.
  */
 // gint (*AtkKeySnoopFunc) (AtkKeyEventStruct *event,  gpointer func_data);
 public typedef extern(C) int  function (AtkKeyEventStruct*, void*) AtkKeySnoopFunc;

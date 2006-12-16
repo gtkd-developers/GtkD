@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTreeModelFilter.html
  * outPack = gtk
  * outFile = TreeModelFilter
  * strct   = GtkTreeModelFilter
@@ -53,7 +54,7 @@
 
 module gtk.TreeModelFilter;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -214,19 +215,23 @@ public class TreeModelFilter : ObjectG
 	
 	/**
 	 * Sets filter_iter to point to the row in filter that corresponds to the
-	 * row pointed at by child_iter.
+	 * row pointed at by child_iter. If filter_iter was not set, FALSE is
+	 * returned.
 	 * filter:
 	 *  A GtkTreeModelFilter.
 	 * filter_iter:
 	 *  An uninitialized GtkTreeIter.
 	 * child_iter:
 	 *  A valid GtkTreeIter pointing to a row on the child model.
+	 * Returns:
+	 *  TRUE, if filter_iter was set, i.e. if child_iter is a
+	 * valid iterator pointing to a visible row in child model.
 	 * Since 2.4
 	 */
-	public void convertChildIterToIter(TreeIter filterIter, TreeIter childIter)
+	public int convertChildIterToIter(TreeIter filterIter, TreeIter childIter)
 	{
-		// void gtk_tree_model_filter_convert_child_iter_to_iter  (GtkTreeModelFilter *filter,  GtkTreeIter *filter_iter,  GtkTreeIter *child_iter);
-		gtk_tree_model_filter_convert_child_iter_to_iter(gtkTreeModelFilter, (filterIter is null) ? null : filterIter.getTreeIterStruct(), (childIter is null) ? null : childIter.getTreeIterStruct());
+		// gboolean gtk_tree_model_filter_convert_child_iter_to_iter  (GtkTreeModelFilter *filter,  GtkTreeIter *filter_iter,  GtkTreeIter *child_iter);
+		return gtk_tree_model_filter_convert_child_iter_to_iter(gtkTreeModelFilter, (filterIter is null) ? null : filterIter.getTreeIterStruct(), (childIter is null) ? null : childIter.getTreeIterStruct());
 	}
 	
 	/**
@@ -249,7 +254,8 @@ public class TreeModelFilter : ObjectG
 	 * Converts child_path to a path relative to filter. That is, child_path
 	 * points to a path in the child model. The rerturned path will point to the
 	 * same row in the filtered model. If child_path isn't a valid path on the
-	 * child model, then NULL is returned.
+	 * child model or points to a row which is not visible in filter, then NULL
+	 * is returned.
 	 * filter:
 	 *  A GtkTreeModelFilter.
 	 * child_path:
@@ -302,7 +308,7 @@ public class TreeModelFilter : ObjectG
 	 * gtk_tree_model_ref_node(). This might be useful if the child model
 	 * being filtered is static (and doesn't change often) and there has been
 	 * a lot of unreffed access to nodes. As a side effect of this function,
-	 * all unreffed itters will be invalid.
+	 * all unreffed iters will be invalid.
 	 * filter:
 	 *  A GtkTreeModelFilter.
 	 * Since 2.4

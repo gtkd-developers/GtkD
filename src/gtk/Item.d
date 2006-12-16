@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkItem.html
  * outPack = gtk
  * outFile = Item
  * strct   = GtkItem
@@ -47,7 +48,7 @@
 
 module gtk.Item;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -91,7 +92,7 @@ public class Item : Bin
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Item)[] onDeselectListeners;
@@ -105,7 +106,7 @@ public class Item : Bin
 			cast(GCallback)&callBackDeselect,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["deselect"] = 1;
 		}
 		onDeselectListeners ~= dlg;
@@ -133,7 +134,7 @@ public class Item : Bin
 			cast(GCallback)&callBackSelect,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["select"] = 1;
 		}
 		onSelectListeners ~= dlg;
@@ -161,7 +162,7 @@ public class Item : Bin
 			cast(GCallback)&callBackToggle,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toggle"] = 1;
 		}
 		onToggleListeners ~= dlg;

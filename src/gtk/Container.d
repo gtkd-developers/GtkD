@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkContainer.html
  * outPack = gtk
  * outFile = Container
  * strct   = GtkContainer
@@ -56,7 +57,7 @@
 
 module gtk.Container;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -171,7 +172,7 @@ public class Container : Widget
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Widget, Container)[] onAddListeners;
@@ -185,7 +186,7 @@ public class Container : Widget
 			cast(GCallback)&callBackAdd,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["add"] = 1;
 		}
 		onAddListeners ~= dlg;
@@ -213,7 +214,7 @@ public class Container : Widget
 			cast(GCallback)&callBackCheckResize,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["check-resize"] = 1;
 		}
 		onCheckResizeListeners ~= dlg;
@@ -241,7 +242,7 @@ public class Container : Widget
 			cast(GCallback)&callBackRemove,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["remove"] = 1;
 		}
 		onRemoveListeners ~= dlg;
@@ -269,7 +270,7 @@ public class Container : Widget
 			cast(GCallback)&callBackSetFocusChild,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["set-focus-child"] = 1;
 		}
 		onSetFocusChildListeners ~= dlg;

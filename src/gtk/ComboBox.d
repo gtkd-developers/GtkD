@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkComboBox.html
  * outPack = gtk
  * outFile = ComboBox
  * strct   = GtkComboBox
@@ -60,7 +61,7 @@
 
 module gtk.ComboBox;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -232,7 +233,7 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ComboBox)[] onChangedListeners;
@@ -246,7 +247,7 @@ public class ComboBox : Bin, CellLayoutIF
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -659,6 +660,36 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	
 	/**
+	 * Sets the menu's title in tearoff mode.
+	 * combo_box:
+	 *  a GtkComboBox
+	 * title:
+	 *  a title for the menu in tearoff mode.
+	 * Since 2.10
+	 */
+	public void setTitle(char[] title)
+	{
+		// void gtk_combo_box_set_title (GtkComboBox *combo_box,  const gchar *title);
+		gtk_combo_box_set_title(gtkComboBox, Str.toStringz(title));
+	}
+	
+	/**
+	 * Gets the current title of the menu in tearoff mode. See
+	 * gtk_combo_box_set_add_tearoffs().
+	 * combo_box:
+	 *  a GtkComboBox
+	 * Returns:
+	 *  the menu's title in tearoff mode. This is an internal copy of the
+	 * string which must not be freed.
+	 * Since 2.10
+	 */
+	public char[] getTitle()
+	{
+		// const gchar* gtk_combo_box_get_title (GtkComboBox *combo_box);
+		return Str.toString(gtk_combo_box_get_title(gtkComboBox) );
+	}
+	
+	/**
 	 * Sets whether the combo box will grab focus when it is clicked with
 	 * the mouse. Making mouse clicks not grab focus is useful in places
 	 * like toolbars where you don't want the keyboard focus removed from
@@ -701,6 +732,8 @@ public class ComboBox : Bin, CellLayoutIF
 		// gboolean gtk_combo_box_get_focus_on_click  (GtkComboBox *combo);
 		return gtk_combo_box_get_focus_on_click(gtkComboBox);
 	}
+	
+	
 	
 	
 	

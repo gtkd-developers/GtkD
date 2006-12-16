@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = pango-Coverage-Maps.html
  * outPack = pango
  * outFile = PgCoverage
  * strct   = 
@@ -46,7 +47,7 @@
 
 module pango.PgCoverage;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
@@ -70,8 +71,10 @@ public class PgCoverage
 	/**
 	 * Create a new PangoCoverage
 	 * Returns:
-	 *  a new PangoCoverage object, initialized to PANGO_COVERAGE_NONE
-	 *  with a reference count of 0.
+	 *  the newly allocated PangoCoverage,
+	 *  initialized to PANGO_COVERAGE_NONE
+	 *  with a reference count of one, which
+	 *  should be freed with pango_coverage_unref().
 	 */
 	public static PangoCoverage* newPgCoverage()
 	{
@@ -111,7 +114,9 @@ public class PgCoverage
 	 * coverage:
 	 *  a PangoCoverage
 	 * Returns:
-	 *  a copy of coverage with a reference count of 1
+	 *  the newly allocated PangoCoverage,
+	 *  with a reference count of one, which
+	 *  should be freed with pango_coverage_unref().
 	 */
 	public static PangoCoverage* copy(PangoCoverage* coverage)
 	{
@@ -126,6 +131,7 @@ public class PgCoverage
 	 * index_:
 	 *  the index to check
 	 * Returns:
+	 *  the coverage level of coverage for character index_.
 	 */
 	public static PangoCoverageLevel get(PangoCoverage* coverage, int index)
 	{

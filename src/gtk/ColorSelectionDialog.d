@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkColorSelectionDialog.html
  * outPack = gtk
  * outFile = ColorSelectionDialog
  * strct   = GtkColorSelectionDialog
@@ -48,7 +49,7 @@
 
 module gtk.ColorSelectionDialog;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

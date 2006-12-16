@@ -26,7 +26,7 @@
 module lib.atk;
 
 private import std.stdio;
-private import atk.typedefs;
+private import atk.atktypes;
 private import lib.Loader;
 private import lib.paths;
 
@@ -72,11 +72,16 @@ extern(C)
 	gboolean function(AtkComponent* component, gint x, gint y, gint width, gint height, AtkCoordType coordType)atk_component_set_extents;
 	gboolean function(AtkComponent* component, gint x, gint y, AtkCoordType coordType)atk_component_set_position;
 	gboolean function(AtkComponent* component, gint width, gint height)atk_component_set_size;
+	gdouble function(AtkComponent* component)atk_component_get_alpha;
 	
 	// atk.Document
 	
 	gchar* function(AtkDocument* document)atk_document_get_document_type;
 	gpointer function(AtkDocument* document)atk_document_get_document;
+	gchar* function(AtkDocument* document, gchar* attributeName)atk_document_get_attribute_value;
+	gboolean function(AtkDocument* document, gchar* attributeName, gchar* attributeValue)atk_document_set_attribute_value;
+	AtkAttributeSet* function(AtkDocument* document)atk_document_get_attributes;
+	gchar* function(AtkDocument* document)atk_document_get_locale;
 	
 	// atk.EditableText
 	
@@ -116,6 +121,7 @@ extern(C)
 	gchar* function(AtkImage* image)atk_image_get_image_description;
 	gboolean function(AtkImage* image, gchar* description)atk_image_set_image_description;
 	void function(AtkImage* image, gint* width, gint* height)atk_image_get_image_size;
+	gchar* function(AtkImage* image)atk_image_get_image_locale;
 	
 	// atk.NoOpObject
 	
@@ -150,6 +156,7 @@ extern(C)
 	void function(AtkObject* accessible, gpointer data)atk_object_initialize;
 	gboolean function(AtkObject* object, AtkRelationType relationship, AtkObject* target)atk_object_add_relationship;
 	gboolean function(AtkObject* object, AtkRelationType relationship, AtkObject* target)atk_object_remove_relationship;
+	AtkAttributeSet* function(AtkObject* accessible)atk_object_get_attributes;
 	gchar* function(AtkRole role)atk_role_get_name;
 	gchar* function(AtkRole role)atk_role_get_localized_name;
 	AtkRole function(gchar* name)atk_role_for_name;
@@ -223,6 +230,7 @@ extern(C)
 	gint function(AtkStreamableContent* streamable)atk_streamable_content_get_n_mime_types;
 	gchar* function(AtkStreamableContent* streamable, gint i)atk_streamable_content_get_mime_type;
 	GIOChannel* function(AtkStreamableContent* streamable, gchar* mimeType)atk_streamable_content_get_stream;
+	gchar* function(AtkStreamableContent* streamable, gchar* mimeType)atk_streamable_content_get_uri;
 	
 	// atk.Table
 	
@@ -288,7 +296,7 @@ extern(C)
 	
 	guint function(AtkEventListener focusTracker)atk_add_focus_tracker;
 	void function(guint trackerId)atk_remove_focus_tracker;
-	void function(AtkEventListenerInit addFunction)atk_focus_tracker_init;
+	void function(AtkEventListenerInit init)atk_focus_tracker_init;
 	void function(AtkObject* object)atk_focus_tracker_notify;
 	guint function(GSignalEmissionHook listener, gchar* eventType)atk_add_global_event_listener;
 	void function(guint listenerId)atk_remove_global_event_listener;
@@ -305,6 +313,7 @@ extern(C)
 	void function(AtkValue* obj, GValue* value)atk_value_get_maximum_value;
 	void function(AtkValue* obj, GValue* value)atk_value_get_minimum_value;
 	gboolean function(AtkValue* obj, GValue* value)atk_value_set_current_value;
+	void function(AtkValue* obj, GValue* value)atk_value_get_minimum_increment;
 
 
 }
@@ -332,8 +341,13 @@ Symbol[] atkLinks =
 	{ "atk_component_set_extents",  cast(void**)& atk_component_set_extents},
 	{ "atk_component_set_position",  cast(void**)& atk_component_set_position},
 	{ "atk_component_set_size",  cast(void**)& atk_component_set_size},
+	{ "atk_component_get_alpha",  cast(void**)& atk_component_get_alpha},
 	{ "atk_document_get_document_type",  cast(void**)& atk_document_get_document_type},
 	{ "atk_document_get_document",  cast(void**)& atk_document_get_document},
+	{ "atk_document_get_attribute_value",  cast(void**)& atk_document_get_attribute_value},
+	{ "atk_document_set_attribute_value",  cast(void**)& atk_document_set_attribute_value},
+	{ "atk_document_get_attributes",  cast(void**)& atk_document_get_attributes},
+	{ "atk_document_get_locale",  cast(void**)& atk_document_get_locale},
 	{ "atk_editable_text_set_run_attributes",  cast(void**)& atk_editable_text_set_run_attributes},
 	{ "atk_editable_text_set_text_contents",  cast(void**)& atk_editable_text_set_text_contents},
 	{ "atk_editable_text_insert_text",  cast(void**)& atk_editable_text_insert_text},
@@ -358,6 +372,7 @@ Symbol[] atkLinks =
 	{ "atk_image_get_image_description",  cast(void**)& atk_image_get_image_description},
 	{ "atk_image_set_image_description",  cast(void**)& atk_image_set_image_description},
 	{ "atk_image_get_image_size",  cast(void**)& atk_image_get_image_size},
+	{ "atk_image_get_image_locale",  cast(void**)& atk_image_get_image_locale},
 	{ "atk_no_op_object_new",  cast(void**)& atk_no_op_object_new},
 	{ "atk_no_op_object_factory_new",  cast(void**)& atk_no_op_object_factory_new},
 	{ "atk_role_register",  cast(void**)& atk_role_register},
@@ -383,6 +398,7 @@ Symbol[] atkLinks =
 	{ "atk_object_initialize",  cast(void**)& atk_object_initialize},
 	{ "atk_object_add_relationship",  cast(void**)& atk_object_add_relationship},
 	{ "atk_object_remove_relationship",  cast(void**)& atk_object_remove_relationship},
+	{ "atk_object_get_attributes",  cast(void**)& atk_object_get_attributes},
 	{ "atk_role_get_name",  cast(void**)& atk_role_get_name},
 	{ "atk_role_get_localized_name",  cast(void**)& atk_role_get_localized_name},
 	{ "atk_role_for_name",  cast(void**)& atk_role_for_name},
@@ -432,6 +448,7 @@ Symbol[] atkLinks =
 	{ "atk_streamable_content_get_n_mime_types",  cast(void**)& atk_streamable_content_get_n_mime_types},
 	{ "atk_streamable_content_get_mime_type",  cast(void**)& atk_streamable_content_get_mime_type},
 	{ "atk_streamable_content_get_stream",  cast(void**)& atk_streamable_content_get_stream},
+	{ "atk_streamable_content_get_uri",  cast(void**)& atk_streamable_content_get_uri},
 	{ "atk_table_ref_at",  cast(void**)& atk_table_ref_at},
 	{ "atk_table_get_index_at",  cast(void**)& atk_table_get_index_at},
 	{ "atk_table_get_column_at_index",  cast(void**)& atk_table_get_column_at_index},
@@ -502,5 +519,6 @@ Symbol[] atkLinks =
 	{ "atk_value_get_maximum_value",  cast(void**)& atk_value_get_maximum_value},
 	{ "atk_value_get_minimum_value",  cast(void**)& atk_value_get_minimum_value},
 	{ "atk_value_set_current_value",  cast(void**)& atk_value_set_current_value},
+	{ "atk_value_get_minimum_increment",  cast(void**)& atk_value_get_minimum_increment},
 
 ];

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = AtkImage.html
  * outPack = atk
  * outFile = Image
  * strct   = AtkImage
@@ -47,7 +48,7 @@
 
 module atk.Image;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 
@@ -148,17 +149,30 @@ public class Image
 	/**
 	 * Get the width and height in pixels for the specified image.
 	 * The values of width and height are returned as -1 if the
-	 * values cannot be obtained.
+	 * values cannot be obtained (for instance, if the object is not onscreen).
 	 * image:
 	 *  a GObject instance that implements AtkImageIface
 	 * width:
-	 *  filled with the image width
+	 *  filled with the image width, or -1 if the value cannot be obtained.
 	 * height:
-	 *  filled with the image height
+	 *  filled with the image height, or -1 if the value cannot be obtained.
 	 */
 	public void getImageSize(int* width, int* height)
 	{
 		// void atk_image_get_image_size (AtkImage *image,  gint *width,  gint *height);
 		atk_image_get_image_size(atkImage, width, height);
+	}
+	
+	/**
+	 * Since ATK 1.12
+	 * image:
+	 *  An AtkImage
+	 * Returns:
+	 * a string corresponding to the POSIX LC_MESSAGES locale used by the image description, or NULL if the image does not specify a locale.
+	 */
+	public char[] getImageLocale()
+	{
+		// const gchar* atk_image_get_image_locale (AtkImage *image);
+		return Str.toString(atk_image_get_image_locale(atkImage) );
 	}
 }

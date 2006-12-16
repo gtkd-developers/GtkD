@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = atk-AtkState.html
  * outPack = atk
  * outFile = State
  * strct   = 
@@ -47,7 +48,7 @@
 
 module atk.State;
 
-private import atk.typedefs;
+private import atk.atktypes;
 
 private import lib.atk;
 

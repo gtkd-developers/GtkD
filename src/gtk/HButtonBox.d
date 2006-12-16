@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkHButtonBox.html
  * outPack = gtk
  * outFile = HButtonBox
  * strct   = GtkHButtonBox
@@ -47,7 +48,7 @@
 
 module gtk.HButtonBox;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

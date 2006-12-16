@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = pango-Glyph-Storage.html
  * outPack = pango
  * outFile = PgGlyphString
  * strct   = PangoGlyphString
@@ -80,7 +81,7 @@
 
 module pango.PgGlyphString;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
@@ -150,13 +151,16 @@ public class PgGlyphString
 	
 	
 	
+	
+	
 	/**
 	 * Copies a PangoMatrix.
 	 * matrix:
-	 *  a PangoMatrix
+	 *  a PangoMatrix, can be NULL
 	 * Returns:
-	 *  a copy of matrix. The result must be freed with
-	 *  pango_matrix_free().
+	 *  the newly allocated PangoMatrix, which should
+	 *  be freed with pango_matrix_free(), or NULL if
+	 *  matrix was NULL.
 	 * Since 1.6
 	 */
 	public static PangoMatrix* pangoMatrixCopy(PangoMatrix* matrix)
@@ -167,8 +171,9 @@ public class PgGlyphString
 	
 	/**
 	 * Free a PangoMatrix created with pango_matrix_copy().
+	 * Does nothing if matrix is NULL.
 	 * matrix:
-	 *  a PangoMatrix
+	 *  a PangoMatrix, or NULL
 	 * Since 1.6
 	 */
 	public static void pangoMatrixFree(PangoMatrix* matrix)
@@ -247,19 +252,40 @@ public class PgGlyphString
 	}
 	
 	/**
+	 * Returns the scale factor of a matrix on the height of the font.
+	 * That is, the scale factor in the direction perpendicular to the
+	 * vector that the X coordinate is mapped to.
 	 * matrix:
 	 *  a PangoMatrix, may be NULL
 	 * Returns:
-	 *  the scale factor of matrix on the height of the font.
-	 * That is, the scale factor in the direction perpendicular to the
-	 * vector that the X coordinate is mapped to, or 1.0 if matrix is NULL.
+	 *  the scale factor of matrix on the height of the font,
+	 * or 1.0 if matrix is NULL.
 	 * Since 1.12
 	 */
 	public static double pangoMatrixGetFontScaleFactor(PangoMatrix* matrix)
 	{
-		// double pango_matrix_get_font_scale_factor  (PangoMatrix *matrix);
+		// double pango_matrix_get_font_scale_factor  (const PangoMatrix *matrix);
 		return pango_matrix_get_font_scale_factor(matrix);
 	}
+	
+	/**
+	 * Finds the gravity that best matches the rotation component
+	 * in a PangoMatrix.
+	 * matrix:
+	 *  a PangoMatrix
+	 * Returns:
+	 *  the gravity of matrix, which will never be
+	 * PANGO_GRAVITY_AUTO, or PANGO_GRAVITY_SOUTH if matrix is NULL
+	 * Since 1.16
+	 */
+	public static PangoGravity pangoMatrixToGravity(PangoMatrix* matrix)
+	{
+		// PangoGravity pango_matrix_to_gravity (const PangoMatrix *matrix);
+		return pango_matrix_to_gravity(matrix);
+	}
+	
+	
+	
 	
 	
 	
@@ -272,7 +298,8 @@ public class PgGlyphString
 	/**
 	 * Create a new PangoGlyphString.
 	 * Returns:
-	 * the new PangoGlyphString
+	 *  the newly allocated PangoGlyphString, which
+	 *  should be freed with pango_glyph_string_free().
 	 */
 	public this ()
 	{
@@ -285,7 +312,8 @@ public class PgGlyphString
 	 * string:
 	 *  a PangoGlyphString.
 	 * Returns:
-	 * the copied PangoGlyphString
+	 *  the newly allocated PangoGlyphString, which
+	 *  should be freed with pango_glyph_string_free().
 	 */
 	public PangoGlyphString* copy()
 	{
@@ -363,6 +391,23 @@ public class PgGlyphString
 	{
 		// void pango_glyph_string_extents_range  (PangoGlyphString *glyphs,  int start,  int end,  PangoFont *font,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
 		pango_glyph_string_extents_range(pangoGlyphString, start, end, font, inkRect, logicalRect);
+	}
+	
+	/**
+	 * Computes the logical width of the glyph string as can also be computed
+	 * using pango_glyph_string_extents(). However, since this only computes the
+	 * width, it's much faster. This is in fact only a convenience function that
+	 * computes the sum of geometry.width for each glyph in the glyphs.
+	 * glyphs:
+	 *  a PangoGlyphString
+	 * Returns:
+	 *  the logical width of the glyph string.
+	 * Since 1.14
+	 */
+	public int getWidth()
+	{
+		// int pango_glyph_string_get_width (PangoGlyphString *glyphs);
+		return pango_glyph_string_get_width(pangoGlyphString);
 	}
 	
 	/**
@@ -453,15 +498,17 @@ public class PgGlyphString
 	 * be at least one byte assigned to each item, you can't create a
 	 * zero-length item).
 	 * This function is similar in function to pango_item_split() (and uses
-	 * it internally)
+	 * it internally.)
 	 * orig:
 	 *  a PangoItem
 	 * text:
-	 *  text to which positions in orig apply.
+	 *  text to which positions in orig apply
 	 * split_index:
 	 *  byte index of position to split item, relative to the start of the item
 	 * Returns:
-	 *  new item representing text before split_index
+	 *  the newly allocated item representing text before
+	 *  split_index, which should be freed
+	 *  with pango_glyph_item_free().
 	 * Since 1.2
 	 */
 	public static PangoGlyphItem* pangoGlyphItemSplit(PangoGlyphItem* orig, char[] text, int splitIndex)

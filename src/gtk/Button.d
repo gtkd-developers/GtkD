@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkButton.html
  * outPack = gtk
  * outFile = Button
  * strct   = GtkButton
@@ -47,7 +48,7 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.Image
- * 	- gtk.typedefs
+ * 	- gtk.gtktypes
  * 	- gtk.Button
  * structWrap:
  * 	- GtkWidget* -> Widget
@@ -56,14 +57,14 @@
 
 module gtk.Button;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.Image;
-private import gtk.typedefs;
+private import gtk.gtktypes;
 private import gtk.Button;
 
 /**
@@ -118,12 +119,12 @@ public class Button : Bin
 		return currentIconSize;
 	}
 	
-	public void setAction(char[] action)
+	public void setActionName(char[] action)
 	{
 		this.action = action.dup;
 	}
 	
-	public char[] getAction()
+	public char[] getActionName()
 	{
 		return action;
 	}
@@ -177,7 +178,7 @@ public class Button : Bin
 		}
 		else
 		{
-			this(cast(GtkButton*)gtk_button_new_from_stock(StockDesc[stockID]) );
+			this(cast(GtkButton*)gtk_button_new_from_stock(StockDesc[stockID].ptr) );
 		}
 		
 	}
@@ -198,7 +199,7 @@ public class Button : Bin
 	public this(char[] label, void delegate(Button) dlg, char[] action)
 	{
 		this(label);
-		setAction(action);
+		setActionName(action);
 		addOnClicked(dlg);
 	}
 	
@@ -208,7 +209,7 @@ public class Button : Bin
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Button)[] onActivateListeners;
@@ -222,7 +223,7 @@ public class Button : Bin
 			cast(GCallback)&callBackActivate,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;
@@ -250,7 +251,7 @@ public class Button : Bin
 			cast(GCallback)&callBackClicked,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["clicked"] = 1;
 		}
 		onClickedListeners ~= dlg;
@@ -278,7 +279,7 @@ public class Button : Bin
 			cast(GCallback)&callBackEnter,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["enter"] = 1;
 		}
 		onEnterListeners ~= dlg;
@@ -306,7 +307,7 @@ public class Button : Bin
 			cast(GCallback)&callBackLeave,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["leave"] = 1;
 		}
 		onLeaveListeners ~= dlg;
@@ -334,7 +335,7 @@ public class Button : Bin
 			cast(GCallback)&callBackPressed,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["pressed"] = 1;
 		}
 		onPressedListeners ~= dlg;
@@ -362,7 +363,7 @@ public class Button : Bin
 			cast(GCallback)&callBackReleased,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["released"] = 1;
 		}
 		onReleasedListeners ~= dlg;
@@ -665,17 +666,50 @@ public class Button : Bin
 	 * Returns:
 	 *  a GtkWidget or NULL in case there is no image
 	 * Since 2.6
-	 * Property Details
-	 * The "focus-on-click" property
-	 *  "focus-on-click" gboolean : Read / Write
-	 * Whether the button grabs focus when it is clicked with the mouse.
-	 * Default value: TRUE
 	 */
 	public Widget getImage()
 	{
 		// GtkWidget* gtk_button_get_image (GtkButton *button);
 		return new Widget( gtk_button_get_image(gtkButton) );
 	}
+	
+	/**
+	 * Sets the position of the image relative to the text
+	 * inside the button.
+	 * button:
+	 *  a GtkButton
+	 * position:
+	 *  the position
+	 * Since 2.10
+	 */
+	public void setImagePosition(GtkPositionType position)
+	{
+		// void gtk_button_set_image_position (GtkButton *button,  GtkPositionType position);
+		gtk_button_set_image_position(gtkButton, position);
+	}
+	
+	/**
+	 * Gets the position of the image relative to the text
+	 * inside the button.
+	 * button:
+	 *  a GtkButton
+	 * Returns:
+	 *  the position
+	 * Since 2.10
+	 * Property Details
+	 * The "focus-on-click" property
+	 *  "focus-on-click" gboolean : Read / Write
+	 * Whether the button grabs focus when it is clicked with the mouse.
+	 * Default value: TRUE
+	 */
+	public GtkPositionType getImagePosition()
+	{
+		// GtkPositionType gtk_button_get_image_position  (GtkButton *button);
+		return gtk_button_get_image_position(gtkButton);
+	}
+	
+	
+	
 	
 	
 	

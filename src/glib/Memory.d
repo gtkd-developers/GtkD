@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Memory-Allocation.html
  * outPack = glib
  * outFile = Memory
  * strct   = 
@@ -46,7 +47,7 @@
 
 module glib.Memory;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -173,6 +174,7 @@ public class Memory
 		// void g_free (gpointer mem);
 		g_free(mem);
 	}
+	
 	
 	
 	

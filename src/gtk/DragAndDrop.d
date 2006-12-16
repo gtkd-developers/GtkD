@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Drag-and-Drop.html
  * outPack = gtk
  * outFile = DragAndDrop
  * strct   = GdkDragContext
@@ -65,7 +66,7 @@
 
 module gtk.DragAndDrop;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -281,6 +282,39 @@ public class DragAndDrop
 	{
 		// void gtk_drag_dest_add_uri_targets (GtkWidget *widget);
 		gtk_drag_dest_add_uri_targets((widget is null) ? null : widget.getWidgetStruct());
+	}
+	
+	/**
+	 * Tells the widget to emit ::drag-motion and ::drag-leave
+	 * events regardless of the targets and the GTK_DEST_DEFAULT_MOTION
+	 * flag.
+	 * This may be used when a widget wants to do generic
+	 * actions regardless of the targets that the source offers.
+	 * widget:
+	 *  a GtkWidget that's a drag destination
+	 * track_motion:
+	 *  whether to accept all targets
+	 * Since 2.10
+	 */
+	public static void destSetTrackMotion(Widget widget, int trackMotion)
+	{
+		// void gtk_drag_dest_set_track_motion (GtkWidget *widget,  gboolean track_motion);
+		gtk_drag_dest_set_track_motion((widget is null) ? null : widget.getWidgetStruct(), trackMotion);
+	}
+	
+	/**
+	 * Returns whether the widget has been configured to always
+	 * emit ::drag-motion signals.
+	 * widget:
+	 *  a GtkWidget that's a drag destination
+	 * Returns:
+	 *  TRUE if the widget always emits ::drag-motion events
+	 * Since 2.10
+	 */
+	public static int destGetTrackMotion(Widget widget)
+	{
+		// gboolean gtk_drag_dest_get_track_motion (GtkWidget *widget);
+		return gtk_drag_dest_get_track_motion((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
 	/**

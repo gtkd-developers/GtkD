@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gtk-Feature-Test-Macros.html
  * outPack = gtk
  * outFile = Version
  * strct   = 
@@ -47,7 +48,7 @@
 
 module gtk.Version;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

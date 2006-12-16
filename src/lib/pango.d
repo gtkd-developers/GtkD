@@ -26,7 +26,7 @@
 module lib.pango;
 
 private import std.stdio;
-private import pango.typedefs;
+private import pango.pangotypes;
 private import lib.Loader;
 private import lib.paths;
 
@@ -61,6 +61,9 @@ extern(C)
 	void function(PangoContext* context, PangoLanguage* language)pango_context_set_language;
 	PangoDirection function(PangoContext* context)pango_context_get_base_dir;
 	void function(PangoContext* context, PangoDirection direction)pango_context_set_base_dir;
+	PangoGravity function(PangoContext* context)pango_context_get_base_gravity;
+	void function(PangoContext* context, PangoGravity gravity)pango_context_set_base_gravity;
+	PangoGravity function(PangoContext* context)pango_context_get_gravity;
 	PangoMatrix* function(PangoContext* context)pango_context_get_matrix;
 	void function(PangoContext* context, PangoMatrix* matrix)pango_context_set_matrix;
 	PangoFont* function(PangoContext* context, PangoFontDescription* desc)pango_context_load_font;
@@ -70,6 +73,7 @@ extern(C)
 	gboolean function(gunichar ch, gunichar* mirroredCh)pango_get_mirror_char;
 	PangoDirection function(gunichar ch)pango_unichar_direction;
 	PangoDirection function(gchar* text, gint length)pango_find_base_dir;
+	double function(PangoGravity gravity)pango_gravity_to_rotation;
 	void function(gchar* text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)pango_break;
 	void function(char* text, int length, int level, PangoLanguage* language, PangoLogAttr* logAttrs, int attrsLen)pango_get_log_attrs;
 	void function(gchar* text, gint length, gint* paragraphDelimiterIndex, gint* nextParagraphStart)pango_find_paragraph_boundary;
@@ -92,12 +96,14 @@ extern(C)
 	void function(PangoMatrix* matrix, double degrees)pango_matrix_rotate;
 	void function(PangoMatrix* matrix, PangoMatrix* newMatrix)pango_matrix_concat;
 	double function(PangoMatrix* matrix)pango_matrix_get_font_scale_factor;
+	PangoGravity function(PangoMatrix* matrix)pango_matrix_to_gravity;
 	PangoGlyphString* function()pango_glyph_string_new;
 	PangoGlyphString* function(PangoGlyphString* string)pango_glyph_string_copy;
 	void function(PangoGlyphString* string, gint newLen)pango_glyph_string_set_size;
 	void function(PangoGlyphString* string)pango_glyph_string_free;
 	void function(PangoGlyphString* glyphs, PangoFont* font, PangoRectangle* inkRect, PangoRectangle* logicalRect)pango_glyph_string_extents;
 	void function(PangoGlyphString* glyphs, int start, int end, PangoFont* font, PangoRectangle* inkRect, PangoRectangle* logicalRect)pango_glyph_string_extents_range;
+	int function(PangoGlyphString* glyphs)pango_glyph_string_get_width;
 	void function(PangoGlyphString* glyphs, char* text, int length, PangoAnalysis* analysis, int index, gboolean trailing, int* xPos)pango_glyph_string_index_to_x;
 	void function(PangoGlyphString* glyphs, char* text, int length, PangoAnalysis* analysis, int xPos, int* index, int* trailing)pango_glyph_string_x_to_index;
 	void function(PangoGlyphString* glyphs, char* text, int length, int embeddingLevel, int* logicalWidths)pango_glyph_string_get_logical_widths;
@@ -130,6 +136,8 @@ extern(C)
 	gint function(PangoFontDescription* desc)pango_font_description_get_size;
 	void function(PangoFontDescription* desc, double size)pango_font_description_set_absolute_size;
 	gboolean function(PangoFontDescription* desc)pango_font_description_get_size_is_absolute;
+	void function(PangoFontDescription* desc, PangoGravity gravity)pango_font_description_set_gravity;
+	PangoGravity function(PangoFontDescription* desc)pango_font_description_get_gravity;
 	PangoFontMask function(PangoFontDescription* desc)pango_font_description_get_set_fields;
 	void function(PangoFontDescription* desc, PangoFontMask toUnset)pango_font_description_unset_fields;
 	void function(PangoFontDescription* desc, PangoFontDescription* descToMerge, gboolean replaceExisting)pango_font_description_merge;
@@ -140,6 +148,7 @@ extern(C)
 	char* function(PangoFontDescription* desc)pango_font_description_to_filename;
 	PangoEngineShape* function(PangoFont* font, PangoLanguage* language, guint32 ch)pango_font_find_shaper;
 	PangoFontDescription* function(PangoFont* font)pango_font_describe;
+	PangoFontDescription* function(PangoFont* font)pango_font_describe_with_absolute_size;
 	PangoCoverage* function(PangoFont* font, PangoLanguage* language)pango_font_get_coverage;
 	void function(PangoFont* font, PangoGlyph glyph, PangoRectangle* inkRect, PangoRectangle* logicalRect)pango_font_get_glyph_extents;
 	PangoFontMetrics* function(PangoFont* font, PangoLanguage* language)pango_font_get_metrics;
@@ -384,6 +393,9 @@ Symbol[] pangoLinks =
 	{ "pango_context_set_language",  cast(void**)& pango_context_set_language},
 	{ "pango_context_get_base_dir",  cast(void**)& pango_context_get_base_dir},
 	{ "pango_context_set_base_dir",  cast(void**)& pango_context_set_base_dir},
+	{ "pango_context_get_base_gravity",  cast(void**)& pango_context_get_base_gravity},
+	{ "pango_context_set_base_gravity",  cast(void**)& pango_context_set_base_gravity},
+	{ "pango_context_get_gravity",  cast(void**)& pango_context_get_gravity},
 	{ "pango_context_get_matrix",  cast(void**)& pango_context_get_matrix},
 	{ "pango_context_set_matrix",  cast(void**)& pango_context_set_matrix},
 	{ "pango_context_load_font",  cast(void**)& pango_context_load_font},
@@ -393,6 +405,7 @@ Symbol[] pangoLinks =
 	{ "pango_get_mirror_char",  cast(void**)& pango_get_mirror_char},
 	{ "pango_unichar_direction",  cast(void**)& pango_unichar_direction},
 	{ "pango_find_base_dir",  cast(void**)& pango_find_base_dir},
+	{ "pango_gravity_to_rotation",  cast(void**)& pango_gravity_to_rotation},
 	{ "pango_break",  cast(void**)& pango_break},
 	{ "pango_get_log_attrs",  cast(void**)& pango_get_log_attrs},
 	{ "pango_find_paragraph_boundary",  cast(void**)& pango_find_paragraph_boundary},
@@ -409,12 +422,14 @@ Symbol[] pangoLinks =
 	{ "pango_matrix_rotate",  cast(void**)& pango_matrix_rotate},
 	{ "pango_matrix_concat",  cast(void**)& pango_matrix_concat},
 	{ "pango_matrix_get_font_scale_factor",  cast(void**)& pango_matrix_get_font_scale_factor},
+	{ "pango_matrix_to_gravity",  cast(void**)& pango_matrix_to_gravity},
 	{ "pango_glyph_string_new",  cast(void**)& pango_glyph_string_new},
 	{ "pango_glyph_string_copy",  cast(void**)& pango_glyph_string_copy},
 	{ "pango_glyph_string_set_size",  cast(void**)& pango_glyph_string_set_size},
 	{ "pango_glyph_string_free",  cast(void**)& pango_glyph_string_free},
 	{ "pango_glyph_string_extents",  cast(void**)& pango_glyph_string_extents},
 	{ "pango_glyph_string_extents_range",  cast(void**)& pango_glyph_string_extents_range},
+	{ "pango_glyph_string_get_width",  cast(void**)& pango_glyph_string_get_width},
 	{ "pango_glyph_string_index_to_x",  cast(void**)& pango_glyph_string_index_to_x},
 	{ "pango_glyph_string_x_to_index",  cast(void**)& pango_glyph_string_x_to_index},
 	{ "pango_glyph_string_get_logical_widths",  cast(void**)& pango_glyph_string_get_logical_widths},
@@ -444,6 +459,8 @@ Symbol[] pangoLinks =
 	{ "pango_font_description_get_size",  cast(void**)& pango_font_description_get_size},
 	{ "pango_font_description_set_absolute_size",  cast(void**)& pango_font_description_set_absolute_size},
 	{ "pango_font_description_get_size_is_absolute",  cast(void**)& pango_font_description_get_size_is_absolute},
+	{ "pango_font_description_set_gravity",  cast(void**)& pango_font_description_set_gravity},
+	{ "pango_font_description_get_gravity",  cast(void**)& pango_font_description_get_gravity},
 	{ "pango_font_description_get_set_fields",  cast(void**)& pango_font_description_get_set_fields},
 	{ "pango_font_description_unset_fields",  cast(void**)& pango_font_description_unset_fields},
 	{ "pango_font_description_merge",  cast(void**)& pango_font_description_merge},
@@ -454,6 +471,7 @@ Symbol[] pangoLinks =
 	{ "pango_font_description_to_filename",  cast(void**)& pango_font_description_to_filename},
 	{ "pango_font_find_shaper",  cast(void**)& pango_font_find_shaper},
 	{ "pango_font_describe",  cast(void**)& pango_font_describe},
+	{ "pango_font_describe_with_absolute_size",  cast(void**)& pango_font_describe_with_absolute_size},
 	{ "pango_font_get_coverage",  cast(void**)& pango_font_get_coverage},
 	{ "pango_font_get_glyph_extents",  cast(void**)& pango_font_get_glyph_extents},
 	{ "pango_font_get_metrics",  cast(void**)& pango_font_get_metrics},

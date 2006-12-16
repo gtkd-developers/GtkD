@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkRadioButton.html
  * outPack = gtk
  * outFile = RadioButton
  * strct   = GtkRadioButton
@@ -54,7 +55,7 @@
 
 module gtk.RadioButton;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -207,7 +208,7 @@ public class RadioButton : CheckButton
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(RadioButton)[] onGroupChangedListeners;
@@ -221,7 +222,7 @@ public class RadioButton : CheckButton
 			cast(GCallback)&callBackGroupChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["group-changed"] = 1;
 		}
 		onGroupChangedListeners ~= dlg;

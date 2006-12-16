@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkMenuItem.html
  * outPack = gtk
  * outFile = MenuItem
  * strct   = GtkMenuItem
@@ -53,7 +54,7 @@
 
 module gtk.MenuItem;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -102,7 +103,7 @@ public class MenuItem : Item
 	private char[] actionLabel;
 	
 	/** Gets the application set action code */
-	public char[] getAction()
+	public char[] getActionName()
 	{
 		if ( actionLabel is null )
 		{
@@ -184,7 +185,7 @@ public class MenuItem : Item
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(MenuItem)[] onActivateListeners;
@@ -198,7 +199,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackActivate,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;
@@ -226,7 +227,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackActivateItem,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["activate-item"] = 1;
 		}
 		onActivateItemListeners ~= dlg;
@@ -254,7 +255,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackToggleSizeAllocate,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toggle-size-allocate"] = 1;
 		}
 		onToggleSizeAllocateListeners ~= dlg;
@@ -282,7 +283,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackToggleSizeRequest,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toggle-size-request"] = 1;
 		}
 		onToggleSizeRequestListeners ~= dlg;

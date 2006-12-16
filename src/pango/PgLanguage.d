@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = pango
  * outFile = PgLanguage
  * strct   = PangoLanguage
@@ -76,7 +77,7 @@
 
 module pango.PgLanguage;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
@@ -215,14 +216,15 @@ public class PgLanguage
 	 * Checks if a language tag matches one of the elements in a list of
 	 * language ranges. A language tag is considered to match a range
 	 * in the list if the range is '*', the range is exactly the tag,
-	 * or the range is a prefix of the tag, and the character after the
-	 * tag is '-'.
+	 * or the range is a prefix of the tag, and the character after it
+	 * in the tag is '-'.
 	 * language:
 	 *  a language tag (see pango_language_from_string()),
 	 *  NULL is allowed and matches nothing but '*'
 	 * range_list:
-	 *  a list of language ranges, separated by ';' characters.
-	 *  each element must either be '*', or a RFC 3066 language range
+	 *  a list of language ranges, separated by ';', ':',
+	 *  ',', or space characters.
+	 *  Each element must either be '*', or a RFC 3066 language range
 	 *  canonicalized as by pango_language_from_string()
 	 * Returns:
 	 *  TRUE if a match was found.

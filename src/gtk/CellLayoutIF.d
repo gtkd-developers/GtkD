@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCellLayout.html
  * outPack = gtk
  * outFile = CellLayoutIF
  * strct   = GtkCellLayout
@@ -51,7 +52,7 @@
 
 module gtk.CellLayoutIF;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -64,6 +65,15 @@ private import glib.Str;
  * GtkCellLayout is an interface to be implemented by all objects which
  * want to provide a GtkTreeViewColumn-like API for packing cells, setting
  * attributes and data funcs.
+ * One of the notable features provided by implementations of GtkCellLayout
+ * are attributes. Attributes let you set the properties
+ * in flexible ways. They can just be set to constant values like regular
+ * properties. But they can also be mapped to a column of the underlying
+ * tree model with gtk_cell_layout_set_attributes(), which means that the value
+ * of the attribute can change from cell to cell as they are rendered by the
+ * cell renderer. Finally, it is possible to specify a function with
+ * gtk_cell_layout_set_cell_data_func() that is called to determine the value
+ * of the attribute for each cell that is rendered.
  */
 public interface CellLayoutIF
 {

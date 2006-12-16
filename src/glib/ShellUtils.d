@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Shell-related-Utilities.html
  * outPack = glib
  * outFile = ShellUtils
  * strct   = 
@@ -48,7 +49,7 @@
 
 module glib.ShellUtils;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

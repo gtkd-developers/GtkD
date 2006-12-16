@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GdkPixbufLoader.html
  * outPack = gdkpixbuf
  * outFile = PixbufLoader
  * strct   = GdkPixbufLoader
@@ -55,7 +56,7 @@
 
 module gdkpixbuf.PixbufLoader;
 
-private import gdkpixbuf.typedefs;
+private import gdkpixbuf.gdkpixbuftypes;
 
 private import lib.gdkpixbuf;
 
@@ -167,7 +168,7 @@ public class PixbufLoader : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(PixbufLoader)[] onAreaPreparedListeners;
@@ -181,7 +182,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackAreaPrepared,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["area-prepared"] = 1;
 		}
 		onAreaPreparedListeners ~= dlg;
@@ -209,7 +210,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackAreaUpdated,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["area-updated"] = 1;
 		}
 		onAreaUpdatedListeners ~= dlg;
@@ -237,7 +238,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackClosed,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["closed"] = 1;
 		}
 		onClosedListeners ~= dlg;
@@ -265,7 +266,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackSizePrepared,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["size-prepared"] = 1;
 		}
 		onSizePreparedListeners ~= dlg;

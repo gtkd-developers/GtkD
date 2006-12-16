@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkMisc.html
  * outPack = gtk
  * outFile = Misc
  * strct   = GtkMisc
@@ -47,7 +48,7 @@
 
 module gtk.Misc;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gobject-Generic-values.html
  * outPack = gobject
  * outFile = Value
  * strct   = GValue
@@ -57,7 +58,7 @@
 
 module gobject.Value;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 
@@ -1560,10 +1561,10 @@ public class Value
 	 * Returns:
 	 * object content of value, should be unreferenced when no longer needed.
 	 */
-	public ObjectG dupObject()
+	public void* dupObject()
 	{
-		// GObject* g_value_dup_object (const GValue *value);
-		return new ObjectG( g_value_dup_object(gValue) );
+		// gpointer g_value_dup_object (const GValue *value);
+		return g_value_dup_object(gValue);
 	}
 	
 	
@@ -1650,6 +1651,7 @@ public class Value
 	
 	
 	
+	
 	/**
 	 * Creates a new GParamSpecGType instance specifying a
 	 * G_TYPE_GTYPE property.
@@ -1662,18 +1664,46 @@ public class Value
 	 *  description of the property specified
 	 * is_a_type:
 	 *  a GType whose subtypes are allowed as values
-	 *  of the property
+	 *  of the property (use G_TYPE_NONE for any type)
 	 * flags:
 	 *  flags for the property specified
 	 * Returns:
 	 * a newly created parameter specification
 	 * Since 2.10
-	 * See Also
-	 * GParamSpec, GValue, g_object_class_install_property().
 	 */
 	public static ParamSpec gParamSpecGtype(char[] name, char[] nick, char[] blurb, GType isAType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_gtype (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType is_a_type,  GParamFlags flags);
 		return new ParamSpec( g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isAType, flags) );
+	}
+	
+	/**
+	 * Get the contents of a G_TYPE_GTYPE GValue.
+	 * value:
+	 * a valid GValue of type G_TYPE_GTYPE
+	 * Returns:
+	 * the GType stored in value
+	 * Since 2.12
+	 */
+	public GType getGtype()
+	{
+		// GType g_value_get_gtype (const GValue *value);
+		return g_value_get_gtype(gValue);
+	}
+	
+	/**
+	 * Set the contents of a G_TYPE_GTYPE GValue to v_gtype.
+	 * value:
+	 * a valid GValue of type G_TYPE_GTYPE
+	 * v_gtype:
+	 * GType to be set
+	 * Since 2.12
+	 * See Also
+	 * GParamSpec, GValue, g_object_class_install_property().
+	 */
+	public void setGtype(GType vGtype)
+	{
+		// void g_value_set_gtype (GValue *value,  GType v_gtype);
+		g_value_set_gtype(gValue, vGtype);
 	}
 }

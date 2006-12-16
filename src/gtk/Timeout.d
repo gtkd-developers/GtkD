@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gtk
  * outFile = Timeout
  * strct   = 
@@ -46,7 +47,7 @@
 
 module gtk.Timeout;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -233,7 +234,7 @@ public class Timeout
 	
 	/**
 	 * Warning
-	 * gtk_timeout_add_full is deprecated and should not be used in newly-written code. Use g_timeout_add_full() instead.
+	 * gtk_timeout_add_full has been deprecated since version 2.4 and should not be used in newly-written code. Use g_timeout_add_full() instead.
 	 * Registers a function to be called periodically. The function will be called
 	 * repeatedly after interval milliseconds until it returns FALSE at which
 	 * point the timeout is destroyed and will not be called again.
@@ -259,7 +260,7 @@ public class Timeout
 	
 	/**
 	 * Warning
-	 * gtk_timeout_add is deprecated and should not be used in newly-written code. Use g_timeout_add() instead.
+	 * gtk_timeout_add has been deprecated since version 2.4 and should not be used in newly-written code. Use g_timeout_add() instead.
 	 * Registers a function to be called periodically. The function will be called
 	 * repeatedly after interval milliseconds until it returns FALSE at which
 	 * point the timeout is destroyed and will not be called again.
@@ -281,7 +282,7 @@ public class Timeout
 	
 	/**
 	 * Warning
-	 * gtk_timeout_remove is deprecated and should not be used in newly-written code. Use g_source_remove() instead.
+	 * gtk_timeout_remove has been deprecated since version 2.4 and should not be used in newly-written code. Use g_source_remove() instead.
 	 * Removes the given timeout destroying all information about it.
 	 * timeout_handler_id:
 	 * The identifier returned when installing the timeout.

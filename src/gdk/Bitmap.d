@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gdk
  * outFile = Bitmap
  * strct   = GdkBitmap
@@ -51,7 +52,7 @@
 
 module gdk.Bitmap;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkArrow.html
  * outPack = gtk
  * outFile = Arrow
  * strct   = GtkArrow
@@ -47,7 +48,7 @@
 
 module gtk.Arrow;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

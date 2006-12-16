@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkProgressBar.html
  * outPack = gtk
  * outFile = ProgressBar
  * strct   = GtkProgressBar
@@ -50,7 +51,7 @@
 
 module gtk.ProgressBar;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -154,7 +155,7 @@ public class ProgressBar : Progress
 	 * pbar:
 	 *  a GtkProgressBar
 	 * text:
-	 *  a UTF-8 string
+	 *  a UTF-8 string, or NULL
 	 */
 	public void setText(char[] text)
 	{
@@ -395,6 +396,7 @@ public class ProgressBar : Progress
 		// void gtk_progress_bar_update (GtkProgressBar *pbar,  gdouble percentage);
 		gtk_progress_bar_update(gtkProgressBar, percentage);
 	}
+	
 	
 	
 	

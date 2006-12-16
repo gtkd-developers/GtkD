@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = pango-Tab-Stops.html
  * outPack = pango
  * outFile = PgTabArray
  * strct   = PangoTabArray
@@ -75,7 +76,7 @@
 
 module pango.PgTabArray;
 
-private import pango.typedefs;
+private import pango.pangotypes;
 
 private import lib.pango;
 
@@ -97,6 +98,8 @@ private import pango.PgScriptIter;
 
 /**
  * Description
+ * Functions in this section are used to deal with PangoTabArray objects
+ * that can be used to set tab stop positions in a PangoLayout.
  */
 public class PgTabArray
 {
@@ -141,7 +144,8 @@ public class PgTabArray
 	 * positions_in_pixels:
 	 *  whether positions are in pixel units
 	 * Returns:
-	 *  the new PangoTabArray
+	 *  the newly allocated PangoTabArray, which should
+	 *  be freed with pango_tab_array_free().
 	 */
 	public this (int initialSize, int positionsInPixels)
 	{
@@ -165,7 +169,8 @@ public class PgTabArray
 	 * ...:
 	 *  additional alignment/position pairs
 	 * Returns:
-	 *  the new PangoTabArray
+	 *  the newly allocated PangoTabArray, which should
+	 *  be freed with pango_tab_array_free().
 	 */
 	public this (int size, int positionsInPixels, PangoTabAlign firstAlignment, int firstPosition, ... )
 	{
@@ -178,7 +183,8 @@ public class PgTabArray
 	 * src:
 	 *  PangoTabArray to copy
 	 * Returns:
-	 *  the new PangoTabArray.
+	 *  the newly allocated PangoTabArray, which should
+	 *  be freed with pango_tab_array_free().
 	 */
 	public PangoTabArray* copy()
 	{

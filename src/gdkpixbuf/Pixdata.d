@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-pixbuf-inline.html
  * outPack = gdkpixbuf
  * outFile = Pixdata
  * strct   = GdkPixdata
@@ -51,7 +52,7 @@
 
 module gdkpixbuf.Pixdata;
 
-private import gdkpixbuf.typedefs;
+private import gdkpixbuf.gdkpixbuftypes;
 
 private import lib.gdkpixbuf;
 

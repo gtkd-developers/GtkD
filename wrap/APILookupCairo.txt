@@ -25,7 +25,50 @@
 ###
 #
 
+
+
 # must start with wrap
+
+addTypedefs: start
+
+public import glib.glibtypes;
+
+//public import std.c.windows.windows;
+private alias void* HDC;
+
+//struct Display;	// to support XLib surfaces
+//struct Visual;	// to support XLib surfaces
+//struct Screen;	// to support XLib surfaces
+
+private alias void* Drawable;
+private alias void* Pixmap;
+//public alias bool cairo_bool_t;
+
+alias ubyte uchar;
+addTypedefs: end
+
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
 
 wrap: cairo
 
@@ -73,6 +116,7 @@ file: cairo-Scaled-Fonts.html
 struct: cairo_scaled_font_t
 class: ScaledFont
 prefix: cairo_scaled_font_
+import: glib.Str
 outFile: ScaledFont
 
 file: cairo-Font-Options.html
@@ -111,19 +155,19 @@ mergeFile: Surface
 #file: cairo-Glitz-Surfaces.html
 #mergeFile: Surface
 
-file: cairo-PDF-Surfaces.html
-mergeFile: Surface
+#file: cairo-PDF-Surfaces.html
+#mergeFile: Surface
 
-file: cairo-PNG-Support.html
-mergeFile: Surface
+#file: cairo-PNG-Support.html
+#mergeFile: Surface
 
-file: cairo-PostScript-Surfaces.html
-mergeFile: Surface
+#file: cairo-PostScript-Surfaces.html
+#mergeFile: Surface
 
-file: cairo-Win32-Surfaces.html
-mergeFile: Surface
+#file: cairo-Win32-Surfaces.html
+#mergeFile: Surface
 
-file: cairo-XLib-Surfaces.html
+#file: cairo-XLib-Surfaces.html
 closeFile: Surface
 
 ###########################################################

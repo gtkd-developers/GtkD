@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-The-Main-Event-Loop.html
  * outPack = glib
  * outFile = MainLoop
  * strct   = GMainLoop
@@ -57,7 +58,7 @@
 
 module glib.MainLoop;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -383,9 +384,23 @@ public class MainLoop
 	 */
 	public static int gMainDepth()
 	{
-		// int g_main_depth (void);
+		// gint g_main_depth (void);
 		return g_main_depth();
 	}
+	
+	/**
+	 * Returns the currently firing source for this thread.
+	 * Returns:
+	 *  The currently firing source or NULL.
+	 * Since 2.12
+	 */
+	public static Source gMainCurrentSource()
+	{
+		// GSource* g_main_current_source (void);
+		return new Source( g_main_current_source() );
+	}
+	
+	
 	
 	
 	
@@ -460,6 +475,8 @@ public class MainLoop
 		// gboolean g_idle_remove_by_data (gpointer data);
 		return g_idle_remove_by_data(data);
 	}
+	
+	
 	
 	
 	

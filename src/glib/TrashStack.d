@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Trash-Stacks.html
  * outPack = glib
  * outFile = TrashStack
  * strct   = GTrashStack
@@ -46,7 +47,7 @@
 
 module glib.TrashStack;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 
@@ -118,7 +119,7 @@ public class TrashStack
 	}
 	
 	/**
-	 * Returns the element at the top of a GTrashStack.
+	 * Returns the element at the top of a GTrashStack which may be NULL.
 	 * stack_p:
 	 * a pointer to a GTrashStack.
 	 * Returns:
@@ -132,6 +133,8 @@ public class TrashStack
 	
 	/**
 	 * Returns the height of a GTrashStack.
+	 * Note that execution of this function is of O(N) complexity
+	 * where N denotes the number of items on the stack.
 	 * stack_p:
 	 * a pointer to a GTrashStack.
 	 * Returns:

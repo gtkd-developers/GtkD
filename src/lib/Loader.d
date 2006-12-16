@@ -15,7 +15,7 @@
  */
  
 module lib.Loader;
-private import std.file;
+
 //debug = loadLib;
 //debug = loadSymbol;
 
@@ -170,19 +170,10 @@ public class Linker
 		} 
 		version(linux)
 		{
-			
-			handle = dlopen( this.libraryName ~ "\0", RTLD_NOW);
-			debug(loadLib)writefln("########## (1)loading %s == %s", libraryName, handle);
-
-			if (handle is null)
-			{
-				// non-dev libraries tend to be called xxxx.so.0
-				handle = dlopen( this.libraryName ~ ".0\0", RTLD_NOW);
-			} 
-
+			handle = dlopen( (this.libraryName ~ "\0").ptr, RTLD_NOW);
 			if ( alternateLibraryName !is null )
 			{
-				alternateHandle = dlopen( this.alternateLibraryName ~ "\0", RTLD_NOW);
+				alternateHandle = dlopen( (this.alternateLibraryName ~ "\0").ptr, RTLD_NOW);
 			}
 			// clear the error buffer
 			dlerror();
@@ -199,7 +190,7 @@ public class Linker
 		}
 		else
 		{
-			debug(loadLib)writefln("Loaded lib = %s", libraryName);
+			writefln("Loaded lib = %s", libraryName);
 		}
 
 	}
@@ -250,15 +241,15 @@ public class Linker
 	{
 		foreach( Symbol link; symbols ) 
 		{
-			*link.pointer = getSymbol(handle, link.name~"\0");
+			*link.pointer = getSymbol(handle, (link.name~"\0").ptr);
 			debug(loadSymbol) writefln("Loaded...", libraryName, " ", link.name);
 			if (*link.pointer is null)
 			{
 				// if gthread try on glib
 				if ( alternateHandle !is null )
 				{
-					*link.pointer = getSymbol(alternateHandle, link.name~"\0");
-					debug(loadSymbol)writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
+					*link.pointer = getSymbol(alternateHandle, (link.name~"\0").ptr);
+					writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
 				}
 				if (*link.pointer is null)
 				{

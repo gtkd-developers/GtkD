@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gtk
  * outFile = IconInfo
  * strct   = GtkIconInfo
@@ -51,7 +52,7 @@
 
 module gtk.IconInfo;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -115,7 +116,7 @@ private import gdk.Pixbuf;
  * if (!pixbuf)
  *  {
 	 *  g_warning ("Couldn't load icon: %s", error->message);
-	 *  g_error_free (message);
+	 *  g_error_free (error);
  *  }
  * else
  *  {
@@ -155,7 +156,7 @@ public class IconInfo
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(IconInfo)[] onChangedListeners;
@@ -169,7 +170,7 @@ public class IconInfo
 			cast(GCallback)&callBackChanged,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;

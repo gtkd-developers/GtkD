@@ -24,7 +24,7 @@ private import gtk.Entry;
 private import gtk.CheckButton;
 private import gtk.Button;
 private import gtk.Label;
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import glib.Str;
 /**

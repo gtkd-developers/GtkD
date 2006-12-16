@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkAccelLabel.html
  * outPack = gtk
  * outFile = AccelLabel
  * strct   = GtkAccelLabel
@@ -52,7 +53,7 @@
 
 module gtk.AccelLabel;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

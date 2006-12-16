@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Double-ended-Queues.html
  * outPack = glib
  * outFile = QueueG
  * strct   = GQueue
@@ -50,7 +51,7 @@
 
 module glib.QueueG;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

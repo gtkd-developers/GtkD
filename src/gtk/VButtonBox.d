@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkVButtonBox.html
  * outPack = gtk
  * outFile = VButtonBox
  * strct   = GtkVButtonBox
@@ -47,7 +48,7 @@
 
 module gtk.VButtonBox;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

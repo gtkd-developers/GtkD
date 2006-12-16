@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Pointer-Arrays.html
  * outPack = glib
  * outFile = PtrArray
  * strct   = GPtrArray
@@ -49,7 +50,7 @@
 
 module glib.PtrArray;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

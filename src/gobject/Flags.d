@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = 
  * outPack = gobject
  * outFile = Flags
  * strct   = GFlagsValue
@@ -50,7 +51,7 @@
 
 module gobject.Flags;
 
-private import gobject.typedefs;
+private import gobject.gobjecttypes;
 
 private import lib.gobject;
 
@@ -172,15 +173,13 @@ public class Flags
 	 * than to write one yourself using g_flags_register_static().
 	 * name:
 	 * A nul-terminated string used as the name of the new type.
-	 * const_static_values:
-	 * An array of GFlagsValue structs for the possible
-	 *  flags values. The array is terminated by a struct with all members being 0.
+	 * _static_values:
 	 * Returns:
 	 * The new type identifier.
 	 */
 	public static GType registerStatic(char[] name, Flags _StaticValues)
 	{
-		// GType g_flags_register_static (const gchar *name,  const GFlagsValue *const_static_values);
+		// GType g_flags_register_static (const gchar *name,  const GFlagsValue *const _static_values);
 		return g_flags_register_static(Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
 	}
 	
@@ -193,17 +192,14 @@ public class Flags
 	 * the type identifier of the type being completed
 	 * info:
 	 * the GTypeInfo struct to be filled in
-	 * const_values:
-	 * An array of GFlagsValue structs for the possible
-	 *  enumeration values. The array is terminated by a struct with all
-	 *  members being 0.
+	 * _values:
 	 * See Also
 	 * GParamSpecEnum, GParamSpecFlags, g_param_spec_enum(), g_param_spec_flags(),
 	 * glib-mkenums
 	 */
 	public static void completeTypeInfo(GType type, GTypeInfo* info, Flags _Values)
 	{
-		// void g_flags_complete_type_info (GType g_flags_type,  GTypeInfo *info,  const GFlagsValue *const_values);
+		// void g_flags_complete_type_info (GType g_flags_type,  GTypeInfo *info,  const GFlagsValue *const _values);
 		g_flags_complete_type_info(type, info, (_Values is null) ? null : _Values.getFlagsStruct());
 	}
 }

@@ -26,7 +26,7 @@ private import gtk.DrawingArea;
 private import gdk.Event;
 private import gtk.Widget;
 private import gtk.ComboBox;
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import gdk.Color;
 private import gdk.Drawable;

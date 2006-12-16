@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Singly-Linked-Lists.html
  * outPack = glib
  * outFile = ListSG
  * strct   = GSList
@@ -48,7 +49,7 @@
 
 module glib.ListSG;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

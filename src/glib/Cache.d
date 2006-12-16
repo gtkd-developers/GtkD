@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = glib-Caches.html
  * outPack = glib
  * outFile = Cache
  * strct   = GCache
@@ -48,7 +49,7 @@
 
 module glib.Cache;
 
-private import glib.typedefs;
+private import glib.glibtypes;
 
 private import lib.glib;
 

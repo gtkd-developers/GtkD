@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkColorButton.html
  * outPack = gtk
  * outFile = ColorButton
  * strct   = GtkColorButton
@@ -50,7 +51,7 @@
 
 module gtk.ColorButton;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -59,8 +60,9 @@ private import gdk.Color;
 
 /**
  * Description
- * The GtkColorButton is a button which displays the currently selected color an allows to open a color
- * selection dialog to change the color. It is suitable widget for selecting a color in a preference dialog.
+ * The GtkColorButton is a button which displays the currently selected color
+ * an allows to open a color selection dialog to change the color. It is suitable
+ * widget for selecting a color in a preference dialog.
  */
 private import gtk.Button;
 public class ColorButton : Button
@@ -96,7 +98,7 @@ public class ColorButton : Button
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ColorButton)[] onColorSetListeners;
@@ -110,7 +112,7 @@ public class ColorButton : Button
 			cast(GCallback)&callBackColorSet,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["color-set"] = 1;
 		}
 		onColorSetListeners ~= dlg;

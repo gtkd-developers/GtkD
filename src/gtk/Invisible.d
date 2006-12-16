@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkInvisible.html
  * outPack = gtk
  * outFile = Invisible
  * strct   = GtkInvisible
@@ -49,7 +50,7 @@
 
 module gtk.Invisible;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 

@@ -78,12 +78,12 @@ public struct ConvParms
 
 	}
 	
-
-	
-	public void appendAsComment(inout char[] text)
+	public char[] toString()
 	{
+		char[] text;
 		text ~= "/*";
 		text ~= "\n * Conversion parameters:";
+		text ~= "\n * inFile  = "~inFile;
 		text ~= "\n * outPack = "~outPack;
 		text ~= "\n * outFile = "~outFile;
 		text ~= "\n * strct   = "~strct;
@@ -149,6 +149,14 @@ public struct ConvParms
 			text ~= "\n * \t- "~key~" -> "~aliases[key];
 		}
 		text ~= "\n */\n\n";
+		return text;
+	}
+	
+
+	
+	public void appendAsComment(inout char[] text)
+	{
+		text ~= toString();
 	}
 
 	public bit containsPrefix(char[] prefix)

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkScale.html
  * outPack = gtk
  * outFile = Scale
  * strct   = GtkScale
@@ -47,7 +48,7 @@
 
 module gtk.Scale;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -98,7 +99,7 @@ public class Scale : Range
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	char[] delegate(gdouble, Scale)[] onFormatValueListeners;
@@ -112,7 +113,7 @@ public class Scale : Range
 			cast(GCallback)&callBackFormatValue,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["format-value"] = 1;
 		}
 		onFormatValueListeners ~= dlg;

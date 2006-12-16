@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkPlug.html
  * outPack = gtk
  * outFile = Plug
  * strct   = GtkPlug
@@ -49,7 +50,7 @@
 
 module gtk.Plug;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -103,7 +104,7 @@ public class Plug : Window
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Plug)[] onEmbeddedListeners;
@@ -117,7 +118,7 @@ public class Plug : Window
 			cast(GCallback)&callBackEmbedded,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["embedded"] = 1;
 		}
 		onEmbeddedListeners ~= dlg;

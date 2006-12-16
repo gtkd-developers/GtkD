@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkTreeViewColumn.html
  * outPack = gtk
  * outFile = TreeViewColumn
  * strct   = GtkTreeViewColumn
@@ -62,7 +63,7 @@
 
 module gtk.TreeViewColumn;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -137,7 +138,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeViewColumn)[] onClickedListeners;
@@ -151,7 +152,7 @@ public class TreeViewColumn : ObjectGtk
 			cast(GCallback)&callBackClicked,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["clicked"] = 1;
 		}
 		onClickedListeners ~= dlg;

@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = gdk-Drawing-Primitives.html
  * outPack = gdk
  * outFile = Drawable
  * strct   = GdkDrawable
@@ -101,7 +102,7 @@
 
 module gdk.Drawable;
 
-private import gdk.typedefs;
+private import gdk.gdktypes;
 
 private import lib.gdk;
 
@@ -197,7 +198,7 @@ public class Drawable : ObjectG
 	public void drawPolygon(GC gc, int filled, GdkPoint[] points)
 	{
 		// void gdk_draw_polygon (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  GdkPoint *points,  gint npoints);
-		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, &points[0], points.length);
+		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, points.ptr, points.length);
 	}
 	
 	/**

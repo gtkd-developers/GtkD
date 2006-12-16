@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkCellRendererText.html
  * outPack = gtk
  * outFile = CellRendererText
  * strct   = GtkCellRenderer
@@ -50,7 +51,7 @@
 
 module gtk.CellRendererText;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -100,7 +101,7 @@ public class CellRendererText : CellRenderer
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], char[], CellRendererText)[] onEditedListeners;
@@ -114,7 +115,7 @@ public class CellRendererText : CellRenderer
 			cast(GCallback)&callBackEdited,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["edited"] = 1;
 		}
 		onEditedListeners ~= dlg;
@@ -163,15 +164,18 @@ public class CellRendererText : CellRenderer
 	 * number_of_rows:
 	 *  Number of rows of text each cell renderer is allocated, or -1
 	 * Property Details
-	 * The "attributes" property
-	 *  "attributes" PangoAttrList : Read / Write
-	 * A list of style attributes to apply to the text of the renderer.
+	 * The "align-set" property
+	 *  "align-set" gboolean : Read / Write
+	 * Whether this tag affects the alignment mode.
+	 * Default value: FALSE
 	 */
 	public static void setFixedHeightFromFont(GtkCellRendererText* renderer, int numberOfRows)
 	{
 		// void gtk_cell_renderer_text_set_fixed_height_from_font  (GtkCellRendererText *renderer,  gint number_of_rows);
 		gtk_cell_renderer_text_set_fixed_height_from_font(renderer, numberOfRows);
 	}
+	
+	
 	
 	
 	

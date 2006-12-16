@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkToggleToolButton.html
  * outPack = gtk
  * outFile = ToggleToolButton
  * strct   = GtkToggleToolButton
@@ -50,7 +51,7 @@
 
 module gtk.ToggleToolButton;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -99,7 +100,7 @@ public class ToggleToolButton : ToolButton
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ToggleToolButton)[] onToggledListeners;
@@ -113,7 +114,7 @@ public class ToggleToolButton : ToolButton
 			cast(GCallback)&callBackToggled,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;

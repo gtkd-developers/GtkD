@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkAction.html
  * outPack = gtk
  * outFile = Action
  * strct   = GtkAction
@@ -56,7 +57,7 @@
 
 module gtk.Action;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -127,7 +128,7 @@ public class Action : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.typedefs;
+	private import gdk.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Action)[] onActivateListeners;
@@ -141,7 +142,7 @@ public class Action : ObjectG
 			cast(GCallback)&callBackActivate,
 			this,
 			null,
-			0);
+			cast(ConnectFlags)0);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;
@@ -391,11 +392,12 @@ public class Action : ObjectG
 	
 	/**
 	 * Returns the proxy widgets for an action.
+	 * See also gtk_widget_get_action().
 	 * action:
 	 *  the action object
 	 * Returns:
-	 *  a GSList of proxy widgets. The list is owned by the action and
-	 * must not be modified.
+	 *  a GSList of proxy widgets. The list is owned by GTK+
+	 * and must not be modified.
 	 * Since 2.4
 	 */
 	public ListSG getProxies()
@@ -533,6 +535,7 @@ public class Action : ObjectG
 		// void gtk_action_set_accel_group (GtkAction *action,  GtkAccelGroup *accel_group);
 		gtk_action_set_accel_group(gtkAction, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 	}
+	
 	
 	
 	

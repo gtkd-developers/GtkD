@@ -20,8 +20,7 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
 
-module glib.typedefs;
-
+module glib.glibtypes;
 
 /* The GLib Basic Types */
 public alias int gint;
@@ -50,7 +49,13 @@ public alias int gssize;
 public alias void* va_list;
 public alias dchar unichar;
 public alias wchar unichar2;
+//public alias dchar gunichar;
+//public alias wchar gunichar2;
 public alias int time_t;
+
+
+const uint G_MAXUINT = 4294967295;
+
 
 /**
  * typedef int GPid;
@@ -82,7 +87,7 @@ public alias ushort gunichar2;
  * Unrelated to GTimer.
  * Note that GTime is defined to always be a 32bit integer,
  * unlike time_t which may be 64bit on some systems.
- * Therefore, GType will overflow in the year 2038, and
+ * Therefore, GTime will overflow in the year 2038, and
  * you cannot use the address of a GTime variable as argument
  * to the UNIX time() function. Instead, do the following:
  * time_t ttime;
@@ -314,8 +319,69 @@ public enum GConvertError
 alias GConvertError ConvertError;
 
 /**
- * These are the possible character classifications.
+ * These are the possible character classifications from the
+ * Unicode specification.
  * See http://www.unicode.org/Public/UNIDATA/UnicodeData.html.
+ * G_UNICODE_CONTROL
+ * General category "Other, Control" (Cc)
+ * G_UNICODE_FORMAT
+ * General category "Other, Format" (Cf)
+ * G_UNICODE_UNASSIGNED
+ * General category "Other, Not Assigned" (Cn)
+ * G_UNICODE_PRIVATE_USE
+ * General category "Other, Private Use" (Co)
+ * G_UNICODE_SURROGATE
+ * General category "Other, Surrogate" (Cs)
+ * G_UNICODE_LOWERCASE_LETTER
+ * General category "Letter, Lowercase" (Ll)
+ * G_UNICODE_MODIFIER_LETTER
+ * General category "Letter, Modifier" (Lm)
+ * G_UNICODE_OTHER_LETTER
+ * General category "Letter, Other" (Lo)
+ * G_UNICODE_TITLECASE_LETTER
+ * General category "Letter, Titlecase" (Lt)
+ * G_UNICODE_UPPERCASE_LETTER
+ * General category "Letter, Uppercase" (Lu)
+ * G_UNICODE_COMBINING_MARK
+ * General category "Mark, Spacing Combining" (Mc)
+ * G_UNICODE_ENCLOSING_MARK
+ * General category "Mark, Enclosing" (Me)
+ * G_UNICODE_NON_SPACING_MARK
+ * General category "Mark, Nonspacing" (Mn)
+ * G_UNICODE_DECIMAL_NUMBER
+ * General category "Number, Decimal Digit" (Nd)
+ * G_UNICODE_LETTER_NUMBER
+ * General category "Number, Letter" (Nl)
+ * G_UNICODE_OTHER_NUMBER
+ * General category "Number, Other" (No)
+ * G_UNICODE_CONNECT_PUNCTUATION
+ * General category "Punctuation, Connector" (Pc)
+ * G_UNICODE_DASH_PUNCTUATION
+ * General category "Punctuation, Dash" (Pd)
+ * G_UNICODE_CLOSE_PUNCTUATION
+ * General category "Punctuation, Close" (Pe)
+ * G_UNICODE_FINAL_PUNCTUATION
+ * General category "Punctuation, Final quote" (Pf)
+ * G_UNICODE_INITIAL_PUNCTUATION
+ * General category "Punctuation, Initial quote" (Pi)
+ * G_UNICODE_OTHER_PUNCTUATION
+ * General category "Punctuation, Other" (Po)
+ * G_UNICODE_OPEN_PUNCTUATION
+ * General category "Punctuation, Open" (Ps)
+ * G_UNICODE_CURRENCY_SYMBOL
+ * General category "Symbol, Currency" (Sc)
+ * G_UNICODE_MODIFIER_SYMBOL
+ * General category "Symbol, Modifier" (Sk)
+ * G_UNICODE_MATH_SYMBOL
+ * General category "Symbol, Math" (Sm)
+ * G_UNICODE_OTHER_SYMBOL
+ * General category "Symbol, Other" (So)
+ * G_UNICODE_LINE_SEPARATOR
+ * General category "Separator, Line" (Zl)
+ * G_UNICODE_PARAGRAPH_SEPARATOR
+ * General category "Separator, Paragraph" (Zp)
+ * G_UNICODE_SPACE_SEPARATOR
+ * General category "Separator, Space" (Zs)
  */
 public enum GUnicodeType
 {
@@ -354,11 +420,10 @@ alias GUnicodeType UnicodeType;
 
 /**
  * These are the possible line break classifications.
- * GLib 2.8 supports Unicode 4.0, GLib 2.10 supports Unicode 4.1.
  * The five Hangul types were added in Unicode 4.1, so, has been
  * introduced in GLib 2.10. Note that new types may be added in the future.
  * Applications should be ready to handle unknown values.
- * They may be regarded as G_UNICODE_BREAK_UNKNOWN
+ * They may be regarded as G_UNICODE_BREAK_UNKNOWN.
  * See http://www.unicode.org/unicode/reports/tr14/.
  */
 public enum GUnicodeBreakType
@@ -401,6 +466,94 @@ public enum GUnicodeBreakType
 	HANGUL_LVT_SYLLABLE
 }
 alias GUnicodeBreakType UnicodeBreakType;
+
+/**
+ * The GUnicodeScript enumeration identifies different writing
+ * systems. The values correspond to the names as defined in the
+ * Unicode standard. The enumeration has been added in GLib 2.14.
+ * Note that new types may be added in the future. Applications
+ * should be ready to handle unknown values.
+ * See Unicode Standard Annex
+ * 24: Script names.
+ * G_UNICODE_SCRIPT_INVALID_CODE
+ * a value never returned from g_unichar_get_script()
+ * G_UNICODE_SCRIPT_COMMON
+ */
+public enum GUnicodeScript
+{
+	INVALID_CODE = -1,
+	COMMON = 0, /+* Zyyy +/
+	INHERITED, /+* Qaai +/
+	ARABIC, /+* Arab +/
+	ARMENIAN, /+* Armn +/
+	BENGALI, /+* Beng +/
+	BOPOMOFO, /+* Bopo +/
+	CHEROKEE, /+* Cher +/
+	COPTIC, /+* Qaac +/
+	CYRILLIC, /+* Cyrl (Cyrs) +/
+	DESERET, /+* Dsrt +/
+	DEVANAGARI, /+* Deva +/
+	ETHIOPIC, /+* Ethi +/
+	GEORGIAN, /+* Geor (Geon, Geoa) +/
+	GOTHIC, /+* Goth +/
+	GREEK, /+* Grek +/
+	GUJARATI, /+* Gujr +/
+	GURMUKHI, /+* Guru +/
+	HAN, /+* Hani +/
+	HANGUL, /+* Hang +/
+	HEBREW, /+* Hebr +/
+	HIRAGANA, /+* Hira +/
+	KANNADA, /+* Knda +/
+	KATAKANA, /+* Kana +/
+	KHMER, /+* Khmr +/
+	LAO, /+* Laoo +/
+	LATIN, /+* Latn (Latf, Latg) +/
+	MALAYALAM, /+* Mlym +/
+	MONGOLIAN, /+* Mong +/
+	MYANMAR, /+* Mymr +/
+	OGHAM, /+* Ogam +/
+	OLD_ITALIC, /+* Ital +/
+	ORIYA, /+* Orya +/
+	RUNIC, /+* Runr +/
+	SINHALA, /+* Sinh +/
+	SYRIAC, /+* Syrc (Syrj, Syrn, Syre) +/
+	TAMIL, /+* Taml +/
+	TELUGU, /+* Telu +/
+	THAANA, /+* Thaa +/
+	THAI, /+* Thai +/
+	TIBETAN, /+* Tibt +/
+	CANADIAN_ABORIGINAL, /+* Cans +/
+	YI, /+* Yiii +/
+	TAGALOG, /+* Tglg +/
+	HANUNOO, /+* Hano +/
+	BUHID, /+* Buhd +/
+	TAGBANWA, /+* Tagb +/
+	/+* Unicode-4.0 additions +/
+	BRAILLE, /+* Brai +/
+	CYPRIOT, /+* Cprt +/
+	LIMBU, /+* Limb +/
+	OSMANYA, /+* Osma +/
+	SHAVIAN, /+* Shaw +/
+	LINEAR_B, /+* Linb +/
+	TAI_LE, /+* Tale +/
+	UGARITIC, /+* Ugar +/
+	/+* Unicode-4.1 additions +/
+	NEW_TAI_LUE, /+* Talu +/
+	BUGINESE, /+* Bugi +/
+	GLAGOLITIC, /+* Glag +/
+	TIFINAGH, /+* Tfng +/
+	SYLOTI_NAGRI, /+* Sylo +/
+	OLD_PERSIAN, /+* Xpeo +/
+	KHAROSHTHI, /+* Khar +/
+	/+* Unicode-5.0 additions +/
+	UNKNOWN, /+* Zzzz +/
+	BALINESE, /+* Bali +/
+	CUNEIFORM, /+* Xsux +/
+	PHOENICIAN, /+* Phnx +/
+	PHAGS_PA, /+* Phag +/
+	NKO /+* Nkoo +/
+}
+alias GUnicodeScript UnicodeScript;
 
 /**
  * Defines how a Unicode string is transformed in a canonical
@@ -807,7 +960,9 @@ public enum GOptionArg
 	CALLBACK,
 	FILENAME,
 	STRING_ARRAY,
-	FILENAME_ARRAY
+	FILENAME_ARRAY,
+	DOUBLE,
+	INT64
 }
 alias GOptionArg OptionArg;
 
@@ -858,15 +1013,16 @@ public enum GMarkupError
 alias GMarkupError MarkupError;
 
 /**
- * There are no flags right now. Pass "0" for the flags argument to all
- * functions.
+ * Flags that affect the behaviour of the parser.
  * G_MARKUP_DO_NOT_USE_THIS_UNSUPPORTED_FLAG
  * flag you should not use.
+ * G_MARKUP_TREAT_CDATA_AS_TEXT
+ * When this flag is set, CDATA marked
  */
 public enum GMarkupParseFlags
 {
-	/+* Hmm, can't think of any at the moment +/
-	G_MARKUP_DO_NOT_USE_THIS_UNSUPPORTED_FLAG = 1 << 0
+	DO_NOT_USE_THIS_UNSUPPORTED_FLAG = 1 << 0,
+	TREAT_CDATA_AS_TEXT = 1 << 1
 }
 alias GMarkupParseFlags MarkupParseFlags;
 
@@ -949,14 +1105,14 @@ alias GTraverseFlags TraverseFlags;
  * The GMainLoop struct is an opaque data type
  * representing the main event loop of a GLib or GTK+ application.
  */
-public struct GMainLoop;
+public struct GMainLoop{}
 
 
 /**
  * The GMainContext struct is an opaque data type
  * representing a set of sources to be handled in a main loop.
  */
-public struct GMainContext;
+public struct GMainContext{}
 
 
 /**
@@ -983,7 +1139,7 @@ public struct GPollFD
  * The GSource struct is an opaque data type representing
  * an event source.
  */
-public struct GSource;
+public struct GSource{}
 
 
 /**
@@ -1029,17 +1185,27 @@ public struct GSource;
  * In the check function, it tests the results of the poll()
  * call to see if the required condition has been met, and returns TRUE if so.
  */
-public struct GSourceFuncs;
+public struct GSourceFuncs{}
 // int (*prepare) (GSource *source,
+// glib-The-Main-Event-Loop.html
 // int *timeout);
+// glib-The-Main-Event-Loop.html
 // int (*check) (GSource *source);
+// glib-The-Main-Event-Loop.html
 // int (*dispatch) (GSource *source,
+// glib-The-Main-Event-Loop.html
 // GSourceFunc callback,
+// glib-The-Main-Event-Loop.html
 // void* userData);
+// glib-The-Main-Event-Loop.html
 // void (*finalize) (GSource *source); /+* Can be NULL +/
+// glib-The-Main-Event-Loop.html
 // /+* For use by gSourceSetClosure +/
+// glib-The-Main-Event-Loop.html
 // GSourceFunc closureCallback;
+// glib-The-Main-Event-Loop.html
 // GSourceDummyMarshal closureMarshal; /+* Really is of type GClosureMarshal +/
+// glib-The-Main-Event-Loop.html
 
 
 /**
@@ -1052,13 +1218,19 @@ public struct GSourceFuncs;
  * get()
  * Called to extract the callback function and data from the callback object.
  */
-public struct GSourceCallbackFuncs;
+public struct GSourceCallbackFuncs{}
 // void (*ref) (void* cbData);
+// glib-The-Main-Event-Loop.html
 // void (*unref) (void* cbData);
+// glib-The-Main-Event-Loop.html
 // void (*get) (void* cbData,
+// glib-The-Main-Event-Loop.html
 // GSource *source,
+// glib-The-Main-Event-Loop.html
 // GSourceFunc *func,
+// glib-The-Main-Event-Loop.html
 // void* *data);
+// glib-The-Main-Event-Loop.html
 
 
 /**
@@ -1073,10 +1245,13 @@ public struct GSourceCallbackFuncs;
  * gbooleanexclusive;
  * are all threads exclusive to this pool
  */
-public struct GThreadPool;
+public struct GThreadPool{}
 // GFunc func;
+// glib-Thread-Pools.html
 // void* userData;
+// glib-Thread-Pools.html
 // int exclusive;
+// glib-Thread-Pools.html
 
 
 /**
@@ -1085,7 +1260,7 @@ public struct GThreadPool;
  * an asynchronous queue. It should only be accessed through the
  * g_async_queue_* functions.
  */
-public struct GAsyncQueue;
+public struct GAsyncQueue{}
 
 
 /**
@@ -1094,7 +1269,7 @@ public struct GAsyncQueue;
  * Dynamically-Loaded Module.
  * It should only be accessed via the following functions.
  */
-public struct GModule;
+public struct GModule{}
 
 
 /**
@@ -1114,17 +1289,27 @@ public struct GModule;
  * try_realloc()
  * function to use for reallocating memory without a default error handler.
  */
-public struct GMemVTable;
+public struct GMemVTable{}
 // void* (*malloc) (uint nBytes);
+// glib-Memory-Allocation.html
 // void* (*realloc) (void* mem,
+// glib-Memory-Allocation.html
 // uint nBytes);
+// glib-Memory-Allocation.html
 // void (*free) (void* mem);
+// glib-Memory-Allocation.html
 // /+* optional; set to NULL if not used ! +/
+// glib-Memory-Allocation.html
 // void* (*calloc) (uint nBlocks,
+// glib-Memory-Allocation.html
 // uint nBlockBytes);
+// glib-Memory-Allocation.html
 // void* (*tryMalloc) (uint nBytes);
+// glib-Memory-Allocation.html
 // void* (*tryRealloc) (void* mem,
+// glib-Memory-Allocation.html
 // uint nBytes);
+// glib-Memory-Allocation.html
 
 
 /**
@@ -1132,37 +1317,60 @@ public struct GMemVTable;
  * A data structure representing an IO Channel. The fields should be considered
  * private and should only be accessed with the following functions.
  */
-public struct GIOChannel;
+public struct GIOChannel{}
 
 
 /**
  * A table of functions used to handle different types of GIOChannel in a
  * generic way.
  */
-public struct GIOFuncs;
+public struct GIOFuncs{}
 // GIOStatus (*ioRead) (GIOChannel *channel,
+// glib-IO-Channels.html
 // char *buf,
+// glib-IO-Channels.html
 // uint count,
+// glib-IO-Channels.html
 // uint *bytesRead,
+// glib-IO-Channels.html
 // GError **err);
+// glib-IO-Channels.html
 // GIOStatus (*ioWrite) (GIOChannel *channel,
+// glib-IO-Channels.html
 // char *buf,
+// glib-IO-Channels.html
 // uint count,
+// glib-IO-Channels.html
 // uint *bytesWritten,
+// glib-IO-Channels.html
 // GError **err);
+// glib-IO-Channels.html
 // GIOStatus (*ioSeek) (GIOChannel *channel,
+// glib-IO-Channels.html
 // long offset,
+// glib-IO-Channels.html
 // GSeekType type,
+// glib-IO-Channels.html
 // GError **err);
+// glib-IO-Channels.html
 // GIOStatus (*ioClose) (GIOChannel *channel,
+// glib-IO-Channels.html
 // GError **err);
+// glib-IO-Channels.html
 // GSource* (*ioCreateWatch) (GIOChannel *channel,
+// glib-IO-Channels.html
 // GIOCondition condition);
+// glib-IO-Channels.html
 // void (*ioFree) (GIOChannel *channel);
+// glib-IO-Channels.html
 // GIOStatus (*ioSetFlags) (GIOChannel *channel,
+// glib-IO-Channels.html
 // GIOFlags flags,
+// glib-IO-Channels.html
 // GError **err);
+// glib-IO-Channels.html
 // GIOFlags (*ioGetFlags) (GIOChannel *channel);
+// glib-IO-Channels.html
 
 
 /**
@@ -1189,7 +1397,7 @@ public struct GError
  * iconv() conversion descriptor. It contains private data
  * and should only be accessed using the following functions.
  */
-public struct GIConv;
+public struct GIConv{}
 
 
 /**
@@ -1228,18 +1436,29 @@ public struct GTimeVal
  * guintday:6;
  * the day of the day-month-year representation of the date, as
  */
-public struct GDate;
+public struct GDate{}
 // uint julianDays : 32; /+* julian days representation - we use a
+// glib-Date-and-Time-Functions.html
 // * bitfield hoping that 64 bit platforms
+// glib-Date-and-Time-Functions.html
 // * will pack this whole struct inn one big
+// glib-Date-and-Time-Functions.html
 // * int
+// glib-Date-and-Time-Functions.html
 // +/
+// glib-Date-and-Time-Functions.html
 // uint julian : 1; /+* julian is valid +/
+// glib-Date-and-Time-Functions.html
 // uint dmy : 1; /+* dmy is valid +/
+// glib-Date-and-Time-Functions.html
 // /+* DMY representation +/
+// glib-Date-and-Time-Functions.html
 // uint day : 6;
+// glib-Date-and-Time-Functions.html
 // uint month : 4;
+// glib-Date-and-Time-Functions.html
 // uint year : 16;
+// glib-Date-and-Time-Functions.html
 
 
 /**
@@ -1247,7 +1466,7 @@ public struct GDate;
  * The GRand struct is an opaque data structure. It should only be
  * accessed through the g_rand_* functions.
  */
-public struct GRand;
+public struct GRand{}
 
 
 /**
@@ -1279,37 +1498,67 @@ public struct GDebugKey
  * msg_handler field. The type of the message
  * handler function is declared by GScannerMsgFunc.
  */
-public struct GScanner;
+public struct GScanner{}
 // /+* unused fields +/
+// glib-Lexical-Scanner.html
 // void* userData;
+// glib-Lexical-Scanner.html
 // uint maxParseErrors;
+// glib-Lexical-Scanner.html
 // /+* _Error() increments this field +/
+// glib-Lexical-Scanner.html
 // uint parseErrors;
+// glib-Lexical-Scanner.html
 // /+* name of input stream, featured by the defaulx message handler +/
+// glib-Lexical-Scanner.html
 // char *inputName;
+// glib-Lexical-Scanner.html
 // /+* quarked data +/
+// glib-Lexical-Scanner.html
 // GData *qdata;
+// glib-Lexical-Scanner.html
 // /+* link into the scanner configuration +/
+// glib-Lexical-Scanner.html
 // GScannerConfig *config;
+// glib-Lexical-Scanner.html
 // /+* fields filled inn after _GetNextToken() +/
+// glib-Lexical-Scanner.html
 // GTokenType token;
+// glib-Lexical-Scanner.html
 // GTokenValue value;
+// glib-Lexical-Scanner.html
 // uint line;
+// glib-Lexical-Scanner.html
 // uint position;
+// glib-Lexical-Scanner.html
 // /+* fields filled inn after _PeekNextToken() +/
+// glib-Lexical-Scanner.html
 // GTokenType nextToken;
+// glib-Lexical-Scanner.html
 // GTokenValue nextValue;
+// glib-Lexical-Scanner.html
 // uint nextLine;
+// glib-Lexical-Scanner.html
 // uint nextPosition;
+// glib-Lexical-Scanner.html
 // /+* to be considered private +/
+// glib-Lexical-Scanner.html
 // GHashTable *symbolTable;
+// glib-Lexical-Scanner.html
 // int inputFd;
+// glib-Lexical-Scanner.html
 // char *text;
+// glib-Lexical-Scanner.html
 // char *textEnd;
+// glib-Lexical-Scanner.html
 // char *buffer;
+// glib-Lexical-Scanner.html
 // uint scopeId;
+// glib-Lexical-Scanner.html
 // /+* handler funct for _Warn and _Error +/
+// glib-Lexical-Scanner.html
 // GScannerMsgFunc msgHandler;
+// glib-Lexical-Scanner.html
 
 
 /**
@@ -1375,41 +1624,75 @@ public struct GScanner;
  * is searched for in the default scope in addition to the current scope
  * (the default is FALSE).
  */
-public struct GScannerConfig;
+public struct GScannerConfig{}
 // /+* Character sets
+// glib-Lexical-Scanner.html
 // +/
+// glib-Lexical-Scanner.html
 // char *csetSkipCharacters; /+* default: " \t\n" +/
+// glib-Lexical-Scanner.html
 // char *csetIdentifierFirst;
+// glib-Lexical-Scanner.html
 // char *csetIdentifierNth;
+// glib-Lexical-Scanner.html
 // char *cpairCommentSingle; /+* default: "#\n" +/
+// glib-Lexical-Scanner.html
 // /+* Should symbol lookup work case sensitive?
+// glib-Lexical-Scanner.html
 // +/
+// glib-Lexical-Scanner.html
 // uint caseSensitive : 1;
+// glib-Lexical-Scanner.html
 // /+* Boolean values to be adjusted "on the fly"
+// glib-Lexical-Scanner.html
 // * to configure scanning behaviour.
+// glib-Lexical-Scanner.html
 // +/
+// glib-Lexical-Scanner.html
 // uint skipCommentMulti : 1; /+* C like comment +/
+// glib-Lexical-Scanner.html
 // uint skipCommentSingle : 1; /+* single line comment +/
+// glib-Lexical-Scanner.html
 // uint scanCommentMulti : 1; /+* scan multi line comments? +/
+// glib-Lexical-Scanner.html
 // uint scanIdentifier : 1;
+// glib-Lexical-Scanner.html
 // uint scanIdentifier1char : 1;
+// glib-Lexical-Scanner.html
 // uint scanIdentifierNULL : 1;
+// glib-Lexical-Scanner.html
 // uint scanSymbols : 1;
+// glib-Lexical-Scanner.html
 // uint scanBinary : 1;
+// glib-Lexical-Scanner.html
 // uint scanOctal : 1;
+// glib-Lexical-Scanner.html
 // uint scanFloat : 1;
+// glib-Lexical-Scanner.html
 // uint scanHex : 1; /+* `0x0ff0' +/
+// glib-Lexical-Scanner.html
 // uint scanHexDollar : 1; /+* `$0ff0' +/
+// glib-Lexical-Scanner.html
 // uint scanStringSq : 1; /+* string: 'anything' +/
+// glib-Lexical-Scanner.html
 // uint scanStringDq : 1; /+* string: "\\-escapes!\n" +/
+// glib-Lexical-Scanner.html
 // uint numbers2_Int : 1; /+* bin, octal, hex => int +/
+// glib-Lexical-Scanner.html
 // uint int2_Float : 1; /+* int => G_TOKEN_FLOAT? +/
+// glib-Lexical-Scanner.html
 // uint identifier2_String : 1;
+// glib-Lexical-Scanner.html
 // uint char2_Token : 1; /+* return G_TOKEN_CHAR? +/
+// glib-Lexical-Scanner.html
 // uint symbol2_Token : 1;
+// glib-Lexical-Scanner.html
 // uint scope0_Fallback : 1; /+* try scope 0 on lookups? +/
+// glib-Lexical-Scanner.html
 // uint storeInt64 : 1; /+* use value.vInt64 rather than vInt +/
+// glib-Lexical-Scanner.html
 // uint paddingDummy;
+// glib-Lexical-Scanner.html
 
 
 /**
@@ -1420,25 +1703,30 @@ public struct GScannerConfig;
  * GCompletionFuncfunc;
  * function which is called to get the string associated with a target
  */
-public struct GCompletion;
+public struct GCompletion{}
 // GList* items;
+// glib-Automatic-String-Completion.html
 // GCompletionFunc func;
+// glib-Automatic-String-Completion.html
 // char* prefix;
+// glib-Automatic-String-Completion.html
 // GList* cache;
+// glib-Automatic-String-Completion.html
 // GCompletionStrncmpFunc strncmpFunc;
+// glib-Automatic-String-Completion.html
 
 
 /**
  * Main Gtk struct.
  * Opaque datatype that records a start time.
  */
-public struct GTimer;
+public struct GTimer{}
 
 
 /**
  * An opaque structure representing an opened directory.
  */
-public struct GDir;
+public struct GDir{}
 
 
 /**
@@ -1446,7 +1734,7 @@ public struct GDir;
  * g_mapped_file_new(). It has only private members and should
  * not be accessed directly.
  */
-public struct GMappedFile;
+public struct GMappedFile{}
 
 
 /**
@@ -1455,7 +1743,7 @@ public struct GMappedFile;
  * are accepted by the commandline option parser. The struct has only private
  * fields and should not be directly accessed.
  */
-public struct GOptionContext;
+public struct GOptionContext{}
 
 
 /**
@@ -1465,14 +1753,21 @@ public struct GOptionContext;
  * constgchar*long_name;
  * The long name of an option can be used to specify it
  */
-public struct GOptionEntry;
+public struct GOptionEntry{}
 // char *longName;
+// glib-Commandline-option-parser.html
 // char shortName;
+// glib-Commandline-option-parser.html
 // int flags;
+// glib-Commandline-option-parser.html
 // GOptionArg arg;
+// glib-Commandline-option-parser.html
 // void* argData;
+// glib-Commandline-option-parser.html
 // char *description;
+// glib-Commandline-option-parser.html
 // char *argDescription;
+// glib-Commandline-option-parser.html
 
 
 /**
@@ -1483,7 +1778,7 @@ public struct GOptionEntry;
  * getting a GOptionGroup holding their options, which
  * the application can then add to its GOptionContext.
  */
-public struct GOptionGroup;
+public struct GOptionGroup{}
 
 
 /**
@@ -1491,7 +1786,7 @@ public struct GOptionGroup;
  * A GPatternSpec is the 'compiled' form of a pattern.
  * This structure is opaque and its fields cannot be accessed directly.
  */
-public struct GPatternSpec;
+public struct GPatternSpec{}
 
 
 /**
@@ -1500,7 +1795,7 @@ public struct GPatternSpec;
  * contain marked-up text. See g_markup_parse_context_new(),
  * GMarkupParser, and so on for more details.
  */
-public struct GMarkupParseContext;
+public struct GMarkupParseContext{}
 
 
 /**
@@ -1513,55 +1808,78 @@ public struct GMarkupParseContext;
  * g_markup_parse_context_parse() will report that error back to its caller.
  * start_element()
  * Callback to invoke when the opening tag of an element
- * is seen.
- * end_element()
- * Callback to invoke when the closing tag of an element is seen
- * text()
- * Callback to invoke when some text is seen (text is always
- * inside an element)
- * passthrough()
- * Callback to invoke for comments, processing
- * instructions and doctype declarations; if you're re-writing the parsed document, write the
- * passthrough text back out in the same position
- * error()
- * Callback to invoke when an error occurs
  */
-public struct GMarkupParser;
+public struct GMarkupParser{}
 // /+* Called for open tags <foo bar="baz"> +/
+// glib-Simple-XML-Subset-Parser.html
 // void (*startElement) (GMarkupParseContext *context,
+// glib-Simple-XML-Subset-Parser.html
 // char *elementName,
+// glib-Simple-XML-Subset-Parser.html
 // char **attributeNames,
+// glib-Simple-XML-Subset-Parser.html
 // char **attributeValues,
+// glib-Simple-XML-Subset-Parser.html
 // void* userData,
+// glib-Simple-XML-Subset-Parser.html
 // GError **error);
+// glib-Simple-XML-Subset-Parser.html
 // /+* Called for close tags </foo> +/
+// glib-Simple-XML-Subset-Parser.html
 // void (*endElement) (GMarkupParseContext *context,
+// glib-Simple-XML-Subset-Parser.html
 // char *elementName,
+// glib-Simple-XML-Subset-Parser.html
 // void* userData,
+// glib-Simple-XML-Subset-Parser.html
 // GError **error);
+// glib-Simple-XML-Subset-Parser.html
 // /+* Called for character data +/
+// glib-Simple-XML-Subset-Parser.html
 // /+* text is not nul-terminated +/
+// glib-Simple-XML-Subset-Parser.html
 // void (*text) (GMarkupParseContext *context,
+// glib-Simple-XML-Subset-Parser.html
 // char *text,
+// glib-Simple-XML-Subset-Parser.html
 // uint textLen,
+// glib-Simple-XML-Subset-Parser.html
 // void* userData,
+// glib-Simple-XML-Subset-Parser.html
 // GError **error);
+// glib-Simple-XML-Subset-Parser.html
 // /+* Called for strings that should be re-saved verbatim inn this same
+// glib-Simple-XML-Subset-Parser.html
 // * position, but are not otherwise interpretable. At the moment
+// glib-Simple-XML-Subset-Parser.html
 // * this includes comments and processing instructions.
+// glib-Simple-XML-Subset-Parser.html
 // +/
+// glib-Simple-XML-Subset-Parser.html
 // /+* text is not nul-terminated. +/
+// glib-Simple-XML-Subset-Parser.html
 // void (*passthrough) (GMarkupParseContext *context,
+// glib-Simple-XML-Subset-Parser.html
 // char *passthroughText,
+// glib-Simple-XML-Subset-Parser.html
 // uint textLen,
+// glib-Simple-XML-Subset-Parser.html
 // void* userData,
+// glib-Simple-XML-Subset-Parser.html
 // GError **error);
+// glib-Simple-XML-Subset-Parser.html
 // /+* Called on error, including one set by other
+// glib-Simple-XML-Subset-Parser.html
 // * methods inn the vtable. The GError should not be freed.
+// glib-Simple-XML-Subset-Parser.html
 // +/
+// glib-Simple-XML-Subset-Parser.html
 // void (*error) (GMarkupParseContext *context,
+// glib-Simple-XML-Subset-Parser.html
 // GError *error,
+// glib-Simple-XML-Subset-Parser.html
 // void* userData);
+// glib-Simple-XML-Subset-Parser.html
 
 
 /**
@@ -1569,7 +1887,7 @@ public struct GMarkupParser;
  * The GKeyFile struct contains only private fields
  * and should not be used directly.
  */
-public struct GKeyFile;
+public struct GKeyFile{}
 
 
 /**
@@ -1579,7 +1897,7 @@ public struct GKeyFile;
  * The GMemChunk struct is an opaque data structure representing a memory
  * chunk. It should be accessed only through the use of the following functions.
  */
-public struct GMemChunk;
+public struct GMemChunk{}
 
 
 /**
@@ -1588,10 +1906,13 @@ public struct GMemChunk;
  * gpointerdata;
  * holds the element's data, which can be a pointer to any kind of data,
  */
-public struct GList;
+public struct GList{}
 // void* data;
+// glib-Doubly-Linked-Lists.html
 // GList *next;
+// glib-Doubly-Linked-Lists.html
 // GList *prev;
+// glib-Doubly-Linked-Lists.html
 
 
 /**
@@ -1600,9 +1921,11 @@ public struct GList;
  * gpointerdata;
  * holds the element's data, which can be a pointer to any kind of data,
  */
-public struct GSList;
+public struct GSList{}
 // void* data;
+// glib-Singly-Linked-Lists.html
 // GSList *next;
+// glib-Singly-Linked-Lists.html
 
 
 /**
@@ -1615,10 +1938,13 @@ public struct GSList;
  * guintlength;
  * the number of elements in the queue.
  */
-public struct GQueue;
+public struct GQueue{}
 // GList *head;
+// glib-Double-ended-Queues.html
 // GList *tail;
+// glib-Double-ended-Queues.html
 // uint length;
+// glib-Double-ended-Queues.html
 
 
 /**
@@ -1630,8 +1956,9 @@ public struct GQueue;
  * gets stored in the first sizeof (gpointer)
  * bytes of the element.
  */
-public struct GTrashStack;
+public struct GTrashStack{}
 // GTrashStack *next;
+// glib-Trash-Stacks.html
 
 
 /**
@@ -1640,7 +1967,7 @@ public struct GTrashStack;
  * Hash Table.
  * It should only be accessed via the following functions.
  */
-public struct GHashTable;
+public struct GHashTable{}
 
 
 /**
@@ -1667,7 +1994,7 @@ public struct GString
  * An opaque data structure representing String Chunks.
  * It should only be accessed by using the following functions.
  */
-public struct GStringChunk;
+public struct GStringChunk{}
 
 
 /**
@@ -1723,7 +2050,7 @@ public struct GByteArray
  * Balanced Binary Tree.
  * It should be accessed only by using the following functions.
  */
-public struct GTree;
+public struct GTree{}
 
 
 /**
@@ -1740,12 +2067,17 @@ public struct GTree;
  * GNode. The other children are accessed by using the
  * next pointer of each child.
  */
-public struct GNode;
+public struct GNode{}
 // void* data;
+// glib-N-ary-Trees.html
 // GNode *next;
+// glib-N-ary-Trees.html
 // GNode *prev;
+// glib-N-ary-Trees.html
 // GNode *parent;
+// glib-N-ary-Trees.html
 // GNode *children;
+// glib-N-ary-Trees.html
 
 
 /**
@@ -1754,7 +2086,7 @@ public struct GNode;
  * Keyed Data List.
  * It should only be accessed via the following functions.
  */
-public struct GData;
+public struct GData{}
 
 
 /**
@@ -1763,7 +2095,7 @@ public struct GData;
  * Relation.
  * It should only be accessed via the following functions.
  */
-public struct GRelation;
+public struct GRelation{}
 
 
 /**
@@ -1785,7 +2117,7 @@ public struct GTuples
  * The GCache struct is an opaque data structure containing information about
  * a GCache. It should only be accessed via the following functions.
  */
-public struct GCache;
+public struct GCache{}
 
 
 /**
@@ -1795,7 +2127,7 @@ public struct GCache;
  * The GAllocator struct contains private data. and
  * should only be accessed using the following functions.
  */
-public struct GAllocator;
+public struct GAllocator{}
 
 
 /*
@@ -1912,6 +2244,9 @@ public struct GAllocator;
  * Allocates n_structs elements of type struct_type.
  * The returned pointer is cast to a pointer to the given type.
  * If n_structs is 0 it returns NULL.
+ * Since the returned pointer is already casted to the right type,
+ * it is normally unnecessary to cast it explicitly, and doing
+ * so might hide memory allocation errors.
  * struct_type:
  * the type of the elements to allocate.
  * n_structs:
@@ -1926,6 +2261,9 @@ public struct GAllocator;
  * Allocates n_structs elements of type struct_type, initialized to 0's.
  * The returned pointer is cast to a pointer to the given type.
  * If n_structs is 0 it returns NULL.
+ * Since the returned pointer is already casted to the right type,
+ * it is normally unnecessary to cast it explicitly, and doing
+ * so might hide memory allocation errors.
  * struct_type:
  * the type of the elements to allocate.
  * n_structs:
@@ -2135,14 +2473,34 @@ public struct GAllocator;
  * ...:
  * ...:
  * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
  */
 // TODO
 // #define g_message(...)
 
 /*
  * A convenience function/macro to log a warning message.
+ * You can make warnings fatal at runtime by setting the G_DEBUG environment
+ * variable (see Running GLib Applications).
  * ...:
  * format string, followed by parameters to insert into the format string (as with printf())
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
  * ...:
  * ...:
  * ...:
@@ -2157,8 +2515,20 @@ public struct GAllocator;
  * warning. You could call g_log_set_always_fatal() to make critical
  * warnings exit the program, then use g_critical() for fatal errors, for
  * example.
+ * You can also make critical warnings fatal at runtime by setting
+ * the G_DEBUG environment variable (see
+ * Running GLib Applications).
  * ...:
  * format string, followed by parameters to insert into the format string (as with printf())
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
  * ...:
  * ...:
  * ...:
@@ -2175,7 +2545,16 @@ public struct GAllocator;
  * expect. Using this function indicates a bug in your program, i.e. an
  * assertion failure.
  * ...:
- * the parameters to insert into the format string.
+ * format string, followed by parameters to insert into the format string (as with printf())
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
  * ...:
  * ...:
  * ...:
@@ -2188,6 +2567,15 @@ public struct GAllocator;
  * A convenience function/macro to log a debug message.
  * ...:
  * format string, followed by parameters to insert into the format string (as with printf())
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
+ * ...:
  * ...:
  * ...:
  * ...:
@@ -2382,7 +2770,7 @@ public struct GAllocator;
  * Since 2.6
  */
 // TODO
-// #define G_WIN32_HAVE_WIDECHAR_API() (G_WIN32_IS_NT_BASED ())
+// #define G_WIN32_HAVE_WIDECHAR_API() TRUE
 
 /*
  * On Windows, this macro defines an expression which evaluates to TRUE
@@ -2391,12 +2779,15 @@ public struct GAllocator;
  * Since 2.6
  */
 // TODO
-// #define G_WIN32_IS_NT_BASED() (g_win32_get_windows_version () < 0x80000000)
+// #define G_WIN32_IS_NT_BASED() TRUE
 
 /*
  * A convenience macro to allocate a block of memory from the slice allocator.
  * It calls g_slice_alloc() with sizeof (type) and casts the returned pointer
  * to a pointer of the given type, avoiding a type cast in the source code.
+ * Note that the underlying slice allocation mechanism can
+ * be changed with the G_SLICE=always-malloc
+ * environment variable.
  * type:
  * the type to allocate, typically a structure name
  * Returns:
@@ -2411,6 +2802,9 @@ public struct GAllocator;
  * and set the memory to 0. It calls g_slice_alloc0() with sizeof (type) and
  * casts the returned pointer to a pointer of the given type, avoiding a type
  * cast in the source code.
+ * Note that the underlying slice allocation mechanism can
+ * be changed with the G_SLICE=always-malloc
+ * environment variable.
  * type:
  * the type to allocate, typically a structure name
  * Returns:
@@ -2424,9 +2818,12 @@ public struct GAllocator;
  * A convenience macro to free a block of memory that has been allocated
  * from the slice allocator. It calls g_slice_free1() using
  * sizeof (type) as the block size.
+ * Note that the exact release behaviour can be changed with the
+ * G_DEBUG=gc-friendly environment variable.
  * type:
  * the type of the block to free, typically a structure name
  * mem:
+ * a pointer to the block to free
  * Since 2.10
  */
 // TODO
@@ -2438,6 +2835,8 @@ public struct GAllocator;
  * g_slice_alloc() or g_slice_alloc0() and linked together by a
  * next pointer (similar to GSList). The name of the
  * next field in type is passed as third argument.
+ * Note that the exact release behaviour can be changed with the
+ * G_DEBUG=gc-friendly environment variable.
  * type:
  *  the type of the mem_chain blocks
  * mem_chain:
@@ -3113,7 +3512,7 @@ public typedef extern(C) void  function (GScanner*, char[], int) GScannerMsgFunc
  * Returns:
  * the string corresponding to the item.
  */
-// gchar* (*GCompletionFunc) (gpointer);
+// gchar* (*GCompletionFunc) (gpointer );
 public typedef extern(C) char*  function (void*) GCompletionFunc;
 
 /*
@@ -3168,44 +3567,10 @@ public typedef extern(C) void  function (void*) GSpawnChildSetupFunc;
  *  is intended to be used for errors in GOptionArgFunc callbacks.
  * Returns:
  * TRUE if the option was successfully parsed, FALSE if an error
- *  occurred
+ *  occurred, in which case error should be set with g_set_error()
  */
 // gboolean (*GOptionArgFunc) (const gchar *option_name,  const gchar *value,  gpointer data,  GError **error);
 public typedef extern(C) int  function (char[], char[], void*, GError**) GOptionArgFunc;
-
-/*
- * The type of function that can be called before and after parsing.
- * context:
- * The active GOptionContext
- * group:
- * The group to which the function belongs
- * data:
- * User data added to the GOptionGroup containing the option when it
- *  was created with g_option_group_new()
- * error:
- * A return location for error details
- * Returns:
- * TRUE if the function completed successfully, FALSE if an error
- *  occurred
- */
-// gboolean (*GOptionParseFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
-public typedef extern(C) int  function (GOptionContext*, GOptionGroup*, void*, GError**) GOptionParseFunc;
-
-/*
- * The type of function to be used as callback when a parse error
- * occurs.
- * context:
- * The active GOptionContext
- * group:
- * The group to which the function belongs
- * data:
- * User data added to the GOptionGroup containing the option when it
- *  was created with g_option_group_new()
- * error:
- * The GError containing details about the parse error
- */
-// void (*GOptionErrorFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
-public typedef extern(C) void  function (GOptionContext*, GOptionGroup*, void*, GError**) GOptionErrorFunc;
 
 /*
  * The type of functions which are used to translate user-visible
@@ -3221,6 +3586,39 @@ public typedef extern(C) void  function (GOptionContext*, GOptionGroup*, void*, 
  */
 // const gchar* (*GTranslateFunc) (const gchar *str,  gpointer data);
 public typedef extern(C) char*  function (char[], void*) GTranslateFunc;
+
+/*
+ * The type of function that can be called before and after parsing.
+ * context:
+ * The active GOptionContext
+ * group:
+ * The group to which the function belongs
+ * data:
+ * User data added to the GOptionGroup containing the option when it
+ *  was created with g_option_group_new()
+ * error:
+ * A return location for error details
+ * Returns:
+ * TRUE if the function completed successfully, FALSE if an error
+ *  occurred, in which case error should be set with g_set_error()
+ */
+// gboolean (*GOptionParseFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
+public typedef extern(C) int  function (GOptionContext*, GOptionGroup*, void*, GError**) GOptionParseFunc;
+
+/*
+ * The type of function to be used as callback when a parse error occurs.
+ * context:
+ * The active GOptionContext
+ * group:
+ * The group to which the function belongs
+ * data:
+ * User data added to the GOptionGroup containing the option when it
+ *  was created with g_option_group_new()
+ * error:
+ * The GError containing details about the parse error
+ */
+// void (*GOptionErrorFunc) (GOptionContext *context,  GOptionGroup *group,  gpointer data,  GError **error);
+public typedef extern(C) void  function (GOptionContext*, GOptionGroup*, void*, GError**) GOptionErrorFunc;
 
 /*
  * Specifies the type of a comparison function used to compare two

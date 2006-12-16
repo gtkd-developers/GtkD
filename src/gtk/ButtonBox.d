@@ -22,6 +22,7 @@
 
 /*
  * Conversion parameters:
+ * inFile  = GtkButtonBox.html
  * outPack = gtk
  * outFile = ButtonBox
  * strct   = GtkButtonBox
@@ -52,7 +53,7 @@
 
 module gtk.ButtonBox;
 
-private import gtk.typedefs;
+private import gtk.gtktypes;
 
 private import lib.gtk;
 
@@ -130,7 +131,7 @@ public class ButtonBox : Box
 		{
 			button =  new Button(stocks[i]);
 			bBox.packEnd(button, false, false, 7);
-			button.setAction(actions[i]);
+			button.setActionName(actions[i]);
 			button.addOnClicked(onClicked);
 		}
 		return bBox;
