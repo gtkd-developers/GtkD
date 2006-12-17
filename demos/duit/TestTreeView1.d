@@ -18,6 +18,7 @@
 
 module duit.TestTreeView1;
 
+//debug = flow;
 
 private import gtk.VBox;
 	
@@ -57,18 +58,26 @@ public class TestTreeView1 : VBox
 	
 	this()
 	{
+		
+		debug(flow)writefln("TestTreeView1.this 1");
 		super(false, 0);
+		debug(flow)writefln("TestTreeView1.this 2");
 		
 		pixbuf = new Pixbuf(greenClass_xpm);
+		debug(flow)writefln("TestTreeView1.this 2.1");
 		pixbufTest = new Pixbuf(book_closed_xpm);
+		debug(flow)writefln("TestTreeView1.this 2.2");
 		image = new Image(pixbufTest);
 
+		debug(flow)writefln("TestTreeView1.this 3");
 		TreeView treeView1 = setup1();
 		populate(testTreeStore1);
 
+		debug(flow)writefln("TestTreeView1.this 4");
 		TreeView treeView2 = setup2();
 		populate(testTreeStore2);
 
+		debug(flow)writefln("TestTreeView1.this 5");
 		treeView2.addOnMoveCursor(&moveCursorCallback);
 		packStart(image, false, false, 1);
 		ScrolledWindow sw = new ScrolledWindow(null, null);
@@ -78,6 +87,7 @@ public class TestTreeView1 : VBox
 		sw.add(treeView2);
 		packStart(sw, true, true, 1);
 		
+		debug(flow)writefln("TestTreeView1.this 6");
 		//addWithViewport(treeView);
 		
 		

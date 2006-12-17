@@ -169,7 +169,7 @@ public class Statusbar : HBox
 		return consumed;
 	}
 	
-	
+	//import std.stdio;
 	
 	/**
 	 * Creates a new GtkStatusbar ready for messages.
@@ -179,6 +179,11 @@ public class Statusbar : HBox
 	public this ()
 	{
 		// GtkWidget* gtk_statusbar_new (void);
+		//writefln("StatusBar.this 1");
+		//GtkStatusbar* sb = cast(GtkStatusbar*)gtk_statusbar_new();
+		//writefln("StatusBar.this 2");
+		//this(sb);
+		//writefln("StatusBar.this 3");
 		this(cast(GtkStatusbar*)gtk_statusbar_new() );
 	}
 	

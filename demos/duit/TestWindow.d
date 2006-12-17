@@ -18,6 +18,8 @@
 
 module duit.TestWindow;
 
+debug = 1;
+
 private import gtk.Version;
 private import gtk.Table;
 
@@ -175,13 +177,13 @@ class TestWindow : MainWindow
 	
 	this()
 	{
-		debug(1)
-		{
-			printf("instantiating TestWindow\n");
-		}
+		debug(1) writefln("instantiating TestWindow 1");
 		super("Duit tests");
+		debug(1) writefln("instantiating TestWindow 2");
 		setup();
+		debug(1) writefln("instantiating TestWindow 3");
 		showAll();
+		debug(1) writefln("instantiating TestWindow 4");
 		
 		char[] versionCompare = Version.checkVersion(2,8,0);
 		if ( versionCompare.length > 0 )
@@ -201,7 +203,7 @@ class TestWindow : MainWindow
 	
 	void setup()
 	{
-		
+		debug(1)writefln("TestWindow.setup 1");
 		//Frame.defaultBorder = 7;
 
 		VBox mainBox = new VBox(false,3);
@@ -210,6 +212,8 @@ class TestWindow : MainWindow
 		mainBox.packStart(getMenuBar(),false,false,0);
 		//table.attach(getToolbar(),0,1,1,2,AttachOptions.EXPAND,AttachOptions.SHRINK,0,0);
 		mainBox.packStart(getToolbar(),false,false,0);
+
+		debug(1)writefln("TestWindow.setup 2");
 
 		Notebook notebook = setNotebook();
 		notebook.setBorderWidth(10);
@@ -221,6 +225,8 @@ class TestWindow : MainWindow
 		Button quitButton = new Button(StockID.OK, &anyButtonExits);
 		
 		ButtonBox bBox = HButtonBox.createActionBox();
+
+		debug(1)writefln("TestWindow.setup 3");
 		
 		bBox.packEnd(exitButton,0,0,10);
 		bBox.packEnd(cancelButton,0,0,10);
@@ -228,34 +234,48 @@ class TestWindow : MainWindow
 		//table.attach(bBox,0,1,3,4,AttachOptions.EXPAND,AttachOptions.SHRINK,0,0);
 		mainBox.packStart(bBox,false,false,0);
 		
+		debug(1)writefln("TestWindow.setup 4");
+
 		Statusbar statusbar = new Statusbar();
+
+		debug(1)writefln("TestWindow.setup 5");
 		
 		//table.attach(statusbar,0,1,4,5,AttachOptions.EXPAND,AttachOptions.EXPAND,0,0);
 		//add(table);
 		//mainBox.packStart(table,true,true,0);
+		
 		mainBox.packStart(statusbar,false,true,0);
 		add(mainBox);
+		debug(1)writefln("TestWindow.setup 5.1");
 		notebook.appendPage(new TestEntries,"Entry");
 		testEventBox(notebook);
 		testButtons(notebook);
+		debug(1)writefln("TestWindow.setup 5.2");
 		notebook.appendPage(new TestStock,"Stock");
 		testLists(notebook);
 		testNotebook(notebook);
+		debug(1)writefln("TestWindow.setup 5.3");
 		testPaned(notebook);
 		testDialogs(notebook);
 		testViewport(notebook);
+		debug(1)writefln("TestWindow.setup 5.4");
 		notebook.appendPage(new TestScales,"Scales");
 		testSpinButton(notebook);
+		debug(1)writefln("TestWindow.setup 5.5");
 		notebook.appendPage(new Label("Deprecated,\nuse TreeView\ninstead"),"Tree");
 		notebook.appendPage(new TestTreeView,"TreeView");
 		notebook.appendPage(new TestTreeView1,"TreeView 1");
+		debug(1)writefln("TestWindow.setup 5.6");
 		testList(notebook);
 		notebook.appendPage(new Frame(new TestDrawingArea,"Drawing Area"),"Drawing");
+		debug(1)writefln("TestWindow.setup 5.7");
 		notebook.appendPage(new TestText,"Text");
 		notebook.appendPage(new TestImage(this),"Image");
+		debug(1)writefln("TestWindow.setup 5.8");
 		notebook.appendPage(new TestAspectFrame(),"Aspect Frame");
 		notebook.appendPage(new TestIdle(),"Idle");
 		gtkDemo(notebook);
+		debug(1)writefln("TestWindow.setup 6");
 		
 	}
 

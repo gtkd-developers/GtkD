@@ -135,6 +135,7 @@ public class Linker
 	
 	private HANDLE  handle;
 	private HANDLE alternateHandle;
+	private HANDLE hackedPixbufHandle;
 	
 	private char[]  libraryName;
 	private char[]  alternateLibraryName;
@@ -162,10 +163,19 @@ public class Linker
 
 		version(Windows)
 		{
-			handle = LoadLibraryA( this.libraryName ~ "\0" );
+			handle = LoadLibraryA( (this.libraryName ~ "\0").ptr );
 			if ( alternateLibraryName !is null )
 			{
-				alternateHandle = LoadLibraryA( this.alternateLibraryName ~ "\0" );
+				alternateHandle = LoadLibraryA( (this.alternateLibraryName ~ "\0").ptr );
+			}
+			//if ( std.string.find(libraryName, "gdk-win32") > 0 )
+			debug(loadSymbol)writefln("libraryName", libraryName);
+			debug(loadSymbol)writefln("importLibs[LIBRARY.GDK]", importLibs[LIBRARY.GDK]);
+			debug(loadSymbol)writefln("importLibs[LIBRARY.GDKPIXBUF]", importLibs[LIBRARY.GDKPIXBUF]);
+			if ( std.string.find(libraryName, importLibs[LIBRARY.GDK]) > 0 )
+			{
+				//hackedPixbufHandle = LoadLibraryA(("libgdk_pixbuf-2.0-0.dll"~"\0").ptr);
+				hackedPixbufHandle = LoadLibraryA((importLibs[LIBRARY.GDKPIXBUF]~"\0").ptr);
 			}
 		} 
 		version(linux)
@@ -242,7 +252,7 @@ public class Linker
 		foreach( Symbol link; symbols ) 
 		{
 			*link.pointer = getSymbol(handle, (link.name~"\0").ptr);
-			debug(loadSymbol) writefln("Loaded...", libraryName, " ", link.name);
+			//debug(loadSymbol) writefln("Loaded...", libraryName, " ", link.name);
 			if (*link.pointer is null)
 			{
 				// if gthread try on glib
@@ -253,7 +263,16 @@ public class Linker
 				}
 				if (*link.pointer is null)
 				{
+					*link.pointer = getSymbol(hackedPixbufHandle, (link.name~"\0").ptr);
+				}
+				if (*link.pointer is null)
+				{
 					onLoadFailure( libraryName, link.name );
+					debug(loadSymbol) writefln("..Failed.", libraryName, " ", link.name);
+				}
+				else
+				{
+					debug(loadSymbol) writefln("Loaded...", libraryName, " ", link.name);
 				}
 			}
 		}
