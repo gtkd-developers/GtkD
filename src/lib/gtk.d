@@ -671,6 +671,31 @@ extern(C)
 	GtkAboutDialogActivateLinkFunc function(GtkAboutDialogActivateLinkFunc func, gpointer data, GDestroyNotify destroy)gtk_about_dialog_set_url_hook;
 	void function(GtkWindow* parent, gchar* firstPropertyName, ... )gtk_show_about_dialog;
 	
+	// gtk.Assistant
+	
+	GtkWidget* function()gtk_assistant_new;
+	gint function(GtkAssistant* assistant)gtk_assistant_get_current_page;
+	void function(GtkAssistant* assistant, gint pageNum)gtk_assistant_set_current_page;
+	gint function(GtkAssistant* assistant)gtk_assistant_get_n_pages;
+	GtkWidget* function(GtkAssistant* assistant, gint pageNum)gtk_assistant_get_nth_page;
+	gint function(GtkAssistant* assistant, GtkWidget* page)gtk_assistant_prepend_page;
+	gint function(GtkAssistant* assistant, GtkWidget* page)gtk_assistant_append_page;
+	gint function(GtkAssistant* assistant, GtkWidget* page, gint position)gtk_assistant_insert_page;
+	void function(GtkAssistant* assistant, GtkAssistantPageFunc pageFunc, gpointer data, GDestroyNotify destroy)gtk_assistant_set_forward_page_func;
+	void function(GtkAssistant* assistant, GtkWidget* page, GtkAssistantPageType type)gtk_assistant_set_page_type;
+	GtkAssistantPageType function(GtkAssistant* assistant, GtkWidget* page)gtk_assistant_get_page_type;
+	void function(GtkAssistant* assistant, GtkWidget* page, gchar* title)gtk_assistant_set_page_title;
+	gchar* function(GtkAssistant* assistant, GtkWidget* page)gtk_assistant_get_page_title;
+	void function(GtkAssistant* assistant, GtkWidget* page, GdkPixbuf* pixbuf)gtk_assistant_set_page_header_image;
+	GdkPixbuf* function(GtkAssistant* assistant, GtkWidget* page)gtk_assistant_get_page_header_image;
+	void function(GtkAssistant* assistant, GtkWidget* page, GdkPixbuf* pixbuf)gtk_assistant_set_page_side_image;
+	GdkPixbuf* function(GtkAssistant* assistant, GtkWidget* page)gtk_assistant_get_page_side_image;
+	void function(GtkAssistant* assistant, GtkWidget* page, gboolean complete)gtk_assistant_set_page_complete;
+	gboolean function(GtkAssistant* assistant, GtkWidget* page)gtk_assistant_get_page_complete;
+	void function(GtkAssistant* assistant, GtkWidget* child)gtk_assistant_add_action_widget;
+	void function(GtkAssistant* assistant, GtkWidget* child)gtk_assistant_remove_action_widget;
+	void function(GtkAssistant* assistant)gtk_assistant_update_buttons_state;
+	
 	// gtk.AccelLabel
 	
 	GtkWidget* function(gchar* string)gtk_accel_label_new;
@@ -3415,6 +3440,28 @@ Symbol[] gtkLinks =
 	{ "gtk_about_dialog_set_email_hook",  cast(void**)& gtk_about_dialog_set_email_hook},
 	{ "gtk_about_dialog_set_url_hook",  cast(void**)& gtk_about_dialog_set_url_hook},
 	{ "gtk_show_about_dialog",  cast(void**)& gtk_show_about_dialog},
+	{ "gtk_assistant_new",  cast(void**)& gtk_assistant_new},
+	{ "gtk_assistant_get_current_page",  cast(void**)& gtk_assistant_get_current_page},
+	{ "gtk_assistant_set_current_page",  cast(void**)& gtk_assistant_set_current_page},
+	{ "gtk_assistant_get_n_pages",  cast(void**)& gtk_assistant_get_n_pages},
+	{ "gtk_assistant_get_nth_page",  cast(void**)& gtk_assistant_get_nth_page},
+	{ "gtk_assistant_prepend_page",  cast(void**)& gtk_assistant_prepend_page},
+	{ "gtk_assistant_append_page",  cast(void**)& gtk_assistant_append_page},
+	{ "gtk_assistant_insert_page",  cast(void**)& gtk_assistant_insert_page},
+	{ "gtk_assistant_set_forward_page_func",  cast(void**)& gtk_assistant_set_forward_page_func},
+	{ "gtk_assistant_set_page_type",  cast(void**)& gtk_assistant_set_page_type},
+	{ "gtk_assistant_get_page_type",  cast(void**)& gtk_assistant_get_page_type},
+	{ "gtk_assistant_set_page_title",  cast(void**)& gtk_assistant_set_page_title},
+	{ "gtk_assistant_get_page_title",  cast(void**)& gtk_assistant_get_page_title},
+	{ "gtk_assistant_set_page_header_image",  cast(void**)& gtk_assistant_set_page_header_image},
+	{ "gtk_assistant_get_page_header_image",  cast(void**)& gtk_assistant_get_page_header_image},
+	{ "gtk_assistant_set_page_side_image",  cast(void**)& gtk_assistant_set_page_side_image},
+	{ "gtk_assistant_get_page_side_image",  cast(void**)& gtk_assistant_get_page_side_image},
+	{ "gtk_assistant_set_page_complete",  cast(void**)& gtk_assistant_set_page_complete},
+	{ "gtk_assistant_get_page_complete",  cast(void**)& gtk_assistant_get_page_complete},
+	{ "gtk_assistant_add_action_widget",  cast(void**)& gtk_assistant_add_action_widget},
+	{ "gtk_assistant_remove_action_widget",  cast(void**)& gtk_assistant_remove_action_widget},
+	{ "gtk_assistant_update_buttons_state",  cast(void**)& gtk_assistant_update_buttons_state},
 	{ "gtk_accel_label_new",  cast(void**)& gtk_accel_label_new},
 	{ "gtk_accel_label_set_accel_closure",  cast(void**)& gtk_accel_label_set_accel_closure},
 	{ "gtk_accel_label_get_accel_widget",  cast(void**)& gtk_accel_label_get_accel_widget},

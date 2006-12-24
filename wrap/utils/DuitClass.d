@@ -42,6 +42,7 @@ module utils.DuitClass;
 //debug = stockItems;
 //debug = gTypes;
 //debug = implements;
+//debug = getMember;
 
 //version = noGtkBody;
 
@@ -988,6 +989,20 @@ public class DuitClass
 		//}
 		
 		
+		debug(getMember)
+		{
+			writefln("getMember:");
+			foreach (char[] line ; lines )
+			{
+				writefln("\t%s", line);
+			}
+		}
+		if ( lines.length < 2 )
+		{
+			return member;
+		}
+		
+		
 		member ~= "";
 		if ( endsWith(lines[0],"()") )
 		{
@@ -1747,7 +1762,7 @@ public class DuitClass
 					debug(noPrefixes)if ( !inc) writefln("dropped by noPrefixes");
 				}
 			}
-			debug(noPrefixes)writefln("%s : %s (%s)", (inc?"included":"dropped"),fun.name, convParms.prefix);
+			//debug(noPrefixes)writefln("%s : %s (%s)", (inc?"included":"dropped"),fun.name, convParms.prefix);
 			return inc;
 		}
 		
@@ -2095,7 +2110,7 @@ public class DuitClass
 	{
 		currLine = 0;
 		
-		debug(getBlock) writefln("getBlock");
+		debug(getBlock) writefln("getBlock for ]%s,%s[", startLine, endLine);
 
 		// TODO use slicing instead of this array
 		char[][] block;
@@ -2290,7 +2305,7 @@ public class DuitClass
 	{
 		char[] converted;
 		
-		debug(tokenToDuit) writefln("gToken=>>>%s<<< (prefix=%s)", gToken, convParms.prefix);
+		//debug(tokenToDuit) writefln("gToken=>>>%s<<< (prefix=%s)", gToken, convParms.prefix);
 		
 		if ( (aliases !is null) && (gToken in aliases) )
 		{
@@ -2332,7 +2347,7 @@ public class DuitClass
 
 	public static char[] removePrefix(inout char[] gToken, ConvParms* convParms)
 	{
-		debug(tokenToDuit) writefln("gToken.length > prefix.length %s",gToken.length > convParms.prefix.length);
+		//debug(tokenToDuit) writefln("gToken.length > prefix.length %s",gToken.length > convParms.prefix.length);
 		char[] prefix = convParms.getPrefix(gToken);
 		if ( prefix.length > 0 )
 		{
@@ -2350,6 +2365,7 @@ public class DuitClass
 		
 		char c = ' ';
 		char pc = ' ';
+		char ppc = ' ';
 		int pos = 0;
 		while ( pos < gToken.length )
 		{
@@ -2366,6 +2382,16 @@ public class DuitClass
 			
 			if ( c > '\0' )
 			{
+				if ( ppc == '_'
+					 && pc == 'g' 
+					 && c == 'l'
+					 && gToken.length-1 > pos
+					 && gToken[pos+1] == '_'
+					)
+				{
+						c = 'L';
+				}
+				ppc = pc;
 				pc = gToken[pos];
 				converted ~= c;
 			}

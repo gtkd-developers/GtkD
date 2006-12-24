@@ -33,6 +33,8 @@ public class HtmlStrip
 
 	public bit convertComment = true;
 	public bit markHR = true;
+	public bit markP = true;
+	public bit markH = true;
 	public bit removeEmptyLines = true;
 	public bit removeExtraSpaces = true;
 	
@@ -41,7 +43,7 @@ public class HtmlStrip
 		
 	}
 	
-	char[] strip(char[] htmlText)
+	char[] strip(char[] htmlText, bool checkUTF=true)
 	{
 		int markupCount = 0;
 		char[] stripped;
@@ -64,6 +66,18 @@ public class HtmlStrip
 					if ( markHR && (mark == "hr" || mark == "HR") )
 					{
 						stripped ~= "\n<hr>\n";
+					}
+					else if ( markP && (mark == "p" || mark == "P") )
+					{
+						stripped ~= "\n";
+					}
+					else if ( markH && (mark == "/h2" || mark == "/H2") )
+					{
+						stripped ~= "\n";
+					}
+					else if ( markH && (mark == "/h3" || mark == "/H3") )
+					{
+						stripped ~= "\n";
 					}
 					break;
 					
@@ -145,6 +159,10 @@ public class HtmlStrip
 			pc = c;
 		}
 		
+		if ( checkUTF )
+		{
+			cleanUTF(stripped);
+		}
 		
 		return stripped;
 	}
@@ -159,7 +177,32 @@ public class HtmlStrip
 		return strip(text);
 	}
 	
+	private import std.utf;
+	
+	public void cleanUTF(inout char[] str)
+	{
+		//printf("before utfClean\n%s\nend before utfClean\n", (str~"\0").ptr);
+		size_t i = 0;
+		while ( i < str.length )
+		{
+			try
+			{
+				std.utf.decode(str, i);
+			}
+			catch ( UtfException e )
+			{
+				str[i] = ' ';
+				++i;
+			}
+
+		}
+		
+		//writefln("after utfClean\n%s\nend after utfClean", str);
+
+	}
+	
 }
+
 
 version (standAlone)
 {

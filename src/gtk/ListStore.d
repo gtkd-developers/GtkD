@@ -511,7 +511,8 @@ public class ListStore : TreeModel
 	}
 	
 	/**
-	 * WarningThis function is slow. Only use it for debugging and/or testing
+	 * Warning
+	 * This function is slow. Only use it for debugging and/or testing
 	 * purposes.
 	 * Checks if the given iter is a valid iter for this GtkListStore.
 	 * list_store:

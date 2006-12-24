@@ -60,7 +60,7 @@ addConstants: end
 # must start with wrap
 
 wrap: glgdk
-srcout: src
+srcout: srcgl
 
 ###########################################################
 ### GL ####################################################

@@ -1052,6 +1052,32 @@ public enum GtkButtonsType
 alias GtkButtonsType ButtonsType;
 
 /**
+ * An enum for determining the page role inside the GtkAssistant. It's used to
+ * handle buttons sensitivity and visibility.
+ * Note that an assistant needs to end its page flow with a page of type GTK_ASSISTANT_PAGE_CONFIRM
+ * or GTK_ASSISTANT_PAGE_SUMMARY to be correct.
+ * GTK_ASSISTANT_PAGE_CONTENT
+ * The page has regular contents.
+ * GTK_ASSISTANT_PAGE_INTRO
+ * The page contains an introduction to the assistant task.
+ * GTK_ASSISTANT_PAGE_CONFIRM
+ * The page lets the user confirm or deny the changes.
+ * GTK_ASSISTANT_PAGE_SUMMARY
+ * The page informs the user of the changes done.
+ * GTK_ASSISTANT_PAGE_PROGRESS
+ * Used for tasks that take a long time to complete, blocks the assistant until the page is marked as complete.
+ */
+public enum GtkAssistantPageType
+{
+	CONTENT,
+	INTRO,
+	CONFIRM,
+	SUMMARY,
+	PROGRESS
+}
+alias GtkAssistantPageType AssistantPageType;
+
+/**
  * Describes the image data representation used by a GtkImage. If you
  * want to get the image from the widget, you can only get the
  * currently-stored representation. e.g. if the
@@ -2155,6 +2181,12 @@ public struct GtkWindowGroup{}
  * only private fields and should not be directly accessed.
  */
 public struct GtkAboutDialog{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkAssistant{}
 
 
 /**
@@ -5655,6 +5687,21 @@ public typedef extern(C) void  function (GtkObject*, void*, uint, GtkArg*) GtkCa
  */
 // void (*GtkAboutDialogActivateLinkFunc)  (GtkAboutDialog *about,  const gchar *link,  gpointer data);
 public typedef extern(C) void  function (GtkAboutDialog*, char[], void*) GtkAboutDialogActivateLinkFunc;
+
+/*
+ * A function used by gtk_assistant_set_forward_page_func() to know which
+ * is the next page given a current one. It's called both for computing the
+ * next page when the user presses the "forward" button and for handling
+ * the behavior of the "last" button.
+ * current_page:
+ * The page number used to calculate the next page.
+ * data:
+ * user data.
+ * Returns:
+ * The next page number.
+ */
+// gint (*GtkAssistantPageFunc) (gint current_page,  gpointer data);
+public typedef extern(C) int  function (int, void*) GtkAssistantPageFunc;
 
 /*
  * A function which decides whether the row indicated by iter matches a given

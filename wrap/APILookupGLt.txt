@@ -59,7 +59,7 @@ addConstants: end
 # must start with wrap
 
 wrap: glgtk
-srcout: src
+srcout: srcgl
 
 ###########################################################
 ### GL ####################################################
@@ -284,7 +284,7 @@ template GLCapability()
 	int configureFrame(GdkEventConfigure* event, Widget widget)
 	{
 		std.gc.disable();
-		writefln("configureFrame 1");
+		//writefln("configureFrame 1");
 		//printf("GLCapabilityT.configureFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
 		GLDrawable drawable = GLWidget.getGLDrawable(widget);
@@ -295,29 +295,29 @@ template GLCapability()
 			return false;
 		}
 		
-		writefln("configureFrame 2");
+		//writefln("configureFrame 2");
 		/*** do user actions ***/
 		bit consumeEvent = typeof(this).resizeGL(event);
-		printf("here\n");
-		writefln("configureFrame 3");
+		//printf("here\n");
+		//writefln("configureFrame 3");
 		
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
 		{
-			writefln("configureFrame 4");
+			//writefln("configureFrame 4");
 			drawable.swapBuffers();
-			writefln("configureFrame 5");
+			//writefln("configureFrame 5");
 		}
 		else
 		{
-			writefln("configureFrame 6");
+			//writefln("configureFrame 6");
 			glFlush ();
-			writefln("configureFrame 7");
+			//writefln("configureFrame 7");
 		}
 		
-		writefln("configureFrame 8");
+		//writefln("configureFrame 8");
 		drawable.glEnd();
-		writefln("configureFrame 9");
+		//writefln("configureFrame 9");
 		/*** OpenGL END ***/
 		
 		std.gc.enable();

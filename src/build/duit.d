@@ -207,6 +207,7 @@ private import gtk.Window;
 private import gtk.MainWindow;
 private import gtk.WindowGroup;
 private import gtk.AboutDialog;
+private import gtk.Assistant;
 private import gtk.AccelLabel;
 private import gtk.Image;
 private import gtk.Label;

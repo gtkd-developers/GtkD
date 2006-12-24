@@ -26,7 +26,7 @@ private import std.file;
 private import std.string;
 private import std.process;
 
-debug = flow;
+//debug = flow;
 //debug = processLine;
 //debug = getDType;
 //debug = functions;

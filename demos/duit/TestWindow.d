@@ -39,6 +39,7 @@ private import duit.TestText;
 private import duit.TestTreeView;
 private import duit.TestTreeView1;
 private import duit.TestImage;
+private import duit.TestThemes;
 private import duit.TestAspectFrame;
 private import duit.TestIdle;
 private import duit.TTextView;
@@ -271,6 +272,7 @@ class TestWindow : MainWindow
 		debug(1)writefln("TestWindow.setup 5.7");
 		notebook.appendPage(new TestText,"Text");
 		notebook.appendPage(new TestImage(this),"Image");
+		//notebook.appendPage(new TestThemes(this),"Themes");
 		debug(1)writefln("TestWindow.setup 5.8");
 		notebook.appendPage(new TestAspectFrame(),"Aspect Frame");
 		notebook.appendPage(new TestIdle(),"Idle");
