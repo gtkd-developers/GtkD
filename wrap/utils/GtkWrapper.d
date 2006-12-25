@@ -743,7 +743,21 @@ public class GtkWrapper : WrapperIF
 "\n"
 "\nstatic this()"
 "\n{"
+;
+if ( loaderTableName == "LIBRARY.GDK" )
+{
+	externalText ~= 
+"\n	"~loaderTableName~"_Linker = new Linker(libPath ~ importLibs[LIBRARY."~std.string.toupper(loaderTableName.dup)~"], libPath ~ importLibs[LIBRARY.GDKPIXBUF] );"
+;
+}
+else
+{
+	externalText ~= 
 "\n	"~loaderTableName~"_Linker = new Linker(libPath ~ importLibs[LIBRARY."~std.string.toupper(loaderTableName.dup)~"] );"
+;
+}
+	externalText ~= 
+
 "\n	"~loaderTableName~"_Linker.link("~loaderTableName~"Links);"
 "\n	debug writefln(\"* Finished static this(): "~loaderTableName~"\");"
 "\n}"
