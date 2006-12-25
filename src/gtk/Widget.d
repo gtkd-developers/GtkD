@@ -308,7 +308,7 @@ public class Widget : ObjectGtk
 	{
 		if ( !("button-press-event" in connectedSignals) )
 		{
-			addEvents(GdkEventMask.GDK_BUTTON_PRESS_MASK);
+			addEvents(EventMask.BUTTON_PRESS_MASK);
 			Signals.connectData(
 			getStruct(),
 			"button-press-event",
@@ -337,7 +337,7 @@ public class Widget : ObjectGtk
 	{
 		if ( !("button-release-event" in connectedSignals) )
 		{
-			addEvents(GdkEventMask.GDK_BUTTON_RELEASE_MASK);
+			addEvents(EventMask.BUTTON_RELEASE_MASK);
 			Signals.connectData(
 			getStruct(),
 			"button-release-event",
@@ -1318,7 +1318,7 @@ public class Widget : ObjectGtk
 	{
 		if ( !("motion-notify-event" in connectedSignals) )
 		{
-			addEvents(GdkEventMask.GDK_POINTER_MOTION_MASK);
+			addEvents(EventMask.POINTER_MOTION_MASK);
 			Signals.connectData(
 			getStruct(),
 			"motion-notify-event",

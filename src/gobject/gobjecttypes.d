@@ -120,10 +120,10 @@ alias GTypeFlags TypeFlags;
  */
 public enum GTypeFundamentalFlags
 {
-	LAG_CLASSED = (1 << 0),
-	LAG_INSTANTIATABLE = (1 << 1),
-	LAG_DERIVABLE = (1 << 2),
-	LAG_DEEP_DERIVABLE = (1 << 3)
+	FLAG_CLASSED = (1 << 0),
+	FLAG_INSTANTIATABLE = (1 << 1),
+	FLAG_DERIVABLE = (1 << 2),
+	FLAG_DEEP_DERIVABLE = (1 << 3)
 }
 alias GTypeFundamentalFlags TypeFundamentalFlags;
 

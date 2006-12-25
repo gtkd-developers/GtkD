@@ -145,11 +145,11 @@ template GLCapability()
 		if ( glConfig is null )
 		{
 			glConfig = new GLConfig(
-			GLConfigMode.RGB
-			| GLConfigMode.DEPTH
-			| GLConfigMode.DOUBLE,
-			GLConfigMode.RGB
-			| GLConfigMode.DEPTH
+			GLConfigMode.MODE_RGB
+			| GLConfigMode.MODE_DEPTH
+			| GLConfigMode.MODE_DOUBLE,
+			GLConfigMode.MODE_RGB
+			| GLConfigMode.MODE_DEPTH
 			);
 		}
 		bit ok = setGLCapability(this, glConfig, null, true, renderType);

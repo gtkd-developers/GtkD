@@ -197,10 +197,10 @@ public enum cairo_pattern_type_t
  */
 public enum cairo_font_type_t
 {
-	OY,
-	CAIRO_FONT_TYPE_FT,
-	CAIRO_FONT_TYPE_WIN32,
-	CAIRO_FONT_TYPE_ATSUI
+	TOY,
+	FT,
+	WIN32,
+	ATSUI
 }
 /**
  * The subpixel order specifies the order of color elements within

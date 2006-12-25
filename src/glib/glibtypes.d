@@ -588,9 +588,9 @@ alias GNormalizeMode NormalizeMode;
  */
 public enum GDateDMY
 {
-	AY = 0,
-	G_DATE_MONTH = 1,
-	G_DATE_YEAR = 2
+	DAY = 0,
+	MONTH = 1,
+	YEAR = 2
 }
 alias GDateDMY DateDMY;
 

@@ -192,10 +192,10 @@ alias GtkIconSize IconSize;
  */
 public enum GtkRcFlags
 {
-	G = 1 << 0,
-	GTK_RC_BG = 1 << 1,
-	GTK_RC_TEXT = 1 << 2,
-	GTK_RC_BASE = 1 << 3
+	FG = 1 << 0,
+	BG = 1 << 1,
+	TEXT = 1 << 2,
+	BASE = 1 << 3
 }
 alias GtkRcFlags RcFlags;
 
@@ -458,10 +458,10 @@ alias GtkIMStatusStyle IMStatusStyle;
  */
 public enum GtkJustification
 {
-	Y_LEFT,
-	Y_RIGHT,
-	Y_CENTER,
-	Y_FILL
+	JUSTIFY_LEFT,
+	JUSTIFY_RIGHT,
+	JUSTIFY_CENTER,
+	JUSTIFY_FILL
 }
 alias GtkJustification Justification;
 
@@ -651,12 +651,12 @@ alias GtkResizeMode ResizeMode;
 
 public enum GtkScrollStep
 {
-	S,
-	GTK_SCROLL_PAGES,
-	GTK_SCROLL_ENDS,
-	GTK_SCROLL_HORIZONTAL_STEPS,
-	GTK_SCROLL_HORIZONTAL_PAGES,
-	GTK_SCROLL_HORIZONTAL_ENDS
+	STEPS,
+	PAGES,
+	ENDS,
+	HORIZONTAL_STEPS,
+	HORIZONTAL_PAGES,
+	HORIZONTAL_ENDS
 }
 alias GtkScrollStep ScrollStep;
 
@@ -1342,12 +1342,12 @@ alias GtkIconViewDropPosition IconViewDropPosition;
  */
 public enum GtkCellRendererState
 {
-	ELECTED = 1 << 0,
-	GTK_CELL_RENDERER_PRELIT = 1 << 1,
-	GTK_CELL_RENDERER_INSENSITIVE = 1 << 2,
+	SELECTED = 1 << 0,
+	PRELIT = 1 << 1,
+	INSENSITIVE = 1 << 2,
 	/+* this flag means the cell is inn the sort column/row +/
-	ORTED = 1 << 3,
-	GTK_CELL_RENDERER_FOCUSED = 1 << 4
+	SORTED = 1 << 3,
+	FOCUSED = 1 << 4
 }
 alias GtkCellRendererState CellRendererState;
 
@@ -1517,10 +1517,10 @@ alias GtkFileChooserError FileChooserError;
  */
 public enum GtkFileFilterFlags
 {
-	ILENAME = 1 << 0,
-	GTK_FILE_FILTER_URI = 1 << 1,
-	GTK_FILE_FILTER_DISPLAY_NAME = 1 << 2,
-	GTK_FILE_FILTER_MIME_TYPE = 1 << 3
+	FILENAME = 1 << 0,
+	URI = 1 << 1,
+	DISPLAY_NAME = 1 << 2,
+	MIME_TYPE = 1 << 3
 }
 alias GtkFileFilterFlags FileFilterFlags;
 

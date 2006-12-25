@@ -353,6 +353,13 @@ public class HTODConvert
 "private import lib.Loader;\n"
 "private import lib.paths;\n"
 "\n"
+;
+		if ( lib == "GL"
+			 || lib == "GLU" )
+		{
+			return;
+		}
+		dText ~= 
 "private Linker "~lib~"_Linker;\n"
 "\n"
 "static this()\n"
@@ -374,6 +381,7 @@ public class HTODConvert
 	
 	void closeDynLoad(inout char[] dText)
 	{
+
 		debug(flow)(writefln("HTODConvert.closeDynLoad"));
 		dText ~= "\n\nextern(C)\n{\n";
 		foreach ( char[] line ; functions )

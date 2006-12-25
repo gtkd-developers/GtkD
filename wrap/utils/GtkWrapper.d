@@ -731,7 +731,11 @@ public class GtkWrapper : WrapperIF
 		{
 			externalText ~= "\nprivate import cairoLib.cairoLibtypes;";
 		}
-		externalText ~= 
+
+		if ( loaderTableName != "gl" 
+			 && loaderTableName != "glu" )
+		{
+			externalText ~= 
 "\nprivate import lib.Loader;"
 "\nprivate import lib.paths;"
 "\n"
@@ -750,6 +754,9 @@ public class GtkWrapper : WrapperIF
 "\n	debug writefln(\"* Finished static ~this(): "~loaderTableName~"\");"
 "\n}"
 "\n"
+;
+		}
+		externalText ~= 
 "\nextern(C) "
 "\n{"
 ;

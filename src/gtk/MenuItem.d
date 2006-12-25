@@ -166,6 +166,7 @@ public class MenuItem : Item
 			// GtkWidget* gtk_menu_item_new_with_label (const gchar *label);
 			this(cast(GtkMenuItem*)gtk_menu_item_new_with_label(Str.toStringz(label)) );
 		}
+		setName(label);
 	}
 	
 	/**

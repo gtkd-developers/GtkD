@@ -204,10 +204,10 @@ static char gray50_bits[] = [0x02, 0x01];
 			      "wrap_mode", cast(int)WrapMode.NONE);
   
 		buffer.createTag("center",
-			      "justification", cast(int)Justification.Y_CENTER);
+			      "justification", cast(int)Justification.JUSTIFY_CENTER);
 
 		buffer.createTag("right_justify",
-			      "justification", cast(int)Justification.Y_RIGHT);
+			      "justification", cast(int)Justification.JUSTIFY_RIGHT);
 
 		buffer.createTag("wide_margins",
 			      "left_margin", 50, "right_margin", 50);

@@ -31,8 +31,8 @@ module utils.DuitClass;
 //debug = declaration;
 //debug = structs;
 //debug = enums;
-//debug = unions;
 //debug = enumPrefix;
+//debug = unions;
 //debug = parmType;
 //debug = parmName;
 //debug = enumToDuit;
@@ -833,9 +833,9 @@ public class DuitClass
 			// TODO move this to the config files or read it from the Gtk docs (how?)
 			switch ( signalName )
 			{
-				case  "button-press-event": text ~= "addEvents(GdkEventMask.GDK_BUTTON_PRESS_MASK);"; break;
-				case  "button-release-event": text ~= "addEvents(GdkEventMask.GDK_BUTTON_RELEASE_MASK);"; break;
-				case  "motion-notify-event": text ~= "addEvents(GdkEventMask.GDK_POINTER_MOTION_MASK);"; break;
+				case  "button-press-event": text ~= "addEvents(EventMask.BUTTON_PRESS_MASK);"; break;
+				case  "button-release-event": text ~= "addEvents(EventMask.BUTTON_RELEASE_MASK);"; break;
+				case  "motion-notify-event": text ~= "addEvents(EventMask.POINTER_MOTION_MASK);"; break;
 				default:
 					break;
 			}
@@ -1221,10 +1221,21 @@ public class DuitClass
 			}
 			
 		}
+		
+		if ( e < enumEntry.length )
+		{
+			while ( e >0 && enumEntry[e]!= '_' )
+			{
+				--e;
+			}
+		}
+
+		
 		if ( e<enumEntry.length && enumEntry[e] == '_' )
 		{
 			++e;
 		}
+
 		prefix = enumEntry[0..e];
 		debug(enumPrefix) writefln("\t%s", prefix);
 		return prefix;
@@ -1328,7 +1339,7 @@ public class DuitClass
 					}
 
 					
-					debug(enumPrefix)writef("\t\t%s", value);
+					debug(enumPrefix)writefln("\t\t%s", value);
 					char[] v = replace(value, enumPrefix, ""); 
 					if ( v.length > 2 )
 					{
@@ -1355,7 +1366,7 @@ public class DuitClass
 //						values ~= value;
 //						debug(enumPrefix)writefln();
 //					}
-					debug(enums)writefln("+ ADDED   >>>%s<<<", value);
+					debug(enums)writefln("+ ADDED   >>>%s<<<", v);
 				}
 			}
 		}
@@ -2477,10 +2488,10 @@ public class DuitClass
 				&& str[0] == prefix;
 	}
 	
-	public static bit endsWith(char[] str, char[] prefix)
+	public static bit endsWith(char[] str, char[] suffix)
 	{
-		return str.length >= prefix.length 
-				&& str[str.length-prefix.length..str.length] == prefix;
+		return str.length >= suffix.length 
+				&& str[str.length-suffix.length..str.length] == suffix;
 	}
 	
 	public static bit endsWith(char[] str, char suffix)
