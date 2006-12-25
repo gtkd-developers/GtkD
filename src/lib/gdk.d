@@ -35,7 +35,7 @@ private Linker gdk_Linker;
 
 static this()
 {
-	gdk_Linker = new Linker(libPath ~ importLibs[LIBRARY.GDK] );
+	gdk_Linker = new Linker(libPath ~ importLibs[LIBRARY.GDK], libPath ~ importLibs[LIBRARY.GDKPIXBUF] );
 	gdk_Linker.link(gdkLinks);
 	debug writefln("* Finished static this(): gdk");
 }
