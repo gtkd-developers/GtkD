@@ -157,11 +157,13 @@ public class Str
 		}
 		char[][] argv;
 		
-		char* arg = *args;
-		while( arg !is null )
+		char* arg = args[0];
+		int i=0;
+		while( (arg) != null && i<10)
 		{
 			argv ~= toString(arg);
-			++args;
+			++i;
+			arg = args[i];
 		}
 		
 		return argv;

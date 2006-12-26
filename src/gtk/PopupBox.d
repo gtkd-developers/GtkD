@@ -88,6 +88,7 @@ public class PopupBox
 		message);
 		d.setTitle(title);
 		//d.addButton("gtk-dialog-info",GtkResponseType.GTK_RESPONSE_OK);
+		d.showAll();
 		d.run();
 		d.destroy();
 	}
