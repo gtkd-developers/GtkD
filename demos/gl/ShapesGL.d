@@ -273,13 +273,13 @@ class ShapesGL : DrawingArea
 	
 	bit idleCallback()
 	{
-		drawGL();
+		glDrawFrame(this);
 		return true;
 	}
 	
 	int exposeCallback(GdkEventExpose* e, Widget widget)
 	{
-		drawGL(e);
+		glDrawFrame(widget);
 		return true;
 	}
 	
