@@ -28,21 +28,21 @@
 
 
 #ifdef __VMS
-#include <GL/vms_x_fix.h>
+//#include </usr/include/GL/vms_x_fix.h>
 # ifdef __cplusplus
 /* VMS Xlib.h gives problems with C++.
  * this avoids a bunch of trivial warnings */
 #pragma message disable nosimpint
 #endif
 #endif
-#include <X11/Xlib.h>
-#include <X11/Xutil.h>
+//#include </usr/include/X11/Xlib.h>
+//#include </usr/include/X11/Xutil.h>
 #ifdef __VMS
 # ifdef __cplusplus
 #pragma message enable nosimpint
 #endif
 #endif
-#include <GL/gl.h>
+//#include </usr/include/GL/gl.h>
 
 
 #if defined(USE_MGL_NAMESPACE)
@@ -297,7 +297,7 @@ extern void (*glXGetProcAddress(const GLubyte *procname))( void );
 
 #ifndef GLX_GLXEXT_LEGACY
 
-#include <GL/glxext.h>
+//#include </usr/include/GL/glxext.h>
 
 #else
 

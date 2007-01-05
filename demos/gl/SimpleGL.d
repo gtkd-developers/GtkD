@@ -47,6 +47,9 @@ private import gtk.MainWindow;
 class SimpleGL : DrawingArea
 {
 
+	GLfloat width;
+	GLfloat height;
+	
 	/** need to include the mixin to add GL capabilities to this widget */
 	mixin GLCapability;
 
@@ -102,14 +105,23 @@ class SimpleGL : DrawingArea
 	 */
 	bit resizeGL(GdkEventConfigure* event = null)
 	{
-		//writefln("SimpleGL.resizeGL");
-		GLfloat w = getWidth();
-		GLfloat h = getHeight();
+		GLfloat w;
+		GLfloat h;
 		
-		int width, height;
-		getSizeRequest(&width, &height);
-		w = width;
-		h = height;
+		if ( event == null )
+		{
+			w = getWidth();
+			h = getHeight();
+		}
+		else
+		{
+			w = event.width;
+			h = event.height;
+		}
+		
+		width = w;
+		height = h;
+		
 		
 		//writefln("SimpleGL.resizeGL %s %s", w, h);
 		

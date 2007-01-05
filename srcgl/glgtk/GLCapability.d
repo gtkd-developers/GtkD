@@ -72,6 +72,20 @@ public import lib.gl;
 
 template GLCapability()
 {
+	
+	GLfloat width = 0;
+	GLfloat height = 0;
+	
+	GLfloat getGLWidth()
+	{
+		return width;
+	}
+	GLfloat getGLHeight()
+	{
+		return height;
+	}
+	
+	
 	/**
 	 * Sets the GL capabilities for the widget
 	 */
@@ -116,13 +130,13 @@ template GLCapability()
 	{
 		return glDrawFrame(this);
 	}
-	
+
 	/**
 	 * The application should use this method to redraw the scene at any time
 	 */
-	bool glDrawFrame(Widget widget)
+	bit glDrawFrame(Widget widget)
 	{
-		//printf("GLCapabilityT.realizeFrame \n" );
+		//printf("GLCapabilityT.glDrawFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
 		GLDrawable drawable = GLWidget.getGLDrawable(widget);
 		
@@ -135,6 +149,7 @@ template GLCapability()
 		/*** do user actions ***/
 		bit consumeEvent = typeof(this).drawGL(null);
 		
+		//writefln("glDrawFrame");
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
 		{
@@ -144,8 +159,11 @@ template GLCapability()
 		{
 			glFlush ();
 		}
-		
+
 		drawable.glEnd();
+		
+
+		
 		/*** OpenGL END ***/
 		return true;
 		
@@ -218,6 +236,11 @@ template GLCapability()
 	
 	int configureFrame(GdkEventConfigure* event, Widget widget)
 	{
+		if ( event != null )
+		{
+			width = event.width;
+			height = event.height;
+		}
 		std.gc.disable();
 		//writefln("configureFrame 1");
 		//printf("GLCapabilityT.configureFrame \n" );

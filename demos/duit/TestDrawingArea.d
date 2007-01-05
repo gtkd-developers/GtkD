@@ -316,6 +316,7 @@ private import gtk.gtktypes;
 					
 				case "Text":
 					Font font = new Font("FreeMono 12");
+					writefln("Text font = %s", font);
 					d.drawString( font, gc,x, y, "DUI toolkit");
 					break;
 				

@@ -733,7 +733,9 @@ public class GtkWrapper : WrapperIF
 		}
 
 		if ( loaderTableName != "gl" 
-			 && loaderTableName != "glu" )
+			 && loaderTableName != "glu" 
+			 && loaderTableName != "glx" 
+			)
 		{
 			externalText ~= 
 "\nprivate import lib.Loader;"

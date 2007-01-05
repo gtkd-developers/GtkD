@@ -184,6 +184,7 @@ private import glgtk.GLWidget;
 private import gtk.Duit;
 
 private import gtk.DrawingArea;
+private import gtk.Layout;
 private import gtk.Menu;
 private import gtk.MenuItem;
 private import gtk.Widget;
@@ -201,7 +202,9 @@ private import gtk.Timeout;
 class ShapesGL : DrawingArea
 {
 
-	bit animate = true;
+	TestGL testGL;
+	
+	bit animate = false;
 
 	//GLfloat angle = 0.0;
 	//GLfloat pos_y = 0.0;
@@ -220,22 +223,14 @@ class ShapesGL : DrawingArea
 	GLfloat width;
 	GLfloat height;
 	
-	this()
+	this(TestGL testGL)
 	{
+		this.testGL = testGL;
 		//super(false,0);
-		//da = new DrawingArea();
+		//super(null, null);
 		setGLCapability();	// set the GL capabilities for this widget
-		
-		//setBorderWidth(10);
 	
-		setSizeRequest(200,200);		
-
-		//GLWidget.setGLCapability(da,glconfig,null,true,GLRenderType.RGBA_TYPE);
-  
-  
-		//packStart(da,true,true,0);
-		
-
+		setSizeRequest(400,400);		
 		addOnRealize(&realizeCallback);						// dispatcher.addRealizeListener(this,da);
 		addOnMap(&mapCallback);								// dispatcher.addMapListener(this,da);
 		addOnExpose(&exposeCallback);						// dispatcher.addExposeListener(this,da);
@@ -294,6 +289,9 @@ class ShapesGL : DrawingArea
 	}
 	
 
+private import gdk.Font;
+private import gdk.Drawable;
+private import gdk.GC;
 	
 	bit drawGL(GdkEventExpose* event = null)
 	{
@@ -317,6 +315,7 @@ class ShapesGL : DrawingArea
 		glMaterialf(GL_FRONT, GL_SHININESS, mat_current.shininess * 128.0);
 		glCallList(shape_list_base + shape_current);
 
+		
 		return true;
 
 	}
@@ -325,12 +324,6 @@ class ShapesGL : DrawingArea
 
 	int resizeGL(GdkEventConfigure* e)
 	{
-		//GLfloat 
-		//GLfloat 
-
-		//GLfloat w = e.width;
-		//GLfloat h = e.height;
-		
 		GLfloat w;
 		GLfloat h;
 		
@@ -451,10 +444,63 @@ class ShapesGL : DrawingArea
 		
 		/* Shape display lists */
 		shape_list_base = glGenLists(Shapes.max);
+
+		
+		int depth = 1;
+		GLfloat none = 0.0;
+		GLfloat step = 1.8 / depth;
+		GLfloat size = step / 1.8;
+		GLfloat back = -(depth-1)*step;
+		GLfloat start;
+		if ( depth % 2 == 1 )
+		{
+			start = -(depth-1)/2*step;
+		}
+		else
+		{
+			start = -depth/2*step+step/2;
+		}
+
+		void addCube(GLfloat tx, GLfloat ty, GLfloat tz)
+		{
+			if ( tx!=none || ty!=none || tz!=none )
+			{
+				glTranslatef(tx, ty, tz);
+			}
+			GLDraw.cube(true, size);
+		}
 		
 		/* Cube */
 		glNewList(shape_list_base + Shapes.cube, GL_COMPILE);
-		GLDraw.cube(true, 1.5);
+		glPushMatrix();
+		
+		for ( int z=0 ; z<depth ; z++ )
+		{
+			for ( int y=0 ; y<depth ; y++ )
+			{
+				if ( y==0 )
+				{
+					if ( z == 0 )
+					{
+						addCube(start,start,start);
+					}
+					else
+					{
+						addCube(back, back, step);
+					}
+				}
+				else
+				{
+					addCube(back, step, none);
+				}
+				for ( int x=1 ; x<depth ; x++ )
+				{
+					addCube(step, none, none);
+				}
+			}
+		}
+
+		glPopMatrix();
 		glEndList();
 		
 		/* Sphere */
@@ -686,12 +732,13 @@ static float dy = 0.0;
 //	}
 //
 
-	void activateCallback(MenuItem menu_item, char[] action)
-	{
-	}
+//	void activateCallback(MenuItem menuItem, char[] action)
+//	{
+//	}
 	void activateItemCallback(MenuItem menuItem)
 	{
 		char[] action = menuItem.getActionName();
+		writefln("activateItemCallback action = %s ", action);
 		switch(action)
 		{
 			case "shapes.Cube":shape_current = Shapes.cube; break;
@@ -716,8 +763,12 @@ static float dy = 0.0;
 			case "materials.Copper":mat_current = &mat_copper;break;
 			case "materials.Gold":mat_current = &mat_gold;break;
 			case "materials.Silver":mat_current = &mat_silver;break;
+			case "reset":init_view();break;
+			case "fullScreen":testGL.fullscreen();break;
+			case "unFullScreen":testGL.unfullscreen();break;
+			default: break;
 		}
-    	init_view();
+    	//init_view();
 	}
 
 	/* Creates the popup menu.*/
@@ -729,10 +780,10 @@ static float dy = 0.0;
 		MenuItem item;
 
 		/*
-		* Shapes submenu.
-		*/
+		 * Shapes submenu.
+		 */
 		
-		menu.append(new MenuItem("Cube", &activateItemCallback, "shapes.Cube"));
+		menu.append(new MenuItem(&activateItemCallback, "Cube", "shapes.Cube"));
 		menu.append(new MenuItem("Sphere", &activateItemCallback, "shapes.Sphere"));
 		menu.append(new MenuItem("Cone", &activateItemCallback, "shapes.Cone"));
 		menu.append(new MenuItem("Torus", &activateItemCallback, "shapes.Torus"));
@@ -745,6 +796,7 @@ static float dy = 0.0;
 		/*
 		 * Materials submenu.
 		 */
+		menu.append(new SeparatorMenuItem());
 		
 		menu.append(new MenuItem("Emerald", &activateItemCallback, "materials.Emerald"));
 		menu.append(new MenuItem("Jade", &activateItemCallback, "materials.Jade"));
@@ -763,20 +815,29 @@ static float dy = 0.0;
 		 * Root popup menu.
 	     */
 	
-		item = new MenuItem("Shapes");
-		menu.append(item);
-		item.setSubmenu(shapes);
-		
-		item = new MenuItem("Materials");
-		menu.append(item);
-		item.setSubmenu(materials);
-		
+//		item = new MenuItem("Shapes");
+//		menu.append(item);
+//		item.setSubmenu(shapes);
+//		
+//		item = new MenuItem("Materials");
+//		menu.append(item);
+//		item.setSubmenu(materials);
+
+		/* reset */
+		menu.append(new SeparatorMenuItem());
+		menu.append(new MenuItem("Reset", &activateItemCallback, "reset"));	
+		menu.append(new MenuItem("Fullscreen", &activateItemCallback, "fullScreen"));	
+		menu.append(new MenuItem("un-Fullscreen", &activateItemCallback, "unFullScreen"));	
+
 		/* Quit */
-		menu.append(new MenuItem("Quit", &activateItemCallback, "quit"));	
+		menu.append(new SeparatorMenuItem());
+		menu.append(new MenuItem("Cancel", &activateItemCallback, "quit"));	
+		
+		menu.showAll();
 		
 		return menu;
 	}
-
+private import gtk.SeparatorMenuItem;
 //static void
 //print_gl_config_attrib (GdkGLConfig *glconfig,
 //                        const gchar *attrib_str,
@@ -853,7 +914,7 @@ class TestGL : MainWindow
 	{
 		super("Duit test Shaples GL");
 		setReallocateRedraws(true);
-		setBorderWidth(10);
+		//setBorderWidth(10);
 		show();
 	}
 }
@@ -873,7 +934,7 @@ void main(char [][]args)
 	TestGL testGL = new TestGL();
 	
 	
-	testGL.add(new ShapesGL());
+	testGL.add(new ShapesGL(testGL));
 	testGL.showAll();
 	
 	Duit.main();

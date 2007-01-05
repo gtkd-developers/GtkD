@@ -137,6 +137,20 @@ public import lib.gl;
 
 template GLCapability()
 {
+	
+	GLfloat width = 0;
+	GLfloat height = 0;
+	
+	GLfloat getGLWidth()
+	{
+		return width;
+	}
+	GLfloat getGLHeight()
+	{
+		return height;
+	}
+
+
 	/**
 	 * Sets the GL capabilities for the widget
 	 */
@@ -261,7 +275,7 @@ template GLCapability()
 		}
 		
 		/*** do user actions ***/
-		bit consumeEvent = typeof(this).drawGL(event);
+		int consumeEvent = typeof(this).drawGL(event);
 		
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
@@ -283,6 +297,11 @@ template GLCapability()
 	
 	int configureFrame(GdkEventConfigure* event, Widget widget)
 	{
+		if ( event != null )
+		{
+			width = event.width;
+			height = event.height;
+		}
 		std.gc.disable();
 		//writefln("configureFrame 1");
 		//printf("GLCapabilityT.configureFrame \n" );

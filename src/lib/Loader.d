@@ -162,10 +162,10 @@ public class Linker
 
 		version(Windows)
 		{
-			handle = LoadLibraryA( (this.libraryName ~ "\0").ptr );
+			handle = LoadLibraryA( this.libraryName ~ "\0" );
 			if ( alternateLibraryName !is null )
 			{
-				alternateHandle = LoadLibraryA( (this.alternateLibraryName ~ "\0").ptr );
+				alternateHandle = LoadLibraryA( this.alternateLibraryName ~ "\0" );
 			}
 		} 
 		version(linux)
