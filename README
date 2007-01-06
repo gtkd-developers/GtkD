@@ -1,10 +1,40 @@
+Duit is Digital Mars D programing language OO wrapper for Gtk+.
+Duit is release on th LGPL license.
+
 Here you can find the development version of Duit.
 Duit is to replace DUI.
 
-Duit is not yet usable. To get a working version of DUI get
-OLDdui.tar.gz
+Duit is as stable as the old DUI and much more complete.
+Duit is a work in progress.
 
-Duit work is progressing rapidly and a usable version is exptected in just a few weeks.
+Requirements:
+-------------
+- linux or windows(2000, XP)
+- Gtk libs
+- dmd installation
+  (on your home directory on linux or the root directory on windows)
+optionally:
+- openGL libs (mesa is fine on linux)
+- gtkglext
 
-Duit is pronounced like "do it"
-Duit name might change to GtkD
+installation:
+-------------
+only the development version of Duit is supplied for now.
+the installation depends on the setup of your development environment.
+consider leds (http://www.dsource.org/projects/leds/browser/downloads/)
+for your D development projects.
+This means that to release your project you must include the Duit lib
+on your deliverable or statically link to Duit - please pay attention
+to the license.
+
+compile the lib and the test programs:
+--------------------------------------
+to compile Duit Duitgl and the tests execute
+
+$ makeAll.sh on linux 
+$ makeAll.bat on windows
+
+then run the tests
+$ DuitTests - tests the wrapping for Gtk+
+$ SimpleGL - simple test for openGL extension
+$ ShapesGL - test for openGL extension

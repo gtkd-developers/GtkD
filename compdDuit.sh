@@ -1,6 +1,6 @@
 #!/bin/sh
 rm libduit.a
-../../compd \
+compd \
 	src/atk \
 	src/cairoLib \
 	src/gdk \
