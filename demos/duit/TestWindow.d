@@ -259,6 +259,7 @@ class TestWindow : MainWindow
 		testPaned(notebook);
 		testDialogs(notebook);
 		testViewport(notebook);
+		testThreads(notebook);
 		debug(1)writefln("TestWindow.setup 5.4");
 		notebook.appendPage(new TestScales,"Scales");
 		testSpinButton(notebook);
@@ -888,6 +889,104 @@ class TestWindow : MainWindow
 		
 	}
 
+Button[] threadTestButtons;
+private import std.thread;
+private import std.random;
+private import gdk.Threads;
+		static T1[] t1s;
+	class T1 : Thread
+	{
+		int num;
+		this(int num)
+		{
+			super(&run);
+			this.num = num;
+		}
+	
+		int run()
+		{
+			while(1)
+			{
+				int buttonNum = rand()%threadTestButtons.length;
+				Button button = threadTestButtons[buttonNum];
+				gdkThreadsEnter();
+				button.removeAll();
+				button.setLabel(std.string.format("%s", num));
+				gdkThreadsLeave();
+				yield();
+			}
+			return 1;
+		}
+	}
+	
+	void testThreads(Notebook notebook)
+	{
+		
+		Table grid = new Table(8,8,0);
+		for ( int i = 0 ; i<8 ; i++)
+		{
+			for ( int j = 0 ; j<8; j++)
+			{
+				Button button = new Button(std.string.format("%s",(j+8*i)));
+				threadTestButtons ~= button;
+				grid.attach( button,
+							i,i+1,
+							j,j+1,
+							AttachOptions.SHRINK,AttachOptions.SHRINK,4,4);
+				
+				t1s ~= new T1(j+8*i);
+			}
+		}
+	
+		void stop(Button button)
+		{
+			foreach ( T1 t ; t1s )
+			{
+				switch( t.getState() )
+				{
+					case Thread.TS.RUNNING: 
+						t.pause();
+						break;
+						
+					default: 
+						break;
+				}
+			}
+		}
+	
+		void go(Button button)
+		{
+			foreach ( T1 t ; t1s )
+			{
+				switch( t.getState() )
+				{
+					case Thread.TS.INITIAL:
+						t.start(); 
+						break;
+						
+					default: 
+						t.resume();
+						break;
+				}
+			}
+		}
+	
+		VBox vbox = new VBox(false, 2);
+		vbox.packStart(grid, true, true,2);
+		ButtonBox actions = HButtonBox.createActionBox();
+		
+		Button button = new Button(StockID.STOP, &stop);
+		actions.packStart(button, false, false, 7);
+		button = new Button(StockID.OK, &go);
+		actions.packStart(button, false, false, 7);
+		
+		vbox.packStart(actions, false, false, 2);
+		
+		notebook.appendPage(vbox,new Label("Threads"));
+	}
+	
+
+	
 	void testViewport(Notebook notebook)
 	{
 
@@ -1058,7 +1157,7 @@ void main(char[][] args)
 
 	Linker.dumpFailedLoads();
 	
-	Duit.init(args);
+	Duit.initMultiThread(args);
 
 	TestWindow window = new TestWindow();
 
