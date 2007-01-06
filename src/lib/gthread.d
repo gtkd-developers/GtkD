@@ -34,7 +34,7 @@ private Linker gthread_Linker;
 
 static this()
 {
-	gthread_Linker = new Linker(libPath ~ importLibs[LIBRARY.GTHREAD] );
+	gthread_Linker = new Linker(libPath ~ importLibs[LIBRARY.GTHREAD], libPath ~ importLibs[LIBRARY.GLIB] );
 	gthread_Linker.link(gthreadLinks);
 	debug writefln("* Finished static this(): gthread");
 }

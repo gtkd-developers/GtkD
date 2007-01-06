@@ -158,18 +158,13 @@ class TestWindow : MainWindow
 				GtkDialogFlags.MODAL,
 				MessageType.INFO,
 				ButtonsType.OK,
-				"DUI D (graphic) User Interface\n"
-				"an implementation through GTK+\n"
+				"Duit D (graphic) User Interface\n"
+				"D OO wrapper for GTK+\n"
 				"by Antonio Monteiro.\n"
-				"DUI is released under the LGPL license\n"
+				"Duit is released under the LGPL license\n"
 				"\n"
 				"Send comments and suggestions to duitoolkit@yahoo.ca\n"
-				"or go to the yahoo group\n"
-				"http://groups.yahoo.com/group/duitoolkit\n"
-				"(Group email: duitoolkit@yahoogroups.com)\n"
-				"\n"
-				"See detailed information at DUI home page\n"
-				"http://ca.geocities.com/duitoolkit\n"
+				"or go to the Dui group on dsource.org\n"
 				);
 		d.run();
 		d.destroy();
@@ -187,6 +182,7 @@ class TestWindow : MainWindow
 		debug(1) writefln("instantiating TestWindow 4");
 		
 		char[] versionCompare = Version.checkVersion(2,8,0);
+		debug(1) writefln("instantiating TestWindow 5");
 		if ( versionCompare.length > 0 )
 		{
 			MessageDialog d = new MessageDialog(this, 
@@ -195,10 +191,13 @@ class TestWindow : MainWindow
 										ButtonsType.OK,
 										"Duit : Gtk+ version missmatch\n" ~ versionCompare ~
 										"\nYou might run into problems!"
-										"\n\nPres OK to continue");
+										"\n\nPress OK to continue");
+			debug(1) writefln("instantiating TestWindow 6");
 			d.run();
+			debug(1) writefln("instantiating TestWindow 7");
 			d.destroy();
 		}
+		debug(1) writefln("instantiating TestWindow 8");
 
 	}
 	
@@ -259,7 +258,14 @@ class TestWindow : MainWindow
 		testPaned(notebook);
 		testDialogs(notebook);
 		testViewport(notebook);
-		testThreads(notebook);
+		version(Win32)
+		{
+			// todo - threads are still broken on windows
+		}
+		else
+		{
+			testThreads(notebook);
+		}
 		debug(1)writefln("TestWindow.setup 5.4");
 		notebook.appendPage(new TestScales,"Scales");
 		testSpinButton(notebook);
@@ -1156,10 +1162,20 @@ void main(char[][] args)
 {
 
 	Linker.dumpFailedLoads();
-	
-	Duit.initMultiThread(args);
+
+	version(Win32)
+	{
+		// todo threads are still broken on windows...
+		Duit.init(args);
+	}
+	else
+	{
+		Duit.initMultiThread(args);
+	}
 
 	TestWindow window = new TestWindow();
 
+	debug(1)writefln("before Duit.main");
 	Duit.main();
+	debug(1)writefln("after Duit.main");
 }

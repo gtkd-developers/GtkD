@@ -147,7 +147,7 @@ class TestDrawingArea : VBox
 
 			primitiveType = "Filled Arc";
 			font = new PgFontDescription(PgFontDescription.fromString("Courier 48"));
-			image = new Image("images/duitIcon.xpm");
+			image = new Image("images\\duitIcon.xpm");
 			scaledPixbuf = image.getPixbuf();
 			paintColor = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
 			black = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
@@ -458,3 +458,4 @@ private import gtk.gtktypes;
 	}
 
 }
+

@@ -34,7 +34,7 @@ private Linker gdkpixbuf_Linker;
 
 static this()
 {
-	gdkpixbuf_Linker = new Linker(libPath ~ importLibs[LIBRARY.GDKPIXBUF] );
+	gdkpixbuf_Linker = new Linker(libPath ~ importLibs[LIBRARY.GDKPIXBUF], libPath ~ importLibs[LIBRARY.GDK] );
 	gdkpixbuf_Linker.link(gdkpixbufLinks);
 	debug writefln("* Finished static this(): gdkpixbuf");
 }
