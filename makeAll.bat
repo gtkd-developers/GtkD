@@ -1,17 +1,17 @@
 @echo OFF
 
-# make duit libs and test
+rem make duit libs and test
 
-compdDuit.bat
-compdDuitTests.bat
+call compdDuit.bat
+call compdDuitTests.bat
 
-#compdDuitgl.bat
-# TODO compdDuitSimpleGL.bat
-# TODO compdDuit.ShapesGL.bat
+remcompdDuitgl.bat
+rem TODO compdDuitSimpleGL.bat
+rem TODO compdDuit.ShapesGL.bat
 
-# you can now run
-#./DuitTests
-# TODO ./SimpleGL
-# TODO ./ShapesGL
+rem you can now run
+rem./DuitTests
+rem TODO ./SimpleGL
+rem TODO ./ShapesGL
 
 
