@@ -12,7 +12,7 @@ mkdir release/duit/images
 
 
 cp `which compd` release/duit/compd
-cp compd.exe duit/compd.exe
+cp compd.exe release/duit/compd.exe
 
 cp -R src/* release/duit/src
 cp -R srcgl/* release/duit/srcgl
