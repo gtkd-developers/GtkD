@@ -136,31 +136,40 @@ template GLCapability()
 	 */
 	bit glDrawFrame(Widget widget)
 	{
-		//printf("GLCapabilityT.glDrawFrame \n" );
+		debug(drawFrame)printf("GLCapabilityT.glDrawFrame 1\n" );
 		GLContext context = GLWidget.getGLContext(widget);
+		debug(drawFrame)printf("GLCapabilityT.glDrawFrame 2\n" );
 		GLDrawable drawable = GLWidget.getGLDrawable(widget);
+		debug(drawFrame)printf("GLCapabilityT.glDrawFrame 3\n" );
 		
 		/*** OpenGL BEGIN ***/
 		if ( !drawable.glBegin(context) )
 		{
+			debug(drawFrame)printf("GLCapabilityT.glDrawFrame 4\n" );
 			return false;
 		}
+		debug(drawFrame)printf("GLCapabilityT.glDrawFrame 5\n" );
 		
 		/*** do user actions ***/
 		bit consumeEvent = typeof(this).drawGL(null);
 		
+		debug(drawFrame)printf("GLCapabilityT.glDrawFrame 6\n" );
 		//writefln("glDrawFrame");
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
 		{
+			debug(drawFrame)printf("GLCapabilityT.glDrawFrame 7\n" );
 			drawable.swapBuffers();
 		}
 		else
 		{
+			debug(drawFrame)printf("GLCapabilityT.glDrawFrame 8\n" );
 			glFlush ();
 		}
 
+		debug(drawFrame)printf("GLCapabilityT.glDrawFrame 9\n" );
 		drawable.glEnd();
+		debug(drawFrame)printf("GLCapabilityT.glDrawFrame 10\n" );
 		
 
 		
@@ -169,10 +178,21 @@ template GLCapability()
 		
 	}
 	
+	bool alreadyRealized;
+	
+	bool getAlreadyRealized()
+	{
+		return alreadyRealized;
+	}
+	
 	void realizeFrame(Widget widget)
 	{
-		
-		//printf("GLCapabilityT.realizeFrame \n" );
+		if ( alreadyRealized ) 
+		{
+		//	return;
+		}
+		alreadyRealized = true;
+		printf("GLCapabilityT.realizeFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
 		GLDrawable drawable = GLWidget.getGLDrawable(widget);
 		
