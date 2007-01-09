@@ -5524,8 +5524,8 @@ code: start
 	{
 		if ( size < 0 ) size = -size;	// hack to workaround leds bug - TO BE REMOVED
 		modifyFont(new PgFontDescription(
-                       PgFontDescription.fromString(
-                       family ~ " " ~ std.string.toString(size))));
+			PgFontDescription.fromString(
+			family ~ " " ~ std.string.toString(size))));
 	}
 	
 	/**
