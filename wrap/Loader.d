@@ -172,10 +172,10 @@ public class Linker
 		{
 			handle = dlopen( (this.libraryName ~ "\0").ptr, RTLD_NOW);
 			if (handle is null) 
-            { 
-                // non-dev libraries tend to be called xxxx.so.0 
-                handle = dlopen( (this.libraryName ~ ".0\0").ptr, RTLD_NOW); 
-            } 
+			{
+				// non-dev libraries tend to be called xxxx.so.0 
+				handle = dlopen( (this.libraryName ~ ".0\0").ptr, RTLD_NOW); 
+			} 
 			if ( alternateLibraryName !is null )
 			{
 				alternateHandle = dlopen( (this.alternateLibraryName ~ "\0").ptr, RTLD_NOW);
