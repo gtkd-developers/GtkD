@@ -531,7 +531,7 @@ class Installer : MainWindow
 		int ok;
 		version(Win32)
 		{
-			 ok = system("copyx /s "~from~" "~to);
+			 ok = system("xcopy /s "~from~" "~to);
 		}
 		else
 		{
