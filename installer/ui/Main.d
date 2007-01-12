@@ -56,6 +56,9 @@ private import gtk.SizeGroup;
 private import gdk.Event;
 private import std.stdio;
 
+private import std.c.stdlib;
+private import std.string;
+
 interface InstallerUI
 {
 	void setUserPanel(UserPanel panel);
@@ -714,14 +717,18 @@ class LocalPanel : UserPanel
 			{
 				version(Win32) char[] dmd = std.path.join(std.path.join(dir ,"bin"), "dmd.exe");
 				else  char[] dmd = std.path.join(std.path.join(dir ,"bin"), "dmd");
+				writefln("validDMDHome dmd = %s", dmd);
 				std.file.isfile(dmd);
 				version(Win32)
 				{
-					char[] dm = std.path.join(std.path.join(dir,".."),"bin");
+					char[] dm = std.path.join(std.path.join(dir,"..\\dm"),"bin");
+					writefln("validDMDHome dm = %s", dm);
 					char[] link = std.path.join(dm, "link.exe");
+					writefln("validDMDHome link = %s", link);
 					std.file.isfile(link);
-					char[] link = std.path.join(dm, "lib.exe");
-					std.file.isfile(link);
+					char[] lib = std.path.join(dm, "lib.exe");
+					writefln("validDMDHome lib = %s", lib);
+					std.file.isfile(lib);
 				}
 				else  char[] link = std.path.join(std.path.join(dir ,"bin"), "dmd");
 				valid = true;
@@ -735,9 +742,6 @@ class LocalPanel : UserPanel
 		return valid;
 	}
 	
-private import std.c.stdlib;
-private import std.string;
-
 //	class GuessFile
 //	{
 //		char[] guess;
@@ -854,6 +858,7 @@ private import std.string;
 			if ( completed )
 			{
 				completed = validDMDHome();
+				writefln("Local.selected 1 completed = %s", completed);
 			}
 		}
 		version(duitdev)
@@ -861,6 +866,7 @@ private import std.string;
 			if ( completed )
 			{
 				completed = installerUI.getDirectory("duitDevHome").length > 0;
+				writefln("Local.selected 2 completed = %s", completed);
 			}
 		}
 		version(leds)
@@ -868,16 +874,19 @@ private import std.string;
 			if ( completed )
 			{
 				completed = installerUI.getDirectory("ledsHome").length > 0;
+				writefln("Local.selected 3 completed = %s", completed);
 			}
 		}
 		
 		if ( completed )
 		{
 			completed = installerUI.getDirectory("gtkHome").length > 0;
+				writefln("Local.selected 4 completed = %s", completed);
 		}
 		if ( completed )
 		{
 			completed = installerUI.getDirectory("duitLibHome").length > 0;
+				writefln("Local.selected 5 completed = %s", completed);
 		}
 		
 		return true;
@@ -966,7 +975,14 @@ MainInstaller mainInstaller;
 
 int main(char[][] args)
 {
-	Duit.initMultiThread(args);
+	version(Win32)
+	{
+		Duit.init(args);
+	}
+	else
+	{
+		Duit.initMultiThread(args);
+	}
 	mainInstaller = new MainInstaller();
 	Duit.main();
 	return 0;
