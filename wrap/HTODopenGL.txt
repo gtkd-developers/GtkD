@@ -45,11 +45,11 @@ dynload: yes
 file: wrap/cHeaders/GL/glu.d
 outfile: srcgl/lib/glu.d
 
-#runthis: wine ~/dm/bin/htod.exe wrap/cHeaders/GL/glx.hpp wrap/cHeaders/GL/glx.d -Iwrap/cHeaders
-#prefile: wrap/cHeaders/GL/glx.hpp
-pack: glgdk
-lib: GLX
-dynload: yes
-file: wrap/cHeaders/GL/glx.d
-outfile: srcgl/lib/glx.d
+##runthis: wine ~/dm/bin/htod.exe wrap/cHeaders/GL/glx.hpp wrap/cHeaders/GL/glx.d -Iwrap/cHeaders
+##prefile: wrap/cHeaders/GL/glx.hpp
+#pack: glgdk
+#lib: GLX
+#dynload: yes
+#file: wrap/cHeaders/GL/glx.d
+#outfile: srcgl/lib/glx.d
 

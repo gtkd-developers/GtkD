@@ -53,6 +53,8 @@
  * 	- gtk.gtktypes
  * 	- lib.gtk
  * 	- gtk.gtktypes
+ * 	- gthread.Thread;
+ * 	- gdk.Threads;
  * structWrap:
  * 	- GdkEvent* -> Event
  * 	- GtkObject* -> ObjectGtk
@@ -74,10 +76,8 @@ private import lib.gtk;
 private import gtk.gtktypes;
 private import lib.gtk;
 private import gtk.gtktypes;
-private import gthread.Thread;
-private import gdk.Threads;
-
-
+private import gthread.Thread;;
+private import gdk.Threads;;
 
 /**
  * Description
@@ -147,8 +147,8 @@ public class Duit
 	 * This initiates Duit to supports multi threaded programs.
 	 * read full documantation at http://gtk.org/faq/#AEN482
 	 * from the FAQ:
-	 * "There is a single global lock that you must acquire with 
-	 * gdk_threads_enter() before making any GDK calls, 
+	 * "There is a single global lock that you must acquire with
+	 * gdk_threads_enter() before making any GDK calls,
 	 * and release with gdk_threads_leave() afterwards throughout your code."
 	 * This is to be used on any call to GDK not executed from the main thread.
 	 */
@@ -159,7 +159,6 @@ public class Duit
 		init(args);
 	}
 	
-
 	
 	/**
 	 */

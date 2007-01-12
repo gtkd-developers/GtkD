@@ -11,8 +11,8 @@ mkdir release/duit/wrap
 mkdir release/duit/images
 
 
-cp `which compd` release/duit/compd
-cp compd.exe release/duit/compd.exe
+#cp `which compd` release/duit/compd
+#cp compd.exe release/duit/compd.exe
 
 cp -R src/* release/duit/src
 cp -R srcgl/* release/duit/srcgl
@@ -20,14 +20,18 @@ cp -R demos/* release/duit/demos
 cp -R wrap/* release/duit/wrap
 cp -R images/* release/duit/images
 
-cp compdDuit.sh compdDuitTests.sh release/duit
-cp compdDuit.bat compdDuitTests.bat release/duit
+cp setup release/duit
+cp setup.exe release/duit
 
-cp compdDuitgl.sh compdShapesGL.sh compdSimpleGL.sh release/duit
-cp compdDuitgl.bat compdShapesGL.bat compdSimpleGL.bat release/duit
 
-cp makeAll.sh release/duit
-cp makeAll.bat release/duit
+#cp compdDuit.sh compdDuitTests.sh release/duit
+#cp compdDuit.bat compdDuitTests.bat release/duit
+
+#cp compdDuitgl.sh compdShapesGL.sh compdSimpleGL.sh release/duit
+#cp compdDuitgl.bat compdShapesGL.bat compdSimpleGL.bat release/duit
+
+#cp makeAll.sh release/duit
+#cp makeAll.bat release/duit
 
 cd release
 # how is this done?
@@ -36,8 +40,8 @@ rm -fr */.svn
 rm -fr */*/.svn
 rm -fr */*/*/.svn
 rm -fr */*/*/*/.svn
-rm -fr */*/*/*/*/*.svn
-rm -fr */*/*/*/*/*/*.svn
+rm -fr */*/*/*/*/.svn
+rm -fr */*/*/*/*/*/.svn
 
 tar -cf ../duit.tar duit
 gzip ../duit.tar
@@ -48,5 +52,5 @@ cd ..
 
 mv duit.tar.gz duit.zip ../downloads
 
-rm -fr release
+#rm -fr release
 

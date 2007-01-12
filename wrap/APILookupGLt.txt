@@ -316,7 +316,7 @@ template GLCapability()
 		
 		//writefln("configureFrame 2");
 		/*** do user actions ***/
-		bit consumeEvent = typeof(this).resizeGL(event);
+		int consumeEvent = typeof(this).resizeGL(event);
 		//printf("here\n");
 		//writefln("configureFrame 3");
 		

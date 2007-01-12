@@ -162,15 +162,20 @@ public class Linker
 
 		version(Windows)
 		{
-			handle = LoadLibraryA( (this.libraryName ~ "\0").ptr );
+			handle = LoadLibraryA( this.libraryName ~ "\0" );
 			if ( alternateLibraryName !is null )
 			{
-				alternateHandle = LoadLibraryA( (this.alternateLibraryName ~ "\0").ptr );
+				alternateHandle = LoadLibraryA( this.alternateLibraryName ~ "\0" );
 			}
 		} 
 		version(linux)
 		{
 			handle = dlopen( (this.libraryName ~ "\0").ptr, RTLD_NOW);
+			if (handle is null) 
+			{
+				// non-dev libraries tend to be called xxxx.so.0 
+				handle = dlopen( (this.libraryName ~ ".0\0").ptr, RTLD_NOW); 
+			} 
 			if ( alternateLibraryName !is null )
 			{
 				alternateHandle = dlopen( (this.alternateLibraryName ~ "\0").ptr, RTLD_NOW);

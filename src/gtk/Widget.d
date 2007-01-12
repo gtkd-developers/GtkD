@@ -246,12 +246,14 @@ public class Widget : ObjectGtk
 	
 	/**
 	 * Modifies the font for this widget.
-	 * This just calls modifyFont(new PgFontDescription(family,size));
+	 * This just calls modifyFont(new PgFontDescription(PgFontDescription.fromString(family ~ " " ~ size)));
 	 */
 	public void modifyFont(char[] family, int size)
 	{
 		if ( size < 0 ) size = -size;	// hack to workaround leds bug - TO BE REMOVED
-		modifyFont(new PgFontDescription(family,size));
+		modifyFont(new PgFontDescription(
+		PgFontDescription.fromString(
+		family ~ " " ~ std.string.toString(size))));
 	}
 	
 	/**
