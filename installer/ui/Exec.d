@@ -57,7 +57,7 @@ class Exec : Executor
 		
 		version(Win32)
 		{
-			std.string.replace(command, "\\", "\\\\");
+			command = std.string.replace(command, "\\", "\\\\");
 		}
 		
 		Spawn spawn = new Spawn(command);
