@@ -55,6 +55,11 @@ class Exec : Executor
 		
 		writefln("\nexec command - %s", command);
 		
+		version(Win32)
+		{
+			std.string.replace(command, "\\", "\\\\");
+		}
+		
 		Spawn spawn = new Spawn(command);
 		
 		int result = spawn.commandLineSync(
