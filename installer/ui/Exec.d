@@ -53,7 +53,8 @@ class Exec : Executor
 
 		this.executionEnded = executionEnded;
 		
-		writefln("\nexec command - %s", command);
+		//writefln("\ncwd : ", std.file.getcwd());
+		//writefln("exec command : %s", command);
 		
 		version(Win32)
 		{
@@ -104,7 +105,7 @@ class Exec : Executor
 	 */
 	bool appendOutputLine(char[] line)
 	{
-		writefln("Output - %s", line);
+		//writefln("Output - %s", line);
 		output ~= line;
 		return false;
 	}
@@ -117,7 +118,7 @@ class Exec : Executor
 	 */
 	bool appendErrorLine(char[] line)
 	{
-		writefln("Error - %s", line);
+		//writefln("Error - %s", line);
 		error ~= line;
 		return true;
 	}

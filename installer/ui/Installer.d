@@ -272,11 +272,9 @@ class Installer : MainWindow
 	
 	private bool installDuitglSimpleGL()
 	{
-		writefln("installDuitglSimpleGL");
 		bool ok = moveDuitDev();
 		if ( ok )
 		{
-			writefln("installDuitglSimpleGL 1");
 			char[] cwd = std.file.getcwd();
 			Compiler compiler;
 			std.file.chdir(duitDevHome);
@@ -285,7 +283,6 @@ class Installer : MainWindow
 			compiler.setExecutor(new Exec());
 			compiler.setCompilerExec(compilerExec);
 			
-			writefln("installDuitglSimpleGL 2");
 			compiler.addArg("-Isrc");
 			compiler.addArg("-Isrcgl");
 			compiler.addArg("-Idemos");
@@ -298,7 +295,7 @@ class Installer : MainWindow
 			compiler.addArg("-lduitgl");
 			compiler.addArg("-lGL");
 			compiler.addArg("-lGLU");
-			compiler.addArg("-ldl");
+			version(linux)compiler.addArg("-ldl");
 			
 			compiler.addArg("-c");
 			compiler.addArg("-op");
@@ -313,9 +310,7 @@ class Installer : MainWindow
 				compiler.addArg("-lpthread");
 				compiler.addArg("-lm");
 			}
-			writefln("installDuitglSimpleGL 3");
 			compiler.compile();
-			writefln("installDuitglSimpleGL 4");
 			if ( compiler.compileStatus == 0 
 				&& compiler.linkStatus == 0
 				)
@@ -327,7 +322,6 @@ class Installer : MainWindow
 				ok = false;
 			}
 			
-			writefln("installDuitglSimpleGL 5");
 			std.file.chdir(cwd);
 		}
 		return ok;
@@ -335,11 +329,9 @@ class Installer : MainWindow
 
 	private bool installDuitglShapesGL()
 	{
-		writefln("installDuitglShapesGL");
 		bool ok = moveDuitDev();
 		if ( ok )
 		{
-			writefln("installDuitglShapesGL 1");
 			char[] cwd = std.file.getcwd();
 			Compiler compiler;
 			std.file.chdir(duitDevHome);
@@ -348,7 +340,6 @@ class Installer : MainWindow
 			compiler.setExecutor(new Exec());
 			compiler.setCompilerExec(compilerExec);
 			
-			writefln("installDuitglShapesGL 2");
 			compiler.addArg("-Isrc");
 			compiler.addArg("-Isrcgl");
 			compiler.addArg("demos/gl/TrackBall.d");
@@ -361,7 +352,7 @@ class Installer : MainWindow
 			compiler.addArg("-lduitgl");
 			compiler.addArg("-lGL");
 			compiler.addArg("-lGLU");
-			compiler.addArg("-ldl");
+			version(linux)compiler.addArg("-ldl");
 			
 			compiler.addArg("-c");
 			compiler.addArg("-op");
@@ -376,9 +367,7 @@ class Installer : MainWindow
 				compiler.addArg("-lpthread");
 				compiler.addArg("-lm");
 			}
-			writefln("installDuitglShapesGL 3");
 			compiler.compile();
-			writefln("installDuitglShapesGL 4");
 			if ( compiler.compileStatus == 0 
 				&& compiler.linkStatus == 0
 				)
@@ -390,7 +379,6 @@ class Installer : MainWindow
 				ok = false;
 			}
 			
-			writefln("installDuitglShapesGL 5");
 			std.file.chdir(cwd);
 		}
 		return ok;
@@ -398,7 +386,6 @@ class Installer : MainWindow
 
 	private bool installDuitglDev()
 	{
-		writefln("installDuitDev");
 		bool ok = true;
 		
 		Compiler compiler;
@@ -469,11 +456,9 @@ class Installer : MainWindow
 	
 	private bool installDuitTests()
 	{
-		writefln("installDuitTests");
 		bool ok = moveDuitDev();
 		if ( ok )
 		{
-			writefln("installDuitTests 1");
 			char[] cwd = std.file.getcwd();
 			Compiler compiler;
 			std.file.chdir(duitDevHome);
@@ -482,7 +467,6 @@ class Installer : MainWindow
 			compiler.setExecutor(new Exec());
 			compiler.setCompilerExec(compilerExec);
 			
-			writefln("installDuitTests 2");
 			compiler.addArg("-Isrc");
 			compiler.addArg("-Idemos");
 			compiler.addArg("demos/duit");
@@ -491,7 +475,7 @@ class Installer : MainWindow
 			compiler.addArg("-o DuitTests");
 			compiler.addArg("-L .");
 			compiler.addArg("-lduit");
-			compiler.addArg("-ldl");
+			version(linux)compiler.addArg("-ldl");
 			
 			compiler.addArg("-c");
 			compiler.addArg("-op");
@@ -506,9 +490,7 @@ class Installer : MainWindow
 				compiler.addArg("-lpthread");
 				compiler.addArg("-lm");
 			}
-			writefln("installDuitTests 3");
 			compiler.compile();
-			writefln("installDuitTests 4");
 			if ( compiler.compileStatus == 0 
 				&& compiler.linkStatus == 0
 				)
@@ -520,7 +502,6 @@ class Installer : MainWindow
 				ok = false;
 			}
 			
-			writefln("installDuitTests 5");
 			std.file.chdir(cwd);
 		}
 		return ok;
@@ -531,7 +512,7 @@ class Installer : MainWindow
 		int ok;
 		version(Win32)
 		{
-			 ok = system("xcopy /s /-Y "~from~" "~to);
+			 ok = system("xcopy /s /Y /E /Q "~from~" "~to);
 		}
 		else
 		{
@@ -562,7 +543,6 @@ class Installer : MainWindow
 	
 	private bool installDuitDev()
 	{
-		writefln("installDuitDev");
 		bool ok = true;
 		
 		Compiler compiler;

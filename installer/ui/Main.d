@@ -688,7 +688,6 @@ class LocalPanel : UserPanel
 		else
 		{
 			home = std.string.toString(getenv("HOME"));
-			writefln("home = %s", home);
 		}
 			
 	}
@@ -717,17 +716,13 @@ class LocalPanel : UserPanel
 			{
 				version(Win32) char[] dmd = std.path.join(std.path.join(dir ,"bin"), "dmd.exe");
 				else  char[] dmd = std.path.join(std.path.join(dir ,"bin"), "dmd");
-				writefln("validDMDHome dmd = %s", dmd);
 				std.file.isfile(dmd);
 				version(Win32)
 				{
 					char[] dm = std.path.join(std.path.join(dir,"..\\dm"),"bin");
-					writefln("validDMDHome dm = %s", dm);
 					char[] link = std.path.join(dm, "link.exe");
-					writefln("validDMDHome link = %s", link);
 					std.file.isfile(link);
 					char[] lib = std.path.join(dm, "lib.exe");
-					writefln("validDMDHome lib = %s", lib);
 					std.file.isfile(lib);
 				}
 				else  char[] link = std.path.join(std.path.join(dir ,"bin"), "dmd");
@@ -826,7 +821,7 @@ class LocalPanel : UserPanel
 		char[] guess;
 		version(Win32)
 		{
-			guess = "\\Program Files\\Common Files\\GTK\\2.0\\bin";
+			guess = "\\testRelease";
 		}
 		else
 		{
@@ -858,7 +853,6 @@ class LocalPanel : UserPanel
 			if ( completed )
 			{
 				completed = validDMDHome();
-				writefln("Local.selected 1 completed = %s", completed);
 			}
 		}
 		version(duitdev)
@@ -866,7 +860,6 @@ class LocalPanel : UserPanel
 			if ( completed )
 			{
 				completed = installerUI.getDirectory("duitDevHome").length > 0;
-				writefln("Local.selected 2 completed = %s", completed);
 			}
 		}
 		version(leds)
@@ -874,19 +867,16 @@ class LocalPanel : UserPanel
 			if ( completed )
 			{
 				completed = installerUI.getDirectory("ledsHome").length > 0;
-				writefln("Local.selected 3 completed = %s", completed);
 			}
 		}
 		
 		if ( completed )
 		{
 			completed = installerUI.getDirectory("gtkHome").length > 0;
-				writefln("Local.selected 4 completed = %s", completed);
 		}
 		if ( completed )
 		{
 			completed = installerUI.getDirectory("duitLibHome").length > 0;
-				writefln("Local.selected 5 completed = %s", completed);
 		}
 		
 		return true;
