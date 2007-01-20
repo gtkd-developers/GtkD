@@ -1,0 +1,876 @@
+#
+# This file is part of duit.
+# 
+# duit is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+# 
+# duit is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+# 
+# You should have received a copy of the GNU Lesser General Public License
+# along with duit; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+#
+###
+#####
+# Definitions for wrapping pango
+#####
+###
+#
+
+# must start with wrap
+
+addTypedefs: start
+
+public import glib.glibtypes;
+public import gobject.gobjecttypes;
+
+//public import std.c.windows.windows;
+
+///* The pango Basic Types */
+public alias void FcPattern;
+public alias void FcCharSet;
+//public alias void LOGFONT;
+//struct Display;
+//struct FT_Bitmap;
+struct FT_Face;
+//struct XftDraw;
+//struct XftColor;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+
+	const int PANGO_SCALE = 1024;
+	const double PANGO_SCALE_XX_SMALL = 0.5787037037037;	/// The scale factor for three shrinking steps (1 / (1.2 * 1.2 * 1.2)).
+	const double PANGO_SCALE_X_SMALL  = 0.6444444444444;	/// The scale factor for two shrinking steps (1 / (1.2 * 1.2)).
+	const double PANGO_SCALE_SMALL    = 0.8333333333333;	/// The scale factor for one shrinking step (1 / 1.2).
+	const double PANGO_SCALE_MEDIUM   = 1.0;	/// The scale factor for normal size (1.0).
+	const double PANGO_SCALE_LARGE    = 1.2;	/// The scale factor for one magnification step (1.2)
+	const double PANGO_SCALE_X_LARGE  = 1.4399999999999;	/// The scale factor for two magnification steps (1.2 * 1.2).
+	const double PANGO_SCALE_XX_LARGE = 1.728;	/// The scale factor for three magnification steps (1.2 * 1.2 * 1.2).
+
+addConstants: end
+
+wrap: pango
+
+###########################################################
+### Basic Pango Interfaces ################################
+###########################################################
+
+file: pango-Text-Processing.html
+
+struct: PangoContext
+class: PgContext
+prefix: pango_context_
+noprefix: pango_item_
+import: glib.ListSG
+structWrap: GSList* ListSG
+import: glib.ListG
+structWrap: GList* ListG
+
+#import: pango.PgContext
+#structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
+
+outFile: PgContext
+
+
+struct: PangoItem
+class: PgItem
+prefix: pango_item_
+strictPrefix: Yes
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+#import: pango.PgItem
+#structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+
+outFile: PgItem
+
+
+file: pango-Glyph-Storage.html
+struct: PangoGlyphString
+class: PgGlyphString
+prefix: pango_glyph_string_
+
+import: glib.ListSG
+structWrap: GSList* ListSG
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
+
+outFile: PgGlyphString
+
+file: pango-Fonts.html
+
+struct: PangoFontDescription
+class: PgFontDescription
+prefix: pango_font_description_
+noprefix: pango_font_metrics_
+noprefix: pango_font_family_
+noprefix: pango_font_face_
+noprefix: pango_font_map_
+noprefix: pango_fontset_simple_
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+#import: pango.PgFontDescription
+#structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
+
+code: start
+
+	/**
+	 * Creates a nwe font description and set the family nd the size
+	 * param: family Family
+	 * param: size Size
+	 */
+	public this(char[] family, int size)
+	{
+		this();
+		setFamily("Sans");
+		setSize(size * PANGO_SCALE);
+	}
+
+code: end
+
+outFile: PgFontDescription
+
+struct: PangoFontMetrics
+class: PgFontMetrics
+prefix: pango_font_metrics_
+strictPrefix: Yes
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+#import: pango.PgFontMetrics
+#structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+
+outFile: PgFontMetrics
+
+struct: PangoFontFamily
+class: PgFontFamily
+prefix: pango_font_family_
+strictPrefix: Yes
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+#import: pango.PgFontFamily
+#structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
+
+outFile: PgFontFamily
+
+struct: PangoFontFace
+class: PgFontFace
+prefix: pango_font_face_
+strictPrefix: Yes
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+#import: pango.PgFontFace
+#structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
+
+outFile: PgFontFace
+
+struct: PangoFontMap
+class: PgFontMap
+prefix: pango_font_map_
+strictPrefix: Yes
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+#import: pango.PgFontMap
+#structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
+
+outFile: PgFontMap
+
+struct: PangoFontsetSimple
+class: PgFontsetSimple
+prefix: pango_fontset_simple_
+strictPrefix: Yes
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+#import: pango.PgFontsetSimple
+#structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
+
+outFile: PgFontsetSimple
+
+file: pango-Text-Attributes.html
+
+struct: PangoAttribute
+class: PgAttribute
+prefix: pango_attr_
+noprefix: pango_language_
+#import: g.SList*
+#structWrap: GSList** SList*
+import: glib.ListSG
+import: glib.Str
+structWrap: GSList* ListSG
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+#import: pango.PgAttribute
+#structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+
+outFile: PgAttribute
+
+struct: PangoAttrList
+class: PgAttributeList
+prefix: pango_attr_List_
+noprefix: pango_attr_list_
+strictPrefix: Yes
+outFile: PgAttributeList
+
+struct: PangoLanguage
+class: PgLanguage
+prefix: pango_language_
+strictPrefix: Yes
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+#import: pango.PgLanguage
+#structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
+
+outFile: PgLanguage
+
+file: pango-Tab-Stops.html
+struct: PangoTabArray
+class: PgTabArray
+prefix: pango_tab_array_
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+#import: pango.PgTabArray
+#structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+
+outFile: PgTabArray
+
+#file: PangoMarkupFormat.html
+#class: 
+#prefix: 
+#outFile: 
+
+file: pango-Layout-Objects.html
+
+struct: PangoLayout
+class: PgLayout
+prefix: pango_layout_
+noprefix: pango_layout_iter_
+import: glib.ListSG
+structWrap: GSList* ListSG
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+#import: pango.PgLayout
+#structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
+
+code: start
+	/**
+	 * Sets the text of the layout.
+	 * layout:
+	 *  a PangoLayout
+	 * text:
+	 *  a UTF-8 string
+	 */
+	public void setText(char[] text)
+	{
+		// void pango_layout_set_text (PangoLayout *layout,  const char *text,  int length);
+		pango_layout_set_text(pangoLayout, Str.toStringz(text), text.length);
+	}
+	
+code: end
+
+outFile: PgLayout
+
+struct: PangoLayoutIter
+class: PgLayoutIter
+prefix: pango_layout_iter_
+strictPrefix: Yes
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+#import: pango.PgLayoutIter
+#structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgScriptIter
+structWrap: PangoScriptIter* PgScriptIter
+
+outFile: PgLayoutIter
+
+file: pango-Scripts.html
+struct: PangoScriptIter
+class: PgScriptIter
+prefix: pango_script_iter_
+
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgItem
+structWrap: PangoItem* PgItem
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontFamily
+structWrap: PangoFontFamily* PgFontFamily
+import: pango.PgFontFace
+structWrap: PangoFontFace* PgFontFace
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontsetSimple
+structWrap: PangoFontsetSimple* PgFontsetSimple
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: pango.PgAttributeList
+structWrap: PangoAttributeList* PgAttributeList
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgTabArray
+structWrap: PangoTabArray* PgTabArray
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutIter
+structWrap: PangoLayoutIter* PgLayoutIter
+#import: pango.PgScriptIter
+#structWrap: PangoScriptIter* PgScriptIter
+import: glib.Str
+
+outFile: PgScriptIter
+
+
+###########################################################
+### Rendering with Pango ################################
+###########################################################
+
+#file: pango-Win32-Fonts-and-Rendering.html
+#class: PgWin32
+#prefix: pango_win32_ 
+#outFile: PgWin32
+
+#file: pango-FreeType-Fonts-and-Rendering.html
+
+#struct: PangoFT2FontMap
+#class: PgFT2FontMap
+#prefix: pango_ft2_font_map_
+#strictPrefix: Yes
+#outFile: PgFT2FontMap
+
+#class: PgFT2
+#prefix: pango_ft2_
+#noprefix: pango_ft2_font_map_
+#outFile: PgFT2
+
+#file: pango-Xft-Fonts-and-Rendering.html
+#class: PgXft
+#prefix: pango_xft_
+#outFile: PgXft
+
+#file: pango-Cairo-Rendering.html
+#struct: PangoCairoFontMap
+#class: PgCairoFontMap
+#prefix: pango_cairo_font_map_
+#strictPrefix: Yes
+#outFile: PgCairoFontMap
+
+#class: PgCairo
+#prefix: pango_cairo_
+#noprefix: pango_cairo_font_map_
+#outFile: PgCairo
+
+#file: pango-X-Fonts-and-Rendering.html
+#class: 
+#prefix: 
+#outFile: 
+
+ 
+###########################################################
+### Low Level Functionality ################################
+###########################################################
+
+#file: PangoFcFontMap.html
+#class: PangoFcFontMap
+#prefix: pango_fc_font_map_
+#outFile: PangoFcFontMap
+
+#file: PangoFcFont.html
+#class: PangoFcFont
+#prefix: pango_fc_font_
+#outFile: PangoFcFont
+
+#file: PangoFcDecoder.html
+#class: PangoFcDecoder
+#prefix: pango_dc_decoder_
+#outFile: PangoFcDecoder
+
+#file: pango-OpenType-Font-Handling.html
+
+#class: PangoOtInfo
+#prefix: pango_ot_info_
+#noprefix: pango_ot_buffer_
+#noprefix: pango_ot_ruleset_
+#outFile: PangoOtInfo
+
+#class: PangoOtBuffer
+#prefix: pango_ot_buffer_
+#strictPrefix: Y
+#outFile: PangoOtBuffer
+
+#class: PangoOtRuleset
+#prefix: pango_ot_ruleset_
+#strictPrefix: Y
+#outFile: PangoOtRuleset
+
+file: pango-Coverage-Maps.html
+class: PgCoverage
+prefix: pango_coverage_
+outFile: PgCoverage
+
+file: pango-Engines.html
+class: PgEngine
+prefix: script_engine_
+import: glib.Str
+outFile: PgEngine
+
+file: PangoEngineLang.html
+class: PgEngineLang
+prefix: script_engine_lang_
+outFile: PgEngineLang
+
+file: PangoEngineShape.html
+class: PgEngineShape
+prefix: script_engine_shape_
+outFile: PgEngineShape
+
+#file: pango-Modules.html
+#class: PgModules
+#prefix: pango_
+#outFile: PgModules
+

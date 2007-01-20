@@ -1,0 +1,255 @@
+#
+# This file is part of duit.
+# 
+# duit is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+# 
+# duit is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+# 
+# You should have received a copy of the GNU Lesser General Public License
+# along with duit; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+#
+###
+#####
+# Definitions for wrapping GdkPixbuf
+#####
+###
+#
+
+
+addTypedefs: start
+
+public import glib.glibtypes;
+public import gobject.gobjecttypes;
+public import gdk.gdktypes;
+public alias void* AtkFocusHandler;
+public struct AtkStateSet;
+public struct AtkRectangle;
+
+addTypedefs: end
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
+# must start with wrap
+
+wrap: gdk-pixbuf
+
+###########################################################
+### GdkPixbuf #############################################
+###########################################################
+
+#file: gdk-pixbuf-Versioning.html
+#struct: 
+#class: 
+#prefix: 
+#outFile: 
+
+##################
+### moved to gdk and merged with gdk.Pixbuf
+##################
+#
+#file: gdk-pixbuf-creating.html
+#struct: GdkPixbuf
+#class: Pixbuf
+#prefix: gdk_pixbuf_
+#noprefix: gdk_pixbuf_ref
+#noprefix: gdk_pixbuf_unref
+##import: g.Error*
+##structWrap: GError** Error*
+#import: gdk.Pixbuf
+#structWrap: GdkPixbuf* Pixbuf
+#import: gdkpixbuf.PixbufFormat
+#structWrap: GdkPixbufFormat* PixbufFormat
+#openFile: Pixbuf
+#
+#file: gdk-pixbuf-gdk-pixbuf.html
+#mergeFile:  Pixbuf
+#
+#file: gdk-pixbuf-refcounting.html
+#mergeFile:  Pixbuf
+#
+#file: gdk-pixbuf-file-loading.html
+#mergeFile:  Pixbuf
+#
+#file: gdk-pixbuf-file-saving.html
+#mergeFile:  Pixbuf
+#
+#file: gdk-pixbuf-scaling.html
+#mergeFile:  Pixbuf
+#
+#file: gdk-pixbuf-util.html
+#closeFile:  Pixbuf
+############################
+
+file: gdk-pixbuf-inline.html
+struct: GdkPixdata
+class: Pixdata
+prefix: gdk_pixdata_
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+#import: g.Error*
+#structWrap: GError** Error*
+import: glib.StringG
+structWrap: GString* StringG
+import: glib.Str
+
+outFile: Pixdata
+
+# on gdk
+#file: gdk-pixbuf-gdk-pixbuf-rendering.html
+#struct: 
+#class: 
+#prefix: 
+#outFile: 
+
+# on gdk
+#file: gdk-pixbuf-gdk-pixbuf-from-drawables.html
+#struct: 
+#class: 
+#prefix: 
+#outFile: 
+
+file: gdk-pixbuf-animation.html
+struct: GdkPixbufAnimation
+class: PixbufAnimation
+prefix: gdk_pixbuf_animation_
+#import: g.Error*
+#structWrap: GError** Error*
+import: gdkpixbuf.PixbufAnimation
+structWrap: GdkPixbufAnimation* PixbufAnimation
+#import: gdkpixbuf.PixbufAnimationIter
+#structWrap: GdkPixbufAnimationIter* PixbufAnimationIter
+#import: g.TimeVal
+#structWrap: GTimeVal* TimeVal
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+#import: gdk.PixbufSimpleAnim
+#structWrap: GdkPixbufSimpleAnim* PixbufSimpleAnim
+import: glib.Str
+
+outFile: PixbufAnimation
+
+file: GdkPixbufLoader.html
+struct: GdkPixbufLoader
+class: PixbufLoader
+prefix: gdk_pixbuf_loader_
+import: gdkpixbuf.PixbufFormat
+structWrap: GdkPixbufFormat* PixbufFormat
+#import: g.Error*
+#structWrap: GError** Error*
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+import: gdkpixbuf.PixbufAnimation
+structWrap: GdkPixbufAnimation* PixbufAnimation
+import: glib.Str
+
+nocode: gdk_pixbuf_loader_new_with_type
+nocode: gdk_pixbuf_loader_new_with_mime_type
+code: start
+	/**
+	 * Creates a new pixbuf loader object that always attempts to parse
+	 * image data as if it were an image of type image_type or mime_type, instead of
+	 * identifying the type automatically. Useful if you want an error if
+	 * the image isn't the expected type, for loading image formats
+	 * that can't be reliably identified by looking at the data, or if
+	 * the user manually forces a specific type.
+	 * type:
+	 *  name of the image format or mime to be loaded with the image
+	 * error:
+	 *  return location for an allocated GError, or NULL to ignore errors
+	 * Returns:
+	 *  A newly-created pixbuf loader.
+	 */
+	public this (char[] type, GError** error, bit isMimeType=false)
+	{
+		if ( isMimeType )
+		{
+			// GdkPixbufLoader* gdk_pixbuf_loader_new_with_mime_type  (const char *mime_type,  GError **error);
+			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_mime_type(Str.toStringz(type), error) );
+		}
+		else
+		{
+			// GdkPixbufLoader* gdk_pixbuf_loader_new_with_type  (const char *image_type,  GError **error);
+			this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new_with_type(Str.toStringz(type), error) );
+		}
+	}
+code: end
+
+outFile: PixbufLoader
+
+#file: gdk-pixbuf-gdk-pixbuf-xlib-init.html
+#class: XLib
+#prefix: gdk_pixbuf_xlib_
+#outFile: XLib
+
+#file: gdk-pixbuf-gdk-pixbuf-xlib-rendering.html
+##struct: GdkPixbuf
+#class: XLibRender
+#prefix: gdk_pixbuf_xlib_render_
+#outFile: XLibRender
+
+#file: gdk-pixbuf-gdk-pixbuf-xlib-from-drawables.html
+##struct: GdkPixbuf
+#class: XDrawables
+#prefix: gdk_pixbuf_xlib_
+#outFile: XDrawables
+
+#file: gdk-pixbuf-gdk-pixbuf-xlib-rgb.html
+##struct: 
+#class: XLibRGB
+#prefix: xlib_
+#outFile: XLibRGB
+
+file: gdk-pixbuf-Module-Interface.html
+struct: GdkPixbufFormat
+class: PixbufFormat
+prefix: gdk_pixbuf_format_
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+import: glib.ListSG
+structWrap: GSList* ListSG
+import: glib.Str
+openFile: PixbufFormat
+
+file: gdk-pixbuf-file-loading.html
+prefix: gdk_pixbuf_
+strictPrefix: Y
+
+noprefix: gdk_pixbuf_new_from_file
+noprefix: gdk_pixbuf_new_from_file_at_size
+noprefix: gdk_pixbuf_new_from_file_at_scale
+
+nocode: gdk_pixbuf_new_from_file 
+nocode: gdk_pixbuf_new_from_file_at_size
+nocode: gdk_pixbuf_new_from_file_at_scale
+closeFile:  PixbufFormat
+

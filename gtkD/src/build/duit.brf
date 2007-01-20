@@ -1,0 +1,8 @@
+# duit brf file
+-lib
+-nolink
+-I..
+-allobj
+-cleanup
+-Xphobos
+duit.d
