@@ -230,8 +230,16 @@ template GLCapability()
 		
 	}
 	
+	bool alreadyRealized;
+	
+	bool getAlreadyRealized()
+	{
+		return alreadyRealized;
+	}
+	
 	void realizeFrame(Widget widget)
 	{
+		alreadyRealized = true;
 		
 		//printf("GLCapabilityT.realizeFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
