@@ -772,3 +772,27 @@ outFile: Device
 #prefix: gdk_x11_
 #outFile: X11
 
+############## cairo interaction ###############
+
+
+file: gdk-Cairo-Interaction.html
+class: GdkCairo
+prefix: gdk_cairo_
+import: cairoLib.Cairo
+structWrap: cairo_t* Cairo
+import: gdk.Drawable
+structWrap: GdkDrawable* Drawable
+import: gdk.Color
+structWrap: GdkColor* Color
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+import: gdk.Pixmap
+structWrap: GdkPixmap* Pixmap
+import: gdk.Rectangle
+structWrap: GdkRectangle* Rectangle
+import: gdk.Region
+structWrap: GdkRegion* Region
+outFile: GdkCairo
+
+
+

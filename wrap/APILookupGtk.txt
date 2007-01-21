@@ -5493,9 +5493,9 @@ code: start
 	}
 
 	/**
-	 * Gets the drawable for this widget
+	 * Gets the Window for this widget
 	 * return:
-	 * 		The drawable for this widget
+	 * 		The window for this widget
 	 */
 	Window getWindow()
 	{
