@@ -40,8 +40,8 @@ private alias void* HDC;
 //struct Visual;	// to support XLib surfaces
 //struct Screen;	// to support XLib surfaces
 
-private alias void* Drawable;
-private alias void* Pixmap;
+//private alias void* Drawable;
+//private alias void* Pixmap;
 //public alias bool cairo_bool_t;
 
 alias ubyte uchar;
@@ -91,6 +91,7 @@ mergeFile: Cairo
 
 file: cairo-Transformations.html
 mergeFile: Cairo
+
 
 file: cairo-Text.html
 closeFile: Cairo

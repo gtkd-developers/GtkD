@@ -652,6 +652,15 @@ extern(C)
 	void function(GdkTimeCoord** events, gint nEvents)gdk_device_free_history;
 	gboolean function(GdkDevice* device, gdouble* axes, GdkAxisUse use, gdouble* value)gdk_device_get_axis;
 	void function(GdkWindow* window, gint mask, GdkExtensionMode mode)gdk_input_set_extension_events;
+	
+	// gdk.GdkCairo
+	
+	cairo_t* function(GdkDrawable* drawable)gdk_cairo_create;
+	void function(cairo_t* cr, GdkColor* color)gdk_cairo_set_source_color;
+	void function(cairo_t* cr, GdkPixbuf* pixbuf, double pixbufX, double pixbufY)gdk_cairo_set_source_pixbuf;
+	void function(cairo_t* cr, GdkPixmap* pixmap, double pixmapX, double pixmapY)gdk_cairo_set_source_pixmap;
+	void function(cairo_t* cr, GdkRectangle* rectangle)gdk_cairo_rectangle;
+	void function(cairo_t* cr, GdkRegion* region)gdk_cairo_region;
 
 
 }
@@ -1183,5 +1192,11 @@ Symbol[] gdkLinks =
 	{ "gdk_device_free_history",  cast(void**)& gdk_device_free_history},
 	{ "gdk_device_get_axis",  cast(void**)& gdk_device_get_axis},
 	{ "gdk_input_set_extension_events",  cast(void**)& gdk_input_set_extension_events},
+	{ "gdk_cairo_create",  cast(void**)& gdk_cairo_create},
+	{ "gdk_cairo_set_source_color",  cast(void**)& gdk_cairo_set_source_color},
+	{ "gdk_cairo_set_source_pixbuf",  cast(void**)& gdk_cairo_set_source_pixbuf},
+	{ "gdk_cairo_set_source_pixmap",  cast(void**)& gdk_cairo_set_source_pixmap},
+	{ "gdk_cairo_rectangle",  cast(void**)& gdk_cairo_rectangle},
+	{ "gdk_cairo_region",  cast(void**)& gdk_cairo_region},
 
 ];

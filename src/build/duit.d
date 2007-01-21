@@ -177,6 +177,7 @@ private import gdk.DragContext;
 private import gdk.Threads;
 private import gdk.Input;
 private import gdk.Device;
+private import gdk.GdkCairo;
 
 private import gtk.Duit;
 private import gtk.Timeout;

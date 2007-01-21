@@ -221,6 +221,36 @@ public class Widget : ObjectGtk
 	}
 	
 	/**
+	 * Gets the drawable for this widget
+	 * return:
+	 * 		The drawable for this widget
+	 */
+	Window getWindow()
+	{
+		
+		//		ubyte *p = cast(ubyte*)getStruct();
+		//
+		//		for ( int i=0 ; i<120 ; i+=4 )
+		//		{
+			//			printf("(%d) %X %x %x %x %x\n", i,p,*(p+0), *(p+1), *(p+2), *(p+3));
+			//			p+=4;
+		//		}
+		//
+		//		int* pt =cast(int*)getStruct();
+		//
+		//		printf("pt=%X strcut=%X\n", pt, getStruct());
+		//		printf("*pt=%X\n", *pt);
+		//		pt+=52/4;
+		//		printf("pt+52=%X strcut.window=%X\n", pt, getWidgetStruct().window);
+		//		printf("*pt+52=%X\n", *pt);
+		//
+		//		//return new Drawable(cast(GdkDrawable*)(getWidgetStruct().window));
+		int* pt =cast(int*)getStruct();
+		pt += 52/4;
+		return new Window(cast(GdkWindow*)(*pt));
+	}
+	
+	/**
 	 * Sets  the cursor.
 	 * @param cursor the new cursor
 	 * \bug the cursor changes to the parent widget also
