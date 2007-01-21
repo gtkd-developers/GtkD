@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  * 
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  * 
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
@@ -36,7 +36,7 @@ public struct Funct
 	private import std.stdio;
 	
 	private import utils.convparms;
-	private import utils.DuitClass;
+	private import utils.GtkDClass;
 
 	bit ctor;	/// when true this method was found to be a constructor
 	char[] type;
@@ -65,21 +65,27 @@ public struct Funct
 		strctVar = null;
 		getStrctVar(convParms);
 		strctPointer = convParms.strct.dup ~ '*';
-		debug(Funct) writefln("init text=%s", text);
-		int p = 0;
-		DuitClass.skipBlank(p,text);
-		type = DuitClass.untilBlank(p, text);
-		debug(type)writef("type = %s", type);
-		DuitClass.fixType(type, p, text);
-		debug(type)writefln(" -> %s", type);
-		DuitClass.skipBlank(p, text);
-		name = DuitClass.until(p, text, '(');
 
-		DuitClass.adjustTypeName(type, name);
+		debug(Funct) writefln("init text=%s", text);
+
+		int p = 0;
+		GtkDClass.skipBlank(p,text);
+		type = GtkDClass.untilBlank(p, text);
+
+		debug(type)writef("type = %s", type);
+
+		GtkDClass.fixType(type, p, text);
+
+		debug(type)writefln(" -> %s", type);
+
+		GtkDClass.skipBlank(p, text);
+		name = GtkDClass.until(p, text, '(');
+
+		GtkDClass.adjustTypeName(type, name);
 
 		typeWrap = getWrappedType(type.dup, convParms);
 		
-		DuitClass.skip(p, text,'(');
+		GtkDClass.skip(p, text,'(');
 		int countBrace = 0;
 		char[] currParmType;
 		char[] currParm;
@@ -89,36 +95,36 @@ public struct Funct
 			currParmType.length = 0;
 			currParm.length = 0;
 			
-			DuitClass.skipBlank(p, text);
-			currParmType = DuitClass.untilBlank(p, text, ",)");
-			DuitClass.skipBlank(p, text);
+			GtkDClass.skipBlank(p, text);
+			currParmType = GtkDClass.untilBlank(p, text, ",)");
+			GtkDClass.skipBlank(p, text);
 			debug(parm)writef("currParmType = %s", currParmType);
 			if ( std.string.find(" const volatile G_CONST_RETURN ", currParmType) > 0 )
 			{
-				currParmType = DuitClass.untilBlank(p, text, ",)");
-				DuitClass.skipBlank(p, text);
+				currParmType = GtkDClass.untilBlank(p, text, ",)");
+				GtkDClass.skipBlank(p, text);
 			}
 			if ( "struct"==currParmType )
 			{
-				currParmType = DuitClass.untilBlank(p, text, ",)");
-				DuitClass.skipBlank(p, text);
+				currParmType = GtkDClass.untilBlank(p, text, ",)");
+				GtkDClass.skipBlank(p, text);
 				currParmType = "void";
 			}
 			else
 			{
-				DuitClass.fixType(currParmType, p, text);
+				GtkDClass.fixType(currParmType, p, text);
 			}
 			debug(parm)writefln(" -> %s", currParmType);
 			if ( currParmType != "..." )
 			{
-				currParm = DuitClass.until(p, text, "),");
+				currParm = GtkDClass.until(p, text, "),");
 			}
 			else
 			{
 				currParm = "";
 			}
 			
-			DuitClass.adjustTypeName(currParmType, currParm);
+			GtkDClass.adjustTypeName(currParmType, currParm);
 
 			parmsType ~= currParmType.dup;
 			parmsWrap ~= getWrappedType(currParmType.dup, convParms);
@@ -126,7 +132,7 @@ public struct Funct
 			
 			if ( p<text.length && text[p]==',') ++p;
 		}
-		DuitClass.skip(p, text, ';');
+		GtkDClass.skip(p, text, ';');
 	}
 
 	char[] getStrctVar(ConvParms* convParms)
@@ -135,7 +141,7 @@ public struct Funct
 		{
 			if ( convParms.strct.length > 0 )
 			{
-				strctVar = DuitClass.toVar(convParms.strct.dup);
+				strctVar = GtkDClass.toVar(convParms.strct.dup);
 			}
 			else
 			{
@@ -176,7 +182,7 @@ public struct Funct
 	}
 	
 	/**
-	 * Gets the gtk from the Duit class to be used on the Gtk function call
+	 * Gets the gtk from the GtkD class to be used on the Gtk function call
 	 * Params:
 	 *    	currType = 	
 	 *    	convParms = 	
@@ -221,7 +227,7 @@ public struct Funct
 				&& (parmsType[i]!="void" || parms[i].length>0)
 				)
 			{
-				parameters ~= parmsType[i] ~" "~DuitClass.idsToDuit(parms[i], convParms, aliases);
+				parameters ~= parmsType[i] ~" "~GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 			}
 			++i;
 		}
@@ -252,19 +258,19 @@ public struct Funct
 			if ( i>firstParameter ) parameters ~= ", ";
 			if ( i == parms.length-1 )
 			{
-				parameters ~= convParms.clss~" "~DuitClass.getClassVar(convParms);
+				parameters ~= convParms.clss~" "~GtkDClass.getClassVar(convParms);
 			}
 			else if ( i>=firstParameter
 				&& (parmsType[i]!="void" || parms[i].length>0)
 				)
 			{
-				if ( i == 0 && DuitClass.endsWith(parmsType[i], '*') )
+				if ( i == 0 && GtkDClass.endsWith(parmsType[i], '*') )
 				{
-					parameters ~= parmsType[i] ~" "~DuitClass.idsToDuit(parms[i], convParms, aliases)~"Struct";
+					parameters ~= parmsType[i] ~" "~GtkDClass.idsToGtkD(parms[i], convParms, aliases)~"Struct";
 				}
 				else
 				{
-					parameters ~= parmsType[i] ~" "~DuitClass.idsToDuit(parms[i], convParms, aliases);
+					parameters ~= parmsType[i] ~" "~GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 				}
 			}
 			++i;
@@ -296,7 +302,7 @@ public struct Funct
 			if ( i>1 ) parameters ~= ", ";
 			if ( i == parms.length-1 )
 			{
-				parameters ~= DuitClass.getClassVar(convParms);
+				parameters ~= GtkDClass.getClassVar(convParms);
 			}
 			else if ( i>=1 
 				&& (parmsType[i]!="void" || parms[i].length>0)
@@ -304,12 +310,12 @@ public struct Funct
 			{
 				//if ( parmsType[i]=="GtkWidget*" )
 				//{
-				//	parameters ~= "new Widget("~DuitClass.idsToDuit(parameterToDuit(i, convParms, aliases), convParms, aliases)~")";
+				//	parameters ~= "new Widget("~GtkDClass.idsToGtkD(parameterToGtkD(i, convParms, aliases), convParms, aliases)~")";
 				//}
 				//else
 				{
-					//parameters ~= DuitClass.idsToDuit(parameterToDuit(i, convParms, aliases), convParms, aliases);
-					parameters ~= parameterToDuit(i, convParms, aliases);
+					//parameters ~= GtkDClass.idsToGtkD(parameterToGtkD(i, convParms, aliases), convParms, aliases);
+					parameters ~= parameterToGtkD(i, convParms, aliases);
 				}
 			}
 			++i;
@@ -320,7 +326,7 @@ public struct Funct
 
 	char[] getDelegateDeclaration(ConvParms* convParms, int firstParameter = 0)
 	{
-		if ( DuitClass.endsWith(typeWrap,"user_function") )
+		if ( GtkDClass.endsWith(typeWrap,"user_function") )
 		{
 			typeWrap = typeWrap[0..typeWrap.length-13];
 		}
@@ -366,9 +372,9 @@ public struct Funct
 		debug(ctor)writefln("declaration ctor realStrct = %s",convParms.realStrct);
 		debug(ctor)writefln("declaration ctor type = %s",type);
 		debug(ctor)writefln("declaration ctor name = %s",name);
-		convName = DuitClass.idsToDuit(name, convParms, aliases);
+		convName = GtkDClass.idsToGtkD(name, convParms, aliases);
 		if ( convParms.strct.length>0 
-			&& DuitClass.startsWith(convName, "new")
+			&& GtkDClass.startsWith(convName, "new")
 			&& ( (type == strctPointer 
 					|| type == convParms.ctorStrct~"*")
 				|| /* special GObject case */
@@ -423,7 +429,7 @@ public struct Funct
 				&& (parmsType[i]!="void" || parms[i].length>0)
 				)
 			{
-				dec ~= parmsWrap[i]~" "~DuitClass.idsToDuit(parms[i], convParms, aliases);
+				dec ~= parmsWrap[i]~" "~GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 			}
 			++i;
 			++parmCount;
@@ -447,44 +453,44 @@ public struct Funct
 			if ( parmsWrap[i] == "char[]" )
 			{
 				parmToGtk = "Str.toStringz("
-							~ DuitClass.idsToDuit(parms[i], convParms, aliases)
+							~ GtkDClass.idsToGtkD(parms[i], convParms, aliases)
 							~")";
 			}
 			else
 			{
-				char[] id = DuitClass.idsToDuit(parms[i], convParms, aliases);
+				char[] id = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 				parmToGtk = "("~id~" is null) ? null : "~id~ ".get"~parmsWrap[i]~"Struct()";
 			}
 		}
 		else
 		{
-			parmToGtk = DuitClass.idsToDuit(parms[i], convParms, aliases);
+			parmToGtk = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 		}
 		return parmToGtk;
 	}
 	
-	char[] parameterToDuit(int i, ConvParms* convParms, char[][char[]] aliases)
+	char[] parameterToGtkD(int i, ConvParms* convParms, char[][char[]] aliases)
 	{
-		char[] parmToDuit;
+		char[] parmToGtkD;
 		if ( parmsType[i] != parmsWrap[i] )
 		{
 			if ( parmsWrap[i] == "char[]" )
 			{
-				parmToDuit = "Str.toString("
-							~ DuitClass.idsToDuit(parms[i], convParms, aliases)
+				parmToGtkD = "Str.toString("
+							~ GtkDClass.idsToGtkD(parms[i], convParms, aliases)
 							~")";
 			}
 			else
 			{
-				//parmToDuit = DuitClass.idsToDuit(parms[i], convParms, aliases);
-				parmToDuit = "new "~parmsWrap[i]~"("~DuitClass.idsToDuit(parms[i], convParms, aliases)~")";
+				//parmToGtkD = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
+				parmToGtkD = "new "~parmsWrap[i]~"("~GtkDClass.idsToGtkD(parms[i], convParms, aliases)~")";
 			}
 		}
 		else
 		{
-			parmToDuit = DuitClass.idsToDuit(parms[i], convParms, aliases);
+			parmToGtkD = GtkDClass.idsToGtkD(parms[i], convParms, aliases);
 		}
-		return parmToDuit;
+		return parmToGtkD;
 	}
 
 	char[] getWrapParametersType()
@@ -502,7 +508,7 @@ public struct Funct
 	}
 	
 	/**
-	 * Gets the body of the Duit method.
+	 * Gets the body of the GtkD method.
 	 * This include the call to the Gtk function.
 	 * If the first parameter is a pointer to the struct make it implicit and use the internal struct
 	 * Returns: The text of the body of the function NOT including the braces
@@ -565,7 +571,7 @@ public struct Funct
 				{
 					if ( convParms.templ.length == 0 )
 					{
-						gtkCall ~= DuitClass.toVar(convParms.strct.dup);
+						gtkCall ~= GtkDClass.toVar(convParms.strct.dup);
 					}
 					else
 					{

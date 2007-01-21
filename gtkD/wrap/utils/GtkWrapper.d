@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  * 
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  * 
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
@@ -62,7 +62,7 @@ public class GtkWrapper : WrapperIF
 {
 
 	private import utils.DefReader;
-	private import utils.DuitClass;
+	private import utils.GtkDClass;
 	private import utils.convparms;
 	
 	private import std.file;
@@ -76,20 +76,20 @@ public class GtkWrapper : WrapperIF
 
 	public static char[] license =
 "/*"
-"\n * This file is part of duit."
+"\n * This file is part of gtkD."
 "\n * "
-"\n * duit is free software; you can redistribute it and/or modify"
+"\n * gtkD is free software; you can redistribute it and/or modify"
 "\n * it under the terms of the GNU Lesser General Public License as published by"
 "\n * the Free Software Foundation; either version 2.1 of the License, or"
 "\n * (at your option) any later version."
 "\n * "
-"\n * duit is distributed in the hope that it will be useful,"
+"\n * gtkD is distributed in the hope that it will be useful,"
 "\n * but WITHOUT ANY WARRANTY; without even the implied warranty of"
 "\n * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the"
 "\n * GNU Lesser General Public License for more details."
 "\n * "
 "\n * You should have received a copy of the GNU Lesser General Public License"
-"\n * along with duit; if not, write to the Free Software"
+"\n * along with gtkD; if not, write to the Free Software"
 "\n * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA"
 "\n */"
 "\n"
@@ -187,7 +187,7 @@ public class GtkWrapper : WrapperIF
 	public void writeBuildText()
 	{
 		writefln("writeBuildText start");
-		std.file.write(std.path.join("src/build", "duit.d"), buildText~"\n\n"~buildTextLibs);
+		std.file.write(std.path.join("src/build", "gtkD.d"), buildText~"\n\n"~buildTextLibs);
 	}
 	
 	int process(char[] apiLookupDefinition)
@@ -444,7 +444,7 @@ public class GtkWrapper : WrapperIF
 		debug(file)writefln("GtkWrapper.wrapFile pack=%s outPack=%s", pack, outPack);
 		int status = ERR_NONE;
 
-		DuitClass duitClass;
+		GtkDClass gtkDClass;
 		
 		ConvParms* convParms = new ConvParms;
 		convParms.outPack = outPack;
@@ -500,15 +500,15 @@ public class GtkWrapper : WrapperIF
 					break;
 				
 				case "openFile": 
-					duitClass = openFile(outPack, text, convParms);
+					gtkDClass = openFile(outPack, text, convParms);
 					text.length = 0;
 					break;
 				case "mergeFile": 
-					duitClass.mergeDuitClass(text, convParms);
+					gtkDClass.mergeGtkDClass(text, convParms);
 					text.length = 0;
 					break;
 				case "closeFile": 
-					closeFile(text, duitClass, convParms);
+					closeFile(text, gtkDClass, convParms);
 					text.length = 0;
 					break;
 				case "interface":
@@ -538,7 +538,7 @@ public class GtkWrapper : WrapperIF
 					convParms.inFile = std.string.strip(defReader.getValue());
 					if ( convParms.inFile.length > 0 )
 					{
-						if ( DuitClass.startsWith(convParms.inFile,"/") )
+						if ( GtkDClass.startsWith(convParms.inFile,"/") )
 						{
 							debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", convParms.toString());
 							debug(file)writefln("GtkWrapper.wrapFile convParms:\n%s", defReader.toString());
@@ -576,8 +576,8 @@ public class GtkWrapper : WrapperIF
 	 */
 	private void outFile(char[] outPack, char[] text, ConvParms* convParms)
 	{
-		DuitClass duitClass = openFile(outPack, text, convParms);
-		closeFile("", duitClass, convParms);
+		GtkDClass gtkDClass = openFile(outPack, text, convParms);
+		closeFile("", gtkDClass, convParms);
 	}
 	
 	/**
@@ -588,40 +588,40 @@ public class GtkWrapper : WrapperIF
 	 *    	convParms = 	
 	 * Returns: 
 	 */
-	private DuitClass openFile(char[] outPack, char[] text, ConvParms* convParms)
+	private GtkDClass openFile(char[] outPack, char[] text, ConvParms* convParms)
 	{
 		convParms.outFile = defReader.getValue(); 
-		debug(wrapFile)writefln("######### duitClass for %s.%s (%s)", outPack, convParms.clss, convParms.outFile);
-		DuitClass duitClass = new DuitClass(this);
-		duitClass.openDuitClass(text, convParms);
+		debug(wrapFile)writefln("######### gtkDClass for %s.%s (%s)", outPack, convParms.clss, convParms.outFile);
+		GtkDClass gtkDClass = new GtkDClass(this);
+		gtkDClass.openGtkDClass(text, convParms);
 		
-		return duitClass;
+		return gtkDClass;
 	}
 	
-	private void closeFile(char[] text, DuitClass duitClass, ConvParms* convParms)
+	private void closeFile(char[] text, GtkDClass gtkDClass, ConvParms* convParms)
 	{
-		debug(writeFile)writefln("GtkWrapper.closeFile %s", duitClass.getOutFile(outputRoot, srcOut));
-		char[] duitText = duitClass.closeDuitClass(text, convParms);
-		if ( duitClass.getError() == 0 )
+		debug(writeFile)writefln("GtkWrapper.closeFile %s", gtkDClass.getOutFile(outputRoot, srcOut));
+		char[] gtkDText = gtkDClass.closeGtkDClass(text, convParms);
+		if ( gtkDClass.getError() == 0 )
 		{
-			std.file.write(duitClass.getOutFile(outputRoot, srcOut),duitText);
+			std.file.write(gtkDClass.getOutFile(outputRoot, srcOut),gtkDText);
 		}
 		if ( convParms.interf.length == 0 )
 		{
 			convParms.clearAll();
 		}
 		
-		externalDeclarations ~= duitClass.getExternalDeclarations();
-		collectedAliases ~=	duitClass.getAliases();
-		collectedEnums ~=	duitClass.getEnums();
-		collectedFuncts ~=	duitClass.getFuncts();
-		collectedStructs ~=	duitClass.getStructs();
-		collectedTypes ~=	duitClass.getTypes();
-		collectedUnions ~=	duitClass.getUnions();
-		collectedConstants ~=	duitClass.getConstants();
-		stockEnums ~= duitClass.getStockEnums();
-		stockChars ~= duitClass.getStockChars();
-		gTypes ~= duitClass.getGTypes();
+		externalDeclarations ~= gtkDClass.getExternalDeclarations();
+		collectedAliases ~=	gtkDClass.getAliases();
+		collectedEnums ~=	gtkDClass.getEnums();
+		collectedFuncts ~=	gtkDClass.getFuncts();
+		collectedStructs ~=	gtkDClass.getStructs();
+		collectedTypes ~=	gtkDClass.getTypes();
+		collectedUnions ~=	gtkDClass.getUnions();
+		collectedConstants ~=	gtkDClass.getConstants();
+		stockEnums ~= gtkDClass.getStockEnums();
+		stockChars ~= gtkDClass.getStockChars();
+		gTypes ~= gtkDClass.getGTypes();
 	}
 	
 	/**
@@ -787,7 +787,7 @@ else
 			}
 			externalText ~= dec;
 			if ( dec.length > 0
-				&& !DuitClass.startsWith(dec, "//")
+				&& !GtkDClass.startsWith(dec, "//")
 				&& dec[0]!='#'
 				)
 			{
@@ -840,7 +840,7 @@ else
 
 		char[] tabs = "";
 		
-		DuitClass.append(def, lookupTypedefs, tabs);
+		GtkDClass.append(def, lookupTypedefs, tabs);
 		
 
 				
@@ -850,36 +850,36 @@ else
 			def ~= "\nenum GType";
 			def ~= "\n{\n";
 			tabs ~= "\t";
-			DuitClass.append(def, gTypes, tabs);
+			GtkDClass.append(def, gTypes, tabs);
 			tabs = "";
 			def ~= "\n}\n\n";
 		}
 		tabs = "";
 
-		DuitClass.append(def, lookupConstants, tabs);
+		GtkDClass.append(def, lookupConstants, tabs);
 
-		DuitClass.append(def, lookupAliases, tabs);
-		DuitClass.append(def, collectedAliases, tabs);
+		GtkDClass.append(def, lookupAliases, tabs);
+		GtkDClass.append(def, collectedAliases, tabs);
 		tabs = "";
 		
-		DuitClass.append(def, lookupEnums, tabs);
-		DuitClass.append(def, collectedEnums, tabs);
+		GtkDClass.append(def, lookupEnums, tabs);
+		GtkDClass.append(def, collectedEnums, tabs);
 		tabs = "";
 		
-		DuitClass.append(def, lookupStructs, tabs);
-		DuitClass.append(def, collectedStructs, tabs);
+		GtkDClass.append(def, lookupStructs, tabs);
+		GtkDClass.append(def, collectedStructs, tabs);
 		tabs = "";
 		
-		DuitClass.append(def, lookupTypes, tabs);
-		DuitClass.append(def, collectedTypes, tabs);
+		GtkDClass.append(def, lookupTypes, tabs);
+		GtkDClass.append(def, collectedTypes, tabs);
 		tabs = "";
 
-		DuitClass.append(def, lookupFuncts, tabs);
-		DuitClass.append(def, collectedFuncts, tabs);
+		GtkDClass.append(def, lookupFuncts, tabs);
+		GtkDClass.append(def, collectedFuncts, tabs);
 		tabs = "";
 
-		DuitClass.append(def, lookupUnions, tabs);
-		DuitClass.append(def, collectedUnions, tabs);
+		GtkDClass.append(def, lookupUnions, tabs);
+		GtkDClass.append(def, collectedUnions, tabs);
 		tabs = "";
 		
 		if ( stockEnums.length > 0 )
@@ -888,18 +888,18 @@ else
 			def ~= "\nenum StockID";
 			def ~= "\n{\n";
 			tabs ~= "\t";
-			DuitClass.append(def, stockEnums, tabs);
+			GtkDClass.append(def, stockEnums, tabs);
 			tabs = "";
 			def ~= "\n}";
 			def ~= "\n\n// Stock strings";
 			def ~= "\nchar[][] StockDesc = ";
 			def ~= "\n[";
 			tabs ~= "\t";
-			DuitClass.append(def, stockChars, tabs);
+			GtkDClass.append(def, stockChars, tabs);
 			tabs = "";
 			def ~= "\n];";
 		}
-		DuitClass.append(def, collectedConstants, tabs);
+		GtkDClass.append(def, collectedConstants, tabs);
 		tabs = "";
 
 		char[] pathname = std.path.join(srcOut, outPack);
