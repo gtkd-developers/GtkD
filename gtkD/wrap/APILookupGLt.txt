@@ -73,7 +73,7 @@ prefix: gtk_gl_
 outFile: GLtInit
 
 
-file: gtkglext/gtkglext-gtkglwidget.html
+file: gtkglext-gtkglwidget.html
 
 #struct: GtkGLWidget
 class: GLWidget

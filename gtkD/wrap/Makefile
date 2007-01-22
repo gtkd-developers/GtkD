@@ -30,3 +30,35 @@ clean:
 install:
 	cp $(LIB_TARG) $(PATH_INSTALL)/lib
 	cp $(INCL_FILES) $(PATH_INSTALL)/include  
+	
+##########################################################
+#
+# Automatically grab the html from the tarballs
+# Cairo and gtkglext full sources need to be somewhere.
+
+TMPDIR = tmp
+CAIROROOT = /opt/cairo
+GTKGLEXTROOT = /opt/gtkglext
+GZROOT = /opt/gtkdocs
+INSTALLDIR = /opt/gtkddev/trunk/gtkdocs
+GZBALLS = atk-1.0-docs.tar.gz gdk-2.0-docs.tar.gz gdk-pixbuf-2.0-docs.tar.gz glib-2.0-docs.tar.gz \
+	  gobject-2.0-docs.tar.gz gtk-2.0-docs.tar.gz pango-1.0-docs.tar.gz
+TAR = tar -xzvvf
+CAIRODIR = doc/public
+GTKGLEXTDIR = docs/reference/gtkglext
+
+prephtml:
+	rm -rf tmp
+	mkdir $(TMPDIR)
+	for i in $(GZBALLS); do \
+	$(TAR) $(GZROOT)/$$i -C $(TMPDIR); \
+	done
+	ln -s glib $(TMPDIR)/gthread
+	cp -Ra  $(CAIROROOT)/$(CAIRODIR)/html $(TMPDIR)/cairo
+	cp -Ra  $(GTKGLEXTROOT)/$(GTKGLEXTDIR)/html $(TMPDIR)/glgdk
+	ln -s glgdk $(TMPDIR)/glgtk
+	mv $(TMPDIR) $(INSTALLDIR)
+	 
+	#Copy cairo html 
+	#copy gtkglext html
+	#ln -s glgdk glgtk

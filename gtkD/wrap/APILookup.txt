@@ -122,7 +122,7 @@ enumType: G_PARAM_CONSTRUCT_ONLY ParamFlags.CONSTRUCT_ONLY
 
 # define the lookup and destination directories
 # "src" and "obj" will be added to outputRoot
-inputRoot: ../gtk/api/
+inputRoot: ../gtkdocs/
 outputRoot: 
 
 # define the packages to process

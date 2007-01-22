@@ -368,7 +368,7 @@ prefix: gdk_pixbuf_
 import: glib.Str
 openFile: Pixbuf
 
-file: gdk-pixbuf-creating.html
+file: ../gdk-pixbuf/gdk-pixbuf-creating.html
 struct: GdkPixbuf
 class: Pixbuf
 import: glib.Str
@@ -391,23 +391,23 @@ text: end
 
 mergeFile: Pixbuf
 
-file: gdk-pixbuf-gdk-pixbuf.html
+file: ../gdk-pixbuf/gdk-pixbuf-gdk-pixbuf.html
 mergeFile:  Pixbuf
 
-file: gdk-pixbuf-refcounting.html
+file: ../gdk-pixbuf/gdk-pixbuf-refcounting.html
 mergeFile:  Pixbuf
 
-file: gdk-pixbuf-file-loading.html
+file: ../gdk-pixbuf/gdk-pixbuf-file-loading.html
 noprefix: gdk_pixbuf_get_file_info 
 mergeFile:  Pixbuf
 
-file: gdk-pixbuf-file-saving.html
+file: ../gdk-pixbuf/gdk-pixbuf-file-saving.html
 mergeFile:  Pixbuf
 
-file: gdk-pixbuf-scaling.html
+file: ../gdk-pixbuf/gdk-pixbuf-scaling.html
 mergeFile:  Pixbuf
 
-file: gdk-pixbuf-util.html
+file: ../gdk-pixbuf/gdk-pixbuf-util.html
 closeFile:  Pixbuf
 
 file: gdk-Colormaps-and-Colors.html
