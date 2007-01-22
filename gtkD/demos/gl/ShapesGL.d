@@ -3,24 +3,24 @@
  * Simple toggle button example.
  *
  * written by Naofumi Yasufuku  <naofumi@users.sourceforge.net>
- * adapted by Antonio Monteiro to the DUI toolkit <duitoolkit@yahoo.ca>
+ * adapted by Antonio Monteiro to the gtkD toolkit <gtkDoolkit@yahoo.ca>
  * this example is released under GPL license
  */
 /*
- * This file is part of dui.
+ * This file is part of gtkD.
  * 
- * dui is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  * 
- * dui is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with dui; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
@@ -181,7 +181,7 @@ private import glgtk.glgtktypes;
 private import glgtk.GLCapability;
 private import glgtk.GLWidget;
 
-private import gtk.Duit;
+private import gtk.GtkD;
 
 private import gtk.DrawingArea;
 private import gtk.Layout;
@@ -912,7 +912,7 @@ class TestGL : MainWindow
 {
 	this()
 	{
-		super("Duit test Shaples GL");
+		super("GtkD test Shaples GL");
 		setReallocateRedraws(true);
 		//setBorderWidth(10);
 		show();
@@ -926,7 +926,7 @@ void main(char [][]args)
 {
 	
 	
-	Duit.init(args);
+	GtkD.init(args);
 
 	GLdInit.init(null, null);
 	
@@ -937,7 +937,7 @@ void main(char [][]args)
 	testGL.add(new ShapesGL(testGL));
 	testGL.showAll();
 	
-	Duit.main();
+	GtkD.main();
 
 	
 } 

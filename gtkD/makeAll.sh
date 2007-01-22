@@ -1,16 +1,16 @@
 #!/bin/sh
 
-# make duit libs and test
+# make gtkD libs and test
 
-./compdDuit.sh
-./compdDuitTests.sh
+./compdGtkD.sh
+./compdGtkDTests.sh
 
-./compdDuitgl.sh
+./compdGtkDgl.sh
 ./compdSimpleGL.sh
 ./compdShapesGL.sh
 
 # you can now run
-#./DuitTests
+#./GtkDTests
 #./SimpleGL
 #./ShapesGL
 

@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
@@ -24,7 +24,7 @@ private import gtk.Window;
 private import gtk.Label;
 private import gtk.Button;
 private import gtk.VBox;
-private import gtk.Duit;
+private import gtk.GtkD;
 private import std.stdio;
 private import gtk.Image;
 
@@ -42,7 +42,7 @@ public class OtherTests : Window
 
 	this()
 	{
-		super("Duit");
+		super("GtkD");
 		setDecorated(true);
 		VBox box = new VBox(false, 2);
 		box.add(new Label("Hello World"));
@@ -114,7 +114,7 @@ public class OtherTests : Window
 	{
 		destroy();
 		writefln("Exit by request from HelloWorld");
-		Duit.exit(0);
+		GtkD.exit(0);
 		return 0;
 	}
 	
@@ -127,8 +127,8 @@ public class OtherTests : Window
 
 void main(char[][] args)
 {
-	Duit.init(args);
+	GtkD.init(args);
 	new OtherTests();
-	Duit.main();
+	GtkD.main();
 }
 

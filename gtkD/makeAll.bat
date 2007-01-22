@@ -1,16 +1,16 @@
 @echo OFF
 
-rem make duit libs and test
+rem make gtkD libs and test
 
-call compdDuit.bat
-call compdDuitTests.bat
+call compdGtkD.bat
+call compdGtkDTests.bat
 
-rem compdDuitgl.bat
-rem TODO compdDuitSimpleGL.bat
-rem TODO compdDuit.ShapesGL.bat
+rem compdGtkDgl.bat
+rem TODO compdGtkDSimpleGL.bat
+rem TODO compdGtkD.ShapesGL.bat
 
 rem you can now run
-rem ./DuitTests
+rem ./GtkDTests
 rem TODO ./SimpleGL
 rem TODO ./ShapesGL
 

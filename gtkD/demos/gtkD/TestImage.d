@@ -1,22 +1,22 @@
 /*
- * This file is part of dui.
+ * This file is part of gtkD.
  * 
- * dui is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  * 
- * dui is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with dui; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-module duit.TestImage;
+module gtkD.TestImage;
 
 private import gtk.VBox;
 	
@@ -38,7 +38,7 @@ private import std.stdio;
 private import glib.Str;
 
 /**
- * This tests the DUI loading and display and image file
+ * This tests the GtkD loading and display and image file
  */
 class TestImage : VBox
 {
@@ -78,12 +78,12 @@ class TestImage : VBox
 		// so here it is
 		char[][] pngs;
 		
-		pngs ~= "/home/ruimt/devel/D/DUI/images/duiIcon_t.xpm";
-		pngs ~= "/home/ruimt/devel/D/DUI/images/duiLogo.gif";
-		pngs ~= "/home/ruimt/devel/D/DUI/images/duiLogo.xpm";
-		pngs ~= "/home/ruimt/devel/D/DUI/images/duiLogo_2.xpm";
-		pngs ~= "/home/ruimt/devel/D/DUI/images/duiLogo_4.xpm";
-		pngs ~= "/home/ruimt/devel/D/DUI/images/duiLogo_8.xpm";
+		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDIcon_t.xpm";
+		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDLogo.gif";
+		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDLogo.xpm";
+		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDLogo_2.xpm";
+		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDLogo_4.xpm";
+		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDLogo_8.xpm";
 
 		return loadTable(pngs);
 	}
@@ -120,7 +120,7 @@ class TestImage : VBox
 			if ( fileName[0] != '/' )
 			{
 				version(linux) fileName = fileName ~ "/usr/share/pixmaps/";
-				version(Windows) fileName = fileName ~ "C:\\Projects\\D\\DynDUI\\dui\\images\\";
+				version(Windows) fileName = fileName ~ "C:\\Projects\\D\\DynGtkD\\gtkD\\images\\";
 			}
 			image = new Image(fileName);
 			//image.addOnEnterNotify(&onEnter);

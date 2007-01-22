@@ -1,8 +1,8 @@
 #!/bin/sh
-rm libduitgl.a
+rm libgtkdgl.a
 compd \
 	srcgl/glgdk \
 	srcgl/glgtk \
 	srcgl/lib \
 	-I src:srcgl:~/dmd/src/phobos \
-	-olib libduitgl
+	-olib libgtkdgl

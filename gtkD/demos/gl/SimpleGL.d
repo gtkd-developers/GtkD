@@ -32,7 +32,7 @@ private import gdk.Event;
 
 private import gtk.Widget;
 
-private import gtk.Duit;
+private import gtk.GtkD;
 private import gtk.MainWindow;
 
 /**
@@ -144,7 +144,7 @@ private import glgdk.GLdInit;
 
 void main(char[][] args)
 {
-	Duit.init(args);
+	GtkD.init(args);
 
 	GLdInit.init(null, null);
 	
@@ -153,6 +153,6 @@ void main(char[][] args)
 	window.add(simpleGL);
 	window.showAll();
 		
-	Duit.main();
+	GtkD.main();
 
 }

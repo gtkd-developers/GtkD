@@ -3,4 +3,4 @@
 -cleanup
 -Xsrc
 demo.d
-DUIT.lib
+gtkd.lib

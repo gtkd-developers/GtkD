@@ -1,5 +1,5 @@
 #!/bin/sh
-rm libduit.a
+rm libgtkd.a
 compd \
 	src/atk \
 	src/cairoLib \
@@ -11,4 +11,4 @@ compd \
 	src/lib \
 	src/pango \
 	-I src:~/dmd/src/phobos \
-	-olib libduit
+	-olib libgtkd

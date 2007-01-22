@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -20,7 +20,7 @@ module ui.Installer;
 
 private import ui.Main;
 private import ui.Exec;
-private import gtk.Duit;
+private import gtk.GtkD;
 private import gtk.MainWindow;
 private import gtk.Widget;
 private import gtk.ProgressBar;
@@ -43,7 +43,7 @@ private import std.c.time;
 	
 
 /**
- * From the informatino collected from the UI this will install Duit, Duitgl and or leds
+ * From the informatino collected from the UI this will install GtkD, GtkDgl and or leds
  */
 class Installer : MainWindow
 {
@@ -55,7 +55,7 @@ class Installer : MainWindow
 	
 	this(InstallerUI installerUI)
 	{
-		super("Installing Duit components");
+		super("Installing GtkD components");
 		this.installerUI = installerUI;
 		setDefaultSize(400,300);
 		setup();
@@ -86,7 +86,7 @@ class Installer : MainWindow
 	}
 	
 	char[] dmdHome;
-	char[] duitDevHome;
+	char[] gtkDDevHome;
 	char[] phobos;
 	char[] compilerExec;
 
@@ -96,7 +96,7 @@ class Installer : MainWindow
 	private void install()
 	{
 		bool ok = true;
-		duitDevHome = installerUI.getDirectory("duitDevHome");
+		gtkDDevHome = installerUI.getDirectory("gtkDDevHome");
 		dmdHome = installerUI.getDirectory("dmdHome");
 		phobos = std.path.join(std.path.join(dmdHome,"src"),"phobos");
 		compilerExec = std.path.join(installerUI.getDirectory("dmdHome"),"bin");
@@ -109,11 +109,11 @@ class Installer : MainWindow
 			compilerExec = std.path.join(compilerExec,"dmd");
 		}
 		
-//		if ( ok && installerUI.getSelection("duit") )
+//		if ( ok && installerUI.getSelection("gtkD") )
 //		{
 //			label.setText("");
 //			Gdk.flush();
-//			ok = installDuit();
+//			ok = installGtkD();
 //		}
 
 
@@ -140,9 +140,9 @@ class Installer : MainWindow
 				while ( !cancel && getState() != Thread.TS.TERMINATED )
 				{
 					progressBar.pulse();
-					while ( Duit.eventsPending() )
+					while ( GtkD.eventsPending() )
 					{
-						Duit.mainIterationDo(false);
+						GtkD.mainIterationDo(false);
 					}
 					std.c.time.usleep(30000);
 				}
@@ -156,21 +156,21 @@ class Installer : MainWindow
 			
 		}
 		
-		if ( !cancel && ok && installerUI.getSelection("duitDev") )
+		if ( !cancel && ok && installerUI.getSelection("gtkDDev") )
 		{
-			ok = (new CompileThread("Duit Development", &installDuitDev)).ok;
+			ok = (new CompileThread("GtkD Development", &installGtkDDev)).ok;
 		}
 
-//		if ( ok && installerUI.getSelection("duitgl") )
+//		if ( ok && installerUI.getSelection("gtkDgl") )
 //		{
-//			label.setText("Duitgl - openGL bindings");
+//			label.setText("GtkDgl - openGL bindings");
 //			Gdk.flush();
-//			ok = installDuitgl();
+//			ok = installGtkDgl();
 //		}
 
 		if ( !cancel && ok && installerUI.getSelection("duiglDev") )
 		{
-			ok = (new CompileThread("Duitgl Development", &installDuitglDev)).ok;
+			ok = (new CompileThread("GtkDgl Development", &installGtkDglDev)).ok;
 		}
 
 //		if ( !cancel && ok && installerUI.getSelection("leds") )
@@ -180,40 +180,40 @@ class Installer : MainWindow
 //			ok = installLeds();
 //		}
 //
-//		if ( !cancel && ok && installerUI.getSelection("duitdi") )
+//		if ( !cancel && ok && installerUI.getSelection("gtkDdi") )
 //		{
-//			label.setText("Duit .di files");
+//			label.setText("GtkD .di files");
 //			Gdk.flush();
-//			ok = installDuitdi();
+//			ok = installGtkDdi();
 //		}
 //
-//		if ( !cancel && ok && installerUI.getSelection("duitSource") )
+//		if ( !cancel && ok && installerUI.getSelection("gtkDSource") )
 //		{
-//			label.setText("Duit source files");
+//			label.setText("GtkD source files");
 //			Gdk.flush();
-//			ok = installDuitSource();
+//			ok = installGtkDSource();
 //		}
 //
-		if ( !cancel && ok && installerUI.getSelection("duitTests") )
+		if ( !cancel && ok && installerUI.getSelection("gtkDTests") )
 		{
-			ok = (new CompileThread("Duit Test and demos programs", &installDuitTests)).ok;
+			ok = (new CompileThread("GtkD Test and demos programs", &installGtkDTests)).ok;
 		}
 		
-		if ( !cancel && ok && installerUI.getSelection("duitglSimple") )
+		if ( !cancel && ok && installerUI.getSelection("gtkDglSimple") )
 		{
-			ok = (new CompileThread("Duitgl SimpleGL demo program", &installDuitglSimpleGL)).ok;
+			ok = (new CompileThread("GtkDgl SimpleGL demo program", &installGtkDglSimpleGL)).ok;
 		}
 
-		if ( !cancel && ok && installerUI.getSelection("duitglShapes") )
+		if ( !cancel && ok && installerUI.getSelection("gtkDglShapes") )
 		{
-			ok = (new CompileThread("Duitgl ShapeGL and demo program", &installDuitglShapesGL)).ok;
+			ok = (new CompileThread("GtkDgl ShapeGL and demo program", &installGtkDglShapesGL)).ok;
 		}
 
-//		if ( !cancel && ok && installerUI.getSelection("ledsDuit") )
+//		if ( !cancel && ok && installerUI.getSelection("ledsGtkD") )
 //		{
-//			label.setText("Leds project for Duit");
+//			label.setText("Leds project for GtkD");
 //			Gdk.flush();
-//			ok = installLedsDuit();
+//			ok = installLedsGtkD();
 //		}
 //
 //		if ( !cancel && ok && installerUI.getSelection("ledsLeds") )
@@ -270,14 +270,14 @@ class Installer : MainWindow
 		return ok;
 	}
 	
-	private bool installDuitglSimpleGL()
+	private bool installGtkDglSimpleGL()
 	{
-		bool ok = moveDuitDev();
+		bool ok = moveGtkDDev();
 		if ( ok )
 		{
 			char[] cwd = std.file.getcwd();
 			Compiler compiler;
-			std.file.chdir(duitDevHome);
+			std.file.chdir(gtkDDevHome);
 			
 			compiler = new Compiler();
 			compiler.setExecutor(new Exec());
@@ -291,8 +291,8 @@ class Installer : MainWindow
 			compiler.addArg("-L"~std.path.join(dmdHome,"lib"));
 			compiler.addArg("-o SimpleGL");
 			compiler.addArg("-L .");
-			compiler.addArg("-lduit");
-			compiler.addArg("-lduitgl");
+			compiler.addArg("-lgtkD");
+			compiler.addArg("-lgtkDgl");
 			compiler.addArg("-lGL");
 			compiler.addArg("-lGLU");
 			version(linux)compiler.addArg("-ldl");
@@ -327,14 +327,14 @@ class Installer : MainWindow
 		return ok;
 	}
 
-	private bool installDuitglShapesGL()
+	private bool installGtkDglShapesGL()
 	{
-		bool ok = moveDuitDev();
+		bool ok = moveGtkDDev();
 		if ( ok )
 		{
 			char[] cwd = std.file.getcwd();
 			Compiler compiler;
-			std.file.chdir(duitDevHome);
+			std.file.chdir(gtkDDevHome);
 			
 			compiler = new Compiler();
 			compiler.setExecutor(new Exec());
@@ -348,8 +348,8 @@ class Installer : MainWindow
 			compiler.addArg("-L"~std.path.join(dmdHome,"lib"));
 			compiler.addArg("-o ShapesGL");
 			compiler.addArg("-L .");
-			compiler.addArg("-lduit");
-			compiler.addArg("-lduitgl");
+			compiler.addArg("-lgtkD");
+			compiler.addArg("-lgtkDgl");
 			compiler.addArg("-lGL");
 			compiler.addArg("-lGLU");
 			version(linux)compiler.addArg("-ldl");
@@ -384,7 +384,7 @@ class Installer : MainWindow
 		return ok;
 	}
 
-	private bool installDuitglDev()
+	private bool installGtkDglDev()
 	{
 		bool ok = true;
 		
@@ -396,19 +396,19 @@ class Installer : MainWindow
 		
 		version(Win32)
 		{
-			char[] libDuitgl = "duitgl";
+			char[] libGtkDgl = "gtkDgl";
 		}
 		else
 		{
-			char[] libDuitgl = "libduitgl";
+			char[] libGtkDgl = "libgtkDgl";
 		}
 		
 		
 		
-		ok = moveDuitDev();
+		ok = moveGtkDDev();
 		if ( ok )
 		{
-			std.file.chdir(duitDevHome);
+			std.file.chdir(gtkDDevHome);
 			compiler = new Compiler();
 			compiler.setExecutor(new Exec());
 			compiler.setCompilerExec(compilerExec);
@@ -420,9 +420,9 @@ class Installer : MainWindow
 			compiler.addArg("srcgl/lib");
 			compiler.addArg("-I"~phobos);
 			compiler.addArg("-L"~std.path.join(dmdHome,"lib"));
-			compiler.addArg("-olib "~libDuitgl);
+			compiler.addArg("-olib "~libGtkDgl);
 			compiler.addArg("-L. ");
-			compiler.addArg("-lduit ");
+			compiler.addArg("-lgtkD ");
 			compiler.addArg("-c");
 			compiler.addArg("-op");
 			
@@ -454,14 +454,14 @@ class Installer : MainWindow
 	}
 
 	
-	private bool installDuitTests()
+	private bool installGtkDTests()
 	{
-		bool ok = moveDuitDev();
+		bool ok = moveGtkDDev();
 		if ( ok )
 		{
 			char[] cwd = std.file.getcwd();
 			Compiler compiler;
-			std.file.chdir(duitDevHome);
+			std.file.chdir(gtkDDevHome);
 			
 			compiler = new Compiler();
 			compiler.setExecutor(new Exec());
@@ -469,12 +469,12 @@ class Installer : MainWindow
 			
 			compiler.addArg("-Isrc");
 			compiler.addArg("-Idemos");
-			compiler.addArg("demos/duit");
+			compiler.addArg("demos/gtkD");
 			compiler.addArg("-I"~phobos);
 			compiler.addArg("-L"~std.path.join(dmdHome,"lib"));
-			compiler.addArg("-o DuitTests");
+			compiler.addArg("-o GtkDTests");
 			compiler.addArg("-L .");
-			compiler.addArg("-lduit");
+			compiler.addArg("-lgtkD");
 			version(linux)compiler.addArg("-ldl");
 			
 			compiler.addArg("-c");
@@ -521,27 +521,27 @@ class Installer : MainWindow
 		return ok == 0;
 	}
 
-	bool duitDevMoved;
+	bool gtkDDevMoved;
 	
-	private bool moveDuitDev()
+	private bool moveGtkDDev()
 	{
-		if ( !duitDevMoved )
+		if ( !gtkDDevMoved )
 		{
-			if ( makeDirs(duitDevHome) )
+			if ( makeDirs(gtkDDevHome) )
 			{
-				duitDevMoved = movePackToDestiny("*", duitDevHome);
+				gtkDDevMoved = movePackToDestiny("*", gtkDDevHome);
 			}
 		}
-		return duitDevMoved;
+		return gtkDDevMoved;
 	}
 	
-//	private bool installDuit()
+//	private bool installGtkD()
 //	{
 //		// nothing
 //		return true;
 //	}
 	
-	private bool installDuitDev()
+	private bool installGtkDDev()
 	{
 		bool ok = true;
 		
@@ -553,18 +553,18 @@ class Installer : MainWindow
 		
 		version(Win32)
 		{
-			char[] libDuit = "duit";
+			char[] libGtkD = "gtkD";
 		}
 		else
 		{
-			char[] libDuit = "libduit";
+			char[] libGtkD = "libgtkD";
 		}
 		
 		
-		ok = moveDuitDev();
+		ok = moveGtkDDev();
 		if ( ok )
 		{
-			std.file.chdir(duitDevHome);
+			std.file.chdir(gtkDDevHome);
 			compiler = new Compiler();
 			compiler.setExecutor(new Exec());
 			
@@ -582,7 +582,7 @@ class Installer : MainWindow
 			compiler.addArg("src/pango");
 			compiler.addArg("-I"~phobos);
 			compiler.addArg("-L"~std.path.join(dmdHome,"lib"));
-			compiler.addArg("-olib "~libDuit);
+			compiler.addArg("-olib "~libGtkD);
 			compiler.addArg("-c");
 			compiler.addArg("-op");
 			

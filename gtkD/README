@@ -1,11 +1,11 @@
-Duit is Digital Mars D programing language OO wrapper for Gtk+.
-Duit is release on th LGPL license.
+gtkD is Digital Mars D programing language OO wrapper for Gtk+.
+gtkD is release on th LGPL license.
 
-Here you can find the development version of Duit.
-Duit is to replace DUI.
+Here you can find the development version of gtkD.
+gtkD is to replace DUI, Duit.
 
-Duit is as stable as the old DUI and much more complete.
-Duit is a work in progress.
+gtkD is as stable as the old DUI and much more complete.
+gtkD is a work in progress.
 
 Requirements:
 -------------
@@ -16,25 +16,36 @@ Requirements:
 optionally:
 - openGL libs (mesa is fine on linux)
 - gtkglext
+- compd(dool) http://svn.dsource.org/projects/dool/trunk
+
+Who are you?
+------------
+
+If you want to write some wicked cool D + gtk+ Apps, grab the gtkD release 
+archive at dsource.org/projects/gtkd. It comes with a shiny installer.
+
+If you want to tweak the automatic wrapper or help with it use subversion...
+http://svn.dsource.org/projects/gtkd/trunk
+Then check out README_SVN
 
 installation:
 -------------
-only the development version of Duit is supplied for now.
+only the development version of gtkD is supplied for now.
 the installation depends on the setup of your development environment.
 consider leds (http://www.dsource.org/projects/leds/browser/downloads/)
 for your D development projects.
-This means that to release your project you must include the Duit lib
-on your deliverable or statically link to Duit - please pay attention
+This means that to release your project you must include the gtkD lib
+on your deliverable or statically link to gtkD - please pay attention
 to the license.
 
 compile the lib and the test programs:
 --------------------------------------
-to compile Duit Duitgl and the tests execute
+to compile gtkD gtkDgl and the tests execute
 
 $ makeAll.sh on linux 
 $ makeAll.bat on windows
 
 then run the tests
-$ DuitTests - tests the wrapping for Gtk+
+$ gtkDTests - tests the wrapping for Gtk+
 $ SimpleGL - simple test for openGL extension
 $ ShapesGL - test for openGL extension

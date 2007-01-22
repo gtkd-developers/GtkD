@@ -1,41 +1,41 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
 module ui.Main;
 
 //version = leds;
-version = duitdev;
-version = duittest;
+version = gtkDdev;
+version = gtkDtest;
 //version = difiles
 //version = compiler;
 version(linux)
 {
-	version = duitgl;
-	version = duitgltest;
+	version = gtkDgl;
+	version = gtkDgltest;
 }
 version = dmd;
 //version = gdc;
 
 private import ui.Installer;
 
-private import ui.duitLogo;
+private import ui.gtkDLogo;
 
-private import gtk.Duit;
+private import gtk.GtkD;
 private import gtk.Alignment;
 private import gtk.MainWindow;
 private import gtk.VBox;
@@ -100,7 +100,7 @@ public class MainInstaller : MainWindow , InstallerUI
 	
 	this()
 	{
-		super("Duit and Leds installer");
+		super("GtkD and Leds installer");
 		setup();
 		addPanels();
 		setUserPanel(0);
@@ -199,12 +199,12 @@ private import gtk.HSeparator;
 		installButton = makeButton(buttonBox, StockID.OK, "Install", "install");
 		
 //		Button logo = new Button();
-//		logo.setImage(getDuitLogo());
+//		logo.setImage(getGtkDLogo());
 //		logo.addOnButtonPress(&logoClicked);
 //		logo.setRelief(ReliefStyle.NONE);
 //		logo.setFocusOnClick(false);
 		
-		mainBox.packStart(Alignment.west(getDuitLogo()), false, false, 2);
+		mainBox.packStart(Alignment.west(getGtkDLogo()), false, false, 2);
 		mainBox.packStart(notebook, true, true, 2);
 		mainBox.packStart(buttonBox, false, false, 2);
 
@@ -219,7 +219,7 @@ private import gtk.PopupBox;
 	private int logoClicked(GdkEventButton* event, Widget widget)
 	{
 		
-		PopupBox.information(this, "Help with the graphics design is apreciated", "DuitLogo");
+		PopupBox.information(this, "Help with the graphics design is apreciated", "GtkDLogo");
 		return false;
 	}
 	
@@ -241,7 +241,7 @@ private import gtk.PopupBox;
 	private void addPanels()
 	{
 		addPanel(new SelectionsPanel(this));
-		version(duitdev)addPanel(new DevPanel(this));
+		version(gtkDdev)addPanel(new DevPanel(this));
 		version(leds)	addPanel(new LedsPanel(this));
 		version(compiler)	addPanel(new MainCompilerPanel(this));
 		addPanel(new LocalPanel(this));
@@ -271,7 +271,7 @@ private import gtk.PopupBox;
 		switch ( action )
 		{
 			case "exit":
-				Duit.exit(0);
+				GtkD.exit(0);
 				break;
 			
 			case "back":
@@ -424,7 +424,7 @@ class UserPanel
 			
 			case "leds":
 				bool active = cast(bool)check.getActive();
-				installerUI.setSensitive("ledsDuit", active);
+				installerUI.setSensitive("ledsGtkD", active);
 				installerUI.setSensitive("ledsLeds", active);
 				installerUI.setSensitive("ledsDool", active);
 				installerUI.setSensitive("ledsDante", active);
@@ -502,16 +502,16 @@ class SelectionsPanel : UserPanel
 	private void setup()
 	{
 		vbox.packStart(new Label("Select the components to install"), false, false, 14);
-		vbox.packStart(newSelection("Install Duit", "duit"), false, false, 2);
-		version(duitdev) vbox.packStart(newSelection("Install Duit for development", "duitDev"), false, false, 2);
-		version(duitgl) vbox.packStart(newSelection("Install Duitgl", "duitgl"), false, false, 2);
-		version(duitdev) version(duitgl) vbox.packStart(newSelection("Install Duitgl for development", "duiglDev"), false, false, 2);
+		vbox.packStart(newSelection("Install GtkD", "gtkD"), false, false, 2);
+		version(gtkDdev) vbox.packStart(newSelection("Install GtkD for development", "gtkDDev"), false, false, 2);
+		version(gtkDgl) vbox.packStart(newSelection("Install GtkDgl", "gtkDgl"), false, false, 2);
+		version(gtkDdev) version(gtkDgl) vbox.packStart(newSelection("Install GtkDgl for development", "duiglDev"), false, false, 2);
 		version(leds) vbox.packStart(newSelection("Install Leds", "leds"), false, false, 2);
 
-		installerUI.setSelection("duit", true);
-		version(duitdev) installerUI.setSelection("duitDev", true);
-		version(duitgl) installerUI.setSelection("duitgl", true);
-		version(duitdev) version(duitgl) installerUI.setSelection("duiglDev", true);
+		installerUI.setSelection("gtkD", true);
+		version(gtkDdev) installerUI.setSelection("gtkDDev", true);
+		version(gtkDgl) installerUI.setSelection("gtkDgl", true);
+		version(gtkDdev) version(gtkDgl) installerUI.setSelection("duiglDev", true);
 		version(leds) installerUI.setSelection("leds", true);
 
 	}
@@ -528,7 +528,7 @@ class DevPanel : UserPanel
 	}
 	public char[] getName()
 	{
-		return "Development for Duit";
+		return "Development for GtkD";
 	}
 	public Widget getWidget()
 	{
@@ -543,24 +543,24 @@ class DevPanel : UserPanel
 	public bool selected()
 	{
 		completed = true;
-		return installerUI.getSelection("duitDev")
-				|| installerUI.getSelection("duitglDev");
+		return installerUI.getSelection("gtkDDev")
+				|| installerUI.getSelection("gtkDglDev");
 	}
 	
 	private void setup()
 	{
-		vbox.packStart(new Label("Select Duit modules"), false, false, 14);
-		version(difiles) vbox.packStart(newSelection("Duit .di files", "duitdi"), false, false, 2);
-		vbox.packStart(newSelection("Duit source files", "duitSource"), false, false, 2);
-		vbox.packStart(newSelection("DuitTests - general UI tests", "duitTests"), false, false, 2);
-		version(duitgl) vbox.packStart(newSelection("SimpleGL - simplest GL test", "duitglSimple"), false, false, 2);
-		version(duitgl) vbox.packStart(newSelection("ShapesGL - showing more of openGL integration", "duitglShapes"), false, false, 2);
+		vbox.packStart(new Label("Select GtkD modules"), false, false, 14);
+		version(difiles) vbox.packStart(newSelection("GtkD .di files", "gtkDdi"), false, false, 2);
+		vbox.packStart(newSelection("GtkD source files", "gtkDSource"), false, false, 2);
+		vbox.packStart(newSelection("GtkDTests - general UI tests", "gtkDTests"), false, false, 2);
+		version(gtkDgl) vbox.packStart(newSelection("SimpleGL - simplest GL test", "gtkDglSimple"), false, false, 2);
+		version(gtkDgl) vbox.packStart(newSelection("ShapesGL - showing more of openGL integration", "gtkDglShapes"), false, false, 2);
 
-		version(difiles) installerUI.setSelection("duitdi", true);
-		installerUI.setSelection("duitSource", true);
-		installerUI.setSelection("duitTests", true);
-		version(duitgl) installerUI.setSelection("duitglSimple", true);
-		version(duitgl) installerUI.setSelection("duitglShapes", true);
+		version(difiles) installerUI.setSelection("gtkDdi", true);
+		installerUI.setSelection("gtkDSource", true);
+		installerUI.setSelection("gtkDTests", true);
+		version(gtkDgl) installerUI.setSelection("gtkDglSimple", true);
+		version(gtkDgl) installerUI.setSelection("gtkDglShapes", true);
 
 	}
 	
@@ -598,13 +598,13 @@ class LedsPanel : UserPanel
 	private void setup()
 	{
 		vbox.packStart(new Label("Select the leds projects to create"), false, false, 14);
-		vbox.packStart(newSelection("Create a leds project for Duit", "ledsDuit"), false, false, 2);
+		vbox.packStart(newSelection("Create a leds project for GtkD", "ledsGtkD"), false, false, 2);
 		vbox.packStart(newSelection("Create a leds project for Leds", "ledsLeds"), false, false, 2);
 		vbox.packStart(newSelection("Create a leds project for Dool", "ledsDool"), false, false, 2);
 		vbox.packStart(newSelection("Create a leds project for Dante", "ledsDante"), false, false, 2);
 		vbox.packStart(newSelection("Create a leds project for phobos", "ledsPhobos"), false, false, 2);
 
-		installerUI.setSelection("ledsDuit", true);
+		installerUI.setSelection("ledsGtkD", true);
 		installerUI.setSelection("ledsLeds", true);
 		installerUI.setSelection("ledsDool", true);
 		installerUI.setSelection("ledsDante", true);
@@ -802,7 +802,7 @@ class LocalPanel : UserPanel
 		return guess;
 	}
 	
-	public char[] guessDuitLibHome()
+	public char[] guessGtkDLibHome()
 	{
 		char[] guess;
 		version(Win32)
@@ -816,7 +816,7 @@ class LocalPanel : UserPanel
 		return guess;
 	}
 
-	public char[] guessDuitDevHome()
+	public char[] guessGtkDDevHome()
 	{
 		char[] guess;
 		version(Win32)
@@ -825,7 +825,7 @@ class LocalPanel : UserPanel
 		}
 		else
 		{
-			guess = std.path.join(home, "devel/D/testInstall/Duit1");
+			guess = std.path.join(home, "devel/D/testInstall/GtkD1");
 		}
 		return guess;
 	}
@@ -855,11 +855,11 @@ class LocalPanel : UserPanel
 				completed = validDMDHome();
 			}
 		}
-		version(duitdev)
+		version(gtkDdev)
 		{
 			if ( completed )
 			{
-				completed = installerUI.getDirectory("duitDevHome").length > 0;
+				completed = installerUI.getDirectory("gtkDDevHome").length > 0;
 			}
 		}
 		version(leds)
@@ -876,7 +876,7 @@ class LocalPanel : UserPanel
 		}
 		if ( completed )
 		{
-			completed = installerUI.getDirectory("duitLibHome").length > 0;
+			completed = installerUI.getDirectory("gtkDLibHome").length > 0;
 		}
 		
 		return true;
@@ -895,14 +895,14 @@ class LocalPanel : UserPanel
 		vbox.packStart(new Label("Select the paths for installation"), false, false, 14);
 		vbox.packStart(newDirectory("DMD home", "dmdHome", sizeGroup), false, false, 2);
 		vbox.packStart(newDirectory("Gtk lib home", "gtkHome", sizeGroup), false, false, 2);
-		vbox.packStart(newDirectory("Duit lib home", "duitLibHome", sizeGroup), false, false, 2);
-		version(duitdev) vbox.packStart(newDirectory("Duit dev home", "duitDevHome", sizeGroup), false, false, 2);
+		vbox.packStart(newDirectory("GtkD lib home", "gtkDLibHome", sizeGroup), false, false, 2);
+		version(gtkDdev) vbox.packStart(newDirectory("GtkD dev home", "gtkDDevHome", sizeGroup), false, false, 2);
 		version(leds) vbox.packStart(newDirectory("leds home", "ledsHome", sizeGroup), false, false, 2);
 		
 		installerUI.setDirectory("dmdHome", guessDMDHome());
 		installerUI.setDirectory("gtkHome", guessGtkHome());
-		installerUI.setDirectory("duitLibHome", guessDuitLibHome());
-		version(duitdev) installerUI.setDirectory("duitDevHome", guessDuitDevHome());
+		installerUI.setDirectory("gtkDLibHome", guessGtkDLibHome());
+		version(gtkDdev) installerUI.setDirectory("gtkDDevHome", guessGtkDDevHome());
 		version(leds) installerUI.setDirectory("ledsHome", guessLedsHome());
 	}
 }
@@ -942,20 +942,20 @@ class InstallPanel : UserPanel
 	private void setup()
 	{
 		Label label = new Label(
-			"Thank you for installing Duit\n"
+			"Thank you for installing GtkD\n"
 			~"press Install to continue"
 		);
 		vbox.packStart(label, true, true, 2);
 		
-		version(duittest) vbox.packStart(newSelection("Create desktop icon for duit tests", "duitTestsIcon"), false, false, 2);
+		version(gtkDtest) vbox.packStart(newSelection("Create desktop icon for gtkD tests", "gtkDTestsIcon"), false, false, 2);
 		version(leds) vbox.packStart(newSelection("Create desktop icon for leds", "ledsIcon"), false, false, 2);
 		version(leds) vbox.packStart(newSelection("set leds as your D editor", "ledsDEditor"), false, false, 2);
 		
-		version(duittest) installerUI.setSelection("duitTestsIcon", false);
+		version(gtkDtest) installerUI.setSelection("gtkDTestsIcon", false);
 		version(leds) installerUI.setSelection("ledsIcon", false);
 		version(leds) installerUI.setSelection("ledsDEditor", false);
 
-		version(duittest) installerUI.setSensitive("duitTestsIcon", false);
+		version(gtkDtest) installerUI.setSensitive("gtkDTestsIcon", false);
 		version(leds) installerUI.setSensitive("ledsIcon", false);
 		version(leds) installerUI.setSensitive("ledsDEditor", false);
 	}
@@ -967,13 +967,13 @@ int main(char[][] args)
 {
 	version(Win32)
 	{
-		Duit.init(args);
+		GtkD.init(args);
 	}
 	else
 	{
-		Duit.initMultiThread(args);
+		GtkD.initMultiThread(args);
 	}
 	mainInstaller = new MainInstaller();
-	Duit.main();
+	GtkD.main();
 	return 0;
 }

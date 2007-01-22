@@ -1,22 +1,22 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  * 
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  * 
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
-module duit.TestText;
+module gtkD.TestText;
 
 private import gtk.VBox;
 	
@@ -25,7 +25,7 @@ private import gtk.TextView;
 private import gtk.TextBuffer;
 
 /**
- * This tests the Duit text widget
+ * This tests the GtkD text widget
  */
 
 class TestText : VBox
@@ -64,9 +64,9 @@ class TestText : VBox
 "\n    * if it's D related or can have interest to other D user please use the D discussion group at"
 "\n      Digital Mars D news group"
 "\n    * if it's a DUI issue with no insterest to other D user please use the yahoo group"
-"\n      duitoolkit yahoo group"
+"\n      gtkDoolkit yahoo group"
 "\n    * if you want to send a private message to the author please fill free to do so at"
-"\n      duitoolkit guy"
+"\n      gtkDoolkit guy"
 "\n"
 "\nObjectives"
 "\nThe main goal of DUI is to enable the creation of D GUI applications under Linux."

@@ -7,5 +7,5 @@ compd \
 	-c \
 	-L .. \
 	-l phobos \
-	-L . -l duit -l duitgl -l GLU -l GL\
+	-L . -l gtkd -l gtkdgl -l GLU -l GL\
 	-l dl

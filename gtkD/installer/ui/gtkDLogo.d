@@ -1,11 +1,11 @@
-module ui.duitLogo;
+module ui.gtkDLogo;
 
 private import gtk.Image;
 private import gdk.Pixbuf;
 
-public Image getDuitLogo()
+public Image getGtkDLogo()
 {
-	return getImage(duitIcon_xpm);
+	return getImage(gtkDIcon_xpm);
 }
 
 public Image getImage(char** image)
@@ -16,7 +16,7 @@ public Image getImage(char** image)
 
 /* XPM */
 
-static char** duitIcon_xpm = [
+static char** gtkDIcon_xpm = [
 "160 64 625 2",
 "  	c None",
 ". 	c #000000",
