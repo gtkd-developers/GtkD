@@ -3,6 +3,7 @@ This is not for GUI App writers wanting to use gtkD. Save yourself some
 misery and get the archived install files at dsource.org.
 
 Prerequesits:
+-------------
 
 htod.exe from http://digitalmars.com/d needs to be in the
 GtkD/wrap/utils directory.
@@ -11,12 +12,30 @@ cairo source must be unzipped somewhere on your system.
 gtkglext source must be unzipped somewhere on your system.
 gtk documentation tarballs must be in some directory.
 
-Build & run on linux:
+Pointing to where everything is:
+-------------------------------
 
-cd ${GtkD}/wrap
+
+wrap/Makefile #has location of gtk docs tarballs, cairo, gtkglext
+
+wrap/APIlookup.txt #has html-source and output directories
+                   #(search for "inputRoot" and "outputRoot")
+
+wrap/utils/GtkWrapper #has build filename & path, output root directory
+                      #(search for "buildDir", "buildFile", "srcOut")
+
+wrap/utils/HTODConvert #where to find wine and paths...
+                       # constants at the start of the file
+
+
+
+Build & run on linux:
+--------------------
+
+cd ${gtkD}/wrap
 make prephtml
 make default
-cd ${GtkD}
+cd ${gtkD}
 wrap/wrapit
 
 ... and that should do it. Go run ./makeAll.sh and see what works.

@@ -5,8 +5,6 @@ DSRC := $(OBJS:%.o=%.d)
 DTARG = wrapit
 CC = gcc
 DC = dmd
-PATH_INCLUDE = 
-PATH_INSTALL = ../..
 
 CFLAGS += $(PATH_INCLUDE) 
 DFLAGS += 
@@ -26,10 +24,6 @@ $(DTARG): $(OBJS)
 clean: 
 	rm obj/*.o ${DTARG} 
 
-
-install:
-	cp $(LIB_TARG) $(PATH_INSTALL)/lib
-	cp $(INCL_FILES) $(PATH_INSTALL)/include  
 	
 ##########################################################
 #
@@ -43,7 +37,7 @@ GZROOT = /opt/gtkdocs
 INSTALLDIR = /opt/gtkddev/trunk/gtkdocs
 GZBALLS = atk-1.0-docs.tar.gz gdk-2.0-docs.tar.gz gdk-pixbuf-2.0-docs.tar.gz glib-2.0-docs.tar.gz \
 	  gobject-2.0-docs.tar.gz gtk-2.0-docs.tar.gz pango-1.0-docs.tar.gz
-TAR = tar -xzvvf
+TAR = tar -xzvf
 CAIRODIR = doc/public
 GTKGLEXTDIR = docs/reference/gtkglext
 
