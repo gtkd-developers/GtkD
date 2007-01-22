@@ -1,21 +1,25 @@
 This contains information and code to generate the GtkD source code.
+This is not for GUI App writers wanting to use gtkD. Save yourself some
+misery and get the archived install files at dsource.org.
 
 Prerequesits:
 
 htod.exe from http://digitalmars.com/d needs to be in the
 GtkD/wrap/utils directory.
 wine needs to be installed and in $PATH
-$GtkD/../gtk/api must hold the html documentation of gtk & friends (need
-		to document what these are specifically)
+cairo source must be unzipped somewhere on your system.
+gtkglext source must be unzipped somewhere on your system.
+gtk documentation tarballs must be in some directory.
 
 Build & run on linux:
 
-cd $GtkD/wrap
+cd ${GtkD}/wrap
+make prephtml
 make default
-cd $GtkD
+cd ${GtkD}
 wrap/wrapit
 
-
+... and that should do it. Go run ./makeAll.sh and see what works.
 
 
 
