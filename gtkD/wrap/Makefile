@@ -13,22 +13,19 @@ DFLAGS +=
 
 LDFLAGS += -L/usr/lib -lm -lpthread -ldl -lphobos
 
+default:$(DTARG) 
+
 $(OBJS): $(DSRC)
 	${DC} ${DFLAGS} $^ -c
 
-default: $(OBJS)
+$(DTARG): $(OBJS)
 	$(CC) $^ -o $(DTARG) $(LDFLAGS)
+	mkdir obj
 	mv *.o ./obj
 
 clean: 
-	rm *.o ${LIB_TARG} 
+	rm obj/*.o ${DTARG} 
 
-small:
-	rm obj/*.o *~ *.bak
-
-lib: ${LIB_OBJS}
-	$(AR) rcs $(LIB_TARG) ${LIB_OBJS}
-	$(RM) $*.o
 
 install:
 	cp $(LIB_TARG) $(PATH_INSTALL)/lib

@@ -35,7 +35,7 @@ pack: glgdk
 lib: GL
 dynload: yes
 file: wrap/cHeaders/GL/gl.d
-outfile: src/lib/gl.d
+outfile: srcgl/lib/gl.d
 
 #runthis: wine ~/dm/bin/htod.exe wrap/cHeaders/GL/glu.hpp wrap/cHeaders/GL/glu.d -Iwrap/cHeaders
 #prefile: wrap/cHeaders/GL/glu.hpp
@@ -43,7 +43,8 @@ pack: glgdk
 lib: GLU
 dynload: yes
 file: wrap/cHeaders/GL/glu.d
-outfile: src/lib/glu.d
+outfile: srcgl/lib/glu.d
+
 
 ##runthis: wine ~/dm/bin/htod.exe wrap/cHeaders/GL/glx.hpp wrap/cHeaders/GL/glx.d -Iwrap/cHeaders
 ##prefile: wrap/cHeaders/GL/glx.hpp
