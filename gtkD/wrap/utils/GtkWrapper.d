@@ -72,7 +72,14 @@ public class GtkWrapper : WrapperIF
 	private char[] buildText;	/// to build the build.d 
 	private char[] buildTextLibs;	/// to build the build.d libs 
 
-	char[] srcOut;		/// the src output directory
+	char[] srcOut = "src";		/// the src output directory
+	char[] srcDir;
+	char[] apiLookupDefinitionBaseDirectory;	
+	char[] inputRoot;
+	char[] outputRoot;
+	char[] buildDir = "build";
+	char[] buildPath;
+	char[] buildFile =  "gtkD.d";
 
 	public static char[] license =
 "/*"
@@ -119,10 +126,6 @@ public class GtkWrapper : WrapperIF
 	
 	DefReader defReader;
 	
-	char[] apiLookupDefinitionBaseDirectory;
-	
-	char[] inputRoot;
-	char[] outputRoot;
 	
 	char[][char[]] packages;
 
@@ -155,7 +158,13 @@ public class GtkWrapper : WrapperIF
 	this(char[] apiLookupDefinitionBaseDirectory)
 	{
 		this.apiLookupDefinitionBaseDirectory = apiLookupDefinitionBaseDirectory;
-		srcOut = "src";
+		//srcOut = "src";
+		//if (!std.file.exists(std.path.join(outputRoot,srcOut)))
+		//{
+		//	std.file.mkdir(std.path.join(outputRoot,srcOut));
+		//}
+		buildPath = std.path.join(std.path.join(outputRoot,srcOut),buildDir);
+		
 	}
 	
 	
@@ -174,8 +183,8 @@ public class GtkWrapper : WrapperIF
 			"\n{"
 			"\n	pragma (nolink);"
 			"\n"
-			"\n	version (Windows)     pragma (target, \"Duit.lib\"  );"
-			"\n	version (linux)   pragma (target, \"libDuit.a\" );"
+			"\n	version (Windows)     pragma (target, \"GtkD.lib\"  );"
+			"\n	version (linux)   pragma (target, \"libgtkd.a\" );"
 			"\n}"
 			"\n"
 			;
@@ -186,8 +195,14 @@ public class GtkWrapper : WrapperIF
 	
 	public void writeBuildText()
 	{
+		
 		writefln("writeBuildText start");
-		std.file.write(std.path.join("src/build", "gtkD.d"), buildText~"\n\n"~buildTextLibs);
+		if (!std.file.exists(buildPath))
+		{
+			std.file.mkdir(buildPath);
+		}
+		
+		std.file.write(std.path.join(buildPath,buildFile), buildText~"\n\n"~buildTextLibs);
 	}
 	
 	int process(char[] apiLookupDefinition)
@@ -255,15 +270,27 @@ public class GtkWrapper : WrapperIF
 		
 		char[] key = defReader.next();
 		
-		while ( status==ERR_NONE 
+		while ( status==ERR_NONE && ( "srcdir" ==  key ))
+		{
+			srcDir = defReader.getValue();
+			char[] chkdir = std.path.join(outputRoot,srcDir);
+			if (!std.file.exists(chkdir))
+		    {
+			  std.file.mkdir(chkdir);
+			}
+     		key = defReader.next();
+     		while ( status==ERR_NONE 
 				&& ( "package" ==  key
 					|| "src" == key )
 				
 			)
-		{
-			status = createPackage(outputRoot, defReader.getValue());
-			key = defReader.next();
+    		{
+	    		status = createPackage(outputRoot, defReader.getValue());
+		    	key = defReader.next();
+		    }	 
 		}
+
+		
 		
 		if ( status==ERR_NONE )
 		{
@@ -287,6 +314,7 @@ public class GtkWrapper : WrapperIF
 					case "addUnions": lookupUnions ~= loadTextMultiLine("addUnions"); defReader.next();break;
 					case "addConstants": lookupConstants ~= loadTextMultiLine("addConstants"); defReader.next();break;
 					case "srcout": srcOut = defReader.getValue(); break;
+					
 					case "wrap":
 						pack = defReader.getValue();
 						outPack = packages[pack];
@@ -318,7 +346,10 @@ public class GtkWrapper : WrapperIF
 
 					case "htod":
 						// not as clean as lookup...
+						// WARNING!!! writefln's are needed to avoid hang.
+						writefln("start htod");
 						new HTODConvert(defReader.getValue());
+						writefln("end htod");
 						defReader.next();
 						break;
 						
@@ -427,7 +458,12 @@ public class GtkWrapper : WrapperIF
 		void[] text = std.file.read(std.path.join(fromDir, fileName));
 		try
 		{
-			debug(copyFile)writefln("copying file [%s] to [%s]", std.path.join(fromDir, fileName), std.path.join(toDir, fileName));
+			//debug(copyFile)
+			writefln("copying file [%s] to [%s]", std.path.join(fromDir, fileName), std.path.join(toDir, fileName));
+			if (!std.file.exists(toDir))
+		{
+			std.file.mkdir(toDir);
+		}
 			std.file.write(std.path.join(toDir, fileName), text);
 		}
 		catch ( Exception e)
@@ -473,7 +509,11 @@ public class GtkWrapper : WrapperIF
 								~outPack
 								~"."~defReader.getValue()~";\n";
 					break;
-				case "srcout": srcOut = defReader.getValue(); break;
+				case "srcout": srcOut = defReader.getValue();
+				            
+
+				 break;
+				
 				case "struct": convParms.strct = defReader.getValue(); break;
 				case "realStruct": convParms.realStrct = defReader.getValue(); break;
 				case "ctorStruct": convParms.ctorStrct = defReader.getValue(); break;
@@ -602,8 +642,13 @@ public class GtkWrapper : WrapperIF
 	{
 		debug(writeFile)writefln("GtkWrapper.closeFile %s", gtkDClass.getOutFile(outputRoot, srcOut));
 		char[] gtkDText = gtkDClass.closeGtkDClass(text, convParms);
+		char[] writeDir = std.path.join(outputRoot, srcOut);
 		if ( gtkDClass.getError() == 0 )
 		{
+			if (!std.file.exists(writeDir))
+		    {
+			  std.file.mkdir(writeDir);
+     		}
 			std.file.write(gtkDClass.getOutFile(outputRoot, srcOut),gtkDText);
 		}
 		if ( convParms.interf.length == 0 )
@@ -656,7 +701,7 @@ public class GtkWrapper : WrapperIF
 			this.packages[packages[0]] = packages[1];
 			try
 			{
-				std.file.mkdir(std.path.join(std.path.join(outputRoot,srcOut), packages[1]));
+				std.file.mkdir(std.path.join(std.path.join(outputRoot,srcDir), packages[1]));
 			}
 			catch ( Exception e)
 			{
@@ -717,12 +762,11 @@ public class GtkWrapper : WrapperIF
 		char[] externalText = license;
 
 		externalText ~= "// Adapted from John Reimer's DUI loader modules\n\n";
-		externalText ~= 
-"\nmodule lib."~loaderTableName~";"
-"\n"
-"\nprivate import std.stdio;"
-"\nprivate import "~loaderTableName~"." ~loaderTableName~"types;"
-;
+		externalText ~= "\nmodule lib."~loaderTableName~";"
+                        "\n"
+                        "\nprivate import std.stdio;"
+                        "\nprivate import "~loaderTableName~"." ~loaderTableName~"types;"
+                         ;
 		if ( loaderTableName == "glib" )
 		{
 			externalText ~= "\nprivate import gthread.gthreadtypes;";
@@ -738,13 +782,13 @@ public class GtkWrapper : WrapperIF
 			)
 		{
 			externalText ~= 
-"\nprivate import lib.Loader;"
-"\nprivate import lib.paths;"
-"\n"
-"\nprivate Linker "~loaderTableName~"_Linker;"
-"\n"
-"\nstatic this()"
-"\n{"
+                           "\nprivate import lib.Loader;"
+                           "\nprivate import lib.paths;"
+                           "\n"
+                           "\nprivate Linker "~loaderTableName~"_Linker;"
+                           "\n"
+                           "\nstatic this()"
+                           "\n{"
 ;
 if ( loaderTableName == "gdk" )
 {
@@ -932,7 +976,7 @@ else
 
 int main()
 {
-	GtkWrapper wrapper = new GtkWrapper("/home/ruimt/devel/D/Duit/trunk/wrap/");
+	GtkWrapper wrapper = new GtkWrapper("./wrap/"); //Run gtkwrapper from the project directory... Make this a config option later.
 	int status = wrapper.process("APILookup.txt");
 	wrapper.printErrors();
 	if ( wrapper.errors.length == 0 )

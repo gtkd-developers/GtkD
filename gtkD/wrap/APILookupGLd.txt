@@ -1,18 +1,18 @@
 #
-# This file is part of duit.
+# This file is part of gtkD.
 # 
-# duit is free software; you can redistribute it and/or modify
+# gtkD is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation; either version 2.1 of the License, or
 # (at your option) any later version.
 # 
-# duit is distributed in the hope that it will be useful,
+# gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
 # 
 # You should have received a copy of the GNU Lesser General Public License
-# along with duit; if not, write to the Free Software
+# along with gtkD; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
@@ -66,14 +66,14 @@ srcout: srcgl
 ### GL ####################################################
 ###########################################################
 
-file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglinit.html
+file: gtkglext-gdkglinit.html
 
 #struct: GMutex
 class: GLdInit
 prefix: gdk_gl_
 outFile: GLdInit
 
-file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglquery.html
+file: gtkglext-gdkglquery.html
 
 #struct: GMutex
 class: GLQuery
@@ -83,7 +83,7 @@ import: gdk.Display
 structWrap: GdkDisplay* Display
 outFile: GLQuery
 
-file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglconfig.html
+file: gtkglext-gdkglconfig.html
 
 struct: GdkGLConfig
 class: GLConfig
@@ -120,7 +120,7 @@ code: end
 
 outFile: GLConfig
 
-file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglcontext.html
+file: gtkglext-gdkglcontext.html
 
 struct: GdkGLContext
 class: GLContext
@@ -129,7 +129,7 @@ import: glgdk.GLDrawable
 structWrap: GdkGLDrawable* GLDrawable
 outFile: GLContext
 
-file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkgldrawable.html
+file: gtkglext-gdkgldrawable.html
 
 struct: GdkGLDrawable
 class: GLDrawable
@@ -138,7 +138,7 @@ import: glgdk.GLContext
 structWrap: GdkGLContext* GLContext
 outFile: GLDrawable
 
-file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglpixmap.html
+file: gtkglext-gdkglpixmap.html
 
 struct: GdkGLPixmap
 class: GLPixmap
@@ -147,7 +147,7 @@ import: glgdk.GLConfig
 structWrap: GdkGLCondif* GLConfig
 outFile: GLPixmap
 
-file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglwindow.html
+file: gtkglext-gdkglwindow.html
 
 struct: GdkGLWindow
 class: GLWindow
@@ -156,7 +156,7 @@ import: glgdk.GLConfig
 structWrap: GdkGLCondif* GLConfig
 outFile: GLWindow
 
-file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglfont.html
+file: gtkglext-gdkglfont.html
 
 #struct: GdkGL
 class: GLFont
@@ -168,21 +168,21 @@ import: pango.PgFontDescription
 structWrap: PangoFontDescription* PgFontDescription
 outFile: GLFont
 
-file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglshapes.html
+file: gtkglext-gdkglshapes.html
 
 #struct: GdkGL
 class: GLDraw
 prefix: gdk_gl_draw_
 outFile: GLDraw
 
-file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkgltokens.html
+file: gtkglext-gdkgltokens.html
 
 #struct: GdkGL
 class: GLTokens
 prefix: gdk_gl_tokens_
 outFile: GLTokens
 
-#file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglx.html
+#file: gtkglext-gdkglx.html
 #
 ##struct: GdkGLX11
 #class: GLX11
@@ -199,7 +199,7 @@ outFile: GLTokens
 #structWrap: GdkGLWindow* GLWindow
 #outFile: GLX11
 
-file: /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglversion.html
+file: gtkglext-gdkglversion.html
 
 #struct: GdkGLVersion
 class: GLdVersion

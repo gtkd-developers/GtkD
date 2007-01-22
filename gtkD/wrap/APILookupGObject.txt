@@ -1,18 +1,18 @@
 #
-# This file is part of duit.
+# This file is part of gtkD.
 # 
-# duit is free software; you can redistribute it and/or modify
+# gtkD is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation; either version 2.1 of the License, or
 # (at your option) any later version.
 # 
-# duit is distributed in the hope that it will be useful,
+# gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
 # 
 # You should have received a copy of the GNU Lesser General Public License
-# along with duit; if not, write to the Free Software
+# along with gtkD; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
@@ -210,7 +210,7 @@ code: start
 //}
 //
 //	/**
-//	 * Maps Gtk structures to Duit Objects
+//	 * Maps Gtk structures to GtkD Objects
 //	 */
 //	private static ObjectStore objectStore;
 //	
@@ -241,14 +241,14 @@ code: start
 //
 //	
 //	/**
-//	 * Maintains the map from Gtk structures to Duit objects
+//	 * Maintains the map from Gtk structures to GtkD objects
 //	 */
 //	private static class ObjectStore
 //	{
 //		static ObjectG[void*] objectStore;
 //		
 //		/**
-//		 * Puts a new gtk struct to Duit objects
+//		 * Puts a new gtk struct to GtkD objects
 //		 */
 //		void putObject(ObjectG objectG, GObject* gtkStruct)
 //		{
@@ -260,8 +260,8 @@ code: start
 //		}
 //		
 //		/**
-//		 * Gets a Duit object from a gtk struct.
-//		 * Returns: the Duit object or null if not found
+//		 * Gets a GtkD object from a gtk struct.
+//		 * Returns: the GtkD object or null if not found
 //		 */
 //		ObjectG getObject(GObject* gtkStruct)
 //		{
@@ -290,7 +290,7 @@ code: start
 //		}
 //		
 //		/**
-//		 * Removes an entry from the gtk struct to Duit object map
+//		 * Removes an entry from the gtk struct to GtkD object map
 //		 */
 //		void removeObject(GObject* gtkStruct)
 //		{
@@ -318,7 +318,7 @@ code: start
 //	}
 //
 //	/**
-//	 * Gets a Duit object from a Gtk Structure if the Duit object was already created for the structure
+//	 * Gets a GtkD object from a Gtk Structure if the GtkD object was already created for the structure
 //	 */
 //	public static ObjectG getStoredObject(GObject* gtkStruct)
 //	{

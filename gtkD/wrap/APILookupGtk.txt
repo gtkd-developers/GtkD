@@ -1,18 +1,18 @@
 #
-# This file is part of duit.
+# This file is part of gtkD.
 # 
-# duit is free software; you can redistribute it and/or modify
+# gtkD is free software; you can redistribute it and/or modify
 # it under the terms of the GNU Lesser General Public License as published by
 # the Free Software Foundation; either version 2.1 of the License, or
 # (at your option) any later version.
 # 
-# duit is distributed in the hope that it will be useful,
+# gtkD is distributed in the hope that it will be useful,
 # but WITHOUT ANY WARRANTY; without even the implied warranty of
 # MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
 # GNU Lesser General Public License for more details.
 # 
 # You should have received a copy of the GNU Lesser General Public License
-# along with duit; if not, write to the Free Software
+# along with gtkD; if not, write to the Free Software
 # Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
 #
 
@@ -105,7 +105,7 @@ wrap: gtk
 file: gtk-General.html
 
 #struct: 
-class: Duit
+class: GtkD
 #prefix: 
 prefix: gtk_
 noprefix: gtk_true
@@ -154,7 +154,7 @@ code: start
 	}
 	
 	/**
-	 * This initiates Duit to supports multi threaded programs.
+	 * This initiates GtkD to supports multi threaded programs.
 	 * read full documantation at http://gtk.org/faq/#AEN482
 	 * from the FAQ:
 	 * "There is a single global lock that you must acquire with 
@@ -170,7 +170,7 @@ code: start
 	}
 	
 code: end
-outFile: Duit
+outFile: GtkD
 
 class: Timeout
 prefix: gtk_timeout_
@@ -1067,7 +1067,7 @@ outFile: Window
 file: 
 import: gtk.Widget
 import: gtk.Window
-import: gtk.Duit
+import: gtk.GtkD
 import: gdk.Event
 	
 
@@ -1103,7 +1103,7 @@ public class MainWindow : Window
 		//printf("MainWindows.windowDelete count = %d\n", countTotalMainWindows);
 		if ( exit(0, false) || countTotalMainWindows==0 )
 		{
-			Duit.mainQuit();
+			GtkD.mainQuit();
 			return false;
 		}
 		return false;
@@ -5492,36 +5492,6 @@ code: start
 		return new Drawable(cast(GdkDrawable*)(*pt));
 	}
 
-	/**
-	 * Gets the Window for this widget
-	 * return:
-	 * 		The window for this widget
-	 */
-	Window getWindow()
-	{
-		
-		//		ubyte *p = cast(ubyte*)getStruct();
-		//
-		//		for ( int i=0 ; i<120 ; i+=4 )
-		//		{
-			//			printf("(%d) %X %x %x %x %x\n", i,p,*(p+0), *(p+1), *(p+2), *(p+3));
-			//			p+=4;
-		//		}
-		//
-		//		int* pt =cast(int*)getStruct();
-		//
-		//		printf("pt=%X strcut=%X\n", pt, getStruct());
-		//		printf("*pt=%X\n", *pt);
-		//		pt+=52/4;
-		//		printf("pt+52=%X strcut.window=%X\n", pt, getWidgetStruct().window);
-		//		printf("*pt+52=%X\n", *pt);
-		//
-		//		//return new Drawable(cast(GdkDrawable*)(getWidgetStruct().window));
-		int* pt =cast(int*)getStruct();
-		pt += 52/4;
-		return new Window(cast(GdkWindow*)(*pt));
-	}
-	
 	/**
 	 * Sets  the cursor.
 	 * @param cursor the new cursor

@@ -26,6 +26,9 @@ private import std.file;
 private import std.string;
 private import std.process;
 
+static char[] htod_location = "wrap/utils/htod.exe";
+static char[] wine_command = "wine";
+
 //debug = flow;
 //debug = processLine;
 //debug = getDType;
@@ -107,6 +110,7 @@ public class HTODConvert
 {
 	
 	char[] dText;
+
 	
 	DefReader defReader;
 
@@ -194,15 +198,16 @@ public class HTODConvert
 
 	void processPreFile(char[] preFileName, char[] fileName)
 	{
-		debug(flow)(writefln("HTODConvert.processPreFile files: %s > %s", preFileName, fileName));
+		//debug(flow)
+		writefln("HTODConvert.processPreFile files: %s > %s", preFileName, fileName);
 		char[][] args;
-		args ~= "/home/ruimt/dm/bin/htod.exe";
-		args ~= "/home/ruimt/dm/bin/htod.exe";
+		args ~= htod_location;
+		args ~= htod_location;
 		args ~= preFileName;
 		args ~= fileName;
 		try
 		{
-			std.process.execvp("wine", args);
+			std.process.execvp(wine_command, args);
 		}
 		catch ( Object e)
 		{

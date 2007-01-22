@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  * 
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  * 
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  * 
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
 
@@ -23,7 +23,7 @@ module utils.convparms;
 public struct ConvParms
 {
 
-	private import utils.DuitClass;
+	private import utils.GtkDClass;
 	private import std.stdio;
 	
 	public char[] inFile;
@@ -45,8 +45,8 @@ public struct ConvParms
 	public char[][] noPrefixes;
 	public char[][] noCode;		/// insert the external declaration but not the wrapping code
 	public char[][char[]] aliases;
-	public char[] classCode;		/// any valid D code to be copied to the final Duit class
-	public char[] interfaceCode;	/// any valid D code to be copied to the final Duit interface
+	public char[] classCode;		/// any valid D code to be copied to the final GtkD class
+	public char[] interfaceCode;	/// any valid D code to be copied to the final GtkD interface
 	public char[][] text;		/// text to be added to the text read from the file
 
 	public void clearAll()
@@ -165,7 +165,7 @@ public struct ConvParms
 		int i = 0;
 		while ( !contains && i<prefixes.length )
 		{
-			contains = DuitClass.startsWith(prefix, prefixes[i]);
+			contains = GtkDClass.startsWith(prefix, prefixes[i]);
 			++i;
 		}
 		return contains;
@@ -178,7 +178,7 @@ public struct ConvParms
 		int i = 0;
 		while ( !contains && i<prefixes.length )
 		{
-			if ( DuitClass.startsWith(prefix, prefixes[i]) )
+			if ( GtkDClass.startsWith(prefix, prefixes[i]) )
 			{
 				contains = true;
 				fundPrefix = prefixes[i];
