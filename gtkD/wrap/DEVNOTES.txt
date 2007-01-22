@@ -1,0 +1,25 @@
+Some notes for myself as I go through the wrap source.
+
+th <- hauptmech
+
+th 10Jan2007
+The trickiest thing so far is paths and file locations. They were hard
+coded and finding out where they are has been challenging. I'm going to
+lay out a set of assumptions here and adjust the code accordingly.
+
+working directory: the binary will assume it is running from the root
+GtkD project directory.
+
+run from: GtkD
+wrap source code: GtkD/wrap/utils
+build from: GtkD/wrap
+html: GtkD/../gtk/api
+
+Where to change the paths...
+wrap/APIlookup.txt #has source and output directories
+wrap/utils/GtkWrapper #has build filename & path, output root directory
+wrap/utils/HTODConvert #where to find wine and paths...
+
+
+added "srcdir" key to help direct packages into subdirs.
+
