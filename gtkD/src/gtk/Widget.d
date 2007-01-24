@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -219,7 +219,35 @@ public class Widget : ObjectGtk
 		pt += 52/4;
 		return new Drawable(cast(GdkDrawable*)(*pt));
 	}
-	
+	/**
+	 * Gets the Window for this widget
+	 * return:
+	 * 		The window for this widget
+	 */
+	Window getWindow()
+	{
+		
+		//		ubyte *p = cast(ubyte*)getStruct();
+		//
+		//		for ( int i=0 ; i<120 ; i+=4 )
+		//		{
+			//			printf("(%d) %X %x %x %x %x\n", i,p,*(p+0), *(p+1), *(p+2), *(p+3));
+			//			p+=4;
+		//		}
+		//
+		//		int* pt =cast(int*)getStruct();
+		//
+		//		printf("pt=%X strcut=%X\n", pt, getStruct());
+		//		printf("*pt=%X\n", *pt);
+		//		pt+=52/4;
+		//		printf("pt+52=%X strcut.window=%X\n", pt, getWidgetStruct().window);
+		//		printf("*pt+52=%X\n", *pt);
+		//
+		//		//return new Drawable(cast(GdkDrawable*)(getWidgetStruct().window));
+		int* pt =cast(int*)getStruct();
+		pt += 52/4;
+		return new Window(cast(GdkWindow*)(*pt));
+	}
 	/**
 	 * Sets  the cursor.
 	 * @param cursor the new cursor
@@ -1198,6 +1226,34 @@ public class Widget : ObjectGtk
 		foreach ( gboolean delegate(GdkEventKey*, Widget) dlg ; widget.onKeyReleaseListeners )
 		{
 			dlg(event, widget);
+		}
+		
+		return consumed;
+	}
+	
+	gboolean delegate(GtkDirectionType, Widget)[] onKeynavFailedListeners;
+	void addOnKeynavFailed(gboolean delegate(GtkDirectionType, Widget) dlg)
+	{
+		if ( !("keynav-failed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"keynav-failed",
+			cast(GCallback)&callBackKeynavFailed,
+			this,
+			null,
+			cast(ConnectFlags)0);
+			connectedSignals["keynav-failed"] = 1;
+		}
+		onKeynavFailedListeners ~= dlg;
+	}
+	extern(C) static void callBackKeynavFailed(GtkWidget* widgetStruct, GtkDirectionType direction, Widget widget)
+	{
+		bit consumed = false;
+		
+		foreach ( gboolean delegate(GtkDirectionType, Widget) dlg ; widget.onKeynavFailedListeners )
+		{
+			dlg(direction, widget);
 		}
 		
 		return consumed;
@@ -4521,6 +4577,66 @@ public class Widget : ObjectGtk
 	}
 	
 	/**
+	 * Notifies the user about an input-related error on this widget. If
+	 * the gtk-error-bell settings property is TRUE, it calls
+	 * gdk_window_beep(), otherwise it does nothing.
+	 * Note that the effect of gdk_window_beep() can be configured in many
+	 * ways, depending on the windowing backend and the desktop environment
+	 * or window manager that is used.
+	 * widget:
+	 *  a GtkWidget
+	 * Since 2.12
+	 */
+	public void errorBell()
+	{
+		// void gtk_widget_error_bell (GtkWidget *widget);
+		gtk_widget_error_bell(gtkWidget);
+	}
+	
+	/**
+	 * This function should be called whenever keyboard navigation within
+	 * a single widget hits a boundary. The function emits the
+	 * "keynav-changed" signal on the widget and its return value should
+	 * be interpreted in a way similar to the return value of
+	 * gtk_widget_child_focus():
+	 * When TRUE is returned, stay in the widget, the failed keyboard
+	 * navigation is Ok and/or there is nowhere we can/should move the
+	 * focus to.
+	 * When FALSE is returned, the caller should continue with keyboard
+	 * navigation outside the widget, e.g. by calling
+	 * gtk_widget_child_focus() on the widget's toplevel.
+	 * The default implementation for the "keynav-failed" signal is to
+	 * return TRUE for GTK_DIR_TAB_FORWARD and
+	 * GTK_DIR_TAB_BACKWARD. For the other values of GtkDirectionType,
+	 * it looks at the "gtk-keynav-cursor-only" settings property and
+	 * returns FALSE if the setting is TRUE. This way the entire GUI
+	 * becomes cursor-navigatable on input devices such as mobile phones
+	 * which only have cursor keys but no tab key.
+	 * Whenever the default implementation returns TRUE, it also calls
+	 * gtk_widget_error_bell() to notify the user of the failed keyboard
+	 * navigation.
+	 * A use case for providing an own implementation of keynav-failed (by
+	 * either connecting to it or by overriding it) would be a row of
+	 * GtkEntry widgets where the user should be able to navigate the
+	 * entire row with the cursor keys, as e.g. known from GUIs that
+	 * require entering license keys.
+	 * widget:
+	 *  a GtkWidget
+	 * direction:
+	 *  direction of focus movement
+	 * Returns:
+	 *  TRUE if stopping keyboard navigation is fine, FALSE
+	 *  if the emitting widget should try to handle the keyboard
+	 *  navigation attempt in its parent container(s).
+	 * Since 2.12
+	 */
+	public int keynavFailed(GtkDirectionType direction)
+	{
+		// gboolean gtk_widget_keynav_failed (GtkWidget *widget,  GtkDirectionType direction);
+		return gtk_widget_keynav_failed(gtkWidget, direction);
+	}
+	
+	/**
 	 * Copies a GtkRequisition.
 	 * requisition:
 	 *  a GtkRequisition.
@@ -4548,6 +4664,7 @@ public class Widget : ObjectGtk
 		// void gtk_requisition_free (GtkRequisition *requisition);
 		gtk_requisition_free(requisition);
 	}
+	
 	
 	
 	

@@ -1,5 +1,5 @@
 /*
- * This file is part of Duit. Adapted from:
+ * This file is part of gtkD. Adapted from:
  *
  * paths.d  -- list of libraries that will be dynamically linked with DUI
  *
@@ -11,7 +11,7 @@
 module lib.paths;
 
 /* 
- * Define the Libraries that Duit will be using.
+ * Define the Libraries that gtkD will be using.
  *   This is a growable list, as long as the programmer
  *   also adds to the importLibs list.
  */

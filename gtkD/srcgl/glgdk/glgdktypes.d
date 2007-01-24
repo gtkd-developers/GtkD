@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -201,7 +201,8 @@ public enum GdkGLEventType
 alias GdkGLEventType GLEventType;
 
 /**
- * << Geometric Object RenderingX Window System Interaction >>
+ * <<Geometric Object Rendering
+ * X Window System Interaction>>
  */
 public enum GdkGLDrawableType
 {
@@ -244,9 +245,12 @@ public struct GdkGLWindow{}
 /*
  * Returns the GdkGLDrawable held by the pixmap. In fact, this is macro
  * that casts the result of gdk_pixmap_get_gl_pixmap to GdkGLDrawable.
- * pixmap :a GdkGLPixmap.
- * Returns :the GdkGLDrawable.
- * << Rendering SurfaceOpenGL Window >>
+ * pixmap:
+ * a GdkGLPixmap.
+ * Returns:
+ * the GdkGLDrawable.
+ * <<Rendering Surface
+ * OpenGL Window>>
  */
 // TODO
 // #define gdk_pixmap_get_gl_drawable(pixmap)
@@ -254,17 +258,20 @@ public struct GdkGLWindow{}
 /*
  * Returns the GdkGLDrawable held by the window. In fact, this is macro
  * that casts the result of gdk_window_get_gl_window to GdkGLDrawable.
- * window :a GdkGLWindow.
- * Returns :the GdkGLDrawable.
- * << OpenGL PixmapFont Rendering >>
+ * window:
+ * a GdkGLWindow.
+ * Returns:
+ * the GdkGLDrawable.
+ * <<OpenGL Pixmap
+ * Font Rendering>>
  */
 // TODO
 // #define gdk_window_get_gl_drawable(window)
 
 /*
- * major :
- * minor :
- * micro :
+ * major:
+ * minor:
+ * micro:
  */
 // TODO
 // #define GDKGLEXT_CHECK_VERSION(major, minor, micro)

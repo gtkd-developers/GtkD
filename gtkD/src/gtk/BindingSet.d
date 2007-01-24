@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -160,6 +160,57 @@ public class BindingSet
 	
 	
 	
+	
+	
+	/**
+	 * Warning
+	 * gtk_binding_entry_add_signall is deprecated and should not be used in newly-written code.
+	 * Deprecated.
+	 * binding_set:
+	 *  binding set to add a signal to
+	 * keyval:
+	 *  key value
+	 * modifiers:
+	 *  key modifier
+	 * signal_name:
+	 *  signal name to be bound
+	 * binding_args:
+	 *  list of GtkBindingArg signal arguments
+	 */
+	public void bindingEntryAddSignall(uint keyval, GdkModifierType modifiers, char[] signalName, ListSG bindingArgs)
+	{
+		// void gtk_binding_entry_add_signall (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers,  const gchar *signal_name,  GSList *binding_args);
+		gtk_binding_entry_add_signall(gtkBindingSet, keyval, modifiers, Str.toStringz(signalName), (bindingArgs is null) ? null : bindingArgs.getListSGStruct());
+	}
+	
+	/**
+	 * Warning
+	 * gtk_binding_entry_clear is deprecated and should not be used in newly-written code.
+	 * Use of this function is deprecated.
+	 * binding_set:
+	 * keyval:
+	 * modifiers:
+	 */
+	public void bindingEntryClear(uint keyval, GdkModifierType modifiers)
+	{
+		// void gtk_binding_entry_clear (GtkBindingSet *binding_set,  guint keyval,  GdkModifierType modifiers);
+		gtk_binding_entry_clear(gtkBindingSet, keyval, modifiers);
+	}
+	
+	/**
+	 * Warning
+	 * gtk_binding_parse_binding is deprecated and should not be used in newly-written code.
+	 * Deprecated as public API, used only internally.
+	 * scanner:
+	 *  GtkRC scanner
+	 * Returns:
+	 *  expected token upon errors, G_TOKEN_NONE on success.
+	 */
+	public static uint bindingParseBinding(GScanner* scanner)
+	{
+		// guint gtk_binding_parse_binding (GScanner *scanner);
+		return gtk_binding_parse_binding(scanner);
+	}
 	
 	/**
 	 * Gtk+ maintains a global list of binding sets. Each binding set has

@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -217,8 +217,11 @@ public class Child
 	}
 	
 	/**
-	 * Sets a function to be called when the child indicated by pid exits, at a
-	 * default priority, G_PRIORITY_DEFAULT.
+	 * Sets a function to be called when the child indicated by pid
+	 * exits, at a default priority, G_PRIORITY_DEFAULT.
+	 * If you obtain pid from g_spawn_async() or g_spawn_async_with_pipes()
+	 * you will need to pass G_SPAWN_DO_NOT_REAP_CHILD as flag to
+	 * the spawn function for the child watching to work.
 	 * Note that on platforms where GPid must be explicitly closed
 	 * (see g_spawn_close_pid()) pid must not be closed while the
 	 * source is still active. Typically, you will want to call
@@ -241,8 +244,11 @@ public class Child
 	}
 	
 	/**
-	 * Sets a function to be called when the child indicated by pid exits, at a
-	 * default priority, G_PRIORITY_DEFAULT.
+	 * Sets a function to be called when the child indicated by pid
+	 * exits, at the priority priority.
+	 * If you obtain pid from g_spawn_async() or g_spawn_async_with_pipes()
+	 * you will need to pass G_SPAWN_DO_NOT_REAP_CHILD as flag to
+	 * the spawn function for the child watching to work.
 	 * Note that on platforms where GPid must be explicitly closed
 	 * (see g_spawn_close_pid()) pid must not be closed while the
 	 * source is still active. Typically, you will want to call

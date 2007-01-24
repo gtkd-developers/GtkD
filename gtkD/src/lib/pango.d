@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -223,9 +223,10 @@ extern(C)
 	PangoAttribute* function(gboolean enableFallback)pango_attr_fallback_new;
 	PangoAttribute* function(int rise)pango_attr_rise_new;
 	PangoAttribute* function(int letterSpacing)pango_attr_letter_spacing_new;
-	void function(PangoColor* color)pango_color_free;
 	gboolean function(PangoColor* color, char* spec)pango_color_parse;
 	PangoColor* function(PangoColor* src)pango_color_copy;
+	void function(PangoColor* color)pango_color_free;
+	gchar* function(PangoColor* color)pango_color_to_string;
 	PangoAttrList* function()pango_attr_list_new;
 	PangoAttrList* function(PangoAttrList* list)pango_attr_list_ref;
 	void function(PangoAttrList* list)pango_attr_list_unref;
@@ -311,7 +312,9 @@ extern(C)
 	void function(PangoLayout* layout, int* width, int* height)pango_layout_get_pixel_size;
 	int function(PangoLayout* layout)pango_layout_get_line_count;
 	PangoLayoutLine* function(PangoLayout* layout, int line)pango_layout_get_line;
+	PangoLayoutLine* function(PangoLayout* layout, int line)pango_layout_get_line_readonly;
 	GSList* function(PangoLayout* layout)pango_layout_get_lines;
+	GSList* function(PangoLayout* layout)pango_layout_get_lines_readonly;
 	PangoLayoutIter* function(PangoLayout* layout)pango_layout_get_iter;
 	PangoLayoutLine* function(PangoLayoutLine* line)pango_layout_line_ref;
 	void function(PangoLayoutLine* line)pango_layout_line_unref;
@@ -332,7 +335,9 @@ extern(C)
 	int function(PangoLayoutIter* iter)pango_layout_iter_get_index;
 	int function(PangoLayoutIter* iter)pango_layout_iter_get_baseline;
 	PangoLayoutRun* function(PangoLayoutIter* iter)pango_layout_iter_get_run;
+	PangoLayoutRun* function(PangoLayoutIter* iter)pango_layout_iter_get_run_readonly;
 	PangoLayoutLine* function(PangoLayoutIter* iter)pango_layout_iter_get_line;
+	PangoLayoutLine* function(PangoLayoutIter* iter)pango_layout_iter_get_line_readonly;
 	void function(PangoLayoutIter* iter, PangoRectangle* logicalRect)pango_layout_iter_get_char_extents;
 	void function(PangoLayoutIter* iter, PangoRectangle* inkRect, PangoRectangle* logicalRect)pango_layout_iter_get_cluster_extents;
 	void function(PangoLayoutIter* iter, PangoRectangle* inkRect, PangoRectangle* logicalRect)pango_layout_iter_get_run_extents;
@@ -528,9 +533,10 @@ Symbol[] pangoLinks =
 	{ "pango_attr_fallback_new",  cast(void**)& pango_attr_fallback_new},
 	{ "pango_attr_rise_new",  cast(void**)& pango_attr_rise_new},
 	{ "pango_attr_letter_spacing_new",  cast(void**)& pango_attr_letter_spacing_new},
-	{ "pango_color_free",  cast(void**)& pango_color_free},
 	{ "pango_color_parse",  cast(void**)& pango_color_parse},
 	{ "pango_color_copy",  cast(void**)& pango_color_copy},
+	{ "pango_color_free",  cast(void**)& pango_color_free},
+	{ "pango_color_to_string",  cast(void**)& pango_color_to_string},
 	{ "pango_attr_list_new",  cast(void**)& pango_attr_list_new},
 	{ "pango_attr_list_ref",  cast(void**)& pango_attr_list_ref},
 	{ "pango_attr_list_unref",  cast(void**)& pango_attr_list_unref},
@@ -604,7 +610,9 @@ Symbol[] pangoLinks =
 	{ "pango_layout_get_pixel_size",  cast(void**)& pango_layout_get_pixel_size},
 	{ "pango_layout_get_line_count",  cast(void**)& pango_layout_get_line_count},
 	{ "pango_layout_get_line",  cast(void**)& pango_layout_get_line},
+	{ "pango_layout_get_line_readonly",  cast(void**)& pango_layout_get_line_readonly},
 	{ "pango_layout_get_lines",  cast(void**)& pango_layout_get_lines},
+	{ "pango_layout_get_lines_readonly",  cast(void**)& pango_layout_get_lines_readonly},
 	{ "pango_layout_get_iter",  cast(void**)& pango_layout_get_iter},
 	{ "pango_layout_line_ref",  cast(void**)& pango_layout_line_ref},
 	{ "pango_layout_line_unref",  cast(void**)& pango_layout_line_unref},
@@ -622,7 +630,9 @@ Symbol[] pangoLinks =
 	{ "pango_layout_iter_get_index",  cast(void**)& pango_layout_iter_get_index},
 	{ "pango_layout_iter_get_baseline",  cast(void**)& pango_layout_iter_get_baseline},
 	{ "pango_layout_iter_get_run",  cast(void**)& pango_layout_iter_get_run},
+	{ "pango_layout_iter_get_run_readonly",  cast(void**)& pango_layout_iter_get_run_readonly},
 	{ "pango_layout_iter_get_line",  cast(void**)& pango_layout_iter_get_line},
+	{ "pango_layout_iter_get_line_readonly",  cast(void**)& pango_layout_iter_get_line_readonly},
 	{ "pango_layout_iter_get_char_extents",  cast(void**)& pango_layout_iter_get_char_extents},
 	{ "pango_layout_iter_get_cluster_extents",  cast(void**)& pango_layout_iter_get_cluster_extents},
 	{ "pango_layout_iter_get_run_extents",  cast(void**)& pango_layout_iter_get_run_extents},

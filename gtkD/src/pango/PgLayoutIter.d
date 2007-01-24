@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -189,6 +189,8 @@ public class PgLayoutIter
 	
 	
 	
+	
+	
 	/**
 	 * Frees an iterator that's no longer in use.
 	 * iter:
@@ -304,6 +306,8 @@ public class PgLayoutIter
 	 * line, there's a position with a NULL run, so this function can return
 	 * NULL. The NULL run at the end of each line ensures that all lines have
 	 * at least one run, even lines consisting of only a newline.
+	 * Use the faster pango_layout_iter_get_run_readonly() if you do not plan
+	 * to modify the contents of the run (glyphs, glyph widths, etc.).
 	 * iter:
 	 *  a PangoLayoutIter
 	 * Returns:
@@ -316,7 +320,29 @@ public class PgLayoutIter
 	}
 	
 	/**
+	 * Gets the current run. When iterating by run, at the end of each
+	 * line, there's a position with a NULL run, so this function can return
+	 * NULL. The NULL run at the end of each line ensures that all lines have
+	 * at least one run, even lines consisting of only a newline.
+	 * This is a faster alternative to pango_layout_iter_get_run(),
+	 * but the user is not expected
+	 * to modify the contents of the run (glyphs, glyph widths, etc.).
+	 * iter:
+	 *  a PangoLayoutIter
+	 * Returns:
+	 *  the current run, that should not be modified.
+	 * Since 1.16
+	 */
+	public PangoLayoutRun* getRunReadonly()
+	{
+		// PangoLayoutRun* pango_layout_iter_get_run_readonly  (PangoLayoutIter *iter);
+		return pango_layout_iter_get_run_readonly(pangoLayoutIter);
+	}
+	
+	/**
 	 * Gets the current line.
+	 * Use the faster pango_layout_iter_get_line_readonly() if you do not plan
+	 * to modify the contents of the line (glyphs, glyph widths, etc.).
 	 * iter:
 	 *  a PangoLayoutIter
 	 * Returns:
@@ -326,6 +352,23 @@ public class PgLayoutIter
 	{
 		// PangoLayoutLine* pango_layout_iter_get_line (PangoLayoutIter *iter);
 		return pango_layout_iter_get_line(pangoLayoutIter);
+	}
+	
+	/**
+	 * Gets the current line for read-only access.
+	 * This is a faster alternative to pango_layout_iter_get_line(),
+	 * but the user is not expected
+	 * to modify the contents of the line (glyphs, glyph widths, etc.).
+	 * iter:
+	 *  a PangoLayoutIter
+	 * Returns:
+	 *  the current line, that should not be modified.
+	 * Since 1.16
+	 */
+	public PangoLayoutLine* getLineReadonly()
+	{
+		// PangoLayoutLine* pango_layout_iter_get_line_readonly  (PangoLayoutIter *iter);
+		return pango_layout_iter_get_line_readonly(pangoLayoutIter);
 	}
 	
 	/**

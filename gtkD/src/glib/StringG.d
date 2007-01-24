@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -95,9 +95,9 @@ public class StringG
 	/**
 	 * Creates a new GString, initialized with the given string.
 	 * init:
-	 * the initial text to copy into the string.
+	 *  the initial text to copy into the string.
 	 * Returns:
-	 * the new GString.
+	 *  the new GString.
 	 */
 	public this (char[] init)
 	{
@@ -106,14 +106,18 @@ public class StringG
 	}
 	
 	/**
-	 * Creates a new GString with len bytes of the init buffer. Because a length is
-	 * provided, init need not be nul-terminated, and can contain embedded nul bytes.
+	 * Creates a new GString with len bytes of the
+	 * init buffer. Because a length is provided, init
+	 * need not be nul-terminated, and can contain embedded
+	 * nul bytes.
+	 * Since this function does not stop at nul bytes, it is the caller's
+	 * responsibility to ensure that init has at least len addressable bytes.
 	 * init:
-	 * initial contents of string.
+	 *  initial contents of string.
 	 * len:
-	 * length of init to use.
+	 *  length of init to use.
 	 * Returns:
-	 * a new GString.
+	 *  a new GString.
 	 */
 	public this (char[] init, int len)
 	{
@@ -122,13 +126,15 @@ public class StringG
 	}
 	
 	/**
-	 * Creates a new GString, with enough space for dfl_size bytes.
-	 * This is useful if you are going to add a lot of text to the string and
-	 * don't want it to be reallocated too often.
+	 * Creates a new GString, with enough space for dfl_size
+	 * bytes. This is useful if you are going to add a lot of
+	 * text to the string and don't want it to be reallocated
+	 * too often.
 	 * dfl_size:
-	 * the default size of the space allocated to hold the string.
+	 *  the default size of the space allocated to
+	 *  hold the string.
 	 * Returns:
-	 * the new GString.
+	 *  the new GString.
 	 */
 	public static StringG sizedNew(uint dflSize)
 	{
@@ -137,15 +143,17 @@ public class StringG
 	}
 	
 	/**
-	 * Copies the bytes from a string into a GString, destroying any previous
-	 * contents. It is rather like the standard strcpy() function, except that
-	 * you do not have to worry about having enough space to copy the string.
+	 * Copies the bytes from a string into a GString,
+	 * destroying any previous contents. It is rather like
+	 * the standard strcpy() function, except that you do not
+	 * have to worry about having enough space to copy the string.
 	 * string:
-	 * the destination GString. Its current contents are destroyed.
+	 *  the destination GString. Its current contents
+	 *  are destroyed.
 	 * rval:
-	 * the string to copy into string
+	 *  the string to copy into string
 	 * Returns:
-	 * the destination GString.
+	 *  the destination GString.
 	 */
 	public StringG assign(char[] rval)
 	{
@@ -158,14 +166,15 @@ public class StringG
 	/**
 	 * Writes a formatted string into a GString.
 	 * This is similar to the standard sprintf() function,
-	 * except that the GString buffer automatically expands to contain the results.
-	 * The previous contents of the GString are destroyed.
+	 * except that the GString buffer automatically expands
+	 * to contain the results. The previous contents of the
+	 * GString are destroyed.
 	 * string:
-	 * a GString.
+	 *  a GString.
 	 * format:
-	 * the string format. See the printf() documentation.
+	 *  the string format. See the printf() documentation.
 	 * ...:
-	 * the parameters to insert into the format string.
+	 *  the parameters to insert into the format string.
 	 */
 	public void printf(char[] format, ... )
 	{
@@ -175,14 +184,14 @@ public class StringG
 	
 	/**
 	 * Appends a formatted string onto the end of a GString.
-	 * This function is is similar to g_string_printf() except that
-	 * the text is appended to the GString.
+	 * This function is is similar to g_string_printf() except
+	 * that the text is appended to the GString.
 	 * string:
-	 * a GString.
+	 *  a GString.
 	 * format:
-	 * the string format. See the printf() documentation.
+	 *  the string format. See the printf() documentation.
 	 * ...:
-	 * the parameters to insert into the format string.
+	 *  the parameters to insert into the format string.
 	 */
 	public void appendPrintf(char[] format, ... )
 	{
@@ -193,11 +202,11 @@ public class StringG
 	/**
 	 * Adds a string onto the end of a GString, expanding it if necessary.
 	 * string:
-	 * a GString.
+	 *  a GString.
 	 * val:
-	 * the string to append onto the end of the GString.
+	 *  the string to append onto the end of the GString.
 	 * Returns:
-	 * the GString.
+	 *  the GString.
 	 */
 	public StringG append(char[] val)
 	{
@@ -208,11 +217,11 @@ public class StringG
 	/**
 	 * Adds a byte onto the end of a GString, expanding it if necessary.
 	 * string:
-	 * a GString.
+	 *  a GString.
 	 * c:
-	 * the byte to append onto the end of the GString.
+	 *  the byte to append onto the end of the GString.
 	 * Returns:
-	 * the GString.
+	 *  the GString.
 	 */
 	public StringG appendC(char c)
 	{
@@ -237,16 +246,19 @@ public class StringG
 	}
 	
 	/**
-	 * Appends len bytes of val to string. Because len is provided,
-	 * val may contain embedded nuls and need not be nul-terminated.
+	 * Appends len bytes of val to string.
+	 * Because len is provided, val may contain
+	 * embedded nuls and need not be nul-terminated.
+	 * Since this function does not stop at nul bytes, it is the caller's
+	 * responsibility to ensure that val has at least len addressable bytes.
 	 * string:
-	 * a GString.
+	 *  a GString
 	 * val:
-	 * bytes to append.
+	 *  bytes to append
 	 * len:
-	 * number of bytes of val to use.
+	 *  number of bytes of val to use.
 	 * Returns:
-	 * the GString.
+	 *  the GString
 	 */
 	public StringG appendLen(char[] val, int len)
 	{
@@ -255,13 +267,14 @@ public class StringG
 	}
 	
 	/**
-	 * Adds a string on to the start of a GString, expanding it if necessary.
+	 * Adds a string on to the start of a GString,
+	 * expanding it if necessary.
 	 * string:
-	 * a GString.
+	 *  a GString
 	 * val:
-	 * the string to prepend on the start of the GString.
+	 *  the string to prepend on the start of the GString
 	 * Returns:
-	 * the GString.
+	 *  the GString
 	 */
 	public StringG prepend(char[] val)
 	{
@@ -270,13 +283,14 @@ public class StringG
 	}
 	
 	/**
-	 * Adds a byte onto the start of a GString, expanding it if necessary.
+	 * Adds a byte onto the start of a GString,
+	 * expanding it if necessary.
 	 * string:
-	 * a GString.
+	 *  a GString
 	 * c:
-	 * the byte to prepend on the start of the GString.
+	 *  the byte to prepend on the start of the GString
 	 * Returns:
-	 * the GString.
+	 *  the GString
 	 */
 	public StringG prependC(char c)
 	{
@@ -301,16 +315,19 @@ public class StringG
 	}
 	
 	/**
-	 * Prepends len bytes of val to string. Because len is provided,
-	 * val may contain embedded nuls and need not be nul-terminated.
+	 * Prepends len bytes of val to string.
+	 * Because len is provided, val may contain
+	 * embedded nuls and need not be nul-terminated.
+	 * Since this function does not stop at nul bytes, it is the caller's
+	 * responsibility to ensure that val has at least len addressable bytes.
 	 * string:
-	 * a GString.
+	 *  a GString
 	 * val:
-	 * bytes to prepend.
+	 *  bytes to prepend
 	 * len:
-	 * number of bytes in val to prepend.
+	 *  number of bytes in val to prepend
 	 * Returns:
-	 * the GString passed in.
+	 *  the GString passed in
 	 */
 	public StringG prependLen(char[] val, int len)
 	{
@@ -319,15 +336,16 @@ public class StringG
 	}
 	
 	/**
-	 * Inserts a copy of a string into a GString, expanding it if necessary.
+	 * Inserts a copy of a string into a GString,
+	 * expanding it if necessary.
 	 * string:
-	 * a GString.
+	 *  a GString
 	 * pos:
-	 * the position to insert the copy of the string.
+	 *  the position to insert the copy of the string
 	 * val:
-	 * the string to insert.
+	 *  the string to insert
 	 * Returns:
-	 * the GString.
+	 *  the GString
 	 */
 	public StringG insert(int pos, char[] val)
 	{
@@ -338,13 +356,13 @@ public class StringG
 	/**
 	 * Inserts a byte into a GString, expanding it if necessary.
 	 * string:
-	 * a GString.
+	 *  a GString
 	 * pos:
-	 * the position to insert the byte.
+	 *  the position to insert the byte
 	 * c:
-	 * the byte to insert.
+	 *  the byte to insert
 	 * Returns:
-	 * the GString.
+	 *  the GString
 	 */
 	public StringG insertC(int pos, char c)
 	{
@@ -372,18 +390,23 @@ public class StringG
 	}
 	
 	/**
-	 * Inserts len bytes of val into string at pos. Because len is provided, val
-	 *  may contain embedded nuls and need not be nul-terminated. If pos is -1, bytes are inserted at the end of the string.
+	 * Inserts len bytes of val into string at pos.
+	 * Because len is provided, val may contain embedded
+	 * nuls and need not be nul-terminated. If pos is -1,
+	 * bytes are inserted at the end of the string.
+	 * Since this function does not stop at nul bytes, it is the caller's
+	 * responsibility to ensure that val has at least len addressable bytes.
 	 * string:
-	 * a GString.
+	 *  a GString
 	 * pos:
-	 * position in string where insertion should happen, or -1 for at the end.
+	 *  position in string where insertion should
+	 *  happen, or -1 for at the end
 	 * val:
-	 * bytes to insert.
+	 *  bytes to insert
 	 * len:
-	 * number of bytes of val to insert.
+	 *  number of bytes of val to insert
 	 * Returns:
-	 * the GString.
+	 *  the GString
 	 */
 	public StringG insertLen(int pos, char[] val, int len)
 	{
@@ -395,14 +418,14 @@ public class StringG
 	 * Removes len bytes from a GString, starting at position pos.
 	 * The rest of the GString is shifted down to fill the gap.
 	 * string:
-	 * a GString.
+	 *  a GString
 	 * pos:
-	 * the position of the content to remove.
+	 *  the position of the content to remove
 	 * len:
-	 * the number of bytes to remove, or -1 to remove all
-	 *  following bytes.
+	 *  the number of bytes to remove, or -1 to remove all
+	 *  following bytes
 	 * Returns:
-	 * the GString.
+	 *  the GString
 	 */
 	public StringG erase(int pos, int len)
 	{
@@ -413,11 +436,11 @@ public class StringG
 	/**
 	 * Cuts off the end of the GString, leaving the first len bytes.
 	 * string:
-	 * a GString.
+	 *  a GString
 	 * len:
-	 * the new size of the GString.
+	 *  the new size of the GString
 	 * Returns:
-	 * the GString.
+	 *  the GString
 	 */
 	public StringG truncate(uint len)
 	{
@@ -448,11 +471,12 @@ public class StringG
 	 * Frees the memory allocated for the GString.
 	 * If free_segment is TRUE it also frees the character data.
 	 * string:
-	 * a GString.
+	 *  a GString
 	 * free_segment:
-	 * if TRUE the actual character data is freed as well.
+	 *  if TRUE the actual character data is freed as well
 	 * Returns:
-	 * the character data of string (i.e. NULL if free_segment is TRUE)
+	 *  the character data of string
+	 *  (i.e. NULL if free_segment is TRUE)
 	 */
 	public char[] free(int freeSegment)
 	{
@@ -497,9 +521,9 @@ public class StringG
 	/**
 	 * Creates a hash code for str; for use with GHashTable.
 	 * str:
-	 * a string to hash.
+	 *  a string to hash
 	 * Returns:
-	 * hash code for str.
+	 *  hash code for str
 	 */
 	public uint hash()
 	{
@@ -510,12 +534,15 @@ public class StringG
 	/**
 	 * Compares two strings for equality, returning TRUE if they are equal.
 	 * For use with GHashTable.
+	 * Compares two strings for equality, returning TRUE if they are equal.
+	 * For use with GHashTable.
 	 * v:
-	 * a GString.
+	 *  a GString
 	 * v2:
-	 * another GString.
+	 *  another GString
 	 * Returns:
-	 * TRUE if they strings are the same length and contain the same bytes.
+	 *  TRUE if they strings are the same
+	 *  length and contain the same bytes.
 	 */
 	public int equal(StringG v2)
 	{

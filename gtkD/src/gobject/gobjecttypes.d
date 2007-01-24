@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -1699,6 +1699,15 @@ public struct GValueArray{}
  * has been changed. Note that getting this signal doesn't guarantee that the
  * value of the property has actually changed, it may also be emitted when
  * the setter for the property is called to reinstate the previous value.
+ * This signal is typically used to obtain change notification for a
+ * single property, by specifying the property name as a detail in the
+ * g_signal_connect() call, like this:
+ * g_signal_connect (text_view->buffer, "notify::paste-target-list",
+ *  G_CALLBACK (gtk_text_view_target_list_notify),
+ *  text_view)
+ * It is important to note that you must use
+ * canonical parameter names as
+ * detail strings for the notify signal.
  * pspec:
  * the GParamSpec of the property which changed
  * gobject:

@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -136,6 +136,35 @@ public class CellView : Widget
 	/**
 	 */
 	
+	
+	/**
+	 * Get whether the GtkCellView hints the cell renderer that foreground colors
+	 * should be used when rendering text. See gtk_cell_view_set_use_fg().
+	 * cell_view:
+	 *  a GtkCellView
+	 * Returns:
+	 *  The value of the "use-fg" property
+	 * Since 2.12
+	 */
+	public int getUseFg()
+	{
+		// gboolean gtk_cell_view_get_use_fg (GtkCellView *cell_view);
+		return gtk_cell_view_get_use_fg(gtkCellView);
+	}
+	
+	/**
+	 * Sets whether to hint the cell renderer that foreground colors should be used when rendering text.
+	 * cell_view:
+	 *  a GtkCellView
+	 * use_fg:
+	 *  TRUE if foreground colors should be used for text
+	 * Since 2.12
+	 */
+	public void setUseFg(int useFg)
+	{
+		// void gtk_cell_view_set_use_fg (GtkCellView *cell_view,  gboolean use_fg);
+		gtk_cell_view_set_use_fg(gtkCellView, useFg);
+	}
 	
 	/**
 	 * Creates a new GtkCellView widget.
@@ -270,6 +299,7 @@ public class CellView : Widget
 		// GList* gtk_cell_view_get_cell_renderers  (GtkCellView *cell_view);
 		return new ListG( gtk_cell_view_get_cell_renderers(gtkCellView) );
 	}
+	
 	
 	
 	

@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -602,17 +602,6 @@ public class PgAttribute
 	
 	
 	/**
-	 * Frees a color allocated by pango_color_copy().
-	 * color:
-	 *  an allocated PangoColor
-	 */
-	public static void pangoColorFree(PangoColor* color)
-	{
-		// void pango_color_free (PangoColor *color);
-		pango_color_free(color);
-	}
-	
-	/**
 	 * Fill in the fields of a color from a string specification. The
 	 * string can either one of a large set of standard names. (Taken
 	 * from the X11 rgb.txt file), or it can be a hex value in the
@@ -649,6 +638,34 @@ public class PgAttribute
 	{
 		// PangoColor* pango_color_copy (const PangoColor *src);
 		return pango_color_copy(src);
+	}
+	
+	/**
+	 * Frees a color allocated by pango_color_copy().
+	 * color:
+	 *  an allocated PangoColor
+	 */
+	public static void pangoColorFree(PangoColor* color)
+	{
+		// void pango_color_free (PangoColor *color);
+		pango_color_free(color);
+	}
+	
+	/**
+	 * Returns a textual specification of color in the hexadecimal form
+	 * #rrrrggggbbbb, where r,
+	 * g and b are hex digits representing
+	 * the red, green, and blue components respectively.
+	 * color:
+	 *  a PangoColor
+	 * Returns:
+	 *  a newly-allocated text string that must be freed with g_free().
+	 * Since 1.16
+	 */
+	public static char[] pangoColorToString(PangoColor* color)
+	{
+		// gchar* pango_color_to_string (const PangoColor *color);
+		return Str.toString(pango_color_to_string(color) );
 	}
 	
 	

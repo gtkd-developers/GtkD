@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -883,9 +883,9 @@ public class Cairo
 	}
 	
 	/**
-	 * Tests whether the given point is on the area filled by doing a
-	 * cairo_stroke() operation on cr given the current path and filling
-	 * parameters.
+	 * Tests whether the given point is inside the area that would be
+	 * filled by doing a cairo_fill() operation on cr given the current
+	 * path and filling parameters.
 	 * See cairo_fill(), cairo_set_fill_rule() and cairo_fill_preserve().
 	 * cr:
 	 *  a cairo context
@@ -894,6 +894,8 @@ public class Cairo
 	 * y:
 	 *  Y coordinate of the point to test
 	 * Returns:
+	 *  A non-zero value if the point is inside, or zero if
+	 * outside.
 	 */
 	public cairo_bool_t inFill(double x, double y)
 	{
@@ -1029,10 +1031,10 @@ public class Cairo
 	}
 	
 	/**
-	 * Tests whether the given point is on the area stroked by doing a
-	 * cairo_stroke() operation on cr given the current path and stroking
-	 * parameters.
-	 * See cairo_stroke, cairo_set_line_width(), cairo_set_line_join(),
+	 * Tests whether the given point is inside the area that would be
+	 * stroked by doing a cairo_stroke() operation on cr given the
+	 * current path and stroking parameters.
+	 * See cairo_stroke(), cairo_set_line_width(), cairo_set_line_join(),
 	 * cairo_set_line_cap(), cairo_set_dash(), and
 	 * cairo_stroke_preserve().
 	 * cr:
@@ -1042,6 +1044,8 @@ public class Cairo
 	 * y:
 	 *  Y coordinate of the point to test
 	 * Returns:
+	 *  A non-zero value if the point is inside, or zero if
+	 * outside.
 	 */
 	public cairo_bool_t inStroke(double x, double y)
 	{
@@ -1086,8 +1090,12 @@ public class Cairo
 	 * will have no data (data==NULL and
 	 * num_data==0), if either of the following
 	 * conditions hold:
-	 * If there is insufficient memory to copy the path.
-	 * If cr is already in an error state.
+	 * If there is insufficient memory to copy the path. In this
+	 *  case path->status will be set to
+	 *  CAIRO_STATUS_NO_MEMORY.
+	 * If cr is already in an error state. In this case
+	 *  path->status will contain the same status that
+	 *  would be returned by cairo_status().
 	 * In either case, path->status will be set to
 	 * CAIRO_STATUS_NO_MEMORY (regardless of what the error status in
 	 * cr might have been).

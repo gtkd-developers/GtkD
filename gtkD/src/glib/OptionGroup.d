@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -70,15 +70,15 @@ private import glib.Str;
  *  Options can be single letters, prefixed by a single dash. Multiple
  *  short options can be grouped behind a single dash.
  *  Long options are prefixed by two consecutive dashes.
- *  Options can have an extra argument, which can be a number, a string or a filename.
- *  For long options, the extra argument can be appended with an equals sign after the
- *  option name.
+ *  Options can have an extra argument, which can be a number, a string or a
+ *  filename. For long options, the extra argument can be appended with an
+ *  equals sign after the option name.
  *  Non-option arguments are returned to the application as rest arguments.
- *  An argument consisting solely of two dashes turns off further parsing, any remaining
- *  arguments (even those starting with a dash) are returned to the application as rest
- *  arguments.
- * Another important feature of GOption is that it can automatically generate nicely
- * formatted help output. Unless it is explicitly turned off with
+ *  An argument consisting solely of two dashes turns off further parsing,
+ *  any remaining arguments (even those starting with a dash) are returned
+ *  to the application as rest arguments.
+ * Another important feature of GOption is that it can automatically generate
+ * nicely formatted help output. Unless it is explicitly turned off with
  * g_option_context_set_help_enabled(), GOption will recognize the
  * --help, -?, --help-all
  * and --help-groupname options
@@ -104,7 +104,8 @@ private import glib.Str;
  * to g_option_context_parse(). See gtk_get_option_group() for an example.
  * If an option is declared to be of type string or filename, GOption takes
  * care of converting it to the right encoding; strings are returned in UTF-8,
- * filenames are returned in the GLib filename encoding.
+ * filenames are returned in the GLib filename encoding. Note that this only
+ * works if setlocale() has been called before g_option_context_parse().
  * Here is a complete example of setting up GOption to parse the example
  * commandline above and produce the example help output.
  * static gint repeats = 2;

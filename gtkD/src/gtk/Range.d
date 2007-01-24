@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -209,6 +209,103 @@ public class Range : Widget
 	}
 	
 	
+	
+	/**
+	 * range:
+	 *  A GtkRange
+	 * Returns:
+	 *  The current position of the fill level indicator.
+	 * Since 2.12
+	 */
+	public double getFillLevel()
+	{
+		// gdouble gtk_range_get_fill_level (GtkRange *range);
+		return gtk_range_get_fill_level(gtkRange);
+	}
+	
+	/**
+	 * range:
+	 *  A GtkRange
+	 * Returns:
+	 *  Whether GtkRange is restricted to the fill level.
+	 * Since 2.12
+	 */
+	public int getRestrictToFillLevel()
+	{
+		// gboolean gtk_range_get_restrict_to_fill_level  (GtkRange *range);
+		return gtk_range_get_restrict_to_fill_level(gtkRange);
+	}
+	
+	/**
+	 * range:
+	 *  A GtkRange
+	 * Returns:
+	 *  Whether GtkRange displays a fill level graphics.
+	 * Since 2.12
+	 */
+	public int getShowFillLevel()
+	{
+		// gboolean gtk_range_get_show_fill_level (GtkRange *range);
+		return gtk_range_get_show_fill_level(gtkRange);
+	}
+	
+	/**
+	 * Set the new position of the fill level indicator.
+	 * The "fill level" is probably best described by its most prominent
+	 * use case, which is an indicator for the amount of pre-buffering in
+	 * a streaming media player. In that use case, the value of the range
+	 * would indicate the current play position, and the fill level would
+	 * be the position up to which the file/stream has been downloaded.
+	 * This amount of prebuffering can be displayed on the range's trough
+	 * and is themeable separately from the trough. To enable fill level
+	 * display, use gtk_range_set_show_fill_level(). The range defaults
+	 * to not showing the fill level.
+	 * Additionally, it's possible to restrict the range's slider position
+	 * to values which are smaller than the fill level. This is controller
+	 * by gtk_range_set_restrict_to_fill_level() and is by default
+	 * enabled.
+	 * range:
+	 *  A GtkRange
+	 * fill_level:
+	 * Since 2.12
+	 */
+	public void setFillLevel(double fillLevel)
+	{
+		// void gtk_range_set_fill_level (GtkRange *range,  gdouble fill_level);
+		gtk_range_set_fill_level(gtkRange, fillLevel);
+	}
+	
+	/**
+	 * Sets whether the slider is restricted to the fill level. See
+	 * gtk_range_set_fill_level() for a general description of the fill
+	 * level concept.
+	 * range:
+	 *  A GtkRange
+	 * restrict_to_fill_level:
+	 *  Whether the fill level restricts slider movement.
+	 * Since 2.12
+	 */
+	public void setRestrictToFillLevel(int restrictToFillLevel)
+	{
+		// void gtk_range_set_restrict_to_fill_level  (GtkRange *range,  gboolean restrict_to_fill_level);
+		gtk_range_set_restrict_to_fill_level(gtkRange, restrictToFillLevel);
+	}
+	
+	/**
+	 * Sets whether a graphical fill level is show on the trough. See
+	 * gtk_range_set_fill_level() for a general description of the fill
+	 * level concept.
+	 * range:
+	 *  A GtkRange
+	 * show_fill_level:
+	 *  Whether a fill level indicator graphics is shown.
+	 * Since 2.12
+	 */
+	public void setShowFillLevel(int showFillLevel)
+	{
+		// void gtk_range_set_show_fill_level (GtkRange *range,  gboolean show_fill_level);
+		gtk_range_set_show_fill_level(gtkRange, showFillLevel);
+	}
 	
 	/**
 	 * Get the GtkAdjustment which is the "model" object for GtkRange.
@@ -435,6 +532,9 @@ public class Range : Widget
 		// GtkSensitivityType gtk_range_get_upper_stepper_sensitivity  (GtkRange *range);
 		return gtk_range_get_upper_stepper_sensitivity(gtkRange);
 	}
+	
+	
+	
 	
 	
 	

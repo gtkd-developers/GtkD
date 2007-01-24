@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -255,7 +255,7 @@ public class ThreadPool
 	 * processed. Note however, that no thread of this pool is
 	 * interrupted, while processing a task. Instead at least all still
 	 * running threads can finish their tasks before the pool is freed.
-	 * If wait is TRUE, the functions does not return before all tasks
+	 * If wait_ is TRUE, the functions does not return before all tasks
 	 * to be processed (dependent on immediate, whether all or only the
 	 * currently running) are ready. Otherwise the function returns immediately.
 	 * After calling this function pool must not be used anymore.
@@ -263,12 +263,12 @@ public class ThreadPool
 	 *  a GThreadPool
 	 * immediate:
 	 *  should pool shut down immediately?
-	 * wait:
+	 * wait_:
 	 *  should the function wait for all tasks to be finished?
 	 */
 	public void free(int immediate, int wait)
 	{
-		// void g_thread_pool_free (GThreadPool *pool,  gboolean immediate,  gboolean wait);
+		// void g_thread_pool_free (GThreadPool *pool,  gboolean immediate,  gboolean wait_);
 		g_thread_pool_free(gThreadPool, immediate, wait);
 	}
 	

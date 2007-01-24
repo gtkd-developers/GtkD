@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -408,10 +408,10 @@ public class Date
 	
 	/**
 	 * Parses a user-inputted string str, and try to figure out what date it
-	 * represents, taking the current locale into account. If the string is
-	 * successfully parsed, the date will be valid after the call. Otherwise,
-	 * it will be invalid. You should check using g_date_valid() to see
-	 * whether the parsing succeeded.
+	 * represents, taking the current locale
+	 * into account. If the string is successfully parsed, the date will be
+	 * valid after the call. Otherwise, it will be invalid. You should check
+	 * using g_date_valid() to see whether the parsing succeeded.
 	 * This function is not appropriate for file formats and the like; it
 	 * isn't very precise, and its exact behavior varies with the
 	 * locale. It's intended to be a heuristic routine that guesses what the
@@ -802,18 +802,16 @@ public class Date
 	}
 	
 	/**
-	 * Generates a printed representation of the date, in a locale-specific
-	 * way. Works just like the platform's C library
-	 * strftime() function, but only accepts
-	 * date-related formats; time-related formats give undefined
-	 * results. Date must be valid. Unlike strftime()
-	 * (which uses the locale encoding), works on a UTF-8 format string and
-	 * stores a UTF-8 result.
+	 * Generates a printed representation of the date, in a
+	 * locale-specific way. Works just like
+	 * the platform's C library strftime() function, but only accepts date-related
+	 * formats; time-related formats give undefined results. Date must be valid.
+	 * Unlike strftime() (which uses the locale encoding), works on a UTF-8 format
+	 * string and stores a UTF-8 result.
 	 * This function does not provide any conversion specifiers in addition
 	 * to those implemented by the platform's C library. For example, don't
-	 * expect that using g_date_strftime() would make
-	 * the F provided by the C99 strftime() work on
-	 * Windows where the C library only complies to C89.
+	 * expect that using g_date_strftime() would make the F provided by the C99
+	 * strftime() work on Windows where the C library only complies to C89.
 	 * s:
 	 * destination buffer.
 	 * slen:

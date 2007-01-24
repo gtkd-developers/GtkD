@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -99,6 +99,20 @@ private import glib.Str;
 	 *  {
 		 *  g_set_error (error, SAY_ERROR, SAY_ERROR_OPEN,
 		 * 		 "%s: %s", filename, g_module_error ());
+		 *  if (!g_module_close (module))
+		 * 	g_warning ("%s: %s", filename, g_module_error ());
+		 *  return FALSE;
+	 *  }
+	 *  if (say_hello == NULL)
+	 *  {
+		 *  g_set_error (error, SAY_ERROR, SAY_ERROR_OPEN, "symbol say_hello is NULL");
+		 *  if (!g_module_close (module))
+		 * 	g_warning ("%s: %s", filename, g_module_error ());
+		 *  return FALSE;
+	 *  }
+	 *  if (say_hello == NULL)
+	 *  {
+		 *  g_set_error (error, SAY_ERROR, SAY_ERROR_OPEN, "symbol say_hello is NULL");
 		 *  if (!g_module_close (module))
 		 * 	g_warning ("%s: %s", filename, g_module_error ());
 		 *  return FALSE;
@@ -210,6 +224,8 @@ public class Module
 	
 	/**
 	 * Gets a symbol pointer from a module.
+	 * Note that a valid symbol can be NULL.
+	 * Note that a valid symbol can be NULL.
 	 * module:
 	 * a GModule.
 	 * symbol_name:

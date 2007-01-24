@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -252,7 +252,8 @@ public class CharacterSet
 	/**
 	 * Converts a string which is in the encoding used for strings by
 	 * the C runtime (usually the same as that used by the operating
-	 * system) in the current locale into a UTF-8 string.
+	 * system) in the current locale into a
+	 * UTF-8 string.
 	 * opsysstring:
 	 *  a string in the encoding of the current locale. On Windows
 	 *  this means the system codepage.
@@ -286,7 +287,8 @@ public class CharacterSet
 	/**
 	 * Converts a string which is in the encoding used by GLib for
 	 * filenames into a UTF-8 string. Note that on Windows GLib uses UTF-8
-	 * for filenames.
+	 * for filenames; on other platforms, this function indirectly depends on
+	 * the current locale.
 	 * opsysstring:
 	 *  a string in the encoding for filenames
 	 * len:
@@ -318,7 +320,9 @@ public class CharacterSet
 	
 	/**
 	 * Converts a string from UTF-8 to the encoding GLib uses for
-	 * filenames. Note that on Windows GLib uses UTF-8 for filenames.
+	 * filenames. Note that on Windows GLib uses UTF-8 for filenames;
+	 * on other platforms, this function indirectly depends on the
+	 * current locale.
 	 * utf8string:
 	 *  a UTF-8 encoded string.
 	 * len:
@@ -403,16 +407,17 @@ public class CharacterSet
 	 * used in the GLib API is always UTF-8 and said environment variables
 	 * have no effect.
 	 * G_FILENAME_ENCODING may be set to a comma-separated list
-	 * of character set names. The special token "locale" is taken to mean the
-	 * character set for the current locale. If G_FILENAME_ENCODING
-	 * is not set, but G_BROKEN_FILENAMES is, the character set of
-	 * the current locale is taken as the filename encoding. If neither environment
-	 * variable is set, UTF-8 is taken as the filename encoding, but the character
+	 * of character set names. The special token "@locale" is taken to
+	 * mean the character set for the current
+	 * locale. If G_FILENAME_ENCODING is not set, but
+	 * G_BROKEN_FILENAMES is, the character set of the current
+	 * locale is taken as the filename encoding. If neither environment variable
+	 * is set, UTF-8 is taken as the filename encoding, but the character
 	 * set of the current locale is also put in the list of encodings.
 	 * The returned charsets belong to GLib and must not be freed.
 	 * Note that on Unix, regardless of the locale character set or
-	 * G_FILENAME_ENCODING value, the actual file names present on a
-	 * system might be in any random encoding or just gibberish.
+	 * G_FILENAME_ENCODING value, the actual file names present
+	 * on a system might be in any random encoding or just gibberish.
 	 * charsets:
 	 *  return location for the NULL-terminated list of encoding names
 	 * Returns:
@@ -532,11 +537,11 @@ public class CharacterSet
 	
 	
 	/**
-	 * Obtains the character set for the current locale; you might use
-	 * this character set as an argument to g_convert(), to convert from
-	 * the current locale's encoding to some other encoding. (Frequently
-	 * g_locale_to_utf8() and g_locale_from_utf8() are nice shortcuts,
-	 * though.)
+	 * Obtains the character set for the current
+	 * locale; you might use this character set as an argument to
+	 * g_convert(), to convert from the current locale's encoding to some
+	 * other encoding. (Frequently g_locale_to_utf8() and g_locale_from_utf8()
+	 * are nice shortcuts, though.)
 	 * The return value is TRUE if the locale's encoding is UTF-8, in that
 	 * case you can perhaps avoid calling g_convert().
 	 * The string returned in charset is not allocated, and should not be

@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -881,11 +881,11 @@ public class Unicode
 	
 	/**
 	 * Compares two strings for ordering using the linguistically
-	 * correct rules for the current locale. When sorting a large
-	 * number of strings, it will be significantly faster to
-	 * obtain collation keys with g_utf8_collate_key() and
-	 * compare the keys with strcmp() when
-	 * sorting instead of sorting the original strings.
+	 * correct rules for the current locale.
+	 * When sorting a large number of strings, it will be significantly
+	 * faster to obtain collation keys with g_utf8_collate_key() and
+	 * compare the keys with strcmp() when sorting instead of sorting
+	 * the original strings.
 	 * str1:
 	 *  a UTF-8 encoded string
 	 * str2:
@@ -905,8 +905,10 @@ public class Unicode
 	 * with other collation keys produced by the same function using
 	 * strcmp().
 	 * The results of comparing the collation keys of two strings
-	 * with strcmp() will always be the same as
-	 * comparing the two original keys with g_utf8_collate().
+	 * with strcmp() will always be the same as comparing the two
+	 * original keys with g_utf8_collate().
+	 * Note that this function depends on the
+	 * current locale.
 	 * str:
 	 *  a UTF-8 encoded string.
 	 * len:
@@ -930,6 +932,8 @@ public class Unicode
 	 * "event.h" instead of "event.c" "event.h" "eventgenerator.c". Also, we
 	 * would like to treat numbers intelligently so that "file1" "file10" "file5"
 	 * is sorted as "file1" "file5" "file10".
+	 * Note that this function depends on the
+	 * current locale.
 	 * str:
 	 *  a UTF-8 encoded string.
 	 * len:

@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkgldrawable.html
+ * inFile  = gtkglext-gdkgldrawable.html
  * outPack = glgdk
  * outFile = GLDrawable
  * strct   = GdkGLDrawable
@@ -91,9 +91,12 @@ public class GLDrawable
 	
 	/**
 	 * Attach an OpenGL rendering context to a gldrawable.
-	 * gldrawable : a GdkGLDrawable.
-	 * glcontext : a GdkGLContext.
-	 * Returns : TRUE if it is successful, FALSE otherwise.
+	 * gldrawable:
+	 *  a GdkGLDrawable.
+	 * glcontext:
+	 *  a GdkGLContext.
+	 * Returns:
+	 *  TRUE if it is successful, FALSE otherwise.
 	 */
 	public int makeCurrent(GLContext glcontext)
 	{
@@ -103,8 +106,10 @@ public class GLDrawable
 	
 	/**
 	 * Returns whether the gldrawable supports the double-buffered visual.
-	 * gldrawable : a GdkGLDrawable.
-	 * Returns : TRUE if the double-buffered visual is supported,
+	 * gldrawable:
+	 *  a GdkGLDrawable.
+	 * Returns:
+	 *  TRUE if the double-buffered visual is supported,
 	 *  FALSE otherwise.
 	 */
 	public int isDoubleBuffered()
@@ -115,7 +120,8 @@ public class GLDrawable
 	
 	/**
 	 * Exchange front and back buffers.
-	 * gldrawable : a GdkGLDrawable.
+	 * gldrawable:
+	 *  a GdkGLDrawable.
 	 */
 	public void swapBuffers()
 	{
@@ -125,7 +131,8 @@ public class GLDrawable
 	
 	/**
 	 * Complete OpenGL execution prior to subsequent GDK drawing calls.
-	 * gldrawable : a GdkGLDrawable.
+	 * gldrawable:
+	 *  a GdkGLDrawable.
 	 */
 	public void waitGl()
 	{
@@ -135,7 +142,8 @@ public class GLDrawable
 	
 	/**
 	 * Complete GDK drawing execution prior to subsequent OpenGL calls.
-	 * gldrawable : a GdkGLDrawable.
+	 * gldrawable:
+	 *  a GdkGLDrawable.
 	 */
 	public void waitGdk()
 	{
@@ -145,9 +153,12 @@ public class GLDrawable
 	
 	/**
 	 * Delimits the begining of the OpenGL execution.
-	 * gldrawable : a GdkGLDrawable.
-	 * glcontext : a GdkGLContext.
-	 * Returns : TRUE if it is successful, FALSE otherwise.
+	 * gldrawable:
+	 *  a GdkGLDrawable.
+	 * glcontext:
+	 *  a GdkGLContext.
+	 * Returns:
+	 *  TRUE if it is successful, FALSE otherwise.
 	 */
 	public int glBegin(GLContext glcontext)
 	{
@@ -157,7 +168,8 @@ public class GLDrawable
 	
 	/**
 	 * Delimits the end of the OpenGL execution.
-	 * gldrawable : a GdkGLDrawable.
+	 * gldrawable:
+	 *  a GdkGLDrawable.
 	 */
 	public void glEnd()
 	{
@@ -167,8 +179,10 @@ public class GLDrawable
 	
 	/**
 	 * Gets GdkGLConfig with which the gldrawable is configured.
-	 * gldrawable : a GdkGLDrawable.
-	 * Returns : the GdkGLConfig.
+	 * gldrawable:
+	 *  a GdkGLDrawable.
+	 * Returns:
+	 *  the GdkGLConfig.
 	 */
 	public GdkGLConfig* getGLConfig()
 	{
@@ -179,9 +193,12 @@ public class GLDrawable
 	/**
 	 * Fills *width and *height with the size of GL drawable.
 	 * width or height can be NULL if you only want the other one.
-	 * gldrawable : a GdkGLDrawable.
-	 * width : location to store drawable's width, or NULL.
-	 * height : location to store drawable's height, or NULL.
+	 * gldrawable:
+	 *  a GdkGLDrawable.
+	 * width:
+	 *  location to store drawable's width, or NULL.
+	 * height:
+	 *  location to store drawable's height, or NULL.
 	 */
 	public void getSize(int* width, int* height)
 	{
@@ -191,8 +208,10 @@ public class GLDrawable
 	
 	/**
 	 * Returns the current GdkGLDrawable.
-	 * Returns : the current GdkGLDrawable or NULL if there is no current drawable.
-	 * << Rendering ContextOpenGL Pixmap >>
+	 * Returns:
+	 *  the current GdkGLDrawable or NULL if there is no current drawable.
+	 * <<Rendering Context
+	 * OpenGL Pixmap>>
 	 */
 	public static GdkGLDrawable* getCurrent()
 	{

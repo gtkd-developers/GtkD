@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglquery.html
+ * inFile  = gtkglext-gdkglquery.html
  * outPack = glgdk
  * outFile = GLQuery
  * strct   = 
@@ -70,7 +70,8 @@ public class GLQuery
 	/**
 	 * Indicates whether the window system supports the OpenGL extension
 	 * (GLX, WGL, etc.).
-	 * Returns : TRUE if OpenGL is supported, FALSE otherwise.
+	 * Returns:
+	 *  TRUE if OpenGL is supported, FALSE otherwise.
 	 */
 	public static int extension()
 	{
@@ -81,8 +82,10 @@ public class GLQuery
 	/**
 	 * Indicates whether the window system supports the OpenGL extension
 	 * (GLX, WGL, etc.).
-	 * display : the GdkDisplay where the query is sent to.
-	 * Returns : TRUE if OpenGL is supported, FALSE otherwise.
+	 * display:
+	 *  the GdkDisplay where the query is sent to.
+	 * Returns:
+	 *  TRUE if OpenGL is supported, FALSE otherwise.
 	 */
 	public static int extensionForDisplay(Display display)
 	{
@@ -94,9 +97,12 @@ public class GLQuery
 	 * Returns the version numbers of the OpenGL extension to the window system.
 	 * In the X Window System, it returns the GLX version.
 	 * In the Microsoft Windows, it returns the Windows version.
-	 * major : returns the major version number of the OpenGL extension.
-	 * minor : returns the minor version number of the OpenGL extension.
-	 * Returns : FALSE if it fails, TRUE otherwise.
+	 * major:
+	 *  returns the major version number of the OpenGL extension.
+	 * minor:
+	 *  returns the minor version number of the OpenGL extension.
+	 * Returns:
+	 *  FALSE if it fails, TRUE otherwise.
 	 */
 	public static int versio(int* major, int* minor)
 	{
@@ -108,10 +114,14 @@ public class GLQuery
 	 * Returns the version numbers of the OpenGL extension to the window system.
 	 * In the X Window System, it returns the GLX version.
 	 * In the Microsoft Windows, it returns the Windows version.
-	 * display : the GdkDisplay where the query is sent to.
-	 * major : returns the major version number of the OpenGL extension.
-	 * minor : returns the minor version number of the OpenGL extension.
-	 * Returns : FALSE if it fails, TRUE otherwise.
+	 * display:
+	 *  the GdkDisplay where the query is sent to.
+	 * major:
+	 *  returns the major version number of the OpenGL extension.
+	 * minor:
+	 *  returns the minor version number of the OpenGL extension.
+	 * Returns:
+	 *  FALSE if it fails, TRUE otherwise.
 	 */
 	public static int versionForDisplay(Display display, int* major, int* minor)
 	{
@@ -126,8 +136,10 @@ public class GLQuery
 	 * gdk_gl_query_gl_extension() returns information about OpenGL extensions
 	 * only. This means that window system dependent extensions (for example,
 	 * GLX extensions) are not reported by gdk_gl_query_gl_extension().
-	 * extension : name of OpenGL extension.
-	 * Returns : TRUE if the OpenGL extension is supported, FALSE if not
+	 * extension:
+	 *  name of OpenGL extension.
+	 * Returns:
+	 *  TRUE if the OpenGL extension is supported, FALSE if not
 	 *  supported.
 	 */
 	public static int glExtension(char[] extension)
@@ -138,9 +150,12 @@ public class GLQuery
 	
 	/**
 	 * Returns the address of the OpenGL, GLU, or GLX function.
-	 * proc_name : function name.
-	 * Returns : the address of the function named by proc_name.
-	 * << InitializationFrame Buffer Configuration >>
+	 * proc_name:
+	 *  function name.
+	 * Returns:
+	 *  the address of the function named by proc_name.
+	 * <<Initialization
+	 * Frame Buffer Configuration>>
 	 */
 	public static GdkGLProc gdkGLGetProcAddress(char[] procName)
 	{

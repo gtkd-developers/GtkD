@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglinit.html
+ * inFile  = gtkglext-gdkglinit.html
  * outPack = glgdk
  * outFile = GLdInit
  * strct   = 
@@ -71,10 +71,12 @@ public class GLdInit
 	 * This function will terminate your program if it was unable to initialize
 	 * the library for some reason. If you want your program to fall back to a
 	 * textual interface you want to call gdk_gl_init_check() instead.
-	 * argc : Address of the argc parameter of your
+	 * argc:
+	 *  Address of the argc parameter of your
 	 *  main() function. Changed if any arguments
 	 *  were handled.
-	 * argv : Address of the argv parameter of
+	 * argv:
+	 *  Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gdk_gl_init() are stripped before return.
 	 */
@@ -90,13 +92,16 @@ public class GLdInit
 	 * initialized. Instead it returns FALSE on failure.
 	 * This way the application can fall back to some other means of communication
 	 * with the user - for example a curses or command line interface.
-	 * argc : Address of the argc parameter of your
+	 * argc:
+	 *  Address of the argc parameter of your
 	 *  main() function. Changed if any arguments
 	 *  were handled.
-	 * argv : Address of the argv parameter of
+	 * argv:
+	 *  Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gdk_gl_init() are stripped before return.
-	 * Returns : TRUE if the GUI has been successfully initialized,
+	 * Returns:
+	 *  TRUE if the GUI has been successfully initialized,
 	 *  FALSE otherwise.
 	 */
 	public static int initCheck(int* argc, char*** argv)
@@ -112,10 +117,14 @@ public class GLdInit
 	 * argc and argv are updated accordingly.
 	 * You shouldn't call this function explicitely if you are using
 	 * gdk_gl_init(), or gdk_gl_init_check().
-	 * argc : the number of command line arguments.
-	 * argv : the array of command line arguments.
-	 * Returns : TRUE if initialization succeeded, otherwise FALSE.
-	 * << Part II. GdkGLExt API ReferenceQuery >>
+	 * argc:
+	 *  the number of command line arguments.
+	 * argv:
+	 *  the array of command line arguments.
+	 * Returns:
+	 *  TRUE if initialization succeeded, otherwise FALSE.
+	 * <<PartII.GdkGLExt API Reference
+	 * Query>>
 	 */
 	public static int parseArgs(int* argc, char*** argv)
 	{

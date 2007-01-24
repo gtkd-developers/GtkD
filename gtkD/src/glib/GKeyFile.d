@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -91,7 +91,7 @@ private import glib.Str;
  * key[locale]=value. Space before and after the
  * '=' character are ignored. Newline, tab, carriage return and backslash
  * characters are escaped as \n, \t, \r, and \\, respectively. To preserve
- * initial and final spaces, these can also be escaped as \s.
+ * leading spaces in values, these can also be escaped as \s.
  * Key files can store strings (possibly with localized variants), integers,
  * booleans and lists of these. Lists are separated by a separator character,
  * typically ';' or ','. To use the list separator character in a value in
@@ -104,6 +104,13 @@ private import glib.Str;
  * Key files are always encoded in UTF-8.
  * Key and Group names are case-sensitive, for example a group called
  * [GROUP] is a different group from [group].
+ * Note that in contrast to the
+ * Desktop
+ * Entry Specification, groups in key files may contain the same
+ * key multiple times; the last entry wins. Key files may also contain
+ * multiple groups with the same name; they are merged together.
+ * Another difference is that keys and group names in key files are not
+ * restricted to ASCII characters.
  */
 public class KeyFile
 {

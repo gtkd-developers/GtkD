@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -2821,30 +2821,30 @@ Symbol[] GLLinks =
 	{ "glMultiTexCoord4ivARB",  cast(void**)& glMultiTexCoord4ivARB},
 	{ "glMultiTexCoord4sARB",  cast(void**)& glMultiTexCoord4sARB},
 	{ "glMultiTexCoord4svARB",  cast(void**)& glMultiTexCoord4svARB},
-//	{ "glEnableTraceMESA",  cast(void**)& glEnableTraceMESA},
-//	{ "glEnableTraceMESA",  cast(void**)& glEnableTraceMESA},
-//	{ "glDisableTraceMESA",  cast(void**)& glDisableTraceMESA},
-//	{ "glDisableTraceMESA",  cast(void**)& glDisableTraceMESA},
-//	{ "glNewTraceMESA",  cast(void**)& glNewTraceMESA},
-//	{ "glNewTraceMESA",  cast(void**)& glNewTraceMESA},
-//	{ "glEndTraceMESA",  cast(void**)& glEndTraceMESA},
-//	{ "glEndTraceMESA",  cast(void**)& glEndTraceMESA},
-//	{ "glTraceAssertAttribMESA",  cast(void**)& glTraceAssertAttribMESA},
-//	{ "glTraceAssertAttribMESA",  cast(void**)& glTraceAssertAttribMESA},
-//	{ "glTraceCommentMESA",  cast(void**)& glTraceCommentMESA},
-//	{ "glTraceCommentMESA",  cast(void**)& glTraceCommentMESA},
-//	{ "glTraceTextureMESA",  cast(void**)& glTraceTextureMESA},
-//	{ "glTraceTextureMESA",  cast(void**)& glTraceTextureMESA},
-//	{ "glTraceListMESA",  cast(void**)& glTraceListMESA},
-//	{ "glTraceListMESA",  cast(void**)& glTraceListMESA},
-//	{ "glTracePointerMESA",  cast(void**)& glTracePointerMESA},
-//	{ "glTracePointerMESA",  cast(void**)& glTracePointerMESA},
-//	{ "glTracePointerRangeMESA",  cast(void**)& glTracePointerRangeMESA},
-//	{ "glTracePointerRangeMESA",  cast(void**)& glTracePointerRangeMESA},
-//	
-//	{ "glProgramCallbackMESA",  cast(void**)& glProgramCallbackMESA},
-//	
-//	{ "glGetProgramRegisterfvMESA",  cast(void**)& glGetProgramRegisterfvMESA},
-//	{ "glBlendEquationSeparateATI",  cast(void**)& glBlendEquationSeparateATI},
+	{ "glEnableTraceMESA",  cast(void**)& glEnableTraceMESA},
+	{ "glEnableTraceMESA",  cast(void**)& glEnableTraceMESA},
+	{ "glDisableTraceMESA",  cast(void**)& glDisableTraceMESA},
+	{ "glDisableTraceMESA",  cast(void**)& glDisableTraceMESA},
+	{ "glNewTraceMESA",  cast(void**)& glNewTraceMESA},
+	{ "glNewTraceMESA",  cast(void**)& glNewTraceMESA},
+	{ "glEndTraceMESA",  cast(void**)& glEndTraceMESA},
+	{ "glEndTraceMESA",  cast(void**)& glEndTraceMESA},
+	{ "glTraceAssertAttribMESA",  cast(void**)& glTraceAssertAttribMESA},
+	{ "glTraceAssertAttribMESA",  cast(void**)& glTraceAssertAttribMESA},
+	{ "glTraceCommentMESA",  cast(void**)& glTraceCommentMESA},
+	{ "glTraceCommentMESA",  cast(void**)& glTraceCommentMESA},
+	{ "glTraceTextureMESA",  cast(void**)& glTraceTextureMESA},
+	{ "glTraceTextureMESA",  cast(void**)& glTraceTextureMESA},
+	{ "glTraceListMESA",  cast(void**)& glTraceListMESA},
+	{ "glTraceListMESA",  cast(void**)& glTraceListMESA},
+	{ "glTracePointerMESA",  cast(void**)& glTracePointerMESA},
+	{ "glTracePointerMESA",  cast(void**)& glTracePointerMESA},
+	{ "glTracePointerRangeMESA",  cast(void**)& glTracePointerRangeMESA},
+	{ "glTracePointerRangeMESA",  cast(void**)& glTracePointerRangeMESA},
+	
+	{ "glProgramCallbackMESA",  cast(void**)& glProgramCallbackMESA},
+	
+	{ "glGetProgramRegisterfvMESA",  cast(void**)& glGetProgramRegisterfvMESA},
+	{ "glBlendEquationSeparateATI",  cast(void**)& glBlendEquationSeparateATI},
 ];
 

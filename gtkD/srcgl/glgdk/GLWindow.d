@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglwindow.html
+ * inFile  = gtkglext-gdkglwindow.html
  * outPack = glgdk
  * outFile = GLWindow
  * strct   = GdkGLWindow
@@ -95,10 +95,14 @@ public class GLWindow : Drawable
 	 * Creates an on-screen rendering area.
 	 * attrib_list is currently unused. This must be set to NULL or empty
 	 * (first attribute of None). See GLX 1.3 spec.
-	 * glconfig : a GdkGLConfig.
-	 * window : the GdkWindow to be used as the rendering area.
-	 * attrib_list : this must be set to NULL or empty (first attribute of None).
-	 * Returns : the new GdkGLWindow.
+	 * glconfig:
+	 *  a GdkGLConfig.
+	 * window:
+	 *  the GdkWindow to be used as the rendering area.
+	 * attrib_list:
+	 *  this must be set to NULL or empty (first attribute of None).
+	 * Returns:
+	 *  the new GdkGLWindow.
 	 */
 	public this (GdkGLConfig* glconfig, GdkWindow* window, int* attribList)
 	{
@@ -109,7 +113,8 @@ public class GLWindow : Drawable
 	/**
 	 * Destroys the OpenGL resources associated with glwindow and
 	 * decrements glwindow's reference count.
-	 * glwindow : a GdkGLWindow.
+	 * glwindow:
+	 *  a GdkGLWindow.
 	 */
 	public void destroy()
 	{
@@ -121,8 +126,10 @@ public class GLWindow : Drawable
 	 * Returns the GdkWindow associated with glwindow.
 	 * Notice that GdkGLWindow is not GdkWindow, but another
 	 * GdkDrawable which have an associated GdkWindow.
-	 * glwindow : a GdkGLWindow.
-	 * Returns : the GdkWindow associated with glwindow.
+	 * glwindow:
+	 *  a GdkGLWindow.
+	 * Returns:
+	 *  the GdkWindow associated with glwindow.
 	 */
 	public GdkWindow* getWindow()
 	{
@@ -135,10 +142,14 @@ public class GLWindow : Drawable
 	 * This function creates a new GdkGLWindow held by the window.
 	 * attrib_list is currently unused. This must be set to NULL or empty
 	 * (first attribute of None).
-	 * window : the GdkWindow to be used as the rendering area.
-	 * glconfig : a GdkGLConfig.
-	 * attrib_list : this must be set to NULL or empty (first attribute of None).
-	 * Returns : the GdkGLWindow used by the window if it is successful,
+	 * window:
+	 *  the GdkWindow to be used as the rendering area.
+	 * glconfig:
+	 *  a GdkGLConfig.
+	 * attrib_list:
+	 *  this must be set to NULL or empty (first attribute of None).
+	 * Returns:
+	 *  the GdkGLWindow used by the window if it is successful,
 	 *  NULL otherwise.
 	 */
 	public static GdkGLWindow* gdkWindowSetGLCapability(GdkWindow* window, GdkGLConfig* glconfig, int* attribList)
@@ -150,7 +161,8 @@ public class GLWindow : Drawable
 	/**
 	 * Unset the OpenGL-capability of the window.
 	 * This function destroys the GdkGLWindow held by the window.
-	 * window : a GdkWindow.
+	 * window:
+	 *  a GdkWindow.
 	 */
 	public static void gdkWindowUnsetGLCapability(GdkWindow* window)
 	{
@@ -160,8 +172,10 @@ public class GLWindow : Drawable
 	
 	/**
 	 * Returns whether the window is OpenGL-capable.
-	 * window : a GdkWindow.
-	 * Returns : TRUE if the window is OpenGL-capable, FALSE otherwise.
+	 * window:
+	 *  a GdkWindow.
+	 * Returns:
+	 *  TRUE if the window is OpenGL-capable, FALSE otherwise.
 	 */
 	public static int gdkWindowIsGLCapable(GdkWindow* window)
 	{
@@ -171,8 +185,10 @@ public class GLWindow : Drawable
 	
 	/**
 	 * Returns the GdkGLWindow held by the window.
-	 * window : a GdkWindow.
-	 * Returns : the GdkGLWindow.
+	 * window:
+	 *  a GdkWindow.
+	 * Returns:
+	 *  the GdkGLWindow.
 	 */
 	public static GdkGLWindow* gdkWindowGetGLWindow(GdkWindow* window)
 	{

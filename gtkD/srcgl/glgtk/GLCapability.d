@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -49,10 +49,6 @@ module glgtk.GLCapability;
 private import glgtk.glgtktypes;
 
 private import lib.glgtk;
-
-
-private import gtk.Widget;
-debug = events;
 
 
 /**
@@ -140,7 +136,7 @@ template GLCapability()
 	 */
 	bit glDrawFrame(Widget widget)
 	{
-		debug(event)printf("GLCapabilityT.realizeFrame \n" );
+		//printf("GLCapabilityT.realizeFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
 		GLDrawable drawable = GLWidget.getGLDrawable(widget);
 		
@@ -180,7 +176,7 @@ template GLCapability()
 	{
 		alreadyRealized = true;
 		
-		debug(event)printf("GLCapabilityT.realizeFrame \n" );
+		//printf("GLCapabilityT.realizeFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
 		GLDrawable drawable = GLWidget.getGLDrawable(widget);
 		
@@ -211,7 +207,7 @@ template GLCapability()
 	
 	int exposeFrame(GdkEventExpose* event, Widget widget)
 	{
-		debug(event)printf("GLCapabilityT.exposeFrame exposeFrame\n" );
+		//printf("GLCapabilityT.exposeFrame exposeFrame\n" );
 		GLContext context = GLWidget.getGLContext(widget);
 		GLDrawable drawable = GLWidget.getGLDrawable(widget);
 		
@@ -249,10 +245,9 @@ template GLCapability()
 			width = event.width;
 			height = event.height;
 		}
-		debug(event)writefln("GLCapability.configureFrame size = %s %s", width, height);
 		std.gc.disable();
 		//writefln("configureFrame 1");
-		debug(event)printf("GLCapabilityT.configureFrame \n" );
+		//printf("GLCapabilityT.configureFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
 		GLDrawable drawable = GLWidget.getGLDrawable(widget);
 		
@@ -293,7 +288,7 @@ template GLCapability()
 	
 	void mapFrame(Widget widget)
 	{
-		debug(event)printf("GLCapabilityT.mapFrame \n" );
+		//printf("GLCapabilityT.mapFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
 		GLDrawable drawable = GLWidget.getGLDrawable(widget);
 		
@@ -324,7 +319,7 @@ template GLCapability()
 	
 	void unmapFrame(Widget widget)
 	{
-		debug(event)printf("GLCapabilityT.unmapFrame \n" );
+		//printf("GLCapabilityT.unmapFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
 		GLDrawable drawable = GLWidget.getGLDrawable(widget);
 		
@@ -355,7 +350,7 @@ template GLCapability()
 	
 	int visibilityFrame(GdkEventVisibility* event, Widget widget)
 	{
-		debug(event)printf("GLCapabilityT.visibilityFrame \n" );
+		//printf("GLCapabilityT.visibilityFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
 		GLDrawable drawable = GLWidget.getGLDrawable(widget);
 		
@@ -386,19 +381,19 @@ template GLCapability()
 	
 	bit onMap()
 	{
-		debug(event)printf("GLCapabilityT.map \n" );
+		//printf("GLCapabilityT.map \n" );
 		return true;
 	}
 	
 	bit onUnmap()
 	{
-		debug(event)printf("GLCapabilityT.unmap \n" );
+		//printf("GLCapabilityT.unmap \n" );
 		return true;
 	}
 	
 	bool onVisibility(GdkEventVisibility* event)
 	{
-		debug(event)printf("GLCapabilityT.visibility \n" );
+		//printf("GLCapabilityT.visibility \n" );
 		return true;
 	}
 }

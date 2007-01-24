@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gtkglwidget.html
+ * inFile  = gtkglext-gtkglwidget.html
  * outPack = glgtk
  * outFile = GLWidget
  * strct   = 
@@ -98,15 +98,21 @@ public class GLWidget
 	/**
 	 * Set the OpenGL-capability to the widget.
 	 * This function prepares the widget for its use with OpenGL.
-	 * widget : the GtkWidget to be used as the rendering area.
-	 * glconfig : a GdkGLConfig.
-	 * share_list : the GdkGLContext with which to share display lists and texture
+	 * widget:
+	 *  the GtkWidget to be used as the rendering area.
+	 * glconfig:
+	 *  a GdkGLConfig.
+	 * share_list:
+	 *  the GdkGLContext with which to share display lists and texture
 	 *  objects. NULL indicates that no sharing is to take place.
-	 * direct : whether rendering is to be done with a direct connection to
+	 * direct:
+	 *  whether rendering is to be done with a direct connection to
 	 *  the graphics system.
-	 * render_type : GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
+	 * render_type:
+	 *  GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
 	 *  used).
-	 * Returns : TRUE if it is successful, FALSE otherwise.
+	 * Returns:
+	 *  TRUE if it is successful, FALSE otherwise.
 	 */
 	public static int setGLCapability(Widget widget, GLConfig glconfig, GLContext shareList, int direct, int renderType)
 	{
@@ -116,8 +122,10 @@ public class GLWidget
 	
 	/**
 	 * Returns whether the widget is OpenGL-capable.
-	 * widget : a GtkWidget.
-	 * Returns : TRUE if the widget is OpenGL-capable, FALSE otherwise.
+	 * widget:
+	 *  a GtkWidget.
+	 * Returns:
+	 *  TRUE if the widget is OpenGL-capable, FALSE otherwise.
 	 */
 	public static int isGLCapable(Widget widget)
 	{
@@ -127,8 +135,10 @@ public class GLWidget
 	
 	/**
 	 * Returns the GdkGLConfig referred by the widget.
-	 * widget : a GtkWidget.
-	 * Returns : the GdkGLConfig.
+	 * widget:
+	 *  a GtkWidget.
+	 * Returns:
+	 *  the GdkGLConfig.
 	 */
 	public static GLConfig getGLConfig(Widget widget)
 	{
@@ -140,14 +150,19 @@ public class GLWidget
 	 * Creates a new GdkGLContext with the appropriate GdkGLDrawable
 	 * for this widget. The GL context must be freed when you're
 	 * finished with it. See also gtk_widget_get_gl_context().
-	 * widget : a GtkWidget.
-	 * share_list : the GdkGLContext with which to share display lists and texture
+	 * widget:
+	 *  a GtkWidget.
+	 * share_list:
+	 *  the GdkGLContext with which to share display lists and texture
 	 *  objects. NULL indicates that no sharing is to take place.
-	 * direct : whether rendering is to be done with a direct connection to
+	 * direct:
+	 *  whether rendering is to be done with a direct connection to
 	 *  the graphics system.
-	 * render_type : GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
+	 * render_type:
+	 *  GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
 	 *  used).
-	 * Returns : the new GdkGLContext.
+	 * Returns:
+	 *  the new GdkGLContext.
 	 */
 	public static GLContext createGLContext(Widget widget, GLContext shareList, int direct, int renderType)
 	{
@@ -161,8 +176,10 @@ public class GLWidget
 	 * gtk_widget_create_gl_context(), this context is owned by the widget.
 	 * GdkGLContext is needed for the function gdk_gl_drawable_begin,
 	 * or for sharing display lists (see gtk_widget_set_gl_capability()).
-	 * widget : a GtkWidget.
-	 * Returns : the GdkGLContext.
+	 * widget:
+	 *  a GtkWidget.
+	 * Returns:
+	 *  the GdkGLContext.
 	 */
 	public static GLContext getGLContext(Widget widget)
 	{
@@ -172,8 +189,10 @@ public class GLWidget
 	
 	/**
 	 * Returns the GdkGLWindow owned by the widget.
-	 * widget : a GtkWidget.
-	 * Returns : the GdkGLWindow.
+	 * widget:
+	 *  a GtkWidget.
+	 * Returns:
+	 *  the GdkGLWindow.
 	 */
 	public static GLWindow getGLWindow(Widget widget)
 	{

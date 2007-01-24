@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -105,12 +105,14 @@ public class StringGChunk
 	
 	/**
 	 * Creates a new GStringChunk.
+	 * Creates a new GStringChunk.
 	 * size:
-	 * the default size of the blocks of memory which are allocated to store
-	 * the strings. If a particular string is larger than this default size, a larger
-	 * block of memory will be allocated for it.
+	 *  the default size of the blocks of memory which are
+	 *  allocated to store the strings. If a particular string
+	 *  is larger than this default size, a larger block of
+	 *  memory will be allocated for it.
 	 * Returns:
-	 * a new GStringChunk.
+	 *  a new GStringChunk
 	 */
 	public this (uint size)
 	{
@@ -120,6 +122,16 @@ public class StringGChunk
 	
 	/**
 	 * Adds a copy of string to the GStringChunk.
+	 * It returns a pointer to the new copy of the string
+	 * in the GStringChunk. The characters in the string
+	 * can be changed, if necessary, though you should not
+	 * change anything after the end of the string.
+	 * Unlike g_string_chunk_insert_const(), this function
+	 * does not check for duplicates. Also strings added
+	 * with g_string_chunk_insert() will not be searched
+	 * by g_string_chunk_insert_const() when looking for
+	 * duplicates.
+	 * Adds a copy of string to the GStringChunk.
 	 * It returns a pointer to the new copy of the string in the GStringChunk.
 	 * The characters in the string can be changed, if necessary, though you
 	 * should not change anything after the end of the string.
@@ -127,11 +139,12 @@ public class StringGChunk
 	 * duplicates. Also strings added with g_string_chunk_insert() will not be
 	 * searched by g_string_chunk_insert_const() when looking for duplicates.
 	 * chunk:
-	 * a GStringChunk.
+	 *  a GStringChunk
 	 * string:
-	 * the string to add.
+	 *  the string to add
 	 * Returns:
-	 * a pointer to the copy of string within the GStringChunk.
+	 *  a pointer to the copy of string within
+	 *  the GStringChunk.
 	 */
 	public char[] insert(char[] string)
 	{
@@ -140,6 +153,17 @@ public class StringGChunk
 	}
 	
 	/**
+	 * Adds a copy of string to the GStringChunk, unless
+	 * the same string has already been added to the GStringChunk
+	 * with g_string_chunk_insert_const().
+	 * This function is useful if you need to copy a large number
+	 * of strings but do not want to waste space storing duplicates.
+	 * But you must remember that there may be several pointers to
+	 * the same string, and so any changes made to the strings
+	 * should be done very carefully.
+	 * Note that g_string_chunk_insert_const() will not return a
+	 * pointer to a string added with g_string_chunk_insert(), even
+	 * if they do match.
 	 * Adds a copy of string to the GStringChunk, unless the same string has
 	 * already been added to the GStringChunk with g_string_chunk_insert_const().
 	 * This function is useful if you need to copy a large number of strings
@@ -149,12 +173,12 @@ public class StringGChunk
 	 * Note that g_string_chunk_insert_const() will not return a pointer to a string
 	 * added with g_string_chunk_insert(), even if they do match.
 	 * chunk:
-	 * a GStringChunk.
+	 *  a GStringChunk
 	 * string:
-	 * the string to add.
+	 *  the string to add
 	 * Returns:
-	 * a pointer to the new or existing copy of string within the
-	 * GStringChunk.
+	 *  a pointer to the new or existing copy of string
+	 *  within the GStringChunk
 	 */
 	public char[] insertConst(char[] string)
 	{
@@ -165,8 +189,10 @@ public class StringGChunk
 	/**
 	 * Adds a copy of the first len bytes of string to the GStringChunk. The
 	 * copy is nul-terminated.
-	 * The characters in the string can be changed, if necessary, though you
-	 * should not change anything after the end of the string.
+	 * Since this function does not stop at nul bytes, it is the caller's
+	 * responsibility to ensure that string has at least len addressable bytes.
+	 * The characters in the returned string can be changed, if necessary, though
+	 * you should not change anything after the end of the string.
 	 * chunk:
 	 *  a GStringChunk
 	 * string:
@@ -185,11 +211,28 @@ public class StringGChunk
 	}
 	
 	/**
+	 * Frees all strings contained within the GStringChunk.
+	 * After calling g_string_chunk_clear() it is not safe to
+	 * access any of the strings which were contained within it.
+	 * chunk:
+	 *  a GStringChunk
+	 * Since 2.14
+	 */
+	public void clear()
+	{
+		// void g_string_chunk_clear (GStringChunk *chunk);
+		g_string_chunk_clear(gStringChunk);
+	}
+	
+	/**
+	 * Frees all memory allocated by the GStringChunk.
+	 * After calling g_string_chunk_free() it is not safe to
+	 * access any of the strings which were contained within it.
 	 * Frees all memory allocated by the GStringChunk.
 	 * After calling g_string_chunk_free() it is not safe to
 	 * access any of the strings which were contained within it.
 	 * chunk:
-	 * a GStringChunk.
+	 *  a GStringChunk
 	 */
 	public void free()
 	{

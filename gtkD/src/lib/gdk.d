@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -652,6 +652,15 @@ extern(C)
 	void function(GdkTimeCoord** events, gint nEvents)gdk_device_free_history;
 	gboolean function(GdkDevice* device, gdouble* axes, GdkAxisUse use, gdouble* value)gdk_device_get_axis;
 	void function(GdkWindow* window, gint mask, GdkExtensionMode mode)gdk_input_set_extension_events;
+	
+	// gdk.GdkCairo
+	
+	cairo_t* function(GdkDrawable* drawable)gdk_cairo_create;
+	void function(cairo_t* cr, GdkColor* color)gdk_cairo_set_source_color;
+	void function(cairo_t* cr, GdkPixbuf* pixbuf, double pixbufX, double pixbufY)gdk_cairo_set_source_pixbuf;
+	void function(cairo_t* cr, GdkPixmap* pixmap, double pixmapX, double pixmapY)gdk_cairo_set_source_pixmap;
+	void function(cairo_t* cr, GdkRectangle* rectangle)gdk_cairo_rectangle;
+	void function(cairo_t* cr, GdkRegion* region)gdk_cairo_region;
 
 
 }
@@ -1183,5 +1192,11 @@ Symbol[] gdkLinks =
 	{ "gdk_device_free_history",  cast(void**)& gdk_device_free_history},
 	{ "gdk_device_get_axis",  cast(void**)& gdk_device_get_axis},
 	{ "gdk_input_set_extension_events",  cast(void**)& gdk_input_set_extension_events},
+	{ "gdk_cairo_create",  cast(void**)& gdk_cairo_create},
+	{ "gdk_cairo_set_source_color",  cast(void**)& gdk_cairo_set_source_color},
+	{ "gdk_cairo_set_source_pixbuf",  cast(void**)& gdk_cairo_set_source_pixbuf},
+	{ "gdk_cairo_set_source_pixmap",  cast(void**)& gdk_cairo_set_source_pixmap},
+	{ "gdk_cairo_rectangle",  cast(void**)& gdk_cairo_rectangle},
+	{ "gdk_cairo_region",  cast(void**)& gdk_cairo_region},
 
 ];

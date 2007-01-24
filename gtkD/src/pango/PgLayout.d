@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -948,6 +948,8 @@ public class PgLayout
 	
 	/**
 	 * Retrieves a particular line from a PangoLayout.
+	 * Use the faster pango_layout_get_line_readonly() if you do not plan
+	 * to modify the contents of the line (glyphs, glyph widths, etc.).
 	 * layout:
 	 *  a PangoLayout
 	 * line:
@@ -966,7 +968,33 @@ public class PgLayout
 	}
 	
 	/**
+	 * Retrieves a particular line from a PangoLayout.
+	 * This is a faster alternative to pango_layout_get_line(),
+	 * but the user is not expected
+	 * to modify the contents of the line (glyphs, glyph widths, etc.).
+	 * layout:
+	 *  a PangoLayout
+	 * line:
+	 *  the index of a line, which must be between 0 and
+	 *  pango_layout_get_line_count(layout) - 1, inclusive.
+	 * Returns:
+	 *  the requested PangoLayoutLine, or NULL if the
+	 *  index is out of range. This layout line can
+	 *  be ref'ed and retained, but will become invalid
+	 *  if changes are made to the PangoLayout.
+	 *  No changes should be made to the line.
+	 * Since 1.16
+	 */
+	public PangoLayoutLine* getLineReadonly(int line)
+	{
+		// PangoLayoutLine* pango_layout_get_line_readonly  (PangoLayout *layout,  int line);
+		return pango_layout_get_line_readonly(pangoLayout, line);
+	}
+	
+	/**
 	 * Returns the lines of the layout as a list.
+	 * Use the faster pango_layout_get_lines_readonly() if you do not plan
+	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
 	 * layout:
 	 *  a PangoLayout
 	 * Returns:
@@ -982,6 +1010,26 @@ public class PgLayout
 	}
 	
 	/**
+	 * Returns the lines of the layout as a list.
+	 * This is a faster alternative to pango_layout_get_lines(),
+	 * but the user is not expected
+	 * to modify the contents of the lines (glyphs, glyph widths, etc.).
+	 * layout:
+	 *  a PangoLayout
+	 * Returns:
+	 *  a GSList containing the lines in the layout. This
+	 * points to internal data of the PangoLayout and must be used with
+	 * care. It will become invalid on any change to the layout's
+	 * text or properties. No changes should be made to the lines.
+	 * Since 1.16
+	 */
+	public ListSG getLinesReadonly()
+	{
+		// GSList* pango_layout_get_lines_readonly (PangoLayout *layout);
+		return new ListSG( pango_layout_get_lines_readonly(pangoLayout) );
+	}
+	
+	/**
 	 * Returns an iterator to iterate over the visual extents of the layout.
 	 * layout:
 	 *  a PangoLayout
@@ -994,6 +1042,8 @@ public class PgLayout
 		// PangoLayoutIter* pango_layout_get_iter (PangoLayout *layout);
 		return new PgLayoutIter( pango_layout_get_iter(pangoLayout) );
 	}
+	
+	
 	
 	
 	

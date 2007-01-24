@@ -1,6 +1,7 @@
 #!/bin/sh
 compd \
 	demos/gtkD \
+	demos/cairo/clock.d \
 	-o GtkDTests \
 	-c \
 	-I src \

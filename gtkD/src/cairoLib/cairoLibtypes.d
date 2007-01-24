@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -32,8 +32,8 @@ private alias void* HDC;
 //struct Visual;	// to support XLib surfaces
 //struct Screen;	// to support XLib surfaces
 
-private alias void* Drawable;
-private alias void* Pixmap;
+//private alias void* Drawable;
+//private alias void* Pixmap;
 //public alias bool cairo_bool_t;
 
 alias ubyte uchar;
@@ -387,7 +387,7 @@ public struct cairo_path_t{}
  * Note that the offsets given by x and y are not cumulative. When
  * drawing or measuring text, each glyph is individually positioned
  * with respect to the overall origin
- * doublex;
+ * unsignedlongindex;
  */
 public struct cairo_glyph_t{}
 // unsigned long index;

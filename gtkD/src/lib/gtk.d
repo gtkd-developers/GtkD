@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -47,7 +47,7 @@ static ~this()
 
 extern(C) 
 {	
-	// gtk.Duit
+	// gtk.GtkD
 	
 	gchar* function()gtk_set_locale;
 	void function()gtk_disable_setlocale;
@@ -339,6 +339,9 @@ extern(C)
 	
 	// gtk.BindingSet
 	
+	void function(GtkBindingSet* bindingSet, guint keyval, GdkModifierType modifiers, gchar* signalName, GSList* bindingArgs)gtk_binding_entry_add_signall;
+	void function(GtkBindingSet* bindingSet, guint keyval, GdkModifierType modifiers)gtk_binding_entry_clear;
+	guint function(GScanner* scanner)gtk_binding_parse_binding;
 	GtkBindingSet* function(gchar* setName)gtk_binding_set_new;
 	GtkBindingSet* function(gpointer objectClass)gtk_binding_set_by_class;
 	GtkBindingSet* function(gchar* setName)gtk_binding_set_find;
@@ -1400,6 +1403,10 @@ extern(C)
 	// gtk.TreeView
 	
 	GtkWidget* function()gtk_tree_view_new;
+	gint function(GtkTreeView* treeView)gtk_tree_view_get_level_indentation;
+	gboolean function(GtkTreeView* treeView)gtk_tree_view_get_show_expanders;
+	void function(GtkTreeView* treeView, gint indentation)gtk_tree_view_set_level_indentation;
+	void function(GtkTreeView* treeView, gboolean enabled)gtk_tree_view_set_show_expanders;
 	GtkWidget* function(GtkTreeModel* model)gtk_tree_view_new_with_model;
 	GtkTreeModel* function(GtkTreeView* treeView)gtk_tree_view_get_model;
 	void function(GtkTreeView* treeView, GtkTreeModel* model)gtk_tree_view_set_model;
@@ -1495,6 +1502,8 @@ extern(C)
 	
 	// gtk.CellView
 	
+	gboolean function(GtkCellView* cellView)gtk_cell_view_get_use_fg;
+	void function(GtkCellView* cellView, gboolean useFg)gtk_cell_view_set_use_fg;
 	GtkWidget* function()gtk_cell_view_new;
 	GtkWidget* function(gchar* text)gtk_cell_view_new_with_text;
 	GtkWidget* function(gchar* markup)gtk_cell_view_new_with_markup;
@@ -2630,6 +2639,12 @@ extern(C)
 	
 	// gtk.Range
 	
+	gdouble function(GtkRange* range)gtk_range_get_fill_level;
+	gboolean function(GtkRange* range)gtk_range_get_restrict_to_fill_level;
+	gboolean function(GtkRange* range)gtk_range_get_show_fill_level;
+	void function(GtkRange* range, gdouble fillLevel)gtk_range_set_fill_level;
+	void function(GtkRange* range, gboolean restrictToFillLevel)gtk_range_set_restrict_to_fill_level;
+	void function(GtkRange* range, gboolean showFillLevel)gtk_range_set_show_fill_level;
 	GtkAdjustment* function(GtkRange* range)gtk_range_get_adjustment;
 	void function(GtkRange* range, GtkUpdateType policy)gtk_range_set_update_policy;
 	void function(GtkRange* range, GtkAdjustment* adjustment)gtk_range_set_adjustment;
@@ -2795,6 +2810,8 @@ extern(C)
 	void function(GtkWidget* widget, GtkWidget* label)gtk_widget_remove_mnemonic_label;
 	GtkAction* function(GtkWidget* widget)gtk_widget_get_action;
 	gboolean function(GtkWidget* widget)gtk_widget_is_composited;
+	void function(GtkWidget* widget)gtk_widget_error_bell;
+	gboolean function(GtkWidget* widget, GtkDirectionType direction)gtk_widget_keynav_failed;
 	GtkRequisition* function(GtkRequisition* requisition)gtk_requisition_copy;
 	void function(GtkRequisition* requisition)gtk_requisition_free;
 	
@@ -3154,6 +3171,9 @@ Symbol[] gtkLinks =
 	{ "gtk_settings_set_string_property",  cast(void**)& gtk_settings_set_string_property},
 	{ "gtk_settings_set_long_property",  cast(void**)& gtk_settings_set_long_property},
 	{ "gtk_settings_set_double_property",  cast(void**)& gtk_settings_set_double_property},
+	{ "gtk_binding_entry_add_signall",  cast(void**)& gtk_binding_entry_add_signall},
+	{ "gtk_binding_entry_clear",  cast(void**)& gtk_binding_entry_clear},
+	{ "gtk_binding_parse_binding",  cast(void**)& gtk_binding_parse_binding},
 	{ "gtk_binding_set_new",  cast(void**)& gtk_binding_set_new},
 	{ "gtk_binding_set_by_class",  cast(void**)& gtk_binding_set_by_class},
 	{ "gtk_binding_set_find",  cast(void**)& gtk_binding_set_find},
@@ -4074,6 +4094,10 @@ Symbol[] gtkLinks =
 	{ "gtk_tree_view_column_focus_cell",  cast(void**)& gtk_tree_view_column_focus_cell},
 	{ "gtk_tree_view_column_queue_resize",  cast(void**)& gtk_tree_view_column_queue_resize},
 	{ "gtk_tree_view_new",  cast(void**)& gtk_tree_view_new},
+	{ "gtk_tree_view_get_level_indentation",  cast(void**)& gtk_tree_view_get_level_indentation},
+	{ "gtk_tree_view_get_show_expanders",  cast(void**)& gtk_tree_view_get_show_expanders},
+	{ "gtk_tree_view_set_level_indentation",  cast(void**)& gtk_tree_view_set_level_indentation},
+	{ "gtk_tree_view_set_show_expanders",  cast(void**)& gtk_tree_view_set_show_expanders},
 	{ "gtk_tree_view_new_with_model",  cast(void**)& gtk_tree_view_new_with_model},
 	{ "gtk_tree_view_get_model",  cast(void**)& gtk_tree_view_get_model},
 	{ "gtk_tree_view_set_model",  cast(void**)& gtk_tree_view_set_model},
@@ -4163,6 +4187,8 @@ Symbol[] gtkLinks =
 	{ "gtk_tree_drag_dest_row_drop_possible",  cast(void**)& gtk_tree_drag_dest_row_drop_possible},
 	{ "gtk_tree_set_row_drag_data",  cast(void**)& gtk_tree_set_row_drag_data},
 	{ "gtk_tree_get_row_drag_data",  cast(void**)& gtk_tree_get_row_drag_data},
+	{ "gtk_cell_view_get_use_fg",  cast(void**)& gtk_cell_view_get_use_fg},
+	{ "gtk_cell_view_set_use_fg",  cast(void**)& gtk_cell_view_set_use_fg},
 	{ "gtk_cell_view_new",  cast(void**)& gtk_cell_view_new},
 	{ "gtk_cell_view_new_with_text",  cast(void**)& gtk_cell_view_new_with_text},
 	{ "gtk_cell_view_new_with_markup",  cast(void**)& gtk_cell_view_new_with_markup},
@@ -5022,6 +5048,12 @@ Symbol[] gtkLinks =
 	{ "gtk_paned_get_child2",  cast(void**)& gtk_paned_get_child2},
 	{ "gtk_paned_set_position",  cast(void**)& gtk_paned_set_position},
 	{ "gtk_paned_get_position",  cast(void**)& gtk_paned_get_position},
+	{ "gtk_range_get_fill_level",  cast(void**)& gtk_range_get_fill_level},
+	{ "gtk_range_get_restrict_to_fill_level",  cast(void**)& gtk_range_get_restrict_to_fill_level},
+	{ "gtk_range_get_show_fill_level",  cast(void**)& gtk_range_get_show_fill_level},
+	{ "gtk_range_set_fill_level",  cast(void**)& gtk_range_set_fill_level},
+	{ "gtk_range_set_restrict_to_fill_level",  cast(void**)& gtk_range_set_restrict_to_fill_level},
+	{ "gtk_range_set_show_fill_level",  cast(void**)& gtk_range_set_show_fill_level},
 	{ "gtk_range_get_adjustment",  cast(void**)& gtk_range_get_adjustment},
 	{ "gtk_range_set_update_policy",  cast(void**)& gtk_range_set_update_policy},
 	{ "gtk_range_set_adjustment",  cast(void**)& gtk_range_set_adjustment},
@@ -5175,6 +5207,8 @@ Symbol[] gtkLinks =
 	{ "gtk_widget_remove_mnemonic_label",  cast(void**)& gtk_widget_remove_mnemonic_label},
 	{ "gtk_widget_get_action",  cast(void**)& gtk_widget_get_action},
 	{ "gtk_widget_is_composited",  cast(void**)& gtk_widget_is_composited},
+	{ "gtk_widget_error_bell",  cast(void**)& gtk_widget_error_bell},
+	{ "gtk_widget_keynav_failed",  cast(void**)& gtk_widget_keynav_failed},
 	{ "gtk_requisition_copy",  cast(void**)& gtk_requisition_copy},
 	{ "gtk_requisition_free",  cast(void**)& gtk_requisition_free},
 	{ "gtk_im_context_set_client_window",  cast(void**)& gtk_im_context_set_client_window},

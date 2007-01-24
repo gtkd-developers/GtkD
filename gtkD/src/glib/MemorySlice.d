@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -155,7 +155,8 @@ public class MemorySlice
 	 * g_slice_alloc() or g_slice_alloc0()
 	 * and the block_size has to match the size specified upon allocation.
 	 * Note that the exact release behaviour can be changed with the
-	 * G_DEBUG=gc-friendly environment variable.
+	 * G_DEBUG=gc-friendly environment variable,
+	 * also see G_SLICE for related debugging options.
 	 * block_size:
 	 * the size of the block
 	 * mem_block:
@@ -175,7 +176,8 @@ public class MemorySlice
 	 * and linked together by a next pointer (similar to GSList). The offset
 	 * of the next field in each block is passed as third argument.
 	 * Note that the exact release behaviour can be changed with the
-	 * G_DEBUG=gc-friendly environment variable.
+	 * G_DEBUG=gc-friendly environment variable,
+	 * also see G_SLICE for related debugging options.
 	 * block_size:
 	 * the size of the blocks
 	 * mem_chain:

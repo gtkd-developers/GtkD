@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = /usr/share/doc/libgtkglext1-doc/html/gtkglext/gtkglext-gdkglfont.html
+ * inFile  = gtkglext-gdkglfont.html
  * outPack = glgdk
  * outFile = GLFont
  * strct   = 
@@ -71,11 +71,16 @@ public class GLFont
 	
 	/**
 	 * Creates bitmap display lists from a PangoFont.
-	 * font_desc : a PangoFontDescription describing the font to use.
-	 * first : the index of the first glyph to be taken.
-	 * count : the number of glyphs to be taken.
-	 * list_base : the index of the first display list to be generated.
-	 * Returns : the PangoFont used, or NULL if no font matched.
+	 * font_desc:
+	 *  a PangoFontDescription describing the font to use.
+	 * first:
+	 *  the index of the first glyph to be taken.
+	 * count:
+	 *  the number of glyphs to be taken.
+	 * list_base:
+	 *  the index of the first display list to be generated.
+	 * Returns:
+	 *  the PangoFont used, or NULL if no font matched.
 	 */
 	public static PangoFont* usePangoFont(PgFontDescription fontDesc, int first, int count, int listBase)
 	{
@@ -85,13 +90,20 @@ public class GLFont
 	
 	/**
 	 * Creates bitmap display lists from a PangoFont.
-	 * display : a GdkDisplay.
-	 * font_desc : a PangoFontDescription describing the font to use.
-	 * first : the index of the first glyph to be taken.
-	 * count : the number of glyphs to be taken.
-	 * list_base : the index of the first display list to be generated.
-	 * Returns : the PangoFont used, or NULL if no font matched.
-	 * << OpenGL WindowGeometric Object Rendering >>
+	 * display:
+	 *  a GdkDisplay.
+	 * font_desc:
+	 *  a PangoFontDescription describing the font to use.
+	 * first:
+	 *  the index of the first glyph to be taken.
+	 * count:
+	 *  the number of glyphs to be taken.
+	 * list_base:
+	 *  the index of the first display list to be generated.
+	 * Returns:
+	 *  the PangoFont used, or NULL if no font matched.
+	 * <<OpenGL Window
+	 * Geometric Object Rendering>>
 	 */
 	public static PangoFont* usePangoFontForDisplay(Display display, PgFontDescription fontDesc, int first, int count, int listBase)
 	{

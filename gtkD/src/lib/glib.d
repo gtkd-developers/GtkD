@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -942,6 +942,7 @@ extern(C)
 	gchar* function(GStringChunk* chunk, gchar* string)g_string_chunk_insert;
 	gchar* function(GStringChunk* chunk, gchar* string)g_string_chunk_insert_const;
 	gchar* function(GStringChunk* chunk, gchar* string, gssize len)g_string_chunk_insert_len;
+	void function(GStringChunk* chunk)g_string_chunk_clear;
 	void function(GStringChunk* chunk)g_string_chunk_free;
 	
 	// glib.ArrayG
@@ -1870,6 +1871,7 @@ Symbol[] glibLinks =
 	{ "g_string_chunk_insert",  cast(void**)& g_string_chunk_insert},
 	{ "g_string_chunk_insert_const",  cast(void**)& g_string_chunk_insert_const},
 	{ "g_string_chunk_insert_len",  cast(void**)& g_string_chunk_insert_len},
+	{ "g_string_chunk_clear",  cast(void**)& g_string_chunk_clear},
 	{ "g_string_chunk_free",  cast(void**)& g_string_chunk_free},
 	{ "g_array_new",  cast(void**)& g_array_new},
 	{ "g_array_sized_new",  cast(void**)& g_array_sized_new},

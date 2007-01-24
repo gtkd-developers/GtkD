@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -718,6 +718,75 @@ public class TreeView : Container
 	{
 		// GtkWidget* gtk_tree_view_new (void);
 		this(cast(GtkTreeView*)gtk_tree_view_new() );
+	}
+	
+	/**
+	 * Returns the amount, in pixels, of extra indentation for child levels
+	 * in tree_view.
+	 * tree_view:
+	 *  a GtkTreeView.
+	 * Returns:
+	 *  the amount of extra indentation for child levels in
+	 * tree_view. A return value of 0 means that this feature is disabled.
+	 * Since 2.12
+	 */
+	public int getLevelIndentation()
+	{
+		// gint gtk_tree_view_get_level_indentation  (GtkTreeView *tree_view);
+		return gtk_tree_view_get_level_indentation(gtkTreeView);
+	}
+	
+	/**
+	 * Returns whether or not expanders are drawn in tree_view.
+	 * tree_view:
+	 *  a GtkTreeView.
+	 * Returns:
+	 *  TRUE if expanders are drawn in tree_view, FALSE
+	 * otherwise.
+	 * Since 2.12
+	 */
+	public int getShowExpanders()
+	{
+		// gboolean gtk_tree_view_get_show_expanders  (GtkTreeView *tree_view);
+		return gtk_tree_view_get_show_expanders(gtkTreeView);
+	}
+	
+	/**
+	 * Sets the amount of extra indentation for child levels to use in tree_view
+	 * in addition to the default indentation. The value should be specified in
+	 * pixels, a value of 0 disables this feature and in this case only the default
+	 * indentation will be used.
+	 * This does not have any visible effects for lists.
+	 * tree_view:
+	 *  a GtkTreeView
+	 * indentation:
+	 *  the amount, in pixels, of extra indentation in tree_view.
+	 * Since 2.12
+	 */
+	public void setLevelIndentation(int indentation)
+	{
+		// void gtk_tree_view_set_level_indentation  (GtkTreeView *tree_view,  gint indentation);
+		gtk_tree_view_set_level_indentation(gtkTreeView, indentation);
+	}
+	
+	/**
+	 * Sets whether to draw and enable expanders and indent child rows in
+	 * tree_view. When disabled there will be no expanders visible in trees
+	 * and there will be no way to expand and collapse rows by default. Also
+	 * note that hiding the expanders will disable the default indentation. You
+	 * can set a custom indentation in this case using
+	 * gtk_tree_view_set_level_indentation().
+	 * This does not have any visible effects for lists.
+	 * tree_view:
+	 *  a GtkTreeView
+	 * enabled:
+	 *  TRUE to enable expander drawing, FALSE otherwise.
+	 * Since 2.12
+	 */
+	public void setShowExpanders(int enabled)
+	{
+		// void gtk_tree_view_set_show_expanders  (GtkTreeView *tree_view,  gboolean enabled);
+		gtk_tree_view_set_show_expanders(gtkTreeView, enabled);
 	}
 	
 	/**

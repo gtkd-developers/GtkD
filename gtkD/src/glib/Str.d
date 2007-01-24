@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -276,18 +276,21 @@ public static char[] strdup(char[] str)
 }
 
 /**
- * Duplicates the first n characters of a string, returning a newly-allocated
- * buffer n + 1 characters long which will always be nul-terminated.
- * If str is less than n characters long the buffer is padded with nuls.
+ * Duplicates the first n bytes of a string, returning a newly-allocated
+ * buffer n + 1 bytes long which will always be nul-terminated.
+ * If str is less than n bytes long the buffer is padded with nuls.
  * If str is NULL it returns NULL.
  * The returned value should be freed when no longer needed.
+ * Note
+ * To copy a number of characters from a UTF-8 encoded string, use
+ * g_utf8_strncpy() instead.
  * str:
- * the string to duplicate part of.
+ *  the string to duplicate
  * n:
- * the maximum number of characters to copy from str.
+ *  the maximum number of bytes to copy from str
  * Returns:
- * a newly-allocated buffer containing the first n characters of str,
- * nul-terminated.
+ *  a newly-allocated buffer containing the first n bytes
+ *  of str, nul-terminated
  */
 public static char[] strndup(char[] str, uint n)
 {
@@ -312,14 +315,14 @@ public static char** strdupv(char** strArray)
 }
 
 /**
- * Creates a new string length characters long filled with fill_char.
+ * Creates a new string length bytes long filled with fill_char.
  * The returned string should be freed when no longer needed.
  * length:
- * the length of the new string.
+ *  the length of the new string
  * fill_char:
- * the character to fill the string with.
+ *  the byte to fill the string with
  * Returns:
- * a newly-allocated string filled the fill_char.
+ *  a newly-allocated string filled the fill_char
  */
 public static char[] strnfill(uint length, char fillChar)
 {

@@ -1,18 +1,18 @@
 /*
- * This file is part of duit.
+ * This file is part of gtkD.
  *
- * duit is free software; you can redistribute it and/or modify
+ * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
  *
- * duit is distributed in the hope that it will be useful,
+ * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
  *
  * You should have received a copy of the GNU Lesser General Public License
- * along with duit; if not, write to the Free Software
+ * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
  
@@ -2482,6 +2482,8 @@ public struct GAllocator{}
  * ...:
  * ...:
  * ...:
+ * ...:
+ * ...:
  */
 // TODO
 // #define g_message(...)
@@ -2492,6 +2494,8 @@ public struct GAllocator{}
  * variable (see Running GLib Applications).
  * ...:
  * format string, followed by parameters to insert into the format string (as with printf())
+ * ...:
+ * ...:
  * ...:
  * ...:
  * ...:
@@ -2533,6 +2537,8 @@ public struct GAllocator{}
  * ...:
  * ...:
  * ...:
+ * ...:
+ * ...:
  */
 // TODO
 // #define g_critical(...)
@@ -2559,6 +2565,8 @@ public struct GAllocator{}
  * ...:
  * ...:
  * ...:
+ * ...:
+ * ...:
  */
 // TODO
 // #define g_error(...)
@@ -2567,6 +2575,8 @@ public struct GAllocator{}
  * A convenience function/macro to log a debug message.
  * ...:
  * format string, followed by parameters to insert into the format string (as with printf())
+ * ...:
+ * ...:
  * ...:
  * ...:
  * ...:
@@ -2819,7 +2829,8 @@ public struct GAllocator{}
  * from the slice allocator. It calls g_slice_free1() using
  * sizeof (type) as the block size.
  * Note that the exact release behaviour can be changed with the
- * G_DEBUG=gc-friendly environment variable.
+ * G_DEBUG=gc-friendly environment variable,
+ * also see G_SLICE for related debugging options.
  * type:
  * the type of the block to free, typically a structure name
  * mem:
@@ -2836,7 +2847,8 @@ public struct GAllocator{}
  * next pointer (similar to GSList). The name of the
  * next field in type is passed as third argument.
  * Note that the exact release behaviour can be changed with the
- * G_DEBUG=gc-friendly environment variable.
+ * G_DEBUG=gc-friendly environment variable,
+ * also see G_SLICE for related debugging options.
  * type:
  *  the type of the mem_chain blocks
  * mem_chain:
