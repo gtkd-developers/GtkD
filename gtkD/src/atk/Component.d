@@ -47,9 +47,9 @@
 
 module atk.Component;
 
-private import atk.atktypes;
+private import gtkc.atktypes;
 
-private import lib.atk;
+private import gtkc.atk;
 
 
 /**
@@ -96,7 +96,7 @@ public class Component
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(AtkRectangle*, Component)[] onBoundsChangedListeners;

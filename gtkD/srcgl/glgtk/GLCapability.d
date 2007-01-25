@@ -46,9 +46,9 @@
 
 module glgtk.GLCapability;
 
-private import glgtk.glgtktypes;
+private import gtkglc.glgtktypes;
 
-private import lib.glgtk;
+private import gtkglc.glgtk;
 
 
 /**
@@ -67,7 +67,7 @@ public import std.stdio;
 public import glgtk.GLWidget;
 private import glgdk.GLDrawable;
 public import gdk.Event;
-public import lib.gl;
+public import gtkglc.gl;
 
 
 template GLCapability()

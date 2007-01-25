@@ -49,9 +49,9 @@
 
 module cairoLib.Surface;
 
-private import cairoLib.cairoLibtypes;
+private import gtkc.cairoLibtypes;
 
-private import lib.cairoLib;
+private import gtkc.cairoLib;
 
 private import glib.Str;
 

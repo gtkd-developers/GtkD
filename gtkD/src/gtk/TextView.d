@@ -70,9 +70,9 @@
 
 module gtk.TextView;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.TextBuffer;
@@ -177,7 +177,7 @@ public class TextView : Container
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TextView)[] onBackspaceListeners;

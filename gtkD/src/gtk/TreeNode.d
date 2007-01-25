@@ -46,9 +46,9 @@
 
 module gtk.TreeNode;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 
 /**

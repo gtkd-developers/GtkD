@@ -21,13 +21,13 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module lib.glu;
+module gtkglc.glu;
 
 
 private import std.stdio;
-private import glgdk.glgdktypes;
-private import lib.Loader;
-private import lib.paths;
+private import gtkglc.glgdktypes;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 /*
 ** License Applicability. Except to the extent portions of this file are
@@ -65,7 +65,7 @@ private import lib.paths;
 //#include "glu_mangle.h"
 //#endif
 //
-import lib.gl;
+import gtkglc.gl;
 
 
 

@@ -47,9 +47,9 @@
 
 module pango.PgEngineShape;
 
-private import pango.pangotypes;
+private import gtkc.pangotypes;
 
-private import lib.pango;
+private import gtkc.pango;
 
 
 /**

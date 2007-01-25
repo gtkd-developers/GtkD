@@ -58,9 +58,9 @@
 
 module glib.MainLoop;
 
-private import glib.glibtypes;
+private import gtkc.glibtypes;
 
-private import lib.glib;
+private import gtkc.glib;
 
 private import glib.Dataset;
 private import glib.MainContext;

@@ -56,9 +56,9 @@
 
 module gobject.ObjectG;
 
-private import gobject.gobjecttypes;
+private import gtkc.gobjecttypes;
 
-private import lib.gobject;
+private import gtkc.gobject;
 
 private import gobject.ParamSpec;
 private import gobject.Value;
@@ -341,7 +341,7 @@ public class ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ParamSpec, ObjectG)[] onNotifyListeners;

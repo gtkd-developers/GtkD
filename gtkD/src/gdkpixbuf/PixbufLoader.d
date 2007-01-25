@@ -56,9 +56,9 @@
 
 module gdkpixbuf.PixbufLoader;
 
-private import gdkpixbuf.gdkpixbuftypes;
+private import gtkc.gdkpixbuftypes;
 
-private import lib.gdkpixbuf;
+private import gtkc.gdkpixbuf;
 
 private import gdkpixbuf.PixbufFormat;
 private import gdk.Pixbuf;
@@ -168,7 +168,7 @@ public class PixbufLoader : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(PixbufLoader)[] onAreaPreparedListeners;

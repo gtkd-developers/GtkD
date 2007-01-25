@@ -48,9 +48,9 @@
 
 module gtk.TreeSortable;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 
 /**
@@ -91,7 +91,7 @@ public class TreeSortable
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeSortable)[] onSortColumnChangedListeners;

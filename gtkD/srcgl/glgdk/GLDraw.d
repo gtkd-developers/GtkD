@@ -47,9 +47,9 @@
 
 module glgdk.GLDraw;
 
-private import glgdk.glgdktypes;
+private import gtkglc.glgdktypes;
 
-private import lib.glgdk;
+private import gtkglc.glgdk;
 
 
 /**

@@ -52,9 +52,9 @@
 
 module gtk.TreeDragSource;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import gtk.TreePath;
 private import gtk.TreeModel;

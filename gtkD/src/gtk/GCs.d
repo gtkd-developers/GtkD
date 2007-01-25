@@ -52,9 +52,9 @@
 
 module gtk.GCs;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import gdk.GC;
 private import gdk.Colormap;

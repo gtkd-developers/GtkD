@@ -49,10 +49,7 @@
  * 	- gtk.Widget
  * 	- gtk.ObjectGtk
  * 	- glib.Str
- * 	- lib.gtk
- * 	- gtk.gtktypes
- * 	- lib.gtk
- * 	- gtk.gtktypes
+ * 	- gtkc.gtk
  * 	- gthread.Thread;
  * 	- gdk.Threads;
  * structWrap:
@@ -64,18 +61,15 @@
 
 module gtk.GtkD;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import gdk.Event;
 private import gtk.Widget;
 private import gtk.ObjectGtk;
 private import glib.Str;
-private import lib.gtk;
-private import gtk.gtktypes;
-private import lib.gtk;
-private import gtk.gtktypes;
+private import gtkc.gtk;
 private import gthread.Thread;;
 private import gdk.Threads;;
 

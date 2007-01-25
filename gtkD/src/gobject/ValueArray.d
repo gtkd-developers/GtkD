@@ -51,9 +51,9 @@
 
 module gobject.ValueArray;
 
-private import gobject.gobjecttypes;
+private import gtkc.gobjecttypes;
 
-private import lib.gobject;
+private import gtkc.gobject;
 
 private import gobject.Value;
 private import gobject.ValueArray;

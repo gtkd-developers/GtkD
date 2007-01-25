@@ -53,9 +53,9 @@
 
 module gtk.ButtonBox;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import gtk.Widget;
 private import gtk.Button;

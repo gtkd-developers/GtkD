@@ -52,9 +52,9 @@
 
 module gtk.Layout;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import gtk.Adjustment;
 private import gtk.Widget;
@@ -106,7 +106,7 @@ public class Layout : Container
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Adjustment, Adjustment, Layout)[] onSetScrollAdjustmentsListeners;

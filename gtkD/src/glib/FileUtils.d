@@ -49,9 +49,9 @@
 
 module glib.FileUtils;
 
-private import glib.glibtypes;
+private import gtkc.glibtypes;
 
-private import lib.glib;
+private import gtkc.glib;
 
 private import std.stdio;
 private import glib.Str;

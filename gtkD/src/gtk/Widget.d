@@ -64,7 +64,7 @@
  * 	- gtk.Clipboard
  * 	- gdk.Display
  * 	- gdk.Screen
- * 	- lib.gdk
+ * 	- gtkc.gdk
  * 	- gdk.Cursor
  * 	- pango.PgLayout
  * 	- pango.PgContext
@@ -100,9 +100,9 @@
 
 module gtk.Widget;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import glib.Str;
 private import atk.ObjectAtk;
@@ -125,7 +125,7 @@ private import gtk.Settings;
 private import gtk.Clipboard;
 private import gdk.Display;
 private import gdk.Screen;
-private import lib.gdk;
+private import gtkc.gdk;
 private import gdk.Cursor;
 private import pango.PgLayout;
 private import pango.PgContext;
@@ -302,7 +302,7 @@ public class Widget : ObjectGtk
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Widget)[] onAccelClosuresChangedListeners;

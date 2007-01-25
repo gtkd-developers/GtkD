@@ -47,9 +47,9 @@
 
 module gthread.Mutex;
 
-private import gthread.gthreadtypes;
+private import gtkc.gthreadtypes;
 
-private import lib.gthread;
+private import gtkc.gthread;
 
 
 /**

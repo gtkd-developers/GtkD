@@ -49,9 +49,9 @@
 
 module gthread.StaticPrivate;
 
-private import gthread.gthreadtypes;
+private import gtkc.gthreadtypes;
 
-private import lib.gthread;
+private import gtkc.gthread;
 
 private import glib.Dataset;
 

@@ -82,9 +82,9 @@
 
 module pango.PgContext;
 
-private import pango.pangotypes;
+private import gtkc.pangotypes;
 
-private import lib.pango;
+private import gtkc.pango;
 
 private import glib.ListSG;
 private import glib.ListG;

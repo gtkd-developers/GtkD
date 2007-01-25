@@ -57,9 +57,9 @@
 
 module glgtk.GLWidget;
 
-private import glgtk.glgtktypes;
+private import gtkglc.glgtktypes;
 
-private import lib.glgtk;
+private import gtkglc.glgtk;
 
 private import gtk.Widget;
 private import glgdk.GLDrawable;

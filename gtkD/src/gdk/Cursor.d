@@ -58,9 +58,9 @@
 
 module gdk.Cursor;
 
-private import gdk.gdktypes;
+private import gtkc.gdktypes;
 
-private import lib.gdk;
+private import gtkc.gdk;
 
 private import glib.Str;
 private import gdk.Pixmap;

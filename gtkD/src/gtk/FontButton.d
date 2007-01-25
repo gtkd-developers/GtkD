@@ -49,9 +49,9 @@
 
 module gtk.FontButton;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import glib.Str;
 
@@ -94,7 +94,7 @@ public class FontButton : Button
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(FontButton)[] onFontSetListeners;

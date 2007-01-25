@@ -52,9 +52,9 @@
 
 module gdkpixbuf.PixbufAnimation;
 
-private import gdkpixbuf.gdkpixbuftypes;
+private import gtkc.gdkpixbuftypes;
 
-private import lib.gdkpixbuf;
+private import gtkc.gdkpixbuf;
 
 private import gdkpixbuf.PixbufAnimation;
 private import gdk.Pixbuf;

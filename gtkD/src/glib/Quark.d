@@ -49,9 +49,9 @@
 
 module glib.Quark;
 
-private import glib.glibtypes;
+private import gtkc.glibtypes;
 
-private import lib.glib;
+private import gtkc.glib;
 
 private import glib.ErrorG;
 private import glib.Str;

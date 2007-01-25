@@ -48,9 +48,9 @@
 
 module gobject.Boxed;
 
-private import gobject.gobjecttypes;
+private import gtkc.gobjecttypes;
 
-private import lib.gobject;
+private import gtkc.gobject;
 
 private import glib.Str;
 

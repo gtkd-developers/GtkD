@@ -50,9 +50,9 @@
 
 module glib.Node;
 
-private import glib.glibtypes;
+private import gtkc.glibtypes;
 
-private import lib.glib;
+private import gtkc.glib;
 
 private import glib.BBTree;
 

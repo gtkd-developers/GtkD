@@ -49,9 +49,9 @@
 
 module atk.ValueAtk;
 
-private import atk.atktypes;
+private import gtkc.atktypes;
 
-private import lib.atk;
+private import gtkc.atk;
 
 private import gobject.Value;
 

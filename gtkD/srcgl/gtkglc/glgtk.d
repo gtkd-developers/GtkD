@@ -23,26 +23,26 @@
 // Adapted from John Reimer's DUI loader modules
 
 
-module lib.glgtk;
+module gtkglc.glgtk;
 
 private import std.stdio;
-private import glgtk.glgtktypes;
-private import lib.Loader;
-private import lib.paths;
+private import gtkglc.glgtktypes;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 private Linker glgtk_Linker;
 
 static this()
 {
-	glgtk_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLGTK] );
-	glgtk_Linker.link(glgtkLinks);
-	debug writefln("* Finished static this(): glgtk");
+ glgtk_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLGTK] );
+ glgtk_Linker.link(glgtkLinks);
+ debug writefln("* Finished static this(): glgtk");
 }
 
 static ~this()
 {
-	delete glgtk_Linker;
-	debug writefln("* Finished static ~this(): glgtk");
+ delete glgtk_Linker;
+ debug writefln("* Finished static ~this(): glgtk");
 }
 
 extern(C) 

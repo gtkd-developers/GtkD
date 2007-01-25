@@ -47,9 +47,9 @@
 
 module cairoLib.FontFace;
 
-private import cairoLib.cairoLibtypes;
+private import gtkc.cairoLibtypes;
 
-private import lib.cairoLib;
+private import gtkc.cairoLib;
 
 
 /**

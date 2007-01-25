@@ -55,9 +55,9 @@
 
 module gdk.DisplayManager;
 
-private import gdk.gdktypes;
+private import gtkc.gdktypes;
 
-private import lib.gdk;
+private import gtkc.gdk;
 
 private import gdk.DisplayManager;
 private import gdk.Display;
@@ -104,7 +104,7 @@ public class DisplayManager : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Display, DisplayManager)[] onDisplayOpenedListeners;

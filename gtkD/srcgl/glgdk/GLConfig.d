@@ -50,9 +50,9 @@
 
 module glgdk.GLConfig;
 
-private import glgdk.glgdktypes;
+private import gtkglc.glgdktypes;
 
-private import lib.glgdk;
+private import gtkglc.glgdk;
 
 private import glib.Str;
 private import gdk.Screen;

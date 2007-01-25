@@ -47,9 +47,9 @@
 
 module gdk.Input;
 
-private import gdk.gdktypes;
+private import gtkc.gdktypes;
 
-private import lib.gdk;
+private import gtkc.gdk;
 
 
 /**

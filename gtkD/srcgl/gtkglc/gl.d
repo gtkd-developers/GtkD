@@ -21,13 +21,13 @@
 // implement new conversion functionalities on the wrap.utils pakage
 
 
-module lib.gl;
+module gtkglc.gl;
 
 
 private import std.stdio;
-private import glgdk.glgdktypes;
-private import lib.Loader;
-private import lib.paths;
+private import gtkglc.glgdktypes;
+private import gtkc.Loader;
+private import gtkc.paths;
 
 /*
  * Mesa 3-D graphics library
@@ -2821,7 +2821,7 @@ Symbol[] GLLinks =
 	{ "glMultiTexCoord4ivARB",  cast(void**)& glMultiTexCoord4ivARB},
 	{ "glMultiTexCoord4sARB",  cast(void**)& glMultiTexCoord4sARB},
 	{ "glMultiTexCoord4svARB",  cast(void**)& glMultiTexCoord4svARB},
-	{ "glEnableTraceMESA",  cast(void**)& glEnableTraceMESA},
+/*	{ "glEnableTraceMESA",  cast(void**)& glEnableTraceMESA},
 	{ "glEnableTraceMESA",  cast(void**)& glEnableTraceMESA},
 	{ "glDisableTraceMESA",  cast(void**)& glDisableTraceMESA},
 	{ "glDisableTraceMESA",  cast(void**)& glDisableTraceMESA},
@@ -2845,6 +2845,7 @@ Symbol[] GLLinks =
 	{ "glProgramCallbackMESA",  cast(void**)& glProgramCallbackMESA},
 	
 	{ "glGetProgramRegisterfvMESA",  cast(void**)& glGetProgramRegisterfvMESA},
-	{ "glBlendEquationSeparateATI",  cast(void**)& glBlendEquationSeparateATI},
+	{ "glBlendEquationSeparateATI",  cast(void**)&
+		glBlendEquationSeparateATI},*/
 ];
 

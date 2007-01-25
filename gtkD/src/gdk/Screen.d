@@ -41,7 +41,7 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- cairoLib.cairoLibtypes
+ * 	- gtkc.cairoLibtypes
  * 	- glib.Str
  * 	- gdk.Screen
  * 	- gdk.Colormap
@@ -67,11 +67,11 @@
 
 module gdk.Screen;
 
-private import gdk.gdktypes;
+private import gtkc.gdktypes;
 
-private import lib.gdk;
+private import gtkc.gdk;
 
-private import cairoLib.cairoLibtypes;
+private import gtkc.cairoLibtypes;
 private import glib.Str;
 private import gdk.Screen;
 private import gdk.Colormap;
@@ -128,7 +128,7 @@ public class Screen : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Screen)[] onCompositedChangedListeners;

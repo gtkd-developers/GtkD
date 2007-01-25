@@ -58,9 +58,9 @@
 
 module gdk.Display;
 
-private import gdk.gdktypes;
+private import gtkc.gdktypes;
 
-private import lib.gdk;
+private import gtkc.gdk;
 
 private import glib.Str;
 private import gdk.Display;
@@ -116,7 +116,7 @@ public class Display : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gboolean, Display)[] onClosedListeners;

@@ -59,9 +59,9 @@
 
 module gtk.Image;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import glib.Str;
 private import gdk.Pixbuf;

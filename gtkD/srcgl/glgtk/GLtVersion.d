@@ -47,9 +47,9 @@
 
 module glgtk.GLtVersion;
 
-private import glgtk.glgtktypes;
+private import gtkglc.glgtktypes;
 
-private import lib.glgtk;
+private import gtkglc.glgtk;
 
 
 /**

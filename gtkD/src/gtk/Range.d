@@ -50,9 +50,9 @@
 
 module gtk.Range;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import gtk.Adjustment;
 
@@ -93,7 +93,7 @@ public class Range : Widget
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gdouble, Range)[] onAdjustBoundsListeners;

@@ -50,9 +50,9 @@
 
 module gtk.MenuShell;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import gtk.Widget;
 
@@ -99,7 +99,7 @@ public class MenuShell : Container
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gboolean, MenuShell)[] onActivateCurrentListeners;

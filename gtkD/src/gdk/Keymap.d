@@ -52,9 +52,9 @@
 
 module gdk.Keymap;
 
-private import gdk.gdktypes;
+private import gtkc.gdktypes;
 
-private import lib.gdk;
+private import gtkc.gdk;
 
 private import glib.Str;
 private import gdk.Keymap;
@@ -148,7 +148,7 @@ public class Keymap : ObjectG
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Keymap)[] onDirectionChangedListeners;

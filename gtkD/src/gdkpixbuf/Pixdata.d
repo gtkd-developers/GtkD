@@ -52,9 +52,9 @@
 
 module gdkpixbuf.Pixdata;
 
-private import gdkpixbuf.gdkpixbuftypes;
+private import gtkc.gdkpixbuftypes;
 
-private import lib.gdkpixbuf;
+private import gtkc.gdkpixbuf;
 
 private import gdk.Pixbuf;
 private import glib.StringG;

@@ -56,9 +56,9 @@
 
 module gtk.ComboBoxEntry;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import gtk.TreeModel;
 private import glib.Str;

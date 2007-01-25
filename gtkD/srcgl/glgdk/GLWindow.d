@@ -49,9 +49,9 @@
 
 module glgdk.GLWindow;
 
-private import glgdk.glgdktypes;
+private import gtkglc.glgdktypes;
 
-private import lib.glgdk;
+private import gtkglc.glgdk;
 
 private import glgdk.GLConfig;
 

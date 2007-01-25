@@ -40,24 +40,20 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- gtk.gtktypes
  * 	- gtk.MessageDialog;
  * 	- gtk.Window;
- * 	- gtk.gtktypes
  * structWrap:
  * local aliases:
  */
 
 module gtk.PopupBox;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
-private import gtk.gtktypes;
 private import gtk.MessageDialog;;
 private import gtk.Window;;
-private import gtk.gtktypes;
 
 /**
  */

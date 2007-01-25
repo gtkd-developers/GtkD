@@ -48,9 +48,9 @@
 
 module gtk.HandleBox;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 
 /**
@@ -109,7 +109,7 @@ public class HandleBox : Bin
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkWidget*, HandleBox)[] onChildAttachedListeners;

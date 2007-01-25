@@ -51,9 +51,9 @@
 
 module gthread.Cond;
 
-private import gthread.gthreadtypes;
+private import gtkc.gthreadtypes;
 
-private import lib.gthread;
+private import gtkc.gthread;
 
 private import glib.Date;
 private import gthread.Mutex;

@@ -52,9 +52,9 @@
 
 module gtk.ToolButton;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
-private import lib.gtk;
+private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.ToolItem;
@@ -131,7 +131,7 @@ public class ToolButton : ToolItem
 	
 	// imports for the signal processing
 	private import gobject.Signals;
-	private import gdk.gdktypes;
+	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ToolButton)[] onClickedListeners;

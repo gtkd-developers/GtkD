@@ -53,9 +53,9 @@
 
 module gdk.ImageGdk;
 
-private import gdk.gdktypes;
+private import gtkc.gdktypes;
 
-private import lib.gdk;
+private import gtkc.gdk;
 
 private import gdk.Visual;
 private import gdk.Drawable;
