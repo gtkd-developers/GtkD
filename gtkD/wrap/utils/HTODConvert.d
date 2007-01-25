@@ -23,6 +23,7 @@ private import utils.GtkWrapper;
 
 private import std.stdio;
 private import std.file;
+import std.path;
 private import std.string;
 private import std.process;
 
@@ -121,6 +122,8 @@ public class HTODConvert
 	/** the package */
 	char[] pack;
 	char[] bindDir;
+	char[] outputRoot;
+	char[] inputRoot;
 	/** convert to dynamic loading */
 	bool dynLoad;
 	/** mark when the header was already added to the text */
@@ -137,7 +140,12 @@ public class HTODConvert
 		clearValues();
 		process();
 	}
-	
+	this(char[] htodFilename, char[] _outputRoot, char[] _inputRoot)
+	{
+		inputRoot = _inputRoot;
+		outputRoot = _outputRoot;
+		this(htodFilename);
+	}	
 	void process()
 	{
 		debug(flow)(writefln("HTODConvert.process 1"));
@@ -207,7 +215,7 @@ public class HTODConvert
 		args ~= htod_location;
 		args ~= htod_location;
 		args ~= preFileName;
-		args ~= fileName;
+		args ~= std.path.join(inputRoot,fileName);
 		try
 		{
 			std.process.execvp(wine_command, args);
@@ -462,7 +470,7 @@ public class HTODConvert
 	{
 		debug(flow)(writefln("HTODConvert.writeFile"));
 		debug(flow)(writefln("HTODConvert.writeFile fileName = %s", fileName));
-		std.file.write(fileName, dText);
+		std.file.write(std.path.join(outputRoot,fileName), dText);
 	}
 	
 	public static bit startsWith(char[] str, char[] prefix)

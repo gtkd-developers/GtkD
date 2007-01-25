@@ -122,8 +122,8 @@ enumType: G_PARAM_CONSTRUCT_ONLY ParamFlags.CONSTRUCT_ONLY
 
 # define the lookup and destination directories
 # "src" and "obj" will be added to outputRoot
-inputRoot: ../gtkdocs/
-outputRoot: 
+inputRoot: ./gtkdocs
+outputRoot:../ 
 
 # define the packages to process
 srcdir: src
@@ -176,6 +176,7 @@ bind: gtkglc
 ### predifined: lib
 ###########################################################
 wrap: gtkc
+srcout: ../src
 copy: paths.d
 copy: Loader.d
 #wrap: gtkglc
@@ -201,4 +202,6 @@ lookup: APILookupGLt.txt
 #Copy statements move here so that directory structure can be created
 #first
 
-htod: wrap/HTODopenGL.txt
+htod: HTODopenGL.txt
+#Hack to put the build text in the correct place.
+srcdir: src

@@ -18,13 +18,13 @@
 
 module utils.GtkWrapper;
 
-debug=copyFile;
-debug=wrapFile;
-debug=wrapParameter;
-debug=createPackage;
-debug=aliases;
-debug=lookup;
-debug=file;
+//debug=copyFile;
+//debug=wrapFile;
+//debug=wrapParameter;
+//debug=createPackage;
+//debug=aliases;
+//debug=lookup;
+//debug=file;
 debug=writeFile;
 
 struct WError
@@ -182,7 +182,6 @@ public class GtkWrapper : WrapperIF
         //{
         //  std.file.mkdir(std.path.join(outputRoot,srcOut));
         //}
-        buildPath = std.path.join(std.path.join(outputRoot,srcOut),buildDir);
         
     }
     
@@ -214,14 +213,18 @@ public class GtkWrapper : WrapperIF
     
     public void writeBuildText()
     {
-        
-        writefln("writeBuildText start");
+	    char[] outfile;
+
+        buildPath = std.path.join(std.path.join(outputRoot,srcDir),buildDir);
         if (!std.file.exists(buildPath))
         {
             std.file.mkdir(buildPath);
-        }
-        
-        std.file.write(std.path.join(buildPath,buildFile), buildText~"\n\n"~buildTextLibs);
+    
+    	}
+        outfile = std.path.join(buildPath,buildFile);
+        writefln("writeBuildText: %s",outfile);
+
+        std.file.write(outfile, buildText~"\n\n"~buildTextLibs);
     }
     
     int process(char[] apiLookupDefinition)
@@ -369,7 +372,8 @@ public class GtkWrapper : WrapperIF
                         // not as clean as lookup...
                         // WARNING!!! writefln's are needed to avoid hang.
                         writefln("start htod");
-                        new HTODConvert(defReader.getValue());
+                        new
+				HTODConvert(defReader.getValue(),outputRoot,apiRoot);
                         writefln("end htod");
                         defReader.next();
                         break;
@@ -658,7 +662,8 @@ public class GtkWrapper : WrapperIF
     
     private void closeFile(char[] text, GtkDClass gtkDClass, ConvParms* convParms)
     {
-        debug(writeFile)writefln("GtkWrapper.closeFile %s", gtkDClass.getOutFile(outputRoot, srcOut));
+        debug(writeFile)writefln("GtkWrapper.closeFile %s",
+			gtkDClass.getOutFile(outputRoot, srcDir));
         char[] gtkDText = gtkDClass.closeGtkDClass(text, convParms);
         char[] writeDir = std.path.join(outputRoot, srcDir);
         if ( gtkDClass.getError() == 0 )
@@ -993,7 +998,7 @@ public class GtkWrapper : WrapperIF
 
 int main()
 {
-    GtkWrapper wrapper = new GtkWrapper("./wrap/"); //Run gtkwrapper from the project directory... Make this a config option later.
+    GtkWrapper wrapper = new GtkWrapper("./"); //Run gtkwrapper from the project directory... Make this a config option later.
     int status = wrapper.process("APILookup.txt");
     wrapper.printErrors();
     if ( wrapper.errors.length == 0 )

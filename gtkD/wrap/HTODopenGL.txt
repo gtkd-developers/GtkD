@@ -35,7 +35,7 @@ pack: glgdk
 bindDir: gtkglc
 lib: GL
 dynload: yes
-file: wrap/cHeaders/GL/gl.d
+file: cHeaders/GL/gl.d
 outfile: srcgl/gtkglc/gl.d
 
 #runthis: wine ~/dm/bin/htod.exe wrap/cHeaders/GL/glu.hpp wrap/cHeaders/GL/glu.d -Iwrap/cHeaders
@@ -44,7 +44,7 @@ pack: glgdk
 bindDir: gtkglc
 lib: GLU
 dynload: yes
-file: wrap/cHeaders/GL/glu.d
+file: cHeaders/GL/glu.d
 outfile: srcgl/gtkglc/glu.d
 
 

@@ -2,7 +2,7 @@ VPATH =  utils
 OBJS =  HTODConvert.o WrapperIF.o funct.o DefReader.o \
 	    GtkWrapper.o HtmlStrip.o convparms.o GtkDClass.o
 DSRC := $(OBJS:%.o=%.d)
-DTARG = wrapit
+DTARG = gtkwrap
 CC = gcc
 DC = dmd
 
@@ -14,6 +14,7 @@ LDFLAGS += -L/usr/lib -lm -lpthread -ldl -lphobos
 default:$(DTARG) 
 
 $(OBJS): $(DSRC)
+	rm -rf obj
 	${DC} ${DFLAGS} $^ -c
 
 $(DTARG): $(OBJS)
@@ -34,7 +35,7 @@ TMPDIR = tmp
 CAIROROOT = /opt/cairo
 GTKGLEXTROOT = /opt/gtkglext
 GZROOT = /opt/gtkdocs
-INSTALLDIR = /opt/gtkddev/trunk/gtkdocs
+INSTALLDIR = gtkdocs
 GZBALLS = atk-1.0-docs.tar.gz gdk-2.0-docs.tar.gz gdk-pixbuf-2.0-docs.tar.gz glib-2.0-docs.tar.gz \
 	  gobject-2.0-docs.tar.gz gtk-2.0-docs.tar.gz pango-1.0-docs.tar.gz
 TAR = tar -xzvf

@@ -12,37 +12,43 @@ cairo source must be unzipped somewhere on your system.
 gtkglext source must be unzipped somewhere on your system.
 gtk documentation tarballs must be in some directory.
 
-Pointing to where everything is:
--------------------------------
+Build & run on linux:
+--------------------
+Default paths: 
+html docs: ${gtkD}/wrap/gtkdocs
+API*.txt: ${gtkD}/wrap
+output: ${gtkD}/src ${gtkD}/srcgl
 
+cd ${gtkD}/wrap
+make default
+gtkwrap
+
+edit ${gtkD}/srcgl/gtkglc/gl.d; comment out the last 23 entries
+(MESA...)
+
+... and that should do it. Go run ./makeAll.sh and see what works.
+
+
+Path definition locations:
+-------------------------------
 
 wrap/Makefile #has location of gtk docs tarballs, cairo, gtkglext
 
 wrap/APIlookup.txt #has html-source and output directories
                    #(search for "inputRoot" and "outputRoot")
 
-wrap/utils/GtkWrapper #has build filename & path, output root directory
-                      #(search for "buildDir", "buildFile", "srcOut")
+wrap/utils/GtkWrapper.d #has build filename & path
+                      #(search for "buildDir", "buildFile")
 
-wrap/utils/HTODConvert #where to find wine and paths...
+wrap/utils/HTODConvert.d #where to find wine and paths...
                        # constants at the start of the file
 
+at the moment gtkwrap assumes that the api files are in the
+directory you run it from...
 
 
-Build & run on linux:
---------------------
-
-cd ${gtkD}/wrap
-make prephtml
-make default
-cd ${gtkD}
-wrap/wrapit
-
-... and that should do it. Go run ./makeAll.sh and see what works.
-
-
-
-
+Random info
+-----------------------------------------------------
 When building from leds the following commands are run...
 
 dmd wrap/utils/HTODConvert.d wrap/utils/WrapperIF.d wrap/utils/funct.d wrap/utils/DefReader.d wrap/utils/GtkWrapper.d wrap/utils/HtmlStrip.d wrap/utils/convparms.d wrap/utils/DuitClass.d  \
