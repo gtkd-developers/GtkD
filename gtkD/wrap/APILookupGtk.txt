@@ -30,12 +30,12 @@
 
 
 addTypedefs: start
-public import glib.glibtypes;
-public import gobject.gobjecttypes;
-public import pango.pangotypes;
-public import atk.atktypes;
-public import gdkpixbuf.gdkpixbuftypes;
-public import gdk.gdktypes;
+public import gtkc.glibtypes;
+public import gtkc.gobjecttypes;
+public import gtkc.pangotypes;
+public import gtkc.atktypes;
+public import gtkc.gdkpixbuftypes;
+public import gtkc.gdktypes;
 alias void GtkAccelGroupEntry;
 alias void GtkContainerClass;
 
@@ -127,10 +127,7 @@ structWrap: GtkObject* ObjectGtk
 #import: gdk.ModifierType
 #structWrap: GdkModifierType* ModifierType
 import: glib.Str
-import: lib.gtk
-import: gtk.gtktypes
-import: lib.gtk
-import: gtk.gtktypes
+import: gtkc.gtk
 import: gthread.Thread;
 import: gdk.Threads;
 
@@ -881,11 +878,8 @@ outFile: MessageDialog
 
 file: 
 class: PopupBox
-import: gtk.gtktypes
 import: gtk.MessageDialog;
 import: gtk.Window;
-
-import: gtk.gtktypes
 
 code: start
 	/**
@@ -1331,7 +1325,6 @@ import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Image
-import: gtk.gtktypes
 import: gtk.Button
 
 nocode: gtk_button_new_with_mnemonic
@@ -5435,7 +5428,7 @@ import: gdk.Display
 structWrap: GdkDisplay* Display
 import: gdk.Screen
 structWrap: GdkScreen* Screen
-import: lib.gdk
+import: gtkc.gdk
 import: gdk.Cursor
 
 import: pango.PgLayout

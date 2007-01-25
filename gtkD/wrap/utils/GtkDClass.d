@@ -52,7 +52,7 @@ module utils.GtkDClass;
 
 public class GtkDClass
 {
-	
+
 	private import std.ctype;
 	private import std.path;
 	private import std.stdio;
@@ -226,8 +226,8 @@ public class GtkDClass
 		gtkDText ~= ";\n\n";
 
 		// moved to class level
-		gtkDText ~= "private import "~convParms.outPack ~ "."~convParms.outPack~"types;\n\n";
-		gtkDText ~= "private import lib."~convParms.outPack ~ ";\n\n";
+		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
+		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack ~ ";\n\n";
 		
 		// moved back to class level
 		foreach( char[] imprt ; convParms.imprts )
@@ -924,7 +924,7 @@ public class GtkDClass
 			text ~= "";
 			text ~= "// imports for the signal processing"; 
 			text ~= "private import gobject.Signals;";
-			text ~= "private import gdk.gdktypes;";
+			text ~= "private import gtkc.gdktypes;";
 			if ( !isInterface )
 			{
 				text ~= "int[char[]] connectedSignals;";

@@ -28,8 +28,8 @@
 
 addTypedefs: start
 
-public import glib.glibtypes;
-public import gdk.gdktypes;
+public import gtkc.glibtypes;
+public import gtkc.gdktypes;
 alias uint VisualID;
 
 addTypedefs: end
@@ -60,7 +60,7 @@ addConstants: end
 # must start with wrap
 
 wrap: glgdk
-srcout: srcgl
+#srcout: srcgl
 
 ###########################################################
 ### GL ####################################################

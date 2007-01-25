@@ -34,7 +34,7 @@ private import gtk.Timeout;
 
 private import cairoLib.Cairo;
 private import cairoLib.Surface;
-private import cairoLib.cairoLibtypes;
+private import gtkc.cairoLibtypes;
 
 private import gtk.Widget;
 private import gdk.Drawable;

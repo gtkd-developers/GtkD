@@ -32,18 +32,20 @@
 #runthis: wine ~/dm/bin/htod.exe wrap/cHeaders/GL/gl.hpp wrap/cHeaders/GL/gl.d -Iwrap/cHeaders
 #prefile: wrap/cHeaders/GL/gl.hpp
 pack: glgdk
+bindDir: gtkglc
 lib: GL
 dynload: yes
 file: wrap/cHeaders/GL/gl.d
-outfile: srcgl/lib/gl.d
+outfile: srcgl/gtkglc/gl.d
 
 #runthis: wine ~/dm/bin/htod.exe wrap/cHeaders/GL/glu.hpp wrap/cHeaders/GL/glu.d -Iwrap/cHeaders
 #prefile: wrap/cHeaders/GL/glu.hpp
 pack: glgdk
+bindDir: gtkglc
 lib: GLU
 dynload: yes
 file: wrap/cHeaders/GL/glu.d
-outfile: srcgl/lib/glu.d
+outfile: srcgl/gtkglc/glu.d
 
 
 ##runthis: wine ~/dm/bin/htod.exe wrap/cHeaders/GL/glx.hpp wrap/cHeaders/GL/glx.d -Iwrap/cHeaders

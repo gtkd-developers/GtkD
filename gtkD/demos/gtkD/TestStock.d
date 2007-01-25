@@ -18,7 +18,7 @@
 
 module gtkD.TestStock;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
 private import gtk.ScrolledWindow;
 	

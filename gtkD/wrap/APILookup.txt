@@ -136,12 +136,12 @@ package: atk atk
 package: gdk-pixbuf gdkpixbuf
 package: gdk gdk
 package: gtk gtk
-src: lib
+bind: gtkc
 
 srcdir: srcgl
 package: glgdk glgdk
 package: glgtk glgtk
-src: lib
+bind: gtkglc
 # define other packages to create
 
 # define package by package, file by file
@@ -175,11 +175,16 @@ src: lib
 ###########################################################
 ### predifined: lib
 ###########################################################
-wrap: lib
-
+wrap: gtkc
 copy: paths.d
 copy: Loader.d
+#wrap: gtkglc
+#srcout: srcgl
+#copy: paths.d
+#copy: Loader.d
 
+srcdir: src
+bindDir: gtkc
 lookup: APILookupGLib.txt
 lookup: APILookupGThread.txt
 lookup: APILookupGObject.txt
@@ -189,6 +194,8 @@ lookup: APILookupAtk.txt
 lookup: APILookupGdkPixbuf.txt
 lookup: APILookupGdk.txt
 lookup: APILookupGtk.txt
+srcdir: srcgl
+bindDir: gtkglc
 lookup: APILookupGLd.txt
 lookup: APILookupGLt.txt
 #Copy statements move here so that directory structure can be created

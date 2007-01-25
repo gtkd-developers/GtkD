@@ -4,6 +4,7 @@ compd \
 	-o SimpleGL \
 	-c \
 	-I src \
+	-I srcgl \
 	-c \
 	-L .. \
 	-l phobos \

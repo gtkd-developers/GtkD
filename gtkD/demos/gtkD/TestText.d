@@ -32,7 +32,7 @@ class TestText : VBox
 {	
 
 	private import gtk.ScrolledWindow;
-	private import gtk.gtktypes;
+	private import gtkc.gtktypes;
 	
 	this()
 	{

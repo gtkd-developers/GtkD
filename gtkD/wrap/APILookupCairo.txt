@@ -31,7 +31,7 @@
 
 addTypedefs: start
 
-public import glib.glibtypes;
+public import gtkc.glibtypes;
 
 //public import std.c.windows.windows;
 private alias void* HDC;

@@ -28,10 +28,10 @@
 
 addTypedefs: start
 
-public import glib.glibtypes;
-public import gobject.gobjecttypes;
-public import pango.pangotypes;
-public import gdkpixbuf.gdkpixbuftypes;
+public import gtkc.glibtypes;
+public import gtkc.gobjecttypes;
+public import gtkc.pangotypes;
+public import gtkc.gdkpixbuftypes;
 
 alias void* GdkAtom;
 alias void* GdkNativeWindow;
@@ -127,7 +127,7 @@ file: GdkScreen.html
 struct: GdkScreen
 class: Screen
 prefix: gdk_screen_
-import: cairoLib.cairoLibtypes
+import: gtkc.cairoLibtypes
 import: glib.Str
 import: gdk.Screen
 structWrap: GdkScreen* Screen

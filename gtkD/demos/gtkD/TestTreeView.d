@@ -21,7 +21,7 @@ module gtkD.TestTreeView;
 private import gtk.ScrolledWindow;
 	
 	
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 private import gtk.TreeView;
 private import gtk.TreePath;
 private import gtk.TreeViewColumn;

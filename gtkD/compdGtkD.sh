@@ -8,7 +8,7 @@ compd \
 	src/gobject \
 	src/gthread \
 	src/gtk \
-	src/lib \
+	src/gtkc \
 	src/pango \
 	-I src:~/dmd/src/phobos \
 	-olib libgtkd

@@ -26,7 +26,7 @@ private import gtk.Version;
 private import gtk.Table;
 
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 private import gtk.GtkD;
 private import gtk.MainWindow;
 private import gtk.Adjustment;
@@ -1161,7 +1161,7 @@ private import gdk.Threads;
 	
 }
 
-private import lib.Loader;
+private import gtkc.Loader;
 
 void main(char[][] args)
 {

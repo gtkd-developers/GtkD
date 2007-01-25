@@ -23,10 +23,10 @@ private import glgtk.GLCapability;
 private import glgdk.GLDrawable;
 private import glgdk.GLConfig;
 private import glgdk.GLContext;
-private import glgdk.glgdktypes;
+private import gtkglc.glgdktypes;
 
-private import lib.gl;
-private import lib.glu;
+private import gtkglc.gl;
+private import gtkglc.glu;
 
 private import gdk.Event;
 

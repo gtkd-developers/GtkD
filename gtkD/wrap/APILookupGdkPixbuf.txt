@@ -28,9 +28,9 @@
 
 addTypedefs: start
 
-public import glib.glibtypes;
-public import gobject.gobjecttypes;
-public import gdk.gdktypes;
+public import gtkc.glibtypes;
+public import gtkc.gobjecttypes;
+public import gtkc.gdktypes;
 public alias void* AtkFocusHandler;
 public struct AtkStateSet;
 public struct AtkRectangle;

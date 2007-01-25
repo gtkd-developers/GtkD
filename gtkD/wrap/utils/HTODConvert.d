@@ -120,6 +120,7 @@ public class HTODConvert
 	char[] preFile;
 	/** the package */
 	char[] pack;
+	char[] bindDir;
 	/** convert to dynamic loading */
 	bool dynLoad;
 	/** mark when the header was already added to the text */
@@ -148,7 +149,9 @@ public class HTODConvert
 					debug(flow)(writefln("HTODConvert.process case prefile"));
 					preFile = defReader.getValue();
 					break;
-					
+				case "bindDir":
+					bindDir = defReader.getValue();
+				break;	
 				case "pack":
 					debug(flow)(writefln("HTODConvert.process case pack"));
 					pack = defReader.getValue();
@@ -261,17 +264,17 @@ public class HTODConvert
 			}
 			if ( line == "module wrap/cHeaders/GL/gl;" )
 			{
-				line = "module lib.gl;";
+				line = "module "~bindDir~".gl;";
 			}
 			
 			if ( line == "module wrap/cHeaders/GL/glu;" )
 			{
-				line = "module lib.glu;";
+				line = "module "~bindDir~".glu;";
 			}
 
 			if ( line == "import std.c.gl;" )
 			{
-				line = "import lib.gl;";
+				line = "import "~bindDir~".gl;";
 			}
 
 			if ( startsWith(line, "/* Converted to D from" ) )
@@ -354,9 +357,9 @@ public class HTODConvert
 "\n"
 "\n"
 "private import std.stdio;\n"
-"private import "~pack~"."~pack~"types;\n"
-"private import lib.Loader;\n"
-"private import lib.paths;\n"
+"private import "~bindDir~"."~pack~"types;\n"
+"private import gtkc.Loader;\n"
+"private import gtkc.paths;\n"
 "\n"
 ;
 		if ( lib == "GL"

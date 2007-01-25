@@ -24,7 +24,7 @@ private import gtk.VBox;
 	
 private import gobject.Value;
 	
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 private import gtk.Image;
 private import gtk.TreeView;
 private import gtk.TreeStore;

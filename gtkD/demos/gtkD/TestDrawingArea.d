@@ -168,7 +168,7 @@ class TestDrawingArea : VBox
 			addOnButtonRelease(&onButtonRelease);
 		}
 
-private import gtk.gtktypes;		
+private import gtkc.gtktypes;		
 		void onSizeAllocate(GtkAllocation* allocation, Widget widget)
 		{
 			width = allocation.width;

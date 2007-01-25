@@ -28,7 +28,7 @@
 
 addTypedefs: start
 
-public import glib.glibtypes;
+public import gtkc.glibtypes;
 
 addTypedefs: end
 

@@ -29,8 +29,8 @@
 
 addTypedefs: start
 
-public import glib.glibtypes;
-public import gobject.gobjecttypes;
+public import gtkc.glibtypes;
+public import gtkc.gobjecttypes;
 
 //public import std.c.windows.windows;
 

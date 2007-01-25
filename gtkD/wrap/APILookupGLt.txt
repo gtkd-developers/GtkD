@@ -28,9 +28,9 @@
 
 addTypedefs: start
 
-public import glib.glibtypes;
-public import glgdk.glgdktypes;
-public import gtk.gtktypes;
+public import gtkc.glibtypes;
+public import gtkglc.glgdktypes;
+public import gtkc.gtktypes;
 
 addTypedefs: end
 
@@ -132,7 +132,7 @@ public import std.stdio;
 public import glgtk.GLWidget;
 private import glgdk.GLDrawable;
 public import gdk.Event;
-public import lib.gl;
+public import gtkglc.gl;
 
 
 template GLCapability()

@@ -31,7 +31,7 @@ private import gtk.Image;
 
 private import gtk.Window;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 
 private import std.stdio;
 

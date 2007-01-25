@@ -27,10 +27,10 @@
 module testGL.ShapesGL;
 
 private import gtk.VBox;
-private import lib.gl;
+private import gtkglc.gl;
 private import gl.TrackBall;
 
-private import glib.glibtypes;
+private import gtkc.glibtypes;
 
 private import std.math;
 private import std.stdio;
@@ -175,8 +175,8 @@ private import glgdk.GLConfig;
 private import glgdk.GLContext;
 private import glgdk.GLDraw;
 private import glgdk.GLDrawable;
-private import glgdk.glgdktypes;
-private import glgtk.glgtktypes;
+private import gtkglc.glgdktypes;
+private import gtkglc.glgtktypes;
 
 private import glgtk.GLCapability;
 private import glgtk.GLWidget;

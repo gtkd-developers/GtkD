@@ -28,6 +28,7 @@ public struct ConvParms
 	
 	public char[] inFile;
 	public char[] outPack;
+	public char[] bindDir;
 	public char[] outFile;
 	public char[] strct;
 	public char[] realStrct;
@@ -56,6 +57,7 @@ public struct ConvParms
 		inFile.length = 0;
 		//outPack.length = 0;
 		outFile.length = 0;
+		bindDir.length = 0;
 		strct.length = 0;
 		realStrct.length = 0;
 		ctorStrct.length = 0;

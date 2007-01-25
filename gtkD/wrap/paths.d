@@ -8,7 +8,7 @@
  * Updated: 2005-05-05 updated Linux support
  */
 
-module lib.paths;
+module gtkc.paths;
 
 /* 
  * Define the Libraries that gtkD will be using.

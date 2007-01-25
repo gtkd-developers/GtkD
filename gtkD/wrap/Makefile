@@ -22,7 +22,7 @@ $(DTARG): $(OBJS)
 	mv *.o ./obj
 
 clean: 
-	rm obj/*.o ${DTARG} 
+	rm -rf obj ${DTARG} 
 
 	
 ##########################################################

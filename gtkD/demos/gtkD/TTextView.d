@@ -20,8 +20,8 @@ module gtkD.TTextView;
 
 private import gtk.Window;
 
-private import gtk.gtktypes;
-private import gdk.gdktypes;
+private import gtkc.gtktypes;
+private import gtkc.gdktypes;
 
 private import gtk.Widget;
 private import gtk.TextView;

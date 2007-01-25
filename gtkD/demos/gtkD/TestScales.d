@@ -18,7 +18,7 @@
 
 module gtkD.TestScales;
 
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 private import gtk.Table;
 
 private import gtk.VScale;

@@ -14,7 +14,7 @@
  *
  */
  
-module lib.Loader;
+module gtkc.Loader;
 
 //debug = loadLib;
 //debug = loadSymbol;
@@ -63,7 +63,7 @@ public struct Symbol
 	void**	pointer;	// Address of the procedure pointer variable
 }
 
-private import lib.paths;
+private import gtkc.paths;
 
 /*
  * Linker : simple class to handle the loading 
