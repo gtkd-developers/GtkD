@@ -52,7 +52,7 @@ class Clock : public DrawingArea
 		addOnExpose(&exposeCallback);
 
 		//Create a new timeout that will ask the window to be drawn once every second.
-		//m_timeout = new Timeout( 1000, &onSecondElapsed, false );
+		m_timeout = new Timeout( 1000, &onSecondElapsed, false );
 	
 	}
 
