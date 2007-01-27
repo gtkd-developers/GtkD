@@ -2841,9 +2841,9 @@ Symbol[] GLLinks =
 //	{ "glTracePointerMESA",  cast(void**)& glTracePointerMESA},
 //	{ "glTracePointerRangeMESA",  cast(void**)& glTracePointerRangeMESA},
 //	{ "glTracePointerRangeMESA",  cast(void**)& glTracePointerRangeMESA},
-	
+//	
 //	{ "glProgramCallbackMESA",  cast(void**)& glProgramCallbackMESA},
-	
+//	
 //	{ "glGetProgramRegisterfvMESA",  cast(void**)& glGetProgramRegisterfvMESA},
 //	{ "glBlendEquationSeparateATI",  cast(void**)& glBlendEquationSeparateATI},
 ];

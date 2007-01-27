@@ -26,11 +26,11 @@ module cairo.main;
 private import cairo.clock;
 
 private import gtk.MainWindow;
-private import gtk.Duit;
+private import gtk.GtkD;
 
 void main(char[][] args)
 {
-	Duit.init(args);
+	GtkD.init(args);
 	
 	MainWindow win = new MainWindow("Duit Cairo Clock");
 	
@@ -41,5 +41,5 @@ void main(char[][] args)
 	c.show();
 	win.showAll();
 
-	Duit.main();
+	GtkD.main();
 }
