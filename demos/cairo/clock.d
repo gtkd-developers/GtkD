@@ -235,7 +235,10 @@ class Clock : public DrawingArea
 	
 			win.invalidateRect(r, false);
 		}
-		else writefln("The Gdk.Window doesn't exist. Something went wrong in clock.d onSecondsElapsed()");
+		else
+		{
+			writefln("The Gdk.Window doesn't exist. Something went wrong in clock.d onSecondsElapsed()");
+		}
 	
 		return true;
 		

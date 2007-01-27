@@ -15,3 +15,4 @@ ln -s cairo-1.2.6/doc/public/html cairo
 wget http://downloads.sourceforge.net/gtkglext/gtkglext-1.2.0.tar.bz2
 tar xvfj gtkglext-1.2.0.tar.bz2
 ln -s gtkglext-1.2.0/docs/reference/gtkglext/html glgdk
+ln -s gtkglext-1.2.0/docs/reference/gtkglext/html glgtk
