@@ -1171,16 +1171,16 @@ void main(char[][] args)
 	version(Win32)
 	{
 		// todo threads are still broken on windows...
-		GtkD.init(args);
+		Gtk.init(args);
 	}
 	else
 	{
-		GtkD.initMultiThread(args);
+		Gtk.initMultiThread(args);
 	}
 
 	TestWindow window = new TestWindow();
 
 	debug(1)writefln("before GtkD.main");
-	GtkD.main();
+	Gtk.main();
 	debug(1)writefln("after GtkD.main");
 }

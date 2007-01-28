@@ -48,6 +48,7 @@
  * 	- glib.Str
  * structWrap:
  * 	- GtkTreePath* -> TreePath
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.TreePath;
 private import glib.Str;
+
+
 
 /**
  * Description

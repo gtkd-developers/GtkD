@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GDataset* -> Dataset
  * 	- GOptionContext* -> OptionContext
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.glib;
 private import glib.Dataset;
 private import glib.OptionContext;
 private import glib.Str;
+
+
 
 /**
  * Description

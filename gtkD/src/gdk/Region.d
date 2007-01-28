@@ -46,6 +46,7 @@
  * structWrap:
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkRegion* -> Region
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.gdk;
 
 private import gdk.Region;
 private import gdk.Rectangle;
+
+
 
 /**
  * Description

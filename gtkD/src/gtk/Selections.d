@@ -50,6 +50,7 @@
  * 	- GdkDisplay* -> Display
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -64,6 +65,8 @@ private import gtk.Widget;
 private import gdk.Display;
 private import gdk.Pixbuf;
 private import glib.Str;
+
+
 
 /**
  * Description

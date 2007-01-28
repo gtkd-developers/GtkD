@@ -53,6 +53,7 @@
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreePath* -> TreePath
+ * module aliases:
  * local aliases:
  */
 
@@ -66,6 +67,8 @@ private import glib.Str;
 private import gtk.TreeIter;
 private import gtk.TreePath;
 private import gobject.Value;
+
+
 
 /**
  * Description

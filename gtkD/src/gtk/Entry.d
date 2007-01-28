@@ -46,6 +46,7 @@
  * 	- gtk.EntryCompletion
  * structWrap:
  * 	- GtkEntryCompletion* -> EntryCompletion
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.EntryCompletion;
+
+
 
 /**
  * Description

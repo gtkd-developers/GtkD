@@ -53,6 +53,7 @@
  * 	- GdkScreen* -> Screen
  * 	- GtkAccelGroup* -> AccelGroup
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -68,6 +69,8 @@ private import gdk.Screen;
 private import gtk.AccelGroup;
 private import glib.ListG;
 private import gtk.MenuItem;
+
+
 
 /**
  * Description

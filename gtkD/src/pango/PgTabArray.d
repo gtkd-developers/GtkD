@@ -71,6 +71,7 @@
  * 	- PangoLayout* -> PgLayout
  * 	- PangoLayoutIter* -> PgLayoutIter
  * 	- PangoScriptIter* -> PgScriptIter
+ * module aliases:
  * local aliases:
  */
 
@@ -95,6 +96,8 @@ private import pango.PgLanguage;
 private import pango.PgLayout;
 private import pango.PgLayoutIter;
 private import pango.PgScriptIter;
+
+
 
 /**
  * Description

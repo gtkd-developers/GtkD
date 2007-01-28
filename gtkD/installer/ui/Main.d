@@ -50,7 +50,7 @@ private import gtk.CheckButton;
 private import gtk.Notebook;
 private import gtk.Widget;
 private import gtk.Image;
-private import gtk.gtktypes;
+private import gtkc.gtktypes;
 private import gtk.SizeGroup;
 
 private import gdk.Event;

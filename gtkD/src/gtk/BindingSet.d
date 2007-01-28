@@ -52,6 +52,7 @@
  * 	- GSList* -> ListSG
  * 	- GtkBindingSet* -> BindingSet
  * 	- GtkObject* -> ObjectGtk
+ * module aliases:
  * local aliases:
  */
 
@@ -66,6 +67,8 @@ private import gtk.BindingSet;
 private import gtk.ObjectGtk;
 private import glib.ListSG;
 private import glib.Str;;
+
+
 
 /**
  * Description

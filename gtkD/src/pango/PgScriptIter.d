@@ -72,6 +72,7 @@
  * 	- PangoLayout* -> PgLayout
  * 	- PangoLayoutIter* -> PgLayoutIter
  * 	- PangoTabArray* -> PgTabArray
+ * module aliases:
  * local aliases:
  */
 
@@ -97,6 +98,8 @@ private import pango.PgTabArray;
 private import pango.PgLayout;
 private import pango.PgLayoutIter;
 private import glib.Str;
+
+
 
 /**
  * Description

@@ -46,6 +46,7 @@
  * 	- gtk.AccelMap
  * structWrap:
  * 	- GtkAccelMap* -> AccelMap
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.AccelMap;
+
+
 
 /**
  * Description

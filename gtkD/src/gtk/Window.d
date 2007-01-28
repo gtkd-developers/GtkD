@@ -57,6 +57,7 @@
  * 	- GtkAccelGroup* -> AccelGroup
  * 	- GtkWidget* -> Widget
  * 	- GtkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -74,6 +75,8 @@ private import gdk.Screen;
 private import glib.ListG;
 private import gdk.Pixbuf;
 private import gtk.Window;
+
+
 
 /**
  * Description

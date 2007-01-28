@@ -45,6 +45,7 @@
  * 	- gtk.GtkD
  * 	- gdk.Event
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -58,6 +59,8 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.GtkD;
 private import gdk.Event;
+
+
 
 /**
  */

@@ -45,6 +45,7 @@
  * 	- glib.Str
  * structWrap:
  * 	- GPtrArray* -> PtrArray
+ * module aliases:
  * local aliases:
  */
 
@@ -56,6 +57,8 @@ private import gtkc.atk;
 
 private import glib.PtrArray;
 private import glib.Str;
+
+
 
 /**
  * Description

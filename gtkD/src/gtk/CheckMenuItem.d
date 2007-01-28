@@ -46,6 +46,7 @@
  * imports:
  * 	- glib.Str
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -56,6 +57,8 @@ private import gtkc.gtktypes;
 private import gtkc.gtk;
 
 private import glib.Str;
+
+
 
 /**
  * Description

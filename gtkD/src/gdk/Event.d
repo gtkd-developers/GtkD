@@ -53,6 +53,7 @@
  * 	- GdkEvent* -> Event
  * 	- GdkScreen* -> Screen
  * 	- GdkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -68,6 +69,8 @@ private import gdk.Window;
 private import gdk.Display;
 private import gdk.Screen;
 private import gobject.Value;
+
+
 
 /**
  * Description

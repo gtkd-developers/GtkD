@@ -75,6 +75,7 @@
  * 	- GtkTextTagTable* -> TextTagTable
  * 	- GtkWidget* -> Widget
  * 	- PangoTabArray* -> PgTabArray
+ * module aliases:
  * local aliases:
  */
 
@@ -99,6 +100,8 @@ private import gtk.TextMark;
 private import gtk.Clipboard;
 private import gdk.Bitmap;
 private import std.stdarg;
+
+
 
 /**
  * Description

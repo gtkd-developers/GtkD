@@ -46,6 +46,7 @@
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- GdkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.gdk;
 
 private import gdk.Window;
 private import gdk.Display;
+
+
 
 /**
  * Description

@@ -51,6 +51,7 @@
  * 	- GtkAccelGroup* -> AccelGroup
  * 	- GtkItemFactory* -> ItemFactory
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -64,6 +65,8 @@ private import glib.Str;
 private import gtk.AccelGroup;
 private import gtk.Widget;
 private import gtk.ItemFactory;
+
+
 
 /**
  * Description

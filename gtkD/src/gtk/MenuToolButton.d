@@ -54,6 +54,7 @@
  * 	- GtkToolItem* -> ToolItem
  * 	- GtkTooltips* -> Tooltips
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -68,6 +69,8 @@ private import gtk.ToolItem;
 private import gtk.Widget;
 private import gtk.Tooltips;
 private import gtk.Menu;
+
+
 
 /**
  * Description

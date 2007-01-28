@@ -61,6 +61,7 @@
  * 	- GdkPixmap* -> Pixmap
  * 	- GdkWindow* -> Window
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -80,6 +81,8 @@ private import gdk.Pixmap;
 private import gdk.Bitmap;
 private import gdk.Pixbuf;
 private import glib.Str;
+
+
 
 /**
  * Description

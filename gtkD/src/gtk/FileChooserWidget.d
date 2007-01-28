@@ -48,6 +48,7 @@
  * 	- gtk.FileFilter;
  * 	- gtk.FileChooser;
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -62,6 +63,8 @@ private import glib.ListSG;;
 private import gtk.Widget;;
 private import gtk.FileFilter;;
 private import gtk.FileChooser;;
+
+
 
 /**
  * Description

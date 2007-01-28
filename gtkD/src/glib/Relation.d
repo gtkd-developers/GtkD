@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GHashTable* -> HashTable
  * 	- GTuples* -> Tuples
+ * module aliases:
  * local aliases:
  */
 
@@ -58,6 +59,8 @@ private import gtkc.glib;
 
 private import glib.HashTable;
 private import glib.Tuples;
+
+
 
 /**
  * Description

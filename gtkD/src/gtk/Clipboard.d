@@ -52,6 +52,7 @@
  * 	- GdkDisplay* -> Display
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkClipboard* -> Clipboard
+ * module aliases:
  * local aliases:
  */
 
@@ -66,6 +67,8 @@ private import gtk.Clipboard;
 private import gdk.Display;
 private import gobject.ObjectG;
 private import gdk.Pixbuf;
+
+
 
 /**
  * Description

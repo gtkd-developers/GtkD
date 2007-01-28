@@ -44,6 +44,7 @@
  * 	- std.stdio
  * 	- glib.Str
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -55,6 +56,8 @@ private import gtkc.glib;
 
 private import std.stdio;
 private import glib.Str;
+
+
 
 /**
  * Description

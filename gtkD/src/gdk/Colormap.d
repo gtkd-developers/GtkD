@@ -51,6 +51,7 @@
  * 	- GdkColormap* -> Colormap
  * 	- GdkScreen* -> Screen
  * 	- GdkVisual* -> Visual
+ * module aliases:
  * local aliases:
  */
 
@@ -64,6 +65,8 @@ private import gdk.Visual;
 private import gdk.Colormap;
 private import gdk.Color;
 private import gdk.Screen;
+
+
 
 /**
  * Description

@@ -54,6 +54,7 @@
  * 	- GdkWindow* -> Window
  * 	- GtkCellEditable* -> CellEditable
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -69,6 +70,8 @@ private import gdk.Rectangle;
 private import gdk.Window;
 private import gdk.Event;
 private import gtk.CellEditable;
+
+
 
 /**
  * Description

@@ -48,6 +48,7 @@
  * structWrap:
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gdk.Window;
 private import gdk.Rectangle;
+
+
 
 /**
  * Description

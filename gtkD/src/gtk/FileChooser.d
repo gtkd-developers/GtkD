@@ -52,6 +52,7 @@
  * 	- GtkFileFilter* -> FileFilter
  * 	- GtkWidget* -> Widget
  * 	- GtkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -66,6 +67,8 @@ private import gtk.Window;
 private import glib.ListSG;
 private import gtk.Widget;
 private import gtk.FileFilter;
+
+
 
 /**
  * Description

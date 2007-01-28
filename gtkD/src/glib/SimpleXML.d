@@ -46,6 +46,7 @@
  * 	- glib.Str
  * structWrap:
  * 	- GDataset* -> Dataset
+ * module aliases:
  * local aliases:
  */
 
@@ -58,6 +59,8 @@ private import gtkc.glib;
 private import glib.ErrorG;
 private import glib.Dataset;
 private import glib.Str;
+
+
 
 /**
  * Description

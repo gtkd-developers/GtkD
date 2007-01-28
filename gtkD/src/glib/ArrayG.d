@@ -45,6 +45,7 @@
  * 	- glib.Str
  * structWrap:
  * 	- GArray* -> ArrayG
+ * module aliases:
  * local aliases:
  */
 
@@ -56,6 +57,8 @@ private import gtkc.glib;
 
 private import glib.ListG;
 private import glib.Str;
+
+
 
 /**
  * Description

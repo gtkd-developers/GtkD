@@ -44,6 +44,7 @@
  * imports:
  * 	- gtk.Widget
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -54,6 +55,8 @@ private import gtkc.gtktypes;
 private import gtkc.gtk;
 
 private import gtk.Widget;
+
+
 
 /**
  * Description
@@ -131,6 +134,35 @@ public class Alignment : Bin
 		a.add(widget);
 		return a;
 	}
+
+	public static Alignment northWest(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	public static Alignment southWest(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	public static Alignment northEast(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	public static Alignment southEast(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 1.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
 	
 	
 	/**

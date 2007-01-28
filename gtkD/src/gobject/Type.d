@@ -47,6 +47,7 @@
  * 	- gobject.TypePlugin
  * structWrap:
  * 	- GTypePlugin* -> TypePlugin
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import glib.Str;
 private import glib.Quark;
 private import gobject.Type;
 private import gobject.TypePlugin;
+
+
 
 /**
  * Description

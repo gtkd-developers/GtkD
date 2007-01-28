@@ -46,6 +46,7 @@
  * 	- gtk.Adjustment
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.Adjustment;
+
+
 
 /**
  * Description

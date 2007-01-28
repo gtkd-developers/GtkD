@@ -43,6 +43,7 @@
  * imports:
  * structWrap:
  * 	- GRand* -> RandG
+ * module aliases:
  * local aliases:
  */
 
@@ -51,6 +52,8 @@ module glib.RandG;
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
+
+
 
 
 /**

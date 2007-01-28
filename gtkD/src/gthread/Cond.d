@@ -46,6 +46,7 @@
  * structWrap:
  * 	- GDate* -> Date
  * 	- GMutex* -> Mutex
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.gthread;
 
 private import glib.Date;
 private import gthread.Mutex;
+
+
 
 /**
  * Description

@@ -46,6 +46,7 @@
  * structWrap:
  * 	- GList* -> ListG
  * 	- GQueue* -> QueueG
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.glib;
 
 private import glib.ListG;
 private import glib.ListG;
+
+
 
 /**
  * Description

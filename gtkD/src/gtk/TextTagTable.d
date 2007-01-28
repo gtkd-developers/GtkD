@@ -48,6 +48,7 @@
  * structWrap:
  * 	- GtkTextTag* -> TextTag
  * 	- GtkTextTagTable* -> TextTagTable
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.TextTagTable;
 private import gtk.TextTag;
+
+
 
 /**
  * Description

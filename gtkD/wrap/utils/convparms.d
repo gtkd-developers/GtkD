@@ -46,6 +46,7 @@ public struct ConvParms
 	public char[][] noPrefixes;
 	public char[][] noCode;		/// insert the external declaration but not the wrapping code
 	public char[][char[]] aliases;
+	public char[][char[]] mAliases;
 	public char[] classCode;		/// any valid D code to be copied to the final GtkD class
 	public char[] interfaceCode;	/// any valid D code to be copied to the final GtkD interface
 	public char[][] text;		/// text to be added to the text read from the file
@@ -74,6 +75,7 @@ public struct ConvParms
 		noCode.length = 0;
 		noStructs.length = 0;
 		aliases = clear();
+		mAliases = clear();
 		classCode.length = 0;
 		interfaceCode.length = 0;
 		text.length = 0;
@@ -145,6 +147,11 @@ public struct ConvParms
 			text ~= "\n * \t- "~key~" -> "~structWrap[key];
 		}
 
+		text ~= "\n * module aliases:";
+		foreach ( char[] key ; mAliases.keys.sort )
+		{
+			text ~= "\n * \t- "~key~" -> "~mAliases[key];
+		}
 		text ~= "\n * local aliases:";
 		foreach ( char[] key ; aliases.keys.sort )
 		{

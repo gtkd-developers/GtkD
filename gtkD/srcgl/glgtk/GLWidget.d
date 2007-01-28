@@ -52,6 +52,7 @@
  * 	- GdkGLDrawable* -> Drawable
  * 	- GdkGLWindow* -> GLWindow
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -66,6 +67,8 @@ private import glgdk.GLDrawable;
 private import glgdk.GLConfig;
 private import glgdk.GLContext;
 private import glgdk.GLWindow;
+
+
 
 /**
  * Description

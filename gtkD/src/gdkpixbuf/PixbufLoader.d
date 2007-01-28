@@ -51,6 +51,7 @@
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufAnimation* -> PixbufAnimation
  * 	- GdkPixbufFormat* -> PixbufFormat
+ * module aliases:
  * local aliases:
  */
 
@@ -64,6 +65,8 @@ private import gdkpixbuf.PixbufFormat;
 private import gdk.Pixbuf;
 private import gdkpixbuf.PixbufAnimation;
 private import glib.Str;
+
+
 
 /**
  * Description

@@ -52,6 +52,7 @@
  * 	- GMainContext* -> MainContext
  * 	- GMainLoop* -> MainLoop
  * 	- GSource* -> Source
+ * module aliases:
  * local aliases:
  */
 
@@ -66,6 +67,8 @@ private import glib.Dataset;
 private import glib.Date;
 private import glib.Source;
 private import glib.MainContext;
+
+
 
 /**
  * Description

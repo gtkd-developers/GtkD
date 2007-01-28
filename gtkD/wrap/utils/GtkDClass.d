@@ -250,6 +250,15 @@ public class GtkDClass
 		append(text, collectedFuncts, tabs);
 		append(text, collectedUnions, tabs);
 		*/
+
+		gtkDText ~= "\n";
+		
+		foreach ( char[] key ; convParms.mAliases.keys.sort )
+		{
+			gtkDText ~= "public alias "~key~" "~convParms.mAliases[key]~";";
+		}
+		gtkDText ~= "\n";
+		
 		
 		if ( wrapper.includeComments() )
 		{
@@ -408,6 +417,7 @@ public class GtkDClass
 	private char[][] openClass(ConvParms* convParms)
 	{
 		char[][] text;
+		
 		if ( convParms.clss.length > 0 )
 		{
 			getParent();

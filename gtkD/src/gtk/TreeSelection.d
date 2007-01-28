@@ -55,6 +55,7 @@
  * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreePath* -> TreePath
  * 	- GtkTreeView* -> TreeView
+ * module aliases:
  * local aliases:
  */
 
@@ -70,6 +71,8 @@ private import glib.ListG;
 private import gtk.TreePath;
 private import gtk.TreeModel;
 private import gtk.TreeIter;
+
+
 
 /**
  * Description

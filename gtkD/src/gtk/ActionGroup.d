@@ -48,6 +48,7 @@
  * structWrap:
  * 	- GList* -> ListG
  * 	- GtkAction* -> Action
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.Action;
 private import glib.ListG;
+
+
 
 /**
  * Description

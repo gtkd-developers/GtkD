@@ -51,6 +51,7 @@
  * 	- GObject* -> ObjectG
  * 	- GSource* -> Source
  * 	- GValue* -> Value
+ * module aliases:
  * local aliases:
  */
 
@@ -64,6 +65,8 @@ private import gobject.ObjectG;
 private import gobject.Closure;
 private import gobject.Value;
 private import glib.Source;
+
+
 
 /**
  * Description

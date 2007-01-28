@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GtkIMContext* -> IMContext
  * 	- GtkMenuShell* -> MenuShell
+ * module aliases:
  * local aliases:
  */
 
@@ -58,6 +59,8 @@ private import gtkc.gtk;
 
 private import gtk.IMContext;
 private import gtk.MenuShell;
+
+
 
 /**
  * Description

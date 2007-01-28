@@ -46,6 +46,7 @@
  * structWrap:
  * 	- GDataset* -> Dataset
  * 	- GList* -> List*
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.glib;
 
 private import glib.ListG;
 private import glib.Dataset;
+
+
 
 /**
  * Description

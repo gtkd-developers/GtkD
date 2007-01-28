@@ -62,6 +62,7 @@
  * 	- GdkScreen* -> Screen
  * 	- GdkVisual* -> Visual
  * 	- GdkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -82,6 +83,8 @@ private import glib.ListG;
 private import gdk.Rectangle;
 private import gdk.Event;
 private import gobject.Value;
+
+
 
 /**
  * Description

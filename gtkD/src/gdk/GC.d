@@ -60,6 +60,7 @@
  * 	- GdkPixmap* -> Pixmap
  * 	- GdkRegion* -> Region
  * 	- GdkScreen* -> Screen
+ * module aliases:
  * local aliases:
  */
 
@@ -78,6 +79,8 @@ private import gdk.Pixmap;
 private import gdk.Bitmap;
 private import gdk.Region;
 private import gdk.Colormap;
+
+
 
 /**
  * Description

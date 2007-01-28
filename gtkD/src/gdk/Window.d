@@ -60,6 +60,7 @@
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkRegion* -> Region
  * 	- GdkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -78,6 +79,8 @@ private import gdk.Color;
 private import gdk.Pixmap;
 private import gdk.Cursor;
 private import glib.ListG;
+
+
 
 /**
  * Description

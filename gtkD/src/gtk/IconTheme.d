@@ -55,6 +55,7 @@
  * 	- GdkScreen* -> Screen
  * 	- GtkIconInfo* -> IconInfo
  * 	- GtkIconTheme* -> IconTheme
+ * module aliases:
  * local aliases:
  */
 
@@ -70,6 +71,8 @@ private import gdk.Screen;
 private import gtk.IconInfo;
 private import gdk.Pixbuf;
 private import glib.ListG;
+
+
 
 /**
  * Description

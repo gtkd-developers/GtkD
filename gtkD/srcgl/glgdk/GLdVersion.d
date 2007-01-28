@@ -42,6 +42,7 @@
  * omit code:
  * imports:
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -50,6 +51,8 @@ module glgdk.GLdVersion;
 private import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
+
+
 
 
 /**

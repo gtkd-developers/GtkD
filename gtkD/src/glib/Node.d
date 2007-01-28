@@ -45,6 +45,7 @@
  * structWrap:
  * 	- GNode* -> Node
  * 	- GTree* -> BBTree
+ * module aliases:
  * local aliases:
  */
 
@@ -55,6 +56,8 @@ private import gtkc.glibtypes;
 private import gtkc.glib;
 
 private import glib.BBTree;
+
+
 
 /**
  * Description

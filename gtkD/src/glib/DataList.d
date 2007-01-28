@@ -45,6 +45,7 @@
  * 	- glib.Dataset
  * structWrap:
  * 	- GDataset* -> Dataset
+ * module aliases:
  * local aliases:
  */
 
@@ -56,6 +57,8 @@ private import gtkc.glib;
 
 private import glib.Quark;
 private import glib.Dataset;
+
+
 
 /**
  * Description

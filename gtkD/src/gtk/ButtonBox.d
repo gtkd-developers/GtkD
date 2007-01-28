@@ -48,6 +48,7 @@
  * 	- gtk.VButtonBox
  * structWrap:
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -61,6 +62,8 @@ private import gtk.Widget;
 private import gtk.Button;
 private import gtk.HButtonBox;
 private import gtk.VButtonBox;
+
+
 
 /**
  * Description

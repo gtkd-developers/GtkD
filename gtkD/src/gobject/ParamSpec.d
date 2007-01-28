@@ -49,6 +49,7 @@
  * 	- GList* -> ListG
  * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
+ * module aliases:
  * local aliases:
  */
 
@@ -62,6 +63,8 @@ private import glib.Str;
 private import gobject.ParamSpec;
 private import gobject.Value;
 private import glib.ListG;
+
+
 
 /**
  * Description

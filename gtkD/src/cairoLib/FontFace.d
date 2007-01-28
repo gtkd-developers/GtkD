@@ -42,6 +42,7 @@
  * omit code:
  * imports:
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -50,6 +51,8 @@ module cairoLib.FontFace;
 private import gtkc.cairoLibtypes;
 
 private import gtkc.cairoLib;
+
+
 
 
 /**

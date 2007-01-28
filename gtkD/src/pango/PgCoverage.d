@@ -42,6 +42,7 @@
  * omit code:
  * imports:
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -50,6 +51,8 @@ module pango.PgCoverage;
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
+
+
 
 
 /**

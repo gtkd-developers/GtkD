@@ -42,6 +42,7 @@
  * omit code:
  * imports:
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -50,6 +51,8 @@ module gtk.Timeout;
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
+
+
 
 
 /**

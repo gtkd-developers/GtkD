@@ -50,6 +50,7 @@
  * 	- GIOChannel* -> IOChannel
  * 	- GSource* -> Source
  * 	- GString* -> StringG
+ * module aliases:
  * local aliases:
  */
 
@@ -64,6 +65,8 @@ private import glib.StringG;
 private import glib.Source;
 private import glib.Dataset;
 private import glib.Str;
+
+
 
 /**
  * Description

@@ -48,6 +48,7 @@
  * 	- GDataset* -> Dataset
  * 	- GMainLoop* -> MainLoop
  * 	- GSource* -> Source
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.glib;
 private import glib.MainLoop;
 private import glib.Dataset;
 private import glib.Source;
+
+
 
 /**
  * Description

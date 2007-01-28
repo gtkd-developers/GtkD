@@ -46,6 +46,7 @@
  * structWrap:
  * 	- cairo_surface_t* -> Surface
  * 	- cairo_t* -> Cairo
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.cairoLib;
 
 private import cairoLib.Surface;
 private import glib.Str;
+
+
 
 /**
  * Description

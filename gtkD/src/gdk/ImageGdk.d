@@ -48,6 +48,7 @@
  * 	- GdkColormap* -> Colormap
  * 	- GdkDrawable* -> Drawable
  * 	- GdkVisual* -> Visual
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gdk;
 private import gdk.Visual;
 private import gdk.Drawable;
 private import gdk.Colormap;
+
+
 
 /**
  * Description

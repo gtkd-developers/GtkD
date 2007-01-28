@@ -46,6 +46,7 @@
  * structWrap:
  * 	- GDataset* -> Dataset
  * 	- GMainLoop* -> MainLoop
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.glib;
 
 private import glib.MainLoop;
 private import glib.Dataset;
+
+
 
 /**
  * Description

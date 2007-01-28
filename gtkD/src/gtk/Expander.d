@@ -48,6 +48,7 @@
  * 	- gtk.Widget
  * structWrap:
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.Widget;
+
+
 
 /**
  * Description

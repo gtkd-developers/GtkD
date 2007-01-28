@@ -44,6 +44,7 @@
  * 	- glib.Str
  * structWrap:
  * 	- GString* -> StringG
+ * module aliases:
  * local aliases:
  */
 
@@ -54,6 +55,8 @@ private import gtkc.glibtypes;
 private import gtkc.glib;
 
 private import glib.Str;
+
+
 
 /**
  * Description

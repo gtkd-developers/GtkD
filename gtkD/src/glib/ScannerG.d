@@ -46,6 +46,7 @@
  * structWrap:
  * 	- GHashTable* -> HashTable
  * 	- GScanner* -> ScannerG
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.glib;
 
 private import glib.HashTable;
 private import glib.Str;
+
+
 
 /**
  * Description

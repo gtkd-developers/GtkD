@@ -53,6 +53,7 @@
  * 	- GdkDisplay* -> Display
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixmap* -> Pixmap
+ * module aliases:
  * local aliases:
  */
 
@@ -68,6 +69,8 @@ private import gdk.Color;
 private import gdk.Display;
 private import gdk.Pixbuf;
 private import gdk.Cursor;
+
+
 
 /**
  * Description

@@ -46,6 +46,7 @@
  * 	- glib.AsyncQueue
  * structWrap:
  * 	- GAsyncQueue* -> AsyncQueue
+ * module aliases:
  * local aliases:
  */
 
@@ -58,6 +59,8 @@ private import gtkc.glib;
 private import glib.ListG;
 private import glib.Date;
 private import glib.AsyncQueue;
+
+
 
 /**
  * Description

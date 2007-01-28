@@ -95,6 +95,7 @@
  * 	- PangoContext* -> PgContext
  * 	- PangoFontDescription* -> PgFontDescription
  * 	- PangoLayout* -> PgLayout
+ * module aliases:
  * local aliases:
  */
 
@@ -132,6 +133,8 @@ private import pango.PgContext;
 private import pango.PgFontDescription;
 private import gdk.Drawable;
 private import gtk.Tooltips;
+
+
 
 /**
  * Description

@@ -52,6 +52,7 @@
  * 	- GObject* -> ObjectG
  * 	- GSList* -> ListSG
  * 	- GtkAccelGroup* -> AccelGroup
+ * module aliases:
  * local aliases:
  */
 
@@ -66,6 +67,8 @@ private import gobject.Closure;
 private import gobject.ObjectG;
 private import gtk.AccelGroup;
 private import glib.ListSG;
+
+
 
 /**
  * Description

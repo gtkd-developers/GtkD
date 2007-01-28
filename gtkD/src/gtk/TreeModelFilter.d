@@ -49,6 +49,7 @@
  * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreeModel* -> TreeModel
  * 	- GtkTreePath* -> TreePath
+ * module aliases:
  * local aliases:
  */
 
@@ -61,6 +62,8 @@ private import gtkc.gtk;
 private import gtk.TreeModel;
 private import gtk.TreePath;
 private import gtk.TreeIter;
+
+
 
 /**
  * Description

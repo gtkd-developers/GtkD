@@ -48,6 +48,7 @@
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GtkToolItem* -> ToolItem
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.ToolItem;
 private import glib.ListSG;
+
+
 
 /**
  * Description

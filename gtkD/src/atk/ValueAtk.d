@@ -44,6 +44,7 @@
  * 	- gobject.Value
  * structWrap:
  * 	- GValue* -> Value
+ * module aliases:
  * local aliases:
  */
 
@@ -54,6 +55,8 @@ private import gtkc.atktypes;
 private import gtkc.atk;
 
 private import gobject.Value;
+
+
 
 /**
  * Description

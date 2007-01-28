@@ -56,6 +56,7 @@
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkTreeModel* -> TreeModel
  * 	- GtkTreePath* -> TreePath
+ * module aliases:
  * local aliases:
  */
 
@@ -71,6 +72,8 @@ private import gtk.TreeModel;
 private import gtk.TreePath;
 private import gdk.Color;
 private import glib.ListG;
+
+
 
 /**
  * Description

@@ -128,11 +128,9 @@ structWrap: GtkObject* ObjectGtk
 #structWrap: GdkModifierType* ModifierType
 import: glib.Str
 import: gtkc.gtk
-import: gthread.Thread;
-import: gdk.Threads;
-
-
-
+import: gthread.Thread
+import: gdk.Threads
+moduleAlias: GtkD Gtk
 code: start
 
 	/**
@@ -4640,6 +4638,34 @@ code: start
 		return a;
 	}
 	
+	public static Alignment northWest(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	public static Alignment southWest(Widget widget)
+	{
+		Alignment a = new Alignment(0.0, 0.5, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	public static Alignment northEast(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 0.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
+	public static Alignment southEast(Widget widget)
+	{
+		Alignment a = new Alignment(1.0, 1.0, 0, 0);
+		a.add(widget);
+		return a;
+	}
+
 code: end
 outFile: Alignment
 

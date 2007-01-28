@@ -44,6 +44,7 @@
  * imports:
  * 	- glib.Str
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -54,6 +55,8 @@ private import gtkc.cairoLibtypes;
 private import gtkc.cairoLib;
 
 private import glib.Str;
+
+
 
 /**
  * Description

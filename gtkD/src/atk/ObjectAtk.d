@@ -45,6 +45,7 @@
  * 	- atk.StateSet
  * structWrap:
  * 	- AtkStateSet* -> StateSet
+ * module aliases:
  * local aliases:
  */
 
@@ -56,6 +57,8 @@ private import gtkc.atk;
 
 private import glib.Str;
 private import atk.StateSet;
+
+
 
 /**
  * Description

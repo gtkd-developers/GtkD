@@ -42,6 +42,7 @@
  * omit code:
  * imports:
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -50,6 +51,8 @@ module glgtk.GLtInit;
 private import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;
+
+
 
 
 /**

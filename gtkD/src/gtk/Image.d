@@ -54,6 +54,7 @@
  * 	- GdkImage* -> ImageGdk
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixmap* -> Pixmap
+ * module aliases:
  * local aliases:
  */
 
@@ -68,6 +69,8 @@ private import gdk.Pixbuf;
 private import gdk.ImageGdk;
 private import gdk.Bitmap;
 private import gdk.Pixmap;
+
+
 
 /**
  * Description

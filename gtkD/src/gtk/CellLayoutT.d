@@ -48,6 +48,7 @@
  * 	- glib.Str
  * structWrap:
  * 	- GtkCellRenderer* -> CellRenderer
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.CellRenderer;
 private import glib.Str;
+
+
 
 /**
  * Description

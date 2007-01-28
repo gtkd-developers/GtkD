@@ -52,6 +52,7 @@
  * 	- GSList* -> ListSG
  * 	- GtkAccelGroup* -> AccelGroup
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -66,6 +67,8 @@ private import gtk.Widget;
 private import glib.ListSG;
 private import gobject.Closure;
 private import gtk.AccelGroup;
+
+
 
 /**
  * Description

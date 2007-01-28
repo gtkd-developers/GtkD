@@ -52,6 +52,7 @@
  * 	- GdkDragContext* -> DragContext
  * 	- GdkScreen* -> Screen
  * 	- GdkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -66,6 +67,8 @@ private import gdk.Window;
 private import gdk.Screen;
 private import glib.ListG;
 private import gdk.Display;
+
+
 
 /**
  * Description

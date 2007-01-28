@@ -56,6 +56,7 @@
  * 	- AtkObject* -> ObjectAtk
  * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreeModel* -> TreeModel
+ * module aliases:
  * local aliases:
  */
 
@@ -72,6 +73,8 @@ private import gtk.TreeIter;
 private import gtk.CellRenderer;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
+
+
 
 /**
  * Description

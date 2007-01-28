@@ -65,6 +65,7 @@
  * 	- GtkTextMark* -> TextMark
  * 	- GtkWidget* -> Widget
  * 	- PangoTabArray* -> PgTabArray
+ * module aliases:
  * local aliases:
  */
 
@@ -85,6 +86,8 @@ private import gtk.TextAttributes;
 private import gdk.Window;
 private import gtk.TextChildAnchor;
 private import glib.ListG;
+
+
 
 /**
  * Description

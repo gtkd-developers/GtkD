@@ -41,6 +41,7 @@
  * omit code:
  * imports:
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -49,6 +50,8 @@ module gtk.TreeNode;
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
+
+
 
 
 /**

@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GEnumValue* -> Enums
  * 	- GFlagsValue* -> Flags
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.gobject;
 private import glib.Str;
 private import gobject.Enums;
 private import gobject.Flags;
+
+
 
 /**
  * Description

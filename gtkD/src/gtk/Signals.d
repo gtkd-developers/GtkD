@@ -47,6 +47,7 @@
  * 	- glib.Str
  * structWrap:
  * 	- GtkObject* -> ObjectGtk
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.ObjectGtk;
 private import glib.Str;
+
+
 
 /**
  * Description

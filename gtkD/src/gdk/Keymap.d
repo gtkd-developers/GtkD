@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- GdkKeymap* -> Keymap
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.gdk;
 private import glib.Str;
 private import gdk.Keymap;
 private import gdk.Display;
+
+
 
 /**
  * Description

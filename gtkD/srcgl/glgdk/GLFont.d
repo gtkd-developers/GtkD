@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- PangoFontDescription* -> PgFontDescription
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkglc.glgdk;
 private import glib.Str;
 private import gdk.Display;
 private import pango.PgFontDescription;
+
+
 
 /**
  * Description

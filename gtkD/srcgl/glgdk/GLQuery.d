@@ -45,6 +45,7 @@
  * 	- gdk.Display
  * structWrap:
  * 	- GdkDisplay* -> Display
+ * module aliases:
  * local aliases:
  */
 
@@ -56,6 +57,8 @@ private import gtkglc.glgdk;
 
 private import glib.Str;
 private import gdk.Display;
+
+
 
 /**
  * Description

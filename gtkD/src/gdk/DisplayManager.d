@@ -50,6 +50,7 @@
  * 	- GdkDevice* -> Device
  * 	- GdkDisplay* -> Display
  * 	- GdkDisplayManager* -> DisplayManager
+ * module aliases:
  * local aliases:
  */
 
@@ -63,6 +64,8 @@ private import gdk.DisplayManager;
 private import gdk.Display;
 private import glib.ListSG;
 private import gdk.Device;
+
+
 
 /**
  * Description

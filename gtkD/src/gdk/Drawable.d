@@ -97,6 +97,7 @@
  * 	- PangoLayoutIter* -> PgLayoutIter
  * 	- PangoScriptIter* -> PgScriptIter
  * 	- PangoTabArray* -> PgTabArray
+ * module aliases:
  * local aliases:
  */
 
@@ -134,6 +135,8 @@ private import pango.PgTabArray;
 private import pango.PgLayout;
 private import pango.PgLayoutIter;
 private import pango.PgScriptIter;
+
+
 
 /**
  * Description

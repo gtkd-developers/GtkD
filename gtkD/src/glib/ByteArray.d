@@ -44,6 +44,7 @@
  * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
+ * module aliases:
  * local aliases:
  */
 
@@ -54,6 +55,8 @@ private import gtkc.glibtypes;
 private import gtkc.glib;
 
 private import glib.ListG;
+
+
 
 /**
  * Description

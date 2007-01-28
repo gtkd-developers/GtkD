@@ -50,6 +50,7 @@
  * 	- GClosure* -> Closure
  * 	- GQuark* -> Quark
  * 	- GValue* -> Value
+ * module aliases:
  * local aliases:
  */
 
@@ -64,6 +65,8 @@ private import gobject.Closure;
 private import gobject.Type;
 private import gobject.Value;
 private import glib.Quark;
+
+
 
 /**
  * Description

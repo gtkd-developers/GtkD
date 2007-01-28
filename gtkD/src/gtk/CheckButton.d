@@ -48,6 +48,7 @@
  * 	- gtk.Button
  * 	- glib.Str
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.Button;
 private import glib.Str;
+
+
 
 /**
  * Description

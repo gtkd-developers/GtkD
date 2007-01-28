@@ -46,6 +46,7 @@
  * 	- std.c.string
  * structWrap:
  * 	- GString* -> StringG
+ * module aliases:
  * local aliases:
  */
 
@@ -58,6 +59,8 @@ private import gtkc.glib;
 private import std.stdio;
 private import glib.StringG;
 private import std.c.string;
+
+
 
 /**
  * Description

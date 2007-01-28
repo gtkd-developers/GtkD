@@ -45,6 +45,7 @@
  * structWrap:
  * 	- GList* -> ListG
  * 	- GPtrArray* -> PtrArray
+ * module aliases:
  * local aliases:
  */
 
@@ -55,6 +56,8 @@ private import gtkc.glibtypes;
 private import gtkc.glib;
 
 private import glib.ListG;
+
+
 
 /**
  * Description

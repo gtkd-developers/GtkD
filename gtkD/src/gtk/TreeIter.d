@@ -49,6 +49,7 @@
  * 	- gobject.Value;
  * structWrap:
  * 	- GtkTreeIter* -> TreeIter
+ * module aliases:
  * local aliases:
  */
 
@@ -64,6 +65,8 @@ private import gtk.TreeModel;
 private import gtk.TreePath;
 private import gtk.TreeIterError;
 private import gobject.Value;;
+
+
 
 /**
  * Description

@@ -56,6 +56,7 @@
  * 	- GtkAction* -> Action
  * 	- GtkActionGroup* -> ActionGroup
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -72,6 +73,8 @@ private import gtk.AccelGroup;
 private import gtk.Widget;
 private import glib.ListSG;
 private import gtk.Action;
+
+
 
 /**
  * Description

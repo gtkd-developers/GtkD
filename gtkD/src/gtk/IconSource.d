@@ -52,6 +52,7 @@
  * 	- GtkSettings* -> Settings
  * 	- GtkStyle* -> Style
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -66,6 +67,8 @@ private import gdk.Pixbuf;
 private import gtk.Style;
 private import gtk.Widget;
 private import gtk.Settings;
+
+
 
 /**
  * Description

@@ -51,6 +51,7 @@
  * 	- GClosure* -> Closure
  * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
+ * module aliases:
  * local aliases:
  */
 
@@ -65,6 +66,8 @@ private import gobject.Value;
 private import gobject.Closure;
 private import std.gc;
 private import glib.Str;
+
+
 
 /**
  * Description

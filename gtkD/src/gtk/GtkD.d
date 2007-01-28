@@ -56,6 +56,8 @@
  * 	- GdkEvent* -> Event
  * 	- GtkObject* -> ObjectGtk
  * 	- GtkWidget* -> Widget
+ * module aliases:
+ * 	- GtkD -> Gtk
  * local aliases:
  */
 
@@ -72,6 +74,8 @@ private import glib.Str;
 private import gtkc.gtk;
 private import gthread.Thread;;
 private import gdk.Threads;;
+
+public alias GtkD Gtk;
 
 /**
  * Description

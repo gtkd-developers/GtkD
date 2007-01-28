@@ -53,6 +53,7 @@
  * 	- GObject* -> ObjectG
  * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
+ * module aliases:
  * local aliases:
  */
 
@@ -67,6 +68,8 @@ private import gobject.Value;
 private import gobject.ParamSpec;
 private import gobject.ObjectG;
 private import gdk.Pixbuf;
+
+
 
 /**
  * Description

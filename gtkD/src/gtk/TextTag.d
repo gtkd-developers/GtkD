@@ -51,6 +51,7 @@
  * 	- GObject* -> ObjectG
  * 	- GdkEvent* -> Event
  * 	- GtkTextIter* -> TextIter
+ * module aliases:
  * local aliases:
  */
 
@@ -64,6 +65,8 @@ private import glib.Str;
 private import gobject.ObjectG;
 private import gdk.Event;
 private import gtk.TextIter;
+
+
 
 /**
  * Description

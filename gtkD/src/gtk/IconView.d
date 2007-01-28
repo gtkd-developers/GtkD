@@ -53,6 +53,7 @@
  * 	- GtkCellRenderer* -> CellRenderer
  * 	- GtkTreeModel* -> TreeModel
  * 	- GtkTreePath* -> TreePath
+ * module aliases:
  * local aliases:
  */
 
@@ -67,6 +68,8 @@ private import gtk.TreePath;
 private import gtk.CellRenderer;
 private import glib.ListG;
 private import gdk.Pixmap;
+
+
 
 /**
  * Description

@@ -43,6 +43,7 @@
  * omit code:
  * imports:
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -51,6 +52,8 @@ module gtk.VRuler;
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
+
+
 
 
 /**

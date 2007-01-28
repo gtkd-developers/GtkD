@@ -54,6 +54,7 @@
  * 	- GtkSettings* -> Settings
  * 	- GtkStyle* -> Style
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -69,6 +70,8 @@ private import gtk.Widget;
 private import gtk.Settings;
 private import gdk.Color;
 private import gtk.RcStyle;
+
+
 
 /**
  * Description

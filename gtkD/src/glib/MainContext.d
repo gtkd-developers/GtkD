@@ -54,6 +54,7 @@
  * 	- GMutex* -> Mutex
  * 	- GSource* -> Source
  * 	- GThreadPoll* -> ThreadPoll
+ * module aliases:
  * local aliases:
  */
 
@@ -69,6 +70,8 @@ private import gthread.Cond;
 private import gthread.Mutex;
 private import glib.ThreadPool;
 private import glib.MainContext;
+
+
 
 /**
  * Description

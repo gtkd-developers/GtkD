@@ -58,6 +58,7 @@
  * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreeModel* -> TreeModel
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -75,6 +76,8 @@ private import gtk.TreeModel;
 private import gtk.TreeIter;
 private import gdk.Rectangle;
 private import glib.Str;
+
+
 
 /**
  * Description

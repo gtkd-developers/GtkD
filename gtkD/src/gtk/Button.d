@@ -51,6 +51,7 @@
  * 	- gtk.Button
  * structWrap:
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -64,6 +65,8 @@ private import glib.Str;
 private import gtk.Widget;
 private import gtk.Image;
 private import gtk.Button;
+
+
 
 /**
  * Description

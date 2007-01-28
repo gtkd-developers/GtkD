@@ -27,20 +27,21 @@ class HelloWorld : MainWindow
 	this()
 	{
 		super("GtkD");
+		setBorderWidth(10);
 		add(new Label("Hello World"));
 		showAll();
 	}
 }
 
-private import lib.Loader;
+private import gtkc.Loader;
 
 void main(char[][] args)
 {
 	
 	Linker.dumpFailedLoads();
 	
-	GtkD.init(args);
+	Gtk.init(args);
 	new HelloWorld();
-	GtkD.main();
+	Gtk.main();
 
 }

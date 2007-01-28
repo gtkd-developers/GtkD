@@ -51,6 +51,7 @@
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
+ * module aliases:
  * local aliases:
  */
 
@@ -65,6 +66,8 @@ private import glib.Str;
 private import gtk.TreeIter;
 private import gobject.Value;
 private import glib.Str;
+
+
 
 /**
  * Description

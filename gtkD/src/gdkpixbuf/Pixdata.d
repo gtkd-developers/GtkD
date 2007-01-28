@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GString* -> StringG
  * 	- GdkPixbuf* -> Pixbuf
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.gdkpixbuf;
 private import gdk.Pixbuf;
 private import glib.StringG;
 private import glib.Str;
+
+
 
 /**
  * Description

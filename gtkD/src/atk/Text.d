@@ -43,6 +43,7 @@
  * imports:
  * 	- glib.Str
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -53,6 +54,8 @@ private import gtkc.atktypes;
 private import gtkc.atk;
 
 private import glib.Str;
+
+
 
 /**
  * Description

@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GdkColormap* -> Colormap
  * 	- GdkGC* -> GC
+ * module aliases:
  * local aliases:
  */
 
@@ -58,6 +59,8 @@ private import gtkc.gtk;
 
 private import gdk.GC;
 private import gdk.Colormap;
+
+
 
 /**
  * Description

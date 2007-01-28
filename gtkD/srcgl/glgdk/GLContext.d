@@ -44,6 +44,7 @@
  * 	- glgdk.GLDrawable
  * structWrap:
  * 	- GdkGLDrawable* -> GLDrawable
+ * module aliases:
  * local aliases:
  */
 
@@ -54,6 +55,8 @@ private import gtkglc.glgdktypes;
 private import gtkglc.glgdk;
 
 private import glgdk.GLDrawable;
+
+
 
 /**
  * Description

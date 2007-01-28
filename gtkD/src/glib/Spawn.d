@@ -51,6 +51,7 @@
  * 	- std.c.string;
  * structWrap:
  * 	- GMainLoop* -> MainLoop
+ * module aliases:
  * local aliases:
  */
 
@@ -67,6 +68,8 @@ private import std.thread;
 private import std.stdio;
 private import std.string;;
 private import std.c.string;;
+
+
 
 /**
  * Description

@@ -48,6 +48,7 @@
  * 	- GList* -> ListG
  * 	- GdkDevice* -> Device
  * 	- GdkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gdk;
 private import glib.ListG;
 private import gdk.Device;
 private import gdk.Window;
+
+
 
 /**
  * Description

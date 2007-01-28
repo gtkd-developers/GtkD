@@ -43,6 +43,7 @@
  * 	- gtk.MessageDialog;
  * 	- gtk.Window;
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -54,6 +55,8 @@ private import gtkc.gtk;
 
 private import gtk.MessageDialog;;
 private import gtk.Window;;
+
+
 
 /**
  */

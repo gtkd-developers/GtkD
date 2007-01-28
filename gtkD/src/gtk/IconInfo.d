@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkIconInfo* -> IconInfo
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.IconInfo;
 private import gdk.Pixbuf;
+
+
 
 /**
  * Description

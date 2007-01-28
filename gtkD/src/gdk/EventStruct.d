@@ -41,6 +41,7 @@
  * omit code:
  * imports:
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -49,6 +50,8 @@ module gdk.EventStruct;
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
+
+
 
 
 /**

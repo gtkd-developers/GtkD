@@ -53,6 +53,7 @@
  * 	- glib.Str
  * structWrap:
  * 	- GtkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -69,6 +70,8 @@ private import gtk.Widget;;
 private import gtk.FileFilter;;
 private import gtk.FileChooser;;
 private import glib.Str;
+
+
 
 /**
  * Description

@@ -60,6 +60,7 @@
  * 	- GtkIconSource* -> IconSource
  * 	- GtkStyle* -> Style
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -78,6 +79,8 @@ private import gtk.IconSource;
 private import gtk.Widget;
 private import gdk.Font;
 private import gdk.Drawable;
+
+
 
 /**
  * Description

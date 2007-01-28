@@ -48,6 +48,7 @@
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.gtk;
 
 private import gtk.Widget;
 private import gtk.Adjustment;
+
+
 
 /**
  * Description

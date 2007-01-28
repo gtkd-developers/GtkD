@@ -58,6 +58,7 @@
  * 	- GMutex* -> Mutex
  * 	- GSource* -> Source
  * 	- GThread* -> Thread
+ * module aliases:
  * local aliases:
  */
 
@@ -72,6 +73,8 @@ private import gthread.Mutex;
 private import glib.Source;
 private import glib.Dataset;
 private import glib.ListG;
+
+
 
 /**
  * Description

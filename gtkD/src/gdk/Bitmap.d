@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkDrawable* -> Drawable
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.gdk;
 private import glib.Str;
 private import gdk.Bitmap;
 private import gdk.Drawable;
+
+
 
 /**
  * Description

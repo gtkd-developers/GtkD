@@ -52,6 +52,7 @@
  * 	- GValue* -> Value
  * 	- GdkScreen* -> Screen
  * 	- GtkSettings* -> Settings
+ * module aliases:
  * local aliases:
  */
 
@@ -66,6 +67,8 @@ private import gtk.Settings;
 private import gdk.Screen;
 private import glib.StringG;
 private import gobject.Value;
+
+
 
 /**
  * Description

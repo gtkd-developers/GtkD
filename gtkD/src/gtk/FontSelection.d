@@ -46,6 +46,7 @@
  * 	- gdk.Font
  * structWrap:
  * 	- GdkFont* -> Font
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gdk.Font;
+
+
 
 /**
  * Description

@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GdkCursor* -> Cursor
  * 	- GdkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.gdk;
 private import glib.Str;
 private import gdk.Window;
 private import gdk.Cursor;
+
+
 
 /**
  * Description

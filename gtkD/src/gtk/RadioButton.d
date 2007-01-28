@@ -50,6 +50,7 @@
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
+ * module aliases:
  * local aliases:
  */
 
@@ -61,6 +62,8 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import glib.ListSG;
+
+
 
 /**
  * Description

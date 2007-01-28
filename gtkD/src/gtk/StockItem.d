@@ -48,6 +48,7 @@
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GtkStockItem* -> StockItem
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.StockItem;
 private import glib.ListSG;
+
+
 
 /**
  * Description

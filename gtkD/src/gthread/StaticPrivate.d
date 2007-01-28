@@ -44,6 +44,7 @@
  * 	- glib.Dataset
  * structWrap:
  * 	- GDataset* -> Dataset
+ * module aliases:
  * local aliases:
  */
 
@@ -54,6 +55,8 @@ private import gtkc.gthreadtypes;
 private import gtkc.gthread;
 
 private import glib.Dataset;
+
+
 
 /**
  * Description

@@ -515,7 +515,7 @@ public class GtkWrapper : WrapperIF
         
         char[] keys = " file text struct realStruct ctorStruct class template interface extend implements prefix strictPrefix"
                       " openFile mergeFile closeFile outFile"
-                      " copy import structWrap alias"
+                      " copy import structWrap alias moduleAlias"
                       " noprefix nostruct nocode"
                       " code interfaceCode"
                       " srcout"
@@ -548,6 +548,7 @@ public class GtkWrapper : WrapperIF
                 case "import": convParms.imprts ~= defReader.getValue(); break;
                 case "structWrap": loadAA(convParms.structWrap, defReader, errors); break;
                 case "alias": loadAA(convParms.aliases, defReader, errors); break;
+                case "moduleAlias": loadAA(convParms.mAliases, defReader, errors); break;
                 case "text": 
                     convParms.text ~= loadTextMultiLine("text");
                     break;

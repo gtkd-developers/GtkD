@@ -44,6 +44,7 @@
  * 	- glib.Quark
  * 	- glib.Str
  * structWrap:
+ * module aliases:
  * local aliases:
  */
 
@@ -55,6 +56,8 @@ private import gtkc.glib;
 
 private import glib.Quark;
 private import glib.Str;
+
+
 
 /**
  * Description

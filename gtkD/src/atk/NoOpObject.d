@@ -44,6 +44,7 @@
  * 	- gobject.ObjectG
  * structWrap:
  * 	- GObject* -> ObjectG
+ * module aliases:
  * local aliases:
  */
 
@@ -54,6 +55,8 @@ private import gtkc.atktypes;
 private import gtkc.atk;
 
 private import gobject.ObjectG;
+
+
 
 /**
  * Description

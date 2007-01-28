@@ -50,6 +50,7 @@
  * 	- GdkScreen* -> Screen
  * 	- GtkWidget* -> Widget
  * 	- GtkWindow* -> Window
+ * module aliases:
  * local aliases:
  */
 
@@ -63,6 +64,8 @@ private import glib.Str;
 private import gtk.Window;
 private import gtk.Widget;
 private import gdk.Screen;
+
+
 
 /**
  * Description

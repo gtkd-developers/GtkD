@@ -44,6 +44,7 @@
  * 	- gtk.TextAttributes
  * structWrap:
  * 	- GtkTextAttributes* -> TextAttributes
+ * module aliases:
  * local aliases:
  */
 
@@ -54,6 +55,8 @@ private import gtkc.gtktypes;
 private import gtkc.gtk;
 
 private import gtk.TextAttributes;
+
+
 
 /**
  * Description

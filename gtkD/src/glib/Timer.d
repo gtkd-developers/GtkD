@@ -43,6 +43,7 @@
  * imports:
  * structWrap:
  * 	- GTimer* -> Timer
+ * module aliases:
  * local aliases:
  */
 
@@ -51,6 +52,8 @@ module glib.Timer;
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
+
+
 
 
 /**

@@ -48,6 +48,7 @@
  * 	- GList* -> ListG
  * 	- GdkScreen* -> Screen
  * 	- GdkVisual* -> Visual
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gdk;
 private import glib.ListG;
 private import gdk.Visual;
 private import gdk.Screen;
+
+
 
 /**
  * Description

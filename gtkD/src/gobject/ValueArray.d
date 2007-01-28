@@ -46,6 +46,7 @@
  * structWrap:
  * 	- GValue* -> Value
  * 	- GValueArray* -> ValueArray
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.gobject;
 
 private import gobject.Value;
 private import gobject.ValueArray;
+
+
 
 /**
  * Description

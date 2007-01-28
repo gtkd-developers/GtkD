@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GtkTreeModel* -> TreeModel
  * 	- GtkTreePath* -> TreePath
+ * module aliases:
  * local aliases:
  */
 
@@ -58,6 +59,8 @@ private import gtkc.gtk;
 
 private import gtk.TreePath;
 private import gtk.TreeModel;
+
+
 
 /**
  * Description

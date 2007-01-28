@@ -65,6 +65,7 @@
  * 	- GtkTreePath* -> TreePath
  * 	- GtkTreeSelection* -> TreeSelection
  * 	- GtkTreeViewColumn* -> TreeViewColumn
+ * module aliases:
  * local aliases:
  */
 
@@ -86,6 +87,8 @@ private import gdk.Rectangle;
 private import gdk.Window;
 private import gdk.Pixmap;
 private import gtk.TreeIter;
+
+
 
 /**
  * Description

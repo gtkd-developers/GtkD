@@ -45,6 +45,7 @@
  * 	- gtk.ObjectGtk
  * structWrap:
  * 	- GtkObject* -> ObjectGtk
+ * module aliases:
  * local aliases:
  */
 
@@ -55,6 +56,8 @@ private import gtkc.gtktypes;
 private import gtkc.gtk;
 
 private import gtk.ObjectGtk;
+
+
 
 /**
  * Description

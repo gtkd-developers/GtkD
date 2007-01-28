@@ -51,6 +51,7 @@
  * 	- gtk.CellLayoutT
  * structWrap:
  * 	- GtkTreeModel* -> TreeModel
+ * module aliases:
  * local aliases:
  */
 
@@ -65,6 +66,8 @@ private import glib.Str;
 private import gtk.CellRenderer;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
+
+
 
 /**
  * Description

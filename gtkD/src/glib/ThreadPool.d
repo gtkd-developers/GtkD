@@ -46,6 +46,7 @@
  * 	- glib.MainLoop
  * structWrap:
  * 	- GList* -> ListG
+ * module aliases:
  * local aliases:
  */
 
@@ -58,6 +59,8 @@ private import gtkc.glib;
 private import glib.ErrorG;
 private import glib.ListG;
 private import glib.MainLoop;
+
+
 
 /**
  * Description

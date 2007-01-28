@@ -53,6 +53,7 @@
  * 	- GDataset* -> Dataset
  * 	- GMainContext* -> MainContext
  * 	- GSource* -> Source
+ * module aliases:
  * local aliases:
  */
 
@@ -65,6 +66,8 @@ private import gtkc.glib;
 private import glib.Dataset;
 private import glib.MainContext;
 private import glib.Source;
+
+
 
 /**
  * Description

@@ -48,6 +48,7 @@
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gdk.Pixbuf;
 private import gtk.Widget;
+
+
 
 /**
  * Description

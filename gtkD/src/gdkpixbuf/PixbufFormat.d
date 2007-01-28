@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GdkPixbuf* -> Pixbuf
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.gdkpixbuf;
 private import gdk.Pixbuf;
 private import glib.ListSG;
 private import glib.Str;
+
+
 
 /**
  * Description

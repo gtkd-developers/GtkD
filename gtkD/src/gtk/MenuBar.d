@@ -49,6 +49,7 @@
  * 	- GtkMenu* -> Menu
  * 	- GtkMenuItem* -> MenuItem
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -61,6 +62,8 @@ private import gtkc.gtk;
 private import gtk.Widget;
 private import gtk.Menu;;
 private import gtk.MenuItem;;
+
+
 
 /**
  * Description

@@ -46,6 +46,7 @@
  * 	- gobject.Flags
  * structWrap:
  * 	- GFlagsValue* -> Flags
+ * module aliases:
  * local aliases:
  */
 
@@ -57,6 +58,8 @@ private import gtkc.gobject;
 
 private import glib.Str;
 private import gobject.Flags;
+
+
 
 /**
  * Description

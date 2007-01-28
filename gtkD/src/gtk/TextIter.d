@@ -59,6 +59,7 @@
  * 	- GtkTextChildAnchor* -> TextChildAnchor
  * 	- GtkTextIter* -> TextIter
  * 	- GtkTextTag* -> TextTag
+ * module aliases:
  * local aliases:
  */
 
@@ -76,6 +77,8 @@ private import glib.ListSG;
 private import gtk.TextTag;
 private import gtk.TextAttributes;
 private import gtk.TextChildAnchor;
+
+
 
 /**
  * Description

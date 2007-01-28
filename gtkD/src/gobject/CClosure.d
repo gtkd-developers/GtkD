@@ -50,6 +50,7 @@
  * 	- GClosure* -> Closure
  * 	- GObject* -> ObjectG
  * 	- GValue* -> Value
+ * module aliases:
  * local aliases:
  */
 
@@ -62,6 +63,8 @@ private import gtkc.gobject;
 private import gobject.Closure;
 private import gobject.ObjectG;
 private import gobject.Value;
+
+
 
 /**
  * Description

@@ -47,6 +47,7 @@
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufAnimation* -> PixbufAnimation
+ * module aliases:
  * local aliases:
  */
 
@@ -59,6 +60,8 @@ private import gtkc.gdkpixbuf;
 private import gdkpixbuf.PixbufAnimation;
 private import gdk.Pixbuf;
 private import glib.Str;
+
+
 
 /**
  * Description

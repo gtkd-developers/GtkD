@@ -52,6 +52,7 @@
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkContainerClass* -> Container
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -65,6 +66,8 @@ private import glib.Str;
 private import gtk.Adjustment;
 private import glib.ListG;
 private import gobject.Value;
+
+
 
 /**
  * Description

@@ -48,6 +48,7 @@
  * structWrap:
  * 	- GtkTooltips* -> Tooltips
  * 	- GtkWidget* -> Widget
+ * module aliases:
  * local aliases:
  */
 
@@ -60,6 +61,8 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.Tooltips;
 private import gtk.Widget;
+
+
 
 /**
  * Description
