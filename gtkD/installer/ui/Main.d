@@ -52,6 +52,7 @@ private import gtk.Widget;
 private import gtk.Image;
 private import gtkc.gtktypes;
 private import gtk.SizeGroup;
+private import gtk.HSeparator;
 
 private import gdk.Event;
 private import std.stdio;
@@ -100,7 +101,14 @@ public class MainInstaller : MainWindow , InstallerUI
 	
 	this()
 	{
-		super("GtkD and Leds installer");
+		version(leds)
+		{
+			super("GtkD and Leds installer");
+		}
+		else
+		{
+			super("GtkD installer");
+		}
 		setup();
 		addPanels();
 		setUserPanel(0);
@@ -179,7 +187,6 @@ public class MainInstaller : MainWindow , InstallerUI
 		setUserPanel(notebook.getCurrentPage());
 	}
 	
-private import gtk.HSeparator;
 	private void setup()
 	{
 		topBox = new HBox(false, 2);
@@ -246,6 +253,7 @@ private import gtk.PopupBox;
 		version(compiler)	addPanel(new MainCompilerPanel(this));
 		addPanel(new LocalPanel(this));
 		addPanel(new InstallPanel(this));
+		addPanel(new TestPanel(this));
 	}
 	
 	CheckButton[char[]] tasksList;
@@ -254,14 +262,16 @@ private import gtk.PopupBox;
 	{
 		notebook.appendPage(userPanel.getWidget(), userPanel.getName());
 		
-		HBox hbox = new HBox(false, 1);
-		CheckButton check = new CheckButton();
-		hbox.packStart(check, false, false, 4);
-		
-		hbox.packStart(Alignment.west(new Label(userPanel.getName())), false, false, 4);
-		tasksBox.packStart(hbox, false, false, 4);
-		tasksList[userPanel.getName()] = check;
-		check.setSensitive(false);
+		if ( userPanel.getName().length > 0 )
+		{
+			HBox hbox = new HBox(false, 1);
+			CheckButton check = new CheckButton();
+			hbox.packStart(check, false, false, 4);
+			hbox.packStart(Alignment.west(new Label(userPanel.getName())), false, false, 4);
+			tasksBox.packStart(hbox, false, false, 4);
+			tasksList[userPanel.getName()] = check;
+			check.setSensitive(false);
+		}
 		userPanels ~= userPanel;
 	}
 	
@@ -285,6 +295,7 @@ private import gtk.PopupBox;
 			case "install":
 				hide();
 				new Installer(this);
+				nextPanel();
 				break;
 		
 			default:
@@ -414,6 +425,19 @@ class UserPanel
 		button.setImage(new Image(StockID.INDEX, IconSize.MENU));
 		box.packStart(button, false, false, 2);
 		installerUI.addDirectory(id, entry);
+		return box;
+	}
+	
+	protected HBox newButton(Button actionButton, char[] id)
+	{
+		HBox box = new HBox(false, 2);
+		
+		Button button = new Button(StockID.HELP, &userHelp, true);
+		button.setActionName(id);
+		button.setImage(new Image(StockID.HELP, IconSize.MENU));
+		
+		box.packStart(button, false, false, 2);
+		box.packStart(actionButton, false, false, 2);
 		return box;
 	}
 	
@@ -958,6 +982,114 @@ class InstallPanel : UserPanel
 		version(gtkDtest) installerUI.setSensitive("gtkDTestsIcon", false);
 		version(leds) installerUI.setSensitive("ledsIcon", false);
 		version(leds) installerUI.setSensitive("ledsDEditor", false);
+	}
+}
+
+class TestPanel : UserPanel
+{
+	VBox vbox;
+	bool active;
+	//bool installed = false;
+	public this(InstallerUI installerUI)
+	{
+		super(installerUI);
+	}
+	public bool complete()
+	{
+		return !active;
+	}
+	public bool selected()
+	{
+		active = true;
+		completed = true;
+		return true;
+	}
+	public char[] getName()
+	{
+		return "";
+	}
+	public Widget getWidget()
+	{
+		if ( vbox is null )
+		{
+			vbox = new VBox(false, 2);
+			setup();
+		}
+		return vbox;
+	}
+	
+	bool allowNext()
+	{
+		return false;
+	}
+	
+	bool allowBack()
+	{
+		return false;
+	}
+private import std.process;
+	private void testButtonAction(Button button)
+	{
+		switch ( button.getActionName() )
+		{
+
+			default:
+				writefln("testButtonAction going for %s", button.getActionName());
+				system(button.getActionName());
+				break;
+		}
+
+	}
+	
+	private void setup()
+	{
+		Label label = new Label(
+			"Installation is complete\n"
+			~"press Exit to quit the installer\n"
+			~"or execute the test programs"
+		);
+		vbox.packStart(label, false, false, 2);
+		
+		Button button;
+		
+		version(gtkDtest)
+		{
+			if ( installerUI.getSelection("gtkDTests") )
+			{
+				button = new Button("gtkD Tests");
+				vbox.packStart(newButton(button, "helpGtkDTests"), false, false, 2);
+				button.setActionName(installerUI.getDirectory("gtkDDevHome")~"/gtkDTests");
+				button.addOnClicked(&testButtonAction);
+			}
+		}
+		version(gtkDgltest)
+		{
+			if ( installerUI.getSelection("gtkDglSimple") )
+			{
+				button = new Button("SimpleGL test");
+				button.setActionName(installerUI.getDirectory("gtkDDevHome")~"/SimpleGL");
+				button.addOnClicked(&testButtonAction);
+				vbox.packStart(newButton(button, "helpSimpleGLTest"), false, false, 2);
+			}
+			if ( installerUI.getSelection("gtkDglShapes") )
+			{
+				button = new Button("ShapesGL test");
+				button.setActionName(installerUI.getDirectory("gtkDDevHome")~"/ShapesGL");
+				button.addOnClicked(&testButtonAction);
+				vbox.packStart(newButton(button, "helpShapesGLTest"), false, false, 2);
+			}
+		}
+		version(leds)
+		{
+			if ( installerUI.getSelection("leds") )
+			{
+				button = new Button("Leds");
+				button.setActionName(installerUI.getDirectory("ledsHome")~"/leds");
+				button.addOnClicked(&testButtonAction);
+				vbox.packStart(newButton(button, "helpLedsTest"), false, false, 2);
+			}
+		}
+		
 	}
 }
 

@@ -63,19 +63,37 @@ class Installer : MainWindow
 		install();
 		progressBar.setFraction(1.0);
 		progressBar.setText("");
+		windowDelete(null, this);
+		destroy();
 	}
 	
+private import ui.gtkDLogo;
+private import gtk.Alignment;
+private import gtk.Button;
+private import gtkc.gtktypes;
+
 	private void setup()
 	{
 		VBox vbox = new VBox(false, 7);
 		vbox.setBorderWidth(11);
 		label = new Label("");
+		
+		vbox.packStart(Alignment.west(getGtkDLogo()), false, false, 2);
+		
 		vbox.packStart(new Label("Installing"), false, false, 14);
 		vbox.packStart(label, false, false, 14);
 		progressBar = new ProgressBar();
 		progressBar.setPulseStep(0.01);
 		vbox.packStart(progressBar, false, false, 14);
+		
+		vbox.packEnd(Alignment.east(new Button(StockID.CANCEL, &cancelInstall)), false, false, 14);
+		
 		add(vbox);
+	}
+	
+	private void cancelInstall(Button button)
+	{
+		cancel = true;
 	}
 	
 	protected int windowDelete(Event event, Widget widget)
@@ -196,7 +214,7 @@ class Installer : MainWindow
 //
 		if ( !cancel && ok && installerUI.getSelection("gtkDTests") )
 		{
-			ok = (new CompileThread("GtkD Test and demos programs", &installGtkDTests)).ok;
+			ok = (new CompileThread("GtkD Test and demo programs", &installGtkDTests)).ok;
 		}
 		
 		if ( !cancel && ok && installerUI.getSelection("gtkDglSimple") )
