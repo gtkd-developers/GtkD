@@ -40,7 +40,6 @@ private import gtk.Widget;
 private import gdk.Drawable;
 private import gdk.Window;
 private import gdk.Rectangle;
-private import gdk.GdkCairo;
 private import gtk.DrawingArea;
 
 class Clock : public DrawingArea
@@ -69,7 +68,7 @@ class Clock : public DrawingArea
 
 		dr.drawableGetSize(&width, &height);
 
-		Cairo cr = GdkCairo.create( dr );
+		Cairo cr = dr.createCairo();
 		
 		if (event)
 		{
