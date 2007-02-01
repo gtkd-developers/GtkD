@@ -272,7 +272,9 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
-
+import: cairoLib.Types
+import: cairoLib.Cairo
+ 
 code: start
 	/**
 	 * Draws an outlined or filled polygon.
@@ -293,6 +295,27 @@ code: start
 		// void gdk_draw_polygon (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  GdkPoint *points,  gint npoints);
 		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, points.ptr, points.length);
 	}
+	
+	
+	
+ 
+	/**
+	 * Creates a Cairo context for drawing to drawable.
+	 * drawable:
+	 *  a GdkDrawable
+	 * Returns:
+	 *  A newly created Cairo context. Free with
+	 *  cairo_destroy() when you are done drawing.
+	 * Since 2.8
+	 */
+	public Cairo createCairo()
+	{
+		// cairo_t* gdk_cairo_create (GdkDrawable *drawable);
+		return new Cairo(gdk_cairo_create(gdkDrawable));
+	}
+
+	
+	
 code: end
 
 outFile: Drawable
