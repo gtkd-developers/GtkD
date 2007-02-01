@@ -272,7 +272,7 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
-import: cairoLib.Types
+import: gtkc.cairoLibtypes
 import: cairoLib.Cairo
  
 code: start
