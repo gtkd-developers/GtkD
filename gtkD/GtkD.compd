@@ -9,3 +9,5 @@ src/gtkc
 src/pango 
 -I src:~/dmd/src/phobos 
 -olib libgtkd
+-ldl
+-g
