@@ -23,5 +23,5 @@ curl http://ftp.gnome.org/pub/GNOME/sources/libgda/1.2/libgda-1.2.4.tar.gz | tar
 ln -s  libgda-1.2.4/doc/C/html gda
 
 #glade
-#curl http://developer.gnome.org/doc/API/libglade-2.0-docs.tar.gz | tar xvfz -
-#ln -s libglade glade
+curl http://developer.gnome.org/doc/API/libglade-2.0-docs.tar.gz | tar xvfz -
+ln -s libglade glade
