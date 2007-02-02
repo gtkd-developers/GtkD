@@ -90,10 +90,25 @@ import: gdk.Pixbuf
 import: gdk.Pixmap
 import: gdk.Color
 import: gtkc.gdk
-
+import: gdk.Drawable
 
 code: start
 
+
+	/**
+	 * Creates a Cairo context for drawing to drawable.
+	 * drawable:
+	 *  a GdkDrawable
+	 * Returns:
+	 *  A newly created Cairo context. Free with
+	 *  cairo_destroy() when you are done drawing.
+	 * Since 2.8
+	 */
+	this (Drawable drawable)
+	{
+		// cairo_t* gdk_cairo_create (GdkDrawable *);
+		this(gdk_cairo_create(drawable.getDrawableStruct()));
+	}
 
 	/**
 	 * Sets the specified GdkColor as the source color of cr.

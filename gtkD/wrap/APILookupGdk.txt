@@ -272,8 +272,6 @@ import: pango.PgLayoutIter
 structWrap: PangoLayoutIter* PgLayoutIter
 import: pango.PgScriptIter
 structWrap: PangoScriptIter* PgScriptIter
-import: gtkc.cairoLibtypes
-import: cairoLib.Cairo
  
 code: start
 	/**
@@ -297,24 +295,7 @@ code: start
 	}
 	
 	
-	
- 
-	/**
-	 * Creates a Cairo context for drawing to drawable.
-	 * drawable:
-	 *  a GdkDrawable
-	 * Returns:
-	 *  A newly created Cairo context. Free with
-	 *  cairo_destroy() when you are done drawing.
-	 * Since 2.8
-	 */
-	public Cairo createCairo()
-	{
-		// cairo_t* gdk_cairo_create (GdkDrawable *drawable);
-		return new Cairo(gdk_cairo_create(gdkDrawable));
-	}
-
-	
+	 
 	
 code: end
 
@@ -784,10 +765,7 @@ outFile: Device
 #prefix: 
 #outFile: 
 
-#file: gdk-Cairo-Interaction.html
-#class: Cairo
-#prefix: gdk_cairo_
-#outFile: Cairo
+ 
 
 #file: gdk-X-Window-System-Interaction.html
 ##struct: 
@@ -799,22 +777,35 @@ outFile: Device
 
 
 file: gdk-Cairo-Interaction.html
-class: GdkCairo
+
 prefix: gdk_cairo_
 import: cairoLib.Cairo
 structWrap: cairo_t* Cairo
-import: gdk.Drawable
 structWrap: GdkDrawable* Drawable
-import: gdk.Color
 structWrap: GdkColor* Color
-import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-import: gdk.Pixmap
 structWrap: GdkPixmap* Pixmap
-import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
-import: gdk.Region
 structWrap: GdkRegion* Region
+
+nocode: gdk_cairo_create
+nocode: gdk_cairo_set_source_color
+nocode: gdk_cairo_set_source_pixbuf
+nocode: gdk_cairo_set_source_pixmap
+nocode: gdk_cairo_rectangle
+nocode: gdk_cairo_region
+
+code: start
+
+	/**
+	 * This file is not used, 
+	 * 
+	 * It is here just to tell you to look at 
+	 * cairoLib.Cairo class for the methods that where here..
+	 */
+
+
+code: end
 outFile: GdkCairo
 
 
