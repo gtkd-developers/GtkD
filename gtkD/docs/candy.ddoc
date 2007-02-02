@@ -3,11 +3,11 @@ DDOC =
 <meta http-equiv="content-type" content="text/html; charset=utf-8">
 <meta content="text/javascript" http-equiv="content-script-type">
 <title>$(TITLE)</title>
-<link rel="stylesheet" type="text/css" href="candydoc/style.css">
+<link rel="stylesheet" type="text/css" href="../../candydoc/style.css">
 <!--[if lt IE 7]><link rel="stylesheet" type="text/css" href="candydoc/ie56hack.css"><![endif]-->
-<script language="JavaScript" src="candydoc/util.js" type="text/javascript"></script>
-<script language="JavaScript" src="candydoc/tree.js" type="text/javascript"></script>
-<script language="JavaScript" src="candydoc/explorer.js" type="text/javascript"></script>
+<script language="JavaScript" src="../../candydoc/util.js" type="text/javascript"></script>
+<script language="JavaScript" src="../../candydoc/tree.js" type="text/javascript"></script>
+<script language="JavaScript" src="../../candydoc/explorer.js" type="text/javascript"></script>
 </head><body>
 <div id="tabarea"></div><div id="explorerclient"></div>
 <div id="content"><script>explorer.initialize("$(TITLE)");</script>
@@ -15,7 +15,7 @@ DDOC =
 		<tr><td id="docbody"><h1>$(TITLE)</h1>$(BODY)</td></tr>
 		<tr><td id="docfooter">
 			Page was generated with
-			<img src="candydoc/img/candydoc.gif" style="vertical-align:middle; position:relative; top:-1px">
+			<img src="../../candydoc/img/candydoc.gif" style="vertical-align:middle; position:relative; top:-1px">
 			on $(DATETIME)
 		</td></tr>
 	</table>
