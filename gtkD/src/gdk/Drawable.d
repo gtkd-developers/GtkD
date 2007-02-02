@@ -204,6 +204,10 @@ public class Drawable : ObjectG
 		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, points.ptr, points.length);
 	}
 	
+	
+	
+	
+	
 	/**
 	 */
 	

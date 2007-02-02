@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = ListG
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -114,6 +114,15 @@ public class ListG
 	{
 		this.gList = gList;
 	}
+	
+	
+	void* data()
+	{
+		int* pt =cast(int*)getStruct();
+		return cast(void *)(*pt);
+	}
+	
+	
 	
 	/**
 	 */

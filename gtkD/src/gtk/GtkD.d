@@ -50,8 +50,8 @@
  * 	- gtk.ObjectGtk
  * 	- glib.Str
  * 	- gtkc.gtk
- * 	- gthread.Thread;
- * 	- gdk.Threads;
+ * 	- gthread.Thread
+ * 	- gdk.Threads
  * structWrap:
  * 	- GdkEvent* -> Event
  * 	- GtkObject* -> ObjectGtk
@@ -72,8 +72,8 @@ private import gtk.Widget;
 private import gtk.ObjectGtk;
 private import glib.Str;
 private import gtkc.gtk;
-private import gthread.Thread;;
-private import gdk.Threads;;
+private import gthread.Thread;
+private import gdk.Threads;
 
 public alias GtkD Gtk;
 

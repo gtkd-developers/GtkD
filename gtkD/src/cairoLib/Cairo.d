@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Cairo
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -43,6 +43,13 @@
  * imports:
  * 	- cairoLib.Surface
  * 	- glib.Str
+ * 	- gdk.Region
+ * 	- gdk.Rectangle
+ * 	- gdk.Pixbuf
+ * 	- gdk.Pixmap
+ * 	- gdk.Color
+ * 	- gtkc.gdk
+ * 	- gdk.Drawable
  * structWrap:
  * 	- cairo_surface_t* -> Surface
  * 	- cairo_t* -> Cairo
@@ -58,6 +65,13 @@ private import gtkc.cairoLib;
 
 private import cairoLib.Surface;
 private import glib.Str;
+private import gdk.Region;
+private import gdk.Rectangle;
+private import gdk.Pixbuf;
+private import gdk.Pixmap;
+private import gdk.Color;
+private import gtkc.gdk;
+private import gdk.Drawable;
 
 
 
@@ -98,6 +112,104 @@ public class Cairo
 	{
 		this.cairo = cairo;
 	}
+	
+	/**
+	 * Creates a Cairo context for drawing to drawable.
+	 * drawable:
+	 *  a GdkDrawable
+	 * Returns:
+	 *  A newly created Cairo context. Free with
+	 *  cairo_destroy() when you are done drawing.
+	 * Since 2.8
+	 */
+	this (Drawable drawable)
+	{
+		// cairo_t* gdk_cairo_create (GdkDrawable *);
+		this(gdk_cairo_create(drawable.getDrawableStruct()));
+	}
+	
+	/**
+	 * Sets the specified GdkColor as the source color of cr.
+	 * cr:
+	 *  a cairo_t
+	 * color:
+	 *  a GdkColor
+	 * Since 2.8
+	 */
+	public void setSourceColor(Color color)
+	{
+		// void gdk_cairo_set_source_color (cairo_t *cr,  GdkColor *color);
+		gdk_cairo_set_source_color(getCairoStruct(), color.getColorStruct());
+	}
+	
+	/**
+	 * Sets the given pixbuf as the source pattern for the Cairo context.
+	 * The pattern has an extend mode of CAIRO_EXTEND_NONE and is aligned
+	 * so that the origin of pixbuf is pixbuf_x, pixbuf_y
+	 * cr:
+	 *  a Cairo context
+	 * pixbuf:
+	 *  a GdkPixbuf
+	 * pixbuf_x:
+	 *  X coordinate of location to place upper left corner of pixbuf
+	 * pixbuf_y:
+	 *  Y coordinate of location to place upper left corner of pixbuf
+	 * Since 2.8
+	 */
+	public void setSourcePixbuf(Pixbuf pixbuf, double pixbufX, double pixbufY)
+	{
+		// void gdk_cairo_set_source_pixbuf (cairo_t *cr,  GdkPixbuf *pixbuf,  double pixbuf_x,  double pixbuf_y);
+		gdk_cairo_set_source_pixbuf(getCairoStruct(), pixbuf.getPixbufStruct(), pixbufX, pixbufY);
+	}
+	
+	/**
+	 * Sets the given pixmap as the source pattern for the Cairo context.
+	 * The pattern has an extend mode of CAIRO_EXTEND_NONE and is aligned
+	 * so that the origin of pixbuf is pixbuf_x, pixbuf_y
+	 * cr:
+	 *  a Cairo context
+	 * pixmap:
+	 *  a GdkPixmap
+	 * pixmap_x:
+	 *  X coordinate of location to place upper left corner of pixmap
+	 * pixmap_y:
+	 *  Y coordinate of location to place upper left corner of pixmap
+	 * Since 2.10
+	 */
+	public void setSourcePixmap(Pixmap pixmap, double pixmapX, double pixmapY)
+	{
+		// void gdk_cairo_set_source_pixmap (cairo_t *cr,  GdkPixmap *pixmap,  double pixmap_x,  double pixmap_y);
+		gdk_cairo_set_source_pixmap( getCairoStruct(), pixmap.getPixmapStruct(), pixmapX, pixmapY);
+	}
+	
+	/**
+	 * Adds the given rectangle to the current path of cr.
+	 * cr:
+	 *  a cairo_t
+	 * rectangle:
+	 *  a GdkRectangle
+	 * Since 2.8
+	 */
+	public void rectangle(Rectangle rectangle)
+	{
+		// void gdk_cairo_rectangle (cairo_t *cr,  GdkRectangle *rectangle);
+		gdk_cairo_rectangle( getCairoStruct(), rectangle.getRectangleStruct());
+	}
+	
+	/**
+	 * Adds the given region to the current path of cr.
+	 * cr:
+	 *  a cairo_t
+	 * region:
+	 *  a GdkRegion
+	 * Since 2.8
+	 */
+	public  void region( Region region)
+	{
+		// void gdk_cairo_region (cairo_t *cr,  GdkRegion *region);
+		gdk_cairo_region(getCairoStruct(), region.getRegionStruct());
+	}
+	
 	
 	/**
 	 * Description
