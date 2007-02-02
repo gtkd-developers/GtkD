@@ -3459,26 +3459,19 @@ const GL_TRACE_ERRORS_BIT_MESA = 0x0020;
 const GL_TRACE_MASK_MESA = 0x8755;
 
 const GL_TRACE_NAME_MESA = 0x8756;
-////C     GLAPI void GLAPIENTRY glEnableTraceMESA( GLbitfield mask );
-//void  glEnableTraceMESA(GLbitfield mask);
-////C     GLAPI void GLAPIENTRY glDisableTraceMESA( GLbitfield mask );
-//void  glDisableTraceMESA(GLbitfield mask);
-////C     GLAPI void GLAPIENTRY glNewTraceMESA( GLbitfield mask, const GLubyte * traceName );
-//void  glNewTraceMESA(GLbitfield mask, GLubyte *traceName);
-////C     GLAPI void GLAPIENTRY glEndTraceMESA( void );
-//void  glEndTraceMESA();
-////C     GLAPI void GLAPIENTRY glTraceAssertAttribMESA( GLbitfield attribMask );
-//void  glTraceAssertAttribMESA(GLbitfield attribMask);
-////C     GLAPI void GLAPIENTRY glTraceCommentMESA( const GLubyte * comment );
-//void  glTraceCommentMESA(GLubyte *comment);
-////C     GLAPI void GLAPIENTRY glTraceTextureMESA( GLuint name, const GLubyte* comment );
-//void  glTraceTextureMESA(GLuint name, GLubyte *comment);
-////C     GLAPI void GLAPIENTRY glTraceListMESA( GLuint name, const GLubyte* comment );
-//void  glTraceListMESA(GLuint name, GLubyte *comment);
-////C     GLAPI void GLAPIENTRY glTracePointerMESA( GLvoid* pointer, const GLubyte* comment );
-//void  glTracePointerMESA(GLvoid *pointer, GLubyte *comment);
-////C     GLAPI void GLAPIENTRY glTracePointerRangeMESA( const GLvoid* first, const GLvoid* last, const GLubyte* comment );
-//void  glTracePointerRangeMESA(GLvoid *first, GLvoid *last, GLubyte *comment);
+//C     GLAPI void GLAPIENTRY glEnableTraceMESA( GLbitfield mask );
+//C     GLAPI void GLAPIENTRY glDisableTraceMESA( GLbitfield mask );
+//C     GLAPI void GLAPIENTRY glNewTraceMESA( GLbitfield mask, const GLubyte * traceName );
+//C     GLAPI void GLAPIENTRY glEndTraceMESA( void );
+//C     GLAPI void GLAPIENTRY glTraceAssertAttribMESA( GLbitfield attribMask );
+//C     GLAPI void GLAPIENTRY glTraceCommentMESA( const GLubyte * comment );
+//C     GLAPI void GLAPIENTRY glTraceTextureMESA( GLuint name, const GLubyte* comment );
+//C     GLAPI void GLAPIENTRY glTraceListMESA( GLuint name, const GLubyte* comment );
+//C     GLAPI void GLAPIENTRY glTracePointerMESA( GLvoid* pointer, const GLubyte* comment );
+//C     GLAPI void GLAPIENTRY glTracePointerRangeMESA( const GLvoid* first, const GLvoid* last, const GLubyte* comment );
+
+ 
+ 
 
 //C     #endif /* GL_MESA_trace */
 
@@ -3527,13 +3520,11 @@ const GL_VERTEX_PROGRAM_CALLBACK_FUNC_MESA = 0x8bb6;
 
 const GL_VERTEX_PROGRAM_CALLBACK_DATA_MESA = 0x8bb7;
 //C     typedef void (*GLprogramcallbackMESA)(GLenum target, GLvoid *data);
-alias void  function(GLenum target, GLvoid *data)GLprogramcallbackMESA;
+
 
 //C     GLAPI void GLAPIENTRY glProgramCallbackMESA(GLenum target, GLprogramcallbackMESA callback, GLvoid *data);
-void  glProgramCallbackMESA(GLenum target, GLprogramcallbackMESA callback, GLvoid *data);
 
 //C     GLAPI void GLAPIENTRY glGetProgramRegisterfvMESA(GLenum target, GLsizei len, const GLubyte *name, GLfloat *v);
-void  glGetProgramRegisterfvMESA(GLenum target, GLsizei len, GLubyte *name, GLfloat *v);
 
 //C     #endif /* GL_MESA_program_debug */
 
@@ -3546,7 +3537,7 @@ const GL_ATI_blend_equation_separate = 1;
 
 const GL_ALPHA_BLEND_EQUATION_ATI = 0x883D;
 //C     GLAPI void GLAPIENTRY glBlendEquationSeparateATI( GLenum modeRGB, GLenum modeA );
-//void  glBlendEquationSeparateATI(GLenum modeRGB, GLenum modeA);
+
 //C     typedef void (APIENTRYP PFNGLBLENDEQUATIONSEPARATEATIPROC) (GLenum modeRGB, GLenum modeA);
 alias void  function(GLenum modeRGB, GLenum modeA)PFNGLBLENDEQUATIONSEPARATEATIPROC;
 
