@@ -136,6 +136,8 @@ package: atk atk
 package: gdk-pixbuf gdkpixbuf
 package: gdk gdk
 package: gtk gtk
+package: gda gda
+package: glade glade
 bind: gtkc
 
 srcdir: srcgl
@@ -195,6 +197,9 @@ lookup: APILookupAtk.txt
 lookup: APILookupGdkPixbuf.txt
 lookup: APILookupGdk.txt
 lookup: APILookupGtk.txt
+
+#lookup: APILookupGlade.txt
+
 srcdir: srcgl
 bindDir: gtkglc
 lookup: APILookupGLd.txt
@@ -203,5 +208,10 @@ lookup: APILookupGLt.txt
 #first
 
 htod: HTODopenGL.txt
+
+srcdir: srcgda
+bindDir: gdac
+lookup: APILookupGda.txt
+
 #Hack to put the build text in the correct place.
 srcdir: src
