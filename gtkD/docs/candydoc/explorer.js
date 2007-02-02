@@ -121,15 +121,15 @@ function Outline()
                 var text = n.firstChild.data; // text before declaration
                 
                 if ( this.classRegExp.test(text) )
-                    iconSrc = "candydoc/img/outline/class.gif";
+                    iconSrc = "../../candydoc/img/outline/class.gif";
                 else if ( this.structRegExp.test(text) )
-                    iconSrc = "candydoc/img/outline/struct.gif";
+                    iconSrc = "../../candydoc/img/outline/struct.gif";
                 else if ( this.enumRegExp.test(text) )
-                    iconSrc = "candydoc/img/outline/enum.gif";
+                    iconSrc = "../../candydoc/img/outline/enum.gif";
                 else if ( this.templateRegExp.test(text) )
-                    iconSrc = "candydoc/img/outline/template.gif";
+                    iconSrc = "../../candydoc/img/outline/template.gif";
                 else if ( this.aliasRegExp.test(text) )
-                    iconSrc = "candydoc/img/outline/alias.gif";
+                    iconSrc = "../../candydoc/img/outline/alias.gif";
                 else // function or variable? check whether '(' ')' exists on the right
                 {
                     var np = n.firstChild;
@@ -139,14 +139,14 @@ function Outline()
                     if (np && np.nextSibling && np.nextSibling.nodeName == "#text" &&
                         this.funcRegExp.test(np.nextSibling.data))
                     {
-                        iconSrc = "candydoc/img/outline/func.gif";
+                        iconSrc = "../../candydoc/img/outline/func.gif";
                     }
                     else
-                        iconSrc = "candydoc/img/outline/var.gif";
+                        iconSrc = "../../candydoc/img/outline/var.gif";
                 }
             }
             else // enum member ?
-                iconSrc = "candydoc/img/outline/var.gif";
+                iconSrc = "../../candydoc/img/outline/var.gif";
                     
             child.icon.src = iconSrc;
             child.icon.width = 16;
@@ -210,8 +210,8 @@ function PackageExplorer()
     
     this.addModule = function(mod)
     {
-        var moduleIco = "candydoc/img/outline/module.gif";
-        var packageIco = "candydoc/img/outline/package.gif";
+        var moduleIco = "../../candydoc/img/outline/module.gif";
+        var packageIco = "../../candydoc/img/outline/package.gif";
 
         var path = mod.split("\.");
         var node = this.tree.branch(path[0]);
@@ -224,9 +224,9 @@ function PackageExplorer()
             node = node.child(path[i]);
             if (!node)
                 node = prev.createChild(path[i], (path.length == i + 1) ? moduleIco : packageIco);
-                
-            if (path.length == i + 1)
-                node.setRef(path[i] + ".html");
+               
+            if (path.length == i + 1) 
+                node.setRef("../" + path[0] + "/" + path[i] + ".html");
         }
     }
 }
@@ -256,7 +256,7 @@ function Explorer()
         this.clientArea.onclick = new Function("return true;");
         this.clientArea.onselectstart = new Function("return false;");
         
-        this.outline.tree.createBranch( moduleName, "candydoc/img/outline/module.gif" );
+        this.outline.tree.createBranch( moduleName, "../../candydoc/img/outline/module.gif" );
         
         // create tabs
         this.createTab("Outline", this.outline.tree.domEntry);
