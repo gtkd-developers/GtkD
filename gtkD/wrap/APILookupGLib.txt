@@ -1129,6 +1129,19 @@ class: ListG
 prefix: g_list_
 #import: glib.ListG
 structWrap: GList* ListG
+
+code: start
+   
+	void* data()
+	{
+		int* pt =cast(int*)getStruct();
+		return cast(void *)(*pt);
+	}
+	 
+
+
+code: end
+
 outFile: ListG
 
 file: glib-Singly-Linked-Lists.html
