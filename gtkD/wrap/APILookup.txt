@@ -198,7 +198,7 @@ lookup: APILookupGdkPixbuf.txt
 lookup: APILookupGdk.txt
 lookup: APILookupGtk.txt
 
-#lookup: APILookupGlade.txt
+lookup: APILookupGlade.txt
 
 srcdir: srcgl
 bindDir: gtkglc

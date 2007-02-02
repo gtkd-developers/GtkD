@@ -33,7 +33,8 @@ enum LIBRARY
 	GL,
 	GLU,
 	GLEXT,
-	GDA
+	GDA,
+	GLADE
 }
 
 version (Windows)
@@ -54,7 +55,8 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GLGTK:		"libgtkglext-win32-1.0-0.dll",
 	LIBRARY.GL:			"opengl32.dll",
 	LIBRARY.GLU:		"glu32.dll",
-	LIBRARY.GDA:		"libgda-2.dll"
+	LIBRARY.GDA:		"libgda-2.dll",
+	LIBRARY.GLADE:		"libglade-2.0.dll"
 	];
 }
 
@@ -77,7 +79,8 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GL:			"libGL.so",
 	LIBRARY.GLU:		"libGLU.so",
 	LIBRARY.GLEXT:		"libGL.so",
-	LIBRARY.GDA:		"libgda-2.so.3"
+	LIBRARY.GDA:		"libgda-2.so.3",
+	LIBRARY.GLADE:		"libglade-2.0.so"
 	];
 }
 
