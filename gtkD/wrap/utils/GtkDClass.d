@@ -2047,13 +2047,18 @@ public class GtkDClass
 		debug(functionType) writefln("\ngetFunction line = %s", line);
 		// void (*GChildWatchFunc) (GPid pid,  gint status,  gpointer data);
 		// public typedef extern(C) void function(int, int, void*) GChildWatchFunc;
+		
+		
+		
 		char[] f = "public typedef extern(C) ";
 		int pos = 0;
 		char[] type = until(pos, line, "(");
 		until(pos, line, "*");
 		skip(pos, line, '*');
 		char[] name = until(pos, line, ")");
-
+		if (convParms.omitCode(name)) {
+			return "";
+		}
 		//adjustTypeName(type, name);
 		
 		f ~= stringToGtkD(type, convParms, wrapper.getAliases());
