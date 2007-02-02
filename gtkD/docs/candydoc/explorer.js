@@ -225,8 +225,14 @@ function PackageExplorer()
             if (!node)
                 node = prev.createChild(path[i], (path.length == i + 1) ? moduleIco : packageIco);
                
-            if (path.length == i + 1) 
-                node.setRef("../" + path[0] + "/" + path[i] + ".html");
+            if (path.length == i + 1) {
+	    	if ((path[0] == "gtkglc") || (path[0].substring(0,2) == "gl")) {
+	                node.setRef("../../srcgl/" + path[0] + "/" + path[i] + ".html");
+		} else {
+		        node.setRef("../../src/" + path[0] + "/" + path[i] + ".html");
+		}
+	    }
+		
         }
     }
 }
