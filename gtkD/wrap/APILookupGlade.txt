@@ -1,0 +1,155 @@
+#
+# This file is part of gtkD.
+# 
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+# 
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+# 
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+#
+###
+#####
+# Definitions for wrapping Glade
+#####
+###
+#
+
+
+addTypedefs: start
+
+public import gtkc.glibtypes;
+public import gtkc.gobjecttypes;
+public import gtkc.gdktypes;
+public import gtkc.gtktypes;
+
+addTypedefs: end
+
+addAliases: start
+// hacks as we ignore all connect stuff at present..
+alias void* GladeXMLConnectFunc;
+alias void* GladeXMLCustomWidgetHandler;
+ 
+
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
+# must start with wrap
+
+wrap: glade
+
+###########################################################
+### Glade #############################################
+###########################################################
+
+  
+
+
+
+ 
+
+file: GladeXML.html
+struct: GladeXML
+class: Glade
+prefix: glade_xml_
+structWrap: GladeXML* Glade
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+import: glib.ListG
+structWrap: GList* ListG
+import: glib.Str
+
+nocode: glade_xml_signal_autoconnect
+nocode: glade_xml_signal_connect_data
+nocode: glade_xml_signal_connect
+nocode: glade_xml_signal_connect_full
+nocode: glade_xml_signal_autoconnect_full
+nocode: GladeXMLConnectFunc
+nocode: GladeXMLCustomWidgetHandler
+nocode: glade_set_custom_handler
+
+
+nocode: glade_xml_get_widget_prefix
+
+code: start
+        /**
+         * This function is used to get a list of pointers to the GtkWidget(s)
+         * with names that start with the string name in the interface description.
+         * You would use this if you have to do something to all of these widgets
+         * after loading.
+         * self:
+         *  the GladeXML object.
+         * name:
+         *  the name of the widget.
+         * Returns:
+         *  A list of the widget that match name as the start of their
+         * name, or NULL if none exists.
+         */
+        public Widget[] getWidgetPrefix(char[] name)
+        {
+                // GList* glade_xml_get_widget_prefix (GladeXML *self,  const char *name);
+		Widget[] ret;
+		ListG widgets = new ListG( glade_xml_get_widget_prefix(gladeXML, Str.toStringz(name)) );
+		for (int i=0;i < widgets.length; i++) {
+			ret ~= new Widget(cast(GtkWidget*)widgets.nthData(i));
+		}
+                return widgets.length ? ret : null;
+        }
+
+
+
+
+
+code: end
+
+
+openFile: Glade 
+
+
+file: libglade-Libglade-Initialisation.html
+
+class: Glade
+prefix: glade_
+import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+import: glib.ListG
+structWrap: GList* ListG
+import: glib.Str
+
+
+closeFile: Glade
+ 
