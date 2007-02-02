@@ -16,3 +16,12 @@ wget http://downloads.sourceforge.net/gtkglext/gtkglext-1.2.0.tar.bz2
 tar xvfj gtkglext-1.2.0.tar.bz2
 ln -s gtkglext-1.2.0/docs/reference/gtkglext/html glgdk
 ln -s gtkglext-1.2.0/docs/reference/gtkglext/html glgtk
+
+#other libraries.
+#gda
+curl http://ftp.gnome.org/pub/GNOME/sources/libgda/1.2/libgda-1.2.4.tar.gz | tar xvfz - 
+ln -s  libgda-1.2.4/doc/C/html gda
+
+#glade
+#curl http://developer.gnome.org/doc/API/libglade-2.0-docs.tar.gz | tar xvfz -
+#ln -s libglade glade
