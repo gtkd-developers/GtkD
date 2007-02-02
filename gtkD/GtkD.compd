@@ -7,7 +7,9 @@ src/gthread
 src/gtk 
 src/gtkc 
 src/pango 
+src/glade
 -I src:~/dmd/src/phobos 
 -olib libgtkd
 -ldl
 -g
+
