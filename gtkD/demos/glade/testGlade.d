@@ -10,7 +10,8 @@ import gtkc.gtktypes;
 import std.stdio;
 import std.c.process;
 
-
+import gobject.ObjectG;
+import gobject.Type;
 /**
  * Usage ./gladeText /path/to/your/glade/file.glade
  * 
@@ -25,11 +26,18 @@ int main(char[][] args)
 	Glade g = new Glade(args[1]);
     
 	Widget w = g.getWidget("window1");
-	if (w) {
-		(new Window(w)).setTitle("This is a glade window");
+	 
+ 
+	if (w && cast(Window)w ) {
+		(cast(Window)w).setTitle("This is a glade window");
+		//uint t = g_type_from_instance(w);
+		//writefln("wintype=%d %s", t , Type.name(cast(GType)t));
+	} else {
+		writefln("no window?");
+		exit(1);
+		
 	}
-	writefln("no window?");
-	exit(1);
+	
 	
 	GtkD.main();
 	return 0;
