@@ -100,14 +100,6 @@ public class ItemFactory : ObjectGtk
 		super(cast(GtkObject*)gtkItemFactory);
 		this.gtkItemFactory = gtkItemFactory;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkItemFactory*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

@@ -98,14 +98,6 @@ public class FontSelectionDialog : Dialog
 		super(cast(GtkDialog*)gtkFontSelectionDialog);
 		this.gtkFontSelectionDialog = gtkFontSelectionDialog;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkFontSelectionDialog*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

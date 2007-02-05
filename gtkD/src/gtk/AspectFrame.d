@@ -96,14 +96,6 @@ public class AspectFrame : Frame
 		super(cast(GtkFrame*)gtkAspectFrame);
 		this.gtkAspectFrame = gtkAspectFrame;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkAspectFrame*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

@@ -129,14 +129,6 @@ public class Box : Container
 		super(cast(GtkContainer*)gtkBox);
 		this.gtkBox = gtkBox;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkBox*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

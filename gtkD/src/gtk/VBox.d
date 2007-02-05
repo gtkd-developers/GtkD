@@ -91,14 +91,6 @@ public class VBox : Box
 		super(cast(GtkBox*)gtkVBox);
 		this.gtkVBox = gtkVBox;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkVBox*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

@@ -98,14 +98,6 @@ public class CellRendererText : CellRenderer
 		super(cast(GtkCellRenderer*)gtkCellRendererText);
 		this.gtkCellRendererText = gtkCellRendererText;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkCellRendererText*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

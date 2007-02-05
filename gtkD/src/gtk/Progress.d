@@ -95,14 +95,6 @@ public class Progress : Widget
 		super(cast(GtkWidget*)gtkProgress);
 		this.gtkProgress = gtkProgress;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkProgress*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

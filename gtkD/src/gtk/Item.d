@@ -89,14 +89,6 @@ public class Item : Bin
 		super(cast(GtkBin*)gtkItem);
 		this.gtkItem = gtkItem;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkItem*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

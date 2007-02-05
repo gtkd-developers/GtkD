@@ -95,14 +95,6 @@ public class HSeparator : Separator
 		super(cast(GtkSeparator*)gtkHSeparator);
 		this.gtkHSeparator = gtkHSeparator;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkHSeparator*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

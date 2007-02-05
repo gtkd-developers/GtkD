@@ -163,14 +163,6 @@ public class Label : Misc
 		super(cast(GtkMisc*)gtkLabel);
 		this.gtkLabel = gtkLabel;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkLabel*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 * Creates a new GtkLabel, containing the text in str.

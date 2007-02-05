@@ -107,14 +107,6 @@ public class Statusbar : HBox
 		super(cast(GtkHBox*)gtkStatusbar);
 		this.gtkStatusbar = gtkStatusbar;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkStatusbar*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

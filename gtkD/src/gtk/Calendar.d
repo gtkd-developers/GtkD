@@ -99,14 +99,6 @@ public class Calendar : Widget
 		super(cast(GtkWidget*)gtkCalendar);
 		this.gtkCalendar = gtkCalendar;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkCalendar*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

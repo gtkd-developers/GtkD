@@ -102,14 +102,6 @@ public class HButtonBox : ButtonBox
 		super(cast(GtkButtonBox*)gtkHButtonBox);
 		this.gtkHButtonBox = gtkHButtonBox;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkHButtonBox*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 * Creates a new HButtonBox and sets comon parameters

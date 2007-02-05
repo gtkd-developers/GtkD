@@ -97,14 +97,6 @@ public class ToggleToolButton : ToolButton
 		super(cast(GtkToolButton*)gtkToggleToolButton);
 		this.gtkToggleToolButton = gtkToggleToolButton;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkToggleToolButton*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

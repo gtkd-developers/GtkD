@@ -95,14 +95,6 @@ public class ColorButton : Button
 		super(cast(GtkButton*)gtkColorButton);
 		this.gtkColorButton = gtkColorButton;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkColorButton*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

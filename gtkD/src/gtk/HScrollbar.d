@@ -95,14 +95,6 @@ public class HScrollbar : Scrollbar
 		super(cast(GtkScrollbar*)gtkHScrollbar);
 		this.gtkHScrollbar = gtkHScrollbar;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkHScrollbar*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

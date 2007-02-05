@@ -122,14 +122,6 @@ public class ProgressBar : Progress
 		super(cast(GtkProgress*)gtkProgressBar);
 		this.gtkProgressBar = gtkProgressBar;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkProgressBar*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

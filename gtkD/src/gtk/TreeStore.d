@@ -112,14 +112,6 @@ public class TreeStore : TreeModel
 		super(cast(GtkTreeModel*)gtkTreeStore);
 		this.gtkTreeStore = gtkTreeStore;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkTreeStore*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.

@@ -92,14 +92,6 @@ public class ColorSelectionDialog : Dialog
 		super(cast(GtkDialog*)gtkColorSelectionDialog);
 		this.gtkColorSelectionDialog = gtkColorSelectionDialog;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkColorSelectionDialog*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

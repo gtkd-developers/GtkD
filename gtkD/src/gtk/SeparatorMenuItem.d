@@ -90,14 +90,6 @@ public class SeparatorMenuItem : MenuItem
 		super(cast(GtkMenuItem*)gtkSeparatorMenuItem);
 		this.gtkSeparatorMenuItem = gtkSeparatorMenuItem;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkSeparatorMenuItem*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

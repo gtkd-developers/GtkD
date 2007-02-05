@@ -102,14 +102,6 @@ public class ToolItem : Bin
 		super(cast(GtkBin*)gtkToolItem);
 		this.gtkToolItem = gtkToolItem;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkToolItem*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 * Sets this widget tooltip

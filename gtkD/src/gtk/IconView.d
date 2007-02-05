@@ -108,14 +108,6 @@ public class IconView : Container
 		super(cast(GtkContainer*)gtkIconView);
 		this.gtkIconView = gtkIconView;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkIconView*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

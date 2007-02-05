@@ -104,14 +104,6 @@ public class Table : Container
 		super(cast(GtkContainer*)gtkTable);
 		this.gtkTable = gtkTable;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkTable*) parent.getWidgetStruct());
-	}
 	
 	int row;
 	int col;

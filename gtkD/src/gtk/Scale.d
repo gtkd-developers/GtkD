@@ -96,14 +96,6 @@ public class Scale : Range
 		super(cast(GtkRange*)gtkScale);
 		this.gtkScale = gtkScale;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkScale*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

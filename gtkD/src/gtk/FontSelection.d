@@ -101,14 +101,6 @@ public class FontSelection : VBox
 		super(cast(GtkVBox*)gtkFontSelection);
 		this.gtkFontSelection = gtkFontSelection;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkFontSelection*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

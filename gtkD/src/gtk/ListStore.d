@@ -176,14 +176,6 @@ public class ListStore : TreeModel
 		super(cast(GtkTreeModel*)gtkListStore);
 		this.gtkListStore = gtkListStore;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkListStore*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.

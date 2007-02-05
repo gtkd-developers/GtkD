@@ -102,14 +102,6 @@ public class CellRendererCombo : CellRendererText
 		super(cast(GtkCellRendererText*)gtkCellRendererCombo);
 		this.gtkCellRendererCombo = gtkCellRendererCombo;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkCellRendererCombo*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

@@ -157,14 +157,6 @@ public class Container : Widget
 		super(cast(GtkWidget*)gtkContainer);
 		this.gtkContainer = gtkContainer;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkContainer*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 * Removes all widgets from the container

@@ -94,14 +94,6 @@ public class Invisible : Widget
 		super(cast(GtkWidget*)gtkInvisible);
 		this.gtkInvisible = gtkInvisible;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkInvisible*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

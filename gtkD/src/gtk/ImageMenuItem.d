@@ -100,14 +100,6 @@ public class ImageMenuItem : MenuItem
 		super(cast(GtkMenuItem*)gtkImageMenuItem);
 		this.gtkImageMenuItem = gtkImageMenuItem;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkImageMenuItem*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 * Creates a new GtkImageMenuItem containing a label.

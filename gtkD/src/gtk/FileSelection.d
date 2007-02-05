@@ -129,14 +129,6 @@ public class FileSelection : Dialog
 		super(cast(GtkDialog*)gtkFileSelection);
 		this.gtkFileSelection = gtkFileSelection;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkFileSelection*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

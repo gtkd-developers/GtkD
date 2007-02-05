@@ -109,14 +109,6 @@ public class ToolButton : ToolItem
 		super(cast(GtkToolItem*)gtkToolButton);
 		this.gtkToolButton = gtkToolButton;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkToolButton*) parent.getWidgetStruct());
-	}
 	
 	/** An arbitrary string to be used by the application */
 	private char[] action;

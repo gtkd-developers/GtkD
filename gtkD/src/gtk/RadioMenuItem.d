@@ -113,14 +113,6 @@ public class RadioMenuItem : CheckMenuItem
 		super(cast(GtkCheckMenuItem*)gtkRadioMenuItem);
 		this.gtkRadioMenuItem = gtkRadioMenuItem;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkRadioMenuItem*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 * Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.

@@ -105,14 +105,6 @@ public class FileChooserWidget : VBox
 		super(cast(GtkVBox*)gtkFileChooserWidget);
 		this.gtkFileChooserWidget = gtkFileChooserWidget;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkFileChooserWidget*) parent.getWidgetStruct());
-	}
 	
 	private FileChooser fileChooser;
 	

@@ -106,14 +106,6 @@ public class HandleBox : Bin
 		super(cast(GtkBin*)gtkHandleBox);
 		this.gtkHandleBox = gtkHandleBox;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkHandleBox*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

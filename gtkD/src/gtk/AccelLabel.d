@@ -131,14 +131,6 @@ public class AccelLabel : Label
 		super(cast(GtkLabel*)gtkAccelLabel);
 		this.gtkAccelLabel = gtkAccelLabel;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkAccelLabel*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

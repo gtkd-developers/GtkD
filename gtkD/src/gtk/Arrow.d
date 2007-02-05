@@ -97,14 +97,6 @@ public class Arrow : Misc
 		super(cast(GtkMisc*)gtkArrow);
 		this.gtkArrow = gtkArrow;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkArrow*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

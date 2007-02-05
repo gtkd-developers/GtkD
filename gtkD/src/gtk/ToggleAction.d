@@ -91,14 +91,6 @@ public class ToggleAction : Action
 		super(cast(GtkAction*)gtkToggleAction);
 		this.gtkToggleAction = gtkToggleAction;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkToggleAction*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

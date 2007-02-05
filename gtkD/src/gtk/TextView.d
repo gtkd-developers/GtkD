@@ -123,14 +123,6 @@ public class TextView : Container
 		super(cast(GtkContainer*)gtkTextView);
 		this.gtkTextView = gtkTextView;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkTextView*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 * Get the text line at the pixel y

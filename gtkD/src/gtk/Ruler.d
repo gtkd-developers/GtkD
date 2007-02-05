@@ -101,14 +101,6 @@ public class Ruler : Widget
 		super(cast(GtkWidget*)gtkRuler);
 		this.gtkRuler = gtkRuler;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkRuler*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

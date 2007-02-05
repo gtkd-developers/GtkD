@@ -98,14 +98,6 @@ public class Assistant : Window
 		super(cast(GtkWindow*)gtkAssistant);
 		this.gtkAssistant = gtkAssistant;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkAssistant*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

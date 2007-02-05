@@ -97,14 +97,6 @@ public class Frame : Bin
 		super(cast(GtkBin*)gtkFrame);
 		this.gtkFrame = gtkFrame;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkFrame*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 * Creates frame with label and set it's child widget

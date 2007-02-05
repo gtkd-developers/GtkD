@@ -90,14 +90,6 @@ public class IMContextSimple : IMContext
 		super(cast(GtkIMContext*)gtkIMContextSimple);
 		this.gtkIMContextSimple = gtkIMContextSimple;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkIMContextSimple*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

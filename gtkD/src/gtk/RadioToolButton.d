@@ -105,14 +105,6 @@ public class RadioToolButton : ToggleToolButton
 		super(cast(GtkToggleToolButton*)gtkRadioToolButton);
 		this.gtkRadioToolButton = gtkRadioToolButton;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkRadioToolButton*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

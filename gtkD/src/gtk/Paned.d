@@ -131,14 +131,6 @@ public class Paned : Container
 		super(cast(GtkContainer*)gtkPaned);
 		this.gtkPaned = gtkPaned;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkPaned*) parent.getWidgetStruct());
-	}
 	
 	public void add(Widget child1, Widget child2)
 	{

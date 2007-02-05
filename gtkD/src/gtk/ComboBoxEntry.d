@@ -117,14 +117,6 @@ public class ComboBoxEntry : ComboBox, CellLayoutIF
 		super(cast(GtkComboBox*)gtkComboBoxEntry);
 		this.gtkComboBoxEntry = gtkComboBoxEntry;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkComboBoxEntry*) parent.getWidgetStruct());
-	}
 	
 	mixin CellLayoutT!(GtkComboBoxEntry);
 	/**

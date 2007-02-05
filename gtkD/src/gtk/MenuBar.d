@@ -97,14 +97,6 @@ public class MenuBar : MenuShell
 		super(cast(GtkMenuShell*)gtkMenuBar);
 		this.gtkMenuBar = gtkMenuBar;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkMenuBar*) parent.getWidgetStruct());
-	}
 	
 	Menu append(char[] label, bool rightJustify=false)
 	{

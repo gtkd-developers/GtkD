@@ -97,14 +97,6 @@ public class Scrollbar : Range
 		super(cast(GtkRange*)gtkScrollbar);
 		this.gtkScrollbar = gtkScrollbar;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkScrollbar*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

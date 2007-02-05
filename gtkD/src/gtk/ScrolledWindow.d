@@ -126,14 +126,6 @@ public class ScrolledWindow : Bin
 		super(cast(GtkBin*)gtkScrolledWindow);
 		this.gtkScrolledWindow = gtkScrolledWindow;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkScrolledWindow*) parent.getWidgetStruct());
-	}
 	
 	public this()
 	{

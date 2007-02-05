@@ -127,14 +127,6 @@ public class ComboBox : Bin, CellLayoutIF
 		super(cast(GtkBin*)gtkComboBox);
 		this.gtkComboBox = gtkComboBox;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkComboBox*) parent.getWidgetStruct());
-	}
 	
 	private int count = 0;
 	public int maxCount = 0;

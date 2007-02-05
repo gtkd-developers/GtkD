@@ -101,14 +101,6 @@ public class VRuler : Ruler
 		super(cast(GtkRuler*)gtkVRuler);
 		this.gtkVRuler = gtkVRuler;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkVRuler*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

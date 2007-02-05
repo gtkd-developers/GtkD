@@ -97,14 +97,6 @@ public class TearoffMenuItem : MenuItem
 		super(cast(GtkMenuItem*)gtkTearoffMenuItem);
 		this.gtkTearoffMenuItem = gtkTearoffMenuItem;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkTearoffMenuItem*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

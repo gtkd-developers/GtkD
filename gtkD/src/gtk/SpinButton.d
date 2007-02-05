@@ -138,14 +138,6 @@ public class SpinButton : Entry
 		super(cast(GtkEntry*)gtkSpinButton);
 		this.gtkSpinButton = gtkSpinButton;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkSpinButton*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 */

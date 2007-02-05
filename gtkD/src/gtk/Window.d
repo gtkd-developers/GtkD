@@ -109,14 +109,6 @@ public class Window : Bin
 		super(cast(GtkBin*)gtkWindow);
 		this.gtkWindow = gtkWindow;
 	}
-	/**
-	 * Allows constructors from Widget - needed for Glade support
-	 */
-	private import gtk.Widget;
-	public this (Widget  parent)
-	{
-		this(cast(GtkWindow*) parent.getWidgetStruct());
-	}
 	
 	/**
 	 * Creates a top level window with a title
