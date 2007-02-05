@@ -1127,6 +1127,9 @@ const GL_TRACE_MASK_MESA = 0x8755;
 
 const GL_TRACE_NAME_MESA = 0x8756;
 
+ 
+ 
+
 
 
 /*
@@ -1154,7 +1157,9 @@ const GL_VERTEX_PROGRAM_CALLBACK_MESA = 0x8bb5;
 const GL_VERTEX_PROGRAM_CALLBACK_FUNC_MESA = 0x8bb6;
 
 const GL_VERTEX_PROGRAM_CALLBACK_DATA_MESA = 0x8bb7;
-alias void  function(GLenum target, GLvoid *data)GLprogramcallbackMESA;
+
+
+
 
 
 
@@ -1162,6 +1167,7 @@ alias void  function(GLenum target, GLvoid *data)GLprogramcallbackMESA;
 const GL_ATI_blend_equation_separate = 1;
 
 const GL_ALPHA_BLEND_EQUATION_ATI = 0x883D;
+
 alias void  function(GLenum modeRGB, GLenum modeA)PFNGLBLENDEQUATIONSEPARATEATIPROC;
 
 
@@ -1979,31 +1985,6 @@ extern(C)
 	void  glMultiTexCoord4ivARB(GLenum target, GLint *v);
 	void  glMultiTexCoord4sARB(GLenum target, GLshort s, GLshort t, GLshort r, GLshort q);
 	void  glMultiTexCoord4svARB(GLenum target, GLshort *v);
-	////C     GLAPI void GLAPIENTRY glEnableTraceMESA( GLbitfield mask );
-	//void  glEnableTraceMESA(GLbitfield mask);
-	////C     GLAPI void GLAPIENTRY glDisableTraceMESA( GLbitfield mask );
-	//void  glDisableTraceMESA(GLbitfield mask);
-	////C     GLAPI void GLAPIENTRY glNewTraceMESA( GLbitfield mask, const GLubyte * traceName );
-	//void  glNewTraceMESA(GLbitfield mask, GLubyte *traceName);
-	////C     GLAPI void GLAPIENTRY glEndTraceMESA( void );
-	//void  glEndTraceMESA();
-	////C     GLAPI void GLAPIENTRY glTraceAssertAttribMESA( GLbitfield attribMask );
-	//void  glTraceAssertAttribMESA(GLbitfield attribMask);
-	////C     GLAPI void GLAPIENTRY glTraceCommentMESA( const GLubyte * comment );
-	//void  glTraceCommentMESA(GLubyte *comment);
-	////C     GLAPI void GLAPIENTRY glTraceTextureMESA( GLuint name, const GLubyte* comment );
-	//void  glTraceTextureMESA(GLuint name, GLubyte *comment);
-	////C     GLAPI void GLAPIENTRY glTraceListMESA( GLuint name, const GLubyte* comment );
-	//void  glTraceListMESA(GLuint name, GLubyte *comment);
-	////C     GLAPI void GLAPIENTRY glTracePointerMESA( GLvoid* pointer, const GLubyte* comment );
-	//void  glTracePointerMESA(GLvoid *pointer, GLubyte *comment);
-	////C     GLAPI void GLAPIENTRY glTracePointerRangeMESA( const GLvoid* first, const GLvoid* last, const GLubyte* comment );
-	//void  glTracePointerRangeMESA(GLvoid *first, GLvoid *last, GLubyte *comment);
-	
-	void  glProgramCallbackMESA(GLenum target, GLprogramcallbackMESA callback, GLvoid *data);
-	
-	void  glGetProgramRegisterfvMESA(GLenum target, GLsizei len, GLubyte *name, GLfloat *v);
-	//void  glBlendEquationSeparateATI(GLenum modeRGB, GLenum modeA);
 } // extern(C)
 
 
@@ -2821,30 +2802,5 @@ Symbol[] GLLinks =
 	{ "glMultiTexCoord4ivARB",  cast(void**)& glMultiTexCoord4ivARB},
 	{ "glMultiTexCoord4sARB",  cast(void**)& glMultiTexCoord4sARB},
 	{ "glMultiTexCoord4svARB",  cast(void**)& glMultiTexCoord4svARB},
-	{ "glEnableTraceMESA",  cast(void**)& glEnableTraceMESA},
-	{ "glEnableTraceMESA",  cast(void**)& glEnableTraceMESA},
-	{ "glDisableTraceMESA",  cast(void**)& glDisableTraceMESA},
-	{ "glDisableTraceMESA",  cast(void**)& glDisableTraceMESA},
-	{ "glNewTraceMESA",  cast(void**)& glNewTraceMESA},
-	{ "glNewTraceMESA",  cast(void**)& glNewTraceMESA},
-	{ "glEndTraceMESA",  cast(void**)& glEndTraceMESA},
-	{ "glEndTraceMESA",  cast(void**)& glEndTraceMESA},
-	{ "glTraceAssertAttribMESA",  cast(void**)& glTraceAssertAttribMESA},
-	{ "glTraceAssertAttribMESA",  cast(void**)& glTraceAssertAttribMESA},
-	{ "glTraceCommentMESA",  cast(void**)& glTraceCommentMESA},
-	{ "glTraceCommentMESA",  cast(void**)& glTraceCommentMESA},
-	{ "glTraceTextureMESA",  cast(void**)& glTraceTextureMESA},
-	{ "glTraceTextureMESA",  cast(void**)& glTraceTextureMESA},
-	{ "glTraceListMESA",  cast(void**)& glTraceListMESA},
-	{ "glTraceListMESA",  cast(void**)& glTraceListMESA},
-	{ "glTracePointerMESA",  cast(void**)& glTracePointerMESA},
-	{ "glTracePointerMESA",  cast(void**)& glTracePointerMESA},
-	{ "glTracePointerRangeMESA",  cast(void**)& glTracePointerRangeMESA},
-	{ "glTracePointerRangeMESA",  cast(void**)& glTracePointerRangeMESA},
-	
-	{ "glProgramCallbackMESA",  cast(void**)& glProgramCallbackMESA},
-	
-	{ "glGetProgramRegisterfvMESA",  cast(void**)& glGetProgramRegisterfvMESA},
-	{ "glBlendEquationSeparateATI",  cast(void**)& glBlendEquationSeparateATI},
 ];
 
