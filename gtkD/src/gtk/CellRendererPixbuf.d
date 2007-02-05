@@ -104,6 +104,14 @@ public class CellRendererPixbuf : CellRenderer
 		super(cast(GtkCellRenderer*)gtkCellRendererPixbuf);
 		this.gtkCellRendererPixbuf = gtkCellRendererPixbuf;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkCellRendererPixbuf*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

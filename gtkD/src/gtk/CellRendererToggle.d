@@ -96,6 +96,14 @@ public class CellRendererToggle : CellRenderer
 		super(cast(GtkCellRenderer*)gtkCellRendererToggle);
 		this.gtkCellRendererToggle = gtkCellRendererToggle;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkCellRendererToggle*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

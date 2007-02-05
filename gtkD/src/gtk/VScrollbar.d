@@ -94,6 +94,14 @@ public class VScrollbar : Scrollbar
 		super(cast(GtkScrollbar*)gtkVScrollbar);
 		this.gtkVScrollbar = gtkVScrollbar;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkVScrollbar*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

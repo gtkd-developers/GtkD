@@ -110,6 +110,14 @@ public class CellView : Widget
 		super(cast(GtkWidget*)gtkCellView);
 		this.gtkCellView = gtkCellView;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkCellView*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Creates a new GtkCellView widget, adds a GtkCellRendererText

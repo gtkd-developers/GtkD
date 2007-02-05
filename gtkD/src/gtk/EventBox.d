@@ -90,6 +90,14 @@ public class EventBox : Bin
 		super(cast(GtkBin*)gtkEventBox);
 		this.gtkEventBox = gtkEventBox;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkEventBox*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

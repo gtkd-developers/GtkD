@@ -157,6 +157,14 @@ public class Dialog : Window
 		super(cast(GtkWindow*)gtkDialog);
 		this.gtkDialog = gtkDialog;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkDialog*) parent.getWidgetStruct());
+	}
 	
 	public Widget addButton(StockID stockID, int responseId)
 	{

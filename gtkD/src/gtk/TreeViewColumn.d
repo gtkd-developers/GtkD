@@ -116,6 +116,14 @@ public class TreeViewColumn : ObjectGtk
 		super(cast(GtkObject*)gtkTreeViewColumn);
 		this.gtkTreeViewColumn = gtkTreeViewColumn;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkTreeViewColumn*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Creates a new Tree view column

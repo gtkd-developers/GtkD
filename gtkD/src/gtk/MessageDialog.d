@@ -123,6 +123,14 @@ public class MessageDialog : Dialog
 		super(cast(GtkDialog*)gtkMessageDialog);
 		this.gtkMessageDialog = gtkMessageDialog;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkMessageDialog*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Creates a new message dialog, which is a simple dialog with an icon

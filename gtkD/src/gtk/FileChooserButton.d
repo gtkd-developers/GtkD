@@ -121,6 +121,14 @@ public class FileChooserButton : HBox
 		super(cast(GtkHBox*)gtkFileChooserButton);
 		this.gtkFileChooserButton = gtkFileChooserButton;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkFileChooserButton*) parent.getWidgetStruct());
+	}
 	
 	private FileChooser fileChooser;
 	

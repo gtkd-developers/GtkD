@@ -125,6 +125,14 @@ public class TreeView : Container
 		super(cast(GtkContainer*)gtkTreeView);
 		this.gtkTreeView = gtkTreeView;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkTreeView*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Expands the row of the iter.

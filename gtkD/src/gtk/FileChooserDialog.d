@@ -187,6 +187,14 @@ public class FileChooserDialog : Dialog
 		super(cast(GtkDialog*)gtkFileChooserDialog);
 		this.gtkFileChooserDialog = gtkFileChooserDialog;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkFileChooserDialog*) parent.getWidgetStruct());
+	}
 	
 	private FileChooser fileChooser;
 	

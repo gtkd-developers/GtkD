@@ -140,6 +140,14 @@ public class RadioButton : CheckButton
 		super(cast(GtkCheckButton*)gtkRadioButton);
 		this.gtkRadioButton = gtkRadioButton;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkRadioButton*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Creates a new GtkRadioButton with a text label.

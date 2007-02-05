@@ -94,6 +94,14 @@ public class VScale : Scale
 		super(cast(GtkScale*)gtkVScale);
 		this.gtkVScale = gtkVScale;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkVScale*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

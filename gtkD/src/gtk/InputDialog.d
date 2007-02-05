@@ -107,6 +107,14 @@ public class InputDialog : Dialog
 		super(cast(GtkDialog*)gtkInputDialog);
 		this.gtkInputDialog = gtkInputDialog;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkInputDialog*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

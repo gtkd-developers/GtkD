@@ -138,6 +138,14 @@ public class Socket : Container
 		super(cast(GtkContainer*)gtkSocket);
 		this.gtkSocket = gtkSocket;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkSocket*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

@@ -93,6 +93,14 @@ public class VPaned : Paned
 		super(cast(GtkPaned*)gtkVPaned);
 		this.gtkVPaned = gtkVPaned;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkVPaned*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Creates a new HPaned and adds two widgets as it's children

@@ -112,6 +112,14 @@ public class AboutDialog : Dialog
 		super(cast(GtkDialog*)gtkAboutDialog);
 		this.gtkAboutDialog = gtkAboutDialog;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkAboutDialog*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

@@ -105,6 +105,14 @@ public class Button : Bin
 		super(cast(GtkBin*)gtkButton);
 		this.gtkButton = gtkButton;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkButton*) parent.getWidgetStruct());
+	}
 	
 	private static IconSize currentIconSize = IconSize.BUTTON;
 	

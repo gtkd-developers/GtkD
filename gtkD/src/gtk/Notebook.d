@@ -103,6 +103,14 @@ public class Notebook : Container
 		super(cast(GtkContainer*)gtkNotebook);
 		this.gtkNotebook = gtkNotebook;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkNotebook*) parent.getWidgetStruct());
+	}
 	
 	/** The GtkNotebookTab is not documented */
 	public enum GtkNotebookTab

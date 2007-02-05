@@ -103,6 +103,14 @@ public class Curve : DrawingArea
 		super(cast(GtkDrawingArea*)gtkCurve);
 		this.gtkCurve = gtkCurve;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkCurve*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

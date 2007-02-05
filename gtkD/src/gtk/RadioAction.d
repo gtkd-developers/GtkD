@@ -95,6 +95,14 @@ public class RadioAction : ToggleAction
 		super(cast(GtkToggleAction*)gtkRadioAction);
 		this.gtkRadioAction = gtkRadioAction;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkRadioAction*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

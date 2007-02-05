@@ -90,6 +90,14 @@ public class Range : Widget
 		super(cast(GtkWidget*)gtkRange);
 		this.gtkRange = gtkRange;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkRange*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

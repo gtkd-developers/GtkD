@@ -91,6 +91,14 @@ public class FontButton : Button
 		super(cast(GtkButton*)gtkFontButton);
 		this.gtkFontButton = gtkFontButton;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkFontButton*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

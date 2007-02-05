@@ -167,6 +167,14 @@ public class Image : Misc
 		super(cast(GtkMisc*)gtkImage);
 		this.gtkImage = gtkImage;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkImage*) parent.getWidgetStruct());
+	}
 	
 	// this will be an enum
 	/**

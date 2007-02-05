@@ -130,6 +130,14 @@ public class CellRenderer : ObjectGtk
 		super(cast(GtkObject*)gtkCellRenderer);
 		this.gtkCellRenderer = gtkCellRenderer;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkCellRenderer*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

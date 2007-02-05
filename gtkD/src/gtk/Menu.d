@@ -143,6 +143,14 @@ public class Menu : MenuShell
 		super(cast(GtkMenuShell*)gtkMenu);
 		this.gtkMenu = gtkMenu;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkMenu*) parent.getWidgetStruct());
+	}
 	
 	public void append(Widget widget)
 	{

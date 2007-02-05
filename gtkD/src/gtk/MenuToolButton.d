@@ -109,6 +109,14 @@ public class MenuToolButton : ToolButton
 		super(cast(GtkToolButton*)gtkMenuToolButton);
 		this.gtkMenuToolButton = gtkMenuToolButton;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkMenuToolButton*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Creates a new GtkMenuToolButton using icon_widget as icon and

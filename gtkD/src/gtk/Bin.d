@@ -95,6 +95,14 @@ public class Bin : Container
 		super(cast(GtkContainer*)gtkBin);
 		this.gtkBin = gtkBin;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkBin*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

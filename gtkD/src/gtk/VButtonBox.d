@@ -102,6 +102,14 @@ public class VButtonBox : ButtonBox
 		super(cast(GtkButtonBox*)gtkVButtonBox);
 		this.gtkVButtonBox = gtkVButtonBox;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkVButtonBox*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Creates a new vertical button box and sets standart values for it's comon parameters

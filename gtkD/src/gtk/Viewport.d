@@ -90,6 +90,14 @@ public class Viewport : Bin
 		super(cast(GtkBin*)gtkViewport);
 		this.gtkViewport = gtkViewport;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkViewport*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

@@ -91,6 +91,14 @@ public class HBox : Box
 		super(cast(GtkBox*)gtkHBox);
 		this.gtkHBox = gtkHBox;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkHBox*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

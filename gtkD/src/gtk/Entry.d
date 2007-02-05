@@ -97,6 +97,14 @@ public class Entry : Widget
 		super(cast(GtkWidget*)gtkEntry);
 		this.gtkEntry = gtkEntry;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkEntry*) parent.getWidgetStruct());
+	}
 	
 	public this (char[] text)
 	{

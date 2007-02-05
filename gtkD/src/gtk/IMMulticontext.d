@@ -93,6 +93,14 @@ public class IMMulticontext : IMContext
 		super(cast(GtkIMContext*)gtkIMMulticontext);
 		this.gtkIMMulticontext = gtkIMMulticontext;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkIMMulticontext*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

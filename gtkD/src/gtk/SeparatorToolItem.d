@@ -97,6 +97,14 @@ public class SeparatorToolItem : ToolItem
 		super(cast(GtkToolItem*)gtkSeparatorToolItem);
 		this.gtkSeparatorToolItem = gtkSeparatorToolItem;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkSeparatorToolItem*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

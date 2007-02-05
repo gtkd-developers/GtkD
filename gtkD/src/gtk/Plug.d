@@ -101,6 +101,14 @@ public class Plug : Window
 		super(cast(GtkWindow*)gtkPlug);
 		this.gtkPlug = gtkPlug;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkPlug*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

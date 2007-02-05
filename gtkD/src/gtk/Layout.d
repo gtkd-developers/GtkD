@@ -103,6 +103,14 @@ public class Layout : Container
 		super(cast(GtkContainer*)gtkLayout);
 		this.gtkLayout = gtkLayout;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkLayout*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

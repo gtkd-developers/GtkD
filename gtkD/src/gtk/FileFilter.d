@@ -102,6 +102,14 @@ public class FileFilter : ObjectGtk
 		super(cast(GtkObject*)gtkFileFilter);
 		this.gtkFileFilter = gtkFileFilter;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkFileFilter*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

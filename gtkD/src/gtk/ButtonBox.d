@@ -111,6 +111,14 @@ public class ButtonBox : Box
 		super(cast(GtkBox*)gtkButtonBox);
 		this.gtkButtonBox = gtkButtonBox;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkButtonBox*) parent.getWidgetStruct());
+	}
 	
 	static ButtonBox createActionBox(
 	void delegate(Button) onClicked,

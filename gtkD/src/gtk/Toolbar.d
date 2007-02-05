@@ -109,6 +109,14 @@ public class Toolbar : Container
 		super(cast(GtkContainer*)gtkToolbar);
 		this.gtkToolbar = gtkToolbar;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkToolbar*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Retrieves whether the toolbar has text, icons, or both . See

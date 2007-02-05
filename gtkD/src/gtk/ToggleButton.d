@@ -121,6 +121,14 @@ public class ToggleButton : Button
 		super(cast(GtkButton*)gtkToggleButton);
 		this.gtkToggleButton = gtkToggleButton;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkToggleButton*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Creates a new toggle button with a text label.

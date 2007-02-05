@@ -97,6 +97,14 @@ public class CheckButton : ToggleButton
 		super(cast(GtkToggleButton*)gtkCheckButton);
 		this.gtkCheckButton = gtkCheckButton;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkCheckButton*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Creates a new GtkCheckButton with a GtkLabel to the right of it.

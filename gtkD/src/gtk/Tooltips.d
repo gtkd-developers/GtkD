@@ -133,6 +133,14 @@ public class Tooltips : ObjectGtk
 		super(cast(GtkObject*)gtkTooltips);
 		this.gtkTooltips = gtkTooltips;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkTooltips*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

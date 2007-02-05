@@ -95,6 +95,14 @@ public class Misc : Widget
 		super(cast(GtkWidget*)gtkMisc);
 		this.gtkMisc = gtkMisc;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkMisc*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

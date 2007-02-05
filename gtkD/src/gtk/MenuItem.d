@@ -100,6 +100,14 @@ public class MenuItem : Item
 		super(cast(GtkItem*)gtkMenuItem);
 		this.gtkMenuItem = gtkMenuItem;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkMenuItem*) parent.getWidgetStruct());
+	}
 	
 	
 	/** store the action code passed in by the applcation */

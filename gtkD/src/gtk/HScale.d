@@ -94,6 +94,14 @@ public class HScale : Scale
 		super(cast(GtkScale*)gtkHScale);
 		this.gtkHScale = gtkHScale;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkHScale*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

@@ -99,6 +99,14 @@ public class Alignment : Bin
 		super(cast(GtkBin*)gtkAlignment);
 		this.gtkAlignment = gtkAlignment;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkAlignment*) parent.getWidgetStruct());
+	}
 	
 	public static Alignment center(Widget widget)
 	{

@@ -97,6 +97,14 @@ public class CheckMenuItem : MenuItem
 		super(cast(GtkMenuItem*)gtkCheckMenuItem);
 		this.gtkCheckMenuItem = gtkCheckMenuItem;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkCheckMenuItem*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Creates a new GtkCheckMenuItem with a label.

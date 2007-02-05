@@ -103,6 +103,14 @@ public class GammaCurve : VBox
 		super(cast(GtkVBox*)gtkGammaCurve);
 		this.gtkGammaCurve = gtkGammaCurve;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkGammaCurve*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

@@ -138,6 +138,14 @@ public class DrawingArea : Widget
 		super(cast(GtkWidget*)gtkDrawingArea);
 		this.gtkDrawingArea = gtkDrawingArea;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkDrawingArea*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Create a new DrawingArea and sets the SizeRequest

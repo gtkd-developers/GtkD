@@ -129,6 +129,14 @@ public class Expander : Bin
 		super(cast(GtkBin*)gtkExpander);
 		this.gtkExpander = gtkExpander;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkExpander*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 * Creates a new expander using label as the text of the label.

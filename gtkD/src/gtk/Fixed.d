@@ -117,6 +117,14 @@ public class Fixed : Container
 		super(cast(GtkContainer*)gtkFixed);
 		this.gtkFixed = gtkFixed;
 	}
+	/**
+	 * Allows constructors from Widget - needed for Glade support
+	 */
+	private import gtk.Widget;
+	public this (Widget  parent)
+	{
+		this(cast(GtkFixed*) parent.getWidgetStruct());
+	}
 	
 	/**
 	 */

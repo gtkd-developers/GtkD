@@ -48,6 +48,7 @@
  * 	- GladeXMLConnectFunc
  * 	- GladeXMLCustomWidgetHandler
  * 	- glade_set_custom_handler
+ * 	- glade_xml_new
  * 	- glade_xml_get_widget_prefix
  * imports:
  * 	- gtk.Widget
@@ -117,6 +118,32 @@ public class Glade : ObjectG
 		this.gladeXML = gladeXML;
 	}
 	
+	
+	
+	/**
+	 * Creates a new GladeXML object (and the corresponding widgets) from the
+	 * XML file fname. Optionally it will only build the interface from the
+	 * widget node root (if it is not NULL). This feature is useful if you
+	 * only want to build say a toolbar or menu from the XML file, but not the
+	 * window it is embedded in. Note also that the XML parse tree is cached
+	 * to speed up creating another GladeXML object for the same file
+	 * fname:
+	 *  the XML file name.
+	 * root:
+	 *  the widget node in fname to start building from (or NULL)
+	 * domain:
+	 *  the translation domain for the XML file (or NULL for default)
+	 * Returns:
+	 *  the newly created GladeXML object, or NULL on failure.
+	 */
+	public this (char[] fname, char[] root = null, char[] domain=null)
+	{
+		// GladeXML* glade_xml_new (const char *fname,  const char *root,  const char *domain);
+		this(cast(GladeXML*)glade_xml_new(Str.toStringz(fname),
+		root ? Str.toStringz(root) : null,
+		domain ? Str.toStringz(domain) : null) );
+	}
+	
 	/**
 	 * This function is used to get a list of pointers to the GtkWidget(s)
 	 * with names that start with the string name in the interface description.
@@ -156,27 +183,6 @@ public class Glade : ObjectG
 	
 	
 	
-	/**
-	 * Creates a new GladeXML object (and the corresponding widgets) from the
-	 * XML file fname. Optionally it will only build the interface from the
-	 * widget node root (if it is not NULL). This feature is useful if you
-	 * only want to build say a toolbar or menu from the XML file, but not the
-	 * window it is embedded in. Note also that the XML parse tree is cached
-	 * to speed up creating another GladeXML object for the same file
-	 * fname:
-	 *  the XML file name.
-	 * root:
-	 *  the widget node in fname to start building from (or NULL)
-	 * domain:
-	 *  the translation domain for the XML file (or NULL for default)
-	 * Returns:
-	 *  the newly created GladeXML object, or NULL on failure.
-	 */
-	public this (char[] fname, char[] root, char[] domain)
-	{
-		// GladeXML* glade_xml_new (const char *fname,  const char *root,  const char *domain);
-		this(cast(GladeXML*)glade_xml_new(Str.toStringz(fname), Str.toStringz(root), Str.toStringz(domain)) );
-	}
 	
 	/**
 	 * Creates a new GladeXML object (and the corresponding widgets) from the
