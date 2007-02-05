@@ -524,6 +524,25 @@ public class GtkDClass
 							}
 							text ~= "this."~var~" = "~var~";";
 							text ~= "}";
+							// this constructor is needed to work with Glade:
+							// Window w = new Window(glade.getWidget("xxxx")); 
+							// there must be a better way, but I could not think of one.
+							if ( gtkDParentNamePrefix == "gtk" && parentName.length > 0 && ( gtkStruct !="GtkWidget" ) )	
+							{
+								
+								text ~= "/**";
+								text ~= " * Allows constructors from Widget - needed for Glade support";
+								text ~= " */";
+								text ~= "private import gtk.Widget;";
+								text ~= "public this (Widget  parent)";
+								text ~= "{";
+								 text ~= "this(cast("~gtkStruct~ "*) parent.getWidgetStruct());";
+								text ~= "}";
+							}
+							
+							
+							
+							
 						}
 					}
 				}
