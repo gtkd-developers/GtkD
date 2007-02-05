@@ -48,6 +48,7 @@
  * 	- GladeXMLConnectFunc
  * 	- GladeXMLCustomWidgetHandler
  * 	- glade_set_custom_handler
+ * 	- glade_xml_get_widget
  * 	- glade_xml_new
  * 	- glade_xml_get_widget_prefix
  * imports:
@@ -118,6 +119,26 @@ public class Glade : ObjectG
 		this.gladeXML = gladeXML;
 	}
 	
+	/**
+	 * This function is used to get a pointer to the GtkWidget corresponding to
+	 * name in the interface description. You would use this if you have to do
+	 * anything to the widget after loading.
+	 * self:
+	 *  the GladeXML object.
+	 * name:
+	 *  the name of the widget.
+	 * Returns:
+	 *  the widget matching name, or NULL if none exists.
+	 */
+	public Widget getWidget(char[] name)
+	{
+		// GtkWidget* glade_xml_get_widget (GladeXML *self,  const char *name);
+		return newFromWidget(cast(void *) glade_xml_get_widget(gladeXML, Str.toStringz(name)) );
+	}
+	
+	
+	
+	
 	
 	
 	/**
@@ -163,10 +184,269 @@ public class Glade : ObjectG
 		Widget[] ret;
 		ListG widgets = new ListG( glade_xml_get_widget_prefix(gladeXML, Str.toStringz(name)) );
 		for (int i=0;i < widgets.length; i++) {
-			ret ~= new Widget(cast(GtkWidget*)widgets.nthData(i));
+			ret ~= newFromWidget( cast(void *)widgets.nthData(i) );
 		}
 		return widgets.length ? ret : null;
 	}
+	
+	
+	/**
+	 * Utilitiy method to create objects that are castable.
+	 *
+	 */
+	private import gobject.Type;
+	private import gtk.Container;
+	private import gtk.Bin;
+	private import gtk.Window;
+	private import gtk.Dialog;
+	private import gtk.AboutDialog;
+	private import gtk.ColorSelectionDialog;
+	private import gtk.FileChooserDialog;
+	private import gtk.FileSelection;
+	private import gtk.FontSelectionDialog;
+	private import gtk.InputDialog;
+	private import gtk.MessageDialog;
+	//private import gtk.PageSetupUnixDialog;
+	//private import gtk.PrintUnixDialog;
+	//private import gtk.RecentChooserDialog;
+	private import gtk.Assistant;
+	private import gtk.Plug;
+	private import gtk.Alignment;
+	private import gtk.Frame;
+	private import gtk.AspectFrame;
+	private import gtk.Button;
+	private import gtk.ToggleButton;
+	private import gtk.CheckButton;
+	private import gtk.RadioButton;
+	private import gtk.ColorButton;
+	private import gtk.FontButton;
+	//private import gtk.LinkButton;
+	//private import gtk.OptionMenu;
+	private import gtk.Item;
+	private import gtk.MenuItem;
+	private import gtk.CheckMenuItem;
+	private import gtk.RadioMenuItem;
+	private import gtk.ImageMenuItem;
+	private import gtk.SeparatorMenuItem;
+	private import gtk.TearoffMenuItem;
+	//private import gtk.ListItem;
+	//private import gtk.TreeItem;
+	private import gtk.ComboBox;
+	private import gtk.ComboBoxEntry;
+	private import gtk.EventBox;
+	private import gtk.Expander;
+	private import gtk.HandleBox;
+	private import gtk.ToolItem;
+	private import gtk.ToolButton;
+	private import gtk.MenuToolButton;
+	private import gtk.ToggleToolButton;
+	private import gtk.RadioToolButton;
+	private import gtk.SeparatorToolItem;
+	private import gtk.ScrolledWindow;
+	private import gtk.Viewport;
+	private import gtk.Box;
+	private import gtk.ButtonBox;
+	private import gtk.HButtonBox;
+	private import gtk.VButtonBox;
+	private import gtk.VBox;
+	private import gtk.ColorSelection;
+	private import gtk.FileChooserWidget;
+	private import gtk.FontSelection;
+	private import gtk.GammaCurve;
+	//private import gtk.RecentChooserWidget;
+	private import gtk.HBox;
+	//private import gtk.Combo;
+	private import gtk.FileChooserButton;
+	private import gtk.Statusbar;
+	//private import gtk.CList;
+	//private import gtk.CTree;
+	private import gtk.Fixed;
+	private import gtk.Paned;
+	private import gtk.HPaned;
+	private import gtk.VPaned;
+	private import gtk.IconView;
+	private import gtk.Layout;
+	//private import gtk.List;
+	private import gtk.MenuShell;
+	private import gtk.MenuBar;
+	private import gtk.Menu;
+	//private import gtk.RecentChooserMenu;
+	private import gtk.Notebook;
+	private import gtk.Socket;
+	private import gtk.Table;
+	private import gtk.TextView;
+	private import gtk.Toolbar;
+	//private import gtk.Tree;
+	private import gtk.TreeView;
+	private import gtk.Misc;
+	private import gtk.Label;
+	private import gtk.AccelLabel;
+	//private import gtk.TipsQuery;
+	private import gtk.Arrow;
+	private import gtk.Image;
+	//private import gtk.Pixmap;
+	private import gtk.Calendar;
+	private import gtk.CellView;
+	private import gtk.DrawingArea;
+	private import gtk.Curve;
+	private import gtk.Entry;
+	private import gtk.SpinButton;
+	private import gtk.Ruler;
+	private import gtk.HRuler;
+	private import gtk.VRuler;
+	private import gtk.Range;
+	private import gtk.Scale;
+	private import gtk.HScale;
+	private import gtk.VScale;
+	private import gtk.Scrollbar;
+	private import gtk.HScrollbar;
+	private import gtk.VScrollbar;
+	private import gtk.Separator;
+	private import gtk.HSeparator;
+	private import gtk.VSeparator;
+	private import gtk.Invisible;
+	//private import gtk.OldEditable;
+	//private import gtk.Text;
+	//private import gtk.Preview;
+	private import gtk.Progress;
+	private import gtk.ProgressBar;
+	
+	Widget newFromWidget(void * ptr)
+	{
+		if (ptr is null) {
+			return null;
+		}
+		
+		int* pt =cast(int*)ptr;
+		
+		int* pt2 =cast(int*) (cast(int*)(*pt));
+		uint utype =  cast(uint)(*pt2);
+		
+		char[] tname = Type.name(cast(GType)utype);
+		
+		switch(tname) {
+			case "GtkContainer": return new Container(cast(GtkContainer *)ptr);
+			case "GtkBin": return new Bin(cast(GtkBin *)ptr);
+			case "GtkWindow": return new Window(cast(GtkWindow *)ptr);
+			case "GtkDialog": return new Dialog(cast(GtkDialog *)ptr);
+			case "GtkAboutDialog": return new AboutDialog(cast(GtkAboutDialog *)ptr);
+			case "GtkColorSelectionDialog": return new ColorSelectionDialog(cast(GtkColorSelectionDialog *)ptr);
+			case "GtkFileChooserDialog": return new FileChooserDialog(cast(GtkFileChooserDialog *)ptr);
+			case "GtkFileSelection": return new FileSelection(cast(GtkFileSelection *)ptr);
+			case "GtkFontSelectionDialog": return new FontSelectionDialog(cast(GtkFontSelectionDialog *)ptr);
+			case "GtkInputDialog": return new InputDialog(cast(GtkInputDialog *)ptr);
+			case "GtkMessageDialog": return new MessageDialog(cast(GtkMessageDialog *)ptr);
+			//case "GtkPageSetupUnixDialog": return new PageSetupUnixDialog(cast(GtkPageSetupUnixDialog *)ptr);
+			//case "GtkPrintUnixDialog": return new PrintUnixDialog(cast(GtkPrintUnixDialog *)ptr);
+			//case "GtkRecentChooserDialog": return new RecentChooserDialog(cast(GtkRecentChooserDialog *)ptr);
+			case "GtkAssistant": return new Assistant(cast(GtkAssistant *)ptr);
+			case "GtkPlug": return new Plug(cast(GtkPlug *)ptr);
+			case "GtkAlignment": return new Alignment(cast(GtkAlignment *)ptr);
+			case "GtkFrame": return new Frame(cast(GtkFrame *)ptr);
+			case "GtkAspectFrame": return new AspectFrame(cast(GtkAspectFrame *)ptr);
+			case "GtkButton": return new Button(cast(GtkButton *)ptr);
+			case "GtkToggleButton": return new ToggleButton(cast(GtkToggleButton *)ptr);
+			case "GtkCheckButton": return new CheckButton(cast(GtkCheckButton *)ptr);
+			case "GtkRadioButton": return new RadioButton(cast(GtkRadioButton *)ptr);
+			case "GtkColorButton": return new ColorButton(cast(GtkColorButton *)ptr);
+			case "GtkFontButton": return new FontButton(cast(GtkFontButton *)ptr);
+			//case "GtkLinkButton": return new LinkButton(cast(GtkLinkButton *)ptr);
+			//case "GtkOptionMenu": return new OptionMenu(cast(GtkOptionMenu *)ptr);
+			case "GtkItem": return new Item(cast(GtkItem *)ptr);
+			case "GtkMenuItem": return new MenuItem(cast(GtkMenuItem *)ptr);
+			case "GtkCheckMenuItem": return new CheckMenuItem(cast(GtkCheckMenuItem *)ptr);
+			case "GtkRadioMenuItem": return new RadioMenuItem(cast(GtkRadioMenuItem *)ptr);
+			case "GtkImageMenuItem": return new ImageMenuItem(cast(GtkImageMenuItem *)ptr);
+			case "GtkSeparatorMenuItem": return new SeparatorMenuItem(cast(GtkSeparatorMenuItem *)ptr);
+			case "GtkTearoffMenuItem": return new TearoffMenuItem(cast(GtkTearoffMenuItem *)ptr);
+			//case "GtkListItem": return new ListItem(cast(GtkListItem *)ptr);
+			//case "GtkTreeItem": return new TreeItem(cast(GtkTreeItem *)ptr);
+			case "GtkComboBox": return new ComboBox(cast(GtkComboBox *)ptr);
+			case "GtkComboBoxEntry": return new ComboBoxEntry(cast(GtkComboBoxEntry *)ptr);
+			case "GtkEventBox": return new EventBox(cast(GtkEventBox *)ptr);
+			case "GtkExpander": return new Expander(cast(GtkExpander *)ptr);
+			case "GtkHandleBox": return new HandleBox(cast(GtkHandleBox *)ptr);
+			case "GtkToolItem": return new ToolItem(cast(GtkToolItem *)ptr);
+			case "GtkToolButton": return new ToolButton(cast(GtkToolButton *)ptr);
+			case "GtkMenuToolButton": return new MenuToolButton(cast(GtkMenuToolButton *)ptr);
+			case "GtkToggleToolButton": return new ToggleToolButton(cast(GtkToggleToolButton *)ptr);
+			case "GtkRadioToolButton": return new RadioToolButton(cast(GtkRadioToolButton *)ptr);
+			case "GtkSeparatorToolItem": return new SeparatorToolItem(cast(GtkSeparatorToolItem *)ptr);
+			case "GtkScrolledWindow": return new ScrolledWindow(cast(GtkScrolledWindow *)ptr);
+			case "GtkViewport": return new Viewport(cast(GtkViewport *)ptr);
+			case "GtkBox": return new Box(cast(GtkBox *)ptr);
+			case "GtkButtonBox": return new ButtonBox(cast(GtkButtonBox *)ptr);
+			case "GtkHButtonBox": return new HButtonBox(cast(GtkHButtonBox *)ptr);
+			case "GtkVButtonBox": return new VButtonBox(cast(GtkVButtonBox *)ptr);
+			case "GtkVBox": return new VBox(cast(GtkVBox *)ptr);
+			case "GtkColorSelection": return new ColorSelection(cast(GtkColorSelection *)ptr);
+			case "GtkFileChooserWidget": return new FileChooserWidget(cast(GtkFileChooserWidget *)ptr);
+			case "GtkFontSelection": return new FontSelection(cast(GtkFontSelection *)ptr);
+			case "GtkGammaCurve": return new GammaCurve(cast(GtkGammaCurve *)ptr);
+			//case "GtkRecentChooserWidget": return new RecentChooserWidget(cast(GtkRecentChooserWidget *)ptr);
+			case "GtkHBox": return new HBox(cast(GtkHBox *)ptr);
+			//case "GtkCombo": return new Combo(cast(GtkCombo *)ptr);
+			case "GtkFileChooserButton": return new FileChooserButton(cast(GtkFileChooserButton *)ptr);
+			case "GtkStatusbar": return new Statusbar(cast(GtkStatusbar *)ptr);
+			//case "GtkCList": return new CList(cast(GtkCList *)ptr);
+			//case "GtkCTree": return new CTree(cast(GtkCTree *)ptr);
+			case "GtkFixed": return new Fixed(cast(GtkFixed *)ptr);
+			case "GtkPaned": return new Paned(cast(GtkPaned *)ptr);
+			case "GtkHPaned": return new HPaned(cast(GtkHPaned *)ptr);
+			case "GtkVPaned": return new VPaned(cast(GtkVPaned *)ptr);
+			case "GtkIconView": return new IconView(cast(GtkIconView *)ptr);
+			case "GtkLayout": return new Layout(cast(GtkLayout *)ptr);
+			//case "GtkList": return new List(cast(GtkList *)ptr);
+			case "GtkMenuShell": return new MenuShell(cast(GtkMenuShell *)ptr);
+			case "GtkMenuBar": return new MenuBar(cast(GtkMenuBar *)ptr);
+			case "GtkMenu": return new Menu(cast(GtkMenu *)ptr);
+			//case "GtkRecentChooserMenu": return new RecentChooserMenu(cast(GtkRecentChooserMenu *)ptr);
+			case "GtkNotebook": return new Notebook(cast(GtkNotebook *)ptr);
+			case "GtkSocket": return new Socket(cast(GtkSocket *)ptr);
+			case "GtkTable": return new Table(cast(GtkTable *)ptr);
+			case "GtkTextView": return new TextView(cast(GtkTextView *)ptr);
+			case "GtkToolbar": return new Toolbar(cast(GtkToolbar *)ptr);
+			//case "GtkTree": return new Tree(cast(GtkTree *)ptr);
+			case "GtkTreeView": return new TreeView(cast(GtkTreeView *)ptr);
+			case "GtkMisc": return new Misc(cast(GtkMisc *)ptr);
+			case "GtkLabel": return new Label(cast(GtkLabel *)ptr);
+			case "GtkAccelLabel": return new AccelLabel(cast(GtkAccelLabel *)ptr);
+			//case "GtkTipsQuery": return new TipsQuery(cast(GtkTipsQuery *)ptr);
+			case "GtkArrow": return new Arrow(cast(GtkArrow *)ptr);
+			case "GtkImage": return new Image(cast(GtkImage *)ptr);
+			//case "GtkPixmap": return new Pixmap(cast(GtkPixmap *)ptr);
+			case "GtkCalendar": return new Calendar(cast(GtkCalendar *)ptr);
+			case "GtkCellView": return new CellView(cast(GtkCellView *)ptr);
+			case "GtkDrawingArea": return new DrawingArea(cast(GtkDrawingArea *)ptr);
+			case "GtkCurve": return new Curve(cast(GtkCurve *)ptr);
+			case "GtkEntry": return new Entry(cast(GtkEntry *)ptr);
+			case "GtkSpinButton": return new SpinButton(cast(GtkSpinButton *)ptr);
+			case "GtkRuler": return new Ruler(cast(GtkRuler *)ptr);
+			case "GtkHRuler": return new HRuler(cast(GtkHRuler *)ptr);
+			case "GtkVRuler": return new VRuler(cast(GtkVRuler *)ptr);
+			case "GtkRange": return new Range(cast(GtkRange *)ptr);
+			case "GtkScale": return new Scale(cast(GtkScale *)ptr);
+			case "GtkHScale": return new HScale(cast(GtkHScale *)ptr);
+			case "GtkVScale": return new VScale(cast(GtkVScale *)ptr);
+			case "GtkScrollbar": return new Scrollbar(cast(GtkScrollbar *)ptr);
+			case "GtkHScrollbar": return new HScrollbar(cast(GtkHScrollbar *)ptr);
+			case "GtkVScrollbar": return new VScrollbar(cast(GtkVScrollbar *)ptr);
+			case "GtkSeparator": return new Separator(cast(GtkSeparator *)ptr);
+			case "GtkHSeparator": return new HSeparator(cast(GtkHSeparator *)ptr);
+			case "GtkVSeparator": return new VSeparator(cast(GtkVSeparator *)ptr);
+			case "GtkInvisible": return new Invisible(cast(GtkInvisible *)ptr);
+			//case "GtkOldEditable": return new OldEditable(cast(GtkOldEditable *)ptr);
+			//case "GtkText": return new Text(cast(GtkText *)ptr);
+			//case "GtkPreview": return new Preview(cast(GtkPreview *)ptr);
+			case "GtkProgress": return new Progress(cast(GtkProgress *)ptr);
+			case "GtkProgressBar": return new ProgressBar(cast(GtkProgressBar *)ptr);
+			default: return null;
+		}
+		
+	}
+	
+	
+	
 	
 	
 	
@@ -230,22 +510,6 @@ public class Glade : ObjectG
 	
 	
 	
-	/**
-	 * This function is used to get a pointer to the GtkWidget corresponding to
-	 * name in the interface description. You would use this if you have to do
-	 * anything to the widget after loading.
-	 * self:
-	 *  the GladeXML object.
-	 * name:
-	 *  the name of the widget.
-	 * Returns:
-	 *  the widget matching name, or NULL if none exists.
-	 */
-	public Widget getWidget(char[] name)
-	{
-		// GtkWidget* glade_xml_get_widget (GladeXML *self,  const char *name);
-		return new Widget( glade_xml_get_widget(gladeXML, Str.toStringz(name)) );
-	}
 	
 	
 	/**
