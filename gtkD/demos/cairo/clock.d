@@ -51,8 +51,6 @@ class Clock : public DrawingArea
 		//Attach our expose callback, which will draw the window.
 		addOnExpose(&exposeCallback);
 
-		//Create a new timeout that will ask the window to be drawn once every second.
-		m_timeout = new Timeout( 1000, &onSecondElapsed, false );
 	
 	}
 
@@ -60,6 +58,11 @@ class Clock : public DrawingArea
         //Override default signal handler:
         int exposeCallback(GdkEventExpose* event, Widget widget)
 	{
+		if ( m_timeout is null )
+		{
+			//Create a new timeout that will ask the window to be drawn once every second.
+			m_timeout = new Timeout( 1000, &onSecondElapsed, false );
+		}
 		// This is where we draw on the window
 		
 		Drawable dr = getDrawable();
