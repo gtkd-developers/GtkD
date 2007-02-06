@@ -53,12 +53,15 @@ private import gtk.Image;
 private import gtkc.gtktypes;
 private import gtk.SizeGroup;
 private import gtk.HSeparator;
+private import gtk.PopupBox;
+	
 
 private import gdk.Event;
 private import std.stdio;
+private import std.process;
+private import std.string;
 
 private import std.c.stdlib;
-private import std.string;
 
 interface InstallerUI
 {
@@ -221,8 +224,6 @@ public class MainInstaller : MainWindow , InstallerUI
 		add(topBox);
 	}
 
-private import gtk.PopupBox;
-	
 	private int logoClicked(GdkEventButton* event, Widget widget)
 	{
 		
@@ -1027,7 +1028,7 @@ class TestPanel : UserPanel
 	{
 		return false;
 	}
-private import std.process;
+
 	private void testButtonAction(Button button)
 	{
 		switch ( button.getActionName() )
@@ -1035,7 +1036,7 @@ private import std.process;
 
 			default:
 				writefln("testButtonAction going for %s", button.getActionName());
-				system(button.getActionName());
+				std.process.system(button.getActionName());
 				break;
 		}
 

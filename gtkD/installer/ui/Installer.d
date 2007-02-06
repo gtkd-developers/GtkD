@@ -41,9 +41,14 @@ private import std.process;
 private import std.thread;
 private import std.c.time;
 	
+private import ui.gtkDLogo;
+private import gtk.Alignment;
+private import gtk.Button;
+private import gtkc.gtktypes;
+
 
 /**
- * From the informatino collected from the UI this will install GtkD, GtkDgl and or leds
+ * From the information collected from the UI this will install GtkD, GtkDgl and or leds
  */
 class Installer : MainWindow
 {
@@ -67,11 +72,6 @@ class Installer : MainWindow
 		destroy();
 	}
 	
-private import ui.gtkDLogo;
-private import gtk.Alignment;
-private import gtk.Button;
-private import gtkc.gtktypes;
-
 	private void setup()
 	{
 		VBox vbox = new VBox(false, 7);
