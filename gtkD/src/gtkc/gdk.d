@@ -653,7 +653,7 @@ extern(C)
 	gboolean function(GdkDevice* device, gdouble* axes, GdkAxisUse use, gdouble* value)gdk_device_get_axis;
 	void function(GdkWindow* window, gint mask, GdkExtensionMode mode)gdk_input_set_extension_events;
 	
-	// gdk.GdkCairo
+	// gdk.
 	
 	cairo_t* function(GdkDrawable* drawable)gdk_cairo_create;
 	void function(cairo_t* cr, GdkColor* color)gdk_cairo_set_source_color;
