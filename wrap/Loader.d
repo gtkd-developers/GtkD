@@ -1,7 +1,7 @@
 /*
  * MODULE: loader.d 
  * 
- * Dynamic Library Loader for DUI
+ * Dynamic Library Loader for gtkD
  *
  * Added 2004-12-11 -- John Reimer
  * Updated 2005-02-21: class and symbol names change; versioning modification.
@@ -14,7 +14,7 @@
  *
  */
  
-module lib.Loader;
+module gtkc.Loader;
 
 //debug = loadLib;
 //debug = loadSymbol;
@@ -63,7 +63,7 @@ public struct Symbol
 	void**	pointer;	// Address of the procedure pointer variable
 }
 
-private import lib.paths;
+private import gtkc.paths;
 
 /*
  * Linker : simple class to handle the loading 

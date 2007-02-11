@@ -1,7 +1,7 @@
 /*
  * This file is part of gtkD. Adapted from:
  *
- * paths.d  -- list of libraries that will be dynamically linked with DUI
+ * paths.d  -- list of libraries that will be dynamically linked with gtkD
  *
  * Added:	John Reimer	-- 2004-12-20
  * Updated: 2005-02-21 changed names; added version(linux)
@@ -42,7 +42,7 @@ version (Windows)
 const char[][LIBRARY.max+1] importLibs = 
 	[
 	LIBRARY.ATK:		"libatk-1.0-0.dll",
-	LIBRARY.CAIROLIB:	"libcairo-1.0-0.dll",
+	LIBRARY.CAIROLIB:	"libcairo-2.dll",
 	LIBRARY.GDK: 		"libgdk-win32-2.0-0.dll",
 	LIBRARY.GDKPIXBUF:	"libgdk_pixbuf-2.0-0.dll",
 	LIBRARY.GLIB: 		"libglib-2.0-0.dll",
@@ -84,11 +84,70 @@ const char[][LIBRARY.max+1] importLibs =
 	];
 }
 
-// Specify the default path for the DUI dll's
 
-version(Windows) const char[] libPath = "\\Program Files\\Common Files\\GTK\\2.0\\bin\\";
+// dmd 1.005 still makes private char[] public?!
+//private char[] libPath;
+// Specify the default path for the gtkD dll's
+
+version(Windows)
+{
+	import std.windows.registry;
+	import std.stdio;
+	
+	char[] libPath()
+	{
+//		if ( libPath is null )
+//		{
+//			libPath = "\\Program Files\\Common Files\\GTK\\2.0\\bin\\";
+//		}
+//		return libPath;
+		
+		Key k = Registry.localMachine();
+		
+		char[] libPath;
+		
+		foreach ( Key key ; k.keys() )
+		{
+			writefln("key = ", key.name());
+		}
+		
+		try
+		{
+			k = k.getKey("SOFTWARE");
+			//writefln("key.value = %s", k.name());
+			k = k.getKey("GTK");
+			//writefln("key.value = %s", k.name());
+			k = k.getKey("2.0");
+			//writefln("key.value = %s", k.name());
+			Value v = k.getValue("DllPath");
+			libPath = v.value_SZ() ~ "\\";
+		}
+		catch ( Exception e )
+		{
+			libPath = "\\Program Files\\Common Files\\GTK\\2.0\\bin\\";
+		}
+
+		if ( libPath is null )
+		{
+			libPath = "\\Program Files\\Common Files\\GTK\\2.0\\bin\\";
+		}
+		
+		
+		return libPath;
+	}
+}
 
 //   empty for linux because default path is known by ld
 
-version(linux)   const char[] libPath = "";
-
+version(linux)
+{
+	char[] libPath()
+	{
+//		if ( libPath is null )
+//		{
+//			libPath = "";
+//		}
+//		return libPath;
+		return "";
+	}
+}

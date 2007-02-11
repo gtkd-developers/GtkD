@@ -1,7 +1,7 @@
 /*
  * MODULE: loader.d 
  * 
- * Dynamic Library Loader for DUI
+ * Dynamic Library Loader for gtkD
  *
  * Added 2004-12-11 -- John Reimer
  * Updated 2005-02-21: class and symbol names change; versioning modification.
