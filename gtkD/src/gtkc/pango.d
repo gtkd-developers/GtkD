@@ -392,6 +392,11 @@ extern(C)
 	
 	// pango.PgEngineShape
 	
+	
+	// pango.PgVertical
+	
+	PangoGravity function(PangoMatrix* matrix)pango_gravity_get_for_matrix;
+	PangoGravity function(PangoScript script, PangoGravity baseGravity, PangoGravityHint hint)pango_gravity_get_for_script;
 
 
 }
@@ -685,5 +690,7 @@ Symbol[] pangoLinks =
 	{ "script_engine_init",  cast(void**)& script_engine_init},
 	{ "script_engine_exit",  cast(void**)& script_engine_exit},
 	{ "script_engine_create",  cast(void**)& script_engine_create},
+	{ "pango_gravity_get_for_matrix",  cast(void**)& pango_gravity_get_for_matrix},
+	{ "pango_gravity_get_for_script",  cast(void**)& pango_gravity_get_for_script},
 
 ];

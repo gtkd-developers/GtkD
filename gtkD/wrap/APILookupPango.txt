@@ -874,3 +874,10 @@ outFile: PgEngineShape
 #prefix: pango_
 #outFile: PgModules
 
+file: pango-Vertical-Text.html
+class: PgVertical
+prefix: pango_gravity_get_
+outFile: PgVertical
+
+
+

@@ -23,8 +23,7 @@
 module gsvc.gsvtypes;
 
 
-public import gtkc.glibtypes;
-public import gtkc.gobjecttypes;
+public import gtkc.gtktypes;
 
 
 /**

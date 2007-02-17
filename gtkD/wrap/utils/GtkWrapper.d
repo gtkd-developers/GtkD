@@ -25,7 +25,7 @@ module utils.GtkWrapper;
 //debug=aliases;
 //debug=lookup;
 //debug=file;
-debug=writeFile;
+//debug=writeFile;
 
 struct WError
 {
@@ -496,7 +496,9 @@ public class GtkWrapper : WrapperIF
             status = ERR_COPY_FILE;
             errors ~= WError.create(defReader.getLineNumber(), status, "Cannot copy  file "~fileName);
         }
-        
+
+        writefln("Wrappde %s", fileName);
+		
         return status;
     }
     
@@ -692,6 +694,7 @@ public class GtkWrapper : WrapperIF
         stockEnums ~= gtkDClass.getStockEnums();
         stockChars ~= gtkDClass.getStockChars();
         gTypes ~= gtkDClass.getGTypes();
+		writefln("gtk Wrapped %s", gtkDClass.getOutFile(outputRoot, srcDir));
     }
     
     /**

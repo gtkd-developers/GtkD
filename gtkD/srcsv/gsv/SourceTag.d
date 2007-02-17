@@ -41,6 +41,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- gsv.SourceTagStyle
  * structWrap:
  * 	- GtkSourceTagStyle* -> SourceTagStyle
  * module aliases:
@@ -53,6 +54,7 @@ private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 
+private import gsv.SourceTagStyle;
 
 
 

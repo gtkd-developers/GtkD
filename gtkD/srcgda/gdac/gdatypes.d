@@ -558,14 +558,14 @@ public typedef extern(C) void  function (char[], void*) GdaConfigListenerFunc;
  * user_data :
  */
 // void (*GdaConfigListenerFunc) (const gchar *path,  gpointer user_data);
-public typedef extern(C) void  function (char[], void*) GdaConfigListenerFunc;
+
 
 /*
  * path :
  * user_data :
  */
 // void (*GdaConfigListenerFunc) (const gchar *path,  gpointer user_data);
-public typedef extern(C) void  function (char[], void*) GdaConfigListenerFunc;
+
 
 /*
  * model :

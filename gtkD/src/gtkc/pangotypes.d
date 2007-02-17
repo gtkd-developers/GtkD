@@ -472,6 +472,39 @@ public enum PangoCoverageLevel
 	APPROXIMATE,
 	EXACT
 }
+/**
+ * The PangoGravity type represents the orientation of glyphs in a segment
+ * of text. This is useful when rendering vertical text layouts. In
+ * those situations, the layout is rotated using a non-identity PangoMatrix,
+ * and then glyph orientation is controlled using PangoGravity.
+ * Not every value in this enumeration makes sense for every usage of
+ * PangoGravity; for example, PANGO_GRAVITY_AUTO only can be passed to
+ * pango_context_set_base_gravity() and can only be returned by
+ * pango_context_get_base_gravity().
+ * See also: PangoGravityHint
+ * PANGO_GRAVITY_SOUTH
+ */
+public enum PangoGravity
+{
+	SOUTH,
+	EAST,
+	NORTH,
+	WEST,
+	AUTO
+}
+/**
+ * The PangoGravityHint defines how horizontal scripts should behave in a
+ * vertical context. That is, English excerpt in a vertical paragraph for
+ * example.
+ * See PangoGravity.
+ * PANGO_GRAVITY_HINT_NATURAL
+ */
+public enum PangoGravityHint
+{
+	NATURAL,
+	STRONG,
+	LINE
+}
 
 /**
  * Main Gtk struct.
@@ -1591,6 +1624,15 @@ public struct PangoEngineShapeClass{}
  */
 // TODO
 // #define PANGO_ENGINE_SHAPE_DEFINE_TYPE(name, prefix, class_init, instance_init)
+
+/*
+ * Whether a PangoGravity represents vertical writing directions.
+ * gravity:
+ *  the PangoGravity to check
+ * Since 1.16
+ */
+// TODO
+// #define PANGO_GRAVITY_IS_VERTICAL(gravity)
 
 /*
  * A callback function used by pango_fontset_foreach() when enumerating

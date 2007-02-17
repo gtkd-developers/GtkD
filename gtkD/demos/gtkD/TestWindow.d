@@ -20,7 +20,9 @@ module gtkD.TestWindow;
 
 //debug = 1;
 
-private import cairo.clock;
+//version=cairo;
+
+version(cairo)private import cairo.clock;
 
 private import gtk.Version;
 private import gtk.Table;
@@ -286,7 +288,7 @@ class TestWindow : MainWindow
 		notebook.appendPage(new TestAspectFrame(),"Aspect Frame");
 		notebook.appendPage(new TestIdle(),"Idle");
 
-		notebook.appendPage(new Clock(), "Cairo");
+		version(cairo)notebook.appendPage(new Clock(), "Cairo");
 		
 		gtkDemo(notebook);
 		debug(1)writefln("TestWindow.setup 6");

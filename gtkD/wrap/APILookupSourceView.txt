@@ -28,8 +28,7 @@
 
 addTypedefs: start
 
-public import gtkc.glibtypes;
-public import gtkc.gobjecttypes;
+public import gtkc.gtktypes;
 
 addTypedefs: end
 
@@ -68,6 +67,7 @@ struct: GtkSourceView
 class: SourceView
 prefix: gtk_source_view_
 structWrap: GtkSourceBuffer* SourceBuffer
+import: gsv.SourceBuffer
 outFile: SourceView
 
 file: GtkSourceBuffer.html
@@ -79,6 +79,11 @@ structWrap: GtkSourceTagTable* SourceTagTable
 structWrap: GtkSourceLanguage* SourceLanguage
 structWrap: GtkSourceTagStyle* SourceTagStyle
 structWrap: GtkSourceMarker* SourceMarker
+import: gsv.SourceBuffer
+import: gsv.SourceTagTable
+import: gsv.SourceLanguage
+import: gsv.SourceTagStyle
+import: gsv.SourceMarker
 outFile: SourceBuffer
 
 file: gtksourceview-Searching-in-a-GtkSourceBuffer.html
@@ -86,6 +91,7 @@ file: gtksourceview-Searching-in-a-GtkSourceBuffer.html
 class: SourceSearch
 prefix: gtk_source_iter_
 structWrap: GtkTextIter* TextIter
+import: gtk.TextIter
 outFile: SourceSearch
 
 file: gtksourceview-GtkSourceMarker.html
@@ -99,6 +105,7 @@ struct: GtkSourceLanguage
 class: SourceLanguage
 prefix: gtk_source_iter_
 structWrap: GtkSourceStyleScheme* SourceStyleScheme
+import: gsv.SourceStyleScheme
 outFile: SourceLanguage
 
 file: GtkSourceLanguagesManager.html
@@ -123,6 +130,7 @@ struct: GtkSourceTag
 class: SourceTag
 prefix: gtk_source_tag_
 structWrap: GtkSourceTagStyle* SourceTagStyle
+import: gsv.SourceTagStyle
 outFile: SourceTag
 
 

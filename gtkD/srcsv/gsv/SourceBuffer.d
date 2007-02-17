@@ -41,6 +41,11 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- gsv.SourceBuffer
+ * 	- gsv.SourceTagTable
+ * 	- gsv.SourceLanguage
+ * 	- gsv.SourceTagStyle
+ * 	- gsv.SourceMarker
  * structWrap:
  * 	- GtkSourceBuffer* -> SourceBuffer
  * 	- GtkSourceLanguage* -> SourceLanguage
@@ -57,6 +62,11 @@ private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 
+private import gsv.SourceBuffer;
+private import gsv.SourceTagTable;
+private import gsv.SourceLanguage;
+private import gsv.SourceTagStyle;
+private import gsv.SourceMarker;
 
 
 

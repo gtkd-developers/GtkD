@@ -29,7 +29,7 @@ module utils.GtkDClass;
 //debug = noPrefixes;
 //debug = functionType;
 //debug = declaration;
-//debug = structs;
+debug = structs;
 //debug = enums;
 //debug = enumPrefix;
 //debug = unions;
@@ -180,6 +180,7 @@ public class GtkDClass
 	
 	public void openGtkDClass(char[] inAPI, ConvParms* convParms)
 	{
+		//writefln("collectStructs %s", std.string.strip(inLines[currLine]));
 		this.inAPI = inAPI;
 		isInterface = convParms.interf.length > 0;
 		if ( isInterface ) iFaceChar = ";";
@@ -1480,12 +1481,14 @@ public class GtkDClass
 		}
 		if ( includeStruct )
 		{
+
 			char[][] structDef;	/// all elements of the struct
 			bit invalidDStruct = false;
 			int pos = 1;
 			if ( lines[1][lines[1].length-1] == '{' )
 			{
 				++pos;
+				debug(structs)writefln("collectStructs %s",std.string.strip(lines[pos]));
 				while ( pos < lines.length && lines[pos][0] != '}' )
 				{
 					//invalidDStruct = true;
@@ -1509,6 +1512,7 @@ public class GtkDClass
 					else if ( startsWith(std.string.strip(lines[pos]), '#') )
 					{
 						// ignore
+						writefln("collectStructs %s", std.string.strip(lines[pos]));
 						debug(structs)writefln("= IGNORED >>>%s<<<", lines[pos]);
 					}
 					else if ( !primitiveType(lines[pos]) )

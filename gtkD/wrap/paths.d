@@ -34,7 +34,8 @@ enum LIBRARY
 	GLU,
 	GLEXT,
 	GDA,
-	GLADE
+	GLADE,
+	GSV
 }
 
 version (Windows)
@@ -80,8 +81,8 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GLU:		"libGLU.so",
 	LIBRARY.GLEXT:		"libGL.so",
 	LIBRARY.GDA:		"libgda-2.so.3",
-	LIBRARY.GLADE:		"libglade-2.0.so"
-	LIBRARY.GLADE:		"libgtksourceview-1.0.so"
+	LIBRARY.GLADE:		"libglade-2.0.so",
+	LIBRARY.GSV:		"libgtksourceview-1.0.so"
 	];
 }
 

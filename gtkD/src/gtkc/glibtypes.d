@@ -1129,11 +1129,11 @@ public struct GMainContext{}
  */
 public struct GPollFD
 {
-	#if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8
-	long fd;
-	#else
+//	#if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8
+//	long fd;
+//	#else
 	int fd;
-	#endif
+//	#endif
 	ushort events;
 	ushort revents;
 }

@@ -41,6 +41,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- gsv.SourceBuffer
  * structWrap:
  * 	- GtkSourceBuffer* -> SourceBuffer
  * module aliases:
@@ -53,6 +54,7 @@ private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 
+private import gsv.SourceBuffer;
 
 
 
