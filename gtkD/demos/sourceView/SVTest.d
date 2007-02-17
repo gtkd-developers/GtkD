@@ -25,11 +25,18 @@ private import gtk.GtkD;
 private import gtk.ScrolledWindow;
 private import gtk.Widget;
 
+private import glib.ListSG;
+
 private import gsv.SourceView;
 private import gsv.SourceBuffer;
+private import gsv.SourceLanguage;
+private import gsv.SourceLanguagesManager;
 
+private import gsvc.gsvtypes;
 
 private import gsv.SourceBuffer;
+
+private import std.stdio;
 
 /**
  * Demos for SourceView.
@@ -57,12 +64,40 @@ class HelloWorld : MainWindow
 		
 		sourceView.setInsertSpacesInsteadOfTabs(false);
 		sourceView.setTabsWidth(4);
+		sourceView.setHighlightCurrentLine(true);
 		
 		SourceBuffer sb = sourceView.getBuffer();
 		sb.setText(demoText);
 		
 		ScrolledWindow scWindow = new ScrolledWindow();
 		scWindow.add(sourceView);
+
+		
+		SourceLanguagesManager slm = new SourceLanguagesManager();
+		ListSG list = new ListSG(slm.getAvailableLanguages());
+		
+		writefln("%s available languages", list.length());
+		
+		SourceLanguage dLang;
+		
+		for(int i=0 ; i<list.length() ; i++ )
+		{
+			SourceLanguage sl = new SourceLanguage(cast(GtkSourceLanguage*)list.nthData(i));
+			char[] name = sl.gtkSourceLanguageGetName();
+			if ( "D" == name )
+			{
+				dLang = sl;
+			}
+			writefln("\t[%s] %s", i, name);
+		}
+
+		
+		if ( dLang !is null )
+		{
+			writefln("Setting language to D");
+			sb.setLanguage(dLang);
+			sb.setHighlight(true);
+		}
 		
 		return scWindow;
 	}
