@@ -51,6 +51,7 @@ module gsv.SourceStyleScheme;
 private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
+private import glib.Str;
 
 
 

@@ -56,6 +56,7 @@ private import gsvc.gsv;
 
 private import gsv.SourceTagStyle;
 
+private import glib.Str;
 
 
 /**

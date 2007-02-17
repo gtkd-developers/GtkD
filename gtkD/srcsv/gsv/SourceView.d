@@ -53,8 +53,10 @@ module gsv.SourceView;
 private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
+private import gtkc.gtk;
 
 private import gsv.SourceBuffer;
+private import glib.Str;
 
 
 
@@ -89,6 +91,22 @@ public class SourceView : TextView
 		super(cast(GtkTextView*)gtkSourceView);
 		this.gtkSourceView = gtkSourceView;
 	}
+	
+	/**
+	 * Returns the GtkSourceBuffer being displayed by this source view.
+	 * The reference count on the buffer is not incremented; the caller
+	 * of this function won't own a new reference.
+	 * text_view:
+	 *  a GtkSourceView
+	 * Returns:
+	 *  a GtkSourceBuffer
+	 */
+	public SourceBuffer getBuffer()
+	{
+		// GtkSourceBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
+		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );
+	}
+
 	
 	/**
 	 */

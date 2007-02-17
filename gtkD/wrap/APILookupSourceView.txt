@@ -68,6 +68,29 @@ class: SourceView
 prefix: gtk_source_view_
 structWrap: GtkSourceBuffer* SourceBuffer
 import: gsv.SourceBuffer
+import: glib.Str
+
+code: start
+
+	/**
+	 * Returns the GtkSourceBuffer being displayed by this source view.
+	 * The reference count on the buffer is not incremented; the caller
+	 * of this function won't own a new reference.
+	 * text_view:
+	 *  a GtkSourceView
+	 * Returns:
+	 *  a GtkSourceBuffer
+	 */
+	public SourceBuffer getBuffer()
+	{
+		// GtkSourceBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
+		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );
+	}
+	
+
+
+code: end
+
 outFile: SourceView
 
 file: GtkSourceBuffer.html
@@ -84,6 +107,7 @@ import: gsv.SourceTagTable
 import: gsv.SourceLanguage
 import: gsv.SourceTagStyle
 import: gsv.SourceMarker
+import: glib.Str
 outFile: SourceBuffer
 
 file: gtksourceview-Searching-in-a-GtkSourceBuffer.html
@@ -92,12 +116,14 @@ class: SourceSearch
 prefix: gtk_source_iter_
 structWrap: GtkTextIter* TextIter
 import: gtk.TextIter
+import: glib.Str
 outFile: SourceSearch
 
 file: gtksourceview-GtkSourceMarker.html
 struct: GtkSourceMarker
 class: SourceMarker
 prefix: gtk_source_marker_
+import: glib.Str
 outFile: SourceMarker
 
 file: GtkSourceLanguage.html
@@ -106,6 +132,7 @@ class: SourceLanguage
 prefix: gtk_source_iter_
 structWrap: GtkSourceStyleScheme* SourceStyleScheme
 import: gsv.SourceStyleScheme
+import: glib.Str
 outFile: SourceLanguage
 
 file: GtkSourceLanguagesManager.html
@@ -113,6 +140,7 @@ struct: GtkSourceLanguagesManager
 class: SourceLanguagesManager
 prefix: gtk_source_languages_manager_
 #structWrap: 
+import: glib.Str
 outFile: SourceLanguagesManager
 
 
@@ -122,6 +150,7 @@ struct: GtkSourceStyleScheme
 class: SourceStyleScheme
 prefix: gtk_source_style_scheme_
 #structWrap: 
+import: glib.Str
 outFile: SourceStyleScheme
 
 
@@ -131,6 +160,7 @@ class: SourceTag
 prefix: gtk_source_tag_
 structWrap: GtkSourceTagStyle* SourceTagStyle
 import: gsv.SourceTagStyle
+import: glib.Str
 outFile: SourceTag
 
 

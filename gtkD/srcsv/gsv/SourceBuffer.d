@@ -68,7 +68,7 @@ private import gsv.SourceLanguage;
 private import gsv.SourceTagStyle;
 private import gsv.SourceMarker;
 
-
+private import glib.Str;
 
 /**
  * Description

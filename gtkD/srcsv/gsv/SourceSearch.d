@@ -56,6 +56,7 @@ private import gsvc.gsv;
 
 private import gtk.TextIter;
 
+private import glib.Str;
 
 
 /**

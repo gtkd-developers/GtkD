@@ -54,7 +54,7 @@ private import gsvc.gsv;
 
 
 
-
+private import glib.Str;
 /**
  * Description
  */
