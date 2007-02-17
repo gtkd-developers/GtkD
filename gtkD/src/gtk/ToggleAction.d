@@ -203,7 +203,7 @@ public class ToggleAction : Action
 	 */
 	public void setDrawAsRadio(int drawAsRadio)
 	{
-		// void gtk_toggle_action_set_draw_as_radio  (GtkToggleAction *action,  gboolean draw_as_radio);
+		// void gtk_toggle_action_set_draw_as_radio (GtkToggleAction *action,  gboolean draw_as_radio);
 		gtk_toggle_action_set_draw_as_radio(gtkToggleAction, drawAsRadio);
 	}
 	
@@ -223,7 +223,7 @@ public class ToggleAction : Action
 	 */
 	public int getDrawAsRadio()
 	{
-		// gboolean gtk_toggle_action_get_draw_as_radio  (GtkToggleAction *action);
+		// gboolean gtk_toggle_action_get_draw_as_radio (GtkToggleAction *action);
 		return gtk_toggle_action_get_draw_as_radio(gtkToggleAction);
 	}
 	

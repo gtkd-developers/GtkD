@@ -313,7 +313,7 @@ public class PixbufLoader : ObjectG
 	 */
 	public PixbufFormat getFormat()
 	{
-		// GdkPixbufFormat* gdk_pixbuf_loader_get_format  (GdkPixbufLoader *loader);
+		// GdkPixbufFormat* gdk_pixbuf_loader_get_format (GdkPixbufLoader *loader);
 		return new PixbufFormat( gdk_pixbuf_loader_get_format(gdkPixbufLoader) );
 	}
 	
@@ -401,7 +401,7 @@ public class PixbufLoader : ObjectG
 	 */
 	public PixbufAnimation getAnimation()
 	{
-		// GdkPixbufAnimation* gdk_pixbuf_loader_get_animation  (GdkPixbufLoader *loader);
+		// GdkPixbufAnimation* gdk_pixbuf_loader_get_animation (GdkPixbufLoader *loader);
 		return new PixbufAnimation( gdk_pixbuf_loader_get_animation(gdkPixbufLoader) );
 	}
 	
@@ -425,7 +425,7 @@ public class PixbufLoader : ObjectG
 	 * Signal Details
 	 * The "area-prepared" signal
 	 * void user_function (GdkPixbufLoader *loader,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * This signal is emitted when the pixbuf loader has allocated the
 	 * pixbuf in the desired size. After this signal is emitted,
 	 * applications can call gdk_pixbuf_loader_get_pixbuf() to fetch

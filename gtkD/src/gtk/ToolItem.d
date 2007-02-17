@@ -317,7 +317,7 @@ public class ToolItem : Bin
 	 */
 	public void setUseDragWindow(int useDragWindow)
 	{
-		// void gtk_tool_item_set_use_drag_window  (GtkToolItem *toolitem,  gboolean use_drag_window);
+		// void gtk_tool_item_set_use_drag_window (GtkToolItem *toolitem,  gboolean use_drag_window);
 		gtk_tool_item_set_use_drag_window(gtkToolItem, useDragWindow);
 	}
 	
@@ -332,7 +332,7 @@ public class ToolItem : Bin
 	 */
 	public int getUseDragWindow()
 	{
-		// gboolean gtk_tool_item_get_use_drag_window  (GtkToolItem *toolitem);
+		// gboolean gtk_tool_item_get_use_drag_window (GtkToolItem *toolitem);
 		return gtk_tool_item_get_use_drag_window(gtkToolItem);
 	}
 	
@@ -380,7 +380,7 @@ public class ToolItem : Bin
 	 */
 	public void setVisibleVertical(int visibleVertical)
 	{
-		// void gtk_tool_item_set_visible_vertical  (GtkToolItem *toolitem,  gboolean visible_vertical);
+		// void gtk_tool_item_set_visible_vertical (GtkToolItem *toolitem,  gboolean visible_vertical);
 		gtk_tool_item_set_visible_vertical(gtkToolItem, visibleVertical);
 	}
 	
@@ -395,7 +395,7 @@ public class ToolItem : Bin
 	 */
 	public int getVisibleVertical()
 	{
-		// gboolean gtk_tool_item_get_visible_vertical  (GtkToolItem *toolitem);
+		// gboolean gtk_tool_item_get_visible_vertical (GtkToolItem *toolitem);
 		return gtk_tool_item_get_visible_vertical(gtkToolItem);
 	}
 	
@@ -461,7 +461,7 @@ public class ToolItem : Bin
 	 */
 	public GtkOrientation getOrientation()
 	{
-		// GtkOrientation gtk_tool_item_get_orientation  (GtkToolItem *tool_item);
+		// GtkOrientation gtk_tool_item_get_orientation (GtkToolItem *tool_item);
 		return gtk_tool_item_get_orientation(gtkToolItem);
 	}
 	
@@ -490,7 +490,7 @@ public class ToolItem : Bin
 	 */
 	public GtkToolbarStyle getToolbarStyle()
 	{
-		// GtkToolbarStyle gtk_tool_item_get_toolbar_style  (GtkToolItem *tool_item);
+		// GtkToolbarStyle gtk_tool_item_get_toolbar_style (GtkToolItem *tool_item);
 		return gtk_tool_item_get_toolbar_style(gtkToolItem);
 	}
 	
@@ -508,7 +508,7 @@ public class ToolItem : Bin
 	 */
 	public GtkReliefStyle getReliefStyle()
 	{
-		// GtkReliefStyle gtk_tool_item_get_relief_style  (GtkToolItem *tool_item);
+		// GtkReliefStyle gtk_tool_item_get_relief_style (GtkToolItem *tool_item);
 		return gtk_tool_item_get_relief_style(gtkToolItem);
 	}
 	
@@ -547,7 +547,7 @@ public class ToolItem : Bin
 	 */
 	public Widget getProxyMenuItem(char[] menuItemId)
 	{
-		// GtkWidget* gtk_tool_item_get_proxy_menu_item  (GtkToolItem *tool_item,  const gchar *menu_item_id);
+		// GtkWidget* gtk_tool_item_get_proxy_menu_item (GtkToolItem *tool_item,  const gchar *menu_item_id);
 		return new Widget( gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId)) );
 	}
 	
@@ -565,7 +565,7 @@ public class ToolItem : Bin
 	 */
 	public void setProxyMenuItem(char[] menuItemId, Widget menuItem)
 	{
-		// void gtk_tool_item_set_proxy_menu_item  (GtkToolItem *tool_item,  const gchar *menu_item_id,  GtkWidget *menu_item);
+		// void gtk_tool_item_set_proxy_menu_item (GtkToolItem *tool_item,  const gchar *menu_item_id,  GtkWidget *menu_item);
 		gtk_tool_item_set_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId), (menuItem is null) ? null : menuItem.getWidgetStruct());
 	}
 	

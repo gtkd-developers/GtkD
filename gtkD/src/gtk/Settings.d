@@ -238,7 +238,7 @@ public class Settings : ObjectG
 	 */
 	public static int rcPropertyParseRequisition(GParamSpec* pspec, StringG gstring, Value propertyValue)
 	{
-		// gboolean gtk_rc_property_parse_requisition  (const GParamSpec *pspec,  const GString *gstring,  GValue *property_value);
+		// gboolean gtk_rc_property_parse_requisition (const GParamSpec *pspec,  const GString *gstring,  GValue *property_value);
 		return gtk_rc_property_parse_requisition(pspec, (gstring is null) ? null : gstring.getStringGStruct(), (propertyValue is null) ? null : propertyValue.getValueStruct());
 	}
 	
@@ -283,7 +283,7 @@ public class Settings : ObjectG
 	 */
 	public void setStringProperty(char[] name, char[] vString, char[] origin)
 	{
-		// void gtk_settings_set_string_property  (GtkSettings *settings,  const gchar *name,  const gchar *v_string,  const gchar *origin);
+		// void gtk_settings_set_string_property (GtkSettings *settings,  const gchar *name,  const gchar *v_string,  const gchar *origin);
 		gtk_settings_set_string_property(gtkSettings, Str.toStringz(name), Str.toStringz(vString), Str.toStringz(origin));
 	}
 	
@@ -313,9 +313,18 @@ public class Settings : ObjectG
 	 */
 	public void setDoubleProperty(char[] name, double vDouble, char[] origin)
 	{
-		// void gtk_settings_set_double_property  (GtkSettings *settings,  const gchar *name,  gdouble v_double,  const gchar *origin);
+		// void gtk_settings_set_double_property (GtkSettings *settings,  const gchar *name,  gdouble v_double,  const gchar *origin);
 		gtk_settings_set_double_property(gtkSettings, Str.toStringz(name), vDouble, Str.toStringz(origin));
 	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
 	
 	
 	

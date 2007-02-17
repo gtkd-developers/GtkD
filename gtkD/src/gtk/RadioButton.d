@@ -268,7 +268,7 @@ public class RadioButton : CheckButton
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_radio_button_new_from_widget  (GtkRadioButton *group);
+		// GtkWidget* gtk_radio_button_new_from_widget (GtkRadioButton *group);
 		this(cast(GtkRadioButton*)gtk_radio_button_new_from_widget(gtkRadioButton) );
 	}
 	
@@ -308,7 +308,7 @@ public class RadioButton : CheckButton
 	 * Signal Details
 	 * The "group-changed" signal
 	 * void user_function (GtkRadioButton *style,
-	 *  gpointer user_data) : Run first
+	 *  gpointer user_data) : Run First
 	 * Emitted when the group of radio buttons that a radio button belongs
 	 * to changes. This is emitted when a radio button switches from
 	 * being alone to being part of a group of 2 or more buttons, or

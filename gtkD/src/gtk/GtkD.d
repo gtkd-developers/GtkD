@@ -208,8 +208,9 @@ public class GtkD
 	 * effect. (Note that this can change over the life of an
 	 * application.) The default language is derived from the current
 	 * locale. It determines, for example, whether GTK+ uses the
-	 * right-to-left or left-to-right text direction. See
-	 * _gtk_get_lc_ctype() for notes on behaviour on Windows.
+	 * right-to-left or left-to-right text direction.
+	 * This function is equivalent to pango_language_get_default(). See
+	 * that function for details.
 	 * Returns:
 	 *  the default language as a PangoLanguage, must not be
 	 * freed

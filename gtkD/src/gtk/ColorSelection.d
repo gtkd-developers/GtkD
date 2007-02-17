@@ -205,7 +205,7 @@ public class ColorSelection : VBox
 	 */
 	public void setHasPalette(int hasPalette)
 	{
-		// void gtk_color_selection_set_has_palette  (GtkColorSelection *colorsel,  gboolean has_palette);
+		// void gtk_color_selection_set_has_palette (GtkColorSelection *colorsel,  gboolean has_palette);
 		gtk_color_selection_set_has_palette(gtkColorSelection, hasPalette);
 	}
 	
@@ -218,7 +218,7 @@ public class ColorSelection : VBox
 	 */
 	public int getHasPalette()
 	{
-		// gboolean gtk_color_selection_get_has_palette  (GtkColorSelection *colorsel);
+		// gboolean gtk_color_selection_get_has_palette (GtkColorSelection *colorsel);
 		return gtk_color_selection_get_has_palette(gtkColorSelection);
 	}
 	
@@ -342,7 +342,7 @@ public class ColorSelection : VBox
 	 */
 	public int isAdjusting()
 	{
-		// gboolean gtk_color_selection_is_adjusting  (GtkColorSelection *colorsel);
+		// gboolean gtk_color_selection_is_adjusting (GtkColorSelection *colorsel);
 		return gtk_color_selection_is_adjusting(gtkColorSelection);
 	}
 	

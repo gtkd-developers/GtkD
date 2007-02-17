@@ -179,7 +179,7 @@ public class EventBox : Bin
 	 */
 	public void setVisibleWindow(int visibleWindow)
 	{
-		// void gtk_event_box_set_visible_window  (GtkEventBox *event_box,  gboolean visible_window);
+		// void gtk_event_box_set_visible_window (GtkEventBox *event_box,  gboolean visible_window);
 		gtk_event_box_set_visible_window(gtkEventBox, visibleWindow);
 	}
 	
@@ -199,7 +199,7 @@ public class EventBox : Bin
 	 */
 	public int getVisibleWindow()
 	{
-		// gboolean gtk_event_box_get_visible_window  (GtkEventBox *event_box);
+		// gboolean gtk_event_box_get_visible_window (GtkEventBox *event_box);
 		return gtk_event_box_get_visible_window(gtkEventBox);
 	}
 	

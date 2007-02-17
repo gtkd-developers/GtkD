@@ -129,7 +129,7 @@ public class Image
 	 */
 	public char[] getImageDescription()
 	{
-		// const gchar* atk_image_get_image_description  (AtkImage *image);
+		// const gchar* atk_image_get_image_description (AtkImage *image);
 		return Str.toString(atk_image_get_image_description(atkImage) );
 	}
 	

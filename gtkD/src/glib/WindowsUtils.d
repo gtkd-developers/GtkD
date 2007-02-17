@@ -213,7 +213,7 @@ public class WindowsUtils
 	 */
 	public static char[] localeFilenameFromUtf8(char[] utf8filename)
 	{
-		// gchar* g_win32_locale_filename_from_utf8  (const gchar *utf8filename);
+		// gchar* g_win32_locale_filename_from_utf8 (const gchar *utf8filename);
 		return Str.toString(g_win32_locale_filename_from_utf8(Str.toStringz(utf8filename)) );
 	}
 	

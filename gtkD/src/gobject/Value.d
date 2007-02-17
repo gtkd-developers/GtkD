@@ -1178,7 +1178,7 @@ public class Value
 	 */
 	public void setStringTakeOwnership(char[] vString)
 	{
-		// void g_value_set_string_take_ownership  (GValue *value,  gchar *v_string);
+		// void g_value_set_string_take_ownership (GValue *value,  gchar *v_string);
 		g_value_set_string_take_ownership(gValue, Str.toStringz(vString));
 	}
 	
@@ -1276,7 +1276,7 @@ public class Value
 	 */
 	public void setParamTakeOwnership(ParamSpec param)
 	{
-		// void g_value_set_param_take_ownership  (GValue *value,  GParamSpec *param);
+		// void g_value_set_param_take_ownership (GValue *value,  GParamSpec *param);
 		g_value_set_param_take_ownership(gValue, (param is null) ? null : param.getParamSpecStruct());
 	}
 	
@@ -1389,7 +1389,7 @@ public class Value
 	 */
 	public void setBoxedTakeOwnership(void* vBoxed)
 	{
-		// void g_value_set_boxed_take_ownership  (GValue *value,  gconstpointer v_boxed);
+		// void g_value_set_boxed_take_ownership (GValue *value,  gconstpointer v_boxed);
 		g_value_set_boxed_take_ownership(gValue, vBoxed);
 	}
 	
@@ -1540,7 +1540,7 @@ public class Value
 	 */
 	public void setObjectTakeOwnership(void* vObject)
 	{
-		// void g_value_set_object_take_ownership  (GValue *value,  gpointer v_object);
+		// void g_value_set_object_take_ownership (GValue *value,  gpointer v_object);
 		g_value_set_object_take_ownership(gValue, vObject);
 	}
 	

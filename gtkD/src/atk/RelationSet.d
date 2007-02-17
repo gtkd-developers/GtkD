@@ -169,7 +169,7 @@ public class RelationSet : ObjectG
 	 */
 	public int atkRelationSetGetNRelations()
 	{
-		// gint atk_relation_set_get_n_relations  (AtkRelationSet *set);
+		// gint atk_relation_set_get_n_relations (AtkRelationSet *set);
 		return atk_relation_set_get_n_relations(atkRelationSet);
 	}
 	

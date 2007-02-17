@@ -193,7 +193,7 @@ public class DisplayManager : ObjectG
 	 */
 	public ListSG listDisplays()
 	{
-		// GSList* gdk_display_manager_list_displays  (GdkDisplayManager *display_manager);
+		// GSList* gdk_display_manager_list_displays (GdkDisplayManager *display_manager);
 		return new ListSG( gdk_display_manager_list_displays(gdkDisplayManager) );
 	}
 	
@@ -213,7 +213,7 @@ public class DisplayManager : ObjectG
 	 * The "display-opened" signal
 	 * void user_function (GdkDisplayManager *display_manager,
 	 *  GdkDisplay *display,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * The ::display_opened signal is emitted when a display is opened.
 	 * display_manager:
 	 *  the object on which the signal is emitted

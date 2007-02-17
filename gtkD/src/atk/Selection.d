@@ -197,7 +197,7 @@ public class Selection
 	 */
 	public int getSelectionCount()
 	{
-		// gint atk_selection_get_selection_count  (AtkSelection *selection);
+		// gint atk_selection_get_selection_count (AtkSelection *selection);
 		return atk_selection_get_selection_count(atkSelection);
 	}
 	
@@ -247,7 +247,7 @@ public class Selection
 	 * Signal Details
 	 * The "selection-changed" signal
 	 * void user_function (AtkSelection *atkselection,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * The "selection-changed" signal is emitted by an object which implements
 	 * AtkSelection interface when the selection changes.
 	 * atkselection:
@@ -259,7 +259,7 @@ public class Selection
 	 */
 	public int selectAllSelection()
 	{
-		// gboolean atk_selection_select_all_selection  (AtkSelection *selection);
+		// gboolean atk_selection_select_all_selection (AtkSelection *selection);
 		return atk_selection_select_all_selection(atkSelection);
 	}
 }

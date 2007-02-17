@@ -512,7 +512,7 @@ public class TreeModel
 	 */
 	public int getIterFromString(TreeIter iter, char[] pathString)
 	{
-		// gboolean gtk_tree_model_get_iter_from_string  (GtkTreeModel *tree_model,  GtkTreeIter *iter,  const gchar *path_string);
+		// gboolean gtk_tree_model_get_iter_from_string (GtkTreeModel *tree_model,  GtkTreeIter *iter,  const gchar *path_string);
 		return gtk_tree_model_get_iter_from_string(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct(), Str.toStringz(pathString));
 	}
 	
@@ -692,7 +692,7 @@ public class TreeModel
 	 */
 	public char[] getStringFromIter(TreeIter iter)
 	{
-		// gchar* gtk_tree_model_get_string_from_iter  (GtkTreeModel *tree_model,  GtkTreeIter *iter);
+		// gchar* gtk_tree_model_get_string_from_iter (GtkTreeModel *tree_model,  GtkTreeIter *iter);
 		return Str.toString(gtk_tree_model_get_string_from_iter(gtkTreeModel, (iter is null) ? null : iter.getTreeIterStruct()) );
 	}
 	
@@ -873,7 +873,7 @@ public class TreeModel
 	 * void user_function (GtkTreeModel *tree_model,
 	 *  GtkTreePath *path,
 	 *  GtkTreeIter *iter,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * This signal is emitted when a row in the model has changed.
 	 * tree_model:
 	 *  the GtkTreeModel on which the signal is emitted

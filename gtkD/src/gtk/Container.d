@@ -351,7 +351,7 @@ public class Container : Widget
 	 */
 	public void addWithProperties(Widget widget, char[] firstPropName, ... )
 	{
-		// void gtk_container_add_with_properties  (GtkContainer *container,  GtkWidget *widget,  const gchar *first_prop_name,  ...);
+		// void gtk_container_add_with_properties (GtkContainer *container,  GtkWidget *widget,  const gchar *first_prop_name,  ...);
 		gtk_container_add_with_properties(gtkContainer, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(firstPropName));
 	}
 	
@@ -478,7 +478,7 @@ public class Container : Widget
 	 */
 	public Adjustment getFocusVadjustment()
 	{
-		// GtkAdjustment* gtk_container_get_focus_vadjustment  (GtkContainer *container);
+		// GtkAdjustment* gtk_container_get_focus_vadjustment (GtkContainer *container);
 		return new Adjustment( gtk_container_get_focus_vadjustment(gtkContainer) );
 	}
 	
@@ -498,7 +498,7 @@ public class Container : Widget
 	 */
 	public void setFocusVadjustment(Adjustment adjustment)
 	{
-		// void gtk_container_set_focus_vadjustment  (GtkContainer *container,  GtkAdjustment *adjustment);
+		// void gtk_container_set_focus_vadjustment (GtkContainer *container,  GtkAdjustment *adjustment);
 		gtk_container_set_focus_vadjustment(gtkContainer, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
@@ -513,7 +513,7 @@ public class Container : Widget
 	 */
 	public Adjustment getFocusHadjustment()
 	{
-		// GtkAdjustment* gtk_container_get_focus_hadjustment  (GtkContainer *container);
+		// GtkAdjustment* gtk_container_get_focus_hadjustment (GtkContainer *container);
 		return new Adjustment( gtk_container_get_focus_hadjustment(gtkContainer) );
 	}
 	
@@ -533,7 +533,7 @@ public class Container : Widget
 	 */
 	public void setFocusHadjustment(Adjustment adjustment)
 	{
-		// void gtk_container_set_focus_hadjustment  (GtkContainer *container,  GtkAdjustment *adjustment);
+		// void gtk_container_set_focus_hadjustment (GtkContainer *container,  GtkAdjustment *adjustment);
 		gtk_container_set_focus_hadjustment(gtkContainer, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
@@ -611,7 +611,7 @@ public class Container : Widget
 	 */
 	public void childGetProperty(Widget child, char[] propertyName, Value value)
 	{
-		// void gtk_container_child_get_property  (GtkContainer *container,  GtkWidget *child,  const gchar *property_name,  GValue *value);
+		// void gtk_container_child_get_property (GtkContainer *container,  GtkWidget *child,  const gchar *property_name,  GValue *value);
 		gtk_container_child_get_property(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
@@ -628,7 +628,7 @@ public class Container : Widget
 	 */
 	public void childSetProperty(Widget child, char[] propertyName, Value value)
 	{
-		// void gtk_container_child_set_property  (GtkContainer *container,  GtkWidget *child,  const gchar *property_name,  const GValue *value);
+		// void gtk_container_child_set_property (GtkContainer *container,  GtkWidget *child,  const gchar *property_name,  const GValue *value);
 		gtk_container_child_set_property(gtkContainer, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(propertyName), (value is null) ? null : value.getValueStruct());
 	}
 	
@@ -839,8 +839,8 @@ public class Container : Widget
 	 * n_properties:
 	 *  location to return the number of child properties found
 	 * Returns:
-	 *  a newly allocated array of GParamSpec*. The array must be
-	 *  freed with g_free().
+	 *  a newly allocated NULL-terminated array of GParamSpec*.
+	 *  The array must be freed with g_free().
 	 * Property Details
 	 * The "border-width" property
 	 *  "border-width" guint : Read / Write

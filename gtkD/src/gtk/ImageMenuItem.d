@@ -188,7 +188,7 @@ public class ImageMenuItem : MenuItem
 	 */
 	public this (char[] stockId, AccelGroup accelGroup)
 	{
-		// GtkWidget* gtk_image_menu_item_new_from_stock  (const gchar *stock_id,  GtkAccelGroup *accel_group);
+		// GtkWidget* gtk_image_menu_item_new_from_stock (const gchar *stock_id,  GtkAccelGroup *accel_group);
 		this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_from_stock(Str.toStringz(stockId), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct()) );
 	}
 	

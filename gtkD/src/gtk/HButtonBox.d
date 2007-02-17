@@ -141,7 +141,7 @@ public class HButtonBox : ButtonBox
 	 */
 	public static int getSpacingDefault()
 	{
-		// gint gtk_hbutton_box_get_spacing_default  (void);
+		// gint gtk_hbutton_box_get_spacing_default (void);
 		return gtk_hbutton_box_get_spacing_default();
 	}
 	
@@ -154,7 +154,7 @@ public class HButtonBox : ButtonBox
 	 */
 	public static GtkButtonBoxStyle getLayoutDefault()
 	{
-		// GtkButtonBoxStyle gtk_hbutton_box_get_layout_default  (void);
+		// GtkButtonBoxStyle gtk_hbutton_box_get_layout_default (void);
 		return gtk_hbutton_box_get_layout_default();
 	}
 	
@@ -168,7 +168,7 @@ public class HButtonBox : ButtonBox
 	 */
 	public static void setSpacingDefault(int spacing)
 	{
-		// void gtk_hbutton_box_set_spacing_default  (gint spacing);
+		// void gtk_hbutton_box_set_spacing_default (gint spacing);
 		gtk_hbutton_box_set_spacing_default(spacing);
 	}
 	
@@ -188,7 +188,7 @@ public class HButtonBox : ButtonBox
 	 */
 	public static void setLayoutDefault(GtkButtonBoxStyle layout)
 	{
-		// void gtk_hbutton_box_set_layout_default  (GtkButtonBoxStyle layout);
+		// void gtk_hbutton_box_set_layout_default (GtkButtonBoxStyle layout);
 		gtk_hbutton_box_set_layout_default(layout);
 	}
 }

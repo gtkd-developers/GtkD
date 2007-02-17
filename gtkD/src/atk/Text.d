@@ -260,7 +260,7 @@ public class Text
 	 */
 	public gunichar getCharacterAtOffset(int offset)
 	{
-		// gunichar atk_text_get_character_at_offset  (AtkText *text,  gint offset);
+		// gunichar atk_text_get_character_at_offset (AtkText *text,  gint offset);
 		return atk_text_get_character_at_offset(atkText, offset);
 	}
 	
@@ -477,7 +477,7 @@ public class Text
 	 */
 	public AtkAttributeSet* getRunAttributes(int offset, int* startOffset, int* endOffset)
 	{
-		// AtkAttributeSet* atk_text_get_run_attributes  (AtkText *text,  gint offset,  gint *start_offset,  gint *end_offset);
+		// AtkAttributeSet* atk_text_get_run_attributes (AtkText *text,  gint offset,  gint *start_offset,  gint *end_offset);
 		return atk_text_get_run_attributes(atkText, offset, startOffset, endOffset);
 	}
 	
@@ -495,7 +495,7 @@ public class Text
 	 */
 	public AtkAttributeSet* getDefaultAttributes()
 	{
-		// AtkAttributeSet* atk_text_get_default_attributes  (AtkText *text);
+		// AtkAttributeSet* atk_text_get_default_attributes (AtkText *text);
 		return atk_text_get_default_attributes(atkText);
 	}
 	
@@ -729,7 +729,7 @@ public class Text
 	 */
 	public static AtkTextAttribute attributeRegister(char[] name)
 	{
-		// AtkTextAttribute atk_text_attribute_register  (const gchar *name);
+		// AtkTextAttribute atk_text_attribute_register (const gchar *name);
 		return atk_text_attribute_register(Str.toStringz(name));
 	}
 	
@@ -757,7 +757,7 @@ public class Text
 	 */
 	public static AtkTextAttribute attributeForName(char[] name)
 	{
-		// AtkTextAttribute atk_text_attribute_for_name  (const gchar *name);
+		// AtkTextAttribute atk_text_attribute_for_name (const gchar *name);
 		return atk_text_attribute_for_name(Str.toStringz(name));
 	}
 	
@@ -773,7 +773,7 @@ public class Text
 	 * Signal Details
 	 * The "text-attributes-changed" signal
 	 * void user_function (AtkText *atktext,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * The "text-attributes-changed" signal is emitted when the text attributes of
 	 * the text of an object which implements AtkText changes.
 	 * atktext:

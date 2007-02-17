@@ -205,7 +205,7 @@ public class ProgressBar : Progress
 	 */
 	public void setOrientation(GtkProgressBarOrientation orientation)
 	{
-		// void gtk_progress_bar_set_orientation  (GtkProgressBar *pbar,  GtkProgressBarOrientation orientation);
+		// void gtk_progress_bar_set_orientation (GtkProgressBar *pbar,  GtkProgressBarOrientation orientation);
 		gtk_progress_bar_set_orientation(gtkProgressBar, orientation);
 	}
 	
@@ -292,7 +292,7 @@ public class ProgressBar : Progress
 	 */
 	public PangoEllipsizeMode getEllipsize()
 	{
-		// PangoEllipsizeMode gtk_progress_bar_get_ellipsize  (GtkProgressBar *pbar);
+		// PangoEllipsizeMode gtk_progress_bar_get_ellipsize (GtkProgressBar *pbar);
 		return gtk_progress_bar_get_ellipsize(gtkProgressBar);
 	}
 	
@@ -358,7 +358,7 @@ public class ProgressBar : Progress
 	 */
 	public void setActivityStep(uint step)
 	{
-		// void gtk_progress_bar_set_activity_step  (GtkProgressBar *pbar,  guint step);
+		// void gtk_progress_bar_set_activity_step (GtkProgressBar *pbar,  guint step);
 		gtk_progress_bar_set_activity_step(gtkProgressBar, step);
 	}
 	

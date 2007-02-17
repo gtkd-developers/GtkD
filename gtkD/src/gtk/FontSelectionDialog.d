@@ -127,7 +127,7 @@ public class FontSelectionDialog : Dialog
 	 */
 	public Font getFont()
 	{
-		// GdkFont* gtk_font_selection_dialog_get_font  (GtkFontSelectionDialog *fsd);
+		// GdkFont* gtk_font_selection_dialog_get_font (GtkFontSelectionDialog *fsd);
 		return new Font( gtk_font_selection_dialog_get_font(gtkFontSelectionDialog) );
 	}
 	

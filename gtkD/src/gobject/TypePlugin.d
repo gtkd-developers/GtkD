@@ -175,7 +175,7 @@ public class TypePlugin
 	 */
 	public void completeTypeInfo(GType gType, GTypeInfo* info, GTypeValueTable* valueTable)
 	{
-		// void g_type_plugin_complete_type_info  (GTypePlugin *plugin,  GType g_type,  GTypeInfo *info,  GTypeValueTable *value_table);
+		// void g_type_plugin_complete_type_info (GTypePlugin *plugin,  GType g_type,  GTypeInfo *info,  GTypeValueTable *value_table);
 		g_type_plugin_complete_type_info(gTypePlugin, gType, info, valueTable);
 	}
 	

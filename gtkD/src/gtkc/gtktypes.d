@@ -337,6 +337,7 @@ alias GtkAttachOptions AttachOptions;
  * GTK_BUTTONBOX_END
  * Buttons are grouped towards the end of a box, (on the
  * right for a HBox, or the bottom for a VBox).
+ * GTK_BUTTONBOX_CENTER
  */
 public enum GtkButtonBoxStyle
 {
@@ -344,7 +345,8 @@ public enum GtkButtonBoxStyle
 	SPREAD,
 	EDGE,
 	START,
-	END
+	END,
+	CENTER
 }
 alias GtkButtonBoxStyle ButtonBoxStyle;
 
@@ -1197,9 +1199,9 @@ alias GtkTextSearchFlags TextSearchFlags;
 
 public enum GtkTextBufferTargetInfo
 {
-	BUFFER_CONTENTS = G_MAXUINT - 0,
-	RICH_TEXT = G_MAXUINT - 1,
-	TEXT = G_MAXUINT - 2
+	BUFFER_CONTENTS = - 1,
+	RICH_TEXT = - 2,
+	TEXT = - 3
 }
 alias GtkTextBufferTargetInfo TextBufferTargetInfo;
 
@@ -1339,7 +1341,6 @@ alias GtkIconViewDropPosition IconViewDropPosition;
  * GTK_CELL_RENDERER_SORTED
  * The cell is in a sorted row
  * GTK_CELL_RENDERER_FOCUSED
- * GTK_CELL_RENDERER_USE_FG
  */
 public enum GtkCellRendererState
 {
@@ -1348,8 +1349,7 @@ public enum GtkCellRendererState
 	INSENSITIVE = 1 << 2,
 	/+* this flag means the cell is inn the sort column/row +/
 	SORTED = 1 << 3,
-	FOCUSED = 1 << 4,
-	USE_FG = 1 << 5
+	FOCUSED = 1 << 4
 }
 alias GtkCellRendererState CellRendererState;
 
@@ -2225,7 +2225,8 @@ public struct GtkProgressBar{}
 
 /**
  * Main Gtk struct.
- * Contains private data that should be modified with the functions described below.
+ * Contains private data that should be modified with the functions described
+ * below.
  */
 public struct GtkStatusbar{}
 
@@ -2819,6 +2820,8 @@ public struct GtkCellLayoutIface{}
 // GtkCellLayout.html
 // int position);
 // GtkCellLayout.html
+// GList* (* getCells) (GtkCellLayout *cellLayout);
+// GtkCellLayout.html
 
 
 /**
@@ -3203,15 +3206,17 @@ public struct GtkColorSelectionDialog{}
 
 /**
  * Main Gtk struct.
+ * Warning
+ * GtkFileSelection is deprecated and should not be used in newly-written code.
  * The GtkFileSelection struct contains the following GtkWidget fields:
- * *fileop_dialog;
- * the dialog box used to display the GtkFileSelection. It can be customized by adding/removing widgets from it using the standard GtkDialog functions.
- * *ok_button, *cancel_button;
- * the two main buttons that signals should be connected to in order to perform an action when the user hits either OK or Cancel.
- * *history_pulldown;
- * the GtkOptionMenu used to create the drop-down directory history.
- * *fileop_c_dir, *fileop_del_file, *fileop_ren_file;
- * the buttons that appear at the top of the file selection dialog. These "operation buttons" can be hidden and redisplayed with gtk_file_selection_hide_fileop_buttons() and gtk_file_selection_show_fileop_buttons() respectively.
+ * GtkWidget*dir_list;
+ * GtkWidget*file_list;
+ * GtkWidget*selection_entry;
+ * GtkWidget*selection_text;
+ * GtkWidget*main_vbox;
+ * GtkWidget*ok_button;
+ * GtkWidget*cancel_button;
+ * the two main buttons that signals should be connected
  */
 public struct GtkFileSelection{}
 // GtkWidget *dirList;
@@ -5547,7 +5552,7 @@ public typedef extern(C) void  function (GtkClipboard*, char[], void*) GtkClipbo
  * the user_data supplied to gtk_clipboard_request_image().
  * Since 2.6
  */
-// void (*GtkClipboardImageReceivedFunc)  (GtkClipboard *clipboard,  GdkPixbuf *pixbuf,  gpointer data);
+// void (*GtkClipboardImageReceivedFunc) (GtkClipboard *clipboard,  GdkPixbuf *pixbuf,  gpointer data);
 public typedef extern(C) void  function (GtkClipboard*, GdkPixbuf*, void*) GtkClipboardImageReceivedFunc;
 
 /*
@@ -5564,7 +5569,7 @@ public typedef extern(C) void  function (GtkClipboard*, GdkPixbuf*, void*) GtkCl
  * the user_data supplied to gtk_clipboard_request_targets().
  * Since 2.4
  */
-// void (*GtkClipboardTargetsReceivedFunc)  (GtkClipboard *clipboard,  GdkAtom *atoms,  gint n_atoms,  gpointer data);
+// void (*GtkClipboardTargetsReceivedFunc) (GtkClipboard *clipboard,  GdkAtom *atoms,  gint n_atoms,  gpointer data);
 public typedef extern(C) void  function (GtkClipboard*, GdkAtom*, int, void*) GtkClipboardTargetsReceivedFunc;
 
 /*
@@ -5574,7 +5579,7 @@ public typedef extern(C) void  function (GtkClipboard*, GdkAtom*, int, void*) Gt
  * length:
  * data:
  */
-// void (*GtkClipboardRichTextReceivedFunc)  (GtkClipboard *clipboard,  GdkAtom format,  const guint8 *text,  gsize length,  gpointer data);
+// void (*GtkClipboardRichTextReceivedFunc) (GtkClipboard *clipboard,  GdkAtom format,  const guint8 *text,  gsize length,  gpointer data);
 public typedef extern(C) void  function (GtkClipboard*, GdkAtom, guint8*, uint, void*) GtkClipboardRichTextReceivedFunc;
 
 /*
@@ -5623,7 +5628,7 @@ public typedef extern(C) void  function (GtkClipboard*, void*) GtkClipboardClear
  * Signal Details
  * The "realize" signal
  * void user_function (GtkStyle *style,
- *  gpointer user_data) : Run first
+ *  gpointer user_data) : Run First
  * Emitted when the style has been initialized for a particular
  * colormap and depth. Connecting to this signal is probably seldom
  * useful since most of the time applications and widgets only
@@ -5687,7 +5692,7 @@ public typedef extern(C) void  function (GtkObject*, void*, uint, GtkArg*) GtkCa
  *  with gtk_about_dialog_set_email_hook() or
  *  gtk_about_dialog_set_url_hook()
  */
-// void (*GtkAboutDialogActivateLinkFunc)  (GtkAboutDialog *about,  const gchar *link,  gpointer data);
+// void (*GtkAboutDialogActivateLinkFunc) (GtkAboutDialog *about,  const gchar *link,  gpointer data);
 public typedef extern(C) void  function (GtkAboutDialog*, char[], void*) GtkAboutDialogActivateLinkFunc;
 
 /*
@@ -5734,27 +5739,48 @@ public typedef extern(C) int  function (GtkEntryCompletion*, char[], GtkTreeIter
 public typedef extern(C) int  function (gunichar, void*) GtkTextCharPredicate;
 
 /*
+ * A function that is called to deserialize rich text that has been
+ * serialized with gtk_text_buffer_serialize(), and insert it at iter.
  * register_buffer:
+ * the GtkTextBuffer the format is registered with
  * content_buffer:
+ * the GtkTextBuffer to deserialize into
  * iter:
+ * insertion point for the deserialized text
  * data:
+ * data to deserialize
  * length:
+ * length of data
  * create_tags:
+ * TRUE if deserializing may create tags
  * user_data:
+ * user data that was specified when registering the format
  * error:
+ * return location for a GError
  * Returns:
+ * TRUE on success, FALSE otherwise
  */
 // gboolean (*GtkTextBufferDeserializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  GtkTextIter *iter,  const guint8 *data,  gsize length,  gboolean create_tags,  gpointer user_data,  GError **error);
 public typedef extern(C) int  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, guint8*, uint, int, void*, GError**) GtkTextBufferDeserializeFunc;
 
 /*
+ * A function that is called to serialize the content of a text buffer.
+ * It must return the serialized form of the content.
  * register_buffer:
+ * the GtkTextBuffer for which the format is registered
  * content_buffer:
+ * the GtkTextsBuffer to serialize
  * start:
+ * start of the block of text to serialize
  * end:
+ * end of the block of text to serialize
  * length:
+ * Return location for the length of the serialized data
  * user_data:
+ * user data that was specified when registering the format
  * Returns:
+ * a newly-allocated array of guint8 which contains the serialized
+ *  data, or NULL if an error occurred
  */
 // guint8* (*GtkTextBufferSerializeFunc) (GtkTextBuffer *register_buffer,  GtkTextBuffer *content_buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gsize *length,  gpointer user_data);
 public typedef extern(C) byte*  function (GtkTextBuffer*, GtkTextBuffer*, GtkTextIter*, GtkTextIter*, gsize*, void*) GtkTextBufferSerializeFunc;
@@ -5897,7 +5923,7 @@ public typedef extern(C) int  function (GtkTreeModel*, int, char[], GtkTreeIter*
  * search_dialog:
  * user_data:
  */
-// void (*GtkTreeViewSearchPositionFunc)  (GtkTreeView *tree_view,  GtkWidget *search_dialog,  gpointer user_data);
+// void (*GtkTreeViewSearchPositionFunc) (GtkTreeView *tree_view,  GtkWidget *search_dialog,  gpointer user_data);
 public typedef extern(C) void  function (GtkTreeView*, GtkWidget*, void*) GtkTreeViewSearchPositionFunc;
 
 /*
@@ -5975,7 +6001,7 @@ public typedef extern(C) int  function (GtkTreeModel*, GtkTreeIter*, GtkTreeIter
  * Returns:
  * Whether the row indicated by iter is visible.
  */
-// gboolean (*GtkTreeModelFilterVisibleFunc)  (GtkTreeModel *model,  GtkTreeIter *iter,  gpointer data);
+// gboolean (*GtkTreeModelFilterVisibleFunc) (GtkTreeModel *model,  GtkTreeIter *iter,  gpointer data);
 public typedef extern(C) int  function (GtkTreeModel*, GtkTreeIter*, void*) GtkTreeModelFilterVisibleFunc;
 
 /*
@@ -6099,7 +6125,7 @@ public typedef extern(C) int  function (GtkFileFilterInfo*, void*) GtkFileFilter
  * Returns:
  * The created GtkNotebook where the tab will be attached, or NULL to cancel the drag
  */
-// GtkNotebook* (*GtkNotebookWindowCreationFunc)  (GtkNotebook *source,  GtkWidget *page,  gint x,  gint y,  gpointer data);
+// GtkNotebook* (*GtkNotebookWindowCreationFunc) (GtkNotebook *source,  GtkWidget *page,  gint x,  gint y,  gpointer data);
 public typedef extern(C) GtkNotebook*  function (GtkNotebook*, GtkWidget*, int, int, void*) GtkNotebookWindowCreationFunc;
 
 /*

@@ -138,12 +138,15 @@ package: gdk gdk
 package: gtk gtk
 package: gda gda
 package: glade glade
+package: sourceview gsv
 bind: gtkc
 
 srcdir: srcgl
 package: glgdk glgdk
 package: glgtk glgtk
 bind: gtkglc
+
+
 # define other packages to create
 
 # define package by package, file by file
@@ -212,6 +215,12 @@ htod: HTODopenGL.txt
 srcdir: srcgda
 bindDir: gdac
 lookup: APILookupGda.txt
+
+srcdir: srcsv
+bindDir: gsvc
+lookup: APILookupSourceView.txt
+
+
 
 #Hack to put the build text in the correct place.
 srcdir: src

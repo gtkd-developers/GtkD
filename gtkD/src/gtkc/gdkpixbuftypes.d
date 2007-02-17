@@ -369,7 +369,7 @@ public struct GdkPixbufAnimationIterClass{}
  * a GdkPixbufModule.
  * Since 2.2
  */
-// void (*GdkPixbufModuleFillVtableFunc)  (GdkPixbufModule *module);
+// void (*GdkPixbufModuleFillVtableFunc) (GdkPixbufModule *module);
 public typedef extern(C) void  function (GdkPixbufModule*) GdkPixbufModuleFillVtableFunc;
 
 /*

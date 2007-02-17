@@ -121,7 +121,7 @@ private import glib.ListG;
  * GError *error = NULL;
  * GtkIconTheme *icon_theme;
  * GdkPixbuf *pixbuf;
- * icon_theme = gtk_icon_theme_get_default();
+ * icon_theme = gtk_icon_theme_get_default ();
  * pixbuf = gtk_icon_theme_load_icon (icon_theme,
  *  "my-icon-name", /+* icon name +/
  *  48, /+* size +/
@@ -338,7 +338,7 @@ public class IconTheme : ObjectG
 	 */
 	public void appendSearchPath(char[] path)
 	{
-		// void gtk_icon_theme_append_search_path  (GtkIconTheme *icon_theme,  const gchar *path);
+		// void gtk_icon_theme_append_search_path (GtkIconTheme *icon_theme,  const gchar *path);
 		gtk_icon_theme_append_search_path(gtkIconTheme, Str.toStringz(path));
 	}
 	
@@ -353,7 +353,7 @@ public class IconTheme : ObjectG
 	 */
 	public void prependSearchPath(char[] path)
 	{
-		// void gtk_icon_theme_prepend_search_path  (GtkIconTheme *icon_theme,  const gchar *path);
+		// void gtk_icon_theme_prepend_search_path (GtkIconTheme *icon_theme,  const gchar *path);
 		gtk_icon_theme_prepend_search_path(gtkIconTheme, Str.toStringz(path));
 	}
 	

@@ -141,35 +141,6 @@ public class CellView : Widget
 	
 	
 	/**
-	 * Get whether the GtkCellView hints the cell renderer that foreground colors
-	 * should be used when rendering text. See gtk_cell_view_set_use_fg().
-	 * cell_view:
-	 *  a GtkCellView
-	 * Returns:
-	 *  The value of the "use-fg" property
-	 * Since 2.12
-	 */
-	public int getUseFg()
-	{
-		// gboolean gtk_cell_view_get_use_fg (GtkCellView *cell_view);
-		return gtk_cell_view_get_use_fg(gtkCellView);
-	}
-	
-	/**
-	 * Sets whether to hint the cell renderer that foreground colors should be used when rendering text.
-	 * cell_view:
-	 *  a GtkCellView
-	 * use_fg:
-	 *  TRUE if foreground colors should be used for text
-	 * Since 2.12
-	 */
-	public void setUseFg(int useFg)
-	{
-		// void gtk_cell_view_set_use_fg (GtkCellView *cell_view,  gboolean use_fg);
-		gtk_cell_view_set_use_fg(gtkCellView, useFg);
-	}
-	
-	/**
 	 * Creates a new GtkCellView widget.
 	 * Returns:
 	 *  A newly created GtkCellView widget.
@@ -245,7 +216,7 @@ public class CellView : Widget
 	 */
 	public TreePath getDisplayedRow()
 	{
-		// GtkTreePath* gtk_cell_view_get_displayed_row  (GtkCellView *cell_view);
+		// GtkTreePath* gtk_cell_view_get_displayed_row (GtkCellView *cell_view);
 		return new TreePath( gtk_cell_view_get_displayed_row(gtkCellView) );
 	}
 	
@@ -278,7 +249,7 @@ public class CellView : Widget
 	 */
 	public void setBackgroundColor(Color color)
 	{
-		// void gtk_cell_view_set_background_color  (GtkCellView *cell_view,  const GdkColor *color);
+		// void gtk_cell_view_set_background_color (GtkCellView *cell_view,  const GdkColor *color);
 		gtk_cell_view_set_background_color(gtkCellView, (color is null) ? null : color.getColorStruct());
 	}
 	
@@ -299,10 +270,9 @@ public class CellView : Widget
 	 */
 	public ListG getCellRenderers()
 	{
-		// GList* gtk_cell_view_get_cell_renderers  (GtkCellView *cell_view);
+		// GList* gtk_cell_view_get_cell_renderers (GtkCellView *cell_view);
 		return new ListG( gtk_cell_view_get_cell_renderers(gtkCellView) );
 	}
-	
 	
 	
 	

@@ -251,7 +251,7 @@ public class OptionContext
 	 */
 	public void setDescription(char[] description)
 	{
-		// void g_option_context_set_description  (GOptionContext *context,  const gchar *description);
+		// void g_option_context_set_description (GOptionContext *context,  const gchar *description);
 		g_option_context_set_description(gOptionContext, Str.toStringz(description));
 	}
 	
@@ -265,7 +265,7 @@ public class OptionContext
 	 */
 	public char[] getDescription()
 	{
-		// const gchar* g_option_context_get_description  (GOptionContext *context);
+		// const gchar* g_option_context_get_description (GOptionContext *context);
 		return Str.toString(g_option_context_get_description(gOptionContext) );
 	}
 	
@@ -292,7 +292,7 @@ public class OptionContext
 	 */
 	public void setTranslateFunc(GTranslateFunc func, void* data, GDestroyNotify destroyNotify)
 	{
-		// void g_option_context_set_translate_func  (GOptionContext *context,  GTranslateFunc func,  gpointer data,  GDestroyNotify destroy_notify);
+		// void g_option_context_set_translate_func (GOptionContext *context,  GTranslateFunc func,  gpointer data,  GDestroyNotify destroy_notify);
 		g_option_context_set_translate_func(gOptionContext, func, data, destroyNotify);
 	}
 	
@@ -377,7 +377,7 @@ public class OptionContext
 	 */
 	public void setHelpEnabled(int helpEnabled)
 	{
-		// void g_option_context_set_help_enabled  (GOptionContext *context,  gboolean help_enabled);
+		// void g_option_context_set_help_enabled (GOptionContext *context,  gboolean help_enabled);
 		g_option_context_set_help_enabled(gOptionContext, helpEnabled);
 	}
 	
@@ -392,7 +392,7 @@ public class OptionContext
 	 */
 	public int getHelpEnabled()
 	{
-		// gboolean g_option_context_get_help_enabled  (GOptionContext *context);
+		// gboolean g_option_context_get_help_enabled (GOptionContext *context);
 		return g_option_context_get_help_enabled(gOptionContext);
 	}
 	
@@ -450,7 +450,7 @@ public class OptionContext
 	 */
 	public void addMainEntries(GOptionEntry* entries, char[] translationDomain)
 	{
-		// void g_option_context_add_main_entries  (GOptionContext *context,  const GOptionEntry *entries,  const gchar *translation_domain);
+		// void g_option_context_add_main_entries (GOptionContext *context,  const GOptionEntry *entries,  const gchar *translation_domain);
 		g_option_context_add_main_entries(gOptionContext, entries, Str.toStringz(translationDomain));
 	}
 	
@@ -502,7 +502,7 @@ public class OptionContext
 	 */
 	public OptionGroup getMainGroup()
 	{
-		// GOptionGroup* g_option_context_get_main_group  (GOptionContext *context);
+		// GOptionGroup* g_option_context_get_main_group (GOptionContext *context);
 		return new OptionGroup( g_option_context_get_main_group(gOptionContext) );
 	}
 	

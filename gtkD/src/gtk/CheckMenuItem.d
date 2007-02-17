@@ -214,7 +214,7 @@ public class CheckMenuItem : MenuItem
 	 */
 	public void setShowToggle(int always)
 	{
-		// void gtk_check_menu_item_set_show_toggle  (GtkCheckMenuItem *menu_item,  gboolean always);
+		// void gtk_check_menu_item_set_show_toggle (GtkCheckMenuItem *menu_item,  gboolean always);
 		gtk_check_menu_item_set_show_toggle(gtkCheckMenuItem, always);
 	}
 	

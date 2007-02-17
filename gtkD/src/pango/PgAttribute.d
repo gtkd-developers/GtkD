@@ -158,10 +158,10 @@ public class PgAttribute
 	/**
 	 * Parses marked-up text (see
 	 * markup format) to create
-	 * a plaintext string and an attribute list.
+	 * a plain-text string and an attribute list.
 	 * If accel_marker is nonzero, the given character will mark the
-	 * character following it as an accelerator. For example, the accel
-	 * marker might be an ampersand or underscore. All characters marked
+	 * character following it as an accelerator. For example, accel_marker
+	 * might be an ampersand or underscore. All characters marked
 	 * as an accelerator will receive a PANGO_UNDERLINE_LOW attribute,
 	 * and the first character so marked will be returned in accel_char.
 	 * Two accel_marker characters following each other produce a single
@@ -353,7 +353,7 @@ public class PgAttribute
 	 */
 	public static PangoAttribute* sizeNewAbsolute(int size)
 	{
-		// PangoAttribute* pango_attr_size_new_absolute  (int size);
+		// PangoAttribute* pango_attr_size_new_absolute (int size);
 		return pango_attr_size_new_absolute(size);
 	}
 	
@@ -419,7 +419,7 @@ public class PgAttribute
 	 */
 	public static PangoAttribute* strikethroughNew(int strikethrough)
 	{
-		// PangoAttribute* pango_attr_strikethrough_new  (gboolean strikethrough);
+		// PangoAttribute* pango_attr_strikethrough_new (gboolean strikethrough);
 		return pango_attr_strikethrough_new(strikethrough);
 	}
 	
@@ -440,7 +440,7 @@ public class PgAttribute
 	 */
 	public static PangoAttribute* strikethroughColorNew(ushort red, ushort green, ushort blue)
 	{
-		// PangoAttribute* pango_attr_strikethrough_color_new  (guint16 red,  guint16 green,  guint16 blue);
+		// PangoAttribute* pango_attr_strikethrough_color_new (guint16 red,  guint16 green,  guint16 blue);
 		return pango_attr_strikethrough_color_new(red, green, blue);
 	}
 	
@@ -475,7 +475,7 @@ public class PgAttribute
 	 */
 	public static PangoAttribute* underlineColorNew(ushort red, ushort green, ushort blue)
 	{
-		// PangoAttribute* pango_attr_underline_color_new  (guint16 red,  guint16 green,  guint16 blue);
+		// PangoAttribute* pango_attr_underline_color_new (guint16 red,  guint16 green,  guint16 blue);
 		return pango_attr_underline_color_new(red, green, blue);
 	}
 	
@@ -483,7 +483,7 @@ public class PgAttribute
 	
 	/**
 	 * Create a new shape attribute. A shape is used to impose a
-	 * particular ink and logical rect on the result of shaping a
+	 * particular ink and logical rectangle on the result of shaping a
 	 * particular glyph. This might be used, for instance, for
 	 * embedding a picture or a widget inside a PangoLayout.
 	 * ink_rect:
@@ -524,7 +524,7 @@ public class PgAttribute
 	 */
 	public static PangoAttribute* shapeNewWithData(PangoRectangle* inkRect, PangoRectangle* logicalRect, void* data, PangoAttrDataCopyFunc copyFunc, GDestroyNotify destroyFunc)
 	{
-		// PangoAttribute* pango_attr_shape_new_with_data  (const PangoRectangle *ink_rect,  const PangoRectangle *logical_rect,  gpointer data,  PangoAttrDataCopyFunc copy_func,  GDestroyNotify destroy_func);
+		// PangoAttribute* pango_attr_shape_new_with_data (const PangoRectangle *ink_rect,  const PangoRectangle *logical_rect,  gpointer data,  PangoAttrDataCopyFunc copy_func,  GDestroyNotify destroy_func);
 		return pango_attr_shape_new_with_data(inkRect, logicalRect, data, copyFunc, destroyFunc);
 	}
 	
@@ -542,26 +542,6 @@ public class PgAttribute
 	{
 		// PangoAttribute* pango_attr_scale_new (double scale_factor);
 		return pango_attr_scale_new(scaleFactor);
-	}
-	
-	/**
-	 * Create a new font fallback attribute.
-	 * If fallback is disabled, characters will only be used from the
-	 * closest matching font on the system. No fallback will be done to
-	 * other fonts on the system that might contain the characters in the
-	 * text.
-	 * enable_fallback:
-	 *  TRUE if we should fall back on other fonts
-	 *  for characters the active font is missing.
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
-	 * Since 1.4
-	 */
-	public static PangoAttribute* fallbackNew(int enableFallback)
-	{
-		// PangoAttribute* pango_attr_fallback_new (gboolean enable_fallback);
-		return pango_attr_fallback_new(enableFallback);
 	}
 	
 	
@@ -598,8 +578,58 @@ public class PgAttribute
 	 */
 	public static PangoAttribute* letterSpacingNew(int letterSpacing)
 	{
-		// PangoAttribute* pango_attr_letter_spacing_new  (int letter_spacing);
+		// PangoAttribute* pango_attr_letter_spacing_new (int letter_spacing);
 		return pango_attr_letter_spacing_new(letterSpacing);
+	}
+	
+	/**
+	 * Create a new font fallback attribute.
+	 * If fallback is disabled, characters will only be used from the
+	 * closest matching font on the system. No fallback will be done to
+	 * other fonts on the system that might contain the characters in the
+	 * text.
+	 * enable_fallback:
+	 *  TRUE if we should fall back on other fonts
+	 *  for characters the active font is missing.
+	 * Returns:
+	 *  the newly allocated PangoAttribute, which should be
+	 *  freed with pango_attribute_destroy().
+	 * Since 1.4
+	 */
+	public static PangoAttribute* fallbackNew(int enableFallback)
+	{
+		// PangoAttribute* pango_attr_fallback_new (gboolean enable_fallback);
+		return pango_attr_fallback_new(enableFallback);
+	}
+	
+	/**
+	 * Create a new gravity attribute.
+	 * gravity:
+	 *  the gravity value; should not be PANGO_GRAVITY_AUTO.
+	 * Returns:
+	 *  the newly allocated PangoAttribute, which should be
+	 *  freed with pango_attribute_destroy().
+	 * Since 1.16
+	 */
+	public static PangoAttribute* gravityNew(PangoGravity gravity)
+	{
+		// PangoAttribute* pango_attr_gravity_new (PangoGravity gravity);
+		return pango_attr_gravity_new(gravity);
+	}
+	
+	/**
+	 * Create a new gravity hint attribute.
+	 * hint:
+	 *  the gravity hint value.
+	 * Returns:
+	 *  the newly allocated PangoAttribute, which should be
+	 *  freed with pango_attribute_destroy().
+	 * Since 1.16
+	 */
+	public static PangoAttribute* gravityHintNew(PangoGravityHint hint)
+	{
+		// PangoAttribute* pango_attr_gravity_hint_new (PangoGravityHint hint);
+		return pango_attr_gravity_hint_new(hint);
 	}
 	
 	
@@ -793,7 +823,7 @@ public class PgAttribute
 	 * and then calling pango_attr_list_change() with a copy
 	 * of each attribute in other in sequence (offset in position by pos).
 	 * This operation proves useful for, for instance, inserting
-	 * a preedit string in the middle of an edit buffer.
+	 * a pre-edit string in the middle of an edit buffer.
 	 * list:
 	 *  a PangoAttrList
 	 * other:
@@ -818,7 +848,7 @@ public class PgAttribute
 	 * list:
 	 *  a PangoAttrList
 	 * func:
-	 *  callback function; returns TRUE if an atttribute
+	 *  callback function; returns TRUE if an attribute
 	 *  should be filtered out.
 	 * data:
 	 *  Data to be passed to func
@@ -845,7 +875,7 @@ public class PgAttribute
 	 */
 	public static PangoAttrIterator* listGetIterator(PangoAttrList* list)
 	{
-		// PangoAttrIterator* pango_attr_list_get_iterator  (PangoAttrList *list);
+		// PangoAttrIterator* pango_attr_list_get_iterator (PangoAttrList *list);
 		return pango_attr_list_get_iterator(list);
 	}
 	

@@ -595,7 +595,7 @@ public class ObjectGtk : ObjectG
 	 */
 	public void removeNoNotifyById(GQuark keyId)
 	{
-		// void gtk_object_remove_no_notify_by_id  (GtkObject *object,  GQuark key_id);
+		// void gtk_object_remove_no_notify_by_id (GtkObject *object,  GQuark key_id);
 		gtk_object_remove_no_notify_by_id(gtkObject, keyId);
 	}
 	

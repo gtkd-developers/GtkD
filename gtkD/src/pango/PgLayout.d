@@ -235,7 +235,7 @@ public class PgLayout
 	 *  maximum length of text, in bytes. -1 indicates that
 	 *  the string is nul-terminated and the length should be
 	 *  calculated. The text will also be truncated on
-	 *  encountaring a nul-termination even when length is
+	 *  encountering a nul-termination even when length is
 	 *  positive.
 	 */
 	public void setText(char[] text, int length)
@@ -280,8 +280,8 @@ public class PgLayout
 	 * markup format). Replaces
 	 * the current text and attribute list.
 	 * If accel_marker is nonzero, the given character will mark the
-	 * character following it as an accelerator. For example, the accel
-	 * marker might be an ampersand or underscore. All characters marked
+	 * character following it as an accelerator. For example, accel_marker
+	 * might be an ampersand or underscore. All characters marked
 	 * as an accelerator will receive a PANGO_UNDERLINE_LOW attribute,
 	 * and the first character so marked will be returned in accel_char.
 	 * Two accel_marker characters following each other produce a single
@@ -301,7 +301,7 @@ public class PgLayout
 	 */
 	public void setMarkupWithAccel(char[] markup, int length, gunichar accelMarker, gunichar* accelChar)
 	{
-		// void pango_layout_set_markup_with_accel  (PangoLayout *layout,  const char *markup,  int length,  gunichar accel_marker,  gunichar *accel_char);
+		// void pango_layout_set_markup_with_accel (PangoLayout *layout,  const char *markup,  int length,  gunichar accel_marker,  gunichar *accel_char);
 		pango_layout_set_markup_with_accel(pangoLayout, Str.toStringz(markup), length, accelMarker, accelChar);
 	}
 	
@@ -343,7 +343,7 @@ public class PgLayout
 	 */
 	public void setFontDescription(PgFontDescription desc)
 	{
-		// void pango_layout_set_font_description  (PangoLayout *layout,  const PangoFontDescription *desc);
+		// void pango_layout_set_font_description (PangoLayout *layout,  const PangoFontDescription *desc);
 		pango_layout_set_font_description(pangoLayout, (desc is null) ? null : desc.getPgFontDescriptionStruct());
 	}
 	
@@ -408,6 +408,8 @@ public class PgLayout
 	
 	/**
 	 * Gets the wrap mode for the layout.
+	 * Use pango_layout_is_wrapped() to query whether any paragraphs
+	 * were actually wrapped.
 	 * layout:
 	 *  a PangoLayout
 	 * Returns:
@@ -417,6 +419,25 @@ public class PgLayout
 	{
 		// PangoWrapMode pango_layout_get_wrap (PangoLayout *layout);
 		return pango_layout_get_wrap(pangoLayout);
+	}
+	
+	/**
+	 * Queries whether the layout had to wrap any paragraphs.
+	 * This returns TRUE if a positive width is set on layout,
+	 * ellipsization mode of layout is set to PANGO_ELLIPSIZE_NONE,
+	 * and there are paragraphs exceeding the layout width that have
+	 * to be wrapped.
+	 * layout:
+	 *  a PangoLayout
+	 * Returns:
+	 *  TRUE if any paragraphs had to be wrapped, FALSE
+	 * otherwise.
+	 * Since 1.16
+	 */
+	public int isWrapped()
+	{
+		// gboolean pango_layout_is_wrapped (PangoLayout *layout);
+		return pango_layout_is_wrapped(pangoLayout);
 	}
 	
 	
@@ -448,12 +469,33 @@ public class PgLayout
 	 *  a PangoLayout
 	 * Returns:
 	 *  the current ellipsization mode for layout.
+	 * Use pango_layout_is_ellipsized() to query whether any paragraphs
+	 * were actually ellipsized.
 	 * Since 1.6
 	 */
 	public PangoEllipsizeMode getEllipsize()
 	{
-		// PangoEllipsizeMode pango_layout_get_ellipsize  (PangoLayout *layout);
+		// PangoEllipsizeMode pango_layout_get_ellipsize (PangoLayout *layout);
 		return pango_layout_get_ellipsize(pangoLayout);
+	}
+	
+	/**
+	 * Queries whether the layout had to ellipsize any paragraphs.
+	 * This returns TRUE if the ellipsization mode for layout
+	 * is not PANGO_ELLIPSIZE_NONE, a positive width is set on layout,
+	 * and there are paragraphs exceeding that width that have to be
+	 * ellipsized.
+	 * layout:
+	 *  a PangoLayout
+	 * Returns:
+	 *  TRUE if any paragraphs had to be ellipsized, FALSE
+	 * otherwise.
+	 * Since 1.16
+	 */
+	public int isEllipsized()
+	{
+		// gboolean pango_layout_is_ellipsized (PangoLayout *layout);
+		return pango_layout_is_ellipsized(pangoLayout);
 	}
 	
 	
@@ -522,7 +564,7 @@ public class PgLayout
 	 * done by adding whitespace, but for some scripts (such as Arabic),
 	 * the justification may be done in more complex ways, like extending
 	 * the characters.
-	 * Note that as of Pango-1.10, this functionality is not yet implemented.
+	 * Note that as of Pango-1.16, this functionality is not yet implemented.
 	 * layout:
 	 *  a PangoLayout
 	 * justify:
@@ -684,6 +726,22 @@ public class PgLayout
 	}
 	
 	
+	
+	/**
+	 * Counts the number unknown glyphs in layout. That is, zero if
+	 * glyphs for all characters in the layout text were found, or more
+	 * than zero otherwise.
+	 * layout:
+	 *  a PangoLayout
+	 * Returns:
+	 *  The number of unknown glyphs in layout.
+	 * Since 1.16
+	 */
+	public int getUnknownGlyphsCount()
+	{
+		// int pango_layout_get_unknown_glyphs_count  (PangoLayout *layout);
+		return pango_layout_get_unknown_glyphs_count(pangoLayout);
+	}
 	
 	/**
 	 * Retrieves an array of logical attributes for each character in
@@ -852,7 +910,7 @@ public class PgLayout
 	 */
 	public void moveCursorVisually(int strong, int oldIndex, int oldTrailing, int direction, int* newIndex, int* newTrailing)
 	{
-		// void pango_layout_move_cursor_visually  (PangoLayout *layout,  gboolean strong,  int old_index,  int old_trailing,  int direction,  int *new_index,  int *new_trailing);
+		// void pango_layout_move_cursor_visually (PangoLayout *layout,  gboolean strong,  int old_index,  int old_trailing,  int direction,  int *new_index,  int *new_trailing);
 		pango_layout_move_cursor_visually(pangoLayout, strong, oldIndex, oldTrailing, direction, newIndex, newTrailing);
 	}
 	
@@ -872,7 +930,7 @@ public class PgLayout
 	 *  or NULL to indicate that the result is not needed.
 	 * logical_rect:
 	 *  rectangle used to store the logical extents of the layout
-	 *  or NULL to indicate that the result is not needed.
+	 * 		 or NULL to indicate that the result is not needed.
 	 */
 	public void getExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -882,9 +940,8 @@ public class PgLayout
 	
 	/**
 	 * Computes the logical and ink extents of layout in device units.
-	 * See pango_layout_get_extents(); this function just calls
-	 * pango_layout_get_extents() and then converts the extents to
-	 * device units using the PANGO_SCALE factor.
+	 * This function just calls pango_layout_get_extents() followed by
+	 * pango_extents_to_pixels().
 	 * layout:
 	 *  a PangoLayout
 	 * ink_rect:
@@ -902,7 +959,7 @@ public class PgLayout
 	
 	/**
 	 * Determines the logical width and height of a PangoLayout
-	 * in Pango units. (device units scaled by PANGO_SCALE). This
+	 * in Pango units (device units scaled by PANGO_SCALE). This
 	 * is simply a convenience function around pango_layout_get_extents().
 	 * layout:
 	 *  a PangoLayout
@@ -990,7 +1047,7 @@ public class PgLayout
 	 */
 	public PangoLayoutLine* getLineReadonly(int line)
 	{
-		// PangoLayoutLine* pango_layout_get_line_readonly  (PangoLayout *layout,  int line);
+		// PangoLayoutLine* pango_layout_get_line_readonly (PangoLayout *layout,  int line);
 		return pango_layout_get_line_readonly(pangoLayout, line);
 	}
 	
@@ -1113,11 +1170,9 @@ public class PgLayout
 	}
 	
 	/**
-	 * Computes the logical and ink extents of a layout line. See
-	 * pango_font_get_glyph_extents() for details about the interpretation
-	 * of the rectangles. The returned rectangles are in device units, as
-	 * opposed to pango_layout_line_get_extents(), which returns the extents in
-	 * PangoGlyphUnit.
+	 * Computes the logical and ink extents of layout_line in device units.
+	 * This function just calls pango_layout_line_get_extents() followed by
+	 * pango_extents_to_pixels().
 	 * layout_line:
 	 *  a PangoLayoutLine
 	 * ink_rect:
@@ -1129,7 +1184,7 @@ public class PgLayout
 	 */
 	public static void lineGetPixelExtents(PangoLayoutLine* layoutLine, PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
-		// void pango_layout_line_get_pixel_extents  (PangoLayoutLine *layout_line,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
+		// void pango_layout_line_get_pixel_extents (PangoLayoutLine *layout_line,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
 		pango_layout_line_get_pixel_extents(layoutLine, inkRect, logicalRect);
 	}
 	

@@ -212,7 +212,7 @@ public class TreeModelFilter : ObjectG
 	 */
 	public TreeModel getModel()
 	{
-		// GtkTreeModel* gtk_tree_model_filter_get_model  (GtkTreeModelFilter *filter);
+		// GtkTreeModel* gtk_tree_model_filter_get_model (GtkTreeModelFilter *filter);
 		return new TreeModel( gtk_tree_model_filter_get_model(gtkTreeModelFilter) );
 	}
 	
@@ -322,7 +322,7 @@ public class TreeModelFilter : ObjectG
 	 */
 	public void clearCache()
 	{
-		// void gtk_tree_model_filter_clear_cache  (GtkTreeModelFilter *filter);
+		// void gtk_tree_model_filter_clear_cache (GtkTreeModelFilter *filter);
 		gtk_tree_model_filter_clear_cache(gtkTreeModelFilter);
 	}
 	

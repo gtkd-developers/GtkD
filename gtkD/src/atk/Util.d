@@ -149,7 +149,7 @@ public class Util
 	 */
 	public static void removeGlobalEventListener(uint listenerId)
 	{
-		// void atk_remove_global_event_listener  (guint listener_id);
+		// void atk_remove_global_event_listener (guint listener_id);
 		atk_remove_global_event_listener(listenerId);
 	}
 	

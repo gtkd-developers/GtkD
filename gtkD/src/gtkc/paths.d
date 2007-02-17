@@ -1,7 +1,7 @@
 /*
  * This file is part of gtkD. Adapted from:
  *
- * paths.d  -- list of libraries that will be dynamically linked with gtkD
+ * paths.d  -- list of libraries that will be dynamically linked with DUI
  *
  * Added:	John Reimer	-- 2004-12-20
  * Updated: 2005-02-21 changed names; added version(linux)
@@ -81,9 +81,9 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GLEXT:		"libGL.so",
 	LIBRARY.GDA:		"libgda-2.so.3",
 	LIBRARY.GLADE:		"libglade-2.0.so"
+	LIBRARY.GLADE:		"libgtksourceview-1.0.so"
 	];
 }
-
 
 // dmd 1.005 still makes private char[] public?!
 //private char[] libPath;

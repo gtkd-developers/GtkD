@@ -72,6 +72,50 @@ private import gtk.ObjectGtk;
  * gtk_adjustment_value_changed() and gtk_adjustment_changed() functions
  * after changing the value and its bounds. This results in the emission of the
  * "value_changed" or "changed" signal respectively.
+ * Numerical Precision
+ * The values in a GtkAdjustment are stored as double precision floating point values.
+ * More about the different floating point types can be found in the corresponding
+ * IEEE Floating Point Standard.
+ * In most GtkAdjustment applications, the value member contains a computed number, for instance because
+ * the adjustment is updated by a GtkSpinButton or GtkRange widget which assign adjustment values based
+ * on computations which use user input with pixel precision.
+ * When floats/doubles are computed, they almost never represent the exact number wanted or needed,
+ * but only an approximation of the real value, because floating point numbers are approximations of
+ * real numbers by design (needed to represent infinite precision numbers in a finite number of memory cells).
+ * In the case of a range, spin button or similar widget where the current value is represented by a
+ * floating point number (i.e. an inexact approximation of the real value needed),
+ * adjustment->upper and adjustment->lower may or may not be represented exactly in adjustment->value,
+ * depending on the implementation.
+ * That means, even if a spinner or range looks like it represents adjustment->lower or
+ * adjustment->upper in the graphical display, the actual adjustment->value may very well be off
+ * by a small number (epsilon) that corresponds to ca. half a pixel at the GUI.
+ * To compensate for such boundary cases accurately in user code, additional logic may be required, for instance:
+ * Example1.Epsilon comparison for adjustments
+ *  /+* retrieve a computed floating point value +/
+ *  double myval = gtk_spin_button_get_value (spinner);
+ *  double myval = gtk_range_get_value (range);
+ *  double myval = gtk_progress_get_value (progress_widget);
+ *  double myval = gtk_adjustment_get_value (adjustment);
+ *  /+* adjust for border cases, assuming a screen resolution < 65536 pixels +/
+ *  const double epsilon = 0.0000152587890625; /+* 1.0 / 2^16 +/
+ *  if (fabs (myval - adjustment->lower) < epsilon)
+ *  myval = adjustment->lower;
+ *  if (fabs (myval - (adjustment->upper - adjustment->page_size)) < epsilon)
+ *  myval = adjustment->upper - adjustment->page_size;
+ * While this compensation code makes some more implicit assumptions,
+ * like the range (adjustment->upper - adjustment->lower) not being significantly smaller than
+ * 1 and only being a few magnitudes larger than the amount of pixels on screen,
+ * and while all code that deals with floating point numbers always warrants a detailed precision
+ * analysis, it should work out well in practice for the vast majority of cases in Gtk+ and uses
+ * of adjustment->value in Gtk+ applications.
+ * But as mentioned, there are more issues that need to be taken care of when dealing with
+ * floating point numbers.
+ * Many of those are addressed by books like Numerical Recipes in C,
+ * in particular the chapter
+ * 1.3 Error, Accuracy, and Stability
+ * is a highly recommended read.
+ * And a further recommended reading is the paper
+ * What Every Computer Scientist Should Know About Floating-Point Arithmetic.
  */
 private import gtk.ObjectGtk;
 public class Adjustment : ObjectGtk

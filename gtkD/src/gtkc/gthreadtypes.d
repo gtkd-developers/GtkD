@@ -361,7 +361,7 @@ public struct GOnce
  * Calling g_once() recursively on the same GOnce struct in func will lead
  * to a deadlock.
  * gpointer
- * get_debug_flags()
+ * get_debug_flags ()
  * {
 	 *  static GOnce my_once = G_ONCE_INIT;
 	 *  g_once (my_once, parse_debug_flags, NULL);

@@ -302,7 +302,7 @@ public class Component
 	 */
 	public void removeFocusHandler(uint handlerId)
 	{
-		// void atk_component_remove_focus_handler  (AtkComponent *component,  guint handler_id);
+		// void atk_component_remove_focus_handler (AtkComponent *component,  guint handler_id);
 		atk_component_remove_focus_handler(atkComponent, handlerId);
 	}
 	
@@ -380,7 +380,7 @@ public class Component
 	 * The "bounds-changed" signal
 	 * void user_function (AtkComponent *atkcomponent,
 	 *  AtkRectangle *arg1,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * The 'bounds-changed" signal is emitted when the bposition or size of the
 	 * a component changes.
 	 * atkcomponent:

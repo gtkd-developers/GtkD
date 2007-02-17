@@ -395,7 +395,7 @@ public class Region
 	 */
 	public void spansIntersectForeach(GdkSpan* spans, int nSpans, int sorted, GdkSpanFunc funct, void* data)
 	{
-		// void gdk_region_spans_intersect_foreach  (GdkRegion *region,  GdkSpan *spans,  int n_spans,  gboolean sorted,  GdkSpanFunc function,  gpointer data);
+		// void gdk_region_spans_intersect_foreach (GdkRegion *region,  GdkSpan *spans,  int n_spans,  gboolean sorted,  GdkSpanFunc function,  gpointer data);
 		gdk_region_spans_intersect_foreach(gdkRegion, spans, nSpans, sorted, funct, data);
 	}
 }

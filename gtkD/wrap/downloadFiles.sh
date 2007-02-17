@@ -1,6 +1,8 @@
 #!/bin/sh
 mkdir gtkdocs
 cd gtkdocs
+
+#main gtk libs doc
 curl http://developer.gnome.org/doc/API/glib-2.0-docs.tar.gz | tar xvfz -
 ln -s glib gthread
 curl http://developer.gnome.org/doc/API/gobject-2.0-docs.tar.gz | tar xvfz -
@@ -25,3 +27,8 @@ ln -s  libgda-1.2.4/doc/C/html gda
 #glade
 curl http://developer.gnome.org/doc/API/libglade-2.0-docs.tar.gz | tar xvfz -
 ln -s libglade glade
+
+#gtkSourceView
+curl http://gtksourceview.sourceforge.net/gtksourceview-1.6-docs.tar.gz | tar xvfz -
+mv html gtksourceview
+

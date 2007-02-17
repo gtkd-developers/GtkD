@@ -209,7 +209,7 @@ public class RadioAction : ToggleAction
 	 */
 	public int getCurrentValue()
 	{
-		// gint gtk_radio_action_get_current_value  (GtkRadioAction *action);
+		// gint gtk_radio_action_get_current_value (GtkRadioAction *action);
 		return gtk_radio_action_get_current_value(gtkRadioAction);
 	}
 	
@@ -231,7 +231,7 @@ public class RadioAction : ToggleAction
 	 */
 	public void setCurrentValue(int currentValue)
 	{
-		// void gtk_radio_action_set_current_value  (GtkRadioAction *action,  gint current_value);
+		// void gtk_radio_action_set_current_value (GtkRadioAction *action,  gint current_value);
 		gtk_radio_action_set_current_value(gtkRadioAction, currentValue);
 	}
 	

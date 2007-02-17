@@ -220,7 +220,7 @@ public class DragAndDrop
 	 */
 	public static GtkTargetList* destGetTargetList(Widget widget)
 	{
-		// GtkTargetList* gtk_drag_dest_get_target_list  (GtkWidget *widget);
+		// GtkTargetList* gtk_drag_dest_get_target_list (GtkWidget *widget);
 		return gtk_drag_dest_get_target_list((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
@@ -720,7 +720,7 @@ public class DragAndDrop
 	 */
 	public static GtkTargetList* sourceGetTargetList(Widget widget)
 	{
-		// GtkTargetList* gtk_drag_source_get_target_list  (GtkWidget *widget);
+		// GtkTargetList* gtk_drag_source_get_target_list (GtkWidget *widget);
 		return gtk_drag_source_get_target_list((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
@@ -736,7 +736,7 @@ public class DragAndDrop
 	 */
 	public static void sourceAddTextTargets(Widget widget)
 	{
-		// void gtk_drag_source_add_text_targets  (GtkWidget *widget);
+		// void gtk_drag_source_add_text_targets (GtkWidget *widget);
 		gtk_drag_source_add_text_targets((widget is null) ? null : widget.getWidgetStruct());
 	}
 	
@@ -752,7 +752,7 @@ public class DragAndDrop
 	 */
 	public static void sourceAddImageTargets(Widget widget)
 	{
-		// void gtk_drag_source_add_image_targets  (GtkWidget *widget);
+		// void gtk_drag_source_add_image_targets (GtkWidget *widget);
 		gtk_drag_source_add_image_targets((widget is null) ? null : widget.getWidgetStruct());
 	}
 	

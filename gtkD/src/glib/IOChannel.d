@@ -513,7 +513,7 @@ public class IOChannel
 	 */
 	public static GIOChannelError errorFromErrno(int en)
 	{
-		// GIOChannelError g_io_channel_error_from_errno  (gint en);
+		// GIOChannelError g_io_channel_error_from_errno (gint en);
 		return g_io_channel_error_from_errno(en);
 	}
 	
@@ -650,7 +650,7 @@ public class IOChannel
 	 */
 	public GIOCondition getBufferCondition()
 	{
-		// GIOCondition g_io_channel_get_buffer_condition  (GIOChannel *channel);
+		// GIOCondition g_io_channel_get_buffer_condition (GIOChannel *channel);
 		return g_io_channel_get_buffer_condition(gIOChannel);
 	}
 	

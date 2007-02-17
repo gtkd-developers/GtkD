@@ -1129,7 +1129,11 @@ public struct GMainContext{}
  */
 public struct GPollFD
 {
+	#if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8
+	long fd;
+	#else
 	int fd;
+	#endif
 	ushort events;
 	ushort revents;
 }
@@ -2469,21 +2473,6 @@ public struct GAllocator{}
  * A convenience function/macro to log a normal message.
  * ...:
  * format string, followed by parameters to insert into the format string (as with printf())
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
  */
 // TODO
 // #define g_message(...)
@@ -2494,21 +2483,6 @@ public struct GAllocator{}
  * variable (see Running GLib Applications).
  * ...:
  * format string, followed by parameters to insert into the format string (as with printf())
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
  */
 // TODO
 // #define g_warning(...)
@@ -2524,21 +2498,6 @@ public struct GAllocator{}
  * Running GLib Applications).
  * ...:
  * format string, followed by parameters to insert into the format string (as with printf())
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
  */
 // TODO
 // #define g_critical(...)
@@ -2552,21 +2511,6 @@ public struct GAllocator{}
  * assertion failure.
  * ...:
  * format string, followed by parameters to insert into the format string (as with printf())
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
  */
 // TODO
 // #define g_error(...)
@@ -2575,21 +2519,6 @@ public struct GAllocator{}
  * A convenience function/macro to log a debug message.
  * ...:
  * format string, followed by parameters to insert into the format string (as with printf())
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
- * ...:
  * Since 2.6
  */
 // TODO
@@ -2690,6 +2619,7 @@ public struct GAllocator{}
 /*
  * Warning
  * g_scanner_freeze_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
+ * There is no reason to use this macro, since it does nothing.
  * scanner:
  * a GScanner.
  */
@@ -2699,6 +2629,7 @@ public struct GAllocator{}
 /*
  * Warning
  * g_scanner_thaw_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
+ * There is no reason to use this macro, since it does nothing.
  * scanner:
  * a GScanner.
  */

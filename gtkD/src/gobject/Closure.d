@@ -310,7 +310,7 @@ public class Closure
 	 */
 	public void addInvalidateNotifier(void* notifyData, GClosureNotify notifyFunc)
 	{
-		// void g_closure_add_invalidate_notifier  (GClosure *closure,  gpointer notify_data,  GClosureNotify notify_func);
+		// void g_closure_add_invalidate_notifier (GClosure *closure,  gpointer notify_data,  GClosureNotify notify_func);
 		g_closure_add_invalidate_notifier(gClosure, notifyData, notifyFunc);
 	}
 	
@@ -327,7 +327,7 @@ public class Closure
 	 */
 	public void removeFinalizeNotifier(void* notifyData, GClosureNotify notifyFunc)
 	{
-		// void g_closure_remove_finalize_notifier  (GClosure *closure,  gpointer notify_data,  GClosureNotify notify_func);
+		// void g_closure_remove_finalize_notifier (GClosure *closure,  gpointer notify_data,  GClosureNotify notify_func);
 		g_closure_remove_finalize_notifier(gClosure, notifyData, notifyFunc);
 	}
 	

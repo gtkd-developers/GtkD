@@ -382,7 +382,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 */
 	public int getRowSpanColumn()
 	{
-		// gint gtk_combo_box_get_row_span_column  (GtkComboBox *combo_box);
+		// gint gtk_combo_box_get_row_span_column (GtkComboBox *combo_box);
 		return gtk_combo_box_get_row_span_column(gtkComboBox);
 	}
 	
@@ -398,7 +398,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 */
 	public void setRowSpanColumn(int rowSpan)
 	{
-		// void gtk_combo_box_set_row_span_column  (GtkComboBox *combo_box,  gint row_span);
+		// void gtk_combo_box_set_row_span_column (GtkComboBox *combo_box,  gint row_span);
 		gtk_combo_box_set_row_span_column(gtkComboBox, rowSpan);
 	}
 	
@@ -652,7 +652,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 */
 	public ObjectAtk getPopupAccessible()
 	{
-		// AtkObject* gtk_combo_box_get_popup_accessible  (GtkComboBox *combo_box);
+		// AtkObject* gtk_combo_box_get_popup_accessible (GtkComboBox *combo_box);
 		return new ObjectAtk( gtk_combo_box_get_popup_accessible(gtkComboBox) );
 	}
 	
@@ -762,7 +762,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 */
 	public void setFocusOnClick(int focusOnClick)
 	{
-		// void gtk_combo_box_set_focus_on_click  (GtkComboBox *combo,  gboolean focus_on_click);
+		// void gtk_combo_box_set_focus_on_click (GtkComboBox *combo,  gboolean focus_on_click);
 		gtk_combo_box_set_focus_on_click(gtkComboBox, focusOnClick);
 	}
 	
@@ -788,7 +788,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 */
 	public int getFocusOnClick()
 	{
-		// gboolean gtk_combo_box_get_focus_on_click  (GtkComboBox *combo);
+		// gboolean gtk_combo_box_get_focus_on_click (GtkComboBox *combo);
 		return gtk_combo_box_get_focus_on_click(gtkComboBox);
 	}
 	

@@ -194,6 +194,9 @@ public class PgLayoutIter
 	
 	
 	
+	
+	
+	
 	/**
 	 * Frees an iterator that's no longer in use.
 	 * iter:
@@ -338,7 +341,7 @@ public class PgLayoutIter
 	 */
 	public PangoLayoutRun* getRunReadonly()
 	{
-		// PangoLayoutRun* pango_layout_iter_get_run_readonly  (PangoLayoutIter *iter);
+		// PangoLayoutRun* pango_layout_iter_get_run_readonly (PangoLayoutIter *iter);
 		return pango_layout_iter_get_run_readonly(pangoLayoutIter);
 	}
 	
@@ -370,7 +373,7 @@ public class PgLayoutIter
 	 */
 	public PangoLayoutLine* getLineReadonly()
 	{
-		// PangoLayoutLine* pango_layout_iter_get_line_readonly  (PangoLayoutIter *iter);
+		// PangoLayoutLine* pango_layout_iter_get_line_readonly (PangoLayoutIter *iter);
 		return pango_layout_iter_get_line_readonly(pangoLayoutIter);
 	}
 	
@@ -386,7 +389,7 @@ public class PgLayoutIter
 	 */
 	public void getCharExtents(PangoRectangle* logicalRect)
 	{
-		// void pango_layout_iter_get_char_extents  (PangoLayoutIter *iter,  PangoRectangle *logical_rect);
+		// void pango_layout_iter_get_char_extents (PangoLayoutIter *iter,  PangoRectangle *logical_rect);
 		pango_layout_iter_get_char_extents(pangoLayoutIter, logicalRect);
 	}
 	
@@ -418,7 +421,7 @@ public class PgLayoutIter
 	 */
 	public void getRunExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
-		// void pango_layout_iter_get_run_extents  (PangoLayoutIter *iter,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
+		// void pango_layout_iter_get_run_extents (PangoLayoutIter *iter,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
 		pango_layout_iter_get_run_extents(pangoLayoutIter, inkRect, logicalRect);
 	}
 	
@@ -439,7 +442,7 @@ public class PgLayoutIter
 	 */
 	public void getLineYrange(int* y0_, int* y1_)
 	{
-		// void pango_layout_iter_get_line_yrange  (PangoLayoutIter *iter,  int *y0_,  int *y1_);
+		// void pango_layout_iter_get_line_yrange (PangoLayoutIter *iter,  int *y0_,  int *y1_);
 		pango_layout_iter_get_line_yrange(pangoLayoutIter, y0_, y1_);
 	}
 	
@@ -459,7 +462,7 @@ public class PgLayoutIter
 	 */
 	public void getLineExtents(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
-		// void pango_layout_iter_get_line_extents  (PangoLayoutIter *iter,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
+		// void pango_layout_iter_get_line_extents (PangoLayoutIter *iter,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
 		pango_layout_iter_get_line_extents(pangoLayoutIter, inkRect, logicalRect);
 	}
 	

@@ -436,7 +436,7 @@ public class IconView : Container
 	 * icon_view:
 	 *  A GtkIconView.
 	 * column:
-	 *  A column in the currently used model.
+	 *  A column in the currently used model, or -1 to display no text
 	 * Since 2.6
 	 */
 	public void setTextColumn(int column)
@@ -467,7 +467,7 @@ public class IconView : Container
 	 * icon_view:
 	 *  A GtkIconView.
 	 * column:
-	 *  A column in the currently used model.
+	 *  A column in the currently used model, or -1 to display no text
 	 * Since 2.6
 	 */
 	public void setMarkupColumn(int column)
@@ -496,7 +496,7 @@ public class IconView : Container
 	 * icon_view:
 	 *  A GtkIconView.
 	 * column:
-	 *  A column in the currently used model.
+	 *  A column in the currently used model, or -1 to disable
 	 * Since 2.6
 	 */
 	public void setPixbufColumn(int column)
@@ -639,7 +639,7 @@ public class IconView : Container
 	 */
 	public void setSelectionMode(GtkSelectionMode mode)
 	{
-		// void gtk_icon_view_set_selection_mode  (GtkIconView *icon_view,  GtkSelectionMode mode);
+		// void gtk_icon_view_set_selection_mode (GtkIconView *icon_view,  GtkSelectionMode mode);
 		gtk_icon_view_set_selection_mode(gtkIconView, mode);
 	}
 	
@@ -653,7 +653,7 @@ public class IconView : Container
 	 */
 	public GtkSelectionMode getSelectionMode()
 	{
-		// GtkSelectionMode gtk_icon_view_get_selection_mode  (GtkIconView *icon_view);
+		// GtkSelectionMode gtk_icon_view_get_selection_mode (GtkIconView *icon_view);
 		return gtk_icon_view_get_selection_mode(gtkIconView);
 	}
 	
@@ -683,7 +683,7 @@ public class IconView : Container
 	 */
 	public GtkOrientation getOrientation()
 	{
-		// GtkOrientation gtk_icon_view_get_orientation  (GtkIconView *icon_view);
+		// GtkOrientation gtk_icon_view_get_orientation (GtkIconView *icon_view);
 		return gtk_icon_view_get_orientation(gtkIconView);
 	}
 	
@@ -818,7 +818,7 @@ public class IconView : Container
 	 */
 	public void setColumnSpacing(int columnSpacing)
 	{
-		// void gtk_icon_view_set_column_spacing  (GtkIconView *icon_view,  gint column_spacing);
+		// void gtk_icon_view_set_column_spacing (GtkIconView *icon_view,  gint column_spacing);
 		gtk_icon_view_set_column_spacing(gtkIconView, columnSpacing);
 	}
 	
@@ -832,7 +832,7 @@ public class IconView : Container
 	 */
 	public int getColumnSpacing()
 	{
-		// gint gtk_icon_view_get_column_spacing  (GtkIconView *icon_view);
+		// gint gtk_icon_view_get_column_spacing (GtkIconView *icon_view);
 		return gtk_icon_view_get_column_spacing(gtkIconView);
 	}
 	
@@ -927,7 +927,7 @@ public class IconView : Container
 	 */
 	public ListG getSelectedItems()
 	{
-		// GList* gtk_icon_view_get_selected_items  (GtkIconView *icon_view);
+		// GList* gtk_icon_view_get_selected_items (GtkIconView *icon_view);
 		return new ListG( gtk_icon_view_get_selected_items(gtkIconView) );
 	}
 	
@@ -1082,7 +1082,7 @@ public class IconView : Container
 	 */
 	public void unsetModelDragDest()
 	{
-		// void gtk_icon_view_unset_model_drag_dest  (GtkIconView *icon_view);
+		// void gtk_icon_view_unset_model_drag_dest (GtkIconView *icon_view);
 		gtk_icon_view_unset_model_drag_dest(gtkIconView);
 	}
 	
@@ -1135,7 +1135,7 @@ public class IconView : Container
 	 */
 	public void setDragDestItem(TreePath path, GtkIconViewDropPosition pos)
 	{
-		// void gtk_icon_view_set_drag_dest_item  (GtkIconView *icon_view,  GtkTreePath *path,  GtkIconViewDropPosition pos);
+		// void gtk_icon_view_set_drag_dest_item (GtkIconView *icon_view,  GtkTreePath *path,  GtkIconViewDropPosition pos);
 		gtk_icon_view_set_drag_dest_item(gtkIconView, (path is null) ? null : path.getTreePathStruct(), pos);
 	}
 	
@@ -1151,7 +1151,7 @@ public class IconView : Container
 	 */
 	public void getDragDestItem(GtkTreePath** path, GtkIconViewDropPosition* pos)
 	{
-		// void gtk_icon_view_get_drag_dest_item  (GtkIconView *icon_view,  GtkTreePath **path,  GtkIconViewDropPosition *pos);
+		// void gtk_icon_view_get_drag_dest_item (GtkIconView *icon_view,  GtkTreePath **path,  GtkIconViewDropPosition *pos);
 		gtk_icon_view_get_drag_dest_item(gtkIconView, path, pos);
 	}
 	
@@ -1173,7 +1173,7 @@ public class IconView : Container
 	 */
 	public int getDestItemAtPos(int dragX, int dragY, GtkTreePath** path, GtkIconViewDropPosition* pos)
 	{
-		// gboolean gtk_icon_view_get_dest_item_at_pos  (GtkIconView *icon_view,  gint drag_x,  gint drag_y,  GtkTreePath **path,  GtkIconViewDropPosition *pos);
+		// gboolean gtk_icon_view_get_dest_item_at_pos (GtkIconView *icon_view,  gint drag_x,  gint drag_y,  GtkTreePath **path,  GtkIconViewDropPosition *pos);
 		return gtk_icon_view_get_dest_item_at_pos(gtkIconView, dragX, dragY, path, pos);
 	}
 	

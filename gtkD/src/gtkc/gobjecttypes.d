@@ -1586,6 +1586,100 @@ public struct GValueArray{}
 // #define G_DEFINE_TYPE_EXTENDED(TN, t_n, T_P, _f_, _C_)	 _G_DEFINE_TYPE_EXTENDED_BEGIN (TN, t_n, T_P, _f_) {_C_;} _G_DEFINE_TYPE_EXTENDED_END()
 
 /*
+ * A convenience macro for dynamic type implementations, which declares a
+ * class initialization function, an instance initialization function (see
+ * GTypeInfo for information about these) and a static variable named
+ * t_n_parent_class pointing to the parent class. Furthermore,
+ * it defines a *_get_type() and a static
+ * *_register_type() function for use in your
+ * module_init().
+ * See G_DEFINE_DYNAMIC_TYPE_EXTENDED() for an example.
+ * TN:
+ * The name of the new type, in Camel case.
+ * t_n:
+ * The name of the new type, in lowercase, with words
+ *  separated by '_'.
+ * T_P:
+ * The GType of the parent type.
+ * Since 2.14
+ */
+// TODO
+// #define G_DEFINE_DYNAMIC_TYPE(TN, t_n, T_P) G_DEFINE_DYNAMIC_TYPE_EXTENDED (TN, t_n, T_P, 0, {})
+
+/*
+ * A more general version of G_DEFINE_DYNAMIC_TYPE() which
+ * allows to specify GTypeFlags and custom code.
+ * G_DEFINE_DYNAMIC_TYPE_EXTENDED (GtkGadget,
+ *  gtk_gadget,
+ *  GTK_TYPE_THING,
+ *  0,
+ *  G_IMPLEMENT_INTERFACE (TYPE_GIZMO,
+ *  gtk_gadget_gizmo_init));
+ * expands to
+ * static void gtk_gadget_init (GtkGadget *self);
+ * static void gtk_gadget_class_init (GtkGadgetClass *klass);
+ * static void gtk_gadget_class_finalize (GtkGadgetClass *klass);
+ * static gpointer gtk_gadget_parent_class = NULL;
+ * static GType gtk_gadget_type_id = 0;
+ * static void gtk_gadget_class_intern_init (gpointer klass)
+ * {
+	 *  gtk_gadget_parent_class = g_type_class_peek_parent (klass);
+	 *  gtk_gadget_class_init ((GtkGadgetClass*) klass);
+ * }
+ * GType
+ * gtk_gadget_get_type (void)
+ * {
+	 *  return gtk_gadget_type_id;
+ * }
+ * static void
+ * gtk_gadget_register_type (GTypeModule *type_module)
+ * {
+	 *  const GTypeInfo g_define_type_info = {
+		 *  sizeof (GtkGadgetClass),
+		 *  (GBaseInitFunc) NULL,
+		 *  (GBaseFinalizeFunc) NULL,
+		 *  (GClassInitFunc) gtk_gadget_class_intern_init,
+		 *  (GClassFinalizeFunc) gtk_gadget_class_finalize,
+		 *  NULL, /+* class_data +/
+		 *  sizeof (GtkGadget),
+		 *  0, /+* n_preallocs +/
+		 *  (GInstanceInitFunc) gtk_gadget_init,
+		 *  NULL /+* value_table +/
+	 *  };
+	 *  gtk_gadget_type_id = g_type_module_register_type (type_module,
+	 *  GTK_TYPE_THING,
+	 *  GtkGadget,
+	 *  g_define_type_info,
+	 *  (GTypeFlags) flags);
+	 *  {
+		 *  const GInterfaceInfo g_implement_interface_info = {
+			 *  (GInterfaceInitFunc) gtk_gadget_gizmo_init
+		 *  };
+		 *  g_type_add_interface_static (g_define_type_id, TYPE_GIZMO, g_implement_interface_info);
+	 *  }
+ * }
+ * TypeName:
+ * The name of the new type, in Camel case.
+ * type_name:
+ * The name of the new type, in lowercase, with words
+ *  separated by '_'.
+ * TYPE_PARENT:
+ * The GType of the parent type.
+ * flags:
+ * GTypeFlags to pass to g_type_register_static()
+ * CODE:
+ * Custom code that gets inserted in the *_get_type() function.
+ * Since 2.14
+ * See Also
+ * GTypePlugin
+ * The abstract type loader interface.
+ * GModule
+ * Portable mechanism for dynamically loaded modules.
+ */
+// TODO
+// #define G_DEFINE_DYNAMIC_TYPE_EXTENDED(TypeName, type_name, TYPE_PARENT, flags, CODE)
+
+/*
  * Returns a boolean value of FALSE or TRUE indicating whether
  * the passed in type id is a G_TYPE_OBJECT or derived from it.
  * type:
@@ -1694,7 +1788,7 @@ public struct GValueArray{}
  * The "notify" signal
  * void user_function (GObject *gobject,
  *  GParamSpec *arg1,
- *  gpointer user_data) : Run first / No recursion / Has details / Action / No hooks
+ *  gpointer user_data) : Run First / No Recursion / Has Details / Action / No Hooks
  * The notify signal is emitted on an object when one of its properties
  * has been changed. Note that getting this signal doesn't guarantee that the
  * value of the property has actually changed, it may also be emitted when
@@ -2827,7 +2921,7 @@ public typedef extern(C) void  function (GTypePlugin*, GType, GTypeInfo*, GTypeV
  * info:
  * the GInterfaceInfo to fill in
  */
-// void (*GTypePluginCompleteInterfaceInfo)  (GTypePlugin *plugin,  GType instance_type,  GType interface_type,  GInterfaceInfo *info);
+// void (*GTypePluginCompleteInterfaceInfo) (GTypePlugin *plugin,  GType instance_type,  GType interface_type,  GInterfaceInfo *info);
 public typedef extern(C) void  function (GTypePlugin*, GType, GType, GInterfaceInfo*) GTypePluginCompleteInterfaceInfo;
 
 /*

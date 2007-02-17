@@ -168,7 +168,7 @@ public class Selection
 	 */
 	public static int ownerSetForDisplay(Display display, Window owner, GdkAtom selection, uint time, int sendEvent)
 	{
-		// gboolean gdk_selection_owner_set_for_display  (GdkDisplay *display,  GdkWindow *owner,  GdkAtom selection,  guint32 time_,  gboolean send_event);
+		// gboolean gdk_selection_owner_set_for_display (GdkDisplay *display,  GdkWindow *owner,  GdkAtom selection,  guint32 time_,  gboolean send_event);
 		return gdk_selection_owner_set_for_display((display is null) ? null : display.getDisplayStruct(), (owner is null) ? null : owner.getWindowStruct(), selection, time, sendEvent);
 	}
 	
@@ -209,7 +209,7 @@ public class Selection
 	 */
 	public static Window ownerGetForDisplay(Display display, GdkAtom selection)
 	{
-		// GdkWindow* gdk_selection_owner_get_for_display  (GdkDisplay *display,  GdkAtom selection);
+		// GdkWindow* gdk_selection_owner_get_for_display (GdkDisplay *display,  GdkAtom selection);
 		return new Window( gdk_selection_owner_get_for_display((display is null) ? null : display.getDisplayStruct(), selection) );
 	}
 	

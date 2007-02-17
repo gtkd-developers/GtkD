@@ -779,7 +779,7 @@ public class Drawable : ObjectG
 	 */
 	public void drawLayoutLineWithColors(GC gc, int x, int y, PangoLayoutLine* line, Color foreground, Color background)
 	{
-		// void gdk_draw_layout_line_with_colors  (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  PangoLayoutLine *line,  const GdkColor *foreground,  const GdkColor *background);
+		// void gdk_draw_layout_line_with_colors (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  PangoLayoutLine *line,  const GdkColor *foreground,  const GdkColor *background);
 		gdk_draw_layout_line_with_colors(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), x, y, line, (foreground is null) ? null : foreground.getColorStruct(), (background is null) ? null : background.getColorStruct());
 	}
 	

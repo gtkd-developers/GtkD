@@ -669,7 +669,7 @@ public class Window : Bin
 	 */
 	public void setDestroyWithParent(int setting)
 	{
-		// void gtk_window_set_destroy_with_parent  (GtkWindow *window,  gboolean setting);
+		// void gtk_window_set_destroy_with_parent (GtkWindow *window,  gboolean setting);
 		gtk_window_set_destroy_with_parent(gtkWindow, setting);
 	}
 	
@@ -1291,7 +1291,7 @@ public class Window : Bin
 	 */
 	public void setMnemonicModifier(GdkModifierType modifier)
 	{
-		// void gtk_window_set_mnemonic_modifier  (GtkWindow *window,  GdkModifierType modifier);
+		// void gtk_window_set_mnemonic_modifier (GtkWindow *window,  GdkModifierType modifier);
 		gtk_window_set_mnemonic_modifier(gtkWindow, modifier);
 	}
 	
@@ -1346,7 +1346,7 @@ public class Window : Bin
 	 */
 	public void setSkipTaskbarHint(int setting)
 	{
-		// void gtk_window_set_skip_taskbar_hint  (GtkWindow *window,  gboolean setting);
+		// void gtk_window_set_skip_taskbar_hint (GtkWindow *window,  gboolean setting);
 		gtk_window_set_skip_taskbar_hint(gtkWindow, setting);
 	}
 	
@@ -1453,7 +1453,7 @@ public class Window : Bin
 	 */
 	public static ListG getDefaultIconList()
 	{
-		// GList* gtk_window_get_default_icon_list  (void);
+		// GList* gtk_window_get_default_icon_list (void);
 		return new ListG( gtk_window_get_default_icon_list() );
 	}
 	
@@ -1485,7 +1485,7 @@ public class Window : Bin
 	 */
 	public int getDestroyWithParent()
 	{
-		// gboolean gtk_window_get_destroy_with_parent  (GtkWindow *window);
+		// gboolean gtk_window_get_destroy_with_parent (GtkWindow *window);
 		return gtk_window_get_destroy_with_parent(gtkWindow);
 	}
 	
@@ -1587,7 +1587,7 @@ public class Window : Bin
 	 */
 	public GdkModifierType getMnemonicModifier()
 	{
-		// GdkModifierType gtk_window_get_mnemonic_modifier  (GtkWindow *window);
+		// GdkModifierType gtk_window_get_mnemonic_modifier (GtkWindow *window);
 		return gtk_window_get_mnemonic_modifier(gtkWindow);
 	}
 	
@@ -1772,7 +1772,7 @@ public class Window : Bin
 	 */
 	public int getSkipTaskbarHint()
 	{
-		// gboolean gtk_window_get_skip_taskbar_hint  (GtkWindow *window);
+		// gboolean gtk_window_get_skip_taskbar_hint (GtkWindow *window);
 		return gtk_window_get_skip_taskbar_hint(gtkWindow);
 	}
 	
@@ -1910,7 +1910,7 @@ public class Window : Bin
 	 * to be called when the window has its "final" size, i.e. after calling
 	 * gtk_widget_show_all() on the contents and gtk_window_set_geometry_hints()
 	 * on the window.
-	 * include <gtk/gtk.h>
+	 * #include <gtk/gtk.h>
 	 * static void
 	 * fill_with_content (GtkWidget *vbox)
 	 * {
@@ -1941,7 +1941,7 @@ public class Window : Bin
 			 *  fprintf (stderr, "Failed to parse '%s'\n", argv[1]);
 		 *  }
 		 *  gtk_widget_show_all (window);
-		 *  gtk_main();
+		 *  gtk_main ();
 		 *  return 0;
 	 * }
 	 * window:
@@ -1966,7 +1966,7 @@ public class Window : Bin
 	 */
 	public void reshowWithInitialSize()
 	{
-		// void gtk_window_reshow_with_initial_size  (GtkWindow *window);
+		// void gtk_window_reshow_with_initial_size (GtkWindow *window);
 		gtk_window_reshow_with_initial_size(gtkWindow);
 	}
 	
@@ -2004,7 +2004,7 @@ public class Window : Bin
 	 */
 	public static void setDefaultIconList(ListG list)
 	{
-		// void gtk_window_set_default_icon_list  (GList *list);
+		// void gtk_window_set_default_icon_list (GList *list);
 		gtk_window_set_default_icon_list((list is null) ? null : list.getListGStruct());
 	}
 	
@@ -2049,7 +2049,7 @@ public class Window : Bin
 	 */
 	public static void setDefaultIconName(char[] name)
 	{
-		// void gtk_window_set_default_icon_name  (const gchar *name);
+		// void gtk_window_set_default_icon_name (const gchar *name);
 		gtk_window_set_default_icon_name(Str.toStringz(name));
 	}
 	

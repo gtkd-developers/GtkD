@@ -249,7 +249,7 @@ public class TreeSelection : ObjectG
 	 */
 	public GtkSelectionMode getMode()
 	{
-		// GtkSelectionMode gtk_tree_selection_get_mode  (GtkTreeSelection *selection);
+		// GtkSelectionMode gtk_tree_selection_get_mode (GtkTreeSelection *selection);
 		return gtk_tree_selection_get_mode(gtkTreeSelection);
 	}
 	
@@ -282,7 +282,7 @@ public class TreeSelection : ObjectG
 	 */
 	public void* getUserData()
 	{
-		// gpointer gtk_tree_selection_get_user_data  (GtkTreeSelection *selection);
+		// gpointer gtk_tree_selection_get_user_data (GtkTreeSelection *selection);
 		return gtk_tree_selection_get_user_data(gtkTreeSelection);
 	}
 	
@@ -295,7 +295,7 @@ public class TreeSelection : ObjectG
 	 */
 	public TreeView getTreeView()
 	{
-		// GtkTreeView* gtk_tree_selection_get_tree_view  (GtkTreeSelection *selection);
+		// GtkTreeView* gtk_tree_selection_get_tree_view (GtkTreeSelection *selection);
 		return new TreeView( gtk_tree_selection_get_tree_view(gtkTreeSelection) );
 	}
 	
@@ -313,7 +313,7 @@ public class TreeSelection : ObjectG
 	 */
 	public void selectedForeach(GtkTreeSelectionForeachFunc func, void* data)
 	{
-		// void gtk_tree_selection_selected_foreach  (GtkTreeSelection *selection,  GtkTreeSelectionForeachFunc func,  gpointer data);
+		// void gtk_tree_selection_selected_foreach (GtkTreeSelection *selection,  GtkTreeSelectionForeachFunc func,  gpointer data);
 		gtk_tree_selection_selected_foreach(gtkTreeSelection, func, data);
 	}
 	
@@ -354,7 +354,7 @@ public class TreeSelection : ObjectG
 	 */
 	public void unselectPath(TreePath path)
 	{
-		// void gtk_tree_selection_unselect_path  (GtkTreeSelection *selection,  GtkTreePath *path);
+		// void gtk_tree_selection_unselect_path (GtkTreeSelection *selection,  GtkTreePath *path);
 		gtk_tree_selection_unselect_path(gtkTreeSelection, (path is null) ? null : path.getTreePathStruct());
 	}
 	
@@ -370,7 +370,7 @@ public class TreeSelection : ObjectG
 	 */
 	public int pathIsSelected(TreePath path)
 	{
-		// gboolean gtk_tree_selection_path_is_selected  (GtkTreeSelection *selection,  GtkTreePath *path);
+		// gboolean gtk_tree_selection_path_is_selected (GtkTreeSelection *selection,  GtkTreePath *path);
 		return gtk_tree_selection_path_is_selected(gtkTreeSelection, (path is null) ? null : path.getTreePathStruct());
 	}
 	
@@ -396,7 +396,7 @@ public class TreeSelection : ObjectG
 	 */
 	public void unselectIter(TreeIter iter)
 	{
-		// void gtk_tree_selection_unselect_iter  (GtkTreeSelection *selection,  GtkTreeIter *iter);
+		// void gtk_tree_selection_unselect_iter (GtkTreeSelection *selection,  GtkTreeIter *iter);
 		gtk_tree_selection_unselect_iter(gtkTreeSelection, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
@@ -411,7 +411,7 @@ public class TreeSelection : ObjectG
 	 */
 	public int iterIsSelected(TreeIter iter)
 	{
-		// gboolean gtk_tree_selection_iter_is_selected  (GtkTreeSelection *selection,  GtkTreeIter *iter);
+		// gboolean gtk_tree_selection_iter_is_selected (GtkTreeSelection *selection,  GtkTreeIter *iter);
 		return gtk_tree_selection_iter_is_selected(gtkTreeSelection, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
@@ -467,7 +467,7 @@ public class TreeSelection : ObjectG
 	 * Signal Details
 	 * The "changed" signal
 	 * void user_function (GtkTreeSelection *treeselection,
-	 *  gpointer user_data) : Run first
+	 *  gpointer user_data) : Run First
 	 * Emitted whenever the selection has (possibly) changed. Please note that
 	 * this signal is mostly a hint. It may only be emitted once when a range
 	 * of rows are selected, and it may occasionally be emitted when nothing
@@ -481,7 +481,7 @@ public class TreeSelection : ObjectG
 	 */
 	public void unselectRange(TreePath startPath, TreePath endPath)
 	{
-		// void gtk_tree_selection_unselect_range  (GtkTreeSelection *selection,  GtkTreePath *start_path,  GtkTreePath *end_path);
+		// void gtk_tree_selection_unselect_range (GtkTreeSelection *selection,  GtkTreePath *start_path,  GtkTreePath *end_path);
 		gtk_tree_selection_unselect_range(gtkTreeSelection, (startPath is null) ? null : startPath.getTreePathStruct(), (endPath is null) ? null : endPath.getTreePathStruct());
 	}
 }

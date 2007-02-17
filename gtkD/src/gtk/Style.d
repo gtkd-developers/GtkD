@@ -218,7 +218,7 @@ public class Style : ObjectG
 	 * Returns:
 	 *  Either style, or a newly-created GtkStyle.
 	 *  If the style is newly created, the style parameter
-	 *  will be dereferenced, and the new style will have
+	 *  will be unref'ed, and the new style will have
 	 *  a reference count belonging to the caller.
 	 */
 	public Style attach(Window window)
@@ -296,7 +296,7 @@ public class Style : ObjectG
 	 */
 	public void applyDefaultBackground(Window window, int setBg, GtkStateType stateType, Rectangle area, int x, int y, int width, int height)
 	{
-		// void gtk_style_apply_default_background  (GtkStyle *style,  GdkWindow *window,  gboolean set_bg,  GtkStateType state_type,  GdkRectangle *area,  gint x,  gint y,  gint width,  gint height);
+		// void gtk_style_apply_default_background (GtkStyle *style,  GdkWindow *window,  gboolean set_bg,  GtkStateType state_type,  GdkRectangle *area,  gint x,  gint y,  gint width,  gint height);
 		gtk_style_apply_default_background(gtkStyle, (window is null) ? null : window.getWindowStruct(), setBg, stateType, (area is null) ? null : area.getRectangleStruct(), x, y, width, height);
 	}
 	

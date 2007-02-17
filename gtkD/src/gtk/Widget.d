@@ -786,6 +786,34 @@ public class Widget : ObjectGtk
 		return consumed;
 	}
 	
+	gboolean delegate(GdkDragContext*, GtkDragResult, Widget)[] onDragFailedListeners;
+	void addOnDragFailed(gboolean delegate(GdkDragContext*, GtkDragResult, Widget) dlg)
+	{
+		if ( !("drag-failed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"drag-failed",
+			cast(GCallback)&callBackDragFailed,
+			this,
+			null,
+			cast(ConnectFlags)0);
+			connectedSignals["drag-failed"] = 1;
+		}
+		onDragFailedListeners ~= dlg;
+	}
+	extern(C) static void callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkDragResult result, Widget widget)
+	{
+		bit consumed = false;
+		
+		foreach ( gboolean delegate(GdkDragContext*, GtkDragResult, Widget) dlg ; widget.onDragFailedListeners )
+		{
+			dlg(dragContext, result, widget);
+		}
+		
+		return consumed;
+	}
+	
 	void delegate(GdkDragContext*, guint, Widget)[] onDragLeaveListeners;
 	void addOnDragLeave(void delegate(GdkDragContext*, guint, Widget) dlg)
 	{
@@ -1566,6 +1594,34 @@ public class Widget : ObjectGtk
 		foreach ( gboolean delegate(GdkEventProximity*, Widget) dlg ; widget.onProximityOutListeners )
 		{
 			dlg(event, widget);
+		}
+		
+		return consumed;
+	}
+	
+	gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget)[] onQueryTooltipListeners;
+	void addOnQueryTooltip(gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg)
+	{
+		if ( !("query-tooltip" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"query-tooltip",
+			cast(GCallback)&callBackQueryTooltip,
+			this,
+			null,
+			cast(ConnectFlags)0);
+			connectedSignals["query-tooltip"] = 1;
+		}
+		onQueryTooltipListeners ~= dlg;
+	}
+	extern(C) static void callBackQueryTooltip(GtkWidget* widgetStruct, gint x, gint y, gboolean keyboardMode, GtkTooltip* tooltip, Widget widget)
+	{
+		bit consumed = false;
+		
+		foreach ( gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg ; widget.onQueryTooltipListeners )
+		{
+			dlg(x, y, keyboardMode, tooltip, widget);
 		}
 		
 		return consumed;
@@ -2414,7 +2470,7 @@ public class Widget : ObjectGtk
 	 */
 	public void queueResizeNoRedraw()
 	{
-		// void gtk_widget_queue_resize_no_redraw  (GtkWidget *widget);
+		// void gtk_widget_queue_resize_no_redraw (GtkWidget *widget);
 		gtk_widget_queue_resize_no_redraw(gtkWidget);
 	}
 	
@@ -2486,7 +2542,7 @@ public class Widget : ObjectGtk
 	 */
 	public void getChildRequisition(GtkRequisition* requisition)
 	{
-		// void gtk_widget_get_child_requisition  (GtkWidget *widget,  GtkRequisition *requisition);
+		// void gtk_widget_get_child_requisition (GtkWidget *widget,  GtkRequisition *requisition);
 		gtk_widget_get_child_requisition(gtkWidget, requisition);
 	}
 	
@@ -2967,7 +3023,7 @@ public class Widget : ObjectGtk
 	 */
 	public GdkExtensionMode getExtensionEvents()
 	{
-		// GdkExtensionMode gtk_widget_get_extension_events  (GtkWidget *widget);
+		// GdkExtensionMode gtk_widget_get_extension_events (GtkWidget *widget);
 		return gtk_widget_get_extension_events(gtkWidget);
 	}
 	
@@ -3142,7 +3198,7 @@ public class Widget : ObjectGtk
 	 */
 	public int translateCoordinates(GtkWidget* destWidget, int srcX, int srcY, int* destX, int* destY)
 	{
-		// gboolean gtk_widget_translate_coordinates  (GtkWidget *src_widget,  GtkWidget *dest_widget,  gint src_x,  gint src_y,  gint *dest_x,  gint *dest_y);
+		// gboolean gtk_widget_translate_coordinates (GtkWidget *src_widget,  GtkWidget *dest_widget,  gint src_x,  gint src_y,  gint *dest_x,  gint *dest_y);
 		return gtk_widget_translate_coordinates(gtkWidget, destWidget, srcX, srcY, destX, destY);
 	}
 	
@@ -3280,7 +3336,7 @@ public class Widget : ObjectGtk
 	 */
 	public static Colormap getDefaultColormap()
 	{
-		// GdkColormap* gtk_widget_get_default_colormap  (void);
+		// GdkColormap* gtk_widget_get_default_colormap (void);
 		return new Colormap( gtk_widget_get_default_colormap() );
 	}
 	
@@ -3343,7 +3399,7 @@ public class Widget : ObjectGtk
 	 */
 	public static void setDefaultDirection(GtkTextDirection dir)
 	{
-		// void gtk_widget_set_default_direction  (GtkTextDirection dir);
+		// void gtk_widget_set_default_direction (GtkTextDirection dir);
 		gtk_widget_set_default_direction(dir);
 	}
 	
@@ -3355,7 +3411,7 @@ public class Widget : ObjectGtk
 	 */
 	public static GtkTextDirection getDefaultDirection()
 	{
-		// GtkTextDirection gtk_widget_get_default_direction  (void);
+		// GtkTextDirection gtk_widget_get_default_direction (void);
 		return gtk_widget_get_default_direction();
 	}
 	
@@ -3394,7 +3450,7 @@ public class Widget : ObjectGtk
 	 */
 	public void inputShapeCombineMask(Bitmap shapeMask, int offsetX, int offsetY)
 	{
-		// void gtk_widget_input_shape_combine_mask  (GtkWidget *widget,  GdkBitmap *shape_mask,  gint offset_x,  gint offset_y);
+		// void gtk_widget_input_shape_combine_mask (GtkWidget *widget,  GdkBitmap *shape_mask,  gint offset_x,  gint offset_y);
 		gtk_widget_input_shape_combine_mask(gtkWidget, (shapeMask is null) ? null : shapeMask.getBitmapStruct(), offsetX, offsetY);
 	}
 	
@@ -3630,7 +3686,7 @@ public class Widget : ObjectGtk
 	 */
 	public PgContext createPangoContext()
 	{
-		// PangoContext* gtk_widget_create_pango_context  (GtkWidget *widget);
+		// PangoContext* gtk_widget_create_pango_context (GtkWidget *widget);
 		return new PgContext( gtk_widget_create_pango_context(gtkWidget) );
 	}
 	
@@ -3904,7 +3960,7 @@ public class Widget : ObjectGtk
 	 */
 	public void setRedrawOnAllocate(int redrawOnAllocate)
 	{
-		// void gtk_widget_set_redraw_on_allocate  (GtkWidget *widget,  gboolean redraw_on_allocate);
+		// void gtk_widget_set_redraw_on_allocate (GtkWidget *widget,  gboolean redraw_on_allocate);
 		gtk_widget_set_redraw_on_allocate(gtkWidget, redrawOnAllocate);
 	}
 	
@@ -3939,7 +3995,7 @@ public class Widget : ObjectGtk
 	 */
 	public int setScrollAdjustments(Adjustment hadjustment, Adjustment vadjustment)
 	{
-		// gboolean gtk_widget_set_scroll_adjustments  (GtkWidget *widget,  GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
+		// gboolean gtk_widget_set_scroll_adjustments (GtkWidget *widget,  GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
 		return gtk_widget_set_scroll_adjustments(gtkWidget, (hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 	}
 	
@@ -4542,7 +4598,7 @@ public class Widget : ObjectGtk
 	 */
 	public void removeMnemonicLabel(GtkWidget* label)
 	{
-		// void gtk_widget_remove_mnemonic_label  (GtkWidget *widget,  GtkWidget *label);
+		// void gtk_widget_remove_mnemonic_label (GtkWidget *widget,  GtkWidget *label);
 		gtk_widget_remove_mnemonic_label(gtkWidget, label);
 	}
 	
@@ -4667,6 +4723,10 @@ public class Widget : ObjectGtk
 		// void gtk_requisition_free (GtkRequisition *requisition);
 		gtk_requisition_free(requisition);
 	}
+	
+	
+	
+	
 	
 	
 	

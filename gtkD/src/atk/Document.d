@@ -230,7 +230,7 @@ public class Document
 	 */
 	public char[] getAttributeValue(char[] attributeName)
 	{
-		// const gchar* atk_document_get_attribute_value  (AtkDocument *document,  const gchar *attribute_name);
+		// const gchar* atk_document_get_attribute_value (AtkDocument *document,  const gchar *attribute_name);
 		return Str.toString(atk_document_get_attribute_value(atkDocument, Str.toStringz(attributeName)) );
 	}
 	
@@ -251,7 +251,7 @@ public class Document
 	 */
 	public int setAttributeValue(char[] attributeName, char[] attributeValue)
 	{
-		// gboolean atk_document_set_attribute_value  (AtkDocument *document,  const gchar *attribute_name,  const gchar *attribute_value);
+		// gboolean atk_document_set_attribute_value (AtkDocument *document,  const gchar *attribute_name,  const gchar *attribute_value);
 		return atk_document_set_attribute_value(atkDocument, Str.toStringz(attributeName), Str.toStringz(attributeValue));
 	}
 	
@@ -269,7 +269,7 @@ public class Document
 	 */
 	public AtkAttributeSet* getAttributes()
 	{
-		// AtkAttributeSet* atk_document_get_attributes  (AtkDocument *document);
+		// AtkAttributeSet* atk_document_get_attributes (AtkDocument *document);
 		return atk_document_get_attributes(atkDocument);
 	}
 	
@@ -288,7 +288,7 @@ public class Document
 	 * Signal Details
 	 * The "load-complete" signal
 	 * void user_function (AtkDocument *atkdocument,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * The 'load-complete' signal is emitted when a pending load of a static
 	 * document has completed. This signal is to be expected by ATK clients
 	 * if and when AtkDocument implementors expose ATK_STATE_BUSY. If the state

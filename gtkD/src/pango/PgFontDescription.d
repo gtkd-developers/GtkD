@@ -111,7 +111,7 @@ private import glib.Str;
  * Pango supports a flexible architecture where a
  * particular rendering architecture can supply an
  * implementation of fonts. The PangoFont structure
- * represents an abstract rendering-system-indepent font.
+ * represents an abstract rendering-system-independent font.
  * Pango provides routines to list available fonts, and
  * to load a font of a given description.
  */
@@ -177,7 +177,7 @@ public class PgFontDescription
 	 */
 	public this ()
 	{
-		// PangoFontDescription* pango_font_description_new  (void);
+		// PangoFontDescription* pango_font_description_new (void);
 		this(cast(PangoFontDescription*)pango_font_description_new() );
 	}
 	
@@ -191,14 +191,14 @@ public class PgFontDescription
 	 */
 	public PangoFontDescription* copy()
 	{
-		// PangoFontDescription* pango_font_description_copy  (const PangoFontDescription *desc);
+		// PangoFontDescription* pango_font_description_copy (const PangoFontDescription *desc);
 		return pango_font_description_copy(pangoFontDescription);
 	}
 	
 	/**
 	 * Like pango_font_description_copy(), but only a shallow copy is made
 	 * of the family name and other allocated fields. The result can only
-	 * be used until desc is modififed or freed. This is meant to be used
+	 * be used until desc is modified or freed. This is meant to be used
 	 * when the copy is only needed temporarily.
 	 * desc:
 	 *  a PangoFontDescription
@@ -230,8 +230,8 @@ public class PgFontDescription
 	/**
 	 * Compares two font descriptions for equality. Two font descriptions
 	 * are considered equal if the fonts they describe are provably identical.
-	 * This means that their maskd do not have to match, as long as other fields
-	 * are all the same. (Two font descrptions may result in identical fonts
+	 * This means that their masks do not have to match, as long as other fields
+	 * are all the same. (Two font descriptions may result in identical fonts
 	 * being loaded, but still compare FALSE.)
 	 * desc1:
 	 *  a PangoFontDescription
@@ -239,7 +239,7 @@ public class PgFontDescription
 	 *  another PangoFontDescription
 	 * Returns:
 	 *  TRUE if the two font descriptions are identical,
-	 * 		 FALSE otherwise.
+	 * 	 FALSE otherwise.
 	 */
 	public int equal(PangoFontDescription* desc2)
 	{
@@ -284,7 +284,7 @@ public class PgFontDescription
 	 */
 	public void setFamily(char[] family)
 	{
-		// void pango_font_description_set_family  (PangoFontDescription *desc,  const char *family);
+		// void pango_font_description_set_family (PangoFontDescription *desc,  const char *family);
 		pango_font_description_set_family(pangoFontDescription, Str.toStringz(family));
 	}
 	
@@ -318,7 +318,7 @@ public class PgFontDescription
 	 */
 	public char[] getFamily()
 	{
-		// const char* pango_font_description_get_family  (const PangoFontDescription *desc);
+		// const char* pango_font_description_get_family (const PangoFontDescription *desc);
 		return Str.toString(pango_font_description_get_family(pangoFontDescription) );
 	}
 	
@@ -338,7 +338,7 @@ public class PgFontDescription
 	 */
 	public void setStyle(PangoStyle style)
 	{
-		// void pango_font_description_set_style  (PangoFontDescription *desc,  PangoStyle style);
+		// void pango_font_description_set_style (PangoFontDescription *desc,  PangoStyle style);
 		pango_font_description_set_style(pangoFontDescription, style);
 	}
 	
@@ -350,11 +350,11 @@ public class PgFontDescription
 	 * Returns:
 	 *  the style field for the font description.
 	 *  Use pango_font_description_get_set_fields() to find out if
-	 *  the field was explicitely set or not.
+	 *  the field was explicitly set or not.
 	 */
 	public PangoStyle getStyle()
 	{
-		// PangoStyle pango_font_description_get_style  (const PangoFontDescription *desc);
+		// PangoStyle pango_font_description_get_style (const PangoFontDescription *desc);
 		return pango_font_description_get_style(pangoFontDescription);
 	}
 	
@@ -368,7 +368,7 @@ public class PgFontDescription
 	 */
 	public void setVariant(PangoVariant variant)
 	{
-		// void pango_font_description_set_variant  (PangoFontDescription *desc,  PangoVariant variant);
+		// void pango_font_description_set_variant (PangoFontDescription *desc,  PangoVariant variant);
 		pango_font_description_set_variant(pangoFontDescription, variant);
 	}
 	
@@ -380,11 +380,11 @@ public class PgFontDescription
 	 * Returns:
 	 *  the variant field for the font description. Use
 	 *  pango_font_description_get_set_fields() to find out if
-	 *  the field was explicitely set or not.
+	 *  the field was explicitly set or not.
 	 */
 	public PangoVariant getVariant()
 	{
-		// PangoVariant pango_font_description_get_variant  (const PangoFontDescription *desc);
+		// PangoVariant pango_font_description_get_variant (const PangoFontDescription *desc);
 		return pango_font_description_get_variant(pangoFontDescription);
 	}
 	
@@ -400,7 +400,7 @@ public class PgFontDescription
 	 */
 	public void setWeight(PangoWeight weight)
 	{
-		// void pango_font_description_set_weight  (PangoFontDescription *desc,  PangoWeight weight);
+		// void pango_font_description_set_weight (PangoFontDescription *desc,  PangoWeight weight);
 		pango_font_description_set_weight(pangoFontDescription, weight);
 	}
 	
@@ -412,11 +412,11 @@ public class PgFontDescription
 	 * Returns:
 	 *  the weight field for the font description. Use
 	 *  pango_font_description_get_set_fields() to find out if
-	 *  the field was explicitely set or not.
+	 *  the field was explicitly set or not.
 	 */
 	public PangoWeight getWeight()
 	{
-		// PangoWeight pango_font_description_get_weight  (const PangoFontDescription *desc);
+		// PangoWeight pango_font_description_get_weight (const PangoFontDescription *desc);
 		return pango_font_description_get_weight(pangoFontDescription);
 	}
 	
@@ -430,7 +430,7 @@ public class PgFontDescription
 	 */
 	public void setStretch(PangoStretch stretch)
 	{
-		// void pango_font_description_set_stretch  (PangoFontDescription *desc,  PangoStretch stretch);
+		// void pango_font_description_set_stretch (PangoFontDescription *desc,  PangoStretch stretch);
 		pango_font_description_set_stretch(pangoFontDescription, stretch);
 	}
 	
@@ -442,11 +442,11 @@ public class PgFontDescription
 	 * Returns:
 	 *  the stretch field for the font description. Use
 	 *  pango_font_description_get_set_fields() to find out if
-	 *  the field was explicitely set or not.
+	 *  the field was explicitly set or not.
 	 */
 	public PangoStretch getStretch()
 	{
-		// PangoStretch pango_font_description_get_stretch  (const PangoFontDescription *desc);
+		// PangoStretch pango_font_description_get_stretch (const PangoFontDescription *desc);
 		return pango_font_description_get_stretch(pangoFontDescription);
 	}
 	
@@ -481,7 +481,7 @@ public class PgFontDescription
 	 *  to find out which is the case. Returns 0 if the size field has not
 	 *  previously been set or it has been set to 0 explicitly.
 	 *  Use pango_font_description_get_set_fields() to
-	 *  find out if the field was explicitely set or not.
+	 *  find out if the field was explicitly set or not.
 	 */
 	public int getSize()
 	{
@@ -514,7 +514,7 @@ public class PgFontDescription
 	 * Returns:
 	 *  whether the size for the font description is in
 	 *  points or device units. Use pango_font_description_get_set_fields() to
-	 *  find out if the size field of the font description was explicitely set or not.
+	 *  find out if the size field of the font description was explicitly set or not.
 	 * Since 1.8
 	 */
 	public int getSizeIsAbsolute()
@@ -538,7 +538,7 @@ public class PgFontDescription
 	 */
 	public void setGravity(PangoGravity gravity)
 	{
-		// void pango_font_description_set_gravity  (PangoFontDescription *desc,  PangoGravity gravity);
+		// void pango_font_description_set_gravity (PangoFontDescription *desc,  PangoGravity gravity);
 		pango_font_description_set_gravity(pangoFontDescription, gravity);
 	}
 	
@@ -550,12 +550,12 @@ public class PgFontDescription
 	 * Returns:
 	 *  the gravity field for the font description. Use
 	 *  pango_font_description_get_set_fields() to find out if
-	 *  the field was explicitely set or not.
+	 *  the field was explicitly set or not.
 	 * Since 1.16
 	 */
 	public PangoGravity getGravity()
 	{
-		// PangoGravity pango_font_description_get_gravity  (const PangoFontDescription *desc);
+		// PangoGravity pango_font_description_get_gravity (const PangoFontDescription *desc);
 		return pango_font_description_get_gravity(pangoFontDescription);
 	}
 	
@@ -583,7 +583,7 @@ public class PgFontDescription
 	 */
 	public void unsetFields(PangoFontMask toUnset)
 	{
-		// void pango_font_description_unset_fields  (PangoFontDescription *desc,  PangoFontMask to_unset);
+		// void pango_font_description_unset_fields (PangoFontDescription *desc,  PangoFontMask to_unset);
 		pango_font_description_unset_fields(pangoFontDescription, toUnset);
 	}
 	
@@ -623,7 +623,7 @@ public class PgFontDescription
 	 */
 	public void mergeStatic(PangoFontDescription* descToMerge, int replaceExisting)
 	{
-		// void pango_font_description_merge_static  (PangoFontDescription *desc,  const PangoFontDescription *desc_to_merge,  gboolean replace_existing);
+		// void pango_font_description_merge_static (PangoFontDescription *desc,  const PangoFontDescription *desc_to_merge,  gboolean replace_existing);
 		pango_font_description_merge_static(pangoFontDescription, descToMerge, replaceExisting);
 	}
 	
@@ -643,7 +643,7 @@ public class PgFontDescription
 	 */
 	public int betterMatch(PangoFontDescription* oldMatch, PangoFontDescription* newMatch)
 	{
-		// gboolean pango_font_description_better_match  (const PangoFontDescription *desc,  const PangoFontDescription *old_match,  const PangoFontDescription *new_match);
+		// gboolean pango_font_description_better_match (const PangoFontDescription *desc,  const PangoFontDescription *old_match,  const PangoFontDescription *new_match);
 		return pango_font_description_better_match(pangoFontDescription, oldMatch, newMatch);
 	}
 	
@@ -684,7 +684,7 @@ public class PgFontDescription
 	 */
 	public char[] toString()
 	{
-		// char* pango_font_description_to_string  (const PangoFontDescription *desc);
+		// char* pango_font_description_to_string (const PangoFontDescription *desc);
 		return Str.toString(pango_font_description_to_string(pangoFontDescription) );
 	}
 	
@@ -700,7 +700,7 @@ public class PgFontDescription
 	 */
 	public char[] toFilename()
 	{
-		// char* pango_font_description_to_filename  (const PangoFontDescription *desc);
+		// char* pango_font_description_to_filename (const PangoFontDescription *desc);
 		return Str.toString(pango_font_description_to_filename(pangoFontDescription) );
 	}
 	

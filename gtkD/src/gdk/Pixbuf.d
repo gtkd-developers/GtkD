@@ -296,7 +296,7 @@ public class Pixbuf
 	 */
 	public void renderThresholdAlpha(GdkBitmap* bitmap, int srcX, int srcY, int destX, int destY, int width, int height, int alphaThreshold)
 	{
-		// void gdk_pixbuf_render_threshold_alpha  (GdkPixbuf *pixbuf,  GdkBitmap *bitmap,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height,  int alpha_threshold);
+		// void gdk_pixbuf_render_threshold_alpha (GdkPixbuf *pixbuf,  GdkBitmap *bitmap,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height,  int alpha_threshold);
 		gdk_pixbuf_render_threshold_alpha(gdkPixbuf, bitmap, srcX, srcY, destX, destY, width, height, alphaThreshold);
 	}
 	
@@ -383,7 +383,7 @@ public class Pixbuf
 	 */
 	public void renderToDrawableAlpha(GdkDrawable* drawable, int srcX, int srcY, int destX, int destY, int width, int height, GdkPixbufAlphaMode alphaMode, int alphaThreshold, GdkRgbDither dither, int xDither, int yDither)
 	{
-		// void gdk_pixbuf_render_to_drawable_alpha  (GdkPixbuf *pixbuf,  GdkDrawable *drawable,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height,  GdkPixbufAlphaMode alpha_mode,  int alpha_threshold,  GdkRgbDither dither,  int x_dither,  int y_dither);
+		// void gdk_pixbuf_render_to_drawable_alpha (GdkPixbuf *pixbuf,  GdkDrawable *drawable,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height,  GdkPixbufAlphaMode alpha_mode,  int alpha_threshold,  GdkRgbDither dither,  int x_dither,  int y_dither);
 		gdk_pixbuf_render_to_drawable_alpha(gdkPixbuf, drawable, srcX, srcY, destX, destY, width, height, alphaMode, alphaThreshold, dither, xDither, yDither);
 	}
 	
@@ -412,7 +412,7 @@ public class Pixbuf
 	 */
 	public void renderPixmapAndMask(GdkPixmap** pixmapReturn, GdkBitmap** maskReturn, int alphaThreshold)
 	{
-		// void gdk_pixbuf_render_pixmap_and_mask  (GdkPixbuf *pixbuf,  GdkPixmap **pixmap_return,  GdkBitmap **mask_return,  int alpha_threshold);
+		// void gdk_pixbuf_render_pixmap_and_mask (GdkPixbuf *pixbuf,  GdkPixmap **pixmap_return,  GdkBitmap **mask_return,  int alpha_threshold);
 		gdk_pixbuf_render_pixmap_and_mask(gdkPixbuf, pixmapReturn, maskReturn, alphaThreshold);
 	}
 	
@@ -560,15 +560,15 @@ public class Pixbuf
 	 * buffer has an optimal rowstride. Note that the buffer is not cleared;
 	 * you will have to fill it completely yourself.
 	 * colorspace:
-	 *  Color space for image.
+	 *  Color space for image
 	 * has_alpha:
-	 *  Whether the image should have transparency information.
+	 *  Whether the image should have transparency information
 	 * bits_per_sample:
-	 *  Number of bits per color sample.
+	 *  Number of bits per color sample
 	 * width:
-	 *  Width of image in pixels.
+	 *  Width of image in pixels, must be > 0
 	 * height:
-	 *  Height of image in pixels.
+	 *  Height of image in pixels, must be > 0
 	 * Returns:
 	 *  A newly-created GdkPixbuf with a reference count of 1, or
 	 * NULL if not enough memory could be allocated for the image buffer.
@@ -583,24 +583,24 @@ public class Pixbuf
 	 * Creates a new GdkPixbuf out of in-memory image data. Currently only RGB
 	 * images with 8 bits per sample are supported.
 	 * data:
-	 *  Image data in 8-bit/sample packed format.
+	 *  Image data in 8-bit/sample packed format
 	 * colorspace:
-	 *  Colorspace for the image data.
+	 *  Colorspace for the image data
 	 * has_alpha:
-	 *  Whether the data has an opacity channel.
+	 *  Whether the data has an opacity channel
 	 * bits_per_sample:
-	 *  Number of bits per sample.
+	 *  Number of bits per sample
 	 * width:
-	 *  Width of the image in pixels.
+	 *  Width of the image in pixels, must be > 0
 	 * height:
-	 *  Height of the image in pixels.
+	 *  Height of the image in pixels, must be > 0
 	 * rowstride:
-	 *  Distance in bytes between row starts.
+	 *  Distance in bytes between row starts
 	 * destroy_fn:
 	 *  Function used to free the data when the pixbuf's reference count
-	 * drops to zero, or NULL if the data should not be freed.
+	 * drops to zero, or NULL if the data should not be freed
 	 * destroy_fn_data:
-	 *  Closure data to pass to the destroy notification function.
+	 *  Closure data to pass to the destroy notification function
 	 * Returns:
 	 *  A newly-created GdkPixbuf structure with a reference count of 1.
 	 */
@@ -900,7 +900,7 @@ public class Pixbuf
 	 */
 	public this (char[] filename, int width, int height, GError** error)
 	{
-		// GdkPixbuf* gdk_pixbuf_new_from_file_at_size  (const char *filename,  int width,  int height,  GError **error);
+		// GdkPixbuf* gdk_pixbuf_new_from_file_at_size (const char *filename,  int width,  int height,  GError **error);
 		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, error) );
 	}
 	
@@ -935,7 +935,7 @@ public class Pixbuf
 	 */
 	public this (char[] filename, int width, int height, int preserveAspectRatio, GError** error)
 	{
-		// GdkPixbuf* gdk_pixbuf_new_from_file_at_scale  (const char *filename,  int width,  int height,  gboolean preserve_aspect_ratio,  GError **error);
+		// GdkPixbuf* gdk_pixbuf_new_from_file_at_scale (const char *filename,  int width,  int height,  gboolean preserve_aspect_ratio,  GError **error);
 		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, error) );
 	}
 	
@@ -1228,7 +1228,7 @@ public class Pixbuf
 	 */
 	public Pixbuf compositeColorSimple(int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, uint color1, uint color2)
 	{
-		// GdkPixbuf* gdk_pixbuf_composite_color_simple  (const GdkPixbuf *src,  int dest_width,  int dest_height,  GdkInterpType interp_type,  int overall_alpha,  int check_size,  guint32 color1,  guint32 color2);
+		// GdkPixbuf* gdk_pixbuf_composite_color_simple (const GdkPixbuf *src,  int dest_width,  int dest_height,  GdkInterpType interp_type,  int overall_alpha,  int check_size,  guint32 color1,  guint32 color2);
 		return new Pixbuf( gdk_pixbuf_composite_color_simple(gdkPixbuf, destWidth, destHeight, interpType, overallAlpha, checkSize, color1, color2) );
 	}
 	
@@ -1435,7 +1435,7 @@ public class Pixbuf
 	 */
 	public void saturateAndPixelate(Pixbuf dest, float saturation, int pixelate)
 	{
-		// void gdk_pixbuf_saturate_and_pixelate  (const GdkPixbuf *src,  GdkPixbuf *dest,  gfloat saturation,  gboolean pixelate);
+		// void gdk_pixbuf_saturate_and_pixelate (const GdkPixbuf *src,  GdkPixbuf *dest,  gfloat saturation,  gboolean pixelate);
 		gdk_pixbuf_saturate_and_pixelate(gdkPixbuf, (dest is null) ? null : dest.getPixbufStruct(), saturation, pixelate);
 	}
 	

@@ -153,7 +153,6 @@ public class PgContext : ObjectG
 	
 	
 	
-	
 	/**
 	 * Breaks a piece of text into segments with consistent
 	 * directional level and shaping engine. Each byte of text will
@@ -166,7 +165,7 @@ public class PgContext : ObjectG
 	 * (i.e. if itemizing in a loop, just keep passing in the same cached_iter).
 	 * context:
 	 *  a structure holding information that affects
-	 *  the itemization process.
+	 * 	 the itemization process.
 	 * text:
 	 *  the text to itemize.
 	 * start_index:
@@ -191,10 +190,10 @@ public class PgContext : ObjectG
 	/**
 	 * Like pango_itemize(), but the base direction to use when
 	 * computing bidirectional levels (see pango_context_set_base_dir()),
-	 * is specified explicitely rather than gotten from the PangoContext.
+	 * is specified explicitly rather than gotten from the PangoContext.
 	 * context:
 	 *  a structure holding information that affects
-	 *  the itemization process.
+	 * 	 the itemization process.
 	 * base_dir:
 	 *  base direction to use for bidirectional processing
 	 * text:
@@ -231,7 +230,7 @@ public class PgContext : ObjectG
 	 *  a GList of PangoItem in logical order.
 	 * Returns:
 	 * a GList of PangoItem structures in visual order.
-	 * (Please mail otaylorredhat.com if you use this function.
+	 * (Please open a bug if you use this function.
 	 *  It is not a particularly convenient interface, and the code
 	 *  is duplicated elsewhere in Pango for that reason.)
 	 */
@@ -246,8 +245,8 @@ public class PgContext : ObjectG
 	 * This function is only useful when implementing a new backend
 	 * for Pango, something applications won't do. You should use
 	 * the context creation function for the backend you are using,
-	 * for example, pango_xft_get_context(), pango_win32_get_context()
-	 * or, pango_ft2_font_map_create_context().
+	 * for example, pango_cairo_font_map_create_context(), pango_xft_get_context(),
+	 * pango_win32_get_context() or, pango_ft2_font_map_create_context().
 	 * If you are using Pango as part of a higher-level system,
 	 * that system may have it's own ways of create a PangoContext.
 	 * For instance, the GTK+ toolkit has, among others,
@@ -316,7 +315,7 @@ public class PgContext : ObjectG
 	 */
 	public void setFontDescription(PgFontDescription desc)
 	{
-		// void pango_context_set_font_description  (PangoContext *context,  const PangoFontDescription *desc);
+		// void pango_context_set_font_description (PangoContext *context,  const PangoFontDescription *desc);
 		pango_context_set_font_description(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct());
 	}
 	
@@ -414,7 +413,7 @@ public class PgContext : ObjectG
 	/**
 	 * Retrieves the gravity for the context. This is similar to
 	 * pango_context_get_base_gravity(), except for when the base gravity
-	 * is PANGO_GRAVITY_AUTO for which pango_matrix_to_gravity() is used
+	 * is PANGO_GRAVITY_AUTO for which pango_gravity_get_for_matrix() is used
 	 * to return the gravity from the current context matrix.
 	 * context:
 	 *  a PangoContext
@@ -426,6 +425,38 @@ public class PgContext : ObjectG
 	{
 		// PangoGravity pango_context_get_gravity (PangoContext *context);
 		return pango_context_get_gravity(pangoContext);
+	}
+	
+	/**
+	 * Retrieves the gravity hint for the context. See
+	 * pango_context_set_gravity_hint() for details.
+	 * context:
+	 *  a PangoContext
+	 * Returns:
+	 *  the gravity hint for the context.
+	 * Since 1.16
+	 */
+	public PangoGravityHint getGravityHint()
+	{
+		// PangoGravityHint pango_context_get_gravity_hint (PangoContext *context);
+		return pango_context_get_gravity_hint(pangoContext);
+	}
+	
+	/**
+	 * Sets the gravity hint for the context.
+	 * The gravity hint is used in laying vertical text out, and is only relevant
+	 * if gravity of the context as returned by pango_context_get_gravity()
+	 * is set PANGO_GRAVITY_EAST or PANGO_GRAVITY_WEST.
+	 * context:
+	 *  a PangoContext
+	 * hint:
+	 *  the new gravity hint
+	 * Since 1.16
+	 */
+	public void setGravityHint(PangoGravityHint hint)
+	{
+		// void pango_context_set_gravity_hint (PangoContext *context,  PangoGravityHint hint);
+		pango_context_set_gravity_hint(pangoContext, hint);
 	}
 	
 	/**
@@ -450,7 +481,7 @@ public class PgContext : ObjectG
 	 * Sets the transformation matrix that will be applied when rendering
 	 * with this context. Note that reported metrics are in the user space
 	 * coordinates before the application of the matrix, not device-space
-	 * coordiantes after the application of the matrix. So, they don't scale
+	 * coordinates after the application of the matrix. So, they don't scale
 	 * with the matrix, though they may change slightly for different
 	 * matrices, depending on how the text is fit to the pixel grid.
 	 * context:
@@ -519,7 +550,7 @@ public class PgContext : ObjectG
 	 * language:
 	 *  language tag used to determine which script to get the metrics
 	 *  for. NULL means that the language tag from the context will
-	 *  be used. If no language tag is set on the ccontext, metrics
+	 *  be used. If no language tag is set on the context, metrics
 	 *  large enough to cover a range of languages will be returned.
 	 *  The process of determining such metrics is slow, so it is best
 	 *  to always make sure some real language tag will be used.
@@ -607,11 +638,11 @@ public class PgContext : ObjectG
 	
 	/**
 	 * Converts a PangoGravity value to its rotation value.
+	 * gravity should not be PANGO_GRAVITY_AUTO.
 	 * gravity:
 	 *  gravity to query
 	 * Returns:
-	 *  the rotation value corresponding to gravity,
-	 * or zero if gravity is PANGO_GRAVITY_AUTO
+	 *  the rotation value corresponding to gravity.
 	 * Since 1.16
 	 */
 	public static double pangoGravityToRotation(PangoGravity gravity)

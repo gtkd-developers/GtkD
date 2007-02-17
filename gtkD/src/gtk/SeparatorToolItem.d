@@ -126,7 +126,7 @@ public class SeparatorToolItem : ToolItem
 	 */
 	public void setDraw(int draw)
 	{
-		// void gtk_separator_tool_item_set_draw  (GtkSeparatorToolItem *item,  gboolean draw);
+		// void gtk_separator_tool_item_set_draw (GtkSeparatorToolItem *item,  gboolean draw);
 		gtk_separator_tool_item_set_draw(gtkSeparatorToolItem, draw);
 	}
 	
@@ -152,7 +152,7 @@ public class SeparatorToolItem : ToolItem
 	 */
 	public int getDraw()
 	{
-		// gboolean gtk_separator_tool_item_get_draw  (GtkSeparatorToolItem *item);
+		// gboolean gtk_separator_tool_item_get_draw (GtkSeparatorToolItem *item);
 		return gtk_separator_tool_item_get_draw(gtkSeparatorToolItem);
 	}
 }

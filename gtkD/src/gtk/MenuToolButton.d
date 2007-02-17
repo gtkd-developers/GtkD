@@ -256,7 +256,7 @@ public class MenuToolButton : ToolButton
 	 * Signal Details
 	 * The "show-menu" signal
 	 * void user_function (GtkMenuToolButton *menutoolbutton,
-	 *  gpointer user_data) : Run first
+	 *  gpointer user_data) : Run First
 	 * menutoolbutton:
 	 * the object which received the signal.
 	 * user_data:

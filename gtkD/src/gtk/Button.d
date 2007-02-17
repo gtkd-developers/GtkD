@@ -705,7 +705,7 @@ public class Button : Bin
 	 */
 	public GtkPositionType getImagePosition()
 	{
-		// GtkPositionType gtk_button_get_image_position  (GtkButton *button);
+		// GtkPositionType gtk_button_get_image_position (GtkButton *button);
 		return gtk_button_get_image_position(gtkButton);
 	}
 	

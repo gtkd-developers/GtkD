@@ -103,25 +103,6 @@ public enum PangoDirection
 	NEUTRAL
 }
 /**
- * The PangoGravity type represents the orientation of glyphs in a segment
- * of text. This is useful when rendering vertical text layouts. In
- * those situations, the layout is rotated using a non-identity PangoMatrix,
- * and then glyph orientation is controlled using PangoGravity.
- * Not every value in this enumeration makes sense for every usage of
- * PangoGravity; for example, PANGO_GRAVITY_AUTO only can be passed to
- * pango_context_set_base_gravity() and can only be returned by
- * pango_context_get_base_gravity().
- * PANGO_GRAVITY_SOUTH
- */
-public enum PangoGravity
-{
-	SOUTH,
-	EAST,
-	NORTH,
-	WEST,
-	AUTO
-}
-/**
  * An enumeration specifying the various slant styles possible for a font.
  * PANGO_STYLE_NORMAL
  */
@@ -271,6 +252,10 @@ public enum PangoFontMask
  * strikethrough color (PangoAttrColor)
  * PANGO_ATTR_ABSOLUTE_SIZE
  * font size in pixels scaled by PANGO_SCALE (PangoAttrInt)
+ * PANGO_ATTR_GRAVITY
+ * base text gravity (PangoAttrInt)
+ * PANGO_ATTR_GRAVITY_HINT
+ * gravity hint (PangoAttrInt)
  */
 public enum PangoAttrType
 {
@@ -293,8 +278,10 @@ public enum PangoAttrType
 	FALLBACK, /+* PangoAttrInt +/
 	LETTER_SPACING, /+* PangoAttrInt +/
 	UNDERLINE_COLOR, /+* PangoAttrColor +/
-	STRIKETHROUGH_COLOR, /+* PangoAttrColor +/
-	ABSOLUTE_SIZE /+* PangoAttrSize +/
+	STRIKETHROUGH_COLOR,/+* PangoAttrColor +/
+	ABSOLUTE_SIZE, /+* PangoAttrSize +/
+	GRAVITY, /+* PangoAttrInt +/
+	GRAVITY_HINT /+* PangoAttrInt +/
 }
 /**
  * the PangoUnderline enumeration is used to specify
@@ -521,13 +508,12 @@ public struct PangoItem{}
  * the engine for doing rendering-system-independent processing.
  * PangoFont*font;
  * the font for this segment.
- * guintlevel:8;
- * the bidrectional level for this segment.
- * guintgravity:3;
+ * guint8level;
+ * the bidirectional level for this segment.
+ * guint8gravity;
  * the glyph orientation for this segment.
- * guintcentered_baseline:1;
- * whether this segment should be shifted to center around
- * the baseline.
+ * guint8flags;
+ * boolean flags for this segment (currently only one) (Since: 1.16).
  * PangoLanguage*language;
  * the detected language for this segment.
  * GSList*extra_attrs;
@@ -540,11 +526,11 @@ public struct PangoAnalysis{}
 // pango-Text-Processing.html
 // PangoFont *font;
 // pango-Text-Processing.html
-// uint level : 8;
+// byte level;
 // pango-Text-Processing.html
-// uint gravity : 3; /+* PangoGravity +/
+// byte gravity; /+* PangoGravity +/
 // pango-Text-Processing.html
-// uint centeredBaseline : 1; /+* int +/
+// byte flags;
 // pango-Text-Processing.html
 // PangoLanguage *language;
 // pango-Text-Processing.html
@@ -821,7 +807,7 @@ public struct PangoFontMetrics{}
  * The PangoFont structure is used to represent
  * a font in a rendering-system-independent matter.
  * To create an implementation of a PangoFont,
- * the rendering-system specific code should malloc
+ * the rendering-system specific code should allocate
  * a larger structure that contains a nested
  * PangoFont, fill in the klass member of
  * the nested PangoFont with a pointer to
@@ -853,7 +839,7 @@ public struct PangoFontFace{}
  * particular rendering system. This is a virtual object with
  * implementations being specific to particular rendering systems. To
  * create an implementation of a PangoFontMap, the rendering-system
- * specific code should malloc a larger structure that contains a nested
+ * specific code should allocate a larger structure that contains a nested
  * PangoFontMap, fill in the klass member of the nested PangoFontMap with a
  * pointer to a appropriate PangoFontMapClass, then call
  * pango_font_map_init() on the structure.
@@ -1132,7 +1118,7 @@ public struct PangoAttrSize{}
 
 /**
  * The PangoColor structure is used to
- * represent a color in an uncalibrated RGB colorspace.
+ * represent a color in an uncalibrated RGB color-space.
  * guint16red;
  * The red component of the color. This is a value between 0 and 65535,
  */

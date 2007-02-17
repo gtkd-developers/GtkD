@@ -370,7 +370,8 @@ public class Gdk
 	
 	
 	/**
-	 * Ungrabs the pointer, if it is grabbed by this application.
+	 * Ungrabs the pointer on the default display, if it is grabbed by this
+	 * application.
 	 * time_:
 	 *  a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
 	 *  timestamp is available.
@@ -382,7 +383,8 @@ public class Gdk
 	}
 	
 	/**
-	 * Returns TRUE if the pointer is currently grabbed by this application.
+	 * Returns TRUE if the pointer on the default display is currently
+	 * grabbed by this application.
 	 * Note that this does not take the inmplicit pointer grab on button
 	 * presses into account.
 	 * Returns:
@@ -437,7 +439,8 @@ public class Gdk
 	}
 	
 	/**
-	 * Ungrabs the keyboard, if it is grabbed by this application.
+	 * Ungrabs the keyboard on the default display, if it is grabbed by this
+	 * application.
 	 * time_:
 	 *  a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
 	 *  timestamp is available.
@@ -449,7 +452,7 @@ public class Gdk
 	}
 	
 	/**
-	 * Emits a short beep.
+	 * Emits a short beep on the default display.
 	 */
 	public static void beep()
 	{

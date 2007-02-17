@@ -392,11 +392,28 @@ public class Color
 	 * colora:
 	 *  a GdkColor.
 	 * Returns:
-	 *  The hash function appled to colora
+	 *  The hash function applied to colora
 	 */
 	public uint hash()
 	{
 		// guint gdk_color_hash (const GdkColor *colora);
 		return gdk_color_hash(gdkColor);
+	}
+	
+	/**
+	 * Returns a textual specification of color in the hexadecimal form
+	 * #rrrrggggbbbb, where r,
+	 * g and b are hex digits
+	 * representing the red, green and blue components respectively.
+	 * color:
+	 *  a GdkColor
+	 * Returns:
+	 *  a newly-allocated text string
+	 * Since 2.12
+	 */
+	public char[] toString()
+	{
+		// gchar* gdk_color_to_string (const GdkColor *color);
+		return Str.toString(gdk_color_to_string(gdkColor) );
 	}
 }

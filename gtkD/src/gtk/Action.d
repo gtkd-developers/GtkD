@@ -435,7 +435,7 @@ public class Action : ObjectG
 	 */
 	public void disconnectAccelerator()
 	{
-		// void gtk_action_disconnect_accelerator  (GtkAction *action);
+		// void gtk_action_disconnect_accelerator (GtkAction *action);
 		gtk_action_disconnect_accelerator(gtkAction);
 	}
 	
@@ -469,7 +469,7 @@ public class Action : ObjectG
 	 */
 	public void unblockActivateFrom(Widget proxy)
 	{
-		// void gtk_action_unblock_activate_from  (GtkAction *action,  GtkWidget *proxy);
+		// void gtk_action_unblock_activate_from (GtkAction *action,  GtkWidget *proxy);
 		gtk_action_unblock_activate_from(gtkAction, (proxy is null) ? null : proxy.getWidgetStruct());
 	}
 	

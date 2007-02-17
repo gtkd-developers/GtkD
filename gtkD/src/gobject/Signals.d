@@ -78,7 +78,7 @@ private import glib.Quark;
  * A signal emission mainly involves invocation of a certain set of callbacks in
  * precisely defined manner. There are two main categories of such callbacks,
  * per-object
- * 	[11]
+ * 	[12]
  * ones and user provided ones.
  * The per-object callbacks are most often referred to as "object method
  * handler" or "default (signal) handler", while user provided callbacks are
@@ -441,7 +441,7 @@ public class Signals
 	
 	/**
 	 * Connects a GCallback function to a signal for a particular object. Similar
-	 * to g_signal_connect(), but allows to provide a GDestroyNotify for the data
+	 * to g_signal_connect(), but allows to provide a GClosureNotify for the data
 	 * which will be called when the signal handler is disconnected and no longer
 	 * used. Specify connect_flags if you need ..._after() pr
 	 * ..._swapped() variants of this function.
@@ -454,7 +454,7 @@ public class Signals
 	 * data:
 	 * data to pass to c_handler calls.
 	 * destroy_data:
-	 * a GDestroyNotify for data.
+	 * a GClosureNotify for data.
 	 * connect_flags:
 	 * a combination of GConnectFlags.
 	 * Returns:
@@ -659,7 +659,7 @@ public class Signals
 	 */
 	public static uint handlersUnblockMatched(void* instanc, GSignalMatchType mask, uint signalId, GQuark detail, Closure closure, void* func, void* data)
 	{
-		// guint g_signal_handlers_unblock_matched  (gpointer instance,  GSignalMatchType mask,  guint signal_id,  GQuark detail,  GClosure *closure,  gpointer func,  gpointer data);
+		// guint g_signal_handlers_unblock_matched (gpointer instance,  GSignalMatchType mask,  guint signal_id,  GQuark detail,  GClosure *closure,  gpointer func,  gpointer data);
 		return g_signal_handlers_unblock_matched(instanc, mask, signalId, detail, (closure is null) ? null : closure.getClosureStruct(), func, data);
 	}
 	
@@ -875,7 +875,7 @@ public class Signals
 	 */
 	public static GSignalInvocationHint* getInvocationHint(void* instanc)
 	{
-		// GSignalInvocationHint* g_signal_get_invocation_hint  (gpointer instance);
+		// GSignalInvocationHint* g_signal_get_invocation_hint (gpointer instance);
 		return g_signal_get_invocation_hint(instanc);
 	}
 	
@@ -916,13 +916,13 @@ public class Signals
 	 * Returns:
 	 * standard GSignalAccumulator result
 	 * Since 2.4
-	 * [11] Although signals can deal with any kind of instantiatable type,
+	 * [12] Although signals can deal with any kind of instantiatable type,
 	 * 	i'm referring to those types as "object types" in the following, simply
 	 * 	because that is the context most users will encounter signals in.
 	 */
 	public static int accumulatorTrueHandled(GSignalInvocationHint* ihint, Value returnAccu, Value handlerReturn, void* dummy)
 	{
-		// gboolean g_signal_accumulator_true_handled  (GSignalInvocationHint *ihint,  GValue *return_accu,  const GValue *handler_return,  gpointer dummy);
+		// gboolean g_signal_accumulator_true_handled (GSignalInvocationHint *ihint,  GValue *return_accu,  const GValue *handler_return,  gpointer dummy);
 		return g_signal_accumulator_true_handled(ihint, (returnAccu is null) ? null : returnAccu.getValueStruct(), (handlerReturn is null) ? null : handlerReturn.getValueStruct(), dummy);
 	}
 }

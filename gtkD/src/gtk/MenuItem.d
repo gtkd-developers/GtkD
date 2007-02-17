@@ -333,7 +333,7 @@ public class MenuItem : Item
 	 */
 	public void setRightJustified(int rightJustified)
 	{
-		// void gtk_menu_item_set_right_justified  (GtkMenuItem *menu_item,  gboolean right_justified);
+		// void gtk_menu_item_set_right_justified (GtkMenuItem *menu_item,  gboolean right_justified);
 		gtk_menu_item_set_right_justified(gtkMenuItem, rightJustified);
 	}
 	
@@ -420,7 +420,7 @@ public class MenuItem : Item
 	 */
 	public void toggleSizeRequest(int* requisition)
 	{
-		// void gtk_menu_item_toggle_size_request  (GtkMenuItem *menu_item,  gint *requisition);
+		// void gtk_menu_item_toggle_size_request (GtkMenuItem *menu_item,  gint *requisition);
 		gtk_menu_item_toggle_size_request(gtkMenuItem, requisition);
 	}
 	
@@ -433,7 +433,7 @@ public class MenuItem : Item
 	 */
 	public void toggleSizeAllocate(int allocation)
 	{
-		// void gtk_menu_item_toggle_size_allocate  (GtkMenuItem *menu_item,  gint allocation);
+		// void gtk_menu_item_toggle_size_allocate (GtkMenuItem *menu_item,  gint allocation);
 		gtk_menu_item_toggle_size_allocate(gtkMenuItem, allocation);
 	}
 	
@@ -449,7 +449,7 @@ public class MenuItem : Item
 	 */
 	public int getRightJustified()
 	{
-		// gboolean gtk_menu_item_get_right_justified  (GtkMenuItem *menu_item);
+		// gboolean gtk_menu_item_get_right_justified (GtkMenuItem *menu_item);
 		return gtk_menu_item_get_right_justified(gtkMenuItem);
 	}
 	

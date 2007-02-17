@@ -170,7 +170,7 @@ public class Atomic
 	 */
 	public static int intCompareAndExchange(int* atomic, int oldval, int newval)
 	{
-		// gboolean g_atomic_int_compare_and_exchange  (volatile gint *atomic,  gint oldval,  gint newval);
+		// gboolean g_atomic_int_compare_and_exchange (volatile gint *atomic,  gint oldval,  gint newval);
 		return g_atomic_int_compare_and_exchange(atomic, oldval, newval);
 	}
 	

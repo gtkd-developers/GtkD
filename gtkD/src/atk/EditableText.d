@@ -128,7 +128,7 @@ public class EditableText
 	 */
 	public void _SetTextContents(char[] string)
 	{
-		// void atk_editable_text_set_text_contents  (AtkEditableText *text,  const gchar *string);
+		// void atk_editable_text_set_text_contents (AtkEditableText *text,  const gchar *string);
 		atk_editable_text_set_text_contents(atkEditableText, Str.toStringz(string));
 	}
 	

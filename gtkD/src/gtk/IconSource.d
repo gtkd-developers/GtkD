@@ -455,7 +455,7 @@ public class IconSource
 	 */
 	public static int sizeLookupForSettings(Settings settings, GtkIconSize size, int* width, int* height)
 	{
-		// gboolean gtk_icon_size_lookup_for_settings  (GtkSettings *settings,  GtkIconSize size,  gint *width,  gint *height);
+		// gboolean gtk_icon_size_lookup_for_settings (GtkSettings *settings,  GtkIconSize size,  gint *width,  gint *height);
 		return gtk_icon_size_lookup_for_settings((settings is null) ? null : settings.getSettingsStruct(), size, width, height);
 	}
 	
@@ -546,7 +546,7 @@ public class IconSource
 	 */
 	public GtkTextDirection sourceGetDirection()
 	{
-		// GtkTextDirection gtk_icon_source_get_direction  (const GtkIconSource *source);
+		// GtkTextDirection gtk_icon_source_get_direction (const GtkIconSource *source);
 		return gtk_icon_source_get_direction(gtkIconSource);
 	}
 	
@@ -636,7 +636,7 @@ public class IconSource
 	 */
 	public int sourceGetSizeWildcarded()
 	{
-		// gboolean gtk_icon_source_get_size_wildcarded  (const GtkIconSource *source);
+		// gboolean gtk_icon_source_get_size_wildcarded (const GtkIconSource *source);
 		return gtk_icon_source_get_size_wildcarded(gtkIconSource);
 	}
 	
@@ -818,7 +818,7 @@ public class IconSource
 	 */
 	public void sourceSetSizeWildcarded(int setting)
 	{
-		// void gtk_icon_source_set_size_wildcarded  (GtkIconSource *source,  gboolean setting);
+		// void gtk_icon_source_set_size_wildcarded (GtkIconSource *source,  gboolean setting);
 		gtk_icon_source_set_size_wildcarded(gtkIconSource, setting);
 	}
 	

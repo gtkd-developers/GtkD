@@ -168,7 +168,7 @@ public class Relation : ObjectG
 	 */
 	public AtkRelationType getRelationType()
 	{
-		// AtkRelationType atk_relation_get_relation_type  (AtkRelation *relation);
+		// AtkRelationType atk_relation_get_relation_type (AtkRelation *relation);
 		return atk_relation_get_relation_type(atkRelation);
 	}
 	

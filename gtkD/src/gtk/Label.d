@@ -359,7 +359,7 @@ public class Label : Misc
 	 */
 	public void setMarkupWithMnemonic(char[] str)
 	{
-		// void gtk_label_set_markup_with_mnemonic  (GtkLabel *label,  const gchar *str);
+		// void gtk_label_set_markup_with_mnemonic (GtkLabel *label,  const gchar *str);
 		gtk_label_set_markup_with_mnemonic(gtkLabel, Str.toStringz(str));
 	}
 	
@@ -651,7 +651,7 @@ public class Label : Misc
 	 */
 	public void setTextWithMnemonic(char[] str)
 	{
-		// void gtk_label_set_text_with_mnemonic  (GtkLabel *label,  const gchar *str);
+		// void gtk_label_set_text_with_mnemonic (GtkLabel *label,  const gchar *str);
 		gtk_label_set_text_with_mnemonic(gtkLabel, Str.toStringz(str));
 	}
 	

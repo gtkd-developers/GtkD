@@ -283,7 +283,7 @@ public class ToggleButton : Button
 	 */
 	public int getInconsistent()
 	{
-		// gboolean gtk_toggle_button_get_inconsistent  (GtkToggleButton *toggle_button);
+		// gboolean gtk_toggle_button_get_inconsistent (GtkToggleButton *toggle_button);
 		return gtk_toggle_button_get_inconsistent(gtkToggleButton);
 	}
 	
@@ -308,7 +308,7 @@ public class ToggleButton : Button
 	 */
 	public void setInconsistent(int setting)
 	{
-		// void gtk_toggle_button_set_inconsistent  (GtkToggleButton *toggle_button,  gboolean setting);
+		// void gtk_toggle_button_set_inconsistent (GtkToggleButton *toggle_button,  gboolean setting);
 		gtk_toggle_button_set_inconsistent(gtkToggleButton, setting);
 	}
 	

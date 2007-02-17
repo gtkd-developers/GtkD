@@ -125,6 +125,18 @@ public interface CellLayoutIF
 	public void packEnd(CellRenderer cell, int expand);
 	
 	/**
+	 * Returns the cell renderers which have been added to cell_layout.
+	 * cell_layout:
+	 *  a GtkCellLayout
+	 * Returns:
+	 *  a list of cell renderers. The list, but not the
+	 *  renderers has been newly allocated and should be freed with
+	 *  g_list_free() when no longer needed.
+	 * Since 2.12
+	 */
+	public GList* getCells();
+	
+	/**
 	 * Re-inserts cell at position. Note that cell has already to be packed
 	 * into cell_layout for this to function properly.
 	 * cell_layout:

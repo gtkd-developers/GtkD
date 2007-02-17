@@ -69,7 +69,7 @@ private import glib.Str;
  * the following handler to "insert_text", an application
  * can convert all entry into a widget into uppercase.
  * Example3.Forcing entry to uppercase.
- * include <ctype.h>
+ * #include <ctype.h>
  * void
  * insert_text_handler (GtkEditable *editable,
  *  const gchar *text,
@@ -242,7 +242,7 @@ public class Editable
 	 */
 	public int getSelectionBounds(int* start, int* end)
 	{
-		// gboolean gtk_editable_get_selection_bounds  (GtkEditable *editable,  gint *start,  gint *end);
+		// gboolean gtk_editable_get_selection_bounds (GtkEditable *editable,  gint *start,  gint *end);
 		return gtk_editable_get_selection_bounds(gtkEditable, start, end);
 	}
 	
@@ -422,7 +422,7 @@ public class Editable
 	 * Signal Details
 	 * The "changed" signal
 	 * void user_function (GtkEditable *editable,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * Indicates that the user has changed the contents
 	 * of the widget.
 	 * editable:

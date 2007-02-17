@@ -104,19 +104,25 @@ public class CellRendererProgress : CellRenderer
 	 *  the new cell renderer
 	 * Since 2.6
 	 * Property Details
-	 * The "text" property
-	 *  "text" gchararray : Read / Write
-	 * The "text" property determines the label which will be drawn
-	 * over the progress bar. Setting this property to NULL causes the default
-	 * label to be displayed. Setting this property to an empty string causes
-	 * no label to be displayed.
-	 * Default value: NULL
-	 * Since 2.6
+	 * The "pulse" property
+	 *  "pulse" gint : Read / Write
+	 * Setting this to a non-negative value causes the cell renderer to
+	 * enter "activity mode", where a block bounces back and forth to
+	 * indicate that some progress is made, without specifying exactly how
+	 * much.
+	 * Each increment of the property causes the block to move by a little
+	 * bit.
+	 * To indicate that the activity has not started yet, set the property
+	 * to zero. To indicate completion, set the property to G_MAXINT.
+	 * Allowed values: >= -1
+	 * Default value: -1
+	 * Since 2.12
 	 */
 	public this ()
 	{
-		// GtkCellRenderer* gtk_cell_renderer_progress_new  (void);
+		// GtkCellRenderer* gtk_cell_renderer_progress_new (void);
 		this(cast(GtkCellRendererProgress*)gtk_cell_renderer_progress_new() );
 	}
+	
 	
 }

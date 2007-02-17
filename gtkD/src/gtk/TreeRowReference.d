@@ -413,7 +413,7 @@ public class TreeRowReference
 	 */
 	public this (TreeModel model, TreePath path)
 	{
-		// GtkTreeRowReference* gtk_tree_row_reference_new  (GtkTreeModel *model,  GtkTreePath *path);
+		// GtkTreeRowReference* gtk_tree_row_reference_new (GtkTreeModel *model,  GtkTreePath *path);
 		this(cast(GtkTreeRowReference*)gtk_tree_row_reference_new((model is null) ? null : model.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct()) );
 	}
 	
@@ -447,7 +447,7 @@ public class TreeRowReference
 	 */
 	public this (ObjectG proxy, TreeModel model, TreePath path)
 	{
-		// GtkTreeRowReference* gtk_tree_row_reference_new_proxy  (GObject *proxy,  GtkTreeModel *model,  GtkTreePath *path);
+		// GtkTreeRowReference* gtk_tree_row_reference_new_proxy (GObject *proxy,  GtkTreeModel *model,  GtkTreePath *path);
 		this(cast(GtkTreeRowReference*)gtk_tree_row_reference_new_proxy((proxy is null) ? null : proxy.getObjectGStruct(), (model is null) ? null : model.getTreeModelStruct(), (path is null) ? null : path.getTreePathStruct()) );
 	}
 	
@@ -461,7 +461,7 @@ public class TreeRowReference
 	 */
 	public TreeModel getModel()
 	{
-		// GtkTreeModel* gtk_tree_row_reference_get_model  (GtkTreeRowReference *reference);
+		// GtkTreeModel* gtk_tree_row_reference_get_model (GtkTreeRowReference *reference);
 		return new TreeModel( gtk_tree_row_reference_get_model(gtkTreeRowReference) );
 	}
 	
@@ -475,7 +475,7 @@ public class TreeRowReference
 	 */
 	public TreePath getPath()
 	{
-		// GtkTreePath* gtk_tree_row_reference_get_path  (GtkTreeRowReference *reference);
+		// GtkTreePath* gtk_tree_row_reference_get_path (GtkTreeRowReference *reference);
 		return new TreePath( gtk_tree_row_reference_get_path(gtkTreeRowReference) );
 	}
 	
@@ -514,7 +514,7 @@ public class TreeRowReference
 	 */
 	public GtkTreeRowReference* copy()
 	{
-		// GtkTreeRowReference* gtk_tree_row_reference_copy  (GtkTreeRowReference *reference);
+		// GtkTreeRowReference* gtk_tree_row_reference_copy (GtkTreeRowReference *reference);
 		return gtk_tree_row_reference_copy(gtkTreeRowReference);
 	}
 	
@@ -560,7 +560,7 @@ public class TreeRowReference
 	 */
 	public static void reordered(ObjectG proxy, TreePath path, TreeIter iter, int* newOrder)
 	{
-		// void gtk_tree_row_reference_reordered  (GObject *proxy,  GtkTreePath *path,  GtkTreeIter *iter,  gint *new_order);
+		// void gtk_tree_row_reference_reordered (GObject *proxy,  GtkTreePath *path,  GtkTreeIter *iter,  gint *new_order);
 		gtk_tree_row_reference_reordered((proxy is null) ? null : proxy.getObjectGStruct(), (path is null) ? null : path.getTreePathStruct(), (iter is null) ? null : iter.getTreeIterStruct(), newOrder);
 	}
 	

@@ -450,7 +450,9 @@ public class Entry : Widget
 	
 	/**
 	 * Warning
-	 * gtk_entry_append_text is deprecated and should not be used in newly-written code.
+	 * gtk_entry_append_text is deprecated and should not be used in newly-written code. gtk_entry_append_text() is deprecated and should not
+	 *  be used in newly-written code. Use gtk_editable_insert_text()
+	 *  instead.
 	 * Appends the given text to the contents of the widget.
 	 * entry:
 	 * a GtkEntry.
@@ -465,8 +467,10 @@ public class Entry : Widget
 	
 	/**
 	 * Warning
-	 * gtk_entry_prepend_text is deprecated and should not be used in newly-written code.
-	 * Prepends the given text to the contents of th ewidget.
+	 * gtk_entry_prepend_text is deprecated and should not be used in newly-written code. gtk_entry_prepend_text() is deprecated and should not
+	 *  be used in newly-written code. Use gtk_editable_insert_text()
+	 *  instead.
+	 * Prepends the given text to the contents of the widget.
 	 * entry:
 	 * a GtkEntry.
 	 * text:
@@ -932,7 +936,7 @@ public class Entry : Widget
 	 */
 	public EntryCompletion getCompletion()
 	{
-		// GtkEntryCompletion* gtk_entry_get_completion  (GtkEntry *entry);
+		// GtkEntryCompletion* gtk_entry_get_completion (GtkEntry *entry);
 		return new EntryCompletion( gtk_entry_get_completion(gtkEntry) );
 	}
 	

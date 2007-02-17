@@ -213,7 +213,7 @@ public class Item : Bin
 	 * Signal Details
 	 * The "deselect" signal
 	 * void user_function (GtkItem *item,
-	 *  gpointer user_data) : Run first
+	 *  gpointer user_data) : Run First
 	 * Emitted when the item is deselected.
 	 * item:
 	 * the object which received the signal.

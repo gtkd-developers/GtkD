@@ -105,7 +105,7 @@ public class NoOpObjectFactory : ObjectFactory
 	 */
 	public static AtkObjectFactory* _New()
 	{
-		// AtkObjectFactory* atk_no_op_object_factory_new  (void);
+		// AtkObjectFactory* atk_no_op_object_factory_new (void);
 		return atk_no_op_object_factory_new();
 	}
 }

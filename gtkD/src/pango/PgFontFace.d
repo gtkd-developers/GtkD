@@ -106,7 +106,7 @@ private import glib.Str;
  * Pango supports a flexible architecture where a
  * particular rendering architecture can supply an
  * implementation of fonts. The PangoFont structure
- * represents an abstract rendering-system-indepent font.
+ * represents an abstract rendering-system-independent font.
  * Pango provides routines to list available fonts, and
  * to load a font of a given description.
  */
@@ -268,7 +268,7 @@ public class PgFontFace
 	 */
 	public PgFontDescription describe()
 	{
-		// PangoFontDescription* pango_font_face_describe  (PangoFontFace *face);
+		// PangoFontDescription* pango_font_face_describe (PangoFontFace *face);
 		return new PgFontDescription( pango_font_face_describe(pangoFontFace) );
 	}
 	

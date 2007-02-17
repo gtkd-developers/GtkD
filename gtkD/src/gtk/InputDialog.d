@@ -182,7 +182,7 @@ public class InputDialog : Dialog
 	 * The "disable-device" signal
 	 * void user_function (GtkInputDialog *inputdialog,
 	 *  GdkDevice *deviceid,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * This signal is emitted when the user changes the
 	 * mode of a device from a GDK_MODE_SCREEN or GDK_MODE_WINDOW
 	 * to GDK_MODE_ENABLED.

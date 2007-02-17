@@ -199,7 +199,7 @@ public class FileFilter : ObjectGtk
 	 */
 	public void addPixbufFormats()
 	{
-		// void gtk_file_filter_add_pixbuf_formats  (GtkFileFilter *filter);
+		// void gtk_file_filter_add_pixbuf_formats (GtkFileFilter *filter);
 		gtk_file_filter_add_pixbuf_formats(gtkFileFilter);
 	}
 	
@@ -244,7 +244,7 @@ public class FileFilter : ObjectGtk
 	 */
 	public GtkFileFilterFlags getNeeded()
 	{
-		// GtkFileFilterFlags gtk_file_filter_get_needed  (GtkFileFilter *filter);
+		// GtkFileFilterFlags gtk_file_filter_get_needed (GtkFileFilter *filter);
 		return gtk_file_filter_get_needed(gtkFileFilter);
 	}
 	

@@ -209,7 +209,7 @@ public class ButtonBox : Box
 	 */
 	public void getChildIpadding(int* ipadX, int* ipadY)
 	{
-		// void gtk_button_box_get_child_ipadding  (GtkButtonBox *widget,  gint *ipad_x,  gint *ipad_y);
+		// void gtk_button_box_get_child_ipadding (GtkButtonBox *widget,  gint *ipad_x,  gint *ipad_y);
 		gtk_button_box_get_child_ipadding(gtkButtonBox, ipadX, ipadY);
 	}
 	
@@ -225,7 +225,7 @@ public class ButtonBox : Box
 	 */
 	public int getChildSecondary(Widget child)
 	{
-		// gboolean gtk_button_box_get_child_secondary  (GtkButtonBox *widget,  GtkWidget *child);
+		// gboolean gtk_button_box_get_child_secondary (GtkButtonBox *widget,  GtkWidget *child);
 		return gtk_button_box_get_child_secondary(gtkButtonBox, (child is null) ? null : child.getWidgetStruct());
 	}
 	
@@ -276,7 +276,7 @@ public class ButtonBox : Box
 	 */
 	public void setChildIpadding(int ipadX, int ipadY)
 	{
-		// void gtk_button_box_set_child_ipadding  (GtkButtonBox *widget,  gint ipad_x,  gint ipad_y);
+		// void gtk_button_box_set_child_ipadding (GtkButtonBox *widget,  gint ipad_x,  gint ipad_y);
 		gtk_button_box_set_child_ipadding(gtkButtonBox, ipadX, ipadY);
 	}
 	
@@ -318,7 +318,7 @@ public class ButtonBox : Box
 	 */
 	public void setChildSecondary(Widget child, int isSecondary)
 	{
-		// void gtk_button_box_set_child_secondary  (GtkButtonBox *widget,  GtkWidget *child,  gboolean is_secondary);
+		// void gtk_button_box_set_child_secondary (GtkButtonBox *widget,  GtkWidget *child,  gboolean is_secondary);
 		gtk_button_box_set_child_secondary(gtkButtonBox, (child is null) ? null : child.getWidgetStruct(), isSecondary);
 	}
 	

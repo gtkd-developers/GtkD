@@ -144,7 +144,6 @@ public class PgItem
 	
 	
 	
-	
 	/**
 	 * Free a PangoItem and all associated memory.
 	 * item:
@@ -208,6 +207,8 @@ public class PgItem
 		// PangoItem* pango_item_split (PangoItem *orig,  int split_index,  int split_offset);
 		return pango_item_split(pangoItem, splitIndex, splitOffset);
 	}
+	
+	
 	
 	
 	

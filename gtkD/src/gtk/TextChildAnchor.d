@@ -560,7 +560,7 @@ public class TextChildAnchor
 	 */
 	public this ()
 	{
-		// GtkTextChildAnchor* gtk_text_child_anchor_new  (void);
+		// GtkTextChildAnchor* gtk_text_child_anchor_new (void);
 		this(cast(GtkTextChildAnchor*)gtk_text_child_anchor_new() );
 	}
 	
@@ -574,7 +574,7 @@ public class TextChildAnchor
 	 */
 	public GList* getWidgets()
 	{
-		// GList* gtk_text_child_anchor_get_widgets  (GtkTextChildAnchor *anchor);
+		// GList* gtk_text_child_anchor_get_widgets (GtkTextChildAnchor *anchor);
 		return gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
 	}
 	
@@ -592,7 +592,7 @@ public class TextChildAnchor
 	 */
 	public int getDeleted()
 	{
-		// gboolean gtk_text_child_anchor_get_deleted  (GtkTextChildAnchor *anchor);
+		// gboolean gtk_text_child_anchor_get_deleted (GtkTextChildAnchor *anchor);
 		return gtk_text_child_anchor_get_deleted(gtkTextChildAnchor);
 	}
 	

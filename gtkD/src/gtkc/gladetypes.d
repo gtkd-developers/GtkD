@@ -76,7 +76,7 @@ public struct GladeXMLClass{}
  *  the user data argument.
  */
 // void (*GladeXMLConnectFunc) (const gchar *handler_name,  GObject *object,  const gchar *signal_name,  const gchar *signal_data,  GObject *connect_object,  gboolean after,  gpointer user_data);
-
+public typedef extern(C) void  function (char[], GObject*, char[], char[], GObject*, int, void*) GladeXMLConnectFunc;
 
 /*
  * This prototype is for a function that creates custom widgets.
@@ -100,4 +100,4 @@ public struct GladeXMLClass{}
  *  the GtkWidget.
  */
 // GtkWidget* (*GladeXMLCustomWidgetHandler) (GladeXML *xml,  gchar *func_name,  gchar *name,  gchar *string1,  gchar *string2,  gint int1,  gint int2,  gpointer user_data);
-
+public typedef extern(C) GtkWidget*  function (GladeXML*, char[], char[], char[], char[], int, int, void*) GladeXMLCustomWidgetHandler;

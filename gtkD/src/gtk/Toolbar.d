@@ -432,7 +432,7 @@ public class Toolbar : Container
 	 */
 	public void setDropHighlightItem(GtkToolItem* toolItem, int index)
 	{
-		// void gtk_toolbar_set_drop_highlight_item  (GtkToolbar *toolbar,  GtkToolItem *tool_item,  gint index_);
+		// void gtk_toolbar_set_drop_highlight_item (GtkToolbar *toolbar,  GtkToolItem *tool_item,  gint index_);
 		gtk_toolbar_set_drop_highlight_item(gtkToolbar, toolItem, index);
 	}
 	

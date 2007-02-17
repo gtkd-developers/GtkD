@@ -129,7 +129,7 @@ public class CellRendererPixbuf : CellRenderer
 	 */
 	public this ()
 	{
-		// GtkCellRenderer* gtk_cell_renderer_pixbuf_new  (void);
+		// GtkCellRenderer* gtk_cell_renderer_pixbuf_new (void);
 		this(cast(GtkCellRendererPixbuf*)gtk_cell_renderer_pixbuf_new() );
 	}
 	

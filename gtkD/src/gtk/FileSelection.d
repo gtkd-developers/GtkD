@@ -60,6 +60,8 @@ private import glib.Str;
 
 /**
  * Description
+ * GtkFileSelection has been superseded by the newer GtkFileChooser family
+ * of widgets.
  * GtkFileSelection should be used to retrieve file or directory names from
  * the user. It will create a new dialog window containing a directory list,
  * and a file list corresponding to the current working directory. The filesystem
@@ -135,6 +137,8 @@ public class FileSelection : Dialog
 	
 	
 	/**
+	 * Warning
+	 * gtk_file_selection_new is deprecated and should not be used in newly-written code. Use gtk_file_chooser_dialog_new() instead
 	 * Creates a new file selection dialog box. By default it will contain a GtkTreeView of the application's current working directory, and a file listing. Operation buttons that allow the user to create a directory, delete files and rename files, are also present.
 	 * title:
 	 * a message that will be placed in the file requestor's titlebar.
@@ -148,6 +152,8 @@ public class FileSelection : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_file_selection_set_filename is deprecated and should not be used in newly-written code.
 	 * Sets a default path for the file requestor. If filename includes a
 	 * directory path, then the requestor will open with that path as its
 	 * current working directory.
@@ -168,6 +174,8 @@ public class FileSelection : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_file_selection_get_filename is deprecated and should not be used in newly-written code.
 	 * This function returns the selected filename in the GLib file name
 	 * encoding. To convert to UTF-8, call g_filename_to_utf8(). The
 	 * returned string points to a statically allocated buffer and should
@@ -180,11 +188,13 @@ public class FileSelection : Dialog
 	 */
 	public char[] getFilename()
 	{
-		// const gchar* gtk_file_selection_get_filename  (GtkFileSelection *filesel);
+		// const gchar* gtk_file_selection_get_filename (GtkFileSelection *filesel);
 		return Str.toString(gtk_file_selection_get_filename(gtkFileSelection) );
 	}
 	
 	/**
+	 * Warning
+	 * gtk_file_selection_complete is deprecated and should not be used in newly-written code.
 	 * Will attempt to match pattern to a valid filenames or subdirectories in the current directory. If a match can be made, the matched filename will appear in the text entry field of the file selection dialog.
 	 * If a partial match can be made, the "Files" list will contain those
 	 * file names which have been partially matched, and the "Folders"
@@ -201,6 +211,8 @@ public class FileSelection : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_file_selection_show_fileop_buttons is deprecated and should not be used in newly-written code.
 	 * Shows the file operation buttons, if they have previously been hidden. The rest of the widgets in the dialog will be resized accordingly.
 	 * filesel:
 	 * a GtkFileSelection.
@@ -212,6 +224,8 @@ public class FileSelection : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_file_selection_hide_fileop_buttons is deprecated and should not be used in newly-written code.
 	 * Hides the file operation buttons that normally appear at the top of the dialog. Useful if you wish to create a custom file selector, based on GtkFileSelection.
 	 * filesel:
 	 * a GtkFileSelection.
@@ -223,6 +237,8 @@ public class FileSelection : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_file_selection_get_selections is deprecated and should not be used in newly-written code.
 	 * Retrieves the list of file selections the user has made in the dialog box.
 	 * This function is intended for use when the user can select multiple files
 	 * in the file list.
@@ -236,11 +252,13 @@ public class FileSelection : Dialog
 	 */
 	public char** getSelections()
 	{
-		// gchar** gtk_file_selection_get_selections  (GtkFileSelection *filesel);
+		// gchar** gtk_file_selection_get_selections (GtkFileSelection *filesel);
 		return gtk_file_selection_get_selections(gtkFileSelection);
 	}
 	
 	/**
+	 * Warning
+	 * gtk_file_selection_set_select_multiple is deprecated and should not be used in newly-written code.
 	 * Sets whether the user is allowed to select multiple files in the file list.
 	 * Use gtk_file_selection_get_selections() to get the list of selected files.
 	 * filesel:
@@ -256,6 +274,8 @@ public class FileSelection : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_file_selection_get_select_multiple is deprecated and should not be used in newly-written code.
 	 * Determines whether or not the user is allowed to select multiple files in
 	 * the file list. See gtk_file_selection_set_select_multiple().
 	 * filesel:

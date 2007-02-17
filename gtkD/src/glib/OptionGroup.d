@@ -310,7 +310,7 @@ public class OptionGroup
 	 */
 	public void setTranslateFunc(GTranslateFunc func, void* data, GDestroyNotify destroyNotify)
 	{
-		// void g_option_group_set_translate_func  (GOptionGroup *group,  GTranslateFunc func,  gpointer data,  GDestroyNotify destroy_notify);
+		// void g_option_group_set_translate_func (GOptionGroup *group,  GTranslateFunc func,  gpointer data,  GDestroyNotify destroy_notify);
 		g_option_group_set_translate_func(gOptionGroup, func, data, destroyNotify);
 	}
 	

@@ -136,6 +136,40 @@ public class FileChooserButton : HBox
 	/**
 	 */
 	
+	// imports for the signal processing
+	private import gobject.Signals;
+	private import gtkc.gdktypes;
+	int[char[]] connectedSignals;
+	
+	void delegate(FileChooserButton)[] onFileSetListeners;
+	void addOnFileSet(void delegate(FileChooserButton) dlg)
+	{
+		if ( !("file-set" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"file-set",
+			cast(GCallback)&callBackFileSet,
+			this,
+			null,
+			cast(ConnectFlags)0);
+			connectedSignals["file-set"] = 1;
+		}
+		onFileSetListeners ~= dlg;
+	}
+	extern(C) static void callBackFileSet(GtkFileChooserButton* filechooserbuttonStruct, FileChooserButton fileChooserButton)
+	{
+		bit consumed = false;
+		
+		foreach ( void delegate(FileChooserButton) dlg ; fileChooserButton.onFileSetListeners )
+		{
+			dlg(fileChooserButton);
+		}
+		
+		return consumed;
+	}
+	
+	
 	
 	/**
 	 * Creates a new file-selecting button widget.
@@ -173,10 +207,11 @@ public class FileChooserButton : HBox
 	
 	/**
 	 * Creates a GtkFileChooserButton widget which uses dialog as it's
-	 * file-picking window. Note that dialog must be a GtkFileChooserDialog (or
-	 * subclass) and must not have GTK_DIALOG_DESTROY_WITH_PARENT set.
+	 * file-picking window. Note that dialog must be a GtkDialog (or
+	 * subclass) which implements the GtkFileChooser interface and must
+	 * not have GTK_DIALOG_DESTROY_WITH_PARENT set.
 	 * dialog:
-	 *  the GtkFileChooserDialog widget to use.
+	 *  the widget to use as dialog
 	 * Returns:
 	 *  a new button widget.
 	 * Since 2.6
@@ -198,7 +233,7 @@ public class FileChooserButton : HBox
 	 */
 	public char[] getTitle()
 	{
-		// const gchar* gtk_file_chooser_button_get_title  (GtkFileChooserButton *button);
+		// const gchar* gtk_file_chooser_button_get_title (GtkFileChooserButton *button);
 		return Str.toString(gtk_file_chooser_button_get_title(gtkFileChooserButton) );
 	}
 	
@@ -212,7 +247,7 @@ public class FileChooserButton : HBox
 	 */
 	public void setTitle(char[] title)
 	{
-		// void gtk_file_chooser_button_set_title  (GtkFileChooserButton *button,  const gchar *title);
+		// void gtk_file_chooser_button_set_title (GtkFileChooserButton *button,  const gchar *title);
 		gtk_file_chooser_button_set_title(gtkFileChooserButton, Str.toStringz(title));
 	}
 	
@@ -272,7 +307,7 @@ public class FileChooserButton : HBox
 	 * Since 2.10
 	 * Property Details
 	 * The "dialog" property
-	 *  "dialog" GtkFileChooserDialog : Write / Construct Only
+	 *  "dialog" GtkFileChooser : Write / Construct Only
 	 * Instance of the GtkFileChooserDialog associated with the button.
 	 * Since 2.6
 	 */

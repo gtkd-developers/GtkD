@@ -482,7 +482,7 @@ public class UIManager : ObjectG
 	 */
 	public void insertActionGroup(ActionGroup actionGroup, int pos)
 	{
-		// void gtk_ui_manager_insert_action_group  (GtkUIManager *self,  GtkActionGroup *action_group,  gint pos);
+		// void gtk_ui_manager_insert_action_group (GtkUIManager *self,  GtkActionGroup *action_group,  gint pos);
 		gtk_ui_manager_insert_action_group(gtkUIManager, (actionGroup is null) ? null : actionGroup.getActionGroupStruct(), pos);
 	}
 	
@@ -497,7 +497,7 @@ public class UIManager : ObjectG
 	 */
 	public void removeActionGroup(ActionGroup actionGroup)
 	{
-		// void gtk_ui_manager_remove_action_group  (GtkUIManager *self,  GtkActionGroup *action_group);
+		// void gtk_ui_manager_remove_action_group (GtkUIManager *self,  GtkActionGroup *action_group);
 		gtk_ui_manager_remove_action_group(gtkUIManager, (actionGroup is null) ? null : actionGroup.getActionGroupStruct());
 	}
 	
@@ -512,7 +512,7 @@ public class UIManager : ObjectG
 	 */
 	public ListG getActionGroups()
 	{
-		// GList* gtk_ui_manager_get_action_groups  (GtkUIManager *self);
+		// GList* gtk_ui_manager_get_action_groups (GtkUIManager *self);
 		return new ListG( gtk_ui_manager_get_action_groups(gtkUIManager) );
 	}
 	
@@ -526,7 +526,7 @@ public class UIManager : ObjectG
 	 */
 	public AccelGroup getAccelGroup()
 	{
-		// GtkAccelGroup* gtk_ui_manager_get_accel_group  (GtkUIManager *self);
+		// GtkAccelGroup* gtk_ui_manager_get_accel_group (GtkUIManager *self);
 		return new AccelGroup( gtk_ui_manager_get_accel_group(gtkUIManager) );
 	}
 	
@@ -614,7 +614,7 @@ public class UIManager : ObjectG
 	 */
 	public uint addUiFromString(char[] buffer, int length, GError** error)
 	{
-		// guint gtk_ui_manager_add_ui_from_string  (GtkUIManager *self,  const gchar *buffer,  gssize length,  GError **error);
+		// guint gtk_ui_manager_add_ui_from_string (GtkUIManager *self,  const gchar *buffer,  gssize length,  GError **error);
 		return gtk_ui_manager_add_ui_from_string(gtkUIManager, Str.toStringz(buffer), length, error);
 	}
 	

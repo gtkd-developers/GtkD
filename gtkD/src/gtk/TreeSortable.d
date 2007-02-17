@@ -236,7 +236,7 @@ public class TreeSortable
 	 * Signal Details
 	 * The "sort-column-changed" signal
 	 * void user_function (GtkTreeSortable *treesortable,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * treesortable:
 	 * the object which received the signal.
 	 * user_data:

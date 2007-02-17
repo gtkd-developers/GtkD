@@ -147,7 +147,7 @@ public class FontSelection : VBox
 	 */
 	public char[] getFontName()
 	{
-		// gchar* gtk_font_selection_get_font_name  (GtkFontSelection *fontsel);
+		// gchar* gtk_font_selection_get_font_name (GtkFontSelection *fontsel);
 		return Str.toString(gtk_font_selection_get_font_name(gtkFontSelection) );
 	}
 	
@@ -166,7 +166,7 @@ public class FontSelection : VBox
 	 */
 	public int setFontName(char[] fontname)
 	{
-		// gboolean gtk_font_selection_set_font_name  (GtkFontSelection *fontsel,  const gchar *fontname);
+		// gboolean gtk_font_selection_set_font_name (GtkFontSelection *fontsel,  const gchar *fontname);
 		return gtk_font_selection_set_font_name(gtkFontSelection, Str.toStringz(fontname));
 	}
 	
@@ -180,7 +180,7 @@ public class FontSelection : VBox
 	 */
 	public char[] getPreviewText()
 	{
-		// const gchar* gtk_font_selection_get_preview_text  (GtkFontSelection *fontsel);
+		// const gchar* gtk_font_selection_get_preview_text (GtkFontSelection *fontsel);
 		return Str.toString(gtk_font_selection_get_preview_text(gtkFontSelection) );
 	}
 	
@@ -197,7 +197,7 @@ public class FontSelection : VBox
 	 */
 	public void setPreviewText(char[] text)
 	{
-		// void gtk_font_selection_set_preview_text  (GtkFontSelection *fontsel,  const gchar *text);
+		// void gtk_font_selection_set_preview_text (GtkFontSelection *fontsel,  const gchar *text);
 		gtk_font_selection_set_preview_text(gtkFontSelection, Str.toStringz(text));
 	}
 	

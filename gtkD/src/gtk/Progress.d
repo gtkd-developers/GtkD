@@ -270,7 +270,7 @@ public class Progress : Widget
 	 */
 	public char[] getTextFromValue(double value)
 	{
-		// gchar* gtk_progress_get_text_from_value  (GtkProgress *progress,  gdouble value);
+		// gchar* gtk_progress_get_text_from_value (GtkProgress *progress,  gdouble value);
 		return Str.toString(gtk_progress_get_text_from_value(gtkProgress, value) );
 	}
 	
@@ -285,7 +285,7 @@ public class Progress : Widget
 	 */
 	public double getCurrentPercentage()
 	{
-		// gdouble gtk_progress_get_current_percentage  (GtkProgress *progress);
+		// gdouble gtk_progress_get_current_percentage (GtkProgress *progress);
 		return gtk_progress_get_current_percentage(gtkProgress);
 	}
 	

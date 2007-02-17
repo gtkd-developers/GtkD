@@ -394,7 +394,9 @@ public class Menu : MenuShell
 	
 	/**
 	 * Sets the title string for the menu. The title is displayed when the menu
-	 * is shown as a tearoff menu.
+	 * is shown as a tearoff menu. If title is NULL, the menu will see if it is
+	 * attached to a parent menu item, and if so it will try to use the same text as
+	 * that menu item's label.
 	 * menu:
 	 *  a GtkMenu
 	 * title:

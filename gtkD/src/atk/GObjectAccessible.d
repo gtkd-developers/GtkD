@@ -107,7 +107,7 @@ public class GObjectAccessible : ObjectAtk
 	 */
 	public static AtkObject* _ForObject(ObjectG obj)
 	{
-		// AtkObject* atk_gobject_accessible_for_object  (GObject *obj);
+		// AtkObject* atk_gobject_accessible_for_object (GObject *obj);
 		return atk_gobject_accessible_for_object((obj is null) ? null : obj.getObjectGStruct());
 	}
 	
@@ -120,7 +120,7 @@ public class GObjectAccessible : ObjectAtk
 	 */
 	public ObjectG _GetObject()
 	{
-		// GObject* atk_gobject_accessible_get_object  (AtkGObjectAccessible *obj);
+		// GObject* atk_gobject_accessible_get_object (AtkGObjectAccessible *obj);
 		return new ObjectG( atk_gobject_accessible_get_object(atkGObjectAccessible) );
 	}
 }

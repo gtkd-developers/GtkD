@@ -550,7 +550,7 @@ public class FileChooser
 	 */
 	public GtkFileChooserAction getAction()
 	{
-		// GtkFileChooserAction gtk_file_chooser_get_action  (GtkFileChooser *chooser);
+		// GtkFileChooserAction gtk_file_chooser_get_action (GtkFileChooser *chooser);
 		return gtk_file_chooser_get_action(gtkFileChooser);
 	}
 	
@@ -632,7 +632,7 @@ public class FileChooser
 	 */
 	public void setShowHidden(int showHidden)
 	{
-		// void gtk_file_chooser_set_show_hidden  (GtkFileChooser *chooser,  gboolean show_hidden);
+		// void gtk_file_chooser_set_show_hidden (GtkFileChooser *chooser,  gboolean show_hidden);
 		gtk_file_chooser_set_show_hidden(gtkFileChooser, showHidden);
 	}
 	
@@ -647,7 +647,7 @@ public class FileChooser
 	 */
 	public int getShowHidden()
 	{
-		// gboolean gtk_file_chooser_get_show_hidden  (GtkFileChooser *chooser);
+		// gboolean gtk_file_chooser_get_show_hidden (GtkFileChooser *chooser);
 		return gtk_file_chooser_get_show_hidden(gtkFileChooser);
 	}
 	
@@ -706,7 +706,7 @@ public class FileChooser
 	 */
 	public void setCurrentName(char[] name)
 	{
-		// void gtk_file_chooser_set_current_name  (GtkFileChooser *chooser,  const gchar *name);
+		// void gtk_file_chooser_set_current_name (GtkFileChooser *chooser,  const gchar *name);
 		gtk_file_chooser_set_current_name(gtkFileChooser, Str.toStringz(name));
 	}
 	
@@ -788,7 +788,7 @@ public class FileChooser
 	 */
 	public int selectFilename(char[] filename)
 	{
-		// gboolean gtk_file_chooser_select_filename  (GtkFileChooser *chooser,  const char *filename);
+		// gboolean gtk_file_chooser_select_filename (GtkFileChooser *chooser,  const char *filename);
 		return gtk_file_chooser_select_filename(gtkFileChooser, Str.toStringz(filename));
 	}
 	
@@ -804,7 +804,7 @@ public class FileChooser
 	 */
 	public void unselectFilename(char[] filename)
 	{
-		// void gtk_file_chooser_unselect_filename  (GtkFileChooser *chooser,  const char *filename);
+		// void gtk_file_chooser_unselect_filename (GtkFileChooser *chooser,  const char *filename);
 		gtk_file_chooser_unselect_filename(gtkFileChooser, Str.toStringz(filename));
 	}
 	
@@ -866,7 +866,7 @@ public class FileChooser
 	 */
 	public int setCurrentFolder(char[] filename)
 	{
-		// gboolean gtk_file_chooser_set_current_folder  (GtkFileChooser *chooser,  const gchar *filename);
+		// gboolean gtk_file_chooser_set_current_folder (GtkFileChooser *chooser,  const gchar *filename);
 		return gtk_file_chooser_set_current_folder(gtkFileChooser, Str.toStringz(filename));
 	}
 	
@@ -892,7 +892,7 @@ public class FileChooser
 	 */
 	public char[] getCurrentFolder()
 	{
-		// gchar* gtk_file_chooser_get_current_folder  (GtkFileChooser *chooser);
+		// gchar* gtk_file_chooser_get_current_folder (GtkFileChooser *chooser);
 		return Str.toString(gtk_file_chooser_get_current_folder(gtkFileChooser) );
 	}
 	
@@ -1075,7 +1075,7 @@ public class FileChooser
 	 */
 	public void setPreviewWidget(Widget previewWidget)
 	{
-		// void gtk_file_chooser_set_preview_widget  (GtkFileChooser *chooser,  GtkWidget *preview_widget);
+		// void gtk_file_chooser_set_preview_widget (GtkFileChooser *chooser,  GtkWidget *preview_widget);
 		gtk_file_chooser_set_preview_widget(gtkFileChooser, (previewWidget is null) ? null : previewWidget.getWidgetStruct());
 	}
 	
@@ -1090,7 +1090,7 @@ public class FileChooser
 	 */
 	public Widget getPreviewWidget()
 	{
-		// GtkWidget* gtk_file_chooser_get_preview_widget  (GtkFileChooser *chooser);
+		// GtkWidget* gtk_file_chooser_get_preview_widget (GtkFileChooser *chooser);
 		return new Widget( gtk_file_chooser_get_preview_widget(gtkFileChooser) );
 	}
 	
@@ -1191,7 +1191,7 @@ public class FileChooser
 	 */
 	public char[] getPreviewUri()
 	{
-		// char* gtk_file_chooser_get_preview_uri  (GtkFileChooser *chooser);
+		// char* gtk_file_chooser_get_preview_uri (GtkFileChooser *chooser);
 		return Str.toString(gtk_file_chooser_get_preview_uri(gtkFileChooser) );
 	}
 	
@@ -1205,7 +1205,7 @@ public class FileChooser
 	 */
 	public void setExtraWidget(Widget extraWidget)
 	{
-		// void gtk_file_chooser_set_extra_widget  (GtkFileChooser *chooser,  GtkWidget *extra_widget);
+		// void gtk_file_chooser_set_extra_widget (GtkFileChooser *chooser,  GtkWidget *extra_widget);
 		gtk_file_chooser_set_extra_widget(gtkFileChooser, (extraWidget is null) ? null : extraWidget.getWidgetStruct());
 	}
 	
@@ -1220,7 +1220,7 @@ public class FileChooser
 	 */
 	public Widget getExtraWidget()
 	{
-		// GtkWidget* gtk_file_chooser_get_extra_widget  (GtkFileChooser *chooser);
+		// GtkWidget* gtk_file_chooser_get_extra_widget (GtkFileChooser *chooser);
 		return new Widget( gtk_file_chooser_get_extra_widget(gtkFileChooser) );
 	}
 	
@@ -1418,71 +1418,29 @@ public class FileChooser
 	 * folders. Free the returned list with g_slist_free(), and the URIs with
 	 * g_free().
 	 * Since 2.4
-	 * Signal Details
-	 * The "confirm-overwrite" signal
-	 * GtkFileChooserConfirmationuser_function (GtkFileChooser *filechooser,
-	 *  gpointer user_data) : Run last
-	 *  This signal gets emitted whenever it is appropriate to present a
-	 *  confirmation dialog when the user has selected a file name that
-	 *  already exists. The signal only gets emitted when the file
-	 *  chooser is in GTK_FILE_CHOOSER_ACTION_SAVE mode.
-	 *  Most applications just need to turn on the do-overwrite-confirmation
-	 *  property (or call the
-	 *  gtk_file_chooser_set_do_overwrite_confirmation() function), and
-	 *  they will automatically get a stock confirmation dialog.
-	 *  Applications which need to customize this behavior should do
-	 *  that, and also connect to the confirm-overwrite
-	 *  signal.
-	 *  A signal handler for this signal must return a
-	 *  GtkFileChooserConfirmation value, which indicates the action to
-	 *  take. If the handler determines that the user wants to select a
-	 *  different filename, it should return
-	 *  GTK_FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN. If it determines
-	 *  that the user is satisfied with his choice of file name, it
-	 *  should return GTK_FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME.
-	 *  On the other hand, if it determines that the stock confirmation
-	 *  dialog should be used, it should return
-	 *  GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM. The following example
-	 *  illustrates this.
-	 * Example5.Custom confirmation
-	 * static GtkFileChooserConfirmation
-	 * confirm_overwrite_callback (GtkFileChooser *chooser, gpointer data)
-	 * {
-		 *  char *uri;
-		 *  uri = gtk_file_chooser_get_uri (chooser);
-		 *  if (is_uri_read_only (uri))
-		 *  {
-			 *  if (user_wants_to_replace_read_only_file (uri))
-			 *  return GTK_FILE_CHOOSER_CONFIRMATION_ACCEPT_FILENAME;
-			 *  else
-			 *  return GTK_FILE_CHOOSER_CONFIRMATION_SELECT_AGAIN;
-			 *  } else
-			 *  return GTK_FILE_CHOOSER_CONFIRMATION_CONFIRM; /+* fall back to the default dialog +/
-		 * }
-		 * ...
-		 * chooser = gtk_file_chooser_dialog_new (...);
-		 * gtk_file_chooser_set_do_overwrite_confirmation (GTK_FILE_CHOOSER (dialog), TRUE);
-		 * g_signal_connect (chooser, "confirm-overwrite",
-		 *  G_CALLBACK (confirm_overwrite_callback), NULL);
-		 * if (gtk_dialog_run (chooser) == GTK_RESPONSE_ACCEPT)
-		 *  save_to_file (gtk_file_chooser_get_filename (GTK_FILE_CHOOSER (chooser));
-		 * gtk_widget_destroy (chooser);
-		 * filechooser:
-		 * the object which received the signal.
-		 * user_data:
-		 * user data set when the signal handler was connected.
-		 * Returns:
-		 * GtkFileChooserConfirmation value that indicates which
-		 *  action to take after emitting the signal.
-		 *  Since 2.8
-		 */
-		public ListSG listShortcutFolderUris()
-		{
-			// GSList* gtk_file_chooser_list_shortcut_folder_uris  (GtkFileChooser *chooser);
-			return new ListSG( gtk_file_chooser_list_shortcut_folder_uris(gtkFileChooser) );
-		}
-		
-		
-		
-		
+	 * Property Details
+	 * The "action" property
+	 *  "action" GtkFileChooserAction : Read / Write
+	 * The type of operation that the file selector is performing.
+	 * Default value: GTK_FILE_CHOOSER_ACTION_OPEN
+	 */
+	public ListSG listShortcutFolderUris()
+	{
+		// GSList* gtk_file_chooser_list_shortcut_folder_uris  (GtkFileChooser *chooser);
+		return new ListSG( gtk_file_chooser_list_shortcut_folder_uris(gtkFileChooser) );
+	}
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
+	
 }

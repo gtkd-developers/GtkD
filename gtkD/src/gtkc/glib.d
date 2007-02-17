@@ -392,6 +392,7 @@ extern(C)
 	gboolean function(gunichar c)g_unichar_isdefined;
 	gboolean function(gunichar c)g_unichar_iswide;
 	gboolean function(gunichar c)g_unichar_iswide_cjk;
+	gboolean function(gunichar c)g_unichar_iszerowidth;
 	gunichar function(gunichar c)g_unichar_toupper;
 	gunichar function(gunichar c)g_unichar_tolower;
 	gunichar function(gunichar c)g_unichar_totitle;
@@ -728,8 +729,8 @@ extern(C)
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gboolean value)g_key_file_set_boolean;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gint value)g_key_file_set_integer;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gdouble value)g_key_file_set_double;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key)g_key_file_set_string_list;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale)g_key_file_set_locale_string_list;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar*[] list, gsize length)g_key_file_set_string_list;
+	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* locale, gchar*[] list, gsize length)g_key_file_set_locale_string_list;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gboolean[] list, gsize length)g_key_file_set_boolean_list;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gint[] list, gsize length)g_key_file_set_integer_list;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gdouble[] list, gsize length)g_key_file_set_double_list;
@@ -1396,6 +1397,7 @@ Symbol[] glibLinks =
 	{ "g_unichar_isdefined",  cast(void**)& g_unichar_isdefined},
 	{ "g_unichar_iswide",  cast(void**)& g_unichar_iswide},
 	{ "g_unichar_iswide_cjk",  cast(void**)& g_unichar_iswide_cjk},
+	{ "g_unichar_iszerowidth",  cast(void**)& g_unichar_iszerowidth},
 	{ "g_unichar_toupper",  cast(void**)& g_unichar_toupper},
 	{ "g_unichar_tolower",  cast(void**)& g_unichar_tolower},
 	{ "g_unichar_totitle",  cast(void**)& g_unichar_totitle},

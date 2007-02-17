@@ -405,7 +405,7 @@ public class AsyncQueue
 	 */
 	public void pushSortedUnlocked(void* data, GCompareDataFunc func, void* userData)
 	{
-		// void g_async_queue_push_sorted_unlocked  (GAsyncQueue *queue,  gpointer data,  GCompareDataFunc func,  gpointer user_data);
+		// void g_async_queue_push_sorted_unlocked (GAsyncQueue *queue,  gpointer data,  GCompareDataFunc func,  gpointer user_data);
 		g_async_queue_push_sorted_unlocked(gAsyncQueue, data, func, userData);
 	}
 	
@@ -456,7 +456,7 @@ public class AsyncQueue
 	 */
 	public void* timedPopUnlocked(GTimeVal* endTime)
 	{
-		// gpointer g_async_queue_timed_pop_unlocked  (GAsyncQueue *queue,  GTimeVal *end_time);
+		// gpointer g_async_queue_timed_pop_unlocked (GAsyncQueue *queue,  GTimeVal *end_time);
 		return g_async_queue_timed_pop_unlocked(gAsyncQueue, endTime);
 	}
 	

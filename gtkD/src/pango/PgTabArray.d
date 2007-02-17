@@ -177,7 +177,7 @@ public class PgTabArray
 	 */
 	public this (int size, int positionsInPixels, PangoTabAlign firstAlignment, int firstPosition, ... )
 	{
-		// PangoTabArray* pango_tab_array_new_with_positions  (gint size,  gboolean positions_in_pixels,  PangoTabAlign first_alignment,  gint first_position,  ...);
+		// PangoTabArray* pango_tab_array_new_with_positions (gint size,  gboolean positions_in_pixels,  PangoTabAlign first_alignment,  gint first_position,  ...);
 		this(cast(PangoTabArray*)pango_tab_array_new_with_positions(size, positionsInPixels, firstAlignment, firstPosition) );
 	}
 	

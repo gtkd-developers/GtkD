@@ -603,7 +603,9 @@ public static int vfprintf(FILE* file, char[] format, void* args)
  * An implementation of the standard sprintf() function which supports
  * positional parameters, as specified in the Single Unix Specification.
  * string:
- *  the buffer to hold the output.
+ *  A pointer to a memory buffer to contain the resulting string. It
+ *  is up to the caller to ensure that the allocated buffer is large
+ *  enough to hold the formatted result
  * format:
  *  a standard printf() format string, but notice
  *  string precision pitfalls.

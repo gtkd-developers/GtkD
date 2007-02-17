@@ -110,7 +110,7 @@ private import gdk.Pixbuf;
  * GError *error = NULL;
  * GtkIconTheme *icon_theme;
  * GdkPixbuf *pixbuf;
- * icon_theme = gtk_icon_theme_get_default();
+ * icon_theme = gtk_icon_theme_get_default ();
  * pixbuf = gtk_icon_theme_load_icon (icon_theme,
  *  "my-icon-name", /+* icon name +/
  *  48, /+* size +/
@@ -298,7 +298,7 @@ public class IconInfo
 	 */
 	public Pixbuf getBuiltinPixbuf()
 	{
-		// GdkPixbuf* gtk_icon_info_get_builtin_pixbuf  (GtkIconInfo *icon_info);
+		// GdkPixbuf* gtk_icon_info_get_builtin_pixbuf (GtkIconInfo *icon_info);
 		return new Pixbuf( gtk_icon_info_get_builtin_pixbuf(gtkIconInfo) );
 	}
 	
@@ -351,7 +351,7 @@ public class IconInfo
 	 */
 	public void setRawCoordinates(int rawCoordinates)
 	{
-		// void gtk_icon_info_set_raw_coordinates  (GtkIconInfo *icon_info,  gboolean raw_coordinates);
+		// void gtk_icon_info_set_raw_coordinates (GtkIconInfo *icon_info,  gboolean raw_coordinates);
 		gtk_icon_info_set_raw_coordinates(gtkIconInfo, rawCoordinates);
 	}
 	
@@ -412,7 +412,7 @@ public class IconInfo
 	 * Signal Details
 	 * The "changed" signal
 	 * void user_function (GtkIconTheme *icon_theme,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * Emitted when the current icon theme is switched or GTK+ detects
 	 * that a change has occurred in the contents of the current
 	 * icon theme.

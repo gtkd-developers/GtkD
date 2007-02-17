@@ -111,9 +111,8 @@ public class PgCoverage
 	}
 	
 	/**
-	 * Copy an existing PangoCoverage. (This function may now be unecessary
-	 * since we refcount the structure. Mail otaylorredhat.com if you
-	 * use it.)
+	 * Copy an existing PangoCoverage. (This function may now be unnecessary
+	 * since we refcount the structure. File a bug if you use it.)
 	 * coverage:
 	 *  a PangoCoverage
 	 * Returns:

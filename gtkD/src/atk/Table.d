@@ -468,7 +468,7 @@ public class Table
 	 */
 	public char[] getColumnDescription(int column)
 	{
-		// const gchar* atk_table_get_column_description  (AtkTable *table,  gint column);
+		// const gchar* atk_table_get_column_description (AtkTable *table,  gint column);
 		return Str.toString(atk_table_get_column_description(atkTable, column) );
 	}
 	
@@ -575,7 +575,7 @@ public class Table
 	 */
 	public void setColumnDescription(int column, char[] description)
 	{
-		// void atk_table_set_column_description  (AtkTable *table,  gint column,  const gchar *description);
+		// void atk_table_set_column_description (AtkTable *table,  gint column,  const gchar *description);
 		atk_table_set_column_description(atkTable, column, Str.toStringz(description));
 	}
 	
@@ -754,7 +754,7 @@ public class Table
 	 */
 	public int removeColumnSelection(int column)
 	{
-		// gboolean atk_table_remove_column_selection  (AtkTable *table,  gint column);
+		// gboolean atk_table_remove_column_selection (AtkTable *table,  gint column);
 		return atk_table_remove_column_selection(atkTable, column);
 	}
 	
@@ -772,7 +772,7 @@ public class Table
 	 * void user_function (AtkTable *atktable,
 	 *  gint arg1,
 	 *  gint arg2,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * The "column-deleted" signal is emitted by an object which implements the
 	 * AtkTable interface when a column is deleted.
 	 * atktable:

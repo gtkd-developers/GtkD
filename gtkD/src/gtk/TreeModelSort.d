@@ -91,7 +91,7 @@ private import gtk.TreeIter;
 	 *  GtkTreeModel *sort_model2;
 	 *  GtkTreeModel *child_model;
 	 *  /+* get the child model +/
-	 *  child_model = get_my_model();
+	 *  child_model = get_my_model ();
 	 *  /+* Create the first tree +/
 	 *  sort_model1 = gtk_tree_model_sort_new_with_model (child_model);
 	 *  tree_view1 = gtk_tree_view_new_with_model (sort_model1);
@@ -189,7 +189,7 @@ public class TreeModelSort : ObjectG
 	 */
 	public static TreeModel newWithModel(TreeModel childModel)
 	{
-		// GtkTreeModel* gtk_tree_model_sort_new_with_model  (GtkTreeModel *child_model);
+		// GtkTreeModel* gtk_tree_model_sort_new_with_model (GtkTreeModel *child_model);
 		return new TreeModel( gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelStruct()) );
 	}
 	
@@ -324,7 +324,7 @@ public class TreeModelSort : ObjectG
 	 */
 	public int iterIsValid(TreeIter iter)
 	{
-		// gboolean gtk_tree_model_sort_iter_is_valid  (GtkTreeModelSort *tree_model_sort,  GtkTreeIter *iter);
+		// gboolean gtk_tree_model_sort_iter_is_valid (GtkTreeModelSort *tree_model_sort,  GtkTreeIter *iter);
 		return gtk_tree_model_sort_iter_is_valid(gtkTreeModelSort, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 }

@@ -415,7 +415,7 @@ public class Calendar : Widget
 	 */
 	public void setDisplayOptions(GtkCalendarDisplayOptions flags)
 	{
-		// void gtk_calendar_set_display_options  (GtkCalendar *calendar,  GtkCalendarDisplayOptions flags);
+		// void gtk_calendar_set_display_options (GtkCalendar *calendar,  GtkCalendarDisplayOptions flags);
 		gtk_calendar_set_display_options(gtkCalendar, flags);
 	}
 	

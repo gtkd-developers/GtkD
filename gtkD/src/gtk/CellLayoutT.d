@@ -137,6 +137,22 @@ public template CellLayoutT(TStruct)
 	}
 	
 	/**
+	 * Returns the cell renderers which have been added to cell_layout.
+	 * cell_layout:
+	 *  a GtkCellLayout
+	 * Returns:
+	 *  a list of cell renderers. The list, but not the
+	 *  renderers has been newly allocated and should be freed with
+	 *  g_list_free() when no longer needed.
+	 * Since 2.12
+	 */
+	public GList* getCells()
+	{
+		// GList* gtk_cell_layout_get_cells (GtkCellLayout *cell_layout);
+		return gtk_cell_layout_get_cells(getCellLayoutTStruct());
+	}
+	
+	/**
 	 * Re-inserts cell at position. Note that cell has already to be packed
 	 * into cell_layout for this to function properly.
 	 * cell_layout:
@@ -226,7 +242,7 @@ public template CellLayoutT(TStruct)
 	 */
 	public void setCellDataFunc(CellRenderer cell, GtkCellLayoutDataFunc func, void* funcData, GDestroyNotify destroy)
 	{
-		// void gtk_cell_layout_set_cell_data_func  (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  GtkCellLayoutDataFunc func,  gpointer func_data,  GDestroyNotify destroy);
+		// void gtk_cell_layout_set_cell_data_func (GtkCellLayout *cell_layout,  GtkCellRenderer *cell,  GtkCellLayoutDataFunc func,  gpointer func_data,  GDestroyNotify destroy);
 		gtk_cell_layout_set_cell_data_func(getCellLayoutTStruct(), (cell is null) ? null : cell.getCellRendererStruct(), func, funcData, destroy);
 	}
 	
@@ -241,7 +257,7 @@ public template CellLayoutT(TStruct)
 	 */
 	public void clearAttributes(CellRenderer cell)
 	{
-		// void gtk_cell_layout_clear_attributes  (GtkCellLayout *cell_layout,  GtkCellRenderer *cell);
+		// void gtk_cell_layout_clear_attributes (GtkCellLayout *cell_layout,  GtkCellRenderer *cell);
 		gtk_cell_layout_clear_attributes(getCellLayoutTStruct(), (cell is null) ? null : cell.getCellRendererStruct());
 	}
 }

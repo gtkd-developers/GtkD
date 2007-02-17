@@ -1063,7 +1063,7 @@ public class Window : Drawable
 	 */
 	public void getInternalPaintInfo(GdkDrawable** realDrawable, int* xOffset, int* yOffset)
 	{
-		// void gdk_window_get_internal_paint_info  (GdkWindow *window,  GdkDrawable **real_drawable,  gint *x_offset,  gint *y_offset);
+		// void gdk_window_get_internal_paint_info (GdkWindow *window,  GdkDrawable **real_drawable,  gint *x_offset,  gint *y_offset);
 		gdk_window_get_internal_paint_info(gdkWindow, realDrawable, xOffset, yOffset);
 	}
 	
@@ -1139,7 +1139,7 @@ public class Window : Drawable
 	 */
 	public void setOverrideRedirect(int overrideRedirect)
 	{
-		// void gdk_window_set_override_redirect  (GdkWindow *window,  gboolean override_redirect);
+		// void gdk_window_set_override_redirect (GdkWindow *window,  gboolean override_redirect);
 		gdk_window_set_override_redirect(gdkWindow, overrideRedirect);
 	}
 	
@@ -1332,7 +1332,7 @@ public class Window : Drawable
 	 */
 	public void inputShapeCombineMask(Bitmap mask, int x, int y)
 	{
-		// void gdk_window_input_shape_combine_mask  (GdkWindow *window,  GdkBitmap *mask,  gint x,  gint y);
+		// void gdk_window_input_shape_combine_mask (GdkWindow *window,  GdkBitmap *mask,  gint x,  gint y);
 		gdk_window_input_shape_combine_mask(gdkWindow, (mask is null) ? null : mask.getBitmapStruct(), x, y);
 	}
 	
@@ -1377,7 +1377,7 @@ public class Window : Drawable
 	 */
 	public void setChildInputShapes()
 	{
-		// void gdk_window_set_child_input_shapes  (GdkWindow *window);
+		// void gdk_window_set_child_input_shapes (GdkWindow *window);
 		gdk_window_set_child_input_shapes(gdkWindow);
 	}
 	
@@ -1395,7 +1395,7 @@ public class Window : Drawable
 	 */
 	public void mergeChildInputShapes()
 	{
-		// void gdk_window_merge_child_input_shapes  (GdkWindow *window);
+		// void gdk_window_merge_child_input_shapes (GdkWindow *window);
 		gdk_window_merge_child_input_shapes(gdkWindow);
 	}
 	
@@ -1699,7 +1699,7 @@ public class Window : Drawable
 	 */
 	public void setSkipTaskbarHint(int skipsTaskbar)
 	{
-		// void gdk_window_set_skip_taskbar_hint  (GdkWindow *window,  gboolean skips_taskbar);
+		// void gdk_window_set_skip_taskbar_hint (GdkWindow *window,  gboolean skips_taskbar);
 		gdk_window_set_skip_taskbar_hint(gdkWindow, skipsTaskbar);
 	}
 	
@@ -1835,7 +1835,7 @@ public class Window : Drawable
 	 */
 	public int getDeskrelativeOrigin(int* x, int* y)
 	{
-		// gboolean gdk_window_get_deskrelative_origin  (GdkWindow *window,  gint *x,  gint *y);
+		// gboolean gdk_window_get_deskrelative_origin (GdkWindow *window,  gint *x,  gint *y);
 		return gdk_window_get_deskrelative_origin(gdkWindow, x, y);
 	}
 	

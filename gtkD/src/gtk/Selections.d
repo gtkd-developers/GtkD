@@ -175,7 +175,7 @@ public class Selections
 	 */
 	public static void targetListAddTextTargets(GtkTargetList* list, uint info)
 	{
-		// void gtk_target_list_add_text_targets  (GtkTargetList *list,  guint info);
+		// void gtk_target_list_add_text_targets (GtkTargetList *list,  guint info);
 		gtk_target_list_add_text_targets(list, info);
 	}
 	
@@ -193,7 +193,7 @@ public class Selections
 	 */
 	public static void targetListAddImageTargets(GtkTargetList* list, uint info, int writable)
 	{
-		// void gtk_target_list_add_image_targets  (GtkTargetList *list,  guint info,  gboolean writable);
+		// void gtk_target_list_add_image_targets (GtkTargetList *list,  guint info,  gboolean writable);
 		gtk_target_list_add_image_targets(list, info, writable);
 	}
 	
@@ -294,7 +294,7 @@ public class Selections
 	 */
 	public static GtkTargetEntry* targetTableNewFromList(GtkTargetList* list, int* nTargets)
 	{
-		// GtkTargetEntry* gtk_target_table_new_from_list  (GtkTargetList *list,  gint *n_targets);
+		// GtkTargetEntry* gtk_target_table_new_from_list (GtkTargetList *list,  gint *n_targets);
 		return gtk_target_table_new_from_list(list, nTargets);
 	}
 	
@@ -333,7 +333,7 @@ public class Selections
 	 */
 	public static int selectionOwnerSetForDisplay(Display display, Widget widget, GdkAtom selection, uint time)
 	{
-		// gboolean gtk_selection_owner_set_for_display  (GdkDisplay *display,  GtkWidget *widget,  GdkAtom selection,  guint32 time_);
+		// gboolean gtk_selection_owner_set_for_display (GdkDisplay *display,  GtkWidget *widget,  GdkAtom selection,  guint32 time_);
 		return gtk_selection_owner_set_for_display((display is null) ? null : display.getDisplayStruct(), (widget is null) ? null : widget.getWidgetStruct(), selection, time);
 	}
 	

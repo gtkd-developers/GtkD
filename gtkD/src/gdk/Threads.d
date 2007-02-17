@@ -117,10 +117,10 @@ private import gtkc.gdk;
  *  * Filename: gtk-thread.c
  *  * Version: 0.99.1
  *  * Copyright: Copyright (C) 1999, Erik Mouw
- *  * Author: Erik Mouw <J.A.K.Mouwits.tudelft.nl>
+ *  * Author: Erik Mouw <J.A.K.Mouw@its.tudelft.nl>
  *  * Description: GTK threads example.
  *  * Created at: Sun Oct 17 21:27:09 1999
- *  * Modified by: Erik Mouw <J.A.K.Mouwits.tudelft.nl>
+ *  * Modified by: Erik Mouw <J.A.K.Mouw@its.tudelft.nl>
  *  * Modified at: Sun Oct 24 17:21:41 1999
  *  *-----------------------------------------------------------------------+/
  * /+*
@@ -293,5 +293,142 @@ public static void gdkThreadsSetLockFunctions(GCallback enterFn, GCallback leave
 {
 	// void gdk_threads_set_lock_functions (GCallback enter_fn,  GCallback leave_fn);
 	gdk_threads_set_lock_functions(enterFn, leaveFn);
+}
+
+/**
+ * A wrapper for the common usage of gdk_threads_add_idle_full()
+ * assigning the default priority, G_PRIORITY_DEFAULT_IDLE.
+ * See gdk_threads_add_idle_full().
+ * function:
+ *  function to call
+ * data:
+ *  data to pass to function
+ * Returns:
+ * Since 2.12
+ */
+public static uint gdkThreadsAddIdle(GSourceFunc funct, void* data)
+{
+	// guint gdk_threads_add_idle (GSourceFunc function,  gpointer data);
+	return gdk_threads_add_idle(funct, data);
+}
+
+/**
+ * Adds a function to be called whenever there are no higher priority
+ * events pending. If the function returns FALSE it is automatically
+ * removed from the list of event sources and will not be called again.
+ * This variant of g_idle_add_full() calls function with the GDK lock
+ * held. It can be thought of a MT-safe version for GTK+ widgets for the
+ * following use case, where you have to worry about idle_callback()
+ * running in thread A and accessing self after it has been finalized
+ * in thread B:
+ * static gboolean idle_callback (gpointer data)
+ * {
+	 *  SomeWidget *self = data;
+	 *  /+* do stuff with self +/
+	 *  self->idle_id = 0;
+	 *  return FALSE;
+ * }
+ * static void some_widget_do_stuff_later (SomeWidget *self)
+ * {
+	 *  self->idle_id = g_idle_add (idle_callback, self)
+ * }
+ * static void some_widget_finalize (GObject *object)
+ * {
+	 *  SomeWidget *self = SOME_WIDGET(object);
+	 *  if (self->idle_id)
+	 *  g_source_remove (self->idle_id);
+	 *  G_OBJECT_CLASS (parent_class)->finalize (object);
+ * }
+ * priority:
+ *  the priority of the idle source. Typically this will be in the
+ *  range btweeen G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE
+ * function:
+ *  function to call
+ * data:
+ *  data to pass to function
+ * notify:
+ *  function to call when the idle is removed, or NULL
+ * Returns:
+ *  the ID (greater than 0) of the event source.
+ * Since 2.12
+ */
+public static uint gdkThreadsAddIdleFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
+{
+	// guint gdk_threads_add_idle_full (gint priority,  GSourceFunc function,  gpointer data,  GDestroyNotify notify);
+	return gdk_threads_add_idle_full(priority, funct, data, notify);
+}
+
+/**
+ * A wrapper for the common usage of gdk_threads_add_timeout_full()
+ * assigning the default priority, G_PRIORITY_DEFAULT.
+ * See gdk_threads_add_timeout_full().
+ * interval:
+ *  the time between calls to the function, in milliseconds
+ *  (1/1000ths of a second)
+ * function:
+ *  function to call
+ * data:
+ *  data to pass to function
+ * Returns:
+ * Since 2.12
+ */
+public static uint gdkThreadsAddTimeout(uint interval, GSourceFunc funct, void* data)
+{
+	// guint gdk_threads_add_timeout (guint interval,  GSourceFunc function,  gpointer data);
+	return gdk_threads_add_timeout(interval, funct, data);
+}
+
+/**
+ * Sets a function to be called at regular intervals holding the GDK lock,
+ * with the given priority. The function is called repeatedly until it
+ * returns FALSE, at which point the timeout is automatically destroyed
+ * and the function will not be called again. The notify function is
+ * called when the timeout is destroyed. The first call to the
+ * function will be at the end of the first interval.
+ * Note that timeout functions may be delayed, due to the processing of other
+ * event sources. Thus they should not be relied on for precise timing.
+ * After each call to the timeout function, the time of the next
+ * timeout is recalculated based on the current time and the given interval
+ * (it does not try to 'catch up' time lost in delays).
+ * This variant of g_timeout_add_full() can be thought of a MT-safe version
+ * for GTK+ widgets for the following use case:
+ * static gboolean timeout_callback (gpointer data)
+ * {
+	 *  SomeWidget *self = data;
+	 *  /+* do stuff with self +/
+	 *  self->timeout_id = 0;
+	 *  return FALSE;
+ * }
+ * static void some_widget_do_stuff_later (SomeWidget *self)
+ * {
+	 *  self->timeout_id = g_timeout_add (timeout_callback, self)
+ * }
+ * static void some_widget_finalize (GObject *object)
+ * {
+	 *  SomeWidget *self = SOME_WIDGET(object);
+	 *  if (self->timeout_id)
+	 *  g_source_remove (self->timeout_id);
+	 *  G_OBJECT_CLASS (parent_class)->finalize (object);
+ * }
+ * priority:
+ *  the priority of the timeout source. Typically this will be in the
+ *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
+ * interval:
+ *  the time between calls to the function, in milliseconds
+ *  (1/1000ths of a second)
+ * function:
+ *  function to call
+ * data:
+ *  data to pass to function
+ * notify:
+ *  function to call when the timeout is removed, or NULL
+ * Returns:
+ *  the ID (greater than 0) of the event source.
+ * Since 2.12
+ */
+public static uint gdkThreadsAddTimeoutFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
+{
+	// guint gdk_threads_add_timeout_full (gint priority,  guint interval,  GSourceFunc function,  gpointer data,  GDestroyNotify notify);
+	return gdk_threads_add_timeout_full(priority, interval, funct, data, notify);
 }
 

@@ -910,6 +910,8 @@ public class RcStyle : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_rc_style_ref is deprecated and should not be used in newly-written code. Use g_object_ref() instead
 	 * Increments the reference count of a GtkRcStyle.
 	 * rc_style:
 	 * a GtkRcStyle
@@ -921,6 +923,8 @@ public class RcStyle : ObjectG
 	}
 	
 	/**
+	 * Warning
+	 * gtk_rc_style_unref is deprecated and should not be used in newly-written code. Use g_object_unref() instead
 	 * Decrements the reference count of a GtkRcStyle and
 	 * frees if the result is 0.
 	 * rc_style:

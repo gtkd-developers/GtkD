@@ -100,7 +100,7 @@ private import glib.Str;
  * gdk-pixbuf-animation.h if the module supports animations).
  * They are not covered by the same stability guarantees as the regular
  * gdk-pixbuf API. To underline this fact, they are protected by
- * ifdef GDK_PIXBUF_ENABLE_BACKEND.
+ * #ifdef GDK_PIXBUF_ENABLE_BACKEND.
  */
 public class PixbufFormat
 {
@@ -202,7 +202,7 @@ public class PixbufFormat
 	 */
 	public char[] getDescription()
 	{
-		// gchar* gdk_pixbuf_format_get_description  (GdkPixbufFormat *format);
+		// gchar* gdk_pixbuf_format_get_description (GdkPixbufFormat *format);
 		return Str.toString(gdk_pixbuf_format_get_description(gdkPixbufFormat) );
 	}
 	
@@ -217,7 +217,7 @@ public class PixbufFormat
 	 */
 	public char** getMimeTypes()
 	{
-		// gchar** gdk_pixbuf_format_get_mime_types  (GdkPixbufFormat *format);
+		// gchar** gdk_pixbuf_format_get_mime_types (GdkPixbufFormat *format);
 		return gdk_pixbuf_format_get_mime_types(gdkPixbufFormat);
 	}
 	
@@ -233,7 +233,7 @@ public class PixbufFormat
 	 */
 	public char** getExtensions()
 	{
-		// gchar** gdk_pixbuf_format_get_extensions  (GdkPixbufFormat *format);
+		// gchar** gdk_pixbuf_format_get_extensions (GdkPixbufFormat *format);
 		return gdk_pixbuf_format_get_extensions(gdkPixbufFormat);
 	}
 	

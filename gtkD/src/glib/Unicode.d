@@ -330,6 +330,27 @@ public class Unicode
 	}
 	
 	/**
+	 * Determines if a given character typically takes zero width when rendered.
+	 * The return value is TRUE for all non-spacing and enclosing marks
+	 * (e.g., combining accents), format characters, zero-width
+	 * space, but not U+00AD SOFT HYPHEN.
+	 * A typical use of this function is with one of g_unichar_iswide() or
+	 * g_unichar_iswide_cjk() to determine the number of cells a string occupies
+	 * when displayed on a grid display (terminals). However, note that not all
+	 * terminals support zero-width rendering of zero-width marks.
+	 * c:
+	 *  a Unicode character
+	 * Returns:
+	 *  TRUE if the character has zero width
+	 * Since 2.14
+	 */
+	public static int unicharIszerowidth(gunichar c)
+	{
+		// gboolean g_unichar_iszerowidth (gunichar c);
+		return g_unichar_iszerowidth(c);
+	}
+	
+	/**
 	 * Converts a character to uppercase.
 	 * c:
 	 *  a Unicode character
@@ -465,7 +486,7 @@ public class Unicode
 	 */
 	public static gunichar* unicodeCanonicalDecomposition(gunichar ch, uint* resultLen)
 	{
-		// gunichar* g_unicode_canonical_decomposition  (gunichar ch,  gsize *result_len);
+		// gunichar* g_unicode_canonical_decomposition (gunichar ch,  gsize *result_len);
 		return g_unicode_canonical_decomposition(ch, resultLen);
 	}
 	
@@ -540,8 +561,9 @@ public class Unicode
 	 * Returns:
 	 *  the resulting character. If p points to a partial
 	 *  sequence at the end of a string that could begin a valid
-	 *  character, returns (gunichar)-2; otherwise, if p does not point
-	 *  to a valid UTF-8 encoded Unicode character, returns (gunichar)-1.
+	 *  character (or if max_len is zero), returns (gunichar)-2;
+	 *  otherwise, if p does not point to a valid UTF-8 encoded
+	 *  Unicode character, returns (gunichar)-1.
 	 */
 	public static gunichar utf8_GetCharValidated(char[] p, int maxLen)
 	{

@@ -541,7 +541,7 @@ public class Clipboard : ObjectG
 	 */
 	public GtkSelectionData* waitForContents(GdkAtom target)
 	{
-		// GtkSelectionData* gtk_clipboard_wait_for_contents  (GtkClipboard *clipboard,  GdkAtom target);
+		// GtkSelectionData* gtk_clipboard_wait_for_contents (GtkClipboard *clipboard,  GdkAtom target);
 		return gtk_clipboard_wait_for_contents(gtkClipboard, target);
 	}
 	
@@ -611,7 +611,7 @@ public class Clipboard : ObjectG
 	 */
 	public byte* waitForRichText(GtkTextBuffer* buffer, GdkAtom* format, uint* length)
 	{
-		// guint8* gtk_clipboard_wait_for_rich_text  (GtkClipboard *clipboard,  GtkTextBuffer *buffer,  GdkAtom *format,  gsize *length);
+		// guint8* gtk_clipboard_wait_for_rich_text (GtkClipboard *clipboard,  GtkTextBuffer *buffer,  GdkAtom *format,  gsize *length);
 		return gtk_clipboard_wait_for_rich_text(gtkClipboard, buffer, format, length);
 	}
 	
@@ -754,7 +754,7 @@ public class Clipboard : ObjectG
 	 * The "owner-change" signal
 	 * void user_function (GtkClipboard *clipboard,
 	 *  GdkEvent *event,
-	 *  gpointer user_data) : Run first
+	 *  gpointer user_data) : Run First
 	 * clipboard:
 	 * the object which received the signal.
 	 * event:

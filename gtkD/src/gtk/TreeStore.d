@@ -485,7 +485,7 @@ public class TreeStore : TreeModel
 	 */
 	public void insertWithValues(TreeIter iter, TreeIter parent, int position, ... )
 	{
-		// void gtk_tree_store_insert_with_values  (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent,  gint position,  ...);
+		// void gtk_tree_store_insert_with_values (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent,  gint position,  ...);
 		gtk_tree_store_insert_with_values(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct(), position);
 	}
 	
@@ -511,7 +511,7 @@ public class TreeStore : TreeModel
 	 */
 	public void insertWithValuesv(TreeIter iter, TreeIter parent, int position, int* columns, Value values, int nValues)
 	{
-		// void gtk_tree_store_insert_with_valuesv  (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent,  gint position,  gint *columns,  GValue *values,  gint n_values);
+		// void gtk_tree_store_insert_with_valuesv (GtkTreeStore *tree_store,  GtkTreeIter *iter,  GtkTreeIter *parent,  gint position,  gint *columns,  GValue *values,  gint n_values);
 		gtk_tree_store_insert_with_valuesv(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), (parent is null) ? null : parent.getTreeIterStruct(), position, columns, (values is null) ? null : values.getValueStruct(), nValues);
 	}
 	

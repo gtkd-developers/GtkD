@@ -207,7 +207,7 @@ public class HandleBox : Bin
 	 */
 	public void setHandlePosition(GtkPositionType position)
 	{
-		// void gtk_handle_box_set_handle_position  (GtkHandleBox *handle_box,  GtkPositionType position);
+		// void gtk_handle_box_set_handle_position (GtkHandleBox *handle_box,  GtkPositionType position);
 		gtk_handle_box_set_handle_position(gtkHandleBox, position);
 	}
 	
@@ -247,7 +247,7 @@ public class HandleBox : Bin
 	 */
 	public GtkPositionType getHandlePosition()
 	{
-		// GtkPositionType gtk_handle_box_get_handle_position  (GtkHandleBox *handle_box);
+		// GtkPositionType gtk_handle_box_get_handle_position (GtkHandleBox *handle_box);
 		return gtk_handle_box_get_handle_position(gtkHandleBox);
 	}
 	
@@ -261,7 +261,7 @@ public class HandleBox : Bin
 	 */
 	public GtkShadowType getShadowType()
 	{
-		// GtkShadowType gtk_handle_box_get_shadow_type  (GtkHandleBox *handle_box);
+		// GtkShadowType gtk_handle_box_get_shadow_type (GtkHandleBox *handle_box);
 		return gtk_handle_box_get_shadow_type(gtkHandleBox);
 	}
 	
@@ -281,7 +281,7 @@ public class HandleBox : Bin
 	 */
 	public GtkPositionType getSnapEdge()
 	{
-		// GtkPositionType gtk_handle_box_get_snap_edge  (GtkHandleBox *handle_box);
+		// GtkPositionType gtk_handle_box_get_snap_edge (GtkHandleBox *handle_box);
 		return gtk_handle_box_get_snap_edge(gtkHandleBox);
 	}
 	

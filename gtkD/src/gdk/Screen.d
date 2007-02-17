@@ -215,7 +215,7 @@ public class Screen : ObjectG
 	 */
 	public Colormap getDefaultColormap()
 	{
-		// GdkColormap* gdk_screen_get_default_colormap  (GdkScreen *screen);
+		// GdkColormap* gdk_screen_get_default_colormap (GdkScreen *screen);
 		return new Colormap( gdk_screen_get_default_colormap(gdkScreen) );
 	}
 	
@@ -578,7 +578,7 @@ public class Screen : ObjectG
 	 */
 	public int getMonitorAtWindow(Window window)
 	{
-		// gint gdk_screen_get_monitor_at_window  (GdkScreen *screen,  GdkWindow *window);
+		// gint gdk_screen_get_monitor_at_window (GdkScreen *screen,  GdkWindow *window);
 		return gdk_screen_get_monitor_at_window(gdkScreen, (window is null) ? null : window.getWindowStruct());
 	}
 	
@@ -600,7 +600,7 @@ public class Screen : ObjectG
 	 */
 	public void broadcastClientMessage(Event event)
 	{
-		// void gdk_screen_broadcast_client_message  (GdkScreen *screen,  GdkEvent *event);
+		// void gdk_screen_broadcast_client_message (GdkScreen *screen,  GdkEvent *event);
 		gdk_screen_broadcast_client_message(gdkScreen, (event is null) ? null : event.getEventStruct());
 	}
 	
@@ -637,7 +637,7 @@ public class Screen : ObjectG
 	 */
 	public cairo_font_options_t* getFontOptions()
 	{
-		// const cairo_font_options_t* gdk_screen_get_font_options  (GdkScreen *screen);
+		// const cairo_font_options_t* gdk_screen_get_font_options (GdkScreen *screen);
 		return gdk_screen_get_font_options(gdkScreen);
 	}
 	
@@ -845,7 +845,7 @@ public class Screen : ObjectG
 	 */
 	public int gdkSpawnCommandLineOnScreen(char[] commandLine, GError** error)
 	{
-		// gboolean gdk_spawn_command_line_on_screen  (GdkScreen *screen,  const gchar *command_line,  GError **error);
+		// gboolean gdk_spawn_command_line_on_screen (GdkScreen *screen,  const gchar *command_line,  GError **error);
 		return gdk_spawn_command_line_on_screen(gdkScreen, Str.toStringz(commandLine), error);
 	}
 	

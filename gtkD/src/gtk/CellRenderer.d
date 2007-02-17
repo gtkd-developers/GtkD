@@ -304,7 +304,7 @@ public class CellRenderer : ObjectGtk
 	 */
 	public CellEditable startEditing(Event event, Widget widget, char[] path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
 	{
-		// GtkCellEditable* gtk_cell_renderer_start_editing  (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  GdkRectangle *background_area,  GdkRectangle *cell_area,  GtkCellRendererState flags);
+		// GtkCellEditable* gtk_cell_renderer_start_editing (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  GdkRectangle *background_area,  GdkRectangle *cell_area,  GtkCellRendererState flags);
 		return new CellEditable( gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags) );
 	}
 	
@@ -321,7 +321,7 @@ public class CellRenderer : ObjectGtk
 	 */
 	public void editingCanceled()
 	{
-		// void gtk_cell_renderer_editing_canceled  (GtkCellRenderer *cell);
+		// void gtk_cell_renderer_editing_canceled (GtkCellRenderer *cell);
 		gtk_cell_renderer_editing_canceled(gtkCellRenderer);
 	}
 	
@@ -353,7 +353,7 @@ public class CellRenderer : ObjectGtk
 	 */
 	public void getFixedSize(int* width, int* height)
 	{
-		// void gtk_cell_renderer_get_fixed_size  (GtkCellRenderer *cell,  gint *width,  gint *height);
+		// void gtk_cell_renderer_get_fixed_size (GtkCellRenderer *cell,  gint *width,  gint *height);
 		gtk_cell_renderer_get_fixed_size(gtkCellRenderer, width, height);
 	}
 	
@@ -373,7 +373,7 @@ public class CellRenderer : ObjectGtk
 	 */
 	public void setFixedSize(int width, int height)
 	{
-		// void gtk_cell_renderer_set_fixed_size  (GtkCellRenderer *cell,  gint width,  gint height);
+		// void gtk_cell_renderer_set_fixed_size (GtkCellRenderer *cell,  gint width,  gint height);
 		gtk_cell_renderer_set_fixed_size(gtkCellRenderer, width, height);
 	}
 	

@@ -739,7 +739,7 @@ public class Type
 	 */
 	public static void interfaceAddPrerequisite(GType interfaceType, GType prerequisiteType)
 	{
-		// void g_type_interface_add_prerequisite  (GType interface_type,  GType prerequisite_type);
+		// void g_type_interface_add_prerequisite (GType interface_type,  GType prerequisite_type);
 		g_type_interface_add_prerequisite(interfaceType, prerequisiteType);
 	}
 	

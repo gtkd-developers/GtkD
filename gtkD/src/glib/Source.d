@@ -361,12 +361,12 @@ public class Source
 	 * idle_callback (gpointer data)
 	 * {
 		 *  SomeWidget *self = data;
-		 *  GDK_THREADS_ENTER();
-		 *  if (!g_source_is_destroyed (g_main_current_source()))
+		 *  GDK_THREADS_ENTER ();
+		 *  if (!g_source_is_destroyed (g_main_current_source ()))
 		 *  {
 			 *  /+* do stuff with self +/
 		 *  }
-		 *  GDK_THREADS_LEAVE();
+		 *  GDK_THREADS_LEAVE ();
 		 *  return FALSE;
 	 * }
 	 * source:
@@ -597,7 +597,7 @@ public class Source
 	 */
 	public static int removeByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
-		// gboolean g_source_remove_by_funcs_user_data  (GSourceFuncs *funcs,  gpointer user_data);
+		// gboolean g_source_remove_by_funcs_user_data (GSourceFuncs *funcs,  gpointer user_data);
 		return g_source_remove_by_funcs_user_data(funcs, userData);
 	}
 	

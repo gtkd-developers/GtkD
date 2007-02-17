@@ -212,10 +212,16 @@ public class Plug : Window
 	 *  a GtkPlug.
 	 * Returns:
 	 *  the window ID for the plug
+	 * Property Details
+	 * The "embedded" property
+	 *  "embedded" gboolean : Read
+	 * TRUE if the plug is embedded in a socket.
+	 * Default value: FALSE
+	 * Since 2.12
 	 * Signal Details
 	 * The "embedded" signal
 	 * void user_function (GtkPlug *plug,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * plug:
 	 * the object which received the signal.
 	 * user_data:

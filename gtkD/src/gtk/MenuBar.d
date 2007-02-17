@@ -157,7 +157,7 @@ public class MenuBar : MenuShell
 	 */
 	public GtkPackDirection getPackDirection()
 	{
-		// GtkPackDirection gtk_menu_bar_get_pack_direction  (GtkMenuBar *menubar);
+		// GtkPackDirection gtk_menu_bar_get_pack_direction (GtkMenuBar *menubar);
 		return gtk_menu_bar_get_pack_direction(gtkMenuBar);
 	}
 	

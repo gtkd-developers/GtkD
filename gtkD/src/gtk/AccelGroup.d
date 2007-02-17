@@ -350,7 +350,7 @@ public class AccelGroup : ObjectG
 	 */
 	public static AccelGroup fromAccelClosure(Closure closure)
 	{
-		// GtkAccelGroup* gtk_accel_group_from_accel_closure  (GClosure *closure);
+		// GtkAccelGroup* gtk_accel_group_from_accel_closure (GClosure *closure);
 		return new AccelGroup( gtk_accel_group_from_accel_closure((closure is null) ? null : closure.getClosureStruct()) );
 	}
 	
@@ -516,7 +516,7 @@ public class AccelGroup : ObjectG
 	 *  GObject *acceleratable,
 	 *  guint keyval,
 	 *  GdkModifierType modifier,
-	 *  gpointer user_data) : Has details
+	 *  gpointer user_data) : Has Details
 	 * The accel-activate signal is an implementation detail of
 	 * GtkAccelGroup and not meant to be used by applications.
 	 * accel_group:

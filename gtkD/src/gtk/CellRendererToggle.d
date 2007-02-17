@@ -148,7 +148,7 @@ public class CellRendererToggle : CellRenderer
 	 */
 	public this ()
 	{
-		// GtkCellRenderer* gtk_cell_renderer_toggle_new  (void);
+		// GtkCellRenderer* gtk_cell_renderer_toggle_new (void);
 		this(cast(GtkCellRendererToggle*)gtk_cell_renderer_toggle_new() );
 	}
 	
@@ -161,7 +161,7 @@ public class CellRendererToggle : CellRenderer
 	 */
 	public static int getRadio(GtkCellRendererToggle* toggle)
 	{
-		// gboolean gtk_cell_renderer_toggle_get_radio  (GtkCellRendererToggle *toggle);
+		// gboolean gtk_cell_renderer_toggle_get_radio (GtkCellRendererToggle *toggle);
 		return gtk_cell_renderer_toggle_get_radio(toggle);
 	}
 	
@@ -180,7 +180,7 @@ public class CellRendererToggle : CellRenderer
 	 */
 	public static void setRadio(GtkCellRendererToggle* toggle, int radio)
 	{
-		// void gtk_cell_renderer_toggle_set_radio  (GtkCellRendererToggle *toggle,  gboolean radio);
+		// void gtk_cell_renderer_toggle_set_radio (GtkCellRendererToggle *toggle,  gboolean radio);
 		gtk_cell_renderer_toggle_set_radio(toggle, radio);
 	}
 	
@@ -194,7 +194,7 @@ public class CellRendererToggle : CellRenderer
 	 */
 	public static int getActive(GtkCellRendererToggle* toggle)
 	{
-		// gboolean gtk_cell_renderer_toggle_get_active  (GtkCellRendererToggle *toggle);
+		// gboolean gtk_cell_renderer_toggle_get_active (GtkCellRendererToggle *toggle);
 		return gtk_cell_renderer_toggle_get_active(toggle);
 	}
 	
@@ -212,7 +212,7 @@ public class CellRendererToggle : CellRenderer
 	 */
 	public static void setActive(GtkCellRendererToggle* toggle, int setting)
 	{
-		// void gtk_cell_renderer_toggle_set_active  (GtkCellRendererToggle *toggle,  gboolean setting);
+		// void gtk_cell_renderer_toggle_set_active (GtkCellRendererToggle *toggle,  gboolean setting);
 		gtk_cell_renderer_toggle_set_active(toggle, setting);
 	}
 	

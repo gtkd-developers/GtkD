@@ -207,8 +207,8 @@ public class ScrolledWindow : Bin
 		return consumed;
 	}
 	
-	void delegate(GtkScrollType, gboolean, ScrolledWindow)[] onScrollChildListeners;
-	void addOnScrollChild(void delegate(GtkScrollType, gboolean, ScrolledWindow) dlg)
+	gboolean delegate(GtkScrollType, gboolean, ScrolledWindow)[] onScrollChildListeners;
+	void addOnScrollChild(gboolean delegate(GtkScrollType, gboolean, ScrolledWindow) dlg)
 	{
 		if ( !("scroll-child" in connectedSignals) )
 		{
@@ -227,7 +227,7 @@ public class ScrolledWindow : Bin
 	{
 		bit consumed = false;
 		
-		foreach ( void delegate(GtkScrollType, gboolean, ScrolledWindow) dlg ; scrolledWindow.onScrollChildListeners )
+		foreach ( gboolean delegate(GtkScrollType, gboolean, ScrolledWindow) dlg ; scrolledWindow.onScrollChildListeners )
 		{
 			dlg(arg1, arg2, scrolledWindow);
 		}
@@ -249,7 +249,7 @@ public class ScrolledWindow : Bin
 	 */
 	public Adjustment getHadjustment()
 	{
-		// GtkAdjustment* gtk_scrolled_window_get_hadjustment  (GtkScrolledWindow *scrolled_window);
+		// GtkAdjustment* gtk_scrolled_window_get_hadjustment (GtkScrolledWindow *scrolled_window);
 		return new Adjustment( gtk_scrolled_window_get_hadjustment(gtkScrolledWindow) );
 	}
 	
@@ -264,7 +264,7 @@ public class ScrolledWindow : Bin
 	 */
 	public Adjustment getVadjustment()
 	{
-		// GtkAdjustment* gtk_scrolled_window_get_vadjustment  (GtkScrolledWindow *scrolled_window);
+		// GtkAdjustment* gtk_scrolled_window_get_vadjustment (GtkScrolledWindow *scrolled_window);
 		return new Adjustment( gtk_scrolled_window_get_vadjustment(gtkScrolledWindow) );
 	}
 	
@@ -279,7 +279,7 @@ public class ScrolledWindow : Bin
 	 */
 	public Widget getHscrollbar()
 	{
-		// GtkWidget* gtk_scrolled_window_get_hscrollbar  (GtkScrolledWindow *scrolled_window);
+		// GtkWidget* gtk_scrolled_window_get_hscrollbar (GtkScrolledWindow *scrolled_window);
 		return new Widget( gtk_scrolled_window_get_hscrollbar(gtkScrolledWindow) );
 	}
 	
@@ -294,7 +294,7 @@ public class ScrolledWindow : Bin
 	 */
 	public Widget getVscrollbar()
 	{
-		// GtkWidget* gtk_scrolled_window_get_vscrollbar  (GtkScrolledWindow *scrolled_window);
+		// GtkWidget* gtk_scrolled_window_get_vscrollbar (GtkScrolledWindow *scrolled_window);
 		return new Widget( gtk_scrolled_window_get_vscrollbar(gtkScrolledWindow) );
 	}
 	
@@ -362,7 +362,7 @@ public class ScrolledWindow : Bin
 	 */
 	public void setPlacement(GtkCornerType windowPlacement)
 	{
-		// void gtk_scrolled_window_set_placement  (GtkScrolledWindow *scrolled_window,  GtkCornerType window_placement);
+		// void gtk_scrolled_window_set_placement (GtkScrolledWindow *scrolled_window,  GtkCornerType window_placement);
 		gtk_scrolled_window_set_placement(gtkScrolledWindow, windowPlacement);
 	}
 	
@@ -378,7 +378,7 @@ public class ScrolledWindow : Bin
 	 */
 	public void unsetPlacement()
 	{
-		// void gtk_scrolled_window_unset_placement  (GtkScrolledWindow *scrolled_window);
+		// void gtk_scrolled_window_unset_placement (GtkScrolledWindow *scrolled_window);
 		gtk_scrolled_window_unset_placement(gtkScrolledWindow);
 	}
 	
@@ -392,7 +392,7 @@ public class ScrolledWindow : Bin
 	 */
 	public void setShadowType(GtkShadowType type)
 	{
-		// void gtk_scrolled_window_set_shadow_type  (GtkScrolledWindow *scrolled_window,  GtkShadowType type);
+		// void gtk_scrolled_window_set_shadow_type (GtkScrolledWindow *scrolled_window,  GtkShadowType type);
 		gtk_scrolled_window_set_shadow_type(gtkScrolledWindow, type);
 	}
 	
@@ -405,7 +405,7 @@ public class ScrolledWindow : Bin
 	 */
 	public void setHadjustment(Adjustment hadjustment)
 	{
-		// void gtk_scrolled_window_set_hadjustment  (GtkScrolledWindow *scrolled_window,  GtkAdjustment *hadjustment);
+		// void gtk_scrolled_window_set_hadjustment (GtkScrolledWindow *scrolled_window,  GtkAdjustment *hadjustment);
 		gtk_scrolled_window_set_hadjustment(gtkScrolledWindow, (hadjustment is null) ? null : hadjustment.getAdjustmentStruct());
 	}
 	
@@ -418,7 +418,7 @@ public class ScrolledWindow : Bin
 	 */
 	public void setVadjustment(Adjustment vadjustment)
 	{
-		// void gtk_scrolled_window_set_vadjustment  (GtkScrolledWindow *scrolled_window,  GtkAdjustment *vadjustment);
+		// void gtk_scrolled_window_set_vadjustment (GtkScrolledWindow *scrolled_window,  GtkAdjustment *vadjustment);
 		gtk_scrolled_window_set_vadjustment(gtkScrolledWindow, (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
 	}
 	
@@ -434,7 +434,7 @@ public class ScrolledWindow : Bin
 	 */
 	public GtkCornerType getPlacement()
 	{
-		// GtkCornerType gtk_scrolled_window_get_placement  (GtkScrolledWindow *scrolled_window);
+		// GtkCornerType gtk_scrolled_window_get_placement (GtkScrolledWindow *scrolled_window);
 		return gtk_scrolled_window_get_placement(gtkScrolledWindow);
 	}
 	
@@ -468,7 +468,7 @@ public class ScrolledWindow : Bin
 	 */
 	public GtkShadowType getShadowType()
 	{
-		// GtkShadowType gtk_scrolled_window_get_shadow_type  (GtkScrolledWindow *scrolled_window);
+		// GtkShadowType gtk_scrolled_window_get_shadow_type (GtkScrolledWindow *scrolled_window);
 		return gtk_scrolled_window_get_shadow_type(gtkScrolledWindow);
 	}
 	

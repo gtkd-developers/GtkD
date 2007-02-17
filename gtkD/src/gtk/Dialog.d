@@ -485,7 +485,7 @@ public class Dialog : Window
 	 */
 	public void setResponseSensitive(int responseId, int setting)
 	{
-		// void gtk_dialog_set_response_sensitive  (GtkDialog *dialog,  gint response_id,  gboolean setting);
+		// void gtk_dialog_set_response_sensitive (GtkDialog *dialog,  gint response_id,  gboolean setting);
 		gtk_dialog_set_response_sensitive(gtkDialog, responseId, setting);
 	}
 	
@@ -503,7 +503,7 @@ public class Dialog : Window
 	 */
 	public int getResponseForWidget(Widget widget)
 	{
-		// gint gtk_dialog_get_response_for_widget  (GtkDialog *dialog,  GtkWidget *widget);
+		// gint gtk_dialog_get_response_for_widget (GtkDialog *dialog,  GtkWidget *widget);
 		return gtk_dialog_get_response_for_widget(gtkDialog, (widget is null) ? null : widget.getWidgetStruct());
 	}
 	
@@ -524,7 +524,7 @@ public class Dialog : Window
 	 */
 	public static int alternativeDialogButtonOrder(Screen screen)
 	{
-		// gboolean gtk_alternative_dialog_button_order  (GdkScreen *screen);
+		// gboolean gtk_alternative_dialog_button_order (GdkScreen *screen);
 		return gtk_alternative_dialog_button_order((screen is null) ? null : screen.getScreenStruct());
 	}
 	

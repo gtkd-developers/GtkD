@@ -170,7 +170,7 @@ public class Display : ObjectG
 	/**
 	 * Gets the default GdkDisplay. This is a convenience
 	 * function for:
-	 *  gdk_display_manager_get_default_display (gdk_display_manager_get())
+	 *  gdk_display_manager_get_default_display (gdk_display_manager_get ())
 	 * Returns:
 	 *  a GdkDisplay, or NULL if there is no default
 	 *  display.
@@ -444,7 +444,7 @@ public class Display : ObjectG
 	 */
 	public void setDoubleClickTime(uint msec)
 	{
-		// void gdk_display_set_double_click_time  (GdkDisplay *display,  guint msec);
+		// void gdk_display_set_double_click_time (GdkDisplay *display,  guint msec);
 		gdk_display_set_double_click_time(gdkDisplay, msec);
 	}
 	
@@ -505,7 +505,7 @@ public class Display : ObjectG
 	 */
 	public Window getWindowAtPointer(int* winX, int* winY)
 	{
-		// GdkWindow* gdk_display_get_window_at_pointer  (GdkDisplay *display,  gint *win_x,  gint *win_y);
+		// GdkWindow* gdk_display_get_window_at_pointer (GdkDisplay *display,  gint *win_x,  gint *win_y);
 		return new Window( gdk_display_get_window_at_pointer(gdkDisplay, winX, winY) );
 	}
 	
@@ -528,7 +528,7 @@ public class Display : ObjectG
 	 */
 	public GdkDisplayPointerHooks* setPointerHooks(GdkDisplayPointerHooks* newHooks)
 	{
-		// GdkDisplayPointerHooks* gdk_display_set_pointer_hooks  (GdkDisplay *display,  const GdkDisplayPointerHooks *new_hooks);
+		// GdkDisplayPointerHooks* gdk_display_set_pointer_hooks (GdkDisplay *display,  const GdkDisplayPointerHooks *new_hooks);
 		return gdk_display_set_pointer_hooks(gdkDisplay, newHooks);
 	}
 	
@@ -571,7 +571,7 @@ public class Display : ObjectG
 	 */
 	public int supportsCursorColor()
 	{
-		// gboolean gdk_display_supports_cursor_color  (GdkDisplay *display);
+		// gboolean gdk_display_supports_cursor_color (GdkDisplay *display);
 		return gdk_display_supports_cursor_color(gdkDisplay);
 	}
 	
@@ -587,7 +587,7 @@ public class Display : ObjectG
 	 */
 	public int supportsCursorAlpha()
 	{
-		// gboolean gdk_display_supports_cursor_alpha  (GdkDisplay *display);
+		// gboolean gdk_display_supports_cursor_alpha (GdkDisplay *display);
 		return gdk_display_supports_cursor_alpha(gdkDisplay);
 	}
 	
@@ -601,7 +601,7 @@ public class Display : ObjectG
 	 */
 	public uint getDefaultCursorSize()
 	{
-		// guint gdk_display_get_default_cursor_size  (GdkDisplay *display);
+		// guint gdk_display_get_default_cursor_size (GdkDisplay *display);
 		return gdk_display_get_default_cursor_size(gdkDisplay);
 	}
 	
@@ -617,7 +617,7 @@ public class Display : ObjectG
 	 */
 	public void getMaximalCursorSize(uint* width, uint* height)
 	{
-		// void gdk_display_get_maximal_cursor_size  (GdkDisplay *display,  guint *width,  guint *height);
+		// void gdk_display_get_maximal_cursor_size (GdkDisplay *display,  guint *width,  guint *height);
 		gdk_display_get_maximal_cursor_size(gdkDisplay, width, height);
 	}
 	
@@ -740,7 +740,7 @@ public class Display : ObjectG
 	 * The "closed" signal
 	 * void user_function (GdkDisplay *display,
 	 *  gboolean is_error,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * The ::closed signal is emitted when the connection to the windowing
 	 * system for display is closed.
 	 * display:
@@ -753,7 +753,7 @@ public class Display : ObjectG
 	 */
 	public int supportsInputShapes()
 	{
-		// gboolean gdk_display_supports_input_shapes  (GdkDisplay *display);
+		// gboolean gdk_display_supports_input_shapes (GdkDisplay *display);
 		return gdk_display_supports_input_shapes(gdkDisplay);
 	}
 }

@@ -251,7 +251,7 @@ public class RadioMenuItem : CheckMenuItem
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_radio_menu_item_new_from_widget  (GtkRadioMenuItem *group);
+		// GtkWidget* gtk_radio_menu_item_new_from_widget (GtkRadioMenuItem *group);
 		this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_from_widget(gtkRadioMenuItem) );
 	}
 	
@@ -286,7 +286,7 @@ public class RadioMenuItem : CheckMenuItem
 	 * Signal Details
 	 * The "group-changed" signal
 	 * void user_function (GtkRadioMenuItem *radiomenuitem,
-	 *  gpointer user_data) : Run first
+	 *  gpointer user_data) : Run First
 	 * radiomenuitem:
 	 * the object which received the signal.
 	 * user_data:

@@ -255,15 +255,12 @@ public class TypeModule : ObjectG
 	 * Returns:
 	 * the new or existing type ID
 	 * Since 2.6
-	 * See Also
-	 * GTypePlugin
-	 * The abstract type loader interface.
-	 * GModule
-	 * Portable mechanism for dynamically loaded modules.
 	 */
 	public GType registerFlags(char[] name, Flags _StaticValues)
 	{
 		// GType g_type_module_register_flags (GTypeModule *module,  const gchar *name,  const GFlagsValue *const _static_values);
 		return g_type_module_register_flags(gTypeModule, Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
 	}
+	
+	
 }

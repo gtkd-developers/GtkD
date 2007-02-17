@@ -284,7 +284,7 @@ public class MainContext
 	 */
 	public Source findSourceById(uint sourceId)
 	{
-		// GSource* g_main_context_find_source_by_id  (GMainContext *context,  guint source_id);
+		// GSource* g_main_context_find_source_by_id (GMainContext *context,  guint source_id);
 		return new Source( g_main_context_find_source_by_id(gMainContext, sourceId) );
 	}
 	

@@ -135,8 +135,8 @@ public class Notebook : Container
 	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
-	void delegate(gint, Notebook)[] onChangeCurrentPageListeners;
-	void addOnChangeCurrentPage(void delegate(gint, Notebook) dlg)
+	gboolean delegate(gint, Notebook)[] onChangeCurrentPageListeners;
+	void addOnChangeCurrentPage(gboolean delegate(gint, Notebook) dlg)
 	{
 		if ( !("change-current-page" in connectedSignals) )
 		{
@@ -155,7 +155,7 @@ public class Notebook : Container
 	{
 		bit consumed = false;
 		
-		foreach ( void delegate(gint, Notebook) dlg ; notebook.onChangeCurrentPageListeners )
+		foreach ( gboolean delegate(gint, Notebook) dlg ; notebook.onChangeCurrentPageListeners )
 		{
 			dlg(arg1, notebook);
 		}
@@ -303,8 +303,8 @@ public class Notebook : Container
 		return consumed;
 	}
 	
-	void delegate(GtkDirectionType, gboolean, Notebook)[] onReorderTabListeners;
-	void addOnReorderTab(void delegate(GtkDirectionType, gboolean, Notebook) dlg)
+	gboolean delegate(GtkDirectionType, gboolean, Notebook)[] onReorderTabListeners;
+	void addOnReorderTab(gboolean delegate(GtkDirectionType, gboolean, Notebook) dlg)
 	{
 		if ( !("reorder-tab" in connectedSignals) )
 		{
@@ -323,7 +323,7 @@ public class Notebook : Container
 	{
 		bit consumed = false;
 		
-		foreach ( void delegate(GtkDirectionType, gboolean, Notebook) dlg ; notebook.onReorderTabListeners )
+		foreach ( gboolean delegate(GtkDirectionType, gboolean, Notebook) dlg ; notebook.onReorderTabListeners )
 		{
 			dlg(arg1, arg2, notebook);
 		}
@@ -830,7 +830,7 @@ public class Notebook : Container
 	 */
 	public void setHomogeneousTabs(int homogeneous)
 	{
-		// void gtk_notebook_set_homogeneous_tabs  (GtkNotebook *notebook,  gboolean homogeneous);
+		// void gtk_notebook_set_homogeneous_tabs (GtkNotebook *notebook,  gboolean homogeneous);
 		gtk_notebook_set_homogeneous_tabs(gtkNotebook, homogeneous);
 	}
 	
@@ -860,7 +860,7 @@ public class Notebook : Container
 	 */
 	public void setMenuLabelText(Widget child, char[] menuText)
 	{
-		// void gtk_notebook_set_menu_label_text  (GtkNotebook *notebook,  GtkWidget *child,  const gchar *menu_text);
+		// void gtk_notebook_set_menu_label_text (GtkNotebook *notebook,  GtkWidget *child,  const gchar *menu_text);
 		gtk_notebook_set_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), Str.toStringz(menuText));
 	}
 	
@@ -913,7 +913,7 @@ public class Notebook : Container
 	 */
 	public void setTabLabelPacking(Widget child, int expand, int fill, GtkPackType packType)
 	{
-		// void gtk_notebook_set_tab_label_packing  (GtkNotebook *notebook,  GtkWidget *child,  gboolean expand,  gboolean fill,  GtkPackType pack_type);
+		// void gtk_notebook_set_tab_label_packing (GtkNotebook *notebook,  GtkWidget *child,  gboolean expand,  gboolean fill,  GtkPackType pack_type);
 		gtk_notebook_set_tab_label_packing(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), expand, fill, packType);
 	}
 	
@@ -961,7 +961,7 @@ public class Notebook : Container
 	 */
 	public void setTabReorderable(Widget child, int reorderable)
 	{
-		// void gtk_notebook_set_tab_reorderable  (GtkNotebook *notebook,  GtkWidget *child,  gboolean reorderable);
+		// void gtk_notebook_set_tab_reorderable (GtkNotebook *notebook,  GtkWidget *child,  gboolean reorderable);
 		gtk_notebook_set_tab_reorderable(gtkNotebook, (child is null) ? null : child.getWidgetStruct(), reorderable);
 	}
 	
@@ -1025,7 +1025,7 @@ public class Notebook : Container
 	 */
 	public char[] getMenuLabelText(Widget child)
 	{
-		// const gchar* gtk_notebook_get_menu_label_text  (GtkNotebook *notebook,  GtkWidget *child);
+		// const gchar* gtk_notebook_get_menu_label_text (GtkNotebook *notebook,  GtkWidget *child);
 		return Str.toString(gtk_notebook_get_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
 	}
 	
@@ -1086,7 +1086,7 @@ public class Notebook : Container
 	 */
 	public char[] getTabLabelText(Widget child)
 	{
-		// const gchar* gtk_notebook_get_tab_label_text  (GtkNotebook *notebook,  GtkWidget *child);
+		// const gchar* gtk_notebook_get_tab_label_text (GtkNotebook *notebook,  GtkWidget *child);
 		return Str.toString(gtk_notebook_get_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
 	}
 	
@@ -1116,7 +1116,7 @@ public class Notebook : Container
 	 */
 	public int getTabReorderable(Widget child)
 	{
-		// gboolean gtk_notebook_get_tab_reorderable  (GtkNotebook *notebook,  GtkWidget *child);
+		// gboolean gtk_notebook_get_tab_reorderable (GtkNotebook *notebook,  GtkWidget *child);
 		return gtk_notebook_get_tab_reorderable(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 	}
 	

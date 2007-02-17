@@ -163,7 +163,7 @@ public class ComboBoxEntry : ComboBox, CellLayoutIF
 	 */
 	public this (TreeModel model, int textColumn)
 	{
-		// GtkWidget* gtk_combo_box_entry_new_with_model  (GtkTreeModel *model,  gint text_column);
+		// GtkWidget* gtk_combo_box_entry_new_with_model (GtkTreeModel *model,  gint text_column);
 		this(cast(GtkComboBoxEntry*)gtk_combo_box_entry_new_with_model((model is null) ? null : model.getTreeModelStruct(), textColumn) );
 	}
 	
@@ -179,7 +179,7 @@ public class ComboBoxEntry : ComboBox, CellLayoutIF
 	 */
 	public void setTextColumn(int textColumn)
 	{
-		// void gtk_combo_box_entry_set_text_column  (GtkComboBoxEntry *entry_box,  gint text_column);
+		// void gtk_combo_box_entry_set_text_column (GtkComboBoxEntry *entry_box,  gint text_column);
 		gtk_combo_box_entry_set_text_column(gtkComboBoxEntry, textColumn);
 	}
 	
@@ -201,7 +201,7 @@ public class ComboBoxEntry : ComboBox, CellLayoutIF
 	 */
 	public int getTextColumn()
 	{
-		// gint gtk_combo_box_entry_get_text_column  (GtkComboBoxEntry *entry_box);
+		// gint gtk_combo_box_entry_get_text_column (GtkComboBoxEntry *entry_box);
 		return gtk_combo_box_entry_get_text_column(gtkComboBoxEntry);
 	}
 }

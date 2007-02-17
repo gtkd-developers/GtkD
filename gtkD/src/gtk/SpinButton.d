@@ -371,7 +371,7 @@ public class SpinButton : Entry
 	 */
 	public Adjustment getAdjustment()
 	{
-		// GtkAdjustment* gtk_spin_button_get_adjustment  (GtkSpinButton *spin_button);
+		// GtkAdjustment* gtk_spin_button_get_adjustment (GtkSpinButton *spin_button);
 		return new Adjustment( gtk_spin_button_get_adjustment(gtkSpinButton) );
 	}
 	
@@ -430,7 +430,7 @@ public class SpinButton : Entry
 	 */
 	public int getValueAsInt()
 	{
-		// gint gtk_spin_button_get_value_as_int  (GtkSpinButton *spin_button);
+		// gint gtk_spin_button_get_value_as_int (GtkSpinButton *spin_button);
 		return gtk_spin_button_get_value_as_int(gtkSpinButton);
 	}
 	
@@ -457,7 +457,7 @@ public class SpinButton : Entry
 	 */
 	public void setUpdatePolicy(GtkSpinButtonUpdatePolicy policy)
 	{
-		// void gtk_spin_button_set_update_policy  (GtkSpinButton *spin_button,  GtkSpinButtonUpdatePolicy policy);
+		// void gtk_spin_button_set_update_policy (GtkSpinButton *spin_button,  GtkSpinButtonUpdatePolicy policy);
 		gtk_spin_button_set_update_policy(gtkSpinButton, policy);
 	}
 	
@@ -515,7 +515,7 @@ public class SpinButton : Entry
 	 */
 	public void setSnapToTicks(int snapToTicks)
 	{
-		// void gtk_spin_button_set_snap_to_ticks  (GtkSpinButton *spin_button,  gboolean snap_to_ticks);
+		// void gtk_spin_button_set_snap_to_ticks (GtkSpinButton *spin_button,  gboolean snap_to_ticks);
 		gtk_spin_button_set_snap_to_ticks(gtkSpinButton, snapToTicks);
 	}
 	
@@ -599,7 +599,7 @@ public class SpinButton : Entry
 	 */
 	public int getSnapToTicks()
 	{
-		// gboolean gtk_spin_button_get_snap_to_ticks  (GtkSpinButton *spin_button);
+		// gboolean gtk_spin_button_get_snap_to_ticks (GtkSpinButton *spin_button);
 		return gtk_spin_button_get_snap_to_ticks(gtkSpinButton);
 	}
 	

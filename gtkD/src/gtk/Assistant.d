@@ -367,7 +367,7 @@ public class Assistant : Window
 	 */
 	public void setForwardPageFunc(GtkAssistantPageFunc pageFunc, void* data, GDestroyNotify destroy)
 	{
-		// void gtk_assistant_set_forward_page_func  (GtkAssistant *assistant,  GtkAssistantPageFunc page_func,  gpointer data,  GDestroyNotify destroy);
+		// void gtk_assistant_set_forward_page_func (GtkAssistant *assistant,  GtkAssistantPageFunc page_func,  gpointer data,  GDestroyNotify destroy);
 		gtk_assistant_set_forward_page_func(gtkAssistant, pageFunc, data, destroy);
 	}
 	
@@ -401,7 +401,7 @@ public class Assistant : Window
 	 */
 	public GtkAssistantPageType getPageType(Widget page)
 	{
-		// GtkAssistantPageType gtk_assistant_get_page_type  (GtkAssistant *assistant,  GtkWidget *page);
+		// GtkAssistantPageType gtk_assistant_get_page_type (GtkAssistant *assistant,  GtkWidget *page);
 		return gtk_assistant_get_page_type(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
 	}
 	
@@ -451,7 +451,7 @@ public class Assistant : Window
 	 */
 	public void setPageHeaderImage(Widget page, Pixbuf pixbuf)
 	{
-		// void gtk_assistant_set_page_header_image  (GtkAssistant *assistant,  GtkWidget *page,  GdkPixbuf *pixbuf);
+		// void gtk_assistant_set_page_header_image (GtkAssistant *assistant,  GtkWidget *page,  GdkPixbuf *pixbuf);
 		gtk_assistant_set_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
@@ -468,7 +468,7 @@ public class Assistant : Window
 	 */
 	public Pixbuf getPageHeaderImage(Widget page)
 	{
-		// GdkPixbuf* gtk_assistant_get_page_header_image  (GtkAssistant *assistant,  GtkWidget *page);
+		// GdkPixbuf* gtk_assistant_get_page_header_image (GtkAssistant *assistant,  GtkWidget *page);
 		return new Pixbuf( gtk_assistant_get_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct()) );
 	}
 	
@@ -485,7 +485,7 @@ public class Assistant : Window
 	 */
 	public void setPageSideImage(Widget page, Pixbuf pixbuf)
 	{
-		// void gtk_assistant_set_page_side_image  (GtkAssistant *assistant,  GtkWidget *page,  GdkPixbuf *pixbuf);
+		// void gtk_assistant_set_page_side_image (GtkAssistant *assistant,  GtkWidget *page,  GdkPixbuf *pixbuf);
 		gtk_assistant_set_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 	
@@ -502,7 +502,7 @@ public class Assistant : Window
 	 */
 	public Pixbuf getPageSideImage(Widget page)
 	{
-		// GdkPixbuf* gtk_assistant_get_page_side_image  (GtkAssistant *assistant,  GtkWidget *page);
+		// GdkPixbuf* gtk_assistant_get_page_side_image (GtkAssistant *assistant,  GtkWidget *page);
 		return new Pixbuf( gtk_assistant_get_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct()) );
 	}
 	
@@ -563,7 +563,7 @@ public class Assistant : Window
 	 */
 	public void removeActionWidget(Widget child)
 	{
-		// void gtk_assistant_remove_action_widget  (GtkAssistant *assistant,  GtkWidget *child);
+		// void gtk_assistant_remove_action_widget (GtkAssistant *assistant,  GtkWidget *child);
 		gtk_assistant_remove_action_widget(gtkAssistant, (child is null) ? null : child.getWidgetStruct());
 	}
 	
@@ -589,7 +589,7 @@ public class Assistant : Window
 	 */
 	public void updateButtonsState()
 	{
-		// void gtk_assistant_update_buttons_state  (GtkAssistant *assistant);
+		// void gtk_assistant_update_buttons_state (GtkAssistant *assistant);
 		gtk_assistant_update_buttons_state(gtkAssistant);
 	}
 	

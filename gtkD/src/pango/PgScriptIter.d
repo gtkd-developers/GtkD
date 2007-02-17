@@ -162,7 +162,7 @@ public class PgScriptIter
 	 * representative of that script. This will usually be the
 	 * most widely spoken or used language written in that script:
 	 * for instance, the sample language for PANGO_SCRIPT_CYRILLIC
-	 * is ru (Russian), the sample lanugage
+	 * is ru (Russian), the sample language
 	 * for PANGO_SCRIPT_ARABIC is ar.
 	 * For some
 	 * scripts, no sample language will be returned because there
@@ -181,7 +181,7 @@ public class PgScriptIter
 	 */
 	public static PgLanguage pangoScriptGetSampleLanguage(PangoScript script)
 	{
-		// PangoLanguage* pango_script_get_sample_language  (PangoScript script);
+		// PangoLanguage* pango_script_get_sample_language (PangoScript script);
 		return new PgLanguage( pango_script_get_sample_language(script) );
 	}
 	
@@ -253,13 +253,13 @@ public class PgScriptIter
 	}
 	
 	/**
-	 * Advances a PangoScriptIter to the next range. If the iter
+	 * Advances a PangoScriptIter to the next range. If iter
 	 * is already at the end, it is left unchanged and FALSE
 	 * is returned.
 	 * iter:
 	 *  a PangoScriptIter
 	 * Returns:
-	 *  TRUE if the iter was succesfully advanced.
+	 *  TRUE if iter was successfully advanced.
 	 * Since 1.4
 	 */
 	public int next()

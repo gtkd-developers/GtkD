@@ -271,7 +271,7 @@ public class Socket : Container
 	 * Signal Details
 	 * The "plug-added" signal
 	 * void user_function (GtkSocket *socket,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * This signal is emitted when a client is successfully
 	 * added to the socket.
 	 * socket:

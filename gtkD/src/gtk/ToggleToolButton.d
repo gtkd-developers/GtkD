@@ -177,7 +177,7 @@ public class ToggleToolButton : ToolButton
 	 */
 	public void setActive(int isActive)
 	{
-		// void gtk_toggle_tool_button_set_active  (GtkToggleToolButton *button,  gboolean is_active);
+		// void gtk_toggle_tool_button_set_active (GtkToggleToolButton *button,  gboolean is_active);
 		gtk_toggle_tool_button_set_active(gtkToggleToolButton, isActive);
 	}
 	
@@ -198,7 +198,7 @@ public class ToggleToolButton : ToolButton
 	 * Signal Details
 	 * The "toggled" signal
 	 * void user_function (GtkToggleToolButton *toggle_tool_button,
-	 *  gpointer user_data) : Run first
+	 *  gpointer user_data) : Run First
 	 * Emitted whenever the toggle tool button changes state.
 	 * toggle_tool_button:
 	 *  the object that emitted the signal
@@ -216,7 +216,7 @@ public class ToggleToolButton : ToolButton
 	 */
 	public int getActive()
 	{
-		// gboolean gtk_toggle_tool_button_get_active  (GtkToggleToolButton *button);
+		// gboolean gtk_toggle_tool_button_get_active (GtkToggleToolButton *button);
 		return gtk_toggle_tool_button_get_active(gtkToggleToolButton);
 	}
 }

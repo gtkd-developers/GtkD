@@ -193,7 +193,7 @@ public class CellEditable
 	 * Signal Details
 	 * The "editing-done" signal
 	 * void user_function (GtkCellEditable *celleditable,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * celleditable:
 	 * the object which received the signal.
 	 * user_data:

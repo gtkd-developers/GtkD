@@ -64,6 +64,8 @@ extern(C)
 	PangoGravity function(PangoContext* context)pango_context_get_base_gravity;
 	void function(PangoContext* context, PangoGravity gravity)pango_context_set_base_gravity;
 	PangoGravity function(PangoContext* context)pango_context_get_gravity;
+	PangoGravityHint function(PangoContext* context)pango_context_get_gravity_hint;
+	void function(PangoContext* context, PangoGravityHint hint)pango_context_set_gravity_hint;
 	PangoMatrix* function(PangoContext* context)pango_context_get_matrix;
 	void function(PangoContext* context, PangoMatrix* matrix)pango_context_set_matrix;
 	PangoFont* function(PangoContext* context, PangoFontDescription* desc)pango_context_load_font;
@@ -89,14 +91,20 @@ extern(C)
 	
 	// pango.PgGlyphString
 	
+	double function(int i)pango_units_to_double;
+	int function(double d)pango_units_from_double;
+	void function(PangoRectangle* inkRect, PangoRectangle* logicalRect)pango_extents_to_pixels;
 	PangoMatrix* function(PangoMatrix* matrix)pango_matrix_copy;
 	void function(PangoMatrix* matrix)pango_matrix_free;
 	void function(PangoMatrix* matrix, double tx, double ty)pango_matrix_translate;
 	void function(PangoMatrix* matrix, double scaleX, double scaleY)pango_matrix_scale;
 	void function(PangoMatrix* matrix, double degrees)pango_matrix_rotate;
 	void function(PangoMatrix* matrix, PangoMatrix* newMatrix)pango_matrix_concat;
+	void function(PangoMatrix* matrix, double* x, double* y)pango_matrix_transform_point;
+	void function(PangoMatrix* matrix, double* dx, double* dy)pango_matrix_transform_distance;
+	void function(PangoMatrix* matrix, PangoRectangle* rect)pango_matrix_transform_rectangle;
+	void function(PangoMatrix* matrix, PangoRectangle* rect)pango_matrix_transform_pixel_rectangle;
 	double function(PangoMatrix* matrix)pango_matrix_get_font_scale_factor;
-	PangoGravity function(PangoMatrix* matrix)pango_matrix_to_gravity;
 	PangoGlyphString* function()pango_glyph_string_new;
 	PangoGlyphString* function(PangoGlyphString* string)pango_glyph_string_copy;
 	void function(PangoGlyphString* string, gint newLen)pango_glyph_string_set_size;
@@ -220,9 +228,11 @@ extern(C)
 	PangoAttribute* function(PangoRectangle* inkRect, PangoRectangle* logicalRect)pango_attr_shape_new;
 	PangoAttribute* function(PangoRectangle* inkRect, PangoRectangle* logicalRect, gpointer data, PangoAttrDataCopyFunc copyFunc, GDestroyNotify destroyFunc)pango_attr_shape_new_with_data;
 	PangoAttribute* function(double scaleFactor)pango_attr_scale_new;
-	PangoAttribute* function(gboolean enableFallback)pango_attr_fallback_new;
 	PangoAttribute* function(int rise)pango_attr_rise_new;
 	PangoAttribute* function(int letterSpacing)pango_attr_letter_spacing_new;
+	PangoAttribute* function(gboolean enableFallback)pango_attr_fallback_new;
+	PangoAttribute* function(PangoGravity gravity)pango_attr_gravity_new;
+	PangoAttribute* function(PangoGravityHint hint)pango_attr_gravity_hint_new;
 	gboolean function(PangoColor* color, char* spec)pango_color_parse;
 	PangoColor* function(PangoColor* src)pango_color_copy;
 	void function(PangoColor* color)pango_color_free;
@@ -284,8 +294,10 @@ extern(C)
 	int function(PangoLayout* layout)pango_layout_get_width;
 	void function(PangoLayout* layout, PangoWrapMode wrap)pango_layout_set_wrap;
 	PangoWrapMode function(PangoLayout* layout)pango_layout_get_wrap;
+	gboolean function(PangoLayout* layout)pango_layout_is_wrapped;
 	void function(PangoLayout* layout, PangoEllipsizeMode ellipsize)pango_layout_set_ellipsize;
 	PangoEllipsizeMode function(PangoLayout* layout)pango_layout_get_ellipsize;
+	gboolean function(PangoLayout* layout)pango_layout_is_ellipsized;
 	void function(PangoLayout* layout, int indent)pango_layout_set_indent;
 	int function(PangoLayout* layout)pango_layout_get_indent;
 	int function(PangoLayout* layout)pango_layout_get_spacing;
@@ -300,6 +312,7 @@ extern(C)
 	PangoTabArray* function(PangoLayout* layout)pango_layout_get_tabs;
 	void function(PangoLayout* layout, gboolean setting)pango_layout_set_single_paragraph_mode;
 	gboolean function(PangoLayout* layout)pango_layout_get_single_paragraph_mode;
+	int function(PangoLayout* layout)pango_layout_get_unknown_glyphs_count;
 	void function(PangoLayout* layout, PangoLogAttr** attrs, gint* nAttrs)pango_layout_get_log_attrs;
 	void function(PangoLayout* layout, int index, PangoRectangle* pos)pango_layout_index_to_pos;
 	void function(PangoLayout* layout, int index, gboolean trailing, int* line, int* xPos)pango_layout_index_to_line_x;
@@ -401,6 +414,8 @@ Symbol[] pangoLinks =
 	{ "pango_context_get_base_gravity",  cast(void**)& pango_context_get_base_gravity},
 	{ "pango_context_set_base_gravity",  cast(void**)& pango_context_set_base_gravity},
 	{ "pango_context_get_gravity",  cast(void**)& pango_context_get_gravity},
+	{ "pango_context_get_gravity_hint",  cast(void**)& pango_context_get_gravity_hint},
+	{ "pango_context_set_gravity_hint",  cast(void**)& pango_context_set_gravity_hint},
 	{ "pango_context_get_matrix",  cast(void**)& pango_context_get_matrix},
 	{ "pango_context_set_matrix",  cast(void**)& pango_context_set_matrix},
 	{ "pango_context_load_font",  cast(void**)& pango_context_load_font},
@@ -420,14 +435,20 @@ Symbol[] pangoLinks =
 	{ "pango_item_copy",  cast(void**)& pango_item_copy},
 	{ "pango_item_new",  cast(void**)& pango_item_new},
 	{ "pango_item_split",  cast(void**)& pango_item_split},
+	{ "pango_units_to_double",  cast(void**)& pango_units_to_double},
+	{ "pango_units_from_double",  cast(void**)& pango_units_from_double},
+	{ "pango_extents_to_pixels",  cast(void**)& pango_extents_to_pixels},
 	{ "pango_matrix_copy",  cast(void**)& pango_matrix_copy},
 	{ "pango_matrix_free",  cast(void**)& pango_matrix_free},
 	{ "pango_matrix_translate",  cast(void**)& pango_matrix_translate},
 	{ "pango_matrix_scale",  cast(void**)& pango_matrix_scale},
 	{ "pango_matrix_rotate",  cast(void**)& pango_matrix_rotate},
 	{ "pango_matrix_concat",  cast(void**)& pango_matrix_concat},
+	{ "pango_matrix_transform_point",  cast(void**)& pango_matrix_transform_point},
+	{ "pango_matrix_transform_distance",  cast(void**)& pango_matrix_transform_distance},
+	{ "pango_matrix_transform_rectangle",  cast(void**)& pango_matrix_transform_rectangle},
+	{ "pango_matrix_transform_pixel_rectangle",  cast(void**)& pango_matrix_transform_pixel_rectangle},
 	{ "pango_matrix_get_font_scale_factor",  cast(void**)& pango_matrix_get_font_scale_factor},
-	{ "pango_matrix_to_gravity",  cast(void**)& pango_matrix_to_gravity},
 	{ "pango_glyph_string_new",  cast(void**)& pango_glyph_string_new},
 	{ "pango_glyph_string_copy",  cast(void**)& pango_glyph_string_copy},
 	{ "pango_glyph_string_set_size",  cast(void**)& pango_glyph_string_set_size},
@@ -530,9 +551,11 @@ Symbol[] pangoLinks =
 	{ "pango_attr_shape_new",  cast(void**)& pango_attr_shape_new},
 	{ "pango_attr_shape_new_with_data",  cast(void**)& pango_attr_shape_new_with_data},
 	{ "pango_attr_scale_new",  cast(void**)& pango_attr_scale_new},
-	{ "pango_attr_fallback_new",  cast(void**)& pango_attr_fallback_new},
 	{ "pango_attr_rise_new",  cast(void**)& pango_attr_rise_new},
 	{ "pango_attr_letter_spacing_new",  cast(void**)& pango_attr_letter_spacing_new},
+	{ "pango_attr_fallback_new",  cast(void**)& pango_attr_fallback_new},
+	{ "pango_attr_gravity_new",  cast(void**)& pango_attr_gravity_new},
+	{ "pango_attr_gravity_hint_new",  cast(void**)& pango_attr_gravity_hint_new},
 	{ "pango_color_parse",  cast(void**)& pango_color_parse},
 	{ "pango_color_copy",  cast(void**)& pango_color_copy},
 	{ "pango_color_free",  cast(void**)& pango_color_free},
@@ -582,8 +605,10 @@ Symbol[] pangoLinks =
 	{ "pango_layout_get_width",  cast(void**)& pango_layout_get_width},
 	{ "pango_layout_set_wrap",  cast(void**)& pango_layout_set_wrap},
 	{ "pango_layout_get_wrap",  cast(void**)& pango_layout_get_wrap},
+	{ "pango_layout_is_wrapped",  cast(void**)& pango_layout_is_wrapped},
 	{ "pango_layout_set_ellipsize",  cast(void**)& pango_layout_set_ellipsize},
 	{ "pango_layout_get_ellipsize",  cast(void**)& pango_layout_get_ellipsize},
+	{ "pango_layout_is_ellipsized",  cast(void**)& pango_layout_is_ellipsized},
 	{ "pango_layout_set_indent",  cast(void**)& pango_layout_set_indent},
 	{ "pango_layout_get_indent",  cast(void**)& pango_layout_get_indent},
 	{ "pango_layout_get_spacing",  cast(void**)& pango_layout_get_spacing},
@@ -598,6 +623,7 @@ Symbol[] pangoLinks =
 	{ "pango_layout_get_tabs",  cast(void**)& pango_layout_get_tabs},
 	{ "pango_layout_set_single_paragraph_mode",  cast(void**)& pango_layout_set_single_paragraph_mode},
 	{ "pango_layout_get_single_paragraph_mode",  cast(void**)& pango_layout_get_single_paragraph_mode},
+	{ "pango_layout_get_unknown_glyphs_count",  cast(void**)& pango_layout_get_unknown_glyphs_count},
 	{ "pango_layout_get_log_attrs",  cast(void**)& pango_layout_get_log_attrs},
 	{ "pango_layout_index_to_pos",  cast(void**)& pango_layout_index_to_pos},
 	{ "pango_layout_index_to_line_x",  cast(void**)& pango_layout_index_to_line_x},

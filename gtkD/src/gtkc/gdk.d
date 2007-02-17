@@ -382,6 +382,7 @@ extern(C)
 	gint function(GdkColormap* colormap, GdkColor* color)gdk_color_change;
 	gboolean function(GdkColor* colora, GdkColor* colorb)gdk_color_equal;
 	guint function(GdkColor* colora)gdk_color_hash;
+	gchar* function(GdkColor* color)gdk_color_to_string;
 	
 	// gdk.Visual
 	
@@ -632,6 +633,10 @@ extern(C)
 	void function()gdk_threads_enter;
 	void function()gdk_threads_leave;
 	void function(GCallback enterFn, GCallback leaveFn)gdk_threads_set_lock_functions;
+	guint function(GSourceFunc funct, gpointer data)gdk_threads_add_idle;
+	guint function(gint priority, GSourceFunc funct, gpointer data, GDestroyNotify notify)gdk_threads_add_idle_full;
+	guint function(guint interval, GSourceFunc funct, gpointer data)gdk_threads_add_timeout;
+	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify)gdk_threads_add_timeout_full;
 	
 	// gdk.Input
 	
@@ -958,6 +963,7 @@ Symbol[] gdkLinks =
 	{ "gdk_color_change",  cast(void**)& gdk_color_change},
 	{ "gdk_color_equal",  cast(void**)& gdk_color_equal},
 	{ "gdk_color_hash",  cast(void**)& gdk_color_hash},
+	{ "gdk_color_to_string",  cast(void**)& gdk_color_to_string},
 	{ "gdk_query_depths",  cast(void**)& gdk_query_depths},
 	{ "gdk_query_visual_types",  cast(void**)& gdk_query_visual_types},
 	{ "gdk_list_visuals",  cast(void**)& gdk_list_visuals},
@@ -1178,6 +1184,10 @@ Symbol[] gdkLinks =
 	{ "gdk_threads_enter",  cast(void**)& gdk_threads_enter},
 	{ "gdk_threads_leave",  cast(void**)& gdk_threads_leave},
 	{ "gdk_threads_set_lock_functions",  cast(void**)& gdk_threads_set_lock_functions},
+	{ "gdk_threads_add_idle",  cast(void**)& gdk_threads_add_idle},
+	{ "gdk_threads_add_idle_full",  cast(void**)& gdk_threads_add_idle_full},
+	{ "gdk_threads_add_timeout",  cast(void**)& gdk_threads_add_timeout},
+	{ "gdk_threads_add_timeout_full",  cast(void**)& gdk_threads_add_timeout_full},
 	{ "gdk_input_add_full",  cast(void**)& gdk_input_add_full},
 	{ "gdk_input_add",  cast(void**)& gdk_input_add},
 	{ "gdk_input_remove",  cast(void**)& gdk_input_remove},

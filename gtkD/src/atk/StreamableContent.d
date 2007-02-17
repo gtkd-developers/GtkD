@@ -148,7 +148,7 @@ public class StreamableContent
 	 */
 	public IOChannel getStream(char[] mimeType)
 	{
-		// GIOChannel* atk_streamable_content_get_stream  (AtkStreamableContent *streamable,  const gchar *mime_type);
+		// GIOChannel* atk_streamable_content_get_stream (AtkStreamableContent *streamable,  const gchar *mime_type);
 		return new IOChannel( atk_streamable_content_get_stream(atkStreamableContent, Str.toStringz(mimeType)) );
 	}
 	

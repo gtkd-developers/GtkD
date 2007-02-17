@@ -451,7 +451,7 @@ public class ActionGroup : ObjectG
 	 */
 	public void addActionsFull(GtkActionEntry* entries, uint nEntries, void* userData, GDestroyNotify destroy)
 	{
-		// void gtk_action_group_add_actions_full  (GtkActionGroup *action_group,  const GtkActionEntry *entries,  guint n_entries,  gpointer user_data,  GDestroyNotify destroy);
+		// void gtk_action_group_add_actions_full (GtkActionGroup *action_group,  const GtkActionEntry *entries,  guint n_entries,  gpointer user_data,  GDestroyNotify destroy);
 		gtk_action_group_add_actions_full(gtkActionGroup, entries, nEntries, userData, destroy);
 	}
 	
@@ -474,7 +474,7 @@ public class ActionGroup : ObjectG
 	 */
 	public void addToggleActions(GtkToggleActionEntry* entries, uint nEntries, void* userData)
 	{
-		// void gtk_action_group_add_toggle_actions  (GtkActionGroup *action_group,  const GtkToggleActionEntry *entries,  guint n_entries,  gpointer user_data);
+		// void gtk_action_group_add_toggle_actions (GtkActionGroup *action_group,  const GtkToggleActionEntry *entries,  guint n_entries,  gpointer user_data);
 		gtk_action_group_add_toggle_actions(gtkActionGroup, entries, nEntries, userData);
 	}
 	
@@ -523,7 +523,7 @@ public class ActionGroup : ObjectG
 	 */
 	public void addRadioActions(GtkRadioActionEntry* entries, uint nEntries, int value, GCallback onChange, void* userData)
 	{
-		// void gtk_action_group_add_radio_actions  (GtkActionGroup *action_group,  const GtkRadioActionEntry *entries,  guint n_entries,  gint value,  GCallback on_change,  gpointer user_data);
+		// void gtk_action_group_add_radio_actions (GtkActionGroup *action_group,  const GtkRadioActionEntry *entries,  guint n_entries,  gint value,  GCallback on_change,  gpointer user_data);
 		gtk_action_group_add_radio_actions(gtkActionGroup, entries, nEntries, value, onChange, userData);
 	}
 	
@@ -571,7 +571,7 @@ public class ActionGroup : ObjectG
 	 */
 	public void setTranslateFunc(GtkTranslateFunc func, void* data, GtkDestroyNotify notify)
 	{
-		// void gtk_action_group_set_translate_func  (GtkActionGroup *action_group,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
+		// void gtk_action_group_set_translate_func (GtkActionGroup *action_group,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
 		gtk_action_group_set_translate_func(gtkActionGroup, func, data, notify);
 	}
 	
@@ -611,7 +611,7 @@ public class ActionGroup : ObjectG
 	 */
 	public char[] translateString(char[] string)
 	{
-		// const gchar* gtk_action_group_translate_string  (GtkActionGroup *action_group,  const gchar *string);
+		// const gchar* gtk_action_group_translate_string (GtkActionGroup *action_group,  const gchar *string);
 		return Str.toString(gtk_action_group_translate_string(gtkActionGroup, Str.toStringz(string)) );
 	}
 	

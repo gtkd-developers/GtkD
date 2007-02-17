@@ -208,7 +208,7 @@ public class SimpleXML
 	 */
 	public int endParse(GError** error)
 	{
-		// gboolean g_markup_parse_context_end_parse  (GMarkupParseContext *context,  GError **error);
+		// gboolean g_markup_parse_context_end_parse (GMarkupParseContext *context,  GError **error);
 		return g_markup_parse_context_end_parse(gMarkupParseContext, error);
 	}
 	
@@ -238,7 +238,7 @@ public class SimpleXML
 	 */
 	public void getPosition(int* lineNumber, int* charNumber)
 	{
-		// void g_markup_parse_context_get_position  (GMarkupParseContext *context,  gint *line_number,  gint *char_number);
+		// void g_markup_parse_context_get_position (GMarkupParseContext *context,  gint *line_number,  gint *char_number);
 		g_markup_parse_context_get_position(gMarkupParseContext, lineNumber, charNumber);
 	}
 	
@@ -252,7 +252,7 @@ public class SimpleXML
 	 */
 	public char[] getElement()
 	{
-		// const gchar* g_markup_parse_context_get_element  (GMarkupParseContext *context);
+		// const gchar* g_markup_parse_context_get_element (GMarkupParseContext *context);
 		return Str.toString(g_markup_parse_context_get_element(gMarkupParseContext) );
 	}
 	
@@ -275,7 +275,7 @@ public class SimpleXML
 	 */
 	public this (GMarkupParser* parser, GMarkupParseFlags flags, void* userData, GDestroyNotify userDataDnotify)
 	{
-		// GMarkupParseContext* g_markup_parse_context_new  (const GMarkupParser *parser,  GMarkupParseFlags flags,  gpointer user_data,  GDestroyNotify user_data_dnotify);
+		// GMarkupParseContext* g_markup_parse_context_new (const GMarkupParser *parser,  GMarkupParseFlags flags,  gpointer user_data,  GDestroyNotify user_data_dnotify);
 		this(cast(GMarkupParseContext*)g_markup_parse_context_new(parser, flags, userData, userDataDnotify) );
 	}
 	

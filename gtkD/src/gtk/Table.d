@@ -322,7 +322,7 @@ public class Table : Container
 	 */
 	public uint getDefaultRowSpacing()
 	{
-		// guint gtk_table_get_default_row_spacing  (GtkTable *table);
+		// guint gtk_table_get_default_row_spacing (GtkTable *table);
 		return gtk_table_get_default_row_spacing(gtkTable);
 	}
 	
@@ -388,7 +388,7 @@ public class Table : Container
 	 */
 	public uint getDefaultColSpacing()
 	{
-		// guint gtk_table_get_default_col_spacing  (GtkTable *table);
+		// guint gtk_table_get_default_col_spacing (GtkTable *table);
 		return gtk_table_get_default_col_spacing(gtkTable);
 	}
 	

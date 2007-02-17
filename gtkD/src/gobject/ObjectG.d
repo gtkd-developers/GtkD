@@ -462,10 +462,11 @@ public class ObjectG
 	 * name:
 	 * the name of a property registered in a parent class or
 	 *  in an interface of this class.
+	 * Since 2.4
 	 */
 	public static void classOverrideProperty(GObjectClass* oclass, uint propertyId, char[] name)
 	{
-		// void g_object_class_override_property  (GObjectClass *oclass,  guint property_id,  const gchar *name);
+		// void g_object_class_override_property (GObjectClass *oclass,  guint property_id,  const gchar *name);
 		g_object_class_override_property(oclass, propertyId, Str.toStringz(name));
 	}
 	
@@ -492,7 +493,7 @@ public class ObjectG
 	 */
 	public static void interfaceInstallProperty(void* gIface, ParamSpec pspec)
 	{
-		// void g_object_interface_install_property  (gpointer g_iface,  GParamSpec *pspec);
+		// void g_object_interface_install_property (gpointer g_iface,  GParamSpec *pspec);
 		g_object_interface_install_property(gIface, (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 	
@@ -515,7 +516,7 @@ public class ObjectG
 	 */
 	public static ParamSpec interfaceFindProperty(void* gIface, char[] propertyName)
 	{
-		// GParamSpec* g_object_interface_find_property  (gpointer g_iface,  const gchar *property_name);
+		// GParamSpec* g_object_interface_find_property (gpointer g_iface,  const gchar *property_name);
 		return new ParamSpec( g_object_interface_find_property(gIface, Str.toStringz(propertyName)) );
 	}
 	
@@ -537,7 +538,7 @@ public class ObjectG
 	 */
 	public static GParamSpec** interfaceListProperties(void* gIface, uint* nPropertiesP)
 	{
-		// GParamSpec** g_object_interface_list_properties  (gpointer g_iface,  guint *n_properties_p);
+		// GParamSpec** g_object_interface_list_properties (gpointer g_iface,  guint *n_properties_p);
 		return g_object_interface_list_properties(gIface, nPropertiesP);
 	}
 	

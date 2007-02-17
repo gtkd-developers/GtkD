@@ -93,8 +93,8 @@ private import glib.Str;
  * with the exception of localized strings, which have the form
  * key[locale]=value. Space before and after the
  * '=' character are ignored. Newline, tab, carriage return and backslash
- * characters are escaped as \n, \t, \r, and \\, respectively. To preserve
- * leading spaces in values, these can also be escaped as \s.
+ * characters in value are escaped as \n, \t, \r, and \\, respectively.
+ * To preserve leading spaces in values, these can also be escaped as \s.
  * Key files can store strings (possibly with localized variants), integers,
  * booleans and lists of these. Lists are separated by a separator character,
  * typically ';' or ','. To use the list separator character in a value in
@@ -594,7 +594,7 @@ public class KeyFile
 	 */
 	public char** getLocaleStringList(char[] groupName, char[] key, char[] locale, uint* length, GError** error)
 	{
-		// gchar** g_key_file_get_locale_string_list  (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  gsize *length,  GError **error);
+		// gchar** g_key_file_get_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  gsize *length,  GError **error);
 		return g_key_file_get_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), length, error);
 	}
 	
@@ -836,12 +836,16 @@ public class KeyFile
 	 *  a group name
 	 * key:
 	 *  a key
+	 * list:
+	 *  an array of locale string values
+	 * length:
+	 *  number of locale string values in list
 	 * Since 2.6
 	 */
-	public void setStringList(char[] groupName, char[] key)
+	public void setStringList(char[] groupName, char[] key, char*[] list, uint length)
 	{
-		// void g_key_file_set_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key);
-		g_key_file_set_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key));
+		// void g_key_file_set_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar * const list[],  gsize length);
+		g_key_file_set_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), list, length);
 	}
 	
 	/**
@@ -856,12 +860,16 @@ public class KeyFile
 	 *  a key
 	 * locale:
 	 *  a locale
+	 * list:
+	 *  a NULL-terminated array of locale string values
+	 * length:
+	 *  the length of list
 	 * Since 2.6
 	 */
-	public void setLocaleStringList(char[] groupName, char[] key, char[] locale)
+	public void setLocaleStringList(char[] groupName, char[] key, char[] locale, char*[] list, uint length)
 	{
-		// void g_key_file_set_locale_string_list  (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale);
-		g_key_file_set_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale));
+		// void g_key_file_set_locale_string_list (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  const gchar * const list[],  gsize length);
+		g_key_file_set_locale_string_list(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), list, length);
 	}
 	
 	/**

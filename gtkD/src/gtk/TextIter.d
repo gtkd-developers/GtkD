@@ -419,7 +419,7 @@ public class TextIter
 	 */
 	public TextChildAnchor getChildAnchor()
 	{
-		// GtkTextChildAnchor* gtk_text_iter_get_child_anchor  (const GtkTextIter *iter);
+		// GtkTextChildAnchor* gtk_text_iter_get_child_anchor (const GtkTextIter *iter);
 		return new TextChildAnchor( gtk_text_iter_get_child_anchor(gtkTextIter) );
 	}
 	
@@ -700,7 +700,7 @@ public class TextIter
 	 */
 	public int isCursorPosition()
 	{
-		// gboolean gtk_text_iter_is_cursor_position  (const GtkTextIter *iter);
+		// gboolean gtk_text_iter_is_cursor_position (const GtkTextIter *iter);
 		return gtk_text_iter_is_cursor_position(gtkTextIter);
 	}
 	
@@ -977,7 +977,7 @@ public class TextIter
 	 */
 	public int backwardWordStarts(int count)
 	{
-		// gboolean gtk_text_iter_backward_word_starts  (GtkTextIter *iter,  gint count);
+		// gboolean gtk_text_iter_backward_word_starts (GtkTextIter *iter,  gint count);
 		return gtk_text_iter_backward_word_starts(gtkTextIter, count);
 	}
 	
@@ -1011,7 +1011,7 @@ public class TextIter
 	 */
 	public int backwardWordStart()
 	{
-		// gboolean gtk_text_iter_backward_word_start  (GtkTextIter *iter);
+		// gboolean gtk_text_iter_backward_word_start (GtkTextIter *iter);
 		return gtk_text_iter_backward_word_start(gtkTextIter);
 	}
 	
@@ -1129,7 +1129,7 @@ public class TextIter
 	 */
 	public int forwardSentenceEnd()
 	{
-		// gboolean gtk_text_iter_forward_sentence_end  (GtkTextIter *iter);
+		// gboolean gtk_text_iter_forward_sentence_end (GtkTextIter *iter);
 		return gtk_text_iter_forward_sentence_end(gtkTextIter);
 	}
 	
@@ -1146,7 +1146,7 @@ public class TextIter
 	 */
 	public int forwardSentenceEnds(int count)
 	{
-		// gboolean gtk_text_iter_forward_sentence_ends  (GtkTextIter *iter,  gint count);
+		// gboolean gtk_text_iter_forward_sentence_ends (GtkTextIter *iter,  gint count);
 		return gtk_text_iter_forward_sentence_ends(gtkTextIter, count);
 	}
 	
@@ -1295,7 +1295,7 @@ public class TextIter
 	 */
 	public int forwardVisibleLine()
 	{
-		// gboolean gtk_text_iter_forward_visible_line  (GtkTextIter *iter);
+		// gboolean gtk_text_iter_forward_visible_line (GtkTextIter *iter);
 		return gtk_text_iter_forward_visible_line(gtkTextIter);
 	}
 	
@@ -1315,7 +1315,7 @@ public class TextIter
 	 */
 	public int backwardVisibleLine()
 	{
-		// gboolean gtk_text_iter_backward_visible_line  (GtkTextIter *iter);
+		// gboolean gtk_text_iter_backward_visible_line (GtkTextIter *iter);
 		return gtk_text_iter_backward_visible_line(gtkTextIter);
 	}
 	
@@ -1337,7 +1337,7 @@ public class TextIter
 	 */
 	public int forwardVisibleLines(int count)
 	{
-		// gboolean gtk_text_iter_forward_visible_lines  (GtkTextIter *iter,  gint count);
+		// gboolean gtk_text_iter_forward_visible_lines (GtkTextIter *iter,  gint count);
 		return gtk_text_iter_forward_visible_lines(gtkTextIter, count);
 	}
 	
@@ -1485,7 +1485,7 @@ public class TextIter
 	 */
 	public int forwardToLineEnd()
 	{
-		// gboolean gtk_text_iter_forward_to_line_end  (GtkTextIter *iter);
+		// gboolean gtk_text_iter_forward_to_line_end (GtkTextIter *iter);
 		return gtk_text_iter_forward_to_line_end(gtkTextIter);
 	}
 	
@@ -1506,7 +1506,7 @@ public class TextIter
 	 */
 	public int forwardToTagToggle(TextTag tag)
 	{
-		// gboolean gtk_text_iter_forward_to_tag_toggle  (GtkTextIter *iter,  GtkTextTag *tag);
+		// gboolean gtk_text_iter_forward_to_tag_toggle (GtkTextIter *iter,  GtkTextTag *tag);
 		return gtk_text_iter_forward_to_tag_toggle(gtkTextIter, (tag is null) ? null : tag.getTextTagStruct());
 	}
 	
@@ -1569,7 +1569,7 @@ public class TextIter
 	 */
 	public int backwardFindChar(GtkTextCharPredicate pred, void* userData, TextIter limit)
 	{
-		// gboolean gtk_text_iter_backward_find_char  (GtkTextIter *iter,  GtkTextCharPredicate pred,  gpointer user_data,  const GtkTextIter *limit);
+		// gboolean gtk_text_iter_backward_find_char (GtkTextIter *iter,  GtkTextCharPredicate pred,  gpointer user_data,  const GtkTextIter *limit);
 		return gtk_text_iter_backward_find_char(gtkTextIter, pred, userData, (limit is null) ? null : limit.getTextIterStruct());
 	}
 	

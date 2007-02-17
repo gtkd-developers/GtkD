@@ -197,7 +197,7 @@ public class ItemFactory : ObjectGtk
 	 */
 	public static ItemFactory fromWidget(Widget widget)
 	{
-		// GtkItemFactory* gtk_item_factory_from_widget  (GtkWidget *widget);
+		// GtkItemFactory* gtk_item_factory_from_widget (GtkWidget *widget);
 		return new ItemFactory( gtk_item_factory_from_widget((widget is null) ? null : widget.getWidgetStruct()) );
 	}
 	
@@ -217,7 +217,7 @@ public class ItemFactory : ObjectGtk
 	 */
 	public static char[] pathFromWidget(Widget widget)
 	{
-		// const gchar* gtk_item_factory_path_from_widget  (GtkWidget *widget);
+		// const gchar* gtk_item_factory_path_from_widget (GtkWidget *widget);
 		return Str.toString(gtk_item_factory_path_from_widget((widget is null) ? null : widget.getWidgetStruct()) );
 	}
 	
@@ -301,7 +301,7 @@ public class ItemFactory : ObjectGtk
 	 */
 	public Widget getItemByAction(uint action)
 	{
-		// GtkWidget* gtk_item_factory_get_item_by_action  (GtkItemFactory *ifactory,  guint action);
+		// GtkWidget* gtk_item_factory_get_item_by_action (GtkItemFactory *ifactory,  guint action);
 		return new Widget( gtk_item_factory_get_item_by_action(gtkItemFactory, action) );
 	}
 	
@@ -363,7 +363,7 @@ public class ItemFactory : ObjectGtk
 	 */
 	public void createItemsAc(uint nEntries, GtkItemFactoryEntry* entries, void* callbackData, uint callbackType)
 	{
-		// void gtk_item_factory_create_items_ac  (GtkItemFactory *ifactory,  guint n_entries,  GtkItemFactoryEntry *entries,  gpointer callback_data,  guint callback_type);
+		// void gtk_item_factory_create_items_ac (GtkItemFactory *ifactory,  guint n_entries,  GtkItemFactoryEntry *entries,  gpointer callback_data,  guint callback_type);
 		gtk_item_factory_create_items_ac(gtkItemFactory, nEntries, entries, callbackData, callbackType);
 	}
 	
@@ -480,7 +480,7 @@ public class ItemFactory : ObjectGtk
 	 */
 	public void popupWithData(void* popupData, GtkDestroyNotify destroy, uint x, uint y, uint mouseButton, uint time)
 	{
-		// void gtk_item_factory_popup_with_data  (GtkItemFactory *ifactory,  gpointer popup_data,  GtkDestroyNotify destroy,  guint x,  guint y,  guint mouse_button,  guint32 time_);
+		// void gtk_item_factory_popup_with_data (GtkItemFactory *ifactory,  gpointer popup_data,  GtkDestroyNotify destroy,  guint x,  guint y,  guint mouse_button,  guint32 time_);
 		gtk_item_factory_popup_with_data(gtkItemFactory, popupData, destroy, x, y, mouseButton, time);
 	}
 	
@@ -572,7 +572,7 @@ public class ItemFactory : ObjectGtk
 	 */
 	public void setTranslateFunc(GtkTranslateFunc func, void* data, GtkDestroyNotify notify)
 	{
-		// void gtk_item_factory_set_translate_func  (GtkItemFactory *ifactory,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
+		// void gtk_item_factory_set_translate_func (GtkItemFactory *ifactory,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
 		gtk_item_factory_set_translate_func(gtkItemFactory, func, data, notify);
 	}
 }

@@ -181,7 +181,7 @@ public class SizeGroup : ObjectG
 	 */
 	public void setIgnoreHidden(int ignoreHidden)
 	{
-		// void gtk_size_group_set_ignore_hidden  (GtkSizeGroup *size_group,  gboolean ignore_hidden);
+		// void gtk_size_group_set_ignore_hidden (GtkSizeGroup *size_group,  gboolean ignore_hidden);
 		gtk_size_group_set_ignore_hidden(gtkSizeGroup, ignoreHidden);
 	}
 	
@@ -195,7 +195,7 @@ public class SizeGroup : ObjectG
 	 */
 	public int getIgnoreHidden()
 	{
-		// gboolean gtk_size_group_get_ignore_hidden  (GtkSizeGroup *size_group);
+		// gboolean gtk_size_group_get_ignore_hidden (GtkSizeGroup *size_group);
 		return gtk_size_group_get_ignore_hidden(gtkSizeGroup);
 	}
 	

@@ -443,7 +443,7 @@ public class ListStore : TreeModel
 	 */
 	public void insertWithValues(TreeIter iter, int position, ... )
 	{
-		// void gtk_list_store_insert_with_values  (GtkListStore *list_store,  GtkTreeIter *iter,  gint position,  ...);
+		// void gtk_list_store_insert_with_values (GtkListStore *list_store,  GtkTreeIter *iter,  gint position,  ...);
 		gtk_list_store_insert_with_values(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), position);
 	}
 	
@@ -468,7 +468,7 @@ public class ListStore : TreeModel
 	 */
 	public void insertWithValuesv(TreeIter iter, int position, int* columns, Value values, int nValues)
 	{
-		// void gtk_list_store_insert_with_valuesv  (GtkListStore *list_store,  GtkTreeIter *iter,  gint position,  gint *columns,  GValue *values,  gint n_values);
+		// void gtk_list_store_insert_with_valuesv (GtkListStore *list_store,  GtkTreeIter *iter,  gint position,  gint *columns,  GValue *values,  gint n_values);
 		gtk_list_store_insert_with_valuesv(gtkListStore, (iter is null) ? null : iter.getTreeIterStruct(), position, columns, (values is null) ? null : values.getValueStruct(), nValues);
 	}
 	

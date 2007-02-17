@@ -400,7 +400,7 @@ public class ParamSpec
 	 */
 	public ParamSpec getRedirectTarget()
 	{
-		// GParamSpec* g_param_spec_get_redirect_target  (GParamSpec *pspec);
+		// GParamSpec* g_param_spec_get_redirect_target (GParamSpec *pspec);
 		return new ParamSpec( g_param_spec_get_redirect_target(gParamSpec) );
 	}
 	

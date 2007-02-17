@@ -1502,8 +1502,6 @@ extern(C)
 	
 	// gtk.CellView
 	
-	gboolean function(GtkCellView* cellView)gtk_cell_view_get_use_fg;
-	void function(GtkCellView* cellView, gboolean useFg)gtk_cell_view_set_use_fg;
 	GtkWidget* function()gtk_cell_view_new;
 	GtkWidget* function(gchar* text)gtk_cell_view_new_with_text;
 	GtkWidget* function(gchar* markup)gtk_cell_view_new_with_markup;
@@ -1610,6 +1608,7 @@ extern(C)
 	
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gboolean expand)gtk_cell_layout_pack_start;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gboolean expand)gtk_cell_layout_pack_end;
+	GList* function(GtkCellLayout* cellLayout)gtk_cell_layout_get_cells;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, gint position)gtk_cell_layout_reorder;
 	void function(GtkCellLayout* cellLayout)gtk_cell_layout_clear;
 	void function(GtkCellLayout* cellLayout, GtkCellRenderer* cell, ... )gtk_cell_layout_set_attributes;
@@ -4187,8 +4186,6 @@ Symbol[] gtkLinks =
 	{ "gtk_tree_drag_dest_row_drop_possible",  cast(void**)& gtk_tree_drag_dest_row_drop_possible},
 	{ "gtk_tree_set_row_drag_data",  cast(void**)& gtk_tree_set_row_drag_data},
 	{ "gtk_tree_get_row_drag_data",  cast(void**)& gtk_tree_get_row_drag_data},
-	{ "gtk_cell_view_get_use_fg",  cast(void**)& gtk_cell_view_get_use_fg},
-	{ "gtk_cell_view_set_use_fg",  cast(void**)& gtk_cell_view_set_use_fg},
 	{ "gtk_cell_view_new",  cast(void**)& gtk_cell_view_new},
 	{ "gtk_cell_view_new_with_text",  cast(void**)& gtk_cell_view_new_with_text},
 	{ "gtk_cell_view_new_with_markup",  cast(void**)& gtk_cell_view_new_with_markup},
@@ -4277,6 +4274,7 @@ Symbol[] gtkLinks =
 	{ "gtk_tree_model_filter_clear_cache",  cast(void**)& gtk_tree_model_filter_clear_cache},
 	{ "gtk_cell_layout_pack_start",  cast(void**)& gtk_cell_layout_pack_start},
 	{ "gtk_cell_layout_pack_end",  cast(void**)& gtk_cell_layout_pack_end},
+	{ "gtk_cell_layout_get_cells",  cast(void**)& gtk_cell_layout_get_cells},
 	{ "gtk_cell_layout_reorder",  cast(void**)& gtk_cell_layout_reorder},
 	{ "gtk_cell_layout_clear",  cast(void**)& gtk_cell_layout_clear},
 	{ "gtk_cell_layout_set_attributes",  cast(void**)& gtk_cell_layout_set_attributes},

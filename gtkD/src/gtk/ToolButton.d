@@ -251,7 +251,7 @@ public class ToolButton : ToolItem
 	 */
 	public void setUseUnderline(int useUnderline)
 	{
-		// void gtk_tool_button_set_use_underline  (GtkToolButton *button,  gboolean use_underline);
+		// void gtk_tool_button_set_use_underline (GtkToolButton *button,  gboolean use_underline);
 		gtk_tool_button_set_use_underline(gtkToolButton, useUnderline);
 	}
 	
@@ -267,7 +267,7 @@ public class ToolButton : ToolItem
 	 */
 	public int getUseUnderline()
 	{
-		// gboolean gtk_tool_button_get_use_underline  (GtkToolButton *button);
+		// gboolean gtk_tool_button_get_use_underline (GtkToolButton *button);
 		return gtk_tool_button_get_use_underline(gtkToolButton);
 	}
 	
@@ -381,7 +381,7 @@ public class ToolButton : ToolItem
 	 */
 	public void setLabelWidget(Widget labelWidget)
 	{
-		// void gtk_tool_button_set_label_widget  (GtkToolButton *button,  GtkWidget *label_widget);
+		// void gtk_tool_button_set_label_widget (GtkToolButton *button,  GtkWidget *label_widget);
 		gtk_tool_button_set_label_widget(gtkToolButton, (labelWidget is null) ? null : labelWidget.getWidgetStruct());
 	}
 	
@@ -404,7 +404,7 @@ public class ToolButton : ToolItem
 	 */
 	public Widget getLabelWidget()
 	{
-		// GtkWidget* gtk_tool_button_get_label_widget  (GtkToolButton *button);
+		// GtkWidget* gtk_tool_button_get_label_widget (GtkToolButton *button);
 		return new Widget( gtk_tool_button_get_label_widget(gtkToolButton) );
 	}
 	

@@ -128,7 +128,7 @@ public class CellRendererCombo : CellRendererText
 	 */
 	public this ()
 	{
-		// GtkCellRenderer* gtk_cell_renderer_combo_new  (void);
+		// GtkCellRenderer* gtk_cell_renderer_combo_new (void);
 		this(cast(GtkCellRendererCombo*)gtk_cell_renderer_combo_new() );
 	}
 	

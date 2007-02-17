@@ -317,7 +317,7 @@ public class ThreadPool
 	 */
 	public static void stopUnusedThreads()
 	{
-		// void g_thread_pool_stop_unused_threads  (void);
+		// void g_thread_pool_stop_unused_threads (void);
 		g_thread_pool_stop_unused_threads();
 	}
 	

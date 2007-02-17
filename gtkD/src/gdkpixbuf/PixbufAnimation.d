@@ -124,7 +124,7 @@ public class PixbufAnimation : ObjectG
 	 */
 	public this (char[] filename, GError** error)
 	{
-		// GdkPixbufAnimation* gdk_pixbuf_animation_new_from_file  (const char *filename,  GError **error);
+		// GdkPixbufAnimation* gdk_pixbuf_animation_new_from_file (const char *filename,  GError **error);
 		this(cast(GdkPixbufAnimation*)gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), error) );
 	}
 	
@@ -139,7 +139,7 @@ public class PixbufAnimation : ObjectG
 	 */
 	public PixbufAnimation ref()
 	{
-		// GdkPixbufAnimation* gdk_pixbuf_animation_ref  (GdkPixbufAnimation *animation);
+		// GdkPixbufAnimation* gdk_pixbuf_animation_ref (GdkPixbufAnimation *animation);
 		return new PixbufAnimation( gdk_pixbuf_animation_ref(gdkPixbufAnimation) );
 	}
 	
@@ -220,7 +220,7 @@ public class PixbufAnimation : ObjectG
 	 */
 	public GdkPixbufAnimationIter* getIter(GTimeVal* startTime)
 	{
-		// GdkPixbufAnimationIter* gdk_pixbuf_animation_get_iter  (GdkPixbufAnimation *animation,  const GTimeVal *start_time);
+		// GdkPixbufAnimationIter* gdk_pixbuf_animation_get_iter (GdkPixbufAnimation *animation,  const GTimeVal *start_time);
 		return gdk_pixbuf_animation_get_iter(gdkPixbufAnimation, startTime);
 	}
 	
@@ -284,7 +284,7 @@ public class PixbufAnimation : ObjectG
 	 */
 	public static int iterAdvance(GdkPixbufAnimationIter* iter, GTimeVal* currentTime)
 	{
-		// gboolean gdk_pixbuf_animation_iter_advance  (GdkPixbufAnimationIter *iter,  const GTimeVal *current_time);
+		// gboolean gdk_pixbuf_animation_iter_advance (GdkPixbufAnimationIter *iter,  const GTimeVal *current_time);
 		return gdk_pixbuf_animation_iter_advance(iter, currentTime);
 	}
 	
@@ -359,7 +359,7 @@ public class PixbufAnimation : ObjectG
 	 */
 	public static GdkPixbufSimpleAnim* gdkPixbufSimpleAnimNew(int width, int height, float rate)
 	{
-		// GdkPixbufSimpleAnim* gdk_pixbuf_simple_anim_new  (gint width,  gint height,  gfloat rate);
+		// GdkPixbufSimpleAnim* gdk_pixbuf_simple_anim_new (gint width,  gint height,  gfloat rate);
 		return gdk_pixbuf_simple_anim_new(width, height, rate);
 	}
 	
@@ -377,7 +377,7 @@ public class PixbufAnimation : ObjectG
 	 */
 	public static void gdkPixbufSimpleAnimAddFrame(GdkPixbufSimpleAnim* animation, Pixbuf pixbuf)
 	{
-		// void gdk_pixbuf_simple_anim_add_frame  (GdkPixbufSimpleAnim *animation,  GdkPixbuf *pixbuf);
+		// void gdk_pixbuf_simple_anim_add_frame (GdkPixbufSimpleAnim *animation,  GdkPixbuf *pixbuf);
 		gdk_pixbuf_simple_anim_add_frame(animation, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 }

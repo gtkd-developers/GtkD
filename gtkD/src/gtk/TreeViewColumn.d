@@ -265,7 +265,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void addAttribute(CellRenderer cellRenderer, char[] attribute, int column)
 	{
-		// void gtk_tree_view_column_add_attribute  (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  const gchar *attribute,  gint column);
+		// void gtk_tree_view_column_add_attribute (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  const gchar *attribute,  gint column);
 		gtk_tree_view_column_add_attribute(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct(), Str.toStringz(attribute), column);
 	}
 	
@@ -283,7 +283,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void setAttributes(CellRenderer cellRenderer, ... )
 	{
-		// void gtk_tree_view_column_set_attributes  (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  ...);
+		// void gtk_tree_view_column_set_attributes (GtkTreeViewColumn *tree_column,  GtkCellRenderer *cell_renderer,  ...);
 		gtk_tree_view_column_set_attributes(gtkTreeViewColumn, (cellRenderer is null) ? null : cellRenderer.getCellRendererStruct());
 	}
 	
@@ -334,7 +334,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void setSpacing(int spacing)
 	{
-		// void gtk_tree_view_column_set_spacing  (GtkTreeViewColumn *tree_column,  gint spacing);
+		// void gtk_tree_view_column_set_spacing (GtkTreeViewColumn *tree_column,  gint spacing);
 		gtk_tree_view_column_set_spacing(gtkTreeViewColumn, spacing);
 	}
 	
@@ -347,7 +347,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public int getSpacing()
 	{
-		// gint gtk_tree_view_column_get_spacing  (GtkTreeViewColumn *tree_column);
+		// gint gtk_tree_view_column_get_spacing (GtkTreeViewColumn *tree_column);
 		return gtk_tree_view_column_get_spacing(gtkTreeViewColumn);
 	}
 	
@@ -360,7 +360,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void setVisible(int visible)
 	{
-		// void gtk_tree_view_column_set_visible  (GtkTreeViewColumn *tree_column,  gboolean visible);
+		// void gtk_tree_view_column_set_visible (GtkTreeViewColumn *tree_column,  gboolean visible);
 		gtk_tree_view_column_set_visible(gtkTreeViewColumn, visible);
 	}
 	
@@ -374,7 +374,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public int getVisible()
 	{
-		// gboolean gtk_tree_view_column_get_visible  (GtkTreeViewColumn *tree_column);
+		// gboolean gtk_tree_view_column_get_visible (GtkTreeViewColumn *tree_column);
 		return gtk_tree_view_column_get_visible(gtkTreeViewColumn);
 	}
 	
@@ -390,7 +390,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void setResizable(int resizable)
 	{
-		// void gtk_tree_view_column_set_resizable  (GtkTreeViewColumn *tree_column,  gboolean resizable);
+		// void gtk_tree_view_column_set_resizable (GtkTreeViewColumn *tree_column,  gboolean resizable);
 		gtk_tree_view_column_set_resizable(gtkTreeViewColumn, resizable);
 	}
 	
@@ -403,7 +403,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public int getResizable()
 	{
-		// gboolean gtk_tree_view_column_get_resizable  (GtkTreeViewColumn *tree_column);
+		// gboolean gtk_tree_view_column_get_resizable (GtkTreeViewColumn *tree_column);
 		return gtk_tree_view_column_get_resizable(gtkTreeViewColumn);
 	}
 	
@@ -429,7 +429,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public GtkTreeViewColumnSizing getSizing()
 	{
-		// GtkTreeViewColumnSizing gtk_tree_view_column_get_sizing  (GtkTreeViewColumn *tree_column);
+		// GtkTreeViewColumnSizing gtk_tree_view_column_get_sizing (GtkTreeViewColumn *tree_column);
 		return gtk_tree_view_column_get_sizing(gtkTreeViewColumn);
 	}
 	
@@ -487,7 +487,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void setMinWidth(int minWidth)
 	{
-		// void gtk_tree_view_column_set_min_width  (GtkTreeViewColumn *tree_column,  gint min_width);
+		// void gtk_tree_view_column_set_min_width (GtkTreeViewColumn *tree_column,  gint min_width);
 		gtk_tree_view_column_set_min_width(gtkTreeViewColumn, minWidth);
 	}
 	
@@ -501,7 +501,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public int getMinWidth()
 	{
-		// gint gtk_tree_view_column_get_min_width  (GtkTreeViewColumn *tree_column);
+		// gint gtk_tree_view_column_get_min_width (GtkTreeViewColumn *tree_column);
 		return gtk_tree_view_column_get_min_width(gtkTreeViewColumn);
 	}
 	
@@ -517,7 +517,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void setMaxWidth(int maxWidth)
 	{
-		// void gtk_tree_view_column_set_max_width  (GtkTreeViewColumn *tree_column,  gint max_width);
+		// void gtk_tree_view_column_set_max_width (GtkTreeViewColumn *tree_column,  gint max_width);
 		gtk_tree_view_column_set_max_width(gtkTreeViewColumn, maxWidth);
 	}
 	
@@ -531,7 +531,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public int getMaxWidth()
 	{
-		// gint gtk_tree_view_column_get_max_width  (GtkTreeViewColumn *tree_column);
+		// gint gtk_tree_view_column_get_max_width (GtkTreeViewColumn *tree_column);
 		return gtk_tree_view_column_get_max_width(gtkTreeViewColumn);
 	}
 	
@@ -616,7 +616,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void setClickable(int clickable)
 	{
-		// void gtk_tree_view_column_set_clickable  (GtkTreeViewColumn *tree_column,  gboolean clickable);
+		// void gtk_tree_view_column_set_clickable (GtkTreeViewColumn *tree_column,  gboolean clickable);
 		gtk_tree_view_column_set_clickable(gtkTreeViewColumn, clickable);
 	}
 	
@@ -629,7 +629,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public int getClickable()
 	{
-		// gboolean gtk_tree_view_column_get_clickable  (GtkTreeViewColumn *tree_column);
+		// gboolean gtk_tree_view_column_get_clickable (GtkTreeViewColumn *tree_column);
 		return gtk_tree_view_column_get_clickable(gtkTreeViewColumn);
 	}
 	
@@ -672,7 +672,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void setAlignment(float xalign)
 	{
-		// void gtk_tree_view_column_set_alignment  (GtkTreeViewColumn *tree_column,  gfloat xalign);
+		// void gtk_tree_view_column_set_alignment (GtkTreeViewColumn *tree_column,  gfloat xalign);
 		gtk_tree_view_column_set_alignment(gtkTreeViewColumn, xalign);
 	}
 	
@@ -686,7 +686,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public float getAlignment()
 	{
-		// gfloat gtk_tree_view_column_get_alignment  (GtkTreeViewColumn *tree_column);
+		// gfloat gtk_tree_view_column_get_alignment (GtkTreeViewColumn *tree_column);
 		return gtk_tree_view_column_get_alignment(gtkTreeViewColumn);
 	}
 	
@@ -793,7 +793,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void setSortOrder(GtkSortType order)
 	{
-		// void gtk_tree_view_column_set_sort_order  (GtkTreeViewColumn *tree_column,  GtkSortType order);
+		// void gtk_tree_view_column_set_sort_order (GtkTreeViewColumn *tree_column,  GtkSortType order);
 		gtk_tree_view_column_set_sort_order(gtkTreeViewColumn, order);
 	}
 	
@@ -806,7 +806,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public GtkSortType getSortOrder()
 	{
-		// GtkSortType gtk_tree_view_column_get_sort_order  (GtkTreeViewColumn *tree_column);
+		// GtkSortType gtk_tree_view_column_get_sort_order (GtkTreeViewColumn *tree_column);
 		return gtk_tree_view_column_get_sort_order(gtkTreeViewColumn);
 	}
 	
@@ -850,7 +850,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void cellGetSize(Rectangle cellArea, int* xOffset, int* yOffset, int* width, int* height)
 	{
-		// void gtk_tree_view_column_cell_get_size  (GtkTreeViewColumn *tree_column,  GdkRectangle *cell_area,  gint *x_offset,  gint *y_offset,  gint *width,  gint *height);
+		// void gtk_tree_view_column_cell_get_size (GtkTreeViewColumn *tree_column,  GdkRectangle *cell_area,  gint *x_offset,  gint *y_offset,  gint *width,  gint *height);
 		gtk_tree_view_column_cell_get_size(gtkTreeViewColumn, (cellArea is null) ? null : cellArea.getRectangleStruct(), xOffset, yOffset, width, height);
 	}
 	
@@ -921,7 +921,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public void queueResize()
 	{
-		// void gtk_tree_view_column_queue_resize  (GtkTreeViewColumn *tree_column);
+		// void gtk_tree_view_column_queue_resize (GtkTreeViewColumn *tree_column);
 		gtk_tree_view_column_queue_resize(gtkTreeViewColumn);
 	}
 	

@@ -340,7 +340,7 @@ public class DragContext
 	 */
 	public static uint gdkDragGetProtocolForDisplay(Display display, uint xid, GdkDragProtocol* protocol)
 	{
-		// guint32 gdk_drag_get_protocol_for_display  (GdkDisplay *display,  guint32 xid,  GdkDragProtocol *protocol);
+		// guint32 gdk_drag_get_protocol_for_display (GdkDisplay *display,  guint32 xid,  GdkDragProtocol *protocol);
 		return gdk_drag_get_protocol_for_display((display is null) ? null : display.getDisplayStruct(), xid, protocol);
 	}
 	

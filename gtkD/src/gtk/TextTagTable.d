@@ -279,7 +279,7 @@ public class TextTagTable : ObjectG
 	 * The "tag-added" signal
 	 * void user_function (GtkTextTagTable *texttagtable,
 	 *  GtkTextTag *arg1,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * texttagtable:
 	 * the object which received the signal.
 	 * arg1:

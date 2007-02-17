@@ -323,7 +323,7 @@ public class Keymap : ObjectG
 	 */
 	public int translateKeyboardState(uint hardwareKeycode, GdkModifierType state, int group, uint* keyval, int* effectiveGroup, int* level, GdkModifierType* consumedModifiers)
 	{
-		// gboolean gdk_keymap_translate_keyboard_state  (GdkKeymap *keymap,  guint hardware_keycode,  GdkModifierType state,  gint group,  guint *keyval,  gint *effective_group,  gint *level,  GdkModifierType *consumed_modifiers);
+		// gboolean gdk_keymap_translate_keyboard_state (GdkKeymap *keymap,  guint hardware_keycode,  GdkModifierType state,  gint group,  guint *keyval,  gint *effective_group,  gint *level,  GdkModifierType *consumed_modifiers);
 		return gdk_keymap_translate_keyboard_state(gdkKeymap, hardwareKeycode, state, group, keyval, effectiveGroup, level, consumedModifiers);
 	}
 	
@@ -352,7 +352,7 @@ public class Keymap : ObjectG
 	 */
 	public int getEntriesForKeyval(uint keyval, GdkKeymapKey** keys, int* nKeys)
 	{
-		// gboolean gdk_keymap_get_entries_for_keyval  (GdkKeymap *keymap,  guint keyval,  GdkKeymapKey **keys,  gint *n_keys);
+		// gboolean gdk_keymap_get_entries_for_keyval (GdkKeymap *keymap,  guint keyval,  GdkKeymapKey **keys,  gint *n_keys);
 		return gdk_keymap_get_entries_for_keyval(gdkKeymap, keyval, keys, nKeys);
 	}
 	
@@ -378,7 +378,7 @@ public class Keymap : ObjectG
 	 */
 	public int getEntriesForKeycode(uint hardwareKeycode, GdkKeymapKey** keys, uint** keyvals, int* nEntries)
 	{
-		// gboolean gdk_keymap_get_entries_for_keycode  (GdkKeymap *keymap,  guint hardware_keycode,  GdkKeymapKey **keys,  guint **keyvals,  gint *n_entries);
+		// gboolean gdk_keymap_get_entries_for_keycode (GdkKeymap *keymap,  guint hardware_keycode,  GdkKeymapKey **keys,  guint **keyvals,  gint *n_entries);
 		return gdk_keymap_get_entries_for_keycode(gdkKeymap, hardwareKeycode, keys, keyvals, nEntries);
 	}
 	
@@ -524,7 +524,7 @@ public class Keymap : ObjectG
 	 * Signal Details
 	 * The "direction-changed" signal
 	 * void user_function (GdkKeymap *keymap,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * The ::direction_changed signal gets emitted when the direction of
 	 * the keymap changes.
 	 * keymap:

@@ -221,7 +221,7 @@ public class EntryCompletion : ObjectG
 	 */
 	public this ()
 	{
-		// GtkEntryCompletion* gtk_entry_completion_new  (void);
+		// GtkEntryCompletion* gtk_entry_completion_new (void);
 		this(cast(GtkEntryCompletion*)gtk_entry_completion_new() );
 	}
 	
@@ -266,7 +266,7 @@ public class EntryCompletion : ObjectG
 	 */
 	public TreeModel getModel()
 	{
-		// GtkTreeModel* gtk_entry_completion_get_model  (GtkEntryCompletion *completion);
+		// GtkTreeModel* gtk_entry_completion_get_model (GtkEntryCompletion *completion);
 		return new TreeModel( gtk_entry_completion_get_model(gtkEntryCompletion) );
 	}
 	
@@ -286,7 +286,7 @@ public class EntryCompletion : ObjectG
 	 */
 	public void setMatchFunc(GtkEntryCompletionMatchFunc func, void* funcData, GDestroyNotify funcNotify)
 	{
-		// void gtk_entry_completion_set_match_func  (GtkEntryCompletion *completion,  GtkEntryCompletionMatchFunc func,  gpointer func_data,  GDestroyNotify func_notify);
+		// void gtk_entry_completion_set_match_func (GtkEntryCompletion *completion,  GtkEntryCompletionMatchFunc func,  gpointer func_data,  GDestroyNotify func_notify);
 		gtk_entry_completion_set_match_func(gtkEntryCompletion, func, funcData, funcNotify);
 	}
 	
@@ -343,7 +343,7 @@ public class EntryCompletion : ObjectG
 	 */
 	public void insertPrefix()
 	{
-		// void gtk_entry_completion_insert_prefix  (GtkEntryCompletion *completion);
+		// void gtk_entry_completion_insert_prefix (GtkEntryCompletion *completion);
 		gtk_entry_completion_insert_prefix(gtkEntryCompletion);
 	}
 	
@@ -392,7 +392,7 @@ public class EntryCompletion : ObjectG
 	 */
 	public void deleteAction(int index)
 	{
-		// void gtk_entry_completion_delete_action  (GtkEntryCompletion *completion,  gint index_);
+		// void gtk_entry_completion_delete_action (GtkEntryCompletion *completion,  gint index_);
 		gtk_entry_completion_delete_action(gtkEntryCompletion, index);
 	}
 	

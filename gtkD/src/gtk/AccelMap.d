@@ -310,7 +310,7 @@ public class AccelMap : ObjectG
 	 */
 	public static void foreachUnfiltered(void* data, GtkAccelMapForeach foreachFunc)
 	{
-		// void gtk_accel_map_foreach_unfiltered  (gpointer data,  GtkAccelMapForeach foreach_func);
+		// void gtk_accel_map_foreach_unfiltered (gpointer data,  GtkAccelMapForeach foreach_func);
 		gtk_accel_map_foreach_unfiltered(data, foreachFunc);
 	}
 	
@@ -365,7 +365,7 @@ public class AccelMap : ObjectG
 	 *  gchar *accel_path,
 	 *  guint accel_key,
 	 *  GdkModifierType accel_mods,
-	 *  gpointer user_data) : Run last / Has details
+	 *  gpointer user_data) : Run Last / Has Details
 	 * Notifies of a change in the global accelerator map.
 	 * The path is also used as the detail for the signal,
 	 * so it is possible to connect to

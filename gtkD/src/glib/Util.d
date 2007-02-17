@@ -342,7 +342,7 @@ public class Util
 	 */
 	public static char** getSystemConfigDirs()
 	{
-		// const gchar* const * g_get_system_config_dirs  (void);
+		// const gchar* const * g_get_system_config_dirs (void);
 		return g_get_system_config_dirs();
 	}
 	
@@ -369,7 +369,8 @@ public class Util
 	}
 	
 	/**
-	 * Gets the current user's home directory.
+	 * Gets the current user's home directory as defined in the
+	 * password database.
 	 * Note that in contrast to traditional UNIX tools, this function
 	 * prefers passwd entries over the HOME
 	 * environment variable.

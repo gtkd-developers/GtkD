@@ -397,7 +397,7 @@ public class Event
 	 */
 	public void sendClientmessageToall()
 	{
-		// void gdk_event_send_clientmessage_toall  (GdkEvent *event);
+		// void gdk_event_send_clientmessage_toall (GdkEvent *event);
 		gdk_event_send_clientmessage_toall(gdkEvent);
 	}
 	

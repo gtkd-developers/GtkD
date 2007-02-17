@@ -453,13 +453,13 @@ public class TextBuffer : ObjectG
 		}
 		onApplyTagListeners ~= dlg;
 	}
-	extern(C) static void callBackApplyTag(GtkTextBuffer* textbufferStruct, GtkTextTag* arg1, GtkTextIter* arg2, GtkTextIter* arg3, TextBuffer textBuffer)
+	extern(C) static void callBackApplyTag(GtkTextBuffer* textbufferStruct, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end, TextBuffer textBuffer)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg ; textBuffer.onApplyTagListeners )
 		{
-			dlg(new TextTag(arg1), new TextIter(arg2), new TextIter(arg3), textBuffer);
+			dlg(new TextTag(tag), new TextIter(start), new TextIter(end), textBuffer);
 		}
 		
 		return consumed;
@@ -537,13 +537,13 @@ public class TextBuffer : ObjectG
 		}
 		onDeleteRangeListeners ~= dlg;
 	}
-	extern(C) static void callBackDeleteRange(GtkTextBuffer* textbufferStruct, GtkTextIter* arg1, GtkTextIter* arg2, TextBuffer textBuffer)
+	extern(C) static void callBackDeleteRange(GtkTextBuffer* textbufferStruct, GtkTextIter* start, GtkTextIter* end, TextBuffer textBuffer)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TextIter, TextIter, TextBuffer) dlg ; textBuffer.onDeleteRangeListeners )
 		{
-			dlg(new TextIter(arg1), new TextIter(arg2), textBuffer);
+			dlg(new TextIter(start), new TextIter(end), textBuffer);
 		}
 		
 		return consumed;
@@ -593,13 +593,13 @@ public class TextBuffer : ObjectG
 		}
 		onInsertChildAnchorListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertChildAnchor(GtkTextBuffer* textbufferStruct, GtkTextIter* arg1, GtkTextChildAnchor* arg2, TextBuffer textBuffer)
+	extern(C) static void callBackInsertChildAnchor(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GtkTextChildAnchor* anchor, TextBuffer textBuffer)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TextIter, TextChildAnchor, TextBuffer) dlg ; textBuffer.onInsertChildAnchorListeners )
 		{
-			dlg(new TextIter(arg1), new TextChildAnchor(arg2), textBuffer);
+			dlg(new TextIter(location), new TextChildAnchor(anchor), textBuffer);
 		}
 		
 		return consumed;
@@ -621,13 +621,13 @@ public class TextBuffer : ObjectG
 		}
 		onInsertPixbufListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertPixbuf(GtkTextBuffer* textbufferStruct, GtkTextIter* arg1, GdkPixbuf* arg2, TextBuffer textBuffer)
+	extern(C) static void callBackInsertPixbuf(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GdkPixbuf* pixbuf, TextBuffer textBuffer)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TextIter, Pixbuf, TextBuffer) dlg ; textBuffer.onInsertPixbufListeners )
 		{
-			dlg(new TextIter(arg1), new Pixbuf(arg2), textBuffer);
+			dlg(new TextIter(location), new Pixbuf(pixbuf), textBuffer);
 		}
 		
 		return consumed;
@@ -649,13 +649,13 @@ public class TextBuffer : ObjectG
 		}
 		onInsertTextListeners ~= dlg;
 	}
-	extern(C) static void callBackInsertText(GtkTextBuffer* textbufferStruct, GtkTextIter* arg1, gchar* arg2, gint arg3, TextBuffer textBuffer)
+	extern(C) static void callBackInsertText(GtkTextBuffer* textbufferStruct, GtkTextIter* location, gchar* text, gint len, TextBuffer textBuffer)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TextIter, char[], gint, TextBuffer) dlg ; textBuffer.onInsertTextListeners )
 		{
-			dlg(new TextIter(arg1), Str.toString(arg2), arg3, textBuffer);
+			dlg(new TextIter(location), Str.toString(text), len, textBuffer);
 		}
 		
 		return consumed;
@@ -677,13 +677,13 @@ public class TextBuffer : ObjectG
 		}
 		onMarkDeletedListeners ~= dlg;
 	}
-	extern(C) static void callBackMarkDeleted(GtkTextBuffer* textbufferStruct, GtkTextMark* arg1, TextBuffer textBuffer)
+	extern(C) static void callBackMarkDeleted(GtkTextBuffer* textbufferStruct, GtkTextMark* mark, TextBuffer textBuffer)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TextMark, TextBuffer) dlg ; textBuffer.onMarkDeletedListeners )
 		{
-			dlg(new TextMark(arg1), textBuffer);
+			dlg(new TextMark(mark), textBuffer);
 		}
 		
 		return consumed;
@@ -705,13 +705,13 @@ public class TextBuffer : ObjectG
 		}
 		onMarkSetListeners ~= dlg;
 	}
-	extern(C) static void callBackMarkSet(GtkTextBuffer* textbufferStruct, GtkTextIter* arg1, GtkTextMark* arg2, TextBuffer textBuffer)
+	extern(C) static void callBackMarkSet(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GtkTextMark* mark, TextBuffer textBuffer)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TextIter, TextMark, TextBuffer) dlg ; textBuffer.onMarkSetListeners )
 		{
-			dlg(new TextIter(arg1), new TextMark(arg2), textBuffer);
+			dlg(new TextIter(location), new TextMark(mark), textBuffer);
 		}
 		
 		return consumed;
@@ -761,13 +761,13 @@ public class TextBuffer : ObjectG
 		}
 		onRemoveTagListeners ~= dlg;
 	}
-	extern(C) static void callBackRemoveTag(GtkTextBuffer* textbufferStruct, GtkTextTag* arg1, GtkTextIter* arg2, GtkTextIter* arg3, TextBuffer textBuffer)
+	extern(C) static void callBackRemoveTag(GtkTextBuffer* textbufferStruct, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end, TextBuffer textBuffer)
 	{
 		bit consumed = false;
 		
 		foreach ( void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg ; textBuffer.onRemoveTagListeners )
 		{
-			dlg(new TextTag(arg1), new TextIter(arg2), new TextIter(arg3), textBuffer);
+			dlg(new TextTag(tag), new TextIter(start), new TextIter(end), textBuffer);
 		}
 		
 		return consumed;
@@ -827,7 +827,7 @@ public class TextBuffer : ObjectG
 	 */
 	public TextTagTable getTagTable()
 	{
-		// GtkTextTagTable* gtk_text_buffer_get_tag_table  (GtkTextBuffer *buffer);
+		// GtkTextTagTable* gtk_text_buffer_get_tag_table (GtkTextBuffer *buffer);
 		return new TextTagTable( gtk_text_buffer_get_tag_table(gtkTextBuffer) );
 	}
 	
@@ -866,7 +866,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void insertAtCursor(char[] text, int len)
 	{
-		// void gtk_text_buffer_insert_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len);
+		// void gtk_text_buffer_insert_at_cursor (GtkTextBuffer *buffer,  const gchar *text,  gint len);
 		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), len);
 	}
 	
@@ -893,7 +893,7 @@ public class TextBuffer : ObjectG
 	 */
 	public int insertInteractive(TextIter iter, char[] text, int len, int defaultEditable)
 	{
-		// gboolean gtk_text_buffer_insert_interactive  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
+		// gboolean gtk_text_buffer_insert_interactive (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
 		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), len, defaultEditable);
 	}
 	
@@ -1010,7 +1010,7 @@ public class TextBuffer : ObjectG
 	 */
 	public int deleteInteractive(TextIter startIter, TextIter endIter, int defaultEditable)
 	{
-		// gboolean gtk_text_buffer_delete_interactive  (GtkTextBuffer *buffer,  GtkTextIter *start_iter,  GtkTextIter *end_iter,  gboolean default_editable);
+		// gboolean gtk_text_buffer_delete_interactive (GtkTextBuffer *buffer,  GtkTextIter *start_iter,  GtkTextIter *end_iter,  gboolean default_editable);
 		return gtk_text_buffer_delete_interactive(gtkTextBuffer, (startIter is null) ? null : startIter.getTextIterStruct(), (endIter is null) ? null : endIter.getTextIterStruct(), defaultEditable);
 	}
 	
@@ -1139,7 +1139,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void insertChildAnchor(TextIter iter, TextChildAnchor anchor)
 	{
-		// void gtk_text_buffer_insert_child_anchor  (GtkTextBuffer *buffer,  GtkTextIter *iter,  GtkTextChildAnchor *anchor);
+		// void gtk_text_buffer_insert_child_anchor (GtkTextBuffer *buffer,  GtkTextIter *iter,  GtkTextChildAnchor *anchor);
 		gtk_text_buffer_insert_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (anchor is null) ? null : anchor.getTextChildAnchorStruct());
 	}
 	
@@ -1158,7 +1158,7 @@ public class TextBuffer : ObjectG
 	 */
 	public TextChildAnchor createChildAnchor(TextIter iter)
 	{
-		// GtkTextChildAnchor* gtk_text_buffer_create_child_anchor  (GtkTextBuffer *buffer,  GtkTextIter *iter);
+		// GtkTextChildAnchor* gtk_text_buffer_create_child_anchor (GtkTextBuffer *buffer,  GtkTextIter *iter);
 		return new TextChildAnchor( gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct()) );
 	}
 	
@@ -1223,7 +1223,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void moveMarkByName(char[] name, TextIter where)
 	{
-		// void gtk_text_buffer_move_mark_by_name  (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *where);
+		// void gtk_text_buffer_move_mark_by_name (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *where);
 		gtk_text_buffer_move_mark_by_name(gtkTextBuffer, Str.toStringz(name), (where is null) ? null : where.getTextIterStruct());
 	}
 	
@@ -1258,7 +1258,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void deleteMarkByName(char[] name)
 	{
-		// void gtk_text_buffer_delete_mark_by_name  (GtkTextBuffer *buffer,  const gchar *name);
+		// void gtk_text_buffer_delete_mark_by_name (GtkTextBuffer *buffer,  const gchar *name);
 		gtk_text_buffer_delete_mark_by_name(gtkTextBuffer, Str.toStringz(name));
 	}
 	
@@ -1312,7 +1312,7 @@ public class TextBuffer : ObjectG
 	 */
 	public TextMark getSelectionBound()
 	{
-		// GtkTextMark* gtk_text_buffer_get_selection_bound  (GtkTextBuffer *buffer);
+		// GtkTextMark* gtk_text_buffer_get_selection_bound (GtkTextBuffer *buffer);
 		return new TextMark( gtk_text_buffer_get_selection_bound(gtkTextBuffer) );
 	}
 	
@@ -1326,7 +1326,7 @@ public class TextBuffer : ObjectG
 	 */
 	public int getHasSelection()
 	{
-		// gboolean gtk_text_buffer_get_has_selection  (GtkTextBuffer *buffer);
+		// gboolean gtk_text_buffer_get_has_selection (GtkTextBuffer *buffer);
 		return gtk_text_buffer_get_has_selection(gtkTextBuffer);
 	}
 	
@@ -1423,7 +1423,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void applyTagByName(char[] name, TextIter start, TextIter end)
 	{
-		// void gtk_text_buffer_apply_tag_by_name  (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *start,  const GtkTextIter *end);
+		// void gtk_text_buffer_apply_tag_by_name (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *start,  const GtkTextIter *end);
 		gtk_text_buffer_apply_tag_by_name(gtkTextBuffer, Str.toStringz(name), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
@@ -1441,7 +1441,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void removeTagByName(char[] name, TextIter start, TextIter end)
 	{
-		// void gtk_text_buffer_remove_tag_by_name  (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *start,  const GtkTextIter *end);
+		// void gtk_text_buffer_remove_tag_by_name (GtkTextBuffer *buffer,  const gchar *name,  const GtkTextIter *start,  const GtkTextIter *end);
 		gtk_text_buffer_remove_tag_by_name(gtkTextBuffer, Str.toStringz(name), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
 	
@@ -1499,7 +1499,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void getIterAtOffset(TextIter iter, int charOffset)
 	{
-		// void gtk_text_buffer_get_iter_at_offset  (GtkTextBuffer *buffer,  GtkTextIter *iter,  gint char_offset);
+		// void gtk_text_buffer_get_iter_at_offset (GtkTextBuffer *buffer,  GtkTextIter *iter,  gint char_offset);
 		gtk_text_buffer_get_iter_at_offset(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), charOffset);
 	}
 	
@@ -1514,7 +1514,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void getIterAtLine(TextIter iter, int lineNumber)
 	{
-		// void gtk_text_buffer_get_iter_at_line  (GtkTextBuffer *buffer,  GtkTextIter *iter,  gint line_number);
+		// void gtk_text_buffer_get_iter_at_line (GtkTextBuffer *buffer,  GtkTextIter *iter,  gint line_number);
 		gtk_text_buffer_get_iter_at_line(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), lineNumber);
 	}
 	
@@ -1549,7 +1549,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void getIterAtMark(TextIter iter, TextMark mark)
 	{
-		// void gtk_text_buffer_get_iter_at_mark  (GtkTextBuffer *buffer,  GtkTextIter *iter,  GtkTextMark *mark);
+		// void gtk_text_buffer_get_iter_at_mark (GtkTextBuffer *buffer,  GtkTextIter *iter,  GtkTextMark *mark);
 		gtk_text_buffer_get_iter_at_mark(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (mark is null) ? null : mark.getTextMarkStruct());
 	}
 	
@@ -1666,7 +1666,7 @@ public class TextBuffer : ObjectG
 	 */
 	public int deleteSelection(int interactive, int defaultEditable)
 	{
-		// gboolean gtk_text_buffer_delete_selection  (GtkTextBuffer *buffer,  gboolean interactive,  gboolean default_editable);
+		// gboolean gtk_text_buffer_delete_selection (GtkTextBuffer *buffer,  gboolean interactive,  gboolean default_editable);
 		return gtk_text_buffer_delete_selection(gtkTextBuffer, interactive, defaultEditable);
 	}
 	
@@ -1762,7 +1762,7 @@ public class TextBuffer : ObjectG
 	 */
 	public void beginUserAction()
 	{
-		// void gtk_text_buffer_begin_user_action  (GtkTextBuffer *buffer);
+		// void gtk_text_buffer_begin_user_action (GtkTextBuffer *buffer);
 		gtk_text_buffer_begin_user_action(gtkTextBuffer);
 	}
 	
@@ -1827,7 +1827,7 @@ public class TextBuffer : ObjectG
 	 * length:
 	 *  length of data
 	 * error:
-	 *  return loaction for a GError
+	 *  return location for a GError
 	 * Returns:
 	 *  TRUE on success, FALSE otherwise.
 	 * Since 2.10
@@ -2033,7 +2033,7 @@ public class TextBuffer : ObjectG
 	 * instances. It is capable of serializing all of a text buffer's tags
 	 * and embedded pixbufs.
 	 * This function is just a wrapper around
-	 * gtk_text_buffer_register_serialize_format(). The mime_type used
+	 * gtk_text_buffer_register_serialize_format(). The mime type used
 	 * for registering is "application/x-gtk-text-buffer-rich-text", or
 	 * "application/x-gtk-text-buffer-rich-text;format=tagset_name" if a
 	 * tagset_name was passed.
@@ -2089,7 +2089,7 @@ public class TextBuffer : ObjectG
 	/**
 	 * This function unregisters a rich text format that was previously
 	 * registered using gtk_text_buffer_register_deserialize_format() or
-	 * gtk_text_buffer_register_deserialize_tagset()
+	 * gtk_text_buffer_register_deserialize_tagset().
 	 * buffer:
 	 *  a GtkTextBuffer
 	 * format:

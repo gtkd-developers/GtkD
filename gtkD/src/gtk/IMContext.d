@@ -287,7 +287,7 @@ public class IMContext : ObjectG
 	 */
 	public void setClientWindow(Window window)
 	{
-		// void gtk_im_context_set_client_window  (GtkIMContext *context,  GdkWindow *window);
+		// void gtk_im_context_set_client_window (GtkIMContext *context,  GdkWindow *window);
 		gtk_im_context_set_client_window(gtkIMContext, (window is null) ? null : window.getWindowStruct());
 	}
 	
@@ -311,7 +311,7 @@ public class IMContext : ObjectG
 	 */
 	public void getPreeditString(char** str, PangoAttrList** attrs, int* cursorPos)
 	{
-		// void gtk_im_context_get_preedit_string  (GtkIMContext *context,  gchar **str,  PangoAttrList **attrs,  gint *cursor_pos);
+		// void gtk_im_context_get_preedit_string (GtkIMContext *context,  gchar **str,  PangoAttrList **attrs,  gint *cursor_pos);
 		gtk_im_context_get_preedit_string(gtkIMContext, str, attrs, cursorPos);
 	}
 	
@@ -384,7 +384,7 @@ public class IMContext : ObjectG
 	 */
 	public void setCursorLocation(Rectangle area)
 	{
-		// void gtk_im_context_set_cursor_location  (GtkIMContext *context,  GdkRectangle *area);
+		// void gtk_im_context_set_cursor_location (GtkIMContext *context,  GdkRectangle *area);
 		gtk_im_context_set_cursor_location(gtkIMContext, (area is null) ? null : area.getRectangleStruct());
 	}
 	
@@ -486,7 +486,7 @@ public class IMContext : ObjectG
 	 * The "commit" signal
 	 * void user_function (GtkIMContext *imcontext,
 	 *  gchar *arg1,
-	 *  gpointer user_data) : Run last
+	 *  gpointer user_data) : Run Last
 	 * imcontext:
 	 * the object which received the signal.
 	 * arg1:
@@ -495,7 +495,7 @@ public class IMContext : ObjectG
 	 */
 	public int deleteSurrounding(int offset, int nChars)
 	{
-		// gboolean gtk_im_context_delete_surrounding  (GtkIMContext *context,  gint offset,  gint n_chars);
+		// gboolean gtk_im_context_delete_surrounding (GtkIMContext *context,  gint offset,  gint n_chars);
 		return gtk_im_context_delete_surrounding(gtkIMContext, offset, nChars);
 	}
 	

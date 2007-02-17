@@ -148,10 +148,64 @@ public class PgGlyphString
 	
 	
 	
+	/**
+	 * Converts a number in Pango units to floating-point: divides
+	 * it by PANGO_SCALE.
+	 * i:
+	 *  value in Pango units
+	 * Returns:
+	 *  the double value.
+	 * Since 1.16
+	 */
+	public static double pangoUnitsToDouble(int i)
+	{
+		// double pango_units_to_double (int i);
+		return pango_units_to_double(i);
+	}
+	
+	/**
+	 * Converts a floating-point number to Pango units: multiplies
+	 * it by PANGO_SCALE and rounds to nearest integer.
+	 * d:
+	 *  double floating-point value
+	 * Returns:
+	 *  the value in Pango units.
+	 * Since 1.16
+	 */
+	public static int pangoUnitsFromDouble(double d)
+	{
+		// int pango_units_from_double (double d);
+		return pango_units_from_double(d);
+	}
 	
 	
 	
 	
+	
+	
+	/**
+	 * Converts extents from Pango units to device units, dividing by the
+	 * PANGO_SCALE factor and performing rounding.
+	 * The ink rectangle is converted by flooring the x/y coordinates and extending
+	 * width/height, such that the final rectangle completely includes the original
+	 * rectangle.
+	 * The logical rectangle is converted by rounding the coordinates
+	 * of the rectangle to the nearest device unit.
+	 * Note that in certain situations you may want pass a logical extents
+	 * rectangle to this function as ink_rect. The rule is: if you want the
+	 * resulting device-space rectangle to completely contain the original
+	 * rectangle, pass it in as ink_rect.
+	 * ink_rect:
+	 *  ink rectangle to convert, or NULL.
+	 * logical_rect:
+	 *  logical rectangle to convert, or NULL.
+	 * Since 1.16
+	 */
+	public static void pangoExtentsToPixels(PangoRectangle* inkRect, PangoRectangle* logicalRect)
+	{
+		// void pango_extents_to_pixels (PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
+		pango_extents_to_pixels(inkRect, logicalRect);
+	}
 	
 	
 	
@@ -225,7 +279,7 @@ public class PgGlyphString
 	/**
 	 * Changes the transformation represented by matrix to be the
 	 * transformation given by first rotating by degrees degrees
-	 * counter-clokwise then applying the original transformation.
+	 * counter-clockwise then applying the original transformation.
 	 * matrix:
 	 *  a PangoMatrix
 	 * degrees:
@@ -255,6 +309,96 @@ public class PgGlyphString
 	}
 	
 	/**
+	 * Transforms the point (x, y) by matrix.
+	 * matrix:
+	 *  a PangoMatrix, or NULL
+	 * x:
+	 *  in/out X position
+	 * y:
+	 *  in/out Y position
+	 * Since 1.16
+	 */
+	public static void pangoMatrixTransformPoint(PangoMatrix* matrix, double* x, double* y)
+	{
+		// void pango_matrix_transform_point (const PangoMatrix *matrix,  double *x,  double *y);
+		pango_matrix_transform_point(matrix, x, y);
+	}
+	
+	/**
+	 * Transforms the distance vector (dx,dy) by matrix. This is
+	 * similar to pango_matrix_transform_point() except that the translation
+	 * components of the transformation are ignored. The calculation of
+	 * the returned vector is as follows:
+	 * dx2 = dx1 * xx + dy1 * xy;
+	 * dy2 = dx1 * yx + dy1 * yy;
+	 * Affine transformations are position invariant, so the same vector
+	 * always transforms to the same vector. If (x1,y1) transforms
+	 * to (x2,y2) then (x1+dx1,y1+dy1) will transform to
+	 * (x1+dx2,y1+dy2) for all values of x1 and x2.
+	 * matrix:
+	 *  a PangoMatrix, or NULL
+	 * dx:
+	 *  in/out X component of a distance vector
+	 * dy:
+	 *  yn/out Y component of a distance vector
+	 * Since 1.16
+	 */
+	public static void pangoMatrixTransformDistance(PangoMatrix* matrix, double* dx, double* dy)
+	{
+		// void pango_matrix_transform_distance (const PangoMatrix *matrix,  double *dx,  double *dy);
+		pango_matrix_transform_distance(matrix, dx, dy);
+	}
+	
+	/**
+	 * First transforms rect using matrix, then calculates the bounding box
+	 * of the transformed rectangle. The rectangle should be in Pango units.
+	 * This function is useful for example when you want to draw a rotated
+	 * PangoLayout to an image buffer, and want to know how large the image
+	 * should be and how much you should shift the layout when rendering.
+	 * If you have a rectangle in device units (pixels), use
+	 * pango_matrix_transform_pixel_rectangle().
+	 * If you have the rectangle in Pango units and want to convert to
+	 * transformed pixel bounding box, it is more accurate to transform it first
+	 * (using this function) and pass the result to pango_extents_to_pixels(),
+	 * as ink_rect. However, there is a reason that you may want to convert
+	 * to pixels first and then transform, and that is when the transformed
+	 * coordinates may overflow in Pango units (large matrix translation for
+	 * example).
+	 * matrix:
+	 *  a PangoMatrix, or NULL
+	 * rect:
+	 *  in/out bounding box in Pango units, or NULL
+	 * Since 1.16
+	 */
+	public static void pangoMatrixTransformRectangle(PangoMatrix* matrix, PangoRectangle* rect)
+	{
+		// void pango_matrix_transform_rectangle (const PangoMatrix *matrix,  PangoRectangle *rect);
+		pango_matrix_transform_rectangle(matrix, rect);
+	}
+	
+	/**
+	 * First transforms the rect using matrix, then calculates the bounding box
+	 * of the transformed rectangle. The rectangle should be in device units
+	 * (pixels).
+	 * This function is useful for example when you want to draw a rotated
+	 * PangoLayout to an image buffer, and want to know how large the image
+	 * should be and how much you should shift the layout when rendering.
+	 * For better accuracy, you should use pango_matrix_transform_rectangle() on
+	 * original rectangle in Pango units and convert to pixels afterward
+	 * using pango_extents_to_pixels() as ink_rect.
+	 * matrix:
+	 *  a PangoMatrix, or NULL
+	 * rect:
+	 *  in/out bounding box in device units, or NULL
+	 * Since 1.16
+	 */
+	public static void pangoMatrixTransformPixelRectangle(PangoMatrix* matrix, PangoRectangle* rect)
+	{
+		// void pango_matrix_transform_pixel_rectangle  (const PangoMatrix *matrix,  PangoRectangle *rect);
+		pango_matrix_transform_pixel_rectangle(matrix, rect);
+	}
+	
+	/**
 	 * Returns the scale factor of a matrix on the height of the font.
 	 * That is, the scale factor in the direction perpendicular to the
 	 * vector that the X coordinate is mapped to.
@@ -267,24 +411,8 @@ public class PgGlyphString
 	 */
 	public static double pangoMatrixGetFontScaleFactor(PangoMatrix* matrix)
 	{
-		// double pango_matrix_get_font_scale_factor  (const PangoMatrix *matrix);
+		// double pango_matrix_get_font_scale_factor (const PangoMatrix *matrix);
 		return pango_matrix_get_font_scale_factor(matrix);
-	}
-	
-	/**
-	 * Finds the gravity that best matches the rotation component
-	 * in a PangoMatrix.
-	 * matrix:
-	 *  a PangoMatrix
-	 * Returns:
-	 *  the gravity of matrix, which will never be
-	 * PANGO_GRAVITY_AUTO, or PANGO_GRAVITY_SOUTH if matrix is NULL
-	 * Since 1.16
-	 */
-	public static PangoGravity pangoMatrixToGravity(PangoMatrix* matrix)
-	{
-		// PangoGravity pango_matrix_to_gravity (const PangoMatrix *matrix);
-		return pango_matrix_to_gravity(matrix);
 	}
 	
 	
@@ -380,7 +508,7 @@ public class PgGlyphString
 	 *  start index
 	 * end:
 	 *  end index (the range is the set of bytes with
-	 *  indices such that start <= index < end)
+	 * 	 indices such that start <= index < end)
 	 * font:
 	 *  a PangoFont
 	 * ink_rect:
@@ -392,7 +520,7 @@ public class PgGlyphString
 	 */
 	public void extentsRange(int start, int end, PangoFont* font, PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
-		// void pango_glyph_string_extents_range  (PangoGlyphString *glyphs,  int start,  int end,  PangoFont *font,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
+		// void pango_glyph_string_extents_range (PangoGlyphString *glyphs,  int start,  int end,  PangoFont *font,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
 		pango_glyph_string_extents_range(pangoGlyphString, start, end, font, inkRect, logicalRect);
 	}
 	
@@ -529,7 +657,7 @@ public class PgGlyphString
 	 * this function.
 	 * All attributes that start or end inside a cluster are applied
 	 * to that cluster; for instance, if half of a cluster is underlined
-	 * and the other-half strikethough, then the cluster will end
+	 * and the other-half strikethrough, then the cluster will end
 	 * up with both underline and strikethrough attributes. In these
 	 * cases, it may happen that item->extra_attrs for some of the
 	 * result items can have multiple attributes of the same type.
