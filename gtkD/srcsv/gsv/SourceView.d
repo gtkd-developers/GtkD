@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = SourceView
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -42,6 +42,8 @@
  * omit code:
  * imports:
  * 	- gsv.SourceBuffer
+ * 	- gtkc.gtk
+ * 	- glib.Str
  * structWrap:
  * 	- GtkSourceBuffer* -> SourceBuffer
  * module aliases:
@@ -53,9 +55,9 @@ module gsv.SourceView;
 private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
-private import gtkc.gtk;
 
 private import gsv.SourceBuffer;
+private import gtkc.gtk;
 private import glib.Str;
 
 
@@ -106,7 +108,8 @@ public class SourceView : TextView
 		// GtkSourceBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
 		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );
 	}
-
+	
+	
 	
 	/**
 	 */

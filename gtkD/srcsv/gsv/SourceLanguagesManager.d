@@ -41,7 +41,10 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.ListSG
+ * 	- glib.Str
  * structWrap:
+ * 	- GSList* -> ListSG
  * module aliases:
  * local aliases:
  */
@@ -52,9 +55,11 @@ private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 
-
-
+private import glib.ListSG;
 private import glib.Str;
+
+
+
 /**
  * Description
  */
@@ -111,10 +116,10 @@ public class SourceLanguagesManager : ObjectG
 	 * Returns:
 	 *  a list of GtkSourceLanguage.
 	 */
-	public GSList* getAvailableLanguages()
+	public ListSG getAvailableLanguages()
 	{
 		// const GSList* gtk_source_languages_manager_get_available_languages  (GtkSourceLanguagesManager *lm);
-		return gtk_source_languages_manager_get_available_languages(gtkSourceLanguagesManager);
+		return new ListSG( gtk_source_languages_manager_get_available_languages(gtkSourceLanguagesManager) );
 	}
 	
 	/**
@@ -145,9 +150,9 @@ public class SourceLanguagesManager : ObjectG
 	 *  "lang-files-dirs" gpointer : Read / Write / Construct Only
 	 * List of directories where the language specification files (.lang) are located.
 	 */
-	public GSList* getLangFilesDirs()
+	public ListSG getLangFilesDirs()
 	{
 		// const GSList* gtk_source_languages_manager_get_lang_files_dirs  (GtkSourceLanguagesManager *lm);
-		return gtk_source_languages_manager_get_lang_files_dirs(gtkSourceLanguagesManager);
+		return new ListSG( gtk_source_languages_manager_get_lang_files_dirs(gtkSourceLanguagesManager) );
 	}
 }

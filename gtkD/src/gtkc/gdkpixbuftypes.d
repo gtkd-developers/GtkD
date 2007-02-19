@@ -107,10 +107,6 @@ public struct GdkPixdata{}
 // gdk-pixbuf-inline.html
 // int length; /+* <1 to disable length checks, otherwise:
 // gdk-pixbuf-inline.html
-// * GDK_PIXDATA_HEADER_LENGTH + pixelData length
-// gdk-pixbuf-inline.html
-// +/
-// gdk-pixbuf-inline.html
 // uint pixdataType; /+* GdkPixdataType +/
 // gdk-pixbuf-inline.html
 // uint rowstride;
@@ -179,8 +175,6 @@ public struct GdkPixbufLoader{}
 public struct GdkPixbufFormat{}
 // char *name;
 // gdk-pixbuf-Module-Interface.html
-// GdkPixbufModulePattern *signature;
-// gdk-pixbuf-Module-Interface.html
 // char *domain;
 // gdk-pixbuf-Module-Interface.html
 // char *description;
@@ -215,12 +209,6 @@ public struct GdkPixbufFormat{}
  * GdkPixbufModulePattern *signature[] = {
 	 */
 public struct GdkPixbufModulePattern{}
-// char *prefix;
-// gdk-pixbuf-Module-Interface.html
-// char *mask;
-// gdk-pixbuf-Module-Interface.html
-// int relevance;
-// gdk-pixbuf-Module-Interface.html
 
 
 /**
@@ -234,35 +222,11 @@ public struct GdkPixbufModulePattern{}
  * the name of the module, usually the same as the
  */
 public struct GdkPixbufModule{}
-// char *moduleName;
-// gdk-pixbuf-Module-Interface.html
-// char *modulePath;
-// gdk-pixbuf-Module-Interface.html
-// GModule *modul;
-// gdk-pixbuf-Module-Interface.html
-// GdkPixbufFormat *info;
-// gdk-pixbuf-Module-Interface.html
-// GdkPixbuf *(* load) (FILE *f,
-// gdk-pixbuf-Module-Interface.html
-// GError **error);
-// gdk-pixbuf-Module-Interface.html
-// GdkPixbuf *(* loadXpmData) ( char **data);
-// gdk-pixbuf-Module-Interface.html
-// /+* Incremental loading +/
-// gdk-pixbuf-Module-Interface.html
 // void* (* beginLoad) (GdkPixbufModuleSizeFunc sizeFunc,
-// gdk-pixbuf-Module-Interface.html
-// GdkPixbufModulePreparedFunc prepareFunc,
-// gdk-pixbuf-Module-Interface.html
-// GdkPixbufModuleUpdatedFunc updateFunc,
 // gdk-pixbuf-Module-Interface.html
 // void* userData,
 // gdk-pixbuf-Module-Interface.html
-// GError **error);
-// gdk-pixbuf-Module-Interface.html
 // int (* stopLoad) (void* context,
-// gdk-pixbuf-Module-Interface.html
-// GError **error);
 // gdk-pixbuf-Module-Interface.html
 // int (* loadIncrement) (void* context,
 // gdk-pixbuf-Module-Interface.html
@@ -270,37 +234,19 @@ public struct GdkPixbufModule{}
 // gdk-pixbuf-Module-Interface.html
 // uint size,
 // gdk-pixbuf-Module-Interface.html
-// GError **error);
-// gdk-pixbuf-Module-Interface.html
-// /+* Animation loading +/
-// gdk-pixbuf-Module-Interface.html
-// GdkPixbufAnimation *(* loadAnimation) (FILE *f,
-// gdk-pixbuf-Module-Interface.html
-// GError **error);
-// gdk-pixbuf-Module-Interface.html
-// /+* Saving +/
-// gdk-pixbuf-Module-Interface.html
 // int (* save) (FILE *f,
-// gdk-pixbuf-Module-Interface.html
-// GdkPixbuf *pixbuf,
 // gdk-pixbuf-Module-Interface.html
 // char **paramKeys,
 // gdk-pixbuf-Module-Interface.html
 // char **paramValues,
 // gdk-pixbuf-Module-Interface.html
-// GError **error);
-// gdk-pixbuf-Module-Interface.html
 // int (*saveToCallback) (GdkPixbufSaveFunc saveFunc,
 // gdk-pixbuf-Module-Interface.html
 // void* userData,
 // gdk-pixbuf-Module-Interface.html
-// GdkPixbuf *pixbuf,
-// gdk-pixbuf-Module-Interface.html
 // char **optionKeys,
 // gdk-pixbuf-Module-Interface.html
 // char **optionValues,
-// gdk-pixbuf-Module-Interface.html
-// GError **error);
 // gdk-pixbuf-Module-Interface.html
 
 
@@ -320,19 +266,7 @@ public struct GdkPixbufModule{}
  * returns an iterator for the given animation.
  */
 public struct GdkPixbufAnimationClass{}
-// GObjectClass parentClass;
-// gdk-pixbuf-Module-Interface.html
 // int (*isStaticImage) (GdkPixbufAnimation *anim);
-// gdk-pixbuf-Module-Interface.html
-// GdkPixbuf* (*getStaticImage) (GdkPixbufAnimation *anim);
-// gdk-pixbuf-Module-Interface.html
-// void (*getSize) (GdkPixbufAnimation *anim,
-// gdk-pixbuf-Module-Interface.html
-// int *width,
-// gdk-pixbuf-Module-Interface.html
-// int *height);
-// gdk-pixbuf-Module-Interface.html
-// GdkPixbufAnimationIter* (*getIter) (GdkPixbufAnimation *anim,
 // gdk-pixbuf-Module-Interface.html
 // GTimeVal *startTime);
 // gdk-pixbuf-Module-Interface.html
@@ -348,12 +282,6 @@ public struct GdkPixbufAnimationClass{}
  * returns the time in milliseconds that the current frame
  */
 public struct GdkPixbufAnimationIterClass{}
-// GObjectClass parentClass;
-// gdk-pixbuf-Module-Interface.html
-// int (*getDelayTime) (GdkPixbufAnimationIter *iter);
-// gdk-pixbuf-Module-Interface.html
-// GdkPixbuf* (*getPixbuf) (GdkPixbufAnimationIter *iter);
-// gdk-pixbuf-Module-Interface.html
 // int (*onCurrentlyLoadingFrame) (GdkPixbufAnimationIter *iter);
 // gdk-pixbuf-Module-Interface.html
 // int (*advance) (GdkPixbufAnimationIter *iter,

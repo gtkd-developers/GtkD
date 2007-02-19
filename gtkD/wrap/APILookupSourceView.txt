@@ -68,6 +68,7 @@ class: SourceView
 prefix: gtk_source_view_
 structWrap: GtkSourceBuffer* SourceBuffer
 import: gsv.SourceBuffer
+import: gtkc.gtk
 import: glib.Str
 
 code: start
@@ -97,17 +98,19 @@ file: GtkSourceBuffer.html
 struct: GtkSourceBuffer
 class: SourceBuffer
 prefix: gtk_source_buffer_
-structWrap: GtkSourceBuffer* SourceBuffer
-structWrap: GtkSourceTagTable* SourceTagTable
-structWrap: GtkSourceLanguage* SourceLanguage
-structWrap: GtkSourceTagStyle* SourceTagStyle
-structWrap: GtkSourceMarker* SourceMarker
-import: gsv.SourceBuffer
+#import: gsv.SourceBuffer
+#structWrap: GtkSourceBuffer* SourceBuffer
 import: gsv.SourceTagTable
+structWrap: GtkSourceTagTable* SourceTagTable
 import: gsv.SourceLanguage
+structWrap: GtkSourceLanguage* SourceLanguage
 import: gsv.SourceTagStyle
+structWrap: GtkSourceTagStyle* SourceTagStyle
 import: gsv.SourceMarker
+structWrap: GtkSourceMarker* SourceMarker
 import: glib.Str
+import: glib.ListSG
+structWrap: GSList* ListSG
 outFile: SourceBuffer
 
 file: gtksourceview-Searching-in-a-GtkSourceBuffer.html
@@ -139,7 +142,8 @@ file: GtkSourceLanguagesManager.html
 struct: GtkSourceLanguagesManager
 class: SourceLanguagesManager
 prefix: gtk_source_languages_manager_
-#structWrap: 
+import: glib.ListSG
+structWrap: GSList* ListSG
 import: glib.Str
 outFile: SourceLanguagesManager
 

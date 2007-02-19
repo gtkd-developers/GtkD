@@ -223,8 +223,6 @@ struct _GdaProviderInfo {
  * Main Gtk struct.
  */
 public struct GdaBlob{}
-// /+* Private +/
-// libgda-gda-blob.html
 // int (* open) (GdaBlob *blob, GdaBlobMode mode);
 // libgda-gda-blob.html
 // int (* read) (GdaBlob *blob, void* buf, int size,
@@ -243,13 +241,7 @@ public struct GdaBlob{}
 // libgda-gda-blob.html
 // char * (* stringify) (GdaBlob *blob);
 // libgda-gda-blob.html
-// void (* freeData) (GdaBlob *blob);
-// libgda-gda-blob.html
 // void* privData;
-// libgda-gda-blob.html
-// /+* +/
-// libgda-gda-blob.html
-// /+* Public +/
 // libgda-gda-blob.html
 // void* userData;
 // libgda-gda-blob.html
@@ -262,17 +254,9 @@ public struct GdaConnectionPrivate{}
 
 
 public struct GdaServerProvider{}
-// GObject object;
-// libgda-GdaConnection.html
-// GdaServerProviderPrivate *priv;
-// libgda-GdaConnection.html
 
 
 public struct GdaClient{}
-// GObject object;
-// libgda-GdaConnection.html
-// GdaClientPrivate *priv;
-// libgda-GdaConnection.html
 
 
 /**
@@ -280,12 +264,6 @@ public struct GdaClient{}
  */
 public struct GdaCommand{}
 // char *text;
-// libgda-gda-command.html
-// GdaCommandType type;
-// libgda-gda-command.html
-// GdaCommandOptions options;
-// libgda-gda-command.html
-// GdaTransaction *xaction;
 // libgda-gda-command.html
 
 
@@ -312,8 +290,6 @@ public struct GdaProviderInfo{}
 // char *location;
 // libgda-gda-config.html
 // char *description;
-// libgda-gda-config.html
-// GList *gdaParams; /+* A list of GdaProviderParameterInfo pointers +/
 // libgda-gda-config.html
 
 
@@ -349,8 +325,6 @@ public struct GdaFieldAttributes{}
 // libgda-gda-field.html
 // int scale;
 // libgda-gda-field.html
-// GdaValueType gdaType;
-// libgda-gda-field.html
 // int allowNull;
 // libgda-gda-field.html
 // int primaryKey;
@@ -367,16 +341,10 @@ public struct GdaFieldAttributes{}
 // libgda-gda-field.html
 // int position;
 // libgda-gda-field.html
-// GdaValue *defaultValue;
-// libgda-gda-field.html
 
 
 public struct GdaField{}
 // int actualSize;
-// libgda-gda-field.html
-// GdaValue *value;
-// libgda-gda-field.html
-// GdaFieldAttributes *attributes;
 // libgda-gda-field.html
 
 
@@ -385,8 +353,6 @@ public struct GdaField{}
  */
 public struct GdaParameter{}
 // char *name;
-// libgda-gda-parameter.html
-// GdaValue *value;
 // libgda-gda-parameter.html
 
 
@@ -400,10 +366,6 @@ public struct GdaQuarkList{}
 
 
 public struct GdaDataModel{}
-// GObject object;
-// libgda-gda-row.html
-// GdaDataModelPrivate *priv;
-// libgda-gda-row.html
 
 
 /**
@@ -477,57 +439,31 @@ public struct GdaTimestamp
  * Main Gtk struct.
  */
 public struct GdaValue{}
-// GdaValueType type;
+// long vBigint;
 // libgda-gda-value.html
-// unio {
-	// libgda-gda-value.html
-	// long vBigint;
-	// libgda-gda-value.html
-	// ulong vBiguint;
-	// libgda-gda-value.html
-	// void* vBinary;
-	// libgda-gda-value.html
-	// GdaBlob vBlob;
-	// libgda-gda-value.html
-	// int vBoolean;
-	// libgda-gda-value.html
-	// GdaDate vDate;
-	// libgda-gda-value.html
-	// double vDouble;
-	// libgda-gda-value.html
-	// GdaGeometricPoint vPoint;
-	// libgda-gda-value.html
-	// GObject *vGobj;
-	// libgda-gda-value.html
-	// int vInteger;
-	// libgda-gda-value.html
-	// GdaValueList *vList;
-	// libgda-gda-value.html
-	// GdaMoney vMoney;
-	// libgda-gda-value.html
-	// GdaNumeric vNumeric;
-	// libgda-gda-value.html
-	// float vSingle;
-	// libgda-gda-value.html
-	// short vSmallint;
-	// libgda-gda-value.html
-	// ushort vSmalluint;
-	// libgda-gda-value.html
-	// char *vString;
-	// libgda-gda-value.html
-	// GdaTime vTime;
-	// libgda-gda-value.html
-	// GdaTimestamp vTimestamp;
-	// libgda-gda-value.html
-	// char vTinyint;
-	// libgda-gda-value.html
-	// char vTinyuint;
-	// libgda-gda-value.html
-	// GdaValueType vType;
-	// libgda-gda-value.html
-	// uint vUinteger;
-	// libgda-gda-value.html
-// } value;
+// ulong vBiguint;
+// libgda-gda-value.html
+// void* vBinary;
+// libgda-gda-value.html
+// int vBoolean;
+// libgda-gda-value.html
+// double vDouble;
+// libgda-gda-value.html
+// int vInteger;
+// libgda-gda-value.html
+// float vSingle;
+// libgda-gda-value.html
+// short vSmallint;
+// libgda-gda-value.html
+// ushort vSmalluint;
+// libgda-gda-value.html
+// char *vString;
+// libgda-gda-value.html
+// char vTinyint;
+// libgda-gda-value.html
+// char vTinyuint;
+// libgda-gda-value.html
+// uint vUinteger;
 // libgda-gda-value.html
 // int binaryLength;
 // libgda-gda-value.html

@@ -365,12 +365,6 @@ public struct cairo_t{}
  * cairo_status_tstatus;
  */
 public struct cairo_path_t{}
-// cairo_status_t status;
-// cairo-Paths.html
-// cairo_path_data_t *data;
-// cairo-Paths.html
-// int numData;
-// cairo-Paths.html
 
 
 /**
@@ -390,12 +384,6 @@ public struct cairo_path_t{}
  * unsignedlongindex;
  */
 public struct cairo_glyph_t{}
-// unsigned long index;
-// cairo-Text.html
-// double x;
-// cairo-Text.html
-// double y;
-// cairo-Text.html
 
 
 /**
@@ -440,16 +428,6 @@ public struct cairo_scaled_font_t{}
  * doubleascent;
  */
 public struct cairo_font_extents_t{}
-// double ascent;
-// cairo-Scaled-Fonts.html
-// double descent;
-// cairo-Scaled-Fonts.html
-// double height;
-// cairo-Scaled-Fonts.html
-// double maxXAdvance;
-// cairo-Scaled-Fonts.html
-// double maxYAdvance;
-// cairo-Scaled-Fonts.html
 
 
 /**
@@ -465,18 +443,6 @@ public struct cairo_font_extents_t{}
  * doublex_bearing;
  */
 public struct cairo_text_extents_t{}
-// double xBearing;
-// cairo-Scaled-Fonts.html
-// double yBearing;
-// cairo-Scaled-Fonts.html
-// double width;
-// cairo-Scaled-Fonts.html
-// double height;
-// cairo-Scaled-Fonts.html
-// double xAdvance;
-// cairo-Scaled-Fonts.html
-// double yAdvance;
-// cairo-Scaled-Fonts.html
 
 
 /**
@@ -505,12 +471,6 @@ public struct cairo_surface_t{}
  * a point (x, y) is given by:
  */
 public struct cairo_matrix_t{}
-// double xx; double yx;
-// cairo-cairo-matrix-t.html
-// double xy; double yy;
-// cairo-cairo-matrix-t.html
-// double x0; double y0;
-// cairo-cairo-matrix-t.html
 
 
 /**
@@ -522,8 +482,6 @@ public struct cairo_matrix_t{}
  * intunused;
  */
 public struct cairo_user_data_key_t{}
-// int unused;
-// cairo-Types.html
 
 
 /*

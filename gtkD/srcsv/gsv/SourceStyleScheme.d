@@ -41,6 +41,7 @@
  * omit prefixes:
  * omit code:
  * imports:
+ * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
@@ -51,8 +52,8 @@ module gsv.SourceStyleScheme;
 private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
-private import glib.Str;
 
+private import glib.Str;
 
 
 

@@ -38,8 +38,6 @@ private import gtkc.Loader;
 void main(char[][] args)
 {
 	
-	Linker.dumpFailedLoads();
-	
 	Gtk.init(args);
 	new HelloWorld();
 	Gtk.main();

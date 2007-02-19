@@ -42,6 +42,7 @@
  * omit code:
  * imports:
  * 	- gsv.SourceTagStyle
+ * 	- glib.Str
  * structWrap:
  * 	- GtkSourceTagStyle* -> SourceTagStyle
  * module aliases:
@@ -55,8 +56,8 @@ private import gsvc.gsvtypes;
 private import gsvc.gsv;
 
 private import gsv.SourceTagStyle;
-
 private import glib.Str;
+
 
 
 /**

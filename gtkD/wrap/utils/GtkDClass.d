@@ -1491,8 +1491,8 @@ public class GtkDClass
 				debug(structs)writefln("collectStructs %s",std.string.strip(lines[pos]));
 				while ( pos < lines.length && lines[pos][0] != '}' )
 				{
-					//invalidDStruct = true;
 					structDef ~= lines[pos].dup;
+					//invalidDStruct = true;
 					//if ( std.string.find(lines[pos], ":") >= 0 )
 					//{
 					//	invalidDStruct = true;
@@ -1653,11 +1653,25 @@ public class GtkDClass
 		}
 	}
 	
+	/// hack... we don't have all types (do we?)
+	bit isEnum(char[] type)
+	{
+		if ( type == "GdkEventType" )
+		{
+			return true;
+		}
+		return false;
+	}
+	
 	bit primitiveType(char[] line)
 	{
 		int p=0;
 		skipBlank(p, line);
 		char[] type = untilBlank(p, line);
+		if ( isEnum(type) )
+		{
+			return true;
+		}
 		return (type in wrapper.getAliases()) !is null;
 	}
 	

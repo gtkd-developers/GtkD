@@ -38,6 +38,7 @@ private import gsv.SourceBuffer;
 
 private import std.stdio;
 
+
 /**
  * Demos for SourceView.
  * TODO on gsv: override methods from TextView, TextBuffer, etc
@@ -74,7 +75,7 @@ class HelloWorld : MainWindow
 
 		
 		SourceLanguagesManager slm = new SourceLanguagesManager();
-		ListSG list = new ListSG(slm.getAvailableLanguages());
+		ListSG list = slm.getAvailableLanguages();
 		
 		writefln("%s available languages", list.length());
 		
@@ -99,6 +100,12 @@ class HelloWorld : MainWindow
 			sb.setHighlight(true);
 		}
 		
+		//sourceView.modifyFont("Courier", 9);
+		sourceView.setMargin(72);
+		sourceView.setShowMargin(true);
+		sourceView.setAutoIndent(true);
+		
+		
 		return scWindow;
 	}
 }
@@ -107,8 +114,6 @@ private import gtkc.Loader;
 
 void main(char[][] args)
 {
-	
-	Linker.dumpFailedLoads();
 	
 	Gtk.init(args);
 	new HelloWorld();

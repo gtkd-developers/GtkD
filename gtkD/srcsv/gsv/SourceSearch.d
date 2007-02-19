@@ -42,6 +42,7 @@
  * omit code:
  * imports:
  * 	- gtk.TextIter
+ * 	- glib.Str
  * structWrap:
  * 	- GtkTextIter* -> TextIter
  * module aliases:
@@ -55,8 +56,8 @@ private import gsvc.gsvtypes;
 private import gsvc.gsv;
 
 private import gtk.TextIter;
-
 private import glib.Str;
+
 
 
 /**

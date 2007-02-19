@@ -46,7 +46,10 @@
  * 	- gsv.SourceLanguage
  * 	- gsv.SourceTagStyle
  * 	- gsv.SourceMarker
+ * 	- glib.Str
+ * 	- glib.ListSG
  * structWrap:
+ * 	- GSList* -> ListSG
  * 	- GtkSourceBuffer* -> SourceBuffer
  * 	- GtkSourceLanguage* -> SourceLanguage
  * 	- GtkSourceMarker* -> SourceMarker
@@ -67,8 +70,10 @@ private import gsv.SourceTagTable;
 private import gsv.SourceLanguage;
 private import gsv.SourceTagStyle;
 private import gsv.SourceMarker;
-
 private import glib.Str;
+private import glib.ListSG;
+
+
 
 /**
  * Description
@@ -640,10 +645,10 @@ public class SourceBuffer : TextBuffer
 	 * Returns:
 	 *  a GSList of the GtkSourceMarker inside the range.
 	 */
-	public GSList* getMarkersInRegion(GtkTextIter* begin, GtkTextIter* end)
+	public ListSG getMarkersInRegion(GtkTextIter* begin, GtkTextIter* end)
 	{
 		// GSList* gtk_source_buffer_get_markers_in_region  (GtkSourceBuffer *buffer,  const GtkTextIter *begin,  const GtkTextIter *end);
-		return gtk_source_buffer_get_markers_in_region(gtkSourceBuffer, begin, end);
+		return new ListSG( gtk_source_buffer_get_markers_in_region(gtkSourceBuffer, begin, end) );
 	}
 	
 	/**

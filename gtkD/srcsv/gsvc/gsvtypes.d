@@ -78,33 +78,11 @@ public struct GtkSourceStyleScheme{}
 
 
 public struct GtkSourceStyleSchemeClass{}
-// GTypeInterface baseIface;
-// GtkSourceStyleScheme.html
-// /+* signals +/
-// GtkSourceStyleScheme.html
-// void (* styleChanged) (GtkSourceStyleScheme *scheme,
-// GtkSourceStyleScheme.html
 // char *tagId);
-// GtkSourceStyleScheme.html
-// /+* vtable +/
 // GtkSourceStyleScheme.html
 // char * (* getName) (GtkSourceStyleScheme *scheme);
 // GtkSourceStyleScheme.html
-// GtkSourceTagStyle * (* getTagStyle) (GtkSourceStyleScheme *scheme,
-// GtkSourceStyleScheme.html
 // char *styleName);
-// GtkSourceStyleScheme.html
-// GSList * (* getStyleNames) (GtkSourceStyleScheme *scheme);
-// GtkSourceStyleScheme.html
-// /+* Padding for future expansion +/
-// GtkSourceStyleScheme.html
-// void (*_GtkSourceReserved1) (void);
-// GtkSourceStyleScheme.html
-// void (*_GtkSourceReserved2) (void);
-// GtkSourceStyleScheme.html
-// void (*_GtkSourceReserved3) (void);
-// GtkSourceStyleScheme.html
-// void (*_GtkSourceReserved4) (void);
 // GtkSourceStyleScheme.html
 
 
@@ -139,15 +117,9 @@ public struct GtkSourceTagTable{}
  * Main Gtk struct.
  */
 public struct GtkSourceTagStyle{}
-// /+* readonly +/
-// gtksourceview-GtkSourceTagStyle.html
 // int isDefault;
 // gtksourceview-GtkSourceTagStyle.html
 // uint mask;
-// gtksourceview-GtkSourceTagStyle.html
-// GdkColor foreground;
-// gtksourceview-GtkSourceTagStyle.html
-// GdkColor background;
 // gtksourceview-GtkSourceTagStyle.html
 // int italic;
 // gtksourceview-GtkSourceTagStyle.html
@@ -156,9 +128,5 @@ public struct GtkSourceTagStyle{}
 // int underline;
 // gtksourceview-GtkSourceTagStyle.html
 // int strikethrough;
-// gtksourceview-GtkSourceTagStyle.html
-// /+* Reserved for future expansion +/
-// gtksourceview-GtkSourceTagStyle.html
-// byte reserved[16];
 // gtksourceview-GtkSourceTagStyle.html
 

@@ -1554,27 +1554,13 @@ public struct GdkDisplay{}
  * Obtains the current pointer position and modifier state.
  */
 public struct GdkDisplayPointerHooks{}
-// void (*getPointer) (GdkDisplay *display,
-// GdkDisplay.html
-// GdkScreen **screen,
-// GdkDisplay.html
 // int *x,
 // GdkDisplay.html
 // int *y,
 // GdkDisplay.html
-// GdkModifierType *mask);
-// GdkDisplay.html
-// GdkWindow* (*windowGetPointer) (GdkDisplay *display,
-// GdkDisplay.html
-// GdkWindow *window,
-// GdkDisplay.html
 // int *x,
 // GdkDisplay.html
 // int *y,
-// GdkDisplay.html
-// GdkModifierType *mask);
-// GdkDisplay.html
-// GdkWindow* (*windowAtPointer) (GdkDisplay *display,
 // GdkDisplay.html
 // int *winX,
 // GdkDisplay.html
@@ -1676,24 +1662,6 @@ public struct GdkGC{}
  * the foreground color. Note that gdk_gc_get_values()
  */
 public struct GdkGCValues{}
-// GdkColor foreground;
-// gdk-Graphics-Contexts.html
-// GdkColor background;
-// gdk-Graphics-Contexts.html
-// GdkFont *font;
-// gdk-Graphics-Contexts.html
-// GdkFunction funct;
-// gdk-Graphics-Contexts.html
-// GdkFill fill;
-// gdk-Graphics-Contexts.html
-// GdkPixmap *tile;
-// gdk-Graphics-Contexts.html
-// GdkPixmap *stipple;
-// gdk-Graphics-Contexts.html
-// GdkPixmap *clipMask;
-// gdk-Graphics-Contexts.html
-// GdkSubwindowMode subwindowMode;
-// gdk-Graphics-Contexts.html
 // int tsXOrigin;
 // gdk-Graphics-Contexts.html
 // int tsYOrigin;
@@ -1705,12 +1673,6 @@ public struct GdkGCValues{}
 // int graphicsExposures;
 // gdk-Graphics-Contexts.html
 // int lineWidth;
-// gdk-Graphics-Contexts.html
-// GdkLineStyle lineStyle;
-// gdk-Graphics-Contexts.html
-// GdkCapStyle capStyle;
-// gdk-Graphics-Contexts.html
-// GdkJoinStyle joinStyle;
 // gdk-Graphics-Contexts.html
 
 
@@ -1762,8 +1724,6 @@ public struct GdkSegment
  * the x coordinate of the bottom right corner
  */
 public struct GdkTrapezoid{}
-// double y1, x11, x21, y2, x12, x22;
-// gdk-Drawing-Primitives.html
 
 
 /**
@@ -1794,8 +1754,6 @@ public struct GdkBitmap
  * colors. This is used only for gdk_draw_indexed_image().
  */
 public struct GdkRgbCmap{}
-// uint colors[256];
-// gdk-GdkRGB.html
 // int nColors;
 // gdk-GdkRGB.html
 
@@ -1829,14 +1787,6 @@ public struct GdkRgbCmap{}
  * the GdkColormap associated with the image
  */
 public struct GdkImage{}
-// GObject parentInstance;
-// gdk-Images.html
-// GdkImageType type; /+* read only. +/
-// gdk-Images.html
-// GdkVisual *visual; /+* read only. visual used to create the image +/
-// gdk-Images.html
-// GdkByteOrder byteOrder; /+* read only. +/
-// gdk-Images.html
 // int width; /+* read only. +/
 // gdk-Images.html
 // int height; /+* read only. +/
@@ -1850,8 +1800,6 @@ public struct GdkImage{}
 // ushort bitsPerPixel; /+* read only. bits per pixel +/
 // gdk-Images.html
 // void* mem;
-// gdk-Images.html
-// GdkColormap *colormap; /+* read only. +/
 // gdk-Images.html
 
 
@@ -1885,8 +1833,6 @@ public struct GdkColor
 public struct GdkColormap{}
 // int size;
 // gdk-Colormaps-and-Colors.html
-// GdkColor *colors;
-// gdk-Colormaps-and-Colors.html
 
 
 /**
@@ -1898,13 +1844,7 @@ public struct GdkColormap{}
  * pixel_from_rgb (GdkVisual *visual,
  */
 public struct GdkVisual{}
-// GObject parentInstance;
-// gdk-Visuals.html
-// GdkVisualType type;
-// gdk-Visuals.html
 // int depth;
-// gdk-Visuals.html
-// GdkByteOrder byteOrder;
 // gdk-Visuals.html
 // int colormapSize;
 // gdk-Visuals.html
@@ -1942,8 +1882,6 @@ public struct GdkVisual{}
  * a value of type GdkFontType which indicates
  */
 public struct GdkFont{}
-// GdkFontType type;
-// gdk-Fonts.html
 // int ascent;
 // gdk-Fonts.html
 // int descent;
@@ -1957,8 +1895,6 @@ public struct GdkFont{}
  * the GdkCursorType of the cursor
  */
 public struct GdkCursor{}
-// GdkCursorType type;
-// gdk-Cursors.html
 
 
 /**
@@ -2021,8 +1957,6 @@ public struct GdkGeometry{}
 // gdk-Windows.html
 // double maxAspect;
 // gdk-Windows.html
-// GdkGravity winGravity;
-// gdk-Windows.html
 
 
 /**
@@ -2067,16 +2001,6 @@ public struct GdkWindowAttr{}
 // gdk-Windows.html
 // int height;
 // gdk-Windows.html
-// GdkWindowClass wclass;
-// gdk-Windows.html
-// GdkVisual *visual;
-// gdk-Windows.html
-// GdkColormap *colormap;
-// gdk-Windows.html
-// GdkWindowType windowType;
-// gdk-Windows.html
-// GdkCursor *cursor;
-// gdk-Windows.html
 // char *wmclassName;
 // gdk-Windows.html
 // char *wmclassClass;
@@ -2095,15 +2019,9 @@ public struct GdkWindowAttr{}
  * Obtains the current pointer position and modifier state.
  */
 public struct GdkPointerHooks{}
-// GdkWindow* (*getPointer) (GdkWindow *window,
-// gdk-Windows.html
 // int *x,
 // gdk-Windows.html
 // int *y,
-// gdk-Windows.html
-// GdkModifierType *mask);
-// gdk-Windows.html
-// GdkWindow* (*windowAtPointer) (GdkScreen *screen, /+* unused +/
 // gdk-Windows.html
 // int *winX,
 // gdk-Windows.html
@@ -2126,7 +2044,6 @@ public struct GdkPointerHooks{}
 public struct GdkEventAny
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
 }
 
@@ -2173,7 +2090,6 @@ public struct GdkEventAny
 public struct GdkEventKey
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
 	uint time;
 	uint state;
@@ -2234,7 +2150,6 @@ public struct GdkEventKey
 public struct GdkEventButton
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
 	uint time;
 	double x;
@@ -2242,7 +2157,6 @@ public struct GdkEventButton
 	double *axes;
 	uint state;
 	uint button;
-	GdkDevice *device;
 	double xRoot, yRoot;
 }
 
@@ -2273,14 +2187,11 @@ public struct GdkEventButton
 public struct GdkEventScroll
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
 	uint time;
 	double x;
 	double y;
 	uint state;
-	GdkScrollDirection direction;
-	GdkDevice *device;
 	double xRoot, yRoot;
 }
 
@@ -2306,7 +2217,6 @@ public struct GdkEventScroll
 public struct GdkEventMotion
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
 	uint time;
 	double x;
@@ -2314,7 +2224,6 @@ public struct GdkEventMotion
 	double *axes;
 	uint state;
 	short isHint;
-	GdkDevice *device;
 	double xRoot, yRoot;
 }
 
@@ -2342,10 +2251,7 @@ public struct GdkEventMotion
 public struct GdkEventExpose
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
-	GdkRectangle area;
-	GdkRegion *region;
 	int count; /+* If non-zero, how many more events follow. +/
 }
 
@@ -2366,9 +2272,7 @@ public struct GdkEventExpose
 public struct GdkEventVisibility
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
-	GdkVisibilityState state;
 }
 
 
@@ -2399,16 +2303,12 @@ public struct GdkEventVisibility
 public struct GdkEventCrossing
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
-	GdkWindow *subwindow;
 	uint time;
 	double x;
 	double y;
 	double xRoot;
 	double yRoot;
-	GdkCrossingMode mode;
-	GdkNotifyType detail;
 	int focus;
 	uint state;
 }
@@ -2429,7 +2329,6 @@ public struct GdkEventCrossing
 public struct GdkEventFocus
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
 	short inn;
 }
@@ -2455,7 +2354,6 @@ public struct GdkEventFocus
 public struct GdkEventConfigure
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
 	int x, y;
 	int width;
@@ -2482,9 +2380,7 @@ public struct GdkEventConfigure
 public struct GdkEventProperty
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
-	GdkAtom atom;
 	uint time;
 	uint state;
 }
@@ -2514,13 +2410,8 @@ public struct GdkEventProperty
 public struct GdkEventSelection
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
-	GdkAtom selection;
-	GdkAtom target;
-	GdkAtom property;
 	uint time;
-	GdkNativeWindow requestor;
 }
 
 
@@ -2532,9 +2423,7 @@ public struct GdkEventSelection
 public struct GdkEventDND
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
-	GdkDragContext *context;
 	uint time;
 	short xRoot, yRoot;
 }
@@ -2561,10 +2450,8 @@ public struct GdkEventDND
 public struct GdkEventProximity
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
 	uint time;
-	GdkDevice *device;
 }
 
 
@@ -2587,23 +2474,9 @@ public struct GdkEventProximity
 public struct GdkEventClient{}
 // GdkEventType type;
 // gdk-Event-Structures.html
-// GdkWindow *window;
-// gdk-Event-Structures.html
 // byte sendEvent;
 // gdk-Event-Structures.html
-// GdkAtom messageType;
-// gdk-Event-Structures.html
 // ushort dataFormat;
-// gdk-Event-Structures.html
-// unio {
-	// gdk-Event-Structures.html
-	// char b[20];
-	// gdk-Event-Structures.html
-	// short s[10];
-	// gdk-Event-Structures.html
-	// long l[5];
-	// gdk-Event-Structures.html
-// } data;
 // gdk-Event-Structures.html
 
 
@@ -2621,7 +2494,6 @@ public struct GdkEventClient{}
 public struct GdkEventNoExpose
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
 }
 
@@ -2642,10 +2514,7 @@ public struct GdkEventNoExpose
 public struct GdkEventWindowState
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
-	GdkWindowState changedMask;
-	GdkWindowState newWindowState;
 }
 
 
@@ -2663,10 +2532,7 @@ public struct GdkEventWindowState
 public struct GdkEventSetting
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
-	GdkSettingAction action;
-	char *name;
 }
 
 
@@ -2694,11 +2560,7 @@ public struct GdkEventSetting
 public struct GdkEventOwnerChange
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
-	GdkNativeWindow owner;
-	GdkOwnerChange reason;
-	GdkAtom selection;
 	uint time;
 	uint selectionTime;
 }
@@ -2718,11 +2580,9 @@ public struct GdkEventOwnerChange
 public struct GdkEventGrabBroken
 {
 	GdkEventType type;
-	GdkWindow *window;
 	byte sendEvent;
 	int keyboard;
 	int implicit;
-	GdkWindow *grabWindow;
 }
 
 
@@ -2772,23 +2632,7 @@ public struct GdkKeymapKey
  * a bitmask of actions proposed by the source when
  */
 public struct GdkDragContext{}
-// GObject parentInstance;
-// gdk-Drag-and-Drop.html
-// GdkDragProtocol protocol;
-// gdk-Drag-and-Drop.html
 // int isSource;
-// gdk-Drag-and-Drop.html
-// GdkWindow *sourceWindow;
-// gdk-Drag-and-Drop.html
-// GdkWindow *destWindow;
-// gdk-Drag-and-Drop.html
-// GList *targets;
-// gdk-Drag-and-Drop.html
-// GdkDragAction actions;
-// gdk-Drag-and-Drop.html
-// GdkDragAction suggestedAction;
-// gdk-Drag-and-Drop.html
-// GdkDragAction action;
 // gdk-Drag-and-Drop.html
 // uint startTime;
 // gdk-Drag-and-Drop.html
@@ -2821,25 +2665,13 @@ public struct GdkDragContext{}
  * an array of GdkDeviceKey, describing the mapped macro buttons
  */
 public struct GdkDevice{}
-// GObject parentInstance;
-// gdk-Input-Devices.html
-// /+* All fields are read-only +/
-// gdk-Input-Devices.html
 // char *name;
-// gdk-Input-Devices.html
-// GdkInputSource source;
-// gdk-Input-Devices.html
-// GdkInputMode mode;
 // gdk-Input-Devices.html
 // int hasCursor; /+* TRUE if the X pointer follows device motion +/
 // gdk-Input-Devices.html
 // int numAxes;
 // gdk-Input-Devices.html
-// GdkDeviceAxis *axes;
-// gdk-Input-Devices.html
 // int numKeys;
-// gdk-Input-Devices.html
-// GdkDeviceKey *keys;
 // gdk-Input-Devices.html
 
 
@@ -2852,8 +2684,6 @@ public struct GdkDevice{}
  */
 public struct GdkDeviceKey{}
 // uint keyval;
-// gdk-Input-Devices.html
-// GdkModifierType modifiers;
 // gdk-Input-Devices.html
 
 
@@ -2868,8 +2698,6 @@ public struct GdkDeviceKey{}
  * the maximal value that will be reported by this axis.
  */
 public struct GdkDeviceAxis{}
-// GdkAxisUse use;
-// gdk-Input-Devices.html
 // double min;
 // gdk-Input-Devices.html
 // double max;
@@ -2886,8 +2714,6 @@ public struct GdkDeviceAxis{}
  */
 public struct GdkTimeCoord{}
 // uint time;
-// gdk-Input-Devices.html
-// double axes[GDK_MAX_TIMECOORD_AXES];
 // gdk-Input-Devices.html
 
 
