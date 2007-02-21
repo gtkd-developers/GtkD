@@ -108,7 +108,7 @@ public class Viewport : Bin
 			getStruct(),
 			"set-scroll-adjustments",
 			cast(GCallback)&callBackSetScrollAdjustments,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["set-scroll-adjustments"] = 1;

@@ -113,7 +113,7 @@ public class IMContext : ObjectG
 			getStruct(),
 			"commit",
 			cast(GCallback)&callBackCommit,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["commit"] = 1;
@@ -141,7 +141,7 @@ public class IMContext : ObjectG
 			getStruct(),
 			"delete-surrounding",
 			cast(GCallback)&callBackDeleteSurrounding,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["delete-surrounding"] = 1;
@@ -169,7 +169,7 @@ public class IMContext : ObjectG
 			getStruct(),
 			"preedit-changed",
 			cast(GCallback)&callBackPreeditChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["preedit-changed"] = 1;
@@ -197,7 +197,7 @@ public class IMContext : ObjectG
 			getStruct(),
 			"preedit-end",
 			cast(GCallback)&callBackPreeditEnd,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["preedit-end"] = 1;
@@ -225,7 +225,7 @@ public class IMContext : ObjectG
 			getStruct(),
 			"preedit-start",
 			cast(GCallback)&callBackPreeditStart,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["preedit-start"] = 1;
@@ -253,7 +253,7 @@ public class IMContext : ObjectG
 			getStruct(),
 			"retrieve-surrounding",
 			cast(GCallback)&callBackRetrieveSurrounding,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["retrieve-surrounding"] = 1;

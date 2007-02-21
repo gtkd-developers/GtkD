@@ -174,7 +174,7 @@ code: start
 		if ( gObject !is  null )
 		{
 			//writefln("ObjectG.this\n");
-			setDataFull("GObject",this);
+			setDataFull("GObject",cast(void*)this);
 		}
 	}
 	

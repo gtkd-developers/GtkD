@@ -192,7 +192,7 @@ public class TextView : Container
 			getStruct(),
 			"backspace",
 			cast(GCallback)&callBackBackspace,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["backspace"] = 1;
@@ -220,7 +220,7 @@ public class TextView : Container
 			getStruct(),
 			"copy-clipboard",
 			cast(GCallback)&callBackCopyClipboard,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["copy-clipboard"] = 1;
@@ -248,7 +248,7 @@ public class TextView : Container
 			getStruct(),
 			"cut-clipboard",
 			cast(GCallback)&callBackCutClipboard,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["cut-clipboard"] = 1;
@@ -276,7 +276,7 @@ public class TextView : Container
 			getStruct(),
 			"delete-from-cursor",
 			cast(GCallback)&callBackDeleteFromCursor,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["delete-from-cursor"] = 1;
@@ -304,7 +304,7 @@ public class TextView : Container
 			getStruct(),
 			"insert-at-cursor",
 			cast(GCallback)&callBackInsertAtCursor,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["insert-at-cursor"] = 1;
@@ -332,7 +332,7 @@ public class TextView : Container
 			getStruct(),
 			"move-cursor",
 			cast(GCallback)&callBackMoveCursor,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-cursor"] = 1;
@@ -360,7 +360,7 @@ public class TextView : Container
 			getStruct(),
 			"move-focus",
 			cast(GCallback)&callBackMoveFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-focus"] = 1;
@@ -388,7 +388,7 @@ public class TextView : Container
 			getStruct(),
 			"move-viewport",
 			cast(GCallback)&callBackMoveViewport,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-viewport"] = 1;
@@ -416,7 +416,7 @@ public class TextView : Container
 			getStruct(),
 			"page-horizontally",
 			cast(GCallback)&callBackPageHorizontally,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["page-horizontally"] = 1;
@@ -444,7 +444,7 @@ public class TextView : Container
 			getStruct(),
 			"paste-clipboard",
 			cast(GCallback)&callBackPasteClipboard,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["paste-clipboard"] = 1;
@@ -472,7 +472,7 @@ public class TextView : Container
 			getStruct(),
 			"populate-popup",
 			cast(GCallback)&callBackPopulatePopup,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["populate-popup"] = 1;
@@ -500,7 +500,7 @@ public class TextView : Container
 			getStruct(),
 			"select-all",
 			cast(GCallback)&callBackSelectAll,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["select-all"] = 1;
@@ -528,7 +528,7 @@ public class TextView : Container
 			getStruct(),
 			"set-anchor",
 			cast(GCallback)&callBackSetAnchor,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["set-anchor"] = 1;
@@ -556,7 +556,7 @@ public class TextView : Container
 			getStruct(),
 			"set-scroll-adjustments",
 			cast(GCallback)&callBackSetScrollAdjustments,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["set-scroll-adjustments"] = 1;
@@ -584,7 +584,7 @@ public class TextView : Container
 			getStruct(),
 			"toggle-overwrite",
 			cast(GCallback)&callBackToggleOverwrite,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["toggle-overwrite"] = 1;

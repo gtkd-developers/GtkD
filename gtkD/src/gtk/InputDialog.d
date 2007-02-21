@@ -125,7 +125,7 @@ public class InputDialog : Dialog
 			getStruct(),
 			"disable-device",
 			cast(GCallback)&callBackDisableDevice,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["disable-device"] = 1;
@@ -153,7 +153,7 @@ public class InputDialog : Dialog
 			getStruct(),
 			"enable-device",
 			cast(GCallback)&callBackEnableDevice,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["enable-device"] = 1;

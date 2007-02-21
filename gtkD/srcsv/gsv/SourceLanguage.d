@@ -109,7 +109,7 @@ public class SourceLanguage : ObjectG
 			getStruct(),
 			"tag-style-changed",
 			cast(GCallback)&callBackTagStyleChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["tag-style-changed"] = 1;

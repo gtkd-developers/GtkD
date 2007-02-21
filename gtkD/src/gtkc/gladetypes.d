@@ -39,9 +39,19 @@ alias void* GladeXMLCustomWidgetHandler;
  * Main Gtk struct.
  */
 public struct GladeXML{}
+// GObject parent;
+// GladeXML.html
+// char *filename;
+// GladeXML.html
 
 
 public struct GladeXMLClass{}
+// GObjectClass parentClass;
+// GladeXML.html
+// /+* Virtual function: gets the appropriate gtype for the typename.+/
+// GladeXML.html
+// GType (* lookupType) (GladeXML*self, char *gtypename);
+// GladeXML.html
 
 
 /*

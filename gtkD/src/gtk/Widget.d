@@ -317,7 +317,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"accel-closures-changed",
 			cast(GCallback)&callBackAccelClosuresChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["accel-closures-changed"] = 1;
@@ -346,7 +346,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"button-press-event",
 			cast(GCallback)&callBackButtonPress,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["button-press-event"] = 1;
@@ -375,7 +375,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"button-release-event",
 			cast(GCallback)&callBackButtonRelease,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["button-release-event"] = 1;
@@ -403,7 +403,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"can-activate-accel",
 			cast(GCallback)&callBackCanActivateAccel,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["can-activate-accel"] = 1;
@@ -431,7 +431,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"child-notify",
 			cast(GCallback)&callBackChildNotify,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["child-notify"] = 1;
@@ -459,7 +459,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"client-event",
 			cast(GCallback)&callBackClient,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["client-event"] = 1;
@@ -487,7 +487,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"composited-changed",
 			cast(GCallback)&callBackCompositedChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["composited-changed"] = 1;
@@ -515,7 +515,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"configure-event",
 			cast(GCallback)&callBackConfigure,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["configure-event"] = 1;
@@ -543,7 +543,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"delete-event",
 			cast(GCallback)&callBackDelete,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["delete-event"] = 1;
@@ -571,7 +571,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"destroy-event",
 			cast(GCallback)&callBackDestroy,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["destroy-event"] = 1;
@@ -599,7 +599,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"direction-changed",
 			cast(GCallback)&callBackDirectionChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["direction-changed"] = 1;
@@ -627,7 +627,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"drag-begin",
 			cast(GCallback)&callBackDragBegin,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["drag-begin"] = 1;
@@ -655,7 +655,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"drag-data-delete",
 			cast(GCallback)&callBackDragDataDelete,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["drag-data-delete"] = 1;
@@ -683,7 +683,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"drag-data-get",
 			cast(GCallback)&callBackDragDataGet,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["drag-data-get"] = 1;
@@ -711,7 +711,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"drag-data-received",
 			cast(GCallback)&callBackDragDataReceived,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["drag-data-received"] = 1;
@@ -739,7 +739,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"drag-drop",
 			cast(GCallback)&callBackDragDrop,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["drag-drop"] = 1;
@@ -767,7 +767,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"drag-end",
 			cast(GCallback)&callBackDragEnd,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["drag-end"] = 1;
@@ -795,7 +795,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"drag-failed",
 			cast(GCallback)&callBackDragFailed,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["drag-failed"] = 1;
@@ -823,7 +823,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"drag-leave",
 			cast(GCallback)&callBackDragLeave,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["drag-leave"] = 1;
@@ -851,7 +851,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"drag-motion",
 			cast(GCallback)&callBackDragMotion,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["drag-motion"] = 1;
@@ -879,7 +879,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"enter-notify-event",
 			cast(GCallback)&callBackEnterNotify,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["enter-notify-event"] = 1;
@@ -907,7 +907,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"event",
 			cast(GCallback)&callBack,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["event"] = 1;
@@ -935,7 +935,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"event-after",
 			cast(GCallback)&callBackEventAfter,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["event-after"] = 1;
@@ -963,7 +963,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"expose-event",
 			cast(GCallback)&callBackExpose,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["expose-event"] = 1;
@@ -991,7 +991,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"focus",
 			cast(GCallback)&callBackFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["focus"] = 1;
@@ -1019,7 +1019,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"focus-in-event",
 			cast(GCallback)&callBackFocusIn,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["focus-in-event"] = 1;
@@ -1047,7 +1047,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"focus-out-event",
 			cast(GCallback)&callBackFocusOut,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["focus-out-event"] = 1;
@@ -1075,7 +1075,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"grab-broken-event",
 			cast(GCallback)&callBackGrabBroken,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["grab-broken-event"] = 1;
@@ -1103,7 +1103,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"grab-focus",
 			cast(GCallback)&callBackGrabFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["grab-focus"] = 1;
@@ -1131,7 +1131,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"grab-notify",
 			cast(GCallback)&callBackGrabNotify,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["grab-notify"] = 1;
@@ -1159,7 +1159,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"hide",
 			cast(GCallback)&callBackHide,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["hide"] = 1;
@@ -1187,7 +1187,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"hierarchy-changed",
 			cast(GCallback)&callBackHierarchyChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["hierarchy-changed"] = 1;
@@ -1215,7 +1215,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"key-press-event",
 			cast(GCallback)&callBackKeyPress,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["key-press-event"] = 1;
@@ -1243,7 +1243,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"key-release-event",
 			cast(GCallback)&callBackKeyRelease,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["key-release-event"] = 1;
@@ -1271,7 +1271,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"keynav-failed",
 			cast(GCallback)&callBackKeynavFailed,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["keynav-failed"] = 1;
@@ -1299,7 +1299,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"leave-notify-event",
 			cast(GCallback)&callBackLeaveNotify,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["leave-notify-event"] = 1;
@@ -1327,7 +1327,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"map",
 			cast(GCallback)&callBackMap,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["map"] = 1;
@@ -1355,7 +1355,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"map-event",
 			cast(GCallback)&callBackMapEvent,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["map-event"] = 1;
@@ -1383,7 +1383,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"mnemonic-activate",
 			cast(GCallback)&callBackMnemonicActivate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["mnemonic-activate"] = 1;
@@ -1412,7 +1412,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"motion-notify-event",
 			cast(GCallback)&callBackMotionNotify,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["motion-notify-event"] = 1;
@@ -1440,7 +1440,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"no-expose-event",
 			cast(GCallback)&callBackNoExpose,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["no-expose-event"] = 1;
@@ -1468,7 +1468,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"parent-set",
 			cast(GCallback)&callBackParentSet,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["parent-set"] = 1;
@@ -1496,7 +1496,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"popup-menu",
 			cast(GCallback)&callBackPopupMenu,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["popup-menu"] = 1;
@@ -1524,7 +1524,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"property-notify-event",
 			cast(GCallback)&callBackPropertyNotify,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["property-notify-event"] = 1;
@@ -1552,7 +1552,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"proximity-in-event",
 			cast(GCallback)&callBackProximityIn,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["proximity-in-event"] = 1;
@@ -1580,7 +1580,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"proximity-out-event",
 			cast(GCallback)&callBackProximityOut,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["proximity-out-event"] = 1;
@@ -1608,7 +1608,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"query-tooltip",
 			cast(GCallback)&callBackQueryTooltip,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["query-tooltip"] = 1;
@@ -1636,7 +1636,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"realize",
 			cast(GCallback)&callBackRealize,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["realize"] = 1;
@@ -1664,7 +1664,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"screen-changed",
 			cast(GCallback)&callBackScreenChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["screen-changed"] = 1;
@@ -1692,7 +1692,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"scroll-event",
 			cast(GCallback)&callBackScroll,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["scroll-event"] = 1;
@@ -1720,7 +1720,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"selection-clear-event",
 			cast(GCallback)&callBackSelectionClear,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["selection-clear-event"] = 1;
@@ -1748,7 +1748,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"selection-get",
 			cast(GCallback)&callBackSelectionGet,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["selection-get"] = 1;
@@ -1776,7 +1776,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"selection-notify-event",
 			cast(GCallback)&callBackSelectionNotify,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["selection-notify-event"] = 1;
@@ -1804,7 +1804,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"selection-received",
 			cast(GCallback)&callBackSelectionReceived,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["selection-received"] = 1;
@@ -1832,7 +1832,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"selection-request-event",
 			cast(GCallback)&callBackSelectionRequest,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["selection-request-event"] = 1;
@@ -1860,7 +1860,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"show",
 			cast(GCallback)&callBackShow,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["show"] = 1;
@@ -1888,7 +1888,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"show-help",
 			cast(GCallback)&callBackShowHelp,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["show-help"] = 1;
@@ -1916,7 +1916,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"size-allocate",
 			cast(GCallback)&callBackSizeAllocate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["size-allocate"] = 1;
@@ -1944,7 +1944,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"size-request",
 			cast(GCallback)&callBackSizeRequest,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["size-request"] = 1;
@@ -1972,7 +1972,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"state-changed",
 			cast(GCallback)&callBackStateChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["state-changed"] = 1;
@@ -2000,7 +2000,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"style-set",
 			cast(GCallback)&callBackStyleSet,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["style-set"] = 1;
@@ -2028,7 +2028,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"unmap",
 			cast(GCallback)&callBackUnmap,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["unmap"] = 1;
@@ -2056,7 +2056,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"unmap-event",
 			cast(GCallback)&callBackUnmapEvent,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["unmap-event"] = 1;
@@ -2084,7 +2084,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"unrealize",
 			cast(GCallback)&callBackUnrealize,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["unrealize"] = 1;
@@ -2112,7 +2112,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"visibility-notify-event",
 			cast(GCallback)&callBackVisibilityNotify,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["visibility-notify-event"] = 1;
@@ -2140,7 +2140,7 @@ public class Widget : ObjectGtk
 			getStruct(),
 			"window-state-event",
 			cast(GCallback)&callBackWindowState,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["window-state-event"] = 1;

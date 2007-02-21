@@ -131,7 +131,7 @@ public class Style : ObjectG
 			getStruct(),
 			"realize",
 			cast(GCallback)&callBackRealize,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["realize"] = 1;
@@ -159,7 +159,7 @@ public class Style : ObjectG
 			getStruct(),
 			"unrealize",
 			cast(GCallback)&callBackUnrealize,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["unrealize"] = 1;

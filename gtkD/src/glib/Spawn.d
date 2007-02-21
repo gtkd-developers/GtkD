@@ -202,7 +202,7 @@ public class Spawn
 		if ( result != 0 )
 		{
 			this.externalWatch = externalWatch;
-			g_child_watch_add(childPid, cast(GChildWatchFunc)(&childWatchCallback), this);
+			g_child_watch_add(childPid, cast(GChildWatchFunc)(&childWatchCallback), cast(void*)this);
 			standardInput = fdopen(stdIn, "w");
 			standardOutput = fdopen(stdOut, "r");
 			standardError = fdopen(stdErr, "r");

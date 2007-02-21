@@ -201,7 +201,7 @@ public class MenuItem : Item
 			getStruct(),
 			"activate",
 			cast(GCallback)&callBackActivate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["activate"] = 1;
@@ -229,7 +229,7 @@ public class MenuItem : Item
 			getStruct(),
 			"activate-item",
 			cast(GCallback)&callBackActivateItem,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["activate-item"] = 1;
@@ -257,7 +257,7 @@ public class MenuItem : Item
 			getStruct(),
 			"toggle-size-allocate",
 			cast(GCallback)&callBackToggleSizeAllocate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["toggle-size-allocate"] = 1;
@@ -285,7 +285,7 @@ public class MenuItem : Item
 			getStruct(),
 			"toggle-size-request",
 			cast(GCallback)&callBackToggleSizeRequest,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["toggle-size-request"] = 1;

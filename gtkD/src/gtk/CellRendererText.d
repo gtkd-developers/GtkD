@@ -116,7 +116,7 @@ public class CellRendererText : CellRenderer
 			getStruct(),
 			"edited",
 			cast(GCallback)&callBackEdited,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["edited"] = 1;

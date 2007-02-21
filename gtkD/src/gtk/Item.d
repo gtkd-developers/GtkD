@@ -107,7 +107,7 @@ public class Item : Bin
 			getStruct(),
 			"deselect",
 			cast(GCallback)&callBackDeselect,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["deselect"] = 1;
@@ -135,7 +135,7 @@ public class Item : Bin
 			getStruct(),
 			"select",
 			cast(GCallback)&callBackSelect,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["select"] = 1;
@@ -163,7 +163,7 @@ public class Item : Bin
 			getStruct(),
 			"toggle",
 			cast(GCallback)&callBackToggle,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["toggle"] = 1;

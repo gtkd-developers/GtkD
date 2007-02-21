@@ -133,7 +133,7 @@ public class AccelGroup : ObjectG
 			getStruct(),
 			"accel-activate",
 			cast(GCallback)&callBackAccelActivate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["accel-activate"] = 1;
@@ -161,7 +161,7 @@ public class AccelGroup : ObjectG
 			getStruct(),
 			"accel-changed",
 			cast(GCallback)&callBackAccelChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["accel-changed"] = 1;

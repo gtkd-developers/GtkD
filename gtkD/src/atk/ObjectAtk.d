@@ -124,7 +124,7 @@ public class ObjectAtk : ObjectG
 			getStruct(),
 			"active-descendant-changed",
 			cast(GCallback)&callBackActiveDescendantChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["active-descendant-changed"] = 1;
@@ -152,7 +152,7 @@ public class ObjectAtk : ObjectG
 			getStruct(),
 			"children-changed",
 			cast(GCallback)&callBackChildrenChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["children-changed"] = 1;
@@ -180,7 +180,7 @@ public class ObjectAtk : ObjectG
 			getStruct(),
 			"focus-event",
 			cast(GCallback)&callBackFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["focus-event"] = 1;
@@ -208,7 +208,7 @@ public class ObjectAtk : ObjectG
 			getStruct(),
 			"property-change",
 			cast(GCallback)&callBackPropertyChange,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["property-change"] = 1;
@@ -236,7 +236,7 @@ public class ObjectAtk : ObjectG
 			getStruct(),
 			"state-change",
 			cast(GCallback)&callBackStateChange,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["state-change"] = 1;
@@ -264,7 +264,7 @@ public class ObjectAtk : ObjectG
 			getStruct(),
 			"visible-data-changed",
 			cast(GCallback)&callBackVisibleDataChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["visible-data-changed"] = 1;

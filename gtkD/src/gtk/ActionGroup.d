@@ -129,7 +129,7 @@ public class ActionGroup : ObjectG
 			getStruct(),
 			"connect-proxy",
 			cast(GCallback)&callBackConnectProxy,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["connect-proxy"] = 1;
@@ -157,7 +157,7 @@ public class ActionGroup : ObjectG
 			getStruct(),
 			"disconnect-proxy",
 			cast(GCallback)&callBackDisconnectProxy,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["disconnect-proxy"] = 1;
@@ -185,7 +185,7 @@ public class ActionGroup : ObjectG
 			getStruct(),
 			"post-activate",
 			cast(GCallback)&callBackPostActivate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["post-activate"] = 1;
@@ -213,7 +213,7 @@ public class ActionGroup : ObjectG
 			getStruct(),
 			"pre-activate",
 			cast(GCallback)&callBackPreActivate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["pre-activate"] = 1;

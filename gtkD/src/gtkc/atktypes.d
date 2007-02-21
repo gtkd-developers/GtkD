@@ -427,6 +427,10 @@ public struct AtkImplementor{}
 public struct AtkPropertyValues{}
 // char *propertyName;
 // AtkObject.html
+// GValue oldValue;
+// AtkObject.html
+// GValue newValue;
+// AtkObject.html
 
 
 /**
@@ -490,6 +494,8 @@ public struct AtkText{}
  * AtkTextRectanglebounds;
  */
 public struct AtkTextRange{}
+// AtkTextRectangle bounds;
+// AtkText.html
 // int startOffset;
 // AtkText.html
 // int endOffset;

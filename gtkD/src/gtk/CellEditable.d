@@ -108,7 +108,7 @@ public class CellEditable
 			getStruct(),
 			"editing-done",
 			cast(GCallback)&callBackEditingDone,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["editing-done"] = 1;
@@ -136,7 +136,7 @@ public class CellEditable
 			getStruct(),
 			"remove-widget",
 			cast(GCallback)&callBackRemoveWidget,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["remove-widget"] = 1;

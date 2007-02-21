@@ -92,13 +92,43 @@ alias GOnceStatus OnceStatus;
  * Do not use this struct unless you know what you are doing.
  */
 public struct GThreadFunctions{}
+// GMutex* (*mutexNew) (void);
+//
+// void (*mutexLock) (GMutex *mutex);
+//
 // int (*mutexTrylock) (GMutex *mutex);
+//
+// void (*mutexUnlock) (GMutex *mutex);
+//
+// void (*mutexFree) (GMutex *mutex);
+//
+// GCond* (*condNew) (void);
+//
+// void (*condSignal) (GCond *cond);
+//
+// void (*condBroadcast) (GCond *cond);
+//
+// void (*condWait) (GCond *cond,
+//
+// GMutex *mutex);
 //
 // int (*condTimedWait) (GCond *cond,
 //
+// GMutex *mutex,
+//
+// GTimeVal *endTime);
+//
+// void (*condFree) (GCond *cond);
+//
+// GPrivate* (*privateNew) (GDestroyNotify destructor);
+//
 // void* (*privateGet) (GPrivate *privateKey);
 //
+// void (*privateSet) (GPrivate *privateKey,
+//
 // void* data);
+//
+// void (*threadCreate) (GThreadFunc func,
 //
 // void* data,
 //
@@ -108,7 +138,23 @@ public struct GThreadFunctions{}
 //
 // int bound,
 //
+// GThreadPriority priority,
+//
 // void* thread,
+//
+// GError **error);
+//
+// void (*threadYield) (void);
+//
+// void (*threadJoin) (void* thread);
+//
+// void (*threadExit) (void);
+//
+// void (*threadSetPriority)(void* thread,
+//
+// GThreadPriority priority);
+//
+// void (*threadSelf) (void* thread);
 //
 // int (*threadEqual) (void* thread1,
 //

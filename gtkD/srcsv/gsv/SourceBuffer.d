@@ -41,7 +41,6 @@
  * omit prefixes:
  * omit code:
  * imports:
- * 	- gsv.SourceBuffer
  * 	- gsv.SourceTagTable
  * 	- gsv.SourceLanguage
  * 	- gsv.SourceTagStyle
@@ -50,7 +49,6 @@
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
- * 	- GtkSourceBuffer* -> SourceBuffer
  * 	- GtkSourceLanguage* -> SourceLanguage
  * 	- GtkSourceMarker* -> SourceMarker
  * 	- GtkSourceTagStyle* -> SourceTagStyle
@@ -65,7 +63,6 @@ private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 
-private import gsv.SourceBuffer;
 private import gsv.SourceTagTable;
 private import gsv.SourceLanguage;
 private import gsv.SourceTagStyle;
@@ -137,7 +134,7 @@ public class SourceBuffer : TextBuffer
 			getStruct(),
 			"can-redo",
 			cast(GCallback)&callBackCanRedo,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["can-redo"] = 1;
@@ -165,7 +162,7 @@ public class SourceBuffer : TextBuffer
 			getStruct(),
 			"can-undo",
 			cast(GCallback)&callBackCanUndo,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["can-undo"] = 1;
@@ -193,7 +190,7 @@ public class SourceBuffer : TextBuffer
 			getStruct(),
 			"highlight-updated",
 			cast(GCallback)&callBackHighlightUpdated,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["highlight-updated"] = 1;
@@ -221,7 +218,7 @@ public class SourceBuffer : TextBuffer
 			getStruct(),
 			"marker-updated",
 			cast(GCallback)&callBackMarkerUpdated,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["marker-updated"] = 1;

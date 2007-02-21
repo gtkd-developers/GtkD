@@ -177,7 +177,7 @@ public class Toolbar : Container
 			getStruct(),
 			"focus-home-or-end",
 			cast(GCallback)&callBackFocusHomeOrEnd,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["focus-home-or-end"] = 1;
@@ -205,7 +205,7 @@ public class Toolbar : Container
 			getStruct(),
 			"move-focus",
 			cast(GCallback)&callBackMoveFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-focus"] = 1;
@@ -233,7 +233,7 @@ public class Toolbar : Container
 			getStruct(),
 			"orientation-changed",
 			cast(GCallback)&callBackOrientationChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["orientation-changed"] = 1;
@@ -261,7 +261,7 @@ public class Toolbar : Container
 			getStruct(),
 			"popup-context-menu",
 			cast(GCallback)&callBackPopupContextMenu,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["popup-context-menu"] = 1;
@@ -289,7 +289,7 @@ public class Toolbar : Container
 			getStruct(),
 			"style-changed",
 			cast(GCallback)&callBackStyleChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["style-changed"] = 1;

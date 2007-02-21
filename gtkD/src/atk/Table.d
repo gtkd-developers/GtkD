@@ -119,7 +119,7 @@ public class Table
 			getStruct(),
 			"column-deleted",
 			cast(GCallback)&callBackColumnDeleted,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["column-deleted"] = 1;
@@ -147,7 +147,7 @@ public class Table
 			getStruct(),
 			"column-inserted",
 			cast(GCallback)&callBackColumnInserted,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["column-inserted"] = 1;
@@ -175,7 +175,7 @@ public class Table
 			getStruct(),
 			"column-reordered",
 			cast(GCallback)&callBackColumnReordered,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["column-reordered"] = 1;
@@ -203,7 +203,7 @@ public class Table
 			getStruct(),
 			"model-changed",
 			cast(GCallback)&callBackModelChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["model-changed"] = 1;
@@ -231,7 +231,7 @@ public class Table
 			getStruct(),
 			"row-deleted",
 			cast(GCallback)&callBackRowDeleted,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["row-deleted"] = 1;
@@ -259,7 +259,7 @@ public class Table
 			getStruct(),
 			"row-inserted",
 			cast(GCallback)&callBackRowInserted,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["row-inserted"] = 1;
@@ -287,7 +287,7 @@ public class Table
 			getStruct(),
 			"row-reordered",
 			cast(GCallback)&callBackRowReordered,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["row-reordered"] = 1;

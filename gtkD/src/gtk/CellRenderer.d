@@ -148,7 +148,7 @@ public class CellRenderer : ObjectGtk
 			getStruct(),
 			"editing-canceled",
 			cast(GCallback)&callBackEditingCanceled,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["editing-canceled"] = 1;
@@ -176,7 +176,7 @@ public class CellRenderer : ObjectGtk
 			getStruct(),
 			"editing-started",
 			cast(GCallback)&callBackEditingStarted,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["editing-started"] = 1;

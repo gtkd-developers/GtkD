@@ -146,7 +146,7 @@ public class ToolButton : ToolItem
 			getStruct(),
 			"clicked",
 			cast(GCallback)&callBackClicked,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["clicked"] = 1;

@@ -111,7 +111,7 @@ public class Component
 			getStruct(),
 			"bounds-changed",
 			cast(GCallback)&callBackBoundsChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["bounds-changed"] = 1;

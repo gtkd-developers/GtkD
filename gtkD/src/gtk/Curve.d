@@ -121,7 +121,7 @@ public class Curve : DrawingArea
 			getStruct(),
 			"curve-type-changed",
 			cast(GCallback)&callBackCurveTypeChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["curve-type-changed"] = 1;

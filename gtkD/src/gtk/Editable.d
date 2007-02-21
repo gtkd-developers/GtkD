@@ -132,7 +132,7 @@ public class Editable
 			getStruct(),
 			"changed",
 			cast(GCallback)&callBackChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
@@ -160,7 +160,7 @@ public class Editable
 			getStruct(),
 			"delete-text",
 			cast(GCallback)&callBackDeleteText,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["delete-text"] = 1;
@@ -188,7 +188,7 @@ public class Editable
 			getStruct(),
 			"insert-text",
 			cast(GCallback)&callBackInsertText,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["insert-text"] = 1;

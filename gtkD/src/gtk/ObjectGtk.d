@@ -159,7 +159,7 @@ public class ObjectGtk : ObjectG
 			getStruct(),
 			"destroy",
 			cast(GCallback)&callBackDestroy,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["destroy"] = 1;

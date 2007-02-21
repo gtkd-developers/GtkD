@@ -120,7 +120,7 @@ public class Text
 			getStruct(),
 			"text-attributes-changed",
 			cast(GCallback)&callBackTextAttributesChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["text-attributes-changed"] = 1;
@@ -148,7 +148,7 @@ public class Text
 			getStruct(),
 			"text-caret-moved",
 			cast(GCallback)&callBackTextCaretMoved,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["text-caret-moved"] = 1;
@@ -176,7 +176,7 @@ public class Text
 			getStruct(),
 			"text-changed",
 			cast(GCallback)&callBackTextChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["text-changed"] = 1;
@@ -204,7 +204,7 @@ public class Text
 			getStruct(),
 			"text-selection-changed",
 			cast(GCallback)&callBackTextSelectionChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["text-selection-changed"] = 1;

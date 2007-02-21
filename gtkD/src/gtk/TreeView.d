@@ -266,7 +266,7 @@ public class TreeView : Container
 			getStruct(),
 			"columns-changed",
 			cast(GCallback)&callBackColumnsChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["columns-changed"] = 1;
@@ -294,7 +294,7 @@ public class TreeView : Container
 			getStruct(),
 			"cursor-changed",
 			cast(GCallback)&callBackCursorChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["cursor-changed"] = 1;
@@ -322,7 +322,7 @@ public class TreeView : Container
 			getStruct(),
 			"expand-collapse-cursor-row",
 			cast(GCallback)&callBackExpandCollapseCursorRow,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["expand-collapse-cursor-row"] = 1;
@@ -350,7 +350,7 @@ public class TreeView : Container
 			getStruct(),
 			"move-cursor",
 			cast(GCallback)&callBackMoveCursor,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-cursor"] = 1;
@@ -378,7 +378,7 @@ public class TreeView : Container
 			getStruct(),
 			"row-activated",
 			cast(GCallback)&callBackRowActivated,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["row-activated"] = 1;
@@ -406,7 +406,7 @@ public class TreeView : Container
 			getStruct(),
 			"row-collapsed",
 			cast(GCallback)&callBackRowCollapsed,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["row-collapsed"] = 1;
@@ -434,7 +434,7 @@ public class TreeView : Container
 			getStruct(),
 			"row-expanded",
 			cast(GCallback)&callBackRowExpanded,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["row-expanded"] = 1;
@@ -462,7 +462,7 @@ public class TreeView : Container
 			getStruct(),
 			"select-all",
 			cast(GCallback)&callBackSelectAll,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["select-all"] = 1;
@@ -490,7 +490,7 @@ public class TreeView : Container
 			getStruct(),
 			"select-cursor-parent",
 			cast(GCallback)&callBackSelectCursorParent,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["select-cursor-parent"] = 1;
@@ -518,7 +518,7 @@ public class TreeView : Container
 			getStruct(),
 			"select-cursor-row",
 			cast(GCallback)&callBackSelectCursorRow,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["select-cursor-row"] = 1;
@@ -546,7 +546,7 @@ public class TreeView : Container
 			getStruct(),
 			"set-scroll-adjustments",
 			cast(GCallback)&callBackSetScrollAdjustments,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["set-scroll-adjustments"] = 1;
@@ -574,7 +574,7 @@ public class TreeView : Container
 			getStruct(),
 			"start-interactive-search",
 			cast(GCallback)&callBackStartInteractiveSearch,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["start-interactive-search"] = 1;
@@ -602,7 +602,7 @@ public class TreeView : Container
 			getStruct(),
 			"test-collapse-row",
 			cast(GCallback)&callBackTestCollapseRow,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["test-collapse-row"] = 1;
@@ -630,7 +630,7 @@ public class TreeView : Container
 			getStruct(),
 			"test-expand-row",
 			cast(GCallback)&callBackTestExpandRow,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["test-expand-row"] = 1;
@@ -658,7 +658,7 @@ public class TreeView : Container
 			getStruct(),
 			"toggle-cursor-row",
 			cast(GCallback)&callBackToggleCursorRow,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["toggle-cursor-row"] = 1;
@@ -686,7 +686,7 @@ public class TreeView : Container
 			getStruct(),
 			"unselect-all",
 			cast(GCallback)&callBackUnselectAll,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["unselect-all"] = 1;

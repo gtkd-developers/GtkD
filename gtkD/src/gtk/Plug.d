@@ -119,7 +119,7 @@ public class Plug : Window
 			getStruct(),
 			"embedded",
 			cast(GCallback)&callBackEmbedded,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["embedded"] = 1;

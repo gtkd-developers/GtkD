@@ -188,7 +188,7 @@ public class ScrolledWindow : Bin
 			getStruct(),
 			"move-focus-out",
 			cast(GCallback)&callBackMoveFocusOut,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-focus-out"] = 1;
@@ -216,7 +216,7 @@ public class ScrolledWindow : Bin
 			getStruct(),
 			"scroll-child",
 			cast(GCallback)&callBackScrollChild,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["scroll-child"] = 1;

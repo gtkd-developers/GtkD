@@ -108,7 +108,7 @@ public class Range : Widget
 			getStruct(),
 			"adjust-bounds",
 			cast(GCallback)&callBackAdjustBounds,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["adjust-bounds"] = 1;
@@ -136,7 +136,7 @@ public class Range : Widget
 			getStruct(),
 			"change-value",
 			cast(GCallback)&callBackChangeValue,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["change-value"] = 1;
@@ -164,7 +164,7 @@ public class Range : Widget
 			getStruct(),
 			"move-slider",
 			cast(GCallback)&callBackMoveSlider,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-slider"] = 1;
@@ -192,7 +192,7 @@ public class Range : Widget
 			getStruct(),
 			"value-changed",
 			cast(GCallback)&callBackValueChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["value-changed"] = 1;

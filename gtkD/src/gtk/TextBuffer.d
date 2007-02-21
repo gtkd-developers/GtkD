@@ -446,7 +446,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"apply-tag",
 			cast(GCallback)&callBackApplyTag,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["apply-tag"] = 1;
@@ -474,7 +474,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"begin-user-action",
 			cast(GCallback)&callBackBeginUserAction,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["begin-user-action"] = 1;
@@ -502,7 +502,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"changed",
 			cast(GCallback)&callBackChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
@@ -530,7 +530,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"delete-range",
 			cast(GCallback)&callBackDeleteRange,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["delete-range"] = 1;
@@ -558,7 +558,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"end-user-action",
 			cast(GCallback)&callBackEndUserAction,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["end-user-action"] = 1;
@@ -586,7 +586,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"insert-child-anchor",
 			cast(GCallback)&callBackInsertChildAnchor,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["insert-child-anchor"] = 1;
@@ -614,7 +614,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"insert-pixbuf",
 			cast(GCallback)&callBackInsertPixbuf,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["insert-pixbuf"] = 1;
@@ -642,7 +642,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"insert-text",
 			cast(GCallback)&callBackInsertText,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["insert-text"] = 1;
@@ -670,7 +670,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"mark-deleted",
 			cast(GCallback)&callBackMarkDeleted,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["mark-deleted"] = 1;
@@ -698,7 +698,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"mark-set",
 			cast(GCallback)&callBackMarkSet,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["mark-set"] = 1;
@@ -726,7 +726,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"modified-changed",
 			cast(GCallback)&callBackModifiedChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["modified-changed"] = 1;
@@ -754,7 +754,7 @@ public class TextBuffer : ObjectG
 			getStruct(),
 			"remove-tag",
 			cast(GCallback)&callBackRemoveTag,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["remove-tag"] = 1;

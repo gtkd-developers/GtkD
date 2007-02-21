@@ -121,7 +121,7 @@ public class Timeout
 	this(uint interval, bit delegate() dlg, bit fireNow=false)
 	{
 		timeoutListeners ~= dlg;
-		timeoutID = gtk_timeout_add(interval, cast(GtkFunction)&timeoutCallback, this);
+		timeoutID = gtk_timeout_add(interval, cast(GtkFunction)&timeoutCallback, cast(void*)this);
 		if ( fireNow )
 		{
 			if ( !dlg() )

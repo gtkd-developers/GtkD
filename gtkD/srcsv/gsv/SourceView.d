@@ -128,7 +128,7 @@ public class SourceView : TextView
 			getStruct(),
 			"redo",
 			cast(GCallback)&callBackRedo,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["redo"] = 1;
@@ -156,7 +156,7 @@ public class SourceView : TextView
 			getStruct(),
 			"undo",
 			cast(GCallback)&callBackUndo,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["undo"] = 1;

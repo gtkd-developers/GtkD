@@ -111,7 +111,7 @@ public class Hyperlink : ObjectG
 			getStruct(),
 			"link-activated",
 			cast(GCallback)&callBackLinkActivated,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["link-activated"] = 1;

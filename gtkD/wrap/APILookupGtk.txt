@@ -191,7 +191,7 @@ code: start
 	this(uint interval, bit delegate() dlg, bit fireNow=false)
 	{
 		timeoutListeners ~= dlg;
-		timeoutID = gtk_timeout_add(interval, cast(GtkFunction)&timeoutCallback, this);
+		timeoutID = gtk_timeout_add(interval, cast(GtkFunction)&timeoutCallback, cast(void*)this);
 		if ( fireNow )
 		{
 			if ( !dlg() )
@@ -295,7 +295,7 @@ code: start
 	this(bit delegate() dlg, bit fireNow=false)
 	{
 		idleListeners ~= dlg;
-		idleID = gtk_idle_add(cast(GtkFunction)&idleCallback, this);
+		idleID = gtk_idle_add(cast(GtkFunction)&idleCallback, cast(void*)this);
 		if ( fireNow )
 		{
 			if ( !dlg() )

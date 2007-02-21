@@ -156,7 +156,7 @@ public class SpinButton : Entry
 			getStruct(),
 			"change-value",
 			cast(GCallback)&callBackChangeValue,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["change-value"] = 1;
@@ -184,7 +184,7 @@ public class SpinButton : Entry
 			getStruct(),
 			"input",
 			cast(GCallback)&callBackInput,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["input"] = 1;
@@ -212,7 +212,7 @@ public class SpinButton : Entry
 			getStruct(),
 			"output",
 			cast(GCallback)&callBackOutput,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["output"] = 1;
@@ -240,7 +240,7 @@ public class SpinButton : Entry
 			getStruct(),
 			"value-changed",
 			cast(GCallback)&callBackValueChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["value-changed"] = 1;
@@ -268,7 +268,7 @@ public class SpinButton : Entry
 			getStruct(),
 			"wrapped",
 			cast(GCallback)&callBackWrapped,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["wrapped"] = 1;

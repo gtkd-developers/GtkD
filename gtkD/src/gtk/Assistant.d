@@ -116,7 +116,7 @@ public class Assistant : Window
 			getStruct(),
 			"apply",
 			cast(GCallback)&callBackApply,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["apply"] = 1;
@@ -144,7 +144,7 @@ public class Assistant : Window
 			getStruct(),
 			"cancel",
 			cast(GCallback)&callBackCancel,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["cancel"] = 1;
@@ -172,7 +172,7 @@ public class Assistant : Window
 			getStruct(),
 			"close",
 			cast(GCallback)&callBackClose,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["close"] = 1;
@@ -200,7 +200,7 @@ public class Assistant : Window
 			getStruct(),
 			"prepare",
 			cast(GCallback)&callBackPrepare,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["prepare"] = 1;

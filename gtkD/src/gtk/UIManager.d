@@ -263,7 +263,7 @@ public class UIManager : ObjectG
 			getStruct(),
 			"actions-changed",
 			cast(GCallback)&callBackActionsChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["actions-changed"] = 1;
@@ -291,7 +291,7 @@ public class UIManager : ObjectG
 			getStruct(),
 			"add-widget",
 			cast(GCallback)&callBackAddWidget,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["add-widget"] = 1;
@@ -319,7 +319,7 @@ public class UIManager : ObjectG
 			getStruct(),
 			"connect-proxy",
 			cast(GCallback)&callBackConnectProxy,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["connect-proxy"] = 1;
@@ -347,7 +347,7 @@ public class UIManager : ObjectG
 			getStruct(),
 			"disconnect-proxy",
 			cast(GCallback)&callBackDisconnectProxy,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["disconnect-proxy"] = 1;
@@ -375,7 +375,7 @@ public class UIManager : ObjectG
 			getStruct(),
 			"post-activate",
 			cast(GCallback)&callBackPostActivate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["post-activate"] = 1;
@@ -403,7 +403,7 @@ public class UIManager : ObjectG
 			getStruct(),
 			"pre-activate",
 			cast(GCallback)&callBackPreActivate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["pre-activate"] = 1;

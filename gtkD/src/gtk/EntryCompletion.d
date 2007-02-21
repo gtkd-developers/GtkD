@@ -135,7 +135,7 @@ public class EntryCompletion : ObjectG
 			getStruct(),
 			"action-activated",
 			cast(GCallback)&callBackActionActivated,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["action-activated"] = 1;
@@ -163,7 +163,7 @@ public class EntryCompletion : ObjectG
 			getStruct(),
 			"insert-prefix",
 			cast(GCallback)&callBackInsertPrefix,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["insert-prefix"] = 1;
@@ -191,7 +191,7 @@ public class EntryCompletion : ObjectG
 			getStruct(),
 			"match-selected",
 			cast(GCallback)&callBackMatchSelected,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["match-selected"] = 1;

@@ -143,7 +143,7 @@ public class Action : ObjectG
 			getStruct(),
 			"activate",
 			cast(GCallback)&callBackActivate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["activate"] = 1;

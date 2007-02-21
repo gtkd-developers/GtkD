@@ -153,7 +153,7 @@ public class TreeViewColumn : ObjectGtk
 			getStruct(),
 			"clicked",
 			cast(GCallback)&callBackClicked,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["clicked"] = 1;

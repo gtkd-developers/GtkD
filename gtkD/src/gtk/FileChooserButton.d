@@ -150,7 +150,7 @@ public class FileChooserButton : HBox
 			getStruct(),
 			"file-set",
 			cast(GCallback)&callBackFileSet,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["file-set"] = 1;

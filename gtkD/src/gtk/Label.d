@@ -216,7 +216,7 @@ public class Label : Misc
 			getStruct(),
 			"copy-clipboard",
 			cast(GCallback)&callBackCopyClipboard,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["copy-clipboard"] = 1;
@@ -244,7 +244,7 @@ public class Label : Misc
 			getStruct(),
 			"move-cursor",
 			cast(GCallback)&callBackMoveCursor,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-cursor"] = 1;
@@ -272,7 +272,7 @@ public class Label : Misc
 			getStruct(),
 			"populate-popup",
 			cast(GCallback)&callBackPopulatePopup,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["populate-popup"] = 1;

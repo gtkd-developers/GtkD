@@ -114,7 +114,7 @@ public class MenuShell : Container
 			getStruct(),
 			"activate-current",
 			cast(GCallback)&callBackActivateCurrent,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["activate-current"] = 1;
@@ -142,7 +142,7 @@ public class MenuShell : Container
 			getStruct(),
 			"cancel",
 			cast(GCallback)&callBackCancel,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["cancel"] = 1;
@@ -170,7 +170,7 @@ public class MenuShell : Container
 			getStruct(),
 			"cycle-focus",
 			cast(GCallback)&callBackCycleFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["cycle-focus"] = 1;
@@ -198,7 +198,7 @@ public class MenuShell : Container
 			getStruct(),
 			"deactivate",
 			cast(GCallback)&callBackDeactivate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["deactivate"] = 1;
@@ -226,7 +226,7 @@ public class MenuShell : Container
 			getStruct(),
 			"move-current",
 			cast(GCallback)&callBackMoveCurrent,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-current"] = 1;
@@ -254,7 +254,7 @@ public class MenuShell : Container
 			getStruct(),
 			"selection-done",
 			cast(GCallback)&callBackSelectionDone,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["selection-done"] = 1;

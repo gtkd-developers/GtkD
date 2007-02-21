@@ -1129,8 +1129,11 @@ public struct GMainContext{}
  */
 public struct GPollFD
 {
+	//#if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8
 	//long fd;
+	//#else
 	int fd;
+	//#endif
 	ushort events;
 	ushort revents;
 }
@@ -1195,7 +1198,17 @@ public struct GSourceFuncs{}
 // glib-The-Main-Event-Loop.html
 // int (*dispatch) (GSource *source,
 // glib-The-Main-Event-Loop.html
+// GSourceFunc callback,
+// glib-The-Main-Event-Loop.html
 // void* userData);
+// glib-The-Main-Event-Loop.html
+// void (*finalize) (GSource *source); /+* Can be NULL +/
+// glib-The-Main-Event-Loop.html
+// /+* For use by gSourceSetClosure +/
+// glib-The-Main-Event-Loop.html
+// GSourceFunc closureCallback;
+// glib-The-Main-Event-Loop.html
+// GSourceDummyMarshal closureMarshal; /+* Really is of type GClosureMarshal +/
 // glib-The-Main-Event-Loop.html
 
 
@@ -1210,6 +1223,16 @@ public struct GSourceFuncs{}
  * Called to extract the callback function and data from the callback object.
  */
 public struct GSourceCallbackFuncs{}
+// void (*ref) (void* cbData);
+// glib-The-Main-Event-Loop.html
+// void (*unref) (void* cbData);
+// glib-The-Main-Event-Loop.html
+// void (*get) (void* cbData,
+// glib-The-Main-Event-Loop.html
+// GSource *source,
+// glib-The-Main-Event-Loop.html
+// GSourceFunc *func,
+// glib-The-Main-Event-Loop.html
 // void* *data);
 // glib-The-Main-Event-Loop.html
 
@@ -1227,6 +1250,8 @@ public struct GSourceCallbackFuncs{}
  * are all threads exclusive to this pool
  */
 public struct GThreadPool{}
+// GFunc func;
+// glib-Thread-Pools.html
 // void* userData;
 // glib-Thread-Pools.html
 // int exclusive;
@@ -1275,6 +1300,10 @@ public struct GMemVTable{}
 // glib-Memory-Allocation.html
 // uint nBytes);
 // glib-Memory-Allocation.html
+// void (*free) (void* mem);
+// glib-Memory-Allocation.html
+// /+* optional; set to NULL if not used ! +/
+// glib-Memory-Allocation.html
 // void* (*calloc) (uint nBlocks,
 // glib-Memory-Allocation.html
 // uint nBlockBytes);
@@ -1300,11 +1329,17 @@ public struct GIOChannel{}
  * generic way.
  */
 public struct GIOFuncs{}
+// GIOStatus (*ioRead) (GIOChannel *channel,
+// glib-IO-Channels.html
 // char *buf,
 // glib-IO-Channels.html
 // uint count,
 // glib-IO-Channels.html
 // uint *bytesRead,
+// glib-IO-Channels.html
+// GError **err);
+// glib-IO-Channels.html
+// GIOStatus (*ioWrite) (GIOChannel *channel,
 // glib-IO-Channels.html
 // char *buf,
 // glib-IO-Channels.html
@@ -1312,7 +1347,33 @@ public struct GIOFuncs{}
 // glib-IO-Channels.html
 // uint *bytesWritten,
 // glib-IO-Channels.html
+// GError **err);
+// glib-IO-Channels.html
+// GIOStatus (*ioSeek) (GIOChannel *channel,
+// glib-IO-Channels.html
 // long offset,
+// glib-IO-Channels.html
+// GSeekType type,
+// glib-IO-Channels.html
+// GError **err);
+// glib-IO-Channels.html
+// GIOStatus (*ioClose) (GIOChannel *channel,
+// glib-IO-Channels.html
+// GError **err);
+// glib-IO-Channels.html
+// GSource* (*ioCreateWatch) (GIOChannel *channel,
+// glib-IO-Channels.html
+// GIOCondition condition);
+// glib-IO-Channels.html
+// void (*ioFree) (GIOChannel *channel);
+// glib-IO-Channels.html
+// GIOStatus (*ioSetFlags) (GIOChannel *channel,
+// glib-IO-Channels.html
+// GIOFlags flags,
+// glib-IO-Channels.html
+// GError **err);
+// glib-IO-Channels.html
+// GIOFlags (*ioGetFlags) (GIOChannel *channel);
 // glib-IO-Channels.html
 
 
@@ -1329,6 +1390,7 @@ public struct GIOFuncs{}
  */
 public struct GError
 {
+	GQuark domain;
 	int code;
 	char *message;
 }
@@ -1381,9 +1443,19 @@ public struct GTimeVal
 public struct GDate{}
 // uint julianDays : 32; /+* julian days representation - we use a
 // glib-Date-and-Time-Functions.html
+// * bitfield hoping that 64 bit platforms
+// glib-Date-and-Time-Functions.html
+// * will pack this whole struct inn one big
+// glib-Date-and-Time-Functions.html
+// * int
+// glib-Date-and-Time-Functions.html
+// +/
+// glib-Date-and-Time-Functions.html
 // uint julian : 1; /+* julian is valid +/
 // glib-Date-and-Time-Functions.html
 // uint dmy : 1; /+* dmy is valid +/
+// glib-Date-and-Time-Functions.html
+// /+* DMY representation +/
 // glib-Date-and-Time-Functions.html
 // uint day : 6;
 // glib-Date-and-Time-Functions.html
@@ -1431,21 +1503,51 @@ public struct GDebugKey
  * handler function is declared by GScannerMsgFunc.
  */
 public struct GScanner{}
+// /+* unused fields +/
+// glib-Lexical-Scanner.html
 // void* userData;
 // glib-Lexical-Scanner.html
 // uint maxParseErrors;
 // glib-Lexical-Scanner.html
+// /+* _Error() increments this field +/
+// glib-Lexical-Scanner.html
 // uint parseErrors;
 // glib-Lexical-Scanner.html
+// /+* name of input stream, featured by the defaulx message handler +/
+// glib-Lexical-Scanner.html
 // char *inputName;
+// glib-Lexical-Scanner.html
+// /+* quarked data +/
+// glib-Lexical-Scanner.html
+// GData *qdata;
+// glib-Lexical-Scanner.html
+// /+* link into the scanner configuration +/
+// glib-Lexical-Scanner.html
+// GScannerConfig *config;
+// glib-Lexical-Scanner.html
+// /+* fields filled inn after _GetNextToken() +/
+// glib-Lexical-Scanner.html
+// GTokenType token;
+// glib-Lexical-Scanner.html
+// GTokenValue value;
 // glib-Lexical-Scanner.html
 // uint line;
 // glib-Lexical-Scanner.html
 // uint position;
 // glib-Lexical-Scanner.html
+// /+* fields filled inn after _PeekNextToken() +/
+// glib-Lexical-Scanner.html
+// GTokenType nextToken;
+// glib-Lexical-Scanner.html
+// GTokenValue nextValue;
+// glib-Lexical-Scanner.html
 // uint nextLine;
 // glib-Lexical-Scanner.html
 // uint nextPosition;
+// glib-Lexical-Scanner.html
+// /+* to be considered private +/
+// glib-Lexical-Scanner.html
+// GHashTable *symbolTable;
 // glib-Lexical-Scanner.html
 // int inputFd;
 // glib-Lexical-Scanner.html
@@ -1456,6 +1558,10 @@ public struct GScanner{}
 // char *buffer;
 // glib-Lexical-Scanner.html
 // uint scopeId;
+// glib-Lexical-Scanner.html
+// /+* handler funct for _Warn and _Error +/
+// glib-Lexical-Scanner.html
+// GScannerMsgFunc msgHandler;
 // glib-Lexical-Scanner.html
 
 
@@ -1523,6 +1629,10 @@ public struct GScanner{}
  * (the default is FALSE).
  */
 public struct GScannerConfig{}
+// /+* Character sets
+// glib-Lexical-Scanner.html
+// +/
+// glib-Lexical-Scanner.html
 // char *csetSkipCharacters; /+* default: " \t\n" +/
 // glib-Lexical-Scanner.html
 // char *csetIdentifierFirst;
@@ -1531,7 +1641,17 @@ public struct GScannerConfig{}
 // glib-Lexical-Scanner.html
 // char *cpairCommentSingle; /+* default: "#\n" +/
 // glib-Lexical-Scanner.html
+// /+* Should symbol lookup work case sensitive?
+// glib-Lexical-Scanner.html
+// +/
+// glib-Lexical-Scanner.html
 // uint caseSensitive : 1;
+// glib-Lexical-Scanner.html
+// /+* Boolean values to be adjusted "on the fly"
+// glib-Lexical-Scanner.html
+// * to configure scanning behaviour.
+// glib-Lexical-Scanner.html
+// +/
 // glib-Lexical-Scanner.html
 // uint skipCommentMulti : 1; /+* C like comment +/
 // glib-Lexical-Scanner.html
@@ -1588,7 +1708,15 @@ public struct GScannerConfig{}
  * function which is called to get the string associated with a target
  */
 public struct GCompletion{}
+// GList* items;
+// glib-Automatic-String-Completion.html
+// GCompletionFunc func;
+// glib-Automatic-String-Completion.html
 // char* prefix;
+// glib-Automatic-String-Completion.html
+// GList* cache;
+// glib-Automatic-String-Completion.html
+// GCompletionStrncmpFunc strncmpFunc;
 // glib-Automatic-String-Completion.html
 
 
@@ -1635,6 +1763,8 @@ public struct GOptionEntry{}
 // char shortName;
 // glib-Commandline-option-parser.html
 // int flags;
+// glib-Commandline-option-parser.html
+// GOptionArg arg;
 // glib-Commandline-option-parser.html
 // void* argData;
 // glib-Commandline-option-parser.html
@@ -1684,6 +1814,10 @@ public struct GMarkupParseContext{}
  * Callback to invoke when the opening tag of an element
  */
 public struct GMarkupParser{}
+// /+* Called for open tags <foo bar="baz"> +/
+// glib-Simple-XML-Subset-Parser.html
+// void (*startElement) (GMarkupParseContext *context,
+// glib-Simple-XML-Subset-Parser.html
 // char *elementName,
 // glib-Simple-XML-Subset-Parser.html
 // char **attributeNames,
@@ -1692,9 +1826,23 @@ public struct GMarkupParser{}
 // glib-Simple-XML-Subset-Parser.html
 // void* userData,
 // glib-Simple-XML-Subset-Parser.html
+// GError **error);
+// glib-Simple-XML-Subset-Parser.html
+// /+* Called for close tags </foo> +/
+// glib-Simple-XML-Subset-Parser.html
+// void (*endElement) (GMarkupParseContext *context,
+// glib-Simple-XML-Subset-Parser.html
 // char *elementName,
 // glib-Simple-XML-Subset-Parser.html
 // void* userData,
+// glib-Simple-XML-Subset-Parser.html
+// GError **error);
+// glib-Simple-XML-Subset-Parser.html
+// /+* Called for character data +/
+// glib-Simple-XML-Subset-Parser.html
+// /+* text is not nul-terminated +/
+// glib-Simple-XML-Subset-Parser.html
+// void (*text) (GMarkupParseContext *context,
 // glib-Simple-XML-Subset-Parser.html
 // char *text,
 // glib-Simple-XML-Subset-Parser.html
@@ -1702,11 +1850,37 @@ public struct GMarkupParser{}
 // glib-Simple-XML-Subset-Parser.html
 // void* userData,
 // glib-Simple-XML-Subset-Parser.html
+// GError **error);
+// glib-Simple-XML-Subset-Parser.html
+// /+* Called for strings that should be re-saved verbatim inn this same
+// glib-Simple-XML-Subset-Parser.html
+// * position, but are not otherwise interpretable. At the moment
+// glib-Simple-XML-Subset-Parser.html
+// * this includes comments and processing instructions.
+// glib-Simple-XML-Subset-Parser.html
+// +/
+// glib-Simple-XML-Subset-Parser.html
+// /+* text is not nul-terminated. +/
+// glib-Simple-XML-Subset-Parser.html
+// void (*passthrough) (GMarkupParseContext *context,
+// glib-Simple-XML-Subset-Parser.html
 // char *passthroughText,
 // glib-Simple-XML-Subset-Parser.html
 // uint textLen,
 // glib-Simple-XML-Subset-Parser.html
 // void* userData,
+// glib-Simple-XML-Subset-Parser.html
+// GError **error);
+// glib-Simple-XML-Subset-Parser.html
+// /+* Called on error, including one set by other
+// glib-Simple-XML-Subset-Parser.html
+// * methods inn the vtable. The GError should not be freed.
+// glib-Simple-XML-Subset-Parser.html
+// +/
+// glib-Simple-XML-Subset-Parser.html
+// void (*error) (GMarkupParseContext *context,
+// glib-Simple-XML-Subset-Parser.html
+// GError *error,
 // glib-Simple-XML-Subset-Parser.html
 // void* userData);
 // glib-Simple-XML-Subset-Parser.html
@@ -1739,6 +1913,10 @@ public struct GMemChunk{}
 public struct GList{}
 // void* data;
 // glib-Doubly-Linked-Lists.html
+// GList *next;
+// glib-Doubly-Linked-Lists.html
+// GList *prev;
+// glib-Doubly-Linked-Lists.html
 
 
 /**
@@ -1749,6 +1927,8 @@ public struct GList{}
  */
 public struct GSList{}
 // void* data;
+// glib-Singly-Linked-Lists.html
+// GSList *next;
 // glib-Singly-Linked-Lists.html
 
 
@@ -1763,6 +1943,10 @@ public struct GSList{}
  * the number of elements in the queue.
  */
 public struct GQueue{}
+// GList *head;
+// glib-Double-ended-Queues.html
+// GList *tail;
+// glib-Double-ended-Queues.html
 // uint length;
 // glib-Double-ended-Queues.html
 
@@ -1777,6 +1961,8 @@ public struct GQueue{}
  * bytes of the element.
  */
 public struct GTrashStack{}
+// GTrashStack *next;
+// glib-Trash-Stacks.html
 
 
 /**
@@ -1887,6 +2073,14 @@ public struct GTree{}
  */
 public struct GNode{}
 // void* data;
+// glib-N-ary-Trees.html
+// GNode *next;
+// glib-N-ary-Trees.html
+// GNode *prev;
+// glib-N-ary-Trees.html
+// GNode *parent;
+// glib-N-ary-Trees.html
+// GNode *children;
 // glib-N-ary-Trees.html
 
 

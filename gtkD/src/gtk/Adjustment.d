@@ -163,7 +163,7 @@ public class Adjustment : ObjectGtk
 			getStruct(),
 			"changed",
 			cast(GCallback)&callBackChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
@@ -191,7 +191,7 @@ public class Adjustment : ObjectGtk
 			getStruct(),
 			"value-changed",
 			cast(GCallback)&callBackValueChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["value-changed"] = 1;

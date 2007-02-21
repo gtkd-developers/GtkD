@@ -120,7 +120,7 @@ public class Idle
 	this(bit delegate() dlg, bit fireNow=false)
 	{
 		idleListeners ~= dlg;
-		idleID = gtk_idle_add(cast(GtkFunction)&idleCallback, this);
+		idleID = gtk_idle_add(cast(GtkFunction)&idleCallback, cast(void*)this);
 		if ( fireNow )
 		{
 			if ( !dlg() )

@@ -113,7 +113,7 @@ public class RadioAction : ToggleAction
 			getStruct(),
 			"changed",
 			cast(GCallback)&callBackChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;

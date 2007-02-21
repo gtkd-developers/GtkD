@@ -116,7 +116,7 @@ public class TextTagTable : ObjectG
 			getStruct(),
 			"tag-added",
 			cast(GCallback)&callBackTagAdded,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["tag-added"] = 1;
@@ -144,7 +144,7 @@ public class TextTagTable : ObjectG
 			getStruct(),
 			"tag-changed",
 			cast(GCallback)&callBackTagChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["tag-changed"] = 1;
@@ -172,7 +172,7 @@ public class TextTagTable : ObjectG
 			getStruct(),
 			"tag-removed",
 			cast(GCallback)&callBackTagRemoved,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["tag-removed"] = 1;

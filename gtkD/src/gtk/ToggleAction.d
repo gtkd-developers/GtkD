@@ -109,7 +109,7 @@ public class ToggleAction : Action
 			getStruct(),
 			"toggled",
 			cast(GCallback)&callBackToggled,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["toggled"] = 1;

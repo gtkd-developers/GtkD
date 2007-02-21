@@ -124,7 +124,7 @@ public class HandleBox : Bin
 			getStruct(),
 			"child-attached",
 			cast(GCallback)&callBackChildAttached,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["child-attached"] = 1;
@@ -152,7 +152,7 @@ public class HandleBox : Bin
 			getStruct(),
 			"child-detached",
 			cast(GCallback)&callBackChildDetached,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["child-detached"] = 1;

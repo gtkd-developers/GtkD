@@ -119,7 +119,7 @@ public class DisplayManager : ObjectG
 			getStruct(),
 			"display-opened",
 			cast(GCallback)&callBackDisplayOpened,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["display-opened"] = 1;

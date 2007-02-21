@@ -144,7 +144,7 @@ public class Notebook : Container
 			getStruct(),
 			"change-current-page",
 			cast(GCallback)&callBackChangeCurrentPage,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["change-current-page"] = 1;
@@ -172,7 +172,7 @@ public class Notebook : Container
 			getStruct(),
 			"focus-tab",
 			cast(GCallback)&callBackFocusTab,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["focus-tab"] = 1;
@@ -200,7 +200,7 @@ public class Notebook : Container
 			getStruct(),
 			"move-focus-out",
 			cast(GCallback)&callBackMoveFocusOut,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-focus-out"] = 1;
@@ -228,7 +228,7 @@ public class Notebook : Container
 			getStruct(),
 			"page-added",
 			cast(GCallback)&callBackPageAdded,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["page-added"] = 1;
@@ -256,7 +256,7 @@ public class Notebook : Container
 			getStruct(),
 			"page-removed",
 			cast(GCallback)&callBackPageRemoved,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["page-removed"] = 1;
@@ -284,7 +284,7 @@ public class Notebook : Container
 			getStruct(),
 			"page-reordered",
 			cast(GCallback)&callBackPageReordered,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["page-reordered"] = 1;
@@ -312,7 +312,7 @@ public class Notebook : Container
 			getStruct(),
 			"reorder-tab",
 			cast(GCallback)&callBackReorderTab,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["reorder-tab"] = 1;
@@ -340,7 +340,7 @@ public class Notebook : Container
 			getStruct(),
 			"select-page",
 			cast(GCallback)&callBackSelectPage,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["select-page"] = 1;
@@ -368,7 +368,7 @@ public class Notebook : Container
 			getStruct(),
 			"switch-page",
 			cast(GCallback)&callBackSwitchPage,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["switch-page"] = 1;

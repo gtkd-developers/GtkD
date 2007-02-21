@@ -149,7 +149,7 @@ public class Window : Bin
 			getStruct(),
 			"activate-default",
 			cast(GCallback)&callBackActivateDefault,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["activate-default"] = 1;
@@ -177,7 +177,7 @@ public class Window : Bin
 			getStruct(),
 			"activate-focus",
 			cast(GCallback)&callBackActivateFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["activate-focus"] = 1;
@@ -205,7 +205,7 @@ public class Window : Bin
 			getStruct(),
 			"frame-event",
 			cast(GCallback)&callBackFrame,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["frame-event"] = 1;
@@ -233,7 +233,7 @@ public class Window : Bin
 			getStruct(),
 			"keys-changed",
 			cast(GCallback)&callBackKeysChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["keys-changed"] = 1;
@@ -261,7 +261,7 @@ public class Window : Bin
 			getStruct(),
 			"move-focus",
 			cast(GCallback)&callBackMoveFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-focus"] = 1;
@@ -289,7 +289,7 @@ public class Window : Bin
 			getStruct(),
 			"set-focus",
 			cast(GCallback)&callBackSetFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["set-focus"] = 1;

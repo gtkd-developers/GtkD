@@ -222,7 +222,7 @@ public class Button : Bin
 			getStruct(),
 			"activate",
 			cast(GCallback)&callBackActivate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["activate"] = 1;
@@ -250,7 +250,7 @@ public class Button : Bin
 			getStruct(),
 			"clicked",
 			cast(GCallback)&callBackClicked,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["clicked"] = 1;
@@ -278,7 +278,7 @@ public class Button : Bin
 			getStruct(),
 			"enter",
 			cast(GCallback)&callBackEnter,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["enter"] = 1;
@@ -306,7 +306,7 @@ public class Button : Bin
 			getStruct(),
 			"leave",
 			cast(GCallback)&callBackLeave,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["leave"] = 1;
@@ -334,7 +334,7 @@ public class Button : Bin
 			getStruct(),
 			"pressed",
 			cast(GCallback)&callBackPressed,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["pressed"] = 1;
@@ -362,7 +362,7 @@ public class Button : Bin
 			getStruct(),
 			"released",
 			cast(GCallback)&callBackReleased,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["released"] = 1;

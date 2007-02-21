@@ -107,7 +107,7 @@ public class Hypertext
 			getStruct(),
 			"link-selected",
 			cast(GCallback)&callBackLinkSelected,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["link-selected"] = 1;

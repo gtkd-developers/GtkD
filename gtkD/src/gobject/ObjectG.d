@@ -149,7 +149,7 @@ public class ObjectG
 		if ( gObject !is  null )
 		{
 			//writefln("ObjectG.this\n");
-			setDataFull("GObject",this);
+			setDataFull("GObject",cast(void*)this);
 		}
 	}
 	
@@ -356,7 +356,7 @@ public class ObjectG
 			getStruct(),
 			"notify",
 			cast(GCallback)&callBackNotify,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["notify"] = 1;

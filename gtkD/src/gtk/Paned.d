@@ -155,7 +155,7 @@ public class Paned : Container
 			getStruct(),
 			"accept-position",
 			cast(GCallback)&callBackAcceptPosition,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["accept-position"] = 1;
@@ -183,7 +183,7 @@ public class Paned : Container
 			getStruct(),
 			"cancel-position",
 			cast(GCallback)&callBackCancelPosition,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["cancel-position"] = 1;
@@ -211,7 +211,7 @@ public class Paned : Container
 			getStruct(),
 			"cycle-child-focus",
 			cast(GCallback)&callBackCycleChildFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["cycle-child-focus"] = 1;
@@ -239,7 +239,7 @@ public class Paned : Container
 			getStruct(),
 			"cycle-handle-focus",
 			cast(GCallback)&callBackCycleHandleFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["cycle-handle-focus"] = 1;
@@ -267,7 +267,7 @@ public class Paned : Container
 			getStruct(),
 			"move-handle",
 			cast(GCallback)&callBackMoveHandle,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-handle"] = 1;
@@ -295,7 +295,7 @@ public class Paned : Container
 			getStruct(),
 			"toggle-handle-focus",
 			cast(GCallback)&callBackToggleHandleFocus,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["toggle-handle-focus"] = 1;

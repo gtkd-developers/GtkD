@@ -163,7 +163,7 @@ public class Keymap : ObjectG
 			getStruct(),
 			"direction-changed",
 			cast(GCallback)&callBackDirectionChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["direction-changed"] = 1;
@@ -191,7 +191,7 @@ public class Keymap : ObjectG
 			getStruct(),
 			"keys-changed",
 			cast(GCallback)&callBackKeysChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["keys-changed"] = 1;

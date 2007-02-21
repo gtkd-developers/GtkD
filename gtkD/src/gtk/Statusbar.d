@@ -130,7 +130,7 @@ public class Statusbar : HBox
 			getStruct(),
 			"text-popped",
 			cast(GCallback)&callBackTextPopped,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["text-popped"] = 1;
@@ -158,7 +158,7 @@ public class Statusbar : HBox
 			getStruct(),
 			"text-pushed",
 			cast(GCallback)&callBackTextPushed,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["text-pushed"] = 1;

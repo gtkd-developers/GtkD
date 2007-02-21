@@ -115,7 +115,7 @@ public class ColorSelection : VBox
 			getStruct(),
 			"color-changed",
 			cast(GCallback)&callBackColorChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["color-changed"] = 1;

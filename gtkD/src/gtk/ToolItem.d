@@ -131,7 +131,7 @@ public class ToolItem : Bin
 			getStruct(),
 			"create-menu-proxy",
 			cast(GCallback)&callBackCreateMenuProxy,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["create-menu-proxy"] = 1;
@@ -159,7 +159,7 @@ public class ToolItem : Bin
 			getStruct(),
 			"set-tooltip",
 			cast(GCallback)&callBackSetTooltip,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["set-tooltip"] = 1;
@@ -187,7 +187,7 @@ public class ToolItem : Bin
 			getStruct(),
 			"toolbar-reconfigured",
 			cast(GCallback)&callBackToolbarReconfigured,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["toolbar-reconfigured"] = 1;

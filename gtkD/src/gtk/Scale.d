@@ -114,7 +114,7 @@ public class Scale : Range
 			getStruct(),
 			"format-value",
 			cast(GCallback)&callBackFormatValue,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["format-value"] = 1;

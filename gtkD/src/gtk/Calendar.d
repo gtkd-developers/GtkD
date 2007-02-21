@@ -117,7 +117,7 @@ public class Calendar : Widget
 			getStruct(),
 			"day-selected",
 			cast(GCallback)&callBackDaySelected,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["day-selected"] = 1;
@@ -145,7 +145,7 @@ public class Calendar : Widget
 			getStruct(),
 			"day-selected-double-click",
 			cast(GCallback)&callBackDaySelectedDoubleClick,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["day-selected-double-click"] = 1;
@@ -173,7 +173,7 @@ public class Calendar : Widget
 			getStruct(),
 			"month-changed",
 			cast(GCallback)&callBackMonthChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["month-changed"] = 1;
@@ -201,7 +201,7 @@ public class Calendar : Widget
 			getStruct(),
 			"next-month",
 			cast(GCallback)&callBackNextMonth,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["next-month"] = 1;
@@ -229,7 +229,7 @@ public class Calendar : Widget
 			getStruct(),
 			"next-year",
 			cast(GCallback)&callBackNextYear,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["next-year"] = 1;
@@ -257,7 +257,7 @@ public class Calendar : Widget
 			getStruct(),
 			"prev-month",
 			cast(GCallback)&callBackPrevMonth,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["prev-month"] = 1;
@@ -285,7 +285,7 @@ public class Calendar : Widget
 			getStruct(),
 			"prev-year",
 			cast(GCallback)&callBackPrevYear,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["prev-year"] = 1;

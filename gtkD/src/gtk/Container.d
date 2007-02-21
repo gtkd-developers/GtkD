@@ -187,7 +187,7 @@ public class Container : Widget
 			getStruct(),
 			"add",
 			cast(GCallback)&callBackAdd,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["add"] = 1;
@@ -215,7 +215,7 @@ public class Container : Widget
 			getStruct(),
 			"check-resize",
 			cast(GCallback)&callBackCheckResize,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["check-resize"] = 1;
@@ -243,7 +243,7 @@ public class Container : Widget
 			getStruct(),
 			"remove",
 			cast(GCallback)&callBackRemove,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["remove"] = 1;
@@ -271,7 +271,7 @@ public class Container : Widget
 			getStruct(),
 			"set-focus-child",
 			cast(GCallback)&callBackSetFocusChild,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["set-focus-child"] = 1;

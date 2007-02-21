@@ -110,7 +110,7 @@ public class Selection
 			getStruct(),
 			"selection-changed",
 			cast(GCallback)&callBackSelectionChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["selection-changed"] = 1;

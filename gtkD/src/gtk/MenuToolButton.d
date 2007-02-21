@@ -197,7 +197,7 @@ public class MenuToolButton : ToolButton
 			getStruct(),
 			"show-menu",
 			cast(GCallback)&callBackShowMenu,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["show-menu"] = 1;

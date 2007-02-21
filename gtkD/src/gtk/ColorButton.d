@@ -113,7 +113,7 @@ public class ColorButton : Button
 			getStruct(),
 			"color-set",
 			cast(GCallback)&callBackColorSet,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["color-set"] = 1;

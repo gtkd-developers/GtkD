@@ -29,7 +29,7 @@ module utils.GtkDClass;
 //debug = noPrefixes;
 //debug = functionType;
 //debug = declaration;
-debug = structs;
+//debug = structs;
 //debug = enums;
 //debug = enumPrefix;
 //debug = unions;
@@ -857,7 +857,7 @@ public class GtkDClass
 			text ~= "			getStruct(), ";
 			text ~= "			\""~signalName~"\", ";
 			text ~= "			cast(GCallback)&callBack"~gtkDSignalName~", ";
-			text ~= "			this, ";
+			text ~= "			cast(void*)this, ";
 			text ~= "			null, ";
 			//text ~= "			ConnectFlags.AFTER);";
 			text ~= "			cast(ConnectFlags)0);";

@@ -131,7 +131,7 @@ public class Display : ObjectG
 			getStruct(),
 			"closed",
 			cast(GCallback)&callBackClosed,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["closed"] = 1;

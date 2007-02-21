@@ -110,7 +110,7 @@ public class Document
 			getStruct(),
 			"load-complete",
 			cast(GCallback)&callBackLoadComplete,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["load-complete"] = 1;
@@ -138,7 +138,7 @@ public class Document
 			getStruct(),
 			"load-stopped",
 			cast(GCallback)&callBackLoadStopped,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["load-stopped"] = 1;
@@ -166,7 +166,7 @@ public class Document
 			getStruct(),
 			"reload",
 			cast(GCallback)&callBackReload,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["reload"] = 1;

@@ -156,7 +156,7 @@ public class Socket : Container
 			getStruct(),
 			"plug-added",
 			cast(GCallback)&callBackPlugAdded,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["plug-added"] = 1;
@@ -184,7 +184,7 @@ public class Socket : Container
 			getStruct(),
 			"plug-removed",
 			cast(GCallback)&callBackPlugRemoved,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["plug-removed"] = 1;

@@ -284,7 +284,7 @@ public class TreeModel
 			getStruct(),
 			"row-changed",
 			cast(GCallback)&callBackRowChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["row-changed"] = 1;
@@ -312,7 +312,7 @@ public class TreeModel
 			getStruct(),
 			"row-deleted",
 			cast(GCallback)&callBackRowDeleted,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["row-deleted"] = 1;
@@ -340,7 +340,7 @@ public class TreeModel
 			getStruct(),
 			"row-has-child-toggled",
 			cast(GCallback)&callBackRowHasChildToggled,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["row-has-child-toggled"] = 1;
@@ -368,7 +368,7 @@ public class TreeModel
 			getStruct(),
 			"row-inserted",
 			cast(GCallback)&callBackRowInserted,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["row-inserted"] = 1;
@@ -396,7 +396,7 @@ public class TreeModel
 			getStruct(),
 			"rows-reordered",
 			cast(GCallback)&callBackRowsReordered,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["rows-reordered"] = 1;

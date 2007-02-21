@@ -106,7 +106,7 @@ public class TreeSortable
 			getStruct(),
 			"sort-column-changed",
 			cast(GCallback)&callBackSortColumnChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["sort-column-changed"] = 1;

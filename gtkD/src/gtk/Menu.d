@@ -208,7 +208,7 @@ public class Menu : MenuShell
 			getStruct(),
 			"move-scroll",
 			cast(GCallback)&callBackMoveScroll,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-scroll"] = 1;

@@ -205,7 +205,7 @@ public class RadioMenuItem : CheckMenuItem
 			getStruct(),
 			"group-changed",
 			cast(GCallback)&callBackGroupChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["group-changed"] = 1;

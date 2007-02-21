@@ -172,7 +172,7 @@ public class Clipboard : ObjectG
 			getStruct(),
 			"owner-change",
 			cast(GCallback)&callBackOwnerChange,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["owner-change"] = 1;

@@ -198,7 +198,7 @@ public class Dialog : Window
 			getStruct(),
 			"close",
 			cast(GCallback)&callBackClose,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["close"] = 1;
@@ -226,7 +226,7 @@ public class Dialog : Window
 			getStruct(),
 			"response",
 			cast(GCallback)&callBackResponse,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["response"] = 1;

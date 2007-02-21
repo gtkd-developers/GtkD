@@ -183,7 +183,7 @@ public class PixbufLoader : ObjectG
 			getStruct(),
 			"area-prepared",
 			cast(GCallback)&callBackAreaPrepared,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["area-prepared"] = 1;
@@ -211,7 +211,7 @@ public class PixbufLoader : ObjectG
 			getStruct(),
 			"area-updated",
 			cast(GCallback)&callBackAreaUpdated,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["area-updated"] = 1;
@@ -239,7 +239,7 @@ public class PixbufLoader : ObjectG
 			getStruct(),
 			"closed",
 			cast(GCallback)&callBackClosed,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["closed"] = 1;
@@ -267,7 +267,7 @@ public class PixbufLoader : ObjectG
 			getStruct(),
 			"size-prepared",
 			cast(GCallback)&callBackSizePrepared,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["size-prepared"] = 1;

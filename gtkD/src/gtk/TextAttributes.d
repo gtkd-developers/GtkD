@@ -114,7 +114,7 @@ public class TextAttributes
 			getStruct(),
 			"event",
 			cast(GCallback)&callBack,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["event"] = 1;

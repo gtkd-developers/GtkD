@@ -126,7 +126,7 @@ public class IconView : Container
 			getStruct(),
 			"activate-cursor-item",
 			cast(GCallback)&callBackActivateCursorItem,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["activate-cursor-item"] = 1;
@@ -154,7 +154,7 @@ public class IconView : Container
 			getStruct(),
 			"item-activated",
 			cast(GCallback)&callBackItemActivated,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["item-activated"] = 1;
@@ -182,7 +182,7 @@ public class IconView : Container
 			getStruct(),
 			"move-cursor",
 			cast(GCallback)&callBackMoveCursor,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-cursor"] = 1;
@@ -210,7 +210,7 @@ public class IconView : Container
 			getStruct(),
 			"select-all",
 			cast(GCallback)&callBackSelectAll,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["select-all"] = 1;
@@ -238,7 +238,7 @@ public class IconView : Container
 			getStruct(),
 			"select-cursor-item",
 			cast(GCallback)&callBackSelectCursorItem,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["select-cursor-item"] = 1;
@@ -266,7 +266,7 @@ public class IconView : Container
 			getStruct(),
 			"selection-changed",
 			cast(GCallback)&callBackSelectionChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["selection-changed"] = 1;
@@ -294,7 +294,7 @@ public class IconView : Container
 			getStruct(),
 			"set-scroll-adjustments",
 			cast(GCallback)&callBackSetScrollAdjustments,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["set-scroll-adjustments"] = 1;
@@ -322,7 +322,7 @@ public class IconView : Container
 			getStruct(),
 			"toggle-cursor-item",
 			cast(GCallback)&callBackToggleCursorItem,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["toggle-cursor-item"] = 1;
@@ -350,7 +350,7 @@ public class IconView : Container
 			getStruct(),
 			"unselect-all",
 			cast(GCallback)&callBackUnselectAll,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["unselect-all"] = 1;

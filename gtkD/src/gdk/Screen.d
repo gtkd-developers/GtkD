@@ -143,7 +143,7 @@ public class Screen : ObjectG
 			getStruct(),
 			"composited-changed",
 			cast(GCallback)&callBackCompositedChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["composited-changed"] = 1;
@@ -171,7 +171,7 @@ public class Screen : ObjectG
 			getStruct(),
 			"size-changed",
 			cast(GCallback)&callBackSizeChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["size-changed"] = 1;

@@ -248,7 +248,7 @@ public class ComboBox : Bin, CellLayoutIF
 			getStruct(),
 			"changed",
 			cast(GCallback)&callBackChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["changed"] = 1;
@@ -276,7 +276,7 @@ public class ComboBox : Bin, CellLayoutIF
 			getStruct(),
 			"move-active",
 			cast(GCallback)&callBackMoveActive,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-active"] = 1;
@@ -304,7 +304,7 @@ public class ComboBox : Bin, CellLayoutIF
 			getStruct(),
 			"popup",
 			cast(GCallback)&callBackPopup,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["popup"] = 1;

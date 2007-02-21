@@ -384,7 +384,7 @@ public class FileChooser
 			getStruct(),
 			"confirm-overwrite",
 			cast(GCallback)&callBackConfirmOverwrite,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["confirm-overwrite"] = 1;
@@ -412,7 +412,7 @@ public class FileChooser
 			getStruct(),
 			"current-folder-changed",
 			cast(GCallback)&callBackCurrentFolderChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["current-folder-changed"] = 1;
@@ -440,7 +440,7 @@ public class FileChooser
 			getStruct(),
 			"file-activated",
 			cast(GCallback)&callBackFileActivated,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["file-activated"] = 1;
@@ -468,7 +468,7 @@ public class FileChooser
 			getStruct(),
 			"selection-changed",
 			cast(GCallback)&callBackSelectionChanged,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["selection-changed"] = 1;
@@ -496,7 +496,7 @@ public class FileChooser
 			getStruct(),
 			"update-preview",
 			cast(GCallback)&callBackUpdatePreview,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["update-preview"] = 1;

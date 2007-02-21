@@ -109,7 +109,7 @@ public class FontButton : Button
 			getStruct(),
 			"font-set",
 			cast(GCallback)&callBackFontSet,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["font-set"] = 1;

@@ -127,7 +127,7 @@ public class Entry : Widget
 			getStruct(),
 			"activate",
 			cast(GCallback)&callBackActivate,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["activate"] = 1;
@@ -155,7 +155,7 @@ public class Entry : Widget
 			getStruct(),
 			"backspace",
 			cast(GCallback)&callBackBackspace,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["backspace"] = 1;
@@ -183,7 +183,7 @@ public class Entry : Widget
 			getStruct(),
 			"copy-clipboard",
 			cast(GCallback)&callBackCopyClipboard,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["copy-clipboard"] = 1;
@@ -211,7 +211,7 @@ public class Entry : Widget
 			getStruct(),
 			"cut-clipboard",
 			cast(GCallback)&callBackCutClipboard,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["cut-clipboard"] = 1;
@@ -239,7 +239,7 @@ public class Entry : Widget
 			getStruct(),
 			"delete-from-cursor",
 			cast(GCallback)&callBackDeleteFromCursor,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["delete-from-cursor"] = 1;
@@ -267,7 +267,7 @@ public class Entry : Widget
 			getStruct(),
 			"insert-at-cursor",
 			cast(GCallback)&callBackInsertAtCursor,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["insert-at-cursor"] = 1;
@@ -295,7 +295,7 @@ public class Entry : Widget
 			getStruct(),
 			"move-cursor",
 			cast(GCallback)&callBackMoveCursor,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["move-cursor"] = 1;
@@ -323,7 +323,7 @@ public class Entry : Widget
 			getStruct(),
 			"paste-clipboard",
 			cast(GCallback)&callBackPasteClipboard,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["paste-clipboard"] = 1;
@@ -351,7 +351,7 @@ public class Entry : Widget
 			getStruct(),
 			"populate-popup",
 			cast(GCallback)&callBackPopulatePopup,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["populate-popup"] = 1;
@@ -379,7 +379,7 @@ public class Entry : Widget
 			getStruct(),
 			"toggle-overwrite",
 			cast(GCallback)&callBackToggleOverwrite,
-			this,
+			cast(void*)this,
 			null,
 			cast(ConnectFlags)0);
 			connectedSignals["toggle-overwrite"] = 1;
