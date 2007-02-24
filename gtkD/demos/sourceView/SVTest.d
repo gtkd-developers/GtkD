@@ -18,7 +18,6 @@
 
 module sourceView.SVTest;
 
-char[] demoText = import("demos/sourceView/SVTest.d");
 
 private import gtk.MainWindow;
 private import gtk.GtkD;
@@ -37,6 +36,7 @@ private import gsvc.gsvtypes;
 private import gsv.SourceBuffer;
 
 private import std.stdio;
+private import std.file;
 
 
 /**
@@ -58,6 +58,21 @@ class HelloWorld : MainWindow
 		showAll();
 	}
 	
+	private char[] getDemoText()
+	{
+		char[] text = "";
+		try
+		{
+			version(Win32) text = cast(char[])std.file.read("demos\\sourceView\\SVTest.d");
+			else text = cast(char[])std.file.read("demos/sourceView/SVTest.d");
+		}
+		catch ( FileException fe )
+		{
+
+		}
+		return text;
+	}
+	
 	private Widget getSourceView()
 	{
 		sourceView = new SourceView();
@@ -68,7 +83,7 @@ class HelloWorld : MainWindow
 		sourceView.setHighlightCurrentLine(true);
 		
 		SourceBuffer sb = sourceView.getBuffer();
-		sb.setText(demoText);
+		sb.setText(getDemoText());
 		
 		ScrolledWindow scWindow = new ScrolledWindow();
 		scWindow.add(sourceView);

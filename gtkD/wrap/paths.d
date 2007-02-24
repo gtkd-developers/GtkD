@@ -48,8 +48,8 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GDKPIXBUF:	"libgdk_pixbuf-2.0-0.dll",
 	LIBRARY.GLIB: 		"libglib-2.0-0.dll",
 	LIBRARY.GMODULE: 	"libgmodule-2.0-0.dll",
-	LIBRARY.GOBJECT:		"libgobject-2.0-0.dll",
-	LIBRARY.GTHREAD:		"libgthread-2.0-0.dll",
+	LIBRARY.GOBJECT:	"libgobject-2.0-0.dll",
+	LIBRARY.GTHREAD:	"libgthread-2.0-0.dll",
 	LIBRARY.GTK:		"libgtk-win32-2.0-0.dll",
 	LIBRARY.PANGO:		"libpango-1.0-0.dll",
 	LIBRARY.GLGDK:		"libgdkglext-win32-1.0-0.dll",
@@ -57,7 +57,8 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GL:			"opengl32.dll",
 	LIBRARY.GLU:		"glu32.dll",
 	LIBRARY.GDA:		"libgda-2.dll",
-	LIBRARY.GLADE:		"libglade-2.0.dll"
+	LIBRARY.GLADE:		"libglade-2.0.dll",
+	LIBRARY.GSV:		"libgtksourceview-1.0-0.dll"
 	];
 }
 

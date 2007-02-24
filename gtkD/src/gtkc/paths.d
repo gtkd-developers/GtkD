@@ -57,7 +57,8 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GL:			"opengl32.dll",
 	LIBRARY.GLU:		"glu32.dll",
 	LIBRARY.GDA:		"libgda-2.dll",
-	LIBRARY.GLADE:		"libglade-2.0.dll"
+	LIBRARY.GLADE:		"libglade-2.0.dll",
+	LIBRARY.GSV:		"libgtksourceview-1.0-0.dll"
 	];
 }
 

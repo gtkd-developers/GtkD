@@ -1,1 +1,1 @@
-compd demos/gtkD demos/cairo/clock.d -o GtkDTests -I src -I demos -c -L .+\dmd\lib\+phobos+gtkd
+compd demos/gtkD -o GtkDTests -I src -I demos -c -L .+\dmd\lib\+phobos+gtkd+advapi32

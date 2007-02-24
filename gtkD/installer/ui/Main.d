@@ -204,9 +204,18 @@ public class MainInstaller : MainWindow , InstallerUI
 		exitButton = makeButton(null, StockID.QUIT, "Exit", "exit");
 		buttonBox.packStart(Alignment.west(exitButton), true, true, 7);
 
-		backButton = makeButton(buttonBox, StockID.GO_BACK, "Back", "back");
-		nextButton = makeButton(buttonBox, StockID.GO_FORWARD, "Next", "next");
-		installButton = makeButton(buttonBox, StockID.OK, "Install", "install");
+		version(Win32)
+		{
+			backButton = makeButton(buttonBox, StockID.GO_BACK, "<< Back", "back");
+			nextButton = makeButton(buttonBox, StockID.GO_FORWARD, "Next >>", "next");
+			installButton = makeButton(buttonBox, StockID.OK, "Install", "install");
+		}
+		else
+		{
+			backButton = makeButton(buttonBox, StockID.GO_BACK, "Back", "back");
+			nextButton = makeButton(buttonBox, StockID.GO_FORWARD, "Next", "next");
+			installButton = makeButton(buttonBox, StockID.OK, "Install", "install");
+		}
 		
 //		Button logo = new Button();
 //		logo.setImage(getGtkDLogo());
