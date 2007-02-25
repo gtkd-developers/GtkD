@@ -74,17 +74,18 @@ class TestImage : VBox
 	Table initTable()
 	{
 
-		// I don't think D can read the content of a directory yet
-		// so here it is
 		char[][] pngs;
 		
-		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDIcon_t.xpm";
-		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDLogo.gif";
-		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDLogo.xpm";
-		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDLogo_2.xpm";
-		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDLogo_4.xpm";
-		pngs ~= "/home/ruimt/devel/D/GtkD/images/gtkDLogo_8.xpm";
-
+		pngs ~= "images/gtkD_bevel.png";
+		pngs ~= "images/gtkDlogo_a.png";
+		pngs ~= "images/gtkD_logo_plain.png";
+		pngs ~= "images/gtkD_logo_small.png";
+		pngs ~= "images/gtkD_icon_1.png";
+		pngs ~= "images/gtkDlogo_a_small.png";
+		pngs ~= "images/gtkD_logo.png";
+		pngs ~= "images/gtkD_logo_too_small.png";
+		
+		
 		return loadTable(pngs);
 	}
 	
@@ -119,8 +120,8 @@ class TestImage : VBox
 			char[] fileName = imageFiles[i];
 			if ( fileName[0] != '/' )
 			{
-				version(linux) fileName = fileName ~ "/usr/share/pixmaps/";
-				version(Windows) fileName = fileName ~ "C:\\Projects\\D\\DynGtkD\\gtkD\\images\\";
+				version(linux) fileName = fileName;
+				version(Windows) fileName = fileName;
 			}
 			image = new Image(fileName);
 			//image.addOnEnterNotify(&onEnter);

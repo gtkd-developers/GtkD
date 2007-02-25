@@ -55,7 +55,8 @@ private import gtk.SizeGroup;
 private import gtk.HSeparator;
 private import gtk.PopupBox;
 	
-
+private import gtkc.gtktypes;
+	
 private import gdk.Event;
 private import std.stdio;
 private import std.process;
@@ -222,8 +223,14 @@ public class MainInstaller : MainWindow , InstallerUI
 //		logo.addOnButtonPress(&logoClicked);
 //		logo.setRelief(ReliefStyle.NONE);
 //		logo.setFocusOnClick(false);
+
+		Image image = new Image("images/gtkD_logo_shadow_small.png");
+		if ( image.getStorageType() == 4) //ImageType.STOCK )
+		{
+			image = getGtkDLogo();
+		}
 		
-		mainBox.packStart(Alignment.west(getGtkDLogo()), false, false, 2);
+		mainBox.packStart(Alignment.west(image), false, false, 2);
 		mainBox.packStart(notebook, true, true, 2);
 		mainBox.packStart(buttonBox, false, false, 2);
 
@@ -562,7 +569,7 @@ class DevPanel : UserPanel
 	}
 	public char[] getName()
 	{
-		return "Development for GtkD";
+		return "GtkD Development";
 	}
 	public Widget getWidget()
 	{
