@@ -10,7 +10,7 @@
 
 module gtkc.paths;
 
-/* 
+/*
  * Define the Libraries that gtkD will be using.
  *   This is a growable list, as long as the programmer
  *   also adds to the importLibs list.
@@ -35,12 +35,13 @@ enum LIBRARY
 	GLEXT,
 	GDA,
 	GLADE,
-	GSV
+	GSV,
+	GSTREAMER
 }
 
 version (Windows)
 {
-const char[][LIBRARY.max+1] importLibs = 
+const char[][LIBRARY.max+1] importLibs =
 	[
 	LIBRARY.ATK:		"libatk-1.0-0.dll",
 	LIBRARY.CAIROLIB:	"libcairo-2.dll",
@@ -58,11 +59,12 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GLU:		"glu32.dll",
 	LIBRARY.GDA:		"libgda-2.dll",
 	LIBRARY.GLADE:		"libglade-2.0.dll",
-	LIBRARY.GSV:		"libgtksourceview-1.0-0.dll"
+	LIBRARY.GSV:		"libgtksourceview-1.0-0.dll",
+	LIBRARY.GSTREAMER:	"libgstreamer-0.10.dll"
 	];
 }
 
-version(linux) 
+version(linux)
 {
 const char[][LIBRARY.max+1] importLibs =
 	[
@@ -83,7 +85,8 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GLEXT:		"libGL.so",
 	LIBRARY.GDA:		"libgda-2.so.3",
 	LIBRARY.GLADE:		"libglade-2.0.so",
-	LIBRARY.GSV:		"libgtksourceview-1.0.so"
+	LIBRARY.GSV:		"libgtksourceview-1.0.so",
+	LIBRARY.GSTREAMER:	"libgstreamer-0.10.so"
 	];
 }
 
@@ -95,7 +98,7 @@ version(Windows)
 {
 	import std.windows.registry;
 	import std.stdio;
-	
+
 	char[] libPath()
 	{
 //		if ( libPath is null )
@@ -103,16 +106,16 @@ version(Windows)
 //			libPath = "\\Program Files\\Common Files\\GTK\\2.0\\bin\\";
 //		}
 //		return libPath;
-		
+
 		Key k = Registry.localMachine();
-		
+
 		char[] libPath;
-		
+
 		foreach ( Key key ; k.keys() )
 		{
 			writefln("key = ", key.name());
 		}
-		
+
 		try
 		{
 			k = k.getKey("SOFTWARE");
@@ -133,8 +136,8 @@ version(Windows)
 		{
 			libPath = "\\Program Files\\Common Files\\GTK\\2.0\\bin\\";
 		}
-		
-		
+
+
 		return libPath;
 	}
 }

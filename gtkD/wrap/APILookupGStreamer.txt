@@ -1,0 +1,1247 @@
+#
+# This file is part of gstreamerD.
+#
+# gstreamerD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gstreamerD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gstreamerD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+#
+###
+#####
+# Definitions for wrapping GStreamer
+#####
+###
+#
+
+addTypedefs: start
+private import gstreamer.gstreamertypes;
+private import lib.gstreamer;
+private import glib.Str;
+addTypedefs: end
+#public import glib.glibtypes;
+#public import gobject.gobjecttypes;
+#public import gthread.gthreadtypes;
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
+# must start with wrap
+
+wrap: gstreamer-0.10
+srcout: srcgstreamer
+
+###########################################################
+### GStreamer ###################################################
+###########################################################
+
+file: gstreamer-Gst.html
+class: GStreamer
+prefix: gst_
+#GOptionGroup*
+import: glib.Str
+nocode: gst_init
+code: start
+
+	/**
+	 * Call this function before using any other GStreamer functions in your applications.
+	 */
+	public static void init(char[][] args) //public static void init(int* argc, char**[] argv)
+	{
+		char** argv = cast(char**) new char*[args.length];
+		int argc = 0;
+		foreach (char[] p; args)
+		{
+			argv[argc++] = cast(char*)p;
+		}
+
+		gst_init(&argc, null);//cast(char**[])&argv);
+	}
+
+code: end
+outFile: gstreamer
+
+file: GstBin.html
+struct: GstBin
+class: Bin
+prefix: gst_bin_
+prefix: gst_
+import: glib.Str
+import: gstreamer.Element
+import: gstreamer.Iterator
+nocode: gst_bin_new
+code: start
+	/**
+	 * Creates a new bin with the given name.
+	 * name:
+	 *  the name of the new bin
+	 * Returns:
+	 *  a new GstBin
+	 */
+	public this(char[] name)
+	{
+		// GstElement* gst_bin_new (const gchar *name);
+		this( cast(GstBin*) gst_bin_new(Str.toStringz(name)) );
+	}
+
+	public this(Element elem)
+	{
+		super( elem.getElementStruct() );
+		this.gstBin = cast(GstBin*)elem.getElementStruct();
+	}
+code: end
+structWrap: GstBin* Bin
+structWrap: GstElement* Element
+structWrap: GstIterator* Iterator
+#... addMany and removeMany
+outFile: Bin
+
+file: gstreamer-GstBuffer.html
+struct: GstBuffer
+class: Buffer
+prefix: gst_buffer_
+prefix: gst_
+import: glib.Str
+import: gstreamer.Caps
+structWrap: GstBuffer* Buffer
+structWrap: GstCaps* Caps
+outFile: Buffer
+
+file: GstBus.html
+struct: GstBus
+class: Bus
+prefix: gst_bus_
+prefix: gst_
+import: glib.Str
+import: gstreamer.Message
+import: glib.Source
+structWrap: GstBus* Bus
+structWrap: GstMessage* Message
+structWrap: GSource* Source
+nocode: gst_bus_add_watch
+code: start
+	/**
+	 * Adds a bus watch to the default main context with the default priority.
+	 * This function is used to receive asynchronous messages in the main loop.
+	 * The watch can be removed using g_source_remove() or by returning FALSE
+	 * from func.
+	 * bus:
+	 *  a GstBus to create the watch for
+	 * func:
+	 *  A function to call when a message is received.
+	 * user_data:
+	 *  user data passed to func.
+	 * Returns:
+	 *  The event source id.
+	 * MT safe.
+	 */
+	public uint addWatch( bool delegate(Message) dlg )
+	{
+		onWatchListener = dlg;
+		return gst_bus_add_watch(gstBus, cast(GstBusFunc)&watchCallBack, this);
+	}
+
+	bool delegate(Message) onWatchListener;
+
+	extern(C) static gboolean watchCallBack(GstBus* bus, GstMessage* msg, Bus bus_d )//gpointer data)
+	{
+		Message msg_d = new Message( msg );
+
+		return bus_d.onWatchListener( msg_d );
+	}
+code: end
+outFile: Bus
+
+file: gstreamer-GstCaps.html
+struct: GstCaps
+class: Caps
+prefix: gst_caps_
+prefix: gst_
+import: glib.Str
+import: gstreamer.Structure
+#libxml2 missing:
+nocode: gst_caps_save_thyself
+nocode: gst_caps_load_thyself
+nocode: gst_caps_new_any
+code: start
+	/**
+	 * Creates a new GstCaps that indicates that it is compatible with
+	 * any media format.
+	 * Returns:
+	 *  the new GstCaps
+	 */
+	public static Caps newAny()
+	{
+		// GstCaps* gst_caps_new_any (void);
+		return new Caps(cast(GstCaps*)gst_caps_new_any() );
+	}
+code: end
+structWrap: GstCaps* Caps
+structWrap: GstStructure* Structure
+#TODO: take a look at replace and it's GstCaps**
+outFile: Caps
+
+#file: gstreamer-GstChildProxy.html
+#class: GstChildProxy
+#prefix: gst_child_proxy_
+#import: gstreamer.ObjectGst;
+#structWrap: GstObject* ObjectGst
+#outfile: ChildProxy
+
+file: GstClock.html
+struct: GstClock
+class: Clock
+prefix: gst_clock_
+prefix: gst_
+import: glib.Str
+structWrap: GstClock* Clock
+outFile: Clock
+
+file: GstElement.html
+struct: GstElement
+class: Element
+prefix: gst_element_
+prefix: gst_
+#nocode: GstState
+#prefix: GST_BIN_
+#prefix: GST_STATE_CHANGE_
+#prefix: GST_STATE_ GstState.
+#prefix: GST_
+import: glib.Str
+import: lib.gobject
+import: gstreamer.Pad
+import: gstreamer.Clock
+import: gstreamer.Caps
+import: gstreamer.Iterator
+import: gstreamer.Index
+import: gstreamer.TagList
+import: gstreamer.Message
+import: gstreamer.Query
+#import: gstreamer.Format
+import: gstreamer.Event
+import: gstreamer.Bus
+structWrap: GstBus* Bus
+#import: gstreamer.QueryType
+#I didn't do this:
+#import: gobject.ObjectG
+#structWrap: GObject* ObjectG
+#I tried this instead:
+structWrap: GObject* Pad
+structWrap: GstElement* Element
+structWrap: GstPad* Pad
+structWrap: GstClock* Clock
+structWrap: GstCaps* Caps
+structWrap: GstIterator* Iterator
+structWrap: GstIndex* Index
+structWrap: GstTagList* TagList
+structWrap: GstMessage* Message
+structWrap: GstQuery* Query
+#structWrap: GstFormat* Format
+#structWrap: GstFormat Format
+structWrap: GstEvent* Event
+#structWrap: GstQueryType* QueryType
+#TODO: GstClockTime
+#where's GList: structWrap: GList
+#import: gdk.Cursor
+#structWrap: GdkCursor* Cursor
+code: start
+	/**
+	 * Queries an element for the stream position.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The current position in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryPosition()
+	{
+		GstFormat form = GstFormat.TIME;
+		long cur_pos;
+		queryPosition( &form, &cur_pos );
+		return cur_pos;
+	}
+
+	/**
+	 * Queries an element for the stream duration.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The duration in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryDuration()
+	{
+		GstFormat form = GstFormat.TIME;
+		long cur_dur;
+		queryDuration( &form, &cur_dur );
+		return cur_dur;
+	}
+
+	/**
+	 *	This set's the filename for a filesrc element.
+	 */
+	public void location( char[] set )
+	{
+		//g_object_set( G_OBJECT(getElementStruct()), "location", set, NULL);
+		setProperty("location", set);
+	}
+
+	/**
+	 * Set the caps property of an Element.
+	 */
+	void caps( Caps cp )
+	{
+		g_object_set( getElementStruct(), Str.toStringz("caps"), cp.getCapsStruct(), null );
+	}
+
+	/**
+	* For your convenience in gstreamerD: you can seek to the
+	* position of the pipeline measured in time_nanoseconds.
+	*/
+	public int seek( ulong time_nanoseconds ) //gint64
+	{
+		return seek( 1.0, GstFormat.TIME, GstSeekFlags.FLUSH,
+								GstSeekType.SET, time_nanoseconds,
+								GstSeekType.NONE, GST_CLOCK_TIME_NONE);
+	}
+code: end
+outFile: Element
+
+file: GstElementFactory.html
+struct: GstElementFactory
+class: ElementFactory
+prefix: gst_element_factory_
+prefix: gst_element_
+prefix: gst_
+import: glib.Str
+import: gstreamer.Element
+import: gstreamer.Plugin
+import: gstreamer.Caps
+import: glib.ListG
+code: start
+	/**
+	 * Create a new element of the type defined by the given element factory.
+	 * The element will receive a guaranteed unique name,
+	 * consisting of the element factory name and a number.
+	 * factoryname:
+	 *  a named factory to instantiate
+	 * Returns:
+	 *  new GstElement or NULL if unable to create element
+	 */
+	public static Element make( char[] factoryname )
+	{
+		// GstElement* gst_element_factory_make (const gchar *factoryname,  const gchar *name);
+		return new Element( gst_element_factory_make(Str.toStringz(factoryname), null ) );
+	}
+code: end
+structWrap: GstElementFactory* ElementFactory
+structWrap: GstElement* Element
+structWrap: GstPlugin* Plugin
+structWrap: GstCaps* Caps
+structWrap: GList* ListG
+outFile: ElementFactory
+
+file: gstreamer-GstEvent.html
+struct: GstEvent
+class: Event
+prefix: gst_event_
+prefix: gst_
+#This might not be necessary:
+nocode: gst_event_new_buffer_size
+code: start
+	/**
+	 * Create a new buffersize event. The event is sent downstream and notifies
+	 * elements that they should provide a buffer of the specified dimensions.
+	 * When the async flag is set, a thread boundary is prefered.
+	 * format:
+	 *  buffer format
+	 * minsize:
+	 *  minimum buffer size
+	 * maxsize:
+	 *  maximum buffer size
+	 * async:
+	 *  thread behavior
+	 * Returns:
+	 *  a new GstEvent
+	 */
+	public static Event newBufferSize(GstFormat format, long minsize, long maxsize, int async)
+	{
+		// GstEvent* gst_event_new_buffer_size (GstFormat format,  gint64 minsize,  gint64 maxsize,  gboolean async);
+		return new Event(cast(GstEvent*)gst_event_new_buffer_size(format, minsize, maxsize, async) );
+	}
+code: end
+nocode: gst_event_new_eos
+code: start
+	/**
+	 * Create a new EOS event. The eos event can only travel downstream
+	 * synchronized with the buffer flow. Elements that receive the EOS
+	 * event on a pad can return UNEXPECTED as a GstFlowReturn when data
+	 * after the EOS event arrives.
+	 * The EOS event will travel down to the sink elements in the pipeline
+	 * which will then post the GST_MESSAGE_EOS on the bus after they have
+	 * finished playing any buffered data.
+	 * When all sinks have posted an EOS message, the EOS message is
+	 * forwarded to the application.
+	 * Returns:
+	 *  The new EOS event.
+	 */
+	public static Event newEOS()
+	{
+		// GstEvent* gst_event_new_eos (void);
+		return new Event(cast(GstEvent*)gst_event_new_eos() );
+	}
+code: end
+nocode: gst_event_new_flush_start
+code: start
+	/**
+	 * Allocate a new flush start event. The flush start event can be send
+	 * upstream and downstream and travels out-of-bounds with the dataflow.
+	 * It marks pads as being in a WRONG_STATE to process more data.
+	 * Elements unlock and blocking functions and exit their streaming functions
+	 * as fast as possible.
+	 * This event is typically generated after a seek to minimize the latency
+	 * after the seek.
+	 * Returns:
+	 *  A new flush start event.
+	 */
+	public static Event newFlushStart()
+	{
+		// GstEvent* gst_event_new_flush_start (void);
+		return new Event(cast(GstEvent*)gst_event_new_flush_start() );
+	}
+code: end
+nocode: gst_event_new_flush_stop
+code: start
+	/**
+	 * Allocate a new flush stop event. The flush start event can be send
+	 * upstream and downstream and travels out-of-bounds with the dataflow.
+	 * It is typically send after sending a FLUSH_START event to make the
+	 * pads accept data again.
+	 * Elements can process this event synchronized with the dataflow since
+	 * the preceeding FLUSH_START event stopped the dataflow.
+	 * This event is typically generated to complete a seek and to resume
+	 * dataflow.
+	 * Returns:
+	 *  A new flush stop event.
+	 */
+	public static Event newFlushStop()
+	{
+		// GstEvent* gst_event_new_flush_stop (void);
+		return new Event(cast(GstEvent*)gst_event_new_flush_stop() );
+	}
+code: end
+nocode: gst_event_new_navigation
+code: start
+/**
+	 * Create a new navigation event from the given description.
+	 * structure:
+	 *  description of the event
+	 * Returns:
+	 *  a new GstEvent
+	 */
+	public static Event newNavigation(Structure structure)
+	{
+		// GstEvent* gst_event_new_navigation (GstStructure *structure);
+		return new Event(cast(GstEvent*)gst_event_new_navigation((structure is null) ? null : structure.getStructureStruct()) );
+	}
+code: end
+import: glib.Str
+import: gstreamer.Structure
+#import: gstreamer.Format
+import: gstreamer.TagList
+import: gstreamer.MiniObject
+structWrap: GstEvent* Event
+structWrap: GstStructure* Structure
+#structWrap: GstFormat* Format
+structWrap: GstTagList* TagList
+structWrap: GstMiniObject* MiniObject
+structWrap: GstMiniObject MiniObject
+outFile: Event
+
+file: gstreamer-GstFormat.html
+struct: GstFormat
+#class: Format
+import: glib.Str
+import: gstreamer.Iterator
+prefix: gst_format_
+prefix: gst_
+#structWrap: GstFormat* Format
+structWrap: GstIterator* Iterator
+outFile: Format
+
+file: gstreamer-GstGError.html
+prefix: gst_
+import: glib.Str
+outFile: GError
+
+file: GstGhostPad.html
+struct: GstGhostPad
+class: GhostPad
+extend: Pad
+prefix: gst_ghost_pad_
+prefix: gst_
+import: glib.Str
+import: gstreamer.Pad
+nocode: gst_ghost_pad_new
+code: start
+	/**
+	 * Create a new ghostpad with target as the target. The direction and
+	 * padtemplate will be taken from the target pad.
+	 * Will ref the target.
+	 * name:
+	 *  the name of the new pad, or NULL to assign a default name.
+	 * target:
+	 *  the pad to ghost.
+	 * Returns:
+	 *  a new GstPad, or NULL in case of an error.
+	 */
+	public this(char[] name, Pad target)
+	{
+		// GstPad* gst_ghost_pad_new (const gchar *name,  GstPad *target);
+		this( cast(GstGhostPad*) gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct()) );
+	}
+code: end
+structWrap: GstGhostPad* GhostPad
+#structWrap: GstProxyPad* ProxyPad
+structWrap: GstPad* Pad
+outFile: GhostPad
+
+file: GstIndex.html
+struct: GstIndex
+class: Index
+#prefix: GST_OBJECT_
+prefix: gst_index_
+prefix: gst_
+import: glib.Str
+import: gstreamer.ObjectGst
+#import: gstreamer.Format
+structWrap: GstIndex* Index
+structWrap: GstObject* ObjectGst
+#structWrap: GstFormat Format
+outFile: Index
+
+file: GstIndexFactory.html
+struct: GstIndexFactory
+class: IndexFactory
+prefix: gst_index_factory_
+prefix: gst_
+import: glib.Str
+import: gstreamer.Index
+structWrap: GstIndexFactory* IndexFactory
+structWrap: GstIndex* Index
+outFile: IndexFactory
+
+file: gstreamer-GstIterator.html
+struct: GstIterator
+class: Iterator
+prefix: gst_iterator_
+prefix: gst_
+import: glib.Str
+#GType
+#GMutex*
+structWrap: GstIterator* Iterator
+outFile: Iterator
+
+file: gstreamer-GstMessage.html
+struct: GstMessage
+class: Message
+prefix: gst_message_
+prefix: gst_
+#code: start
+#	/**
+#	 * Sets our main struct and passes it to the parent class.
+#	 * This one is additional to make gstreamer.Bus addWatch()
+#	 * working without changes.
+#	 */
+#	public this (GObject* gstMessage)
+#	{
+#		//super(cast(GstObject*)gstMessage);
+#		this.gstMessage = cast(GstMessage*) gstMessage;
+#	}
+#code: end
+#This is a way to get the type of the message:
+code: start
+	/**
+	* Get the type of the message.
+	*/
+	public GstMessageType type()
+	{
+		return getMessageStruct().type;
+	}
+code: end
+nocode: gst_message_parse_tag
+code: start
+	/**
+	 * Extracts the tag list from the GstMessage. The tag list returned in the
+	 * output argument is a copy; the caller must free it when done.
+	 * MT safe.
+	 * message:
+	 *  A valid GstMessage of type GST_MESSAGE_TAG.
+	 * tag_list:
+	 *  Return location for the tag-list.
+	 */
+	/*public void parseTag(GstTagList** tagList)
+	{
+		// void gst_message_parse_tag (GstMessage *message,  GstTagList **tag_list);
+		gst_message_parse_tag(gstMessage, tagList);
+	}*/
+	public TagList parseTag()
+	{
+		// void gst_message_parse_tag (GstMessage *message,  GstTagList **tag_list);
+		GstTagList* tag_list_c;
+		gst_message_parse_tag(gstMessage, tag_list_c);
+		return new TagList(tag_list_c);
+	}
+code: end
+#I'm not so sure about the following:
+nocode: gst_message_type_to_quark
+code: start
+	/**
+	 * Get the unique quark for the given message type.
+	 * type:
+	 *  the message type
+	 * Returns:
+	 *  the quark associated with the message type
+	 */
+	public static Quark typeToQuark(GstMessageType type)
+	{
+		// GQuark gst_message_type_to_quark (GstMessageType type);
+		return new Quark( cast(uint*)gst_message_type_to_quark(type) );
+	}
+code: end
+nocode: gst_message_new_element
+code: start
+/**
+	 * Create a new element-specific message. This is meant as a generic way of
+	 * allowing one-way communication from an element to an application, for example
+	 * "the firewire cable was unplugged". The format of the message should be
+	 * documented in the element's documentation. The structure field can be NULL.
+	 * src:
+	 *  The object originating the message.
+	 * structure:
+	 *  The structure for the message. The message will take ownership of
+	 * the structure.
+	 * Returns:
+	 *  The new element message.
+	 * MT safe.
+	 */
+	public static Message newElement(ObjectGst src, Structure structure)
+	{
+		// GstMessage* gst_message_new_element (GstObject *src,  GstStructure *structure);
+		return new Message(cast(GstMessage*)gst_message_new_element((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct()) );
+	}
+code: end
+nocode: gst_message_new_new_clock
+code: start
+	/**
+	 * Create a new clock message. This message is posted whenever the
+	 * pipeline selectes a new clock for the pipeline.
+	 * src:
+	 *  The object originating the message.
+	 * clock:
+	 *  the new selected clock
+	 * Returns:
+	 *  The new new clock message.
+	 * MT safe.
+	 */
+	public static Message newNewClock(ObjectGst src, Clock clock)
+	{
+		// GstMessage* gst_message_new_new_clock (GstObject *src,  GstClock *clock);
+		return new Message(cast(GstMessage*)gst_message_new_new_clock((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct()) );
+	}
+code: end
+nocode: gst_message_new_segment_done
+code: start
+	/**
+	 * Create a new segment done message. This message is posted by elements that
+	 * finish playback of a segment as a result of a segment seek. This message
+	 * is received by the application after all elements that posted a segment_start
+	 * have posted the segment_done.
+	 * src:
+	 *  The object originating the message.
+	 * format:
+	 *  The format of the position being done
+	 * position:
+	 *  The position of the segment being done
+	 * Returns:
+	 *  The new segment done message.
+	 * MT safe.
+	 */
+	public static Message newSegmentDone(ObjectGst src, GstFormat format, long position)
+	{
+		// GstMessage* gst_message_new_segment_done (GstObject *src,  GstFormat format,  gint64 position);
+		return new Message(cast(GstMessage*)gst_message_new_segment_done((src is null) ? null : src.getObjectGstStruct(), format, position) );
+	}
+code: end
+nocode: gst_message_new_segment_start
+code: start
+	/**
+	 * Create a new segment message. This message is posted by elements that
+	 * start playback of a segment as a result of a segment seek. This message
+	 * is not received by the application but is used for maintenance reasons in
+	 * container elements.
+	 * src:
+	 *  The object originating the message.
+	 * format:
+	 *  The format of the position being played
+	 * position:
+	 *  The position of the segment being played
+	 * Returns:
+	 *  The new segment start message.
+	 * MT safe.
+	 */
+	public static Message newSegmentStart(ObjectGst src, GstFormat format, long position)
+	{
+		// GstMessage* gst_message_new_segment_start (GstObject *src,  GstFormat format,  gint64 position);
+		return new Message(cast(GstMessage*)gst_message_new_segment_start((src is null) ? null : src.getObjectGstStruct(), format, position) );
+	}
+code: end
+nocode: gst_message_new_warning
+code: start
+	/**
+	 * Create a new warning message. The message will make copies of error and
+	 * debug.
+	 * src:
+	 *  The object originating the message.
+	 * error:
+	 *  The GError for this message.
+	 * debug:
+	 *  A debugging string for something or other.
+	 * Returns:
+	 *  The new warning message.
+	 * MT safe.
+	 */
+	public static Message newWarning(ObjectGst src, ErrorG error, char[] dbug)
+	{
+		// GstMessage* gst_message_new_warning (GstObject *src,  GError *error,  gchar *debug);
+		return new Message(cast(GstMessage*)gst_message_new_warning((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
+	}
+code: end
+nocode: gst_message_new_state_dirty
+code: start
+	/**
+	 * Create a state dirty message. This message is posted whenever an element
+	 * changed its state asynchronously and is used internally to update the
+	 * states of container objects.
+	 * src:
+	 *  the object originating the message
+	 * Returns:
+	 *  The new state dirty message.
+	 * MT safe.
+	 */
+	public static Message newStateDirty(ObjectGst src)
+	{
+		// GstMessage* gst_message_new_state_dirty (GstObject *src);
+		return new Message(cast(GstMessage*)gst_message_new_state_dirty((src is null) ? null : src.getObjectGstStruct()) );
+	}
+code: end
+nocode: gst_message_new_eos
+code start
+	/**
+	 * Create a new eos message. This message is generated and posted in
+	 * the sink elements of a GstBin. The bin will only forward the EOS
+	 * message to the application if all sinks have posted an EOS message.
+	 * src:
+	 *  The object originating the message.
+	 * Returns:
+	 *  The new eos message.
+	 * MT safe.
+	 */
+	public static Message newEOS(ObjectGst src)
+	{
+		// GstMessage* gst_message_new_eos (GstObject *src);
+		return new Message(cast(GstMessage*)gst_message_new_eos((src is null) ? null : src.getObjectGstStruct()) );
+	}
+code: end
+import: glib.Str
+import: glib.Quark
+import: gstreamer.Structure
+import: gstreamer.ObjectGst
+import: gstreamer.Clock
+import: glib.ErrorG
+#import: gstreamer.Format
+import: gstreamer.TagList
+structWrap: GstMessage* Message
+structWrap: GQuark Quark
+structWrap: GstStructure* Structure
+structWrap: GstObject* ObjectGst
+structWrap: GstClock* Clock
+#GstClock**
+structWrap: GError* ErrorG
+#structWrap: GFormat Format
+#structWrap: GFormat* Format
+structWrap: GstTagList* TagList
+outFile: Message
+
+file: gstreamer-GstMiniObject.html
+struct: GstMiniObject
+class: MiniObject
+prefix: gst_mini_object_
+import: glib.Str
+#import: gobject.Type
+#structWrap: GType Type
+import: gobject.Value
+structWrap: GstMiniObject* MiniObject
+structWrap: GstMiniObject MiniObject
+structWrap: GValue* Value
+outFile: MiniObject
+
+file: GstObject.html
+struct: GstObject
+class: ObjectGst
+prefix: gst_object_
+prefix: gst_
+#libxml2 missing:
+nocode: gst_object_save_thyself
+nocode: gst_object_restore_thyself
+nocode: gst_class_signal_emit_by_name
+#this is removed because of GstObjectClass* not working yet
+nocode: gst_class_signal_connect
+import: glib.Str
+import: gobject.ObjectG
+import: glib.ErrorG
+import: glib.ListG
+structWrap: GstObject* ObjectGst
+structWrap: GObject* ObjectG
+structWrap: GError* ErrorG
+structWrap: GList* ListG
+outFile: ObjectGst
+
+#file:
+#class: ProxyPad
+#extend: Pad
+#import: gstreamer.Pad
+#code: start
+#//public class ProxyPad : Pad
+#//{
+#	/** the main Gtk struct */
+#	//protected GstProxyPad* gstProxyPad;
+#	protected GstPad* gstProxyPad;
+#
+#
+#	public GstPad* getProxyPadStruct()
+#	{
+#		return gstProxyPad;
+#	}
+#
+#
+#	/** the main Gtk struct as a void* */
+#	protected void* getStruct()
+#	{
+#		return cast(void*)gstProxyPad;
+#	}
+#
+#	/**
+#	 * Sets our main struct and passes it to the parent class
+#	 */
+#	public this (GstPad* gstProxyPad)
+#	{
+#		super(cast(GstObject*)gstProxyPad);
+#		this.gstProxyPad = gstProxyPad;
+#	}
+#//}
+#
+#code: end
+#outfile: ProxyPad
+
+file: GstPad.html
+struct: GstPad
+class: Pad
+#prefix: GST_OBJECT_
+prefix: gst_pad_
+prefix: gst_element_
+prefix: gst_
+#libxml2 missing:
+nocode: gst_pad_load_and_link
+import: glib.Str
+import: gstreamer.Element
+import: gstreamer.MiniObject
+import: gstreamer.PadTemplate
+import: gstreamer.Caps
+import: gstreamer.Buffer
+import: gstreamer.Event
+import: gstreamer.Query
+#import: gstreamer.Format
+import: glib.ListG
+structWrap: GstPad* Pad
+structWrap: GstElement* Element
+structWrap: GstMiniObject* MiniObject
+structWrap: GstPadTemplate* PadTemplate
+structWrap: GstCaps* Caps
+structWrap: GstBuffer* Buffer
+structWrap: GstEvent* Event
+structWrap: GstQuery* Query
+#structWrap: GstFormat* Format
+#structWrap: GstFormat Format
+structWrap: GList* ListG
+#import: lib.gobject
+code: start
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 * This one is additional to make gstreamer.Element addOnPadAdded()
+	 * working without changes.
+	 */
+	public this (GObject* gstPad)
+	{
+		super(cast(GstObject*)gstPad);
+		this.gstPad = cast(GstPad*) gstPad;
+	}
+code: end
+
+outFile: Pad
+
+file: GstPadTemplate.html
+struct: GstPadTemplate
+class: PadTemplate
+prefix: gst_pad_template_
+prefix: gst_
+import: glib.Str
+import: gstreamer.Pad
+import: gstreamer.Caps
+structWrap: GstPadTemplate* PadTemplate
+structWrap: GstPad* Pad
+structWrap: GstCaps* Caps
+outFile: PadTemplate
+
+file: gstreamer-GstParse.html
+class: Parse
+prefix: gst_parse_
+#I'm not so sure about the following:
+nocode: gst_parse_error_quark
+code: start
+	/**
+	 * Get the error quark used by the parsing subsystem.
+	 * Returns:
+	 *  the quark of the parse errors.
+	 */
+	public static Quark errorQuark()
+	{
+		// GQuark gst_parse_error_quark (void);
+		return new Quark( cast(uint*)gst_parse_error_quark() );
+	}
+code: end
+import: glib.Str
+import: glib.Quark
+import: glib.ErrorG
+import: gstreamer.Element
+structWrap: GQuark Quark
+structWrap: GError* ErrorG
+structWrap: GstElement* Element
+outFile: Parse
+
+file: GstPipeline.html
+struct: GstPipeline
+class: Pipeline
+prefix: gst_pipeline_
+prefix: gst_
+code: start
+public this (char[] name)
+{
+	this.gstPipeline = cast(GstPipeline*) gst_pipeline_new(Str.toStringz(name));
+	super(cast(GstBin*)this.gstPipeline);
+}
+code: end
+import: glib.Str
+import: gstreamer.Element
+import: gstreamer.Clock
+import: gstreamer.Bus
+structWrap: GstPipeline* Pipeline
+structWrap: GstElement* Element
+structWrap: GstBus* Bus
+structWrap: GstClock* Clock
+outFile: Pipeline
+
+file: GstPlugin.html
+struct: GstPlugin
+class: Plugin
+prefix: gst_plugin_
+prefix: gst_
+import: glib.Str
+#import: glib.Quark
+#structWrap: GQuark Quark
+import: glib.Module
+import: glib.ErrorG
+import: glib.ListG
+structWrap: GstPlugin* Plugin
+structWrap: GModule* Module
+structWrap: GList* ListG
+outFile: Plugin
+
+file: GstPluginFeature.html
+struct: GstPluginFeature
+class: PluginFeature
+prefix: gst_plugin_feature_
+prefix: gst_
+import: glib.Str
+import: glib.ListG
+structWrap: GstPluginFeature* PluginFeature
+structWrap: GList* ListG
+nocode: gst_plugin_feature_set_name
+code: start
+	/**
+	 * Sets the name of a plugin feature. The name uniquely identifies a feature
+	 * within all features of the same type. Renaming a plugin feature is not
+	 * allowed. A copy is made of the name so you should free the supplied name
+	 * after calling this function.
+	 * feature:
+	 *  a feature
+	 * name:
+	 *  the name to set
+	 */
+	public void setFeatureName(char[] name)
+	{
+		// void gst_plugin_feature_set_name (GstPluginFeature *feature,  const gchar *name);
+		gst_plugin_feature_set_name(gstPluginFeature, Str.toStringz(name));
+	}
+code: end
+outFile: PluginFeature
+
+file: gstreamer-GstQuery.html
+struct: GstQuery
+class: Query
+prefix: gst_query_
+prefix: gst_
+nocode: gst_query_new_position
+code: start
+	/**
+	 * Constructs a new query stream position query object. Use gst_query_unref()
+	 * when done with it. A position query is used to query the current position
+	 * of playback in the streams, in some format.
+	 * format:
+	 *  the default GstFormat for the new query
+	 * Returns:
+	 *  A GstQuery
+	 */
+	public static Query newPosition(GstFormat format)
+	{
+		// GstQuery* gst_query_new_position (GstFormat format);
+		return new Query( cast(GstQuery*)gst_query_new_position(format) );
+	}
+code: end
+nocode: gst_query_new_duration
+code: start
+	/**
+	 * Constructs a new stream duration query object to query in the given format.
+	 * Use gst_query_unref() when done with it. A duration query will give the
+	 * total length of the stream.
+	 * format:
+	 *  the GstFormat for this duration query
+	 * Returns:
+	 *  A GstQuery
+	 */
+	public static Query newDuration(GstFormat format)
+	{
+		// GstQuery* gst_query_new_duration (GstFormat format);
+		return new Query( cast(GstQuery*)gst_query_new_duration(format) );
+	}
+code: end
+nocode: gst_query_new_seeking
+code: start
+	/**
+	 * Constructs a new query object for querying seeking properties of
+	 * the stream.
+	 * format:
+	 *  the default GstFormat for the new query
+	 * Returns:
+	 *  A GstQuery
+	 */
+	public static Query newSeeking(GstFormat format)
+	{
+		// GstQuery* gst_query_new_seeking (GstFormat format);
+		return new Query(cast(GstQuery*)gst_query_new_seeking(format) );
+	}
+code: end
+nocode: gst_query_new_formats
+code: start
+	/**
+	 * Constructs a new query object for querying formats of
+	 * the stream.
+	 * Returns:
+	 *  A GstQuery
+	 * Since 0.10.4
+	 */
+	public static Query newFormats()
+	{
+		// GstQuery* gst_query_new_formats (void);
+		return new Query(cast(GstQuery*)gst_query_new_formats() );
+	}
+code: end
+nocode: gst_query_new_segment
+code: start
+	/**
+	 * Constructs a new segment query object. Use gst_query_unref()
+	 * when done with it. A segment query is used to discover information about the
+	 * currently configured segment for playback.
+	 * format:
+	 *  the GstFormat for the new query
+	 * Returns:
+	 *  a GstQuery
+	 */
+	public static Query newSegment(GstFormat format)
+	{
+		// GstQuery* gst_query_new_segment (GstFormat format);
+		return new Query(cast(GstQuery*)gst_query_new_segment(format) );
+	}
+code: end
+import: glib.Str
+import: gstreamer.Structure
+#import: gstreamer.Format
+structWrap: GstQuery* Query
+structWrap: GstStructure* Structure
+#structWrap: GstFormat Format
+#structWrap: GstFormat* Format
+outFile: Query
+
+file: GstRegistry.html
+struct: GstRegistry
+class: Registry
+prefix: gst_registry_
+prefix: gst_
+import: glib.Str
+import: glib.ListG
+import: gstreamer.Plugin
+import: gstreamer.PluginFeature
+#import: gobject.Type
+#structWrap: GType Type
+structWrap: GstRegistry* Registry
+structWrap: GList* ListG
+structWrap: GstPlugin* Plugin
+structWrap: GstPluginFeature* PluginFeature
+outFile: Registry
+
+file: gstreamer-GstSegment.html
+struct: GstSegment
+class: Segment
+prefix: gst_segment_
+prefix: gst_
+import: glib.Str
+#import: gstreamer.Format
+structWrap: GstSegment* Segment
+#structWrap: GstFormat Format
+outFile: Segment
+
+file: gstreamer-GstStructure.html
+struct: GstStructure
+class: Structure
+prefix: gst_structure_
+prefix: gst_
+import: glib.Str
+#import: glib.Quark
+#structWrap: GQuark Quark
+import: gobject.Value
+#import: gobject.Type
+#structWrap: GType Type
+structWrap: GstStructure* Structure
+structWrap: GValue* Value
+#GDate**
+outFile: Structure
+
+file: GstSystemClock.html
+struct: GstSystemClock
+class: SystemClock
+prefix: gst_system_clock_
+import: glib.Str
+import: gstreamer.Clock
+structWrap: GstSystemClock* SystemClock
+structWrap: GstClock* Clock
+outFile: SystemClock
+
+file: gstreamer-GstTagList.html
+struct: GstTagList
+class: TagList
+prefix: gst_tag_list_
+prefix: gst_tag_
+import: glib.Str
+#import: gobject.Type
+#structWrap: GType Type
+#structWrap: GType* Type
+import: gobject.Value
+structWrap: GstTagList* TagList
+structWrap: GValue* Value
+#GDate**
+outFile: TagList
+
+file: GstTagSetter.html
+struct: GstTagSetter
+class: TagSetter
+prefix: gst_tag_setter_
+prefix: gst_
+import: glib.Str
+import: gstreamer.TagList
+structWrap: GstTagSetter* TagSetter
+structWrap: GstTagList* TagList
+outFile: TagSetter
+
+file: GstTask.html
+struct: GstTask
+class: Task
+prefix: gst_task_
+prefix: gst_
+import: glib.Str
+structWrap: GstTask* Task
+#GStaticRecMutex*
+outFile: Task
+
+file: gstreamer-GstTypeFind.html
+struct: GstTypeFind
+class: TypeFind
+prefix: gst_type_find_
+prefix: gst_
+import: glib.Str
+import: gstreamer.Caps
+import: gstreamer.Plugin
+structWrap: GstTypeFind* TypeFind
+structWrap: GstCaps* Caps
+structWrap: GstPlugin* Plugin
+outFile: TypeFind
+
+file: GstTypeFindFactory.html
+struct: GstTypeFindFactory
+class: TypeFindFactory
+prefix: gst_type_find_factory_
+prefix: gst_
+import: glib.Str
+import: glib.ListG
+import: gstreamer.TypeFind
+import: gstreamer.Caps
+structWrap: GstTypeFindFactory* TypeFindFactory
+structWrap: GList* ListG
+structWrap: GstTypeFind* TypeFind
+structWrap: GstCaps* Caps
+outFile: TypeFindFactory
+
+#libxml2 missing:
+#file: GstXML.html
+#struct: GstXML
+#class: XML
+#prefix: gst_xml_
+#prefix: gst_
+#structWrap: GstXML* XML
+#structWrap: GstElement* Element
+#outFile: XML
