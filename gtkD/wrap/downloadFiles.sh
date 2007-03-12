@@ -21,7 +21,7 @@ ln -s gtkglext-1.2.0/docs/reference/gtkglext/html glgtk
 
 #other libraries.
 #gda
-curl http://ftp.gnome.org/pub/GNOME/sources/libgda/1.2/libgda-1.2.4.tar.gz | tar xvfz - 
+curl http://ftp.gnome.org/pub/GNOME/sources/libgda/1.2/libgda-1.2.4.tar.gz | tar xvfz -
 ln -s  libgda-1.2.4/doc/C/html gda
 
 #glade
@@ -31,4 +31,8 @@ ln -s libglade glade
 #gtkSourceView
 curl http://gtksourceview.sourceforge.net/gtksourceview-1.6-docs.tar.gz | tar xvfz -
 mv html gtksourceview
+
+#gstreamer
+curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.12.tar.gz | tar xvfz -
+ln -s gstreamer-0.10.12/docs/gst/html gstreamer
 
