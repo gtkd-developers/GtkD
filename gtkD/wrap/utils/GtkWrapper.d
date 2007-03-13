@@ -1,16 +1,16 @@
 /*
  * This file is part of gtkD.
- * 
+ *
  * gtkD is free software; you can redistribute it and/or modify
  * it under the terms of the GNU Lesser General Public License as published by
  * the Free Software Foundation; either version 2.1 of the License, or
  * (at your option) any later version.
- * 
+ *
  * gtkD is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
  * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
  * GNU Lesser General Public License for more details.
- * 
+ *
  * You should have received a copy of the GNU Lesser General Public License
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
@@ -34,8 +34,8 @@ struct WError
     int lineNumber;
     int code;
     char[] message;
-    
-    
+
+
     static WError* create(int lineNumber, int code, char[] message)
     {
         WError* error = new WError;
@@ -44,7 +44,7 @@ struct WError
         error.message = message;
         return error;
     }
-    
+
     void print ()
     {
         writefln("(line %s, code %s: %s)", lineNumber, code, message);
@@ -82,17 +82,17 @@ public class GtkWrapper : WrapperIF
     private import utils.DefReader;
     private import utils.GtkDClass;
     private import utils.convparms;
-    
+
     private import std.file;
     private import std.path;
     private import std.stdio;
-    
-    private char[] buildText;   /// to build the build.d 
-    private char[] buildTextLibs;   /// to build the build.d libs 
+
+    private char[] buildText;   /// to build the build.d
+    private char[] buildTextLibs;   /// to build the build.d libs
 
     char[] srcOut = "src";      /// the src output directory
     char[] srcDir;
-    char[] apiRoot;    
+    char[] apiRoot;
     char[] inputRoot;
     char[] outputRoot;
     char[] buildDir = "build";
@@ -127,7 +127,7 @@ public class GtkWrapper : WrapperIF
     private bit currIncludeComments;
 
     enum {
-        
+
         ERR_NONE = 1000,
         ERR_UNKNOWNE,
         ERR_NO_LICENSE,
@@ -138,14 +138,14 @@ public class GtkWrapper : WrapperIF
         ERR_FILE_DEFINITION,
         ERR_CREATE_PACKAGE,
     }
-    
+
     char[][char[]] aliases;
-    
+
     char[][char[]] enumTypes;
-    
+
     DefReader defReader;
-    
-    
+
+
     char[][char[]] packages;
 
     WError*[] errors;
@@ -162,18 +162,18 @@ public class GtkWrapper : WrapperIF
     private char[][] collectedFuncts;   /// public, module level definitions of functions
     private char[][] collectedUnions;   /// public, module level definitions of unions
     private char[][] collectedConstants;/// public, module level type contants
-    
+
     private char[][] lookupTypedefs;    /// lookup file definitions to be included on the typedefs.d
-    private char[][] lookupAliases;     /// lookup file aliases definitions 
-    private char[][] lookupEnums;       /// lookup file enum definitions 
-    private char[][] lookupStructs;     /// lookup file struct definitions 
-    private char[][] lookupTypes;       /// lookup file type definitions 
-    private char[][] lookupFuncts;      /// lookup file functs definitions 
-    private char[][] lookupUnions;      /// lookup file unions definitions 
-    private char[][] lookupConstants;   /// lookup file constants definitions 
-    
+    private char[][] lookupAliases;     /// lookup file aliases definitions
+    private char[][] lookupEnums;       /// lookup file enum definitions
+    private char[][] lookupStructs;     /// lookup file struct definitions
+    private char[][] lookupTypes;       /// lookup file type definitions
+    private char[][] lookupFuncts;      /// lookup file functs definitions
+    private char[][] lookupUnions;      /// lookup file unions definitions
+    private char[][] lookupConstants;   /// lookup file constants definitions
+
     DefReader[] defReaders;
-    
+
     this(char[] apiRoot)
     {
         this.apiRoot = apiRoot;
@@ -182,13 +182,13 @@ public class GtkWrapper : WrapperIF
         //{
         //  std.file.mkdir(std.path.join(outputRoot,srcOut));
         //}
-        
+
     }
-    
-    
+
+
     private void startBuildText()
     {
-        buildText = 
+        buildText =
               "/*"
             "\n * Automatically generated build imports from"
             "\n * the initial version generouselly given by:"
@@ -208,9 +208,9 @@ public class GtkWrapper : WrapperIF
             ;
 
         buildTextLibs.length = 0;
-    
+
     }
-    
+
     public void writeBuildText()
     {
 	    char[] outfile;
@@ -219,19 +219,19 @@ public class GtkWrapper : WrapperIF
         if (!std.file.exists(buildPath))
         {
             std.file.mkdir(buildPath);
-    
+
     	}
         outfile = std.path.join(buildPath,buildFile);
         writefln("writeBuildText: %s",outfile);
 
         std.file.write(outfile, buildText~"\n\n"~buildTextLibs);
     }
-    
+
     int process(char[] apiLookupDefinition)
     {
-        
+
         startBuildText();
-        
+
         int status = ERR_NONE;
         defReader = new DefReader(std.path.join(apiRoot,apiLookupDefinition));
 
@@ -244,26 +244,26 @@ public class GtkWrapper : WrapperIF
             status = ERR_NO_LICENSE;
             errors ~= WError.create(defReader.getLineNumber(), status, "Missing license as the first definition");
         }
-        
+
         if ( "includeComments" == defReader.next() )
         {
             currIncludeComments = defReader.getValueBit();
             defReader.next();
         }
-        
+
         debug(aliases) writefln("key before alias = ",defReader.getKey());
         while ( "alias" == defReader.getKey() )
         {
             status = loadAA(aliases, defReader, errors);
             defReader.next();
         }
-        
+
         while ( "enumType" == defReader.getKey() )
         {
             status = loadAA(enumTypes, defReader, errors);
             defReader.next();
         }
-        
+
         debug(aliases) writefln("key after alias = ",defReader.getKey());
 
         debug(aliases) foreach(char[] key ; aliases.keys.sort)
@@ -279,7 +279,7 @@ public class GtkWrapper : WrapperIF
             status = ERR_NO_IN_ROOT;
             errors ~= WError.create(defReader.getLineNumber(), status, "Cannot determine input root");
         }
-        
+
         if ( status==ERR_NONE && "outputRoot" == defReader.next() )
         {
             outputRoot = defReader.getValue();
@@ -289,9 +289,9 @@ public class GtkWrapper : WrapperIF
             status = ERR_NO_OUT_ROOT;
             errors ~= WError.create(defReader.getLineNumber(), status, "Cannot determine output root");
         }
-        
+
         char[] key = defReader.next();
-        
+
         while ( status==ERR_NONE && ( "srcdir" ==  key ))
         {
             srcDir = defReader.getValue();
@@ -306,11 +306,11 @@ public class GtkWrapper : WrapperIF
 
                 status = createPackage(outputRoot, defReader.getValue());
                 key = defReader.next();
-            }    
+            }
         }
 
-        
-        
+
+
         if ( status==ERR_NONE )
         {
             char[] pack;
@@ -377,7 +377,7 @@ public class GtkWrapper : WrapperIF
                         writefln("end htod");
                         defReader.next();
                         break;
-                        
+
                     default:
                         if ( defReader.getKey().length == 0 )
                         {
@@ -403,16 +403,16 @@ public class GtkWrapper : WrapperIF
         {
             //writefln("status = %s",status);
         }
-        
+
         return status;
     }
 
     /**
      * Creates an entry on a char[][char[]] associative array
      * Params:
-     *      aa =    
-     *      defReader =     
-     * Returns: 
+     *      aa =
+     *      defReader =
+     * Returns:
      */
     private static int loadAA(inout char[][char[]] aa, DefReader defReader, inout WError*[] errors = null)
     {
@@ -437,7 +437,7 @@ public class GtkWrapper : WrapperIF
         }
         return status;
     }
-    
+
     private char[] loadLicense()
     {
         license = loadText("license");
@@ -447,7 +447,7 @@ public class GtkWrapper : WrapperIF
     private char[] loadText(char[] key)
     {
         char[] text;
-        
+
         while ( key!=defReader.next(false) && "end"!=defReader.getValue() )
         {
             if ( text.length > 0 )
@@ -459,22 +459,22 @@ public class GtkWrapper : WrapperIF
                 text ~= defReader.getFullLine();
             }
         }
-        
+
         return text;
     }
-    
+
     private char[][] loadTextMultiLine(char[] key)
     {
         char[][] text;
-        
+
         while ( key!=defReader.next(false) && "end"!=defReader.getValue() )
         {
             text ~= defReader.getFullLine();
         }
-        
+
         return text;
     }
-    
+
     private int copyFile(char[] fromDir, char[] toDir, char[] fileName)
     {
         debug(writeFile)writefln("GtkWrapper.copyFile %s", fileName);
@@ -498,23 +498,23 @@ public class GtkWrapper : WrapperIF
         }
 
         writefln("Wrappde %s", fileName);
-		
+
         return status;
     }
-    
+
     private int wrapFile(char[] pack, char[] outPack)
     {
         debug(file)writefln("GtkWrapper.wrapFile pack=%s outPack=%s", pack, outPack);
         int status = ERR_NONE;
 
         GtkDClass gtkDClass;
-        
+
         ConvParms* convParms = new ConvParms;
-        
+
         char[] text;
-        
+
         char[] key = defReader.next();
-        
+
         char[] keys = " file text struct realStruct ctorStruct class template interface extend implements prefix strictPrefix"
                       " openFile mergeFile closeFile outFile"
                       " copy import structWrap alias moduleAlias"
@@ -531,7 +531,7 @@ public class GtkWrapper : WrapperIF
             debug(wrapParameter)writefln("wrapFile [%s] = %s", key, defReader.getValue());
             switch ( key )
             {
-                case "copy": status = copyFile(apiRoot,std.path.join(srcOut,outPack),defReader.getValue()); 
+                case "copy": status = copyFile(apiRoot,std.path.join(srcOut,outPack),defReader.getValue());
                     buildTextLibs ~= "private import " ~outPack~ "." ~defReader.getValue()~ ";\n";
                     break;
                 case "srcout": srcOut = defReader.getValue(); break;
@@ -551,25 +551,25 @@ public class GtkWrapper : WrapperIF
                 case "structWrap": loadAA(convParms.structWrap, defReader, errors); break;
                 case "alias": loadAA(convParms.aliases, defReader, errors); break;
                 case "moduleAlias": loadAA(convParms.mAliases, defReader, errors); break;
-                case "text": 
+                case "text":
                     convParms.text ~= loadTextMultiLine("text");
                     break;
-                case "code": 
+                case "code":
                     convParms.classCode ~= loadText("code");
                     break;
-                case "interfaceCode": 
+                case "interfaceCode":
                     convParms.interfaceCode ~= loadText("interfaceCode");
                     break;
-                
-                case "openFile": 
+
+                case "openFile":
                     gtkDClass = openFile(outPack, text, convParms);
                     text.length = 0;
                     break;
-                case "mergeFile": 
+                case "mergeFile":
                     gtkDClass.mergeGtkDClass(text, convParms);
                     text.length = 0;
                     break;
-                case "closeFile": 
+                case "closeFile":
                     closeFile(text, gtkDClass, convParms);
                     text.length = 0;
                     break;
@@ -590,13 +590,13 @@ public class GtkWrapper : WrapperIF
                     // as outFile is always the last definition
                     // there is no need to restore it
                     break;
-                case "outFile": 
+                case "outFile":
                     buildText ~= "\nprivate import "
                             ~convParms.outPack~"."
                             ~defReader.getValue()~";";
                     outFile(outPack, text, convParms);
                     break;
-                case "file": 
+                case "file":
                     convParms.inFile = std.string.strip(defReader.getValue());
                     if ( convParms.inFile.length > 0 )
                     {
@@ -632,37 +632,37 @@ public class GtkWrapper : WrapperIF
     /**
      * Opens, reads and closes a file
      * Params:
-     *      outPack =   
-     *      text =  
-     *      convParms =     
+     *      outPack =
+     *      text =
+     *      convParms =
      */
     private void outFile(char[] outPack, char[] text, ConvParms* convParms)
     {
         GtkDClass gtkDClass = openFile(outPack, text, convParms);
         closeFile("", gtkDClass, convParms);
     }
-    
+
     /**
      * Opens and reads a file
      * Params:
-     *      outPack =   
-     *      text =  
-     *      convParms =     
-     * Returns: 
+     *      outPack =
+     *      text =
+     *      convParms =
+     * Returns:
      */
     private GtkDClass openFile(char[] outPack, char[] text, ConvParms* convParms)
     {
-        convParms.outFile = defReader.getValue(); 
+        convParms.outFile = defReader.getValue();
         debug(wrapFile)writefln("######### gtkDClass for %s.%s (%s)
 			bound at %s", outPack, convParms.clss,
 			convParms.outFile,convParms.bindDir);
         GtkDClass gtkDClass = new GtkDClass(this);
 	convParms.bindDir = bindingsDir;
         gtkDClass.openGtkDClass(text, convParms);
-        
+
         return gtkDClass;
     }
-    
+
     private void closeFile(char[] text, GtkDClass gtkDClass, ConvParms* convParms)
     {
         debug(writeFile)writefln("GtkWrapper.closeFile %s",
@@ -682,7 +682,7 @@ public class GtkWrapper : WrapperIF
         {
             convParms.clearAll();
         }
-        
+
         externalDeclarations ~= gtkDClass.getExternalDeclarations();
         collectedAliases ~= gtkDClass.getAliases();
         collectedEnums ~=   gtkDClass.getEnums();
@@ -696,24 +696,24 @@ public class GtkWrapper : WrapperIF
         gTypes ~= gtkDClass.getGTypes();
 		writefln("gtk Wrapped %s", gtkDClass.getOutFile(outputRoot, srcDir));
     }
-    
+
     /**
      * Assumes input and output packages contains no spaces and are separated by a space
      * Params:
-     *      outputRoot =    
-     *      pack =  
-     * Returns: 
+     *      outputRoot =
+     *      pack =
+     * Returns:
      */
     private int createPackage(char[] outputRoot, char[] packagevalue)
     {
         int status = ERR_NONE;
-        
+
         char[][] packages = std.string.split(packagevalue, " ");
 	char[] packageDir;
-        
+
         if ( packages.length == 1 && "bind" == defReader.getKey() )
         {
-            packages ~="lib"; 
+            packages ~="lib";
 	    packageDir = packages[0];
         }
         else if ( packages.length == 2 && "package" == defReader.getKey() )
@@ -725,7 +725,7 @@ public class GtkWrapper : WrapperIF
         {
             status = ERR_CREATE_PACKAGE;
         }
-        
+
         if ( status==ERR_NONE )
         {
             debug(createPackage)writefln("adding (%s) %s %s", defReader.getKey(), packages[0], packages[1]);
@@ -750,16 +750,16 @@ public class GtkWrapper : WrapperIF
                 //errors ~= WError.create(defReader.getLineNumber(), status, "Cannot create obj package: "~pack);
             }
         }
-        
+
         if ( status != ERR_NONE )
         {
-            errors ~= WError.create(defReader.getLineNumber(), status, 
+            errors ~= WError.create(defReader.getLineNumber(), status,
                         "Invalid package/src definition (need in and out packages or lib name): "~packagevalue);
         }
 
         return status;
     }
-    
+
     public void printErrors()
     {
         writefln("printing %s errors", errors.length);
@@ -768,22 +768,22 @@ public class GtkWrapper : WrapperIF
             error.print();
         }
     }
-    
+
     public char[] getLicense()
     {
         return license;
     }
-    
+
     public char[][char[]] getAliases()
     {
         return aliases;
     }
-    
+
     public char[][char[]] getEnumTypes()
     {
         return enumTypes;
     }
-    
+
     public bit includeComments()
     {
         return currIncludeComments;
@@ -807,12 +807,12 @@ public class GtkWrapper : WrapperIF
             externalText ~= "\nprivate import "~bindingsDir~".cairoLibtypes;";
         }
 
-        if ( loaderTableName != "gl" 
-             && loaderTableName != "glu" 
-             && loaderTableName != "glx" 
+        if ( loaderTableName != "gl"
+             && loaderTableName != "glu"
+             && loaderTableName != "glx"
             )
         {
-            externalText ~= 
+            externalText ~=
                            "\nprivate import gtkc.Loader;"
                            "\nprivate import gtkc.paths;"
                            "\n"
@@ -830,7 +830,7 @@ public class GtkWrapper : WrapperIF
                 externalText ~= "\n "~loaderTableName~"_Linker = new Linker(libPath ~ importLibs[LIBRARY."
                          ~std.string.toupper(loaderTableName.dup)~"] );";
             }
-        
+
             externalText ~= "\n "~loaderTableName~"_Linker.link("~loaderTableName~"Links);"
                         "\n debug writefln(\"* Finished static this(): "~loaderTableName~"\");"
                         "\n}"
@@ -864,7 +864,7 @@ public class GtkWrapper : WrapperIF
             externalText ~= '\n';
         }
         externalText ~= "\n\n}";
-        
+
         externalText ~= "\n\nSymbol[] "~loaderTableName~"Links = \n[\n\n";
 
         int pos;
@@ -889,17 +889,17 @@ public class GtkWrapper : WrapperIF
                 }
                 externalText ~= '\n';
             }
-            
+
         }
-        
+
         externalText ~= "\n];";
-        
+
         char[] pathname
 		=joinRootDirFile(std.path.join(outputRoot,srcDir),bindingsDir,loaderTableName~".d");
-        
+
         std.file.write(pathname,externalText);
     }
-    
+
 
     void buildTypedefs(char[] outPack)
     {
@@ -908,11 +908,11 @@ public class GtkWrapper : WrapperIF
         def ~= "module "~bindingsDir~"."~outPack~"types;\n\n";
 
         char[] tabs = "";
-        
-        GtkDClass.append(def, lookupTypedefs, tabs);
-        
 
-                
+        GtkDClass.append(def, lookupTypedefs, tabs);
+
+
+
         if ( gTypes.length > 0 )
         {
             def ~= "\n\n// G_TYPE_*";
@@ -930,15 +930,15 @@ public class GtkWrapper : WrapperIF
         GtkDClass.append(def, lookupAliases, tabs);
         GtkDClass.append(def, collectedAliases, tabs);
         tabs = "";
-        
+
         GtkDClass.append(def, lookupEnums, tabs);
         GtkDClass.append(def, collectedEnums, tabs);
         tabs = "";
-        
+
         GtkDClass.append(def, lookupStructs, tabs);
         GtkDClass.append(def, collectedStructs, tabs);
         tabs = "";
-        
+
         GtkDClass.append(def, lookupTypes, tabs);
         GtkDClass.append(def, collectedTypes, tabs);
         tabs = "";
@@ -950,7 +950,7 @@ public class GtkWrapper : WrapperIF
         GtkDClass.append(def, lookupUnions, tabs);
         GtkDClass.append(def, collectedUnions, tabs);
         tabs = "";
-        
+
         if ( stockEnums.length > 0 )
         {
             def ~= "\n\n// StockIDs";
@@ -991,7 +991,7 @@ public class GtkWrapper : WrapperIF
         collectedFuncts.length = 0;
         collectedUnions.length = 0;
         collectedConstants.length = 0;
-        
+
         stockEnums.length = 0;
         stockChars.length = 0;
         gTypes.length = 0;

@@ -25,14 +25,34 @@
 ###
 #
 
+#Notes for the gstreamerD developer:
+#The work on wrapping gstreamerD automatically isn't complete yet.
+#At the moment gstreamerc/gstreamer.d and gstreamerc/gstreamertypes.d
+#have to be copied from hand edited versions from wrap/.
+#The copying is done automatically in APILookup.txt
+#Also GstGhostPad.d has to have it's constructor adjusted by hand,
+#and this isn't done automatically. You should replace Pad* with GstPad*.
+#I have no idea why GtkWrapper is doing that.
+#Also it creates two unnecessary files gstreamerc/lib.d gstreamerc/libtypes.d
+#which have to be removed by hand.
+
+
+
+# These are enums for gstreamer. There should be a way for these to be moved to APILookupGStreamer.txt.
+# currently it just hangs up. These don't work for the moment.
+#enumType: GST_ELEMENT_FLAG_LAST GstElementFlags.FLAG_LAST
+
+
 addTypedefs: start
-private import gstreamer.gstreamertypes;
-private import lib.gstreamer;
+private import gtkc.glibtypes;
+private import gtkc.gobjecttypes;
+private import gtkc.gthreadtypes;
 private import glib.Str;
+
 addTypedefs: end
-#public import glib.glibtypes;
-#public import gobject.gobjecttypes;
-#public import gthread.gthreadtypes;
+
+#private import gstreamerc.gstreamertypes;
+#private import gstreamerc.gstreamer;
 
 addAliases: start
 addAliases: end
@@ -41,6 +61,41 @@ addEnums: start
 addEnums: end
 
 addStructs: start
+#	/**
+#	* GstMiniObject.
+#	* Base class for refcounted lightweight objects.
+#	* GTypeInstance instance;
+#	*/
+#	public struct GstMiniObject
+#	{
+#		GTypeInstance instanc;
+#		//< public >// with COW
+#		int refcount;//gint refcount;
+#		uint flags;//guint flags;
+#
+#		//< private >
+#		gpointer _gst_reserved;
+#	}
+#
+#	struct GstMessage
+#	{
+#		GstMiniObject mini_object;
+#
+#		/*< private > *//* with MESSAGE_LOCK */
+#		GMutex* lock;                 /* lock and cond for async delivery */
+#		GCond* cond;
+#
+#		/*< public > *//* with COW */
+#		GstMessageType type;
+#		ulong timestamp;//guint64 timestamp;
+#		GstObject* src;
+#
+#		GstStructure* structure;
+#
+#		/*< private > */
+#		gpointer _gst_reserved[GST_PADDING];
+#	}
+#
 addStructs: end
 
 addTypes: start
@@ -53,16 +108,38 @@ addUnions: start
 addUnions: end
 
 addConstants: start
+	/***** default padding of structures *****/
+	const long GST_PADDING = 4;
+	//#define GST_PADDING_INIT	{0}
+
+	/***** padding for very extensible base classes *****/
+	const long GST_PADDING_LARGE = 20;
+
+	//These times might be clean to define as GstClockTimes instead of long (maybe):
+
+	//#define G_USEC_PER_SEC 1000000 //This should be in glib...
+	const ulong G_USEC_PER_SEC = 1000000uL;
+	//#define GST_SECOND  (G_USEC_PER_SEC * G_GINT64_CONSTANT (1000))
+	const ulong GST_SECOND = (G_USEC_PER_SEC * 1000uL);
+
+	public alias GST_SECOND SECOND;
+
+	//This one is an undefined GstClockTime. How can this be ulong???
+	//I guess it should be long...???
+	//#define GST_CLOCK_TIME_NONE		((GstClockTime) -1)
+	const long GST_CLOCK_TIME_NONE = -1L;
+	public alias GST_CLOCK_TIME_NONE CLOCK_TIME_NONE;
+
 addConstants: end
 
 
 # must start with wrap
 
-wrap: gstreamer-0.10
+wrap: gstreamer
 srcout: srcgstreamer
 
 ###########################################################
-### GStreamer ###################################################
+### GStreamer #############################################
 ###########################################################
 
 file: gstreamer-Gst.html
@@ -238,7 +315,7 @@ prefix: gst_
 #prefix: GST_STATE_ GstState.
 #prefix: GST_
 import: glib.Str
-import: lib.gobject
+import: gtkc.gobject
 import: gstreamer.Pad
 import: gstreamer.Clock
 import: gstreamer.Caps
@@ -500,6 +577,16 @@ prefix: gst_
 import: glib.Str
 outFile: GError
 
+#For some reason GtkWrapper does the constructor wrong
+#with GstGhostPad. You have to hand edit it to look like this:
+#	/**
+#	 * Sets our main struct and passes it to the parent class
+#	 */
+#	public this (GstGhostPad* gstGhostPad)
+#	{
+#		super(cast(GstPad*)gstGhostPad);
+#		this.gstGhostPad = gstGhostPad;
+#	}
 file: GstGhostPad.html
 struct: GstGhostPad
 class: GhostPad
@@ -508,6 +595,9 @@ prefix: gst_ghost_pad_
 prefix: gst_
 import: glib.Str
 import: gstreamer.Pad
+structWrap: GstGhostPad* GhostPad
+#structWrap: GstProxyPad* ProxyPad
+structWrap: GstPad* Pad
 nocode: gst_ghost_pad_new
 code: start
 	/**
@@ -527,9 +617,6 @@ code: start
 		this( cast(GstGhostPad*) gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct()) );
 	}
 code: end
-structWrap: GstGhostPad* GhostPad
-#structWrap: GstProxyPad* ProxyPad
-structWrap: GstPad* Pad
 outFile: GhostPad
 
 file: GstIndex.html
@@ -568,23 +655,68 @@ import: glib.Str
 structWrap: GstIterator* Iterator
 outFile: Iterator
 
+file: GstPad.html
+struct: GstPad
+class: Pad
+#prefix: GST_OBJECT_
+prefix: gst_pad_
+prefix: gst_element_
+prefix: gst_
+#libxml2 missing:
+nocode: gst_pad_load_and_link
+import: glib.Str
+import: gstreamer.Element
+import: gstreamer.MiniObject
+import: gstreamer.PadTemplate
+import: gstreamer.Caps
+import: gstreamer.Buffer
+import: gstreamer.Event
+import: gstreamer.Query
+#import: gstreamer.Format
+import: glib.ListG
+structWrap: GstPad* Pad
+structWrap: GstElement* Element
+structWrap: GstMiniObject* MiniObject
+structWrap: GstPadTemplate* PadTemplate
+structWrap: GstCaps* Caps
+structWrap: GstBuffer* Buffer
+structWrap: GstEvent* Event
+structWrap: GstQuery* Query
+#structWrap: GstFormat* Format
+#structWrap: GstFormat Format
+structWrap: GList* ListG
+#import: gtkc.gobject
+code: start
+	/**
+	 * Sets our main struct and passes it to the parent class.
+	 * This one is additional to make gstreamer.Element addOnPadAdded()
+	 * working without changes.
+	 */
+	public this (GObject* gstPad)
+	{
+		super(cast(GstObject*)gstPad);
+		this.gstPad = cast(GstPad*) gstPad;
+	}
+code: end
+outFile: Pad
+
 file: gstreamer-GstMessage.html
 struct: GstMessage
 class: Message
 prefix: gst_message_
 prefix: gst_
-#code: start
-#	/**
-#	 * Sets our main struct and passes it to the parent class.
-#	 * This one is additional to make gstreamer.Bus addWatch()
-#	 * working without changes.
-#	 */
-#	public this (GObject* gstMessage)
-#	{
-#		//super(cast(GstObject*)gstMessage);
-#		this.gstMessage = cast(GstMessage*) gstMessage;
-#	}
-#code: end
+nocode: gst_message_parse_tag
+#I'm not so sure about the following:
+nocode: gst_message_type_to_quark
+nocode: gst_message_new_element
+nocode: gst_message_new_new_clock
+nocode: gst_message_new_segment_done
+nocode: gst_message_new_segment_start
+nocode: gst_message_new_warning
+nocode: gst_message_new_state_dirty
+nocode: gst_message_new_eos
+nocode: gst_message_new_error
+nocode: gst_message_new_info
 #This is a way to get the type of the message:
 code: start
 	/**
@@ -594,9 +726,7 @@ code: start
 	{
 		return getMessageStruct().type;
 	}
-code: end
-nocode: gst_message_parse_tag
-code: start
+
 	/**
 	 * Extracts the tag list from the GstMessage. The tag list returned in the
 	 * output argument is a copy; the caller must free it when done.
@@ -615,13 +745,11 @@ code: start
 	{
 		// void gst_message_parse_tag (GstMessage *message,  GstTagList **tag_list);
 		GstTagList* tag_list_c;
-		gst_message_parse_tag(gstMessage, tag_list_c);
+		gst_message_parse_tag(gstMessage, &tag_list_c);
 		return new TagList(tag_list_c);
 	}
-code: end
-#I'm not so sure about the following:
-nocode: gst_message_type_to_quark
-code: start
+
+	//I'm not so sure about the following:
 	/**
 	 * Get the unique quark for the given message type.
 	 * type:
@@ -634,10 +762,8 @@ code: start
 		// GQuark gst_message_type_to_quark (GstMessageType type);
 		return new Quark( cast(uint*)gst_message_type_to_quark(type) );
 	}
-code: end
-nocode: gst_message_new_element
-code: start
-/**
+
+	/**
 	 * Create a new element-specific message. This is meant as a generic way of
 	 * allowing one-way communication from an element to an application, for example
 	 * "the firewire cable was unplugged". The format of the message should be
@@ -656,9 +782,7 @@ code: start
 		// GstMessage* gst_message_new_element (GstObject *src,  GstStructure *structure);
 		return new Message(cast(GstMessage*)gst_message_new_element((src is null) ? null : src.getObjectGstStruct(), (structure is null) ? null : structure.getStructureStruct()) );
 	}
-code: end
-nocode: gst_message_new_new_clock
-code: start
+
 	/**
 	 * Create a new clock message. This message is posted whenever the
 	 * pipeline selectes a new clock for the pipeline.
@@ -675,9 +799,7 @@ code: start
 		// GstMessage* gst_message_new_new_clock (GstObject *src,  GstClock *clock);
 		return new Message(cast(GstMessage*)gst_message_new_new_clock((src is null) ? null : src.getObjectGstStruct(), (clock is null) ? null : clock.getClockStruct()) );
 	}
-code: end
-nocode: gst_message_new_segment_done
-code: start
+
 	/**
 	 * Create a new segment done message. This message is posted by elements that
 	 * finish playback of a segment as a result of a segment seek. This message
@@ -698,9 +820,7 @@ code: start
 		// GstMessage* gst_message_new_segment_done (GstObject *src,  GstFormat format,  gint64 position);
 		return new Message(cast(GstMessage*)gst_message_new_segment_done((src is null) ? null : src.getObjectGstStruct(), format, position) );
 	}
-code: end
-nocode: gst_message_new_segment_start
-code: start
+
 	/**
 	 * Create a new segment message. This message is posted by elements that
 	 * start playback of a segment as a result of a segment seek. This message
@@ -721,9 +841,7 @@ code: start
 		// GstMessage* gst_message_new_segment_start (GstObject *src,  GstFormat format,  gint64 position);
 		return new Message(cast(GstMessage*)gst_message_new_segment_start((src is null) ? null : src.getObjectGstStruct(), format, position) );
 	}
-code: end
-nocode: gst_message_new_warning
-code: start
+
 	/**
 	 * Create a new warning message. The message will make copies of error and
 	 * debug.
@@ -742,9 +860,7 @@ code: start
 		// GstMessage* gst_message_new_warning (GstObject *src,  GError *error,  gchar *debug);
 		return new Message(cast(GstMessage*)gst_message_new_warning((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
 	}
-code: end
-nocode: gst_message_new_state_dirty
-code: start
+
 	/**
 	 * Create a state dirty message. This message is posted whenever an element
 	 * changed its state asynchronously and is used internally to update the
@@ -760,9 +876,7 @@ code: start
 		// GstMessage* gst_message_new_state_dirty (GstObject *src);
 		return new Message(cast(GstMessage*)gst_message_new_state_dirty((src is null) ? null : src.getObjectGstStruct()) );
 	}
-code: end
-nocode: gst_message_new_eos
-code start
+
 	/**
 	 * Create a new eos message. This message is generated and posted in
 	 * the sink elements of a GstBin. The bin will only forward the EOS
@@ -777,6 +891,47 @@ code start
 	{
 		// GstMessage* gst_message_new_eos (GstObject *src);
 		return new Message(cast(GstMessage*)gst_message_new_eos((src is null) ? null : src.getObjectGstStruct()) );
+	}
+
+	/**
+	 * Create a new error message. The message will copy error and
+	 * debug. This message is posted by element when a fatal event
+	 * occured. The pipeline will probably (partially) stop. The application
+	 * receiving this message should stop the pipeline.
+	 * src:
+	 *  The object originating the message.
+	 * error:
+	 *  The GError for this message.
+	 * debug:
+	 *  A debugging string for something or other.
+	 * Returns:
+	 *  The new error message.
+	 * MT safe.
+	 */
+	public static Message newError(ObjectGst src, ErrorG error, char[] dbug)
+	{
+		// GstMessage* gst_message_new_error (GstObject *src,  GError *error,  gchar *debug);
+		return new Message(cast(GstMessage*)gst_message_new_error((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
+	}
+
+	/**
+	 * Create a new info message. The message will make copies of error and
+	 * debug.
+	 * src:
+	 *  The object originating the message.
+	 * error:
+	 *  The GError for this message.
+	 * debug:
+	 *  A debugging string for something or other.
+	 * Returns:
+	 *  The new info message.
+	 * Since 0.10.12
+	 * MT safe.
+	 */
+	public static Message newInfo(ObjectGst src, ErrorG error, char[] dbug)
+	{
+		// GstMessage* gst_message_new_info (GstObject *src,  GError *error,  gchar *debug);
+		return new Message(cast(GstMessage*)gst_message_new_info((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
 	}
 code: end
 import: glib.Str
@@ -832,89 +987,6 @@ structWrap: GObject* ObjectG
 structWrap: GError* ErrorG
 structWrap: GList* ListG
 outFile: ObjectGst
-
-#file:
-#class: ProxyPad
-#extend: Pad
-#import: gstreamer.Pad
-#code: start
-#//public class ProxyPad : Pad
-#//{
-#	/** the main Gtk struct */
-#	//protected GstProxyPad* gstProxyPad;
-#	protected GstPad* gstProxyPad;
-#
-#
-#	public GstPad* getProxyPadStruct()
-#	{
-#		return gstProxyPad;
-#	}
-#
-#
-#	/** the main Gtk struct as a void* */
-#	protected void* getStruct()
-#	{
-#		return cast(void*)gstProxyPad;
-#	}
-#
-#	/**
-#	 * Sets our main struct and passes it to the parent class
-#	 */
-#	public this (GstPad* gstProxyPad)
-#	{
-#		super(cast(GstObject*)gstProxyPad);
-#		this.gstProxyPad = gstProxyPad;
-#	}
-#//}
-#
-#code: end
-#outfile: ProxyPad
-
-file: GstPad.html
-struct: GstPad
-class: Pad
-#prefix: GST_OBJECT_
-prefix: gst_pad_
-prefix: gst_element_
-prefix: gst_
-#libxml2 missing:
-nocode: gst_pad_load_and_link
-import: glib.Str
-import: gstreamer.Element
-import: gstreamer.MiniObject
-import: gstreamer.PadTemplate
-import: gstreamer.Caps
-import: gstreamer.Buffer
-import: gstreamer.Event
-import: gstreamer.Query
-#import: gstreamer.Format
-import: glib.ListG
-structWrap: GstPad* Pad
-structWrap: GstElement* Element
-structWrap: GstMiniObject* MiniObject
-structWrap: GstPadTemplate* PadTemplate
-structWrap: GstCaps* Caps
-structWrap: GstBuffer* Buffer
-structWrap: GstEvent* Event
-structWrap: GstQuery* Query
-#structWrap: GstFormat* Format
-#structWrap: GstFormat Format
-structWrap: GList* ListG
-#import: lib.gobject
-code: start
-	/**
-	 * Sets our main struct and passes it to the parent class.
-	 * This one is additional to make gstreamer.Element addOnPadAdded()
-	 * working without changes.
-	 */
-	public this (GObject* gstPad)
-	{
-		super(cast(GstObject*)gstPad);
-		this.gstPad = cast(GstPad*) gstPad;
-	}
-code: end
-
-outFile: Pad
 
 file: GstPadTemplate.html
 struct: GstPadTemplate
@@ -1245,3 +1317,42 @@ outFile: TypeFindFactory
 #structWrap: GstXML* XML
 #structWrap: GstElement* Element
 #outFile: XML
+
+# ProxyPad doesn't seem to exist anywhere. Atleast we don't seem to need it.
+#file:
+#class: ProxyPad
+#extend: Pad
+#import: gstreamer.Pad
+#code: start
+#//public class ProxyPad : Pad
+#//{
+#	/** the main Gtk struct */
+#	//protected GstProxyPad* gstProxyPad;
+#	protected GstPad* gstProxyPad;
+#
+#
+#	public GstPad* getProxyPadStruct()
+#	{
+#		return gstProxyPad;
+#	}
+#
+#
+#	/** the main Gtk struct as a void* */
+#	protected void* getStruct()
+#	{
+#		return cast(void*)gstProxyPad;
+#	}
+#
+#	/**
+#	 * Sets our main struct and passes it to the parent class
+#	 */
+#	public this (GstPad* gstProxyPad)
+#	{
+#		super(cast(GstObject*)gstProxyPad);
+#		this.gstProxyPad = gstProxyPad;
+#	}
+#//}
+#
+#code: end
+#outfile: ProxyPad
+

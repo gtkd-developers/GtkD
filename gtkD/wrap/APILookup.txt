@@ -146,6 +146,9 @@ package: glgdk glgdk
 package: glgtk glgtk
 bind: gtkglc
 
+srcdir: srcgstreamer
+package: gstreamer gstreamer
+bind: gstreamerc
 
 # define other packages to create
 
@@ -220,7 +223,16 @@ srcdir: srcsv
 bindDir: gsvc
 lookup: APILookupSourceView.txt
 
+srcdir: srcgstreamer
+bindDir: gstreamerc
+lookup: APILookupGStreamer.txt
 
+#This is a hack to put the hand edited gstreamer versions there.
+#This should be removed when we get these files automatically.
+wrap: gstreamerc
+srcout: ../srcgstreamer
+copy: gstreamer.d
+copy: gstreamertypes.d
 
 #Hack to put the build text in the correct place.
 srcdir: src
