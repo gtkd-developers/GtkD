@@ -15,7 +15,7 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
+ 
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
@@ -29,7 +29,7 @@
  * realStrct=
  * ctorStrct=
  * clss    = GhostPad
- * interf  =
+ * interf  = 
  * class Code: Yes
  * interface Code: No
  * template for:
@@ -80,32 +80,32 @@ private import gstreamer.Pad;
  */
 public class GhostPad : Pad
 {
-
+	
 	/** the main Gtk struct */
 	protected GstGhostPad* gstGhostPad;
-
-
+	
+	
 	public GstGhostPad* getGhostPadStruct()
 	{
 		return gstGhostPad;
 	}
-
-
+	
+	
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)gstGhostPad;
 	}
-
+	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
 	public this (GstGhostPad* gstGhostPad)
 	{
-		super(cast(GstPad*)gstGhostPad);
+		super(cast(Pad*)gstGhostPad);
 		this.gstGhostPad = gstGhostPad;
 	}
-
+	
 	/**
 	 * Create a new ghostpad with target as the target. The direction and
 	 * padtemplate will be taken from the target pad.
@@ -122,12 +122,12 @@ public class GhostPad : Pad
 		// GstPad* gst_ghost_pad_new (const gchar *name,  GstPad *target);
 		this( cast(GstGhostPad*) gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct()) );
 	}
-
+	
 	/**
 	 */
-
-
-
+	
+	
+	
 	/**
 	 * Create a new ghostpad without a target with the given direction.
 	 * A target can be set on the ghostpad later with the
@@ -145,7 +145,7 @@ public class GhostPad : Pad
 		// GstPad* gst_ghost_pad_new_no_target (const gchar *name,  GstPadDirection dir);
 		return new Pad( gst_ghost_pad_new_no_target(Str.toStringz(name), dir) );
 	}
-
+	
 	/**
 	 * Create a new ghostpad with target as the target. The direction will be taken
 	 * from the target pad. The template used on the ghostpad will be template.
@@ -165,7 +165,7 @@ public class GhostPad : Pad
 		// GstPad* gst_ghost_pad_new_from_template (const gchar *name,  GstPad *target,  GstPadTemplate *templ);
 		return new Pad( gst_ghost_pad_new_from_template(Str.toStringz(name), (target is null) ? null : target.getPadStruct(), templ) );
 	}
-
+	
 	/**
 	 * Create a new ghostpad based on templ, without setting a target. The
 	 * direction will be taken from the templ.
@@ -182,7 +182,7 @@ public class GhostPad : Pad
 		// GstPad* gst_ghost_pad_new_no_target_from_template  (const gchar *name,  GstPadTemplate *templ);
 		return new Pad( gst_ghost_pad_new_no_target_from_template(Str.toStringz(name), templ) );
 	}
-
+	
 	/**
 	 * Set the new target of the ghostpad gpad. Any existing target
 	 * is unlinked and links to the new target are established.
@@ -199,7 +199,7 @@ public class GhostPad : Pad
 		// gboolean gst_ghost_pad_set_target (GstGhostPad *gpad,  GstPad *newtarget);
 		return gst_ghost_pad_set_target(gstGhostPad, (newtarget is null) ? null : newtarget.getPadStruct());
 	}
-
+	
 	/**
 	 * Get the target pad of gpad. Unref target pad after usage.
 	 * gpad:

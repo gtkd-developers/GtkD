@@ -10,8 +10,17 @@ public Image getGtkDLogo()
 
 public Image getImage(char** image)
 {
-	Pixbuf pixbuf = new Pixbuf(image);
-	return new Image(pixbuf);
+	
+	Image img = new Image("images/gtkD_logo_shadow_small.png");
+	if ( img.getStorageType() == 4) //ImageType.STOCK )
+	{
+		Pixbuf pixbuf = new Pixbuf(image);
+		img = new Image(pixbuf);
+	}
+		
+
+	
+	return img;
 }
 
 /* XPM */

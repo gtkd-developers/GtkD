@@ -539,6 +539,19 @@ import: glib.Quark
 structWrap: GQuark* Quark
 #import: gobject.SignalInvocationHint
 #structWrap: GSignalInvocationHint* SignalInvocationHint
+
+code: start
+
+
+	public static uint connectData(void* instanc, char[] detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
+	{
+		// gulong g_signal_connect_data (gpointer instance,  const gchar *detailed_signal,  GCallback c_handler,  gpointer data,  GClosureNotify destroy_data,  GConnectFlags connect_flags);
+		return g_signal_connect_data(instanc, Str.toStringz(detailedSignal), cHandler, cast(void*)data, destroyData, connectFlags);
+	}
+
+
+code: end
+
 outFile: Signals
 
 file: gobject-Closures.html

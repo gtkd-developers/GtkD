@@ -343,11 +343,12 @@ public class ObjectG
 		//We use g_object_set instead of g_object_set_property, because Value doesn't like longs and ulongs for some reason.
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
-
+	
 	public void setProperty(char[] propertyName, ulong value)
 	{
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
+	
 	
 	/**
 	 */

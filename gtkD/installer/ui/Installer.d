@@ -46,11 +46,10 @@ private import gtk.Alignment;
 private import gtk.Button;
 private import gtkc.gtktypes;
 
-
 /**
- * From the information collected from the UI this will install GtkD, GtkDgl and or leds
+ *
  */
-class Installer : MainWindow
+public class  InstallerBox : VBox
 {
 	InstallerUI installerUI;
 	Label label;
@@ -60,17 +59,13 @@ class Installer : MainWindow
 	
 	this(InstallerUI installerUI)
 	{
-		super("Installing GtkD components");
+		super(false, 7);
 		this.installerUI = installerUI;
-		setDefaultSize(400,300);
 		setup();
-		showAll();
-		install();
 		progressBar.setFraction(1.0);
 		progressBar.setText("");
-		windowDelete(null, this);
-		destroy();
 	}
+
 	
 	private void setup()
 	{
@@ -94,13 +89,6 @@ class Installer : MainWindow
 	private void cancelInstall(Button button)
 	{
 		cancel = true;
-	}
-	
-	protected int windowDelete(Event event, Widget widget)
-	{
-		cancel = true;
-		mainInstaller.show();
-		return super.windowDelete(event, widget);
 	}
 	
 	char[] dmdHome;
@@ -162,7 +150,7 @@ class Installer : MainWindow
 					{
 						GtkD.mainIterationDo(false);
 					}
-					std.c.time.usleep(30000);
+					std.c.time.usleep(10000);
 				}
 			}
 			
@@ -448,6 +436,7 @@ class Installer : MainWindow
 			{
 				compiler.addArg("-lkernel32");
 				compiler.addArg("-luser32");
+				compiler.addArg("-ladvapi32");
 			}
 			else
 			{
@@ -631,4 +620,33 @@ class Installer : MainWindow
 		return ok;
 	}
 
+}
+
+
+/**
+ * From the information collected from the UI this will install GtkD, GtkDgl and or leds
+ */
+class Installer : MainWindow
+{
+	InstallerBox installerBox;
+	
+	this(InstallerUI installerUI)
+	{
+		super("Installing GtkD components");
+		setDefaultSize(400,300);
+		installerBox = new InstallerBox(installerUI);
+		add(installerBox);
+		showAll();
+		installerBox.install();
+		windowDelete(null, this);
+		destroy();
+	}
+
+	protected int windowDelete(Event event, Widget widget)
+	{
+		installerBox.cancel = true;
+		mainInstaller.show();
+		return super.windowDelete(event, widget);
+	}
+	
 }

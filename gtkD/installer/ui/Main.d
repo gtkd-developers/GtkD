@@ -224,13 +224,7 @@ public class MainInstaller : MainWindow , InstallerUI
 //		logo.setRelief(ReliefStyle.NONE);
 //		logo.setFocusOnClick(false);
 
-		Image image = new Image("images/gtkD_logo_shadow_small.png");
-		if ( image.getStorageType() == 4) //ImageType.STOCK )
-		{
-			image = getGtkDLogo();
-		}
-		
-		mainBox.packStart(Alignment.west(image), false, false, 2);
+		mainBox.packStart(Alignment.west(getGtkDLogo()), false, false, 2);
 		mainBox.packStart(notebook, true, true, 2);
 		mainBox.packStart(buttonBox, false, false, 2);
 
