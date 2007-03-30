@@ -154,6 +154,35 @@ public class Pad : ObjectGst
 	}
 	
 	/**
+	 * Queries a pad for the stream position.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The current position in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryPosition()
+	{
+		GstFormat form = GstFormat.TIME;
+		long cur_pos;
+		queryPosition( &form, &cur_pos );
+		return cur_pos;
+	}
+	
+	/**
+	 * Queries a pad for the stream duration.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The duration in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryDuration()
+	{
+		GstFormat form = GstFormat.TIME;
+		long cur_dur;
+		queryDuration( &form, &cur_dur );
+		return cur_dur;
+	}
+	
+	
+	/**
 	 */
 	
 	// imports for the signal processing

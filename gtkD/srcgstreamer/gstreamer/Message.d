@@ -139,6 +139,22 @@ public class Message
 	}
 	
 	/**
+	 * Get the src (the element that originated the message) of the message.
+	 */
+	public ObjectGst src()
+	{
+		return new ObjectGst( cast(GstObject*)getMessageStruct().src );
+	}
+	
+	/**
+	 * Get the structure.
+	 */
+	public Structure structure()
+	{
+		return new Structure( getMessageStruct().structure );
+	}
+	
+	/**
 	 * Extracts the tag list from the GstMessage. The tag list returned in the
 	 * output argument is a copy; the caller must free it when done.
 	 * MT safe.

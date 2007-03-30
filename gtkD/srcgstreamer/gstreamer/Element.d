@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- pad-added
  * imports:
  * 	- glib.Str
  * 	- gtkc.gobject
@@ -222,6 +223,70 @@ public class Element : ObjectGst
 	}
 	
 	/**
+	 * Get's all the pads from an element in a Pad[]. FIXME: This a hackish mess.
+	 */
+	public Pad[] pads()
+	{
+		Pad[] result = new Pad[0];
+		
+		Iterator iter = iteratePads();
+		GstPad* obu_c = null;
+		iter.next( cast(void**) &obu_c );
+		while( obu_c !is null )
+		{
+			Pad tmpobu = new Pad( obu_c );
+			//writefln( "iterating Padname: ", tmpobu.getName() );
+			result.length = result.length + 1;
+			result[result.length-1] = tmpobu;
+			
+			obu_c = null;
+			iter.next( cast(void**) &obu_c );
+		}
+		//writefln("no more pads.");
+		return result;
+	}
+	
+	protected uint padAddedHandlerId;
+	void delegate(Pad, Element)[] onPadAddedListeners;
+	void addOnPadAdded(void delegate(Pad, Element) dlg)
+	{
+		if ( !("pad-added" in connectedSignals) )
+		{
+			padAddedHandlerId = Signals.connectData(
+			getStruct(),
+			"pad-added",
+			cast(GCallback)&callBackPadAdded,
+			cast(void*)this,
+			null,
+			cast(ConnectFlags)0);
+			connectedSignals["pad-added"] = 1;
+		}
+		onPadAddedListeners ~= dlg;
+	}
+	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GObject* newPad, Element element)
+	{
+		bit consumed = false;
+		
+		foreach ( void delegate(Pad, Element) dlg ; element.onPadAddedListeners )
+		{
+			dlg(new Pad(newPad), element);
+		}
+		
+		return consumed;
+	}
+	void disconnectOnPadAdded()
+	{
+		if( "pad-added" in connectedSignals )
+		{
+			Signals.handlerDisconnect( getStruct(), padAddedHandlerId );
+			padAddedHandlerId = 0;
+			connectedSignals["pad-added"] = 0;
+			onPadAddedListeners = null;
+		}
+	}
+	
+	
+	/**
 	 */
 	
 	// imports for the signal processing
@@ -256,7 +321,7 @@ public class Element : ObjectGst
 		
 		return consumed;
 	}
-	
+	/*SEE HANDEDIT ABOVE... there's a disconnectOnPadAdded added.
 	void delegate(Pad, Element)[] onPadAddedListeners;
 	void addOnPadAdded(void delegate(Pad, Element) dlg)
 	{
@@ -284,7 +349,7 @@ public class Element : ObjectGst
 		
 		return consumed;
 	}
-	
+	*/
 	void delegate(Pad, Element)[] onPadRemovedListeners;
 	void addOnPadRemoved(void delegate(Pad, Element) dlg)
 	{

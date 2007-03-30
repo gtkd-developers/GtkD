@@ -351,6 +351,7 @@ structWrap: GstEvent* Event
 #where's GList: structWrap: GList
 #import: gdk.Cursor
 #structWrap: GdkCursor* Cursor
+#nocode: pad-added #this doesn't seem to work.
 code: start
 	/**
 	 * Queries an element for the stream position.
@@ -407,6 +408,74 @@ code: start
 								GstSeekType.SET, time_nanoseconds,
 								GstSeekType.NONE, GST_CLOCK_TIME_NONE);
 	}
+	
+	/**
+	* Get's all the pads from an element in a Pad[]. FIXME: This a hackish mess.
+	*/
+	public Pad[] pads()
+	{
+		Pad[] result = new Pad[0];
+		
+		Iterator iter = iteratePads();
+		GstPad* obu_c = null;
+		iter.next( cast(void**) &obu_c );
+		while( obu_c !is null )
+		{
+			Pad tmpobu = new Pad( obu_c );
+			//writefln( "iterating Padname: ", tmpobu.getName() );
+			result.length = result.length + 1;
+			result[result.length-1] = tmpobu;	
+			
+			obu_c = null;
+			iter.next( cast(void**) &obu_c );
+		}
+		//writefln("no more pads.");
+		return result;
+	}
+
+//HANDEDIT: This is a way to add disconnectOnPadAdded
+//There still doesn't seem to be a way to put it
+//there automatically...
+/*	
+	protected uint padAddedHandlerId;
+	void delegate(Pad, Element)[] onPadAddedListeners;
+	void addOnPadAdded(void delegate(Pad, Element) dlg)
+	{
+		if ( !("pad-added" in connectedSignals) )
+		{
+			padAddedHandlerId = Signals.connectData(
+			getStruct(),
+			"pad-added",
+			cast(GCallback)&callBackPadAdded,
+			cast(void*)this,
+			null,
+			cast(ConnectFlags)0);
+			connectedSignals["pad-added"] = 1;
+		}
+		onPadAddedListeners ~= dlg;
+	}
+	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GObject* newPad, Element element)
+	{
+		bit consumed = false;
+		
+		foreach ( void delegate(Pad, Element) dlg ; element.onPadAddedListeners )
+		{
+			dlg(new Pad(newPad), element);
+		}
+		
+		return consumed;
+	}
+	void disconnectOnPadAdded()
+	{
+		if( "pad-added" in connectedSignals )
+		{
+			Signals.handlerDisconnect( getStruct(), padAddedHandlerId );
+			padAddedHandlerId = 0;
+			connectedSignals["pad-added"] = 0;
+			onPadAddedListeners = null;
+		}
+	}
+*/	
 code: end
 outFile: Element
 
@@ -577,7 +646,7 @@ prefix: gst_
 import: glib.Str
 outFile: GError
 
-#For some reason GtkWrapper does the constructor wrong
+#HANDEDIT: For some reason GtkWrapper does the constructor wrong
 #with GstGhostPad. You have to hand edit it to look like this:
 #	/**
 #	 * Sets our main struct and passes it to the parent class
@@ -697,6 +766,35 @@ code: start
 		super(cast(GstObject*)gstPad);
 		this.gstPad = cast(GstPad*) gstPad;
 	}
+	
+	/**
+	 * Queries a pad for the stream position.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The current position in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryPosition()
+	{
+		GstFormat form = GstFormat.TIME;
+		long cur_pos;
+		queryPosition( &form, &cur_pos );
+		return cur_pos;
+	}
+
+	/**
+	 * Queries a pad for the stream duration.
+	 * This is a convenience function for gstreamerD.
+	 * Returns:
+	 *  The duration in nanoseconds - GstFormat.TIME.
+	 */
+	public long queryDuration()
+	{
+		GstFormat form = GstFormat.TIME;
+		long cur_dur;
+		queryDuration( &form, &cur_dur );
+		return cur_dur;
+	}
+	
 code: end
 outFile: Pad
 
@@ -725,6 +823,22 @@ code: start
 	public GstMessageType type()
 	{
 		return getMessageStruct().type;
+	}
+	
+	/**
+	 * Get the src (the element that originated the message) of the message.
+	 */
+	public ObjectGst src()
+	{
+		return new ObjectGst( cast(GstObject*)getMessageStruct().src );
+	}
+
+	/**
+	 * Get the structure.
+	 */
+	public Structure structure()
+	{
+		return new Structure( getMessageStruct().structure );
 	}
 
 	/**

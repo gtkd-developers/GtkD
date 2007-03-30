@@ -47,6 +47,8 @@ import gstreamer.Message;
 import gstreamer.Bus;
 import gstreamerc.gstreamertypes;
 
+//debug=GnonlinHello;
+
 const long FRAME_25 = (GST_SECOND / 25L);//40000000
 
 class GnonlinHello : MainWindow
@@ -55,7 +57,8 @@ public:
 	
 	this( char[] file1, char[] file2, char[] file3, char[] file4 )
 	{
-		writefln("GnonlinHello.this() START.");
+		debug(GnonlinHello) writefln("GnonlinHello.this() START.");
+		debug(GnonlinHello) scope(exit) writefln("GnonlinHello.this() END.");
 		
 		super("Gnonlin helloworld");
 		
@@ -94,10 +97,14 @@ public:
 		if( pipeline.add( gnl_video_composition ) == false ) throw new Exception("pipeline.add(gnl_video_composition)");
 		gnl_video_composition.addOnPadAdded(&newPad);
 		
-		/*
-		writefln("At the moment getting videotestsrc usually segfaults.");
-		//That's why it's not on now. But this is the way to do it, if you are
-		//able to overcome the segfault.
+		
+		debug(GnonlinHello)
+		{
+			writefln("At the moment getting videotestsrc usually segfaults if you put even one writefln before it.");
+			writefln("Remove all writeflns and debugs to make it work.");
+			//That's why debug=GnonlinHello is not on now.
+			//If you need the writeflns, then comment-out the following six lines.
+		}
 		
 		m_defaultVideoElement = ElementFactory.make( "videotestsrc", "default-videoelement" );
 		m_defaultVideoElement.setProperty("pattern", 2);
@@ -105,7 +112,7 @@ public:
 		m_defaultVideoSource.add( m_defaultVideoElement );
 		m_defaultVideoSource.setProperty("priority", 4294967295 );// 2 ** 32 -1 );
 		gnl_video_composition.add( m_defaultVideoSource );
-		*/
+		
 		
 		gnl_audio_composition1 = new Bin( ElementFactory.make("gnlcomposition", "gnl_audio_composition1") );
 		if( pipeline.add( gnl_audio_composition1 ) == false ) throw new Exception("pipeline.add(gnl_audio_composition1)");
@@ -168,7 +175,7 @@ public:
 
 		//GNLFILESOURCES:
 
-		writefln("GnonlinHello.this() Initing gnlfilesources.");
+		debug(GnonlinHello) writefln("GnonlinHello.this() Initing gnlfilesources.");
 
 		//This isn't entirely necessary, but demonstrated here because this way you could
 		//use video files that have audio as audiofiles.
@@ -177,14 +184,14 @@ public:
 
 		//VIDEO1:
 		
-		writefln("GnonlinHello.this() video_material1.");
+		debug(GnonlinHello) writefln("GnonlinHello.this() video_material1.");
 
 		video_material1 = ElementFactory.make("gnlfilesource", "video_material1");
 		//video_material1.addOnPadAdded(&newPad);
-		writefln("GnonlinHello.this() Trying to do gnl_video_composition.add( video_material1 ).");
+		debug(GnonlinHello) writefln("GnonlinHello.this() Trying to do gnl_video_composition.add( video_material1 ).");
 		if( (cast(Bin)gnl_video_composition).add( video_material1 ) == false ) throw new Exception("gnl_video_composition.add(video_material1)");
 		
-		writefln("GnonlinHello.this() Setting properties for video_material1.");
+		debug(GnonlinHello) writefln("GnonlinHello.this() Setting properties for video_material1.");
 
 		video_material1.location( file1 );
 		//alternatively: video_material1.setProperty("location", file1 );
@@ -194,7 +201,7 @@ public:
 		scope Value locval = new Value( "empty" );
 		video_material1.getProperty( "location", locval );
 		char[] loc = locval.getString();
-		writefln("video_material1 location:", loc );
+		debug(GnonlinHello) writefln("video_material1 location:", loc );
 
 		video_material1.setProperty("start", 0 * SECOND );
 		video_material1.setProperty("duration", 5 * SECOND );
@@ -218,7 +225,7 @@ public:
 
 		video_material2.caps( videocaps );
 
-		writefln("Setting audio properties.");
+		debug(GnonlinHello) writefln("Setting audio properties.");
 
 		audio1 = ElementFactory.make("gnlfilesource", "audio1");
 		if( (cast(Bin)gnl_audio_composition1).add( audio1 ) == false ) throw new Exception("gnl_audio_composition1.add(audio1)");
@@ -244,8 +251,6 @@ public:
 
 		audio2.caps( audiocaps );
 
-		writefln("GnonlinHello.this() END.");
-
 	}
 
 	~this()
@@ -261,7 +266,7 @@ public:
 	void onForwardOne(Button button)
 	{
 		long cur_pos = pipeline.queryPosition();
-		writefln("position: ", cur_pos );
+		debug(GnonlinHello) writefln("position: ", cur_pos );
 		pipeline.seek( cur_pos + FRAME_25 );
 
 	}
@@ -269,29 +274,29 @@ public:
 	void onBackwardOne(Button button)
 	{
 		long cur_pos = pipeline.queryPosition();
-		writefln("position: ", cur_pos );
+		debug(GnonlinHello) writefln("position: ", cur_pos );
 		pipeline.seek( cur_pos - FRAME_25 );
 
 	}
 
 	void onPlay(Button button)
 	{
-		writefln("Setting to PLAYING.");
+		debug(GnonlinHello) writefln("Setting to PLAYING.");
 		pipeline.setState( GstState.PLAYING );
-		writefln("Running.");
+		debug(GnonlinHello) writefln("Running.");
 	}
 
 	void onStop(Button button)
 	{
-		writefln("Setting to STOP.");
+		debug(GnonlinHello) writefln("Setting to STOP.");
 		//pipeline.setState( GstState.NULL );
 		pipeline.setState( GstState.PAUSED );
-		writefln("Stopped.");
+		debug(GnonlinHello) writefln("Stopped.");
 	}
 
 	void newPad( Pad pad, Element element )
 	{
-		writefln("newPad callback called. START.");
+		debug(GnonlinHello) writefln("newPad callback called. START.");
 
 		if( pad is null )
 			throw new Exception("newPad: pad is null.");
@@ -303,18 +308,18 @@ public:
 		Pad convpad;
 
 		// We can now link this pad with the audio decoder
-		writefln("Dynamic pad created, linking parser/decoder");
+		debug(GnonlinHello) writefln("Dynamic pad created, linking parser/decoder");
 
 		Caps caps = pad.getCaps();
 
 		char[] pad_type = caps.getStructure(0).getName();
 
-		writefln("pad_type: ", pad_type );
+		debug(GnonlinHello) writefln("pad_type: ", pad_type );
 
 		if( std.string.find( pad_type, "video" ) == -1 )
 		{
 			//it's audio:
-			writefln("newPad(): linking to audio-output.");
+			debug(GnonlinHello) writefln("newPad(): linking to audio-output.");
 			//convpad = audioconvert.getPad("audiosink");
 			//convpad = audioconvert.getCompatiblePad( pad, pad.getCaps() );
 			convpad = audio_adder.getCompatiblePad( pad, pad.getCaps() );
@@ -322,7 +327,7 @@ public:
 		else
 		{
 			//it's video:
-			writefln("newPad(): linking to video-output.");
+			debug(GnonlinHello) writefln("newPad(): linking to video-output.");
 			convpad = videosink.getCompatiblePad( pad, pad.getCaps() );
 
 		}
@@ -333,31 +338,34 @@ public:
 		else if( convpad.getPadStruct() is null )
 			throw new Exception("newPad: convpad.getPadStruct is null.");
 
-		writefln("Pad name: ", pad.getName() );
-		writefln("convpad name: ", convpad.getName() );
-		writefln("Pad parent name: ", pad.getParent().getName() );
-		writefln("convpad parent name: ", convpad.getParent().getName() );
+		debug(GnonlinHello)
+		{
+			writefln("Pad name: ", pad.getName() );
+			writefln("convpad name: ", convpad.getName() );
+			writefln("Pad parent name: ", pad.getParent().getName() );
+			writefln("convpad parent name: ", convpad.getParent().getName() );
+		}
 
-		writefln("doing a gst_pad_link.");
+		debug(GnonlinHello) writefln("doing a gst_pad_link.");
 		//if(
 		pad.link( convpad );// != GstPadLinkReturn.OK ) throw new Exception("dynamic pad.link(convpad)");
 
-		writefln("Done. That was ok.");
+		debug(GnonlinHello) writefln("Done. That was ok.");
 
 	}
 	
 	bool busCall( Message msg )
 	{
-		debug(gstreamer) writefln("GnonlinHello.busCall(msg) START.");
-		debug(gstreamer) scope(exit) writefln("GnonlinHello.busCall(msg) END.");
+		debug(GnonlinHello) writefln("GnonlinHello.busCall(msg) START.");
+		debug(GnonlinHello) scope(exit) writefln("GnonlinHello.busCall(msg) END.");
 
 		switch( msg.type )
 		{
 			case GstMessageType.UNKNOWN:
-				writefln("Unknown message type.");
+				debug(GnonlinHello) writefln("Unknown message type.");
 			break;
 			case GstMessageType.EOS:
-				writefln("End-of-stream.");
+				debug(GnonlinHello) writefln("End-of-stream.");
 				//GtkD.mainQuit();
 			break;
 
@@ -418,11 +426,11 @@ protected:
 
 int main(char[][] args)
 {
-	writefln("GStreamerD Hello!");
+	debug(GnonlinHello) writefln("GStreamerD Hello!");
 
 	uint major, minor, micro, nano;
 
-	writefln("Trying to init...");
+	debug(GnonlinHello) writefln("Trying to init...");
 
 	GtkD.init(args);
 	GStreamer.init(args);
@@ -434,11 +442,10 @@ int main(char[][] args)
 		return -1;
 	}
 
-	writefln("Checking version of GStreamer...");
+	debug(GnonlinHello) writefln("Checking version of GStreamer...");
 	GStreamer.versio(&major, &minor, &micro, &nano);
-	writefln("This program is linked against GStreamer ", major, ".", minor, ".", micro );
-	//writefln( "The file is: ", args[1] );
-
+	debug(GnonlinHello) writefln("This program is linked against GStreamer ", major, ".", minor, ".", micro );
+	
 	GnonlinHello gstHello = new GnonlinHello( args[1], args[2], args[3], args[4] );
 
 	GtkD.main();

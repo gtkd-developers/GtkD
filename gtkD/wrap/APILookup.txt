@@ -146,9 +146,11 @@ package: glgdk glgdk
 package: glgtk glgtk
 bind: gtkglc
 
-srcdir: srcgstreamer
-package: gstreamer gstreamer
-bind: gstreamerc
+##gstreamerD wrapping is not on by default
+##because of the hand-editing that is still required.
+#srcdir: srcgstreamer
+#package: gstreamer gstreamer
+#bind: gstreamerc
 
 # define other packages to create
 
@@ -223,16 +225,18 @@ srcdir: srcsv
 bindDir: gsvc
 lookup: APILookupSourceView.txt
 
-srcdir: srcgstreamer
-bindDir: gstreamerc
-lookup: APILookupGStreamer.txt
+##gstreamerD wrapping is not on by default
+##because of the hand-editing that is still required.
+#srcdir: srcgstreamer
+#bindDir: gstreamerc
+#lookup: APILookupGStreamer.txt
 
-#This is a hack to put the hand edited gstreamer versions there.
-#This should be removed when we get these files automatically.
-wrap: gstreamerc
-srcout: ../srcgstreamer
-copy: gstreamer.d
-copy: gstreamertypes.d
+##This is a hack to put the hand edited gstreamer versions there.
+##This should be removed when we get these files automatically.
+#wrap: gstreamerc
+#srcout: ../srcgstreamer
+#copy: gstreamer.d
+#copy: gstreamertypes.d
 
 #Hack to put the build text in the correct place.
 srcdir: src

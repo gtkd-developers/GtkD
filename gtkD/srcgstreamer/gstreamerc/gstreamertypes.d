@@ -20,7 +20,7 @@
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils package
 
-module gstreamer.gstreamertypes;
+module gstreamerc.gstreamertypes;
 
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;

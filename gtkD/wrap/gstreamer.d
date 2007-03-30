@@ -26,7 +26,7 @@
 module gstreamerc.gstreamer;
 
 private import std.stdio;
-private import gstreamer.gstreamertypes;
+private import gstreamerc.gstreamertypes;
 private import gtkc.Loader;
 private import gtkc.paths;
 

@@ -102,7 +102,7 @@ public class GhostPad : Pad
 	 */
 	public this (GstGhostPad* gstGhostPad)
 	{
-		super(cast(Pad*)gstGhostPad);
+		super(cast(GstPad*)gstGhostPad);
 		this.gstGhostPad = gstGhostPad;
 	}
 	
