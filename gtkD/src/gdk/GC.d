@@ -192,7 +192,7 @@ public class GC : ObjectG
 	 * Returns:
 	 *  the gc.
 	 */
-	public GC ref()
+	public GC doref()
 	{
 		// GdkGC* gdk_gc_ref (GdkGC *gc);
 		return new GC( gdk_gc_ref(gdkGC) );

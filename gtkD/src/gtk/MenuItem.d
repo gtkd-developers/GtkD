@@ -126,16 +126,27 @@ public class MenuItem : Item
 		addOnActivate(dlg);
 	}
 	
-	
+private import gtk.AccelGroup;
 	
 	/**
 	 * Creates a new Item associated with a "activate" delegate and with a action code
+	 * and optionally accelGroup
 	 */
-	public this(void delegate(MenuItem) dlg, char[] label, char[] action, bit mnemonic=true)
+	public this(void delegate(MenuItem) dlg, char[] label, char[] action, 
+				bit mnemonic=true,
+				AccelGroup accelGroup=null,
+				char accelKey='\0',
+				GdkModifierType modifierType=GdkModifierType.CONTROL_MASK,
+				GtkAccelFlags accelFlags=GtkAccelFlags.VISIBLE
+				)
 	{
 		this(label, mnemonic);
 		this.actionLabel = action;
 		addOnActivate(dlg);
+		if ( accelGroup !is null && accelKey != '\0' )
+		{
+			addAccelerator("activate",accelGroup,accelKey,modifierType,accelFlags); 
+		}
 	}
 	
 	/**

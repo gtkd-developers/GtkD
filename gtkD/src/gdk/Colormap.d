@@ -153,7 +153,7 @@ public class Colormap
 	 * Returns:
 	 *  the colormap
 	 */
-	public Colormap ref()
+	public Colormap doref()
 	{
 		// GdkColormap* gdk_colormap_ref (GdkColormap *cmap);
 		return new Colormap( gdk_colormap_ref(gdkColormap) );

@@ -184,7 +184,7 @@ public class MiniObject
 	 * Returns:
 	 *  the mini-object.
 	 */
-	public MiniObject ref()
+	public MiniObject doref()
 	{
 		// GstMiniObject* gst_mini_object_ref (GstMiniObject *mini_object);
 		return new MiniObject( gst_mini_object_ref(gstMiniObject) );

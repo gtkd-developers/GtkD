@@ -628,7 +628,7 @@ public class Event
 	 * Returns:
 	 *  event (for convenience when doing assignments)
 	 */
-	public Event ref()
+	public Event doref()
 	{
 		// GstEvent* gst_event_ref (GstEvent *event);
 		return new Event( gst_event_ref(gstEvent) );

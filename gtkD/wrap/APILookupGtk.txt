@@ -3678,6 +3678,7 @@ prefix: gtk_menu_item_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
+import: gtk.AccelGroup
 structWrap: GtkWidget* Widget
 # method conflict with parent method
 nocode: gtk_menu_item_activate
@@ -3715,13 +3716,26 @@ code: start
 	
 	/**
 	 * Creates a new Item associated with a "activate" delegate and with a action code
+	 * and optionally accelGroup
 	 */
-	public this(void delegate(MenuItem) dlg, char[] label, char[] action, bit mnemonic=true)
+	public this(void delegate(MenuItem) dlg, char[] label, char[] action, 
+				bit mnemonic=true,
+				AccelGroup accelGroup=null,
+				char accelKey='\0',
+				GdkModifierType modifierType=GdkModifierType.CONTROL_MASK,
+				GtkAccelFlags accelFlags=GtkAccelFlags.VISIBLE
+				)
 	{
 		this(label, mnemonic);
 		this.actionLabel = action;
 		addOnActivate(dlg);
+		if ( accelGroup !is null && accelKey != '\0' )
+		{
+			addAccelerator("activate",accelGroup,accelKey,modifierType,accelFlags); 
+		}
 	}
+	
+	
 
 	/**
 	 * Creates a new Item associated with a "activate" delegate

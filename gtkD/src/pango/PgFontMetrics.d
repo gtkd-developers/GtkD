@@ -191,7 +191,7 @@ public class PgFontMetrics
 	 * Returns:
 	 *  metrics
 	 */
-	public PangoFontMetrics* ref()
+	public PangoFontMetrics* doref()
 	{
 		// PangoFontMetrics* pango_font_metrics_ref (PangoFontMetrics *metrics);
 		return pango_font_metrics_ref(pangoFontMetrics);

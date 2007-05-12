@@ -108,6 +108,8 @@ import: gsv.SourceTagStyle
 structWrap: GtkSourceTagStyle* SourceTagStyle
 import: gsv.SourceMarker
 structWrap: GtkSourceMarker* SourceMarker
+import: gtk.TextIter
+structWrap: GtkTextIter* TextIter
 import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG

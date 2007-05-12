@@ -22,6 +22,14 @@ private import gtk.MainWindow;
 private import gtk.Label;
 private import gtk.GtkD;
 
+private import gtk.Dialog;
+private import gtk.VBox;
+private import gtk.HButtonBox;
+
+private import std.stdio;
+
+private import gtkc.gtktypes;
+
 class HelloWorld : MainWindow
 {
 	this()
@@ -30,7 +38,28 @@ class HelloWorld : MainWindow
 		setBorderWidth(10);
 		add(new Label("Hello World"));
 		showAll();
+		
+		Dialog dialog = new Dialog();
+		dialog.showAll();
+		VBox vbox = getVBox(dialog);
+		dialog.showAll();
+		
 	}
+	
+	VBox getVBox(Dialog dialog)
+	{
+		void* pt = dialog.getDialogStruct();
+		(pt) += 37;
+		VBox vbox;
+		
+		vbox = new VBox(cast(GtkVBox*)(pt));
+		vbox.packStart(new Label("Label test"), false, false, 2);
+		vbox.showAll();
+		
+		return vbox;
+	}
+
+	
 }
 
 private import gtkc.Loader;

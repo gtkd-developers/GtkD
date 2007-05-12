@@ -682,7 +682,7 @@ public class Caps
 	 * Returns:
 	 *  the same GstCaps object.
 	 */
-	public Caps ref()
+	public Caps doref()
 	{
 		// GstCaps* gst_caps_ref (GstCaps *caps);
 		return new Caps( gst_caps_ref(gstCaps) );

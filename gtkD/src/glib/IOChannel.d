@@ -524,7 +524,7 @@ public class IOChannel
 	 * Returns:
 	 *  the channel that was passed in (since 2.6)
 	 */
-	public IOChannel ref()
+	public IOChannel doref()
 	{
 		// GIOChannel* g_io_channel_ref (GIOChannel *channel);
 		return new IOChannel( g_io_channel_ref(gIOChannel) );

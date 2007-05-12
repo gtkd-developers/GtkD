@@ -92,7 +92,7 @@ public class PgCoverage
 	 * Returns:
 	 *  coverage
 	 */
-	public static PangoCoverage* ref(PangoCoverage* coverage)
+	public static PangoCoverage* doref(PangoCoverage* coverage)
 	{
 		// PangoCoverage* pango_coverage_ref (PangoCoverage *coverage);
 		return pango_coverage_ref(coverage);

@@ -433,7 +433,7 @@ public class HashTable
 	 *  the passed in GHashTable.
 	 * Since 2.10
 	 */
-	public HashTable ref()
+	public HashTable doref()
 	{
 		// GHashTable* g_hash_table_ref (GHashTable *hash_table);
 		return new HashTable( g_hash_table_ref(gHashTable) );

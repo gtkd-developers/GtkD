@@ -210,6 +210,7 @@ class TestWindow : MainWindow
 		debug(1)writefln("TestWindow.setup 1");
 		//Frame.defaultBorder = 7;
 
+
 		VBox mainBox = new VBox(false,3);
 		//Table table = new Table(1,5,false);
 		//table.attach(getMenuBar(),0,1,0,1,AttachOptions.EXPAND,AttachOptions.SHRINK,0,0);		// adding to the window
@@ -294,24 +295,39 @@ class TestWindow : MainWindow
 		debug(1)writefln("TestWindow.setup 6");
 		
 	}
+	
+private import gtk.AccelGroup;
 
 	MenuBar getMenuBar()
 	{
+
+		AccelGroup accelGroup = new AccelGroup();
+
+		addAccelGroup(accelGroup);
+
+
 		MenuBar menuBar = new MenuBar();
 
 		Menu menu = menuBar.append("_File");;
-		menu.append(new MenuItem(&onMenuActivate, "_New","file.new"));
-		menu.append(new MenuItem(&onMenuActivate, "_Open","file.open"));
-		menu.append(new MenuItem(&onMenuActivate, "_Close","file.close"));
-		menu.append(new MenuItem(&onMenuActivate, "E_xit","file.exit"));
+		
+		MenuItem item = new MenuItem(&onMenuActivate, "_New","file.new", true, accelGroup, 'n');
+		//item.addAccelerator("activate",accelGroup,'n',GdkModifierType.CONTROL_MASK,GtkAccelFlags.VISIBLE); 
+		
+		menu.append(item);
+		menu.append(new MenuItem(&onMenuActivate, "_Open","file.open", true, accelGroup, 'o'));
+		menu.append(new MenuItem(&onMenuActivate, "_Close","file.close", true, accelGroup, 'c'));
+		menu.append(new MenuItem(&onMenuActivate, "E_xit","file.exit", true, accelGroup, 'x'));
 		
 		
 		menu = menuBar.append("_Edit");
-		menu.append(new MenuItem(&onMenuActivate,"_Find","edit.find"));
-		menu.append(new MenuItem(&onMenuActivate,"_Search","edit.search"));
+		menu.append(new MenuItem(&onMenuActivate,"_Find","edit.find", true, accelGroup, 'f'));
+		menu.append(new MenuItem(&onMenuActivate,"_Search","edit.search", true, accelGroup, 's'));
 
 		menu = menuBar.append("_Help");
-		menu.append(new MenuItem(&onMenuActivate,"_About","help.about"));
+		menu.append(new MenuItem(&onMenuActivate,"_About","help.about", true, accelGroup, 'a',GdkModifierType.CONTROL_MASK|GdkModifierType.SHIFT_MASK));
+		
+		
+		
 		
 		return menuBar;
 	}

@@ -298,7 +298,7 @@ extern(C)
 	gboolean function(GdaFieldAttributes* fa)gda_field_attributes_get_unique_key;
 	void function(GdaFieldAttributes* fa, gboolean uk)gda_field_attributes_set_unique_key;
 	gchar* function(GdaFieldAttributes* fa)gda_field_attributes_get_references;
-	void function(GdaFieldAttributes* fa, gchar* ref)gda_field_attributes_set_references;
+	void function(GdaFieldAttributes* fa, gchar* doref)gda_field_attributes_set_references;
 	gboolean function(GdaFieldAttributes* fa)gda_field_attributes_get_auto_increment;
 	void function(GdaFieldAttributes* fa, gboolean isAuto)gda_field_attributes_set_auto_increment;
 	gint function(GdaFieldAttributes* fa)gda_field_attributes_get_position;

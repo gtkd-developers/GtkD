@@ -128,7 +128,7 @@ public class ParamSpec
 	 * Returns:
 	 * the GParamSpec that was passed into this function
 	 */
-	public ParamSpec ref()
+	public ParamSpec doref()
 	{
 		// GParamSpec* g_param_spec_ref (GParamSpec *pspec);
 		return new ParamSpec( g_param_spec_ref(gParamSpec) );

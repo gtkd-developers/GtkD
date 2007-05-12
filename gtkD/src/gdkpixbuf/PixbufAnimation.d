@@ -137,7 +137,7 @@ public class PixbufAnimation : ObjectG
 	 * Returns:
 	 *  The same as the animation argument.
 	 */
-	public PixbufAnimation ref()
+	public PixbufAnimation doref()
 	{
 		// GdkPixbufAnimation* gdk_pixbuf_animation_ref (GdkPixbufAnimation *animation);
 		return new PixbufAnimation( gdk_pixbuf_animation_ref(gdkPixbufAnimation) );

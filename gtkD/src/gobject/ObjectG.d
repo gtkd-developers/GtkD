@@ -600,7 +600,7 @@ public class ObjectG
 	 * Returns:
 	 * the same object
 	 */
-	public static void* ref(void* object)
+	public static void* doref(void* object)
 	{
 		// gpointer g_object_ref (gpointer object);
 		return g_object_ref(object);

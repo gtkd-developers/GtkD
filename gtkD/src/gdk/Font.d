@@ -383,7 +383,7 @@ public class Font
 	 * Returns:
 	 *  font
 	 */
-	public Font ref()
+	public Font doref()
 	{
 		// GdkFont* gdk_font_ref (GdkFont *font);
 		return new Font( gdk_font_ref(gdkFont) );

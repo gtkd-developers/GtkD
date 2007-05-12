@@ -496,7 +496,7 @@ public class ObjectGst : ObjectG
 	 * Returns:
 	 *  A pointer to object
 	 */
-	public static void* ref(void* object)
+	public static void* doref(void* object)
 	{
 		// gpointer gst_object_ref (gpointer object);
 		return gst_object_ref(object);

@@ -1645,7 +1645,7 @@ public class GtkDClass
 			{
 				switch ( structName )
 				{
-					// TODO "public struct GdkEventClient;" comfuses DMD!!!???
+					// TODO "public struct GdkEventClient;" confuses DMD!!!???
 					case "GdkEventClient":
 						collectedStructs ~= "public struct "~structName~"{}";
 						break;
@@ -2306,6 +2306,7 @@ public class GtkDClass
 			case "out" : converted = "f_out"; break;
 			case "in" : converted = "f_in"; break;
 			case "inout" : converted = "f_inout"; break;
+			case "ref" : converted = "doref"; break; // TODO why wasn't this converted from the alias on APILookup.txt
 			default:
 				// done
 				break;

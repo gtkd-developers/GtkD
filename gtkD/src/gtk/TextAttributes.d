@@ -205,7 +205,7 @@ public class TextAttributes
 	 * Background color as a string.
 	 * Default value: NULL
 	 */
-	public TextAttributes ref()
+	public TextAttributes doref()
 	{
 		// GtkTextAttributes* gtk_text_attributes_ref (GtkTextAttributes *values);
 		return new TextAttributes( gtk_text_attributes_ref(gtkTextAttributes) );

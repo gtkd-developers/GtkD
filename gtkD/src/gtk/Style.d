@@ -248,7 +248,7 @@ public class Style : ObjectG
 	 * Returns:
 	 *  style.
 	 */
-	public Style ref()
+	public Style doref()
 	{
 		// GtkStyle* gtk_style_ref (GtkStyle *style);
 		return new Style( gtk_style_ref(gtkStyle) );

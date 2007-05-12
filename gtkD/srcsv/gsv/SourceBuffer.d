@@ -45,6 +45,7 @@
  * 	- gsv.SourceLanguage
  * 	- gsv.SourceTagStyle
  * 	- gsv.SourceMarker
+ * 	- gtk.TextIter
  * 	- glib.Str
  * 	- glib.ListSG
  * structWrap:
@@ -53,6 +54,7 @@
  * 	- GtkSourceMarker* -> SourceMarker
  * 	- GtkSourceTagStyle* -> SourceTagStyle
  * 	- GtkSourceTagTable* -> SourceTagTable
+ * 	- GtkTextIter* -> TextIter
  * module aliases:
  * local aliases:
  */
@@ -67,6 +69,7 @@ private import gsv.SourceTagTable;
 private import gsv.SourceLanguage;
 private import gsv.SourceTagStyle;
 private import gsv.SourceMarker;
+private import gtk.TextIter;
 private import glib.Str;
 private import glib.ListSG;
 
@@ -181,8 +184,8 @@ public class SourceBuffer : TextBuffer
 		return consumed;
 	}
 	
-	void delegate(GtkTextIter*, GtkTextIter*, SourceBuffer)[] onHighlightUpdatedListeners;
-	void addOnHighlightUpdated(void delegate(GtkTextIter*, GtkTextIter*, SourceBuffer) dlg)
+	void delegate(TextIter, TextIter, SourceBuffer)[] onHighlightUpdatedListeners;
+	void addOnHighlightUpdated(void delegate(TextIter, TextIter, SourceBuffer) dlg)
 	{
 		if ( !("highlight-updated" in connectedSignals) )
 		{
@@ -201,16 +204,16 @@ public class SourceBuffer : TextBuffer
 	{
 		bit consumed = false;
 		
-		foreach ( void delegate(GtkTextIter*, GtkTextIter*, SourceBuffer) dlg ; sourceBuffer.onHighlightUpdatedListeners )
+		foreach ( void delegate(TextIter, TextIter, SourceBuffer) dlg ; sourceBuffer.onHighlightUpdatedListeners )
 		{
-			dlg(arg1, arg2, sourceBuffer);
+			dlg(new TextIter(arg1), new TextIter(arg2), sourceBuffer);
 		}
 		
 		return consumed;
 	}
 	
-	void delegate(GtkTextIter*, SourceBuffer)[] onMarkerUpdatedListeners;
-	void addOnMarkerUpdated(void delegate(GtkTextIter*, SourceBuffer) dlg)
+	void delegate(TextIter, SourceBuffer)[] onMarkerUpdatedListeners;
+	void addOnMarkerUpdated(void delegate(TextIter, SourceBuffer) dlg)
 	{
 		if ( !("marker-updated" in connectedSignals) )
 		{
@@ -229,9 +232,9 @@ public class SourceBuffer : TextBuffer
 	{
 		bit consumed = false;
 		
-		foreach ( void delegate(GtkTextIter*, SourceBuffer) dlg ; sourceBuffer.onMarkerUpdatedListeners )
+		foreach ( void delegate(TextIter, SourceBuffer) dlg ; sourceBuffer.onMarkerUpdatedListeners )
 		{
-			dlg(arg1, sourceBuffer);
+			dlg(new TextIter(arg1), sourceBuffer);
 		}
 		
 		return consumed;
@@ -576,10 +579,10 @@ public class SourceBuffer : TextBuffer
 	 * Returns:
 	 *  a new GtkSourceMarker, owned by the buffer.
 	 */
-	public SourceMarker createMarker(char[] name, char[] type, GtkTextIter* where)
+	public SourceMarker createMarker(char[] name, char[] type, TextIter where)
 	{
 		// GtkSourceMarker* gtk_source_buffer_create_marker  (GtkSourceBuffer *buffer,  const gchar *name,  const gchar *type,  const GtkTextIter *where);
-		return new SourceMarker( gtk_source_buffer_create_marker(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(type), where) );
+		return new SourceMarker( gtk_source_buffer_create_marker(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(type), (where is null) ? null : where.getTextIterStruct()) );
 	}
 	
 	/**
@@ -591,10 +594,10 @@ public class SourceBuffer : TextBuffer
 	 * where:
 	 *  the new location for the marker.
 	 */
-	public void moveMarker(SourceMarker marker, GtkTextIter* where)
+	public void moveMarker(SourceMarker marker, TextIter where)
 	{
 		// void gtk_source_buffer_move_marker (GtkSourceBuffer *buffer,  GtkSourceMarker *marker,  const GtkTextIter *where);
-		gtk_source_buffer_move_marker(gtkSourceBuffer, (marker is null) ? null : marker.getSourceMarkerStruct(), where);
+		gtk_source_buffer_move_marker(gtkSourceBuffer, (marker is null) ? null : marker.getSourceMarkerStruct(), (where is null) ? null : where.getTextIterStruct());
 	}
 	
 	/**
@@ -642,10 +645,10 @@ public class SourceBuffer : TextBuffer
 	 * Returns:
 	 *  a GSList of the GtkSourceMarker inside the range.
 	 */
-	public ListSG getMarkersInRegion(GtkTextIter* begin, GtkTextIter* end)
+	public ListSG getMarkersInRegion(TextIter begin, TextIter end)
 	{
 		// GSList* gtk_source_buffer_get_markers_in_region  (GtkSourceBuffer *buffer,  const GtkTextIter *begin,  const GtkTextIter *end);
-		return new ListSG( gtk_source_buffer_get_markers_in_region(gtkSourceBuffer, begin, end) );
+		return new ListSG( gtk_source_buffer_get_markers_in_region(gtkSourceBuffer, (begin is null) ? null : begin.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct()) );
 	}
 	
 	/**
@@ -687,10 +690,10 @@ public class SourceBuffer : TextBuffer
 	 * marker:
 	 *  a GtkSourceMarker of buffer.
 	 */
-	public void getIterAtMarker(GtkTextIter* iter, SourceMarker marker)
+	public void getIterAtMarker(TextIter iter, SourceMarker marker)
 	{
 		// void gtk_source_buffer_get_iter_at_marker  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  GtkSourceMarker *marker);
-		gtk_source_buffer_get_iter_at_marker(gtkSourceBuffer, iter, (marker is null) ? null : marker.getSourceMarkerStruct());
+		gtk_source_buffer_get_iter_at_marker(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), (marker is null) ? null : marker.getSourceMarkerStruct());
 	}
 	
 	/**
@@ -707,10 +710,10 @@ public class SourceBuffer : TextBuffer
 	 *  the GtkSourceMarker nearest to the right of iter,
 	 * or NULL if there are no more markers after iter.
 	 */
-	public SourceMarker getNextMarker(GtkTextIter* iter)
+	public SourceMarker getNextMarker(TextIter iter)
 	{
 		// GtkSourceMarker* gtk_source_buffer_get_next_marker  (GtkSourceBuffer *buffer,  GtkTextIter *iter);
-		return new SourceMarker( gtk_source_buffer_get_next_marker(gtkSourceBuffer, iter) );
+		return new SourceMarker( gtk_source_buffer_get_next_marker(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct()) );
 	}
 	
 	/**
@@ -732,10 +735,10 @@ public class SourceBuffer : TextBuffer
 	 * Whether to check and highlight matching brackets.
 	 * Default value: TRUE
 	 */
-	public SourceMarker getPrevMarker(GtkTextIter* iter)
+	public SourceMarker getPrevMarker(TextIter iter)
 	{
 		// GtkSourceMarker* gtk_source_buffer_get_prev_marker  (GtkSourceBuffer *buffer,  GtkTextIter *iter);
-		return new SourceMarker( gtk_source_buffer_get_prev_marker(gtkSourceBuffer, iter) );
+		return new SourceMarker( gtk_source_buffer_get_prev_marker(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct()) );
 	}
 	
 	

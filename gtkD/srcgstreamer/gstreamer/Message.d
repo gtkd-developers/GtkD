@@ -788,7 +788,7 @@ public class Message
 	 * Returns:
 	 *  msg (for convenience when doing assignments)
 	 */
-	public Message ref()
+	public Message doref()
 	{
 		// GstMessage* gst_message_ref (GstMessage *msg);
 		return new Message( gst_message_ref(gstMessage) );

@@ -205,7 +205,7 @@ public class MainContext
 	 * Returns:
 	 *  the context that was passed in (since 2.6)
 	 */
-	public MainContext ref()
+	public MainContext doref()
 	{
 		// GMainContext* g_main_context_ref (GMainContext *context);
 		return new MainContext( g_main_context_ref(gMainContext) );

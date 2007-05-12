@@ -1223,7 +1223,7 @@ public struct GSourceFuncs{}
  * Called to extract the callback function and data from the callback object.
  */
 public struct GSourceCallbackFuncs{}
-// void (*ref) (void* cbData);
+// void (*doref) (void* cbData);
 // glib-The-Main-Event-Loop.html
 // void (*unref) (void* cbData);
 // glib-The-Main-Event-Loop.html

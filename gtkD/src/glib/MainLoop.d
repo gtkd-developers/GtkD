@@ -168,7 +168,7 @@ public class MainLoop
 	 * Returns:
 	 *  loop
 	 */
-	public MainLoop ref()
+	public MainLoop doref()
 	{
 		// GMainLoop* g_main_loop_ref (GMainLoop *loop);
 		return new MainLoop( g_main_loop_ref(gMainLoop) );

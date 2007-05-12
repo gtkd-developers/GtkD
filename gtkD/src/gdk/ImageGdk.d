@@ -193,7 +193,7 @@ public class ImageGdk
 	 * Returns:
 	 *  the image
 	 */
-	public GdkImage* ref()
+	public GdkImage* doref()
 	{
 		// GdkImage* gdk_image_ref (GdkImage *image);
 		return gdk_image_ref(gdkImage);

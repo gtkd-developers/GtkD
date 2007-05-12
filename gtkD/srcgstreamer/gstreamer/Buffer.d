@@ -224,7 +224,7 @@ public class Buffer
 	 * Returns:
 	 *  buf
 	 */
-	public Buffer ref()
+	public Buffer doref()
 	{
 		// GstBuffer* gst_buffer_ref (GstBuffer *buf);
 		return new Buffer( gst_buffer_ref(gstBuffer) );

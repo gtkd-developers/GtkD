@@ -22,12 +22,14 @@ module utils.funct;
 //debug = wrapType;
 //debug = unwrapType;
 //debug = mainStrct;
+//debug = declaration;
 //debug = ctor;
 //debug = type;
 //debug = name;
 //debug = parm;
 //debug = externalDec
 //debug = callback;
+
 
 public struct Funct
 {
@@ -373,6 +375,7 @@ public struct Funct
 		debug(ctor)writefln("declaration ctor type = %s",type);
 		debug(ctor)writefln("declaration ctor name = %s",name);
 		convName = GtkDClass.idsToGtkD(name, convParms, aliases);
+		debug(declaration)writefln("name=%s convName=%s", name, convName);
 		if ( convParms.strct.length>0 
 			&& GtkDClass.startsWith(convName, "new")
 			&& ( (type == strctPointer 
@@ -435,6 +438,8 @@ public struct Funct
 			++parmCount;
 		}
 		dec ~= ')';
+
+		debug(declaration)writefln("declaration=%s", dec);
 		
 		return dec;
 	}

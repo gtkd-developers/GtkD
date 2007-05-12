@@ -175,7 +175,7 @@ public class Closure
 	 * Returns:
 	 * The closure passed in, for convenience
 	 */
-	public Closure ref()
+	public Closure doref()
 	{
 		// GClosure* g_closure_ref (GClosure *closure);
 		return new Closure( g_closure_ref(gClosure) );

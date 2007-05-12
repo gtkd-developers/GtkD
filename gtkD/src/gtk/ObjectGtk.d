@@ -234,7 +234,7 @@ public class ObjectGtk : ObjectG
 	 * Returns:
 	 * object.
 	 */
-	public GtkObject* ref()
+	public GtkObject* doref()
 	{
 		// GtkObject* gtk_object_ref (GtkObject *object);
 		return gtk_object_ref(gtkObject);

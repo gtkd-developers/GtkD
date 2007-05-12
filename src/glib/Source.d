@@ -257,7 +257,7 @@ public class Source
 	 * Returns:
 	 *  source
 	 */
-	public Source ref()
+	public Source refe()
 	{
 		// GSource* g_source_ref (GSource *source);
 		return new Source( g_source_ref(gSource) );

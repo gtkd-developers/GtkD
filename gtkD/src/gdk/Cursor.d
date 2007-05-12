@@ -312,7 +312,7 @@ public class Cursor
 	 * Returns:
 	 *  Same cursor that was passed in
 	 */
-	public Cursor ref()
+	public Cursor doref()
 	{
 		// GdkCursor* gdk_cursor_ref (GdkCursor *cursor);
 		return new Cursor( gdk_cursor_ref(gdkCursor) );

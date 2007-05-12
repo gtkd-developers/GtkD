@@ -150,7 +150,7 @@ public class AsyncQueue
 	 * Returns:
 	 *  the queue that was passed in (since 2.6)
 	 */
-	public AsyncQueue ref()
+	public AsyncQueue doref()
 	{
 		// GAsyncQueue* g_async_queue_ref (GAsyncQueue *queue);
 		return new AsyncQueue( g_async_queue_ref(gAsyncQueue) );
