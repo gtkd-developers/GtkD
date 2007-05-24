@@ -25,7 +25,12 @@
 
 module gtkc.gobject;
 
+version(tango)
+{}
+else
+{
 private import std.stdio;
+}
 private import gtkc.gobjecttypes;
 private import gtkc.Loader;
 private import gtkc.paths;

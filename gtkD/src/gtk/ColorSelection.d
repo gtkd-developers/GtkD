@@ -124,7 +124,7 @@ public class ColorSelection : VBox
 	}
 	extern(C) static void callBackColorChanged(GtkColorSelection* colorselectionStruct, ColorSelection colorSelection)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(ColorSelection) dlg ; colorSelection.onColorChangedListeners )
 		{

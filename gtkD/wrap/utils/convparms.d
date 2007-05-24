@@ -39,7 +39,7 @@ public struct ConvParms
 	public char[] extend;
 	public char[][] impl;
 	public char[][] prefixes;
-	public bit strictPrefix;	/// include only function that match the prefix
+	public bool strictPrefix;	/// include only function that match the prefix
 	public char[][] imprts;
 	public char[][char[]]  structWrap;
 	public char[][] noStructs;
@@ -168,9 +168,9 @@ public struct ConvParms
 		text ~= toString();
 	}
 
-	public bit containsPrefix(char[] prefix)
+	public bool containsPrefix(char[] prefix)
 	{
-		bit contains = false;
+		bool contains = false;
 		int i = 0;
 		while ( !contains && i<prefixes.length )
 		{
@@ -183,7 +183,7 @@ public struct ConvParms
 	public char[] getPrefix(char[] prefix)
 	{
 		char[] fundPrefix;
-		bit contains = false;
+		bool contains = false;
 		int i = 0;
 		while ( !contains && i<prefixes.length )
 		{
@@ -197,9 +197,9 @@ public struct ConvParms
 		return fundPrefix;
 	}	
 
-	public bit omitCode(char[] codeName)
+	public bool omitCode(char[] codeName)
 	{
-		bit omit = false;
+		bool omit = false;
 		int i=0;
 		while ( !omit && i<noCode.length )
 		{

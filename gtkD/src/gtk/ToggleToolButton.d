@@ -124,7 +124,7 @@ public class ToggleToolButton : ToolButton
 	}
 	extern(C) static void callBackToggled(GtkToggleToolButton* toggleToolButtonStruct, ToggleToolButton toggleToolButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(ToggleToolButton) dlg ; toggleToolButton.onToggledListeners )
 		{

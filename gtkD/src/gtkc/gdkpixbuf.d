@@ -25,7 +25,12 @@
 
 module gtkc.gdkpixbuf;
 
+version(tango)
+{}
+else
+{
 private import std.stdio;
+}
 private import gtkc.gdkpixbuftypes;
 private import gtkc.Loader;
 private import gtkc.paths;

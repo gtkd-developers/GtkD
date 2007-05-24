@@ -272,7 +272,7 @@ public class UIManager : ObjectG
 	}
 	extern(C) static void callBackActionsChanged(GtkUIManager* mergeStruct, UIManager uIManager)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(UIManager) dlg ; uIManager.onActionsChangedListeners )
 		{
@@ -300,7 +300,7 @@ public class UIManager : ObjectG
 	}
 	extern(C) static void callBackAddWidget(GtkUIManager* mergeStruct, GtkWidget* widget, UIManager uIManager)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget, UIManager) dlg ; uIManager.onAddWidgetListeners )
 		{
@@ -328,7 +328,7 @@ public class UIManager : ObjectG
 	}
 	extern(C) static void callBackConnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, UIManager uIManager)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Action, Widget, UIManager) dlg ; uIManager.onConnectProxyListeners )
 		{
@@ -356,7 +356,7 @@ public class UIManager : ObjectG
 	}
 	extern(C) static void callBackDisconnectProxy(GtkUIManager* uimanagerStruct, GtkAction* action, GtkWidget* proxy, UIManager uIManager)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Action, Widget, UIManager) dlg ; uIManager.onDisconnectProxyListeners )
 		{
@@ -384,7 +384,7 @@ public class UIManager : ObjectG
 	}
 	extern(C) static void callBackPostActivate(GtkUIManager* uimanagerStruct, GtkAction* action, UIManager uIManager)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Action, UIManager) dlg ; uIManager.onPostActivateListeners )
 		{
@@ -412,7 +412,7 @@ public class UIManager : ObjectG
 	}
 	extern(C) static void callBackPreActivate(GtkUIManager* uimanagerStruct, GtkAction* action, UIManager uIManager)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Action, UIManager) dlg ; uIManager.onPreActivateListeners )
 		{

@@ -92,7 +92,7 @@ template GLCapability()
 	/**
 	 * Sets the GL capabilities for the widget
 	 */
-	bit setGLCapability(GLConfig glConfig = null, int renderType = GLRenderType.RGBA_TYPE)
+	bool setGLCapability(GLConfig glConfig = null, int renderType = GLRenderType.RGBA_TYPE)
 	{
 		if ( glConfig is null )
 		{
@@ -104,7 +104,7 @@ template GLCapability()
 			| GLConfigMode.MODE_DEPTH
 			);
 		}
-		bit ok = setGLCapability(this, glConfig, null, true, renderType);
+		bool ok = setGLCapability(this, glConfig, null, true, renderType);
 		
 		return ok;
 	}
@@ -112,7 +112,7 @@ template GLCapability()
 	/**
 	 * Set the GL capabilities for the widget
 	 */
-	bit setGLCapability(Widget widget, GLConfig glConfig, GLContext shareList, bit direct, int renderType)
+	bool setGLCapability(Widget widget, GLConfig glConfig, GLContext shareList, bool direct, int renderType)
 	{
 		GLWidget.setGLCapability(widget, glConfig, shareList, direct, renderType);
 		
@@ -129,7 +129,7 @@ template GLCapability()
 	/**
 	 * The widget should use this method to redraw it self at any time
 	 */
-	public bit glDrawFrame()
+	public bool glDrawFrame()
 	{
 		return glDrawFrame(this);
 	}
@@ -137,7 +137,7 @@ template GLCapability()
 	/**
 	 * The application should use this method to redraw the scene at any time
 	 */
-	bit glDrawFrame(Widget widget)
+	bool glDrawFrame(Widget widget)
 	{
 		//printf("GLCapabilityT.realizeFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
@@ -150,7 +150,7 @@ template GLCapability()
 		}
 		
 		/*** do user actions ***/
-		bit consumeEvent = typeof(this).drawGL(null);
+		bool consumeEvent = typeof(this).drawGL(null);
 		
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
@@ -190,7 +190,7 @@ template GLCapability()
 		}
 		
 		/*** do user actions ***/
-		bit consumeEvent = typeof(this).initGL();
+		bool consumeEvent = typeof(this).initGL();
 		
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
@@ -302,7 +302,7 @@ template GLCapability()
 		}
 		
 		/*** do user actions ***/
-		bit consumeEvent = typeof(this).onMap();
+		bool consumeEvent = typeof(this).onMap();
 		
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
@@ -333,7 +333,7 @@ template GLCapability()
 		}
 		
 		/*** do user actions ***/
-		bit consumeEvent = typeof(this).onUnmap();
+		bool consumeEvent = typeof(this).onUnmap();
 		
 		/*** flush ***/
 		if ( drawable.isDoubleBuffered() )
@@ -382,13 +382,13 @@ template GLCapability()
 		return consumeEvent;
 	}
 	
-	bit onMap()
+	bool onMap()
 	{
 		//printf("GLCapabilityT.map \n" );
 		return true;
 	}
 	
-	bit onUnmap()
+	bool onUnmap()
 	{
 		//printf("GLCapabilityT.unmap \n" );
 		return true;

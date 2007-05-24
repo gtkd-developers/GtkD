@@ -126,7 +126,7 @@ public class Calendar : Widget
 	}
 	extern(C) static void callBackDaySelected(GtkCalendar* calendarStruct, Calendar calendar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Calendar) dlg ; calendar.onDaySelectedListeners )
 		{
@@ -154,7 +154,7 @@ public class Calendar : Widget
 	}
 	extern(C) static void callBackDaySelectedDoubleClick(GtkCalendar* calendarStruct, Calendar calendar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Calendar) dlg ; calendar.onDaySelectedDoubleClickListeners )
 		{
@@ -182,7 +182,7 @@ public class Calendar : Widget
 	}
 	extern(C) static void callBackMonthChanged(GtkCalendar* calendarStruct, Calendar calendar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Calendar) dlg ; calendar.onMonthChangedListeners )
 		{
@@ -210,7 +210,7 @@ public class Calendar : Widget
 	}
 	extern(C) static void callBackNextMonth(GtkCalendar* calendarStruct, Calendar calendar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Calendar) dlg ; calendar.onNextMonthListeners )
 		{
@@ -238,7 +238,7 @@ public class Calendar : Widget
 	}
 	extern(C) static void callBackNextYear(GtkCalendar* calendarStruct, Calendar calendar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Calendar) dlg ; calendar.onNextYearListeners )
 		{
@@ -266,7 +266,7 @@ public class Calendar : Widget
 	}
 	extern(C) static void callBackPrevMonth(GtkCalendar* calendarStruct, Calendar calendar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Calendar) dlg ; calendar.onPrevMonthListeners )
 		{
@@ -294,7 +294,7 @@ public class Calendar : Widget
 	}
 	extern(C) static void callBackPrevYear(GtkCalendar* calendarStruct, Calendar calendar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Calendar) dlg ; calendar.onPrevYearListeners )
 		{

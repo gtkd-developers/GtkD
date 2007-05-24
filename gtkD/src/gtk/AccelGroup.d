@@ -142,7 +142,7 @@ public class AccelGroup : ObjectG
 	}
 	extern(C) static void callBackAccelActivate(GtkAccelGroup* accelGroupStruct, GObject* acceleratable, guint keyval, GdkModifierType modifier, AccelGroup accelGroup)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(ObjectG, guint, GdkModifierType, AccelGroup) dlg ; accelGroup.onAccelActivateListeners )
 		{
@@ -170,7 +170,7 @@ public class AccelGroup : ObjectG
 	}
 	extern(C) static void callBackAccelChanged(GtkAccelGroup* accelGroupStruct, guint keyval, GdkModifierType modifier, GClosure* accelClosure, AccelGroup accelGroup)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(guint, GdkModifierType, Closure, AccelGroup) dlg ; accelGroup.onAccelChangedListeners )
 		{

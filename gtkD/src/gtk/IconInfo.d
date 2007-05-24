@@ -180,7 +180,7 @@ public class IconInfo
 	}
 	extern(C) static void callBackChanged(GtkIconTheme* iconThemeStruct, IconInfo iconInfo)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(IconInfo) dlg ; iconInfo.onChangedListeners )
 		{

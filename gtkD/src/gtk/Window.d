@@ -158,7 +158,7 @@ public class Window : Bin
 	}
 	extern(C) static void callBackActivateDefault(GtkWindow* windowStruct, Window window)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Window) dlg ; window.onActivateDefaultListeners )
 		{
@@ -186,7 +186,7 @@ public class Window : Bin
 	}
 	extern(C) static void callBackActivateFocus(GtkWindow* windowStruct, Window window)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Window) dlg ; window.onActivateFocusListeners )
 		{
@@ -214,7 +214,7 @@ public class Window : Bin
 	}
 	extern(C) static void callBackFrame(GtkWindow* windowStruct, GdkEvent* event, Window window)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEvent*, Window) dlg ; window.onFrameListeners )
 		{
@@ -242,7 +242,7 @@ public class Window : Bin
 	}
 	extern(C) static void callBackKeysChanged(GtkWindow* windowStruct, Window window)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Window) dlg ; window.onKeysChangedListeners )
 		{
@@ -270,7 +270,7 @@ public class Window : Bin
 	}
 	extern(C) static void callBackMoveFocus(GtkWindow* windowStruct, GtkDirectionType arg1, Window window)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkDirectionType, Window) dlg ; window.onMoveFocusListeners )
 		{
@@ -298,7 +298,7 @@ public class Window : Bin
 	}
 	extern(C) static void callBackSetFocus(GtkWindow* windowStruct, GtkWidget* widget, Window window)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget, Window) dlg ; window.onSetFocusListeners )
 		{

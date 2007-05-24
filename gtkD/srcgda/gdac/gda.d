@@ -25,7 +25,12 @@
 
 module gdac.gda;
 
+version(tango)
+{}
+else
+{
 private import std.stdio;
+}
 private import gdac.gdatypes;
 private import gtkc.Loader;
 private import gtkc.paths;

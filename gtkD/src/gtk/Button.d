@@ -143,7 +143,7 @@ public class Button : Bin
 	 * Returns:
 	 *  a new GtkButton
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -191,7 +191,7 @@ public class Button : Bin
 	}
 	
 	
-	public this(char[] label, void delegate(Button) dlg, bit mnemonic=true)
+	public this(char[] label, void delegate(Button) dlg, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnClicked(dlg);
@@ -231,7 +231,7 @@ public class Button : Bin
 	}
 	extern(C) static void callBackActivate(GtkButton* widgetStruct, Button button)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Button) dlg ; button.onActivateListeners )
 		{
@@ -259,7 +259,7 @@ public class Button : Bin
 	}
 	extern(C) static void callBackClicked(GtkButton* buttonStruct, Button button)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Button) dlg ; button.onClickedListeners )
 		{
@@ -287,7 +287,7 @@ public class Button : Bin
 	}
 	extern(C) static void callBackEnter(GtkButton* buttonStruct, Button button)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Button) dlg ; button.onEnterListeners )
 		{
@@ -315,7 +315,7 @@ public class Button : Bin
 	}
 	extern(C) static void callBackLeave(GtkButton* buttonStruct, Button button)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Button) dlg ; button.onLeaveListeners )
 		{
@@ -343,7 +343,7 @@ public class Button : Bin
 	}
 	extern(C) static void callBackPressed(GtkButton* buttonStruct, Button button)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Button) dlg ; button.onPressedListeners )
 		{
@@ -371,7 +371,7 @@ public class Button : Bin
 	}
 	extern(C) static void callBackReleased(GtkButton* buttonStruct, Button button)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Button) dlg ; button.onReleasedListeners )
 		{

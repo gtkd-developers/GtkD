@@ -125,7 +125,7 @@ public class CellRendererText : CellRenderer
 	}
 	extern(C) static void callBackEdited(GtkCellRendererText* rendererStruct, gchar* path, gchar* newText, CellRendererText cellRendererText)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(char[], char[], CellRendererText) dlg ; cellRendererText.onEditedListeners )
 		{

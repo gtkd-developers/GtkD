@@ -25,7 +25,12 @@
 
 module gtkc.glib;
 
+version(tango)
+{}
+else
+{
 private import std.stdio;
+}
 private import gtkc.glibtypes;
 private import gtkc.gthreadtypes;
 private import gtkc.Loader;

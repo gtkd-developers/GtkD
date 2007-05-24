@@ -210,7 +210,7 @@ public class TreeSelection : ObjectG
 	}
 	extern(C) static void callBackChanged(GtkTreeSelection* treeselectionStruct, TreeSelection treeSelection)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreeSelection) dlg ; treeSelection.onChangedListeners )
 		{

@@ -105,7 +105,7 @@ public class Idle
 {
 	
 	/** Holds all idle delegates */
-	bit delegate()[] idleListeners;
+	bool delegate()[] idleListeners;
 	/** our gtk idle ID */
 	uint idleID;
 	
@@ -117,7 +117,7 @@ public class Idle
 	 *    	fireNow = 	When true the delegate will be executed emmidiatly
 	 * Returns:
 	 */
-	this(bit delegate() dlg, bit fireNow=false)
+	this(bool delegate() dlg, bool fireNow=false)
 	{
 		idleListeners ~= dlg;
 		idleID = gtk_idle_add(cast(GtkFunction)&idleCallback, cast(void*)this);
@@ -154,7 +154,7 @@ public class Idle
 	 *    	delegate() =
 	 *    	fireNow =
 	 */
-	public void addListener(bit delegate() dlg, bit fireNow=false)
+	public void addListener(bool delegate() dlg, bool fireNow=false)
 	{
 		idleListeners ~= dlg;
 		if ( fireNow )
@@ -172,7 +172,7 @@ public class Idle
 	 *    	idle =
 	 * Returns:
 	 */
-	extern(C) static bit idleCallback(Idle idle)
+	extern(C) static bool idleCallback(Idle idle)
 	{
 		return idle.callAllListeners();
 	}
@@ -181,9 +181,9 @@ public class Idle
 	 * Executes all delegates on the execution list
 	 * Returns:
 	 */
-	private bit callAllListeners()
+	private bool callAllListeners()
 	{
-		bit runAgain = false;
+		bool runAgain = false;
 		
 		int i = 0;
 		

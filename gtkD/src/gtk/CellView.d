@@ -122,7 +122,7 @@ public class CellView : Widget
 	 *  A newly created GtkCellView widget.
 	 * Since 2.6
 	 */
-	public this (char[] text, bit markup=true)
+	public this (char[] text, bool markup=true)
 	{
 		if ( markup )
 		{

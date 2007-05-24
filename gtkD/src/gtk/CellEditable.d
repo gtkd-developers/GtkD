@@ -117,7 +117,7 @@ public class CellEditable
 	}
 	extern(C) static void callBackEditingDone(GtkCellEditable* celleditableStruct, CellEditable cellEditable)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(CellEditable) dlg ; cellEditable.onEditingDoneListeners )
 		{
@@ -145,7 +145,7 @@ public class CellEditable
 	}
 	extern(C) static void callBackRemoveWidget(GtkCellEditable* celleditableStruct, CellEditable cellEditable)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(CellEditable) dlg ; cellEditable.onRemoveWidgetListeners )
 		{

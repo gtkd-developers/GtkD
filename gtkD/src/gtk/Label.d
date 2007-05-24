@@ -185,7 +185,7 @@ public class Label : Misc
 	 * Returns:
 	 *  the new GtkLabel
 	 */
-	public this (char[] str, bit mnemonic=true)
+	public this (char[] str, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -225,7 +225,7 @@ public class Label : Misc
 	}
 	extern(C) static void callBackCopyClipboard(GtkLabel* labelStruct, Label label)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Label) dlg ; label.onCopyClipboardListeners )
 		{
@@ -253,7 +253,7 @@ public class Label : Misc
 	}
 	extern(C) static void callBackMoveCursor(GtkLabel* labelStruct, GtkMovementStep arg1, gint arg2, gboolean arg3, Label label)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkMovementStep, gint, gboolean, Label) dlg ; label.onMoveCursorListeners )
 		{
@@ -281,7 +281,7 @@ public class Label : Misc
 	}
 	extern(C) static void callBackPopulatePopup(GtkLabel* labelStruct, GtkMenu* arg1, Label label)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkMenu*, Label) dlg ; label.onPopulatePopupListeners )
 		{

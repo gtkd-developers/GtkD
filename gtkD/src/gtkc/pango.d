@@ -25,7 +25,12 @@
 
 module gtkc.pango;
 
+version(tango)
+{}
+else
+{
 private import std.stdio;
+}
 private import gtkc.pangotypes;
 private import gtkc.Loader;
 private import gtkc.paths;

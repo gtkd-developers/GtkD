@@ -153,7 +153,7 @@ public class RadioButton : CheckButton
 	 * Returns:
 	 * a new radio button.
 	 */
-	public this (ListSG group, char[] label, bit mnemonic=true)
+	public this (ListSG group, char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -186,7 +186,7 @@ public class RadioButton : CheckButton
 	 * Returns:
 	 * a new radio button.
 	 */
-	public this (RadioButton radioButton, char[] label, bit mnemonic=true)
+	public this (RadioButton radioButton, char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -232,7 +232,7 @@ public class RadioButton : CheckButton
 	}
 	extern(C) static void callBackGroupChanged(GtkRadioButton* styleStruct, RadioButton radioButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(RadioButton) dlg ; radioButton.onGroupChangedListeners )
 		{

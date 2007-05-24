@@ -189,7 +189,7 @@ code: start
 	 * Returns:
 	 *  A newly-created pixbuf loader.
 	 */
-	public this (char[] type, GError** error, bit isMimeType=false)
+	public this (char[] type, GError** error, bool isMimeType=false)
 	{
 		if ( isMimeType )
 		{

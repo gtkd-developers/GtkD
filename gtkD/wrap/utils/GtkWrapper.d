@@ -124,7 +124,7 @@ public class GtkWrapper : WrapperIF
 "\n"
 ;
 
-    private bit currIncludeComments;
+    private bool currIncludeComments;
 
     enum {
 
@@ -548,6 +548,7 @@ public class GtkWrapper : WrapperIF
                 case "nocode": convParms.noCode ~= defReader.getValue(); break;
                 case "nostruct": convParms.noStructs ~= defReader.getValue(); break;
                 case "import": convParms.imprts ~= defReader.getValue(); break;
+                case "import(tango)": /*ignore for now*/defReader.getValue(); break;
                 case "structWrap": loadAA(convParms.structWrap, defReader, errors); break;
                 case "alias": loadAA(convParms.aliases, defReader, errors); break;
                 case "moduleAlias": loadAA(convParms.mAliases, defReader, errors); break;
@@ -784,7 +785,7 @@ public class GtkWrapper : WrapperIF
         return enumTypes;
     }
 
-    public bit includeComments()
+    public bool includeComments()
     {
         return currIncludeComments;
     }
@@ -796,7 +797,12 @@ public class GtkWrapper : WrapperIF
         externalText ~= "// Adapted from John Reimer's DUI loader modules\n\n";
         externalText ~= "\nmodule "~bindingsDir~"."~loaderTableName~";"
                         "\n"
+                        "\nversion(tango)"
+                        "\n{}"
+                        "\nelse"
+                        "\n{"
                         "\nprivate import std.stdio;"
+                        "\n}"
                         "\nprivate import "~bindingsDir~"." ~loaderTableName~"types;";
         if ( loaderTableName == "glib" )
         {

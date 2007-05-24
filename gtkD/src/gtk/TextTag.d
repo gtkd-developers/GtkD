@@ -135,7 +135,7 @@ public class TextTag : ObjectG
 	}
 	extern(C) static void callBack(GtkTextTag* texttagStruct, GObject* arg1, GdkEvent* event, GtkTextIter* arg2, TextTag textTag)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(ObjectG, Event, TextIter, TextTag) dlg ; textTag.onListeners )
 		{

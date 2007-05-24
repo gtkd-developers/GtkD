@@ -108,7 +108,7 @@ public class CheckMenuItem : MenuItem
 	 * Returns:
 	 * a new GtkCheckMenuItem.
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -148,7 +148,7 @@ public class CheckMenuItem : MenuItem
 	}
 	extern(C) static void callBackToggled(GtkCheckMenuItem* checkmenuitemStruct, CheckMenuItem checkMenuItem)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(CheckMenuItem) dlg ; checkMenuItem.onToggledListeners )
 		{

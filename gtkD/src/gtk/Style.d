@@ -140,7 +140,7 @@ public class Style : ObjectG
 	}
 	extern(C) static void callBackRealize(GtkStyle* styleStruct, Style style)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Style) dlg ; style.onRealizeListeners )
 		{
@@ -168,7 +168,7 @@ public class Style : ObjectG
 	}
 	extern(C) static void callBackUnrealize(GtkStyle* styleStruct, Style style)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Style) dlg ; style.onUnrealizeListeners )
 		{

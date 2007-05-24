@@ -122,7 +122,7 @@ public class RadioAction : ToggleAction
 	}
 	extern(C) static void callBackChanged(GtkRadioAction* actionStruct, GtkRadioAction* current, RadioAction radioAction)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkRadioAction*, RadioAction) dlg ; radioAction.onChangedListeners )
 		{

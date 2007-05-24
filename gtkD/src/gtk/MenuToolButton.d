@@ -206,7 +206,7 @@ public class MenuToolButton : ToolButton
 	}
 	extern(C) static void callBackShowMenu(GtkMenuToolButton* menutoolbuttonStruct, MenuToolButton menuToolButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(MenuToolButton) dlg ; menuToolButton.onShowMenuListeners )
 		{

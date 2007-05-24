@@ -133,7 +133,7 @@ public class HandleBox : Bin
 	}
 	extern(C) static void callBackChildAttached(GtkHandleBox* handleboxStruct, GtkWidget* widget, HandleBox handleBox)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkWidget*, HandleBox) dlg ; handleBox.onChildAttachedListeners )
 		{
@@ -161,7 +161,7 @@ public class HandleBox : Bin
 	}
 	extern(C) static void callBackChildDetached(GtkHandleBox* handleboxStruct, GtkWidget* widget, HandleBox handleBox)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkWidget*, HandleBox) dlg ; handleBox.onChildDetachedListeners )
 		{

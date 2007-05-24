@@ -128,7 +128,7 @@ public class DisplayManager : ObjectG
 	}
 	extern(C) static void callBackDisplayOpened(GdkDisplayManager* displayManagerStruct, GdkDisplay* display, DisplayManager displayManager)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Display, DisplayManager) dlg ; displayManager.onDisplayOpenedListeners )
 		{

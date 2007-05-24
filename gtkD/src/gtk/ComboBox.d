@@ -148,7 +148,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 *  A new GtkComboBox.
 	 * Since 2.4
 	 */
-	public this (bit text=true)
+	public this (bool text=true)
 	{
 		if ( text )
 		{
@@ -195,8 +195,8 @@ public class ComboBox : Bin, CellLayoutIF
 		TreeModel model = getModel();
 		iter.setModel(model);
 		int index = 0;
-		bit found = false;
-		bit end = false;
+		bool found = false;
+		bool end = false;
 		if ( model.getIterFirst(iter) )
 		{
 			while ( !end && iter !is  null && !found )
@@ -257,7 +257,7 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	extern(C) static void callBackChanged(GtkComboBox* widgetStruct, ComboBox comboBox)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(ComboBox) dlg ; comboBox.onChangedListeners )
 		{
@@ -285,7 +285,7 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	extern(C) static void callBackMoveActive(GtkComboBox* comboboxStruct, GtkScrollType arg1, ComboBox comboBox)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkScrollType, ComboBox) dlg ; comboBox.onMoveActiveListeners )
 		{
@@ -313,7 +313,7 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	extern(C) static void callBackPopup(GtkComboBox* comboboxStruct, ComboBox comboBox)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(ComboBox) dlg ; comboBox.onPopupListeners )
 		{

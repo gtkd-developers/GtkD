@@ -105,7 +105,7 @@ public class GtkDClass
 	int[char[]] gtkStructs;
 
 
-	private bit needSignalImports;
+	private bool needSignalImports;
 
 	private char[] tabs;	/// used for simple indentation
 
@@ -817,7 +817,7 @@ public class GtkDClass
 					~fun.getCallbackParameters(0, convParms, wrapper.getAliases())
 					~")";
 			text ~= "{";
-			text ~= "	bit consumed = false;";
+			text ~= "	bool consumed = false;";
 			text ~= "";
 			text ~= "	foreach ( "~dlg~" dlg ; "~getClassVar(convParms)~".on"~gtkDSignal~"Listeners )";
 			text ~= "	{";
@@ -1300,7 +1300,7 @@ public class GtkDClass
 			++pos;
 		}
 		++pos;
-		bit invalidDEnum = false;
+		bool invalidDEnum = false;
 		if ( pos<lines.length && lines[pos][0] != '}' )
 		{
 			char[] enumPrefix = getEnumPrefix(enumName, std.string.strip(lines[pos].dup));
@@ -1480,7 +1480,7 @@ public class GtkDClass
 			structName = structName[7..structName.length];
 		}
 		debug(structs)writefln("found typdef struct = %s", structName);
-		bit includeStruct = true;
+		bool includeStruct = true;
 		int nStructs = 0;
 		while ( includeStruct && nStructs < convParms.noStructs.length )
 		{
@@ -1490,7 +1490,7 @@ public class GtkDClass
 		{
 
 			char[][] structDef;	/// all elements of the struct
-			bit invalidDStruct = false;
+			bool invalidDStruct = false;
 			int pos = 1;
 			if ( lines[1][lines[1].length-1] == '{' )
 			{
@@ -1590,7 +1590,9 @@ public class GtkDClass
 					|| "GValue"==structName
 					|| "GError"==structName
 				 )
-				&& structDef.length>0 )
+					&& structDef.length>0
+					&& structName != "GPollFD"	// todo contain "long fd" and "int fd" conditionally 
+				)
 			{
 				collectedStructs ~= "public struct "~structName~"\n{";
 
@@ -1665,7 +1667,7 @@ public class GtkDClass
 	}
 
 	/// hack... we don't have all types (do we?)
-	bit isEnum(char[] type)
+	bool isEnum(char[] type)
 	{
 		if ( type == "GdkEventType" )
 		{
@@ -1674,7 +1676,7 @@ public class GtkDClass
 		return false;
 	}
 
-	bit primitiveType(char[] line)
+	bool primitiveType(char[] line)
 	{
 		int p=0;
 		skipBlank(p, line);
@@ -1784,9 +1786,9 @@ public class GtkDClass
 		 *    	prefix =
 		 * Returns:
 		 */
-		bit includeFunction(ConvParms* convParms)
+		bool includeFunction(ConvParms* convParms)
 		{
-			bit inc = true;
+			bool inc = true;
 
 			int nPrefix = 0;
 			while ( inc && nPrefix<convParms.noPrefixes.length )
@@ -1870,7 +1872,7 @@ public class GtkDClass
 				}
 				else // the regular function
 				{
-					bit tooSoon = false;	// reject for 2.10
+					bool tooSoon = false;	// reject for 2.10
 					// comment
 					void addComments()
 					{
@@ -1917,11 +1919,11 @@ public class GtkDClass
 //									switch ( fun.typeWrap )
 //									{
 //										case "void": break;
-//										case "int", "uint", "bit", "long", "ulong"
+//										case "int", "uint", "bool", "long", "ulong"
 //											member ~= "return 0;";
 //											break;
 //
-//										case "int", "uint", "bit", "long", "ulong"
+//										case "int", "uint", "bool", "long", "ulong"
 //											member ~= "return 0;";
 //											break;
 //
@@ -1969,7 +1971,7 @@ public class GtkDClass
 	 */
 	private void checkIfGtkStructs(Funct fun)
 	{
-		bit found = false;
+		bool found = false;
 		void check(char[] type)
 		{
 			if ( startsWith(type, 'G')
@@ -2209,7 +2211,7 @@ public class GtkDClass
 	 */
 	private char[][] getUntil(char[] endLine)
 	{
-		bit end = false;
+		bool end = false;
 
 		char[][] block;
 
@@ -2240,7 +2242,7 @@ public class GtkDClass
 	 *    	gString =
 	 * Returns:
 	 */
-	public static char[] stringToGtkD(char[] gString, ConvParms* convParms, char[][char[]] aliases, bit caseConvert=true)
+	public static char[] stringToGtkD(char[] gString, ConvParms* convParms, char[][char[]] aliases, bool caseConvert=true)
 	{
 		char[] converted;
 
@@ -2293,7 +2295,7 @@ public class GtkDClass
 	}
 
 
-	public static char[] idsToGtkD(char[] gToken, ConvParms* convParms, char[][char[]] aliases, bit caseConvert=true)
+	public static char[] idsToGtkD(char[] gToken, ConvParms* convParms, char[][char[]] aliases, bool caseConvert=true)
 	{
 		char[] converted = tokenToGtkD(gToken, convParms, aliases, caseConvert);
 		switch ( converted )
@@ -2324,7 +2326,7 @@ public class GtkDClass
 	 *    	caseConvert =
 	 * Returns:
 	 */
-	public static char[] enumToGtkD(char[] enumType, char[] gToken, ConvParms* convParms, WrapperIF wrapper, bit caseConvert=true)
+	public static char[] enumToGtkD(char[] enumType, char[] gToken, ConvParms* convParms, WrapperIF wrapper, bool caseConvert=true)
 	{
 		debug(enumToGtkD)writefln("enumLine (%s) BEFORE %s", enumType, gToken);
 		char[] converted = stringToGtkD(gToken, convParms, wrapper.getAliases());
@@ -2335,7 +2337,7 @@ public class GtkDClass
 		{
 			char[] refValue = std.string.strip(converted.dup[pos+1..converted.length]);
 			debug(enumToGtkD)writefln("\t refValue = %s", refValue);
-			bit needComa = false;
+			bool needComa = false;
 			if ( endsWith(refValue, ',') )
 			{
 				refValue = std.string.strip(refValue[0..refValue.length-1]);
@@ -2375,7 +2377,7 @@ public class GtkDClass
 	 *    	gToken =
 	 * Returns:
 	 */
-	public static char[] tokenToGtkD(char[] gToken, ConvParms* convParms, char[][char[]] aliases, bit caseConvert=true)
+	public static char[] tokenToGtkD(char[] gToken, ConvParms* convParms, char[][char[]] aliases, bool caseConvert=true)
 	{
 		char[] converted;
 
@@ -2539,25 +2541,25 @@ public class GtkDClass
 
 
 
-	public static bit startsWith(char[] str, char[] prefix)
+	public static bool startsWith(char[] str, char[] prefix)
 	{
 		return str.length >= prefix.length
 				&& str[0..prefix.length] == prefix;
 	}
 
-	public static bit startsWith(char[] str, char prefix)
+	public static bool startsWith(char[] str, char prefix)
 	{
 		return str.length > 0
 				&& str[0] == prefix;
 	}
 
-	public static bit endsWith(char[] str, char[] suffix)
+	public static bool endsWith(char[] str, char[] suffix)
 	{
 		return str.length >= suffix.length
 				&& str[str.length-suffix.length..str.length] == suffix;
 	}
 
-	public static bit endsWith(char[] str, char suffix)
+	public static bool endsWith(char[] str, char suffix)
 	{
 		return str.length >= 1
 				&& str[str.length-1] == suffix;

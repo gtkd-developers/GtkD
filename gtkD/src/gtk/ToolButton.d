@@ -155,7 +155,7 @@ public class ToolButton : ToolItem
 	}
 	extern(C) static void callBackClicked(GtkToolButton* toolbuttonStruct, ToolButton toolButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(ToolButton) dlg ; toolButton.onClickedListeners )
 		{

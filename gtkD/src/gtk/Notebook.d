@@ -153,7 +153,7 @@ public class Notebook : Container
 	}
 	extern(C) static void callBackChangeCurrentPage(GtkNotebook* notebookStruct, gint arg1, Notebook notebook)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(gint, Notebook) dlg ; notebook.onChangeCurrentPageListeners )
 		{
@@ -181,7 +181,7 @@ public class Notebook : Container
 	}
 	extern(C) static void callBackFocusTab(GtkNotebook* notebookStruct, GtkNotebookTab arg1, Notebook notebook)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkNotebookTab, Notebook) dlg ; notebook.onFocusTabListeners )
 		{
@@ -209,7 +209,7 @@ public class Notebook : Container
 	}
 	extern(C) static void callBackMoveFocusOut(GtkNotebook* notebookStruct, GtkDirectionType arg1, Notebook notebook)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkDirectionType, Notebook) dlg ; notebook.onMoveFocusOutListeners )
 		{
@@ -237,7 +237,7 @@ public class Notebook : Container
 	}
 	extern(C) static void callBackPageAdded(GtkNotebook* notebookStruct, GtkWidget* child, guint pageNum, Notebook notebook)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget, guint, Notebook) dlg ; notebook.onPageAddedListeners )
 		{
@@ -265,7 +265,7 @@ public class Notebook : Container
 	}
 	extern(C) static void callBackPageRemoved(GtkNotebook* notebookStruct, GtkWidget* child, guint pageNum, Notebook notebook)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget, guint, Notebook) dlg ; notebook.onPageRemovedListeners )
 		{
@@ -293,7 +293,7 @@ public class Notebook : Container
 	}
 	extern(C) static void callBackPageReordered(GtkNotebook* notebookStruct, GtkWidget* child, guint pageNum, Notebook notebook)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget, guint, Notebook) dlg ; notebook.onPageReorderedListeners )
 		{
@@ -321,7 +321,7 @@ public class Notebook : Container
 	}
 	extern(C) static void callBackReorderTab(GtkNotebook* notebookStruct, GtkDirectionType arg1, gboolean arg2, Notebook notebook)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkDirectionType, gboolean, Notebook) dlg ; notebook.onReorderTabListeners )
 		{
@@ -349,7 +349,7 @@ public class Notebook : Container
 	}
 	extern(C) static void callBackSelectPage(GtkNotebook* notebookStruct, gboolean arg1, Notebook notebook)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(gboolean, Notebook) dlg ; notebook.onSelectPageListeners )
 		{
@@ -377,7 +377,7 @@ public class Notebook : Container
 	}
 	extern(C) static void callBackSwitchPage(GtkNotebook* notebookStruct, GtkNotebookPage* page, guint pageNum, Notebook notebook)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkNotebookPage*, guint, Notebook) dlg ; notebook.onSwitchPageListeners )
 		{

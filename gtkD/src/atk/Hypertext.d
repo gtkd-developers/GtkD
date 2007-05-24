@@ -116,7 +116,7 @@ public class Hypertext
 	}
 	extern(C) static void callBackLinkSelected(AtkHypertext* atkhypertextStruct, gint arg1, Hypertext hypertext)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, Hypertext) dlg ; hypertext.onLinkSelectedListeners )
 		{

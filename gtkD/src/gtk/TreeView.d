@@ -229,7 +229,7 @@ public class TreeView : Container
 	 * @param editable
 	 * @return number of columns including the new one
 	 */
-	gint insertEditableColumn(int position, char[] title, CellRenderer renderer, bit editable)
+	gint insertEditableColumn(int position, char[] title, CellRenderer renderer, bool editable)
 	{
 		// OK, this is a trick because of my ignorance on how to pass variable argument lists
 		if ( position < 0 )
@@ -275,7 +275,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackColumnsChanged(GtkTreeView* treeViewStruct, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreeView) dlg ; treeView.onColumnsChangedListeners )
 		{
@@ -303,7 +303,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackCursorChanged(GtkTreeView* treeViewStruct, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreeView) dlg ; treeView.onCursorChangedListeners )
 		{
@@ -331,7 +331,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackExpandCollapseCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, gboolean arg2, gboolean arg3, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(gboolean, gboolean, gboolean, TreeView) dlg ; treeView.onExpandCollapseCursorRowListeners )
 		{
@@ -359,7 +359,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackMoveCursor(GtkTreeView* treeviewStruct, GtkMovementStep arg1, gint arg2, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkMovementStep, gint, TreeView) dlg ; treeView.onMoveCursorListeners )
 		{
@@ -387,7 +387,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackRowActivated(GtkTreeView* treeViewStruct, GtkTreePath* path, GtkTreeViewColumn* column, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeViewColumn, TreeView) dlg ; treeView.onRowActivatedListeners )
 		{
@@ -415,7 +415,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackRowCollapsed(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onRowCollapsedListeners )
 		{
@@ -443,7 +443,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackRowExpanded(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onRowExpandedListeners )
 		{
@@ -471,7 +471,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackSelectAll(GtkTreeView* treeviewStruct, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(TreeView) dlg ; treeView.onSelectAllListeners )
 		{
@@ -499,7 +499,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackSelectCursorParent(GtkTreeView* treeviewStruct, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(TreeView) dlg ; treeView.onSelectCursorParentListeners )
 		{
@@ -527,7 +527,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackSelectCursorRow(GtkTreeView* treeviewStruct, gboolean arg1, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(gboolean, TreeView) dlg ; treeView.onSelectCursorRowListeners )
 		{
@@ -555,7 +555,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackSetScrollAdjustments(GtkTreeView* treeviewStruct, GtkAdjustment* arg1, GtkAdjustment* arg2, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Adjustment, Adjustment, TreeView) dlg ; treeView.onSetScrollAdjustmentsListeners )
 		{
@@ -583,7 +583,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackStartInteractiveSearch(GtkTreeView* treeviewStruct, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(TreeView) dlg ; treeView.onStartInteractiveSearchListeners )
 		{
@@ -611,7 +611,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackTestCollapseRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onTestCollapseRowListeners )
 		{
@@ -639,7 +639,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackTestExpandRow(GtkTreeView* treeViewStruct, GtkTreeIter* iter, GtkTreePath* path, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onTestExpandRowListeners )
 		{
@@ -667,7 +667,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackToggleCursorRow(GtkTreeView* treeviewStruct, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(TreeView) dlg ; treeView.onToggleCursorRowListeners )
 		{
@@ -695,7 +695,7 @@ public class TreeView : Container
 	}
 	extern(C) static void callBackUnselectAll(GtkTreeView* treeviewStruct, TreeView treeView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(TreeView) dlg ; treeView.onUnselectAllListeners )
 		{

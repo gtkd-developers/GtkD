@@ -25,7 +25,12 @@
 
 module gtkc.gdk;
 
+version(tango)
+{}
+else
+{
 private import std.stdio;
+}
 private import gtkc.gdktypes;
 private import gtkc.cairoLibtypes;
 private import gtkc.Loader;

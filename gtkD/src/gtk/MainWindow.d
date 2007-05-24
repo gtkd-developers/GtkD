@@ -107,7 +107,7 @@ public class MainWindow : Window
 	 * @param force if true the application must expect to be closed even against it's will
 	 * @return false to refuse to exit
 	 */
-	protected bit exit(int code, bit force)
+	protected bool exit(int code, bool force)
 	{
 		return force;
 	}

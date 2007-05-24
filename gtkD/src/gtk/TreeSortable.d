@@ -115,7 +115,7 @@ public class TreeSortable
 	}
 	extern(C) static void callBackSortColumnChanged(GtkTreeSortable* treesortableStruct, TreeSortable treeSortable)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreeSortable) dlg ; treeSortable.onSortColumnChangedListeners )
 		{

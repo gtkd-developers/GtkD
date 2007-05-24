@@ -120,7 +120,7 @@ public class Hyperlink : ObjectG
 	}
 	extern(C) static void callBackLinkActivated(AtkHyperlink* atkhyperlinkStruct, Hyperlink hyperlink)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Hyperlink) dlg ; hyperlink.onLinkActivatedListeners )
 		{

@@ -132,7 +132,7 @@ public class ToggleButton : Button
 	 * Returns:
 	 * a new toggle button.
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -172,7 +172,7 @@ public class ToggleButton : Button
 	}
 	extern(C) static void callBackToggled(GtkToggleButton* togglebuttonStruct, ToggleButton toggleButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(ToggleButton) dlg ; toggleButton.onToggledListeners )
 		{

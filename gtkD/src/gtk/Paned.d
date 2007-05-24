@@ -164,7 +164,7 @@ public class Paned : Container
 	}
 	extern(C) static void callBackAcceptPosition(GtkPaned* panedStruct, Paned paned)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Paned) dlg ; paned.onAcceptPositionListeners )
 		{
@@ -192,7 +192,7 @@ public class Paned : Container
 	}
 	extern(C) static void callBackCancelPosition(GtkPaned* panedStruct, Paned paned)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Paned) dlg ; paned.onCancelPositionListeners )
 		{
@@ -220,7 +220,7 @@ public class Paned : Container
 	}
 	extern(C) static void callBackCycleChildFocus(GtkPaned* panedStruct, gboolean arg1, Paned paned)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(gboolean, Paned) dlg ; paned.onCycleChildFocusListeners )
 		{
@@ -248,7 +248,7 @@ public class Paned : Container
 	}
 	extern(C) static void callBackCycleHandleFocus(GtkPaned* panedStruct, gboolean arg1, Paned paned)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(gboolean, Paned) dlg ; paned.onCycleHandleFocusListeners )
 		{
@@ -276,7 +276,7 @@ public class Paned : Container
 	}
 	extern(C) static void callBackMoveHandle(GtkPaned* panedStruct, GtkScrollType arg1, Paned paned)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkScrollType, Paned) dlg ; paned.onMoveHandleListeners )
 		{
@@ -304,7 +304,7 @@ public class Paned : Container
 	}
 	extern(C) static void callBackToggleHandleFocus(GtkPaned* panedStruct, Paned paned)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Paned) dlg ; paned.onToggleHandleFocusListeners )
 		{

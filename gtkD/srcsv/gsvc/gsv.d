@@ -25,7 +25,12 @@
 
 module gsvc.gsv;
 
+version(tango)
+{}
+else
+{
 private import std.stdio;
+}
 private import gsvc.gsvtypes;
 private import gtkc.Loader;
 private import gtkc.paths;

@@ -122,7 +122,7 @@ public class ColorButton : Button
 	}
 	extern(C) static void callBackColorSet(GtkColorButton* widgetStruct, ColorButton colorButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(ColorButton) dlg ; colorButton.onColorSetListeners )
 		{

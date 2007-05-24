@@ -136,7 +136,7 @@ public class Entry : Widget
 	}
 	extern(C) static void callBackActivate(GtkEntry* entryStruct, Entry entry)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Entry) dlg ; entry.onActivateListeners )
 		{
@@ -164,7 +164,7 @@ public class Entry : Widget
 	}
 	extern(C) static void callBackBackspace(GtkEntry* entryStruct, Entry entry)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Entry) dlg ; entry.onBackspaceListeners )
 		{
@@ -192,7 +192,7 @@ public class Entry : Widget
 	}
 	extern(C) static void callBackCopyClipboard(GtkEntry* entryStruct, Entry entry)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Entry) dlg ; entry.onCopyClipboardListeners )
 		{
@@ -220,7 +220,7 @@ public class Entry : Widget
 	}
 	extern(C) static void callBackCutClipboard(GtkEntry* entryStruct, Entry entry)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Entry) dlg ; entry.onCutClipboardListeners )
 		{
@@ -248,7 +248,7 @@ public class Entry : Widget
 	}
 	extern(C) static void callBackDeleteFromCursor(GtkEntry* entryStruct, GtkDeleteType arg1, gint arg2, Entry entry)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkDeleteType, gint, Entry) dlg ; entry.onDeleteFromCursorListeners )
 		{
@@ -276,7 +276,7 @@ public class Entry : Widget
 	}
 	extern(C) static void callBackInsertAtCursor(GtkEntry* entryStruct, gchar* arg1, Entry entry)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(char[], Entry) dlg ; entry.onInsertAtCursorListeners )
 		{
@@ -304,7 +304,7 @@ public class Entry : Widget
 	}
 	extern(C) static void callBackMoveCursor(GtkEntry* entryStruct, GtkMovementStep arg1, gint arg2, gboolean arg3, Entry entry)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkMovementStep, gint, gboolean, Entry) dlg ; entry.onMoveCursorListeners )
 		{
@@ -332,7 +332,7 @@ public class Entry : Widget
 	}
 	extern(C) static void callBackPasteClipboard(GtkEntry* entryStruct, Entry entry)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Entry) dlg ; entry.onPasteClipboardListeners )
 		{
@@ -360,7 +360,7 @@ public class Entry : Widget
 	}
 	extern(C) static void callBackPopulatePopup(GtkEntry* entryStruct, GtkMenu* arg1, Entry entry)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkMenu*, Entry) dlg ; entry.onPopulatePopupListeners )
 		{
@@ -388,7 +388,7 @@ public class Entry : Widget
 	}
 	extern(C) static void callBackToggleOverwrite(GtkEntry* entryStruct, Entry entry)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Entry) dlg ; entry.onToggleOverwriteListeners )
 		{

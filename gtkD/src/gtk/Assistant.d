@@ -125,7 +125,7 @@ public class Assistant : Window
 	}
 	extern(C) static void callBackApply(GtkAssistant* assistantStruct, Assistant assistant)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Assistant) dlg ; assistant.onApplyListeners )
 		{
@@ -153,7 +153,7 @@ public class Assistant : Window
 	}
 	extern(C) static void callBackCancel(GtkAssistant* assistantStruct, Assistant assistant)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Assistant) dlg ; assistant.onCancelListeners )
 		{
@@ -181,7 +181,7 @@ public class Assistant : Window
 	}
 	extern(C) static void callBackClose(GtkAssistant* assistantStruct, Assistant assistant)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Assistant) dlg ; assistant.onCloseListeners )
 		{
@@ -209,7 +209,7 @@ public class Assistant : Window
 	}
 	extern(C) static void callBackPrepare(GtkAssistant* assistantStruct, GtkWidget* page, Assistant assistant)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget, Assistant) dlg ; assistant.onPrepareListeners )
 		{

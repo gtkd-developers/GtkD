@@ -455,7 +455,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackApplyTag(GtkTextBuffer* textbufferStruct, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg ; textBuffer.onApplyTagListeners )
 		{
@@ -483,7 +483,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackBeginUserAction(GtkTextBuffer* textbufferStruct, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextBuffer) dlg ; textBuffer.onBeginUserActionListeners )
 		{
@@ -511,7 +511,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackChanged(GtkTextBuffer* textbufferStruct, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextBuffer) dlg ; textBuffer.onChangedListeners )
 		{
@@ -539,7 +539,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackDeleteRange(GtkTextBuffer* textbufferStruct, GtkTextIter* start, GtkTextIter* end, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextIter, TextIter, TextBuffer) dlg ; textBuffer.onDeleteRangeListeners )
 		{
@@ -567,7 +567,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackEndUserAction(GtkTextBuffer* textbufferStruct, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextBuffer) dlg ; textBuffer.onEndUserActionListeners )
 		{
@@ -595,7 +595,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackInsertChildAnchor(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GtkTextChildAnchor* anchor, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextIter, TextChildAnchor, TextBuffer) dlg ; textBuffer.onInsertChildAnchorListeners )
 		{
@@ -623,7 +623,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackInsertPixbuf(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GdkPixbuf* pixbuf, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextIter, Pixbuf, TextBuffer) dlg ; textBuffer.onInsertPixbufListeners )
 		{
@@ -651,7 +651,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackInsertText(GtkTextBuffer* textbufferStruct, GtkTextIter* location, gchar* text, gint len, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextIter, char[], gint, TextBuffer) dlg ; textBuffer.onInsertTextListeners )
 		{
@@ -679,7 +679,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackMarkDeleted(GtkTextBuffer* textbufferStruct, GtkTextMark* mark, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextMark, TextBuffer) dlg ; textBuffer.onMarkDeletedListeners )
 		{
@@ -707,7 +707,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackMarkSet(GtkTextBuffer* textbufferStruct, GtkTextIter* location, GtkTextMark* mark, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextIter, TextMark, TextBuffer) dlg ; textBuffer.onMarkSetListeners )
 		{
@@ -735,7 +735,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackModifiedChanged(GtkTextBuffer* textbufferStruct, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextBuffer) dlg ; textBuffer.onModifiedChangedListeners )
 		{
@@ -763,7 +763,7 @@ public class TextBuffer : ObjectG
 	}
 	extern(C) static void callBackRemoveTag(GtkTextBuffer* textbufferStruct, GtkTextTag* tag, GtkTextIter* start, GtkTextIter* end, TextBuffer textBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg ; textBuffer.onRemoveTagListeners )
 		{

@@ -157,7 +157,7 @@ public class CellRenderer : ObjectGtk
 	}
 	extern(C) static void callBackEditingCanceled(GtkCellRenderer* rendererStruct, CellRenderer cellRenderer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(CellRenderer) dlg ; cellRenderer.onEditingCanceledListeners )
 		{
@@ -185,7 +185,7 @@ public class CellRenderer : ObjectGtk
 	}
 	extern(C) static void callBackEditingStarted(GtkCellRenderer* rendererStruct, GtkCellEditable* editable, gchar* path, CellRenderer cellRenderer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(CellEditable, char[], CellRenderer) dlg ; cellRenderer.onEditingStartedListeners )
 		{

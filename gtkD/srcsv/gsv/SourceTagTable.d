@@ -113,7 +113,7 @@ public class SourceTagTable : TextTagTable
 	}
 	extern(C) static void callBackChanged(GtkSourceTagTable* sourcetagtableStruct, SourceTagTable sourceTagTable)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(SourceTagTable) dlg ; sourceTagTable.onChangedListeners )
 		{

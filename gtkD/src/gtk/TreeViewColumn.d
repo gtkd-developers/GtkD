@@ -162,7 +162,7 @@ public class TreeViewColumn : ObjectGtk
 	}
 	extern(C) static void callBackClicked(GtkTreeViewColumn* treeviewcolumnStruct, TreeViewColumn treeViewColumn)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreeViewColumn) dlg ; treeViewColumn.onClickedListeners )
 		{

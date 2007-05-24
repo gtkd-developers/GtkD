@@ -165,7 +165,7 @@ public class SpinButton : Entry
 	}
 	extern(C) static void callBackChangeValue(GtkSpinButton* spinbuttonStruct, GtkScrollType arg1, SpinButton spinButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkScrollType, SpinButton) dlg ; spinButton.onChangeValueListeners )
 		{
@@ -193,7 +193,7 @@ public class SpinButton : Entry
 	}
 	extern(C) static void callBackInput(GtkSpinButton* spinbuttonStruct, gpointer arg1, SpinButton spinButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gint delegate(gpointer, SpinButton) dlg ; spinButton.onInputListeners )
 		{
@@ -221,7 +221,7 @@ public class SpinButton : Entry
 	}
 	extern(C) static void callBackOutput(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(SpinButton) dlg ; spinButton.onOutputListeners )
 		{
@@ -249,7 +249,7 @@ public class SpinButton : Entry
 	}
 	extern(C) static void callBackValueChanged(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(SpinButton) dlg ; spinButton.onValueChangedListeners )
 		{
@@ -277,7 +277,7 @@ public class SpinButton : Entry
 	}
 	extern(C) static void callBackWrapped(GtkSpinButton* spinbuttonStruct, SpinButton spinButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(SpinButton) dlg ; spinButton.onWrappedListeners )
 		{

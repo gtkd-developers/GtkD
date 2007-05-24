@@ -133,7 +133,7 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackActiveDescendantChanged(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk objectAtk)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gpointer, ObjectAtk) dlg ; objectAtk.onActiveDescendantChangedListeners )
 		{
@@ -161,7 +161,7 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackChildrenChanged(AtkObject* atkobjectStruct, guint arg1, gpointer arg2, ObjectAtk objectAtk)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(guint, gpointer, ObjectAtk) dlg ; objectAtk.onChildrenChangedListeners )
 		{
@@ -189,7 +189,7 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackFocus(AtkObject* atkobjectStruct, gboolean arg1, ObjectAtk objectAtk)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gboolean, ObjectAtk) dlg ; objectAtk.onFocusListeners )
 		{
@@ -217,7 +217,7 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackPropertyChange(AtkObject* atkobjectStruct, gpointer arg1, ObjectAtk objectAtk)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gpointer, ObjectAtk) dlg ; objectAtk.onPropertyChangeListeners )
 		{
@@ -245,7 +245,7 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackStateChange(AtkObject* atkobjectStruct, gchar* arg1, gboolean arg2, ObjectAtk objectAtk)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(char[], gboolean, ObjectAtk) dlg ; objectAtk.onStateChangeListeners )
 		{
@@ -273,7 +273,7 @@ public class ObjectAtk : ObjectG
 	}
 	extern(C) static void callBackVisibleDataChanged(AtkObject* atkobjectStruct, ObjectAtk objectAtk)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(ObjectAtk) dlg ; objectAtk.onVisibleDataChangedListeners )
 		{

@@ -40,7 +40,7 @@ public struct Funct
 	private import utils.convparms;
 	private import utils.GtkDClass;
 
-	bit ctor;	/// when true this method was found to be a constructor
+	bool ctor;	/// when true this method was found to be a constructor
 	char[] type;
 	char[] typeWrap;
 	char[] name;
@@ -50,8 +50,8 @@ public struct Funct
 	char[][] parmsWrap;		/// this is the parameter wrapped type
 	char[][] parms;
 	char[][] parmsDesc;
-	bit[] parmConst;
-	bit[] parmPointer;
+	bool[] parmConst;
+	bool[] parmPointer;
 	char[] typeDesc;
 	char[] strctVar;
 	char[] strctPointer;

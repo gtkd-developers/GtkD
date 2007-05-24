@@ -117,7 +117,7 @@ public class Viewport : Bin
 	}
 	extern(C) static void callBackSetScrollAdjustments(GtkViewport* viewportStruct, GtkAdjustment* arg1, GtkAdjustment* arg2, Viewport viewport)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Adjustment, Adjustment, Viewport) dlg ; viewport.onSetScrollAdjustmentsListeners )
 		{

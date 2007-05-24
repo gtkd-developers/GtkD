@@ -165,7 +165,7 @@ public class Socket : Container
 	}
 	extern(C) static void callBackPlugAdded(GtkSocket* socketStruct, Socket socket)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Socket) dlg ; socket.onPlugAddedListeners )
 		{
@@ -193,7 +193,7 @@ public class Socket : Container
 	}
 	extern(C) static void callBackPlugRemoved(GtkSocket* socketStruct, Socket socket)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Socket) dlg ; socket.onPlugRemovedListeners )
 		{

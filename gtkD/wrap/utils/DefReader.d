@@ -82,7 +82,7 @@ public class DefReader
 	 * both key and value a stripped of non visible start and ending chars
 	 * Returns: The key after read the next key/value pair
 	 */
-	char[] next(bit skipEmpty = true)
+	char[] next(bool skipEmpty = true)
 	{
 		key.length = 0;
 		value.length = 0;
@@ -150,7 +150,7 @@ public class DefReader
 	}
 
 	
-	bit getValueBit()
+	bool getValueBit()
 	{
 		return std.string.find(" 1 ok OK Ok true TRUE True Y y yes YES Yes ", value) > 0;
 	}

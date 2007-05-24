@@ -129,7 +129,7 @@ public class Text
 	}
 	extern(C) static void callBackTextAttributesChanged(AtkText* atktextStruct, Text text)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Text) dlg ; text.onTextAttributesChangedListeners )
 		{
@@ -157,7 +157,7 @@ public class Text
 	}
 	extern(C) static void callBackTextCaretMoved(AtkText* atktextStruct, gint arg1, Text text)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, Text) dlg ; text.onTextCaretMovedListeners )
 		{
@@ -185,7 +185,7 @@ public class Text
 	}
 	extern(C) static void callBackTextChanged(AtkText* atktextStruct, gint arg1, gint arg2, Text text)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, gint, Text) dlg ; text.onTextChangedListeners )
 		{
@@ -213,7 +213,7 @@ public class Text
 	}
 	extern(C) static void callBackTextSelectionChanged(AtkText* atktextStruct, Text text)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Text) dlg ; text.onTextSelectionChangedListeners )
 		{

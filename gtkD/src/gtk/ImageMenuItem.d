@@ -111,7 +111,7 @@ public class ImageMenuItem : MenuItem
 	 * Returns:
 	 *  a new GtkImageMenuItem.
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{

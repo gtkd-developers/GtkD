@@ -181,7 +181,7 @@ public class Clipboard : ObjectG
 	}
 	extern(C) static void callBackOwnerChange(GtkClipboard* clipboardStruct, GdkEvent* event, Clipboard clipboard)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GdkEvent*, Clipboard) dlg ; clipboard.onOwnerChangeListeners )
 		{

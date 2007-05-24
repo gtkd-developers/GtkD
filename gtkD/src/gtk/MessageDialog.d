@@ -193,7 +193,7 @@ public class MessageDialog : Dialog
 	 *  a new GtkMessageDialog
 	 * Since 2.4
 	 */
-	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bit markup, char[] messageFormat, char[] message=null )
+	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, char[] messageFormat, char[] message=null )
 	{
 		if ( markup )
 		{

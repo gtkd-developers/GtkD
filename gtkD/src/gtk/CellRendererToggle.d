@@ -123,7 +123,7 @@ public class CellRendererToggle : CellRenderer
 	}
 	extern(C) static void callBackToggled(GtkCellRendererToggle* cellRendererStruct, gchar* path, CellRendererToggle cellRendererToggle)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(char[], CellRendererToggle) dlg ; cellRendererToggle.onToggledListeners )
 		{

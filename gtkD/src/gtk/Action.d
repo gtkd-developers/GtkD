@@ -152,7 +152,7 @@ public class Action : ObjectG
 	}
 	extern(C) static void callBackActivate(GtkAction* actionStruct, Action action)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Action) dlg ; action.onActivateListeners )
 		{

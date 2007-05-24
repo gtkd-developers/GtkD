@@ -140,7 +140,7 @@ public class ToolItem : Bin
 	}
 	extern(C) static void callBackCreateMenuProxy(GtkToolItem* toolitemStruct, ToolItem toolItem)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(ToolItem) dlg ; toolItem.onCreateMenuProxyListeners )
 		{
@@ -168,7 +168,7 @@ public class ToolItem : Bin
 	}
 	extern(C) static void callBackSetTooltip(GtkToolItem* toolitemStruct, GtkTooltips* tooltips, gchar* tipText, gchar* tipPrivate, ToolItem toolItem)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Tooltips, char[], char[], ToolItem) dlg ; toolItem.onSetTooltipListeners )
 		{
@@ -196,7 +196,7 @@ public class ToolItem : Bin
 	}
 	extern(C) static void callBackToolbarReconfigured(GtkToolItem* toolitemStruct, ToolItem toolItem)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(ToolItem) dlg ; toolItem.onToolbarReconfiguredListeners )
 		{

@@ -130,7 +130,7 @@ public class Curve : DrawingArea
 	}
 	extern(C) static void callBackCurveTypeChanged(GtkCurve* curveStruct, Curve curve)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Curve) dlg ; curve.onCurveTypeChangedListeners )
 		{

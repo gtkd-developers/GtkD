@@ -118,7 +118,7 @@ public class SourceLanguage : ObjectG
 	}
 	extern(C) static void callBackTagStyleChanged(GtkSourceLanguage* sourcelanguageStruct, gchar* arg1, SourceLanguage sourceLanguage)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(char[], SourceLanguage) dlg ; sourceLanguage.onTagStyleChangedListeners )
 		{

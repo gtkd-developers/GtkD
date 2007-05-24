@@ -393,7 +393,7 @@ public class FileChooser
 	}
 	extern(C) static void callBackConfirmOverwrite(GtkFileChooser* filechooserStruct, FileChooser fileChooser)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( GtkFileChooserConfirmation delegate(FileChooser) dlg ; fileChooser.onConfirmOverwriteListeners )
 		{
@@ -421,7 +421,7 @@ public class FileChooser
 	}
 	extern(C) static void callBackCurrentFolderChanged(GtkFileChooser* chooserStruct, FileChooser fileChooser)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(FileChooser) dlg ; fileChooser.onCurrentFolderChangedListeners )
 		{
@@ -449,7 +449,7 @@ public class FileChooser
 	}
 	extern(C) static void callBackFileActivated(GtkFileChooser* chooserStruct, FileChooser fileChooser)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(FileChooser) dlg ; fileChooser.onFileActivatedListeners )
 		{
@@ -477,7 +477,7 @@ public class FileChooser
 	}
 	extern(C) static void callBackSelectionChanged(GtkFileChooser* chooserStruct, FileChooser fileChooser)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(FileChooser) dlg ; fileChooser.onSelectionChangedListeners )
 		{
@@ -505,7 +505,7 @@ public class FileChooser
 	}
 	extern(C) static void callBackUpdatePreview(GtkFileChooser* chooserStruct, FileChooser fileChooser)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(FileChooser) dlg ; fileChooser.onUpdatePreviewListeners )
 		{

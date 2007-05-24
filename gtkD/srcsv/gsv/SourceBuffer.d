@@ -146,7 +146,7 @@ public class SourceBuffer : TextBuffer
 	}
 	extern(C) static void callBackCanRedo(GtkSourceBuffer* sourcebufferStruct, gboolean arg1, SourceBuffer sourceBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gboolean, SourceBuffer) dlg ; sourceBuffer.onCanRedoListeners )
 		{
@@ -174,7 +174,7 @@ public class SourceBuffer : TextBuffer
 	}
 	extern(C) static void callBackCanUndo(GtkSourceBuffer* sourcebufferStruct, gboolean arg1, SourceBuffer sourceBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gboolean, SourceBuffer) dlg ; sourceBuffer.onCanUndoListeners )
 		{
@@ -202,7 +202,7 @@ public class SourceBuffer : TextBuffer
 	}
 	extern(C) static void callBackHighlightUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* arg1, GtkTextIter* arg2, SourceBuffer sourceBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextIter, TextIter, SourceBuffer) dlg ; sourceBuffer.onHighlightUpdatedListeners )
 		{
@@ -230,7 +230,7 @@ public class SourceBuffer : TextBuffer
 	}
 	extern(C) static void callBackMarkerUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* arg1, SourceBuffer sourceBuffer)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextIter, SourceBuffer) dlg ; sourceBuffer.onMarkerUpdatedListeners )
 		{

@@ -186,7 +186,7 @@ public class Toolbar : Container
 	}
 	extern(C) static void callBackFocusHomeOrEnd(GtkToolbar* toolbarStruct, gboolean focusHome, Toolbar toolbar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(gboolean, Toolbar) dlg ; toolbar.onFocusHomeOrEndListeners )
 		{
@@ -214,7 +214,7 @@ public class Toolbar : Container
 	}
 	extern(C) static void callBackMoveFocus(GtkToolbar* toolbarStruct, GtkDirectionType dir, Toolbar toolbar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkDirectionType, Toolbar) dlg ; toolbar.onMoveFocusListeners )
 		{
@@ -242,7 +242,7 @@ public class Toolbar : Container
 	}
 	extern(C) static void callBackOrientationChanged(GtkToolbar* toolbarStruct, GtkOrientation orientation, Toolbar toolbar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkOrientation, Toolbar) dlg ; toolbar.onOrientationChangedListeners )
 		{
@@ -270,7 +270,7 @@ public class Toolbar : Container
 	}
 	extern(C) static void callBackPopupContextMenu(GtkToolbar* toolbarStruct, gint x, gint y, gint button, Toolbar toolbar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(gint, gint, gint, Toolbar) dlg ; toolbar.onPopupContextMenuListeners )
 		{
@@ -298,7 +298,7 @@ public class Toolbar : Container
 	}
 	extern(C) static void callBackStyleChanged(GtkToolbar* toolbarStruct, GtkToolbarStyle style, Toolbar toolbar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkToolbarStyle, Toolbar) dlg ; toolbar.onStyleChangedListeners )
 		{

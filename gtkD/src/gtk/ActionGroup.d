@@ -138,7 +138,7 @@ public class ActionGroup : ObjectG
 	}
 	extern(C) static void callBackConnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup actionGroup)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Action, GtkWidget*, ActionGroup) dlg ; actionGroup.onConnectProxyListeners )
 		{
@@ -166,7 +166,7 @@ public class ActionGroup : ObjectG
 	}
 	extern(C) static void callBackDisconnectProxy(GtkActionGroup* actionGroupStruct, GtkAction* action, GtkWidget* proxy, ActionGroup actionGroup)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Action, GtkWidget*, ActionGroup) dlg ; actionGroup.onDisconnectProxyListeners )
 		{
@@ -194,7 +194,7 @@ public class ActionGroup : ObjectG
 	}
 	extern(C) static void callBackPostActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup actionGroup)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Action, ActionGroup) dlg ; actionGroup.onPostActivateListeners )
 		{
@@ -222,7 +222,7 @@ public class ActionGroup : ObjectG
 	}
 	extern(C) static void callBackPreActivate(GtkActionGroup* actionGroupStruct, GtkAction* action, ActionGroup actionGroup)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Action, ActionGroup) dlg ; actionGroup.onPreActivateListeners )
 		{

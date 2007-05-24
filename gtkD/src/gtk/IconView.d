@@ -135,7 +135,7 @@ public class IconView : Container
 	}
 	extern(C) static void callBackActivateCursorItem(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(IconView) dlg ; iconView.onActivateCursorItemListeners )
 		{
@@ -163,7 +163,7 @@ public class IconView : Container
 	}
 	extern(C) static void callBackItemActivated(GtkIconView* iconviewStruct, GtkTreePath* arg1, IconView iconView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, IconView) dlg ; iconView.onItemActivatedListeners )
 		{
@@ -191,7 +191,7 @@ public class IconView : Container
 	}
 	extern(C) static void callBackMoveCursor(GtkIconView* iconviewStruct, GtkMovementStep arg1, gint arg2, IconView iconView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkMovementStep, gint, IconView) dlg ; iconView.onMoveCursorListeners )
 		{
@@ -219,7 +219,7 @@ public class IconView : Container
 	}
 	extern(C) static void callBackSelectAll(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(IconView) dlg ; iconView.onSelectAllListeners )
 		{
@@ -247,7 +247,7 @@ public class IconView : Container
 	}
 	extern(C) static void callBackSelectCursorItem(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(IconView) dlg ; iconView.onSelectCursorItemListeners )
 		{
@@ -275,7 +275,7 @@ public class IconView : Container
 	}
 	extern(C) static void callBackSelectionChanged(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(IconView) dlg ; iconView.onSelectionChangedListeners )
 		{
@@ -303,7 +303,7 @@ public class IconView : Container
 	}
 	extern(C) static void callBackSetScrollAdjustments(GtkIconView* iconviewStruct, GtkAdjustment* arg1, GtkAdjustment* arg2, IconView iconView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, IconView) dlg ; iconView.onSetScrollAdjustmentsListeners )
 		{
@@ -331,7 +331,7 @@ public class IconView : Container
 	}
 	extern(C) static void callBackToggleCursorItem(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(IconView) dlg ; iconView.onToggleCursorItemListeners )
 		{
@@ -359,7 +359,7 @@ public class IconView : Container
 	}
 	extern(C) static void callBackUnselectAll(GtkIconView* iconviewStruct, IconView iconView)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(IconView) dlg ; iconView.onUnselectAllListeners )
 		{

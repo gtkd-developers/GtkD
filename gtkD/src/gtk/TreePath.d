@@ -227,7 +227,7 @@ public class TreePath
 	 * Returns:
 	 *  A newly created GtkTreePath.
 	 */
-	public this (bit firstRow=false)
+	public this (bool firstRow=false)
 	{
 		if ( firstRow )
 		{
@@ -267,7 +267,7 @@ public class TreePath
 	}
 	extern(C) static void callBackRowChanged(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreePath treePath)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, GtkTreeIter*, TreePath) dlg ; treePath.onRowChangedListeners )
 		{
@@ -295,7 +295,7 @@ public class TreePath
 	}
 	extern(C) static void callBackRowDeleted(GtkTreeModel* treeModelStruct, GtkTreePath* path, TreePath treePath)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, TreePath) dlg ; treePath.onRowDeletedListeners )
 		{
@@ -323,7 +323,7 @@ public class TreePath
 	}
 	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreePath treePath)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, GtkTreeIter*, TreePath) dlg ; treePath.onRowHasChildToggledListeners )
 		{
@@ -351,7 +351,7 @@ public class TreePath
 	}
 	extern(C) static void callBackRowInserted(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreePath treePath)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, GtkTreeIter*, TreePath) dlg ; treePath.onRowInsertedListeners )
 		{
@@ -379,7 +379,7 @@ public class TreePath
 	}
 	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, gpointer arg3, TreePath treePath)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, GtkTreeIter*, gpointer, TreePath) dlg ; treePath.onRowsReorderedListeners )
 		{

@@ -456,7 +456,7 @@ code: start
 	}
 	extern(C) static void callBackPadAdded(GstElement* gstelementStruct, GObject* newPad, Element element)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Pad, Element) dlg ; element.onPadAddedListeners )
 		{

@@ -143,7 +143,7 @@ public class Expander : Bin
 	 *  a new GtkExpander widget.
 	 * Since 2.4
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -183,7 +183,7 @@ public class Expander : Bin
 	}
 	extern(C) static void callBackActivate(GtkExpander* expanderStruct, Expander expander)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Expander) dlg ; expander.onActivateListeners )
 		{

@@ -376,7 +376,7 @@ public class ObjectG
 	}
 	extern(C) static void callBackNotify(GObject* gobjectStruct, GParamSpec* arg1, ObjectG objectG)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(ParamSpec, ObjectG) dlg ; objectG.onNotifyListeners )
 		{

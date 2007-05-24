@@ -123,7 +123,7 @@ public class TextAttributes
 	}
 	extern(C) static void callBack(GtkTextTag* texttagStruct, GObject* arg1, GdkEvent* event, GtkTextIter* arg2, TextAttributes textAttributes)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg ; textAttributes.onListeners )
 		{

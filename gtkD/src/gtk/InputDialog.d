@@ -134,7 +134,7 @@ public class InputDialog : Dialog
 	}
 	extern(C) static void callBackDisableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* deviceid, InputDialog inputDialog)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GdkDevice*, InputDialog) dlg ; inputDialog.onDisableDeviceListeners )
 		{
@@ -162,7 +162,7 @@ public class InputDialog : Dialog
 	}
 	extern(C) static void callBackEnableDevice(GtkInputDialog* inputdialogStruct, GdkDevice* deviceid, InputDialog inputDialog)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GdkDevice*, InputDialog) dlg ; inputDialog.onEnableDeviceListeners )
 		{

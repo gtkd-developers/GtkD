@@ -128,7 +128,7 @@ public class RadioMenuItem : CheckMenuItem
 	 *  The new GtkRadioMenuItem
 	 * Since 2.4
 	 */
-	public this (RadioMenuItem radioMenuItem, char[] label, bit mnemonic=true)
+	public this (RadioMenuItem radioMenuItem, char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -172,7 +172,7 @@ public class RadioMenuItem : CheckMenuItem
 	 * Returns:
 	 * a new GtkRadioMenuItem
 	 */
-	public this (ListSG group, char[] label, bit mnemonic=true)
+	public this (ListSG group, char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -214,7 +214,7 @@ public class RadioMenuItem : CheckMenuItem
 	}
 	extern(C) static void callBackGroupChanged(GtkRadioMenuItem* radiomenuitemStruct, RadioMenuItem radioMenuItem)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(RadioMenuItem) dlg ; radioMenuItem.onGroupChangedListeners )
 		{

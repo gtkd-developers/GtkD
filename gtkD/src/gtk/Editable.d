@@ -141,7 +141,7 @@ public class Editable
 	}
 	extern(C) static void callBackChanged(GtkEditable* editableStruct, Editable editable)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Editable) dlg ; editable.onChangedListeners )
 		{
@@ -169,7 +169,7 @@ public class Editable
 	}
 	extern(C) static void callBackDeleteText(GtkEditable* editableStruct, gint startPos, gint endPos, Editable editable)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, gint, Editable) dlg ; editable.onDeleteTextListeners )
 		{
@@ -197,7 +197,7 @@ public class Editable
 	}
 	extern(C) static void callBackInsertText(GtkEditable* editableStruct, gchar* newText, gint newTextLength, gint* position, Editable editable)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(char[], gint, gint*, Editable) dlg ; editable.onInsertTextListeners )
 		{

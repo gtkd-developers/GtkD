@@ -128,7 +128,7 @@ public class Plug : Window
 	}
 	extern(C) static void callBackEmbedded(GtkPlug* plugStruct, Plug plug)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Plug) dlg ; plug.onEmbeddedListeners )
 		{

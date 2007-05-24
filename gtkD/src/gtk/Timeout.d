@@ -105,7 +105,7 @@ public class Timeout
 {
 	
 	/** Holds all timeout delegates */
-	bit delegate()[] timeoutListeners;
+	bool delegate()[] timeoutListeners;
 	/** our gtk timeout ID */
 	uint timeoutID;
 	
@@ -118,7 +118,7 @@ public class Timeout
 	 *    	fireNow = 	When true the delegate will be executed emmidiatly
 	 * Returns:
 	 */
-	this(uint interval, bit delegate() dlg, bit fireNow=false)
+	this(uint interval, bool delegate() dlg, bool fireNow=false)
 	{
 		timeoutListeners ~= dlg;
 		timeoutID = gtk_timeout_add(interval, cast(GtkFunction)&timeoutCallback, cast(void*)this);
@@ -155,7 +155,7 @@ public class Timeout
 	 *    	delegate() =
 	 *    	fireNow =
 	 */
-	public void addListener(bit delegate() dlg, bit fireNow=false)
+	public void addListener(bool delegate() dlg, bool fireNow=false)
 	{
 		timeoutListeners ~= dlg;
 		if ( fireNow )
@@ -173,7 +173,7 @@ public class Timeout
 	 *    	timeout =
 	 * Returns:
 	 */
-	extern(C) static bit timeoutCallback(Timeout timeout)
+	extern(C) static bool timeoutCallback(Timeout timeout)
 	{
 		return timeout.callAllListeners();
 	}
@@ -182,9 +182,9 @@ public class Timeout
 	 * Executes all delegates on the execution list
 	 * Returns:
 	 */
-	private bit callAllListeners()
+	private bool callAllListeners()
 	{
-		bit runAgain = false;
+		bool runAgain = false;
 		
 		int i = 0;
 		

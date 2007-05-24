@@ -116,7 +116,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackBackspace(GtkTextView* textviewStruct, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onBackspaceListeners )
 		{
@@ -144,7 +144,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackCopyClipboard(GtkTextView* textviewStruct, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onCopyClipboardListeners )
 		{
@@ -172,7 +172,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackCutClipboard(GtkTextView* textviewStruct, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onCutClipboardListeners )
 		{
@@ -200,7 +200,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackDeleteFromCursor(GtkTextView* textviewStruct, GtkDeleteType arg1, gint arg2, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkDeleteType, gint, TextChildAnchor) dlg ; textChildAnchor.onDeleteFromCursorListeners )
 		{
@@ -228,7 +228,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackInsertAtCursor(GtkTextView* textviewStruct, gchar* arg1, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(char[], TextChildAnchor) dlg ; textChildAnchor.onInsertAtCursorListeners )
 		{
@@ -256,7 +256,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackMoveCursor(GtkTextView* widgetStruct, GtkMovementStep step, gint count, gboolean extendSelection, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkMovementStep, gint, gboolean, TextChildAnchor) dlg ; textChildAnchor.onMoveCursorListeners )
 		{
@@ -284,7 +284,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackMoveFocus(GtkTextView* textviewStruct, GtkDirectionType arg1, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkDirectionType, TextChildAnchor) dlg ; textChildAnchor.onMoveFocusListeners )
 		{
@@ -312,7 +312,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackMoveViewport(GtkTextView* textviewStruct, GtkScrollStep arg1, gint arg2, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkScrollStep, gint, TextChildAnchor) dlg ; textChildAnchor.onMoveViewportListeners )
 		{
@@ -340,7 +340,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackPageHorizontally(GtkTextView* textviewStruct, gint arg1, gboolean arg2, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, gboolean, TextChildAnchor) dlg ; textChildAnchor.onPageHorizontallyListeners )
 		{
@@ -368,7 +368,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackPasteClipboard(GtkTextView* textviewStruct, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onPasteClipboardListeners )
 		{
@@ -396,7 +396,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackPopulatePopup(GtkTextView* textviewStruct, GtkMenu* arg1, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkMenu*, TextChildAnchor) dlg ; textChildAnchor.onPopulatePopupListeners )
 		{
@@ -424,7 +424,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackSelectAll(GtkTextView* textviewStruct, gboolean arg1, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gboolean, TextChildAnchor) dlg ; textChildAnchor.onSelectAllListeners )
 		{
@@ -452,7 +452,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackSetAnchor(GtkTextView* textviewStruct, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onSetAnchorListeners )
 		{
@@ -480,7 +480,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackSetScrollAdjustments(GtkTextView* textviewStruct, GtkAdjustment* arg1, GtkAdjustment* arg2, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkAdjustment*, GtkAdjustment*, TextChildAnchor) dlg ; textChildAnchor.onSetScrollAdjustmentsListeners )
 		{
@@ -508,7 +508,7 @@ public class TextChildAnchor
 	}
 	extern(C) static void callBackToggleOverwrite(GtkTextView* textviewStruct, TextChildAnchor textChildAnchor)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onToggleOverwriteListeners )
 		{

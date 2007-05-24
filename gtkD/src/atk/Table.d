@@ -128,7 +128,7 @@ public class Table
 	}
 	extern(C) static void callBackColumnDeleted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, gint, Table) dlg ; table.onColumnDeletedListeners )
 		{
@@ -156,7 +156,7 @@ public class Table
 	}
 	extern(C) static void callBackColumnInserted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, gint, Table) dlg ; table.onColumnInsertedListeners )
 		{
@@ -184,7 +184,7 @@ public class Table
 	}
 	extern(C) static void callBackColumnReordered(AtkTable* atktableStruct, Table table)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Table) dlg ; table.onColumnReorderedListeners )
 		{
@@ -212,7 +212,7 @@ public class Table
 	}
 	extern(C) static void callBackModelChanged(AtkTable* atktableStruct, Table table)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Table) dlg ; table.onModelChangedListeners )
 		{
@@ -240,7 +240,7 @@ public class Table
 	}
 	extern(C) static void callBackRowDeleted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, gint, Table) dlg ; table.onRowDeletedListeners )
 		{
@@ -268,7 +268,7 @@ public class Table
 	}
 	extern(C) static void callBackRowInserted(AtkTable* atktableStruct, gint arg1, gint arg2, Table table)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, gint, Table) dlg ; table.onRowInsertedListeners )
 		{
@@ -296,7 +296,7 @@ public class Table
 	}
 	extern(C) static void callBackRowReordered(AtkTable* atktableStruct, Table table)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Table) dlg ; table.onRowReorderedListeners )
 		{

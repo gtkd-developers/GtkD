@@ -172,7 +172,7 @@ public class Keymap : ObjectG
 	}
 	extern(C) static void callBackDirectionChanged(GdkKeymap* keymapStruct, Keymap keymap)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Keymap) dlg ; keymap.onDirectionChangedListeners )
 		{
@@ -200,7 +200,7 @@ public class Keymap : ObjectG
 	}
 	extern(C) static void callBackKeysChanged(GdkKeymap* keymapStruct, Keymap keymap)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Keymap) dlg ; keymap.onKeysChangedListeners )
 		{

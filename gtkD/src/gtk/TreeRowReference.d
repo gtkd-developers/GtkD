@@ -250,7 +250,7 @@ public class TreeRowReference
 	}
 	extern(C) static void callBackRowChanged(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeRowReference treeRowReference)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, TreeRowReference) dlg ; treeRowReference.onRowChangedListeners )
 		{
@@ -278,7 +278,7 @@ public class TreeRowReference
 	}
 	extern(C) static void callBackRowDeleted(GtkTreeModel* treeModelStruct, GtkTreePath* path, TreeRowReference treeRowReference)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeRowReference) dlg ; treeRowReference.onRowDeletedListeners )
 		{
@@ -306,7 +306,7 @@ public class TreeRowReference
 	}
 	extern(C) static void callBackRowHasChildToggled(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeRowReference treeRowReference)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, TreeRowReference) dlg ; treeRowReference.onRowHasChildToggledListeners )
 		{
@@ -334,7 +334,7 @@ public class TreeRowReference
 	}
 	extern(C) static void callBackRowInserted(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, TreeRowReference treeRowReference)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, TreeRowReference) dlg ; treeRowReference.onRowInsertedListeners )
 		{
@@ -362,7 +362,7 @@ public class TreeRowReference
 	}
 	extern(C) static void callBackRowsReordered(GtkTreeModel* treeModelStruct, GtkTreePath* path, GtkTreeIter* iter, gpointer arg3, TreeRowReference treeRowReference)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(TreePath, TreeIter, gpointer, TreeRowReference) dlg ; treeRowReference.onRowsReorderedListeners )
 		{

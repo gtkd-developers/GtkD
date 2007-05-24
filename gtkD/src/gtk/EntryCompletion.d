@@ -144,7 +144,7 @@ public class EntryCompletion : ObjectG
 	}
 	extern(C) static void callBackActionActivated(GtkEntryCompletion* widgetStruct, gint index, EntryCompletion entryCompletion)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, EntryCompletion) dlg ; entryCompletion.onActionActivatedListeners )
 		{
@@ -172,7 +172,7 @@ public class EntryCompletion : ObjectG
 	}
 	extern(C) static void callBackInsertPrefix(GtkEntryCompletion* widgetStruct, gchar* prefix, EntryCompletion entryCompletion)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(char[], EntryCompletion) dlg ; entryCompletion.onInsertPrefixListeners )
 		{
@@ -200,7 +200,7 @@ public class EntryCompletion : ObjectG
 	}
 	extern(C) static void callBackMatchSelected(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion entryCompletion)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onMatchSelectedListeners )
 		{

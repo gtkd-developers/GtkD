@@ -139,7 +139,7 @@ public class Statusbar : HBox
 	}
 	extern(C) static void callBackTextPopped(GtkStatusbar* statusbarStruct, guint contextId, gchar* text, Statusbar statusbar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(guint, char[], Statusbar) dlg ; statusbar.onTextPoppedListeners )
 		{
@@ -167,7 +167,7 @@ public class Statusbar : HBox
 	}
 	extern(C) static void callBackTextPushed(GtkStatusbar* statusbarStruct, guint contextId, gchar* text, Statusbar statusbar)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(guint, char[], Statusbar) dlg ; statusbar.onTextPushedListeners )
 		{

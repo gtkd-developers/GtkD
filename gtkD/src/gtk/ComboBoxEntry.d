@@ -127,7 +127,7 @@ public class ComboBoxEntry : ComboBox, CellLayoutIF
 	 *  A new GtkComboBoxEntry.
 	 * Since 2.4
 	 */
-	public this (bit text=true)
+	public this (bool text=true)
 	{
 		if ( text )
 		{

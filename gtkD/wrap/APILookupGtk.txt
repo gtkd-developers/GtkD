@@ -175,7 +175,7 @@ prefix: gtk_timeout_
 strictPrefix: Y
 code: start
 	/** Holds all timeout delegates */
-	bit delegate()[] timeoutListeners;
+	bool delegate()[] timeoutListeners;
 	/** our gtk timeout ID */
 	uint timeoutID;
 
@@ -188,7 +188,7 @@ code: start
 	 *    	fireNow = 	When true the delegate will be executed emmidiatly
 	 * Returns: 
 	 */
-	this(uint interval, bit delegate() dlg, bit fireNow=false)
+	this(uint interval, bool delegate() dlg, bool fireNow=false)
 	{
 		timeoutListeners ~= dlg;
 		timeoutID = gtk_timeout_add(interval, cast(GtkFunction)&timeoutCallback, cast(void*)this);
@@ -225,7 +225,7 @@ code: start
 	 *    	delegate() = 	
 	 *    	fireNow = 	
 	 */
-	public void addListener(bit delegate() dlg, bit fireNow=false)
+	public void addListener(bool delegate() dlg, bool fireNow=false)
 	{
 		timeoutListeners ~= dlg;
 		if ( fireNow )
@@ -243,7 +243,7 @@ code: start
 	 *    	timeout = 	
 	 * Returns: 
 	 */
-	extern(C) static bit timeoutCallback(Timeout timeout)
+	extern(C) static bool timeoutCallback(Timeout timeout)
 	{
 		return timeout.callAllListeners();
 	}
@@ -252,9 +252,9 @@ code: start
 	 * Executes all delegates on the execution list
 	 * Returns: 
 	 */
-	private bit callAllListeners()
+	private bool callAllListeners()
 	{
-		bit runAgain = false;
+		bool runAgain = false;
 		
 		int i = 0;
 		
@@ -280,7 +280,7 @@ prefix: gtk_idle_
 strictPrefix: Y
 code: start
 	/** Holds all idle delegates */
-	bit delegate()[] idleListeners;
+	bool delegate()[] idleListeners;
 	/** our gtk idle ID */
 	uint idleID;
 
@@ -292,7 +292,7 @@ code: start
 	 *    	fireNow = 	When true the delegate will be executed emmidiatly
 	 * Returns: 
 	 */
-	this(bit delegate() dlg, bit fireNow=false)
+	this(bool delegate() dlg, bool fireNow=false)
 	{
 		idleListeners ~= dlg;
 		idleID = gtk_idle_add(cast(GtkFunction)&idleCallback, cast(void*)this);
@@ -329,7 +329,7 @@ code: start
 	 *    	delegate() = 	
 	 *    	fireNow = 	
 	 */
-	public void addListener(bit delegate() dlg, bit fireNow=false)
+	public void addListener(bool delegate() dlg, bool fireNow=false)
 	{
 		idleListeners ~= dlg;
 		if ( fireNow )
@@ -347,7 +347,7 @@ code: start
 	 *    	idle = 	
 	 * Returns: 
 	 */
-	extern(C) static bit idleCallback(Idle idle)
+	extern(C) static bool idleCallback(Idle idle)
 	{
 		return idle.callAllListeners();
 	}
@@ -356,9 +356,9 @@ code: start
 	 * Executes all delegates on the execution list
 	 * Returns: 
 	 */
-	private bit callAllListeners()
+	private bool callAllListeners()
 	{
-		bit runAgain = false;
+		bool runAgain = false;
 		
 		int i = 0;
 		
@@ -839,7 +839,7 @@ code: start
 	 *  a new GtkMessageDialog
 	 * Since 2.4
 	 */
-	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bit markup, char[] messageFormat, char[] message=null )
+	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, char[] messageFormat, char[] message=null )
 	{
 		if ( markup )
 		{
@@ -1110,7 +1110,7 @@ public class MainWindow : Window
 	 * @param force if true the application must expect to be closed even against it's will
 	 * @return false to refuse to exit
 	 */
-	protected bit exit(int code, bit force)
+	protected bool exit(int code, bool force)
 	{
 		return force;
 	}
@@ -1279,7 +1279,7 @@ code: start
 	 * Returns:
 	 *  the new GtkLabel
 	 */
-	public this (char[] str, bit mnemonic=true)
+	public this (char[] str, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -1372,7 +1372,7 @@ code: start
 	 * Returns:
 	 *  a new GtkButton
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -1420,7 +1420,7 @@ code: start
 	}
 	
 
-	public this(char[] label, void delegate(Button) dlg, bit mnemonic=true)
+	public this(char[] label, void delegate(Button) dlg, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnClicked(dlg);
@@ -1514,7 +1514,7 @@ code: start
 	 * Returns:
 	 * a new radio button.
 	 */
-	public this (ListSG group, char[] label, bit mnemonic=true)
+	public this (ListSG group, char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -1547,7 +1547,7 @@ code: start
 	 * Returns:
 	 * a new radio button.
 	 */
-	public this (RadioButton radioButton, char[] label, bit mnemonic=true)
+	public this (RadioButton radioButton, char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -1590,7 +1590,7 @@ code: start
 	 * Returns:
 	 * a new toggle button.
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -2192,7 +2192,7 @@ code: start
 		if ( ensureVisible )
 		{
 			gdouble within_margin = 0.0;
-			bit use_align = false;
+			bool use_align = false;
 			gdouble xalign = 0.0;
 			gdouble yalign = 0.0;
 			scrollToMark(buf.createMark("",iter,true), within_margin, use_align, xalign, yalign);
@@ -2503,7 +2503,7 @@ code: start
 	 * Returns:
 	 *  A newly created GtkTreePath.
 	 */
-	public this (bit firstRow=false)
+	public this (bool firstRow=false)
 	{
 		if ( firstRow )
 		{
@@ -2539,6 +2539,8 @@ outFile: TreeRowReference
 file:
 class: TreeIterError
 extend: Error
+#import(tango): tango.core.Exception
+
 code: start
 /**
  * A TreeIter error.
@@ -2823,7 +2825,7 @@ code: start
 	 * @param editable
 	 * @return number of columns including the new one
 	 */
-	gint insertEditableColumn(int position, char[] title, CellRenderer renderer, bit editable)
+	gint insertEditableColumn(int position, char[] title, CellRenderer renderer, bool editable)
 	{
 		// OK, this is a trick because of my ignorance on how to pass variable argument lists
 		if ( position < 0 )
@@ -2895,7 +2897,7 @@ code: start
 	 *  A newly created GtkCellView widget.
 	 * Since 2.6
 	 */
-	public this (char[] text, bit markup=true)
+	public this (char[] text, bool markup=true)
 	{
 		if ( markup )
 		{
@@ -3417,7 +3419,7 @@ code: start
 	 *  A new GtkComboBox.
 	 * Since 2.4
 	 */
-	public this (bit text=true)
+	public this (bool text=true)
 	{
 		if ( text )
 		{
@@ -3464,8 +3466,8 @@ code: start
 		TreeModel model = getModel();
 		iter.setModel(model);
 		int index = 0;
-		bit found = false;
-		bit end = false;
+		bool found = false;
+		bool end = false;
 		if ( model.getIterFirst(iter) )
 		{
 			while ( !end && iter !is  null && !found )
@@ -3547,7 +3549,7 @@ code: start
 	 *  A new GtkComboBoxEntry.
 	 * Since 2.4
 	 */
-	public this (bit text=true)
+	public this (bool text=true)
 	{
 		if ( text )
 		{
@@ -3719,7 +3721,7 @@ code: start
 	 * and optionally accelGroup
 	 */
 	public this(void delegate(MenuItem) dlg, char[] label, char[] action, 
-				bit mnemonic=true,
+				bool mnemonic=true,
 				AccelGroup accelGroup=null,
 				char accelKey='\0',
 				GdkModifierType modifierType=GdkModifierType.CONTROL_MASK,
@@ -3740,7 +3742,7 @@ code: start
 	/**
 	 * Creates a new Item associated with a "activate" delegate
 	 */
-	public this(void delegate(MenuItem) dlg, char[] label, bit mnemonic=true)
+	public this(void delegate(MenuItem) dlg, char[] label, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnActivate(dlg);
@@ -3756,7 +3758,7 @@ code: start
 	 * Returns:
 	 * the newly created GtkMenuItem
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -3819,7 +3821,7 @@ code: start
 	 * Returns:
 	 *  a new GtkImageMenuItem.
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -3865,7 +3867,7 @@ code: start
 	 *  The new GtkRadioMenuItem
 	 * Since 2.4
 	 */
-	public this (RadioMenuItem radioMenuItem, char[] label, bit mnemonic=true)
+	public this (RadioMenuItem radioMenuItem, char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -3909,7 +3911,7 @@ code: start
 	 * Returns:
 	 * a new GtkRadioMenuItem
 	 */
-	public this (ListSG group, char[] label, bit mnemonic=true)
+	public this (ListSG group, char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -3948,7 +3950,7 @@ code: start
 	 * Returns:
 	 * a new GtkCheckMenuItem.
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -4954,7 +4956,7 @@ code: start
 	 *  a new GtkExpander widget.
 	 * Since 2.4
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{

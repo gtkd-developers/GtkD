@@ -47,6 +47,7 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
+ * 	- gtk.AccelGroup
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -61,6 +62,7 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.Widget;
+private import gtk.AccelGroup;
 
 
 
@@ -126,33 +128,35 @@ public class MenuItem : Item
 		addOnActivate(dlg);
 	}
 	
-private import gtk.AccelGroup;
+	
 	
 	/**
 	 * Creates a new Item associated with a "activate" delegate and with a action code
 	 * and optionally accelGroup
 	 */
-	public this(void delegate(MenuItem) dlg, char[] label, char[] action, 
-				bit mnemonic=true,
-				AccelGroup accelGroup=null,
-				char accelKey='\0',
-				GdkModifierType modifierType=GdkModifierType.CONTROL_MASK,
-				GtkAccelFlags accelFlags=GtkAccelFlags.VISIBLE
-				)
+	public this(void delegate(MenuItem) dlg, char[] label, char[] action,
+	bool mnemonic=true,
+	AccelGroup accelGroup=null,
+	char accelKey='\0',
+	GdkModifierType modifierType=GdkModifierType.CONTROL_MASK,
+	GtkAccelFlags accelFlags=GtkAccelFlags.VISIBLE
+	)
 	{
 		this(label, mnemonic);
 		this.actionLabel = action;
 		addOnActivate(dlg);
 		if ( accelGroup !is null && accelKey != '\0' )
 		{
-			addAccelerator("activate",accelGroup,accelKey,modifierType,accelFlags); 
+			addAccelerator("activate",accelGroup,accelKey,modifierType,accelFlags);
 		}
 	}
+	
+	
 	
 	/**
 	 * Creates a new Item associated with a "activate" delegate
 	 */
-	public this(void delegate(MenuItem) dlg, char[] label, bit mnemonic=true)
+	public this(void delegate(MenuItem) dlg, char[] label, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnActivate(dlg);
@@ -168,7 +172,7 @@ private import gtk.AccelGroup;
 	 * Returns:
 	 * the newly created GtkMenuItem
 	 */
-	public this (char[] label, bit mnemonic=true)
+	public this (char[] label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -221,7 +225,7 @@ private import gtk.AccelGroup;
 	}
 	extern(C) static void callBackActivate(GtkMenuItem* menuitemStruct, MenuItem menuItem)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(MenuItem) dlg ; menuItem.onActivateListeners )
 		{
@@ -249,7 +253,7 @@ private import gtk.AccelGroup;
 	}
 	extern(C) static void callBackActivateItem(GtkMenuItem* menuitemStruct, MenuItem menuItem)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(MenuItem) dlg ; menuItem.onActivateItemListeners )
 		{
@@ -277,7 +281,7 @@ private import gtk.AccelGroup;
 	}
 	extern(C) static void callBackToggleSizeAllocate(GtkMenuItem* menuitemStruct, gint arg1, MenuItem menuItem)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, MenuItem) dlg ; menuItem.onToggleSizeAllocateListeners )
 		{
@@ -305,7 +309,7 @@ private import gtk.AccelGroup;
 	}
 	extern(C) static void callBackToggleSizeRequest(GtkMenuItem* menuitemStruct, gpointer arg1, MenuItem menuItem)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gpointer, MenuItem) dlg ; menuItem.onToggleSizeRequestListeners )
 		{

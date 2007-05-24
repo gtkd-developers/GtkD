@@ -119,7 +119,7 @@ public class Document
 	}
 	extern(C) static void callBackLoadComplete(AtkDocument* atkdocumentStruct, Document document)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Document) dlg ; document.onLoadCompleteListeners )
 		{
@@ -147,7 +147,7 @@ public class Document
 	}
 	extern(C) static void callBackLoadStopped(AtkDocument* atkdocumentStruct, Document document)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Document) dlg ; document.onLoadStoppedListeners )
 		{
@@ -175,7 +175,7 @@ public class Document
 	}
 	extern(C) static void callBackReload(AtkDocument* atkdocumentStruct, Document document)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Document) dlg ; document.onReloadListeners )
 		{

@@ -119,7 +119,7 @@ public class AccelMap : ObjectG
 	}
 	extern(C) static void callBackChanged(GtkAccelMap* objectStruct, gchar* accelPath, guint accelKey, GdkModifierType accelMods, AccelMap accelMap)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(char[], guint, GdkModifierType, AccelMap) dlg ; accelMap.onChangedListeners )
 		{

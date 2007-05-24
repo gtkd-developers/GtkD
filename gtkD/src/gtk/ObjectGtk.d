@@ -168,7 +168,7 @@ public class ObjectGtk : ObjectG
 	}
 	extern(C) static void callBackDestroy(GtkObject* objectStruct, ObjectGtk objectGtk)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(ObjectGtk) dlg ; objectGtk.onDestroyListeners )
 		{

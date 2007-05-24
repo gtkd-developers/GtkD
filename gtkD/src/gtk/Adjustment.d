@@ -172,7 +172,7 @@ public class Adjustment : ObjectGtk
 	}
 	extern(C) static void callBackChanged(GtkAdjustment* adjustmentStruct, Adjustment adjustment)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Adjustment) dlg ; adjustment.onChangedListeners )
 		{
@@ -200,7 +200,7 @@ public class Adjustment : ObjectGtk
 	}
 	extern(C) static void callBackValueChanged(GtkAdjustment* adjustmentStruct, Adjustment adjustment)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Adjustment) dlg ; adjustment.onValueChangedListeners )
 		{

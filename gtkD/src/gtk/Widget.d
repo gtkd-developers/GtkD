@@ -326,7 +326,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackAccelClosuresChanged(GtkWidget* widgetStruct, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget) dlg ; widget.onAccelClosuresChangedListeners )
 		{
@@ -355,7 +355,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackButtonPress(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventButton*, Widget) dlg ; widget.onButtonPressListeners )
 		{
@@ -384,7 +384,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackButtonRelease(GtkWidget* widgetStruct, GdkEventButton* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventButton*, Widget) dlg ; widget.onButtonReleaseListeners )
 		{
@@ -412,7 +412,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackCanActivateAccel(GtkWidget* widgetStruct, guint signalId, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(guint, Widget) dlg ; widget.onCanActivateAccelListeners )
 		{
@@ -440,7 +440,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackChildNotify(GtkWidget* widgetStruct, GParamSpec* pspec, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GParamSpec*, Widget) dlg ; widget.onChildNotifyListeners )
 		{
@@ -468,7 +468,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackClient(GtkWidget* widgetStruct, GdkEventClient* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventClient*, Widget) dlg ; widget.onClientListeners )
 		{
@@ -496,7 +496,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackCompositedChanged(GtkWidget* widgetStruct, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget) dlg ; widget.onCompositedChangedListeners )
 		{
@@ -524,7 +524,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackConfigure(GtkWidget* widgetStruct, GdkEventConfigure* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventConfigure*, Widget) dlg ; widget.onConfigureListeners )
 		{
@@ -552,7 +552,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDelete(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onDeleteListeners )
 		{
@@ -580,7 +580,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDestroy(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onDestroyListeners )
 		{
@@ -608,7 +608,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDirectionChanged(GtkWidget* widgetStruct, GtkTextDirection arg1, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkTextDirection, Widget) dlg ; widget.onDirectionChangedListeners )
 		{
@@ -636,7 +636,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDragBegin(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GdkDragContext*, Widget) dlg ; widget.onDragBeginListeners )
 		{
@@ -664,7 +664,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDragDataDelete(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GdkDragContext*, Widget) dlg ; widget.onDragDataDeleteListeners )
 		{
@@ -692,7 +692,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDragDataGet(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkSelectionData* data, guint info, guint time, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GdkDragContext*, GtkSelectionData*, guint, guint, Widget) dlg ; widget.onDragDataGetListeners )
 		{
@@ -720,7 +720,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDragDataReceived(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, GtkSelectionData* data, guint info, guint time, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget) dlg ; widget.onDragDataReceivedListeners )
 		{
@@ -748,7 +748,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDragDrop(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; widget.onDragDropListeners )
 		{
@@ -776,7 +776,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDragEnd(GtkWidget* widgetStruct, GdkDragContext* dragContext, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GdkDragContext*, Widget) dlg ; widget.onDragEndListeners )
 		{
@@ -804,7 +804,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDragFailed(GtkWidget* widgetStruct, GdkDragContext* dragContext, GtkDragResult result, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkDragContext*, GtkDragResult, Widget) dlg ; widget.onDragFailedListeners )
 		{
@@ -832,7 +832,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDragLeave(GtkWidget* widgetStruct, GdkDragContext* dragContext, guint time, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GdkDragContext*, guint, Widget) dlg ; widget.onDragLeaveListeners )
 		{
@@ -860,7 +860,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackDragMotion(GtkWidget* widgetStruct, GdkDragContext* dragContext, gint x, gint y, guint time, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg ; widget.onDragMotionListeners )
 		{
@@ -888,7 +888,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackEnterNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventCrossing*, Widget) dlg ; widget.onEnterNotifyListeners )
 		{
@@ -916,7 +916,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBack(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onListeners )
 		{
@@ -944,7 +944,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackEventAfter(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Event, Widget) dlg ; widget.onEventAfterListeners )
 		{
@@ -972,7 +972,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackExpose(GtkWidget* widgetStruct, GdkEventExpose* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventExpose*, Widget) dlg ; widget.onExposeListeners )
 		{
@@ -1000,7 +1000,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackFocus(GtkWidget* widgetStruct, GtkDirectionType arg1, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkDirectionType, Widget) dlg ; widget.onFocusListeners )
 		{
@@ -1028,7 +1028,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackFocusIn(GtkWidget* widgetStruct, GdkEventFocus* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventFocus*, Widget) dlg ; widget.onFocusInListeners )
 		{
@@ -1056,7 +1056,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackFocusOut(GtkWidget* widgetStruct, GdkEventFocus* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventFocus*, Widget) dlg ; widget.onFocusOutListeners )
 		{
@@ -1084,7 +1084,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackGrabBroken(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onGrabBrokenListeners )
 		{
@@ -1112,7 +1112,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackGrabFocus(GtkWidget* widgetStruct, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget) dlg ; widget.onGrabFocusListeners )
 		{
@@ -1140,7 +1140,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackGrabNotify(GtkWidget* widgetStruct, gboolean wasGrabbed, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gboolean, Widget) dlg ; widget.onGrabNotifyListeners )
 		{
@@ -1168,7 +1168,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackHide(GtkWidget* widgetStruct, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget) dlg ; widget.onHideListeners )
 		{
@@ -1196,7 +1196,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackHierarchyChanged(GtkWidget* widgetStruct, GtkWidget* widget2, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkWidget*, Widget) dlg ; widget.onHierarchyChangedListeners )
 		{
@@ -1224,7 +1224,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackKeyPress(GtkWidget* widgetStruct, GdkEventKey* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventKey*, Widget) dlg ; widget.onKeyPressListeners )
 		{
@@ -1252,7 +1252,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackKeyRelease(GtkWidget* widgetStruct, GdkEventKey* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventKey*, Widget) dlg ; widget.onKeyReleaseListeners )
 		{
@@ -1280,7 +1280,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackKeynavFailed(GtkWidget* widgetStruct, GtkDirectionType direction, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkDirectionType, Widget) dlg ; widget.onKeynavFailedListeners )
 		{
@@ -1308,7 +1308,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackLeaveNotify(GtkWidget* widgetStruct, GdkEventCrossing* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventCrossing*, Widget) dlg ; widget.onLeaveNotifyListeners )
 		{
@@ -1336,7 +1336,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackMap(GtkWidget* widgetStruct, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget) dlg ; widget.onMapListeners )
 		{
@@ -1364,7 +1364,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackMapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onMapEventListeners )
 		{
@@ -1392,7 +1392,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackMnemonicActivate(GtkWidget* widgetStruct, gboolean arg1, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(gboolean, Widget) dlg ; widget.onMnemonicActivateListeners )
 		{
@@ -1421,7 +1421,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackMotionNotify(GtkWidget* widgetStruct, GdkEventMotion* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventMotion*, Widget) dlg ; widget.onMotionNotifyListeners )
 		{
@@ -1449,7 +1449,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackNoExpose(GtkWidget* widgetStruct, GdkEventNoExpose* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventNoExpose*, Widget) dlg ; widget.onNoExposeListeners )
 		{
@@ -1477,7 +1477,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackParentSet(GtkWidget* widgetStruct, GtkObject* oldParent, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkObject*, Widget) dlg ; widget.onParentSetListeners )
 		{
@@ -1505,7 +1505,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackPopupMenu(GtkWidget* widgetStruct, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Widget) dlg ; widget.onPopupMenuListeners )
 		{
@@ -1533,7 +1533,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackPropertyNotify(GtkWidget* widgetStruct, GdkEventProperty* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventProperty*, Widget) dlg ; widget.onPropertyNotifyListeners )
 		{
@@ -1561,7 +1561,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackProximityIn(GtkWidget* widgetStruct, GdkEventProximity* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventProximity*, Widget) dlg ; widget.onProximityInListeners )
 		{
@@ -1589,7 +1589,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackProximityOut(GtkWidget* widgetStruct, GdkEventProximity* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventProximity*, Widget) dlg ; widget.onProximityOutListeners )
 		{
@@ -1617,7 +1617,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackQueryTooltip(GtkWidget* widgetStruct, gint x, gint y, gboolean keyboardMode, GtkTooltip* tooltip, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg ; widget.onQueryTooltipListeners )
 		{
@@ -1645,7 +1645,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackRealize(GtkWidget* widgetStruct, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget) dlg ; widget.onRealizeListeners )
 		{
@@ -1673,7 +1673,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackScreenChanged(GtkWidget* widgetStruct, GdkScreen* arg1, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Screen, Widget) dlg ; widget.onScreenChangedListeners )
 		{
@@ -1701,7 +1701,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackScroll(GtkWidget* widgetStruct, GdkEventScroll* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventScroll*, Widget) dlg ; widget.onScrollListeners )
 		{
@@ -1729,7 +1729,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackSelectionClear(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionClearListeners )
 		{
@@ -1757,7 +1757,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackSelectionGet(GtkWidget* widgetStruct, GtkSelectionData* data, guint info, guint time, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkSelectionData*, guint, guint, Widget) dlg ; widget.onSelectionGetListeners )
 		{
@@ -1785,7 +1785,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackSelectionNotify(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionNotifyListeners )
 		{
@@ -1813,7 +1813,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackSelectionReceived(GtkWidget* widgetStruct, GtkSelectionData* data, guint time, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkSelectionData*, guint, Widget) dlg ; widget.onSelectionReceivedListeners )
 		{
@@ -1841,7 +1841,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackSelectionRequest(GtkWidget* widgetStruct, GdkEventSelection* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventSelection*, Widget) dlg ; widget.onSelectionRequestListeners )
 		{
@@ -1869,7 +1869,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackShow(GtkWidget* widgetStruct, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget) dlg ; widget.onShowListeners )
 		{
@@ -1897,7 +1897,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackShowHelp(GtkWidget* widgetStruct, GtkWidgetHelpType arg1, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkWidgetHelpType, Widget) dlg ; widget.onShowHelpListeners )
 		{
@@ -1925,7 +1925,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackSizeAllocate(GtkWidget* widgetStruct, GtkAllocation* allocation, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkAllocation*, Widget) dlg ; widget.onSizeAllocateListeners )
 		{
@@ -1953,7 +1953,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackSizeRequest(GtkWidget* widgetStruct, GtkRequisition* requisition, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkRequisition*, Widget) dlg ; widget.onSizeRequestListeners )
 		{
@@ -1981,7 +1981,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackStateChanged(GtkWidget* widgetStruct, GtkStateType state, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkStateType, Widget) dlg ; widget.onStateChangedListeners )
 		{
@@ -2009,7 +2009,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Style, Widget) dlg ; widget.onStyleSetListeners )
 		{
@@ -2037,7 +2037,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackUnmap(GtkWidget* widgetStruct, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget) dlg ; widget.onUnmapListeners )
 		{
@@ -2065,7 +2065,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackUnmapEvent(GtkWidget* widgetStruct, GdkEvent* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(Event, Widget) dlg ; widget.onUnmapEventListeners )
 		{
@@ -2093,7 +2093,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackUnrealize(GtkWidget* widgetStruct, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Widget) dlg ; widget.onUnrealizeListeners )
 		{
@@ -2121,7 +2121,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackVisibilityNotify(GtkWidget* widgetStruct, GdkEventVisibility* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventVisibility*, Widget) dlg ; widget.onVisibilityNotifyListeners )
 		{
@@ -2149,7 +2149,7 @@ public class Widget : ObjectGtk
 	}
 	extern(C) static void callBackWindowState(GtkWidget* widgetStruct, GdkEventWindowState* event, Widget widget)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( gboolean delegate(GdkEventWindowState*, Widget) dlg ; widget.onWindowStateListeners )
 		{

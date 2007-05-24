@@ -123,7 +123,7 @@ public class MenuShell : Container
 	}
 	extern(C) static void callBackActivateCurrent(GtkMenuShell* menushellStruct, gboolean forceHide, MenuShell menuShell)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gboolean, MenuShell) dlg ; menuShell.onActivateCurrentListeners )
 		{
@@ -151,7 +151,7 @@ public class MenuShell : Container
 	}
 	extern(C) static void callBackCancel(GtkMenuShell* menushellStruct, MenuShell menuShell)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(MenuShell) dlg ; menuShell.onCancelListeners )
 		{
@@ -179,7 +179,7 @@ public class MenuShell : Container
 	}
 	extern(C) static void callBackCycleFocus(GtkMenuShell* menushellStruct, GtkDirectionType arg1, MenuShell menuShell)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkDirectionType, MenuShell) dlg ; menuShell.onCycleFocusListeners )
 		{
@@ -207,7 +207,7 @@ public class MenuShell : Container
 	}
 	extern(C) static void callBackDeactivate(GtkMenuShell* menushellStruct, MenuShell menuShell)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(MenuShell) dlg ; menuShell.onDeactivateListeners )
 		{
@@ -235,7 +235,7 @@ public class MenuShell : Container
 	}
 	extern(C) static void callBackMoveCurrent(GtkMenuShell* menushellStruct, GtkMenuDirectionType direction, MenuShell menuShell)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(GtkMenuDirectionType, MenuShell) dlg ; menuShell.onMoveCurrentListeners )
 		{
@@ -263,7 +263,7 @@ public class MenuShell : Container
 	}
 	extern(C) static void callBackSelectionDone(GtkMenuShell* menushellStruct, MenuShell menuShell)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(MenuShell) dlg ; menuShell.onSelectionDoneListeners )
 		{

@@ -207,7 +207,7 @@ public class Dialog : Window
 	}
 	extern(C) static void callBackClose(GtkDialog* dialogStruct, Dialog dialog)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Dialog) dlg ; dialog.onCloseListeners )
 		{
@@ -235,7 +235,7 @@ public class Dialog : Window
 	}
 	extern(C) static void callBackResponse(GtkDialog* dialogStruct, gint arg1, Dialog dialog)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, Dialog) dlg ; dialog.onResponseListeners )
 		{

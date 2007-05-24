@@ -116,7 +116,7 @@ public class Item : Bin
 	}
 	extern(C) static void callBackDeselect(GtkItem* itemStruct, Item item)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Item) dlg ; item.onDeselectListeners )
 		{
@@ -144,7 +144,7 @@ public class Item : Bin
 	}
 	extern(C) static void callBackSelect(GtkItem* itemStruct, Item item)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Item) dlg ; item.onSelectListeners )
 		{
@@ -172,7 +172,7 @@ public class Item : Bin
 	}
 	extern(C) static void callBackToggle(GtkItem* itemStruct, Item item)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(Item) dlg ; item.onToggleListeners )
 		{

@@ -1127,16 +1127,21 @@ public struct GMainContext{}
  * a bitwise combination of flags from GIOCondition, returned from the
  * poll() function to indicate which events occurred.
  */
-public struct GPollFD
-{
-	//#if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8
-	//long fd;
-	//#else
-	int fd;
-	//#endif
-	ushort events;
-	ushort revents;
-}
+public struct GPollFD{}
+// #if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8
+// glib-The-Main-Event-Loop.html
+// long fd;
+// glib-The-Main-Event-Loop.html
+// #else
+// glib-The-Main-Event-Loop.html
+// int fd;
+// glib-The-Main-Event-Loop.html
+// #endif
+// glib-The-Main-Event-Loop.html
+// ushort events;
+// glib-The-Main-Event-Loop.html
+// ushort revents;
+// glib-The-Main-Event-Loop.html
 
 
 /**

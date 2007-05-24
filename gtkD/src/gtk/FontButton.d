@@ -118,7 +118,7 @@ public class FontButton : Button
 	}
 	extern(C) static void callBackFontSet(GtkFontButton* widgetStruct, FontButton fontButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(FontButton) dlg ; fontButton.onFontSetListeners )
 		{

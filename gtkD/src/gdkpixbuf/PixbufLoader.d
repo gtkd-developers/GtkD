@@ -152,7 +152,7 @@ public class PixbufLoader : ObjectG
 	 * Returns:
 	 *  A newly-created pixbuf loader.
 	 */
-	public this (char[] type, GError** error, bit isMimeType=false)
+	public this (char[] type, GError** error, bool isMimeType=false)
 	{
 		if ( isMimeType )
 		{
@@ -192,7 +192,7 @@ public class PixbufLoader : ObjectG
 	}
 	extern(C) static void callBackAreaPrepared(GdkPixbufLoader* loaderStruct, PixbufLoader pixbufLoader)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(PixbufLoader) dlg ; pixbufLoader.onAreaPreparedListeners )
 		{
@@ -220,7 +220,7 @@ public class PixbufLoader : ObjectG
 	}
 	extern(C) static void callBackAreaUpdated(GdkPixbufLoader* loaderStruct, gint x, gint y, gint width, gint height, PixbufLoader pixbufLoader)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, gint, gint, gint, PixbufLoader) dlg ; pixbufLoader.onAreaUpdatedListeners )
 		{
@@ -248,7 +248,7 @@ public class PixbufLoader : ObjectG
 	}
 	extern(C) static void callBackClosed(GdkPixbufLoader* loaderStruct, PixbufLoader pixbufLoader)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(PixbufLoader) dlg ; pixbufLoader.onClosedListeners )
 		{
@@ -276,7 +276,7 @@ public class PixbufLoader : ObjectG
 	}
 	extern(C) static void callBackSizePrepared(GdkPixbufLoader* loaderStruct, gint width, gint height, PixbufLoader pixbufLoader)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(gint, gint, PixbufLoader) dlg ; pixbufLoader.onSizePreparedListeners )
 		{

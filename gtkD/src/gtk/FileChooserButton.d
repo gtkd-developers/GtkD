@@ -159,7 +159,7 @@ public class FileChooserButton : HBox
 	}
 	extern(C) static void callBackFileSet(GtkFileChooserButton* filechooserbuttonStruct, FileChooserButton fileChooserButton)
 	{
-		bit consumed = false;
+		bool consumed = false;
 		
 		foreach ( void delegate(FileChooserButton) dlg ; fileChooserButton.onFileSetListeners )
 		{
