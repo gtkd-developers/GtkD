@@ -18,7 +18,7 @@
 
 module gtkD.TestTreeView1;
 
-//debug = flow;
+//debug = trace;
 
 private import gtk.VBox;
 	
@@ -36,7 +36,9 @@ private import gtk.CellRendererPixbuf;
 private import gtk.CellRendererText;
 private import gtk.ScrolledWindow;
 private import gdk.Pixbuf;	
-private import std.stdio;
+version(tango) private import tango.io.Stdout;
+version(tango) private import tango.stdc.stdio;
+else private import std.stdio;
 	
 /**
  * This tests the gtkD tree widget
@@ -59,25 +61,32 @@ public class TestTreeView1 : VBox
 	this()
 	{
 		
-		debug(flow)writefln("TestTreeView1.this 1");
+		debug(trace) version(tango) Stdout("TestTreeView1.this 1").newline;
+		else writefln("TestTreeView1.this 1");
 		super(false, 0);
-		debug(flow)writefln("TestTreeView1.this 2");
+		debug(trace) version(tango) Stdout("TestTreeView1.this 2").newline;
+		else writefln("TestTreeView1.this 2");
 		
 		pixbuf = new Pixbuf(greenClass_xpm);
-		debug(flow)writefln("TestTreeView1.this 2.1");
+		debug(trace) version(tango) Stdout("TestTreeView1.this 2.1").newline;
+		else writefln("TestTreeView1.this 2.1");
 		pixbufTest = new Pixbuf(book_closed_xpm);
-		debug(flow)writefln("TestTreeView1.this 2.2");
+		debug(trace) version(tango) Stdout("TestTreeView1.this 2.2").newline;
+		else writefln("TestTreeView1.this 2.2");
 		image = new Image(pixbufTest);
 
-		debug(flow)writefln("TestTreeView1.this 3");
+		debug(trace) version(tango) Stdout("TestTreeView1.this 3").newline;
+		else writefln("TestTreeView1.this 3");
 		TreeView treeView1 = setup1();
 		populate(testTreeStore1);
 
-		debug(flow)writefln("TestTreeView1.this 4");
+		debug(trace) version(tango) Stdout("TestTreeView1.this 4").newline;
+		else writefln("TestTreeView1.this 4");
 		TreeView treeView2 = setup2();
 		populate(testTreeStore2);
 
-		debug(flow)writefln("TestTreeView1.this 5");
+		debug(trace) version(tango) Stdout("TestTreeView1.this 5").newline;
+		else writefln("TestTreeView1.this 5");
 		treeView2.addOnMoveCursor(&moveCursorCallback);
 		packStart(image, false, false, 1);
 		ScrolledWindow sw = new ScrolledWindow(null, null);
@@ -87,7 +96,8 @@ public class TestTreeView1 : VBox
 		sw.add(treeView2);
 		packStart(sw, true, true, 1);
 		
-		debug(flow)writefln("TestTreeView1.this 6");
+		debug(trace) version(tango) Stdout("TestTreeView1.this 6").newline;
+		else writefln("TestTreeView1.this 6");
 		//addWithViewport(treeView);
 		
 		
@@ -100,7 +110,8 @@ public class TestTreeView1 : VBox
 		iter.setModel(tree.getModel());
 		Value v = new Value();
 		iter.getValue(1, v);
-		writefln("cursor on %s", v);
+		debug(trace) version(tango) Stdout("cursor on {}", v).newline;
+		else writefln("cursor on %s", v);
 		return false;
 	}
 	

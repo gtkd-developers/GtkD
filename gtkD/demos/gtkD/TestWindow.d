@@ -27,11 +27,21 @@ version(cairo)private import cairo.clock;
 private import gtk.Version;
 private import gtk.Table;
 
+version(tango)private import tango.text.convert.Layout;
+version(tango) private import tango.core.Thread;
+else private import std.thread;
+version(tango) private import tango.math.Random;
+else private import std.random;
+
+import gdk.Threads;
+
 
 private import gtkc.gtktypes;
 private import gtk.GtkD;
 private import gtk.MainWindow;
 private import gtk.Adjustment;
+private import gtk.AccelGroup;
+
 private import gtkD.TestEntries;
 
 //private import gtkD.gtkDTree;
@@ -94,18 +104,22 @@ private import gtk.ScrolledWindow;
 private import gtk.MessageDialog;
 	
 
-private		import std.gc;
+
+version(tango) private import tango.core.Memory;
+else private import std.gc;
 private import glib.ListSG;
 	
 private import gtk.Label;
 private import glib.ListG;
 private import gtk.ComboBoxEntry;
-	private import gtk.Paned;
-	private import gtk.HPaned;
-	private import gtk.VPaned;
+private import gtk.Paned;
+private import gtk.HPaned;
+private import gtk.VPaned;
 	
 private import gtk.Calendar;
-private import std.stdio;
+version(tango) private import tango.io.Stdout;
+version(tango) private import tango.stdc.stdio;
+else private import std.stdio;
 private import gtk.VButtonBox;
 private import gtk.FileChooserButton;
 private import gdk.Drawable;
@@ -296,8 +310,6 @@ class TestWindow : MainWindow
 		
 	}
 	
-private import gtk.AccelGroup;
-
 	MenuBar getMenuBar()
 	{
 
@@ -418,7 +430,8 @@ private import gtk.AccelGroup;
 	{
 		//writefln("Notebook switch to page %s", pageNumber);
 		// fullCollect helps finding objects that shouldn't have been collected
-		std.gc.fullCollect();
+		version(tango) { /*??? no fullCollect on tango ???*/}
+		else std.gc.fullCollect();
 		//writefln("exiting Notebook switch to page %s", pageNumber);
 	}
 	
@@ -776,7 +789,7 @@ private import gtk.AccelGroup;
 		Button p1;
 		Paned p2;
 
-		bit h = true;
+		bool h = true;
 		for ( char c='1' ; c<='5' ; c++ )
 		{
 			p1 = new Button("Pane "~c);
@@ -918,29 +931,41 @@ private import gtk.AccelGroup;
 		
 	}
 
-Button[] threadTestButtons;
-private import std.thread;
-private import std.random;
-private import gdk.Threads;
-		static T1[] t1s;
+	Button[] threadTestButtons;
+	static T1[] t1s;
+
 	class T1 : Thread
 	{
 		int num;
+		
 		this(int num)
 		{
 			super(&run);
 			this.num = num;
 		}
 	
-		int run()
+		version(tango) void run()
 		{
+			runCommon();
+		}
+		else int run()
+		{
+			return runCommon();
+		}
+
+
+		int runCommon()		
+		{
+			version(tango) Random random = new Random();
 			while(1)
 			{
-				int buttonNum = rand()%threadTestButtons.length;
+				version(tango) int buttonNum = random.next(threadTestButtons.length);
+				else int buttonNum = rand()%threadTestButtons.length;
 				Button button = threadTestButtons[buttonNum];
 				gdkThreadsEnter();
 				button.removeAll();
-				button.setLabel(std.string.format("%s", num));
+				version(tango) button.setLabel( (new Layout!(char))("{}", num));
+				else button.setLabel(std.string.format("%s", num));
 				gdkThreadsLeave();
 				yield();
 			}
@@ -956,7 +981,8 @@ private import gdk.Threads;
 		{
 			for ( int j = 0 ; j<8; j++)
 			{
-				Button button = new Button(std.string.format("%s",(j+8*i)));
+				version(tango) Button button = new Button((new Layout!(char))("{}",(j+8*i)));
+				else Button button = new Button(std.string.format("%s",(j+8*i)));
 				threadTestButtons ~= button;
 				grid.attach( button,
 							i,i+1,
@@ -971,7 +997,14 @@ private import gdk.Threads;
 		{
 			foreach ( T1 t ; t1s )
 			{
-				switch( t.getState() )
+				version(tango)
+				{
+					if ( t.isRunning() )
+					{
+						t.sleep();
+					}
+				}
+				else switch( t.getState() )
 				{
 					case Thread.TS.RUNNING: 
 						t.pause();
@@ -987,7 +1020,14 @@ private import gdk.Threads;
 		{
 			foreach ( T1 t ; t1s )
 			{
-				switch( t.getState() )
+				version(tango) 
+				{
+					if ( !t.isRunning() )
+					{
+						// todo t.go();
+					}
+				}
+				else switch( t.getState() )
 				{
 					case Thread.TS.INITIAL:
 						t.start(); 

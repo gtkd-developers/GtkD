@@ -27,6 +27,8 @@ private import gtk.Label;
 private import gtkc.gtktypes;
 
 private import glib.Str;
+
+version(tango) private import tango.io.Stdout;
 /**
  * This tests the GtkD Entry widget
  */
@@ -68,7 +70,8 @@ class TestEntries : Table
 
 	void showEntry(Button button)
 	{
-		printf("text field contains %s\n",Str.toStringz(entry.getText()));
+		version(tango) Stdout("text field contains {}\n",Str.toStringz(entry.getText()));
+		else printf("text field contains %s\n",Str.toStringz(entry.getText()));
 	}
 
 	void entryEditable(CheckButton button)

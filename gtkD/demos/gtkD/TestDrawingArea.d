@@ -18,15 +18,20 @@
 
 module gtkD.TestDrawingArea;
 
+//debug = trace
+
 private import gtk.VBox;
 private import gdk.Font;
 private import pango.PgContext;
 private import pango.PgLayout;
 private import gdk.ImageGdk;
 		
-private import std.stdio;
+version(tango) private import tango.io.Stdout;
+version(tango) private import tango.stdc.stdio;
+else private import std.stdio;
 
-private import std.math;
+version(tango) private import tango.math.Math; 
+else private import std.math;
 
 private import gtk.Widget;
 private import gtk.MenuItem;
@@ -44,6 +49,11 @@ private import pango.PgFontDescription;
 private import gtk.DrawingArea;
 private import gtk.Image;
 private import gtk.SpinButton;
+
+private import gtkc.gtktypes;		
+private import gdk.Event;
+
+private import gdk.Color;
 
 //private import event.Event;
 
@@ -110,7 +120,6 @@ class TestDrawingArea : VBox
 	class TestDrawing : DrawingArea
 	{
 
-		private import gdk.Color;
 		
 		GdkFunction gcFunction = GdkFunction.INVERT;
 		Color paintColor;
@@ -168,21 +177,21 @@ class TestDrawingArea : VBox
 			addOnButtonRelease(&onButtonRelease);
 		}
 
-private import gtkc.gtktypes;		
 		void onSizeAllocate(GtkAllocation* allocation, Widget widget)
 		{
 			width = allocation.width;
 			height = allocation.height;
 		}
 		
-		private import gdk.Event;
 		
 		public int onButtonPress(GdkEventButton* event, Widget widget)
 		{
-			writefln("button DOWN");
+			debug(trace) version(tango) Stdout("button DOWN").newline;
+			else writefln("button DOWN");
 			if ( event.button == 1 )
 			{
-				writefln("Button 1 down");
+				debug(trace) version(tango) Stdout("Button 1 down").newline;
+				else writefln("Button 1 down");
 				buttonIsDown = true;
 				Drawable d = getDrawable();
 				GC gc = new GC(d);
@@ -199,17 +208,19 @@ private import gtkc.gtktypes;
 
 		public int onButtonRelease(GdkEventButton* event, Widget widget)
 		{
-			writefln("button UP");
+			debug(trace) version(tango) Stdout("button UP").newline;
+			else writefln("button UP");
 			if ( event.button == 1 )
 			{
-				writefln("Button 1 UP");
+				debug(trace) version(tango) Stdout("button 1 UP").newline;
+				else writefln("Button 1 UP");
 				buttonIsDown = false;
 			}
 			return false;
 		}
 
 
-		public bit mapCallback(Widget d, Event event)
+		public bool mapCallback(Widget d, Event event)
 		{
 			//printf("MAP CALLBACK\n");
 			return false;
@@ -225,7 +236,7 @@ private import gtkc.gtktypes;
 			drawPoints(getDrawable());
 			return 1;
 		}
-		public bit noExposeCallback(Widget widget)
+		public bool noExposeCallback(Widget widget)
 		{
 			//printf("testWindow.noExposed ----------------------------- \n");
 			return true;
@@ -253,7 +264,7 @@ private import gtkc.gtktypes;
 			return true;
 		}
 
-		public bit mouseButtonReleaseCallback(Widget widget, GdkEventButton event)
+		public bool mouseButtonReleaseCallback(Widget widget, GdkEventButton event)
 		{
 			//printf("testWindow.buttonReleased ----------------------------- \n");
 			return true;
@@ -264,10 +275,12 @@ private import gtkc.gtktypes;
 		public void backSpinChanged(SpinButton spinButton)
 		{
 			
-			writefln("backSpinChanged - entry %s", ++backSpinCount);
+			debug(trace) version(tango) Stdout("backSpinChanged - entry {}", ++backSpinCount).newline;
+			else writefln("backSpinChanged - entry %s", ++backSpinCount);
 			drawPoints(getDrawable());
 			GC gc = new GC(getDrawable());
-			writefln("backSpinChanged - exit");
+			debug(trace) version(tango) Stdout("backSpinChanged - exit").newline;
+			else writefln("backSpinChanged - exit");
 		}
 
 		public void sizeSpinChanged(SpinButton spinButton)
@@ -287,7 +300,8 @@ private import gtkc.gtktypes;
 		{
 			int width = spin.getValueAsInt();
 			int height = width * 3 / 4;
-			//writefln("primitiveType = %s", primitiveType);
+			debug(trace) version(tango) Stdout("primitiveType = {}", primitiveType).newline;
+			else writefln("primitiveType = %s", primitiveType);
 			switch ( primitiveType )
 			{
 				case "Arc":
@@ -316,7 +330,8 @@ private import gtkc.gtktypes;
 					
 				case "Text":
 					Font font = new Font("FreeMono 12");
-					writefln("Text font = %s", font);
+					debug(trace) version(tango) Stdout("Text font = {}", font).newline;
+					else writefln("Text font = %s", font);
 					d.drawString( font, gc,x, y, "gtkD toolkit");
 					break;
 				
@@ -372,9 +387,11 @@ private import gtkc.gtktypes;
 			int x = 0;
 			int y = 0;
 
-			writefln("w,h = %s %s",width ,height);
+			debug(trace) version(tango) Stdout("w,h = {} {}",width ,height).newline;
+			else writefln("w,h = %s %s",width ,height);
 
-			writefln("w,h = %s %s",width ,height);
+			debug(trace) version(tango) Stdout("w,h = {} {}",width ,height).newline;
+			else writefln("w,h = %s %s",width ,height);
 			
 			float dx = 256.0 / width;
 			float dy = 256.0 / height ;
@@ -420,7 +437,8 @@ private import gtkc.gtktypes;
 
 		void onCGOptionsChanged(ComboBox comboBox)
 		{
-			writefln("gcOptions = %s", comboBox.getActiveText());
+			debug(trace) version(tango) Stdout("gcOptions = {}", comboBox.getActiveText()).newline;
+			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{
 				case "GC COPY": gcFunction = GdkFunction.COPY; break;

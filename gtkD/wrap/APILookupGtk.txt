@@ -1903,7 +1903,8 @@ code: start
 	 * ...:
 	 *  NULL-terminated list of tags to apply
 	 */
-	version(tango){} else public void insertWithTags(TextIter iter, char[] text, ... )
+	//version(tango){} else -- still doesn't work on tango, but it compiles now
+	public void insertWithTags(TextIter iter, char[] text, ... )
 	{
 		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(TextTag)); i++)
 		{
@@ -1929,7 +1930,8 @@ code: start
 	 * ...:
 	 *  more tag names
 	 */
- 	version(tango){} else public void insertWithTagsByName(TextIter iter, char[] text, ... )
+ 	// version(tango){} else  -- still doesn't work on tango, but it compiles now 
+ 	public void insertWithTagsByName(TextIter iter, char[] text, ... )
 	{
 		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(char[])); i++)
 		{

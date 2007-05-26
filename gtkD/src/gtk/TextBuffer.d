@@ -267,7 +267,8 @@ public class TextBuffer : ObjectG
 	 * ...:
 	 *  NULL-terminated list of tags to apply
 	 */
-	version(tango){} else public void insertWithTags(TextIter iter, char[] text, ... )
+	//version(tango){} else 
+	public void insertWithTags(TextIter iter, char[] text, ... )
 	{
 		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(TextTag)); i++)
 		{

@@ -18,6 +18,8 @@
 
 module gtkD.TestIdle;
 
+//debug = trace
+
 private import gtk.VBox;
 private import gtk.HBox;
 private import gtk.Box;
@@ -35,7 +37,9 @@ private import gdk.GC;
 private import gtk.SpinButton;
 private import gtk.Adjustment;
 
-private import std.stdio;
+version(tango) private import tango.io.Stdout;
+version(tango) private import tango.stdc.stdio;
+else private import std.stdio;
 
 private import gtk.Idle;
 private import gtk.Timeout;
@@ -153,7 +157,8 @@ class TestIdle : VBox
 		
 		public void onMap(Widget widget)
 		{
-			//writefln("idle.onMap");
+			debug(trace) version(tango) Stdout("idle.onMap").newline;
+			else writefln("idle.onMap");
 			continueIdleCallback = true;
 			x = 0;
 			y = 0;
@@ -164,7 +169,8 @@ class TestIdle : VBox
 
 		public void onUnmap(Widget widget)
 		{
-			//writefln("idle.onUnmap");
+			debug(trace) version(tango) Stdout("idle.onUnmap").newline;
+			else writefln("idle.onUnmap");
 			continueIdleCallback = false;
 		}
 
@@ -215,7 +221,7 @@ class TestIdle : VBox
 //			return false;
 //		}
 
-		bit idleCallback()
+		bool idleCallback()
 		{
 
 			//printf("%d %d\n",width,height);
@@ -246,7 +252,8 @@ class TestIdle : VBox
 
 		void onCallTypeChanged(ComboBox comboBox)
 		{
-			writefln("gcOptions = %s", comboBox.getActiveText());
+			debug(trace) version(tango) Stdout("gcOptions = {}", comboBox.getActiveText()).newline; 
+			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{
 				case "Idle": callType = 0; break;
@@ -258,7 +265,8 @@ class TestIdle : VBox
 		
 		void onCGOptionsChanged(ComboBox comboBox)
 		{
-			writefln("gcOptions = %s", comboBox.getActiveText());
+			debug(trace) version(tango) Stdout("gcOptions = {}", comboBox.getActiveText()).newline; 
+			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{
 				case "GC COPY":			gc.setFunction(GdkFunction.COPY);		break;

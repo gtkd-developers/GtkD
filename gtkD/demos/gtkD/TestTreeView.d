@@ -37,6 +37,11 @@ private import gtk.Image;
 
 private import gtk.TreeNode;
 
+version(tango) private import tango.io.Stdout;
+version(tango) private import tango.stdc.stdio;
+else private import std.stdio;
+
+
 /* Don't copy this bad example; inline RGB data is always a better
  * idea than inline XPMs.
  */
@@ -77,7 +82,6 @@ static char**  book_closed_xpm = [
  *  method (){ new A;}<br>
  * }<br>
  */
- private import std.stdio;
 class TestTreeView : ScrolledWindow
 {
 	Image image;		
@@ -270,7 +274,7 @@ class TestTreeView : ScrolledWindow
 		TreeIter iter;
 		TreeIter iterTop = testTreeStore.createIter(null);
 		
-		TreeIter peekIter(bit pushIt)
+		TreeIter peekIter(bool pushIt)
 		{
 			TreeIter iter = testTreeStore.append(peek());
 			if ( pushIt )
@@ -280,7 +284,7 @@ class TestTreeView : ScrolledWindow
 			return iter;
 		}
 		
-		TreeIter popIter(bit pushIt)
+		TreeIter popIter(bool pushIt)
 		{
 			TreeIter iter = testTreeStore.append(pop());
 			if ( pushIt )

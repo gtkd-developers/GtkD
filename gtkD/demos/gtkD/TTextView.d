@@ -41,6 +41,12 @@ private import gdk.Bitmap;
 private import gdk.Pixbuf;
 
 private import gtk.ComboBox;
+
+version(tango) private import tango.io.Stdout;
+version(tango) private import tango.text.convert.Layout;
+
+version(tango) private import tango.core.Vararg;
+
 /**
  * reproduces the gtk-demo TextView
  * \bug the output shows erros like (DUITest.exe:5012): GLib-GObject-WARNING **: [Invalid UTF-8] gobject.c:882: object class `GtkTextTag' has no property named `l&#9484;E'
@@ -244,6 +250,9 @@ static char gray50_bits[] = [0x02, 0x01];
 	 */
 	void insertText(TextBuffer buffer)
 	{
+		version(tango){}
+		else
+		{
 		TextIter iter = new TextIter();
 		TextIter start = new TextIter();
 		TextIter end = new TextIter();
@@ -261,7 +270,8 @@ static char gray50_bits[] = [0x02, 0x01];
 		
 		if (pixbuf.getPixbufStruct()  is null)
 		{
-			printf("Failed to load image file gtk-logo-rgb.gif\n");
+			version(tango) Stdout("Failed to load image file gtk-logo-rgb.gif\n").newline;
+			else printf("Failed to load image file gtk-logo-rgb.gif\n");
 			pixbuf = null;
 		}
 		else
@@ -414,7 +424,7 @@ static char gray50_bits[] = [0x02, 0x01];
     	/* Apply word_wrap tag to whole buffer */
 		buffer.getBounds(start, end);
 		buffer.applyTagByName("word_wrap", start, end);
-
+		}
 	}
 
 	/**
@@ -483,7 +493,7 @@ static char gray50_bits[] = [0x02, 0x01];
 		}
 	}
 	
-	bit findAnchor (TextIter iter)
+	bool findAnchor (TextIter iter)
 	{
 		while (iter.forwardChar())
 		{

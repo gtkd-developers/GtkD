@@ -18,6 +18,8 @@
 
 module gtkD.TestImage;
 
+//debug = trace
+
 private import gtk.VBox;
 	
 private import gtk.Table;
@@ -33,7 +35,9 @@ private import gtk.Window;
 
 private import gtkc.gtktypes;
 
-private import std.stdio;
+version(tango) private import tango.io.Stdout;
+version(tango) private import tango.stdc.stdio;
+else private import std.stdio;
 
 private import glib.Str;
 
@@ -126,7 +130,8 @@ class TestImage : VBox
 			image = new Image(fileName);
 			//image.addOnEnterNotify(&onEnter);
 			//image.addOnLeaveNotify(&onLeave);
-			writefln("adding image %s to table at %s,%s", fileName, col, row);
+			debug(trace) version(tango) Stdout("adding image {} to table at {},{}", fileName, col, row).newline;
+			else writefln("adding image %s to table at %s,%s", fileName, col, row);
 			table.resize(col+1, row+1);
 			table.attach(image,col,col+1,row,row+1,AttachOptions.FILL,AttachOptions.FILL,4,4);
 			++col;
@@ -164,7 +169,9 @@ private import glib.ListSG;
 			
 			for ( int i = 0; i<list.length() ; i++)
 			{
-				writefln("Testmage.loadImages.File selected = %s", 
+				debug(trace) version(tango) Stdout("Testmage.loadImages.File selected = {}", 
+						Str.toString(cast(char*)list.nthData(i))).newline;
+				else writefln("Testmage.loadImages.File selected = %s", 
 						Str.toString(cast(char*)list.nthData(i)));
 				fileNames ~= Str.toString(cast(char*)list.nthData(i)).dup;
 			}
