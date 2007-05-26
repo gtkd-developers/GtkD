@@ -62,11 +62,13 @@ private import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;
 
+
 private import gtk.Widget;
 private import glgdk.GLDrawable;
 private import glgdk.GLConfig;
 private import glgdk.GLContext;
 private import glgdk.GLWindow;
+
 
 
 

@@ -25,12 +25,8 @@
 
 module gtkglc.glgtk;
 
-version(tango)
-{}
-else
-{
-private import std.stdio;
-}
+version(tango) private import tango.stdc.stdio;
+else private import std.stdio;
 private import gtkglc.glgtktypes;
 private import gtkc.Loader;
 private import gtkc.paths;

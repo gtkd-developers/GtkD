@@ -64,12 +64,14 @@ private import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+
 private import glib.Str;
 private import gtk.Style;
 private import gtk.Widget;
 private import gtk.Settings;
 private import gdk.Color;
 private import gtk.RcStyle;
+
 
 
 

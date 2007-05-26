@@ -230,10 +230,64 @@ public class GtkDClass
 		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
 		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack ~ ";\n\n";
 
-		// moved back to class level
+		// moved bac to class level
+		
+		// the use of phobs is limited, maybe we can get by with this...
+		
+		char[][][char[]] tangoImportConvs;
+		tangoImportConvs["std.stdio"] = ["tango.stdc.stdio"];
+		tangoImportConvs["std.thread"] = ["tango.core.Thread"];
+		tangoImportConvs["std.string"] = ["tango.text.Util"];
+		tangoImportConvs["std.c.string"] = ["tango.stdc.string"];
+		tangoImportConvs["std.c.stdio"] = ["tango.stdc.posix.stdio"];
+		tangoImportConvs["std.gc"] = ["tango.core.Memory"];
+		tangoImportConvs["std.stdarg"] = ["tango.core.Vararg"];
+		
+		char[] importTango = "\nversion(tango) {\n";
+		char[] importElse = "} else {\n";
+		char[] importCommon = "\n";
+		
+		int countTango;
+		
 		foreach( char[] imprt ; convParms.imprts )
 		{
-			gtkDText ~= "private import "~imprt~";\n";
+		
+//			if ( imprt in tangoImportConvs )
+//			{
+//				gtkDText ~=
+//					"version(tango) private import "~tangoImportConvs[imprt]~";\n"
+//					"else           private import "~imprt~";\n"
+//					;
+//			}
+//			else
+//			{
+//				gtkDText ~= "private import "~imprt~";\n";
+//			}
+//		
+//			if ( imprt == "std.stdio" )
+//			{
+//			}
+
+			if ( imprt in tangoImportConvs )
+			{
+				++countTango;
+				foreach ( char[] tangoImp ; tangoImportConvs[imprt] )
+				{ 
+					importTango ~= "\tprivate import "~tangoImp~";\n";
+				}
+				importElse ~= "\tprivate import "~imprt~";\n";
+			}
+			else
+			{
+				importCommon ~= "private import "~imprt~";\n";
+			}
+		}
+		
+		gtkDText ~= importCommon~"\n";
+		if ( countTango > 0 )
+		{
+			gtkDText ~= importTango;
+			gtkDText ~= importElse~"}\n\n";
 		}
 
 		properties.length = 0;

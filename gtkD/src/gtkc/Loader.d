@@ -75,7 +75,15 @@ private import gtkc.paths;
 public class Linker
 {
 
-	private import std.stdio;
+	version(tango)
+	{
+		private import tango.stdc.stdio;
+		private import tango.io.Stdout;
+	}
+	else
+	{
+		private import std.stdio;
+	}
 	
 	const int RTLD_LAZY = 0x00001;		// Lazy function call binding
 	const int RTLD_NOW  = 0x00002;		// Immediate function call binding
@@ -128,7 +136,8 @@ public class Linker
 		{
 			foreach ( char[] symbol ; Linker.getLoadFailures(lib) )
 			{
-				writefln("failed (%s) %s", lib, symbol);
+				version(tango) Stdout("failed ({}) {}", lib, symbol).newline;
+				else writefln("failed (%s) %s", lib, symbol);
 			}
 		}
 	}
@@ -195,7 +204,8 @@ public class Linker
 		}
 		else
 		{
-			writefln("Loaded lib = %s", libraryName);
+			version(tango) Stdout("Loaded lib = {}", libraryName).newline;
+			else writefln("Loaded lib = %s", libraryName);
 		}
 
 	}
@@ -247,14 +257,16 @@ public class Linker
 		foreach( Symbol link; symbols ) 
 		{
 			*link.pointer = getSymbol(handle, (link.name~"\0").ptr);
-			debug(loadSymbol) writefln("Loaded...", libraryName, " ", link.name);
+			version(tango)debug(loadSymbol) Stdout("Loaded...")(libraryName)(" ")(link.name).newline;
+			else debug(loadSymbol) writefln("Loaded...", libraryName, " ", link.name);
 			if (*link.pointer is null)
 			{
 				// if gthread try on glib
 				if ( alternateHandle !is null )
 				{
 					*link.pointer = getSymbol(alternateHandle, (link.name~"\0").ptr);
-					writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
+					version(tango) Stdout("Loader.Linker.link trying alternate lib <<<<<<<<< {}", link.name).newline;
+					else writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
 				}
 				if (*link.pointer is null)
 				{

@@ -58,8 +58,16 @@ private import gdac.gdatypes;
 
 private import gdac.gda;
 
+
 private import glib.ListG;
-private import std.string;
+
+
+version(tango) {
+	private import tango.text.Util;
+} else {
+	private import std.string;
+}
+
 
 
 

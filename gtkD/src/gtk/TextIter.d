@@ -69,6 +69,7 @@ private import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+
 private import glib.Str;
 private import gtk.TextBuffer;
 private import gtk.TextIter;
@@ -77,6 +78,7 @@ private import glib.ListSG;
 private import gtk.TextTag;
 private import gtk.TextAttributes;
 private import gtk.TextChildAnchor;
+
 
 
 

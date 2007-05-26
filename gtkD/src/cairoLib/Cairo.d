@@ -63,6 +63,7 @@ private import gtkc.cairoLibtypes;
 
 private import gtkc.cairoLib;
 
+
 private import cairoLib.Surface;
 private import glib.Str;
 private import gdk.Region;
@@ -72,6 +73,7 @@ private import gdk.Pixmap;
 private import gdk.Color;
 private import gtkc.gdk;
 private import gdk.Drawable;
+
 
 
 

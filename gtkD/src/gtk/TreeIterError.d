@@ -33,7 +33,7 @@
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  = Error
+ * extend  = Exception
  * implements:
  * prefixes:
  * omit structs:
@@ -54,9 +54,11 @@ private import gtkc.gtk;
 
 
 
+
+
 /**
  */
-public class TreeIterError : Error
+public class TreeIterError : Exception
 {
 	
 	/**

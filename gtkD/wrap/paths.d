@@ -97,7 +97,14 @@ const char[][LIBRARY.max+1] importLibs =
 version(Windows)
 {
 	import std.windows.registry;
-	import std.stdio;
+	version(tango)
+	{
+		private import tango.stdc.stdio;
+	}
+	else
+	{
+		private import std.stdio;
+	}
 
 	char[] libPath()
 	{

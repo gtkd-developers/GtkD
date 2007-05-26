@@ -25,12 +25,8 @@
 
 module gtkc.cairoLib;
 
-version(tango)
-{}
-else
-{
-private import std.stdio;
-}
+version(tango) private import tango.stdc.stdio;
+else private import std.stdio;
 private import gtkc.cairoLibtypes;
 private import gtkc.Loader;
 private import gtkc.paths;

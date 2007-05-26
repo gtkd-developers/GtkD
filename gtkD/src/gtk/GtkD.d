@@ -67,6 +67,7 @@ private import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+
 private import gdk.Event;
 private import gtk.Widget;
 private import gtk.ObjectGtk;
@@ -74,6 +75,7 @@ private import glib.Str;
 private import gtkc.gtk;
 private import gthread.Thread;
 private import gdk.Threads;
+
 
 public alias GtkD Gtk;
 

@@ -85,6 +85,7 @@ private import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+
 private import glib.Str;
 private import gtk.TextBuffer;
 private import gdk.Rectangle;
@@ -99,7 +100,11 @@ private import gtk.TextChildAnchor;
 private import gtk.TextMark;
 private import gtk.Clipboard;
 private import gdk.Bitmap;
-private import std.stdarg;
+
+version(tango)private import tango.core.Vararg;
+else private import std.stdarg;
+
+
 
 
 
@@ -262,7 +267,7 @@ public class TextBuffer : ObjectG
 	 * ...:
 	 *  NULL-terminated list of tags to apply
 	 */
-	public void insertWithTags(TextIter iter, char[] text, ... )
+	version(tango){} else public void insertWithTags(TextIter iter, char[] text, ... )
 	{
 		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(TextTag)); i++)
 		{
@@ -288,7 +293,7 @@ public class TextBuffer : ObjectG
 	 * ...:
 	 *  more tag names
 	 */
-	public void insertWithTagsByName(TextIter iter, char[] text, ... )
+	version(tango){} else public void insertWithTagsByName(TextIter iter, char[] text, ... )
 	{
 		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(char[])); i++)
 		{

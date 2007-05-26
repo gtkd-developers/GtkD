@@ -54,8 +54,16 @@ private import gtkc.glibtypes;
 
 private import gtkc.glib;
 
-private import std.stdio;
+
 private import glib.Str;
+
+
+version(tango) {
+	private import tango.stdc.stdio;
+} else {
+	private import std.stdio;
+}
+
 
 
 

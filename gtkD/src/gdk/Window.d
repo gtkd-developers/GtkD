@@ -70,6 +70,7 @@ private import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
+
 private import glib.Str;
 private import gdk.Window;
 private import gdk.Region;
@@ -79,6 +80,7 @@ private import gdk.Color;
 private import gdk.Pixmap;
 private import gdk.Cursor;
 private import glib.ListG;
+
 
 
 

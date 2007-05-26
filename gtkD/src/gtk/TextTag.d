@@ -61,10 +61,12 @@ private import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+
 private import glib.Str;
 private import gobject.ObjectG;
 private import gdk.Event;
 private import gtk.TextIter;
+
 
 
 

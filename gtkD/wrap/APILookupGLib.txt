@@ -697,11 +697,15 @@ prefix: g_spawn_
 import: glib.Str
 import: std.thread
 import: std.stdio
-import: std.string;
-import: std.c.string;
+import: std.c.stdio
+import: std.string
+import: std.c.string
 nocode: g_spawn_async_with_pipes
 
 code: start
+
+	version(tango) alias splitLines splitlines;
+
 
 	char[] workingDirectory = ".";
 	char[][] argv;

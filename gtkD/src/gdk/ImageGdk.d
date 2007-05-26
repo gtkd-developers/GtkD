@@ -58,9 +58,11 @@ private import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
+
 private import gdk.Visual;
 private import gdk.Drawable;
 private import gdk.Colormap;
+
 
 
 

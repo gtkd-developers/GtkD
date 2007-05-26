@@ -70,6 +70,7 @@ private import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
+
 private import gdk.Drawable;
 private import gdk.Screen;
 private import gdk.GC;
@@ -79,6 +80,7 @@ private import gdk.Pixmap;
 private import gdk.Bitmap;
 private import gdk.Region;
 private import gdk.Colormap;
+
 
 
 

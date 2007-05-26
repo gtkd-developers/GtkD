@@ -47,8 +47,9 @@
  * 	- glib.Str
  * 	- std.thread
  * 	- std.stdio
- * 	- std.string;
- * 	- std.c.string;
+ * 	- std.c.stdio
+ * 	- std.string
+ * 	- std.c.string
  * structWrap:
  * 	- GMainLoop* -> MainLoop
  * module aliases:
@@ -61,13 +62,26 @@ private import gtkc.glibtypes;
 
 private import gtkc.glib;
 
+
 private import glib.ErrorG;
 private import glib.MainLoop;
 private import glib.Str;
-private import std.thread;
-private import std.stdio;
-private import std.string;;
-private import std.c.string;;
+
+
+version(tango) {
+	private import tango.core.Thread;
+	private import tango.stdc.stdio;
+	private import tango.stdc.posix.stdio;
+	private import tango.text.Util;
+	private import tango.stdc.string;
+} else {
+	private import std.thread;
+	private import std.stdio;
+	private import std.c.stdio;
+	private import std.string;
+	private import std.c.string;
+}
+
 
 
 
@@ -76,6 +90,9 @@ private import std.c.string;;
  */
 public class Spawn
 {
+	
+	version(tango) alias splitLines splitlines;
+	
 	
 	char[] workingDirectory = ".";
 	char[][] argv;

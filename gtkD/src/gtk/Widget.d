@@ -105,6 +105,7 @@ private import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+
 private import glib.Str;
 private import atk.ObjectAtk;
 private import gdk.Rectangle;
@@ -133,6 +134,7 @@ private import pango.PgContext;
 private import pango.PgFontDescription;
 private import gdk.Drawable;
 private import gtk.Tooltips;
+
 
 
 
@@ -275,6 +277,8 @@ public class Widget : ObjectGtk
 		gdk_window_set_cursor(cast(GdkWindow*)(*pt), null);
 	}
 	
+	version(tango)import tango.text.convert.Integer;
+	
 	/**
 	 * Modifies the font for this widget.
 	 * This just calls modifyFont(new PgFontDescription(PgFontDescription.fromString(family ~ " " ~ size)));
@@ -282,10 +286,30 @@ public class Widget : ObjectGtk
 	public void modifyFont(char[] family, int size)
 	{
 		if ( size < 0 ) size = -size;	// hack to workaround leds bug - TO BE REMOVED
-		modifyFont(new PgFontDescription(
-		PgFontDescription.fromString(
-		family ~ " " ~ std.string.toString(size))));
+		
+		version(tango)
+		{
+			char[10] s;
+			modifyFont(
+			new PgFontDescription(
+			PgFontDescription.fromString(
+			family ~ " " ~ itoa(s,size)
+			)
+			)
+			);
+		}
+		else
+		{
+			modifyFont(
+			new PgFontDescription(
+			PgFontDescription.fromString(
+			family ~ " " ~ std.string.toString(size)
+			)
+			)
+			);
+		}
 	}
+	
 	
 	/**
 	 * Sets this widget tooltip
@@ -1991,8 +2015,8 @@ public class Widget : ObjectGtk
 		return consumed;
 	}
 	
-	void delegate(Style, Widget)[] onStyleSetListeners;
-	void addOnStyleSet(void delegate(Style, Widget) dlg)
+	version(tango){}else void delegate(Style, Widget)[] onStyleSetListeners;
+	version(tango){}else void addOnStyleSet(void delegate(Style, Widget) dlg)
 	{
 		if ( !("style-set" in connectedSignals) )
 		{
@@ -2007,7 +2031,7 @@ public class Widget : ObjectGtk
 		}
 		onStyleSetListeners ~= dlg;
 	}
-	extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, Widget widget)
+	version(tango){}else extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, Widget widget)
 	{
 		bool consumed = false;
 		
@@ -3232,7 +3256,7 @@ public class Widget : ObjectGtk
 	 *  a GtkStyle, or NULL to remove the effect of a previous
 	 *  gtk_widget_set_style() and go back to the default style
 	 */
-	public void setStyle(Style style)
+	version(tango){}else public void setStyle(Style style)
 	{
 		// void gtk_widget_set_style (GtkWidget *widget,  GtkStyle *style);
 		gtk_widget_set_style(gtkWidget, (style is null) ? null : style.getStyleStruct());
@@ -3260,7 +3284,7 @@ public class Widget : ObjectGtk
 	 * Returns:
 	 *  the widget's GtkStyle
 	 */
-	public Style getStyle()
+	version(tango){}else public Style getStyle()
 	{
 		// GtkStyle* gtk_widget_get_style (GtkWidget *widget);
 		return new Style( gtk_widget_get_style(gtkWidget) );
@@ -3323,7 +3347,7 @@ public class Widget : ObjectGtk
 	 *  the default style. This GtkStyle object is owned by GTK+ and
 	 * should not be modified or freed.
 	 */
-	public static Style getDefaultStyle()
+	version(tango){}else public static Style getDefaultStyle()
 	{
 		// GtkStyle* gtk_widget_get_default_style (void);
 		return new Style( gtk_widget_get_default_style() );

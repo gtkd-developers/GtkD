@@ -37,13 +37,13 @@ class HelloWorld : MainWindow
 		super("GtkD");
 		setBorderWidth(10);
 		add(new Label("Hello World"));
-		showAll();
 		
 		Dialog dialog = new Dialog();
 		dialog.showAll();
 		VBox vbox = getVBox(dialog);
 		dialog.showAll();
 		
+		showAll();
 	}
 	
 	VBox getVBox(Dialog dialog)

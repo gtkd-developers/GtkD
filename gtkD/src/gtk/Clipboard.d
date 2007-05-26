@@ -62,11 +62,13 @@ private import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+
 private import glib.Str;
 private import gtk.Clipboard;
 private import gdk.Display;
 private import gobject.ObjectG;
 private import gdk.Pixbuf;
+
 
 
 

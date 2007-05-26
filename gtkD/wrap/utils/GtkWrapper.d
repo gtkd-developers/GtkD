@@ -517,7 +517,7 @@ public class GtkWrapper : WrapperIF
 
         char[] keys = " file text struct realStruct ctorStruct class template interface extend implements prefix strictPrefix"
                       " openFile mergeFile closeFile outFile"
-                      " copy import structWrap alias moduleAlias"
+                      " copy import import(tango) structWrap alias moduleAlias"
                       " noprefix nostruct nocode"
                       " code interfaceCode"
                       " srcout"
@@ -797,12 +797,8 @@ public class GtkWrapper : WrapperIF
         externalText ~= "// Adapted from John Reimer's DUI loader modules\n\n";
         externalText ~= "\nmodule "~bindingsDir~"."~loaderTableName~";"
                         "\n"
-                        "\nversion(tango)"
-                        "\n{}"
-                        "\nelse"
-                        "\n{"
-                        "\nprivate import std.stdio;"
-                        "\n}"
+                        "\nversion(tango) private import tango.stdc.stdio;"
+                        "\nelse private import std.stdio;"
                         "\nprivate import "~bindingsDir~"." ~loaderTableName~"types;";
         if ( loaderTableName == "glib" )
         {
