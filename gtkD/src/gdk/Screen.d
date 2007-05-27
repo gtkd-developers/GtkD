@@ -137,7 +137,7 @@ public class Screen : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(Screen)[] onCompositedChangedListeners;
-	void addOnCompositedChanged(void delegate(Screen) dlg)
+	void addOnCompositedChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("composited-changed" in connectedSignals) )
 		{
@@ -147,7 +147,7 @@ public class Screen : ObjectG
 			cast(GCallback)&callBackCompositedChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["composited-changed"] = 1;
 		}
 		onCompositedChangedListeners ~= dlg;
@@ -165,7 +165,7 @@ public class Screen : ObjectG
 	}
 	
 	void delegate(Screen)[] onSizeChangedListeners;
-	void addOnSizeChanged(void delegate(Screen) dlg)
+	void addOnSizeChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-changed" in connectedSignals) )
 		{
@@ -175,7 +175,7 @@ public class Screen : ObjectG
 			cast(GCallback)&callBackSizeChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["size-changed"] = 1;
 		}
 		onSizeChangedListeners ~= dlg;

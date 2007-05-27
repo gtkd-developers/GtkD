@@ -144,7 +144,7 @@ public class FileChooserButton : HBox
 	int[char[]] connectedSignals;
 	
 	void delegate(FileChooserButton)[] onFileSetListeners;
-	void addOnFileSet(void delegate(FileChooserButton) dlg)
+	void addOnFileSet(void delegate(FileChooserButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("file-set" in connectedSignals) )
 		{
@@ -154,7 +154,7 @@ public class FileChooserButton : HBox
 			cast(GCallback)&callBackFileSet,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["file-set"] = 1;
 		}
 		onFileSetListeners ~= dlg;

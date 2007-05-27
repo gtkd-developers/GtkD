@@ -118,7 +118,7 @@ public class ObjectAtk : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(gpointer, ObjectAtk)[] onActiveDescendantChangedListeners;
-	void addOnActiveDescendantChanged(void delegate(gpointer, ObjectAtk) dlg)
+	void addOnActiveDescendantChanged(void delegate(gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("active-descendant-changed" in connectedSignals) )
 		{
@@ -128,7 +128,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackActiveDescendantChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["active-descendant-changed"] = 1;
 		}
 		onActiveDescendantChangedListeners ~= dlg;
@@ -146,7 +146,7 @@ public class ObjectAtk : ObjectG
 	}
 	
 	void delegate(guint, gpointer, ObjectAtk)[] onChildrenChangedListeners;
-	void addOnChildrenChanged(void delegate(guint, gpointer, ObjectAtk) dlg)
+	void addOnChildrenChanged(void delegate(guint, gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("children-changed" in connectedSignals) )
 		{
@@ -156,7 +156,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackChildrenChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["children-changed"] = 1;
 		}
 		onChildrenChangedListeners ~= dlg;
@@ -174,7 +174,7 @@ public class ObjectAtk : ObjectG
 	}
 	
 	void delegate(gboolean, ObjectAtk)[] onFocusListeners;
-	void addOnFocus(void delegate(gboolean, ObjectAtk) dlg)
+	void addOnFocus(void delegate(gboolean, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-event" in connectedSignals) )
 		{
@@ -184,7 +184,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["focus-event"] = 1;
 		}
 		onFocusListeners ~= dlg;
@@ -202,7 +202,7 @@ public class ObjectAtk : ObjectG
 	}
 	
 	void delegate(gpointer, ObjectAtk)[] onPropertyChangeListeners;
-	void addOnPropertyChange(void delegate(gpointer, ObjectAtk) dlg)
+	void addOnPropertyChange(void delegate(gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("property-change" in connectedSignals) )
 		{
@@ -212,7 +212,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackPropertyChange,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["property-change"] = 1;
 		}
 		onPropertyChangeListeners ~= dlg;
@@ -230,7 +230,7 @@ public class ObjectAtk : ObjectG
 	}
 	
 	void delegate(char[], gboolean, ObjectAtk)[] onStateChangeListeners;
-	void addOnStateChange(void delegate(char[], gboolean, ObjectAtk) dlg)
+	void addOnStateChange(void delegate(char[], gboolean, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("state-change" in connectedSignals) )
 		{
@@ -240,7 +240,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackStateChange,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["state-change"] = 1;
 		}
 		onStateChangeListeners ~= dlg;
@@ -258,7 +258,7 @@ public class ObjectAtk : ObjectG
 	}
 	
 	void delegate(ObjectAtk)[] onVisibleDataChangedListeners;
-	void addOnVisibleDataChanged(void delegate(ObjectAtk) dlg)
+	void addOnVisibleDataChanged(void delegate(ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("visible-data-changed" in connectedSignals) )
 		{
@@ -268,7 +268,7 @@ public class ObjectAtk : ObjectG
 			cast(GCallback)&callBackVisibleDataChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["visible-data-changed"] = 1;
 		}
 		onVisibleDataChangedListeners ~= dlg;

@@ -181,7 +181,7 @@ public class Container : Widget
 	int[char[]] connectedSignals;
 	
 	void delegate(Widget, Container)[] onAddListeners;
-	void addOnAdd(void delegate(Widget, Container) dlg)
+	void addOnAdd(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("add" in connectedSignals) )
 		{
@@ -191,7 +191,7 @@ public class Container : Widget
 			cast(GCallback)&callBackAdd,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["add"] = 1;
 		}
 		onAddListeners ~= dlg;
@@ -209,7 +209,7 @@ public class Container : Widget
 	}
 	
 	void delegate(Container)[] onCheckResizeListeners;
-	void addOnCheckResize(void delegate(Container) dlg)
+	void addOnCheckResize(void delegate(Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("check-resize" in connectedSignals) )
 		{
@@ -219,7 +219,7 @@ public class Container : Widget
 			cast(GCallback)&callBackCheckResize,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["check-resize"] = 1;
 		}
 		onCheckResizeListeners ~= dlg;
@@ -237,7 +237,7 @@ public class Container : Widget
 	}
 	
 	void delegate(Widget, Container)[] onRemoveListeners;
-	void addOnRemove(void delegate(Widget, Container) dlg)
+	void addOnRemove(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("remove" in connectedSignals) )
 		{
@@ -247,7 +247,7 @@ public class Container : Widget
 			cast(GCallback)&callBackRemove,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["remove"] = 1;
 		}
 		onRemoveListeners ~= dlg;
@@ -265,7 +265,7 @@ public class Container : Widget
 	}
 	
 	void delegate(Widget, Container)[] onSetFocusChildListeners;
-	void addOnSetFocusChild(void delegate(Widget, Container) dlg)
+	void addOnSetFocusChild(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-focus-child" in connectedSignals) )
 		{
@@ -275,7 +275,7 @@ public class Container : Widget
 			cast(GCallback)&callBackSetFocusChild,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["set-focus-child"] = 1;
 		}
 		onSetFocusChildListeners ~= dlg;

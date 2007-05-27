@@ -105,7 +105,7 @@ public class Component
 	int[char[]] connectedSignals;
 	
 	void delegate(AtkRectangle*, Component)[] onBoundsChangedListeners;
-	void addOnBoundsChanged(void delegate(AtkRectangle*, Component) dlg)
+	void addOnBoundsChanged(void delegate(AtkRectangle*, Component) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("bounds-changed" in connectedSignals) )
 		{
@@ -115,7 +115,7 @@ public class Component
 			cast(GCallback)&callBackBoundsChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["bounds-changed"] = 1;
 		}
 		onBoundsChangedListeners ~= dlg;

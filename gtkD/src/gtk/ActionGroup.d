@@ -123,7 +123,7 @@ public class ActionGroup : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(Action, GtkWidget*, ActionGroup)[] onConnectProxyListeners;
-	void addOnConnectProxy(void delegate(Action, GtkWidget*, ActionGroup) dlg)
+	void addOnConnectProxy(void delegate(Action, GtkWidget*, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("connect-proxy" in connectedSignals) )
 		{
@@ -133,7 +133,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackConnectProxy,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["connect-proxy"] = 1;
 		}
 		onConnectProxyListeners ~= dlg;
@@ -151,7 +151,7 @@ public class ActionGroup : ObjectG
 	}
 	
 	void delegate(Action, GtkWidget*, ActionGroup)[] onDisconnectProxyListeners;
-	void addOnDisconnectProxy(void delegate(Action, GtkWidget*, ActionGroup) dlg)
+	void addOnDisconnectProxy(void delegate(Action, GtkWidget*, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("disconnect-proxy" in connectedSignals) )
 		{
@@ -161,7 +161,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackDisconnectProxy,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["disconnect-proxy"] = 1;
 		}
 		onDisconnectProxyListeners ~= dlg;
@@ -179,7 +179,7 @@ public class ActionGroup : ObjectG
 	}
 	
 	void delegate(Action, ActionGroup)[] onPostActivateListeners;
-	void addOnPostActivate(void delegate(Action, ActionGroup) dlg)
+	void addOnPostActivate(void delegate(Action, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("post-activate" in connectedSignals) )
 		{
@@ -189,7 +189,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackPostActivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["post-activate"] = 1;
 		}
 		onPostActivateListeners ~= dlg;
@@ -207,7 +207,7 @@ public class ActionGroup : ObjectG
 	}
 	
 	void delegate(Action, ActionGroup)[] onPreActivateListeners;
-	void addOnPreActivate(void delegate(Action, ActionGroup) dlg)
+	void addOnPreActivate(void delegate(Action, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("pre-activate" in connectedSignals) )
 		{
@@ -217,7 +217,7 @@ public class ActionGroup : ObjectG
 			cast(GCallback)&callBackPreActivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["pre-activate"] = 1;
 		}
 		onPreActivateListeners ~= dlg;

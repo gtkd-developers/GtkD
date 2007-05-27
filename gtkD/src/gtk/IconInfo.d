@@ -165,7 +165,7 @@ public class IconInfo
 	int[char[]] connectedSignals;
 	
 	void delegate(IconInfo)[] onChangedListeners;
-	void addOnChanged(void delegate(IconInfo) dlg)
+	void addOnChanged(void delegate(IconInfo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -175,7 +175,7 @@ public class IconInfo
 			cast(GCallback)&callBackChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;

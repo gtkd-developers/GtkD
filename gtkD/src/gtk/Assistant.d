@@ -110,7 +110,7 @@ public class Assistant : Window
 	int[char[]] connectedSignals;
 	
 	void delegate(Assistant)[] onApplyListeners;
-	void addOnApply(void delegate(Assistant) dlg)
+	void addOnApply(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("apply" in connectedSignals) )
 		{
@@ -120,7 +120,7 @@ public class Assistant : Window
 			cast(GCallback)&callBackApply,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["apply"] = 1;
 		}
 		onApplyListeners ~= dlg;
@@ -138,7 +138,7 @@ public class Assistant : Window
 	}
 	
 	void delegate(Assistant)[] onCancelListeners;
-	void addOnCancel(void delegate(Assistant) dlg)
+	void addOnCancel(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cancel" in connectedSignals) )
 		{
@@ -148,7 +148,7 @@ public class Assistant : Window
 			cast(GCallback)&callBackCancel,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["cancel"] = 1;
 		}
 		onCancelListeners ~= dlg;
@@ -166,7 +166,7 @@ public class Assistant : Window
 	}
 	
 	void delegate(Assistant)[] onCloseListeners;
-	void addOnClose(void delegate(Assistant) dlg)
+	void addOnClose(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("close" in connectedSignals) )
 		{
@@ -176,7 +176,7 @@ public class Assistant : Window
 			cast(GCallback)&callBackClose,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["close"] = 1;
 		}
 		onCloseListeners ~= dlg;
@@ -194,7 +194,7 @@ public class Assistant : Window
 	}
 	
 	void delegate(Widget, Assistant)[] onPrepareListeners;
-	void addOnPrepare(void delegate(Widget, Assistant) dlg)
+	void addOnPrepare(void delegate(Widget, Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("prepare" in connectedSignals) )
 		{
@@ -204,7 +204,7 @@ public class Assistant : Window
 			cast(GCallback)&callBackPrepare,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["prepare"] = 1;
 		}
 		onPrepareListeners ~= dlg;

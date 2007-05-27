@@ -122,7 +122,7 @@ public class SourceView : TextView
 	int[char[]] connectedSignals;
 	
 	void delegate(SourceView)[] onRedoListeners;
-	void addOnRedo(void delegate(SourceView) dlg)
+	void addOnRedo(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("redo" in connectedSignals) )
 		{
@@ -132,7 +132,7 @@ public class SourceView : TextView
 			cast(GCallback)&callBackRedo,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["redo"] = 1;
 		}
 		onRedoListeners ~= dlg;
@@ -150,7 +150,7 @@ public class SourceView : TextView
 	}
 	
 	void delegate(SourceView)[] onUndoListeners;
-	void addOnUndo(void delegate(SourceView) dlg)
+	void addOnUndo(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("undo" in connectedSignals) )
 		{
@@ -160,7 +160,7 @@ public class SourceView : TextView
 			cast(GCallback)&callBackUndo,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["undo"] = 1;
 		}
 		onUndoListeners ~= dlg;

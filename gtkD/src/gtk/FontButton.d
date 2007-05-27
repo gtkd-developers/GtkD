@@ -103,7 +103,7 @@ public class FontButton : Button
 	int[char[]] connectedSignals;
 	
 	void delegate(FontButton)[] onFontSetListeners;
-	void addOnFontSet(void delegate(FontButton) dlg)
+	void addOnFontSet(void delegate(FontButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("font-set" in connectedSignals) )
 		{
@@ -113,7 +113,7 @@ public class FontButton : Button
 			cast(GCallback)&callBackFontSet,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["font-set"] = 1;
 		}
 		onFontSetListeners ~= dlg;

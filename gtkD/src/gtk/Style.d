@@ -125,7 +125,7 @@ public class Style : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(Style)[] onRealizeListeners;
-	void addOnRealize(void delegate(Style) dlg)
+	void addOnRealize(void delegate(Style) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("realize" in connectedSignals) )
 		{
@@ -135,7 +135,7 @@ public class Style : ObjectG
 			cast(GCallback)&callBackRealize,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["realize"] = 1;
 		}
 		onRealizeListeners ~= dlg;
@@ -153,7 +153,7 @@ public class Style : ObjectG
 	}
 	
 	void delegate(Style)[] onUnrealizeListeners;
-	void addOnUnrealize(void delegate(Style) dlg)
+	void addOnUnrealize(void delegate(Style) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unrealize" in connectedSignals) )
 		{
@@ -163,7 +163,7 @@ public class Style : ObjectG
 			cast(GCallback)&callBackUnrealize,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["unrealize"] = 1;
 		}
 		onUnrealizeListeners ~= dlg;

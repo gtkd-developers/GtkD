@@ -257,7 +257,7 @@ public class UIManager : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(UIManager)[] onActionsChangedListeners;
-	void addOnActionsChanged(void delegate(UIManager) dlg)
+	void addOnActionsChanged(void delegate(UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("actions-changed" in connectedSignals) )
 		{
@@ -267,7 +267,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackActionsChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["actions-changed"] = 1;
 		}
 		onActionsChangedListeners ~= dlg;
@@ -285,7 +285,7 @@ public class UIManager : ObjectG
 	}
 	
 	void delegate(Widget, UIManager)[] onAddWidgetListeners;
-	void addOnAddWidget(void delegate(Widget, UIManager) dlg)
+	void addOnAddWidget(void delegate(Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("add-widget" in connectedSignals) )
 		{
@@ -295,7 +295,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackAddWidget,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["add-widget"] = 1;
 		}
 		onAddWidgetListeners ~= dlg;
@@ -313,7 +313,7 @@ public class UIManager : ObjectG
 	}
 	
 	void delegate(Action, Widget, UIManager)[] onConnectProxyListeners;
-	void addOnConnectProxy(void delegate(Action, Widget, UIManager) dlg)
+	void addOnConnectProxy(void delegate(Action, Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("connect-proxy" in connectedSignals) )
 		{
@@ -323,7 +323,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackConnectProxy,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["connect-proxy"] = 1;
 		}
 		onConnectProxyListeners ~= dlg;
@@ -341,7 +341,7 @@ public class UIManager : ObjectG
 	}
 	
 	void delegate(Action, Widget, UIManager)[] onDisconnectProxyListeners;
-	void addOnDisconnectProxy(void delegate(Action, Widget, UIManager) dlg)
+	void addOnDisconnectProxy(void delegate(Action, Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("disconnect-proxy" in connectedSignals) )
 		{
@@ -351,7 +351,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackDisconnectProxy,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["disconnect-proxy"] = 1;
 		}
 		onDisconnectProxyListeners ~= dlg;
@@ -369,7 +369,7 @@ public class UIManager : ObjectG
 	}
 	
 	void delegate(Action, UIManager)[] onPostActivateListeners;
-	void addOnPostActivate(void delegate(Action, UIManager) dlg)
+	void addOnPostActivate(void delegate(Action, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("post-activate" in connectedSignals) )
 		{
@@ -379,7 +379,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackPostActivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["post-activate"] = 1;
 		}
 		onPostActivateListeners ~= dlg;
@@ -397,7 +397,7 @@ public class UIManager : ObjectG
 	}
 	
 	void delegate(Action, UIManager)[] onPreActivateListeners;
-	void addOnPreActivate(void delegate(Action, UIManager) dlg)
+	void addOnPreActivate(void delegate(Action, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("pre-activate" in connectedSignals) )
 		{
@@ -407,7 +407,7 @@ public class UIManager : ObjectG
 			cast(GCallback)&callBackPreActivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["pre-activate"] = 1;
 		}
 		onPreActivateListeners ~= dlg;

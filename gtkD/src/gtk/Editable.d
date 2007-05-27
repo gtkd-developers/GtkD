@@ -126,7 +126,7 @@ public class Editable
 	int[char[]] connectedSignals;
 	
 	void delegate(Editable)[] onChangedListeners;
-	void addOnChanged(void delegate(Editable) dlg)
+	void addOnChanged(void delegate(Editable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -136,7 +136,7 @@ public class Editable
 			cast(GCallback)&callBackChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -154,7 +154,7 @@ public class Editable
 	}
 	
 	void delegate(gint, gint, Editable)[] onDeleteTextListeners;
-	void addOnDeleteText(void delegate(gint, gint, Editable) dlg)
+	void addOnDeleteText(void delegate(gint, gint, Editable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-text" in connectedSignals) )
 		{
@@ -164,7 +164,7 @@ public class Editable
 			cast(GCallback)&callBackDeleteText,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["delete-text"] = 1;
 		}
 		onDeleteTextListeners ~= dlg;
@@ -182,7 +182,7 @@ public class Editable
 	}
 	
 	void delegate(char[], gint, gint*, Editable)[] onInsertTextListeners;
-	void addOnInsertText(void delegate(char[], gint, gint*, Editable) dlg)
+	void addOnInsertText(void delegate(char[], gint, gint*, Editable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-text" in connectedSignals) )
 		{
@@ -192,7 +192,7 @@ public class Editable
 			cast(GCallback)&callBackInsertText,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["insert-text"] = 1;
 		}
 		onInsertTextListeners ~= dlg;

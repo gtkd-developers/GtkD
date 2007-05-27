@@ -70,8 +70,8 @@ class TestEntries : Table
 
 	void showEntry(Button button)
 	{
-		version(tango) Stdout("text field contains {}\n",Str.toStringz(entry.getText()));
-		else printf("text field contains %s\n",Str.toStringz(entry.getText()));
+		version(tango) Stdout.format("text field contains '{}'\n",entry.getText()).newline;
+		else printf("text field contains '%s'\n",Str.toStringz(entry.getText()));
 	}
 
 	void entryEditable(CheckButton button)

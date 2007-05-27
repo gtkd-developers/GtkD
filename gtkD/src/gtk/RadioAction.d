@@ -107,7 +107,7 @@ public class RadioAction : ToggleAction
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkRadioAction*, RadioAction)[] onChangedListeners;
-	void addOnChanged(void delegate(GtkRadioAction*, RadioAction) dlg)
+	void addOnChanged(void delegate(GtkRadioAction*, RadioAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -117,7 +117,7 @@ public class RadioAction : ToggleAction
 			cast(GCallback)&callBackChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;

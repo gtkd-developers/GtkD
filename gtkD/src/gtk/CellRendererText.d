@@ -110,7 +110,7 @@ public class CellRendererText : CellRenderer
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], char[], CellRendererText)[] onEditedListeners;
-	void addOnEdited(void delegate(char[], char[], CellRendererText) dlg)
+	void addOnEdited(void delegate(char[], char[], CellRendererText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("edited" in connectedSignals) )
 		{
@@ -120,7 +120,7 @@ public class CellRendererText : CellRenderer
 			cast(GCallback)&callBackEdited,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["edited"] = 1;
 		}
 		onEditedListeners ~= dlg;

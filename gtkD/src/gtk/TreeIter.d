@@ -399,7 +399,7 @@ public class TreeIter
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkTreePath*, TreeIter, TreeIter)[] onRowChangedListeners;
-	void addOnRowChanged(void delegate(GtkTreePath*, TreeIter, TreeIter) dlg)
+	void addOnRowChanged(void delegate(GtkTreePath*, TreeIter, TreeIter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-changed" in connectedSignals) )
 		{
@@ -409,7 +409,7 @@ public class TreeIter
 			cast(GCallback)&callBackRowChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-changed"] = 1;
 		}
 		onRowChangedListeners ~= dlg;
@@ -427,7 +427,7 @@ public class TreeIter
 	}
 	
 	void delegate(GtkTreePath*, TreeIter)[] onRowDeletedListeners;
-	void addOnRowDeleted(void delegate(GtkTreePath*, TreeIter) dlg)
+	void addOnRowDeleted(void delegate(GtkTreePath*, TreeIter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-deleted" in connectedSignals) )
 		{
@@ -437,7 +437,7 @@ public class TreeIter
 			cast(GCallback)&callBackRowDeleted,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-deleted"] = 1;
 		}
 		onRowDeletedListeners ~= dlg;
@@ -455,7 +455,7 @@ public class TreeIter
 	}
 	
 	void delegate(GtkTreePath*, TreeIter, TreeIter)[] onRowHasChildToggledListeners;
-	void addOnRowHasChildToggled(void delegate(GtkTreePath*, TreeIter, TreeIter) dlg)
+	void addOnRowHasChildToggled(void delegate(GtkTreePath*, TreeIter, TreeIter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-has-child-toggled" in connectedSignals) )
 		{
@@ -465,7 +465,7 @@ public class TreeIter
 			cast(GCallback)&callBackRowHasChildToggled,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-has-child-toggled"] = 1;
 		}
 		onRowHasChildToggledListeners ~= dlg;
@@ -483,7 +483,7 @@ public class TreeIter
 	}
 	
 	void delegate(GtkTreePath*, TreeIter, TreeIter)[] onRowInsertedListeners;
-	void addOnRowInserted(void delegate(GtkTreePath*, TreeIter, TreeIter) dlg)
+	void addOnRowInserted(void delegate(GtkTreePath*, TreeIter, TreeIter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-inserted" in connectedSignals) )
 		{
@@ -493,7 +493,7 @@ public class TreeIter
 			cast(GCallback)&callBackRowInserted,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-inserted"] = 1;
 		}
 		onRowInsertedListeners ~= dlg;
@@ -511,7 +511,7 @@ public class TreeIter
 	}
 	
 	void delegate(GtkTreePath*, TreeIter, gpointer, TreeIter)[] onRowsReorderedListeners;
-	void addOnRowsReordered(void delegate(GtkTreePath*, TreeIter, gpointer, TreeIter) dlg)
+	void addOnRowsReordered(void delegate(GtkTreePath*, TreeIter, gpointer, TreeIter) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("rows-reordered" in connectedSignals) )
 		{
@@ -521,7 +521,7 @@ public class TreeIter
 			cast(GCallback)&callBackRowsReordered,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["rows-reordered"] = 1;
 		}
 		onRowsReorderedListeners ~= dlg;

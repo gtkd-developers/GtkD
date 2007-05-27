@@ -108,7 +108,7 @@ public class MenuShell : Container
 	int[char[]] connectedSignals;
 	
 	void delegate(gboolean, MenuShell)[] onActivateCurrentListeners;
-	void addOnActivateCurrent(void delegate(gboolean, MenuShell) dlg)
+	void addOnActivateCurrent(void delegate(gboolean, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate-current" in connectedSignals) )
 		{
@@ -118,7 +118,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackActivateCurrent,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["activate-current"] = 1;
 		}
 		onActivateCurrentListeners ~= dlg;
@@ -136,7 +136,7 @@ public class MenuShell : Container
 	}
 	
 	void delegate(MenuShell)[] onCancelListeners;
-	void addOnCancel(void delegate(MenuShell) dlg)
+	void addOnCancel(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cancel" in connectedSignals) )
 		{
@@ -146,7 +146,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackCancel,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["cancel"] = 1;
 		}
 		onCancelListeners ~= dlg;
@@ -164,7 +164,7 @@ public class MenuShell : Container
 	}
 	
 	void delegate(GtkDirectionType, MenuShell)[] onCycleFocusListeners;
-	void addOnCycleFocus(void delegate(GtkDirectionType, MenuShell) dlg)
+	void addOnCycleFocus(void delegate(GtkDirectionType, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cycle-focus" in connectedSignals) )
 		{
@@ -174,7 +174,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackCycleFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["cycle-focus"] = 1;
 		}
 		onCycleFocusListeners ~= dlg;
@@ -192,7 +192,7 @@ public class MenuShell : Container
 	}
 	
 	void delegate(MenuShell)[] onDeactivateListeners;
-	void addOnDeactivate(void delegate(MenuShell) dlg)
+	void addOnDeactivate(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("deactivate" in connectedSignals) )
 		{
@@ -202,7 +202,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackDeactivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["deactivate"] = 1;
 		}
 		onDeactivateListeners ~= dlg;
@@ -220,7 +220,7 @@ public class MenuShell : Container
 	}
 	
 	void delegate(GtkMenuDirectionType, MenuShell)[] onMoveCurrentListeners;
-	void addOnMoveCurrent(void delegate(GtkMenuDirectionType, MenuShell) dlg)
+	void addOnMoveCurrent(void delegate(GtkMenuDirectionType, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-current" in connectedSignals) )
 		{
@@ -230,7 +230,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackMoveCurrent,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-current"] = 1;
 		}
 		onMoveCurrentListeners ~= dlg;
@@ -248,7 +248,7 @@ public class MenuShell : Container
 	}
 	
 	void delegate(MenuShell)[] onSelectionDoneListeners;
-	void addOnSelectionDone(void delegate(MenuShell) dlg)
+	void addOnSelectionDone(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-done" in connectedSignals) )
 		{
@@ -258,7 +258,7 @@ public class MenuShell : Container
 			cast(GCallback)&callBackSelectionDone,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["selection-done"] = 1;
 		}
 		onSelectionDoneListeners ~= dlg;

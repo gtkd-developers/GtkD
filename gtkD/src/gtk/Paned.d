@@ -149,7 +149,7 @@ public class Paned : Container
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(Paned)[] onAcceptPositionListeners;
-	void addOnAcceptPosition(gboolean delegate(Paned) dlg)
+	void addOnAcceptPosition(gboolean delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accept-position" in connectedSignals) )
 		{
@@ -159,7 +159,7 @@ public class Paned : Container
 			cast(GCallback)&callBackAcceptPosition,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["accept-position"] = 1;
 		}
 		onAcceptPositionListeners ~= dlg;
@@ -177,7 +177,7 @@ public class Paned : Container
 	}
 	
 	gboolean delegate(Paned)[] onCancelPositionListeners;
-	void addOnCancelPosition(gboolean delegate(Paned) dlg)
+	void addOnCancelPosition(gboolean delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cancel-position" in connectedSignals) )
 		{
@@ -187,7 +187,7 @@ public class Paned : Container
 			cast(GCallback)&callBackCancelPosition,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["cancel-position"] = 1;
 		}
 		onCancelPositionListeners ~= dlg;
@@ -205,7 +205,7 @@ public class Paned : Container
 	}
 	
 	gboolean delegate(gboolean, Paned)[] onCycleChildFocusListeners;
-	void addOnCycleChildFocus(gboolean delegate(gboolean, Paned) dlg)
+	void addOnCycleChildFocus(gboolean delegate(gboolean, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cycle-child-focus" in connectedSignals) )
 		{
@@ -215,7 +215,7 @@ public class Paned : Container
 			cast(GCallback)&callBackCycleChildFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["cycle-child-focus"] = 1;
 		}
 		onCycleChildFocusListeners ~= dlg;
@@ -233,7 +233,7 @@ public class Paned : Container
 	}
 	
 	gboolean delegate(gboolean, Paned)[] onCycleHandleFocusListeners;
-	void addOnCycleHandleFocus(gboolean delegate(gboolean, Paned) dlg)
+	void addOnCycleHandleFocus(gboolean delegate(gboolean, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cycle-handle-focus" in connectedSignals) )
 		{
@@ -243,7 +243,7 @@ public class Paned : Container
 			cast(GCallback)&callBackCycleHandleFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["cycle-handle-focus"] = 1;
 		}
 		onCycleHandleFocusListeners ~= dlg;
@@ -261,7 +261,7 @@ public class Paned : Container
 	}
 	
 	gboolean delegate(GtkScrollType, Paned)[] onMoveHandleListeners;
-	void addOnMoveHandle(gboolean delegate(GtkScrollType, Paned) dlg)
+	void addOnMoveHandle(gboolean delegate(GtkScrollType, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-handle" in connectedSignals) )
 		{
@@ -271,7 +271,7 @@ public class Paned : Container
 			cast(GCallback)&callBackMoveHandle,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-handle"] = 1;
 		}
 		onMoveHandleListeners ~= dlg;
@@ -289,7 +289,7 @@ public class Paned : Container
 	}
 	
 	gboolean delegate(Paned)[] onToggleHandleFocusListeners;
-	void addOnToggleHandleFocus(gboolean delegate(Paned) dlg)
+	void addOnToggleHandleFocus(gboolean delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-handle-focus" in connectedSignals) )
 		{
@@ -299,7 +299,7 @@ public class Paned : Container
 			cast(GCallback)&callBackToggleHandleFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggle-handle-focus"] = 1;
 		}
 		onToggleHandleFocusListeners ~= dlg;

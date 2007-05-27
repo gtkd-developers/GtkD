@@ -105,7 +105,7 @@ public class Hyperlink : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(Hyperlink)[] onLinkActivatedListeners;
-	void addOnLinkActivated(void delegate(Hyperlink) dlg)
+	void addOnLinkActivated(void delegate(Hyperlink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("link-activated" in connectedSignals) )
 		{
@@ -115,7 +115,7 @@ public class Hyperlink : ObjectG
 			cast(GCallback)&callBackLinkActivated,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["link-activated"] = 1;
 		}
 		onLinkActivatedListeners ~= dlg;

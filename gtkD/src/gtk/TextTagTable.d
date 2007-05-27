@@ -110,7 +110,7 @@ public class TextTagTable : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(TextTag, TextTagTable)[] onTagAddedListeners;
-	void addOnTagAdded(void delegate(TextTag, TextTagTable) dlg)
+	void addOnTagAdded(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("tag-added" in connectedSignals) )
 		{
@@ -120,7 +120,7 @@ public class TextTagTable : ObjectG
 			cast(GCallback)&callBackTagAdded,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["tag-added"] = 1;
 		}
 		onTagAddedListeners ~= dlg;
@@ -138,7 +138,7 @@ public class TextTagTable : ObjectG
 	}
 	
 	void delegate(TextTag, gboolean, TextTagTable)[] onTagChangedListeners;
-	void addOnTagChanged(void delegate(TextTag, gboolean, TextTagTable) dlg)
+	void addOnTagChanged(void delegate(TextTag, gboolean, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("tag-changed" in connectedSignals) )
 		{
@@ -148,7 +148,7 @@ public class TextTagTable : ObjectG
 			cast(GCallback)&callBackTagChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["tag-changed"] = 1;
 		}
 		onTagChangedListeners ~= dlg;
@@ -166,7 +166,7 @@ public class TextTagTable : ObjectG
 	}
 	
 	void delegate(TextTag, TextTagTable)[] onTagRemovedListeners;
-	void addOnTagRemoved(void delegate(TextTag, TextTagTable) dlg)
+	void addOnTagRemoved(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("tag-removed" in connectedSignals) )
 		{
@@ -176,7 +176,7 @@ public class TextTagTable : ObjectG
 			cast(GCallback)&callBackTagRemoved,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["tag-removed"] = 1;
 		}
 		onTagRemovedListeners ~= dlg;

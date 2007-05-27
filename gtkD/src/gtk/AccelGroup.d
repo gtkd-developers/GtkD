@@ -127,7 +127,7 @@ public class AccelGroup : ObjectG
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(ObjectG, guint, GdkModifierType, AccelGroup)[] onAccelActivateListeners;
-	void addOnAccelActivate(gboolean delegate(ObjectG, guint, GdkModifierType, AccelGroup) dlg)
+	void addOnAccelActivate(gboolean delegate(ObjectG, guint, GdkModifierType, AccelGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accel-activate" in connectedSignals) )
 		{
@@ -137,7 +137,7 @@ public class AccelGroup : ObjectG
 			cast(GCallback)&callBackAccelActivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["accel-activate"] = 1;
 		}
 		onAccelActivateListeners ~= dlg;
@@ -155,7 +155,7 @@ public class AccelGroup : ObjectG
 	}
 	
 	void delegate(guint, GdkModifierType, Closure, AccelGroup)[] onAccelChangedListeners;
-	void addOnAccelChanged(void delegate(guint, GdkModifierType, Closure, AccelGroup) dlg)
+	void addOnAccelChanged(void delegate(guint, GdkModifierType, Closure, AccelGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accel-changed" in connectedSignals) )
 		{
@@ -165,7 +165,7 @@ public class AccelGroup : ObjectG
 			cast(GCallback)&callBackAccelChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["accel-changed"] = 1;
 		}
 		onAccelChangedListeners ~= dlg;

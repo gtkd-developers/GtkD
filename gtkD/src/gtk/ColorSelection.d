@@ -109,7 +109,7 @@ public class ColorSelection : VBox
 	int[char[]] connectedSignals;
 	
 	void delegate(ColorSelection)[] onColorChangedListeners;
-	void addOnColorChanged(void delegate(ColorSelection) dlg)
+	void addOnColorChanged(void delegate(ColorSelection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("color-changed" in connectedSignals) )
 		{
@@ -119,7 +119,7 @@ public class ColorSelection : VBox
 			cast(GCallback)&callBackColorChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["color-changed"] = 1;
 		}
 		onColorChangedListeners ~= dlg;

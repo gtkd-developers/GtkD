@@ -192,7 +192,7 @@ public class Dialog : Window
 	int[char[]] connectedSignals;
 	
 	void delegate(Dialog)[] onCloseListeners;
-	void addOnClose(void delegate(Dialog) dlg)
+	void addOnClose(void delegate(Dialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("close" in connectedSignals) )
 		{
@@ -202,7 +202,7 @@ public class Dialog : Window
 			cast(GCallback)&callBackClose,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["close"] = 1;
 		}
 		onCloseListeners ~= dlg;
@@ -220,7 +220,7 @@ public class Dialog : Window
 	}
 	
 	void delegate(gint, Dialog)[] onResponseListeners;
-	void addOnResponse(void delegate(gint, Dialog) dlg)
+	void addOnResponse(void delegate(gint, Dialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("response" in connectedSignals) )
 		{
@@ -230,7 +230,7 @@ public class Dialog : Window
 			cast(GCallback)&callBackResponse,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["response"] = 1;
 		}
 		onResponseListeners ~= dlg;

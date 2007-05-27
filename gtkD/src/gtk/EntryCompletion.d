@@ -129,7 +129,7 @@ public class EntryCompletion : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(gint, EntryCompletion)[] onActionActivatedListeners;
-	void addOnActionActivated(void delegate(gint, EntryCompletion) dlg)
+	void addOnActionActivated(void delegate(gint, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("action-activated" in connectedSignals) )
 		{
@@ -139,7 +139,7 @@ public class EntryCompletion : ObjectG
 			cast(GCallback)&callBackActionActivated,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["action-activated"] = 1;
 		}
 		onActionActivatedListeners ~= dlg;
@@ -157,7 +157,7 @@ public class EntryCompletion : ObjectG
 	}
 	
 	gboolean delegate(char[], EntryCompletion)[] onInsertPrefixListeners;
-	void addOnInsertPrefix(gboolean delegate(char[], EntryCompletion) dlg)
+	void addOnInsertPrefix(gboolean delegate(char[], EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-prefix" in connectedSignals) )
 		{
@@ -167,7 +167,7 @@ public class EntryCompletion : ObjectG
 			cast(GCallback)&callBackInsertPrefix,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["insert-prefix"] = 1;
 		}
 		onInsertPrefixListeners ~= dlg;
@@ -185,7 +185,7 @@ public class EntryCompletion : ObjectG
 	}
 	
 	gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion)[] onMatchSelectedListeners;
-	void addOnMatchSelected(gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion) dlg)
+	void addOnMatchSelected(gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("match-selected" in connectedSignals) )
 		{
@@ -195,7 +195,7 @@ public class EntryCompletion : ObjectG
 			cast(GCallback)&callBackMatchSelected,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["match-selected"] = 1;
 		}
 		onMatchSelectedListeners ~= dlg;

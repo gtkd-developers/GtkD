@@ -130,7 +130,7 @@ class TestImage : VBox
 			image = new Image(fileName);
 			//image.addOnEnterNotify(&onEnter);
 			//image.addOnLeaveNotify(&onLeave);
-			debug(trace) version(tango) Stdout("adding image {} to table at {},{}", fileName, col, row).newline;
+			debug(trace) version(tango) Stdout.format("adding image {} to table at {},{}", fileName, col, row).newline;
 			else writefln("adding image %s to table at %s,%s", fileName, col, row);
 			table.resize(col+1, row+1);
 			table.attach(image,col,col+1,row,row+1,AttachOptions.FILL,AttachOptions.FILL,4,4);
@@ -169,7 +169,7 @@ private import glib.ListSG;
 			
 			for ( int i = 0; i<list.length() ; i++)
 			{
-				debug(trace) version(tango) Stdout("Testmage.loadImages.File selected = {}", 
+				debug(trace) version(tango) Stdout.format("Testmage.loadImages.File selected = {}", 
 						Str.toString(cast(char*)list.nthData(i))).newline;
 				else writefln("Testmage.loadImages.File selected = %s", 
 						Str.toString(cast(char*)list.nthData(i)));

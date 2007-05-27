@@ -171,7 +171,7 @@ public class Toolbar : Container
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(gboolean, Toolbar)[] onFocusHomeOrEndListeners;
-	void addOnFocusHomeOrEnd(gboolean delegate(gboolean, Toolbar) dlg)
+	void addOnFocusHomeOrEnd(gboolean delegate(gboolean, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-home-or-end" in connectedSignals) )
 		{
@@ -181,7 +181,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackFocusHomeOrEnd,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["focus-home-or-end"] = 1;
 		}
 		onFocusHomeOrEndListeners ~= dlg;
@@ -199,7 +199,7 @@ public class Toolbar : Container
 	}
 	
 	gboolean delegate(GtkDirectionType, Toolbar)[] onMoveFocusListeners;
-	void addOnMoveFocus(gboolean delegate(GtkDirectionType, Toolbar) dlg)
+	void addOnMoveFocus(gboolean delegate(GtkDirectionType, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-focus" in connectedSignals) )
 		{
@@ -209,7 +209,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackMoveFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-focus"] = 1;
 		}
 		onMoveFocusListeners ~= dlg;
@@ -227,7 +227,7 @@ public class Toolbar : Container
 	}
 	
 	void delegate(GtkOrientation, Toolbar)[] onOrientationChangedListeners;
-	void addOnOrientationChanged(void delegate(GtkOrientation, Toolbar) dlg)
+	void addOnOrientationChanged(void delegate(GtkOrientation, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("orientation-changed" in connectedSignals) )
 		{
@@ -237,7 +237,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackOrientationChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["orientation-changed"] = 1;
 		}
 		onOrientationChangedListeners ~= dlg;
@@ -255,7 +255,7 @@ public class Toolbar : Container
 	}
 	
 	gboolean delegate(gint, gint, gint, Toolbar)[] onPopupContextMenuListeners;
-	void addOnPopupContextMenu(gboolean delegate(gint, gint, gint, Toolbar) dlg)
+	void addOnPopupContextMenu(gboolean delegate(gint, gint, gint, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popup-context-menu" in connectedSignals) )
 		{
@@ -265,7 +265,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackPopupContextMenu,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["popup-context-menu"] = 1;
 		}
 		onPopupContextMenuListeners ~= dlg;
@@ -283,7 +283,7 @@ public class Toolbar : Container
 	}
 	
 	void delegate(GtkToolbarStyle, Toolbar)[] onStyleChangedListeners;
-	void addOnStyleChanged(void delegate(GtkToolbarStyle, Toolbar) dlg)
+	void addOnStyleChanged(void delegate(GtkToolbarStyle, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("style-changed" in connectedSignals) )
 		{
@@ -293,7 +293,7 @@ public class Toolbar : Container
 			cast(GCallback)&callBackStyleChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["style-changed"] = 1;
 		}
 		onStyleChangedListeners ~= dlg;

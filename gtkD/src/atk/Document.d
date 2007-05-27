@@ -104,7 +104,7 @@ public class Document
 	int[char[]] connectedSignals;
 	
 	void delegate(Document)[] onLoadCompleteListeners;
-	void addOnLoadComplete(void delegate(Document) dlg)
+	void addOnLoadComplete(void delegate(Document) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("load-complete" in connectedSignals) )
 		{
@@ -114,7 +114,7 @@ public class Document
 			cast(GCallback)&callBackLoadComplete,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["load-complete"] = 1;
 		}
 		onLoadCompleteListeners ~= dlg;
@@ -132,7 +132,7 @@ public class Document
 	}
 	
 	void delegate(Document)[] onLoadStoppedListeners;
-	void addOnLoadStopped(void delegate(Document) dlg)
+	void addOnLoadStopped(void delegate(Document) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("load-stopped" in connectedSignals) )
 		{
@@ -142,7 +142,7 @@ public class Document
 			cast(GCallback)&callBackLoadStopped,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["load-stopped"] = 1;
 		}
 		onLoadStoppedListeners ~= dlg;
@@ -160,7 +160,7 @@ public class Document
 	}
 	
 	void delegate(Document)[] onReloadListeners;
-	void addOnReload(void delegate(Document) dlg)
+	void addOnReload(void delegate(Document) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("reload" in connectedSignals) )
 		{
@@ -170,7 +170,7 @@ public class Document
 			cast(GCallback)&callBackReload,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["reload"] = 1;
 		}
 		onReloadListeners ~= dlg;

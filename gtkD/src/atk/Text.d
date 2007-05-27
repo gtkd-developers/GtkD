@@ -114,7 +114,7 @@ public class Text
 	int[char[]] connectedSignals;
 	
 	void delegate(Text)[] onTextAttributesChangedListeners;
-	void addOnTextAttributesChanged(void delegate(Text) dlg)
+	void addOnTextAttributesChanged(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-attributes-changed" in connectedSignals) )
 		{
@@ -124,7 +124,7 @@ public class Text
 			cast(GCallback)&callBackTextAttributesChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["text-attributes-changed"] = 1;
 		}
 		onTextAttributesChangedListeners ~= dlg;
@@ -142,7 +142,7 @@ public class Text
 	}
 	
 	void delegate(gint, Text)[] onTextCaretMovedListeners;
-	void addOnTextCaretMoved(void delegate(gint, Text) dlg)
+	void addOnTextCaretMoved(void delegate(gint, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-caret-moved" in connectedSignals) )
 		{
@@ -152,7 +152,7 @@ public class Text
 			cast(GCallback)&callBackTextCaretMoved,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["text-caret-moved"] = 1;
 		}
 		onTextCaretMovedListeners ~= dlg;
@@ -170,7 +170,7 @@ public class Text
 	}
 	
 	void delegate(gint, gint, Text)[] onTextChangedListeners;
-	void addOnTextChanged(void delegate(gint, gint, Text) dlg)
+	void addOnTextChanged(void delegate(gint, gint, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-changed" in connectedSignals) )
 		{
@@ -180,7 +180,7 @@ public class Text
 			cast(GCallback)&callBackTextChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["text-changed"] = 1;
 		}
 		onTextChangedListeners ~= dlg;
@@ -198,7 +198,7 @@ public class Text
 	}
 	
 	void delegate(Text)[] onTextSelectionChangedListeners;
-	void addOnTextSelectionChanged(void delegate(Text) dlg)
+	void addOnTextSelectionChanged(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-selection-changed" in connectedSignals) )
 		{
@@ -208,7 +208,7 @@ public class Text
 			cast(GCallback)&callBackTextSelectionChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["text-selection-changed"] = 1;
 		}
 		onTextSelectionChangedListeners ~= dlg;

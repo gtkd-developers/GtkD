@@ -150,7 +150,7 @@ public class SpinButton : Entry
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkScrollType, SpinButton)[] onChangeValueListeners;
-	void addOnChangeValue(void delegate(GtkScrollType, SpinButton) dlg)
+	void addOnChangeValue(void delegate(GtkScrollType, SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("change-value" in connectedSignals) )
 		{
@@ -160,7 +160,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackChangeValue,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["change-value"] = 1;
 		}
 		onChangeValueListeners ~= dlg;
@@ -178,7 +178,7 @@ public class SpinButton : Entry
 	}
 	
 	gint delegate(gpointer, SpinButton)[] onInputListeners;
-	void addOnInput(gint delegate(gpointer, SpinButton) dlg)
+	void addOnInput(gint delegate(gpointer, SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("input" in connectedSignals) )
 		{
@@ -188,7 +188,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackInput,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["input"] = 1;
 		}
 		onInputListeners ~= dlg;
@@ -206,7 +206,7 @@ public class SpinButton : Entry
 	}
 	
 	gboolean delegate(SpinButton)[] onOutputListeners;
-	void addOnOutput(gboolean delegate(SpinButton) dlg)
+	void addOnOutput(gboolean delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("output" in connectedSignals) )
 		{
@@ -216,7 +216,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackOutput,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["output"] = 1;
 		}
 		onOutputListeners ~= dlg;
@@ -234,7 +234,7 @@ public class SpinButton : Entry
 	}
 	
 	void delegate(SpinButton)[] onValueChangedListeners;
-	void addOnValueChanged(void delegate(SpinButton) dlg)
+	void addOnValueChanged(void delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("value-changed" in connectedSignals) )
 		{
@@ -244,7 +244,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackValueChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["value-changed"] = 1;
 		}
 		onValueChangedListeners ~= dlg;
@@ -262,7 +262,7 @@ public class SpinButton : Entry
 	}
 	
 	void delegate(SpinButton)[] onWrappedListeners;
-	void addOnWrapped(void delegate(SpinButton) dlg)
+	void addOnWrapped(void delegate(SpinButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("wrapped" in connectedSignals) )
 		{
@@ -272,7 +272,7 @@ public class SpinButton : Entry
 			cast(GCallback)&callBackWrapped,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["wrapped"] = 1;
 		}
 		onWrappedListeners ~= dlg;

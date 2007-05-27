@@ -108,7 +108,7 @@ public class CellRendererToggle : CellRenderer
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], CellRendererToggle)[] onToggledListeners;
-	void addOnToggled(void delegate(char[], CellRendererToggle) dlg)
+	void addOnToggled(void delegate(char[], CellRendererToggle) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggled" in connectedSignals) )
 		{
@@ -118,7 +118,7 @@ public class CellRendererToggle : CellRenderer
 			cast(GCallback)&callBackToggled,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;

@@ -113,7 +113,7 @@ public class DisplayManager : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(Display, DisplayManager)[] onDisplayOpenedListeners;
-	void addOnDisplayOpened(void delegate(Display, DisplayManager) dlg)
+	void addOnDisplayOpened(void delegate(Display, DisplayManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("display-opened" in connectedSignals) )
 		{
@@ -123,7 +123,7 @@ public class DisplayManager : ObjectG
 			cast(GCallback)&callBackDisplayOpened,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["display-opened"] = 1;
 		}
 		onDisplayOpenedListeners ~= dlg;

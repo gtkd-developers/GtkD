@@ -120,7 +120,7 @@ public class TextTag : ObjectG
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(ObjectG, Event, TextIter, TextTag)[] onListeners;
-	void addOn(gboolean delegate(ObjectG, Event, TextIter, TextTag) dlg)
+	void addOn(gboolean delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("event" in connectedSignals) )
 		{
@@ -130,7 +130,7 @@ public class TextTag : ObjectG
 			cast(GCallback)&callBack,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["event"] = 1;
 		}
 		onListeners ~= dlg;

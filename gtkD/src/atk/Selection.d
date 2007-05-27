@@ -104,7 +104,7 @@ public class Selection
 	int[char[]] connectedSignals;
 	
 	void delegate(Selection)[] onSelectionChangedListeners;
-	void addOnSelectionChanged(void delegate(Selection) dlg)
+	void addOnSelectionChanged(void delegate(Selection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-changed" in connectedSignals) )
 		{
@@ -114,7 +114,7 @@ public class Selection
 			cast(GCallback)&callBackSelectionChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["selection-changed"] = 1;
 		}
 		onSelectionChangedListeners ~= dlg;

@@ -125,7 +125,7 @@ public class Display : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(gboolean, Display)[] onClosedListeners;
-	void addOnClosed(void delegate(gboolean, Display) dlg)
+	void addOnClosed(void delegate(gboolean, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("closed" in connectedSignals) )
 		{
@@ -135,7 +135,7 @@ public class Display : ObjectG
 			cast(GCallback)&callBackClosed,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["closed"] = 1;
 		}
 		onClosedListeners ~= dlg;

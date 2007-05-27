@@ -150,7 +150,7 @@ public class Socket : Container
 	int[char[]] connectedSignals;
 	
 	void delegate(Socket)[] onPlugAddedListeners;
-	void addOnPlugAdded(void delegate(Socket) dlg)
+	void addOnPlugAdded(void delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("plug-added" in connectedSignals) )
 		{
@@ -160,7 +160,7 @@ public class Socket : Container
 			cast(GCallback)&callBackPlugAdded,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["plug-added"] = 1;
 		}
 		onPlugAddedListeners ~= dlg;
@@ -178,7 +178,7 @@ public class Socket : Container
 	}
 	
 	gboolean delegate(Socket)[] onPlugRemovedListeners;
-	void addOnPlugRemoved(gboolean delegate(Socket) dlg)
+	void addOnPlugRemoved(gboolean delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("plug-removed" in connectedSignals) )
 		{
@@ -188,7 +188,7 @@ public class Socket : Container
 			cast(GCallback)&callBackPlugRemoved,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["plug-removed"] = 1;
 		}
 		onPlugRemovedListeners ~= dlg;

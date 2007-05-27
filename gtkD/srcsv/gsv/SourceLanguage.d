@@ -103,7 +103,7 @@ public class SourceLanguage : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], SourceLanguage)[] onTagStyleChangedListeners;
-	void addOnTagStyleChanged(void delegate(char[], SourceLanguage) dlg)
+	void addOnTagStyleChanged(void delegate(char[], SourceLanguage) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("tag-style-changed" in connectedSignals) )
 		{
@@ -113,7 +113,7 @@ public class SourceLanguage : ObjectG
 			cast(GCallback)&callBackTagStyleChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["tag-style-changed"] = 1;
 		}
 		onTagStyleChangedListeners ~= dlg;

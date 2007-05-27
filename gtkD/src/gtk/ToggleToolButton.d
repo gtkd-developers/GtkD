@@ -109,7 +109,7 @@ public class ToggleToolButton : ToolButton
 	int[char[]] connectedSignals;
 	
 	void delegate(ToggleToolButton)[] onToggledListeners;
-	void addOnToggled(void delegate(ToggleToolButton) dlg)
+	void addOnToggled(void delegate(ToggleToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggled" in connectedSignals) )
 		{
@@ -119,7 +119,7 @@ public class ToggleToolButton : ToolButton
 			cast(GCallback)&callBackToggled,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;

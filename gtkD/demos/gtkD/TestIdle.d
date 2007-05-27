@@ -252,7 +252,7 @@ class TestIdle : VBox
 
 		void onCallTypeChanged(ComboBox comboBox)
 		{
-			debug(trace) version(tango) Stdout("gcOptions = {}", comboBox.getActiveText()).newline; 
+			debug(trace) version(tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline; 
 			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{
@@ -265,7 +265,7 @@ class TestIdle : VBox
 		
 		void onCGOptionsChanged(ComboBox comboBox)
 		{
-			debug(trace) version(tango) Stdout("gcOptions = {}", comboBox.getActiveText()).newline; 
+			debug(trace) version(tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline; 
 			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{

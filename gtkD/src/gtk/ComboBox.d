@@ -242,7 +242,7 @@ public class ComboBox : Bin, CellLayoutIF
 	int[char[]] connectedSignals;
 	
 	void delegate(ComboBox)[] onChangedListeners;
-	void addOnChanged(void delegate(ComboBox) dlg)
+	void addOnChanged(void delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -252,7 +252,7 @@ public class ComboBox : Bin, CellLayoutIF
 			cast(GCallback)&callBackChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -270,7 +270,7 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	
 	void delegate(GtkScrollType, ComboBox)[] onMoveActiveListeners;
-	void addOnMoveActive(void delegate(GtkScrollType, ComboBox) dlg)
+	void addOnMoveActive(void delegate(GtkScrollType, ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-active" in connectedSignals) )
 		{
@@ -280,7 +280,7 @@ public class ComboBox : Bin, CellLayoutIF
 			cast(GCallback)&callBackMoveActive,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-active"] = 1;
 		}
 		onMoveActiveListeners ~= dlg;
@@ -298,7 +298,7 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	
 	void delegate(ComboBox)[] onPopupListeners;
-	void addOnPopup(void delegate(ComboBox) dlg)
+	void addOnPopup(void delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popup" in connectedSignals) )
 		{
@@ -308,7 +308,7 @@ public class ComboBox : Bin, CellLayoutIF
 			cast(GCallback)&callBackPopup,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["popup"] = 1;
 		}
 		onPopupListeners ~= dlg;

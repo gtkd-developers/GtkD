@@ -101,9 +101,12 @@ private import gtk.TextMark;
 private import gtk.Clipboard;
 private import gdk.Bitmap;
 
-version(tango)private import tango.core.Vararg;
-else private import std.stdarg;
 
+version(tango) {
+	private import tango.core.Vararg;
+} else {
+	private import std.stdarg;
+}
 
 
 
@@ -267,7 +270,7 @@ public class TextBuffer : ObjectG
 	 * ...:
 	 *  NULL-terminated list of tags to apply
 	 */
-	//version(tango){} else 
+	//version(tango){} else -- still doesn't work on tango, but it compiles now
 	public void insertWithTags(TextIter iter, char[] text, ... )
 	{
 		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(TextTag)); i++)
@@ -294,7 +297,8 @@ public class TextBuffer : ObjectG
 	 * ...:
 	 *  more tag names
 	 */
-	version(tango){} else public void insertWithTagsByName(TextIter iter, char[] text, ... )
+	// version(tango){} else  -- still doesn't work on tango, but it compiles now
+	public void insertWithTagsByName(TextIter iter, char[] text, ... )
 	{
 		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(char[])); i++)
 		{
@@ -444,7 +448,7 @@ public class TextBuffer : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(TextTag, TextIter, TextIter, TextBuffer)[] onApplyTagListeners;
-	void addOnApplyTag(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg)
+	void addOnApplyTag(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("apply-tag" in connectedSignals) )
 		{
@@ -454,7 +458,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackApplyTag,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["apply-tag"] = 1;
 		}
 		onApplyTagListeners ~= dlg;
@@ -472,7 +476,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextBuffer)[] onBeginUserActionListeners;
-	void addOnBeginUserAction(void delegate(TextBuffer) dlg)
+	void addOnBeginUserAction(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("begin-user-action" in connectedSignals) )
 		{
@@ -482,7 +486,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackBeginUserAction,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["begin-user-action"] = 1;
 		}
 		onBeginUserActionListeners ~= dlg;
@@ -500,7 +504,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextBuffer)[] onChangedListeners;
-	void addOnChanged(void delegate(TextBuffer) dlg)
+	void addOnChanged(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -510,7 +514,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -528,7 +532,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextIter, TextIter, TextBuffer)[] onDeleteRangeListeners;
-	void addOnDeleteRange(void delegate(TextIter, TextIter, TextBuffer) dlg)
+	void addOnDeleteRange(void delegate(TextIter, TextIter, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-range" in connectedSignals) )
 		{
@@ -538,7 +542,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackDeleteRange,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["delete-range"] = 1;
 		}
 		onDeleteRangeListeners ~= dlg;
@@ -556,7 +560,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextBuffer)[] onEndUserActionListeners;
-	void addOnEndUserAction(void delegate(TextBuffer) dlg)
+	void addOnEndUserAction(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("end-user-action" in connectedSignals) )
 		{
@@ -566,7 +570,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackEndUserAction,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["end-user-action"] = 1;
 		}
 		onEndUserActionListeners ~= dlg;
@@ -584,7 +588,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextIter, TextChildAnchor, TextBuffer)[] onInsertChildAnchorListeners;
-	void addOnInsertChildAnchor(void delegate(TextIter, TextChildAnchor, TextBuffer) dlg)
+	void addOnInsertChildAnchor(void delegate(TextIter, TextChildAnchor, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-child-anchor" in connectedSignals) )
 		{
@@ -594,7 +598,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackInsertChildAnchor,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["insert-child-anchor"] = 1;
 		}
 		onInsertChildAnchorListeners ~= dlg;
@@ -612,7 +616,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextIter, Pixbuf, TextBuffer)[] onInsertPixbufListeners;
-	void addOnInsertPixbuf(void delegate(TextIter, Pixbuf, TextBuffer) dlg)
+	void addOnInsertPixbuf(void delegate(TextIter, Pixbuf, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-pixbuf" in connectedSignals) )
 		{
@@ -622,7 +626,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackInsertPixbuf,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["insert-pixbuf"] = 1;
 		}
 		onInsertPixbufListeners ~= dlg;
@@ -640,7 +644,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextIter, char[], gint, TextBuffer)[] onInsertTextListeners;
-	void addOnInsertText(void delegate(TextIter, char[], gint, TextBuffer) dlg)
+	void addOnInsertText(void delegate(TextIter, char[], gint, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-text" in connectedSignals) )
 		{
@@ -650,7 +654,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackInsertText,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["insert-text"] = 1;
 		}
 		onInsertTextListeners ~= dlg;
@@ -668,7 +672,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextMark, TextBuffer)[] onMarkDeletedListeners;
-	void addOnMarkDeleted(void delegate(TextMark, TextBuffer) dlg)
+	void addOnMarkDeleted(void delegate(TextMark, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("mark-deleted" in connectedSignals) )
 		{
@@ -678,7 +682,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackMarkDeleted,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["mark-deleted"] = 1;
 		}
 		onMarkDeletedListeners ~= dlg;
@@ -696,7 +700,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextIter, TextMark, TextBuffer)[] onMarkSetListeners;
-	void addOnMarkSet(void delegate(TextIter, TextMark, TextBuffer) dlg)
+	void addOnMarkSet(void delegate(TextIter, TextMark, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("mark-set" in connectedSignals) )
 		{
@@ -706,7 +710,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackMarkSet,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["mark-set"] = 1;
 		}
 		onMarkSetListeners ~= dlg;
@@ -724,7 +728,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextBuffer)[] onModifiedChangedListeners;
-	void addOnModifiedChanged(void delegate(TextBuffer) dlg)
+	void addOnModifiedChanged(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("modified-changed" in connectedSignals) )
 		{
@@ -734,7 +738,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackModifiedChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["modified-changed"] = 1;
 		}
 		onModifiedChangedListeners ~= dlg;
@@ -752,7 +756,7 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextTag, TextIter, TextIter, TextBuffer)[] onRemoveTagListeners;
-	void addOnRemoveTag(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg)
+	void addOnRemoveTag(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("remove-tag" in connectedSignals) )
 		{
@@ -762,7 +766,7 @@ public class TextBuffer : ObjectG
 			cast(GCallback)&callBackRemoveTag,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["remove-tag"] = 1;
 		}
 		onRemoveTagListeners ~= dlg;

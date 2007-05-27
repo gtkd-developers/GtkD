@@ -103,7 +103,7 @@ public class ToggleAction : Action
 	int[char[]] connectedSignals;
 	
 	void delegate(ToggleAction)[] onToggledListeners;
-	void addOnToggled(void delegate(ToggleAction) dlg)
+	void addOnToggled(void delegate(ToggleAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggled" in connectedSignals) )
 		{
@@ -113,7 +113,7 @@ public class ToggleAction : Action
 			cast(GCallback)&callBackToggled,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;

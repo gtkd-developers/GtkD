@@ -217,7 +217,7 @@ public class RadioButton : CheckButton
 	int[char[]] connectedSignals;
 	
 	void delegate(RadioButton)[] onGroupChangedListeners;
-	void addOnGroupChanged(void delegate(RadioButton) dlg)
+	void addOnGroupChanged(void delegate(RadioButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("group-changed" in connectedSignals) )
 		{
@@ -227,7 +227,7 @@ public class RadioButton : CheckButton
 			cast(GCallback)&callBackGroupChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["group-changed"] = 1;
 		}
 		onGroupChangedListeners ~= dlg;

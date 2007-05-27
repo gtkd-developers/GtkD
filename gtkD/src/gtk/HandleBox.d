@@ -118,7 +118,7 @@ public class HandleBox : Bin
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkWidget*, HandleBox)[] onChildAttachedListeners;
-	void addOnChildAttached(void delegate(GtkWidget*, HandleBox) dlg)
+	void addOnChildAttached(void delegate(GtkWidget*, HandleBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("child-attached" in connectedSignals) )
 		{
@@ -128,7 +128,7 @@ public class HandleBox : Bin
 			cast(GCallback)&callBackChildAttached,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["child-attached"] = 1;
 		}
 		onChildAttachedListeners ~= dlg;
@@ -146,7 +146,7 @@ public class HandleBox : Bin
 	}
 	
 	void delegate(GtkWidget*, HandleBox)[] onChildDetachedListeners;
-	void addOnChildDetached(void delegate(GtkWidget*, HandleBox) dlg)
+	void addOnChildDetached(void delegate(GtkWidget*, HandleBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("child-detached" in connectedSignals) )
 		{
@@ -156,7 +156,7 @@ public class HandleBox : Bin
 			cast(GCallback)&callBackChildDetached,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["child-detached"] = 1;
 		}
 		onChildDetachedListeners ~= dlg;

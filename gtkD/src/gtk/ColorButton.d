@@ -107,7 +107,7 @@ public class ColorButton : Button
 	int[char[]] connectedSignals;
 	
 	void delegate(ColorButton)[] onColorSetListeners;
-	void addOnColorSet(void delegate(ColorButton) dlg)
+	void addOnColorSet(void delegate(ColorButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("color-set" in connectedSignals) )
 		{
@@ -117,7 +117,7 @@ public class ColorButton : Button
 			cast(GCallback)&callBackColorSet,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["color-set"] = 1;
 		}
 		onColorSetListeners ~= dlg;

@@ -965,7 +965,7 @@ class TestWindow : MainWindow
 				gdkThreadsEnter();
 				button.removeAll();
 				version(tango) button.setLabel( (new Layout!(char))("{}", num));
-				else button.setLabel(std.string.format("%s", num));
+				else           button.setLabel(std.string.format("%s", num));
 				gdkThreadsLeave();
 				yield();
 			}
@@ -1025,6 +1025,7 @@ class TestWindow : MainWindow
 					if ( !t.isRunning() )
 					{
 						// todo t.go();
+						// just send a interruped - how?
 					}
 				}
 				else switch( t.getState() )

@@ -121,7 +121,7 @@ public class Entry : Widget
 	int[char[]] connectedSignals;
 	
 	void delegate(Entry)[] onActivateListeners;
-	void addOnActivate(void delegate(Entry) dlg)
+	void addOnActivate(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate" in connectedSignals) )
 		{
@@ -131,7 +131,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackActivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;
@@ -149,7 +149,7 @@ public class Entry : Widget
 	}
 	
 	void delegate(Entry)[] onBackspaceListeners;
-	void addOnBackspace(void delegate(Entry) dlg)
+	void addOnBackspace(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("backspace" in connectedSignals) )
 		{
@@ -159,7 +159,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackBackspace,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["backspace"] = 1;
 		}
 		onBackspaceListeners ~= dlg;
@@ -177,7 +177,7 @@ public class Entry : Widget
 	}
 	
 	void delegate(Entry)[] onCopyClipboardListeners;
-	void addOnCopyClipboard(void delegate(Entry) dlg)
+	void addOnCopyClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("copy-clipboard" in connectedSignals) )
 		{
@@ -187,7 +187,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackCopyClipboard,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["copy-clipboard"] = 1;
 		}
 		onCopyClipboardListeners ~= dlg;
@@ -205,7 +205,7 @@ public class Entry : Widget
 	}
 	
 	void delegate(Entry)[] onCutClipboardListeners;
-	void addOnCutClipboard(void delegate(Entry) dlg)
+	void addOnCutClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cut-clipboard" in connectedSignals) )
 		{
@@ -215,7 +215,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackCutClipboard,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["cut-clipboard"] = 1;
 		}
 		onCutClipboardListeners ~= dlg;
@@ -233,7 +233,7 @@ public class Entry : Widget
 	}
 	
 	void delegate(GtkDeleteType, gint, Entry)[] onDeleteFromCursorListeners;
-	void addOnDeleteFromCursor(void delegate(GtkDeleteType, gint, Entry) dlg)
+	void addOnDeleteFromCursor(void delegate(GtkDeleteType, gint, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-from-cursor" in connectedSignals) )
 		{
@@ -243,7 +243,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackDeleteFromCursor,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["delete-from-cursor"] = 1;
 		}
 		onDeleteFromCursorListeners ~= dlg;
@@ -261,7 +261,7 @@ public class Entry : Widget
 	}
 	
 	void delegate(char[], Entry)[] onInsertAtCursorListeners;
-	void addOnInsertAtCursor(void delegate(char[], Entry) dlg)
+	void addOnInsertAtCursor(void delegate(char[], Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-at-cursor" in connectedSignals) )
 		{
@@ -271,7 +271,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackInsertAtCursor,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["insert-at-cursor"] = 1;
 		}
 		onInsertAtCursorListeners ~= dlg;
@@ -289,7 +289,7 @@ public class Entry : Widget
 	}
 	
 	void delegate(GtkMovementStep, gint, gboolean, Entry)[] onMoveCursorListeners;
-	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, Entry) dlg)
+	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
 		{
@@ -299,7 +299,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackMoveCursor,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -317,7 +317,7 @@ public class Entry : Widget
 	}
 	
 	void delegate(Entry)[] onPasteClipboardListeners;
-	void addOnPasteClipboard(void delegate(Entry) dlg)
+	void addOnPasteClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("paste-clipboard" in connectedSignals) )
 		{
@@ -327,7 +327,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackPasteClipboard,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["paste-clipboard"] = 1;
 		}
 		onPasteClipboardListeners ~= dlg;
@@ -345,7 +345,7 @@ public class Entry : Widget
 	}
 	
 	void delegate(GtkMenu*, Entry)[] onPopulatePopupListeners;
-	void addOnPopulatePopup(void delegate(GtkMenu*, Entry) dlg)
+	void addOnPopulatePopup(void delegate(GtkMenu*, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("populate-popup" in connectedSignals) )
 		{
@@ -355,7 +355,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackPopulatePopup,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["populate-popup"] = 1;
 		}
 		onPopulatePopupListeners ~= dlg;
@@ -373,7 +373,7 @@ public class Entry : Widget
 	}
 	
 	void delegate(Entry)[] onToggleOverwriteListeners;
-	void addOnToggleOverwrite(void delegate(Entry) dlg)
+	void addOnToggleOverwrite(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-overwrite" in connectedSignals) )
 		{
@@ -383,7 +383,7 @@ public class Entry : Widget
 			cast(GCallback)&callBackToggleOverwrite,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggle-overwrite"] = 1;
 		}
 		onToggleOverwriteListeners ~= dlg;

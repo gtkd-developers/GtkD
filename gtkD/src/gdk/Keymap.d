@@ -157,7 +157,7 @@ public class Keymap : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(Keymap)[] onDirectionChangedListeners;
-	void addOnDirectionChanged(void delegate(Keymap) dlg)
+	void addOnDirectionChanged(void delegate(Keymap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("direction-changed" in connectedSignals) )
 		{
@@ -167,7 +167,7 @@ public class Keymap : ObjectG
 			cast(GCallback)&callBackDirectionChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["direction-changed"] = 1;
 		}
 		onDirectionChangedListeners ~= dlg;
@@ -185,7 +185,7 @@ public class Keymap : ObjectG
 	}
 	
 	void delegate(Keymap)[] onKeysChangedListeners;
-	void addOnKeysChanged(void delegate(Keymap) dlg)
+	void addOnKeysChanged(void delegate(Keymap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("keys-changed" in connectedSignals) )
 		{
@@ -195,7 +195,7 @@ public class Keymap : ObjectG
 			cast(GCallback)&callBackKeysChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["keys-changed"] = 1;
 		}
 		onKeysChangedListeners ~= dlg;

@@ -111,7 +111,7 @@ public class Calendar : Widget
 	int[char[]] connectedSignals;
 	
 	void delegate(Calendar)[] onDaySelectedListeners;
-	void addOnDaySelected(void delegate(Calendar) dlg)
+	void addOnDaySelected(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("day-selected" in connectedSignals) )
 		{
@@ -121,7 +121,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackDaySelected,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["day-selected"] = 1;
 		}
 		onDaySelectedListeners ~= dlg;
@@ -139,7 +139,7 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onDaySelectedDoubleClickListeners;
-	void addOnDaySelectedDoubleClick(void delegate(Calendar) dlg)
+	void addOnDaySelectedDoubleClick(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("day-selected-double-click" in connectedSignals) )
 		{
@@ -149,7 +149,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackDaySelectedDoubleClick,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["day-selected-double-click"] = 1;
 		}
 		onDaySelectedDoubleClickListeners ~= dlg;
@@ -167,7 +167,7 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onMonthChangedListeners;
-	void addOnMonthChanged(void delegate(Calendar) dlg)
+	void addOnMonthChanged(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("month-changed" in connectedSignals) )
 		{
@@ -177,7 +177,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackMonthChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["month-changed"] = 1;
 		}
 		onMonthChangedListeners ~= dlg;
@@ -195,7 +195,7 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onNextMonthListeners;
-	void addOnNextMonth(void delegate(Calendar) dlg)
+	void addOnNextMonth(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("next-month" in connectedSignals) )
 		{
@@ -205,7 +205,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackNextMonth,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["next-month"] = 1;
 		}
 		onNextMonthListeners ~= dlg;
@@ -223,7 +223,7 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onNextYearListeners;
-	void addOnNextYear(void delegate(Calendar) dlg)
+	void addOnNextYear(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("next-year" in connectedSignals) )
 		{
@@ -233,7 +233,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackNextYear,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["next-year"] = 1;
 		}
 		onNextYearListeners ~= dlg;
@@ -251,7 +251,7 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onPrevMonthListeners;
-	void addOnPrevMonth(void delegate(Calendar) dlg)
+	void addOnPrevMonth(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("prev-month" in connectedSignals) )
 		{
@@ -261,7 +261,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackPrevMonth,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["prev-month"] = 1;
 		}
 		onPrevMonthListeners ~= dlg;
@@ -279,7 +279,7 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onPrevYearListeners;
-	void addOnPrevYear(void delegate(Calendar) dlg)
+	void addOnPrevYear(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("prev-year" in connectedSignals) )
 		{
@@ -289,7 +289,7 @@ public class Calendar : Widget
 			cast(GCallback)&callBackPrevYear,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["prev-year"] = 1;
 		}
 		onPrevYearListeners ~= dlg;

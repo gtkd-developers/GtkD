@@ -137,7 +137,7 @@ public class Action : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(Action)[] onActivateListeners;
-	void addOnActivate(void delegate(Action) dlg)
+	void addOnActivate(void delegate(Action) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate" in connectedSignals) )
 		{
@@ -147,7 +147,7 @@ public class Action : ObjectG
 			cast(GCallback)&callBackActivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;

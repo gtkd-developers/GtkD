@@ -108,7 +108,7 @@ public class Scale : Range
 	int[char[]] connectedSignals;
 	
 	char[] delegate(gdouble, Scale)[] onFormatValueListeners;
-	void addOnFormatValue(char[] delegate(gdouble, Scale) dlg)
+	void addOnFormatValue(char[] delegate(gdouble, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("format-value" in connectedSignals) )
 		{
@@ -118,7 +118,7 @@ public class Scale : Range
 			cast(GCallback)&callBackFormatValue,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["format-value"] = 1;
 		}
 		onFormatValueListeners ~= dlg;

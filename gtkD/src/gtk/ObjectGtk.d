@@ -153,7 +153,7 @@ public class ObjectGtk : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(ObjectGtk)[] onDestroyListeners;
-	void addOnDestroy(void delegate(ObjectGtk) dlg)
+	void addOnDestroy(void delegate(ObjectGtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("destroy" in connectedSignals) )
 		{
@@ -163,7 +163,7 @@ public class ObjectGtk : ObjectG
 			cast(GCallback)&callBackDestroy,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["destroy"] = 1;
 		}
 		onDestroyListeners ~= dlg;

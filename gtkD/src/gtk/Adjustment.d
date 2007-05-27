@@ -157,7 +157,7 @@ public class Adjustment : ObjectGtk
 	int[char[]] connectedSignals;
 	
 	void delegate(Adjustment)[] onChangedListeners;
-	void addOnChanged(void delegate(Adjustment) dlg)
+	void addOnChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -167,7 +167,7 @@ public class Adjustment : ObjectGtk
 			cast(GCallback)&callBackChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;
@@ -185,7 +185,7 @@ public class Adjustment : ObjectGtk
 	}
 	
 	void delegate(Adjustment)[] onValueChangedListeners;
-	void addOnValueChanged(void delegate(Adjustment) dlg)
+	void addOnValueChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("value-changed" in connectedSignals) )
 		{
@@ -195,7 +195,7 @@ public class Adjustment : ObjectGtk
 			cast(GCallback)&callBackValueChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["value-changed"] = 1;
 		}
 		onValueChangedListeners ~= dlg;

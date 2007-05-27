@@ -210,7 +210,7 @@ public class MenuItem : Item
 	int[char[]] connectedSignals;
 	
 	void delegate(MenuItem)[] onActivateListeners;
-	void addOnActivate(void delegate(MenuItem) dlg)
+	void addOnActivate(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate" in connectedSignals) )
 		{
@@ -220,7 +220,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackActivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;
@@ -238,7 +238,7 @@ public class MenuItem : Item
 	}
 	
 	void delegate(MenuItem)[] onActivateItemListeners;
-	void addOnActivateItem(void delegate(MenuItem) dlg)
+	void addOnActivateItem(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate-item" in connectedSignals) )
 		{
@@ -248,7 +248,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackActivateItem,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["activate-item"] = 1;
 		}
 		onActivateItemListeners ~= dlg;
@@ -266,7 +266,7 @@ public class MenuItem : Item
 	}
 	
 	void delegate(gint, MenuItem)[] onToggleSizeAllocateListeners;
-	void addOnToggleSizeAllocate(void delegate(gint, MenuItem) dlg)
+	void addOnToggleSizeAllocate(void delegate(gint, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-size-allocate" in connectedSignals) )
 		{
@@ -276,7 +276,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackToggleSizeAllocate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggle-size-allocate"] = 1;
 		}
 		onToggleSizeAllocateListeners ~= dlg;
@@ -294,7 +294,7 @@ public class MenuItem : Item
 	}
 	
 	void delegate(gpointer, MenuItem)[] onToggleSizeRequestListeners;
-	void addOnToggleSizeRequest(void delegate(gpointer, MenuItem) dlg)
+	void addOnToggleSizeRequest(void delegate(gpointer, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-size-request" in connectedSignals) )
 		{
@@ -304,7 +304,7 @@ public class MenuItem : Item
 			cast(GCallback)&callBackToggleSizeRequest,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggle-size-request"] = 1;
 		}
 		onToggleSizeRequestListeners ~= dlg;

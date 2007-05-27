@@ -108,7 +108,7 @@ public class TextAttributes
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes)[] onListeners;
-	void addOn(gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg)
+	void addOn(gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("event" in connectedSignals) )
 		{
@@ -118,7 +118,7 @@ public class TextAttributes
 			cast(GCallback)&callBack,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["event"] = 1;
 		}
 		onListeners ~= dlg;

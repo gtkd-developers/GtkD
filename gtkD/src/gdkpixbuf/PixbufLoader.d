@@ -177,7 +177,7 @@ public class PixbufLoader : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(PixbufLoader)[] onAreaPreparedListeners;
-	void addOnAreaPrepared(void delegate(PixbufLoader) dlg)
+	void addOnAreaPrepared(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("area-prepared" in connectedSignals) )
 		{
@@ -187,7 +187,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackAreaPrepared,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["area-prepared"] = 1;
 		}
 		onAreaPreparedListeners ~= dlg;
@@ -205,7 +205,7 @@ public class PixbufLoader : ObjectG
 	}
 	
 	void delegate(gint, gint, gint, gint, PixbufLoader)[] onAreaUpdatedListeners;
-	void addOnAreaUpdated(void delegate(gint, gint, gint, gint, PixbufLoader) dlg)
+	void addOnAreaUpdated(void delegate(gint, gint, gint, gint, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("area-updated" in connectedSignals) )
 		{
@@ -215,7 +215,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackAreaUpdated,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["area-updated"] = 1;
 		}
 		onAreaUpdatedListeners ~= dlg;
@@ -233,7 +233,7 @@ public class PixbufLoader : ObjectG
 	}
 	
 	void delegate(PixbufLoader)[] onClosedListeners;
-	void addOnClosed(void delegate(PixbufLoader) dlg)
+	void addOnClosed(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("closed" in connectedSignals) )
 		{
@@ -243,7 +243,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackClosed,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["closed"] = 1;
 		}
 		onClosedListeners ~= dlg;
@@ -261,7 +261,7 @@ public class PixbufLoader : ObjectG
 	}
 	
 	void delegate(gint, gint, PixbufLoader)[] onSizePreparedListeners;
-	void addOnSizePrepared(void delegate(gint, gint, PixbufLoader) dlg)
+	void addOnSizePrepared(void delegate(gint, gint, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-prepared" in connectedSignals) )
 		{
@@ -271,7 +271,7 @@ public class PixbufLoader : ObjectG
 			cast(GCallback)&callBackSizePrepared,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["size-prepared"] = 1;
 		}
 		onSizePreparedListeners ~= dlg;

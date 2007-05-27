@@ -120,7 +120,7 @@ public class IconView : Container
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(IconView)[] onActivateCursorItemListeners;
-	void addOnActivateCursorItem(gboolean delegate(IconView) dlg)
+	void addOnActivateCursorItem(gboolean delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate-cursor-item" in connectedSignals) )
 		{
@@ -130,7 +130,7 @@ public class IconView : Container
 			cast(GCallback)&callBackActivateCursorItem,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["activate-cursor-item"] = 1;
 		}
 		onActivateCursorItemListeners ~= dlg;
@@ -148,7 +148,7 @@ public class IconView : Container
 	}
 	
 	void delegate(TreePath, IconView)[] onItemActivatedListeners;
-	void addOnItemActivated(void delegate(TreePath, IconView) dlg)
+	void addOnItemActivated(void delegate(TreePath, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("item-activated" in connectedSignals) )
 		{
@@ -158,7 +158,7 @@ public class IconView : Container
 			cast(GCallback)&callBackItemActivated,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["item-activated"] = 1;
 		}
 		onItemActivatedListeners ~= dlg;
@@ -176,7 +176,7 @@ public class IconView : Container
 	}
 	
 	gboolean delegate(GtkMovementStep, gint, IconView)[] onMoveCursorListeners;
-	void addOnMoveCursor(gboolean delegate(GtkMovementStep, gint, IconView) dlg)
+	void addOnMoveCursor(gboolean delegate(GtkMovementStep, gint, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
 		{
@@ -186,7 +186,7 @@ public class IconView : Container
 			cast(GCallback)&callBackMoveCursor,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -204,7 +204,7 @@ public class IconView : Container
 	}
 	
 	void delegate(IconView)[] onSelectAllListeners;
-	void addOnSelectAll(void delegate(IconView) dlg)
+	void addOnSelectAll(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-all" in connectedSignals) )
 		{
@@ -214,7 +214,7 @@ public class IconView : Container
 			cast(GCallback)&callBackSelectAll,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["select-all"] = 1;
 		}
 		onSelectAllListeners ~= dlg;
@@ -232,7 +232,7 @@ public class IconView : Container
 	}
 	
 	void delegate(IconView)[] onSelectCursorItemListeners;
-	void addOnSelectCursorItem(void delegate(IconView) dlg)
+	void addOnSelectCursorItem(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-cursor-item" in connectedSignals) )
 		{
@@ -242,7 +242,7 @@ public class IconView : Container
 			cast(GCallback)&callBackSelectCursorItem,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["select-cursor-item"] = 1;
 		}
 		onSelectCursorItemListeners ~= dlg;
@@ -260,7 +260,7 @@ public class IconView : Container
 	}
 	
 	void delegate(IconView)[] onSelectionChangedListeners;
-	void addOnSelectionChanged(void delegate(IconView) dlg)
+	void addOnSelectionChanged(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-changed" in connectedSignals) )
 		{
@@ -270,7 +270,7 @@ public class IconView : Container
 			cast(GCallback)&callBackSelectionChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["selection-changed"] = 1;
 		}
 		onSelectionChangedListeners ~= dlg;
@@ -288,7 +288,7 @@ public class IconView : Container
 	}
 	
 	void delegate(GtkAdjustment*, GtkAdjustment*, IconView)[] onSetScrollAdjustmentsListeners;
-	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, IconView) dlg)
+	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
 		{
@@ -298,7 +298,7 @@ public class IconView : Container
 			cast(GCallback)&callBackSetScrollAdjustments,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
@@ -316,7 +316,7 @@ public class IconView : Container
 	}
 	
 	void delegate(IconView)[] onToggleCursorItemListeners;
-	void addOnToggleCursorItem(void delegate(IconView) dlg)
+	void addOnToggleCursorItem(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-cursor-item" in connectedSignals) )
 		{
@@ -326,7 +326,7 @@ public class IconView : Container
 			cast(GCallback)&callBackToggleCursorItem,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggle-cursor-item"] = 1;
 		}
 		onToggleCursorItemListeners ~= dlg;
@@ -344,7 +344,7 @@ public class IconView : Container
 	}
 	
 	void delegate(IconView)[] onUnselectAllListeners;
-	void addOnUnselectAll(void delegate(IconView) dlg)
+	void addOnUnselectAll(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unselect-all" in connectedSignals) )
 		{
@@ -354,7 +354,7 @@ public class IconView : Container
 			cast(GCallback)&callBackUnselectAll,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["unselect-all"] = 1;
 		}
 		onUnselectAllListeners ~= dlg;

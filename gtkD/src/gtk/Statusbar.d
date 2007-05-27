@@ -124,7 +124,7 @@ public class Statusbar : HBox
 	int[char[]] connectedSignals;
 	
 	void delegate(guint, char[], Statusbar)[] onTextPoppedListeners;
-	void addOnTextPopped(void delegate(guint, char[], Statusbar) dlg)
+	void addOnTextPopped(void delegate(guint, char[], Statusbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-popped" in connectedSignals) )
 		{
@@ -134,7 +134,7 @@ public class Statusbar : HBox
 			cast(GCallback)&callBackTextPopped,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["text-popped"] = 1;
 		}
 		onTextPoppedListeners ~= dlg;
@@ -152,7 +152,7 @@ public class Statusbar : HBox
 	}
 	
 	void delegate(guint, char[], Statusbar)[] onTextPushedListeners;
-	void addOnTextPushed(void delegate(guint, char[], Statusbar) dlg)
+	void addOnTextPushed(void delegate(guint, char[], Statusbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-pushed" in connectedSignals) )
 		{
@@ -162,7 +162,7 @@ public class Statusbar : HBox
 			cast(GCallback)&callBackTextPushed,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["text-pushed"] = 1;
 		}
 		onTextPushedListeners ~= dlg;

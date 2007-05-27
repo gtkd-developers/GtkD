@@ -102,7 +102,7 @@ public class CellEditable
 	int[char[]] connectedSignals;
 	
 	void delegate(CellEditable)[] onEditingDoneListeners;
-	void addOnEditingDone(void delegate(CellEditable) dlg)
+	void addOnEditingDone(void delegate(CellEditable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("editing-done" in connectedSignals) )
 		{
@@ -112,7 +112,7 @@ public class CellEditable
 			cast(GCallback)&callBackEditingDone,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["editing-done"] = 1;
 		}
 		onEditingDoneListeners ~= dlg;
@@ -130,7 +130,7 @@ public class CellEditable
 	}
 	
 	void delegate(CellEditable)[] onRemoveWidgetListeners;
-	void addOnRemoveWidget(void delegate(CellEditable) dlg)
+	void addOnRemoveWidget(void delegate(CellEditable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("remove-widget" in connectedSignals) )
 		{
@@ -140,7 +140,7 @@ public class CellEditable
 			cast(GCallback)&callBackRemoveWidget,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["remove-widget"] = 1;
 		}
 		onRemoveWidgetListeners ~= dlg;

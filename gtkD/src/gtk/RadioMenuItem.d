@@ -199,7 +199,7 @@ public class RadioMenuItem : CheckMenuItem
 	int[char[]] connectedSignals;
 	
 	void delegate(RadioMenuItem)[] onGroupChangedListeners;
-	void addOnGroupChanged(void delegate(RadioMenuItem) dlg)
+	void addOnGroupChanged(void delegate(RadioMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("group-changed" in connectedSignals) )
 		{
@@ -209,7 +209,7 @@ public class RadioMenuItem : CheckMenuItem
 			cast(GCallback)&callBackGroupChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["group-changed"] = 1;
 		}
 		onGroupChangedListeners ~= dlg;

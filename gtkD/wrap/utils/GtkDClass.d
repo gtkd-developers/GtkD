@@ -892,7 +892,7 @@ public class GtkDClass
 
 	void addAddListener(inout char[][] text, char[] signalName, char[] gtkDSignalName, char[] dlg)
 	{
-		text ~= "void addOn"~gtkDSignalName~"("~dlg~" dlg)"~iFaceChar;
+		text ~= "void addOn"~gtkDSignalName~"("~dlg~" dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)"~iFaceChar;
 		if ( !isInterface )
 		{
 			text ~= "{";
@@ -916,7 +916,8 @@ public class GtkDClass
 			text ~= "			cast(void*)this, ";
 			text ~= "			null, ";
 			//text ~= "			ConnectFlags.AFTER);";
-			text ~= "			cast(ConnectFlags)0);";
+			text ~= "			connectFlags);";
+			//text ~= "			cast(ConnectFlags)0);";
 			//text ~= "			0);";
 			text ~= "	connectedSignals[\""~signalName~"\"] = 1;";
 			text ~= "}";

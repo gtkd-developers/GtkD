@@ -278,7 +278,7 @@ public class TreeModel
 	int[char[]] connectedSignals;
 	
 	void delegate(TreePath, TreeIter, TreeModel)[] onRowChangedListeners;
-	void addOnRowChanged(void delegate(TreePath, TreeIter, TreeModel) dlg)
+	void addOnRowChanged(void delegate(TreePath, TreeIter, TreeModel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-changed" in connectedSignals) )
 		{
@@ -288,7 +288,7 @@ public class TreeModel
 			cast(GCallback)&callBackRowChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-changed"] = 1;
 		}
 		onRowChangedListeners ~= dlg;
@@ -306,7 +306,7 @@ public class TreeModel
 	}
 	
 	void delegate(TreePath, TreeModel)[] onRowDeletedListeners;
-	void addOnRowDeleted(void delegate(TreePath, TreeModel) dlg)
+	void addOnRowDeleted(void delegate(TreePath, TreeModel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-deleted" in connectedSignals) )
 		{
@@ -316,7 +316,7 @@ public class TreeModel
 			cast(GCallback)&callBackRowDeleted,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-deleted"] = 1;
 		}
 		onRowDeletedListeners ~= dlg;
@@ -334,7 +334,7 @@ public class TreeModel
 	}
 	
 	void delegate(TreePath, TreeIter, TreeModel)[] onRowHasChildToggledListeners;
-	void addOnRowHasChildToggled(void delegate(TreePath, TreeIter, TreeModel) dlg)
+	void addOnRowHasChildToggled(void delegate(TreePath, TreeIter, TreeModel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-has-child-toggled" in connectedSignals) )
 		{
@@ -344,7 +344,7 @@ public class TreeModel
 			cast(GCallback)&callBackRowHasChildToggled,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-has-child-toggled"] = 1;
 		}
 		onRowHasChildToggledListeners ~= dlg;
@@ -362,7 +362,7 @@ public class TreeModel
 	}
 	
 	void delegate(TreePath, TreeIter, TreeModel)[] onRowInsertedListeners;
-	void addOnRowInserted(void delegate(TreePath, TreeIter, TreeModel) dlg)
+	void addOnRowInserted(void delegate(TreePath, TreeIter, TreeModel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-inserted" in connectedSignals) )
 		{
@@ -372,7 +372,7 @@ public class TreeModel
 			cast(GCallback)&callBackRowInserted,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-inserted"] = 1;
 		}
 		onRowInsertedListeners ~= dlg;
@@ -390,7 +390,7 @@ public class TreeModel
 	}
 	
 	void delegate(TreePath, TreeIter, gpointer, TreeModel)[] onRowsReorderedListeners;
-	void addOnRowsReordered(void delegate(TreePath, TreeIter, gpointer, TreeModel) dlg)
+	void addOnRowsReordered(void delegate(TreePath, TreeIter, gpointer, TreeModel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("rows-reordered" in connectedSignals) )
 		{
@@ -400,7 +400,7 @@ public class TreeModel
 			cast(GCallback)&callBackRowsReordered,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["rows-reordered"] = 1;
 		}
 		onRowsReorderedListeners ~= dlg;

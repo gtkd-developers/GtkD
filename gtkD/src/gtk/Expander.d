@@ -168,7 +168,7 @@ public class Expander : Bin
 	int[char[]] connectedSignals;
 	
 	void delegate(Expander)[] onActivateListeners;
-	void addOnActivate(void delegate(Expander) dlg)
+	void addOnActivate(void delegate(Expander) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate" in connectedSignals) )
 		{
@@ -178,7 +178,7 @@ public class Expander : Bin
 			cast(GCallback)&callBackActivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;

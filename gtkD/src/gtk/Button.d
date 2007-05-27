@@ -216,7 +216,7 @@ public class Button : Bin
 	int[char[]] connectedSignals;
 	
 	void delegate(Button)[] onActivateListeners;
-	void addOnActivate(void delegate(Button) dlg)
+	void addOnActivate(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate" in connectedSignals) )
 		{
@@ -226,7 +226,7 @@ public class Button : Bin
 			cast(GCallback)&callBackActivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["activate"] = 1;
 		}
 		onActivateListeners ~= dlg;
@@ -244,7 +244,7 @@ public class Button : Bin
 	}
 	
 	void delegate(Button)[] onClickedListeners;
-	void addOnClicked(void delegate(Button) dlg)
+	void addOnClicked(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("clicked" in connectedSignals) )
 		{
@@ -254,7 +254,7 @@ public class Button : Bin
 			cast(GCallback)&callBackClicked,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["clicked"] = 1;
 		}
 		onClickedListeners ~= dlg;
@@ -272,7 +272,7 @@ public class Button : Bin
 	}
 	
 	void delegate(Button)[] onEnterListeners;
-	void addOnEnter(void delegate(Button) dlg)
+	void addOnEnter(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("enter" in connectedSignals) )
 		{
@@ -282,7 +282,7 @@ public class Button : Bin
 			cast(GCallback)&callBackEnter,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["enter"] = 1;
 		}
 		onEnterListeners ~= dlg;
@@ -300,7 +300,7 @@ public class Button : Bin
 	}
 	
 	void delegate(Button)[] onLeaveListeners;
-	void addOnLeave(void delegate(Button) dlg)
+	void addOnLeave(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("leave" in connectedSignals) )
 		{
@@ -310,7 +310,7 @@ public class Button : Bin
 			cast(GCallback)&callBackLeave,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["leave"] = 1;
 		}
 		onLeaveListeners ~= dlg;
@@ -328,7 +328,7 @@ public class Button : Bin
 	}
 	
 	void delegate(Button)[] onPressedListeners;
-	void addOnPressed(void delegate(Button) dlg)
+	void addOnPressed(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("pressed" in connectedSignals) )
 		{
@@ -338,7 +338,7 @@ public class Button : Bin
 			cast(GCallback)&callBackPressed,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["pressed"] = 1;
 		}
 		onPressedListeners ~= dlg;
@@ -356,7 +356,7 @@ public class Button : Bin
 	}
 	
 	void delegate(Button)[] onReleasedListeners;
-	void addOnReleased(void delegate(Button) dlg)
+	void addOnReleased(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("released" in connectedSignals) )
 		{
@@ -366,7 +366,7 @@ public class Button : Bin
 			cast(GCallback)&callBackReleased,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["released"] = 1;
 		}
 		onReleasedListeners ~= dlg;

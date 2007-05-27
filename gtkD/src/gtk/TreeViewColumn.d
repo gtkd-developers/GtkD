@@ -147,7 +147,7 @@ public class TreeViewColumn : ObjectGtk
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeViewColumn)[] onClickedListeners;
-	void addOnClicked(void delegate(TreeViewColumn) dlg)
+	void addOnClicked(void delegate(TreeViewColumn) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("clicked" in connectedSignals) )
 		{
@@ -157,7 +157,7 @@ public class TreeViewColumn : ObjectGtk
 			cast(GCallback)&callBackClicked,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["clicked"] = 1;
 		}
 		onClickedListeners ~= dlg;

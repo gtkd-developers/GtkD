@@ -378,7 +378,7 @@ public class FileChooser
 	int[char[]] connectedSignals;
 	
 	GtkFileChooserConfirmation delegate(FileChooser)[] onConfirmOverwriteListeners;
-	void addOnConfirmOverwrite(GtkFileChooserConfirmation delegate(FileChooser) dlg)
+	void addOnConfirmOverwrite(GtkFileChooserConfirmation delegate(FileChooser) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("confirm-overwrite" in connectedSignals) )
 		{
@@ -388,7 +388,7 @@ public class FileChooser
 			cast(GCallback)&callBackConfirmOverwrite,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["confirm-overwrite"] = 1;
 		}
 		onConfirmOverwriteListeners ~= dlg;
@@ -406,7 +406,7 @@ public class FileChooser
 	}
 	
 	void delegate(FileChooser)[] onCurrentFolderChangedListeners;
-	void addOnCurrentFolderChanged(void delegate(FileChooser) dlg)
+	void addOnCurrentFolderChanged(void delegate(FileChooser) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("current-folder-changed" in connectedSignals) )
 		{
@@ -416,7 +416,7 @@ public class FileChooser
 			cast(GCallback)&callBackCurrentFolderChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["current-folder-changed"] = 1;
 		}
 		onCurrentFolderChangedListeners ~= dlg;
@@ -434,7 +434,7 @@ public class FileChooser
 	}
 	
 	void delegate(FileChooser)[] onFileActivatedListeners;
-	void addOnFileActivated(void delegate(FileChooser) dlg)
+	void addOnFileActivated(void delegate(FileChooser) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("file-activated" in connectedSignals) )
 		{
@@ -444,7 +444,7 @@ public class FileChooser
 			cast(GCallback)&callBackFileActivated,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["file-activated"] = 1;
 		}
 		onFileActivatedListeners ~= dlg;
@@ -462,7 +462,7 @@ public class FileChooser
 	}
 	
 	void delegate(FileChooser)[] onSelectionChangedListeners;
-	void addOnSelectionChanged(void delegate(FileChooser) dlg)
+	void addOnSelectionChanged(void delegate(FileChooser) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-changed" in connectedSignals) )
 		{
@@ -472,7 +472,7 @@ public class FileChooser
 			cast(GCallback)&callBackSelectionChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["selection-changed"] = 1;
 		}
 		onSelectionChangedListeners ~= dlg;
@@ -490,7 +490,7 @@ public class FileChooser
 	}
 	
 	void delegate(FileChooser)[] onUpdatePreviewListeners;
-	void addOnUpdatePreview(void delegate(FileChooser) dlg)
+	void addOnUpdatePreview(void delegate(FileChooser) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("update-preview" in connectedSignals) )
 		{
@@ -500,7 +500,7 @@ public class FileChooser
 			cast(GCallback)&callBackUpdatePreview,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["update-preview"] = 1;
 		}
 		onUpdatePreviewListeners ~= dlg;

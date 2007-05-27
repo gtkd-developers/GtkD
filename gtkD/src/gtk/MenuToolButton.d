@@ -191,7 +191,7 @@ public class MenuToolButton : ToolButton
 	int[char[]] connectedSignals;
 	
 	void delegate(MenuToolButton)[] onShowMenuListeners;
-	void addOnShowMenu(void delegate(MenuToolButton) dlg)
+	void addOnShowMenu(void delegate(MenuToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("show-menu" in connectedSignals) )
 		{
@@ -201,7 +201,7 @@ public class MenuToolButton : ToolButton
 			cast(GCallback)&callBackShowMenu,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["show-menu"] = 1;
 		}
 		onShowMenuListeners ~= dlg;

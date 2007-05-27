@@ -131,7 +131,7 @@ public class SourceBuffer : TextBuffer
 	int[char[]] connectedSignals;
 	
 	void delegate(gboolean, SourceBuffer)[] onCanRedoListeners;
-	void addOnCanRedo(void delegate(gboolean, SourceBuffer) dlg)
+	void addOnCanRedo(void delegate(gboolean, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("can-redo" in connectedSignals) )
 		{
@@ -141,7 +141,7 @@ public class SourceBuffer : TextBuffer
 			cast(GCallback)&callBackCanRedo,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["can-redo"] = 1;
 		}
 		onCanRedoListeners ~= dlg;
@@ -159,7 +159,7 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	void delegate(gboolean, SourceBuffer)[] onCanUndoListeners;
-	void addOnCanUndo(void delegate(gboolean, SourceBuffer) dlg)
+	void addOnCanUndo(void delegate(gboolean, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("can-undo" in connectedSignals) )
 		{
@@ -169,7 +169,7 @@ public class SourceBuffer : TextBuffer
 			cast(GCallback)&callBackCanUndo,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["can-undo"] = 1;
 		}
 		onCanUndoListeners ~= dlg;
@@ -187,7 +187,7 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	void delegate(TextIter, TextIter, SourceBuffer)[] onHighlightUpdatedListeners;
-	void addOnHighlightUpdated(void delegate(TextIter, TextIter, SourceBuffer) dlg)
+	void addOnHighlightUpdated(void delegate(TextIter, TextIter, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("highlight-updated" in connectedSignals) )
 		{
@@ -197,7 +197,7 @@ public class SourceBuffer : TextBuffer
 			cast(GCallback)&callBackHighlightUpdated,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["highlight-updated"] = 1;
 		}
 		onHighlightUpdatedListeners ~= dlg;
@@ -215,7 +215,7 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	void delegate(TextIter, SourceBuffer)[] onMarkerUpdatedListeners;
-	void addOnMarkerUpdated(void delegate(TextIter, SourceBuffer) dlg)
+	void addOnMarkerUpdated(void delegate(TextIter, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("marker-updated" in connectedSignals) )
 		{
@@ -225,7 +225,7 @@ public class SourceBuffer : TextBuffer
 			cast(GCallback)&callBackMarkerUpdated,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["marker-updated"] = 1;
 		}
 		onMarkerUpdatedListeners ~= dlg;

@@ -101,7 +101,7 @@ public class Item : Bin
 	int[char[]] connectedSignals;
 	
 	void delegate(Item)[] onDeselectListeners;
-	void addOnDeselect(void delegate(Item) dlg)
+	void addOnDeselect(void delegate(Item) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("deselect" in connectedSignals) )
 		{
@@ -111,7 +111,7 @@ public class Item : Bin
 			cast(GCallback)&callBackDeselect,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["deselect"] = 1;
 		}
 		onDeselectListeners ~= dlg;
@@ -129,7 +129,7 @@ public class Item : Bin
 	}
 	
 	void delegate(Item)[] onSelectListeners;
-	void addOnSelect(void delegate(Item) dlg)
+	void addOnSelect(void delegate(Item) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select" in connectedSignals) )
 		{
@@ -139,7 +139,7 @@ public class Item : Bin
 			cast(GCallback)&callBackSelect,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["select"] = 1;
 		}
 		onSelectListeners ~= dlg;
@@ -157,7 +157,7 @@ public class Item : Bin
 	}
 	
 	void delegate(Item)[] onToggleListeners;
-	void addOnToggle(void delegate(Item) dlg)
+	void addOnToggle(void delegate(Item) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle" in connectedSignals) )
 		{
@@ -167,7 +167,7 @@ public class Item : Bin
 			cast(GCallback)&callBackToggle,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggle"] = 1;
 		}
 		onToggleListeners ~= dlg;

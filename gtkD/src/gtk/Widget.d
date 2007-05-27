@@ -333,7 +333,7 @@ public class Widget : ObjectGtk
 	int[char[]] connectedSignals;
 	
 	void delegate(Widget)[] onAccelClosuresChangedListeners;
-	void addOnAccelClosuresChanged(void delegate(Widget) dlg)
+	void addOnAccelClosuresChanged(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accel-closures-changed" in connectedSignals) )
 		{
@@ -343,7 +343,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackAccelClosuresChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["accel-closures-changed"] = 1;
 		}
 		onAccelClosuresChangedListeners ~= dlg;
@@ -361,7 +361,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventButton*, Widget)[] onButtonPressListeners;
-	void addOnButtonPress(gboolean delegate(GdkEventButton*, Widget) dlg)
+	void addOnButtonPress(gboolean delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("button-press-event" in connectedSignals) )
 		{
@@ -372,7 +372,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackButtonPress,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["button-press-event"] = 1;
 		}
 		onButtonPressListeners ~= dlg;
@@ -390,7 +390,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventButton*, Widget)[] onButtonReleaseListeners;
-	void addOnButtonRelease(gboolean delegate(GdkEventButton*, Widget) dlg)
+	void addOnButtonRelease(gboolean delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("button-release-event" in connectedSignals) )
 		{
@@ -401,7 +401,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackButtonRelease,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["button-release-event"] = 1;
 		}
 		onButtonReleaseListeners ~= dlg;
@@ -419,7 +419,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(guint, Widget)[] onCanActivateAccelListeners;
-	void addOnCanActivateAccel(gboolean delegate(guint, Widget) dlg)
+	void addOnCanActivateAccel(gboolean delegate(guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("can-activate-accel" in connectedSignals) )
 		{
@@ -429,7 +429,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackCanActivateAccel,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["can-activate-accel"] = 1;
 		}
 		onCanActivateAccelListeners ~= dlg;
@@ -447,7 +447,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GParamSpec*, Widget)[] onChildNotifyListeners;
-	void addOnChildNotify(void delegate(GParamSpec*, Widget) dlg)
+	void addOnChildNotify(void delegate(GParamSpec*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("child-notify" in connectedSignals) )
 		{
@@ -457,7 +457,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackChildNotify,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["child-notify"] = 1;
 		}
 		onChildNotifyListeners ~= dlg;
@@ -475,7 +475,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventClient*, Widget)[] onClientListeners;
-	void addOnClient(gboolean delegate(GdkEventClient*, Widget) dlg)
+	void addOnClient(gboolean delegate(GdkEventClient*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("client-event" in connectedSignals) )
 		{
@@ -485,7 +485,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackClient,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["client-event"] = 1;
 		}
 		onClientListeners ~= dlg;
@@ -503,7 +503,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onCompositedChangedListeners;
-	void addOnCompositedChanged(void delegate(Widget) dlg)
+	void addOnCompositedChanged(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("composited-changed" in connectedSignals) )
 		{
@@ -513,7 +513,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackCompositedChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["composited-changed"] = 1;
 		}
 		onCompositedChangedListeners ~= dlg;
@@ -531,7 +531,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventConfigure*, Widget)[] onConfigureListeners;
-	void addOnConfigure(gboolean delegate(GdkEventConfigure*, Widget) dlg)
+	void addOnConfigure(gboolean delegate(GdkEventConfigure*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("configure-event" in connectedSignals) )
 		{
@@ -541,7 +541,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackConfigure,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["configure-event"] = 1;
 		}
 		onConfigureListeners ~= dlg;
@@ -559,7 +559,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onDeleteListeners;
-	void addOnDelete(gboolean delegate(Event, Widget) dlg)
+	void addOnDelete(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-event" in connectedSignals) )
 		{
@@ -569,7 +569,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDelete,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["delete-event"] = 1;
 		}
 		onDeleteListeners ~= dlg;
@@ -587,7 +587,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onDestroyListeners;
-	void addOnDestroy(gboolean delegate(Event, Widget) dlg)
+	void addOnDestroy(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("destroy-event" in connectedSignals) )
 		{
@@ -597,7 +597,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDestroy,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["destroy-event"] = 1;
 		}
 		onDestroyListeners ~= dlg;
@@ -615,7 +615,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkTextDirection, Widget)[] onDirectionChangedListeners;
-	void addOnDirectionChanged(void delegate(GtkTextDirection, Widget) dlg)
+	void addOnDirectionChanged(void delegate(GtkTextDirection, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("direction-changed" in connectedSignals) )
 		{
@@ -625,7 +625,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDirectionChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["direction-changed"] = 1;
 		}
 		onDirectionChangedListeners ~= dlg;
@@ -643,7 +643,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, Widget)[] onDragBeginListeners;
-	void addOnDragBegin(void delegate(GdkDragContext*, Widget) dlg)
+	void addOnDragBegin(void delegate(GdkDragContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-begin" in connectedSignals) )
 		{
@@ -653,7 +653,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragBegin,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["drag-begin"] = 1;
 		}
 		onDragBeginListeners ~= dlg;
@@ -671,7 +671,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, Widget)[] onDragDataDeleteListeners;
-	void addOnDragDataDelete(void delegate(GdkDragContext*, Widget) dlg)
+	void addOnDragDataDelete(void delegate(GdkDragContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-data-delete" in connectedSignals) )
 		{
@@ -681,7 +681,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragDataDelete,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["drag-data-delete"] = 1;
 		}
 		onDragDataDeleteListeners ~= dlg;
@@ -699,7 +699,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, GtkSelectionData*, guint, guint, Widget)[] onDragDataGetListeners;
-	void addOnDragDataGet(void delegate(GdkDragContext*, GtkSelectionData*, guint, guint, Widget) dlg)
+	void addOnDragDataGet(void delegate(GdkDragContext*, GtkSelectionData*, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-data-get" in connectedSignals) )
 		{
@@ -709,7 +709,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragDataGet,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["drag-data-get"] = 1;
 		}
 		onDragDataGetListeners ~= dlg;
@@ -727,7 +727,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget)[] onDragDataReceivedListeners;
-	void addOnDragDataReceived(void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget) dlg)
+	void addOnDragDataReceived(void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-data-received" in connectedSignals) )
 		{
@@ -737,7 +737,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragDataReceived,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["drag-data-received"] = 1;
 		}
 		onDragDataReceivedListeners ~= dlg;
@@ -755,7 +755,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkDragContext*, gint, gint, guint, Widget)[] onDragDropListeners;
-	void addOnDragDrop(gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg)
+	void addOnDragDrop(gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-drop" in connectedSignals) )
 		{
@@ -765,7 +765,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragDrop,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["drag-drop"] = 1;
 		}
 		onDragDropListeners ~= dlg;
@@ -783,7 +783,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, Widget)[] onDragEndListeners;
-	void addOnDragEnd(void delegate(GdkDragContext*, Widget) dlg)
+	void addOnDragEnd(void delegate(GdkDragContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-end" in connectedSignals) )
 		{
@@ -793,7 +793,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragEnd,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["drag-end"] = 1;
 		}
 		onDragEndListeners ~= dlg;
@@ -811,7 +811,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkDragContext*, GtkDragResult, Widget)[] onDragFailedListeners;
-	void addOnDragFailed(gboolean delegate(GdkDragContext*, GtkDragResult, Widget) dlg)
+	void addOnDragFailed(gboolean delegate(GdkDragContext*, GtkDragResult, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-failed" in connectedSignals) )
 		{
@@ -821,7 +821,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragFailed,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["drag-failed"] = 1;
 		}
 		onDragFailedListeners ~= dlg;
@@ -839,7 +839,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, guint, Widget)[] onDragLeaveListeners;
-	void addOnDragLeave(void delegate(GdkDragContext*, guint, Widget) dlg)
+	void addOnDragLeave(void delegate(GdkDragContext*, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-leave" in connectedSignals) )
 		{
@@ -849,7 +849,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragLeave,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["drag-leave"] = 1;
 		}
 		onDragLeaveListeners ~= dlg;
@@ -867,7 +867,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkDragContext*, gint, gint, guint, Widget)[] onDragMotionListeners;
-	void addOnDragMotion(gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg)
+	void addOnDragMotion(gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-motion" in connectedSignals) )
 		{
@@ -877,7 +877,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackDragMotion,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["drag-motion"] = 1;
 		}
 		onDragMotionListeners ~= dlg;
@@ -895,7 +895,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventCrossing*, Widget)[] onEnterNotifyListeners;
-	void addOnEnterNotify(gboolean delegate(GdkEventCrossing*, Widget) dlg)
+	void addOnEnterNotify(gboolean delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("enter-notify-event" in connectedSignals) )
 		{
@@ -905,7 +905,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackEnterNotify,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["enter-notify-event"] = 1;
 		}
 		onEnterNotifyListeners ~= dlg;
@@ -923,7 +923,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onListeners;
-	void addOn(gboolean delegate(Event, Widget) dlg)
+	void addOn(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("event" in connectedSignals) )
 		{
@@ -933,7 +933,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBack,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["event"] = 1;
 		}
 		onListeners ~= dlg;
@@ -951,7 +951,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Event, Widget)[] onEventAfterListeners;
-	void addOnEventAfter(void delegate(Event, Widget) dlg)
+	void addOnEventAfter(void delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("event-after" in connectedSignals) )
 		{
@@ -961,7 +961,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackEventAfter,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["event-after"] = 1;
 		}
 		onEventAfterListeners ~= dlg;
@@ -979,7 +979,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventExpose*, Widget)[] onExposeListeners;
-	void addOnExpose(gboolean delegate(GdkEventExpose*, Widget) dlg)
+	void addOnExpose(gboolean delegate(GdkEventExpose*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("expose-event" in connectedSignals) )
 		{
@@ -989,7 +989,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackExpose,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["expose-event"] = 1;
 		}
 		onExposeListeners ~= dlg;
@@ -1007,7 +1007,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GtkDirectionType, Widget)[] onFocusListeners;
-	void addOnFocus(gboolean delegate(GtkDirectionType, Widget) dlg)
+	void addOnFocus(gboolean delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus" in connectedSignals) )
 		{
@@ -1017,7 +1017,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["focus"] = 1;
 		}
 		onFocusListeners ~= dlg;
@@ -1035,7 +1035,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventFocus*, Widget)[] onFocusInListeners;
-	void addOnFocusIn(gboolean delegate(GdkEventFocus*, Widget) dlg)
+	void addOnFocusIn(gboolean delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-in-event" in connectedSignals) )
 		{
@@ -1045,7 +1045,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackFocusIn,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["focus-in-event"] = 1;
 		}
 		onFocusInListeners ~= dlg;
@@ -1063,7 +1063,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventFocus*, Widget)[] onFocusOutListeners;
-	void addOnFocusOut(gboolean delegate(GdkEventFocus*, Widget) dlg)
+	void addOnFocusOut(gboolean delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-out-event" in connectedSignals) )
 		{
@@ -1073,7 +1073,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackFocusOut,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["focus-out-event"] = 1;
 		}
 		onFocusOutListeners ~= dlg;
@@ -1091,7 +1091,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onGrabBrokenListeners;
-	void addOnGrabBroken(gboolean delegate(Event, Widget) dlg)
+	void addOnGrabBroken(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("grab-broken-event" in connectedSignals) )
 		{
@@ -1101,7 +1101,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackGrabBroken,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["grab-broken-event"] = 1;
 		}
 		onGrabBrokenListeners ~= dlg;
@@ -1119,7 +1119,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onGrabFocusListeners;
-	void addOnGrabFocus(void delegate(Widget) dlg)
+	void addOnGrabFocus(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("grab-focus" in connectedSignals) )
 		{
@@ -1129,7 +1129,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackGrabFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["grab-focus"] = 1;
 		}
 		onGrabFocusListeners ~= dlg;
@@ -1147,7 +1147,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(gboolean, Widget)[] onGrabNotifyListeners;
-	void addOnGrabNotify(void delegate(gboolean, Widget) dlg)
+	void addOnGrabNotify(void delegate(gboolean, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("grab-notify" in connectedSignals) )
 		{
@@ -1157,7 +1157,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackGrabNotify,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["grab-notify"] = 1;
 		}
 		onGrabNotifyListeners ~= dlg;
@@ -1175,7 +1175,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onHideListeners;
-	void addOnHide(void delegate(Widget) dlg)
+	void addOnHide(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("hide" in connectedSignals) )
 		{
@@ -1185,7 +1185,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackHide,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["hide"] = 1;
 		}
 		onHideListeners ~= dlg;
@@ -1203,7 +1203,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkWidget*, Widget)[] onHierarchyChangedListeners;
-	void addOnHierarchyChanged(void delegate(GtkWidget*, Widget) dlg)
+	void addOnHierarchyChanged(void delegate(GtkWidget*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("hierarchy-changed" in connectedSignals) )
 		{
@@ -1213,7 +1213,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackHierarchyChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["hierarchy-changed"] = 1;
 		}
 		onHierarchyChangedListeners ~= dlg;
@@ -1231,7 +1231,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventKey*, Widget)[] onKeyPressListeners;
-	void addOnKeyPress(gboolean delegate(GdkEventKey*, Widget) dlg)
+	void addOnKeyPress(gboolean delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("key-press-event" in connectedSignals) )
 		{
@@ -1241,7 +1241,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackKeyPress,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["key-press-event"] = 1;
 		}
 		onKeyPressListeners ~= dlg;
@@ -1259,7 +1259,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventKey*, Widget)[] onKeyReleaseListeners;
-	void addOnKeyRelease(gboolean delegate(GdkEventKey*, Widget) dlg)
+	void addOnKeyRelease(gboolean delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("key-release-event" in connectedSignals) )
 		{
@@ -1269,7 +1269,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackKeyRelease,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["key-release-event"] = 1;
 		}
 		onKeyReleaseListeners ~= dlg;
@@ -1287,7 +1287,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GtkDirectionType, Widget)[] onKeynavFailedListeners;
-	void addOnKeynavFailed(gboolean delegate(GtkDirectionType, Widget) dlg)
+	void addOnKeynavFailed(gboolean delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("keynav-failed" in connectedSignals) )
 		{
@@ -1297,7 +1297,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackKeynavFailed,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["keynav-failed"] = 1;
 		}
 		onKeynavFailedListeners ~= dlg;
@@ -1315,7 +1315,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventCrossing*, Widget)[] onLeaveNotifyListeners;
-	void addOnLeaveNotify(gboolean delegate(GdkEventCrossing*, Widget) dlg)
+	void addOnLeaveNotify(gboolean delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("leave-notify-event" in connectedSignals) )
 		{
@@ -1325,7 +1325,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackLeaveNotify,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["leave-notify-event"] = 1;
 		}
 		onLeaveNotifyListeners ~= dlg;
@@ -1343,7 +1343,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onMapListeners;
-	void addOnMap(void delegate(Widget) dlg)
+	void addOnMap(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("map" in connectedSignals) )
 		{
@@ -1353,7 +1353,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackMap,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["map"] = 1;
 		}
 		onMapListeners ~= dlg;
@@ -1371,7 +1371,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onMapEventListeners;
-	void addOnMapEvent(gboolean delegate(Event, Widget) dlg)
+	void addOnMapEvent(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("map-event" in connectedSignals) )
 		{
@@ -1381,7 +1381,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackMapEvent,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["map-event"] = 1;
 		}
 		onMapEventListeners ~= dlg;
@@ -1399,7 +1399,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(gboolean, Widget)[] onMnemonicActivateListeners;
-	void addOnMnemonicActivate(gboolean delegate(gboolean, Widget) dlg)
+	void addOnMnemonicActivate(gboolean delegate(gboolean, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("mnemonic-activate" in connectedSignals) )
 		{
@@ -1409,7 +1409,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackMnemonicActivate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["mnemonic-activate"] = 1;
 		}
 		onMnemonicActivateListeners ~= dlg;
@@ -1427,7 +1427,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventMotion*, Widget)[] onMotionNotifyListeners;
-	void addOnMotionNotify(gboolean delegate(GdkEventMotion*, Widget) dlg)
+	void addOnMotionNotify(gboolean delegate(GdkEventMotion*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("motion-notify-event" in connectedSignals) )
 		{
@@ -1438,7 +1438,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackMotionNotify,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["motion-notify-event"] = 1;
 		}
 		onMotionNotifyListeners ~= dlg;
@@ -1456,7 +1456,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventNoExpose*, Widget)[] onNoExposeListeners;
-	void addOnNoExpose(gboolean delegate(GdkEventNoExpose*, Widget) dlg)
+	void addOnNoExpose(gboolean delegate(GdkEventNoExpose*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("no-expose-event" in connectedSignals) )
 		{
@@ -1466,7 +1466,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackNoExpose,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["no-expose-event"] = 1;
 		}
 		onNoExposeListeners ~= dlg;
@@ -1484,7 +1484,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkObject*, Widget)[] onParentSetListeners;
-	void addOnParentSet(void delegate(GtkObject*, Widget) dlg)
+	void addOnParentSet(void delegate(GtkObject*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("parent-set" in connectedSignals) )
 		{
@@ -1494,7 +1494,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackParentSet,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["parent-set"] = 1;
 		}
 		onParentSetListeners ~= dlg;
@@ -1512,7 +1512,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Widget)[] onPopupMenuListeners;
-	void addOnPopupMenu(gboolean delegate(Widget) dlg)
+	void addOnPopupMenu(gboolean delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popup-menu" in connectedSignals) )
 		{
@@ -1522,7 +1522,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackPopupMenu,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["popup-menu"] = 1;
 		}
 		onPopupMenuListeners ~= dlg;
@@ -1540,7 +1540,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventProperty*, Widget)[] onPropertyNotifyListeners;
-	void addOnPropertyNotify(gboolean delegate(GdkEventProperty*, Widget) dlg)
+	void addOnPropertyNotify(gboolean delegate(GdkEventProperty*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("property-notify-event" in connectedSignals) )
 		{
@@ -1550,7 +1550,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackPropertyNotify,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["property-notify-event"] = 1;
 		}
 		onPropertyNotifyListeners ~= dlg;
@@ -1568,7 +1568,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventProximity*, Widget)[] onProximityInListeners;
-	void addOnProximityIn(gboolean delegate(GdkEventProximity*, Widget) dlg)
+	void addOnProximityIn(gboolean delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("proximity-in-event" in connectedSignals) )
 		{
@@ -1578,7 +1578,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackProximityIn,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["proximity-in-event"] = 1;
 		}
 		onProximityInListeners ~= dlg;
@@ -1596,7 +1596,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventProximity*, Widget)[] onProximityOutListeners;
-	void addOnProximityOut(gboolean delegate(GdkEventProximity*, Widget) dlg)
+	void addOnProximityOut(gboolean delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("proximity-out-event" in connectedSignals) )
 		{
@@ -1606,7 +1606,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackProximityOut,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["proximity-out-event"] = 1;
 		}
 		onProximityOutListeners ~= dlg;
@@ -1624,7 +1624,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget)[] onQueryTooltipListeners;
-	void addOnQueryTooltip(gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg)
+	void addOnQueryTooltip(gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("query-tooltip" in connectedSignals) )
 		{
@@ -1634,7 +1634,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackQueryTooltip,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["query-tooltip"] = 1;
 		}
 		onQueryTooltipListeners ~= dlg;
@@ -1652,7 +1652,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onRealizeListeners;
-	void addOnRealize(void delegate(Widget) dlg)
+	void addOnRealize(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("realize" in connectedSignals) )
 		{
@@ -1662,7 +1662,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackRealize,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["realize"] = 1;
 		}
 		onRealizeListeners ~= dlg;
@@ -1680,7 +1680,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Screen, Widget)[] onScreenChangedListeners;
-	void addOnScreenChanged(void delegate(Screen, Widget) dlg)
+	void addOnScreenChanged(void delegate(Screen, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("screen-changed" in connectedSignals) )
 		{
@@ -1690,7 +1690,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackScreenChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["screen-changed"] = 1;
 		}
 		onScreenChangedListeners ~= dlg;
@@ -1708,7 +1708,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventScroll*, Widget)[] onScrollListeners;
-	void addOnScroll(gboolean delegate(GdkEventScroll*, Widget) dlg)
+	void addOnScroll(gboolean delegate(GdkEventScroll*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("scroll-event" in connectedSignals) )
 		{
@@ -1718,7 +1718,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackScroll,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["scroll-event"] = 1;
 		}
 		onScrollListeners ~= dlg;
@@ -1736,7 +1736,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventSelection*, Widget)[] onSelectionClearListeners;
-	void addOnSelectionClear(gboolean delegate(GdkEventSelection*, Widget) dlg)
+	void addOnSelectionClear(gboolean delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-clear-event" in connectedSignals) )
 		{
@@ -1746,7 +1746,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSelectionClear,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["selection-clear-event"] = 1;
 		}
 		onSelectionClearListeners ~= dlg;
@@ -1764,7 +1764,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkSelectionData*, guint, guint, Widget)[] onSelectionGetListeners;
-	void addOnSelectionGet(void delegate(GtkSelectionData*, guint, guint, Widget) dlg)
+	void addOnSelectionGet(void delegate(GtkSelectionData*, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-get" in connectedSignals) )
 		{
@@ -1774,7 +1774,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSelectionGet,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["selection-get"] = 1;
 		}
 		onSelectionGetListeners ~= dlg;
@@ -1792,7 +1792,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventSelection*, Widget)[] onSelectionNotifyListeners;
-	void addOnSelectionNotify(gboolean delegate(GdkEventSelection*, Widget) dlg)
+	void addOnSelectionNotify(gboolean delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-notify-event" in connectedSignals) )
 		{
@@ -1802,7 +1802,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSelectionNotify,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["selection-notify-event"] = 1;
 		}
 		onSelectionNotifyListeners ~= dlg;
@@ -1820,7 +1820,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkSelectionData*, guint, Widget)[] onSelectionReceivedListeners;
-	void addOnSelectionReceived(void delegate(GtkSelectionData*, guint, Widget) dlg)
+	void addOnSelectionReceived(void delegate(GtkSelectionData*, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-received" in connectedSignals) )
 		{
@@ -1830,7 +1830,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSelectionReceived,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["selection-received"] = 1;
 		}
 		onSelectionReceivedListeners ~= dlg;
@@ -1848,7 +1848,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventSelection*, Widget)[] onSelectionRequestListeners;
-	void addOnSelectionRequest(gboolean delegate(GdkEventSelection*, Widget) dlg)
+	void addOnSelectionRequest(gboolean delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-request-event" in connectedSignals) )
 		{
@@ -1858,7 +1858,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSelectionRequest,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["selection-request-event"] = 1;
 		}
 		onSelectionRequestListeners ~= dlg;
@@ -1876,7 +1876,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onShowListeners;
-	void addOnShow(void delegate(Widget) dlg)
+	void addOnShow(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("show" in connectedSignals) )
 		{
@@ -1886,7 +1886,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackShow,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["show"] = 1;
 		}
 		onShowListeners ~= dlg;
@@ -1904,7 +1904,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GtkWidgetHelpType, Widget)[] onShowHelpListeners;
-	void addOnShowHelp(gboolean delegate(GtkWidgetHelpType, Widget) dlg)
+	void addOnShowHelp(gboolean delegate(GtkWidgetHelpType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("show-help" in connectedSignals) )
 		{
@@ -1914,7 +1914,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackShowHelp,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["show-help"] = 1;
 		}
 		onShowHelpListeners ~= dlg;
@@ -1932,7 +1932,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkAllocation*, Widget)[] onSizeAllocateListeners;
-	void addOnSizeAllocate(void delegate(GtkAllocation*, Widget) dlg)
+	void addOnSizeAllocate(void delegate(GtkAllocation*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-allocate" in connectedSignals) )
 		{
@@ -1942,7 +1942,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSizeAllocate,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["size-allocate"] = 1;
 		}
 		onSizeAllocateListeners ~= dlg;
@@ -1960,7 +1960,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkRequisition*, Widget)[] onSizeRequestListeners;
-	void addOnSizeRequest(void delegate(GtkRequisition*, Widget) dlg)
+	void addOnSizeRequest(void delegate(GtkRequisition*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-request" in connectedSignals) )
 		{
@@ -1970,7 +1970,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackSizeRequest,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["size-request"] = 1;
 		}
 		onSizeRequestListeners ~= dlg;
@@ -1988,7 +1988,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkStateType, Widget)[] onStateChangedListeners;
-	void addOnStateChanged(void delegate(GtkStateType, Widget) dlg)
+	void addOnStateChanged(void delegate(GtkStateType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("state-changed" in connectedSignals) )
 		{
@@ -1998,7 +1998,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackStateChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["state-changed"] = 1;
 		}
 		onStateChangedListeners ~= dlg;
@@ -2015,8 +2015,10 @@ public class Widget : ObjectGtk
 		return consumed;
 	}
 	
-	version(tango){}else void delegate(Style, Widget)[] onStyleSetListeners;
-	version(tango){}else void addOnStyleSet(void delegate(Style, Widget) dlg)
+	version(tango){}else
+	void delegate(Style, Widget)[] onStyleSetListeners;
+	version(tango){}else
+	void addOnStyleSet(void delegate(Style, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("style-set" in connectedSignals) )
 		{
@@ -2026,12 +2028,13 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackStyleSet,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["style-set"] = 1;
 		}
 		onStyleSetListeners ~= dlg;
 	}
-	version(tango){}else extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, Widget widget)
+	version(tango){}else
+	extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, Widget widget)
 	{
 		bool consumed = false;
 		
@@ -2044,7 +2047,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onUnmapListeners;
-	void addOnUnmap(void delegate(Widget) dlg)
+	void addOnUnmap(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unmap" in connectedSignals) )
 		{
@@ -2054,7 +2057,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackUnmap,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["unmap"] = 1;
 		}
 		onUnmapListeners ~= dlg;
@@ -2072,7 +2075,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onUnmapEventListeners;
-	void addOnUnmapEvent(gboolean delegate(Event, Widget) dlg)
+	void addOnUnmapEvent(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unmap-event" in connectedSignals) )
 		{
@@ -2082,7 +2085,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackUnmapEvent,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["unmap-event"] = 1;
 		}
 		onUnmapEventListeners ~= dlg;
@@ -2100,7 +2103,7 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onUnrealizeListeners;
-	void addOnUnrealize(void delegate(Widget) dlg)
+	void addOnUnrealize(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unrealize" in connectedSignals) )
 		{
@@ -2110,7 +2113,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackUnrealize,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["unrealize"] = 1;
 		}
 		onUnrealizeListeners ~= dlg;
@@ -2128,7 +2131,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventVisibility*, Widget)[] onVisibilityNotifyListeners;
-	void addOnVisibilityNotify(gboolean delegate(GdkEventVisibility*, Widget) dlg)
+	void addOnVisibilityNotify(gboolean delegate(GdkEventVisibility*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("visibility-notify-event" in connectedSignals) )
 		{
@@ -2138,7 +2141,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackVisibilityNotify,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["visibility-notify-event"] = 1;
 		}
 		onVisibilityNotifyListeners ~= dlg;
@@ -2156,7 +2159,7 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventWindowState*, Widget)[] onWindowStateListeners;
-	void addOnWindowState(gboolean delegate(GdkEventWindowState*, Widget) dlg)
+	void addOnWindowState(gboolean delegate(GdkEventWindowState*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("window-state-event" in connectedSignals) )
 		{
@@ -2166,7 +2169,7 @@ public class Widget : ObjectGtk
 			cast(GCallback)&callBackWindowState,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["window-state-event"] = 1;
 		}
 		onWindowStateListeners ~= dlg;
@@ -3256,7 +3259,8 @@ public class Widget : ObjectGtk
 	 *  a GtkStyle, or NULL to remove the effect of a previous
 	 *  gtk_widget_set_style() and go back to the default style
 	 */
-	version(tango){}else public void setStyle(Style style)
+	version(tango){}else
+	public void setStyle(Style style)
 	{
 		// void gtk_widget_set_style (GtkWidget *widget,  GtkStyle *style);
 		gtk_widget_set_style(gtkWidget, (style is null) ? null : style.getStyleStruct());
@@ -3284,7 +3288,8 @@ public class Widget : ObjectGtk
 	 * Returns:
 	 *  the widget's GtkStyle
 	 */
-	version(tango){}else public Style getStyle()
+	version(tango){}else
+	public Style getStyle()
 	{
 		// GtkStyle* gtk_widget_get_style (GtkWidget *widget);
 		return new Style( gtk_widget_get_style(gtkWidget) );
@@ -3347,7 +3352,8 @@ public class Widget : ObjectGtk
 	 *  the default style. This GtkStyle object is owned by GTK+ and
 	 * should not be modified or freed.
 	 */
-	version(tango){}else public static Style getDefaultStyle()
+	version(tango){}else
+	public static Style getDefaultStyle()
 	{
 		// GtkStyle* gtk_widget_get_default_style (void);
 		return new Style( gtk_widget_get_default_style() );

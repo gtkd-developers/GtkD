@@ -107,7 +107,7 @@ public class IMContext : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], IMContext)[] onCommitListeners;
-	void addOnCommit(void delegate(char[], IMContext) dlg)
+	void addOnCommit(void delegate(char[], IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("commit" in connectedSignals) )
 		{
@@ -117,7 +117,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackCommit,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["commit"] = 1;
 		}
 		onCommitListeners ~= dlg;
@@ -135,7 +135,7 @@ public class IMContext : ObjectG
 	}
 	
 	gboolean delegate(gint, gint, IMContext)[] onDeleteSurroundingListeners;
-	void addOnDeleteSurrounding(gboolean delegate(gint, gint, IMContext) dlg)
+	void addOnDeleteSurrounding(gboolean delegate(gint, gint, IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-surrounding" in connectedSignals) )
 		{
@@ -145,7 +145,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackDeleteSurrounding,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["delete-surrounding"] = 1;
 		}
 		onDeleteSurroundingListeners ~= dlg;
@@ -163,7 +163,7 @@ public class IMContext : ObjectG
 	}
 	
 	void delegate(IMContext)[] onPreeditChangedListeners;
-	void addOnPreeditChanged(void delegate(IMContext) dlg)
+	void addOnPreeditChanged(void delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("preedit-changed" in connectedSignals) )
 		{
@@ -173,7 +173,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackPreeditChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["preedit-changed"] = 1;
 		}
 		onPreeditChangedListeners ~= dlg;
@@ -191,7 +191,7 @@ public class IMContext : ObjectG
 	}
 	
 	void delegate(IMContext)[] onPreeditEndListeners;
-	void addOnPreeditEnd(void delegate(IMContext) dlg)
+	void addOnPreeditEnd(void delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("preedit-end" in connectedSignals) )
 		{
@@ -201,7 +201,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackPreeditEnd,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["preedit-end"] = 1;
 		}
 		onPreeditEndListeners ~= dlg;
@@ -219,7 +219,7 @@ public class IMContext : ObjectG
 	}
 	
 	void delegate(IMContext)[] onPreeditStartListeners;
-	void addOnPreeditStart(void delegate(IMContext) dlg)
+	void addOnPreeditStart(void delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("preedit-start" in connectedSignals) )
 		{
@@ -229,7 +229,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackPreeditStart,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["preedit-start"] = 1;
 		}
 		onPreeditStartListeners ~= dlg;
@@ -247,7 +247,7 @@ public class IMContext : ObjectG
 	}
 	
 	gboolean delegate(IMContext)[] onRetrieveSurroundingListeners;
-	void addOnRetrieveSurrounding(gboolean delegate(IMContext) dlg)
+	void addOnRetrieveSurrounding(gboolean delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("retrieve-surrounding" in connectedSignals) )
 		{
@@ -257,7 +257,7 @@ public class IMContext : ObjectG
 			cast(GCallback)&callBackRetrieveSurrounding,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["retrieve-surrounding"] = 1;
 		}
 		onRetrieveSurroundingListeners ~= dlg;

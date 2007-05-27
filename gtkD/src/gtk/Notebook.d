@@ -138,7 +138,7 @@ public class Notebook : Container
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(gint, Notebook)[] onChangeCurrentPageListeners;
-	void addOnChangeCurrentPage(gboolean delegate(gint, Notebook) dlg)
+	void addOnChangeCurrentPage(gboolean delegate(gint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("change-current-page" in connectedSignals) )
 		{
@@ -148,7 +148,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackChangeCurrentPage,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["change-current-page"] = 1;
 		}
 		onChangeCurrentPageListeners ~= dlg;
@@ -166,7 +166,7 @@ public class Notebook : Container
 	}
 	
 	gboolean delegate(GtkNotebookTab, Notebook)[] onFocusTabListeners;
-	void addOnFocusTab(gboolean delegate(GtkNotebookTab, Notebook) dlg)
+	void addOnFocusTab(gboolean delegate(GtkNotebookTab, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-tab" in connectedSignals) )
 		{
@@ -176,7 +176,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackFocusTab,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["focus-tab"] = 1;
 		}
 		onFocusTabListeners ~= dlg;
@@ -194,7 +194,7 @@ public class Notebook : Container
 	}
 	
 	void delegate(GtkDirectionType, Notebook)[] onMoveFocusOutListeners;
-	void addOnMoveFocusOut(void delegate(GtkDirectionType, Notebook) dlg)
+	void addOnMoveFocusOut(void delegate(GtkDirectionType, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-focus-out" in connectedSignals) )
 		{
@@ -204,7 +204,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackMoveFocusOut,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-focus-out"] = 1;
 		}
 		onMoveFocusOutListeners ~= dlg;
@@ -222,7 +222,7 @@ public class Notebook : Container
 	}
 	
 	void delegate(Widget, guint, Notebook)[] onPageAddedListeners;
-	void addOnPageAdded(void delegate(Widget, guint, Notebook) dlg)
+	void addOnPageAdded(void delegate(Widget, guint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("page-added" in connectedSignals) )
 		{
@@ -232,7 +232,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackPageAdded,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["page-added"] = 1;
 		}
 		onPageAddedListeners ~= dlg;
@@ -250,7 +250,7 @@ public class Notebook : Container
 	}
 	
 	void delegate(Widget, guint, Notebook)[] onPageRemovedListeners;
-	void addOnPageRemoved(void delegate(Widget, guint, Notebook) dlg)
+	void addOnPageRemoved(void delegate(Widget, guint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("page-removed" in connectedSignals) )
 		{
@@ -260,7 +260,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackPageRemoved,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["page-removed"] = 1;
 		}
 		onPageRemovedListeners ~= dlg;
@@ -278,7 +278,7 @@ public class Notebook : Container
 	}
 	
 	void delegate(Widget, guint, Notebook)[] onPageReorderedListeners;
-	void addOnPageReordered(void delegate(Widget, guint, Notebook) dlg)
+	void addOnPageReordered(void delegate(Widget, guint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("page-reordered" in connectedSignals) )
 		{
@@ -288,7 +288,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackPageReordered,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["page-reordered"] = 1;
 		}
 		onPageReorderedListeners ~= dlg;
@@ -306,7 +306,7 @@ public class Notebook : Container
 	}
 	
 	gboolean delegate(GtkDirectionType, gboolean, Notebook)[] onReorderTabListeners;
-	void addOnReorderTab(gboolean delegate(GtkDirectionType, gboolean, Notebook) dlg)
+	void addOnReorderTab(gboolean delegate(GtkDirectionType, gboolean, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("reorder-tab" in connectedSignals) )
 		{
@@ -316,7 +316,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackReorderTab,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["reorder-tab"] = 1;
 		}
 		onReorderTabListeners ~= dlg;
@@ -334,7 +334,7 @@ public class Notebook : Container
 	}
 	
 	gboolean delegate(gboolean, Notebook)[] onSelectPageListeners;
-	void addOnSelectPage(gboolean delegate(gboolean, Notebook) dlg)
+	void addOnSelectPage(gboolean delegate(gboolean, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-page" in connectedSignals) )
 		{
@@ -344,7 +344,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackSelectPage,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["select-page"] = 1;
 		}
 		onSelectPageListeners ~= dlg;
@@ -362,7 +362,7 @@ public class Notebook : Container
 	}
 	
 	void delegate(GtkNotebookPage*, guint, Notebook)[] onSwitchPageListeners;
-	void addOnSwitchPage(void delegate(GtkNotebookPage*, guint, Notebook) dlg)
+	void addOnSwitchPage(void delegate(GtkNotebookPage*, guint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("switch-page" in connectedSignals) )
 		{
@@ -372,7 +372,7 @@ public class Notebook : Container
 			cast(GCallback)&callBackSwitchPage,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["switch-page"] = 1;
 		}
 		onSwitchPageListeners ~= dlg;

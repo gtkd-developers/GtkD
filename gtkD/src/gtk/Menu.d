@@ -202,7 +202,7 @@ public class Menu : MenuShell
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkScrollType, Menu)[] onMoveScrollListeners;
-	void addOnMoveScroll(void delegate(GtkScrollType, Menu) dlg)
+	void addOnMoveScroll(void delegate(GtkScrollType, Menu) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-scroll" in connectedSignals) )
 		{
@@ -212,7 +212,7 @@ public class Menu : MenuShell
 			cast(GCallback)&callBackMoveScroll,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-scroll"] = 1;
 		}
 		onMoveScrollListeners ~= dlg;

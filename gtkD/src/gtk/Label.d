@@ -210,7 +210,7 @@ public class Label : Misc
 	int[char[]] connectedSignals;
 	
 	void delegate(Label)[] onCopyClipboardListeners;
-	void addOnCopyClipboard(void delegate(Label) dlg)
+	void addOnCopyClipboard(void delegate(Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("copy-clipboard" in connectedSignals) )
 		{
@@ -220,7 +220,7 @@ public class Label : Misc
 			cast(GCallback)&callBackCopyClipboard,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["copy-clipboard"] = 1;
 		}
 		onCopyClipboardListeners ~= dlg;
@@ -238,7 +238,7 @@ public class Label : Misc
 	}
 	
 	void delegate(GtkMovementStep, gint, gboolean, Label)[] onMoveCursorListeners;
-	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, Label) dlg)
+	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
 		{
@@ -248,7 +248,7 @@ public class Label : Misc
 			cast(GCallback)&callBackMoveCursor,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -266,7 +266,7 @@ public class Label : Misc
 	}
 	
 	void delegate(GtkMenu*, Label)[] onPopulatePopupListeners;
-	void addOnPopulatePopup(void delegate(GtkMenu*, Label) dlg)
+	void addOnPopulatePopup(void delegate(GtkMenu*, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("populate-popup" in connectedSignals) )
 		{
@@ -276,7 +276,7 @@ public class Label : Misc
 			cast(GCallback)&callBackPopulatePopup,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["populate-popup"] = 1;
 		}
 		onPopulatePopupListeners ~= dlg;

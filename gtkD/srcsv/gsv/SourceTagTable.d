@@ -98,7 +98,7 @@ public class SourceTagTable : TextTagTable
 	int[char[]] connectedSignals;
 	
 	void delegate(SourceTagTable)[] onChangedListeners;
-	void addOnChanged(void delegate(SourceTagTable) dlg)
+	void addOnChanged(void delegate(SourceTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -108,7 +108,7 @@ public class SourceTagTable : TextTagTable
 			cast(GCallback)&callBackChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;

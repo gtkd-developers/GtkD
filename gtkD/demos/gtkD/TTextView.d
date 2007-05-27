@@ -250,8 +250,7 @@ static char gray50_bits[] = [0x02, 0x01];
 	 */
 	void insertText(TextBuffer buffer)
 	{
-		version(tango){}
-		else
+		//version(tango) {} else
 		{
 		TextIter iter = new TextIter();
 		TextIter start = new TextIter();

@@ -195,7 +195,7 @@ public class TreeSelection : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeSelection)[] onChangedListeners;
-	void addOnChanged(void delegate(TreeSelection) dlg)
+	void addOnChanged(void delegate(TreeSelection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -205,7 +205,7 @@ public class TreeSelection : ObjectG
 			cast(GCallback)&callBackChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;

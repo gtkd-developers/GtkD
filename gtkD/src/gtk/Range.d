@@ -102,7 +102,7 @@ public class Range : Widget
 	int[char[]] connectedSignals;
 	
 	void delegate(gdouble, Range)[] onAdjustBoundsListeners;
-	void addOnAdjustBounds(void delegate(gdouble, Range) dlg)
+	void addOnAdjustBounds(void delegate(gdouble, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("adjust-bounds" in connectedSignals) )
 		{
@@ -112,7 +112,7 @@ public class Range : Widget
 			cast(GCallback)&callBackAdjustBounds,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["adjust-bounds"] = 1;
 		}
 		onAdjustBoundsListeners ~= dlg;
@@ -130,7 +130,7 @@ public class Range : Widget
 	}
 	
 	gboolean delegate(GtkScrollType, gdouble, Range)[] onChangeValueListeners;
-	void addOnChangeValue(gboolean delegate(GtkScrollType, gdouble, Range) dlg)
+	void addOnChangeValue(gboolean delegate(GtkScrollType, gdouble, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("change-value" in connectedSignals) )
 		{
@@ -140,7 +140,7 @@ public class Range : Widget
 			cast(GCallback)&callBackChangeValue,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["change-value"] = 1;
 		}
 		onChangeValueListeners ~= dlg;
@@ -158,7 +158,7 @@ public class Range : Widget
 	}
 	
 	void delegate(GtkScrollType, Range)[] onMoveSliderListeners;
-	void addOnMoveSlider(void delegate(GtkScrollType, Range) dlg)
+	void addOnMoveSlider(void delegate(GtkScrollType, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-slider" in connectedSignals) )
 		{
@@ -168,7 +168,7 @@ public class Range : Widget
 			cast(GCallback)&callBackMoveSlider,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-slider"] = 1;
 		}
 		onMoveSliderListeners ~= dlg;
@@ -186,7 +186,7 @@ public class Range : Widget
 	}
 	
 	void delegate(Range)[] onValueChangedListeners;
-	void addOnValueChanged(void delegate(Range) dlg)
+	void addOnValueChanged(void delegate(Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("value-changed" in connectedSignals) )
 		{
@@ -196,7 +196,7 @@ public class Range : Widget
 			cast(GCallback)&callBackValueChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["value-changed"] = 1;
 		}
 		onValueChangedListeners ~= dlg;

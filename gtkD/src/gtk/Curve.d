@@ -115,7 +115,7 @@ public class Curve : DrawingArea
 	int[char[]] connectedSignals;
 	
 	void delegate(Curve)[] onCurveTypeChangedListeners;
-	void addOnCurveTypeChanged(void delegate(Curve) dlg)
+	void addOnCurveTypeChanged(void delegate(Curve) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("curve-type-changed" in connectedSignals) )
 		{
@@ -125,7 +125,7 @@ public class Curve : DrawingArea
 			cast(GCallback)&callBackCurveTypeChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["curve-type-changed"] = 1;
 		}
 		onCurveTypeChangedListeners ~= dlg;

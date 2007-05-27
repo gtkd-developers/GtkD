@@ -102,7 +102,7 @@ public class Viewport : Bin
 	int[char[]] connectedSignals;
 	
 	void delegate(Adjustment, Adjustment, Viewport)[] onSetScrollAdjustmentsListeners;
-	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, Viewport) dlg)
+	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, Viewport) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
 		{
@@ -112,7 +112,7 @@ public class Viewport : Bin
 			cast(GCallback)&callBackSetScrollAdjustments,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;

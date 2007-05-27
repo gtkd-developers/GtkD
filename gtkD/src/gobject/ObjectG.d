@@ -369,7 +369,7 @@ public class ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(ParamSpec, ObjectG)[] onNotifyListeners;
-	void addOnNotify(void delegate(ParamSpec, ObjectG) dlg)
+	void addOnNotify(void delegate(ParamSpec, ObjectG) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("notify" in connectedSignals) )
 		{
@@ -379,7 +379,7 @@ public class ObjectG
 			cast(GCallback)&callBackNotify,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["notify"] = 1;
 		}
 		onNotifyListeners ~= dlg;

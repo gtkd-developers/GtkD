@@ -113,7 +113,7 @@ public class Plug : Window
 	int[char[]] connectedSignals;
 	
 	void delegate(Plug)[] onEmbeddedListeners;
-	void addOnEmbedded(void delegate(Plug) dlg)
+	void addOnEmbedded(void delegate(Plug) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("embedded" in connectedSignals) )
 		{
@@ -123,7 +123,7 @@ public class Plug : Window
 			cast(GCallback)&callBackEmbedded,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["embedded"] = 1;
 		}
 		onEmbeddedListeners ~= dlg;

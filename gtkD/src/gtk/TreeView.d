@@ -260,7 +260,7 @@ public class TreeView : Container
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeView)[] onColumnsChangedListeners;
-	void addOnColumnsChanged(void delegate(TreeView) dlg)
+	void addOnColumnsChanged(void delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("columns-changed" in connectedSignals) )
 		{
@@ -270,7 +270,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackColumnsChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["columns-changed"] = 1;
 		}
 		onColumnsChangedListeners ~= dlg;
@@ -288,7 +288,7 @@ public class TreeView : Container
 	}
 	
 	void delegate(TreeView)[] onCursorChangedListeners;
-	void addOnCursorChanged(void delegate(TreeView) dlg)
+	void addOnCursorChanged(void delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cursor-changed" in connectedSignals) )
 		{
@@ -298,7 +298,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackCursorChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["cursor-changed"] = 1;
 		}
 		onCursorChangedListeners ~= dlg;
@@ -316,7 +316,7 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(gboolean, gboolean, gboolean, TreeView)[] onExpandCollapseCursorRowListeners;
-	void addOnExpandCollapseCursorRow(gboolean delegate(gboolean, gboolean, gboolean, TreeView) dlg)
+	void addOnExpandCollapseCursorRow(gboolean delegate(gboolean, gboolean, gboolean, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("expand-collapse-cursor-row" in connectedSignals) )
 		{
@@ -326,7 +326,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackExpandCollapseCursorRow,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["expand-collapse-cursor-row"] = 1;
 		}
 		onExpandCollapseCursorRowListeners ~= dlg;
@@ -344,7 +344,7 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(GtkMovementStep, gint, TreeView)[] onMoveCursorListeners;
-	void addOnMoveCursor(gboolean delegate(GtkMovementStep, gint, TreeView) dlg)
+	void addOnMoveCursor(gboolean delegate(GtkMovementStep, gint, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
 		{
@@ -354,7 +354,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackMoveCursor,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -372,7 +372,7 @@ public class TreeView : Container
 	}
 	
 	void delegate(TreePath, TreeViewColumn, TreeView)[] onRowActivatedListeners;
-	void addOnRowActivated(void delegate(TreePath, TreeViewColumn, TreeView) dlg)
+	void addOnRowActivated(void delegate(TreePath, TreeViewColumn, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-activated" in connectedSignals) )
 		{
@@ -382,7 +382,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackRowActivated,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-activated"] = 1;
 		}
 		onRowActivatedListeners ~= dlg;
@@ -400,7 +400,7 @@ public class TreeView : Container
 	}
 	
 	void delegate(GtkTreeIter*, TreePath, TreeView)[] onRowCollapsedListeners;
-	void addOnRowCollapsed(void delegate(GtkTreeIter*, TreePath, TreeView) dlg)
+	void addOnRowCollapsed(void delegate(GtkTreeIter*, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-collapsed" in connectedSignals) )
 		{
@@ -410,7 +410,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackRowCollapsed,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-collapsed"] = 1;
 		}
 		onRowCollapsedListeners ~= dlg;
@@ -428,7 +428,7 @@ public class TreeView : Container
 	}
 	
 	void delegate(GtkTreeIter*, TreePath, TreeView)[] onRowExpandedListeners;
-	void addOnRowExpanded(void delegate(GtkTreeIter*, TreePath, TreeView) dlg)
+	void addOnRowExpanded(void delegate(GtkTreeIter*, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-expanded" in connectedSignals) )
 		{
@@ -438,7 +438,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackRowExpanded,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-expanded"] = 1;
 		}
 		onRowExpandedListeners ~= dlg;
@@ -456,7 +456,7 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(TreeView)[] onSelectAllListeners;
-	void addOnSelectAll(gboolean delegate(TreeView) dlg)
+	void addOnSelectAll(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-all" in connectedSignals) )
 		{
@@ -466,7 +466,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSelectAll,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["select-all"] = 1;
 		}
 		onSelectAllListeners ~= dlg;
@@ -484,7 +484,7 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(TreeView)[] onSelectCursorParentListeners;
-	void addOnSelectCursorParent(gboolean delegate(TreeView) dlg)
+	void addOnSelectCursorParent(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-cursor-parent" in connectedSignals) )
 		{
@@ -494,7 +494,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSelectCursorParent,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["select-cursor-parent"] = 1;
 		}
 		onSelectCursorParentListeners ~= dlg;
@@ -512,7 +512,7 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(gboolean, TreeView)[] onSelectCursorRowListeners;
-	void addOnSelectCursorRow(gboolean delegate(gboolean, TreeView) dlg)
+	void addOnSelectCursorRow(gboolean delegate(gboolean, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-cursor-row" in connectedSignals) )
 		{
@@ -522,7 +522,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSelectCursorRow,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["select-cursor-row"] = 1;
 		}
 		onSelectCursorRowListeners ~= dlg;
@@ -540,7 +540,7 @@ public class TreeView : Container
 	}
 	
 	void delegate(Adjustment, Adjustment, TreeView)[] onSetScrollAdjustmentsListeners;
-	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, TreeView) dlg)
+	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
 		{
@@ -550,7 +550,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackSetScrollAdjustments,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
@@ -568,7 +568,7 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(TreeView)[] onStartInteractiveSearchListeners;
-	void addOnStartInteractiveSearch(gboolean delegate(TreeView) dlg)
+	void addOnStartInteractiveSearch(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("start-interactive-search" in connectedSignals) )
 		{
@@ -578,7 +578,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackStartInteractiveSearch,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["start-interactive-search"] = 1;
 		}
 		onStartInteractiveSearchListeners ~= dlg;
@@ -596,7 +596,7 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(GtkTreeIter*, TreePath, TreeView)[] onTestCollapseRowListeners;
-	void addOnTestCollapseRow(gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg)
+	void addOnTestCollapseRow(gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("test-collapse-row" in connectedSignals) )
 		{
@@ -606,7 +606,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackTestCollapseRow,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["test-collapse-row"] = 1;
 		}
 		onTestCollapseRowListeners ~= dlg;
@@ -624,7 +624,7 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(GtkTreeIter*, TreePath, TreeView)[] onTestExpandRowListeners;
-	void addOnTestExpandRow(gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg)
+	void addOnTestExpandRow(gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("test-expand-row" in connectedSignals) )
 		{
@@ -634,7 +634,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackTestExpandRow,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["test-expand-row"] = 1;
 		}
 		onTestExpandRowListeners ~= dlg;
@@ -652,7 +652,7 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(TreeView)[] onToggleCursorRowListeners;
-	void addOnToggleCursorRow(gboolean delegate(TreeView) dlg)
+	void addOnToggleCursorRow(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-cursor-row" in connectedSignals) )
 		{
@@ -662,7 +662,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackToggleCursorRow,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggle-cursor-row"] = 1;
 		}
 		onToggleCursorRowListeners ~= dlg;
@@ -680,7 +680,7 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(TreeView)[] onUnselectAllListeners;
-	void addOnUnselectAll(gboolean delegate(TreeView) dlg)
+	void addOnUnselectAll(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unselect-all" in connectedSignals) )
 		{
@@ -690,7 +690,7 @@ public class TreeView : Container
 			cast(GCallback)&callBackUnselectAll,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["unselect-all"] = 1;
 		}
 		onUnselectAllListeners ~= dlg;

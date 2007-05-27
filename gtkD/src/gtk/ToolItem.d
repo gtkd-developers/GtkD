@@ -125,7 +125,7 @@ public class ToolItem : Bin
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(ToolItem)[] onCreateMenuProxyListeners;
-	void addOnCreateMenuProxy(gboolean delegate(ToolItem) dlg)
+	void addOnCreateMenuProxy(gboolean delegate(ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("create-menu-proxy" in connectedSignals) )
 		{
@@ -135,7 +135,7 @@ public class ToolItem : Bin
 			cast(GCallback)&callBackCreateMenuProxy,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["create-menu-proxy"] = 1;
 		}
 		onCreateMenuProxyListeners ~= dlg;
@@ -153,7 +153,7 @@ public class ToolItem : Bin
 	}
 	
 	gboolean delegate(Tooltips, char[], char[], ToolItem)[] onSetTooltipListeners;
-	void addOnSetTooltip(gboolean delegate(Tooltips, char[], char[], ToolItem) dlg)
+	void addOnSetTooltip(gboolean delegate(Tooltips, char[], char[], ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-tooltip" in connectedSignals) )
 		{
@@ -163,7 +163,7 @@ public class ToolItem : Bin
 			cast(GCallback)&callBackSetTooltip,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["set-tooltip"] = 1;
 		}
 		onSetTooltipListeners ~= dlg;
@@ -181,7 +181,7 @@ public class ToolItem : Bin
 	}
 	
 	void delegate(ToolItem)[] onToolbarReconfiguredListeners;
-	void addOnToolbarReconfigured(void delegate(ToolItem) dlg)
+	void addOnToolbarReconfigured(void delegate(ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toolbar-reconfigured" in connectedSignals) )
 		{
@@ -191,7 +191,7 @@ public class ToolItem : Bin
 			cast(GCallback)&callBackToolbarReconfigured,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toolbar-reconfigured"] = 1;
 		}
 		onToolbarReconfiguredListeners ~= dlg;

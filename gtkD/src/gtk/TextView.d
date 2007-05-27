@@ -186,7 +186,7 @@ public class TextView : Container
 	int[char[]] connectedSignals;
 	
 	void delegate(TextView)[] onBackspaceListeners;
-	void addOnBackspace(void delegate(TextView) dlg)
+	void addOnBackspace(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("backspace" in connectedSignals) )
 		{
@@ -196,7 +196,7 @@ public class TextView : Container
 			cast(GCallback)&callBackBackspace,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["backspace"] = 1;
 		}
 		onBackspaceListeners ~= dlg;
@@ -214,7 +214,7 @@ public class TextView : Container
 	}
 	
 	void delegate(TextView)[] onCopyClipboardListeners;
-	void addOnCopyClipboard(void delegate(TextView) dlg)
+	void addOnCopyClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("copy-clipboard" in connectedSignals) )
 		{
@@ -224,7 +224,7 @@ public class TextView : Container
 			cast(GCallback)&callBackCopyClipboard,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["copy-clipboard"] = 1;
 		}
 		onCopyClipboardListeners ~= dlg;
@@ -242,7 +242,7 @@ public class TextView : Container
 	}
 	
 	void delegate(TextView)[] onCutClipboardListeners;
-	void addOnCutClipboard(void delegate(TextView) dlg)
+	void addOnCutClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cut-clipboard" in connectedSignals) )
 		{
@@ -252,7 +252,7 @@ public class TextView : Container
 			cast(GCallback)&callBackCutClipboard,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["cut-clipboard"] = 1;
 		}
 		onCutClipboardListeners ~= dlg;
@@ -270,7 +270,7 @@ public class TextView : Container
 	}
 	
 	void delegate(GtkDeleteType, gint, TextView)[] onDeleteFromCursorListeners;
-	void addOnDeleteFromCursor(void delegate(GtkDeleteType, gint, TextView) dlg)
+	void addOnDeleteFromCursor(void delegate(GtkDeleteType, gint, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-from-cursor" in connectedSignals) )
 		{
@@ -280,7 +280,7 @@ public class TextView : Container
 			cast(GCallback)&callBackDeleteFromCursor,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["delete-from-cursor"] = 1;
 		}
 		onDeleteFromCursorListeners ~= dlg;
@@ -298,7 +298,7 @@ public class TextView : Container
 	}
 	
 	void delegate(char[], TextView)[] onInsertAtCursorListeners;
-	void addOnInsertAtCursor(void delegate(char[], TextView) dlg)
+	void addOnInsertAtCursor(void delegate(char[], TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-at-cursor" in connectedSignals) )
 		{
@@ -308,7 +308,7 @@ public class TextView : Container
 			cast(GCallback)&callBackInsertAtCursor,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["insert-at-cursor"] = 1;
 		}
 		onInsertAtCursorListeners ~= dlg;
@@ -326,7 +326,7 @@ public class TextView : Container
 	}
 	
 	void delegate(GtkMovementStep, gint, gboolean, TextView)[] onMoveCursorListeners;
-	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, TextView) dlg)
+	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
 		{
@@ -336,7 +336,7 @@ public class TextView : Container
 			cast(GCallback)&callBackMoveCursor,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-cursor"] = 1;
 		}
 		onMoveCursorListeners ~= dlg;
@@ -354,7 +354,7 @@ public class TextView : Container
 	}
 	
 	void delegate(GtkDirectionType, TextView)[] onMoveFocusListeners;
-	void addOnMoveFocus(void delegate(GtkDirectionType, TextView) dlg)
+	void addOnMoveFocus(void delegate(GtkDirectionType, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-focus" in connectedSignals) )
 		{
@@ -364,7 +364,7 @@ public class TextView : Container
 			cast(GCallback)&callBackMoveFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-focus"] = 1;
 		}
 		onMoveFocusListeners ~= dlg;
@@ -382,7 +382,7 @@ public class TextView : Container
 	}
 	
 	void delegate(GtkScrollStep, gint, TextView)[] onMoveViewportListeners;
-	void addOnMoveViewport(void delegate(GtkScrollStep, gint, TextView) dlg)
+	void addOnMoveViewport(void delegate(GtkScrollStep, gint, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-viewport" in connectedSignals) )
 		{
@@ -392,7 +392,7 @@ public class TextView : Container
 			cast(GCallback)&callBackMoveViewport,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-viewport"] = 1;
 		}
 		onMoveViewportListeners ~= dlg;
@@ -410,7 +410,7 @@ public class TextView : Container
 	}
 	
 	void delegate(gint, gboolean, TextView)[] onPageHorizontallyListeners;
-	void addOnPageHorizontally(void delegate(gint, gboolean, TextView) dlg)
+	void addOnPageHorizontally(void delegate(gint, gboolean, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("page-horizontally" in connectedSignals) )
 		{
@@ -420,7 +420,7 @@ public class TextView : Container
 			cast(GCallback)&callBackPageHorizontally,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["page-horizontally"] = 1;
 		}
 		onPageHorizontallyListeners ~= dlg;
@@ -438,7 +438,7 @@ public class TextView : Container
 	}
 	
 	void delegate(TextView)[] onPasteClipboardListeners;
-	void addOnPasteClipboard(void delegate(TextView) dlg)
+	void addOnPasteClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("paste-clipboard" in connectedSignals) )
 		{
@@ -448,7 +448,7 @@ public class TextView : Container
 			cast(GCallback)&callBackPasteClipboard,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["paste-clipboard"] = 1;
 		}
 		onPasteClipboardListeners ~= dlg;
@@ -466,7 +466,7 @@ public class TextView : Container
 	}
 	
 	void delegate(GtkMenu*, TextView)[] onPopulatePopupListeners;
-	void addOnPopulatePopup(void delegate(GtkMenu*, TextView) dlg)
+	void addOnPopulatePopup(void delegate(GtkMenu*, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("populate-popup" in connectedSignals) )
 		{
@@ -476,7 +476,7 @@ public class TextView : Container
 			cast(GCallback)&callBackPopulatePopup,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["populate-popup"] = 1;
 		}
 		onPopulatePopupListeners ~= dlg;
@@ -494,7 +494,7 @@ public class TextView : Container
 	}
 	
 	void delegate(gboolean, TextView)[] onSelectAllListeners;
-	void addOnSelectAll(void delegate(gboolean, TextView) dlg)
+	void addOnSelectAll(void delegate(gboolean, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-all" in connectedSignals) )
 		{
@@ -504,7 +504,7 @@ public class TextView : Container
 			cast(GCallback)&callBackSelectAll,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["select-all"] = 1;
 		}
 		onSelectAllListeners ~= dlg;
@@ -522,7 +522,7 @@ public class TextView : Container
 	}
 	
 	void delegate(TextView)[] onSetAnchorListeners;
-	void addOnSetAnchor(void delegate(TextView) dlg)
+	void addOnSetAnchor(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-anchor" in connectedSignals) )
 		{
@@ -532,7 +532,7 @@ public class TextView : Container
 			cast(GCallback)&callBackSetAnchor,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["set-anchor"] = 1;
 		}
 		onSetAnchorListeners ~= dlg;
@@ -550,7 +550,7 @@ public class TextView : Container
 	}
 	
 	void delegate(GtkAdjustment*, GtkAdjustment*, TextView)[] onSetScrollAdjustmentsListeners;
-	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, TextView) dlg)
+	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
 		{
@@ -560,7 +560,7 @@ public class TextView : Container
 			cast(GCallback)&callBackSetScrollAdjustments,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;
@@ -578,7 +578,7 @@ public class TextView : Container
 	}
 	
 	void delegate(TextView)[] onToggleOverwriteListeners;
-	void addOnToggleOverwrite(void delegate(TextView) dlg)
+	void addOnToggleOverwrite(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-overwrite" in connectedSignals) )
 		{
@@ -588,7 +588,7 @@ public class TextView : Container
 			cast(GCallback)&callBackToggleOverwrite,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggle-overwrite"] = 1;
 		}
 		onToggleOverwriteListeners ~= dlg;

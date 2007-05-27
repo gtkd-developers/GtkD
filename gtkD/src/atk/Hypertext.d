@@ -101,7 +101,7 @@ public class Hypertext
 	int[char[]] connectedSignals;
 	
 	void delegate(gint, Hypertext)[] onLinkSelectedListeners;
-	void addOnLinkSelected(void delegate(gint, Hypertext) dlg)
+	void addOnLinkSelected(void delegate(gint, Hypertext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("link-selected" in connectedSignals) )
 		{
@@ -111,7 +111,7 @@ public class Hypertext
 			cast(GCallback)&callBackLinkSelected,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["link-selected"] = 1;
 		}
 		onLinkSelectedListeners ~= dlg;

@@ -142,7 +142,7 @@ public class CellRenderer : ObjectGtk
 	int[char[]] connectedSignals;
 	
 	void delegate(CellRenderer)[] onEditingCanceledListeners;
-	void addOnEditingCanceled(void delegate(CellRenderer) dlg)
+	void addOnEditingCanceled(void delegate(CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("editing-canceled" in connectedSignals) )
 		{
@@ -152,7 +152,7 @@ public class CellRenderer : ObjectGtk
 			cast(GCallback)&callBackEditingCanceled,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["editing-canceled"] = 1;
 		}
 		onEditingCanceledListeners ~= dlg;
@@ -170,7 +170,7 @@ public class CellRenderer : ObjectGtk
 	}
 	
 	void delegate(CellEditable, char[], CellRenderer)[] onEditingStartedListeners;
-	void addOnEditingStarted(void delegate(CellEditable, char[], CellRenderer) dlg)
+	void addOnEditingStarted(void delegate(CellEditable, char[], CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("editing-started" in connectedSignals) )
 		{
@@ -180,7 +180,7 @@ public class CellRenderer : ObjectGtk
 			cast(GCallback)&callBackEditingStarted,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["editing-started"] = 1;
 		}
 		onEditingStartedListeners ~= dlg;

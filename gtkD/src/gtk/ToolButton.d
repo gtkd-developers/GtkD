@@ -140,7 +140,7 @@ public class ToolButton : ToolItem
 	int[char[]] connectedSignals;
 	
 	void delegate(ToolButton)[] onClickedListeners;
-	void addOnClicked(void delegate(ToolButton) dlg)
+	void addOnClicked(void delegate(ToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("clicked" in connectedSignals) )
 		{
@@ -150,7 +150,7 @@ public class ToolButton : ToolItem
 			cast(GCallback)&callBackClicked,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["clicked"] = 1;
 		}
 		onClickedListeners ~= dlg;

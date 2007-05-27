@@ -133,7 +133,7 @@ public class CheckMenuItem : MenuItem
 	int[char[]] connectedSignals;
 	
 	void delegate(CheckMenuItem)[] onToggledListeners;
-	void addOnToggled(void delegate(CheckMenuItem) dlg)
+	void addOnToggled(void delegate(CheckMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggled" in connectedSignals) )
 		{
@@ -143,7 +143,7 @@ public class CheckMenuItem : MenuItem
 			cast(GCallback)&callBackToggled,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["toggled"] = 1;
 		}
 		onToggledListeners ~= dlg;

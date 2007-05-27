@@ -113,7 +113,7 @@ public class Table
 	int[char[]] connectedSignals;
 	
 	void delegate(gint, gint, Table)[] onColumnDeletedListeners;
-	void addOnColumnDeleted(void delegate(gint, gint, Table) dlg)
+	void addOnColumnDeleted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("column-deleted" in connectedSignals) )
 		{
@@ -123,7 +123,7 @@ public class Table
 			cast(GCallback)&callBackColumnDeleted,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["column-deleted"] = 1;
 		}
 		onColumnDeletedListeners ~= dlg;
@@ -141,7 +141,7 @@ public class Table
 	}
 	
 	void delegate(gint, gint, Table)[] onColumnInsertedListeners;
-	void addOnColumnInserted(void delegate(gint, gint, Table) dlg)
+	void addOnColumnInserted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("column-inserted" in connectedSignals) )
 		{
@@ -151,7 +151,7 @@ public class Table
 			cast(GCallback)&callBackColumnInserted,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["column-inserted"] = 1;
 		}
 		onColumnInsertedListeners ~= dlg;
@@ -169,7 +169,7 @@ public class Table
 	}
 	
 	void delegate(Table)[] onColumnReorderedListeners;
-	void addOnColumnReordered(void delegate(Table) dlg)
+	void addOnColumnReordered(void delegate(Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("column-reordered" in connectedSignals) )
 		{
@@ -179,7 +179,7 @@ public class Table
 			cast(GCallback)&callBackColumnReordered,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["column-reordered"] = 1;
 		}
 		onColumnReorderedListeners ~= dlg;
@@ -197,7 +197,7 @@ public class Table
 	}
 	
 	void delegate(Table)[] onModelChangedListeners;
-	void addOnModelChanged(void delegate(Table) dlg)
+	void addOnModelChanged(void delegate(Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("model-changed" in connectedSignals) )
 		{
@@ -207,7 +207,7 @@ public class Table
 			cast(GCallback)&callBackModelChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["model-changed"] = 1;
 		}
 		onModelChangedListeners ~= dlg;
@@ -225,7 +225,7 @@ public class Table
 	}
 	
 	void delegate(gint, gint, Table)[] onRowDeletedListeners;
-	void addOnRowDeleted(void delegate(gint, gint, Table) dlg)
+	void addOnRowDeleted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-deleted" in connectedSignals) )
 		{
@@ -235,7 +235,7 @@ public class Table
 			cast(GCallback)&callBackRowDeleted,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-deleted"] = 1;
 		}
 		onRowDeletedListeners ~= dlg;
@@ -253,7 +253,7 @@ public class Table
 	}
 	
 	void delegate(gint, gint, Table)[] onRowInsertedListeners;
-	void addOnRowInserted(void delegate(gint, gint, Table) dlg)
+	void addOnRowInserted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-inserted" in connectedSignals) )
 		{
@@ -263,7 +263,7 @@ public class Table
 			cast(GCallback)&callBackRowInserted,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-inserted"] = 1;
 		}
 		onRowInsertedListeners ~= dlg;
@@ -281,7 +281,7 @@ public class Table
 	}
 	
 	void delegate(Table)[] onRowReorderedListeners;
-	void addOnRowReordered(void delegate(Table) dlg)
+	void addOnRowReordered(void delegate(Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-reordered" in connectedSignals) )
 		{
@@ -291,7 +291,7 @@ public class Table
 			cast(GCallback)&callBackRowReordered,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["row-reordered"] = 1;
 		}
 		onRowReorderedListeners ~= dlg;

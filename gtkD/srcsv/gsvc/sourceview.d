@@ -26,15 +26,17 @@
 module gsvc.sourceview;
 
 private import std.stdio;
-private import gsvc.sourceviewtypes;
+//private import gsvc.sourceviewtypes;
+private import gsvc.gsvtypes;
 private import gtkc.Loader;
 private import gtkc.paths;
+private import gtkc.gtktypes;
 
 private Linker sourceview_Linker;
 
 static this()
 {
- sourceview_Linker = new Linker(libPath ~ importLibs[LIBRARY.SOURCEVIEW] );
+ sourceview_Linker = new Linker(libPath ~ importLibs[LIBRARY.GSV] );
  sourceview_Linker.link(sourceviewLinks);
  debug writefln("* Finished static this(): sourceview");
 }

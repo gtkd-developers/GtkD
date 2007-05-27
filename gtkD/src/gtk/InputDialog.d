@@ -119,7 +119,7 @@ public class InputDialog : Dialog
 	int[char[]] connectedSignals;
 	
 	void delegate(GdkDevice*, InputDialog)[] onDisableDeviceListeners;
-	void addOnDisableDevice(void delegate(GdkDevice*, InputDialog) dlg)
+	void addOnDisableDevice(void delegate(GdkDevice*, InputDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("disable-device" in connectedSignals) )
 		{
@@ -129,7 +129,7 @@ public class InputDialog : Dialog
 			cast(GCallback)&callBackDisableDevice,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["disable-device"] = 1;
 		}
 		onDisableDeviceListeners ~= dlg;
@@ -147,7 +147,7 @@ public class InputDialog : Dialog
 	}
 	
 	void delegate(GdkDevice*, InputDialog)[] onEnableDeviceListeners;
-	void addOnEnableDevice(void delegate(GdkDevice*, InputDialog) dlg)
+	void addOnEnableDevice(void delegate(GdkDevice*, InputDialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("enable-device" in connectedSignals) )
 		{
@@ -157,7 +157,7 @@ public class InputDialog : Dialog
 			cast(GCallback)&callBackEnableDevice,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["enable-device"] = 1;
 		}
 		onEnableDeviceListeners ~= dlg;

@@ -178,7 +178,7 @@ public class IconTheme : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(IconTheme)[] onChangedListeners;
-	void addOnChanged(void delegate(IconTheme) dlg)
+	void addOnChanged(void delegate(IconTheme) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -188,7 +188,7 @@ public class IconTheme : ObjectG
 			cast(GCallback)&callBackChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;

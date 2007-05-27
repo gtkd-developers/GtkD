@@ -100,7 +100,7 @@ public class TreeSortable
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeSortable)[] onSortColumnChangedListeners;
-	void addOnSortColumnChanged(void delegate(TreeSortable) dlg)
+	void addOnSortColumnChanged(void delegate(TreeSortable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("sort-column-changed" in connectedSignals) )
 		{
@@ -110,7 +110,7 @@ public class TreeSortable
 			cast(GCallback)&callBackSortColumnChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["sort-column-changed"] = 1;
 		}
 		onSortColumnChangedListeners ~= dlg;

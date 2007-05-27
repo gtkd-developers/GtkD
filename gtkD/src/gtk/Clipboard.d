@@ -166,7 +166,7 @@ public class Clipboard : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(GdkEvent*, Clipboard)[] onOwnerChangeListeners;
-	void addOnOwnerChange(void delegate(GdkEvent*, Clipboard) dlg)
+	void addOnOwnerChange(void delegate(GdkEvent*, Clipboard) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("owner-change" in connectedSignals) )
 		{
@@ -176,7 +176,7 @@ public class Clipboard : ObjectG
 			cast(GCallback)&callBackOwnerChange,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["owner-change"] = 1;
 		}
 		onOwnerChangeListeners ~= dlg;

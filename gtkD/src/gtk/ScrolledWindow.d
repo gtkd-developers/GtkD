@@ -182,7 +182,7 @@ public class ScrolledWindow : Bin
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkDirectionType, ScrolledWindow)[] onMoveFocusOutListeners;
-	void addOnMoveFocusOut(void delegate(GtkDirectionType, ScrolledWindow) dlg)
+	void addOnMoveFocusOut(void delegate(GtkDirectionType, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-focus-out" in connectedSignals) )
 		{
@@ -192,7 +192,7 @@ public class ScrolledWindow : Bin
 			cast(GCallback)&callBackMoveFocusOut,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-focus-out"] = 1;
 		}
 		onMoveFocusOutListeners ~= dlg;
@@ -210,7 +210,7 @@ public class ScrolledWindow : Bin
 	}
 	
 	gboolean delegate(GtkScrollType, gboolean, ScrolledWindow)[] onScrollChildListeners;
-	void addOnScrollChild(gboolean delegate(GtkScrollType, gboolean, ScrolledWindow) dlg)
+	void addOnScrollChild(gboolean delegate(GtkScrollType, gboolean, ScrolledWindow) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("scroll-child" in connectedSignals) )
 		{
@@ -220,7 +220,7 @@ public class ScrolledWindow : Bin
 			cast(GCallback)&callBackScrollChild,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["scroll-child"] = 1;
 		}
 		onScrollChildListeners ~= dlg;

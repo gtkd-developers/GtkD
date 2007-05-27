@@ -115,7 +115,7 @@ public class Layout : Container
 	int[char[]] connectedSignals;
 	
 	void delegate(Adjustment, Adjustment, Layout)[] onSetScrollAdjustmentsListeners;
-	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, Layout) dlg)
+	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, Layout) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
 		{
@@ -125,7 +125,7 @@ public class Layout : Container
 			cast(GCallback)&callBackSetScrollAdjustments,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["set-scroll-adjustments"] = 1;
 		}
 		onSetScrollAdjustmentsListeners ~= dlg;

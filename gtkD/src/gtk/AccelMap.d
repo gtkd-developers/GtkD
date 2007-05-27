@@ -104,7 +104,7 @@ public class AccelMap : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], guint, GdkModifierType, AccelMap)[] onChangedListeners;
-	void addOnChanged(void delegate(char[], guint, GdkModifierType, AccelMap) dlg)
+	void addOnChanged(void delegate(char[], guint, GdkModifierType, AccelMap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
 		{
@@ -114,7 +114,7 @@ public class AccelMap : ObjectG
 			cast(GCallback)&callBackChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["changed"] = 1;
 		}
 		onChangedListeners ~= dlg;

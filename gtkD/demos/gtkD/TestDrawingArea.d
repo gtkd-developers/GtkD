@@ -275,7 +275,7 @@ class TestDrawingArea : VBox
 		public void backSpinChanged(SpinButton spinButton)
 		{
 			
-			debug(trace) version(tango) Stdout("backSpinChanged - entry {}", ++backSpinCount).newline;
+			debug(trace) version(tango) Stdout.format("backSpinChanged - entry {}", ++backSpinCount).newline;
 			else writefln("backSpinChanged - entry %s", ++backSpinCount);
 			drawPoints(getDrawable());
 			GC gc = new GC(getDrawable());
@@ -300,7 +300,7 @@ class TestDrawingArea : VBox
 		{
 			int width = spin.getValueAsInt();
 			int height = width * 3 / 4;
-			debug(trace) version(tango) Stdout("primitiveType = {}", primitiveType).newline;
+			debug(trace) version(tango) Stdout.format("primitiveType = {}", primitiveType).newline;
 			else writefln("primitiveType = %s", primitiveType);
 			switch ( primitiveType )
 			{
@@ -330,7 +330,7 @@ class TestDrawingArea : VBox
 					
 				case "Text":
 					Font font = new Font("FreeMono 12");
-					debug(trace) version(tango) Stdout("Text font = {}", font).newline;
+					debug(trace) version(tango) Stdout.format("Text font = {}", font).newline;
 					else writefln("Text font = %s", font);
 					d.drawString( font, gc,x, y, "gtkD toolkit");
 					break;
@@ -387,10 +387,10 @@ class TestDrawingArea : VBox
 			int x = 0;
 			int y = 0;
 
-			debug(trace) version(tango) Stdout("w,h = {} {}",width ,height).newline;
+			debug(trace) version(tango) Stdout.format("w,h = {} {}",width ,height).newline;
 			else writefln("w,h = %s %s",width ,height);
 
-			debug(trace) version(tango) Stdout("w,h = {} {}",width ,height).newline;
+			debug(trace) version(tango) Stdout.format("w,h = {} {}",width ,height).newline;
 			else writefln("w,h = %s %s",width ,height);
 			
 			float dx = 256.0 / width;
@@ -437,7 +437,7 @@ class TestDrawingArea : VBox
 
 		void onCGOptionsChanged(ComboBox comboBox)
 		{
-			debug(trace) version(tango) Stdout("gcOptions = {}", comboBox.getActiveText()).newline;
+			debug(trace) version(tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline;
 			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{

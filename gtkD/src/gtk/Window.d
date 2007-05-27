@@ -143,7 +143,7 @@ public class Window : Bin
 	int[char[]] connectedSignals;
 	
 	void delegate(Window)[] onActivateDefaultListeners;
-	void addOnActivateDefault(void delegate(Window) dlg)
+	void addOnActivateDefault(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate-default" in connectedSignals) )
 		{
@@ -153,7 +153,7 @@ public class Window : Bin
 			cast(GCallback)&callBackActivateDefault,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["activate-default"] = 1;
 		}
 		onActivateDefaultListeners ~= dlg;
@@ -171,7 +171,7 @@ public class Window : Bin
 	}
 	
 	void delegate(Window)[] onActivateFocusListeners;
-	void addOnActivateFocus(void delegate(Window) dlg)
+	void addOnActivateFocus(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate-focus" in connectedSignals) )
 		{
@@ -181,7 +181,7 @@ public class Window : Bin
 			cast(GCallback)&callBackActivateFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["activate-focus"] = 1;
 		}
 		onActivateFocusListeners ~= dlg;
@@ -199,7 +199,7 @@ public class Window : Bin
 	}
 	
 	gboolean delegate(GdkEvent*, Window)[] onFrameListeners;
-	void addOnFrame(gboolean delegate(GdkEvent*, Window) dlg)
+	void addOnFrame(gboolean delegate(GdkEvent*, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("frame-event" in connectedSignals) )
 		{
@@ -209,7 +209,7 @@ public class Window : Bin
 			cast(GCallback)&callBackFrame,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["frame-event"] = 1;
 		}
 		onFrameListeners ~= dlg;
@@ -227,7 +227,7 @@ public class Window : Bin
 	}
 	
 	void delegate(Window)[] onKeysChangedListeners;
-	void addOnKeysChanged(void delegate(Window) dlg)
+	void addOnKeysChanged(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("keys-changed" in connectedSignals) )
 		{
@@ -237,7 +237,7 @@ public class Window : Bin
 			cast(GCallback)&callBackKeysChanged,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["keys-changed"] = 1;
 		}
 		onKeysChangedListeners ~= dlg;
@@ -255,7 +255,7 @@ public class Window : Bin
 	}
 	
 	void delegate(GtkDirectionType, Window)[] onMoveFocusListeners;
-	void addOnMoveFocus(void delegate(GtkDirectionType, Window) dlg)
+	void addOnMoveFocus(void delegate(GtkDirectionType, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-focus" in connectedSignals) )
 		{
@@ -265,7 +265,7 @@ public class Window : Bin
 			cast(GCallback)&callBackMoveFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["move-focus"] = 1;
 		}
 		onMoveFocusListeners ~= dlg;
@@ -283,7 +283,7 @@ public class Window : Bin
 	}
 	
 	void delegate(Widget, Window)[] onSetFocusListeners;
-	void addOnSetFocus(void delegate(Widget, Window) dlg)
+	void addOnSetFocus(void delegate(Widget, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-focus" in connectedSignals) )
 		{
@@ -293,7 +293,7 @@ public class Window : Bin
 			cast(GCallback)&callBackSetFocus,
 			cast(void*)this,
 			null,
-			cast(ConnectFlags)0);
+			connectFlags);
 			connectedSignals["set-focus"] = 1;
 		}
 		onSetFocusListeners ~= dlg;
