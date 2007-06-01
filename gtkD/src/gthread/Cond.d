@@ -117,6 +117,7 @@ public class Cond
 	 */
 	public this (GCond* gCond)
 	{
+		assert(gCond !is null, "struct gCond is null on constructor");
 		this.gCond = gCond;
 	}
 	

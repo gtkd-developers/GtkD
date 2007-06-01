@@ -136,6 +136,7 @@ public class PgFontsetSimple
 	 */
 	public this (PangoFontsetSimple* pangoFontsetSimple)
 	{
+		assert(pangoFontsetSimple !is null, "struct pangoFontsetSimple is null on constructor");
 		this.pangoFontsetSimple = pangoFontsetSimple;
 	}
 	

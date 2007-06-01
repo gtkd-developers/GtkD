@@ -125,6 +125,7 @@ public class Date
 	 */
 	public this (GDate* gDate)
 	{
+		assert(gDate !is null, "struct gDate is null on constructor");
 		this.gDate = gDate;
 	}
 	

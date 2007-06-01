@@ -109,6 +109,7 @@ public class CellView : Widget
 	 */
 	public this (GtkCellView* gtkCellView)
 	{
+		assert(gtkCellView !is null, "struct gtkCellView is null on constructor");
 		super(cast(GtkWidget*)gtkCellView);
 		this.gtkCellView = gtkCellView;
 	}

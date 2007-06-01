@@ -113,6 +113,7 @@ public class RandG
 	 */
 	public this (GRand* gRand)
 	{
+		assert(gRand !is null, "struct gRand is null on constructor");
 		this.gRand = gRand;
 	}
 	

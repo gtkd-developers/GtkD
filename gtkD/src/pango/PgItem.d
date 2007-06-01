@@ -132,6 +132,7 @@ public class PgItem
 	 */
 	public this (PangoItem* pangoItem)
 	{
+		assert(pangoItem !is null, "struct pangoItem is null on constructor");
 		this.pangoItem = pangoItem;
 	}
 	

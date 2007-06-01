@@ -102,6 +102,7 @@ public class Text
 	 */
 	public this (AtkText* atkText)
 	{
+		assert(atkText !is null, "struct atkText is null on constructor");
 		this.atkText = atkText;
 	}
 	

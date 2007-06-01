@@ -92,6 +92,7 @@ public class FieldAttributes
 	 */
 	public this (GdaFieldAttributes* gdaFieldAttributes)
 	{
+		assert(gdaFieldAttributes !is null, "struct gdaFieldAttributes is null on constructor");
 		this.gdaFieldAttributes = gdaFieldAttributes;
 	}
 	

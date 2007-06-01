@@ -136,6 +136,7 @@ public class PgFontFace
 	 */
 	public this (PangoFontFace* pangoFontFace)
 	{
+		assert(pangoFontFace !is null, "struct pangoFontFace is null on constructor");
 		this.pangoFontFace = pangoFontFace;
 	}
 	

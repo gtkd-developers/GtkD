@@ -89,6 +89,7 @@ public class Range : Widget
 	 */
 	public this (GtkRange* gtkRange)
 	{
+		assert(gtkRange !is null, "struct gtkRange is null on constructor");
 		super(cast(GtkWidget*)gtkRange);
 		this.gtkRange = gtkRange;
 	}

@@ -128,6 +128,7 @@ public class PixbufFormat
 	 */
 	public this (GdkPixbufFormat* gdkPixbufFormat)
 	{
+		assert(gdkPixbufFormat !is null, "struct gdkPixbufFormat is null on constructor");
 		this.gdkPixbufFormat = gdkPixbufFormat;
 	}
 	

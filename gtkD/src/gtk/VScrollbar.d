@@ -93,6 +93,7 @@ public class VScrollbar : Scrollbar
 	 */
 	public this (GtkVScrollbar* gtkVScrollbar)
 	{
+		assert(gtkVScrollbar !is null, "struct gtkVScrollbar is null on constructor");
 		super(cast(GtkScrollbar*)gtkVScrollbar);
 		this.gtkVScrollbar = gtkVScrollbar;
 	}

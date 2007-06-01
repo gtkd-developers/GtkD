@@ -92,6 +92,7 @@ public class Document
 	 */
 	public this (AtkDocument* atkDocument)
 	{
+		assert(atkDocument !is null, "struct atkDocument is null on constructor");
 		this.atkDocument = atkDocument;
 	}
 	

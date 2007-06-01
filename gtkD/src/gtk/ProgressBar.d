@@ -121,6 +121,7 @@ public class ProgressBar : Progress
 	 */
 	public this (GtkProgressBar* gtkProgressBar)
 	{
+		assert(gtkProgressBar !is null, "struct gtkProgressBar is null on constructor");
 		super(cast(GtkProgress*)gtkProgressBar);
 		this.gtkProgressBar = gtkProgressBar;
 	}

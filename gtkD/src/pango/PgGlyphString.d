@@ -140,6 +140,7 @@ public class PgGlyphString
 	 */
 	public this (PangoGlyphString* pangoGlyphString)
 	{
+		assert(pangoGlyphString !is null, "struct pangoGlyphString is null on constructor");
 		this.pangoGlyphString = pangoGlyphString;
 	}
 	

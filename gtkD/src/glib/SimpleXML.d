@@ -115,6 +115,7 @@ public class SimpleXML
 	 */
 	public this (GMarkupParseContext* gMarkupParseContext)
 	{
+		assert(gMarkupParseContext !is null, "struct gMarkupParseContext is null on constructor");
 		this.gMarkupParseContext = gMarkupParseContext;
 	}
 	

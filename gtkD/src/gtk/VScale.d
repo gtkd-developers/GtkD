@@ -93,6 +93,7 @@ public class VScale : Scale
 	 */
 	public this (GtkVScale* gtkVScale)
 	{
+		assert(gtkVScale !is null, "struct gtkVScale is null on constructor");
 		super(cast(GtkScale*)gtkVScale);
 		this.gtkVScale = gtkVScale;
 	}

@@ -137,6 +137,7 @@ public class SpinButton : Entry
 	 */
 	public this (GtkSpinButton* gtkSpinButton)
 	{
+		assert(gtkSpinButton !is null, "struct gtkSpinButton is null on constructor");
 		super(cast(GtkEntry*)gtkSpinButton);
 		this.gtkSpinButton = gtkSpinButton;
 	}

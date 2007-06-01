@@ -94,6 +94,7 @@ public class IMContext : ObjectG
 	 */
 	public this (GtkIMContext* gtkIMContext)
 	{
+		assert(gtkIMContext !is null, "struct gtkIMContext is null on constructor");
 		super(cast(GObject*)gtkIMContext);
 		this.gtkIMContext = gtkIMContext;
 	}

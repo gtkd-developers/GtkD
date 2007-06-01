@@ -153,6 +153,7 @@ public class Clipboard : ObjectG
 	 */
 	public this (GtkClipboard* gtkClipboard)
 	{
+		assert(gtkClipboard !is null, "struct gtkClipboard is null on constructor");
 		super(cast(GObject*)gtkClipboard);
 		this.gtkClipboard = gtkClipboard;
 	}

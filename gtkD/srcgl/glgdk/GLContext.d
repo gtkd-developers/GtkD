@@ -88,6 +88,7 @@ public class GLContext : ObjectG
 	 */
 	public this (GdkGLContext* gdkGLContext)
 	{
+		assert(gdkGLContext !is null, "struct gdkGLContext is null on constructor");
 		super(cast(GObject*)gdkGLContext);
 		this.gdkGLContext = gdkGLContext;
 	}

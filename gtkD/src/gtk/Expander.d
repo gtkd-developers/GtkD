@@ -128,6 +128,7 @@ public class Expander : Bin
 	 */
 	public this (GtkExpander* gtkExpander)
 	{
+		assert(gtkExpander !is null, "struct gtkExpander is null on constructor");
 		super(cast(GtkBin*)gtkExpander);
 		this.gtkExpander = gtkExpander;
 	}

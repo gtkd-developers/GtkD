@@ -90,6 +90,7 @@ public class HBox : Box
 	 */
 	public this (GtkHBox* gtkHBox)
 	{
+		assert(gtkHBox !is null, "struct gtkHBox is null on constructor");
 		super(cast(GtkBox*)gtkHBox);
 		this.gtkHBox = gtkHBox;
 	}

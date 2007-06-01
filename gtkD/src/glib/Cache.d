@@ -96,6 +96,7 @@ public class Cache
 	 */
 	public this (GCache* gCache)
 	{
+		assert(gCache !is null, "struct gCache is null on constructor");
 		this.gCache = gCache;
 	}
 	

@@ -108,6 +108,7 @@ public class Toolbar : Container
 	 */
 	public this (GtkToolbar* gtkToolbar)
 	{
+		assert(gtkToolbar !is null, "struct gtkToolbar is null on constructor");
 		super(cast(GtkContainer*)gtkToolbar);
 		this.gtkToolbar = gtkToolbar;
 	}

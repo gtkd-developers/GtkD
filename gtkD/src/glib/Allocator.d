@@ -90,6 +90,7 @@ public class Allocator
 	 */
 	public this (GAllocator* gAllocator)
 	{
+		assert(gAllocator !is null, "struct gAllocator is null on constructor");
 		this.gAllocator = gAllocator;
 	}
 	

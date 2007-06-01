@@ -132,6 +132,7 @@ public class Tooltips : ObjectGtk
 	 */
 	public this (GtkTooltips* gtkTooltips)
 	{
+		assert(gtkTooltips !is null, "struct gtkTooltips is null on constructor");
 		super(cast(GtkObject*)gtkTooltips);
 		this.gtkTooltips = gtkTooltips;
 	}

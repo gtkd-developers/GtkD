@@ -101,6 +101,7 @@ public class VButtonBox : ButtonBox
 	 */
 	public this (GtkVButtonBox* gtkVButtonBox)
 	{
+		assert(gtkVButtonBox !is null, "struct gtkVButtonBox is null on constructor");
 		super(cast(GtkButtonBox*)gtkVButtonBox);
 		this.gtkVButtonBox = gtkVButtonBox;
 	}

@@ -108,6 +108,7 @@ public class ToolButton : ToolItem
 	 */
 	public this (GtkToolButton* gtkToolButton)
 	{
+		assert(gtkToolButton !is null, "struct gtkToolButton is null on constructor");
 		super(cast(GtkToolItem*)gtkToolButton);
 		this.gtkToolButton = gtkToolButton;
 	}

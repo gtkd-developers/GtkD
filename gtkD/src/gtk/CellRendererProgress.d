@@ -92,6 +92,7 @@ public class CellRendererProgress : CellRenderer
 	 */
 	public this (GtkCellRendererProgress* gtkCellRendererProgress)
 	{
+		assert(gtkCellRendererProgress !is null, "struct gtkCellRendererProgress is null on constructor");
 		super(cast(GtkCellRenderer*)gtkCellRendererProgress);
 		this.gtkCellRendererProgress = gtkCellRendererProgress;
 	}

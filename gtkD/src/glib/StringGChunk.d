@@ -101,6 +101,7 @@ public class StringGChunk
 	 */
 	public this (GStringChunk* gStringChunk)
 	{
+		assert(gStringChunk !is null, "struct gStringChunk is null on constructor");
 		this.gStringChunk = gStringChunk;
 	}
 	

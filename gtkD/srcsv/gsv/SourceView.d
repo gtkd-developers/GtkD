@@ -92,6 +92,7 @@ public class SourceView : TextView
 	 */
 	public this (GtkSourceView* gtkSourceView)
 	{
+		assert(gtkSourceView !is null, "struct gtkSourceView is null on constructor");
 		super(cast(GtkTextView*)gtkSourceView);
 		this.gtkSourceView = gtkSourceView;
 	}

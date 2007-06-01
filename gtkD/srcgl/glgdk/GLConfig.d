@@ -90,6 +90,7 @@ public class GLConfig : ObjectG
 	 */
 	public this (GdkGLConfig* gdkGLConfig)
 	{
+		assert(gdkGLConfig !is null, "struct gdkGLConfig is null on constructor");
 		super(cast(GObject*)gdkGLConfig);
 		this.gdkGLConfig = gdkGLConfig;
 	}

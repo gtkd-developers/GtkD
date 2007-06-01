@@ -153,6 +153,7 @@ public class IconInfo
 	 */
 	public this (GtkIconInfo* gtkIconInfo)
 	{
+		assert(gtkIconInfo !is null, "struct gtkIconInfo is null on constructor");
 		this.gtkIconInfo = gtkIconInfo;
 	}
 	

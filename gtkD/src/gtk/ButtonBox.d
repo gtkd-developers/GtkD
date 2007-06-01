@@ -110,6 +110,7 @@ public class ButtonBox : Box
 	 */
 	public this (GtkButtonBox* gtkButtonBox)
 	{
+		assert(gtkButtonBox !is null, "struct gtkButtonBox is null on constructor");
 		super(cast(GtkBox*)gtkButtonBox);
 		this.gtkButtonBox = gtkButtonBox;
 	}

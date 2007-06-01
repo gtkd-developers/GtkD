@@ -116,6 +116,7 @@ public class Color
 	 */
 	public this (GdkColor* gdkColor)
 	{
+		assert(gdkColor !is null, "struct gdkColor is null on constructor");
 		this.gdkColor = gdkColor;
 	}
 	

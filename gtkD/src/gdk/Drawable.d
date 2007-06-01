@@ -182,6 +182,7 @@ public class Drawable : ObjectG
 	 */
 	public this (GdkDrawable* gdkDrawable)
 	{
+		assert(gdkDrawable !is null, "struct gdkDrawable is null on constructor");
 		super(cast(GObject*)gdkDrawable);
 		this.gdkDrawable = gdkDrawable;
 	}

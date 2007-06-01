@@ -94,6 +94,7 @@ public class RelationSet : ObjectG
 	 */
 	public this (AtkRelationSet* atkRelationSet)
 	{
+		assert(atkRelationSet !is null, "struct atkRelationSet is null on constructor");
 		super(cast(GObject*)atkRelationSet);
 		this.atkRelationSet = atkRelationSet;
 	}

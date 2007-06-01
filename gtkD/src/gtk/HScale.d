@@ -93,6 +93,7 @@ public class HScale : Scale
 	 */
 	public this (GtkHScale* gtkHScale)
 	{
+		assert(gtkHScale !is null, "struct gtkHScale is null on constructor");
 		super(cast(GtkScale*)gtkHScale);
 		this.gtkHScale = gtkHScale;
 	}

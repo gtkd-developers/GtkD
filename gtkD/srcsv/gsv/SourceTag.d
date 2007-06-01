@@ -90,6 +90,7 @@ public class SourceTag : TextTag
 	 */
 	public this (GtkSourceTag* gtkSourceTag)
 	{
+		assert(gtkSourceTag !is null, "struct gtkSourceTag is null on constructor");
 		super(cast(GtkTextTag*)gtkSourceTag);
 		this.gtkSourceTag = gtkSourceTag;
 	}

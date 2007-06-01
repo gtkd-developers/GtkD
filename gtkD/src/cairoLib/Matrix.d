@@ -98,6 +98,7 @@ public class Matrix
 	 */
 	public this (cairo_matrix_t* cairo_matrix)
 	{
+		assert(cairo_matrix !is null, "struct cairo_matrix is null on constructor");
 		this.cairo_matrix = cairo_matrix;
 	}
 	

@@ -134,6 +134,7 @@ public class PgFontMetrics
 	 */
 	public this (PangoFontMetrics* pangoFontMetrics)
 	{
+		assert(pangoFontMetrics !is null, "struct pangoFontMetrics is null on constructor");
 		this.pangoFontMetrics = pangoFontMetrics;
 	}
 	

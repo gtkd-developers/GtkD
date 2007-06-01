@@ -129,6 +129,7 @@ public class CellRenderer : ObjectGtk
 	 */
 	public this (GtkCellRenderer* gtkCellRenderer)
 	{
+		assert(gtkCellRenderer !is null, "struct gtkCellRenderer is null on constructor");
 		super(cast(GtkObject*)gtkCellRenderer);
 		this.gtkCellRenderer = gtkCellRenderer;
 	}

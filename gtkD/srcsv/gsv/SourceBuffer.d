@@ -118,6 +118,7 @@ public class SourceBuffer : TextBuffer
 	 */
 	public this (GtkSourceBuffer* gtkSourceBuffer)
 	{
+		assert(gtkSourceBuffer !is null, "struct gtkSourceBuffer is null on constructor");
 		super(cast(GtkTextBuffer*)gtkSourceBuffer);
 		this.gtkSourceBuffer = gtkSourceBuffer;
 	}

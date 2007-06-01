@@ -111,6 +111,7 @@ public class StaticRecMutex
 	 */
 	public this (GStaticRecMutex* gStaticRecMutex)
 	{
+		assert(gStaticRecMutex !is null, "struct gStaticRecMutex is null on constructor");
 		this.gStaticRecMutex = gStaticRecMutex;
 	}
 	

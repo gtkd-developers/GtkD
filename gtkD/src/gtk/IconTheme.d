@@ -165,6 +165,7 @@ public class IconTheme : ObjectG
 	 */
 	public this (GtkIconTheme* gtkIconTheme)
 	{
+		assert(gtkIconTheme !is null, "struct gtkIconTheme is null on constructor");
 		super(cast(GObject*)gtkIconTheme);
 		this.gtkIconTheme = gtkIconTheme;
 	}

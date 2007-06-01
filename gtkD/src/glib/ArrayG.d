@@ -113,6 +113,7 @@ public class ArrayG
 	 */
 	public this (GArray* gArray)
 	{
+		assert(gArray !is null, "struct gArray is null on constructor");
 		this.gArray = gArray;
 	}
 	

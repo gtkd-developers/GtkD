@@ -91,6 +91,7 @@ public class Table
 	 */
 	public this (GdaTable* gdaTable)
 	{
+		assert(gdaTable !is null, "struct gdaTable is null on constructor");
 		this.gdaTable = gdaTable;
 	}
 	

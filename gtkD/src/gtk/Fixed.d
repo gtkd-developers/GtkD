@@ -116,6 +116,7 @@ public class Fixed : Container
 	 */
 	public this (GtkFixed* gtkFixed)
 	{
+		assert(gtkFixed !is null, "struct gtkFixed is null on constructor");
 		super(cast(GtkContainer*)gtkFixed);
 		this.gtkFixed = gtkFixed;
 	}

@@ -118,6 +118,7 @@ public class SizeGroup : ObjectG
 	 */
 	public this (GtkSizeGroup* gtkSizeGroup)
 	{
+		assert(gtkSizeGroup !is null, "struct gtkSizeGroup is null on constructor");
 		super(cast(GObject*)gtkSizeGroup);
 		this.gtkSizeGroup = gtkSizeGroup;
 	}

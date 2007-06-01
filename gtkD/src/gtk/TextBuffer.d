@@ -142,6 +142,7 @@ public class TextBuffer : ObjectG
 	 */
 	public this (GtkTextBuffer* gtkTextBuffer)
 	{
+		assert(gtkTextBuffer !is null, "struct gtkTextBuffer is null on constructor");
 		super(cast(GObject*)gtkTextBuffer);
 		this.gtkTextBuffer = gtkTextBuffer;
 	}

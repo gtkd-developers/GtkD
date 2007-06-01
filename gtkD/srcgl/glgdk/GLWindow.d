@@ -88,6 +88,7 @@ public class GLWindow : Drawable
 	 */
 	public this (GdkGLWindow* gdkGLWindow)
 	{
+		assert(gdkGLWindow !is null, "struct gdkGLWindow is null on constructor");
 		super(cast(GdkDrawable*)gdkGLWindow);
 		this.gdkGLWindow = gdkGLWindow;
 	}

@@ -164,6 +164,7 @@ public class MainContext
 	 */
 	public this (GMainContext* gMainContext)
 	{
+		assert(gMainContext !is null, "struct gMainContext is null on constructor");
 		this.gMainContext = gMainContext;
 	}
 	

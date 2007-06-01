@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = Bin
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_bin_get_child
  * imports:
  * 	- gtk.Widget
  * structWrap:
@@ -94,13 +95,10 @@ public class Bin : Container
 	 */
 	public this (GtkBin* gtkBin)
 	{
+		assert(gtkBin !is null, "struct gtkBin is null on constructor");
 		super(cast(GtkContainer*)gtkBin);
 		this.gtkBin = gtkBin;
 	}
-	
-	/**
-	 */
-	
 	
 	/**
 	 * Gets the child of the GtkBin, or NULL if the bin contains
@@ -114,6 +112,19 @@ public class Bin : Container
 	public Widget getChild()
 	{
 		// GtkWidget* gtk_bin_get_child (GtkBin *bin);
-		return new Widget( gtk_bin_get_child(gtkBin) );
+		GtkWidget * gtkWidget = gtk_bin_get_child(gtkBin);
+		if ( gtkWidget )
+		{
+			return new Widget(gtkWidget);
+		}
+		else
+		{
+			return null;
+		}
 	}
+	
+	/**
+	 */
+	
+	
 }

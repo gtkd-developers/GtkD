@@ -136,6 +136,7 @@ public class PgFontMap
 	 */
 	public this (PangoFontMap* pangoFontMap)
 	{
+		assert(pangoFontMap !is null, "struct pangoFontMap is null on constructor");
 		this.pangoFontMap = pangoFontMap;
 	}
 	

@@ -88,6 +88,7 @@ public class StateSet
 	 */
 	public this (AtkStateSet* atkStateSet)
 	{
+		assert(atkStateSet !is null, "struct atkStateSet is null on constructor");
 		this.atkStateSet = atkStateSet;
 	}
 	

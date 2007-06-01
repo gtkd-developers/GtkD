@@ -107,6 +107,7 @@ public class Action
 	 */
 	public this (AtkAction* atkAction)
 	{
+		assert(atkAction !is null, "struct atkAction is null on constructor");
 		this.atkAction = atkAction;
 	}
 	

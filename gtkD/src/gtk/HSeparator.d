@@ -94,6 +94,7 @@ public class HSeparator : Separator
 	 */
 	public this (GtkHSeparator* gtkHSeparator)
 	{
+		assert(gtkHSeparator !is null, "struct gtkHSeparator is null on constructor");
 		super(cast(GtkSeparator*)gtkHSeparator);
 		this.gtkHSeparator = gtkHSeparator;
 	}

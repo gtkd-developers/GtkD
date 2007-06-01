@@ -90,6 +90,7 @@ public class StringG
 	 */
 	public this (GString* gString)
 	{
+		assert(gString !is null, "struct gString is null on constructor");
 		this.gString = gString;
 	}
 	

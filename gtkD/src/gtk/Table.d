@@ -103,6 +103,7 @@ public class Table : Container
 	 */
 	public this (GtkTable* gtkTable)
 	{
+		assert(gtkTable !is null, "struct gtkTable is null on constructor");
 		super(cast(GtkContainer*)gtkTable);
 		this.gtkTable = gtkTable;
 	}

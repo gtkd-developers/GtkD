@@ -89,6 +89,7 @@ public class EventBox : Bin
 	 */
 	public this (GtkEventBox* gtkEventBox)
 	{
+		assert(gtkEventBox !is null, "struct gtkEventBox is null on constructor");
 		super(cast(GtkBin*)gtkEventBox);
 		this.gtkEventBox = gtkEventBox;
 	}

@@ -134,6 +134,7 @@ public class PgLayoutIter
 	 */
 	public this (PangoLayoutIter* pangoLayoutIter)
 	{
+		assert(pangoLayoutIter !is null, "struct pangoLayoutIter is null on constructor");
 		this.pangoLayoutIter = pangoLayoutIter;
 	}
 	

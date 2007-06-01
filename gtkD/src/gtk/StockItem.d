@@ -108,6 +108,7 @@ public class StockItem
 	 */
 	public this (GtkStockItem* gtkStockItem)
 	{
+		assert(gtkStockItem !is null, "struct gtkStockItem is null on constructor");
 		this.gtkStockItem = gtkStockItem;
 	}
 	

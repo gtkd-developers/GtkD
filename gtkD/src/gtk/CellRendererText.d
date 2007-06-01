@@ -97,6 +97,7 @@ public class CellRendererText : CellRenderer
 	 */
 	public this (GtkCellRendererText* gtkCellRendererText)
 	{
+		assert(gtkCellRendererText !is null, "struct gtkCellRendererText is null on constructor");
 		super(cast(GtkCellRenderer*)gtkCellRendererText);
 		this.gtkCellRendererText = gtkCellRendererText;
 	}

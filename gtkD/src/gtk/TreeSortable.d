@@ -88,6 +88,7 @@ public class TreeSortable
 	 */
 	public this (GtkTreeSortable* gtkTreeSortable)
 	{
+		assert(gtkTreeSortable !is null, "struct gtkTreeSortable is null on constructor");
 		this.gtkTreeSortable = gtkTreeSortable;
 	}
 	

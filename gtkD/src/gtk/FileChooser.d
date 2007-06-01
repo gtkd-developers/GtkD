@@ -366,6 +366,7 @@ public class FileChooser
 	 */
 	public this (GtkFileChooser* gtkFileChooser)
 	{
+		assert(gtkFileChooser !is null, "struct gtkFileChooser is null on constructor");
 		this.gtkFileChooser = gtkFileChooser;
 	}
 	

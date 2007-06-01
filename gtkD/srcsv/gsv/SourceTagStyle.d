@@ -84,6 +84,7 @@ public class SourceTagStyle
 	 */
 	public this (GtkSourceTagStyle* gtkSourceTagStyle)
 	{
+		assert(gtkSourceTagStyle !is null, "struct gtkSourceTagStyle is null on constructor");
 		this.gtkSourceTagStyle = gtkSourceTagStyle;
 	}
 	

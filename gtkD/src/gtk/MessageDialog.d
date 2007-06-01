@@ -122,6 +122,7 @@ public class MessageDialog : Dialog
 	 */
 	public this (GtkMessageDialog* gtkMessageDialog)
 	{
+		assert(gtkMessageDialog !is null, "struct gtkMessageDialog is null on constructor");
 		super(cast(GtkDialog*)gtkMessageDialog);
 		this.gtkMessageDialog = gtkMessageDialog;
 	}

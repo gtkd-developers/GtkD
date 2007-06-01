@@ -101,6 +101,7 @@ public class ToolItem : Bin
 	 */
 	public this (GtkToolItem* gtkToolItem)
 	{
+		assert(gtkToolItem !is null, "struct gtkToolItem is null on constructor");
 		super(cast(GtkBin*)gtkToolItem);
 		this.gtkToolItem = gtkToolItem;
 	}

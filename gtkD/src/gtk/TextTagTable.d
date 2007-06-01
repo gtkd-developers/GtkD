@@ -97,6 +97,7 @@ public class TextTagTable : ObjectG
 	 */
 	public this (GtkTextTagTable* gtkTextTagTable)
 	{
+		assert(gtkTextTagTable !is null, "struct gtkTextTagTable is null on constructor");
 		super(cast(GObject*)gtkTextTagTable);
 		this.gtkTextTagTable = gtkTextTagTable;
 	}

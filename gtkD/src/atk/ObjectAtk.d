@@ -105,6 +105,7 @@ public class ObjectAtk : ObjectG
 	 */
 	public this (AtkObject* atkObject)
 	{
+		assert(atkObject !is null, "struct atkObject is null on constructor");
 		super(cast(GObject*)atkObject);
 		this.atkObject = atkObject;
 	}

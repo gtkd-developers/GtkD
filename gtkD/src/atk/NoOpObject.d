@@ -91,6 +91,7 @@ public class NoOpObject : ObjectAtk
 	 */
 	public this (AtkNoOpObject* atkNoOpObject)
 	{
+		assert(atkNoOpObject !is null, "struct atkNoOpObject is null on constructor");
 		super(cast(AtkObject*)atkNoOpObject);
 		this.atkNoOpObject = atkNoOpObject;
 	}

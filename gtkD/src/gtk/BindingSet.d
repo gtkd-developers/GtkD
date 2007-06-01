@@ -156,6 +156,7 @@ public class BindingSet
 	 */
 	public this (GtkBindingSet* gtkBindingSet)
 	{
+		assert(gtkBindingSet !is null, "struct gtkBindingSet is null on constructor");
 		this.gtkBindingSet = gtkBindingSet;
 	}
 	

@@ -114,6 +114,7 @@ public class Private
 	 */
 	public this (GPrivate* gPrivate)
 	{
+		assert(gPrivate !is null, "struct gPrivate is null on constructor");
 		this.gPrivate = gPrivate;
 	}
 	

@@ -101,6 +101,7 @@ public class DataSourceInfo
 	 */
 	public this (GdaDataSourceInfo* gdaDataSourceInfo)
 	{
+		assert(gdaDataSourceInfo !is null, "struct gdaDataSourceInfo is null on constructor");
 		this.gdaDataSourceInfo = gdaDataSourceInfo;
 	}
 	

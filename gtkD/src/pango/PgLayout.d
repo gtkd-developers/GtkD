@@ -143,6 +143,7 @@ public class PgLayout
 	 */
 	public this (PangoLayout* pangoLayout)
 	{
+		assert(pangoLayout !is null, "struct pangoLayout is null on constructor");
 		this.pangoLayout = pangoLayout;
 	}
 	

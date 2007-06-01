@@ -223,6 +223,7 @@ public class TreeRowReference
 	 */
 	public this (GtkTreeRowReference* gtkTreeRowReference)
 	{
+		assert(gtkTreeRowReference !is null, "struct gtkTreeRowReference is null on constructor");
 		this.gtkTreeRowReference = gtkTreeRowReference;
 	}
 	

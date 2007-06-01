@@ -96,6 +96,7 @@ public class Entry : Widget
 	 */
 	public this (GtkEntry* gtkEntry)
 	{
+		assert(gtkEntry !is null, "struct gtkEntry is null on constructor");
 		super(cast(GtkWidget*)gtkEntry);
 		this.gtkEntry = gtkEntry;
 	}

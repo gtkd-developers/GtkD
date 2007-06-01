@@ -87,6 +87,7 @@ public class DataModelArray
 	 */
 	public this (GdaDataModelArray* gdaDataModelArray)
 	{
+		assert(gdaDataModelArray !is null, "struct gdaDataModelArray is null on constructor");
 		this.gdaDataModelArray = gdaDataModelArray;
 	}
 	

@@ -102,6 +102,7 @@ public class Layout : Container
 	 */
 	public this (GtkLayout* gtkLayout)
 	{
+		assert(gtkLayout !is null, "struct gtkLayout is null on constructor");
 		super(cast(GtkContainer*)gtkLayout);
 		this.gtkLayout = gtkLayout;
 	}

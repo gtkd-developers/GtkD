@@ -139,6 +139,7 @@ public class PgAttribute
 	 */
 	public this (PangoAttribute* pangoAttribute)
 	{
+		assert(pangoAttribute !is null, "struct pangoAttribute is null on constructor");
 		this.pangoAttribute = pangoAttribute;
 	}
 	

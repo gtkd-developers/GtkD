@@ -111,6 +111,7 @@ public class Mutex
 	 */
 	public this (GMutex* gMutex)
 	{
+		assert(gMutex !is null, "struct gMutex is null on constructor");
 		this.gMutex = gMutex;
 	}
 	

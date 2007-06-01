@@ -89,6 +89,7 @@ public class VSeparator : Separator
 	 */
 	public this (GtkVSeparator* gtkVSeparator)
 	{
+		assert(gtkVSeparator !is null, "struct gtkVSeparator is null on constructor");
 		super(cast(GtkSeparator*)gtkVSeparator);
 		this.gtkVSeparator = gtkVSeparator;
 	}

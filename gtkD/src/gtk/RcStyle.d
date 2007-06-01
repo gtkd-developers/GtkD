@@ -499,6 +499,7 @@ public class RcStyle : ObjectG
 	 */
 	public this (GtkRcStyle* gtkRcStyle)
 	{
+		assert(gtkRcStyle !is null, "struct gtkRcStyle is null on constructor");
 		super(cast(GObject*)gtkRcStyle);
 		this.gtkRcStyle = gtkRcStyle;
 	}

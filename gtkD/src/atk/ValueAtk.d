@@ -94,6 +94,7 @@ public class ValueAtk
 	 */
 	public this (AtkValue* atkValue)
 	{
+		assert(atkValue !is null, "struct atkValue is null on constructor");
 		this.atkValue = atkValue;
 	}
 	

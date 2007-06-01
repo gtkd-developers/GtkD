@@ -162,6 +162,7 @@ public class Label : Misc
 	 */
 	public this (GtkLabel* gtkLabel)
 	{
+		assert(gtkLabel !is null, "struct gtkLabel is null on constructor");
 		super(cast(GtkMisc*)gtkLabel);
 		this.gtkLabel = gtkLabel;
 	}

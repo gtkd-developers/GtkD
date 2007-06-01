@@ -93,6 +93,7 @@ public class ObjectFactory : ObjectG
 	 */
 	public this (AtkObjectFactory* atkObjectFactory)
 	{
+		assert(atkObjectFactory !is null, "struct atkObjectFactory is null on constructor");
 		super(cast(GObject*)atkObjectFactory);
 		this.atkObjectFactory = atkObjectFactory;
 	}

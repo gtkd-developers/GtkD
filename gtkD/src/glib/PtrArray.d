@@ -113,6 +113,7 @@ public class PtrArray
 	 */
 	public this (GPtrArray* gPtrArray)
 	{
+		assert(gPtrArray !is null, "struct gPtrArray is null on constructor");
 		this.gPtrArray = gPtrArray;
 	}
 	

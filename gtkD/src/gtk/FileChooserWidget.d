@@ -104,6 +104,7 @@ public class FileChooserWidget : VBox
 	 */
 	public this (GtkFileChooserWidget* gtkFileChooserWidget)
 	{
+		assert(gtkFileChooserWidget !is null, "struct gtkFileChooserWidget is null on constructor");
 		super(cast(GtkVBox*)gtkFileChooserWidget);
 		this.gtkFileChooserWidget = gtkFileChooserWidget;
 	}

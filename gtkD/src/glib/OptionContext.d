@@ -163,6 +163,7 @@ public class OptionContext
 	 */
 	public this (GOptionContext* gOptionContext)
 	{
+		assert(gOptionContext !is null, "struct gOptionContext is null on constructor");
 		this.gOptionContext = gOptionContext;
 	}
 	

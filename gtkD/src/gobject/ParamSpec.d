@@ -102,6 +102,7 @@ public class ParamSpec
 	 */
 	public this (GParamSpec* gParamSpec)
 	{
+		assert(gParamSpec !is null, "struct gParamSpec is null on constructor");
 		this.gParamSpec = gParamSpec;
 	}
 	

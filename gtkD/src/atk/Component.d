@@ -93,6 +93,7 @@ public class Component
 	 */
 	public this (AtkComponent* atkComponent)
 	{
+		assert(atkComponent !is null, "struct atkComponent is null on constructor");
 		this.atkComponent = atkComponent;
 	}
 	

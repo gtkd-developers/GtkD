@@ -94,6 +94,7 @@ public class Progress : Widget
 	 */
 	public this (GtkProgress* gtkProgress)
 	{
+		assert(gtkProgress !is null, "struct gtkProgress is null on constructor");
 		super(cast(GtkWidget*)gtkProgress);
 		this.gtkProgress = gtkProgress;
 	}

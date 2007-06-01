@@ -94,6 +94,7 @@ public class RadioAction : ToggleAction
 	 */
 	public this (GtkRadioAction* gtkRadioAction)
 	{
+		assert(gtkRadioAction !is null, "struct gtkRadioAction is null on constructor");
 		super(cast(GtkToggleAction*)gtkRadioAction);
 		this.gtkRadioAction = gtkRadioAction;
 	}

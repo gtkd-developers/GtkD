@@ -178,6 +178,7 @@ public class Widget : ObjectGtk
 	 */
 	public this (GtkWidget* gtkWidget)
 	{
+		assert(gtkWidget !is null, "struct gtkWidget is null on constructor");
 		super(cast(GtkObject*)gtkWidget);
 		this.gtkWidget = gtkWidget;
 	}
@@ -3275,6 +3276,7 @@ public class Widget : ObjectGtk
 	 * widget:
 	 *  a GtkWidget
 	 */
+	version(tango){}else
 	public void ensureStyle()
 	{
 		// void gtk_widget_ensure_style (GtkWidget *widget);

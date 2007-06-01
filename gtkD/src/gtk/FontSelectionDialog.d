@@ -97,6 +97,7 @@ public class FontSelectionDialog : Dialog
 	 */
 	public this (GtkFontSelectionDialog* gtkFontSelectionDialog)
 	{
+		assert(gtkFontSelectionDialog !is null, "struct gtkFontSelectionDialog is null on constructor");
 		super(cast(GtkDialog*)gtkFontSelectionDialog);
 		this.gtkFontSelectionDialog = gtkFontSelectionDialog;
 	}

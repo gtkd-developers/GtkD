@@ -153,6 +153,7 @@ public class Module
 	 */
 	public this (GModule* gModule)
 	{
+		assert(gModule !is null, "struct gModule is null on constructor");
 		this.gModule = gModule;
 	}
 	

@@ -102,6 +102,7 @@ public class QueueG
 	 */
 	public this (GQueue* gQueue)
 	{
+		assert(gQueue !is null, "struct gQueue is null on constructor");
 		this.gQueue = gQueue;
 	}
 	

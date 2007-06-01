@@ -108,6 +108,7 @@ public class MenuToolButton : ToolButton
 	 */
 	public this (GtkMenuToolButton* gtkMenuToolButton)
 	{
+		assert(gtkMenuToolButton !is null, "struct gtkMenuToolButton is null on constructor");
 		super(cast(GtkToolButton*)gtkMenuToolButton);
 		this.gtkMenuToolButton = gtkMenuToolButton;
 	}

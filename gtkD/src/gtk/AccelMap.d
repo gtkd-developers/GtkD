@@ -91,6 +91,7 @@ public class AccelMap : ObjectG
 	 */
 	public this (GtkAccelMap* gtkAccelMap)
 	{
+		assert(gtkAccelMap !is null, "struct gtkAccelMap is null on constructor");
 		super(cast(GObject*)gtkAccelMap);
 		this.gtkAccelMap = gtkAccelMap;
 	}

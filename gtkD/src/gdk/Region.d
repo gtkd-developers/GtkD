@@ -102,6 +102,7 @@ public class Region
 	 */
 	public this (GdkRegion* gdkRegion)
 	{
+		assert(gdkRegion !is null, "struct gdkRegion is null on constructor");
 		this.gdkRegion = gdkRegion;
 	}
 	

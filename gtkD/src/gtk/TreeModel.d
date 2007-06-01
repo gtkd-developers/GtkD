@@ -226,6 +226,7 @@ public class TreeModel
 	 */
 	public this (GtkTreeModel* gtkTreeModel)
 	{
+		assert(gtkTreeModel !is null, "struct gtkTreeModel is null on constructor");
 		this.gtkTreeModel = gtkTreeModel;
 	}
 	

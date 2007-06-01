@@ -125,6 +125,7 @@ public class TreeSelection : ObjectG
 	 */
 	public this (GtkTreeSelection* gtkTreeSelection)
 	{
+		assert(gtkTreeSelection !is null, "struct gtkTreeSelection is null on constructor");
 		super(cast(GObject*)gtkTreeSelection);
 		this.gtkTreeSelection = gtkTreeSelection;
 	}

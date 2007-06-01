@@ -90,6 +90,7 @@ public class TrashStack
 	 */
 	public this (GTrashStack* gTrashStack)
 	{
+		assert(gTrashStack !is null, "struct gTrashStack is null on constructor");
 		this.gTrashStack = gTrashStack;
 	}
 	

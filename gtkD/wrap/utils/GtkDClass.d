@@ -573,6 +573,7 @@ public class GtkDClass
 							text ~= " */";
 							text ~= "public this ("~gtkStruct~"* "~var~")"~iFaceChar;
 							text ~= "{";
+							text ~= "assert("~var~" !is null, \"struct "~var~" is null on constructor\");";
 							if ( parentName.length > 0 )
 							{
 								text ~= "super("~castToParent(var)~");";

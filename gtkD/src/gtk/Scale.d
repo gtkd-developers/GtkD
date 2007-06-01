@@ -95,6 +95,7 @@ public class Scale : Range
 	 */
 	public this (GtkScale* gtkScale)
 	{
+		assert(gtkScale !is null, "struct gtkScale is null on constructor");
 		super(cast(GtkRange*)gtkScale);
 		this.gtkScale = gtkScale;
 	}

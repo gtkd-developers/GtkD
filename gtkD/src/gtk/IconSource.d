@@ -116,6 +116,7 @@ public class IconSource
 	 */
 	public this (GtkIconSource* gtkIconSource)
 	{
+		assert(gtkIconSource !is null, "struct gtkIconSource is null on constructor");
 		this.gtkIconSource = gtkIconSource;
 	}
 	

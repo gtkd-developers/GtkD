@@ -104,6 +104,7 @@ public class TreeDragSource
 	 */
 	public this (GtkTreeDragSource* gtkTreeDragSource)
 	{
+		assert(gtkTreeDragSource !is null, "struct gtkTreeDragSource is null on constructor");
 		this.gtkTreeDragSource = gtkTreeDragSource;
 	}
 	

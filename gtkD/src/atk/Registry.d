@@ -90,6 +90,7 @@ public class Registry : ObjectG
 	 */
 	public this (AtkRegistry* atkRegistry)
 	{
+		assert(atkRegistry !is null, "struct atkRegistry is null on constructor");
 		super(cast(GObject*)atkRegistry);
 		this.atkRegistry = atkRegistry;
 	}

@@ -136,6 +136,7 @@ public class PixbufLoader : ObjectG
 	 */
 	public this (GdkPixbufLoader* gdkPixbufLoader)
 	{
+		assert(gdkPixbufLoader !is null, "struct gdkPixbufLoader is null on constructor");
 		super(cast(GObject*)gdkPixbufLoader);
 		this.gdkPixbufLoader = gdkPixbufLoader;
 	}

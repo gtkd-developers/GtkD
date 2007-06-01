@@ -125,6 +125,7 @@ public class ScrolledWindow : Bin
 	 */
 	public this (GtkScrolledWindow* gtkScrolledWindow)
 	{
+		assert(gtkScrolledWindow !is null, "struct gtkScrolledWindow is null on constructor");
 		super(cast(GtkBin*)gtkScrolledWindow);
 		this.gtkScrolledWindow = gtkScrolledWindow;
 	}

@@ -100,6 +100,7 @@ public class Rectangle
 	 */
 	public this (GdkRectangle* gdkRectangle)
 	{
+		assert(gdkRectangle !is null, "struct gdkRectangle is null on constructor");
 		this.gdkRectangle = gdkRectangle;
 	}
 	

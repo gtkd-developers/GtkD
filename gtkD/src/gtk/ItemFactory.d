@@ -99,6 +99,7 @@ public class ItemFactory : ObjectGtk
 	 */
 	public this (GtkItemFactory* gtkItemFactory)
 	{
+		assert(gtkItemFactory !is null, "struct gtkItemFactory is null on constructor");
 		super(cast(GtkObject*)gtkItemFactory);
 		this.gtkItemFactory = gtkItemFactory;
 	}

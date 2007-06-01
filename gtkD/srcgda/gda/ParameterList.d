@@ -106,6 +106,7 @@ public class ParameterList
 	 */
 	public this (GdaParameterList* gdaParameterList)
 	{
+		assert(gdaParameterList !is null, "struct gdaParameterList is null on constructor");
 		this.gdaParameterList = gdaParameterList;
 	}
 	

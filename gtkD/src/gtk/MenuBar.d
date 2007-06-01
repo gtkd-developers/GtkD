@@ -96,6 +96,7 @@ public class MenuBar : MenuShell
 	 */
 	public this (GtkMenuBar* gtkMenuBar)
 	{
+		assert(gtkMenuBar !is null, "struct gtkMenuBar is null on constructor");
 		super(cast(GtkMenuShell*)gtkMenuBar);
 		this.gtkMenuBar = gtkMenuBar;
 	}

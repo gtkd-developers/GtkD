@@ -93,6 +93,7 @@ public class Relation : ObjectG
 	 */
 	public this (AtkRelation* atkRelation)
 	{
+		assert(atkRelation !is null, "struct atkRelation is null on constructor");
 		super(cast(GObject*)atkRelation);
 		this.atkRelation = atkRelation;
 	}

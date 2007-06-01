@@ -86,6 +86,7 @@ public class SourceMarker
 	 */
 	public this (GtkSourceMarker* gtkSourceMarker)
 	{
+		assert(gtkSourceMarker !is null, "struct gtkSourceMarker is null on constructor");
 		this.gtkSourceMarker = gtkSourceMarker;
 	}
 	

@@ -124,6 +124,7 @@ public class Screen : ObjectG
 	 */
 	public this (GdkScreen* gdkScreen)
 	{
+		assert(gdkScreen !is null, "struct gdkScreen is null on constructor");
 		super(cast(GObject*)gdkScreen);
 		this.gdkScreen = gdkScreen;
 	}

@@ -92,6 +92,7 @@ public class Selection
 	 */
 	public this (AtkSelection* atkSelection)
 	{
+		assert(atkSelection !is null, "struct atkSelection is null on constructor");
 		this.atkSelection = atkSelection;
 	}
 	

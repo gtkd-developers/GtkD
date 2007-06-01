@@ -89,6 +89,7 @@ public class IMContextSimple : IMContext
 	 */
 	public this (GtkIMContextSimple* gtkIMContextSimple)
 	{
+		assert(gtkIMContextSimple !is null, "struct gtkIMContextSimple is null on constructor");
 		super(cast(GtkIMContext*)gtkIMContextSimple);
 		this.gtkIMContextSimple = gtkIMContextSimple;
 	}

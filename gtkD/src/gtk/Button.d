@@ -104,6 +104,7 @@ public class Button : Bin
 	 */
 	public this (GtkButton* gtkButton)
 	{
+		assert(gtkButton !is null, "struct gtkButton is null on constructor");
 		super(cast(GtkBin*)gtkButton);
 		this.gtkButton = gtkButton;
 	}

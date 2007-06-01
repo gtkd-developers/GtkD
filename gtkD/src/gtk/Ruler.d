@@ -100,6 +100,7 @@ public class Ruler : Widget
 	 */
 	public this (GtkRuler* gtkRuler)
 	{
+		assert(gtkRuler !is null, "struct gtkRuler is null on constructor");
 		super(cast(GtkWidget*)gtkRuler);
 		this.gtkRuler = gtkRuler;
 	}

@@ -129,6 +129,7 @@ public class Closure
 	 */
 	public this (GClosure* gClosure)
 	{
+		assert(gClosure !is null, "struct gClosure is null on constructor");
 		this.gClosure = gClosure;
 	}
 	

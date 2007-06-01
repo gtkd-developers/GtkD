@@ -90,6 +90,7 @@ public class CellEditable
 	 */
 	public this (GtkCellEditable* gtkCellEditable)
 	{
+		assert(gtkCellEditable !is null, "struct gtkCellEditable is null on constructor");
 		this.gtkCellEditable = gtkCellEditable;
 	}
 	

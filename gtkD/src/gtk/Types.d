@@ -89,6 +89,7 @@ public class Types
 	 */
 	public this (GtkType* gtkType)
 	{
+		assert(gtkType !is null, "struct gtkType is null on constructor");
 		this.gtkType = gtkType;
 	}
 	

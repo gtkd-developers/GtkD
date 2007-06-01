@@ -118,6 +118,7 @@ public class TypeModule : ObjectG
 	 */
 	public this (GTypeModule* gTypeModule)
 	{
+		assert(gTypeModule !is null, "struct gTypeModule is null on constructor");
 		super(cast(GObject*)gTypeModule);
 		this.gTypeModule = gTypeModule;
 	}

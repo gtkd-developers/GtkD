@@ -101,6 +101,7 @@ public class CellRendererCombo : CellRendererText
 	 */
 	public this (GtkCellRendererCombo* gtkCellRendererCombo)
 	{
+		assert(gtkCellRendererCombo !is null, "struct gtkCellRendererCombo is null on constructor");
 		super(cast(GtkCellRendererText*)gtkCellRendererCombo);
 		this.gtkCellRendererCombo = gtkCellRendererCombo;
 	}

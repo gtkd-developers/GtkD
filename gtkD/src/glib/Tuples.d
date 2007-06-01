@@ -107,6 +107,7 @@ public class Tuples
 	 */
 	public this (GTuples* gTuples)
 	{
+		assert(gTuples !is null, "struct gTuples is null on constructor");
 		this.gTuples = gTuples;
 	}
 	

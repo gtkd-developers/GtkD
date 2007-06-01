@@ -90,6 +90,7 @@ public class SourceLanguagesManager : ObjectG
 	 */
 	public this (GtkSourceLanguagesManager* gtkSourceLanguagesManager)
 	{
+		assert(gtkSourceLanguagesManager !is null, "struct gtkSourceLanguagesManager is null on constructor");
 		super(cast(GObject*)gtkSourceLanguagesManager);
 		this.gtkSourceLanguagesManager = gtkSourceLanguagesManager;
 	}

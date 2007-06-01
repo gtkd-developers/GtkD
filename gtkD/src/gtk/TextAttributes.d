@@ -96,6 +96,7 @@ public class TextAttributes
 	 */
 	public this (GtkTextAttributes* gtkTextAttributes)
 	{
+		assert(gtkTextAttributes !is null, "struct gtkTextAttributes is null on constructor");
 		this.gtkTextAttributes = gtkTextAttributes;
 	}
 	

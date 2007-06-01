@@ -96,6 +96,7 @@ public class DataModelList
 	 */
 	public this (GdaDataModelList* gdaDataModelList)
 	{
+		assert(gdaDataModelList !is null, "struct gdaDataModelList is null on constructor");
 		this.gdaDataModelList = gdaDataModelList;
 	}
 	

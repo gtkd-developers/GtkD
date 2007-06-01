@@ -89,6 +89,7 @@ public class TextChildAnchor
 	 */
 	public this (GtkTextChildAnchor* gtkTextChildAnchor)
 	{
+		assert(gtkTextChildAnchor !is null, "struct gtkTextChildAnchor is null on constructor");
 		this.gtkTextChildAnchor = gtkTextChildAnchor;
 	}
 	

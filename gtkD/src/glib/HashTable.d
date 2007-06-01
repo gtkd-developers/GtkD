@@ -108,6 +108,7 @@ public class HashTable
 	 */
 	public this (GHashTable* gHashTable)
 	{
+		assert(gHashTable !is null, "struct gHashTable is null on constructor");
 		this.gHashTable = gHashTable;
 	}
 	

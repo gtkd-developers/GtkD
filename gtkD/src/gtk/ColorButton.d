@@ -94,6 +94,7 @@ public class ColorButton : Button
 	 */
 	public this (GtkColorButton* gtkColorButton)
 	{
+		assert(gtkColorButton !is null, "struct gtkColorButton is null on constructor");
 		super(cast(GtkButton*)gtkColorButton);
 		this.gtkColorButton = gtkColorButton;
 	}

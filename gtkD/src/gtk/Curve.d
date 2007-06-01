@@ -102,6 +102,7 @@ public class Curve : DrawingArea
 	 */
 	public this (GtkCurve* gtkCurve)
 	{
+		assert(gtkCurve !is null, "struct gtkCurve is null on constructor");
 		super(cast(GtkDrawingArea*)gtkCurve);
 		this.gtkCurve = gtkCurve;
 	}

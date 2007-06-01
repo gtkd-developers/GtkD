@@ -156,6 +156,7 @@ public class Container : Widget
 	 */
 	public this (GtkContainer* gtkContainer)
 	{
+		assert(gtkContainer !is null, "struct gtkContainer is null on constructor");
 		super(cast(GtkWidget*)gtkContainer);
 		this.gtkContainer = gtkContainer;
 	}

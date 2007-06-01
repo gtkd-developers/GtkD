@@ -90,6 +90,7 @@ public class ToggleAction : Action
 	 */
 	public this (GtkToggleAction* gtkToggleAction)
 	{
+		assert(gtkToggleAction !is null, "struct gtkToggleAction is null on constructor");
 		super(cast(GtkAction*)gtkToggleAction);
 		this.gtkToggleAction = gtkToggleAction;
 	}

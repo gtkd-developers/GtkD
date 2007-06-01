@@ -89,6 +89,7 @@ public class WindowGroup : ObjectG
 	 */
 	public this (GtkWindowGroup* gtkWindowGroup)
 	{
+		assert(gtkWindowGroup !is null, "struct gtkWindowGroup is null on constructor");
 		super(cast(GObject*)gtkWindowGroup);
 		this.gtkWindowGroup = gtkWindowGroup;
 	}

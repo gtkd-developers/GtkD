@@ -120,6 +120,7 @@ public class ToggleButton : Button
 	 */
 	public this (GtkToggleButton* gtkToggleButton)
 	{
+		assert(gtkToggleButton !is null, "struct gtkToggleButton is null on constructor");
 		super(cast(GtkButton*)gtkToggleButton);
 		this.gtkToggleButton = gtkToggleButton;
 	}

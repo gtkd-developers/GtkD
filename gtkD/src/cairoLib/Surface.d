@@ -87,6 +87,7 @@ public class Surface
 	 */
 	public this (cairo_surface_t* cairo_surface)
 	{
+		assert(cairo_surface !is null, "struct cairo_surface is null on constructor");
 		this.cairo_surface = cairo_surface;
 	}
 	

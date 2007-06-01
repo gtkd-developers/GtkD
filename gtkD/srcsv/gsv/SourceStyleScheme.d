@@ -86,6 +86,7 @@ public class SourceStyleScheme
 	 */
 	public this (GtkSourceStyleScheme* gtkSourceStyleScheme)
 	{
+		assert(gtkSourceStyleScheme !is null, "struct gtkSourceStyleScheme is null on constructor");
 		this.gtkSourceStyleScheme = gtkSourceStyleScheme;
 	}
 	

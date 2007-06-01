@@ -124,6 +124,7 @@ public class Action : ObjectG
 	 */
 	public this (GtkAction* gtkAction)
 	{
+		assert(gtkAction !is null, "struct gtkAction is null on constructor");
 		super(cast(GObject*)gtkAction);
 		this.gtkAction = gtkAction;
 	}

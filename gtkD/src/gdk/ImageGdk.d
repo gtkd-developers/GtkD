@@ -105,6 +105,7 @@ public class ImageGdk
 	 */
 	public this (GdkImage* gdkImage)
 	{
+		assert(gdkImage !is null, "struct gdkImage is null on constructor");
 		this.gdkImage = gdkImage;
 	}
 	

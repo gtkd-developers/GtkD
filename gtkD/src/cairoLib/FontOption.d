@@ -84,6 +84,7 @@ public class FontOption
 	 */
 	public this (cairo_font_options_t* cairo_font_options)
 	{
+		assert(cairo_font_options !is null, "struct cairo_font_options is null on constructor");
 		this.cairo_font_options = cairo_font_options;
 	}
 	

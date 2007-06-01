@@ -110,6 +110,7 @@ public class ActionGroup : ObjectG
 	 */
 	public this (GtkActionGroup* gtkActionGroup)
 	{
+		assert(gtkActionGroup !is null, "struct gtkActionGroup is null on constructor");
 		super(cast(GObject*)gtkActionGroup);
 		this.gtkActionGroup = gtkActionGroup;
 	}

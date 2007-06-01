@@ -114,6 +114,7 @@ public class ListG
 	 */
 	public this (GList* gList)
 	{
+		assert(gList !is null, "struct gList is null on constructor");
 		this.gList = gList;
 	}
 	

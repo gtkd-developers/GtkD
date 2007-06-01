@@ -93,6 +93,7 @@ public class ValueArray
 	 */
 	public this (GValueArray* gValueArray)
 	{
+		assert(gValueArray !is null, "struct gValueArray is null on constructor");
 		this.gValueArray = gValueArray;
 	}
 	

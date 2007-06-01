@@ -130,6 +130,7 @@ public class AccelLabel : Label
 	 */
 	public this (GtkAccelLabel* gtkAccelLabel)
 	{
+		assert(gtkAccelLabel !is null, "struct gtkAccelLabel is null on constructor");
 		super(cast(GtkLabel*)gtkAccelLabel);
 		this.gtkAccelLabel = gtkAccelLabel;
 	}

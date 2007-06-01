@@ -126,6 +126,7 @@ public class AsyncQueue
 	 */
 	public this (GAsyncQueue* gAsyncQueue)
 	{
+		assert(gAsyncQueue !is null, "struct gAsyncQueue is null on constructor");
 		this.gAsyncQueue = gAsyncQueue;
 	}
 	

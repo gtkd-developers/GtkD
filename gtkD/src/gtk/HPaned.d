@@ -93,6 +93,7 @@ public class HPaned : Paned
 	 */
 	public this (GtkHPaned* gtkHPaned)
 	{
+		assert(gtkHPaned !is null, "struct gtkHPaned is null on constructor");
 		super(cast(GtkPaned*)gtkHPaned);
 		this.gtkHPaned = gtkHPaned;
 	}

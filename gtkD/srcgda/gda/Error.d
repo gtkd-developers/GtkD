@@ -87,6 +87,7 @@ public class Error
 	 */
 	public this (GdaError* gdaError)
 	{
+		assert(gdaError !is null, "struct gdaError is null on constructor");
 		this.gdaError = gdaError;
 	}
 	

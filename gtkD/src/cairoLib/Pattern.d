@@ -84,6 +84,7 @@ public class Pattern
 	 */
 	public this (cairo_pattern_t* cairo_pattern)
 	{
+		assert(cairo_pattern !is null, "struct cairo_pattern is null on constructor");
 		this.cairo_pattern = cairo_pattern;
 	}
 	

@@ -135,6 +135,7 @@ public class PgLanguage
 	 */
 	public this (PangoLanguage* pangoLanguage)
 	{
+		assert(pangoLanguage !is null, "struct pangoLanguage is null on constructor");
 		this.pangoLanguage = pangoLanguage;
 	}
 	

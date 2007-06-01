@@ -100,6 +100,7 @@ public class PixbufAnimation : ObjectG
 	 */
 	public this (GdkPixbufAnimation* gdkPixbufAnimation)
 	{
+		assert(gdkPixbufAnimation !is null, "struct gdkPixbufAnimation is null on constructor");
 		super(cast(GObject*)gdkPixbufAnimation);
 		this.gdkPixbufAnimation = gdkPixbufAnimation;
 	}

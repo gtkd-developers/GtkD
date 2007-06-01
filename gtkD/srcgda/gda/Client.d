@@ -96,6 +96,7 @@ public class Client
 	 */
 	public this (GdaClient* gdaClient)
 	{
+		assert(gdaClient !is null, "struct gdaClient is null on constructor");
 		this.gdaClient = gdaClient;
 	}
 	

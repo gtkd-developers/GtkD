@@ -137,6 +137,7 @@ public class Socket : Container
 	 */
 	public this (GtkSocket* gtkSocket)
 	{
+		assert(gtkSocket !is null, "struct gtkSocket is null on constructor");
 		super(cast(GtkContainer*)gtkSocket);
 		this.gtkSocket = gtkSocket;
 	}

@@ -132,6 +132,7 @@ public class Thread
 	 */
 	public this (GThread* gThread)
 	{
+		assert(gThread !is null, "struct gThread is null on constructor");
 		this.gThread = gThread;
 	}
 	

@@ -108,6 +108,7 @@ public class TreeModelFilter : ObjectG
 	 */
 	public this (GtkTreeModelFilter* gtkTreeModelFilter)
 	{
+		assert(gtkTreeModelFilter !is null, "struct gtkTreeModelFilter is null on constructor");
 		super(cast(GObject*)gtkTreeModelFilter);
 		this.gtkTreeModelFilter = gtkTreeModelFilter;
 	}

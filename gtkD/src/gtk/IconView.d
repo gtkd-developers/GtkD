@@ -107,6 +107,7 @@ public class IconView : Container
 	 */
 	public this (GtkIconView* gtkIconView)
 	{
+		assert(gtkIconView !is null, "struct gtkIconView is null on constructor");
 		super(cast(GtkContainer*)gtkIconView);
 		this.gtkIconView = gtkIconView;
 	}

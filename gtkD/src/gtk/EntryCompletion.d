@@ -116,6 +116,7 @@ public class EntryCompletion : ObjectG
 	 */
 	public this (GtkEntryCompletion* gtkEntryCompletion)
 	{
+		assert(gtkEntryCompletion !is null, "struct gtkEntryCompletion is null on constructor");
 		super(cast(GObject*)gtkEntryCompletion);
 		this.gtkEntryCompletion = gtkEntryCompletion;
 	}

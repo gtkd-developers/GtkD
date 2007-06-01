@@ -225,6 +225,7 @@ public class Font
 	 */
 	public this (GdkFont* gdkFont)
 	{
+		assert(gdkFont !is null, "struct gdkFont is null on constructor");
 		this.gdkFont = gdkFont;
 	}
 	

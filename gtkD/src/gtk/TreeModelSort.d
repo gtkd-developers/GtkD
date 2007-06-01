@@ -174,6 +174,7 @@ public class TreeModelSort : ObjectG
 	 */
 	public this (GtkTreeModelSort* gtkTreeModelSort)
 	{
+		assert(gtkTreeModelSort !is null, "struct gtkTreeModelSort is null on constructor");
 		super(cast(GObject*)gtkTreeModelSort);
 		this.gtkTreeModelSort = gtkTreeModelSort;
 	}

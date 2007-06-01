@@ -90,6 +90,7 @@ public class SourceLanguage : ObjectG
 	 */
 	public this (GtkSourceLanguage* gtkSourceLanguage)
 	{
+		assert(gtkSourceLanguage !is null, "struct gtkSourceLanguage is null on constructor");
 		super(cast(GObject*)gtkSourceLanguage);
 		this.gtkSourceLanguage = gtkSourceLanguage;
 	}

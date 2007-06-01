@@ -96,6 +96,7 @@ public class SeparatorToolItem : ToolItem
 	 */
 	public this (GtkSeparatorToolItem* gtkSeparatorToolItem)
 	{
+		assert(gtkSeparatorToolItem !is null, "struct gtkSeparatorToolItem is null on constructor");
 		super(cast(GtkToolItem*)gtkSeparatorToolItem);
 		this.gtkSeparatorToolItem = gtkSeparatorToolItem;
 	}

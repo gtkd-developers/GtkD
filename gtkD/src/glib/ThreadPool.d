@@ -115,6 +115,7 @@ public class ThreadPool
 	 */
 	public this (GThreadPool* gThreadPool)
 	{
+		assert(gThreadPool !is null, "struct gThreadPool is null on constructor");
 		this.gThreadPool = gThreadPool;
 	}
 	

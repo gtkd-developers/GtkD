@@ -95,6 +95,7 @@ public class AspectFrame : Frame
 	 */
 	public this (GtkAspectFrame* gtkAspectFrame)
 	{
+		assert(gtkAspectFrame !is null, "struct gtkAspectFrame is null on constructor");
 		super(cast(GtkFrame*)gtkAspectFrame);
 		this.gtkAspectFrame = gtkAspectFrame;
 	}

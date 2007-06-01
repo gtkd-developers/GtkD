@@ -102,6 +102,7 @@ public class BBTree
 	 */
 	public this (GTree* gTree)
 	{
+		assert(gTree !is null, "struct gTree is null on constructor");
 		this.gTree = gTree;
 	}
 	

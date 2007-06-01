@@ -94,6 +94,7 @@ public class HScrollbar : Scrollbar
 	 */
 	public this (GtkHScrollbar* gtkHScrollbar)
 	{
+		assert(gtkHScrollbar !is null, "struct gtkHScrollbar is null on constructor");
 		super(cast(GtkScrollbar*)gtkHScrollbar);
 		this.gtkHScrollbar = gtkHScrollbar;
 	}

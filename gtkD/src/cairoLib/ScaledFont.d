@@ -86,6 +86,7 @@ public class ScaledFont
 	 */
 	public this (cairo_scaled_font_t* cairo_scaled_font)
 	{
+		assert(cairo_scaled_font !is null, "struct cairo_scaled_font is null on constructor");
 		this.cairo_scaled_font = cairo_scaled_font;
 	}
 	

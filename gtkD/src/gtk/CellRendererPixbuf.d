@@ -103,6 +103,7 @@ public class CellRendererPixbuf : CellRenderer
 	 */
 	public this (GtkCellRendererPixbuf* gtkCellRendererPixbuf)
 	{
+		assert(gtkCellRendererPixbuf !is null, "struct gtkCellRendererPixbuf is null on constructor");
 		super(cast(GtkCellRenderer*)gtkCellRendererPixbuf);
 		this.gtkCellRendererPixbuf = gtkCellRendererPixbuf;
 	}

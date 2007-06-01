@@ -137,6 +137,7 @@ public class DrawingArea : Widget
 	 */
 	public this (GtkDrawingArea* gtkDrawingArea)
 	{
+		assert(gtkDrawingArea !is null, "struct gtkDrawingArea is null on constructor");
 		super(cast(GtkWidget*)gtkDrawingArea);
 		this.gtkDrawingArea = gtkDrawingArea;
 	}

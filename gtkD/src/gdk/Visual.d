@@ -124,6 +124,7 @@ public class Visual
 	 */
 	public this (GdkVisual* gdkVisual)
 	{
+		assert(gdkVisual !is null, "struct gdkVisual is null on constructor");
 		this.gdkVisual = gdkVisual;
 	}
 	

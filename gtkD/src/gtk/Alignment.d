@@ -98,6 +98,7 @@ public class Alignment : Bin
 	 */
 	public this (GtkAlignment* gtkAlignment)
 	{
+		assert(gtkAlignment !is null, "struct gtkAlignment is null on constructor");
 		super(cast(GtkBin*)gtkAlignment);
 		this.gtkAlignment = gtkAlignment;
 	}

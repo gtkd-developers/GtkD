@@ -90,6 +90,7 @@ public class PgAttributeList
 	 */
 	public this (PangoAttrList* pangoAttrList)
 	{
+		assert(pangoAttrList !is null, "struct pangoAttrList is null on constructor");
 		this.pangoAttrList = pangoAttrList;
 	}
 	

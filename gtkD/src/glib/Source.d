@@ -161,6 +161,7 @@ public class Source
 	 */
 	public this (GSource* gSource)
 	{
+		assert(gSource !is null, "struct gSource is null on constructor");
 		this.gSource = gSource;
 	}
 	

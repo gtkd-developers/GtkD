@@ -121,6 +121,7 @@ public class Colormap
 	 */
 	public this (GdkColormap* gdkColormap)
 	{
+		assert(gdkColormap !is null, "struct gdkColormap is null on constructor");
 		this.gdkColormap = gdkColormap;
 	}
 	

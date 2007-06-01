@@ -100,6 +100,7 @@ public class Settings : ObjectG
 	 */
 	public this (GtkSettings* gtkSettings)
 	{
+		assert(gtkSettings !is null, "struct gtkSettings is null on constructor");
 		super(cast(GObject*)gtkSettings);
 		this.gtkSettings = gtkSettings;
 	}

@@ -105,6 +105,7 @@ public class HandleBox : Bin
 	 */
 	public this (GtkHandleBox* gtkHandleBox)
 	{
+		assert(gtkHandleBox !is null, "struct gtkHandleBox is null on constructor");
 		super(cast(GtkBin*)gtkHandleBox);
 		this.gtkHandleBox = gtkHandleBox;
 	}

@@ -92,6 +92,7 @@ public class ScannerG
 	 */
 	public this (GScanner* gScanner)
 	{
+		assert(gScanner !is null, "struct gScanner is null on constructor");
 		this.gScanner = gScanner;
 	}
 	

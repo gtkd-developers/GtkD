@@ -100,6 +100,7 @@ public class Flags
 	 */
 	public this (GFlagsValue* gFlagsValue)
 	{
+		assert(gFlagsValue !is null, "struct gFlagsValue is null on constructor");
 		this.gFlagsValue = gFlagsValue;
 	}
 	

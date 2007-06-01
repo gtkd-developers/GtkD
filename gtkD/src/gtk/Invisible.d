@@ -93,6 +93,7 @@ public class Invisible : Widget
 	 */
 	public this (GtkInvisible* gtkInvisible)
 	{
+		assert(gtkInvisible !is null, "struct gtkInvisible is null on constructor");
 		super(cast(GtkWidget*)gtkInvisible);
 		this.gtkInvisible = gtkInvisible;
 	}

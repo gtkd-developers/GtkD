@@ -112,6 +112,7 @@ public class RadioMenuItem : CheckMenuItem
 	 */
 	public this (GtkRadioMenuItem* gtkRadioMenuItem)
 	{
+		assert(gtkRadioMenuItem !is null, "struct gtkRadioMenuItem is null on constructor");
 		super(cast(GtkCheckMenuItem*)gtkRadioMenuItem);
 		this.gtkRadioMenuItem = gtkRadioMenuItem;
 	}

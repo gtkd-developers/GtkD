@@ -112,6 +112,7 @@ public class Cairo
 	 */
 	public this (cairo_t* cairo)
 	{
+		assert(cairo !is null, "struct cairo is null on constructor");
 		this.cairo = cairo;
 	}
 	

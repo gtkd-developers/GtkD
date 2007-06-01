@@ -89,6 +89,7 @@ public class Hypertext
 	 */
 	public this (AtkHypertext* atkHypertext)
 	{
+		assert(atkHypertext !is null, "struct atkHypertext is null on constructor");
 		this.atkHypertext = atkHypertext;
 	}
 	

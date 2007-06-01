@@ -95,6 +95,7 @@ public class CellRendererToggle : CellRenderer
 	 */
 	public this (GtkCellRendererToggle* gtkCellRendererToggle)
 	{
+		assert(gtkCellRendererToggle !is null, "struct gtkCellRendererToggle is null on constructor");
 		super(cast(GtkCellRenderer*)gtkCellRendererToggle);
 		this.gtkCellRendererToggle = gtkCellRendererToggle;
 	}

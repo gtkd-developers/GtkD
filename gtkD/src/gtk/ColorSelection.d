@@ -96,6 +96,7 @@ public class ColorSelection : VBox
 	 */
 	public this (GtkColorSelection* gtkColorSelection)
 	{
+		assert(gtkColorSelection !is null, "struct gtkColorSelection is null on constructor");
 		super(cast(GtkVBox*)gtkColorSelection);
 		this.gtkColorSelection = gtkColorSelection;
 	}

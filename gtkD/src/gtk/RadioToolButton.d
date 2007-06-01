@@ -104,6 +104,7 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public this (GtkRadioToolButton* gtkRadioToolButton)
 	{
+		assert(gtkRadioToolButton !is null, "struct gtkRadioToolButton is null on constructor");
 		super(cast(GtkToggleToolButton*)gtkRadioToolButton);
 		this.gtkRadioToolButton = gtkRadioToolButton;
 	}

@@ -85,6 +85,7 @@ public class SourceTagTable : TextTagTable
 	 */
 	public this (GtkSourceTagTable* gtkSourceTagTable)
 	{
+		assert(gtkSourceTagTable !is null, "struct gtkSourceTagTable is null on constructor");
 		super(cast(GtkTextTagTable*)gtkSourceTagTable);
 		this.gtkSourceTagTable = gtkSourceTagTable;
 	}

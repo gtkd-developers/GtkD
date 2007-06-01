@@ -98,6 +98,7 @@ public class Bitmap
 	 */
 	public this (GdkBitmap* gdkBitmap)
 	{
+		assert(gdkBitmap !is null, "struct gdkBitmap is null on constructor");
 		this.gdkBitmap = gdkBitmap;
 	}
 	

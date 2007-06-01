@@ -92,6 +92,7 @@ public class IMMulticontext : IMContext
 	 */
 	public this (GtkIMMulticontext* gtkIMMulticontext)
 	{
+		assert(gtkIMMulticontext !is null, "struct gtkIMMulticontext is null on constructor");
 		super(cast(GtkIMContext*)gtkIMMulticontext);
 		this.gtkIMMulticontext = gtkIMMulticontext;
 	}

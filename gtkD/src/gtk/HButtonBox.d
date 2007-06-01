@@ -101,6 +101,7 @@ public class HButtonBox : ButtonBox
 	 */
 	public this (GtkHButtonBox* gtkHButtonBox)
 	{
+		assert(gtkHButtonBox !is null, "struct gtkHButtonBox is null on constructor");
 		super(cast(GtkButtonBox*)gtkHButtonBox);
 		this.gtkHButtonBox = gtkHButtonBox;
 	}

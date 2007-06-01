@@ -87,6 +87,7 @@ public class GLDrawable
 	 */
 	public this (GdkGLDrawable* gdkGLDrawable)
 	{
+		assert(gdkGLDrawable !is null, "struct gdkGLDrawable is null on constructor");
 		this.gdkGLDrawable = gdkGLDrawable;
 	}
 	

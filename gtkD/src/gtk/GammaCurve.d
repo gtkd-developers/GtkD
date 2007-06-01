@@ -102,6 +102,7 @@ public class GammaCurve : VBox
 	 */
 	public this (GtkGammaCurve* gtkGammaCurve)
 	{
+		assert(gtkGammaCurve !is null, "struct gtkGammaCurve is null on constructor");
 		super(cast(GtkVBox*)gtkGammaCurve);
 		this.gtkGammaCurve = gtkGammaCurve;
 	}

@@ -220,6 +220,7 @@ public class TreePath
 	 */
 	public this (GtkTreePath* gtkTreePath)
 	{
+		assert(gtkTreePath !is null, "struct gtkTreePath is null on constructor");
 		this.gtkTreePath = gtkTreePath;
 	}
 	

@@ -106,6 +106,7 @@ public class DataList
 	 */
 	public this (GData* gData)
 	{
+		assert(gData !is null, "struct gData is null on constructor");
 		this.gData = gData;
 	}
 	

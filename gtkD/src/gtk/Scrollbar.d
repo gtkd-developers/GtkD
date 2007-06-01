@@ -96,6 +96,7 @@ public class Scrollbar : Range
 	 */
 	public this (GtkScrollbar* gtkScrollbar)
 	{
+		assert(gtkScrollbar !is null, "struct gtkScrollbar is null on constructor");
 		super(cast(GtkRange*)gtkScrollbar);
 		this.gtkScrollbar = gtkScrollbar;
 	}

@@ -90,6 +90,7 @@ public class VBox : Box
 	 */
 	public this (GtkVBox* gtkVBox)
 	{
+		assert(gtkVBox !is null, "struct gtkVBox is null on constructor");
 		super(cast(GtkBox*)gtkVBox);
 		this.gtkVBox = gtkVBox;
 	}

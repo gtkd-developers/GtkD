@@ -101,6 +101,7 @@ public class Pattern
 	 */
 	public this (GPatternSpec* gPatternSpec)
 	{
+		assert(gPatternSpec !is null, "struct gPatternSpec is null on constructor");
 		this.gPatternSpec = gPatternSpec;
 	}
 	

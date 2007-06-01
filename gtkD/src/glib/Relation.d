@@ -114,6 +114,7 @@ public class Relation
 	 */
 	public this (GRelation* gRelation)
 	{
+		assert(gRelation !is null, "struct gRelation is null on constructor");
 		this.gRelation = gRelation;
 	}
 	

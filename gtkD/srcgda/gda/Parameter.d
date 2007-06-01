@@ -103,6 +103,7 @@ public class Parameter
 	 */
 	public this (GdaParameter* gdaParameter)
 	{
+		assert(gdaParameter !is null, "struct gdaParameter is null on constructor");
 		this.gdaParameter = gdaParameter;
 	}
 	

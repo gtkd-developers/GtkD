@@ -127,6 +127,7 @@ public class CClosure
 	 */
 	public this (GCClosure* gCClosure)
 	{
+		assert(gCClosure !is null, "struct gCClosure is null on constructor");
 		this.gCClosure = gCClosure;
 	}
 	

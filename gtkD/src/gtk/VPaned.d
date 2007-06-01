@@ -92,6 +92,7 @@ public class VPaned : Paned
 	 */
 	public this (GtkVPaned* gtkVPaned)
 	{
+		assert(gtkVPaned !is null, "struct gtkVPaned is null on constructor");
 		super(cast(GtkPaned*)gtkVPaned);
 		this.gtkVPaned = gtkVPaned;
 	}

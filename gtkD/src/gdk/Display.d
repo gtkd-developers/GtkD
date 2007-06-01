@@ -112,6 +112,7 @@ public class Display : ObjectG
 	 */
 	public this (GdkDisplay* gdkDisplay)
 	{
+		assert(gdkDisplay !is null, "struct gdkDisplay is null on constructor");
 		super(cast(GObject*)gdkDisplay);
 		this.gdkDisplay = gdkDisplay;
 	}

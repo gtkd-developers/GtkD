@@ -122,6 +122,7 @@ public class TextView : Container
 	 */
 	public this (GtkTextView* gtkTextView)
 	{
+		assert(gtkTextView !is null, "struct gtkTextView is null on constructor");
 		super(cast(GtkContainer*)gtkTextView);
 		this.gtkTextView = gtkTextView;
 	}

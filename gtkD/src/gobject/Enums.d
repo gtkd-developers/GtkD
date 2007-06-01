@@ -97,6 +97,7 @@ public class Enums
 	 */
 	public this (GEnumValue* gEnumValue)
 	{
+		assert(gEnumValue !is null, "struct gEnumValue is null on constructor");
 		this.gEnumValue = gEnumValue;
 	}
 	

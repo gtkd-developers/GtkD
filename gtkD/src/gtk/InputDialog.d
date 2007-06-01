@@ -106,6 +106,7 @@ public class InputDialog : Dialog
 	 */
 	public this (GtkInputDialog* gtkInputDialog)
 	{
+		assert(gtkInputDialog !is null, "struct gtkInputDialog is null on constructor");
 		super(cast(GtkDialog*)gtkInputDialog);
 		this.gtkInputDialog = gtkInputDialog;
 	}

@@ -166,6 +166,7 @@ public class Image : Misc
 	 */
 	public this (GtkImage* gtkImage)
 	{
+		assert(gtkImage !is null, "struct gtkImage is null on constructor");
 		super(cast(GtkMisc*)gtkImage);
 		this.gtkImage = gtkImage;
 	}

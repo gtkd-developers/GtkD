@@ -135,6 +135,7 @@ public class ObjectGtk : ObjectG
 	 */
 	public this (GtkObject* gtkObject)
 	{
+		assert(gtkObject !is null, "struct gtkObject is null on constructor");
 		super(cast(GObject*)gtkObject);
 		this.gtkObject = gtkObject;
 	}

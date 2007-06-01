@@ -142,6 +142,7 @@ public class Menu : MenuShell
 	 */
 	public this (GtkMenu* gtkMenu)
 	{
+		assert(gtkMenu !is null, "struct gtkMenu is null on constructor");
 		super(cast(GtkMenuShell*)gtkMenu);
 		this.gtkMenu = gtkMenu;
 	}

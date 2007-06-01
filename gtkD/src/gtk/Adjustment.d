@@ -144,6 +144,7 @@ public class Adjustment : ObjectGtk
 	 */
 	public this (GtkAdjustment* gtkAdjustment)
 	{
+		assert(gtkAdjustment !is null, "struct gtkAdjustment is null on constructor");
 		super(cast(GtkObject*)gtkAdjustment);
 		this.gtkAdjustment = gtkAdjustment;
 	}

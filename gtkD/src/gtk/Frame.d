@@ -96,6 +96,7 @@ public class Frame : Bin
 	 */
 	public this (GtkFrame* gtkFrame)
 	{
+		assert(gtkFrame !is null, "struct gtkFrame is null on constructor");
 		super(cast(GtkBin*)gtkFrame);
 		this.gtkFrame = gtkFrame;
 	}

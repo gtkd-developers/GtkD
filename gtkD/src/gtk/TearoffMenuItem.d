@@ -96,6 +96,7 @@ public class TearoffMenuItem : MenuItem
 	 */
 	public this (GtkTearoffMenuItem* gtkTearoffMenuItem)
 	{
+		assert(gtkTearoffMenuItem !is null, "struct gtkTearoffMenuItem is null on constructor");
 		super(cast(GtkMenuItem*)gtkTearoffMenuItem);
 		this.gtkTearoffMenuItem = gtkTearoffMenuItem;
 	}

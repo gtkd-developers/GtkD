@@ -101,6 +101,7 @@ public class FileFilter : ObjectGtk
 	 */
 	public this (GtkFileFilter* gtkFileFilter)
 	{
+		assert(gtkFileFilter !is null, "struct gtkFileFilter is null on constructor");
 		super(cast(GtkObject*)gtkFileFilter);
 		this.gtkFileFilter = gtkFileFilter;
 	}

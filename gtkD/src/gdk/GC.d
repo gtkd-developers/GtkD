@@ -127,6 +127,7 @@ public class GC : ObjectG
 	 */
 	public this (GdkGC* gdkGC)
 	{
+		assert(gdkGC !is null, "struct gdkGC is null on constructor");
 		super(cast(GObject*)gdkGC);
 		this.gdkGC = gdkGC;
 	}

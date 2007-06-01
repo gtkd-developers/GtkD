@@ -87,6 +87,7 @@ public class Transaction
 	 */
 	public this (GdaTransaction* gdaTransaction)
 	{
+		assert(gdaTransaction !is null, "struct gdaTransaction is null on constructor");
 		this.gdaTransaction = gdaTransaction;
 	}
 	

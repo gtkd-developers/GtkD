@@ -103,6 +103,7 @@ public class Quark
 	 */
 	public this (GQuark* gQuark)
 	{
+		assert(gQuark !is null, "struct gQuark is null on constructor");
 		this.gQuark = gQuark;
 	}
 	

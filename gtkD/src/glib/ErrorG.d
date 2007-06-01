@@ -304,6 +304,7 @@ public class ErrorG
 	 */
 	public this (GError* gError)
 	{
+		assert(gError !is null, "struct gError is null on constructor");
 		this.gError = gError;
 	}
 	

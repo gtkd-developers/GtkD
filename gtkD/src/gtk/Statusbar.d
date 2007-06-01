@@ -111,6 +111,7 @@ public class Statusbar : HBox
 	 */
 	public this (GtkStatusbar* gtkStatusbar)
 	{
+		assert(gtkStatusbar !is null, "struct gtkStatusbar is null on constructor");
 		super(cast(GtkHBox*)gtkStatusbar);
 		this.gtkStatusbar = gtkStatusbar;
 	}

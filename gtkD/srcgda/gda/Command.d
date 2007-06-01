@@ -104,6 +104,7 @@ public class Command
 	 */
 	public this (GdaCommand* gdaCommand)
 	{
+		assert(gdaCommand !is null, "struct gdaCommand is null on constructor");
 		this.gdaCommand = gdaCommand;
 	}
 	

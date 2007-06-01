@@ -91,6 +91,7 @@ public class DataModelHash
 	 */
 	public this (GdaDataModelHash* gdaDataModelHash)
 	{
+		assert(gdaDataModelHash !is null, "struct gdaDataModelHash is null on constructor");
 		this.gdaDataModelHash = gdaDataModelHash;
 	}
 	

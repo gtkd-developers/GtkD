@@ -105,6 +105,7 @@ public class StringCompletion
 	 */
 	public this (GCompletion* gCompletion)
 	{
+		assert(gCompletion !is null, "struct gCompletion is null on constructor");
 		this.gCompletion = gCompletion;
 	}
 	

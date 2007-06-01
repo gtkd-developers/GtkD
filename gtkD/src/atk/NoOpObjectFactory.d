@@ -91,6 +91,7 @@ public class NoOpObjectFactory : ObjectFactory
 	 */
 	public this (AtkNoOpObjectFactory* atkNoOpObjectFactory)
 	{
+		assert(atkNoOpObjectFactory !is null, "struct atkNoOpObjectFactory is null on constructor");
 		super(cast(AtkObjectFactory*)atkNoOpObjectFactory);
 		this.atkNoOpObjectFactory = atkNoOpObjectFactory;
 	}

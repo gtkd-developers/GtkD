@@ -244,6 +244,7 @@ public class UIManager : ObjectG
 	 */
 	public this (GtkUIManager* gtkUIManager)
 	{
+		assert(gtkUIManager !is null, "struct gtkUIManager is null on constructor");
 		super(cast(GObject*)gtkUIManager);
 		this.gtkUIManager = gtkUIManager;
 	}

@@ -128,6 +128,7 @@ public class Box : Container
 	 */
 	public this (GtkBox* gtkBox)
 	{
+		assert(gtkBox !is null, "struct gtkBox is null on constructor");
 		super(cast(GtkContainer*)gtkBox);
 		this.gtkBox = gtkBox;
 	}

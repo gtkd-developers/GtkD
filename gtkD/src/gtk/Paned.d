@@ -130,6 +130,7 @@ public class Paned : Container
 	 */
 	public this (GtkPaned* gtkPaned)
 	{
+		assert(gtkPaned !is null, "struct gtkPaned is null on constructor");
 		super(cast(GtkContainer*)gtkPaned);
 		this.gtkPaned = gtkPaned;
 	}

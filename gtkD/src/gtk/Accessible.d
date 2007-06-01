@@ -86,6 +86,7 @@ public class Accessible : ObjectAtk
 	 */
 	public this (GtkAccessible* gtkAccessible)
 	{
+		assert(gtkAccessible !is null, "struct gtkAccessible is null on constructor");
 		super(cast(AtkObject*)gtkAccessible);
 		this.gtkAccessible = gtkAccessible;
 	}

@@ -108,6 +108,7 @@ public class Window : Bin
 	 */
 	public this (GtkWindow* gtkWindow)
 	{
+		assert(gtkWindow !is null, "struct gtkWindow is null on constructor");
 		super(cast(GtkBin*)gtkWindow);
 		this.gtkWindow = gtkWindow;
 	}

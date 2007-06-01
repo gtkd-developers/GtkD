@@ -100,6 +100,7 @@ public class FontSelection : VBox
 	 */
 	public this (GtkFontSelection* gtkFontSelection)
 	{
+		assert(gtkFontSelection !is null, "struct gtkFontSelection is null on constructor");
 		super(cast(GtkVBox*)gtkFontSelection);
 		this.gtkFontSelection = gtkFontSelection;
 	}

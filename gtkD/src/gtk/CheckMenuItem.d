@@ -96,6 +96,7 @@ public class CheckMenuItem : MenuItem
 	 */
 	public this (GtkCheckMenuItem* gtkCheckMenuItem)
 	{
+		assert(gtkCheckMenuItem !is null, "struct gtkCheckMenuItem is null on constructor");
 		super(cast(GtkMenuItem*)gtkCheckMenuItem);
 		this.gtkCheckMenuItem = gtkCheckMenuItem;
 	}

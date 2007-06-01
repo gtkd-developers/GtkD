@@ -115,6 +115,7 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public this (GtkTreeViewColumn* gtkTreeViewColumn)
 	{
+		assert(gtkTreeViewColumn !is null, "struct gtkTreeViewColumn is null on constructor");
 		super(cast(GtkObject*)gtkTreeViewColumn);
 		this.gtkTreeViewColumn = gtkTreeViewColumn;
 	}

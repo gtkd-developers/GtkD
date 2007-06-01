@@ -108,6 +108,7 @@ public class ByteArray
 	 */
 	public this (GByteArray* gByteArray)
 	{
+		assert(gByteArray !is null, "struct gByteArray is null on constructor");
 		this.gByteArray = gByteArray;
 	}
 	

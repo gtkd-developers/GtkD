@@ -89,6 +89,7 @@ public class Viewport : Bin
 	 */
 	public this (GtkViewport* gtkViewport)
 	{
+		assert(gtkViewport !is null, "struct gtkViewport is null on constructor");
 		super(cast(GtkBin*)gtkViewport);
 		this.gtkViewport = gtkViewport;
 	}

@@ -141,6 +141,7 @@ public class KeyFile
 	 */
 	public this (GKeyFile* gKeyFile)
 	{
+		assert(gKeyFile !is null, "struct gKeyFile is null on constructor");
 		this.gKeyFile = gKeyFile;
 	}
 	

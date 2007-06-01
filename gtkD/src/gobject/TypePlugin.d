@@ -124,6 +124,7 @@ public class TypePlugin
 	 */
 	public this (GTypePlugin* gTypePlugin)
 	{
+		assert(gTypePlugin !is null, "struct gTypePlugin is null on constructor");
 		this.gTypePlugin = gTypePlugin;
 	}
 	

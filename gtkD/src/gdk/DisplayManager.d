@@ -100,6 +100,7 @@ public class DisplayManager : ObjectG
 	 */
 	public this (GdkDisplayManager* gdkDisplayManager)
 	{
+		assert(gdkDisplayManager !is null, "struct gdkDisplayManager is null on constructor");
 		super(cast(GObject*)gdkDisplayManager);
 		this.gdkDisplayManager = gdkDisplayManager;
 	}

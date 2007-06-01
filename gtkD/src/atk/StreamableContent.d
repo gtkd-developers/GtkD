@@ -101,6 +101,7 @@ public class StreamableContent
 	 */
 	public this (AtkStreamableContent* atkStreamableContent)
 	{
+		assert(atkStreamableContent !is null, "struct atkStreamableContent is null on constructor");
 		this.atkStreamableContent = atkStreamableContent;
 	}
 	

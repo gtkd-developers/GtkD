@@ -133,6 +133,7 @@ public class PgScriptIter
 	 */
 	public this (PangoScriptIter* pangoScriptIter)
 	{
+		assert(pangoScriptIter !is null, "struct pangoScriptIter is null on constructor");
 		this.pangoScriptIter = pangoScriptIter;
 	}
 	

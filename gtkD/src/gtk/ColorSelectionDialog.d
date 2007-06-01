@@ -91,6 +91,7 @@ public class ColorSelectionDialog : Dialog
 	 */
 	public this (GtkColorSelectionDialog* gtkColorSelectionDialog)
 	{
+		assert(gtkColorSelectionDialog !is null, "struct gtkColorSelectionDialog is null on constructor");
 		super(cast(GtkDialog*)gtkColorSelectionDialog);
 		this.gtkColorSelectionDialog = gtkColorSelectionDialog;
 	}

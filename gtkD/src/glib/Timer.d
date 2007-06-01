@@ -88,6 +88,7 @@ public class Timer
 	 */
 	public this (GTimer* gTimer)
 	{
+		assert(gTimer !is null, "struct gTimer is null on constructor");
 		this.gTimer = gTimer;
 	}
 	

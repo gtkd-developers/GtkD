@@ -112,6 +112,7 @@ public class Style : ObjectG
 	 */
 	public this (GtkStyle* gtkStyle)
 	{
+		assert(gtkStyle !is null, "struct gtkStyle is null on constructor");
 		super(cast(GObject*)gtkStyle);
 		this.gtkStyle = gtkStyle;
 	}

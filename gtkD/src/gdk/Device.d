@@ -157,6 +157,7 @@ public class Device
 	 */
 	public this (GdkDevice* gdkDevice)
 	{
+		assert(gdkDevice !is null, "struct gdkDevice is null on constructor");
 		this.gdkDevice = gdkDevice;
 	}
 	

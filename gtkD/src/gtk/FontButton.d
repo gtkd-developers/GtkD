@@ -90,6 +90,7 @@ public class FontButton : Button
 	 */
 	public this (GtkFontButton* gtkFontButton)
 	{
+		assert(gtkFontButton !is null, "struct gtkFontButton is null on constructor");
 		super(cast(GtkButton*)gtkFontButton);
 		this.gtkFontButton = gtkFontButton;
 	}

@@ -127,6 +127,7 @@ public class IOChannel
 	 */
 	public this (GIOChannel* gIOChannel)
 	{
+		assert(gIOChannel !is null, "struct gIOChannel is null on constructor");
 		this.gIOChannel = gIOChannel;
 	}
 	

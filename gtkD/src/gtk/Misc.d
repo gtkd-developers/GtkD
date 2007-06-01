@@ -94,6 +94,7 @@ public class Misc : Widget
 	 */
 	public this (GtkMisc* gtkMisc)
 	{
+		assert(gtkMisc !is null, "struct gtkMisc is null on constructor");
 		super(cast(GtkWidget*)gtkMisc);
 		this.gtkMisc = gtkMisc;
 	}

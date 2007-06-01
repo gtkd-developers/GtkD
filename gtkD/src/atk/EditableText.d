@@ -91,6 +91,7 @@ public class EditableText
 	 */
 	public this (AtkEditableText* atkEditableText)
 	{
+		assert(atkEditableText !is null, "struct atkEditableText is null on constructor");
 		this.atkEditableText = atkEditableText;
 	}
 	

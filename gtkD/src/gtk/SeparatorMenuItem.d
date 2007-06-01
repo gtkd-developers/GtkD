@@ -89,6 +89,7 @@ public class SeparatorMenuItem : MenuItem
 	 */
 	public this (GtkSeparatorMenuItem* gtkSeparatorMenuItem)
 	{
+		assert(gtkSeparatorMenuItem !is null, "struct gtkSeparatorMenuItem is null on constructor");
 		super(cast(GtkMenuItem*)gtkSeparatorMenuItem);
 		this.gtkSeparatorMenuItem = gtkSeparatorMenuItem;
 	}

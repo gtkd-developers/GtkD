@@ -90,6 +90,7 @@ public class Export
 	 */
 	public this (GdaExport* gdaExport)
 	{
+		assert(gdaExport !is null, "struct gdaExport is null on constructor");
 		this.gdaExport = gdaExport;
 	}
 	

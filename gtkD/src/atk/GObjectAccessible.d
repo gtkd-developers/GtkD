@@ -92,6 +92,7 @@ public class GObjectAccessible : ObjectAtk
 	 */
 	public this (AtkGObjectAccessible* atkGObjectAccessible)
 	{
+		assert(atkGObjectAccessible !is null, "struct atkGObjectAccessible is null on constructor");
 		super(cast(AtkObject*)atkGObjectAccessible);
 		this.atkGObjectAccessible = atkGObjectAccessible;
 	}

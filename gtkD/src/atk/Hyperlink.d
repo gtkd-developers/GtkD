@@ -92,6 +92,7 @@ public class Hyperlink : ObjectG
 	 */
 	public this (AtkHyperlink* atkHyperlink)
 	{
+		assert(atkHyperlink !is null, "struct atkHyperlink is null on constructor");
 		super(cast(GObject*)atkHyperlink);
 		this.atkHyperlink = atkHyperlink;
 	}

@@ -224,6 +224,7 @@ public class TreeIter
 	 */
 	public this (GtkTreeIter* gtkTreeIter)
 	{
+		assert(gtkTreeIter !is null, "struct gtkTreeIter is null on constructor");
 		this.gtkTreeIter = gtkTreeIter;
 	}
 	

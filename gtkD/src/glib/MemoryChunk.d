@@ -157,6 +157,7 @@ public class MemoryChunk
 	 */
 	public this (GMemChunk* gMemChunk)
 	{
+		assert(gMemChunk !is null, "struct gMemChunk is null on constructor");
 		this.gMemChunk = gMemChunk;
 	}
 	

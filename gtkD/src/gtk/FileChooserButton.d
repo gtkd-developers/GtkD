@@ -120,6 +120,7 @@ public class FileChooserButton : HBox
 	 */
 	public this (GtkFileChooserButton* gtkFileChooserButton)
 	{
+		assert(gtkFileChooserButton !is null, "struct gtkFileChooserButton is null on constructor");
 		super(cast(GtkHBox*)gtkFileChooserButton);
 		this.gtkFileChooserButton = gtkFileChooserButton;
 	}

@@ -102,6 +102,7 @@ public class Connection
 	 */
 	public this (GdaConnection* gdaConnection)
 	{
+		assert(gdaConnection !is null, "struct gdaConnection is null on constructor");
 		this.gdaConnection = gdaConnection;
 	}
 	

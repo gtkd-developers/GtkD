@@ -99,6 +99,7 @@ public class ImageMenuItem : MenuItem
 	 */
 	public this (GtkImageMenuItem* gtkImageMenuItem)
 	{
+		assert(gtkImageMenuItem !is null, "struct gtkImageMenuItem is null on constructor");
 		super(cast(GtkMenuItem*)gtkImageMenuItem);
 		this.gtkImageMenuItem = gtkImageMenuItem;
 	}

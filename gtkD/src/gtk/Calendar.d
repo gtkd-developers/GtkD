@@ -98,6 +98,7 @@ public class Calendar : Widget
 	 */
 	public this (GtkCalendar* gtkCalendar)
 	{
+		assert(gtkCalendar !is null, "struct gtkCalendar is null on constructor");
 		super(cast(GtkWidget*)gtkCalendar);
 		this.gtkCalendar = gtkCalendar;
 	}

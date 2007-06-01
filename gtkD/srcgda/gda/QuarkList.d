@@ -88,6 +88,7 @@ public class QuarkList
 	 */
 	public this (GdaQuarkList* gdaQuarkList)
 	{
+		assert(gdaQuarkList !is null, "struct gdaQuarkList is null on constructor");
 		this.gdaQuarkList = gdaQuarkList;
 	}
 	

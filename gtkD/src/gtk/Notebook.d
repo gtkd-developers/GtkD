@@ -102,6 +102,7 @@ public class Notebook : Container
 	 */
 	public this (GtkNotebook* gtkNotebook)
 	{
+		assert(gtkNotebook !is null, "struct gtkNotebook is null on constructor");
 		super(cast(GtkContainer*)gtkNotebook);
 		this.gtkNotebook = gtkNotebook;
 	}

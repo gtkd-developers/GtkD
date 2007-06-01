@@ -112,6 +112,7 @@ public class TextIter
 	 */
 	public this (GtkTextIter* gtkTextIter)
 	{
+		assert(gtkTextIter !is null, "struct gtkTextIter is null on constructor");
 		this.gtkTextIter = gtkTextIter;
 	}
 	

@@ -117,6 +117,7 @@ public class Glade : ObjectG
 	 */
 	public this (GladeXML* gladeXML)
 	{
+		assert(gladeXML !is null, "struct gladeXML is null on constructor");
 		super(cast(GObject*)gladeXML);
 		this.gladeXML = gladeXML;
 	}

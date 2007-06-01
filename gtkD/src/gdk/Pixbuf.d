@@ -89,6 +89,7 @@ public class Pixbuf
 	 */
 	public this (GdkPixbuf* gdkPixbuf)
 	{
+		assert(gdkPixbuf !is null, "struct gdkPixbuf is null on constructor");
 		this.gdkPixbuf = gdkPixbuf;
 	}
 	

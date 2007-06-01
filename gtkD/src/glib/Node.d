@@ -108,6 +108,7 @@ public class Node
 	 */
 	public this (GNode* gNode)
 	{
+		assert(gNode !is null, "struct gNode is null on constructor");
 		this.gNode = gNode;
 	}
 	

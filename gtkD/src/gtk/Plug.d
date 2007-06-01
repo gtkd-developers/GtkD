@@ -100,6 +100,7 @@ public class Plug : Window
 	 */
 	public this (GtkPlug* gtkPlug)
 	{
+		assert(gtkPlug !is null, "struct gtkPlug is null on constructor");
 		super(cast(GtkWindow*)gtkPlug);
 		this.gtkPlug = gtkPlug;
 	}

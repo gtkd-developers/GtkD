@@ -101,6 +101,7 @@ public class Table
 	 */
 	public this (AtkTable* atkTable)
 	{
+		assert(atkTable !is null, "struct atkTable is null on constructor");
 		this.atkTable = atkTable;
 	}
 	

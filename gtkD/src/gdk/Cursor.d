@@ -114,6 +114,7 @@ public class Cursor
 	 */
 	public this (GdkCursor* gdkCursor)
 	{
+		assert(gdkCursor !is null, "struct gdkCursor is null on constructor");
 		this.gdkCursor = gdkCursor;
 	}
 	

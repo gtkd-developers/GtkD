@@ -111,6 +111,7 @@ public class AboutDialog : Dialog
 	 */
 	public this (GtkAboutDialog* gtkAboutDialog)
 	{
+		assert(gtkAboutDialog !is null, "struct gtkAboutDialog is null on constructor");
 		super(cast(GtkDialog*)gtkAboutDialog);
 		this.gtkAboutDialog = gtkAboutDialog;
 	}

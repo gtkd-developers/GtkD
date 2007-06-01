@@ -96,6 +96,7 @@ public class Arrow : Misc
 	 */
 	public this (GtkArrow* gtkArrow)
 	{
+		assert(gtkArrow !is null, "struct gtkArrow is null on constructor");
 		super(cast(GtkMisc*)gtkArrow);
 		this.gtkArrow = gtkArrow;
 	}

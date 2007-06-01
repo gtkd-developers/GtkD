@@ -88,6 +88,7 @@ public class Select
 	 */
 	public this (GdaSelect* gdaSelect)
 	{
+		assert(gdaSelect !is null, "struct gdaSelect is null on constructor");
 		this.gdaSelect = gdaSelect;
 	}
 	

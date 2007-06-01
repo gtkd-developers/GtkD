@@ -111,6 +111,7 @@ public class RWLock
 	 */
 	public this (GStaticRWLock* gStaticRWLock)
 	{
+		assert(gStaticRWLock !is null, "struct gStaticRWLock is null on constructor");
 		this.gStaticRWLock = gStaticRWLock;
 	}
 	

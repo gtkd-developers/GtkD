@@ -139,6 +139,7 @@ public class RadioButton : CheckButton
 	 */
 	public this (GtkRadioButton* gtkRadioButton)
 	{
+		assert(gtkRadioButton !is null, "struct gtkRadioButton is null on constructor");
 		super(cast(GtkCheckButton*)gtkRadioButton);
 		this.gtkRadioButton = gtkRadioButton;
 	}

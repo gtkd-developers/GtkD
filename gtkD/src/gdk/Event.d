@@ -106,6 +106,7 @@ public class Event
 	 */
 	public this (GdkEvent* gdkEvent)
 	{
+		assert(gdkEvent !is null, "struct gdkEvent is null on constructor");
 		this.gdkEvent = gdkEvent;
 	}
 	

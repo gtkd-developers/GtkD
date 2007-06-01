@@ -100,6 +100,7 @@ public class HRuler : Ruler
 	 */
 	public this (GtkHRuler* gtkHRuler)
 	{
+		assert(gtkHRuler !is null, "struct gtkHRuler is null on constructor");
 		super(cast(GtkRuler*)gtkHRuler);
 		this.gtkHRuler = gtkHRuler;
 	}

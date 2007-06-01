@@ -175,6 +175,7 @@ public class ListStore : TreeModel
 	 */
 	public this (GtkListStore* gtkListStore)
 	{
+		assert(gtkListStore !is null, "struct gtkListStore is null on constructor");
 		super(cast(GtkTreeModel*)gtkListStore);
 		this.gtkListStore = gtkListStore;
 	}

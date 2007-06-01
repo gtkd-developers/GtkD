@@ -114,6 +114,7 @@ public class AccelGroup : ObjectG
 	 */
 	public this (GtkAccelGroup* gtkAccelGroup)
 	{
+		assert(gtkAccelGroup !is null, "struct gtkAccelGroup is null on constructor");
 		super(cast(GObject*)gtkAccelGroup);
 		this.gtkAccelGroup = gtkAccelGroup;
 	}

@@ -126,6 +126,7 @@ public class ComboBox : Bin, CellLayoutIF
 	 */
 	public this (GtkComboBox* gtkComboBox)
 	{
+		assert(gtkComboBox !is null, "struct gtkComboBox is null on constructor");
 		super(cast(GtkBin*)gtkComboBox);
 		this.gtkComboBox = gtkComboBox;
 	}

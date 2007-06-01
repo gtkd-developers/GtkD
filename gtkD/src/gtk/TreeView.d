@@ -124,6 +124,7 @@ public class TreeView : Container
 	 */
 	public this (GtkTreeView* gtkTreeView)
 	{
+		assert(gtkTreeView !is null, "struct gtkTreeView is null on constructor");
 		super(cast(GtkContainer*)gtkTreeView);
 		this.gtkTreeView = gtkTreeView;
 	}

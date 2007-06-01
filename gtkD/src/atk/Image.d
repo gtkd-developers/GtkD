@@ -96,6 +96,7 @@ public class Image
 	 */
 	public this (AtkImage* atkImage)
 	{
+		assert(atkImage !is null, "struct atkImage is null on constructor");
 		this.atkImage = atkImage;
 	}
 	

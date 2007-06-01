@@ -86,6 +86,7 @@ public class Status
 	 */
 	public this (cairo_status_t* cairo_status)
 	{
+		assert(cairo_status !is null, "struct cairo_status is null on constructor");
 		this.cairo_status = cairo_status;
 	}
 	

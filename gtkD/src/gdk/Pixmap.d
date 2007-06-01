@@ -106,6 +106,7 @@ public class Pixmap : Drawable
 	 */
 	public this (GdkPixmap* gdkPixmap)
 	{
+		assert(gdkPixmap !is null, "struct gdkPixmap is null on constructor");
 		super(cast(GdkDrawable*)gdkPixmap);
 		this.gdkPixmap = gdkPixmap;
 	}

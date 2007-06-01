@@ -130,6 +130,7 @@ public class FileSelection : Dialog
 	 */
 	public this (GtkFileSelection* gtkFileSelection)
 	{
+		assert(gtkFileSelection !is null, "struct gtkFileSelection is null on constructor");
 		super(cast(GtkDialog*)gtkFileSelection);
 		this.gtkFileSelection = gtkFileSelection;
 	}

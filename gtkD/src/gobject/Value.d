@@ -111,6 +111,7 @@ public class Value
 	 */
 	public this (GValue* gValue)
 	{
+		assert(gValue !is null, "struct gValue is null on constructor");
 		this.gValue = gValue;
 	}
 	

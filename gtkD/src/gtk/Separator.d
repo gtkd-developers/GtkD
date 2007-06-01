@@ -88,6 +88,7 @@ public class Separator : Widget
 	 */
 	public this (GtkSeparator* gtkSeparator)
 	{
+		assert(gtkSeparator !is null, "struct gtkSeparator is null on constructor");
 		super(cast(GtkWidget*)gtkSeparator);
 		this.gtkSeparator = gtkSeparator;
 	}

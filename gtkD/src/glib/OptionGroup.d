@@ -163,6 +163,7 @@ public class OptionGroup
 	 */
 	public this (GOptionGroup* gOptionGroup)
 	{
+		assert(gOptionGroup !is null, "struct gOptionGroup is null on constructor");
 		this.gOptionGroup = gOptionGroup;
 	}
 	

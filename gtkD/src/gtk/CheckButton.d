@@ -96,6 +96,7 @@ public class CheckButton : ToggleButton
 	 */
 	public this (GtkCheckButton* gtkCheckButton)
 	{
+		assert(gtkCheckButton !is null, "struct gtkCheckButton is null on constructor");
 		super(cast(GtkToggleButton*)gtkCheckButton);
 		this.gtkCheckButton = gtkCheckButton;
 	}

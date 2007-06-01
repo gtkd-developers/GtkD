@@ -156,6 +156,7 @@ public class Dialog : Window
 	 */
 	public this (GtkDialog* gtkDialog)
 	{
+		assert(gtkDialog !is null, "struct gtkDialog is null on constructor");
 		super(cast(GtkWindow*)gtkDialog);
 		this.gtkDialog = gtkDialog;
 	}

@@ -144,6 +144,7 @@ public class Keymap : ObjectG
 	 */
 	public this (GdkKeymap* gdkKeymap)
 	{
+		assert(gdkKeymap !is null, "struct gdkKeymap is null on constructor");
 		super(cast(GObject*)gdkKeymap);
 		this.gdkKeymap = gdkKeymap;
 	}

@@ -114,6 +114,7 @@ public class Editable
 	 */
 	public this (GtkEditable* gtkEditable)
 	{
+		assert(gtkEditable !is null, "struct gtkEditable is null on constructor");
 		this.gtkEditable = gtkEditable;
 	}
 	

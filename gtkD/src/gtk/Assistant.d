@@ -97,6 +97,7 @@ public class Assistant : Window
 	 */
 	public this (GtkAssistant* gtkAssistant)
 	{
+		assert(gtkAssistant !is null, "struct gtkAssistant is null on constructor");
 		super(cast(GtkWindow*)gtkAssistant);
 		this.gtkAssistant = gtkAssistant;
 	}

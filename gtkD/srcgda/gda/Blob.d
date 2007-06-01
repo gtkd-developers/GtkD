@@ -85,6 +85,7 @@ public class Blob
 	 */
 	public this (GdaBlob* gdaBlob)
 	{
+		assert(gdaBlob !is null, "struct gdaBlob is null on constructor");
 		this.gdaBlob = gdaBlob;
 	}
 	

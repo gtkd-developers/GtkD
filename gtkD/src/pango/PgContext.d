@@ -142,6 +142,7 @@ public class PgContext : ObjectG
 	 */
 	public this (PangoContext* pangoContext)
 	{
+		assert(pangoContext !is null, "struct pangoContext is null on constructor");
 		super(cast(GObject*)pangoContext);
 		this.pangoContext = pangoContext;
 	}

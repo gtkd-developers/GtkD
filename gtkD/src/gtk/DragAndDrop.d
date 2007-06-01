@@ -123,6 +123,7 @@ public class DragAndDrop
 	 */
 	public this (GdkDragContext* gdkDragContext)
 	{
+		assert(gdkDragContext !is null, "struct gdkDragContext is null on constructor");
 		this.gdkDragContext = gdkDragContext;
 	}
 	

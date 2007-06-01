@@ -130,6 +130,7 @@ public class PgTabArray
 	 */
 	public this (PangoTabArray* pangoTabArray)
 	{
+		assert(pangoTabArray !is null, "struct pangoTabArray is null on constructor");
 		this.pangoTabArray = pangoTabArray;
 	}
 	

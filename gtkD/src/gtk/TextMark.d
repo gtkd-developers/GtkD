@@ -111,6 +111,7 @@ public class TextMark : ObjectG
 	 */
 	public this (GtkTextMark* gtkTextMark)
 	{
+		assert(gtkTextMark !is null, "struct gtkTextMark is null on constructor");
 		super(cast(GObject*)gtkTextMark);
 		this.gtkTextMark = gtkTextMark;
 	}
