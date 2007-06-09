@@ -97,7 +97,7 @@ const char[][LIBRARY.max+1] importLibs =
 version(Windows)
 {
 	import std.windows.registry;
-	version(tango)
+	version(Tango)
 	{
 		private import tango.stdc.stdio;
 	}

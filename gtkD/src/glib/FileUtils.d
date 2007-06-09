@@ -58,7 +58,7 @@ private import gtkc.glib;
 private import glib.Str;
 
 
-version(tango) {
+version(Tango) {
 	private import tango.stdc.stdio;
 } else {
 	private import std.stdio;

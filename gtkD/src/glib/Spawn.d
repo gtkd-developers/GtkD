@@ -68,7 +68,7 @@ private import glib.MainLoop;
 private import glib.Str;
 
 
-version(tango) {
+version(Tango) {
 	private import tango.core.Thread;
 	private import tango.stdc.stdio;
 	private import tango.stdc.posix.stdio;
@@ -91,7 +91,7 @@ version(tango) {
 public class Spawn
 {
 	
-	version(tango) alias splitLines splitlines;
+	version(Tango) alias splitLines splitlines;
 	
 	
 	char[] workingDirectory = ".";

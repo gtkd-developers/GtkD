@@ -166,10 +166,14 @@ public class Container : Widget
 	 */
 	void removeAll()
 	{
-		ListG children = new ListG(gtk_container_get_children(getContainerStruct()));
-		for ( int i=children.length()-1 ; i>=0 ; i-- )
+		GList* gList = gtk_container_get_children(getContainerStruct());
+		if ( gList !is null )
 		{
-			gtk_container_remove(getContainerStruct(), cast(GtkWidget*)children.nthData(i));
+			ListG children = new ListG(gList);
+			for ( int i=children.length()-1 ; i>=0 ; i-- )
+			{
+				gtk_container_remove(getContainerStruct(), cast(GtkWidget*)children.nthData(i));
+			}
 		}
 	}
 	

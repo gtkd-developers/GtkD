@@ -25,7 +25,7 @@
 
 module gtkc.gobject;
 
-version(tango) private import tango.stdc.stdio;
+version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
 private import gtkc.gobjecttypes;
 private import gtkc.Loader;

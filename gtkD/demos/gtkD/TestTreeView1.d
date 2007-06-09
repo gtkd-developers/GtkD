@@ -36,8 +36,8 @@ private import gtk.CellRendererPixbuf;
 private import gtk.CellRendererText;
 private import gtk.ScrolledWindow;
 private import gdk.Pixbuf;	
-version(tango) private import tango.io.Stdout;
-version(tango) private import tango.stdc.stdio;
+version(Tango) private import tango.io.Stdout;
+version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
 	
 /**
@@ -61,31 +61,31 @@ public class TestTreeView1 : VBox
 	this()
 	{
 		
-		debug(trace) version(tango) Stdout("TestTreeView1.this 1").newline;
+		debug(trace) version(Tango) Stdout("TestTreeView1.this 1").newline;
 		else writefln("TestTreeView1.this 1");
 		super(false, 0);
-		debug(trace) version(tango) Stdout("TestTreeView1.this 2").newline;
+		debug(trace) version(Tango) Stdout("TestTreeView1.this 2").newline;
 		else writefln("TestTreeView1.this 2");
 		
 		pixbuf = new Pixbuf(greenClass_xpm);
-		debug(trace) version(tango) Stdout("TestTreeView1.this 2.1").newline;
+		debug(trace) version(Tango) Stdout("TestTreeView1.this 2.1").newline;
 		else writefln("TestTreeView1.this 2.1");
 		pixbufTest = new Pixbuf(book_closed_xpm);
-		debug(trace) version(tango) Stdout("TestTreeView1.this 2.2").newline;
+		debug(trace) version(Tango) Stdout("TestTreeView1.this 2.2").newline;
 		else writefln("TestTreeView1.this 2.2");
 		image = new Image(pixbufTest);
 
-		debug(trace) version(tango) Stdout("TestTreeView1.this 3").newline;
+		debug(trace) version(Tango) Stdout("TestTreeView1.this 3").newline;
 		else writefln("TestTreeView1.this 3");
 		TreeView treeView1 = setup1();
 		populate(testTreeStore1);
 
-		debug(trace) version(tango) Stdout("TestTreeView1.this 4").newline;
+		debug(trace) version(Tango) Stdout("TestTreeView1.this 4").newline;
 		else writefln("TestTreeView1.this 4");
 		TreeView treeView2 = setup2();
 		populate(testTreeStore2);
 
-		debug(trace) version(tango) Stdout("TestTreeView1.this 5").newline;
+		debug(trace) version(Tango) Stdout("TestTreeView1.this 5").newline;
 		else writefln("TestTreeView1.this 5");
 		treeView2.addOnMoveCursor(&moveCursorCallback);
 		packStart(image, false, false, 1);
@@ -96,7 +96,7 @@ public class TestTreeView1 : VBox
 		sw.add(treeView2);
 		packStart(sw, true, true, 1);
 		
-		debug(trace) version(tango) Stdout("TestTreeView1.this 6").newline;
+		debug(trace) version(Tango) Stdout("TestTreeView1.this 6").newline;
 		else writefln("TestTreeView1.this 6");
 		//addWithViewport(treeView);
 		
@@ -110,7 +110,7 @@ public class TestTreeView1 : VBox
 		iter.setModel(tree.getModel());
 		Value v = new Value();
 		iter.getValue(1, v);
-		debug(trace) version(tango) Stdout("cursor on {}", v).newline;
+		debug(trace) version(Tango) Stdout("cursor on {}", v).newline;
 		else writefln("cursor on %s", v);
 		return false;
 	}

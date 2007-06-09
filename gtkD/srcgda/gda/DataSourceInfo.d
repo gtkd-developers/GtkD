@@ -62,7 +62,7 @@ private import gdac.gda;
 private import glib.ListG;
 
 
-version(tango) {
+version(Tango) {
 	private import tango.text.Util;
 } else {
 	private import std.string;

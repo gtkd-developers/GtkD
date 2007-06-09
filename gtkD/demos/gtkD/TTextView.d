@@ -42,10 +42,10 @@ private import gdk.Pixbuf;
 
 private import gtk.ComboBox;
 
-version(tango) private import tango.io.Stdout;
-version(tango) private import tango.text.convert.Layout;
+version(Tango) private import tango.io.Stdout;
+version(Tango) private import tango.text.convert.Layout;
 
-version(tango) private import tango.core.Vararg;
+version(Tango) private import tango.core.Vararg;
 
 /**
  * reproduces the gtk-demo TextView
@@ -250,7 +250,7 @@ static char gray50_bits[] = [0x02, 0x01];
 	 */
 	void insertText(TextBuffer buffer)
 	{
-		//version(tango) {} else
+		//version(Tango) {} else
 		{
 		TextIter iter = new TextIter();
 		TextIter start = new TextIter();
@@ -269,7 +269,7 @@ static char gray50_bits[] = [0x02, 0x01];
 		
 		if (pixbuf.getPixbufStruct()  is null)
 		{
-			version(tango) Stdout("Failed to load image file gtk-logo-rgb.gif\n").newline;
+			version(Tango) Stdout("Failed to load image file gtk-logo-rgb.gif\n").newline;
 			else printf("Failed to load image file gtk-logo-rgb.gif\n");
 			pixbuf = null;
 		}

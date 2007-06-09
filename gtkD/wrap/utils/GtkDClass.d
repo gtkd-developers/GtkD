@@ -243,7 +243,7 @@ public class GtkDClass
 		tangoImportConvs["std.gc"] = ["tango.core.Memory"];
 		tangoImportConvs["std.stdarg"] = ["tango.core.Vararg"];
 		
-		char[] importTango = "\nversion(tango) {\n";
+		char[] importTango = "\nversion(Tango) {\n";
 		char[] importElse = "} else {\n";
 		char[] importCommon = "\n";
 		
@@ -255,7 +255,7 @@ public class GtkDClass
 //			if ( imprt in tangoImportConvs )
 //			{
 //				gtkDText ~=
-//					"version(tango) private import "~tangoImportConvs[imprt]~";\n"
+//					"version(Tango) private import "~tangoImportConvs[imprt]~";\n"
 //					"else           private import "~imprt~";\n"
 //					;
 //			}

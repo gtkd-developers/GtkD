@@ -25,7 +25,7 @@
 
 module gtkc.cairoLib;
 
-version(tango) private import tango.stdc.stdio;
+version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
 private import gtkc.cairoLibtypes;
 private import gtkc.Loader;

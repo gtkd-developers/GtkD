@@ -27,10 +27,10 @@ version(cairo)private import cairo.clock;
 private import gtk.Version;
 private import gtk.Table;
 
-version(tango)private import tango.text.convert.Layout;
-version(tango) private import tango.core.Thread;
+version(Tango)private import tango.text.convert.Layout;
+version(Tango) private import tango.core.Thread;
 else private import std.thread;
-version(tango) private import tango.math.Random;
+version(Tango) private import tango.math.Random;
 else private import std.random;
 
 import gdk.Threads;
@@ -105,7 +105,7 @@ private import gtk.MessageDialog;
 	
 
 
-version(tango) private import tango.core.Memory;
+version(Tango) private import tango.core.Memory;
 else private import std.gc;
 private import glib.ListSG;
 	
@@ -117,8 +117,8 @@ private import gtk.HPaned;
 private import gtk.VPaned;
 	
 private import gtk.Calendar;
-version(tango) private import tango.io.Stdout;
-version(tango) private import tango.stdc.stdio;
+version(Tango) private import tango.io.Stdout;
+version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
 private import gtk.VButtonBox;
 private import gtk.FileChooserButton;
@@ -430,7 +430,7 @@ class TestWindow : MainWindow
 	{
 		//writefln("Notebook switch to page %s", pageNumber);
 		// fullCollect helps finding objects that shouldn't have been collected
-		version(tango) { /*??? no fullCollect on tango ???*/}
+		version(Tango) { /*??? no fullCollect on tango ???*/}
 		else std.gc.fullCollect();
 		//writefln("exiting Notebook switch to page %s", pageNumber);
 	}
@@ -944,7 +944,7 @@ class TestWindow : MainWindow
 			this.num = num;
 		}
 	
-		version(tango) void run()
+		version(Tango) void run()
 		{
 			runCommon();
 		}
@@ -956,15 +956,15 @@ class TestWindow : MainWindow
 
 		int runCommon()		
 		{
-			version(tango) Random random = new Random();
+			version(Tango) Random random = new Random();
 			while(1)
 			{
-				version(tango) int buttonNum = random.next(threadTestButtons.length);
+				version(Tango) int buttonNum = random.next(threadTestButtons.length);
 				else int buttonNum = rand()%threadTestButtons.length;
 				Button button = threadTestButtons[buttonNum];
 				gdkThreadsEnter();
 				button.removeAll();
-				version(tango) button.setLabel( (new Layout!(char))("{}", num));
+				version(Tango) button.setLabel( (new Layout!(char))("{}", num));
 				else           button.setLabel(std.string.format("%s", num));
 				gdkThreadsLeave();
 				yield();
@@ -981,7 +981,7 @@ class TestWindow : MainWindow
 		{
 			for ( int j = 0 ; j<8; j++)
 			{
-				version(tango) Button button = new Button((new Layout!(char))("{}",(j+8*i)));
+				version(Tango) Button button = new Button((new Layout!(char))("{}",(j+8*i)));
 				else Button button = new Button(std.string.format("%s",(j+8*i)));
 				threadTestButtons ~= button;
 				grid.attach( button,
@@ -997,7 +997,7 @@ class TestWindow : MainWindow
 		{
 			foreach ( T1 t ; t1s )
 			{
-				version(tango)
+				version(Tango)
 				{
 					if ( t.isRunning() )
 					{
@@ -1020,7 +1020,7 @@ class TestWindow : MainWindow
 		{
 			foreach ( T1 t ; t1s )
 			{
-				version(tango) 
+				version(Tango) 
 				{
 					if ( !t.isRunning() )
 					{

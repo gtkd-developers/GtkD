@@ -37,8 +37,8 @@ private import gtk.Image;
 
 private import gtk.TreeNode;
 
-version(tango) private import tango.io.Stdout;
-version(tango) private import tango.stdc.stdio;
+version(Tango) private import tango.io.Stdout;
+version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
 
 

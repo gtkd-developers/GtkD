@@ -68,7 +68,7 @@ private import gobject.Closure;
 private import glib.Str;
 
 
-version(tango) {
+version(Tango) {
 	private import tango.core.Memory;
 } else {
 	private import std.gc;
@@ -169,7 +169,7 @@ public class ObjectG
 	public: void setDataFull(char[] key, gpointer data)
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
-		version(tango) gc.addRoot(data);
+		version(Tango) gc.addRoot(data);
 		else std.gc.addRoot(data);
 		g_object_set_data_full(gObject, Str.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
 	}
@@ -181,7 +181,7 @@ public class ObjectG
 			//writefln("objectg.destroy entry");
 			//writefln("objectg.destroy");
 			//writefln("removing gc.root to %s",data);
-			version(tango) gc.removeRoot(data);
+			version(Tango) gc.removeRoot(data);
 			else std.gc.removeRoot(data);
 			//writefln("objectg.destroy exit");
 		}

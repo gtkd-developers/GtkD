@@ -704,7 +704,7 @@ nocode: g_spawn_async_with_pipes
 
 code: start
 
-	version(tango) alias splitLines splitlines;
+	version(Tango) alias splitLines splitlines;
 
 
 	char[] workingDirectory = ".";

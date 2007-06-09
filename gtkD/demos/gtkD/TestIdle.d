@@ -37,8 +37,8 @@ private import gdk.GC;
 private import gtk.SpinButton;
 private import gtk.Adjustment;
 
-version(tango) private import tango.io.Stdout;
-version(tango) private import tango.stdc.stdio;
+version(Tango) private import tango.io.Stdout;
+version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
 
 private import gtk.Idle;
@@ -157,7 +157,7 @@ class TestIdle : VBox
 		
 		public void onMap(Widget widget)
 		{
-			debug(trace) version(tango) Stdout("idle.onMap").newline;
+			debug(trace) version(Tango) Stdout("idle.onMap").newline;
 			else writefln("idle.onMap");
 			continueIdleCallback = true;
 			x = 0;
@@ -169,7 +169,7 @@ class TestIdle : VBox
 
 		public void onUnmap(Widget widget)
 		{
-			debug(trace) version(tango) Stdout("idle.onUnmap").newline;
+			debug(trace) version(Tango) Stdout("idle.onUnmap").newline;
 			else writefln("idle.onUnmap");
 			continueIdleCallback = false;
 		}
@@ -252,7 +252,7 @@ class TestIdle : VBox
 
 		void onCallTypeChanged(ComboBox comboBox)
 		{
-			debug(trace) version(tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline; 
+			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline; 
 			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{
@@ -265,7 +265,7 @@ class TestIdle : VBox
 		
 		void onCGOptionsChanged(ComboBox comboBox)
 		{
-			debug(trace) version(tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline; 
+			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline; 
 			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{

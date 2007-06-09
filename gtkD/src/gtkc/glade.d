@@ -25,7 +25,7 @@
 
 module gtkc.glade;
 
-version(tango) private import tango.stdc.stdio;
+version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
 private import gtkc.gladetypes;
 private import gtkc.Loader;

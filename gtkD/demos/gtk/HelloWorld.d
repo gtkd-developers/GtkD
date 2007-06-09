@@ -38,27 +38,8 @@ class HelloWorld : MainWindow
 		setBorderWidth(10);
 		add(new Label("Hello World"));
 		
-		Dialog dialog = new Dialog();
-		dialog.showAll();
-		VBox vbox = getVBox(dialog);
-		dialog.showAll();
-		
 		showAll();
 	}
-	
-	VBox getVBox(Dialog dialog)
-	{
-		void* pt = dialog.getDialogStruct();
-		(pt) += 37;
-		VBox vbox;
-		
-		vbox = new VBox(cast(GtkVBox*)(pt));
-		vbox.packStart(new Label("Label test"), false, false, 2);
-		vbox.showAll();
-		
-		return vbox;
-	}
-
 	
 }
 

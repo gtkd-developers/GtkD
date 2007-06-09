@@ -26,11 +26,11 @@ private import pango.PgContext;
 private import pango.PgLayout;
 private import gdk.ImageGdk;
 		
-version(tango) private import tango.io.Stdout;
-version(tango) private import tango.stdc.stdio;
+version(Tango) private import tango.io.Stdout;
+version(Tango) private import tango.stdc.stdio;
 else private import std.stdio;
 
-version(tango) private import tango.math.Math; 
+version(Tango) private import tango.math.Math; 
 else private import std.math;
 
 private import gtk.Widget;
@@ -186,11 +186,11 @@ class TestDrawingArea : VBox
 		
 		public int onButtonPress(GdkEventButton* event, Widget widget)
 		{
-			debug(trace) version(tango) Stdout("button DOWN").newline;
+			debug(trace) version(Tango) Stdout("button DOWN").newline;
 			else writefln("button DOWN");
 			if ( event.button == 1 )
 			{
-				debug(trace) version(tango) Stdout("Button 1 down").newline;
+				debug(trace) version(Tango) Stdout("Button 1 down").newline;
 				else writefln("Button 1 down");
 				buttonIsDown = true;
 				Drawable d = getDrawable();
@@ -208,11 +208,11 @@ class TestDrawingArea : VBox
 
 		public int onButtonRelease(GdkEventButton* event, Widget widget)
 		{
-			debug(trace) version(tango) Stdout("button UP").newline;
+			debug(trace) version(Tango) Stdout("button UP").newline;
 			else writefln("button UP");
 			if ( event.button == 1 )
 			{
-				debug(trace) version(tango) Stdout("button 1 UP").newline;
+				debug(trace) version(Tango) Stdout("button 1 UP").newline;
 				else writefln("Button 1 UP");
 				buttonIsDown = false;
 			}
@@ -275,11 +275,11 @@ class TestDrawingArea : VBox
 		public void backSpinChanged(SpinButton spinButton)
 		{
 			
-			debug(trace) version(tango) Stdout.format("backSpinChanged - entry {}", ++backSpinCount).newline;
+			debug(trace) version(Tango) Stdout.format("backSpinChanged - entry {}", ++backSpinCount).newline;
 			else writefln("backSpinChanged - entry %s", ++backSpinCount);
 			drawPoints(getDrawable());
 			GC gc = new GC(getDrawable());
-			debug(trace) version(tango) Stdout("backSpinChanged - exit").newline;
+			debug(trace) version(Tango) Stdout("backSpinChanged - exit").newline;
 			else writefln("backSpinChanged - exit");
 		}
 
@@ -300,7 +300,7 @@ class TestDrawingArea : VBox
 		{
 			int width = spin.getValueAsInt();
 			int height = width * 3 / 4;
-			debug(trace) version(tango) Stdout.format("primitiveType = {}", primitiveType).newline;
+			debug(trace) version(Tango) Stdout.format("primitiveType = {}", primitiveType).newline;
 			else writefln("primitiveType = %s", primitiveType);
 			switch ( primitiveType )
 			{
@@ -330,7 +330,7 @@ class TestDrawingArea : VBox
 					
 				case "Text":
 					Font font = new Font("FreeMono 12");
-					debug(trace) version(tango) Stdout.format("Text font = {}", font).newline;
+					debug(trace) version(Tango) Stdout.format("Text font = {}", font).newline;
 					else writefln("Text font = %s", font);
 					d.drawString( font, gc,x, y, "gtkD toolkit");
 					break;
@@ -387,10 +387,10 @@ class TestDrawingArea : VBox
 			int x = 0;
 			int y = 0;
 
-			debug(trace) version(tango) Stdout.format("w,h = {} {}",width ,height).newline;
+			debug(trace) version(Tango) Stdout.format("w,h = {} {}",width ,height).newline;
 			else writefln("w,h = %s %s",width ,height);
 
-			debug(trace) version(tango) Stdout.format("w,h = {} {}",width ,height).newline;
+			debug(trace) version(Tango) Stdout.format("w,h = {} {}",width ,height).newline;
 			else writefln("w,h = %s %s",width ,height);
 			
 			float dx = 256.0 / width;
@@ -437,7 +437,7 @@ class TestDrawingArea : VBox
 
 		void onCGOptionsChanged(ComboBox comboBox)
 		{
-			debug(trace) version(tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline;
+			debug(trace) version(Tango) Stdout.format("gcOptions = {}", comboBox.getActiveText()).newline;
 			else writefln("gcOptions = %s", comboBox.getActiveText());
 			switch ( comboBox.getActiveText() )
 			{

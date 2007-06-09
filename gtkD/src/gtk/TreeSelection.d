@@ -169,21 +169,17 @@ public class TreeSelection : ObjectG
 	 */
 	TreePath[] getSelectedRows(TreeModel model)
 	{
-		//printf("getSelectedRows(model) 1\n");
-		GtkTreeModel* m = model.getTreeModelStruct();
-		//printf("getSelectedRows(model) 2\n");
-		ListG list = new ListG(
-		gtk_tree_selection_get_selected_rows(gtkTreeSelection, &m)
-		);
-		//printf("getSelectedRows(model) 3\n");
 		TreePath[] paths;
-		//printf("getSelectedRows(model) 4 list.length() = %d\n",list.length());
-		for ( int i=0 ; i<list.length() ; i++ )
+		GtkTreeModel* m = model.getTreeModelStruct();
+		GList* gList = gtk_tree_selection_get_selected_rows(gtkTreeSelection, &m);
+		if ( gList !is null )
 		{
-			//printf("getSelectedRows(model) 5\n");
-			paths ~= new TreePath(cast(GtkTreePath*)list.nthData(i));
+			ListG list = new ListG(gList);
+			for ( int i=0 ; i<list.length() ; i++ )
+			{
+				paths ~= new TreePath(cast(GtkTreePath*)list.nthData(i));
+			}
 		}
-		//printf("getSelectedRows(model) 6\n");
 		return paths;
 	}
 	

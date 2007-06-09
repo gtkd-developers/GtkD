@@ -102,7 +102,7 @@ private import gtk.Clipboard;
 private import gdk.Bitmap;
 
 
-version(tango) {
+version(Tango) {
 	private import tango.core.Vararg;
 } else {
 	private import std.stdarg;
@@ -271,7 +271,7 @@ public class TextBuffer : ObjectG
 	 * ...:
 	 *  NULL-terminated list of tags to apply
 	 */
-	//version(tango){} else -- still doesn't work on tango, but it compiles now
+	//version(Tango){} else -- still doesn't work on tango, but it compiles now
 	public void insertWithTags(TextIter iter, char[] text, ... )
 	{
 		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(TextTag)); i++)
@@ -298,7 +298,7 @@ public class TextBuffer : ObjectG
 	 * ...:
 	 *  more tag names
 	 */
-	// version(tango){} else  -- still doesn't work on tango, but it compiles now
+	// version(Tango){} else  -- still doesn't work on tango, but it compiles now
 	public void insertWithTagsByName(TextIter iter, char[] text, ... )
 	{
 		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(char[])); i++)

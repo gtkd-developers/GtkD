@@ -60,7 +60,7 @@ private import gtkc.glib;
 private import glib.StringG;
 
 
-version(tango) {
+version(Tango) {
 	private import tango.stdc.stdio;
 	private import tango.stdc.string;
 } else {

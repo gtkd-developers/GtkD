@@ -75,7 +75,7 @@ private import gtkc.paths;
 public class Linker
 {
 
-	version(tango)
+	version(Tango)
 	{
 		private import tango.stdc.stdio;
 		private import tango.io.Stdout;
@@ -136,7 +136,7 @@ public class Linker
 		{
 			foreach ( char[] symbol ; Linker.getLoadFailures(lib) )
 			{
-				version(tango) Stdout("failed ({}) {}", lib, symbol).newline;
+				version(Tango) Stdout("failed ({}) {}", lib, symbol).newline;
 				else writefln("failed (%s) %s", lib, symbol);
 			}
 		}
@@ -204,7 +204,7 @@ public class Linker
 		}
 		else
 		{
-			version(tango) Stdout("Loaded lib = {}", libraryName).newline;
+			version(Tango) Stdout("Loaded lib = {}", libraryName).newline;
 			else writefln("Loaded lib = %s", libraryName);
 		}
 
@@ -257,7 +257,7 @@ public class Linker
 		foreach( Symbol link; symbols ) 
 		{
 			*link.pointer = getSymbol(handle, (link.name~"\0").ptr);
-			version(tango)debug(loadSymbol) Stdout("Loaded...")(libraryName)(" ")(link.name).newline;
+			version(Tango)debug(loadSymbol) Stdout("Loaded...")(libraryName)(" ")(link.name).newline;
 			else debug(loadSymbol) writefln("Loaded...", libraryName, " ", link.name);
 			if (*link.pointer is null)
 			{
@@ -265,7 +265,7 @@ public class Linker
 				if ( alternateHandle !is null )
 				{
 					*link.pointer = getSymbol(alternateHandle, (link.name~"\0").ptr);
-					version(tango) Stdout("Loader.Linker.link trying alternate lib <<<<<<<<< {}", link.name).newline;
+					version(Tango) Stdout("Loader.Linker.link trying alternate lib <<<<<<<<< {}", link.name).newline;
 					else writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
 				}
 				if (*link.pointer is null)
