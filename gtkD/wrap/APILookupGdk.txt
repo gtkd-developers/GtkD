@@ -206,7 +206,7 @@ outFile: GC
 file: gdk-Drawing-Primitives.html
 struct: GdkDrawable
 class: Drawable
-prefix: gdk_drawble_
+prefix: gdk_drawable_
 prefix: gdk_
 import: glib.Str
 import: gdk.Drawable
@@ -294,7 +294,23 @@ code: start
 		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, points.ptr, points.length);
 	}
 	
-	
+	public void drawPixbuf(Pixbuf pixbuf, int destX, int destY)
+	{
+		drawPixbuf(null, pixbuf, destX, destY);
+	}
+	public void drawPixbuf(GC gc, Pixbuf pixbuf, int destX, int destY)
+	{
+		if ( pixbuf is null ) return;
+		gdk_draw_pixbuf(gdkDrawable, 
+						(gc is null) ? null : gc.getGCStruct(), 
+						pixbuf.getPixbufStruct(), 
+						0, 0, destX, destY, 
+						pixbuf.getWidth(), pixbuf.getHeight(), 
+						GdkRgbDither.NORMAL, 
+						0, 0);
+	}
+
+
 	 
 	
 code: end

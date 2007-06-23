@@ -36,7 +36,7 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- gdk_drawble_
+ * 	- gdk_drawable_
  * 	- gdk_
  * omit structs:
  * omit prefixes:
@@ -207,6 +207,22 @@ public class Drawable : ObjectG
 		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, points.ptr, points.length);
 	}
 	
+	public void drawPixbuf(Pixbuf pixbuf, int destX, int destY)
+	{
+		drawPixbuf(null, pixbuf, destX, destY);
+	}
+	public void drawPixbuf(GC gc, Pixbuf pixbuf, int destX, int destY)
+	{
+		if ( pixbuf is null ) return;
+		gdk_draw_pixbuf(gdkDrawable,
+		(gc is null) ? null : gc.getGCStruct(),
+		pixbuf.getPixbufStruct(),
+		0, 0, destX, destY,
+		pixbuf.getWidth(), pixbuf.getHeight(),
+		GdkRgbDither.NORMAL,
+		0, 0);
+	}
+	
 	
 	
 	
@@ -225,7 +241,7 @@ public class Drawable : ObjectG
 	 * Returns:
 	 *  the same drawable passed in
 	 */
-	public Drawable drawableRef()
+	public Drawable doref()
 	{
 		// GdkDrawable* gdk_drawable_ref (GdkDrawable *drawable);
 		return new Drawable( gdk_drawable_ref(gdkDrawable) );
@@ -238,7 +254,7 @@ public class Drawable : ObjectG
 	 * drawable:
 	 *  a GdkDrawable
 	 */
-	public void drawableUnref()
+	public void unref()
 	{
 		// void gdk_drawable_unref (GdkDrawable *drawable);
 		gdk_drawable_unref(gdkDrawable);
@@ -258,7 +274,7 @@ public class Drawable : ObjectG
 	 * destroy_func:
 	 *  function to free data, or NULL
 	 */
-	public void drawableSetData(char[] key, void* data, GDestroyNotify destroyFunc)
+	public void setData(char[] key, void* data, GDestroyNotify destroyFunc)
 	{
 		// void gdk_drawable_set_data (GdkDrawable *drawable,  const gchar *key,  gpointer data,  GDestroyNotify destroy_func);
 		gdk_drawable_set_data(gdkDrawable, Str.toStringz(key), data, destroyFunc);
@@ -276,7 +292,7 @@ public class Drawable : ObjectG
 	 * Returns:
 	 *  the data stored at key
 	 */
-	public void* drawableGetData(char[] key)
+	public void* getData(char[] key)
 	{
 		// gpointer gdk_drawable_get_data (GdkDrawable *drawable,  const gchar *key);
 		return gdk_drawable_get_data(gdkDrawable, Str.toStringz(key));
@@ -290,7 +306,7 @@ public class Drawable : ObjectG
 	 *  the GdkDisplay associated with drawable
 	 * Since 2.2
 	 */
-	public Display drawableGetDisplay()
+	public Display getDisplay()
 	{
 		// GdkDisplay* gdk_drawable_get_display (GdkDrawable *drawable);
 		return new Display( gdk_drawable_get_display(gdkDrawable) );
@@ -304,7 +320,7 @@ public class Drawable : ObjectG
 	 *  the GdkScreen associated with drawable
 	 * Since 2.2
 	 */
-	public Screen drawableGetScreen()
+	public Screen getScreen()
 	{
 		// GdkScreen* gdk_drawable_get_screen (GdkDrawable *drawable);
 		return new Screen( gdk_drawable_get_screen(gdkDrawable) );
@@ -317,7 +333,7 @@ public class Drawable : ObjectG
 	 * Returns:
 	 *  a GdkVisual
 	 */
-	public Visual drawableGetVisual()
+	public Visual getVisual()
 	{
 		// GdkVisual* gdk_drawable_get_visual (GdkDrawable *drawable);
 		return new Visual( gdk_drawable_get_visual(gdkDrawable) );
@@ -337,7 +353,7 @@ public class Drawable : ObjectG
 	 * colormap:
 	 *  a GdkColormap
 	 */
-	public void drawableSetColormap(Colormap colormap)
+	public void setColormap(Colormap colormap)
 	{
 		// void gdk_drawable_set_colormap (GdkDrawable *drawable,  GdkColormap *colormap);
 		gdk_drawable_set_colormap(gdkDrawable, (colormap is null) ? null : colormap.getColormapStruct());
@@ -351,7 +367,7 @@ public class Drawable : ObjectG
 	 * Returns:
 	 *  the colormap, or NULL
 	 */
-	public Colormap drawableGetColormap()
+	public Colormap getColormap()
 	{
 		// GdkColormap* gdk_drawable_get_colormap (GdkDrawable *drawable);
 		return new Colormap( gdk_drawable_get_colormap(gdkDrawable) );
@@ -366,7 +382,7 @@ public class Drawable : ObjectG
 	 * Returns:
 	 *  number of bits per pixel
 	 */
-	public int drawableGetDepth()
+	public int getDepth()
 	{
 		// gint gdk_drawable_get_depth (GdkDrawable *drawable);
 		return gdk_drawable_get_depth(gdkDrawable);
@@ -385,7 +401,7 @@ public class Drawable : ObjectG
 	 * height:
 	 *  location to store drawable's height, or NULL
 	 */
-	public void drawableGetSize(int* width, int* height)
+	public void getSize(int* width, int* height)
 	{
 		// void gdk_drawable_get_size (GdkDrawable *drawable,  gint *width,  gint *height);
 		gdk_drawable_get_size(gdkDrawable, width, height);
@@ -404,7 +420,7 @@ public class Drawable : ObjectG
 	 *  a GdkRegion. This must be freed with gdk_region_destroy()
 	 *  when you are done.
 	 */
-	public Region drawableGetClipRegion()
+	public Region getClipRegion()
 	{
 		// GdkRegion* gdk_drawable_get_clip_region (GdkDrawable *drawable);
 		return new Region( gdk_drawable_get_clip_region(gdkDrawable) );
@@ -421,7 +437,7 @@ public class Drawable : ObjectG
 	 *  a GdkRegion. This must be freed with gdk_region_destroy()
 	 *  when you are done.
 	 */
-	public Region drawableGetVisibleRegion()
+	public Region getVisibleRegion()
 	{
 		// GdkRegion* gdk_drawable_get_visible_region (GdkDrawable *drawable);
 		return new Region( gdk_drawable_get_visible_region(gdkDrawable) );
@@ -1024,7 +1040,7 @@ public class Drawable : ObjectG
 	 * Returns:
 	 *  a GdkImage containing the contents of drawable
 	 */
-	public ImageGdk drawableGetImage(int x, int y, int width, int height)
+	public ImageGdk getImage(int x, int y, int width, int height)
 	{
 		// GdkImage* gdk_drawable_get_image (GdkDrawable *drawable,  gint x,  gint y,  gint width,  gint height);
 		return new ImageGdk( gdk_drawable_get_image(gdkDrawable, x, y, width, height) );
@@ -1055,7 +1071,7 @@ public class Drawable : ObjectG
 	 *  of drawable
 	 * Since 2.4
 	 */
-	public ImageGdk drawableCopyToImage(ImageGdk image, int srcX, int srcY, int destX, int destY, int width, int height)
+	public ImageGdk copyToImage(ImageGdk image, int srcX, int srcY, int destX, int destY, int width, int height)
 	{
 		// GdkImage* gdk_drawable_copy_to_image (GdkDrawable *drawable,  GdkImage *image,  gint src_x,  gint src_y,  gint dest_x,  gint dest_y,  gint width,  gint height);
 		return new ImageGdk( gdk_drawable_copy_to_image(gdkDrawable, (image is null) ? null : image.getImageGdkStruct(), srcX, srcY, destX, destY, width, height) );
