@@ -64,6 +64,14 @@
 
 module gthread.Thread;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
@@ -132,7 +140,26 @@ public class Thread
 	 */
 	public this (GThread* gThread)
 	{
-		assert(gThread !is null, "struct gThread is null on constructor");
+		version(noAssert)
+		{
+			if ( gThread is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gThread is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gThread is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gThread !is null, "struct gThread is null on constructor");
+		}
 		this.gThread = gThread;
 	}
 	

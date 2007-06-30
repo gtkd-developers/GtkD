@@ -51,6 +51,14 @@
 
 module gtk.HScale;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -93,7 +101,26 @@ public class HScale : Scale
 	 */
 	public this (GtkHScale* gtkHScale)
 	{
-		assert(gtkHScale !is null, "struct gtkHScale is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkHScale is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkHScale is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkHScale is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkHScale !is null, "struct gtkHScale is null on constructor");
+		}
 		super(cast(GtkScale*)gtkHScale);
 		this.gtkHScale = gtkHScale;
 	}

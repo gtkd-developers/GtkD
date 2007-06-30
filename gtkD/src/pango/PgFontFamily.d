@@ -78,6 +78,14 @@
 
 module pango.PgFontFamily;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -136,7 +144,26 @@ public class PgFontFamily
 	 */
 	public this (PangoFontFamily* pangoFontFamily)
 	{
-		assert(pangoFontFamily !is null, "struct pangoFontFamily is null on constructor");
+		version(noAssert)
+		{
+			if ( pangoFontFamily is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct pangoFontFamily is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct pangoFontFamily is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(pangoFontFamily !is null, "struct pangoFontFamily is null on constructor");
+		}
 		this.pangoFontFamily = pangoFontFamily;
 	}
 	

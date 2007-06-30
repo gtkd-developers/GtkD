@@ -50,6 +50,14 @@
 
 module gda.DataModelArray;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -87,7 +95,26 @@ public class DataModelArray
 	 */
 	public this (GdaDataModelArray* gdaDataModelArray)
 	{
-		assert(gdaDataModelArray !is null, "struct gdaDataModelArray is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaDataModelArray is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaDataModelArray is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaDataModelArray is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaDataModelArray !is null, "struct gdaDataModelArray is null on constructor");
+		}
 		this.gdaDataModelArray = gdaDataModelArray;
 	}
 	

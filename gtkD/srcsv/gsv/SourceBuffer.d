@@ -61,6 +61,14 @@
 
 module gsv.SourceBuffer;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
@@ -118,7 +126,26 @@ public class SourceBuffer : TextBuffer
 	 */
 	public this (GtkSourceBuffer* gtkSourceBuffer)
 	{
-		assert(gtkSourceBuffer !is null, "struct gtkSourceBuffer is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkSourceBuffer is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkSourceBuffer is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkSourceBuffer is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkSourceBuffer !is null, "struct gtkSourceBuffer is null on constructor");
+		}
 		super(cast(GtkTextBuffer*)gtkSourceBuffer);
 		this.gtkSourceBuffer = gtkSourceBuffer;
 	}

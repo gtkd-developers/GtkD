@@ -51,6 +51,14 @@
 
 module gda.Command;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -104,7 +112,26 @@ public class Command
 	 */
 	public this (GdaCommand* gdaCommand)
 	{
-		assert(gdaCommand !is null, "struct gdaCommand is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaCommand is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaCommand is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaCommand is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaCommand !is null, "struct gdaCommand is null on constructor");
+		}
 		this.gdaCommand = gdaCommand;
 	}
 	

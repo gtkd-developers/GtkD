@@ -53,6 +53,14 @@
 
 module gtk.IMMulticontext;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -92,7 +100,26 @@ public class IMMulticontext : IMContext
 	 */
 	public this (GtkIMMulticontext* gtkIMMulticontext)
 	{
-		assert(gtkIMMulticontext !is null, "struct gtkIMMulticontext is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkIMMulticontext is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkIMMulticontext is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkIMMulticontext is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkIMMulticontext !is null, "struct gtkIMMulticontext is null on constructor");
+		}
 		super(cast(GtkIMContext*)gtkIMMulticontext);
 		this.gtkIMMulticontext = gtkIMMulticontext;
 	}

@@ -49,6 +49,14 @@
 
 module gtk.Arrow;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -96,7 +104,26 @@ public class Arrow : Misc
 	 */
 	public this (GtkArrow* gtkArrow)
 	{
-		assert(gtkArrow !is null, "struct gtkArrow is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkArrow is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkArrow is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkArrow is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkArrow !is null, "struct gtkArrow is null on constructor");
+		}
 		super(cast(GtkMisc*)gtkArrow);
 		this.gtkArrow = gtkArrow;
 	}

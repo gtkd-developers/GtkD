@@ -65,6 +65,14 @@
 
 module gtk.TextIter;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -112,7 +120,26 @@ public class TextIter
 	 */
 	public this (GtkTextIter* gtkTextIter)
 	{
-		assert(gtkTextIter !is null, "struct gtkTextIter is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkTextIter is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkTextIter is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkTextIter is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkTextIter !is null, "struct gtkTextIter is null on constructor");
+		}
 		this.gtkTextIter = gtkTextIter;
 	}
 	

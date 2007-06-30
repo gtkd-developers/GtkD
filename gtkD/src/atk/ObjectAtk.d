@@ -51,6 +51,14 @@
 
 module atk.ObjectAtk;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -105,7 +113,26 @@ public class ObjectAtk : ObjectG
 	 */
 	public this (AtkObject* atkObject)
 	{
-		assert(atkObject !is null, "struct atkObject is null on constructor");
+		version(noAssert)
+		{
+			if ( atkObject is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct atkObject is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct atkObject is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(atkObject !is null, "struct atkObject is null on constructor");
+		}
 		super(cast(GObject*)atkObject);
 		this.atkObject = atkObject;
 	}

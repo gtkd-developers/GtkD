@@ -50,6 +50,14 @@
 
 module gtk.Editable;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -114,7 +122,26 @@ public class Editable
 	 */
 	public this (GtkEditable* gtkEditable)
 	{
-		assert(gtkEditable !is null, "struct gtkEditable is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkEditable is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkEditable is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkEditable is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkEditable !is null, "struct gtkEditable is null on constructor");
+		}
 		this.gtkEditable = gtkEditable;
 	}
 	

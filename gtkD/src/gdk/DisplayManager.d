@@ -56,6 +56,14 @@
 
 module gdk.DisplayManager;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -100,7 +108,26 @@ public class DisplayManager : ObjectG
 	 */
 	public this (GdkDisplayManager* gdkDisplayManager)
 	{
-		assert(gdkDisplayManager !is null, "struct gdkDisplayManager is null on constructor");
+		version(noAssert)
+		{
+			if ( gdkDisplayManager is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdkDisplayManager is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdkDisplayManager is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdkDisplayManager !is null, "struct gdkDisplayManager is null on constructor");
+		}
 		super(cast(GObject*)gdkDisplayManager);
 		this.gdkDisplayManager = gdkDisplayManager;
 	}

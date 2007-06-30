@@ -52,6 +52,14 @@
 
 module glib.QueueG;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -102,7 +110,26 @@ public class QueueG
 	 */
 	public this (GQueue* gQueue)
 	{
-		assert(gQueue !is null, "struct gQueue is null on constructor");
+		version(noAssert)
+		{
+			if ( gQueue is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gQueue is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gQueue is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gQueue !is null, "struct gQueue is null on constructor");
+		}
 		this.gQueue = gQueue;
 	}
 	

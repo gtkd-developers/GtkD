@@ -61,6 +61,14 @@
 
 module gtk.IconTheme;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -165,7 +173,26 @@ public class IconTheme : ObjectG
 	 */
 	public this (GtkIconTheme* gtkIconTheme)
 	{
-		assert(gtkIconTheme !is null, "struct gtkIconTheme is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkIconTheme is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkIconTheme is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkIconTheme is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkIconTheme !is null, "struct gtkIconTheme is null on constructor");
+		}
 		super(cast(GObject*)gtkIconTheme);
 		this.gtkIconTheme = gtkIconTheme;
 	}

@@ -54,6 +54,14 @@
 
 module gdk.Device;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -157,7 +165,26 @@ public class Device
 	 */
 	public this (GdkDevice* gdkDevice)
 	{
-		assert(gdkDevice !is null, "struct gdkDevice is null on constructor");
+		version(noAssert)
+		{
+			if ( gdkDevice is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdkDevice is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdkDevice is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdkDevice !is null, "struct gdkDevice is null on constructor");
+		}
 		this.gdkDevice = gdkDevice;
 	}
 	

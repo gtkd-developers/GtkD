@@ -49,6 +49,14 @@
 
 module gtk.Calendar;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -98,7 +106,26 @@ public class Calendar : Widget
 	 */
 	public this (GtkCalendar* gtkCalendar)
 	{
-		assert(gtkCalendar !is null, "struct gtkCalendar is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkCalendar is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkCalendar is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkCalendar is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkCalendar !is null, "struct gtkCalendar is null on constructor");
+		}
 		super(cast(GtkWidget*)gtkCalendar);
 		this.gtkCalendar = gtkCalendar;
 	}

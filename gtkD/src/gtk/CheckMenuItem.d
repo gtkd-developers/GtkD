@@ -52,6 +52,14 @@
 
 module gtk.CheckMenuItem;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -96,7 +104,26 @@ public class CheckMenuItem : MenuItem
 	 */
 	public this (GtkCheckMenuItem* gtkCheckMenuItem)
 	{
-		assert(gtkCheckMenuItem !is null, "struct gtkCheckMenuItem is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkCheckMenuItem is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkCheckMenuItem is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkCheckMenuItem is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkCheckMenuItem !is null, "struct gtkCheckMenuItem is null on constructor");
+		}
 		super(cast(GtkMenuItem*)gtkCheckMenuItem);
 		this.gtkCheckMenuItem = gtkCheckMenuItem;
 	}

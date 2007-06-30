@@ -58,6 +58,14 @@
 
 module gtk.Action;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -124,7 +132,26 @@ public class Action : ObjectG
 	 */
 	public this (GtkAction* gtkAction)
 	{
-		assert(gtkAction !is null, "struct gtkAction is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkAction is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkAction is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkAction is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkAction !is null, "struct gtkAction is null on constructor");
+		}
 		super(cast(GObject*)gtkAction);
 		this.gtkAction = gtkAction;
 	}

@@ -386,21 +386,138 @@ struct: GdkPixbuf
 class: Pixbuf
 prefix: gdk_pixbuf_
 import: glib.Str
-openFile: Pixbuf
-
-file: ../gdk-pixbuf/gdk-pixbuf-creating.html
-struct: GdkPixbuf
-class: Pixbuf
 import: glib.Str
 prefix: gdk_pixbuf_
 noprefix: gdk_pixbuf_ref
 noprefix: gdk_pixbuf_unref
 #import: g.Error*
 #structWrap: GError** Error*
-import: gdkpixbuf.Pixbuf
+#import: gdkpixbuf.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gdkpixbuf.PixbufFormat
 structWrap: GdkPixbufFormat* PixbufFormat
+import: gdk.Drawable
+structWrap: GdkDrawable* Drawable
+import: gdk.Bitmap
+structWrap: GdkBitmap* Bitmap
+import: gdk.Colormap
+structWrap: GdkColormap* Colormap
+import: gdk.ImageGdk
+structWrap: GdkImage* ImageGdk
+
+# this will create a new pixbuf but the wrapper will pass the existing pixbuf struct
+nocode: gdk_pixbuf_get_from_drawable
+
+code: start
+	/**
+	 * Transfers image data from a GdkDrawable and converts it to an RGB(A)
+	 * representation inside a GdkPixbuf. In other words, copies
+	 * image data from a server-side drawable to a client-side RGB(A) buffer.
+	 * This allows you to efficiently read individual pixels on the client side.
+	 * If the drawable src has no colormap (gdk_drawable_get_colormap()
+	 * returns NULL), then a suitable colormap must be specified.
+	 * Typically a GdkWindow or a pixmap created by passing a GdkWindow
+	 * to gdk_pixmap_new() will already have a colormap associated with
+	 * it. If the drawable has a colormap, the cmap argument will be
+	 * ignored. If the drawable is a bitmap (1 bit per pixel pixmap),
+	 * then a colormap is not required; pixels with a value of 1 are
+	 * assumed to be white, and pixels with a value of 0 are assumed to be
+	 * black. For taking screenshots, gdk_colormap_get_system() returns
+	 * the correct colormap to use.
+	 * If the specified destination pixbuf dest is NULL, then this
+	 * function will create an RGB pixbuf with 8 bits per channel and no
+	 * alpha, with the same size specified by the width and height
+	 * arguments. In this case, the dest_x and dest_y arguments must be
+	 * specified as 0. If the specified destination pixbuf is not NULL
+	 * and it contains alpha information, then the filled pixels will be
+	 * set to full opacity (alpha = 255).
+	 * If the specified drawable is a pixmap, then the requested source
+	 * rectangle must be completely contained within the pixmap, otherwise
+	 * the function will return NULL. For pixmaps only (not for windows)
+	 * passing -1 for width or height is allowed to mean the full width
+	 * or height of the pixmap.
+	 * If the specified drawable is a window, and the window is off the
+	 * screen, then there is no image data in the obscured/offscreen
+	 * regions to be placed in the pixbuf. The contents of portions of the
+	 * pixbuf corresponding to the offscreen region are undefined.
+	 * If the window you're obtaining data from is partially obscured by
+	 * other windows, then the contents of the pixbuf areas corresponding
+	 * to the obscured regions are undefined.
+	 * If the target drawable is not mapped (typically because it's
+	 * iconified/minimized or not on the current workspace), then NULL
+	 * will be returned.
+	 * If memory can't be allocated for the return value, NULL will be returned
+	 * instead.
+	 * (In short, there are several ways this function can fail, and if it fails
+	 *  it returns NULL; so check the return value.)
+	 * This function calls gdk_drawable_get_image() internally and
+	 * converts the resulting image to a GdkPixbuf, so the
+	 * documentation for gdk_drawable_get_image() may also be relevant.
+	 * dest:
+	 *  Destination pixbuf, or NULL if a new pixbuf should be created.
+	 * src:
+	 *  Source drawable.
+	 * cmap:
+	 *  A colormap if src doesn't have one set.
+	 * src_x:
+	 *  Source X coordinate within drawable.
+	 * src_y:
+	 *  Source Y coordinate within drawable.
+	 * dest_x:
+	 *  Destination X coordinate in pixbuf, or 0 if dest is NULL.
+	 * dest_y:
+	 *  Destination Y coordinate in pixbuf, or 0 if dest is NULL.
+	 * width:
+	 *  Width in pixels of region to get.
+	 * height:
+	 *  Height in pixels of region to get.
+	 * Returns:
+	 *  The same pixbuf as dest if it was non-NULL, or a newly-created
+	 * pixbuf with a reference count of 1 if no destination pixbuf was specified, or NULL on error
+	 */
+	public Pixbuf getFromDrawable(Drawable src, Colormap cmap, int srcX, int srcY, int destX, int destY, int width, int height)
+	{
+		// GdkPixbuf* gdk_pixbuf_get_from_drawable (GdkPixbuf *dest,  GdkDrawable *src,  GdkColormap *cmap,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height);
+		return new Pixbuf( gdk_pixbuf_get_from_drawable(null, (src is null) ? null : src.getDrawableStruct(), (cmap is null) ? null : cmap.getColormapStruct(), srcX, srcY, destX, destY, width, height) );
+	}
+	
+	/**
+	 * SetFromDrawable is different from GetFrom Drawable as it doesn't create a new pixbuf
+	 */
+	public void setFromDrawable(Drawable src, int srcX, int srcY, int width, int height)
+	{
+		gdk_pixbuf_get_from_drawable(
+					gdkPixbuf,	// gdkPixbuf
+					src.getDrawableStruct(), 
+					null, // colormap 
+					srcX, srcY, 
+					0, 0,		// destination x and y 
+					width, height);
+	}
+	
+	/**
+	 * Creates a new Pixbuf from a drawable.
+	 * this is a simplyfied GetFromDrawable
+	 */
+	this(Drawable src, int srcX, int srcY, int width, int height)
+	{
+		GdkPixbuf* pb = gdk_pixbuf_get_from_drawable(
+					null,	// gdkPixbuf
+					src.getDrawableStruct(), 
+					null, // colormap 
+					srcX, srcY, 
+					0, 0,		// destination x and y 
+					width, height);
+		this(pb); 
+	}
+	
+code: end
+
+openFile: Pixbuf
+
+file: ../gdk-pixbuf/gdk-pixbuf-creating.html
+struct: GdkPixbuf
+class: Pixbuf
 
 text: start
 gdk_pixbuf_get_type ()

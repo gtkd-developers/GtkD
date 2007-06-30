@@ -67,6 +67,14 @@
 
 module gtk.DragAndDrop;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -123,7 +131,26 @@ public class DragAndDrop
 	 */
 	public this (GdkDragContext* gdkDragContext)
 	{
-		assert(gdkDragContext !is null, "struct gdkDragContext is null on constructor");
+		version(noAssert)
+		{
+			if ( gdkDragContext is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdkDragContext is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdkDragContext is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdkDragContext !is null, "struct gdkDragContext is null on constructor");
+		}
 		this.gdkDragContext = gdkDragContext;
 	}
 	

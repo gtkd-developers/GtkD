@@ -52,6 +52,14 @@
 
 module gtk.FontSelection;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -100,7 +108,26 @@ public class FontSelection : VBox
 	 */
 	public this (GtkFontSelection* gtkFontSelection)
 	{
-		assert(gtkFontSelection !is null, "struct gtkFontSelection is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkFontSelection is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkFontSelection is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkFontSelection is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkFontSelection !is null, "struct gtkFontSelection is null on constructor");
+		}
 		super(cast(GtkVBox*)gtkFontSelection);
 		this.gtkFontSelection = gtkFontSelection;
 	}

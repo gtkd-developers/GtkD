@@ -54,6 +54,14 @@
 
 module gtk.FileChooserWidget;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -104,7 +112,26 @@ public class FileChooserWidget : VBox
 	 */
 	public this (GtkFileChooserWidget* gtkFileChooserWidget)
 	{
-		assert(gtkFileChooserWidget !is null, "struct gtkFileChooserWidget is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkFileChooserWidget is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkFileChooserWidget is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkFileChooserWidget is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkFileChooserWidget !is null, "struct gtkFileChooserWidget is null on constructor");
+		}
 		super(cast(GtkVBox*)gtkFileChooserWidget);
 		this.gtkFileChooserWidget = gtkFileChooserWidget;
 	}

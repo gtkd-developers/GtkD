@@ -52,6 +52,14 @@
 
 module glib.BBTree;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -102,7 +110,26 @@ public class BBTree
 	 */
 	public this (GTree* gTree)
 	{
-		assert(gTree !is null, "struct gTree is null on constructor");
+		version(noAssert)
+		{
+			if ( gTree is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gTree is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gTree is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gTree !is null, "struct gTree is null on constructor");
+		}
 		this.gTree = gTree;
 	}
 	

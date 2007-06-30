@@ -58,6 +58,14 @@
 
 module gtk.BindingSet;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -156,7 +164,26 @@ public class BindingSet
 	 */
 	public this (GtkBindingSet* gtkBindingSet)
 	{
-		assert(gtkBindingSet !is null, "struct gtkBindingSet is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkBindingSet is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkBindingSet is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkBindingSet is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkBindingSet !is null, "struct gtkBindingSet is null on constructor");
+		}
 		this.gtkBindingSet = gtkBindingSet;
 	}
 	

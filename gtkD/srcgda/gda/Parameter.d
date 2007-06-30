@@ -63,6 +63,14 @@
 
 module gda.Parameter;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -103,7 +111,26 @@ public class Parameter
 	 */
 	public this (GdaParameter* gdaParameter)
 	{
-		assert(gdaParameter !is null, "struct gdaParameter is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaParameter is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaParameter is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaParameter is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaParameter !is null, "struct gdaParameter is null on constructor");
+		}
 		this.gdaParameter = gdaParameter;
 	}
 	

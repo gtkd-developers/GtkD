@@ -54,6 +54,14 @@
 
 module gtk.TreePath;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -220,7 +228,26 @@ public class TreePath
 	 */
 	public this (GtkTreePath* gtkTreePath)
 	{
-		assert(gtkTreePath !is null, "struct gtkTreePath is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkTreePath is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkTreePath is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkTreePath is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkTreePath !is null, "struct gtkTreePath is null on constructor");
+		}
 		this.gtkTreePath = gtkTreePath;
 	}
 	

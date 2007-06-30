@@ -54,6 +54,14 @@
 
 module gtk.AboutDialog;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -111,7 +119,26 @@ public class AboutDialog : Dialog
 	 */
 	public this (GtkAboutDialog* gtkAboutDialog)
 	{
-		assert(gtkAboutDialog !is null, "struct gtkAboutDialog is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkAboutDialog is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkAboutDialog is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkAboutDialog is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkAboutDialog !is null, "struct gtkAboutDialog is null on constructor");
+		}
 		super(cast(GtkDialog*)gtkAboutDialog);
 		this.gtkAboutDialog = gtkAboutDialog;
 	}

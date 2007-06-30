@@ -49,6 +49,14 @@
 
 module glib.Allocator;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -90,7 +98,26 @@ public class Allocator
 	 */
 	public this (GAllocator* gAllocator)
 	{
-		assert(gAllocator !is null, "struct gAllocator is null on constructor");
+		version(noAssert)
+		{
+			if ( gAllocator is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gAllocator is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gAllocator is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gAllocator !is null, "struct gAllocator is null on constructor");
+		}
 		this.gAllocator = gAllocator;
 	}
 	

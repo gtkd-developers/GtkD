@@ -48,6 +48,14 @@
 
 module cairoLib.Pattern;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.cairoLibtypes;
 
 private import gtkc.cairoLib;
@@ -84,7 +92,26 @@ public class Pattern
 	 */
 	public this (cairo_pattern_t* cairo_pattern)
 	{
-		assert(cairo_pattern !is null, "struct cairo_pattern is null on constructor");
+		version(noAssert)
+		{
+			if ( cairo_pattern is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct cairo_pattern is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct cairo_pattern is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(cairo_pattern !is null, "struct cairo_pattern is null on constructor");
+		}
 		this.cairo_pattern = cairo_pattern;
 	}
 	

@@ -49,6 +49,14 @@
 
 module atk.StateSet;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -88,7 +96,26 @@ public class StateSet
 	 */
 	public this (AtkStateSet* atkStateSet)
 	{
-		assert(atkStateSet !is null, "struct atkStateSet is null on constructor");
+		version(noAssert)
+		{
+			if ( atkStateSet is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct atkStateSet is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct atkStateSet is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(atkStateSet !is null, "struct atkStateSet is null on constructor");
+		}
 		this.atkStateSet = atkStateSet;
 	}
 	

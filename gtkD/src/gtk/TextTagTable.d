@@ -54,6 +54,14 @@
 
 module gtk.TextTagTable;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -97,7 +105,26 @@ public class TextTagTable : ObjectG
 	 */
 	public this (GtkTextTagTable* gtkTextTagTable)
 	{
-		assert(gtkTextTagTable !is null, "struct gtkTextTagTable is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkTextTagTable is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkTextTagTable is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkTextTagTable is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkTextTagTable !is null, "struct gtkTextTagTable is null on constructor");
+		}
 		super(cast(GObject*)gtkTextTagTable);
 		this.gtkTextTagTable = gtkTextTagTable;
 	}

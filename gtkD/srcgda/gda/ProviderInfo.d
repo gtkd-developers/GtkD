@@ -54,6 +54,14 @@
 
 module gda.ProviderInfo;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -101,7 +109,26 @@ public class ProviderInfo
 	 */
 	public this (GdaProviderInfo* gdaProviderInfo)
 	{
-		assert(gdaProviderInfo !is null, "struct gdaProviderInfo is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaProviderInfo is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaProviderInfo is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaProviderInfo is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaProviderInfo !is null, "struct gdaProviderInfo is null on constructor");
+		}
 		this.gdaProviderInfo = gdaProviderInfo;
 	}
 	

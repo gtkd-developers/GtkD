@@ -61,6 +61,14 @@
 
 module gtk.TreeSelection;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -125,7 +133,26 @@ public class TreeSelection : ObjectG
 	 */
 	public this (GtkTreeSelection* gtkTreeSelection)
 	{
-		assert(gtkTreeSelection !is null, "struct gtkTreeSelection is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkTreeSelection is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkTreeSelection is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkTreeSelection is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkTreeSelection !is null, "struct gtkTreeSelection is null on constructor");
+		}
 		super(cast(GObject*)gtkTreeSelection);
 		this.gtkTreeSelection = gtkTreeSelection;
 	}

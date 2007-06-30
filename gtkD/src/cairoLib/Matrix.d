@@ -50,6 +50,14 @@
 
 module cairoLib.Matrix;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.cairoLibtypes;
 
 private import gtkc.cairoLib;
@@ -98,7 +106,26 @@ public class Matrix
 	 */
 	public this (cairo_matrix_t* cairo_matrix)
 	{
-		assert(cairo_matrix !is null, "struct cairo_matrix is null on constructor");
+		version(noAssert)
+		{
+			if ( cairo_matrix is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct cairo_matrix is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct cairo_matrix is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(cairo_matrix !is null, "struct cairo_matrix is null on constructor");
+		}
 		this.cairo_matrix = cairo_matrix;
 	}
 	

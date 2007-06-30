@@ -51,6 +51,14 @@
 
 module gda.Select;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -88,7 +96,26 @@ public class Select
 	 */
 	public this (GdaSelect* gdaSelect)
 	{
-		assert(gdaSelect !is null, "struct gdaSelect is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaSelect is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaSelect is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaSelect is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaSelect !is null, "struct gdaSelect is null on constructor");
+		}
 		this.gdaSelect = gdaSelect;
 	}
 	

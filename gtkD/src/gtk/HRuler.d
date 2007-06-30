@@ -49,6 +49,14 @@
 
 module gtk.HRuler;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -100,7 +108,26 @@ public class HRuler : Ruler
 	 */
 	public this (GtkHRuler* gtkHRuler)
 	{
-		assert(gtkHRuler !is null, "struct gtkHRuler is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkHRuler is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkHRuler is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkHRuler is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkHRuler !is null, "struct gtkHRuler is null on constructor");
+		}
 		super(cast(GtkRuler*)gtkHRuler);
 		this.gtkHRuler = gtkHRuler;
 	}

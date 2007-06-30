@@ -48,6 +48,14 @@
 
 module atk.Selection;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -92,7 +100,26 @@ public class Selection
 	 */
 	public this (AtkSelection* atkSelection)
 	{
-		assert(atkSelection !is null, "struct atkSelection is null on constructor");
+		version(noAssert)
+		{
+			if ( atkSelection is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct atkSelection is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct atkSelection is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(atkSelection !is null, "struct atkSelection is null on constructor");
+		}
 		this.atkSelection = atkSelection;
 	}
 	

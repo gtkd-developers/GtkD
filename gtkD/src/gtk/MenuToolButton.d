@@ -60,6 +60,14 @@
 
 module gtk.MenuToolButton;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -108,7 +116,26 @@ public class MenuToolButton : ToolButton
 	 */
 	public this (GtkMenuToolButton* gtkMenuToolButton)
 	{
-		assert(gtkMenuToolButton !is null, "struct gtkMenuToolButton is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkMenuToolButton is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkMenuToolButton is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkMenuToolButton is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkMenuToolButton !is null, "struct gtkMenuToolButton is null on constructor");
+		}
 		super(cast(GtkToolButton*)gtkMenuToolButton);
 		this.gtkMenuToolButton = gtkMenuToolButton;
 	}

@@ -58,6 +58,14 @@
 
 module glgtk.GLWidget;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;

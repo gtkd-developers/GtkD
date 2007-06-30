@@ -56,6 +56,14 @@
 
 module gtk.TreeRowReference;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -223,7 +231,26 @@ public class TreeRowReference
 	 */
 	public this (GtkTreeRowReference* gtkTreeRowReference)
 	{
-		assert(gtkTreeRowReference !is null, "struct gtkTreeRowReference is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkTreeRowReference is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkTreeRowReference is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkTreeRowReference is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkTreeRowReference !is null, "struct gtkTreeRowReference is null on constructor");
+		}
 		this.gtkTreeRowReference = gtkTreeRowReference;
 	}
 	

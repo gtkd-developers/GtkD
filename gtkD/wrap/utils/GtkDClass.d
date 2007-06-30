@@ -226,6 +226,8 @@ public class GtkDClass
 		}
 		gtkDText ~= ";\n\n";
 
+		gtkDText ~= getNoAssertVersion();
+
 		// moved to class level
 		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
 		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack ~ ";\n\n";
@@ -329,6 +331,20 @@ public class GtkDClass
 
 	}
 
+	private char[] getNoAssertVersion()
+	{
+		return 
+			"version(noAssert)"
+			"\n{"
+			"\n	version(Tango)"
+			"\n	{"
+			"\n		import tango.io.Stdout;	// use the tango loging?"
+			"\n	}"	
+			"\n}"
+			"\n"
+			"\n"
+			;
+	}
 
 	private void readGtkDClass(ConvParms* convParms)
 	{
@@ -573,7 +589,8 @@ public class GtkDClass
 							text ~= " */";
 							text ~= "public this ("~gtkStruct~"* "~var~")"~iFaceChar;
 							text ~= "{";
-							text ~= "assert("~var~" !is null, \"struct "~var~" is null on constructor\");";
+							char[] tabs = "\t\t";
+							text ~= getAssertStructNotNull(var);
 							if ( parentName.length > 0 )
 							{
 								text ~= "super("~castToParent(var)~");";
@@ -592,6 +609,37 @@ public class GtkDClass
 
 		return text;
 
+	}
+
+	char[][] assertStructNotNull = [
+	]; 
+	
+	private char[][] getAssertStructNotNull(char[] var)
+	{
+		char[][] lines = [
+			"version(noAssert)",
+			"{",
+			"	if ( "~var~" is null )",
+			"	{",
+			"		int zero = 0;",
+			"		version(Tango)",
+			"		{",
+			"			Stdout(\"struct "~var~" is null on constructor\").newline;",
+			"		}",
+			"		else",
+			"		{",
+			"			printf(\"struct "~var~" is null on constructor\");",
+			"		}",
+			"		zero = zero / zero;",
+			"	}",
+			"}",
+			"else",
+			"{",
+			"	assert("~var~" !is null, \"struct "~var~" is null on constructor\");",
+			"}"
+			]
+			;
+		return lines;
 	}
 
 	/**

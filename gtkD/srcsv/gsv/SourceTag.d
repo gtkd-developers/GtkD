@@ -51,6 +51,14 @@
 
 module gsv.SourceTag;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
@@ -90,7 +98,26 @@ public class SourceTag : TextTag
 	 */
 	public this (GtkSourceTag* gtkSourceTag)
 	{
-		assert(gtkSourceTag !is null, "struct gtkSourceTag is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkSourceTag is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkSourceTag is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkSourceTag is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkSourceTag !is null, "struct gtkSourceTag is null on constructor");
+		}
 		super(cast(GtkTextTag*)gtkSourceTag);
 		this.gtkSourceTag = gtkSourceTag;
 	}

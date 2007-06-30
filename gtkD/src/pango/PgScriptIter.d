@@ -78,6 +78,14 @@
 
 module pango.PgScriptIter;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -133,7 +141,26 @@ public class PgScriptIter
 	 */
 	public this (PangoScriptIter* pangoScriptIter)
 	{
-		assert(pangoScriptIter !is null, "struct pangoScriptIter is null on constructor");
+		version(noAssert)
+		{
+			if ( pangoScriptIter is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct pangoScriptIter is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct pangoScriptIter is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(pangoScriptIter !is null, "struct pangoScriptIter is null on constructor");
+		}
 		this.pangoScriptIter = pangoScriptIter;
 	}
 	

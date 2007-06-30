@@ -52,6 +52,14 @@
 
 module gtk.CellRendererToggle;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -95,7 +103,26 @@ public class CellRendererToggle : CellRenderer
 	 */
 	public this (GtkCellRendererToggle* gtkCellRendererToggle)
 	{
-		assert(gtkCellRendererToggle !is null, "struct gtkCellRendererToggle is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkCellRendererToggle is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkCellRendererToggle is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkCellRendererToggle is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkCellRendererToggle !is null, "struct gtkCellRendererToggle is null on constructor");
+		}
 		super(cast(GtkCellRenderer*)gtkCellRendererToggle);
 		this.gtkCellRendererToggle = gtkCellRendererToggle;
 	}

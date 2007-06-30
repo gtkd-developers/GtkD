@@ -52,6 +52,14 @@
 
 module gtk.Bin;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -95,7 +103,26 @@ public class Bin : Container
 	 */
 	public this (GtkBin* gtkBin)
 	{
-		assert(gtkBin !is null, "struct gtkBin is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkBin is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkBin is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkBin is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkBin !is null, "struct gtkBin is null on constructor");
+		}
 		super(cast(GtkContainer*)gtkBin);
 		this.gtkBin = gtkBin;
 	}

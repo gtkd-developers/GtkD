@@ -54,6 +54,14 @@
 
 module gtk.Label;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -162,7 +170,26 @@ public class Label : Misc
 	 */
 	public this (GtkLabel* gtkLabel)
 	{
-		assert(gtkLabel !is null, "struct gtkLabel is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkLabel is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkLabel is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkLabel is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkLabel !is null, "struct gtkLabel is null on constructor");
+		}
 		super(cast(GtkMisc*)gtkLabel);
 		this.gtkLabel = gtkLabel;
 	}

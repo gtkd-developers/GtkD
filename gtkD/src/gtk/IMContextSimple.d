@@ -51,6 +51,14 @@
 
 module gtk.IMContextSimple;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -89,7 +97,26 @@ public class IMContextSimple : IMContext
 	 */
 	public this (GtkIMContextSimple* gtkIMContextSimple)
 	{
-		assert(gtkIMContextSimple !is null, "struct gtkIMContextSimple is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkIMContextSimple is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkIMContextSimple is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkIMContextSimple is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkIMContextSimple !is null, "struct gtkIMContextSimple is null on constructor");
+		}
 		super(cast(GtkIMContext*)gtkIMContextSimple);
 		this.gtkIMContextSimple = gtkIMContextSimple;
 	}

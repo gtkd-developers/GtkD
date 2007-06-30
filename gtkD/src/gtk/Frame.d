@@ -52,6 +52,14 @@
 
 module gtk.Frame;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -96,7 +104,26 @@ public class Frame : Bin
 	 */
 	public this (GtkFrame* gtkFrame)
 	{
-		assert(gtkFrame !is null, "struct gtkFrame is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkFrame is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkFrame is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkFrame is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkFrame !is null, "struct gtkFrame is null on constructor");
+		}
 		super(cast(GtkBin*)gtkFrame);
 		this.gtkFrame = gtkFrame;
 	}

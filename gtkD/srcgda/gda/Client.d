@@ -51,6 +51,14 @@
 
 module gda.Client;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -96,7 +104,26 @@ public class Client
 	 */
 	public this (GdaClient* gdaClient)
 	{
-		assert(gdaClient !is null, "struct gdaClient is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaClient is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaClient is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaClient is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaClient !is null, "struct gdaClient is null on constructor");
+		}
 		this.gdaClient = gdaClient;
 	}
 	

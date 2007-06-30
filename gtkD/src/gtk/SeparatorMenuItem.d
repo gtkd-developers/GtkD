@@ -49,6 +49,14 @@
 
 module gtk.SeparatorMenuItem;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -89,7 +97,26 @@ public class SeparatorMenuItem : MenuItem
 	 */
 	public this (GtkSeparatorMenuItem* gtkSeparatorMenuItem)
 	{
-		assert(gtkSeparatorMenuItem !is null, "struct gtkSeparatorMenuItem is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkSeparatorMenuItem is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkSeparatorMenuItem is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkSeparatorMenuItem is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkSeparatorMenuItem !is null, "struct gtkSeparatorMenuItem is null on constructor");
+		}
 		super(cast(GtkMenuItem*)gtkSeparatorMenuItem);
 		this.gtkSeparatorMenuItem = gtkSeparatorMenuItem;
 	}

@@ -53,6 +53,14 @@
 
 module glib.Relation;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -114,7 +122,26 @@ public class Relation
 	 */
 	public this (GRelation* gRelation)
 	{
-		assert(gRelation !is null, "struct gRelation is null on constructor");
+		version(noAssert)
+		{
+			if ( gRelation is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gRelation is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gRelation is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gRelation !is null, "struct gRelation is null on constructor");
+		}
 		this.gRelation = gRelation;
 	}
 	

@@ -52,6 +52,14 @@
 
 module glib.AsyncQueue;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -126,7 +134,26 @@ public class AsyncQueue
 	 */
 	public this (GAsyncQueue* gAsyncQueue)
 	{
-		assert(gAsyncQueue !is null, "struct gAsyncQueue is null on constructor");
+		version(noAssert)
+		{
+			if ( gAsyncQueue is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gAsyncQueue is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gAsyncQueue is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gAsyncQueue !is null, "struct gAsyncQueue is null on constructor");
+		}
 		this.gAsyncQueue = gAsyncQueue;
 	}
 	

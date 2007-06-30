@@ -63,6 +63,14 @@
 
 module gtk.Window;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -108,7 +116,26 @@ public class Window : Bin
 	 */
 	public this (GtkWindow* gtkWindow)
 	{
-		assert(gtkWindow !is null, "struct gtkWindow is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkWindow is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkWindow is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkWindow is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkWindow !is null, "struct gtkWindow is null on constructor");
+		}
 		super(cast(GtkBin*)gtkWindow);
 		this.gtkWindow = gtkWindow;
 	}

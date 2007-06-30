@@ -77,6 +77,14 @@
 
 module pango.PgFontMetrics;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -134,7 +142,26 @@ public class PgFontMetrics
 	 */
 	public this (PangoFontMetrics* pangoFontMetrics)
 	{
-		assert(pangoFontMetrics !is null, "struct pangoFontMetrics is null on constructor");
+		version(noAssert)
+		{
+			if ( pangoFontMetrics is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct pangoFontMetrics is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct pangoFontMetrics is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(pangoFontMetrics !is null, "struct pangoFontMetrics is null on constructor");
+		}
 		this.pangoFontMetrics = pangoFontMetrics;
 	}
 	

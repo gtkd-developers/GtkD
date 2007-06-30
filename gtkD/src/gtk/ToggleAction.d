@@ -50,6 +50,14 @@
 
 module gtk.ToggleAction;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -90,7 +98,26 @@ public class ToggleAction : Action
 	 */
 	public this (GtkToggleAction* gtkToggleAction)
 	{
-		assert(gtkToggleAction !is null, "struct gtkToggleAction is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkToggleAction is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkToggleAction is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkToggleAction is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkToggleAction !is null, "struct gtkToggleAction is null on constructor");
+		}
 		super(cast(GtkAction*)gtkToggleAction);
 		this.gtkToggleAction = gtkToggleAction;
 	}

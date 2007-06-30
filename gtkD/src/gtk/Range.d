@@ -51,6 +51,14 @@
 
 module gtk.Range;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -89,7 +97,26 @@ public class Range : Widget
 	 */
 	public this (GtkRange* gtkRange)
 	{
-		assert(gtkRange !is null, "struct gtkRange is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkRange is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkRange is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkRange is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkRange !is null, "struct gtkRange is null on constructor");
+		}
 		super(cast(GtkWidget*)gtkRange);
 		this.gtkRange = gtkRange;
 	}

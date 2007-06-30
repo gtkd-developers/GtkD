@@ -55,6 +55,14 @@
 
 module gtk.Toolbar;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -108,7 +116,26 @@ public class Toolbar : Container
 	 */
 	public this (GtkToolbar* gtkToolbar)
 	{
-		assert(gtkToolbar !is null, "struct gtkToolbar is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkToolbar is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkToolbar is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkToolbar is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkToolbar !is null, "struct gtkToolbar is null on constructor");
+		}
 		super(cast(GtkContainer*)gtkToolbar);
 		this.gtkToolbar = gtkToolbar;
 	}

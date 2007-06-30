@@ -59,6 +59,14 @@
 
 module gdk.Cursor;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -114,7 +122,26 @@ public class Cursor
 	 */
 	public this (GdkCursor* gdkCursor)
 	{
-		assert(gdkCursor !is null, "struct gdkCursor is null on constructor");
+		version(noAssert)
+		{
+			if ( gdkCursor is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdkCursor is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdkCursor is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdkCursor !is null, "struct gdkCursor is null on constructor");
+		}
 		this.gdkCursor = gdkCursor;
 	}
 	

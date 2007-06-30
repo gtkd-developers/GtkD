@@ -53,6 +53,14 @@
 
 module glib.OptionContext;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -163,7 +171,26 @@ public class OptionContext
 	 */
 	public this (GOptionContext* gOptionContext)
 	{
-		assert(gOptionContext !is null, "struct gOptionContext is null on constructor");
+		version(noAssert)
+		{
+			if ( gOptionContext is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gOptionContext is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gOptionContext is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gOptionContext !is null, "struct gOptionContext is null on constructor");
+		}
 		this.gOptionContext = gOptionContext;
 	}
 	

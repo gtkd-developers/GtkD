@@ -50,6 +50,14 @@
 
 module gtk.Alignment;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -98,7 +106,26 @@ public class Alignment : Bin
 	 */
 	public this (GtkAlignment* gtkAlignment)
 	{
-		assert(gtkAlignment !is null, "struct gtkAlignment is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkAlignment is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkAlignment is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkAlignment is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkAlignment !is null, "struct gtkAlignment is null on constructor");
+		}
 		super(cast(GtkBin*)gtkAlignment);
 		this.gtkAlignment = gtkAlignment;
 	}

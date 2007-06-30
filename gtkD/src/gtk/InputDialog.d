@@ -49,6 +49,14 @@
 
 module gtk.InputDialog;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -106,7 +114,26 @@ public class InputDialog : Dialog
 	 */
 	public this (GtkInputDialog* gtkInputDialog)
 	{
-		assert(gtkInputDialog !is null, "struct gtkInputDialog is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkInputDialog is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkInputDialog is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkInputDialog is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkInputDialog !is null, "struct gtkInputDialog is null on constructor");
+		}
 		super(cast(GtkDialog*)gtkInputDialog);
 		this.gtkInputDialog = gtkInputDialog;
 	}

@@ -51,6 +51,14 @@
 
 module gda.Transaction;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -87,7 +95,26 @@ public class Transaction
 	 */
 	public this (GdaTransaction* gdaTransaction)
 	{
-		assert(gdaTransaction !is null, "struct gdaTransaction is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaTransaction is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaTransaction is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaTransaction is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaTransaction !is null, "struct gdaTransaction is null on constructor");
+		}
 		this.gdaTransaction = gdaTransaction;
 	}
 	

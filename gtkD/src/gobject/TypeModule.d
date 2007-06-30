@@ -53,6 +53,14 @@
 
 module gobject.TypeModule;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
@@ -118,7 +126,26 @@ public class TypeModule : ObjectG
 	 */
 	public this (GTypeModule* gTypeModule)
 	{
-		assert(gTypeModule !is null, "struct gTypeModule is null on constructor");
+		version(noAssert)
+		{
+			if ( gTypeModule is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gTypeModule is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gTypeModule is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gTypeModule !is null, "struct gTypeModule is null on constructor");
+		}
 		super(cast(GObject*)gTypeModule);
 		this.gTypeModule = gTypeModule;
 	}

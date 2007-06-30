@@ -55,6 +55,14 @@
 
 module gtk.TreeModelFilter;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -108,7 +116,26 @@ public class TreeModelFilter : ObjectG
 	 */
 	public this (GtkTreeModelFilter* gtkTreeModelFilter)
 	{
-		assert(gtkTreeModelFilter !is null, "struct gtkTreeModelFilter is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkTreeModelFilter is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkTreeModelFilter is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkTreeModelFilter is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkTreeModelFilter !is null, "struct gtkTreeModelFilter is null on constructor");
+		}
 		super(cast(GObject*)gtkTreeModelFilter);
 		this.gtkTreeModelFilter = gtkTreeModelFilter;
 	}

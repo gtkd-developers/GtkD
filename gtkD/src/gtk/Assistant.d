@@ -54,6 +54,14 @@
 
 module gtk.Assistant;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -97,7 +105,26 @@ public class Assistant : Window
 	 */
 	public this (GtkAssistant* gtkAssistant)
 	{
-		assert(gtkAssistant !is null, "struct gtkAssistant is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkAssistant is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkAssistant is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkAssistant is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkAssistant !is null, "struct gtkAssistant is null on constructor");
+		}
 		super(cast(GtkWindow*)gtkAssistant);
 		this.gtkAssistant = gtkAssistant;
 	}

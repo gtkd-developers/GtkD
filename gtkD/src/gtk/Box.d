@@ -51,6 +51,14 @@
 
 module gtk.Box;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -128,7 +136,26 @@ public class Box : Container
 	 */
 	public this (GtkBox* gtkBox)
 	{
-		assert(gtkBox !is null, "struct gtkBox is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkBox is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkBox is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkBox is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkBox !is null, "struct gtkBox is null on constructor");
+		}
 		super(cast(GtkContainer*)gtkBox);
 		this.gtkBox = gtkBox;
 	}

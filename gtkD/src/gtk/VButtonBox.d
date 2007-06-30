@@ -49,6 +49,14 @@
 
 module gtk.VButtonBox;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -101,7 +109,26 @@ public class VButtonBox : ButtonBox
 	 */
 	public this (GtkVButtonBox* gtkVButtonBox)
 	{
-		assert(gtkVButtonBox !is null, "struct gtkVButtonBox is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkVButtonBox is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkVButtonBox is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkVButtonBox is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkVButtonBox !is null, "struct gtkVButtonBox is null on constructor");
+		}
 		super(cast(GtkButtonBox*)gtkVButtonBox);
 		this.gtkVButtonBox = gtkVButtonBox;
 	}

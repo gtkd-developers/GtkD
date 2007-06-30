@@ -52,6 +52,14 @@
 
 module gobject.Flags;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
@@ -100,7 +108,26 @@ public class Flags
 	 */
 	public this (GFlagsValue* gFlagsValue)
 	{
-		assert(gFlagsValue !is null, "struct gFlagsValue is null on constructor");
+		version(noAssert)
+		{
+			if ( gFlagsValue is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gFlagsValue is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gFlagsValue is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gFlagsValue !is null, "struct gFlagsValue is null on constructor");
+		}
 		this.gFlagsValue = gFlagsValue;
 	}
 	

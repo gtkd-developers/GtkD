@@ -54,6 +54,14 @@
 
 module gtk.StockItem;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -108,7 +116,26 @@ public class StockItem
 	 */
 	public this (GtkStockItem* gtkStockItem)
 	{
-		assert(gtkStockItem !is null, "struct gtkStockItem is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkStockItem is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkStockItem is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkStockItem is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkStockItem !is null, "struct gtkStockItem is null on constructor");
+		}
 		this.gtkStockItem = gtkStockItem;
 	}
 	

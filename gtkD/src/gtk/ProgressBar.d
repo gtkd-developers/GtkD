@@ -52,6 +52,14 @@
 
 module gtk.ProgressBar;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -121,7 +129,26 @@ public class ProgressBar : Progress
 	 */
 	public this (GtkProgressBar* gtkProgressBar)
 	{
-		assert(gtkProgressBar !is null, "struct gtkProgressBar is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkProgressBar is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkProgressBar is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkProgressBar is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkProgressBar !is null, "struct gtkProgressBar is null on constructor");
+		}
 		super(cast(GtkProgress*)gtkProgressBar);
 		this.gtkProgressBar = gtkProgressBar;
 	}

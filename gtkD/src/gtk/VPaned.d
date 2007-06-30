@@ -50,6 +50,14 @@
 
 module gtk.VPaned;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -92,7 +100,26 @@ public class VPaned : Paned
 	 */
 	public this (GtkVPaned* gtkVPaned)
 	{
-		assert(gtkVPaned !is null, "struct gtkVPaned is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkVPaned is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkVPaned is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkVPaned is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkVPaned !is null, "struct gtkVPaned is null on constructor");
+		}
 		super(cast(GtkPaned*)gtkVPaned);
 		this.gtkVPaned = gtkVPaned;
 	}

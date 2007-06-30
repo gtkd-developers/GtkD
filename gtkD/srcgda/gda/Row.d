@@ -53,6 +53,14 @@
 
 module gda.Row;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -91,7 +99,26 @@ public class Row
 	 */
 	public this (GdaRow* gdaRow)
 	{
-		assert(gdaRow !is null, "struct gdaRow is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaRow is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaRow is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaRow is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaRow !is null, "struct gdaRow is null on constructor");
+		}
 		this.gdaRow = gdaRow;
 	}
 	

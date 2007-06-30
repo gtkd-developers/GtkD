@@ -55,6 +55,14 @@
 
 module gobject.ParamSpec;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
@@ -102,7 +110,26 @@ public class ParamSpec
 	 */
 	public this (GParamSpec* gParamSpec)
 	{
-		assert(gParamSpec !is null, "struct gParamSpec is null on constructor");
+		version(noAssert)
+		{
+			if ( gParamSpec is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gParamSpec is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gParamSpec is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gParamSpec !is null, "struct gParamSpec is null on constructor");
+		}
 		this.gParamSpec = gParamSpec;
 	}
 	

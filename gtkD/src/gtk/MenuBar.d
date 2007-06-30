@@ -55,6 +55,14 @@
 
 module gtk.MenuBar;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -96,7 +104,26 @@ public class MenuBar : MenuShell
 	 */
 	public this (GtkMenuBar* gtkMenuBar)
 	{
-		assert(gtkMenuBar !is null, "struct gtkMenuBar is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkMenuBar is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkMenuBar is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkMenuBar is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkMenuBar !is null, "struct gtkMenuBar is null on constructor");
+		}
 		super(cast(GtkMenuShell*)gtkMenuBar);
 		this.gtkMenuBar = gtkMenuBar;
 	}

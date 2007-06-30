@@ -58,6 +58,14 @@
 
 module gtk.IconSource;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -116,7 +124,26 @@ public class IconSource
 	 */
 	public this (GtkIconSource* gtkIconSource)
 	{
-		assert(gtkIconSource !is null, "struct gtkIconSource is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkIconSource is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkIconSource is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkIconSource is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkIconSource !is null, "struct gtkIconSource is null on constructor");
+		}
 		this.gtkIconSource = gtkIconSource;
 	}
 	

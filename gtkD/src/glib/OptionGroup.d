@@ -53,6 +53,14 @@
 
 module glib.OptionGroup;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -163,7 +171,26 @@ public class OptionGroup
 	 */
 	public this (GOptionGroup* gOptionGroup)
 	{
-		assert(gOptionGroup !is null, "struct gOptionGroup is null on constructor");
+		version(noAssert)
+		{
+			if ( gOptionGroup is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gOptionGroup is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gOptionGroup is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gOptionGroup !is null, "struct gOptionGroup is null on constructor");
+		}
 		this.gOptionGroup = gOptionGroup;
 	}
 	

@@ -66,6 +66,14 @@
 
 module gda.ParameterList;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -106,7 +114,26 @@ public class ParameterList
 	 */
 	public this (GdaParameterList* gdaParameterList)
 	{
-		assert(gdaParameterList !is null, "struct gdaParameterList is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaParameterList is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaParameterList is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaParameterList is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaParameterList !is null, "struct gdaParameterList is null on constructor");
+		}
 		this.gdaParameterList = gdaParameterList;
 	}
 	

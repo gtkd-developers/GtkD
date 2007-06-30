@@ -51,6 +51,14 @@
 
 module glgdk.GLConfig;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
@@ -90,7 +98,26 @@ public class GLConfig : ObjectG
 	 */
 	public this (GdkGLConfig* gdkGLConfig)
 	{
-		assert(gdkGLConfig !is null, "struct gdkGLConfig is null on constructor");
+		version(noAssert)
+		{
+			if ( gdkGLConfig is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdkGLConfig is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdkGLConfig is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdkGLConfig !is null, "struct gdkGLConfig is null on constructor");
+		}
 		super(cast(GObject*)gdkGLConfig);
 		this.gdkGLConfig = gdkGLConfig;
 	}

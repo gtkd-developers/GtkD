@@ -51,6 +51,14 @@
 
 module gsv.SourceLanguagesManager;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
@@ -90,7 +98,26 @@ public class SourceLanguagesManager : ObjectG
 	 */
 	public this (GtkSourceLanguagesManager* gtkSourceLanguagesManager)
 	{
-		assert(gtkSourceLanguagesManager !is null, "struct gtkSourceLanguagesManager is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkSourceLanguagesManager is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkSourceLanguagesManager is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkSourceLanguagesManager is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkSourceLanguagesManager !is null, "struct gtkSourceLanguagesManager is null on constructor");
+		}
 		super(cast(GObject*)gtkSourceLanguagesManager);
 		this.gtkSourceLanguagesManager = gtkSourceLanguagesManager;
 	}

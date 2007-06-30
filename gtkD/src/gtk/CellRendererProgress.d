@@ -51,6 +51,14 @@
 
 module gtk.CellRendererProgress;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -92,7 +100,26 @@ public class CellRendererProgress : CellRenderer
 	 */
 	public this (GtkCellRendererProgress* gtkCellRendererProgress)
 	{
-		assert(gtkCellRendererProgress !is null, "struct gtkCellRendererProgress is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkCellRendererProgress is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkCellRendererProgress is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkCellRendererProgress is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkCellRendererProgress !is null, "struct gtkCellRendererProgress is null on constructor");
+		}
 		super(cast(GtkCellRenderer*)gtkCellRendererProgress);
 		this.gtkCellRendererProgress = gtkCellRendererProgress;
 	}

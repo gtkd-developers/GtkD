@@ -52,6 +52,14 @@
 
 module gsv.SourceView;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
@@ -92,7 +100,26 @@ public class SourceView : TextView
 	 */
 	public this (GtkSourceView* gtkSourceView)
 	{
-		assert(gtkSourceView !is null, "struct gtkSourceView is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkSourceView is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkSourceView is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkSourceView is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkSourceView !is null, "struct gtkSourceView is null on constructor");
+		}
 		super(cast(GtkTextView*)gtkSourceView);
 		this.gtkSourceView = gtkSourceView;
 	}

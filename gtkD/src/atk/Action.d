@@ -49,6 +49,14 @@
 
 module atk.Action;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -107,7 +115,26 @@ public class Action
 	 */
 	public this (AtkAction* atkAction)
 	{
-		assert(atkAction !is null, "struct atkAction is null on constructor");
+		version(noAssert)
+		{
+			if ( atkAction is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct atkAction is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct atkAction is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(atkAction !is null, "struct atkAction is null on constructor");
+		}
 		this.atkAction = atkAction;
 	}
 	

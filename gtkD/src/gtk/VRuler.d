@@ -49,6 +49,14 @@
 
 module gtk.VRuler;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -100,7 +108,26 @@ public class VRuler : Ruler
 	 */
 	public this (GtkVRuler* gtkVRuler)
 	{
-		assert(gtkVRuler !is null, "struct gtkVRuler is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkVRuler is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkVRuler is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkVRuler is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkVRuler !is null, "struct gtkVRuler is null on constructor");
+		}
 		super(cast(GtkRuler*)gtkVRuler);
 		this.gtkVRuler = gtkVRuler;
 	}

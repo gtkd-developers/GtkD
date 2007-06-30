@@ -52,6 +52,14 @@
 
 module glib.ThreadPool;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -115,7 +123,26 @@ public class ThreadPool
 	 */
 	public this (GThreadPool* gThreadPool)
 	{
-		assert(gThreadPool !is null, "struct gThreadPool is null on constructor");
+		version(noAssert)
+		{
+			if ( gThreadPool is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gThreadPool is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gThreadPool is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gThreadPool !is null, "struct gThreadPool is null on constructor");
+		}
 		this.gThreadPool = gThreadPool;
 	}
 	

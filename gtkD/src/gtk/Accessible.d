@@ -49,6 +49,14 @@
 
 module gtk.Accessible;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -86,7 +94,26 @@ public class Accessible : ObjectAtk
 	 */
 	public this (GtkAccessible* gtkAccessible)
 	{
-		assert(gtkAccessible !is null, "struct gtkAccessible is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkAccessible is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkAccessible is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkAccessible is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkAccessible !is null, "struct gtkAccessible is null on constructor");
+		}
 		super(cast(AtkObject*)gtkAccessible);
 		this.gtkAccessible = gtkAccessible;
 	}

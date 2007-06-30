@@ -78,6 +78,14 @@
 
 module pango.PgLanguage;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -135,7 +143,26 @@ public class PgLanguage
 	 */
 	public this (PangoLanguage* pangoLanguage)
 	{
-		assert(pangoLanguage !is null, "struct pangoLanguage is null on constructor");
+		version(noAssert)
+		{
+			if ( pangoLanguage is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct pangoLanguage is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct pangoLanguage is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(pangoLanguage !is null, "struct pangoLanguage is null on constructor");
+		}
 		this.pangoLanguage = pangoLanguage;
 	}
 	

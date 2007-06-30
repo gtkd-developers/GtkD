@@ -54,6 +54,14 @@
 
 module gdk.Visual;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -124,7 +132,26 @@ public class Visual
 	 */
 	public this (GdkVisual* gdkVisual)
 	{
-		assert(gdkVisual !is null, "struct gdkVisual is null on constructor");
+		version(noAssert)
+		{
+			if ( gdkVisual is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdkVisual is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdkVisual is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdkVisual !is null, "struct gdkVisual is null on constructor");
+		}
 		this.gdkVisual = gdkVisual;
 	}
 	

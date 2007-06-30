@@ -49,6 +49,14 @@
 
 module atk.Image;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -96,7 +104,26 @@ public class Image
 	 */
 	public this (AtkImage* atkImage)
 	{
-		assert(atkImage !is null, "struct atkImage is null on constructor");
+		version(noAssert)
+		{
+			if ( atkImage is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct atkImage is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct atkImage is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(atkImage !is null, "struct atkImage is null on constructor");
+		}
 		this.atkImage = atkImage;
 	}
 	

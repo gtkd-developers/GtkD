@@ -56,6 +56,14 @@
 
 module gda.DataModelList;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -96,7 +104,26 @@ public class DataModelList
 	 */
 	public this (GdaDataModelList* gdaDataModelList)
 	{
-		assert(gdaDataModelList !is null, "struct gdaDataModelList is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaDataModelList is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaDataModelList is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaDataModelList is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaDataModelList !is null, "struct gdaDataModelList is null on constructor");
+		}
 		this.gdaDataModelList = gdaDataModelList;
 	}
 	

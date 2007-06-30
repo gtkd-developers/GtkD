@@ -101,6 +101,14 @@
 
 module gtk.Widget;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -178,7 +186,26 @@ public class Widget : ObjectGtk
 	 */
 	public this (GtkWidget* gtkWidget)
 	{
-		assert(gtkWidget !is null, "struct gtkWidget is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkWidget is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkWidget is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkWidget is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkWidget !is null, "struct gtkWidget is null on constructor");
+		}
 		super(cast(GtkObject*)gtkWidget);
 		this.gtkWidget = gtkWidget;
 	}
@@ -2016,9 +2043,9 @@ public class Widget : ObjectGtk
 		return consumed;
 	}
 
-	version(Tango){} else	
+	version(Tango){}else	
 	void delegate(Style, Widget)[] onStyleSetListeners;
-	version(Tango){} else	
+	version(Tango){}else	
 	void addOnStyleSet(void delegate(Style, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("style-set" in connectedSignals) )
@@ -2034,7 +2061,7 @@ public class Widget : ObjectGtk
 		}
 		onStyleSetListeners ~= dlg;
 	}
-	version(Tango){} else	
+	version(Tango){}else	
 	extern(C) static void callBackStyleSet(GtkWidget* widgetStruct, GtkStyle* previousStyle, Widget widget)
 	{
 		bool consumed = false;
@@ -3260,7 +3287,7 @@ public class Widget : ObjectGtk
 	 *  a GtkStyle, or NULL to remove the effect of a previous
 	 *  gtk_widget_set_style() and go back to the default style
 	 */
-	version(Tango){} else	
+	version(Tango){}else	
 	public void setStyle(Style style)
 	{
 		// void gtk_widget_set_style (GtkWidget *widget,  GtkStyle *style);
@@ -3289,7 +3316,7 @@ public class Widget : ObjectGtk
 	 * Returns:
 	 *  the widget's GtkStyle
 	 */
-	version(Tango){} else	
+	version(Tango){}else	
 	public Style getStyle()
 	{
 		// GtkStyle* gtk_widget_get_style (GtkWidget *widget);
@@ -3353,7 +3380,7 @@ public class Widget : ObjectGtk
 	 *  the default style. This GtkStyle object is owned by GTK+ and
 	 * should not be modified or freed.
 	 */
-	version(Tango){} else	
+	version(Tango){}else	
 	public static Style getDefaultStyle()
 	{
 		// GtkStyle* gtk_widget_get_default_style (void);

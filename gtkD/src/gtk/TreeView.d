@@ -71,6 +71,14 @@
 
 module gtk.TreeView;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -124,7 +132,26 @@ public class TreeView : Container
 	 */
 	public this (GtkTreeView* gtkTreeView)
 	{
-		assert(gtkTreeView !is null, "struct gtkTreeView is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkTreeView is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkTreeView is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkTreeView is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkTreeView !is null, "struct gtkTreeView is null on constructor");
+		}
 		super(cast(GtkContainer*)gtkTreeView);
 		this.gtkTreeView = gtkTreeView;
 	}

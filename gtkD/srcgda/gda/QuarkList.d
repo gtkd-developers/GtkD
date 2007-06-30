@@ -50,6 +50,14 @@
 
 module gda.QuarkList;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -88,7 +96,26 @@ public class QuarkList
 	 */
 	public this (GdaQuarkList* gdaQuarkList)
 	{
-		assert(gdaQuarkList !is null, "struct gdaQuarkList is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaQuarkList is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaQuarkList is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaQuarkList is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaQuarkList !is null, "struct gdaQuarkList is null on constructor");
+		}
 		this.gdaQuarkList = gdaQuarkList;
 	}
 	

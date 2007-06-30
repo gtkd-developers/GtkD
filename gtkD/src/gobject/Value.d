@@ -59,6 +59,14 @@
 
 module gobject.Value;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
@@ -111,7 +119,26 @@ public class Value
 	 */
 	public this (GValue* gValue)
 	{
-		assert(gValue !is null, "struct gValue is null on constructor");
+		version(noAssert)
+		{
+			if ( gValue is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gValue is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gValue is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gValue !is null, "struct gValue is null on constructor");
+		}
 		this.gValue = gValue;
 	}
 	

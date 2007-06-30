@@ -51,6 +51,14 @@
 
 module gtk.SeparatorToolItem;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -96,7 +104,26 @@ public class SeparatorToolItem : ToolItem
 	 */
 	public this (GtkSeparatorToolItem* gtkSeparatorToolItem)
 	{
-		assert(gtkSeparatorToolItem !is null, "struct gtkSeparatorToolItem is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkSeparatorToolItem is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkSeparatorToolItem is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkSeparatorToolItem is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkSeparatorToolItem !is null, "struct gtkSeparatorToolItem is null on constructor");
+		}
 		super(cast(GtkToolItem*)gtkSeparatorToolItem);
 		this.gtkSeparatorToolItem = gtkSeparatorToolItem;
 	}

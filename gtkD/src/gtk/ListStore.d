@@ -57,6 +57,14 @@
 
 module gtk.ListStore;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -175,7 +183,26 @@ public class ListStore : TreeModel
 	 */
 	public this (GtkListStore* gtkListStore)
 	{
-		assert(gtkListStore !is null, "struct gtkListStore is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkListStore is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkListStore is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkListStore is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkListStore !is null, "struct gtkListStore is null on constructor");
+		}
 		super(cast(GtkTreeModel*)gtkListStore);
 		this.gtkListStore = gtkListStore;
 	}

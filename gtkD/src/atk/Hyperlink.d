@@ -49,6 +49,14 @@
 
 module atk.Hyperlink;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -92,7 +100,26 @@ public class Hyperlink : ObjectG
 	 */
 	public this (AtkHyperlink* atkHyperlink)
 	{
-		assert(atkHyperlink !is null, "struct atkHyperlink is null on constructor");
+		version(noAssert)
+		{
+			if ( atkHyperlink is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct atkHyperlink is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct atkHyperlink is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(atkHyperlink !is null, "struct atkHyperlink is null on constructor");
+		}
 		super(cast(GObject*)atkHyperlink);
 		this.atkHyperlink = atkHyperlink;
 	}

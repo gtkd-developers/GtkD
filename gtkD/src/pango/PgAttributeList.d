@@ -49,6 +49,14 @@
 
 module pango.PgAttributeList;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -90,7 +98,26 @@ public class PgAttributeList
 	 */
 	public this (PangoAttrList* pangoAttrList)
 	{
-		assert(pangoAttrList !is null, "struct pangoAttrList is null on constructor");
+		version(noAssert)
+		{
+			if ( pangoAttrList is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct pangoAttrList is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct pangoAttrList is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(pangoAttrList !is null, "struct pangoAttrList is null on constructor");
+		}
 		this.pangoAttrList = pangoAttrList;
 	}
 	

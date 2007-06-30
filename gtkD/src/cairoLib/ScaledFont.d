@@ -49,6 +49,14 @@
 
 module cairoLib.ScaledFont;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.cairoLibtypes;
 
 private import gtkc.cairoLib;
@@ -86,7 +94,26 @@ public class ScaledFont
 	 */
 	public this (cairo_scaled_font_t* cairo_scaled_font)
 	{
-		assert(cairo_scaled_font !is null, "struct cairo_scaled_font is null on constructor");
+		version(noAssert)
+		{
+			if ( cairo_scaled_font is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct cairo_scaled_font is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct cairo_scaled_font is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(cairo_scaled_font !is null, "struct cairo_scaled_font is null on constructor");
+		}
 		this.cairo_scaled_font = cairo_scaled_font;
 	}
 	

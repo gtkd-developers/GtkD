@@ -57,6 +57,14 @@
 
 module gtk.Button;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -104,7 +112,26 @@ public class Button : Bin
 	 */
 	public this (GtkButton* gtkButton)
 	{
-		assert(gtkButton !is null, "struct gtkButton is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkButton is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkButton is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkButton is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkButton !is null, "struct gtkButton is null on constructor");
+		}
 		super(cast(GtkBin*)gtkButton);
 		this.gtkButton = gtkButton;
 	}

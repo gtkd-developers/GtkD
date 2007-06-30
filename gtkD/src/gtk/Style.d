@@ -66,6 +66,14 @@
 
 module gtk.Style;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -112,7 +120,26 @@ public class Style : ObjectG
 	 */
 	public this (GtkStyle* gtkStyle)
 	{
-		assert(gtkStyle !is null, "struct gtkStyle is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkStyle is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkStyle is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkStyle is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkStyle !is null, "struct gtkStyle is null on constructor");
+		}
 		super(cast(GObject*)gtkStyle);
 		this.gtkStyle = gtkStyle;
 	}

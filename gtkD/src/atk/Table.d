@@ -49,6 +49,14 @@
 
 module atk.Table;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -101,7 +109,26 @@ public class Table
 	 */
 	public this (AtkTable* atkTable)
 	{
-		assert(atkTable !is null, "struct atkTable is null on constructor");
+		version(noAssert)
+		{
+			if ( atkTable is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct atkTable is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct atkTable is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(atkTable !is null, "struct atkTable is null on constructor");
+		}
 		this.atkTable = atkTable;
 	}
 	

@@ -49,6 +49,14 @@
 
 module gsv.SourceStyleScheme;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
@@ -86,7 +94,26 @@ public class SourceStyleScheme
 	 */
 	public this (GtkSourceStyleScheme* gtkSourceStyleScheme)
 	{
-		assert(gtkSourceStyleScheme !is null, "struct gtkSourceStyleScheme is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkSourceStyleScheme is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkSourceStyleScheme is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkSourceStyleScheme is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkSourceStyleScheme !is null, "struct gtkSourceStyleScheme is null on constructor");
+		}
 		this.gtkSourceStyleScheme = gtkSourceStyleScheme;
 	}
 	

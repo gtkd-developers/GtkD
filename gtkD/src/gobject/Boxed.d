@@ -49,6 +49,14 @@
 
 module gobject.Boxed;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gobjecttypes;
 
 private import gtkc.gobject;

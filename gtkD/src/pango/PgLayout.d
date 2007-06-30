@@ -83,6 +83,14 @@
 
 module pango.PgLayout;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -143,7 +151,26 @@ public class PgLayout
 	 */
 	public this (PangoLayout* pangoLayout)
 	{
-		assert(pangoLayout !is null, "struct pangoLayout is null on constructor");
+		version(noAssert)
+		{
+			if ( pangoLayout is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct pangoLayout is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct pangoLayout is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(pangoLayout !is null, "struct pangoLayout is null on constructor");
+		}
 		this.pangoLayout = pangoLayout;
 	}
 	

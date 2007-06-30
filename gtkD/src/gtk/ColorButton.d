@@ -52,6 +52,14 @@
 
 module gtk.ColorButton;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -94,7 +102,26 @@ public class ColorButton : Button
 	 */
 	public this (GtkColorButton* gtkColorButton)
 	{
-		assert(gtkColorButton !is null, "struct gtkColorButton is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkColorButton is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkColorButton is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkColorButton is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkColorButton !is null, "struct gtkColorButton is null on constructor");
+		}
 		super(cast(GtkButton*)gtkColorButton);
 		this.gtkColorButton = gtkColorButton;
 	}

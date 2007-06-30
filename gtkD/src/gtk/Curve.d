@@ -49,6 +49,14 @@
 
 module gtk.Curve;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -102,7 +110,26 @@ public class Curve : DrawingArea
 	 */
 	public this (GtkCurve* gtkCurve)
 	{
-		assert(gtkCurve !is null, "struct gtkCurve is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkCurve is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkCurve is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkCurve is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkCurve !is null, "struct gtkCurve is null on constructor");
+		}
 		super(cast(GtkDrawingArea*)gtkCurve);
 		this.gtkCurve = gtkCurve;
 	}

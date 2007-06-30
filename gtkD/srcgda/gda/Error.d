@@ -50,6 +50,14 @@
 
 module gda.Error;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -87,7 +95,26 @@ public class Error
 	 */
 	public this (GdaError* gdaError)
 	{
-		assert(gdaError !is null, "struct gdaError is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaError is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaError is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaError is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaError !is null, "struct gdaError is null on constructor");
+		}
 		this.gdaError = gdaError;
 	}
 	

@@ -51,6 +51,14 @@
 
 module gdk.Rectangle;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -100,7 +108,26 @@ public class Rectangle
 	 */
 	public this (GdkRectangle* gdkRectangle)
 	{
-		assert(gdkRectangle !is null, "struct gdkRectangle is null on constructor");
+		version(noAssert)
+		{
+			if ( gdkRectangle is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdkRectangle is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdkRectangle is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdkRectangle !is null, "struct gdkRectangle is null on constructor");
+		}
 		this.gdkRectangle = gdkRectangle;
 	}
 	

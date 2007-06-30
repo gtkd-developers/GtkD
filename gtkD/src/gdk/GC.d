@@ -66,6 +66,14 @@
 
 module gdk.GC;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -127,7 +135,26 @@ public class GC : ObjectG
 	 */
 	public this (GdkGC* gdkGC)
 	{
-		assert(gdkGC !is null, "struct gdkGC is null on constructor");
+		version(noAssert)
+		{
+			if ( gdkGC is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdkGC is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdkGC is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdkGC !is null, "struct gdkGC is null on constructor");
+		}
 		super(cast(GObject*)gdkGC);
 		this.gdkGC = gdkGC;
 	}

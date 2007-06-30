@@ -49,6 +49,14 @@
 
 module gtk.TreeSortable;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -88,7 +96,26 @@ public class TreeSortable
 	 */
 	public this (GtkTreeSortable* gtkTreeSortable)
 	{
-		assert(gtkTreeSortable !is null, "struct gtkTreeSortable is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkTreeSortable is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkTreeSortable is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkTreeSortable is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkTreeSortable !is null, "struct gtkTreeSortable is null on constructor");
+		}
 		this.gtkTreeSortable = gtkTreeSortable;
 	}
 	

@@ -54,6 +54,14 @@
 
 module gda.DataSourceInfo;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -101,7 +109,26 @@ public class DataSourceInfo
 	 */
 	public this (GdaDataSourceInfo* gdaDataSourceInfo)
 	{
-		assert(gdaDataSourceInfo !is null, "struct gdaDataSourceInfo is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaDataSourceInfo is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaDataSourceInfo is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaDataSourceInfo is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaDataSourceInfo !is null, "struct gdaDataSourceInfo is null on constructor");
+		}
 		this.gdaDataSourceInfo = gdaDataSourceInfo;
 	}
 	

@@ -77,6 +77,14 @@
 
 module pango.PgTabArray;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -130,7 +138,26 @@ public class PgTabArray
 	 */
 	public this (PangoTabArray* pangoTabArray)
 	{
-		assert(pangoTabArray !is null, "struct pangoTabArray is null on constructor");
+		version(noAssert)
+		{
+			if ( pangoTabArray is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct pangoTabArray is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct pangoTabArray is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(pangoTabArray !is null, "struct pangoTabArray is null on constructor");
+		}
 		this.pangoTabArray = pangoTabArray;
 	}
 	

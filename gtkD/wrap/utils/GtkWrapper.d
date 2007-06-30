@@ -676,9 +676,9 @@ public class GtkWrapper : WrapperIF
             {
               std.file.mkdir(writeDir);
             }
-            std.file.write(gtkDClass.getOutFile(outputRoot,
-				    srcDir),gtkDText);
+            std.file.write(gtkDClass.getOutFile(outputRoot,srcDir),gtkDText);
         }
+		writefln("gtk Wrapped %s", gtkDClass.getOutFile(outputRoot, srcDir));
         if ( convParms.interf.length == 0 )
         {
             convParms.clearAll();
@@ -695,7 +695,6 @@ public class GtkWrapper : WrapperIF
         stockEnums ~= gtkDClass.getStockEnums();
         stockChars ~= gtkDClass.getStockChars();
         gTypes ~= gtkDClass.getGTypes();
-		writefln("gtk Wrapped %s", gtkDClass.getOutFile(outputRoot, srcDir));
     }
 
     /**

@@ -50,6 +50,14 @@
 
 module glib.StringG;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -90,7 +98,26 @@ public class StringG
 	 */
 	public this (GString* gString)
 	{
-		assert(gString !is null, "struct gString is null on constructor");
+		version(noAssert)
+		{
+			if ( gString is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gString is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gString is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gString !is null, "struct gString is null on constructor");
+		}
 		this.gString = gString;
 	}
 	

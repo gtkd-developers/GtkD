@@ -54,6 +54,14 @@
 
 module gda.FieldAttributes;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -92,7 +100,26 @@ public class FieldAttributes
 	 */
 	public this (GdaFieldAttributes* gdaFieldAttributes)
 	{
-		assert(gdaFieldAttributes !is null, "struct gdaFieldAttributes is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaFieldAttributes is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaFieldAttributes is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaFieldAttributes is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaFieldAttributes !is null, "struct gdaFieldAttributes is null on constructor");
+		}
 		this.gdaFieldAttributes = gdaFieldAttributes;
 	}
 	

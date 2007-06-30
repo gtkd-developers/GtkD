@@ -51,6 +51,14 @@
 
 module gtk.Plug;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -100,7 +108,26 @@ public class Plug : Window
 	 */
 	public this (GtkPlug* gtkPlug)
 	{
-		assert(gtkPlug !is null, "struct gtkPlug is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkPlug is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkPlug is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkPlug is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkPlug !is null, "struct gtkPlug is null on constructor");
+		}
 		super(cast(GtkWindow*)gtkPlug);
 		this.gtkPlug = gtkPlug;
 	}

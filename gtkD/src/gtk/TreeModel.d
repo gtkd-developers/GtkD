@@ -59,6 +59,14 @@
 
 module gtk.TreeModel;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -226,7 +234,26 @@ public class TreeModel
 	 */
 	public this (GtkTreeModel* gtkTreeModel)
 	{
-		assert(gtkTreeModel !is null, "struct gtkTreeModel is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkTreeModel is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkTreeModel is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkTreeModel is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkTreeModel !is null, "struct gtkTreeModel is null on constructor");
+		}
 		this.gtkTreeModel = gtkTreeModel;
 	}
 	

@@ -52,6 +52,14 @@
 
 module gda.Export;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gdac.gdatypes;
 
 private import gdac.gda;
@@ -90,7 +98,26 @@ public class Export
 	 */
 	public this (GdaExport* gdaExport)
 	{
-		assert(gdaExport !is null, "struct gdaExport is null on constructor");
+		version(noAssert)
+		{
+			if ( gdaExport is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gdaExport is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gdaExport is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gdaExport !is null, "struct gdaExport is null on constructor");
+		}
 		this.gdaExport = gdaExport;
 	}
 	

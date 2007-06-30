@@ -49,6 +49,14 @@
 
 module gsv.SourceMarker;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gsvc.gsvtypes;
 
 private import gsvc.gsv;
@@ -86,7 +94,26 @@ public class SourceMarker
 	 */
 	public this (GtkSourceMarker* gtkSourceMarker)
 	{
-		assert(gtkSourceMarker !is null, "struct gtkSourceMarker is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkSourceMarker is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkSourceMarker is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkSourceMarker is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkSourceMarker !is null, "struct gtkSourceMarker is null on constructor");
+		}
 		this.gtkSourceMarker = gtkSourceMarker;
 	}
 	

@@ -60,6 +60,14 @@
 
 module gtk.RcStyle;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -499,7 +507,26 @@ public class RcStyle : ObjectG
 	 */
 	public this (GtkRcStyle* gtkRcStyle)
 	{
-		assert(gtkRcStyle !is null, "struct gtkRcStyle is null on constructor");
+		version(noAssert)
+		{
+			if ( gtkRcStyle is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gtkRcStyle is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gtkRcStyle is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gtkRcStyle !is null, "struct gtkRcStyle is null on constructor");
+		}
 		super(cast(GObject*)gtkRcStyle);
 		this.gtkRcStyle = gtkRcStyle;
 	}

@@ -51,6 +51,14 @@
 
 module glib.DataList;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -106,7 +114,26 @@ public class DataList
 	 */
 	public this (GData* gData)
 	{
-		assert(gData !is null, "struct gData is null on constructor");
+		version(noAssert)
+		{
+			if ( gData is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct gData is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct gData is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(gData !is null, "struct gData is null on constructor");
+		}
 		this.gData = gData;
 	}
 	

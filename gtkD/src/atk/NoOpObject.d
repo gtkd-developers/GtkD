@@ -50,6 +50,14 @@
 
 module atk.NoOpObject;
 
+version(noAssert)
+{
+	version(Tango)
+	{
+		import tango.io.Stdout;	// use the tango loging?
+	}
+}
+
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -91,7 +99,26 @@ public class NoOpObject : ObjectAtk
 	 */
 	public this (AtkNoOpObject* atkNoOpObject)
 	{
-		assert(atkNoOpObject !is null, "struct atkNoOpObject is null on constructor");
+		version(noAssert)
+		{
+			if ( atkNoOpObject is null )
+			{
+				int zero = 0;
+				version(Tango)
+				{
+					Stdout("struct atkNoOpObject is null on constructor").newline;
+				}
+				else
+				{
+					printf("struct atkNoOpObject is null on constructor");
+				}
+				zero = zero / zero;
+			}
+		}
+		else
+		{
+			assert(atkNoOpObject !is null, "struct atkNoOpObject is null on constructor");
+		}
 		super(cast(AtkObject*)atkNoOpObject);
 		this.atkNoOpObject = atkNoOpObject;
 	}
