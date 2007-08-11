@@ -4,7 +4,8 @@ src/gdk
 src/glib 
 src/gobject 
 src/gthread
-src/gtk 
+src/gtk
+src/gdkpixbuf 
 src/gtkc 
 src/pango 
 src/glade
