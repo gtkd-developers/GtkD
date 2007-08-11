@@ -30,7 +30,7 @@ ln -s libglade glade
 
 #gtkSourceView
 curl http://gtksourceview.sourceforge.net/gtksourceview-1.6-docs.tar.gz | tar xvfz -
-mv html gtksourceview
+mv html sourceview
 
 #gstreamer
 curl http://gstreamer.freedesktop.org/src/gstreamer/gstreamer-0.10.12.tar.gz | tar xvfz -
