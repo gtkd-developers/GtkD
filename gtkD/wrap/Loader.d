@@ -180,6 +180,9 @@ public class Linker
 		version(linux)
 		{
 			handle = dlopen( (this.libraryName ~ "\0").ptr, RTLD_NOW);
+			// should be on a debug flag..
+			char* err = dlerror();
+			if (err) { std.stdio.writefln("Error: %s", std.string.toString(err)); }
 			if (handle is null) 
 			{
 				// non-dev libraries tend to be called xxxx.so.0 
@@ -190,7 +193,7 @@ public class Linker
 				alternateHandle = dlopen( (this.alternateLibraryName ~ "\0").ptr, RTLD_NOW);
 			}
 			// clear the error buffer
-			dlerror();
+			err = dlerror();
 		}
 		version(Darwin)
 		{
