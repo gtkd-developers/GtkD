@@ -75,7 +75,7 @@ private import gtkc.gdktypes;
 private import gtkc.gdk;
 
 
-private import cairo.Cairo;
+private import cairo.Context;
 
 
 
