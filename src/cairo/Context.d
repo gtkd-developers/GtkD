@@ -57,7 +57,7 @@
  * local aliases:
  */
 
-module cairoLib.Cairo;
+module cairo.Context;
 
 version(noAssert)
 {
