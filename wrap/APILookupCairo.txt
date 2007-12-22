@@ -1,0 +1,317 @@
+#
+# This file is part of gtkD.
+# 
+# gtkD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+# 
+# gtkD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+# 
+# You should have received a copy of the GNU Lesser General Public License
+# along with gtkD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+#
+###
+#####
+# Definitions for wrapping Cairo
+#####
+###
+#
+
+
+
+# must start with wrap
+
+addTypedefs: start
+
+public import gtkc.glibtypes;
+
+//public import std.c.windows.windows;
+private alias void* HDC;
+
+//struct Display;	// to support XLib surfaces
+//struct Visual;	// to support XLib surfaces
+//struct Screen;	// to support XLib surfaces
+
+//private alias void* Drawable;
+//private alias void* Pixmap;
+//public alias bool cairo_bool_t;
+
+alias ubyte uchar;
+addTypedefs: end
+
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
+wrap: cairo
+
+###########################################################
+### Cairo Drawing #########################################
+###########################################################
+
+file: cairo-cairo-t.html
+struct: cairo_t
+class: Cairo
+prefix: cairo_
+structWrap: cairo_surface_t* Surface
+structWrap: cairo_t* Cairo
+import: cairoLib.Surface
+import: glib.Str
+import: gdk.Region
+import: gdk.Rectangle
+import: gdk.Pixbuf
+import: gdk.Pixmap
+import: gdk.Color
+import: gtkc.gdk
+import: gdk.Drawable
+
+code: start
+
+
+	/**
+	 * Creates a Cairo context for drawing to drawable.
+	 * drawable:
+	 *  a GdkDrawable
+	 * Returns:
+	 *  A newly created Cairo context. Free with
+	 *  cairo_destroy() when you are done drawing.
+	 * Since 2.8
+	 */
+	this (Drawable drawable)
+	{
+		// cairo_t* gdk_cairo_create (GdkDrawable *);
+		this(gdk_cairo_create(drawable.getDrawableStruct()));
+	}
+
+	/**
+	 * Sets the specified GdkColor as the source color of cr.
+	 * cr:
+	 *  a cairo_t
+	 * color:
+	 *  a GdkColor
+	 * Since 2.8
+	 */
+	public void setSourceColor(Color color)
+	{
+		// void gdk_cairo_set_source_color (cairo_t *cr,  GdkColor *color);
+		gdk_cairo_set_source_color(getCairoStruct(), color.getColorStruct());
+	}
+
+	/**
+	 * Sets the given pixbuf as the source pattern for the Cairo context.
+	 * The pattern has an extend mode of CAIRO_EXTEND_NONE and is aligned
+	 * so that the origin of pixbuf is pixbuf_x, pixbuf_y
+	 * cr:
+	 *  a Cairo context
+	 * pixbuf:
+	 *  a GdkPixbuf
+	 * pixbuf_x:
+	 *  X coordinate of location to place upper left corner of pixbuf
+	 * pixbuf_y:
+	 *  Y coordinate of location to place upper left corner of pixbuf
+	 * Since 2.8
+	 */
+	public void setSourcePixbuf(Pixbuf pixbuf, double pixbufX, double pixbufY)
+	{
+		// void gdk_cairo_set_source_pixbuf (cairo_t *cr,  GdkPixbuf *pixbuf,  double pixbuf_x,  double pixbuf_y);
+		gdk_cairo_set_source_pixbuf(getCairoStruct(), pixbuf.getPixbufStruct(), pixbufX, pixbufY);
+	}
+
+	/**
+	 * Sets the given pixmap as the source pattern for the Cairo context.
+	 * The pattern has an extend mode of CAIRO_EXTEND_NONE and is aligned
+	 * so that the origin of pixbuf is pixbuf_x, pixbuf_y
+	 * cr:
+	 *  a Cairo context
+	 * pixmap:
+	 *  a GdkPixmap
+	 * pixmap_x:
+	 *  X coordinate of location to place upper left corner of pixmap
+	 * pixmap_y:
+	 *  Y coordinate of location to place upper left corner of pixmap
+	 * Since 2.10
+	 */
+	public void setSourcePixmap(Pixmap pixmap, double pixmapX, double pixmapY)
+	{
+		// void gdk_cairo_set_source_pixmap (cairo_t *cr,  GdkPixmap *pixmap,  double pixmap_x,  double pixmap_y);
+		gdk_cairo_set_source_pixmap( getCairoStruct(), pixmap.getPixmapStruct(), pixmapX, pixmapY);
+	}
+
+	/**
+	 * Adds the given rectangle to the current path of cr.
+	 * cr:
+	 *  a cairo_t
+	 * rectangle:
+	 *  a GdkRectangle
+	 * Since 2.8
+	 */
+	public void rectangle(Rectangle rectangle)
+	{
+		// void gdk_cairo_rectangle (cairo_t *cr,  GdkRectangle *rectangle);
+		gdk_cairo_rectangle( getCairoStruct(), rectangle.getRectangleStruct());
+	}
+
+	/**
+	 * Adds the given region to the current path of cr.
+	 * cr:
+	 *  a cairo_t
+	 * region:
+	 *  a GdkRegion
+	 * Since 2.8
+	 */
+	public  void region( Region region)
+	{
+		// void gdk_cairo_region (cairo_t *cr,  GdkRegion *region);
+		gdk_cairo_region(getCairoStruct(), region.getRegionStruct());
+	}
+
+
+code: end
+
+openFile: Cairo
+
+file: cairo-Paths.html
+mergeFile: Cairo
+
+file: cairo-Transformations.html
+mergeFile: Cairo
+
+file: cairo-Text.html
+closeFile: Cairo
+
+
+file: cairo-Patterns.html
+struct: cairo_pattern_t
+class: Pattern
+prefix: cairo_pattern_
+outFile: Pattern
+
+###########################################################
+### Cairo Fonts ###########################################
+###########################################################
+
+file: cairo-cairo-font-face-t.html
+struct: cairo_font_face_t
+class: FontFace
+prefix: cairo_font_face_
+outFile: FontFace
+
+file: cairo-Scaled-Fonts.html
+struct: cairo_scaled_font_t
+class: ScaledFont
+prefix: cairo_scaled_font_
+import: glib.Str
+outFile: ScaledFont
+
+file: cairo-Font-Options.html
+struct: cairo_font_options_t
+class: FontOption
+prefix: cairo_font_options_
+outFile: FontOption
+
+#file: cairo-FreeType-Fonts.html
+#struct: 
+#class: 
+#prefix: 
+#outFile: 
+
+#file: cairo-Win32-Fonts.html
+#struct: 
+#class: 
+#prefix: 
+#outFile: 
+
+###########################################################
+### Cairo Surfaces ########################################
+###########################################################
+
+file: cairo-cairo-surface-t.html
+struct: cairo_surface_t
+class: Surface
+prefix: cairo_surface_
+prefix: cairo_
+import: glib.Str
+openFile: Surface
+
+file: cairo-Image-Surfaces.html
+mergeFile: Surface
+
+#file: cairo-Glitz-Surfaces.html
+#mergeFile: Surface
+
+#file: cairo-PDF-Surfaces.html
+#mergeFile: Surface
+
+#file: cairo-PNG-Support.html
+#mergeFile: Surface
+
+#file: cairo-PostScript-Surfaces.html
+#mergeFile: Surface
+
+#file: cairo-Win32-Surfaces.html
+#mergeFile: Surface
+
+#file: cairo-XLib-Surfaces.html
+closeFile: Surface
+
+###########################################################
+### Cairo Utilities #######################################
+###########################################################
+
+file: cairo-cairo-matrix-t.html
+struct: cairo_matrix_t
+class: Matrix
+structWrap: surfaceT* Surface
+prefix: cairo_matrix_
+import: glib.Str
+outFile: Matrix
+
+file: cairo-Error-handling.html
+struct: cairo_status_t
+class: Status
+prefix: cairo_status_t
+import: glib.Str
+outFile: Status
+
+
+file: cairo-Version-Information.html
+#struct: 
+class: Version
+#prefix: 
+import: glib.Str
+outFile: Version
+
+file: cairo-Types.html
+#struct: 
+#class: 
+#prefix: 
+noprefix: cairo_bool_t
+outFile: Types
+

@@ -1,0 +1,31 @@
+INSTALL
+--------------------------------
+
+Install instructions for GtkD 
+a) make sure you have installed dool 
+http://svn.dsource.org/projects/dool
+
+** you really only need compd from this.
+
+b) build dool (using compd)
+#compd GtkD.compd
+
+c) build the test application
+#compd GtkDTests.compd 
+
+--------------------------------
+For GL bindings
+#compd GtkDgl.compd
+Tests
+#compd GtkDSimpleGL.compd
+#compd GtkDShapesGL.compd
+
+-------------------------------
+For GDA (www.gnome-db.org)
+#compd gda.compd
+#compd gdaTests.compd
+
+-------------------------------
+See wrap/Readme.txt for details on how to generate the code.
+
+

@@ -1,0 +1,11 @@
+#!/usr/local/bin/compd
+srcgda/gdac
+srcgda/gda
+-Isrcgda
+-Isrc
+-oliblibgda
+-lgtkd
+-ldl
+-lstdc++
+-lphobos
+-g

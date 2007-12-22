@@ -1,0 +1,6 @@
+MODULES = 
+	$(MODULE carioLib.Cairo)
+	$(MODULE gdk.Color)
+	$(MODULE gdk.Drawable)
+	$(MODULE gtk.GtkD)
+

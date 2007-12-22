@@ -1,0 +1,95 @@
+#
+# This file is part of gstreamerD.
+#
+# gstreamerD is free software; you can redistribute it and/or modify
+# it under the terms of the GNU Lesser General Public License as published by
+# the Free Software Foundation; either version 2.1 of the License, or
+# (at your option) any later version.
+#
+# gstreamerD is distributed in the hope that it will be useful,
+# but WITHOUT ANY WARRANTY; without even the implied warranty of
+# MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+# GNU Lesser General Public License for more details.
+#
+# You should have received a copy of the GNU Lesser General Public License
+# along with gstreamerD; if not, write to the Free Software
+# Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
+#
+
+
+#
+###
+#####
+# Definitions for wrapping GStreamerInterfaces / GstPluginsBaseLibs
+#####
+###
+#
+
+#Notes for the gstreamerD developer:
+#The work on wrapping gstreamerD automatically isn't complete yet.
+#At the moment gstreamerc/gstreamer.d and gstreamerc/gstreamertypes.d
+#have to be copied from hand edited versions from wrap/.
+#The copying is done automatically in APILookup.txt
+#Also GstGhostPad.d has to have it's constructor adjusted by hand,
+#and this isn't done automatically. You should replace Pad* with GstPad*.
+#I have no idea why GtkWrapper is doing that.
+#Also it creates two unnecessary files gstreamerc/lib.d gstreamerc/libtypes.d
+#which have to be removed by hand.
+
+
+
+# These are enums for gstreamer. There should be a way for these to be moved to APILookupGStreamer.txt.
+# currently it just hangs up. These don't work for the moment.
+#enumType: GST_ELEMENT_FLAG_LAST GstElementFlags.FLAG_LAST
+
+
+addTypedefs: start
+private import gtkc.glibtypes;
+private import gtkc.gobjecttypes;
+private import gtkc.gthreadtypes;
+private import glib.Str;
+
+addTypedefs: end
+
+#private import gstreamerc.gstreamertypes;
+#private import gstreamerc.gstreamer;
+
+addAliases: start
+addAliases: end
+
+addEnums: start
+addEnums: end
+
+addStructs: start
+addStructs: end
+
+addTypes: start
+addTypes: end
+
+addFuncts: start
+addFuncts: end
+
+addUnions: start
+addUnions: end
+
+addConstants: start
+addConstants: end
+
+
+# must start with wrap
+
+wrap: gstinterfaces
+srcout: srcgstreamer
+
+###########################################################
+### GStreamer - GstInterfaces ########################
+###########################################################
+
+file: gst-plugins-base-libs-gstxoverlay.html
+struct: GstXOverlay
+class: XOverlay
+prefix: gst_x_overlay_
+import: gtkc.glibtypes
+import: glib.Str
+outFile: XOverlay
+

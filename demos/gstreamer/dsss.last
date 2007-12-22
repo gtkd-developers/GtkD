@@ -1,0 +1,21 @@
+name = gstreamerDTests
+
+requires = gtkD gstreamerD
+
+#[gnonlin_video_example.d]
+#type = binary
+#target = gnonlin_video_example
+#buildflags = -I/usr/local/include/d -I/usr/local/include/d -L-ldl
+
+[gnonlin_video_example_encoding.d]
+type = binary
+target = gnonlin_video_example_encoding
+buildflags = -I/usr/local/include/d -I/usr/local/include/d -L-ldl
+buildflags += -debug=GnonlinHello -debug=gstreamer -debug=gstreamerbus
+
+#[gnonlin_video_example_tester2.d]
+#type = binary
+#target = gnonlin_video_example_tester2
+#buildflags = -I/usr/local/include/d -I/usr/local/include/d -L-ldl
+#buildflags += -version=myfiles
+

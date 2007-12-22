@@ -1,0 +1,15 @@
+#!/usr/local/bin/compd
+demos/glade
+-Isrc
+-Idemos
+-lgtkd
+-ldl
+-lstdc++
+-lphobos
+-g
+-o gladeTest
+-c
+-L .. 
+-L . 
+-l gtkd
+-l dl
