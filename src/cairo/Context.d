@@ -96,7 +96,7 @@ private import gdk.Drawable;
  *  They may then safely be changed, without loosing the current state.
  *  Use cairo_restore() to restore to the saved state.
  */
-public class Cairo
+public class Context
 {
 
 	/** the main Gtk struct */
@@ -275,10 +275,10 @@ public class Cairo
 	 *  You can use this object normally, but no drawing will
 	 *  be done.
 	 */
-	public static Cairo create(Surface target)
+	public static Context create(Surface target)
 	{
 		// cairo_t* cairo_create (cairo_surface_t *target);
-		return new Cairo( cairo_create((target is null) ? null : target.getSurfaceStruct()) );
+		return new Context( cairo_create((target is null) ? null : target.getSurfaceStruct()) );
 	}
 
 	/**
@@ -290,10 +290,10 @@ public class Cairo
 	 * Returns:
 	 *  the referenced cairo_t.
 	 */
-	public Cairo reference()
+	public Context reference()
 	{
 		// cairo_t* cairo_reference (cairo_t *cr);
-		return new Cairo( cairo_reference(cairo) );
+		return new Context( cairo_reference(cairo) );
 	}
 
 	/**
