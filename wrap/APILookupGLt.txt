@@ -96,8 +96,9 @@ structWrap: GdkGLWindow* GLWindow
 code: start
 	/**
 	 * Gets the GL Frawable for (from???) the widget
-	 * @param widget
-	 * @return a new GLDrawable
+	 * Params:
+	 *  widget =
+	 * Returns: a new GLDrawable
 	 */
 	static GLDrawable getGLDrawable(Widget widget)
 	{

@@ -264,8 +264,9 @@ code: start
 
 	/**
 	 * Creates a nwe font description and set the family nd the size
-	 * param: family Family
-	 * param: size Size
+	 * Params:
+	 *  family = Family
+	 *  size = Size
 	 */
 	public this(char[] family, int size)
 	{
@@ -669,10 +670,8 @@ import: glib.Str
 code: start
 	/**
 	 * Sets the text of the layout.
-	 * layout:
-	 *  a PangoLayout
-	 * text:
-	 *  a UTF-8 string
+	 * Params:
+	 *  text = a UTF-8 string
 	 */
 	public void setText(char[] text)
 	{

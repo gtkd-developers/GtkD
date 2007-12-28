@@ -179,10 +179,11 @@ code: start
 	}
 	
 	/**
-	* Sets a pointer on this object's has table
-	* @param key the data identifier
-	* @param data a pointer
-	*/
+	 * Sets a pointer on this object's has table
+	 * Params:
+	 *  key = the data identifier
+	 *  data = a pointer
+	 */
 	public: void setDataFull(char[] key, gpointer data)
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
@@ -329,8 +330,9 @@ code: start
 //	
 //	/**
 //	 * Sets a pointer on this object's has table
-//	 * @param key the data identifier
-//	 * @param data a pointer
+//	 * Params:
+//	 *  key = the data identifier
+//	 *  data = a pointer
 //	 */
 //	private void setDestroyNotify(char[] key, gpointer data)
 //	{
@@ -355,22 +357,27 @@ code: start
 //			//printf("objectg.destroy exit\n");
 //		}
 //	}
+
+	/** */
 	public void setProperty(char[] propertyName, int value)
 	{
 		setProperty(propertyName, new Value(value));
 	}
 	
+	/** */
 	public void setProperty(char[] propertyName, char[] value)
 	{
 		setProperty(propertyName, new Value(value));
 	}
 	
+	/** */
 	public void setProperty(char[] propertyName, long value)
 	{
 		//We use g_object_set instead of g_object_set_property, because Value doesn't like longs and ulongs for some reason.
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
 
+	/** */
 	public void setProperty(char[] propertyName, ulong value)
 	{
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
@@ -429,12 +436,13 @@ nocode: g_value_init
 nocode: g_value_reset
 
 code: start
-
+	/** */
 	public this()
 	{
 		this(new GValue);
 	}
-	
+
+	/** */	
 	this(Pixbuf pixbuf)
 	{
 		GValue* v = new GValue;
@@ -443,7 +451,8 @@ code: start
 		v.data1.v_pointer = cast(void*)(pixbuf.getPixbufStruct());
 		this(v);
 	}
-	
+
+	/** */
 	this(char[] value)
 	{
 		this();
@@ -451,6 +460,7 @@ code: start
 		setString(value);
 	}
 
+	/** */
 	this(int value)
 	{
 		this();
@@ -460,12 +470,11 @@ code: start
 	
 	/**
 	 * Initializes value with the default value of type.
-	 * value:
-	 * A zero-filled (uninitialized) GValue structure.
-	 * g_type:
-	 * Type the GValue should hold values of.
+	 * Params:
+	 *  value = A zero-filled (uninitialized) GValue structure.
+	 *  g_type = Type the GValue should hold values of.
 	 * Returns:
-	 * the GValue structure that has been passed in
+	 *  the GValue structure that has been passed in
 	 */
 	public Value init(GType gType)
 	{
@@ -477,10 +486,10 @@ code: start
 	/**
 	 * Clears the current value in value and resets it to the default value
 	 * (as if the value had just been initialized).
-	 * value:
-	 * An initialized GValue structure.
+	 * Params:
+	 *  value = An initialized GValue structure.
 	 * Returns:
-	 * the GValue structure that has been passed in
+	 *  the GValue structure that has been passed in
 	 */
 	public Value reset()
 	{
@@ -543,8 +552,7 @@ structWrap: GQuark* Quark
 #structWrap: GSignalInvocationHint* SignalInvocationHint
 
 code: start
-
-
+	/** */
 	public static uint connectData(void* instanc, char[] detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
 		// gulong g_signal_connect_data (gpointer instance,  const gchar *detailed_signal,  GCallback c_handler,  gpointer data,  GClosureNotify destroy_data,  GConnectFlags connect_flags);

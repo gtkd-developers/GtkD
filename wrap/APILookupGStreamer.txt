@@ -180,8 +180,8 @@ nocode: gst_bin_new
 code: start
 	/**
 	 * Creates a new bin with the given name.
-	 * name:
-	 *  the name of the new bin
+	 * Params:
+	 *  name = the name of the new bin
 	 * Returns:
 	 *  a new GstBin
 	 */
@@ -191,6 +191,7 @@ code: start
 		this( cast(GstBin*) gst_bin_new(Str.toStringz(name)) );
 	}
 
+	/** */
 	public this(Element elem)
 	{
 		super( elem.getElementStruct() );
@@ -233,15 +234,11 @@ code: start
 	 * This function is used to receive asynchronous messages in the main loop.
 	 * The watch can be removed using g_source_remove() or by returning FALSE
 	 * from func.
-	 * bus:
-	 *  a GstBus to create the watch for
-	 * func:
-	 *  A function to call when a message is received.
-	 * user_data:
-	 *  user data passed to func.
+	 * MT safe.
+	 * Params:
+	 *  dlg = A function to call when a message is received.
 	 * Returns:
 	 *  The event source id.
-	 * MT safe.
 	 */
 	public uint addWatch( bool delegate(Message) dlg )
 	{
@@ -268,12 +265,8 @@ code: start
 	 * functions.
 	 * You cannot replace an existing sync_handler. You can pass NULL to this
 	 * function, which will clear the existing handler.
-	 * bus:
-	 *  a GstBus to install the handler on
-	 * func:
-	 *  The handler function to install
-	 * data:
-	 *  User data that will be sent to the handler function.
+	 * Params:
+	 *  dlg = The handler function to install
 	 */
 	public void setSyncHandler( GstBusSyncReply delegate(Message) dlg )
 	{
@@ -529,8 +522,8 @@ code: start
 	 * Create a new element of the type defined by the given element factory.
 	 * The element will receive a guaranteed unique name,
 	 * consisting of the element factory name and a number.
-	 * factoryname:
-	 *  a named factory to instantiate
+	 * Params:
+	 *  factoryname = a named factory to instantiate
 	 * Returns:
 	 *  new GstElement or NULL if unable to create element
 	 */
@@ -559,14 +552,11 @@ code: start
 	 * Create a new buffersize event. The event is sent downstream and notifies
 	 * elements that they should provide a buffer of the specified dimensions.
 	 * When the async flag is set, a thread boundary is prefered.
-	 * format:
-	 *  buffer format
-	 * minsize:
-	 *  minimum buffer size
-	 * maxsize:
-	 *  maximum buffer size
-	 * async:
-	 *  thread behavior
+	 * Params:
+	 *  format = buffer format
+	 *  minsize = minimum buffer size
+	 *  maxsize = maximum buffer size
+	 *  async = thread behavior
 	 * Returns:
 	 *  a new GstEvent
 	 */
@@ -640,8 +630,8 @@ nocode: gst_event_new_navigation
 code: start
 /**
 	 * Create a new navigation event from the given description.
-	 * structure:
-	 *  description of the event
+	 * Params:
+	 *  structure = description of the event
 	 * Returns:
 	 *  a new GstEvent
 	 */
@@ -707,10 +697,9 @@ code: start
 	 * Create a new ghostpad with target as the target. The direction and
 	 * padtemplate will be taken from the target pad.
 	 * Will ref the target.
-	 * name:
-	 *  the name of the new pad, or NULL to assign a default name.
-	 * target:
-	 *  the pad to ghost.
+	 * Params:
+	 *  name = the name of the new pad, or NULL to assign a default name.
+	 *  target = the pad to ghost.
 	 * Returns:
 	 *  a new GstPad, or NULL in case of an error.
 	 */
@@ -930,10 +919,8 @@ code: start
 	 * Extracts the tag list from the GstMessage. The tag list returned in the
 	 * output argument is a copy; the caller must free it when done.
 	 * MT safe.
-	 * message:
-	 *  A valid GstMessage of type GST_MESSAGE_TAG.
-	 * tag_list:
-	 *  Return location for the tag-list.
+	 * Params:
+	 *  tagList = Return location for the tag-list.
 	 */
 	/*public void parseTag(GstTagList** tagList)
 	{
@@ -951,8 +938,8 @@ code: start
 	//I'm not so sure about the following:
 	/**
 	 * Get the unique quark for the given message type.
-	 * type:
-	 *  the message type
+	 * Params:
+	 *  type = the message type
 	 * Returns:
 	 *  the quark associated with the message type
 	 */
@@ -967,14 +954,13 @@ code: start
 	 * allowing one-way communication from an element to an application, for example
 	 * "the firewire cable was unplugged". The format of the message should be
 	 * documented in the element's documentation. The structure field can be NULL.
-	 * src:
-	 *  The object originating the message.
-	 * structure:
-	 *  The structure for the message. The message will take ownership of
-	 * the structure.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  structure = The structure for the message. The message will take ownership of
+	 *  the structure.
 	 * Returns:
 	 *  The new element message.
-	 * MT safe.
 	 */
 	public static Message newElement(ObjectGst src, Structure structure)
 	{
@@ -985,13 +971,12 @@ code: start
 	/**
 	 * Create a new clock message. This message is posted whenever the
 	 * pipeline selectes a new clock for the pipeline.
-	 * src:
-	 *  The object originating the message.
-	 * clock:
-	 *  the new selected clock
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  clock = the new selected clock
 	 * Returns:
 	 *  The new new clock message.
-	 * MT safe.
 	 */
 	public static Message newNewClock(ObjectGst src, Clock clock)
 	{
@@ -1004,15 +989,13 @@ code: start
 	 * finish playback of a segment as a result of a segment seek. This message
 	 * is received by the application after all elements that posted a segment_start
 	 * have posted the segment_done.
-	 * src:
-	 *  The object originating the message.
-	 * format:
-	 *  The format of the position being done
-	 * position:
-	 *  The position of the segment being done
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  format = The format of the position being done
+	 *  position = The position of the segment being done
 	 * Returns:
 	 *  The new segment done message.
-	 * MT safe.
 	 */
 	public static Message newSegmentDone(ObjectGst src, GstFormat format, long position)
 	{
@@ -1025,15 +1008,13 @@ code: start
 	 * start playback of a segment as a result of a segment seek. This message
 	 * is not received by the application but is used for maintenance reasons in
 	 * container elements.
-	 * src:
-	 *  The object originating the message.
-	 * format:
-	 *  The format of the position being played
-	 * position:
-	 *  The position of the segment being played
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  format = The format of the position being played
+	 *  position = The position of the segment being played
 	 * Returns:
 	 *  The new segment start message.
-	 * MT safe.
 	 */
 	public static Message newSegmentStart(ObjectGst src, GstFormat format, long position)
 	{
@@ -1044,15 +1025,13 @@ code: start
 	/**
 	 * Create a new warning message. The message will make copies of error and
 	 * debug.
-	 * src:
-	 *  The object originating the message.
-	 * error:
-	 *  The GError for this message.
-	 * debug:
-	 *  A debugging string for something or other.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  error = The GError for this message.
+	 *  debug = A debugging string for something or other.
 	 * Returns:
 	 *  The new warning message.
-	 * MT safe.
 	 */
 	public static Message newWarning(ObjectGst src, ErrorG error, char[] dbug)
 	{
@@ -1064,11 +1043,11 @@ code: start
 	 * Create a state dirty message. This message is posted whenever an element
 	 * changed its state asynchronously and is used internally to update the
 	 * states of container objects.
-	 * src:
-	 *  the object originating the message
+	 * MT safe.
+	 * Params:
+	 *  src = the object originating the message
 	 * Returns:
 	 *  The new state dirty message.
-	 * MT safe.
 	 */
 	public static Message newStateDirty(ObjectGst src)
 	{
@@ -1080,11 +1059,11 @@ code: start
 	 * Create a new eos message. This message is generated and posted in
 	 * the sink elements of a GstBin. The bin will only forward the EOS
 	 * message to the application if all sinks have posted an EOS message.
-	 * src:
-	 *  The object originating the message.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
 	 * Returns:
 	 *  The new eos message.
-	 * MT safe.
 	 */
 	public static Message newEOS(ObjectGst src)
 	{
@@ -1097,15 +1076,13 @@ code: start
 	 * debug. This message is posted by element when a fatal event
 	 * occured. The pipeline will probably (partially) stop. The application
 	 * receiving this message should stop the pipeline.
-	 * src:
-	 *  The object originating the message.
-	 * error:
-	 *  The GError for this message.
-	 * debug:
-	 *  A debugging string for something or other.
+	 * MT safe.
+	 * Params:
+	 *  src = The object originating the message.
+	 *  error = The GError for this message.
+	 *  debug = A debugging string for something or other.
 	 * Returns:
 	 *  The new error message.
-	 * MT safe.
 	 */
 	public static Message newError(ObjectGst src, ErrorG error, char[] dbug)
 	{
@@ -1116,16 +1093,14 @@ code: start
 	/**
 	 * Create a new info message. The message will make copies of error and
 	 * debug.
-	 * src:
-	 *  The object originating the message.
-	 * error:
-	 *  The GError for this message.
-	 * debug:
-	 *  A debugging string for something or other.
+	 * MT safe.
+	 * Since 0.10.12
+	 * Params:
+	 *  src = The object originating the message.
+	 *  error = The GError for this message.
+	 *  debug = A debugging string for something or other.
 	 * Returns:
 	 *  The new info message.
-	 * Since 0.10.12
-	 * MT safe.
 	 */
 	public static Message newInfo(ObjectGst src, ErrorG error, char[] dbug)
 	{
@@ -1194,8 +1169,6 @@ code: start
 	 * This object returns the input parameter to ease writing
 	 * constructs like :
 	 *  result = gst_object_ref (object->parent);
-	 * object:
-	 *  a GstObject to reference
 	 * Returns:
 	 *  A pointer to object
 	 */
@@ -1257,6 +1230,7 @@ class: Pipeline
 prefix: gst_pipeline_
 prefix: gst_
 code: start
+/** */
 public this (char[] name)
 {
 	this.gstPipeline = cast(GstPipeline*) gst_pipeline_new(Str.toStringz(name));
@@ -1305,10 +1279,8 @@ code: start
 	 * within all features of the same type. Renaming a plugin feature is not
 	 * allowed. A copy is made of the name so you should free the supplied name
 	 * after calling this function.
-	 * feature:
-	 *  a feature
-	 * name:
-	 *  the name to set
+	 * Params:
+	 *  name = the name to set
 	 */
 	public void setFeatureName(char[] name)
 	{
@@ -1329,8 +1301,8 @@ code: start
 	 * Constructs a new query stream position query object. Use gst_query_unref()
 	 * when done with it. A position query is used to query the current position
 	 * of playback in the streams, in some format.
-	 * format:
-	 *  the default GstFormat for the new query
+	 * Params:
+	 *  format = the default GstFormat for the new query
 	 * Returns:
 	 *  A GstQuery
 	 */
@@ -1346,8 +1318,8 @@ code: start
 	 * Constructs a new stream duration query object to query in the given format.
 	 * Use gst_query_unref() when done with it. A duration query will give the
 	 * total length of the stream.
-	 * format:
-	 *  the GstFormat for this duration query
+	 * Params:
+	 *  format = the GstFormat for this duration query
 	 * Returns:
 	 *  A GstQuery
 	 */
@@ -1362,8 +1334,8 @@ code: start
 	/**
 	 * Constructs a new query object for querying seeking properties of
 	 * the stream.
-	 * format:
-	 *  the default GstFormat for the new query
+	 * Params:
+	 *  format = the default GstFormat for the new query
 	 * Returns:
 	 *  A GstQuery
 	 */
@@ -1378,9 +1350,9 @@ code: start
 	/**
 	 * Constructs a new query object for querying formats of
 	 * the stream.
+	 * Since 0.10.4
 	 * Returns:
 	 *  A GstQuery
-	 * Since 0.10.4
 	 */
 	public static Query newFormats()
 	{
@@ -1394,8 +1366,8 @@ code: start
 	 * Constructs a new segment query object. Use gst_query_unref()
 	 * when done with it. A segment query is used to discover information about the
 	 * currently configured segment for playback.
-	 * format:
-	 *  the GstFormat for the new query
+	 * Params:
+	 *  format = the GstFormat for the new query
 	 * Returns:
 	 *  a GstQuery
 	 */

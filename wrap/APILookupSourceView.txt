@@ -77,8 +77,6 @@ code: start
 	 * Returns the GtkSourceBuffer being displayed by this source view.
 	 * The reference count on the buffer is not incremented; the caller
 	 * of this function won't own a new reference.
-	 * text_view:
-	 *  a GtkSourceView
 	 * Returns:
 	 *  a GtkSourceBuffer
 	 */
