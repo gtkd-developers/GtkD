@@ -812,7 +812,7 @@ public class GtkWrapper : WrapperIF
         }
         if ( loaderTableName == "gdk" )
         {
-            externalText ~= "\nprivate import "~bindingsDir~".cairoLibtypes;";
+            externalText ~= "\nprivate import "~bindingsDir~".cairotypes;";
         }
 
         if ( loaderTableName != "gl"
