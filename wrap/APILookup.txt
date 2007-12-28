@@ -150,10 +150,10 @@ bind: gtkglc
 
 ##gstreamerD wrapping is not on by default
 ##because of the hand-editing that is still required.
-srcdir: srcgstreamer
-package: gstreamer gstreamer
-package: gstinterfaces gstinterfaces
-bind: gstreamerc
+#srcdir: srcgstreamer
+#package: gstreamer gstreamer
+#package: gstinterfaces gstinterfaces
+#bind: gstreamerc
 
 # define other packages to create
 
@@ -230,22 +230,22 @@ lookup: APILookupGLt.txt
 
 ##gstreamerD wrapping is not on by default
 ##because of the hand-editing that is still required.
-srcdir: srcgstreamer
-bindDir: gstreamerc
-lookup: APILookupGstInterfaces.txt
-lookup: APILookupGStreamer.txt
+#srcdir: srcgstreamer
+#bindDir: gstreamerc
+#lookup: APILookupGstInterfaces.txt
+#lookup: APILookupGStreamer.txt
 
 ##This is a hack to put the hand edited gstreamer versions there.
 ##This should be removed when we get these files automatically.
-wrap: gstreamerc
-srcout: ../srcgstreamer
-copy: gstreamer.d
-copy: gstreamertypes.d
+#wrap: gstreamerc
+#srcout: ../srcgstreamer
+#copy: gstreamer.d
+#copy: gstreamertypes.d
 
-wrap: gstreamerc
-srcout: ../srcgstreamer
-copy: gstinterfaces.d
-copy: gstinterfacestypes.d
+#wrap: gstreamerc
+#srcout: ../srcgstreamer
+#copy: gstinterfaces.d
+#copy: gstinterfacestypes.d
 
 #Hack to put the build text in the correct place.
 srcdir: src
