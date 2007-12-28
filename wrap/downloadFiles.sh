@@ -2,31 +2,46 @@
 mkdir gtkdocs
 cd gtkdocs
 
-#main gtk libs doc
-curl http://developer.gnome.org/doc/API/glib-2.0-docs.tar.gz | tar xvfz -
-ln -s glib gthread
-curl http://developer.gnome.org/doc/API/gobject-2.0-docs.tar.gz | tar xvfz -
-curl http://developer.gnome.org/doc/API/atk-1.0-docs.tar.gz | tar xvfz -
-curl http://developer.gnome.org/doc/API/pango-1.0-docs.tar.gz | tar xvfz -
-curl http://developer.gnome.org/doc/API/gdk-pixbuf-2.0-docs.tar.gz | tar xvfz -
-ln -s gdk-pixbuf gdkpixbuf
-curl http://developer.gnome.org/doc/API/gdk-2.0-docs.tar.gz | tar xvfz -
-curl http://developer.gnome.org/doc/API/gtk-2.0-docs.tar.gz | tar xvfz -
+#GLIB
+curl http://library.gnome.org/devel/glib/glib-html-2.14.4.tar.gz | tar xvfz -
+ln -s glib-html-2.14.4 gthread
+ln -s glib-html-2.14.4 glib
+#GOBJECT
+curl http://library.gnome.org/devel/gobject/gobject-html-2.14.4.tar.gz | tar xvfz -
+ln -s gobject-html-2.14.4 gobject
+#ATK
+curl http://library.gnome.org/devel/atk/atk-html-1.20.0.tar.gz | tar xvfz -
+ln -s atk-html-1.20.0 atk
+#PANGO
+curl http://library.gnome.org/devel/pango/pango-html-1.18.3.tar.gz | tar xvfz -
+ln -s pango-html-1.18.3 pango
+#GDK-PIXBUF
+curl http://library.gnome.org/devel/gdk-pixbuf/gdk-pixbuf-html-2.12.3.tar.gz | tar xvfz -
+ln -s gdk-pixbuf-html-2.12.3 gdk-pixbuf
+#GDK
+curl http://library.gnome.org/devel/gdk/gdk-html-2.12.3.tar.gz | tar xvfz -
+ln -s gdk-html-2.12.3 gdk
+#GTK
+curl http://library.gnome.org/devel/gtk/gtk-html-2.12.3.tar.gz | tar xvfz -
+ln -s gtk-html-2.12.3 gtk
+#CAIRO
 curl http://cairographics.org/releases/cairo-1.2.6.tar.gz | tar xvfz -
 ln -s cairo-1.2.6/doc/public/html cairo
-wget http://downloads.sourceforge.net/gtkglext/gtkglext-1.2.0.tar.bz2
-tar xvfj gtkglext-1.2.0.tar.bz2
+#GTKGLEXT
+#wget http://downloads.sourceforge.net/gtkglext/gtkglext-1.2.0.tar.bz2
+#tar xvfj gtkglext-1.2.0.tar.bz2
+curl -L http://downloads.sourceforge.net/gtkglext/gtkglext-1.2.0.tar.bz2 | tar xvfj -
 ln -s gtkglext-1.2.0/docs/reference/gtkglext/html glgdk
 ln -s gtkglext-1.2.0/docs/reference/gtkglext/html glgtk
 
 #other libraries.
 #gda
-curl http://ftp.gnome.org/pub/GNOME/sources/libgda/1.2/libgda-1.2.4.tar.gz | tar xvfz -
+curl -L http://ftp.gnome.org/pub/GNOME/sources/libgda/1.2/libgda-1.2.4.tar.gz | tar xvfz -
 ln -s  libgda-1.2.4/doc/C/html gda
 
 #glade
-curl http://developer.gnome.org/doc/API/libglade-2.0-docs.tar.gz | tar xvfz -
-ln -s libglade glade
+curl http://library.gnome.org/devel/libglade/libglade-html-2.6.2.tar.gz | tar xvfz -
+ln -s libglade-html-2.6.2 glade
 
 #gtkSourceView
 curl http://gtksourceview.sourceforge.net/gtksourceview-1.6-docs.tar.gz | tar xvfz -
