@@ -159,8 +159,8 @@ nocode: g_main_loop_ref
 code: start
 	/**
 	 * Increases the reference count on a GMainLoop object by one.
-	 * loop:
-	 *  a GMainLoop
+	 * Params:
+	 *  loop = a GMainLoop
 	 * Returns:
 	 *  loop
 	 */
@@ -461,6 +461,7 @@ body
 	return copy.ptr;
 }
 
+	/** */
 	public static char** toStringzArray(char[][] args)
 	{
 		if ( args is null )
@@ -478,6 +479,7 @@ body
 		return argv;
 	}
 
+	/** */
 	public static char[][] toStringArray(char** args)
 	{
 		if ( args is null )
@@ -498,11 +500,13 @@ body
 		return argv;
 	}
 
+	/** */
 	public static char[] toString(bool b)
 	{
 		return b ? "true" : "false";
 	}
 	
+	/** */
 	public static char[] toString(char c)
 	{
 		char[] result = new char[2];
@@ -511,9 +515,12 @@ body
 		return result[0 .. 1];
 	}
 
+	/** */
 	public static char[] toString(ubyte ub)  { return toString(cast(uint) ub); } /// ditto
+	/** */
 	public static char[] toString(ushort us) { return toString(cast(uint) us); } /// ditto
 	
+	/** */
 	public static char[] toString(uint u)
 	{   char[uint.sizeof * 3] buffer = void;
 		int ndigits;
@@ -539,6 +546,7 @@ body
 		return result;
 	}
 
+	/** */
 	public static char[] toString(ulong u)
 	{   char[ulong.sizeof * 3] buffer;
 		int ndigits;
@@ -560,9 +568,12 @@ body
 		return result;
 	}
 
+	/** */
 	public static char[] toString(byte b)  { return toString(cast(int) b); } /// ditto
+	/** */
 	public static char[] toString(short s) { return toString(cast(int) s); } /// ditto
 	
+	/** */
 	public static char[] toString(int i)
 	{   char[1 + int.sizeof * 3] buffer;
 		char c;
@@ -752,7 +763,6 @@ code: start
 	/**
 	 * Adds a delegate to be notified on the end of the child process.
 	 * Params:
-	 *    	delegate(int =
 	 *    	dlg =
 	 */
 	public void addChildWatch(ChildWatch dlg)
@@ -1136,15 +1146,12 @@ prefix: g_list_
 structWrap: GList* ListG
 
 code: start
-   
+  	/** */ 
 	void* data()
 	{
 		int* pt =cast(int*)getStruct();
 		return cast(void *)(*pt);
 	}
-	 
-
-
 code: end
 
 outFile: ListG

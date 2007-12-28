@@ -96,7 +96,9 @@ code: start
 	/**
 	 * Creates a mew OpenGL frame buffer configuration that match the specified display mode,
 	 * or the fallback mode.
-	 * @param mode display mode bit mask.
+	 * Params:
+	 *  mode = display mode bit mask.
+	 *  fallback = Try this mode if first fails.
 	 */
 	this(GLConfigMode mode, GLConfigMode fallback)
 	{

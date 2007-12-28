@@ -62,6 +62,7 @@ public class GtkDClass
 	private import std.ctype;
 	private import std.path;
 	private import std.stdio;
+	private import std.string;
 
 	//Moved up... for dsss:
 	//private import utils.HtmlStrip;
@@ -323,11 +324,12 @@ public class GtkDClass
 		}
 		gtkDText ~= "\n";
 
-
-		if ( wrapper.includeComments() )
-		{
-			append(gtkDText, description, tabs);
-		}
+		//moved to openClass
+		//for ddoc the comments need to be right above the class.
+		//if ( wrapper.includeComments() )
+		//{
+		//	append(gtkDText, description, tabs);
+		//}
 
 		// reset the parent name
 		parentName = null;
@@ -503,8 +505,15 @@ public class GtkDClass
 				&& gtkDParentNamePrefix.length > 0
 				)
 			{
-				text ~= "private import "~gtkDParentNamePrefix~"."~gtkDParentName~";\n";
+				text ~= "private import "~gtkDParentNamePrefix~"."~gtkDParentName~";";
 			}
+
+			if ( wrapper.includeComments() )
+			{
+				foreach(char[] line; description)
+					text ~= line;
+			}
+
 			text ~= getClassHeader(convParms, gtkDParentName)
 					~ getImplements(convParms, gtkDParentName);
 //			char[] implements = getImplements(convParms, gtkDParentName);
@@ -1987,17 +1996,117 @@ public class GtkDClass
 					// comment
 					void addComments()
 					{
+						bool stilInParam(char[] comments)
+						{
+							return !(find(comments, ":")  == comments.length-1 ||
+							         find(comments, "Returns:") == 0 ||
+							         find(comments, "Since 2.") == 0 ||
+							         find(comments, "See Also") == 0 ||
+							         find(comments, "Property Details") == 0);
+						}
+
+						char[][] phraseParams(char[][] comments)
+						{
+							char[][] description;
+							char[][] params;
+							char[] ret;							
+							
+							for(int i; i < comments.length; i++)
+							{
+								if(find(comments[i], ":") == comments[i].length-1 && find(comments[i], "Returns:") == -1)
+								{
+									//Get the GtkD name of the param
+									char[] param = idsToGtkD(comments[i][0 .. $-1], convParms, wrapper.getAliases());
+
+									//If this param is not in the Gtkd Function Skip it.
+									if(find(fun.declaration(convParms,wrapper.getAliases()), param) == -1)
+									{
+										//Loop for multi line descriptons for this param.
+										while(i+1 < comments.length && stilInParam(comments[i+1]))
+											i++;
+										continue;
+									}
+
+									if(params.length == 0)
+										params ~= "Params:";
+
+									//Loop for multi line descriptons for this param.
+									bool firstRun = true;
+									while(i+1 < comments.length && stilInParam(comments[i+1]))
+									{
+										i++;
+										if(firstRun)
+										{
+											params ~= param ~" = "~ comments[i];
+											firstRun = false;
+										}
+										else
+											params ~= comments[i];
+									}
+								}
+								else if(find(comments[i], "Returns:") > -1)
+								{
+									//Skip return for Constructors.
+									if(find(fun.declaration(convParms,wrapper.getAliases()), "this (") > -1)
+									{
+										//Loop for multi line descriptons for this return.
+										while(i+1 < comments.length && stilInParam(comments[i+1]))
+											i++;
+										continue;
+									}
+
+									ret ~= comments[i];
+
+									//Loop for multi line descriptons for this return.
+									bool firstRun = true;
+									while(i+1 < comments.length && stilInParam(comments[i+1]))
+									{
+										i++;
+										ret ~= comments[i];
+									}
+								}
+								else if(find(comments[i], "See Also") == 0 || find(comments[i], "Property Details") == 0)
+								{
+									//These sections get included with the last function.
+									break;
+								}
+								else
+								{
+									//Add the rest to the description.
+									description ~= comments[i];
+								}
+							}
+
+							if(params.length > 0)
+							{
+								foreach(char[] line; params)
+									description ~= line;
+							}
+
+							if(ret.length > 0)
+								description ~= ret;
+
+							return description;
+						}
+
 						if ( wrapper.includeComments() )
 						{
-							member ~= "/**";
+							char[][] comments;
 							while ( line<lines.length )
 							{
 								//if ( !tooSoon )
 								//{
 								//	tooSoon = lines[line]=="Since 2.10";
 								//}
-								member ~= " * "~lines[line++];
+								comments ~= lines[line++];
 							}
+
+							member ~= "/**";
+
+							comments = phraseParams(comments);
+							foreach(char[] line; comments)
+								member ~= " * "~ line;
+
 							member ~= " */";
 						}
 					}

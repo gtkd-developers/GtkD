@@ -78,11 +78,11 @@ wrap: cairo
 
 file: cairo-cairo-t.html
 struct: cairo_t
-class: Cairo
+class: Context
 prefix: cairo_
 structWrap: cairo_surface_t* Surface
-structWrap: cairo_t* Cairo
-import: cairoLib.Surface
+structWrap: cairo_t* Context
+import: cairo.Surface
 import: glib.Str
 import: gdk.Region
 import: gdk.Rectangle
@@ -97,12 +97,12 @@ code: start
 
 	/**
 	 * Creates a Cairo context for drawing to drawable.
-	 * drawable:
-	 *  a GdkDrawable
+	 * Since 2.8
+	 * Params:
+	 *  drawable = a GdkDrawable
 	 * Returns:
 	 *  A newly created Cairo context. Free with
 	 *  cairo_destroy() when you are done drawing.
-	 * Since 2.8
 	 */
 	this (Drawable drawable)
 	{
@@ -112,99 +112,85 @@ code: start
 
 	/**
 	 * Sets the specified GdkColor as the source color of cr.
-	 * cr:
-	 *  a cairo_t
-	 * color:
-	 *  a GdkColor
 	 * Since 2.8
+	 * Params:
+	 *  color = a GdkColor
 	 */
 	public void setSourceColor(Color color)
 	{
 		// void gdk_cairo_set_source_color (cairo_t *cr,  GdkColor *color);
-		gdk_cairo_set_source_color(getCairoStruct(), color.getColorStruct());
+		gdk_cairo_set_source_color(getContextStruct(), color.getColorStruct());
 	}
 
 	/**
 	 * Sets the given pixbuf as the source pattern for the Cairo context.
 	 * The pattern has an extend mode of CAIRO_EXTEND_NONE and is aligned
-	 * so that the origin of pixbuf is pixbuf_x, pixbuf_y
-	 * cr:
-	 *  a Cairo context
-	 * pixbuf:
-	 *  a GdkPixbuf
-	 * pixbuf_x:
-	 *  X coordinate of location to place upper left corner of pixbuf
-	 * pixbuf_y:
-	 *  Y coordinate of location to place upper left corner of pixbuf
+	 * so that the origin of pixbuf is pixbufX, pixbufY
 	 * Since 2.8
+	 * Params:
+	 *  pixbuf = a GdkPixbuf
+	 *  pixbufX = X coordinate of location to place upper left corner of pixbuf
+	 *  pixbufY = Y coordinate of location to place upper left corner of pixbuf
 	 */
 	public void setSourcePixbuf(Pixbuf pixbuf, double pixbufX, double pixbufY)
 	{
 		// void gdk_cairo_set_source_pixbuf (cairo_t *cr,  GdkPixbuf *pixbuf,  double pixbuf_x,  double pixbuf_y);
-		gdk_cairo_set_source_pixbuf(getCairoStruct(), pixbuf.getPixbufStruct(), pixbufX, pixbufY);
+		gdk_cairo_set_source_pixbuf(getContextStruct(), pixbuf.getPixbufStruct(), pixbufX, pixbufY);
 	}
 
 	/**
 	 * Sets the given pixmap as the source pattern for the Cairo context.
 	 * The pattern has an extend mode of CAIRO_EXTEND_NONE and is aligned
-	 * so that the origin of pixbuf is pixbuf_x, pixbuf_y
-	 * cr:
-	 *  a Cairo context
-	 * pixmap:
-	 *  a GdkPixmap
-	 * pixmap_x:
-	 *  X coordinate of location to place upper left corner of pixmap
-	 * pixmap_y:
-	 *  Y coordinate of location to place upper left corner of pixmap
+	 * so that the origin of pixbuf is pixbufX, pixbufY
 	 * Since 2.10
+	 * Params:
+	 *  pixmap = a GdkPixmap
+	 *  pixmapX = X coordinate of location to place upper left corner of pixmap
+	 *  pixmapY = Y coordinate of location to place upper left corner of pixmap
 	 */
 	public void setSourcePixmap(Pixmap pixmap, double pixmapX, double pixmapY)
 	{
 		// void gdk_cairo_set_source_pixmap (cairo_t *cr,  GdkPixmap *pixmap,  double pixmap_x,  double pixmap_y);
-		gdk_cairo_set_source_pixmap( getCairoStruct(), pixmap.getPixmapStruct(), pixmapX, pixmapY);
+		gdk_cairo_set_source_pixmap( getContextStruct(), pixmap.getPixmapStruct(), pixmapX, pixmapY);
 	}
 
 	/**
 	 * Adds the given rectangle to the current path of cr.
-	 * cr:
-	 *  a cairo_t
-	 * rectangle:
-	 *  a GdkRectangle
 	 * Since 2.8
+	 * Params:
+	 *  rectangle = a GdkRectangle
 	 */
 	public void rectangle(Rectangle rectangle)
 	{
 		// void gdk_cairo_rectangle (cairo_t *cr,  GdkRectangle *rectangle);
-		gdk_cairo_rectangle( getCairoStruct(), rectangle.getRectangleStruct());
+		gdk_cairo_rectangle( getContextStruct(), rectangle.getRectangleStruct());
 	}
 
 	/**
 	 * Adds the given region to the current path of cr.
-	 * cr:
-	 *  a cairo_t
-	 * region:
-	 *  a GdkRegion
 	 * Since 2.8
+	 * Params:
+	 *  region = a GdkRegion
 	 */
-	public  void region( Region region)
+	public  void region(Region region)
 	{
 		// void gdk_cairo_region (cairo_t *cr,  GdkRegion *region);
-		gdk_cairo_region(getCairoStruct(), region.getRegionStruct());
+		gdk_cairo_region(getContextStruct(), region.getRegionStruct());
 	}
 
 
 code: end
 
-openFile: Cairo
+openFile: Context
 
 file: cairo-Paths.html
-mergeFile: Cairo
+mergeFile: Context
 
 file: cairo-Transformations.html
-mergeFile: Cairo
+mergeFile: Context
 
 file: cairo-Text.html
-closeFile: Cairo
+closeFile: Context
 
 
 file: cairo-Patterns.html

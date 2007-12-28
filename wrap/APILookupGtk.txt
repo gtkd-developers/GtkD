@@ -186,7 +186,6 @@ code: start
 	 *    	interval = 	the timeout in milieconds
 	 *    	delegate() = 	the delegate to be executed
 	 *    	fireNow = 	When true the delegate will be executed emmidiatly
-	 * Returns: 
 	 */
 	this(uint interval, bool delegate() dlg, bool fireNow=false)
 	{
@@ -201,6 +200,7 @@ code: start
 		}
 	}
 
+	/** */
 	public void stop()
 	{
 		if ( timeoutID > 0 )
@@ -212,7 +212,6 @@ code: start
 	
 	/**
 	 * Removes the timeout from gtk
-	 * Returns: 
 	 */
 	~this()
 	{
@@ -222,7 +221,7 @@ code: start
 	/**
 	 * Adds a new delegate to this timeout cycle
 	 * Params:
-	 *    	delegate() = 	
+	 *    	dlg = 	
 	 *    	fireNow = 	
 	 */
 	public void addListener(bool delegate() dlg, bool fireNow=false)
@@ -287,10 +286,9 @@ code: start
 	/**
 	 * Creates a new idle cycle.
 	 * Params:
-	 *    	interval = 	the idle in milieconds
-	 *    	delegate() = 	the delegate to be executed
-	 *    	fireNow = 	When true the delegate will be executed emmidiatly
-	 * Returns: 
+	 *    	interval = the idle in milieconds
+	 *    	dlg = the delegate to be executed
+	 *    	fireNow = When true the delegate will be executed emmidiatly
 	 */
 	this(bool delegate() dlg, bool fireNow=false)
 	{
@@ -305,6 +303,7 @@ code: start
 		}
 	}
 
+	/** */
 	public void stop()
 	{
 		if ( idleID > 0 )
@@ -316,7 +315,6 @@ code: start
 	
 	/**
 	 * Removes the idle from gtk
-	 * Returns: 
 	 */
 	~this()
 	{
@@ -326,7 +324,7 @@ code: start
 	/**
 	 * Adds a new delegate to this idle cycle
 	 * Params:
-	 *    	delegate() = 	
+	 *    	dlg = 	
 	 *    	fireNow = 	
 	 */
 	public void addListener(bool delegate() dlg, bool fireNow=false)
@@ -722,13 +720,13 @@ import: gdk.Screen
 structWrap: GdkScreen* Screen
 
 code: start
-
+	/** */
 	public Widget addButton(StockID stockID, int responseId)
 	{
 		return addButton(StockDesc[stockID], responseId);
 	}
 	
-
+	/** */
 	public void addButtons(char[][] buttonsText, ResponseType[] responses)
 	{
 		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
@@ -737,6 +735,7 @@ code: start
 		}
 	}
 	
+	/** */
 	public void addButtons(StockID[] stockIDs, ResponseType[] responses)
 	{
 		for ( int i=0 ; i<stockIDs.length && i<responses.length ; i++)
@@ -776,18 +775,13 @@ code: start
 	 * user may want to see. When the user clicks a button a "response"
 	 * signal is emitted with response IDs from GtkResponseType. See
 	 * GtkDialog for more details.
-	 * parent:
-	 *  transient parent, or NULL for none
-	 * flags:
-	 *  flags
-	 * type:
-	 *  type of message
-	 * buttons:
-	 *  set of buttons to use
-	 * message_format:
-	 *  printf()-style format string, or NULL
-	 * message:
-	 *  the message - should be null, any formatting should be done prior to call this constructor
+	 * Params:
+	 *    	parent = transient parent, or NULL for none
+	 *    	flags = flags
+	 *    	type = type of message
+	 *    	buttons= set of buttons to use
+	 *    	messageFormat = printf()-style format string, or NULL
+	 *    	message = the message - should be null, any formatting should be done prior to call this constructor
 	 *  arguments for message_format
 	 * Returns:
 	 *  a new GtkMessageDialog
@@ -813,6 +807,9 @@ code: start
 	 * instead, since you can't pass the markup string either
 	 * as the format (it might contain '%' characters) or as a string
 	 * argument.
+	 * Since 2.4
+	 * Examples:
+	 * --------------------
 	 *  GtkWidget *dialog;
 	 *  dialog = gtk_message_dialog_new (main_application_window,
 	 *  GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -821,23 +818,14 @@ code: start
 	 *  NULL);
 	 *  gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog),
 	 *  markup);
-	 * parent:
-	 *  transient parent, or NULL for none
-	 * flags:
-	 *  flags
-	 * type:
-	 *  type of message
-	 * buttons:
-	 *  set of buttons to use
-	 * message_format:
-	 *  printf()-style format string, or NULL
-	 * message:
-	 *  the message - should be null, any formatting should be done prior to call this constructor
-	 * ...:
-	 *  arguments for message_format
-	 * Returns:
-	 *  a new GtkMessageDialog
-	 * Since 2.4
+	 * --------------------
+	 * Params:
+	 *  parent = transient parent, or NULL for none
+	 *  flags = flags
+	 *  type = type of message
+	 *  buttons = set of buttons to use
+	 *  messageFormat = printf()-style format string, or NULL
+	 *  message = the message - should be null, any formatting should be done prior to call this constructor
 	 */
 	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, char[] messageFormat, char[] message=null )
 	{
@@ -885,8 +873,9 @@ import: gtk.Window;
 code: start
 	/**
 	 * Create an information popup dialog.
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static void information(char[] message, char[] title)
 	{
@@ -895,9 +884,10 @@ code: start
 	
 	/**
 	 * Create an information popup dialog.
-	 * @param parent The parent window of this popup dialog
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static void information(Window parent, char[] message, char[] title)
 	{
@@ -914,8 +904,9 @@ code: start
 	
 	/**
 	 * Create an error popup dialog.
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static void error(char[] message, char[] title)
 	{
@@ -924,9 +915,10 @@ code: start
 	
 	/**
 	 * Create an error popup dialog.
-	 * @param parent The parent window of this popup dialog
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static void error(Window parent, char[] message, char[] title)
 	{
@@ -944,8 +936,9 @@ code: start
 	
 	/**
 	 * Create an 'yes' or 'no' popup dialog.
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static bool yesNo(char[] message, char[] title)
 	{
@@ -954,9 +947,10 @@ code: start
 	
 	/**
 	 * Create an 'yes' or 'no' popup dialog.
-	 * @param parent The parent window of this popup dialog
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static bool yesNo(Window parent, char[] message, char[] title)
 	{
@@ -976,8 +970,9 @@ code: start
 	
 	/**
 	 * Create an 'yes', 'no' or 'cancel' popup dialog.
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static ResponseType yesNoCancel(char[] message, char[] title)
 	{
@@ -986,9 +981,10 @@ code: start
 	
 	/**
 	 * Create an 'yes', 'no' or 'cancel' popup dialog.
-	 * @param parent The parent window of this popup dialog
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static ResponseType yesNoCancel(Window parent, char[] message, char[] title)
 	{
@@ -1036,7 +1032,7 @@ code: start
 	/**
 	 * Creates a top level window with a title
 	 * Params:
-	 * 		title:	The Window title
+	 * 		title = The Window title
 	 */
 	public this(char[] title)
 	{
@@ -1090,7 +1086,7 @@ public class MainWindow : Window
 	
 	/**
 	 * Executed when the user tries to close the window
-	 * @return true to refuse to close the window
+	 * Returns: true to refuse to close the window
 	 */
 	protected int windowDelete(Event event, Widget widget)
 	{
@@ -1106,9 +1102,10 @@ public class MainWindow : Window
 	
 	/**
 	 * Allows the application to close and decide if it can exit
-	 * @param code the code reason to exit
-	 * @param force if true the application must expect to be closed even against it's will
-	 * @return false to refuse to exit
+	 * Params:
+	 *  code = the code reason to exit
+	 *  force = if true the application must expect to be closed even against it's will
+	 * Returns: false to refuse to exit
 	 */
 	protected bool exit(int code, bool force)
 	{
@@ -1211,10 +1208,9 @@ code: start
 	 * icon name isn't known, the image will be empty.
 	 * You can register your own stock icon names, see
 	 * gtk_icon_factory_add_default() and gtk_icon_factory_add().
-	 * stock_id:
-	 *  a stock icon name
-	 * size:
-	 *  a stock icon size
+	 * Params:
+	 *  StockID = a stock icon name
+	 *  size = a stock icon size
 	 * Returns:
 	 *  a new GtkImage displaying the stock icon
 	 */
@@ -1228,14 +1224,12 @@ code: start
 	 * Creates a GtkImage displaying an icon from the current icon theme.
 	 * If the icon name isn't known, a "broken image" icon will be
 	 * displayed instead. If the current icon theme is changed, the icon
-	 * will be updated appropriately.
-	 * icon_name:
-	 *  an icon name
-	 * size:
-	 *  a stock icon size
+	 * will be updated appropriately. Since 2.6
+	 * Params:
+	 *  iconName = an icon name
+	 *  size = a stock icon size
 	 * Returns:
 	 *  a new GtkImage displaying the themed icon
-	 * Since 2.6
 	 */
 	public this (char[] iconName, GtkIconSize size)
 	{
@@ -1272,12 +1266,10 @@ code: start
 	 * label is inside a button or menu item, the button or menu item will
 	 * automatically become the mnemonic widget and be activated by
 	 * the mnemonic.
-	 * str:
-	 *  The text of the label, with an underscore in front of the
+	 * Params:
+	 *  str = The text of the label, with an underscore in front of the
 	 *  mnemonic character
-	 * mnemonic: when false uses the literal text passed in without mnemonic
-	 * Returns:
-	 *  the new GtkLabel
+	 *  mnemonic = when false uses the literal text passed in without mnemonic
 	 */
 	public this (char[] str, bool mnemonic=true)
 	{
@@ -1340,20 +1332,25 @@ code: start
 	/** An arbitrary string to be used by the application */
 	private char[] action;
 
+	/** */
 	public static void setIconSize(IconSize iconSize)
 	{
 		currentIconSize = iconSize;
 	}
+
+	/** */
 	public static IconSize getIconSize()
 	{
 		return currentIconSize;
 	}
 
+	/** */
 	public void setActionName(char[] action)
 	{
 		this.action = action.dup;
 	}
-	
+
+	/** */
 	public char[] getActionName()
 	{
 		return action;
@@ -1366,9 +1363,10 @@ code: start
 	 * underscores). The first underlined character represents a keyboard
 	 * accelerator called a mnemonic.
 	 * Pressing Alt and that key activates the button.
-	 * label:
-	 *  The text of the button, with an underscore in front of the
+	 * Params:
+	 *  label = The text of the button, with an underscore in front of the
 	 *  mnemonic character
+	 *  mnemonic = true if the button has an mnemnonic
 	 * Returns:
 	 *  a new GtkButton
 	 */
@@ -1392,10 +1390,8 @@ code: start
 	 * GTK_STOCK_APPLY.
 	 * If stock_id is unknown, then it will be treated as a mnemonic
 	 * label (as for gtk_button_new_with_mnemonic()).
-	 * stock_id:
-	 *  the name of the stock item
-	 * Returns:
-	 *  a new GtkButton
+	 * Params:
+	 *  StockID = the name of the stock item
 	 */
 	public this (StockID stockID, bool hideLabel=false)
 	{
@@ -1413,19 +1409,21 @@ code: start
 		
 	}
 	
+	/** */
 	public this(StockID stockID, void delegate(Button) dlg, bool hideLabel=false)
 	{
 		this(stockID, hideLabel);
 		addOnClicked(dlg);
 	}
 	
-
+	/** */
 	public this(char[] label, void delegate(Button) dlg, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnClicked(dlg);
 	}
 
+	/** */
 	public this(char[] label, void delegate(Button) dlg, char[] action)
 	{
 		this(label);
@@ -1455,13 +1453,10 @@ code: start
 	 * If mnemonic is true the label
 	 * will be created using gtk_label_new_with_mnemonic(), so underscores
 	 * in label indicate the mnemonic for the check button.
-	 * label:
-	 *  The text of the button, with an underscore in front of the
+	 * Params:
+	 *  label = The text of the button, with an underscore in front of the
 	 *  mnemonic character
-	 * label:
-	 * the text for the check button.
-	 * Returns:
-	 * a GtkWidget.
+	 *  mnemonic = true if the button has an mnemnonic
 	 */
 	public this (char[] label, bool mnemonic=true)
 	{
@@ -1476,7 +1471,8 @@ code: start
 			this(cast(GtkCheckButton*)gtk_check_button_new_with_label(Str.toStringz(label)) );
 		}
 	}
-	
+
+	/** */
 	public this(char[] label, void delegate(CheckButton) onClicked, bool mnemonic=true)
 	{
 		this(label, mnemonic);
@@ -1504,15 +1500,13 @@ nocode: gtk_radio_button_new_with_mnemonic_from_widget
 code: start
 	/**
 	 * Creates a new GtkRadioButton with a text label.
-	 * If mnemonic if true the label will be created using
-	 * gtk_label_new_with_mnemonic(), so underscores in label indicate the
-	 * mnemonic for the button.
-	 * an existing radio button group, or NULL if you are creating a new
-	 * group.
-	 * label:
-	 * the text label to display next to the radio button.
-	 * Returns:
-	 * a new radio button.
+	 * Params:
+	 *  group = an existing radio button group, or NULL if you are creating a new
+	 *  group.
+	 *  label = the text label to display next to the radio button.
+	 *  mnemonic = if true the label will be created using
+	 *  gtk_label_new_with_mnemonic(), so underscores in label indicate the
+	 *  mnemonic for the button.
 	 */
 	public this (ListSG group, char[] label, bool mnemonic=true)
 	{
@@ -1537,15 +1531,12 @@ code: start
 	/**
 	 * Creates a new GtkRadioButton with a text label, adding it to the same group
 	 * as group.
-	 * It mnemonic it true the label
-	 * will be created using gtk_label_new_with_mnemonic(), so underscores
-	 * in label indicate the mnemonic for the button.
-	 * group:
-	 * an existing GtkRadioButton.
-	 * label:
-	 * a text string to display next to the radio button.
-	 * Returns:
-	 * a new radio button.
+	 * Params:
+	 *  group = an existing GtkRadioButton.
+	 *  label = a text string to display next to the radio button.
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the button.
 	 */
 	public this (RadioButton radioButton, char[] label, bool mnemonic=true)
 	{
@@ -1582,13 +1573,11 @@ nocode: gtk_toggle_button_new_with_mnemonic
 code: start
 	/**
 	 * Creates a new toggle button with a text label.
-	 * If mnemonic is true the label
-	 * will be created using gtk_label_new_with_mnemonic(), so underscores
-	 * in label indicate the mnemonic for the button.
-	 * label:
-	 * a string containing the message to be placed in the toggle button.
-	 * Returns:
-	 * a new toggle button.
+	 * Params:
+	 *  label = a string containing the message to be placed in the toggle button.
+	 *  mnemonic =  if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the button.
 	 */
 	public this (char[] label, bool mnemonic=true)
 	{
@@ -1621,12 +1610,14 @@ import: gtk.EntryCompletion
 structWrap: GtkEntryCompletion* EntryCompletion
 
 code: start
+	/** */
 	public this (char[] text)
 	{
 		this();
 		setText(text);
 	}
-	
+
+	/** */	
 	public this (char[] text, int max)
 	{
 		this(max);
@@ -1714,6 +1705,7 @@ import: gtk.TextChildAnchor
 structWrap: GtkTextChildAnchor* TextChildAnchor
 
 code: start
+	/** */
 	public this()
 	{
 		this(new GtkTextIter);
@@ -1782,12 +1774,8 @@ code: start
 	/**
 	 * Deletes current contents of buffer, and inserts text instead. If
 	 * len is -1, text must be nul-terminated. text must be valid UTF-8.
-	 * buffer:
-	 *  a GtkTextBuffer
-	 * text:
-	 *  UTF-8 text to insert
-	 * len:
-	 *  length of text in bytes
+	 * Params:
+	 *  text = UTF-8 text to insert
 	 */
 	public void setText(char[] text)
 	{
@@ -1795,7 +1783,7 @@ code: start
 		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), text.length);
 	}
 	
-		/**
+	/**
 	 * Inserts len bytes of text at position iter. If len is -1,
 	 * text must be nul-terminated and will be inserted in its
 	 * entirety. Emits the "insert_text" signal; insertion actually occurs
@@ -1803,14 +1791,9 @@ code: start
 	 * insertion occurs (because the buffer contents change), but the
 	 * default signal handler revalidates it to point to the end of the
 	 * inserted text.
-	 * buffer:
-	 *  a GtkTextBuffer
-	 * iter:
-	 *  a position in the buffer
-	 * text:
-	 *  UTF-8 format text to insert
-	 * len:
-	 *  length of text in bytes, or -1
+	 * Params:
+	 *  iter = a position in the buffer
+	 *  text = UTF-8 format text to insert
 	 */
 	public void insert(TextIter iter, char[] text)
 	{
@@ -1821,12 +1804,8 @@ code: start
 	/**
 	 * Simply calls gtk_text_buffer_insert(), using the current
 	 * cursor position as the insertion point.
-	 * buffer:
-	 *  a GtkTextBuffer
-	 * text:
-	 *  some text in UTF-8 format
-	 * len:
-	 *  length of text, in bytes
+	 * Params:
+	 *  text = some text in UTF-8 format
 	 */
 	public void insertAtCursor(char[] text)
 	{
@@ -1842,16 +1821,10 @@ code: start
 	 * default_editable indicates the editability of text that doesn't
 	 * have a tag affecting editability applied to it. Typically the
 	 * result of gtk_text_view_get_editable() is appropriate here.
-	 * buffer:
-	 *  a GtkTextBuffer
-	 * iter:
-	 *  a position in buffer
-	 * text:
-	 *  some UTF-8 text
-	 * len:
-	 *  length of text in bytes, or -1
-	 * default_editable:
-	 *  default editability of buffer
+	 * Params:
+	 *  iter = a position in buffer
+	 *  text = some UTF-8 text
+	 *  defaultEditable = default editability of buffer
 	 * Returns:
 	 *  whether text was actually inserted
 	 */
@@ -1867,14 +1840,9 @@ code: start
 	 * default_editable indicates the editability of text that doesn't
 	 * have a tag affecting editability applied to it. Typically the
 	 * result of gtk_text_view_get_editable() is appropriate here.
-	 * buffer:
-	 *  a GtkTextBuffer
-	 * text:
-	 *  text in UTF-8 format
-	 * len:
-	 *  length of text in bytes, or -1
-	 * default_editable:
-	 *  default editability of buffer
+	 * Params:
+	 *  text = text in UTF-8 format
+	 *  defaultEditable = default editability of buffer
 	 * Returns:
 	 *  whether text was actually inserted
 	 */
@@ -1890,18 +1858,10 @@ code: start
 	 * terminate the list. Equivalent to calling gtk_text_buffer_insert(),
 	 * then gtk_text_buffer_apply_tag() on the inserted text;
 	 * gtk_text_buffer_insert_with_tags() is just a convenience function.
-	 * buffer:
-	 *  a GtkTextBuffer
-	 * iter:
-	 *  an iterator in buffer
-	 * text:
-	 *  UTF-8 text
-	 * len:
-	 *  length of text, or -1
-	 * first_tag:
-	 *  first tag to apply to text
-	 * ...:
-	 *  NULL-terminated list of tags to apply
+	 * Params:
+	 *  iter = an iterator in buffer
+	 *  text = UTF-8 text
+	 *  ... = NULL-terminated list of tags to apply
 	 */
 	//version(Tango){} else -- still doesn't work on tango, but it compiles now
 	public void insertWithTags(TextIter iter, char[] text, ... )
@@ -1917,18 +1877,10 @@ code: start
 	/**
 	 * Same as gtk_text_buffer_insert_with_tags(), but allows you
 	 * to pass in tag names instead of tag objects.
-	 * buffer:
-	 *  a GtkTextBuffer
-	 * iter:
-	 *  position in buffer
-	 * text:
-	 *  UTF-8 text
-	 * len:
-	 *  length of text, or -1
-	 * first_tag_name:
-	 *  name of a tag to apply to text
-	 * ...:
-	 *  more tag names
+	 * Params:
+	 *  iter = position in buffer
+	 *  text = UTF-8 text
+	 *  ... = more tag names
 	 */
  	// version(Tango){} else  -- still doesn't work on tango, but it compiles now 
  	public void insertWithTagsByName(TextIter iter, char[] text, ... )
@@ -1943,10 +1895,11 @@ code: start
 	
 	/**
 	 * Create a new tag for this buffer
-	 * @param tagName can be null for no name
-	 * @param propertyName
-	 * @param propertyValue
-	 */
+	 * Params:
+	 *  tagName= can be null for no name
+	 *  propertyName=
+	 *  propertyValue=
+	 */ 
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, 
 									   char[] propertyName1, char[] propertyValue1)
 	{
@@ -1962,9 +1915,10 @@ code: start
 	}
 	/**
 	 * Create a new tag for this buffer
-	 * @param tagName can be null for no name
-	 * @param propertyName
-	 * @param propertyValue
+	 * Params:
+	 *  tagName= can be null for no name
+	 *  propertyName=
+	 *  propertyValue=
 	 */
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue)
 	{
@@ -1978,9 +1932,10 @@ code: start
 
 	/**
 	 * Create a new tag for this buffer
-	 * @param tagName can be null for no name
-	 * @param propertyName
-	 * @param propertyValue
+	 * Params:
+	 *  tagName= can be null for no name
+	 *  propertyName=
+	 *  propertyValue=
 	 */
 	TextTag createTag(char[] tagName, char[] propertyName, double propertyValue)
 	{
@@ -1992,11 +1947,12 @@ code: start
 	
 	/**
 	 * Create a new tag for this buffer
-	 * @param tagName can be null for no name
-	 * @param propertyName
-	 * @param propertyValue
-	 * @param propertyName2
-	 * @param propertyValue2
+	 * Params:
+	 *  tagName= can be null for no name
+	 *  propertyName=
+	 *  propertyValue=
+	 *  propertyName2=
+	 *  propertyValue2=
 	 */
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2)
 	{
@@ -2005,17 +1961,20 @@ code: start
 		);
 	}
 
+	/** Create a new tag for this buffer */
 	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2, char[] propertyName3, int propertyValue3, char[] propertyName4, int propertyValue4, char[] propertyName5, int propertyValue5)
 	{
 		return new TextTag(
 			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName), propertyValue, Str.toStringz(propertyName2), propertyValue2, Str.toStringz(propertyName3), propertyValue3, Str.toStringz(propertyName4), propertyValue4, Str.toStringz(propertyName5), propertyValue5, null)
 		);
 	}
+
 	/**
 	 * Create a new tag for this buffer
-	 * @param tagName can be null for no name
-	 * @param propertyName
-	 * @param propertyValue
+	 * Params:
+	 *  tagName= can be null for no name
+	 *  propertyName=
+	 *  propertyValue=
 	 */
 	TextTag createTag(char[] tagName, char[] propertyName, char[] propertyValue)
 	{
@@ -2027,10 +1986,10 @@ code: start
 
 	/**
 	 * Create a new tag for this buffer
-	 * @param tagName can be null for no name
-	 * @param propertyName
-	 * @param propertyValue
-	 * @return 
+	 * Params:
+	 *  tagName = can be null for no name
+	 *  propertyName=
+	 *  propertyValue= 
 	 */
 	TextTag createTag(char[] tagName, char[] propertyName, Bitmap propertyValue)
 	{
@@ -2042,7 +2001,7 @@ code: start
 
 	/**
 	 * Obtain the entire text 
-	 * @return The text char[]
+	 * Returns: The text char[]
 	 */
 	char[] getText()
 	{
@@ -2054,11 +2013,12 @@ code: start
 
 	/**
 	 * Create a new tag for this buffer
-	 * @param tagName can be null for no name
-	 * @param propertyName
-	 * @param propertyValue
-	 * @param propertyName2
-	 * @param propertyValue2
+	 * Params:
+	 *  tagName= can be null for no name
+	 *  propertyName=
+	 *  propertyValue=
+	 *  propertyName2=
+	 *  propertyValue2=
 	 */
 	TextTag createTag(char[] tagName, 
 			char[] propertyName, char[] propertyValue, 
@@ -2172,7 +2132,8 @@ code: start
 
 	/**
 	 * Simply appends some on the cursor position
-	 * @param text the text to append
+	 * Params:
+	 *  text = the text to append
 	 */
 	void insertText(char[] text)
 	{
@@ -2182,7 +2143,8 @@ code: start
 
 	/**
 	 * Simply appends some text to this view
-	 * @param text the text to append
+	 * Params:
+	 *  text = the text to append
 	 */
 	void appendText(char[] text, bool ensureVisible=true)
 	body
@@ -2247,8 +2209,10 @@ interfaceCode: start
 	 */
 	int getValueInt(TreeIter iter, int column);
 
+	/** */
 	void setValue(TreeIter iter, int column, char[] value);
 
+	/** */
 	void setValue(TreeIter iter, int column, int value);
 
 interfaceCode: end
@@ -2278,14 +2242,11 @@ code: start
 		return value.getInt();
 	}
 
-		/**
+	/**
 	 * Sets iter to a valid iterator pointing to path.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The uninitialized GtkTreeIter.
-	 * path:
-	 *  The GtkTreePath.
+	 * Params:
+	 *  iter = The uninitialized GtkTreeIter.
+	 *  path = The GtkTreePath.
 	 * Returns:
 	 *  TRUE, if iter was set.
 	 */
@@ -2322,16 +2283,19 @@ code: start
 	 */
 	GtkTreeModel *gtkTreeModel; 
 
+	/** */
 	public void setModel(GtkTreeModel *gtkTreeModel)
 	{
 		this.gtkTreeModel = gtkTreeModel;
 	}
-       
+
+	/** */       
 	public void setModel(TreeModel treeModel)
 	{
 		this.gtkTreeModel = treeModel.getTreeModelStruct();
 	}
 	   
+	/** */
 	public this(TreeModel treeModel, TreePath treePath)
 	{
 		this();
@@ -2356,9 +2320,9 @@ code: start
 	
 	/**
 	 * Get Value
-	 * @param iter
-	 * @param column
-	 * @param value
+	 * Params:
+	 *  column =
+	 *  value =
 	 */
 	void getValue(int column, Value value)
 	{
@@ -2371,8 +2335,9 @@ code: start
 
 	/**
 	 * Get the value of a column as a string
-	 * @para column the column number
-	 * @return a string representing the value of the column
+	 * Params:
+	 *  column = the column number
+	 * Returns: a string representing the value of the column
 	 */
 	char[] getValueString(int column)
 	{
@@ -2388,8 +2353,9 @@ code: start
 
 	/**
 	 * Get the value of a column as an int
-	 * @para column the column number
-	 * @return a string representing the value of the column
+	 * Params:
+	 *  column = the column number
+	 * Returns: a string representing the value of the column
 	 */
 	int getValueInt(int column)
 	{
@@ -2402,6 +2368,7 @@ code: start
 		return value.getInt();
 	}
 
+	/** */
 	TreePath getTreePath()
 	{
 		if ( gtkTreeModel  is  null )
@@ -2411,7 +2378,7 @@ code: start
 		return new TreePath(gtk_tree_model_get_path(gtkTreeModel, gtkTreeIter));
 	}
 
-		/**
+	/**
 	 * This return the path visible to the user.
 	 */
 	char[] getVisiblePath(char[] separator)
@@ -2438,8 +2405,7 @@ code: start
 	
 	/**
 	 * Gets the parent of this iter
-	 * @param child
-	 * @return the parent iter or null if can't get parent or an error occured
+	 * Returns: the parent iter or null if can't get parent or an error occured
 	 */
 	TreeIter getParent()
 	{
@@ -2457,7 +2423,7 @@ code: start
 		return parent;
 	}
 
-
+	/** */
 	TreeIter getGrandParent()
 	{
 		if ( gtkTreeModel  is  null )
@@ -2501,9 +2467,8 @@ nocode: gtk_tree_path_new_first
 code: start
 	/**
 	 * Creates a new GtkTreePath. This structure refers to a row.
-	 * if firstRow is true this is the string representation of this path is "0"
-	 * Returns:
-	 *  A newly created GtkTreePath.
+	 * Params:
+	 * firstRow = if true this is the string representation of this path is "0"
 	 */
 	public this (bool firstRow=false)
 	{
@@ -2544,11 +2509,11 @@ extend: Exception
 import(tango): tango.core.Exception
 
 code: start
-/**
- * A TreeIter error.
- * thrown<br>
- * - trying to access a method that requires a tree model and the tree model was never set
- */
+	/**
+	 * A TreeIter error.
+	 * thrown<br>
+	 * - trying to access a method that requires a tree model and the tree model was never set
+	 */
 	public this(char[] method, char[] message)
 	{
 		super("TreeIter."~method~" : "~message);
@@ -2586,12 +2551,9 @@ code: start
 	 * just want to test if selection has any selected nodes. model is filled
 	 * with the current model as a convenience. This function will not work if you
 	 * use selection is GTK_SELECTION_MULTIPLE.
-	 * selection:
-	 *  A GtkTreeSelection.
-	 * model:
-	 *  A pointer to set to the GtkTreeModel, or NULL.
-	 * iter:
-	 *  The GtkTreeIter, or NULL.
+	 * Params:
+	 *  model = A pointer to set to the GtkTreeModel, or NULL.
+	 *  iter = The GtkTreeIter, or NULL.
 	 * Returns:
 	 *  TRUE, if there is a selected node.
 	 */
@@ -2609,13 +2571,11 @@ code: start
 	 * To free the return value, use:
 	 * g_list_foreach (list, gtk_tree_path_free, NULL);
 	 * g_list_free (list);
-	 * selection:
-	 *  A GtkTreeSelection.
-	 * model:
-	 *  A pointer to set to the GtkTreeModel, or NULL.
+	 * Since 2.2
+	 * Params:
+	 *  model = A pointer to set to the GtkTreeModel, or NULL.
 	 * Returns:
 	 *  A GList containing a GtkTreePath for each selected row.
-	 * Since 2.2
 	 */
 	TreePath[] getSelectedRows(TreeModel model)
 	{
@@ -2662,10 +2622,11 @@ nocode: gtk_tree_view_column_new_with_attributes
 code: start
 	/**
 	 * Creates a new Tree view column
-	 * @param header th column header text
-	 * @param renderer the rederer for the column cells
-	 * @param type the type of data to be displayed (shouldn't this be on the renderer?)
-	 * @param column the column number
+	 * Params:
+	 *  header = th column header text
+	 *  renderer = the rederer for the column cells
+	 *  type = the type of data to be displayed (shouldn't this be on the renderer?)
+	 *  column = the column number
 	 */
 	this(char [] header, CellRenderer renderer, char [] type, int column)
 	{
@@ -2722,16 +2683,17 @@ import: gtk.TreeIter
 code: start
 	/**
 	 * Expands the row of the iter.
-	 * @param iter
-	 * @param openAll
-	 * @return
+	 * Params:
+	 *  iter =
+	 *  openAll =
+	 *  Returns =
 	 */
 	int expandRow(TreeIter iter, TreeModel model, int openAll)
 	{
 		return expandRow(model.getPath(iter), openAll);
 	}
 
-		/**
+	/**
 	 * Finds the path at the point (x, y), relative to widget coordinates. That
 	 * is, x and y are relative to an events coordinates. x and y must come
 	 * from an event on the tree_view only where event->window ==
@@ -2742,20 +2704,13 @@ code: start
 	 * cell_x and cell_y return the coordinates relative to the cell background
 	 * (i.e. the background_area passed to gtk_cell_renderer_render()). This
 	 * function is only meaningful if tree_view is realized.
-	 * tree_view:
-	 *  A GtkTreeView.
-	 * x:
-	 *  The x position to be identified.
-	 * y:
-	 *  The y position to be identified.
-	 * path:
-	 *  A pointer to a GtkTreePath pointer to be filled in, or NULL
-	 * column:
-	 *  A pointer to a GtkTreeViewColumn pointer to be filled in, or NULL
-	 * cell_x:
-	 *  A pointer where the X coordinate relative to the cell can be placed, or NULL
-	 * cell_y:
-	 *  A pointer where the Y coordinate relative to the cell can be placed, or NULL
+	 * Params:
+	 *  x = The x position to be identified.
+	 *  y = The y position to be identified.
+	 *  path = A pointer to a GtkTreePath pointer to be filled in, or NULL
+	 *  column = A pointer to a GtkTreeViewColumn pointer to be filled in, or NULL
+	 *  cellX = A pointer where the X coordinate relative to the cell can be placed, or NULL
+	 *  cellY = A pointer where the Y coordinate relative to the cell can be placed, or NULL
 	 * Returns:
 	 *  TRUE if a row exists at that coordinate.
 	 */
@@ -2790,7 +2745,8 @@ code: start
 		}
 		return iter;
 	}
-	
+
+	/** */
 	TreeIter[] getSelectedIters()
 	{
 		TreeIter[] iters;
@@ -2817,11 +2773,12 @@ code: start
 
 	/**
 	 * Inserts a column and sets it's attributes
-	 * @param position
-	 * @param title
-	 * @param renderer
-	 * @param editable
-	 * @return number of columns including the new one
+	 * Params:
+	 *  position =
+	 *  title =
+	 *  renderer =
+	 *  editable =
+	 * Returns: number of columns including the new one
 	 */
 	gint insertEditableColumn(int position, char[] title, CellRenderer renderer, bool editable)
 	{
@@ -2889,11 +2846,11 @@ code: start
 	 * to it, and makes its show text.
 	 * If markup is true the text can be marked up with the Pango text
 	 * markup language.
-	 * text:
-	 *  the text to display in the cell view
+	 * Since 2.6
+	 * Params:
+	 *  text = the text to display in the cell view
 	 * Returns:
 	 *  A newly created GtkCellView widget.
-	 * Since 2.6
 	 */
 	public this (char[] text, bool markup=true)
 	{
@@ -3103,10 +3060,8 @@ code: start
 
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
-	 * n_columns:
-	 *  number of columns in the list store
-	 * types:
-	 *  an array of GType types for the columns, from first to last
+	 * Params:
+	 *  types = an array of GType types for the columns, from first to last
 	 * Returns:
 	 *  a new GtkListStore
 	 */
@@ -3129,9 +3084,10 @@ code: start
 	
 	/**
 	 * sets the values for one row
-	 * @param iter the row iteractor
-	 * @param columns an arrays with the columns to set
-	 * @param values an arrays with the values
+	 * Params:
+	 *  iter = the row iteractor
+	 *  columns = an arrays with the columns to set
+	 *  values = an arrays with the values
 	 */
 	void set(TreeIter iter, int [] columns, char*[] values)
 	{
@@ -3147,6 +3103,7 @@ code: start
 		}
 	}
 
+	/** */
 	void set(TreeIter iter, int [] columns, char[][] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
@@ -3161,13 +3118,15 @@ code: start
 		}
 	}
 
+	/** */
 	void setValue(TreeIter iter, int column, char[] value)
 	{
 		Value v = new Value(value);
 		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
 		//gtk_list_store_set_value(obj(), iter.getIter(), column, (GValue*)cChar(value));
 	}
-	
+
+	/** */
 	void setValue(TreeIter iter, int column, int value)
 	{
 		Value v = new Value(value);
@@ -3202,10 +3161,8 @@ code: start
 
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
-	 * n_columns:
-	 *  number of columns in the list store
-	 * types:
-	 *  an array of GType types for the columns, from first to last
+	 * Params:
+	 *  types = an array of GType types for the columns, from first to last
 	 * Returns:
 	 *  a new GtkListStore
 	 */
@@ -3232,16 +3189,18 @@ code: start
 	
 	/**
 	 * Sets one value into one cells.
-	 * @param iter the tree iteractor, effectivly the row
-	 * @param column to column number to set
-	 * @param value the value
 	 * \todo confirm we need to destroy the Value instance
+	 * Params:
+	 *  iter = the tree iteractor, effectivly the row
+	 *  column = to column number to set
+	 *  value = the value
 	 */
 	void setValue(TreeIter iter, int column, char[] value)
 	{
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
 	}
 
+	/** */
 	void setValue(TreeIter iter, int column, int value)
 	{
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, (new Value(value)).getValueStruct() , -1);
@@ -3261,9 +3220,10 @@ code: start
 
 	/**
 	 * sets the values for one row
-	 * @param iter the row iteractor
-	 * @param columns an arrays with the columns to set
-	 * @param values an arrays with the values
+	 * Params:
+	 *  iter = the row iteractor
+	 *  columns = an arrays with the columns to set
+	 *  values = an arrays with the values
 	 */
 	void set(TreeIter iter, int [] columns, char*[] values)
 	{
@@ -3279,6 +3239,7 @@ code: start
 		}
 	}
 
+	/** */
 	void set(TreeIter iter, int [] columns, char[][] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
@@ -3298,10 +3259,10 @@ code: start
 	 * This is the way to add a new row to the tree,
 	 * the iteractor is either a top level iteractor created from createIter()
 	 * or a nested iteractor created from append()
-	 * @param iter the iteractor to set
-	 * @param treeNode the tree node
-	 * @see createIter()
-	 * @see append()
+	 * Params:
+	 *  iter = the iteractor to set
+	 *  treeNode = the tree node
+	 * See_Also: createIter(), append()
 	 */
 	void set(TreeIter iter, TreeNode treeNode)
 	{
@@ -3331,8 +3292,8 @@ code: start
 	 * to the top level. iter will be changed to point to this new row. The row
 	 * will be empty after this function is called. To fill in values, you need to
 	 * call gtk_tree_store_set() or gtk_tree_store_set_value().
-	 * parent:
-	 *  A valid GtkTreeIter, or NULL
+	 * Params:
+	 *  parent = A valid GtkTreeIter, or NULL
 	 */
 	public TreeIter prepend(TreeIter parent)
 	{
@@ -3348,8 +3309,8 @@ code: start
 	 * the top level. iter will be changed to point to this new row. The row will
 	 * be empty after this function is called. To fill in values, you need to call
 	 * gtk_tree_store_set() or gtk_tree_store_set_value().
-	 * parent:
-	 *  A valid GtkTreeIter, or NULL
+	 * Params:
+	 *  parent = A valid GtkTreeIter, or NULL
 	 */
 	public TreeIter append(TreeIter parent)
 	{
@@ -3413,9 +3374,9 @@ code: start
 	 * following convenience functions: gtk_combo_box_append_text(),
 	 * gtk_combo_box_insert_text(), gtk_combo_box_prepend_text() and
 	 * gtk_combo_box_remove_text().
+	 * Since 2.4
 	 * Returns:
 	 *  A new GtkComboBox.
-	 * Since 2.4
 	 */
 	public this (bool text=true)
 	{
@@ -3431,6 +3392,7 @@ code: start
 		}
 	}
 
+	/** */
 	public void setActiveText(char[] text, bool insert=false)
 	{
 		int currActive = getActive();
@@ -3457,7 +3419,7 @@ code: start
 		}
 	}
 
-
+	/** */
 	int getIndex(char[] text)
 	{
 		TreeIter iter = new TreeIter();
@@ -3485,6 +3447,7 @@ code: start
 		return end ? -1 : index;
 	}
 
+	/** */
 	void prependOrReplaceText(char[] text)
 	{
 		int index = getIndex(text);
@@ -3543,9 +3506,9 @@ code: start
 	 * Creates a new GtkComboBoxEntry which has a GtkEntry as child. After
 	 * construction, you should set a model using gtk_combo_box_set_model() and a
 	 * text_column * using gtk_combo_box_entry_set_text_column().
+	 * Since 2.4
 	 * Returns:
 	 *  A new GtkComboBoxEntry.
-	 * Since 2.4
 	 */
 	public this (bool text=true)
 	{
@@ -3592,6 +3555,7 @@ structWrap: GList* ListG
 import: gtk.MenuItem
 
 code: start
+	/** */
 	public void append(Widget widget)
 	{
 		super.append(widget);
@@ -3599,8 +3563,9 @@ code: start
 
 	/**
 	 * Popups up this menu
-	 * @param button ??? you can pass a button number here
-	 * @param activateTime ??? you can pass the time from an event here
+	 * Params:
+	 *  button = you can pass a button number here
+	 *  activateTime = you can pass the time from an event here
 	 */
 	void popup(guint button, guint32 activateTime)
 	{
@@ -3610,8 +3575,9 @@ code: start
 	/**
 	 * Creates and append a submenu to this menu.
 	 * This menu item that actualy has the sub menu is also created.
-	 * @param label the sub menu item label
-	 * @return the new menu
+	 * Params:
+	 *  label = the sub menu item label
+	 * Returns: the new menu
 	 */
 	Menu appendSubmenu(char[] label)
 	{
@@ -3622,6 +3588,7 @@ code: start
 		return submenu;
 	}
 
+	/** */
 	void appendSubmenu(char[] label, Menu submenu)
 	{
 		MenuItem item = new MenuItem(label);
@@ -3629,6 +3596,7 @@ code: start
 		item.setSubmenu(submenu);
 	}
 
+	/** */
 	Menu prependSubmenu(char[] label)
 	{
 		MenuItem item = new MenuItem(label);
@@ -3637,8 +3605,6 @@ code: start
 		item.setSubmenu(submenu);
 		return submenu;
 	}
-
-
 code: end
 outFile: Menu
 
@@ -3654,6 +3620,7 @@ import: gtk.MenuItem;
 structWrap: GtkMenu* Menu
 structWrap: GtkMenuItem* MenuItem
 code: start
+	/** */
 	Menu append(char[] label, bool rightJustify=false)
 	{
 		MenuItem item = new MenuItem(label);
@@ -3664,6 +3631,7 @@ code: start
 		return menu;
 	}
 
+	/** */
 	public void append(Widget widget)
 	{
 		super.append(widget);
@@ -3748,13 +3716,11 @@ code: start
 
 	/**
 	 * Creates a new GtkMenuItem whose child is a GtkLabel.
-	 * If mnemonic is true the label
-	 * will be created using gtk_label_new_with_mnemonic(), so underscores
-	 * in label indicate the mnemonic for the menu item.
-	 * label:
-	 * the text for the label
-	 * Returns:
-	 * the newly created GtkMenuItem
+	 * Params:
+	 *  label = the text for the label
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the menu item.
 	 */
 	public this (char[] label, bool mnemonic=true)
 	{
@@ -3773,8 +3739,8 @@ code: start
 
 	/**
 	 * Emits the "activate" signal on the given item
-	 * menu_item:
-	 * the menu item
+	 * Params:
+	 *  menu_item = the menu item
 	 */
 	public void itemActivate()
 	{
@@ -3814,8 +3780,8 @@ code: start
 	 * If mnemonic it true the label
 	 * will be created using gtk_label_new_with_mnemonic(), so underscores
 	 * in label indicate the mnemonic for the menu item.
-	 * label:
-	 *  the text of the menu item.
+	 * Params:
+	 *  label = the text of the menu item.
 	 * Returns:
 	 *  a new GtkImageMenuItem.
 	 */
@@ -3857,13 +3823,10 @@ code: start
 	 * If mnemonic is true the label will be
 	 * created using gtk_label_new_with_mnemonic(), so underscores in label
 	 * indicate the mnemonic for the menu item.
-	 * group:
-	 *  an existing GtkRadioMenuItem
-	 * label:
-	 *  the text for the label
-	 * Returns:
-	 *  The new GtkRadioMenuItem
 	 * Since 2.4
+	 * Params:
+	 *  group = an existing GtkRadioMenuItem
+	 *  label = the text for the label
 	 */
 	public this (RadioMenuItem radioMenuItem, char[] label, bool mnemonic=true)
 	{
@@ -3884,14 +3847,11 @@ code: start
 	/**
 	 * Creates a new GtkRadioMenuItem containing a label. T
 	 * The new GtkRadioMenuItem is added to the same group as group.
-	 * group:
-	 *  An existing GtkRadioMenuItem
-	 * label:
-	 *  the text of the button, with an underscore in front of the
-	 *  mnemonic character
-	 * Returns:
-	 *  The new GtkRadioMenuItem
 	 * Since 2.4
+	 * Params:
+	 *  group = An existing GtkRadioMenuItem
+	 *  label = the text of the button, with an underscore in front of the
+	 *  mnemonic character
 	 */
 	public this (char[] label)
 	{
@@ -3899,15 +3859,12 @@ code: start
 	
 	/**
 	 * Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.
-	 * If mnemonic is true the label
-	 * will be created using gtk_label_new_with_mnemonic(), so underscores
-	 * in label indicate the mnemonic for the menu item.
-	 * group:
-	 * the group to which the radio menu item is to be attached
-	 * label:
-	 * the text for the label
-	 * Returns:
-	 * a new GtkRadioMenuItem
+	 * Params:
+	 *  group = the group to which the radio menu item is to be attached
+	 *  label = the text for the label
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the menu item.
 	 */
 	public this (ListSG group, char[] label, bool mnemonic=true)
 	{
@@ -3940,13 +3897,11 @@ nocode: gtk_check_menu_item_new_with_mnemonic
 code: start
 	/**
 	 * Creates a new GtkCheckMenuItem with a label.
-	 * If mnemonic it true the label
-	 * will be created using gtk_label_new_with_mnemonic(), so underscores
-	 * in label indicate the mnemonic for the menu item.
-	 * label:
-	 * the string to use for the label.
-	 * Returns:
-	 * a new GtkCheckMenuItem.
+	 * Params:
+	 *  label = the string to use for the label.
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the menu item.
 	 */
 	public this (char[] label, bool mnemonic=true)
 	{
@@ -3995,8 +3950,8 @@ code: start
 	/**
 	 * Retrieves whether the toolbar has text, icons, or both . See
 	 * gtk_toolbar_set_style().
-	 * toolbar:
-	 *  a GtkToolbar
+	 * Params:
+	 *  toolbar = a GtkToolbar
 	 * Returns:
 	 *  the current style of toolbar
 	 */
@@ -4006,26 +3961,31 @@ code: start
 		return gtk_toolbar_get_style(gtkToolbar);
 	}
 
+	/** */
 	public void insert (ToolItem toolItem, int pos=-1)
 	{
 		gtk_toolbar_insert(gtkToolbar, toolItem.getToolItemStruct(), pos);
 	}
-	
+
+	/** */	
 	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
 	{
 		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, callback, userData, position);
 	}
 
+	/** */
 	public Widget insertStock(char[] stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
 	{
 		return insertStock(stockId, tooltipText, tooltipPrivateText, null, null, position);
 	}
 	
+	/** */
 	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
 	{
 		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, null, null, position);
 	}
 
+	/** */
 	Button insertButton(StockID stockID,
 			char[] tooltipText, char[] tooltipPrivateText,
 			gint position)
@@ -4059,8 +4019,9 @@ structWrap: GtkWidget* Widget
 code: start
 	/**
 	 * Sets this widget tooltip
-	 * @param tipText the tooltip
-	 * @param tipPrivate a private text
+	 * Params:
+	 *  tipText = the tooltip
+	 *  tipPrivate = a private text
 	 */
 	void setTooltip(char[] tipText, char[] tipPrivate)
 	{
@@ -4098,22 +4059,23 @@ code: start
 	/** An arbitrary string to be used by the application */
 	private char[] action;
 
+	/** */
 	public void setActionName(char[] action)
 	{
 		this.action = action.dup;
 	}
 	
+	/** */
 	public char[] getActionName()
 	{
 		return action;
 	}
 
+	/** */
 	public this (StockID stockID)
 	{
 		this(StockDesc[stockID]);
 	}
-	
-
 code: end
 
 outFile: ToolButton
@@ -4142,13 +4104,10 @@ code: start
 	/**
 	 * Creates a new GtkMenuToolButton using icon_widget as icon and
 	 * label as label.
-	 * icon_widget:
-	 *  a widget that will be used as icon widget, or NULL
-	 * label:
-	 *  a string that will be used as label, or NULL
-	 * Returns:
-	 *  the new GtkMenuToolButton
 	 * Since 2.6
+	 * Params:
+	 *  iconWidget = a widget that will be used as icon widget, or NULL
+	 *  label = a string that will be used as label, or NULL
 	 */
 	public this(Widget iconWidget, char[] label)
 	{
@@ -4162,12 +4121,10 @@ code: start
 	/**
 	 * Creates a new GtkMenuToolButton.
 	 * The new GtkMenuToolButton will contain an icon and label from
-	 * the stock item indicated by stock_id.
-	 * stock_id:
-	 *  the name of a stock item
-	 * Returns:
-	 *  the new GtkMenuToolButton
+	 * the stock item indicated by stockID.
 	 * Since 2.6
+	 * Params:
+	 * stockID = the name of a stock item
 	 */
 	public this(StockID stockId)
 	{
@@ -4180,11 +4137,11 @@ code: start
 
 	/**
 	 * Gets the GtkMenu associated with GtkMenuToolButton.
-	 * button:
-	 *  a GtkMenuToolButton
+	 * Since 2.6
+	 * Params:
+	 *  button = a GtkMenuToolButton
 	 * Returns:
 	 *  the GtkMenu associated with GtkMenuToolButton
-	 * Since 2.6
 	 */
 	public Menu getMenu()
 	{
@@ -4383,9 +4340,9 @@ import: gtk.FileFilter;
 import: gtk.FileChooser;
 
 code: start
-
 	private FileChooser fileChooser;
 
+	/** */
 	public FileChooser getFileChooser()
 	{
 		if ( fileChooser is null )
@@ -4414,9 +4371,9 @@ nocode: gtk_file_chooser_dialog_new
 nocode: gtk_file_chooser_dialog_new_with_backend
 
 code: start
-
 	private FileChooser fileChooser;
 
+	/** */
 	public FileChooser getFileChooser()
 	{
 		if ( fileChooser is null )
@@ -4429,19 +4386,15 @@ code: start
 	/**
 	 * Creates a new GtkFileChooserDialog. This function is analogous to
 	 * gtk_dialog_new_with_buttons().
-	 * title:
-	 *  Title of the dialog, or NULL
-	 * parent:
-	 *  Transient parent of the dialog, or NULL
-	 * action:
-	 *  Open or save mode for the dialog
-	 * first_button_text:
-	 *  stock ID or text to go in the first button, or NULL
-	 * ...:
-	 *  response ID for the first button, then additional (button, id) pairs, ending with NULL
+	 * Since 2.4
+	 * Params:
+	 *  title = Title of the dialog, or NULL
+	 *  parent = Transient parent of the dialog, or NULL
+	 *  action = Open or save mode for the dialog
+	 *  buttonsText = text to go in the buttons
+	 *  responses = response ID's for the buttons
 	 * Returns:
 	 *  a new GtkFileChooserDialog
-	 * Since 2.4
 	 */
 	this(char[] title, Window parent, FileChooserAction action,  char[][] buttonsText=null, ResponseType[] responses=null)
 	{
@@ -4471,22 +4424,17 @@ code: start
 	 * especially useful if you use gtk_file_chooser_set_local_only() to allow
 	 * non-local files and you use a more expressive vfs, such as gnome-vfs,
 	 * to load files.
-	 * title:
-	 *  Title of the dialog, or NULL
-	 * parent:
-	 *  Transient parent of the dialog, or NULL
-	 * action:
-	 *  Open or save mode for the dialog
-	 * backend:
-	 *  The name of the specific filesystem backend to use.
-	 * first_button_text:
-	 *  stock ID or text to go in the first button, or NULL
-	 * ...:
-	 *  response ID for the first button, then additional (button, id) pairs, ending with NULL
+	 * Since 2.4
+	 * Params:
+	 *  title = Title of the dialog, or NULL
+	 *  parent = Transient parent of the dialog, or NULL
+	 *  action = Open or save mode for the dialog
+	 *  backend = The name of the specific filesystem backend to use.
+	 *  buttonsText = text to go in the buttons
+	 *  responses = response ID's for the buttons
 	 * Returns:
 	 *  a new GtkFileChooserDialog
-	 * Since 2.4
-	 * See Also
+	 * See_Also:
 	 *  GtkFileChooser, GtkDialog
 	 */
 	public this (char[] title, Window parent, GtkFileChooserAction action, char[] backend,  char[][] buttonsText=null, ResponseType[] responses=null)
@@ -4554,6 +4502,7 @@ import: gtk.FileChooser;
 code: start
 	private FileChooser fileChooser;
 
+	/** */
 	public FileChooser getFileChooser()
 	{
 		if ( fileChooser is null )
@@ -4620,27 +4569,31 @@ prefix: gtk_
 import: gtk.Widget
 
 code: start
+	/** */
 	public static Alignment center(Widget widget)
 	{
 		Alignment a = new Alignment(0.5, 0.5, 0, 0);
 		a.add(widget);
 		return a;
 	}
-	
+
+	/** */	
 	public static Alignment north(Widget widget)
 	{
 		Alignment a = new Alignment(0.5, 0.0, 0, 0);
 		a.add(widget);
 		return a;
 	}
-	
+
+	/** */	
 	public static Alignment south(Widget widget)
 	{
 		Alignment a = new Alignment(0.5, 1.0, 0, 0);
 		a.add(widget);
 		return a;
 	}
-	
+
+	/** */	
 	public static Alignment east(Widget widget)
 	{
 		Alignment a = new Alignment(1.0, 0.5, 0, 0);
@@ -4648,13 +4601,15 @@ code: start
 		return a;
 	}
 	
+	/** */
 	public static Alignment west(Widget widget)
 	{
 		Alignment a = new Alignment(0.0, 0.5, 0, 0);
 		a.add(widget);
 		return a;
 	}
-	
+
+	/** */	
 	public static Alignment northWest(Widget widget)
 	{
 		Alignment a = new Alignment(0.0, 0.0, 0, 0);
@@ -4662,6 +4617,7 @@ code: start
 		return a;
 	}
 
+	/** */
 	public static Alignment southWest(Widget widget)
 	{
 		Alignment a = new Alignment(0.0, 0.5, 0, 0);
@@ -4669,6 +4625,7 @@ code: start
 		return a;
 	}
 
+	/** */
 	public static Alignment northEast(Widget widget)
 	{
 		Alignment a = new Alignment(1.0, 0.0, 0, 0);
@@ -4676,13 +4633,13 @@ code: start
 		return a;
 	}
 
+	/** */
 	public static Alignment southEast(Widget widget)
 	{
 		Alignment a = new Alignment(1.0, 1.0, 0, 0);
 		a.add(widget);
 		return a;
 	}
-
 code: end
 outFile: Alignment
 
@@ -4737,7 +4694,7 @@ prefix: gtk_
 code: start
     /**
      * Creates a new vertical button box and sets standart values for it's comon parameters
-     * @return a new vertical button box
+     * Returns: a new vertical button box
      */
 	static ButtonBox createActionBox()
 	{
@@ -4770,8 +4727,9 @@ import: gtk.Widget
 code: start
 	/**
 	 * Creates a new HPaned and adds two widgets as it's children
-	 * @param child1
-	 * @param child2
+	 * Params:
+	 *  child1 =
+	 *  child2 =
 	 */
 	this(Widget child1, Widget child2)
 	{
@@ -4793,8 +4751,9 @@ import: gtk.Widget
 code: start
 	/**
 	 * Creates a new HPaned and adds two widgets as it's children
-	 * @param child1
-	 * @param child2
+	 * Params:
+	 *  child1 =
+	 *  child2 =
 	 */
 	this(Widget child1, Widget child2)
 	{
@@ -4826,6 +4785,7 @@ import: glib.Str
 import: gtk.Label
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+
 code: start
 /** The GtkNotebookTab is not documented */
 public enum GtkNotebookTab
@@ -4843,13 +4803,11 @@ alias GtkNotebookTab NotebookTab;
 		return appendPage(child, new Label(tabLabel));
 	}
 
+	/** */
 	void setCurrentPage(Widget child)
 	{
 		gtk_notebook_set_current_page(gtkNotebook,gtk_notebook_page_num(gtkNotebook, child.getWidgetStruct()));
 	}
-	
-
-
 code: end
 outFile: Notebook
 
@@ -4887,15 +4845,13 @@ code: start
 	 * specifying how many rows and columns the table should have, although
 	 * this can be changed later with gtk_table_resize(). rows and columns
 	 * must both be in the range 0 .. 65535.
-	 * rows:
-	 * The number of rows the new table should have.
-	 * columns:
-	 * The number of columns the new table should have.
-	 * homogeneous:
-	 * If set to TRUE, all table cells are resized to the size of the cell
-	 * containing the largest widget.
+	 * Params:
+	 *  rows = The number of rows the new table should have.
+	 *  columns = The number of columns the new table should have.
+	 *  homogeneous = If set to TRUE, all table cells are resized to the size of the cell
+	 *  containing the largest widget.
 	 * Returns:
-	 * A pointer to the the newly created table widget.
+	 *  A pointer to the the newly created table widget.
 	 */
 	public this (uint rows, uint columns, int homogeneous)
 	{
@@ -4923,8 +4879,6 @@ code: start
 			++row;
 		}
 	}
-
-
 code: end
 outFile: Table
 
@@ -4943,16 +4897,14 @@ nocode: gtk_expander_new_with_mnemonic
 code: start
 	/**
 	 * Creates a new expander using label as the text of the label.
-	 * If mnemonic os true 
-	 * If characters in label are preceded by an underscore, they are underlined.
-	 * If you need a literal underscore character in a label, use '__' (two
-	 * underscores). The first underlined character represents a keyboard
-	 * accelerator called a mnemonic.
-	 * label:
-	 *  the text of the label
-	 * Returns:
-	 *  a new GtkExpander widget.
 	 * Since 2.4
+	 * Params:
+	 *  label = the text of the label
+	 *  mnemonic = if true characters in label that are preceded by an underscore,
+	 *  are underlined.
+	 *  If you need a literal underscore character in a label, use '__' (two
+	 *  underscores). The first underlined character represents a keyboard
+	 *  accelerator called a mnemonic.
 	 */
 	public this (char[] label, bool mnemonic=true)
 	{
@@ -5045,12 +4997,13 @@ structWrap: GtkAdjustment* Adjustment
 
 nocode: gtk_scrolled_window_new
 code: start
-
+	/** */
 	public this()
 	{
 		this(null, null);
 	}
-	
+
+	/** */
 	public this(Widget widget)
 	{
 		this();
@@ -5063,12 +5016,9 @@ code: start
 	 * child widget to keep the bars in sync with the child. Usually you want
 	 * to pass NULL for the adjustments, which will cause the scrolled window
 	 * to create them for you.
-	 * hadjustment:
-	 * Horizontal adjustment.
-	 * vadjustment:
-	 * Vertical adjustment.
-	 * Returns:
-	 * New scrolled window.
+	 * Params:
+	 *  hadjustment = Horizontal adjustment.
+	 *  vadjustment = Vertical adjustment.
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
@@ -5081,8 +5031,9 @@ code: start
 
 	/**
 	 * Creates a new Scrolled window and set the policy type
-	 * @param hPolicy the horizontal policy
-	 * @param vPolicy the vertical policy
+	 * Params:
+	 *  hPolicy = the horizontal policy
+	 *  vPolicy = the vertical policy
 	 */
 	this(PolicyType hPolicy, PolicyType vPolicy)
 	{
@@ -5130,8 +5081,7 @@ code: start
 	 * Create a new DrawingArea and sets the SizeRequest
 	 * Params:
 	 *    	width = 	
-	 *    	height = 	
-	 * Returns: 
+	 *    	height =
 	 */
 	this(int width, int height)
 	{
@@ -5235,8 +5185,6 @@ code: start
 	 * Gets the child of the GtkBin, or NULL if the bin contains
 	 * no child widget. The returned widget does not have a reference
 	 * added, so you do not need to unref it.
-	 * bin:
-	 *  a GtkBin
 	 * Returns:
 	 *  pointer to child of the GtkBin
 	 */
@@ -5279,6 +5227,7 @@ import: gtk.Button
 import: gtk.HButtonBox
 import: gtk.VButtonBox
 code: start
+	/** */
 	static ButtonBox createActionBox(
 			void delegate(Button) onClicked, 
 			StockID[] stocks, 
@@ -5306,7 +5255,8 @@ code: start
 		}
 		return bBox;
 	}
-	
+
+	/** */
 	static ButtonBox createOkBox(void delegate(Button) onClicked)
 	{
 		static StockID[] stocks = [StockID.OK];
@@ -5315,6 +5265,7 @@ code: start
 		return createActionBox(onClicked, stocks, actions);
 	}
 
+	/** */
 	static ButtonBox createOkCancelBox(void delegate(Button) onClicked)
 	{
 		static StockID[] stocks = [StockID.OK, StockID.CANCEL];
@@ -5390,6 +5341,7 @@ prefix: gtk_
 import: glib.Str
 
 code: star
+	/** */
 	public static char[] getId(StockID id)
 	{
 		return StockDesc[id];
@@ -5407,7 +5359,7 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 
 code: start
-
+	/** */
 	public void add(Widget child1, Widget child2)
 	{
 		add1(child1);
@@ -5516,13 +5468,15 @@ import: gdk.Drawable
 import: gtk.Tooltips
 
 code: start
-
+	/** */
 	public int getWidth()
 	{
 		int width;
 		gtk_widget_get_size_request(gtkWidget, &width, null);
 		return width;
 	}
+
+	/** */
 	public int getHeight()
 	{
 		int height;
@@ -5532,7 +5486,7 @@ code: start
 	
 	/**
 	 * Gets the drawable for this widget
-	 * return:
+	 * Returns:
 	 * 		The drawable for this widget
 	 */
 	Drawable getDrawable()
@@ -5559,9 +5513,10 @@ code: start
 		pt += 52/4;
 		return new Drawable(cast(GdkDrawable*)(*pt));
 	}
-/**
+
+	/**
 	 * Gets the Window for this widget
-	 * return:
+	 * Returns:
 	 * 		The window for this widget
 	 */
 	Window getWindow()
@@ -5588,10 +5543,12 @@ code: start
 		pt += 52/4;
 		return new Window(cast(GdkWindow*)(*pt));
 	}
+
 	/**
 	 * Sets  the cursor.
-	 * @param cursor the new cursor
-	 * \bug the cursor changes to the parent widget also
+	 * Params:
+	 *  cursor = the new cursor
+	 * Bugs: the cursor changes to the parent widget also
 	 */
 	void setCursor(Cursor cursor)
 	{
@@ -5603,7 +5560,7 @@ code: start
 	/**
 	 * Resets the cursor.
 	 * don't know if this is implemented by GTK+. Seems that it's not
-	 * \bug does nothing
+	 * Bugs: does nothing
 	 */
 	public void resetCursor()
 	{
@@ -5648,19 +5605,16 @@ code: start
 	
 	/**
 	 * Sets this widget tooltip
-	 * @param tipText the tooltip
-	 * @param tipPrivate a private text
+	 * Params:
+	 *  tipText = the tooltip
+	 *  tipPrivate = a private text
 	 */
 	void setTooltip(char[] tipText, char[] tipPrivate)
 	{
 		Tooltips tt = new Tooltips();
 		tt.setTip(this, tipText, tipPrivate);
 	}
-
-
-
 code: end
-
 outFile: Widget
 
 file: GtkIMContext.html

@@ -132,7 +132,7 @@ srcdir: src
 package: glib glib
 package: gthread gthread
 package: gobject gobject
-package: cairo cairoLib
+package: cairo cairo
 package: pango pango
 package: atk atk
 package: gdk-pixbuf gdkpixbuf

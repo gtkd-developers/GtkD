@@ -104,14 +104,12 @@ nocode: glade_xml_new
 nocode: glade_xml_get_widget_prefix
 
 code: start
-        /**
+    /**
 	 * This function is used to get a pointer to the GtkWidget corresponding to
 	 * name in the interface description. You would use this if you have to do
 	 * anything to the widget after loading.
-	 * self:
-	 *  the GladeXML object.
-	 * name:
-	 *  the name of the widget.
+	 * Params:
+	 *  name = the name of the widget.
 	 * Returns:
 	 *  the widget matching name, or NULL if none exists.
 	 */
@@ -133,14 +131,10 @@ code: start
 	 * only want to build say a toolbar or menu from the XML file, but not the
 	 * window it is embedded in. Note also that the XML parse tree is cached
 	 * to speed up creating another GladeXML object for the same file
-	 * fname:
-	 *  the XML file name.
-	 * root:
-	 *  the widget node in fname to start building from (or NULL)
-	 * domain:
-	 *  the translation domain for the XML file (or NULL for default)
-	 * Returns:
-	 *  the newly created GladeXML object, or NULL on failure.
+	 * Params:
+	 *  fname = the XML file name.
+	 *  root = the widget node in fname to start building from (or NULL)
+	 *  domain = the translation domain for the XML file (or NULL for default)
 	 */
 	public this (char[] fname, char[] root = null, char[] domain=null)
 	{
@@ -151,34 +145,30 @@ code: start
 	}
 	
 	/**
-         * This function is used to get a list of pointers to the GtkWidget(s)
-         * with names that start with the string name in the interface description.
-         * You would use this if you have to do something to all of these widgets
-         * after loading.
-         * self:
-         *  the GladeXML object.
-         * name:
-         *  the name of the widget.
-         * Returns:
-         *  A list of the widget that match name as the start of their
-         * name, or NULL if none exists.
-         */
-        public Widget[] getWidgetPrefix(char[] name)
-        {
-                // GList* glade_xml_get_widget_prefix (GladeXML *self,  const char *name);
+	 * This function is used to get a list of pointers to the GtkWidget(s)
+	 * with names that start with the string name in the interface description.
+	 * You would use this if you have to do something to all of these widgets
+	 * after loading.
+	 * Params:
+	 *  self = the GladeXML object.
+	 *  name = the name of the widget.
+	 * Returns:
+	 *  A list of the widget that match name as the start of their
+	 *  name, or NULL if none exists.
+	 */
+	public Widget[] getWidgetPrefix(char[] name)
+	{
+		// GList* glade_xml_get_widget_prefix (GladeXML *self,  const char *name);
 		Widget[] ret;
 		ListG widgets = new ListG( glade_xml_get_widget_prefix(gladeXML, Str.toStringz(name)) );
-		for (int i=0;i < widgets.length; i++) {
+		for (int i=0;i < widgets.length; i++)
+		{
 			ret ~= newFromWidget( cast(void *)widgets.nthData(i) );
 		}
-                return widgets.length ? ret : null;
-        }
+		return widgets.length ? ret : null;
+	}
 
 
-	/**
-	 * Utilitiy method to create objects that are castable.
-	 * 
-	 */
 	private import gobject.Type;
 	private import gtk.Container;
 	private import gtk.Bin;
@@ -295,7 +285,11 @@ code: start
 	//private import gtk.Preview;
 	private import gtk.Progress;
 	private import gtk.ProgressBar;
- 
+
+	/**
+	 * Utilitiy method to create objects that are castable.
+	 * 
+	 */
 	Widget newFromWidget(void * ptr) 
 	{
 		if (ptr is null) {
@@ -429,12 +423,6 @@ code: start
 		}
 		
 	}
-
-	 
-	
-	
-	
-
 
 
 code: end

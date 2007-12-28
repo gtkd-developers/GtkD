@@ -128,7 +128,7 @@ file: GdkScreen.html
 struct: GdkScreen
 class: Screen
 prefix: gdk_screen_
-import: gtkc.cairoLibtypes
+import: gtkc.cairotypes
 import: glib.Str
 import: gdk.Screen
 structWrap: GdkScreen* Screen
@@ -277,16 +277,12 @@ structWrap: PangoScriptIter* PgScriptIter
 code: start
 	/**
 	 * Draws an outlined or filled polygon.
-	 * drawable:
-	 *  a GdkDrawable (a GdkWindow or a GdkPixmap).
-	 * gc:
-	 *  a GdkGC.
-	 * filled:
-	 *  TRUE if the polygon should be filled. The polygon is closed
+	 * Params:
+	 *  gc = a GdkGC.
+	 *  filled = TRUE if the polygon should be filled. The polygon is closed
 	 *  automatically, connecting the last point to the first point if
 	 *  necessary.
-	 * points:
-	 *  an array of GdkPoint structures specifying the points making
+	 *  points = an array of GdkPoint structures specifying the points making
 	 *  up the polygon.
 	 */
 	public void drawPolygon(GC gc, int filled, GdkPoint[] points)
@@ -294,11 +290,14 @@ code: start
 		// void gdk_draw_polygon (GdkDrawable *drawable,  GdkGC *gc,  gboolean filled,  GdkPoint *points,  gint npoints);
 		gdk_draw_polygon(gdkDrawable, gc.getGCStruct(), filled, points.ptr, points.length);
 	}
-	
+
+	/** */
 	public void drawPixbuf(Pixbuf pixbuf, int destX, int destY)
 	{
 		drawPixbuf(null, pixbuf, destX, destY);
 	}
+
+	/** */
 	public void drawPixbuf(GC gc, Pixbuf pixbuf, int destX, int destY)
 	{
 		if ( pixbuf is null ) return;
@@ -310,10 +309,6 @@ code: start
 						GdkRgbDither.NORMAL, 
 						0, 0);
 	}
-
-
-	 
-	
 code: end
 
 outFile: Drawable
@@ -454,27 +449,18 @@ code: start
 	 * This function calls gdk_drawable_get_image() internally and
 	 * converts the resulting image to a GdkPixbuf, so the
 	 * documentation for gdk_drawable_get_image() may also be relevant.
-	 * dest:
-	 *  Destination pixbuf, or NULL if a new pixbuf should be created.
-	 * src:
-	 *  Source drawable.
-	 * cmap:
-	 *  A colormap if src doesn't have one set.
-	 * src_x:
-	 *  Source X coordinate within drawable.
-	 * src_y:
-	 *  Source Y coordinate within drawable.
-	 * dest_x:
-	 *  Destination X coordinate in pixbuf, or 0 if dest is NULL.
-	 * dest_y:
-	 *  Destination Y coordinate in pixbuf, or 0 if dest is NULL.
-	 * width:
-	 *  Width in pixels of region to get.
-	 * height:
-	 *  Height in pixels of region to get.
+	 * Params:
+	 * 	src = Source drawable.
+	 *  cmap = A colormap if src doesn't have one set.
+	 *  srcX = Source X coordinate within drawable.
+	 *  srcY = Source Y coordinate within drawable.
+	 *  destX = Destination X coordinate in pixbuf, or 0 if dest is NULL.
+	 *  destY = Destination Y coordinate in pixbuf, or 0 if dest is NULL.
+	 *  width = Width in pixels of region to get.
+	 *  height = Height in pixels of region to get.
 	 * Returns:
 	 *  The same pixbuf as dest if it was non-NULL, or a newly-created
-	 * pixbuf with a reference count of 1 if no destination pixbuf was specified, or NULL on error
+	 *  pixbuf with a reference count of 1 if no destination pixbuf was specified, or NULL on error
 	 */
 	public Pixbuf getFromDrawable(Drawable src, Colormap cmap, int srcX, int srcY, int destX, int destY, int width, int height)
 	{
@@ -587,6 +573,7 @@ code: start
 		this(new GdkColor);
 	}
 
+	/** */
 	this(ubyte red, ubyte green, ubyte blue)
 	{
 		this();
@@ -595,9 +582,10 @@ code: start
 	
 	/**
 	 * Creates a new Color with RGB values
-	 * @param red
-	 * @param green
-	 * @param blue
+	 * Params:	
+	 *  red =
+	 *  green =
+	 *  blue =
 	 */
 	this(guint16 red, guint16 green, guint16 blue)
 	{
@@ -606,6 +594,7 @@ code: start
 		set(red,green,blue);
 	}
 
+	/** */
 	this(uint rgb)
 	{
 		this();
@@ -613,6 +602,7 @@ code: start
 		set( ((rgb&0xFFFF)),((rgb&0xFFFF00000000)>>32),(rgb&0xFFFF0000)>>16);
 	}
 
+	/** */
 	this(int rgb)
 	{
 		this();
@@ -620,6 +610,7 @@ code: start
 		set8( cast(byte)((rgb&0xFF0000)>>16),cast(byte)((rgb&0x00FF00)>>8),cast(byte)(rgb&0xFF));
 	}
 
+	/** */
 	static Color black()
 	{
 		if ( !_black )
@@ -628,6 +619,8 @@ code: start
 		}
 		return _black;
 	}
+
+	/** */
 	static Color white()
 	{
 		if ( !_white )
@@ -639,9 +632,10 @@ code: start
 	
 	/**
 	 * Sets the Color with RGB values
-	 * @param red
-	 * @param green
-	 * @param blue
+	 * Params:
+	 *  red =
+	 *  green =
+	 *  blue =
 	 */
 	void set(guint16 red, guint16 green, guint16 blue)
 	{
@@ -655,6 +649,7 @@ code: start
 		//printf("set pixel = %X\n", gdkColor.pixel);
 	}
 
+	/** */
 	void set8(ubyte red, ubyte green, ubyte blue)
 	{
 		//printf("Color.set %X %X %X\n",red,green,blue);
@@ -666,16 +661,19 @@ code: start
 		//printf("set8 pixel = %X\n", gdkColor.pixel);
 	}
 	
+	/** */
 	uint getValue()
 	{
 		return (gdkColor.red <<32) | (gdkColor.green << 16) | (gdkColor.blue);
 	}
 	
+	/** */
 	int getValue24()
 	{
 		return ((gdkColor.red&0xFF00)<<8 ) | ((gdkColor.green&0xFF00)) | ((gdkColor.blue&0xFF00) >>8);
 	}
 	
+	/** */
 	uint getPixelValue()
 	{
 		return gdkColor.pixel;
@@ -794,18 +792,19 @@ import: gobject.Value
 structWrap: GValue* Value
 
 code: start
+	/** */
 	public static bool isDoubleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
 		return eventButton.button==buttonNumber 
 				&& eventButton.type == EventType.DOUBLE_BUTTON_PRESS;
 	}
 
+	/** */
 	public static bool isTrippleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
 		return eventButton.button==buttonNumber 
 				&& eventButton.type == EventType.TRIPPLE_BUTTON_PRESS;
 	}
-
 code: end
 
 outFile: Event
@@ -968,8 +967,8 @@ outFile: X11
 file: gdk-Cairo-Interaction.html
 
 prefix: gdk_cairo_
-import: cairoLib.Cairo
-structWrap: cairo_t* Cairo
+import: cairo.Context
+structWrap: cairo_t* Context
 structWrap: GdkDrawable* Drawable
 structWrap: GdkColor* Color
 structWrap: GdkPixbuf* Pixbuf
@@ -990,12 +989,9 @@ code: start
 	 * This file is not used, 
 	 * 
 	 * It is here just to tell you to look at 
-	 * cairoLib.Cairo class for the methods that where here..
+	 * cairo.Context class for the methods that where here..
 	 */
 
 
 code: end
 outFile: GdkCairo
-
-
-
