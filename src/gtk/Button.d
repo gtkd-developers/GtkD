@@ -77,6 +77,7 @@ private import gtk.Button;
 
 
 
+private import gtk.Bin;
 
 /**
  * Description
@@ -87,7 +88,6 @@ private import gtk.Button;
  * hold most any other standard GtkWidget. The most commonly used child is
  * the GtkLabel.
  */
-private import gtk.Bin;
 public class Button : Bin
 {
 	
@@ -141,20 +141,25 @@ public class Button : Bin
 	/** An arbitrary string to be used by the application */
 	private char[] action;
 	
+	/** */
 	public static void setIconSize(IconSize iconSize)
 	{
 		currentIconSize = iconSize;
 	}
+	
+	/** */
 	public static IconSize getIconSize()
 	{
 		return currentIconSize;
 	}
 	
+	/** */
 	public void setActionName(char[] action)
 	{
 		this.action = action.dup;
 	}
 	
+	/** */
 	public char[] getActionName()
 	{
 		return action;
@@ -167,9 +172,10 @@ public class Button : Bin
 	 * underscores). The first underlined character represents a keyboard
 	 * accelerator called a mnemonic.
 	 * Pressing Alt and that key activates the button.
-	 * label:
-	 *  The text of the button, with an underscore in front of the
+	 * Params:
+	 *  label = The text of the button, with an underscore in front of the
 	 *  mnemonic character
+	 *  mnemonic = true if the button has an mnemnonic
 	 * Returns:
 	 *  a new GtkButton
 	 */
@@ -193,10 +199,8 @@ public class Button : Bin
 	 * GTK_STOCK_APPLY.
 	 * If stock_id is unknown, then it will be treated as a mnemonic
 	 * label (as for gtk_button_new_with_mnemonic()).
-	 * stock_id:
-	 *  the name of the stock item
-	 * Returns:
-	 *  a new GtkButton
+	 * Params:
+	 *  StockID = the name of the stock item
 	 */
 	public this (StockID stockID, bool hideLabel=false)
 	{
@@ -214,19 +218,21 @@ public class Button : Bin
 		
 	}
 	
+	/** */
 	public this(StockID stockID, void delegate(Button) dlg, bool hideLabel=false)
 	{
 		this(stockID, hideLabel);
 		addOnClicked(dlg);
 	}
 	
-	
+	/** */
 	public this(char[] label, void delegate(Button) dlg, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnClicked(dlg);
 	}
 	
+	/** */
 	public this(char[] label, void delegate(Button) dlg, char[] action)
 	{
 		this(label);
@@ -416,8 +422,6 @@ public class Button : Bin
 	/**
 	 * Creates a new GtkButton widget. To add a child widget to the button,
 	 * use gtk_container_add().
-	 * Returns:
-	 * The newly created GtkButton widget.
 	 */
 	public this ()
 	{
@@ -429,9 +433,7 @@ public class Button : Bin
 	
 	
 	/**
-	 * Emits a GtkButton::pressed signal to the given GtkButton.
-	 * button:
-	 * The GtkButton you want to send the signal to.
+	 * Emits a "pressed" signal to the given GtkButton.
 	 */
 	public void pressed()
 	{
@@ -440,9 +442,7 @@ public class Button : Bin
 	}
 	
 	/**
-	 * Emits a GtkButton::released signal to the given GtkButton.
-	 * button:
-	 * The GtkButton you want to send the signal to.
+	 * Emits a "released" signal to the given GtkButton.
 	 */
 	public void released()
 	{
@@ -451,9 +451,7 @@ public class Button : Bin
 	}
 	
 	/**
-	 * Emits a GtkButton::clicked signal to the given GtkButton.
-	 * button:
-	 * The GtkButton you want to send the signal to.
+	 * Emits a "clicked" signal to the given GtkButton.
 	 */
 	public void clicked()
 	{
@@ -462,9 +460,7 @@ public class Button : Bin
 	}
 	
 	/**
-	 * Emits a GtkButton::enter signal to the given GtkButton.
-	 * button:
-	 * The GtkButton you want to send the signal to.
+	 * Emits a "enter" signal to the given GtkButton.
 	 */
 	public void enter()
 	{
@@ -473,9 +469,7 @@ public class Button : Bin
 	}
 	
 	/**
-	 * Emits a GtkButton::leave signal to the given GtkButton.
-	 * button:
-	 * The GtkButton you want to send the signal to.
+	 * Emits a "leave" signal to the given GtkButton.
 	 */
 	public void leave()
 	{
@@ -487,10 +481,8 @@ public class Button : Bin
 	 * Sets the relief style of the edges of the given GtkButton widget.
 	 * Three styles exist, GTK_RELIEF_NORMAL, GTK_RELIEF_HALF, GTK_RELIEF_NONE.
 	 * The default style is, as one can guess, GTK_RELIEF_NORMAL.
-	 * button:
-	 * The GtkButton you want to set relief styles of.
-	 * newstyle:
-	 * The GtkReliefStyle as described above.
+	 * Params:
+	 * newstyle = The GtkReliefStyle as described above.
 	 */
 	public void setRelief(GtkReliefStyle newstyle)
 	{
@@ -500,10 +492,7 @@ public class Button : Bin
 	
 	/**
 	 * Returns the current relief style of the given GtkButton.
-	 * button:
-	 * The GtkButton you want the GtkReliefStyle from.
-	 * Returns:
-	 * The current GtkReliefStyle
+	 * Returns:The current GtkReliefStyle
 	 */
 	public GtkReliefStyle getRelief()
 	{
@@ -517,11 +506,7 @@ public class Button : Bin
 	 * been set the return value will be NULL. This will be the
 	 * case if you create an empty button with gtk_button_new() to
 	 * use as a container.
-	 * button:
-	 *  a GtkButton
-	 * Returns:
-	 *  The text of the label widget. This string is owned
-	 * by the widget and must not be modified or freed.
+	 * Returns: The text of the label widget. This string is ownedby the widget and must not be modified or freed.
 	 */
 	public char[] getLabel()
 	{
@@ -534,10 +519,8 @@ public class Button : Bin
 	 * also used to select the stock item if gtk_button_set_use_stock()
 	 * is used.
 	 * This will also clear any previously set labels.
-	 * button:
-	 *  a GtkButton
-	 * label:
-	 *  a string
+	 * Params:
+	 * label =  a string
 	 */
 	public void setLabel(char[] label)
 	{
@@ -547,12 +530,7 @@ public class Button : Bin
 	
 	/**
 	 * Returns whether the button label is a stock item.
-	 * button:
-	 *  a GtkButton
-	 * Returns:
-	 *  TRUE if the button label is used to
-	 *  select a stock item instead of being
-	 *  used directly as the label text.
+	 * Returns: TRUE if the button label is used to select a stock item instead of being used directly as the label text.
 	 */
 	public int getUseStock()
 	{
@@ -561,12 +539,10 @@ public class Button : Bin
 	}
 	
 	/**
-	 * If true, the label set on the button is used as a
+	 * If TRUE, the label set on the button is used as a
 	 * stock id to select the stock item for the button.
-	 * button:
-	 *  a GtkButton
-	 * use_stock:
-	 *  TRUE if the button should use a stock item
+	 * Params:
+	 * useStock =  TRUE if the button should use a stock item
 	 */
 	public void setUseStock(int useStock)
 	{
@@ -577,11 +553,7 @@ public class Button : Bin
 	/**
 	 * Returns whether an embedded underline in the button label indicates a
 	 * mnemonic. See gtk_button_set_use_underline().
-	 * button:
-	 *  a GtkButton
-	 * Returns:
-	 *  TRUE if an embedded underline in the button label
-	 *  indicates the mnemonic accelerator keys.
+	 * Returns: TRUE if an embedded underline in the button label indicates the mnemonic accelerator keys.
 	 */
 	public int getUseUnderline()
 	{
@@ -592,10 +564,8 @@ public class Button : Bin
 	/**
 	 * If true, an underline in the text of the button label indicates
 	 * the next character should be used for the mnemonic accelerator key.
-	 * button:
-	 *  a GtkButton
-	 * use_underline:
-	 *  TRUE if underlines in the text indicate mnemonics
+	 * Params:
+	 * useUnderline =  TRUE if underlines in the text indicate mnemonics
 	 */
 	public void setUseUnderline(int useUnderline)
 	{
@@ -608,11 +578,9 @@ public class Button : Bin
 	 * Making mouse clicks not grab focus is useful in places like toolbars where
 	 * you don't want the keyboard focus removed from the main area of the
 	 * application.
-	 * button:
-	 *  a GtkButton
-	 * focus_on_click:
-	 *  whether the button grabs focus when clicked with the mouse
 	 * Since 2.4
+	 * Params:
+	 * focusOnClick =  whether the button grabs focus when clicked with the mouse
 	 */
 	public void setFocusOnClick(int focusOnClick)
 	{
@@ -623,12 +591,8 @@ public class Button : Bin
 	/**
 	 * Returns whether the button grabs focus when it is clicked with the mouse.
 	 * See gtk_button_set_focus_on_click().
-	 * button:
-	 *  a GtkButton
-	 * Returns:
-	 *  TRUE if the button grabs focus when it is clicked with
-	 *  the mouse.
 	 * Since 2.4
+	 * Returns: TRUE if the button grabs focus when it is clicked with the mouse.
 	 */
 	public int getFocusOnClick()
 	{
@@ -639,15 +603,12 @@ public class Button : Bin
 	/**
 	 * Sets the alignment of the child. This property has no effect unless
 	 * the child is a GtkMisc or a GtkAligment.
-	 * button:
-	 *  a GtkButton
-	 * xalign:
-	 *  the horizontal position of the child, 0.0 is left aligned,
-	 *  1.0 is right aligned
-	 * yalign:
-	 *  the vertical position of the child, 0.0 is top aligned,
-	 *  1.0 is bottom aligned
 	 * Since 2.4
+	 * Params:
+	 * xalign =  the horizontal position of the child, 0.0 is left aligned,
+	 *  1.0 is right aligned
+	 * yalign =  the vertical position of the child, 0.0 is top aligned,
+	 *  1.0 is bottom aligned
 	 */
 	public void setAlignment(float xalign, float yalign)
 	{
@@ -657,13 +618,10 @@ public class Button : Bin
 	
 	/**
 	 * Gets the alignment of the child in the button.
-	 * button:
-	 *  a GtkButton
-	 * xalign:
-	 *  return location for horizontal alignment
-	 * yalign:
-	 *  return location for vertical alignment
 	 * Since 2.4
+	 * Params:
+	 * xalign =  return location for horizontal alignment
+	 * yalign =  return location for vertical alignment
 	 */
 	public void getAlignment(float* xalign, float* yalign)
 	{
@@ -673,14 +631,12 @@ public class Button : Bin
 	
 	/**
 	 * Set the image of button to the given widget. Note that
-	 * it depends on the gtk-button-images setting whether the
+	 * it depends on the "gtk-button-images" setting whether the
 	 * image will be displayed or not, you don't have to call
 	 * gtk_widget_show() on image yourself.
-	 * button:
-	 *  a GtkButton
-	 * image:
-	 *  a widget to set as the image for the button
 	 * Since 2.6
+	 * Params:
+	 * image =  a widget to set as the image for the button
 	 */
 	public void setImage(Widget image)
 	{
@@ -692,11 +648,8 @@ public class Button : Bin
 	 * Gets the widget that is currenty set as the image of button.
 	 * This may have been explicitly set by gtk_button_set_image()
 	 * or constructed by gtk_button_new_from_stock().
-	 * button:
-	 *  a GtkButton
-	 * Returns:
-	 *  a GtkWidget or NULL in case there is no image
 	 * Since 2.6
+	 * Returns: a GtkWidget or NULL in case there is no image
 	 */
 	public Widget getImage()
 	{
@@ -707,11 +660,9 @@ public class Button : Bin
 	/**
 	 * Sets the position of the image relative to the text
 	 * inside the button.
-	 * button:
-	 *  a GtkButton
-	 * position:
-	 *  the position
 	 * Since 2.10
+	 * Params:
+	 * position =  the position
 	 */
 	public void setImagePosition(GtkPositionType position)
 	{
@@ -722,16 +673,8 @@ public class Button : Bin
 	/**
 	 * Gets the position of the image relative to the text
 	 * inside the button.
-	 * button:
-	 *  a GtkButton
-	 * Returns:
-	 *  the position
 	 * Since 2.10
-	 * Property Details
-	 * The "focus-on-click" property
-	 *  "focus-on-click" gboolean : Read / Write
-	 * Whether the button grabs focus when it is clicked with the mouse.
-	 * Default value: TRUE
+	 * Returns: the position
 	 */
 	public GtkPositionType getImagePosition()
 	{

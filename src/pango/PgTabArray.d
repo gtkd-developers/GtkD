@@ -172,13 +172,9 @@ public class PgTabArray
 	 * Creates an array of initial_size tab stops. Tab stops are specified in
 	 * pixel units if positions_in_pixels is TRUE, otherwise in Pango
 	 * units. All stops are initially at position 0.
-	 * initial_size:
-	 *  Initial number of tab stops to allocate, can be 0
-	 * positions_in_pixels:
-	 *  whether positions are in pixel units
-	 * Returns:
-	 *  the newly allocated PangoTabArray, which should
-	 *  be freed with pango_tab_array_free().
+	 * Params:
+	 * initialSize =  Initial number of tab stops to allocate, can be 0
+	 * positionsInPixels =  whether positions are in pixel units
 	 */
 	public this (int initialSize, int positionsInPixels)
 	{
@@ -191,19 +187,12 @@ public class PgTabArray
 	 * and allows you to specify the alignment and position of each
 	 * tab stop. You must provide an alignment
 	 * and position for size tab stops.
-	 * size:
-	 *  number of tab stops in the array
-	 * positions_in_pixels:
-	 *  whether positions are in pixel units
-	 * first_alignment:
-	 *  alignment of first tab stop
-	 * first_position:
-	 *  position of first tab stop
-	 * ...:
-	 *  additional alignment/position pairs
-	 * Returns:
-	 *  the newly allocated PangoTabArray, which should
-	 *  be freed with pango_tab_array_free().
+	 * Params:
+	 * size =  number of tab stops in the array
+	 * positionsInPixels =  whether positions are in pixel units
+	 * firstAlignment =  alignment of first tab stop
+	 * firstPosition =  position of first tab stop
+	 * ... =  additional alignment/position pairs
 	 */
 	public this (int size, int positionsInPixels, PangoTabAlign firstAlignment, int firstPosition, ... )
 	{
@@ -213,11 +202,7 @@ public class PgTabArray
 	
 	/**
 	 * Copies a PangoTabArray
-	 * src:
-	 *  PangoTabArray to copy
-	 * Returns:
-	 *  the newly allocated PangoTabArray, which should
-	 *  be freed with pango_tab_array_free().
+	 * Returns: the newly allocated PangoTabArray, which should be freed with pango_tab_array_free().
 	 */
 	public PangoTabArray* copy()
 	{
@@ -227,8 +212,6 @@ public class PgTabArray
 	
 	/**
 	 * Frees a tab array and associated resources.
-	 * tab_array:
-	 *  a PangoTabArray
 	 */
 	public void free()
 	{
@@ -238,10 +221,7 @@ public class PgTabArray
 	
 	/**
 	 * Gets the number of tab stops in tab_array.
-	 * tab_array:
-	 *  a PangoTabArray
-	 * Returns:
-	 *  the number of tab stops in the array.
+	 * Returns: the number of tab stops in the array.
 	 */
 	public int getSize()
 	{
@@ -252,10 +232,8 @@ public class PgTabArray
 	/**
 	 * Resizes a tab array. You must subsequently initialize any tabs that
 	 * were added as a result of growing the array.
-	 * tab_array:
-	 *  a PangoTabArray
-	 * new_size:
-	 *  new size of the array
+	 * Params:
+	 * newSize =  new size of the array
 	 */
 	public void resize(int newSize)
 	{
@@ -267,14 +245,10 @@ public class PgTabArray
 	 * Sets the alignment and location of a tab stop.
 	 * alignment must always be PANGO_TAB_LEFT in the current
 	 * implementation.
-	 * tab_array:
-	 *  a PangoTabArray
-	 * tab_index:
-	 *  the index of a tab stop
-	 * alignment:
-	 *  tab alignment
-	 * location:
-	 *  tab location in Pango units
+	 * Params:
+	 * tabIndex =  the index of a tab stop
+	 * alignment =  tab alignment
+	 * location =  tab location in Pango units
 	 */
 	public void setTab(int tabIndex, PangoTabAlign alignment, int location)
 	{
@@ -284,14 +258,10 @@ public class PgTabArray
 	
 	/**
 	 * Gets the alignment and position of a tab stop.
-	 * tab_array:
-	 *  a PangoTabArray
-	 * tab_index:
-	 *  tab stop index
-	 * alignment:
-	 *  location to store alignment, or NULL
-	 * location:
-	 *  location to store tab position, or NULL
+	 * Params:
+	 * tabIndex =  tab stop index
+	 * alignment =  location to store alignment, or NULL
+	 * location =  location to store tab position, or NULL
 	 */
 	public void getTab(int tabIndex, PangoTabAlign* alignment, int* location)
 	{
@@ -303,12 +273,9 @@ public class PgTabArray
 	 * If non-NULL, alignments and locations are filled with allocated
 	 * arrays of length pango_tab_array_get_size(). You must free the
 	 * returned array.
-	 * tab_array:
-	 *  a PangoTabArray
-	 * alignments:
-	 *  location to store an array of tab stop alignments, or NULL
-	 * locations:
-	 *  location to store an array of tab positions, or NULL
+	 * Params:
+	 * alignments =  location to store an array of tab stop alignments, or NULL
+	 * locations =  location to store an array of tab positions, or NULL
 	 */
 	public void getTabs(PangoTabAlign** alignments, int** locations)
 	{
@@ -319,10 +286,7 @@ public class PgTabArray
 	/**
 	 * Returns TRUE if the tab positions are in pixels, FALSE if they are
 	 * in Pango units.
-	 * tab_array:
-	 *  a PangoTabArray
-	 * Returns:
-	 *  whether positions are in pixels.
+	 * Returns: whether positions are in pixels.
 	 */
 	public int getPositionsInPixels()
 	{

@@ -96,7 +96,7 @@ private import glib.Str;
  * To reset the memory chunk, freeing all of the atoms, use g_mem_chunk_reset().
  * To destroy a memory chunk, use g_mem_chunk_destroy().
  * To help debug memory chunks, use g_mem_chunk_info() and g_mem_chunk_print().
- * Example3.Using a GMemChunk
+ * Example17.Using a GMemChunk
  *  GMemChunk *mem_chunk;
  *  gchar *mem[10000];
  *  gint i;
@@ -120,7 +120,7 @@ private import glib.Str;
  *  }
  *  /+* We are finished with the GMemChunk, so we destroy it. +/
  *  g_mem_chunk_destroy (mem_chunk);
- * Example4.Using a GMemChunk with data structures
+ * Example18.Using a GMemChunk with data structures
  *  GMemChunk *array_mem_chunk;
  *  GRealArray *array;
  *  /+* Create a GMemChunk to hold GRealArray structures, using the
@@ -199,23 +199,18 @@ public class MemoryChunk
 	 * g_mem_chunk_new has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice allocator
 	 *  instead
 	 * Creates a new GMemChunk.
-	 * name:
-	 * a string to identify the GMemChunk. It is not copied so it
+	 * Params:
+	 * name = a string to identify the GMemChunk. It is not copied so it
 	 * should be valid for the lifetime of the GMemChunk. It is only used in
 	 * g_mem_chunk_print(), which is used for debugging.
-	 * atom_size:
-	 * the size, in bytes, of each element in the GMemChunk.
-	 * area_size:
-	 * the size, in bytes, of each block of memory allocated to contain
+	 * atomSize = the size, in bytes, of each element in the GMemChunk.
+	 * areaSize = the size, in bytes, of each block of memory allocated to contain
 	 * the atoms.
-	 * type:
-	 * the type of the GMemChunk.
+	 * type = the type of the GMemChunk.
 	 * G_ALLOC_AND_FREE is used if the atoms will be freed individually.
 	 * G_ALLOC_ONLY should be used if atoms will never be freed individually.
 	 * G_ALLOC_ONLY is quicker, since it does not need to track free atoms,
 	 * but it obviously wastes memory if you no longer need many of the atoms.
-	 * Returns:
-	 * the new GMemChunk.
 	 */
 	public this (char[] name, int atomSize, uint areaSize, int type)
 	{
@@ -227,10 +222,7 @@ public class MemoryChunk
 	 * Warning
 	 * g_mem_chunk_alloc has been deprecated since version 2.10 and should not be used in newly-written code. Use g_slice_alloc() instead
 	 * Allocates an atom of memory from a GMemChunk.
-	 * mem_chunk:
-	 * a GMemChunk.
-	 * Returns:
-	 * a pointer to the allocated atom.
+	 * Returns:a pointer to the allocated atom.
 	 */
 	public void* alloc()
 	{
@@ -242,10 +234,7 @@ public class MemoryChunk
 	 * Warning
 	 * g_mem_chunk_alloc0 has been deprecated since version 2.10 and should not be used in newly-written code. Use g_slice_alloc0() instead
 	 * Allocates an atom of memory from a GMemChunk, setting the memory to 0.
-	 * mem_chunk:
-	 * a GMemChunk.
-	 * Returns:
-	 * a pointer to the allocated atom.
+	 * Returns:a pointer to the allocated atom.
 	 */
 	public void* alloc0()
 	{
@@ -259,10 +248,8 @@ public class MemoryChunk
 	 * Frees an atom in a GMemChunk.
 	 * This should only be called if the GMemChunk was created with
 	 * G_ALLOC_AND_FREE. Otherwise it will simply return.
-	 * mem_chunk:
-	 * a GMemChunk.
-	 * mem:
-	 * a pointer to the atom to free.
+	 * Params:
+	 * mem = a pointer to the atom to free.
 	 */
 	public void free(void* mem)
 	{
@@ -275,8 +262,6 @@ public class MemoryChunk
 	 * g_mem_chunk_destroy has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice
 	 *  allocator instead
 	 * Frees all of the memory allocated for a GMemChunk.
-	 * mem_chunk:
-	 * a GMemChunk.
 	 */
 	public void destroy()
 	{
@@ -294,8 +279,6 @@ public class MemoryChunk
 	 *  allocator instead
 	 * Resets a GMemChunk to its initial state.
 	 * It frees all of the currently allocated blocks of memory.
-	 * mem_chunk:
-	 * a GMemChunk.
 	 */
 	public void reset()
 	{
@@ -308,8 +291,6 @@ public class MemoryChunk
 	 * g_mem_chunk_clean has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice
 	 *  allocator instead
 	 * Frees any blocks in a GMemChunk which are no longer being used.
-	 * mem_chunk:
-	 * a GMemChunk.
 	 */
 	public void clean()
 	{
@@ -350,8 +331,6 @@ public class MemoryChunk
 	 * Outputs debugging information for a GMemChunk.
 	 * It outputs the name of the GMemChunk (set with g_mem_chunk_new()),
 	 * the number of bytes used, and the number of blocks of memory allocated.
-	 * mem_chunk:
-	 * a GMemChunk.
 	 */
 	public void print()
 	{

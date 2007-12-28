@@ -79,11 +79,11 @@ private import gobject.Value;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-private import gobject.ObjectG;
 public class Settings : ObjectG
 {
 	
@@ -140,9 +140,7 @@ public class Settings : ObjectG
 	/**
 	 * Gets the GtkSettings object for the default GDK screen, creating
 	 * it if necessary. See gtk_settings_get_for_screen().
-	 * Returns:
-	 *  a GtkSettings object. If there is no default
-	 *  screen, then returns NULL.
+	 * Returns: a GtkSettings object. If there is no default screen, then returns NULL.
 	 */
 	public static Settings getDefault()
 	{
@@ -152,11 +150,10 @@ public class Settings : ObjectG
 	
 	/**
 	 * Gets the GtkSettings object for screen, creating it if necessary.
-	 * screen:
-	 *  a GdkScreen.
-	 * Returns:
-	 *  a GtkSettings object.
 	 * Since 2.2
+	 * Params:
+	 * screen =  a GdkScreen.
+	 * Returns: a GtkSettings object.
 	 */
 	public static Settings getForScreen(Screen screen)
 	{
@@ -165,7 +162,7 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * pspec:
+	 * Params:
 	 */
 	public static void installProperty(GParamSpec* pspec)
 	{
@@ -174,8 +171,7 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * pspec:
-	 * parser:
+	 * Params:
 	 */
 	public static void installPropertyParser(GParamSpec* pspec, GtkRcPropertyParser parser)
 	{
@@ -190,15 +186,11 @@ public class Settings : ObjectG
 	 * { red, green, blue } where red, green and
 	 * blue are integers between 0 and 65535 or floating-point numbers
 	 * between 0 and 1.
-	 * pspec:
-	 *  a GParamSpec
-	 * gstring:
-	 *  the GString to be parsed
-	 * property_value:
-	 *  a GValue which must hold GdkColor values.
-	 * Returns:
-	 *  TRUE if gstring could be parsed and property_value
-	 * has been set to the resulting GdkColor.
+	 * Params:
+	 * pspec =  a GParamSpec
+	 * gstring =  the GString to be parsed
+	 * propertyValue =  a GValue which must hold GdkColor values.
+	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GdkColor.
 	 */
 	public static int rcPropertyParseColor(GParamSpec* pspec, StringG gstring, Value propertyValue)
 	{
@@ -213,15 +205,11 @@ public class Settings : ObjectG
 	 * The enumeration value can be specified by its name, its nickname or
 	 * its numeric value. For consistency with flags parsing, the value
 	 * may be surrounded by parentheses.
-	 * pspec:
-	 *  a GParamSpec
-	 * gstring:
-	 *  the GString to be parsed
-	 * property_value:
-	 *  a GValue which must hold enum values.
-	 * Returns:
-	 *  TRUE if gstring could be parsed and property_value
-	 * has been set to the resulting GEnumValue.
+	 * Params:
+	 * pspec =  a GParamSpec
+	 * gstring =  the GString to be parsed
+	 * propertyValue =  a GValue which must hold enum values.
+	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GEnumValue.
 	 */
 	public static int rcPropertyParseEnum(GParamSpec* pspec, StringG gstring, Value propertyValue)
 	{
@@ -235,15 +223,11 @@ public class Settings : ObjectG
 	 * Flags can be specified by their name, their nickname or
 	 * numerically. Multiple flags can be specified in the form
 	 * "( flag1 | flag2 | ... )".
-	 * pspec:
-	 *  a GParamSpec
-	 * gstring:
-	 *  the GString to be parsed
-	 * property_value:
-	 *  a GValue which must hold flags values.
-	 * Returns:
-	 *  TRUE if gstring could be parsed and property_value
-	 * has been set to the resulting flags value.
+	 * Params:
+	 * pspec =  a GParamSpec
+	 * gstring =  the GString to be parsed
+	 * propertyValue =  a GValue which must hold flags values.
+	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting flags value.
 	 */
 	public static int rcPropertyParseFlags(GParamSpec* pspec, StringG gstring, Value propertyValue)
 	{
@@ -256,15 +240,11 @@ public class Settings : ObjectG
 	 * or gtk_widget_class_install_style_property_parser() which parses a
 	 * requisition in the form
 	 * "{ width, height }" for integers width and height.
-	 * pspec:
-	 *  a GParamSpec
-	 * gstring:
-	 *  the GString to be parsed
-	 * property_value:
-	 *  a GValue which must hold boxed values.
-	 * Returns:
-	 *  TRUE if gstring could be parsed and property_value
-	 * has been set to the resulting GtkRequisition.
+	 * Params:
+	 * pspec =  a GParamSpec
+	 * gstring =  the GString to be parsed
+	 * propertyValue =  a GValue which must hold boxed values.
+	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GtkRequisition.
 	 */
 	public static int rcPropertyParseRequisition(GParamSpec* pspec, StringG gstring, Value propertyValue)
 	{
@@ -278,15 +258,11 @@ public class Settings : ObjectG
 	 * borders in the form
 	 * "{ left, right, top, bottom }" for integers
 	 * left, right, top and bottom.
-	 * pspec:
-	 *  a GParamSpec
-	 * gstring:
-	 *  the GString to be parsed
-	 * property_value:
-	 *  a GValue which must hold boxed values.
-	 * Returns:
-	 *  TRUE if gstring could be parsed and property_value
-	 * has been set to the resulting GtkBorder.
+	 * Params:
+	 * pspec =  a GParamSpec
+	 * gstring =  the GString to be parsed
+	 * propertyValue =  a GValue which must hold boxed values.
+	 * Returns: TRUE if gstring could be parsed and property_valuehas been set to the resulting GtkBorder.
 	 */
 	public static int rcPropertyParseBorder(GParamSpec* pspec, StringG gstring, Value propertyValue)
 	{
@@ -295,9 +271,7 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * settings:
-	 * name:
-	 * svalue:
+	 * Params:
 	 */
 	public void setPropertyValue(char[] name, GtkSettingsValue* svalue)
 	{
@@ -306,10 +280,7 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * settings:
-	 * name:
-	 * v_string:
-	 * origin:
+	 * Params:
 	 */
 	public void setStringProperty(char[] name, char[] vString, char[] origin)
 	{
@@ -318,10 +289,7 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * settings:
-	 * name:
-	 * v_long:
-	 * origin:
+	 * Params:
 	 */
 	public void setLongProperty(char[] name, int vLong, char[] origin)
 	{
@@ -330,22 +298,14 @@ public class Settings : ObjectG
 	}
 	
 	/**
-	 * settings:
-	 * name:
-	 * v_double:
-	 * origin:
-	 * Property Details
-	 * The "color-hash" property
-	 *  "color-hash" GHashTable : Read
-	 * Holds a hash table representation of the gtk-color-scheme setting,
-	 * mapping color names to GdkColors.
-	 * Since 2.10
+	 * Params:
 	 */
 	public void setDoubleProperty(char[] name, double vDouble, char[] origin)
 	{
 		// void gtk_settings_set_double_property (GtkSettings *settings,  const gchar *name,  gdouble v_double,  const gchar *origin);
 		gtk_settings_set_double_property(gtkSettings, Str.toStringz(name), vDouble, Str.toStringz(origin));
 	}
+	
 	
 	
 	

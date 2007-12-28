@@ -74,9 +74,9 @@ private import glib.MainLoop;
 
 /**
  * Description
- * Sometimes you wish to asyncronously fork out the execution of work and
+ * Sometimes you wish to asynchronously fork out the execution of work and
  * continue working in your own thread. If that will happen often, the
- * overhead of starting and destroying a thread each time might be to
+ * overhead of starting and destroying a thread each time might be too
  * high. In such cases reusing already started threads seems like a good
  * idea. And it indeed is, but implementing this can be tedious and
  * error-prone.
@@ -170,20 +170,14 @@ public class ThreadPool
 	 * error can be NULL to ignore errors, or non-NULL to report
 	 * errors. An error can only occur when exclusive is set to TRUE and
 	 * not all max_threads threads could be created.
-	 * func:
-	 *  a function to execute in the threads of the new thread pool
-	 * user_data:
-	 *  user data that is handed over to func every time it
+	 * Params:
+	 * func =  a function to execute in the threads of the new thread pool
+	 * userData =  user data that is handed over to func every time it
 	 *  is called
-	 * max_threads:
-	 *  the maximal number of threads to execute concurrently in
+	 * maxThreads =  the maximal number of threads to execute concurrently in
 	 *  the new thread pool, -1 means no limit
-	 * exclusive:
-	 *  should this thread pool be exclusive?
-	 * error:
-	 *  return location for error
-	 * Returns:
-	 *  the new GThreadPool
+	 * exclusive =  should this thread pool be exclusive?
+	 * error =  return location for error
 	 */
 	public this (GFunc func, void* userData, int maxThreads, int exclusive, GError** error)
 	{
@@ -202,12 +196,9 @@ public class ThreadPool
 	 * errors. An error can only occur when a new thread couldn't be
 	 * created. In that case data is simply appended to the queue of work
 	 * to do.
-	 * pool:
-	 *  a GThreadPool
-	 * data:
-	 *  a new task for pool
-	 * error:
-	 *  return location for error
+	 * Params:
+	 * data =  a new task for pool
+	 * error =  return location for error
 	 */
 	public void push(void* data, GError** error)
 	{
@@ -229,12 +220,9 @@ public class ThreadPool
 	 * error can be NULL to ignore errors, or non-NULL to report
 	 * errors. An error can only occur when a new thread couldn't be
 	 * created.
-	 * pool:
-	 *  a GThreadPool
-	 * max_threads:
-	 *  a new maximal number of threads for pool
-	 * error:
-	 *  return location for error
+	 * Params:
+	 * maxThreads =  a new maximal number of threads for pool
+	 * error =  return location for error
 	 */
 	public void setMaxThreads(int maxThreads, GError** error)
 	{
@@ -244,10 +232,7 @@ public class ThreadPool
 	
 	/**
 	 * Returns the maximal number of threads for pool.
-	 * pool:
-	 *  a GThreadPool
-	 * Returns:
-	 *  the maximal number of threads
+	 * Returns: the maximal number of threads
 	 */
 	public int getMaxThreads()
 	{
@@ -257,10 +242,7 @@ public class ThreadPool
 	
 	/**
 	 * Returns the number of threads currently running in pool.
-	 * pool:
-	 *  a GThreadPool
-	 * Returns:
-	 *  the number of threads currently running
+	 * Returns: the number of threads currently running
 	 */
 	public uint getNumThreads()
 	{
@@ -270,10 +252,7 @@ public class ThreadPool
 	
 	/**
 	 * Returns the number of tasks still unprocessed in pool.
-	 * pool:
-	 *  a GThreadPool
-	 * Returns:
-	 *  the number of unprocessed tasks
+	 * Returns: the number of unprocessed tasks
 	 */
 	public uint unprocessed()
 	{
@@ -292,12 +271,9 @@ public class ThreadPool
 	 * to be processed (dependent on immediate, whether all or only the
 	 * currently running) are ready. Otherwise the function returns immediately.
 	 * After calling this function pool must not be used anymore.
-	 * pool:
-	 *  a GThreadPool
-	 * immediate:
-	 *  should pool shut down immediately?
-	 * wait_:
-	 *  should the function wait for all tasks to be finished?
+	 * Params:
+	 * immediate =  should pool shut down immediately?
+	 * wait =  should the function wait for all tasks to be finished?
 	 */
 	public void free(int immediate, int wait)
 	{
@@ -309,8 +285,8 @@ public class ThreadPool
 	 * Sets the maximal number of unused threads to max_threads. If
 	 * max_threads is -1, no limit is imposed on the number of unused
 	 * threads.
-	 * max_threads:
-	 *  maximal number of unused threads
+	 * Params:
+	 * maxThreads =  maximal number of unused threads
 	 */
 	public static void setMaxUnusedThreads(int maxThreads)
 	{
@@ -320,8 +296,7 @@ public class ThreadPool
 	
 	/**
 	 * Returns the maximal allowed number of unused threads.
-	 * Returns:
-	 *  the maximal number of unused threads
+	 * Returns: the maximal number of unused threads
 	 */
 	public static int getMaxUnusedThreads()
 	{
@@ -331,8 +306,7 @@ public class ThreadPool
 	
 	/**
 	 * Returns the number of currently unused threads.
-	 * Returns:
-	 *  the number of currently unused threads
+	 * Returns: the number of currently unused threads
 	 */
 	public static uint getNumUnusedThreads()
 	{
@@ -360,18 +334,15 @@ public class ThreadPool
 	 * scheduled by the operating system and are executed at random. It
 	 * cannot be assumed that threads are executed in the order they are
 	 * created.
-	 * pool:
-	 *  a GThreadPool
-	 * func:
-	 *  the GCompareDataFunc used to sort the list of tasks.
+	 * Since 2.10
+	 * Params:
+	 * func =  the GCompareDataFunc used to sort the list of tasks.
 	 *  This function is passed two tasks. It should return
 	 *  0 if the order in which they are handled does not matter,
 	 *  a negative value if the first task should be processed before
 	 *  the second or a positive value if the second task should be
 	 *  processed first.
-	 * user_data:
-	 *  user data passed to func.
-	 * Since 2.10
+	 * userData =  user data passed to func.
 	 */
 	public void setSortFunction(GCompareDataFunc func, void* userData)
 	{
@@ -388,10 +359,10 @@ public class ThreadPool
 	 * By setting interval to 0, idle threads will not be stopped.
 	 * This function makes use of g_async_queue_timed_pop() using
 	 * interval.
-	 * interval:
-	 *  the maximum interval (1/1000ths of a second) a thread
-	 *  can be idle.
 	 * Since 2.10
+	 * Params:
+	 * interval =  the maximum interval (1/1000ths of a second) a thread
+	 *  can be idle.
 	 */
 	public static void setMaxIdleTime(uint interval)
 	{
@@ -404,13 +375,8 @@ public class ThreadPool
 	 * wait in the thread pool for new tasks before being stopped.
 	 * If this function returns 0, threads waiting in the thread pool for
 	 * new work are not stopped.
-	 * Returns:
-	 *  the maximum interval to wait for new tasks in the
-	 *  thread pool before stopping the thread (1/1000ths of a second).
 	 * Since 2.10
-	 * See Also
-	 * GThread
-	 * GLib thread system.
+	 * Returns: the maximum interval to wait for new tasks in the thread pool before stopping the thread (1/1000ths of a second).
 	 */
 	public static uint getMaxIdleTime()
 	{

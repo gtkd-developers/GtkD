@@ -200,6 +200,7 @@ public class Child
 	
 	
 	
+	
 	/**
 	 * Creates a new child_watch source.
 	 * The source will not initially be associated with any GMainContext
@@ -216,12 +217,11 @@ public class Child
 	 * compatible with calling waitpid(-1) in
 	 * the application. Calling waitpid() for individual pids will
 	 * still work fine.
-	 * pid:
-	 *  process id of a child process to watch. On Windows, a HANDLE
-	 * for the process to watch (which actually doesn't have to be a child).
-	 * Returns:
-	 *  the newly-created child watch source
 	 * Since 2.4
+	 * Params:
+	 * pid =  process id of a child process to watch. On Windows, a HANDLE
+	 * for the process to watch (which actually doesn't have to be a child).
+	 * Returns: the newly-created child watch source
 	 */
 	public static GSource* watchSourceNew(GPid pid)
 	{
@@ -240,15 +240,12 @@ public class Child
 	 * source is still active. Typically, you will want to call
 	 * g_spawn_close_pid() in the callback function for the source.
 	 * GLib supports only a single callback per process id.
-	 * pid:
-	 *  process id of a child process to watch
-	 * function:
-	 *  function to call
-	 * data:
-	 *  data to pass to function
-	 * Returns:
-	 *  the ID (greater than 0) of the event source.
 	 * Since 2.4
+	 * Params:
+	 * pid =  process id of a child process to watch
+	 * funct =  function to call
+	 * data =  data to pass to function
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint watchAdd(GPid pid, GChildWatchFunc funct, void* data)
 	{
@@ -267,20 +264,15 @@ public class Child
 	 * source is still active. Typically, you will want to call
 	 * g_spawn_close_pid() in the callback function for the source.
 	 * GLib supports only a single callback per process id.
-	 * priority:
-	 *  the priority of the idle source. Typically this will be in the
-	 *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-	 * pid:
-	 *  process id of a child process to watch
-	 * function:
-	 *  function to call
-	 * data:
-	 *  data to pass to function
-	 * notify:
-	 *  function to call when the idle is removed, or NULL
-	 * Returns:
-	 *  the ID (greater than 0) of the event source.
 	 * Since 2.4
+	 * Params:
+	 * priority =  the priority of the idle source. Typically this will be in the
+	 *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
+	 * pid =  process id of a child process to watch
+	 * funct =  function to call
+	 * data =  data to pass to function
+	 * notify =  function to call when the idle is removed, or NULL
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint watchAddFull(int priority, GPid pid, GChildWatchFunc funct, void* data, GDestroyNotify notify)
 	{

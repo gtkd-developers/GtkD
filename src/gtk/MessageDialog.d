@@ -72,6 +72,7 @@ private import gtk.Window;
 
 
 
+private import gtk.Dialog;
 
 /**
  * Description
@@ -83,7 +84,7 @@ private import gtk.Window;
  * you can also pass in the GTK_DIALOG_MODAL flag, gtk_dialog_run() automatically
  * makes the dialog modal and waits for the user to respond to it. gtk_dialog_run()
  * returns when any dialog button is clicked.
- * Example2.A modal dialog.
+ * Example6.A modal dialog.
  *  dialog = gtk_message_dialog_new (main_application_window,
  *  GTK_DIALOG_DESTROY_WITH_PARENT,
  *  GTK_MESSAGE_ERROR,
@@ -93,7 +94,7 @@ private import gtk.Window;
  *  gtk_dialog_run (GTK_DIALOG (dialog));
  *  gtk_widget_destroy (dialog);
  * You might do a non-modal GtkMessageDialog as follows:
- * Example3.A non-modal dialog.
+ * Example7.A non-modal dialog.
  *  dialog = gtk_message_dialog_new (main_application_window,
  *  GTK_DIALOG_DESTROY_WITH_PARENT,
  *  GTK_MESSAGE_ERROR,
@@ -105,7 +106,6 @@ private import gtk.Window;
  *  G_CALLBACK (gtk_widget_destroy),
  *  dialog);
  */
-private import gtk.Dialog;
 public class MessageDialog : Dialog
 {
 	
@@ -160,18 +160,13 @@ public class MessageDialog : Dialog
 	 * user may want to see. When the user clicks a button a "response"
 	 * signal is emitted with response IDs from GtkResponseType. See
 	 * GtkDialog for more details.
-	 * parent:
-	 *  transient parent, or NULL for none
-	 * flags:
-	 *  flags
-	 * type:
-	 *  type of message
-	 * buttons:
-	 *  set of buttons to use
-	 * message_format:
-	 *  printf()-style format string, or NULL
-	 * message:
-	 *  the message - should be null, any formatting should be done prior to call this constructor
+	 * Params:
+	 *    	parent = transient parent, or NULL for none
+	 *    	flags = flags
+	 *    	type = type of message
+	 *    	buttons= set of buttons to use
+	 *    	messageFormat = printf()-style format string, or NULL
+	 *    	message = the message - should be null, any formatting should be done prior to call this constructor
 	 *  arguments for message_format
 	 * Returns:
 	 *  a new GtkMessageDialog
@@ -197,6 +192,9 @@ public class MessageDialog : Dialog
 	 * instead, since you can't pass the markup string either
 	 * as the format (it might contain '%' characters) or as a string
 	 * argument.
+	 * Since 2.4
+	 * Examples:
+	 * --------------------
 	 *  GtkWidget *dialog;
 	 *  dialog = gtk_message_dialog_new (main_application_window,
 	 *  GTK_DIALOG_DESTROY_WITH_PARENT,
@@ -205,23 +203,14 @@ public class MessageDialog : Dialog
 	 *  NULL);
 	 *  gtk_message_dialog_set_markup (GTK_MESSAGE_DIALOG (dialog),
 	 *  markup);
-	 * parent:
-	 *  transient parent, or NULL for none
-	 * flags:
-	 *  flags
-	 * type:
-	 *  type of message
-	 * buttons:
-	 *  set of buttons to use
-	 * message_format:
-	 *  printf()-style format string, or NULL
-	 * message:
-	 *  the message - should be null, any formatting should be done prior to call this constructor
-	 * ...:
-	 *  arguments for message_format
-	 * Returns:
-	 *  a new GtkMessageDialog
-	 * Since 2.4
+	 * --------------------
+	 * Params:
+	 *  parent = transient parent, or NULL for none
+	 *  flags = flags
+	 *  type = type of message
+	 *  buttons = set of buttons to use
+	 *  messageFormat = printf()-style format string, or NULL
+	 *  message = the message - should be null, any formatting should be done prior to call this constructor
 	 */
 	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, char[] messageFormat, char[] message=null )
 	{
@@ -270,11 +259,9 @@ public class MessageDialog : Dialog
 	 * Sets the text of the message dialog to be str, which is marked
 	 * up with the Pango text markup
 	 * language.
-	 * message_dialog:
-	 *  a GtkMessageDialog
-	 * str:
-	 *  markup string (see Pango markup format)
 	 * Since 2.4
+	 * Params:
+	 * str =  markup string (see Pango markup format)
 	 */
 	public void setMarkup(char[] str)
 	{
@@ -284,11 +271,9 @@ public class MessageDialog : Dialog
 	
 	/**
 	 * Sets the dialog's image to image.
-	 * dialog:
-	 *  a GtkMessageDialog
-	 * image:
-	 *  the image
 	 * Since 2.10
+	 * Params:
+	 * image =  the image
 	 */
 	public void setImage(GtkWidget* image)
 	{
@@ -301,13 +286,10 @@ public class MessageDialog : Dialog
 	 * (with printf()-style).
 	 * Note that setting a secondary text makes the primary text become
 	 * bold, unless you have provided explicit markup.
-	 * message_dialog:
-	 *  a GtkMessageDialog
-	 * message_format:
-	 *  printf()-style format string, or NULL
-	 * ...:
-	 *  arguments for message_format
 	 * Since 2.6
+	 * Params:
+	 * messageFormat =  printf()-style format string, or NULL
+	 * ... =  arguments for message_format
 	 */
 	public void formatSecondaryText(char[] messageFormat, ... )
 	{
@@ -329,19 +311,11 @@ public class MessageDialog : Dialog
 	 * msg = g_markup_printf_escaped (message_format, ...);
 	 * gtk_message_dialog_format_secondary_markup (message_dialog, "%s", msg);
 	 * g_free (msg);
-	 * message_dialog:
-	 *  a GtkMessageDialog
-	 * message_format:
-	 *  printf()-style markup string (see
-	 *  Pango markup format), or NULL
-	 * ...:
-	 *  arguments for message_format
 	 * Since 2.6
-	 * Property Details
-	 * The "buttons" property
-	 *  "buttons" GtkButtonsType : Write / Construct Only
-	 * The buttons shown in the message dialog.
-	 * Default value: GTK_BUTTONS_NONE
+	 * Params:
+	 * messageFormat =  printf()-style markup string (see
+	 *  Pango markup format), or NULL
+	 * ... =  arguments for message_format
 	 */
 	public void formatSecondaryMarkup(char[] messageFormat, ... )
 	{

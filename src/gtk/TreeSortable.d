@@ -161,8 +161,6 @@ public class TreeSortable
 	
 	/**
 	 * Emits a GtkTreeSortable::sort_column_changed signal on
-	 * sortable:
-	 *  A GtkTreeSortable
 	 */
 	public void sortColumnChanged()
 	{
@@ -175,15 +173,10 @@ public class TreeSortable
 	 * order. It returns TRUE unless the sort_column_id is
 	 * GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID or
 	 * GTK_TREE_SORTABLE_UNSORTED_SORT_COLUMN_ID.
-	 * sortable:
-	 *  A GtkTreeSortable
-	 * sort_column_id:
-	 *  The sort column id to be filled in
-	 * order:
-	 *  The GtkSortType to be filled in
-	 * Returns:
-	 *  TRUE if the sort column is not one of the special sort
-	 *  column ids.
+	 * Params:
+	 * sortColumnId =  The sort column id to be filled in
+	 * order =  The GtkSortType to be filled in
+	 * Returns: TRUE if the sort column is not one of the special sort column ids.
 	 */
 	public int getSortColumnId(int* sortColumnId, GtkSortType* order)
 	{
@@ -197,12 +190,9 @@ public class TreeSortable
 	 * GtkTreeSortable::sort_column_changed signal. If sort_column_id is
 	 * GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, then the default sort function
 	 * will be used, if it is set.
-	 * sortable:
-	 *  A GtkTreeSortable
-	 * sort_column_id:
-	 *  the sort column id to set
-	 * order:
-	 *  The sort order of the column
+	 * Params:
+	 * sortColumnId =  the sort column id to set
+	 * order =  The sort order of the column
 	 */
 	public void setSortColumnId(int sortColumnId, GtkSortType order)
 	{
@@ -214,16 +204,11 @@ public class TreeSortable
 	 * Sets the comparison function used when sorting to be sort_func. If the
 	 * current sort column id of sortable is the same as sort_column_id, then the
 	 * model will sort using this function.
-	 * sortable:
-	 *  A GtkTreeSortable
-	 * sort_column_id:
-	 *  the sort column id to set the function for
-	 * sort_func:
-	 *  The comparison function
-	 * user_data:
-	 *  User data to pass to sort_func, or NULL
-	 * destroy:
-	 *  Destroy notifier of user_data, or NULL
+	 * Params:
+	 * sortColumnId =  the sort column id to set the function for
+	 * sortFunc =  The comparison function
+	 * userData =  User data to pass to sort_func, or NULL
+	 * destroy =  Destroy notifier of user_data, or NULL
 	 */
 	public void setSortFunc(int sortColumnId, GtkTreeIterCompareFunc sortFunc, void* userData, GtkDestroyNotify destroy)
 	{
@@ -240,14 +225,10 @@ public class TreeSortable
 	 * This means that once the model has been sorted, it can't go back to the
 	 * default state. In this case, when the current sort column id of sortable is
 	 * GTK_TREE_SORTABLE_DEFAULT_SORT_COLUMN_ID, the model will be unsorted.
-	 * sortable:
-	 *  A GtkTreeSortable
-	 * sort_func:
-	 *  The comparison function
-	 * user_data:
-	 *  User data to pass to sort_func, or NULL
-	 * destroy:
-	 *  Destroy notifier of user_data, or NULL
+	 * Params:
+	 * sortFunc =  The comparison function
+	 * userData =  User data to pass to sort_func, or NULL
+	 * destroy =  Destroy notifier of user_data, or NULL
 	 */
 	public void setDefaultSortFunc(GtkTreeIterCompareFunc sortFunc, void* userData, GtkDestroyNotify destroy)
 	{
@@ -259,20 +240,7 @@ public class TreeSortable
 	 * Returns TRUE if the model has a default sort function. This is used
 	 * primarily by GtkTreeViewColumns in order to determine if a model can go back
 	 * to the default state, or not.
-	 * sortable:
-	 *  A GtkTreeSortable
-	 * Returns:
-	 *  TRUE, if the model has a default sort function
-	 * Signal Details
-	 * The "sort-column-changed" signal
-	 * void user_function (GtkTreeSortable *treesortable,
-	 *  gpointer user_data) : Run Last
-	 * treesortable:
-	 * the object which received the signal.
-	 * user_data:
-	 * user data set when the signal handler was connected.
-	 * See Also
-	 * GtkTreeModel, GtkTreeView
+	 * Returns: TRUE, if the model has a default sort functionSignal DetailsThe "sort-column-changed" signalvoid user_function (GtkTreeSortable *treesortable, gpointer user_data) : Run Last
 	 */
 	public int hasDefaultSortFunc()
 	{

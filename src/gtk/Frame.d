@@ -70,6 +70,7 @@ private import gtk.Widget;
 
 
 
+private import gtk.Bin;
 
 /**
  * Description
@@ -78,8 +79,22 @@ private import gtk.Widget;
  * If present, the label is drawn in a gap in the
  * top side of the frame. The position of the
  * label can be controlled with gtk_frame_set_label_align().
+ * GtkFrame as GtkBuildable
+ * The GtkFrame implementation of the GtkBuildable interface
+ * supports placing a child in the label position by specifying
+ * "label" as the "type" attribute of a <child> element.
+ * A normal content child can be specified without specifying
+ * a <child> type attribute.
+ * Example38.A UI definition fragment with GtkFrame
+ * <object class="GtkFrame">
+ *  <child type="label">
+ *  <object class="GtkLabel" id="frame-label"/>
+ *  </child>
+ *  <child>
+ *  <object class="GtkEntry" id="frame-content"/>
+ *  </child>
+ * </object>
  */
-private import gtk.Bin;
 public class Frame : Bin
 {
 	
@@ -144,10 +159,8 @@ public class Frame : Bin
 	/**
 	 * Creates a new GtkFrame, with optional label label.
 	 * If label is NULL, the label is omitted.
-	 * label:
-	 *  the text to use as the label of the frame
-	 * Returns:
-	 *  a new GtkFrame widget
+	 * Params:
+	 * label =  the text to use as the label of the frame
 	 */
 	public this (char[] label)
 	{
@@ -158,10 +171,8 @@ public class Frame : Bin
 	/**
 	 * Sets the text of the label. If label is NULL,
 	 * the current label is removed.
-	 * frame:
-	 *  a GtkFrame
-	 * label:
-	 *  the text to use as the label of the frame
+	 * Params:
+	 * label =  the text to use as the label of the frame
 	 */
 	public void setLabel(char[] label)
 	{
@@ -173,10 +184,8 @@ public class Frame : Bin
 	 * Sets the label widget for the frame. This is the widget that
 	 * will appear embedded in the top edge of the frame as a
 	 * title.
-	 * frame:
-	 *  a GtkFrame
-	 * label_widget:
-	 *  the new label widget
+	 * Params:
+	 * labelWidget =  the new label widget
 	 */
 	public void setLabelWidget(Widget labelWidget)
 	{
@@ -187,15 +196,14 @@ public class Frame : Bin
 	/**
 	 * Sets the alignment of the frame widget's label. The
 	 * default values for a newly created frame are 0.0 and 0.5.
-	 * frame:
-	 *  a GtkFrame
-	 * xalign:
-	 *  The position of the label along the top edge
+	 * Params:
+	 * xalign =  The position of the label along the top edge
 	 *  of the widget. A value of 0.0 represents left alignment;
 	 *  1.0 represents right alignment.
-	 * yalign:
-	 *  The y alignment of the label. A value of 0.0 aligns under
-	 *  the frame; 1.0 aligns above the frame.
+	 * yalign =  The y alignment of the label. A value of 0.0 aligns under
+	 *  the frame; 1.0 aligns above the frame. If the values are exactly
+	 *  0.0 or 1.0 the gap in the frame won't be painted because the label
+	 *  will be completely above or below the frame.
 	 */
 	public void setLabelAlign(float xalign, float yalign)
 	{
@@ -205,10 +213,8 @@ public class Frame : Bin
 	
 	/**
 	 * Sets the shadow type for frame.
-	 * frame:
-	 *  a GtkFrame
-	 * type:
-	 *  the new GtkShadowType
+	 * Params:
+	 * type =  the new GtkShadowType
 	 */
 	public void setShadowType(GtkShadowType type)
 	{
@@ -221,13 +227,7 @@ public class Frame : Bin
 	 * text in the label widget. (The frame will have a GtkLabel
 	 * for the label widget if a non-NULL argument was passed
 	 * to gtk_frame_new().)
-	 * frame:
-	 *  a GtkFrame
-	 * Returns:
-	 *  the text in the label, or NULL if there
-	 *  was no label widget or the lable widget was not
-	 *  a GtkLabel. This string is owned by GTK+ and
-	 *  must not be modified or freed.
+	 * Returns: the text in the label, or NULL if there was no label widget or the lable widget was not a GtkLabel. This string is owned by GTK+ and must not be modified or freed.
 	 */
 	public char[] getLabel()
 	{
@@ -238,12 +238,9 @@ public class Frame : Bin
 	/**
 	 * Retrieves the X and Y alignment of the frame's label. See
 	 * gtk_frame_set_label_align().
-	 * frame:
-	 *  a GtkFrame
-	 * xalign:
-	 *  location to store X alignment of frame's label, or NULL
-	 * yalign:
-	 *  location to store X alignment of frame's label, or NULL
+	 * Params:
+	 * xalign =  location to store X alignment of frame's label, or NULL
+	 * yalign =  location to store X alignment of frame's label, or NULL
 	 */
 	public void getLabelAlign(float* xalign, float* yalign)
 	{
@@ -254,10 +251,7 @@ public class Frame : Bin
 	/**
 	 * Retrieves the label widget for the frame. See
 	 * gtk_frame_set_label_widget().
-	 * frame:
-	 *  a GtkFrame
-	 * Returns:
-	 *  the label widget, or NULL if there is none.
+	 * Returns: the label widget, or NULL if there is none.
 	 */
 	public Widget getLabelWidget()
 	{
@@ -268,15 +262,7 @@ public class Frame : Bin
 	/**
 	 * Retrieves the shadow type of the frame. See
 	 * gtk_frame_set_shadow_type().
-	 * frame:
-	 *  a GtkFrame
-	 * Returns:
-	 *  the current shadow type of the frame.
-	 * Property Details
-	 * The "label" property
-	 *  "label" gchararray : Read / Write
-	 * Text of the frame's label.
-	 * Default value: NULL
+	 * Returns: the current shadow type of the frame.
 	 */
 	public GtkShadowType getShadowType()
 	{

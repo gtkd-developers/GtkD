@@ -93,7 +93,7 @@ private import glib.Str;
  * If your module introduces static data to common subsystems in the running
  * program, e.g. through calling g_quark_from_static_string ("my-module-stuff"),
  * it must ensure that it is never unloaded, by calling g_module_make_resident().
- * Example12.Calling a function defined in a GModule
+ * Example11.Calling a function defined in a GModule
  * /+* the function signature for 'say_hello' +/
  * typedef void (* SayHelloFunc) (const char *message);
  * gboolean
@@ -112,13 +112,6 @@ private import glib.Str;
 	 *  {
 		 *  g_set_error (error, SAY_ERROR, SAY_ERROR_OPEN,
 		 * 		 "%s: %s", filename, g_module_error ());
-		 *  if (!g_module_close (module))
-		 * 	g_warning ("%s: %s", filename, g_module_error ());
-		 *  return FALSE;
-	 *  }
-	 *  if (say_hello == NULL)
-	 *  {
-		 *  g_set_error (error, SAY_ERROR, SAY_ERROR_OPEN, "symbol say_hello is NULL");
 		 *  if (!g_module_close (module))
 		 * 	g_warning ("%s: %s", filename, g_module_error ());
 		 *  return FALSE;
@@ -190,8 +183,7 @@ public class Module
 	
 	/**
 	 * Checks if modules are supported on the current platform.
-	 * Returns:
-	 * TRUE if modules are supported.
+	 * Returns:TRUE if modules are supported.
 	 */
 	public static int supported()
 	{
@@ -212,15 +204,12 @@ public class Module
 	 * /lib/libmylibrary.so. On a Windows system, using
 	 * \Windows as the directory it will return
 	 * \Windows\mylibrary.dll.
-	 * directory:
-	 * the directory where the module is. This can be NULL or the empty
+	 * Params:
+	 * directory = the directory where the module is. This can be NULL or the empty
 	 * string to indicate that the standard platform-specific directories will be
 	 * used, though that is not recommended.
-	 * module_name:
-	 * the name of the module.
-	 * Returns:
-	 * the complete path of the module, including the standard library
-	 * prefix and suffix. This should be freed when no longer needed.
+	 * moduleName = the name of the module.
+	 * Returns:the complete path of the module, including the standard libraryprefix and suffix. This should be freed when no longer needed.
 	 */
 	public static char[] buildPath(char[] directory, char[] moduleName)
 	{
@@ -239,14 +228,12 @@ public class Module
 	 * that fails and file_name doesn't have the ".la"-suffix, this suffix is
 	 * appended and g_module_open() tries to open the corresponding module. If
 	 * eventually that fails as well, NULL is returned.
-	 * file_name:
-	 * the name of the file containing the module, or NULL to obtain
+	 * Params:
+	 * fileName = the name of the file containing the module, or NULL to obtain
 	 *  a GModule representing the main program itself.
-	 * flags:
-	 * the flags used for opening the module. This can be the logical
+	 * flags = the flags used for opening the module. This can be the logical
 	 * OR of any of the GModuleFlags.
-	 * Returns:
-	 * a GModule on success, or NULL on failure.
+	 * Returns:a GModule on success, or NULL on failure.
 	 */
 	public static Module open(char[] fileName, GModuleFlags flags)
 	{
@@ -258,15 +245,10 @@ public class Module
 	/**
 	 * Gets a symbol pointer from a module.
 	 * Note that a valid symbol can be NULL.
-	 * Note that a valid symbol can be NULL.
-	 * module:
-	 * a GModule.
-	 * symbol_name:
-	 * the name of the symbol to find.
-	 * symbol:
-	 * returns the pointer to the symbol value.
-	 * Returns:
-	 * TRUE on success.
+	 * Params:
+	 * symbolName = the name of the symbol to find.
+	 * symbol = returns the pointer to the symbol value.
+	 * Returns:TRUE on success.
 	 */
 	public int symbol(char[] symbolName, void** symbol)
 	{
@@ -276,11 +258,7 @@ public class Module
 	
 	/**
 	 * Gets the filename from a GModule.
-	 * module:
-	 * a GModule.
-	 * Returns:
-	 * the filename of the module, or "main" if the module is the main
-	 * program itself.
+	 * Returns:the filename of the module, or "main" if the module is the mainprogram itself.
 	 */
 	public char[] name()
 	{
@@ -291,8 +269,6 @@ public class Module
 	/**
 	 * Ensures that a module will never be unloaded.
 	 * Any future g_module_close() calls on the module will be ignored.
-	 * module:
-	 * a GModule to make permanently resident.
 	 */
 	public void makeResident()
 	{
@@ -302,10 +278,7 @@ public class Module
 	
 	/**
 	 * Closes a module.
-	 * module:
-	 * a GModule to close.
-	 * Returns:
-	 * TRUE on success.
+	 * Returns:TRUE on success.
 	 */
 	public int close()
 	{
@@ -315,8 +288,7 @@ public class Module
 	
 	/**
 	 * Gets a string describing the last module error.
-	 * Returns:
-	 * a string describing the last module error.
+	 * Returns:a string describing the last module error.
 	 */
 	public static char[] error()
 	{

@@ -68,6 +68,7 @@ private import gtk.Widget;
 
 
 
+private import gtk.Container;
 
 /**
  * Description
@@ -78,7 +79,6 @@ private import gtk.Widget;
  * application functions. A GtkMenuItem can have a submenu associated with it,
  * allowing for nested hierarchical menus.
  */
-private import gtk.Container;
 public class MenuShell : Container
 {
 	
@@ -275,6 +275,34 @@ public class MenuShell : Container
 		return consumed;
 	}
 	
+	gboolean delegate(gint, MenuShell)[] onMoveSelectedListeners;
+	void addOnMoveSelected(gboolean delegate(gint, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("move-selected" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"move-selected",
+			cast(GCallback)&callBackMoveSelected,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["move-selected"] = 1;
+		}
+		onMoveSelectedListeners ~= dlg;
+	}
+	extern(C) static void callBackMoveSelected(GtkMenuShell* menuShellStruct, gint distance, MenuShell menuShell)
+	{
+		bool consumed = false;
+		
+		foreach ( gboolean delegate(gint, MenuShell) dlg ; menuShell.onMoveSelectedListeners )
+		{
+			dlg(distance, menuShell);
+		}
+		
+		return consumed;
+	}
+	
 	void delegate(MenuShell)[] onSelectionDoneListeners;
 	void addOnSelectionDone(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -307,10 +335,8 @@ public class MenuShell : Container
 	
 	/**
 	 * Adds a new GtkMenuItem to the end of the menu shell's item list.
-	 * menu_shell:
-	 * a GtkMenuShell.
-	 * child:
-	 * The GtkMenuItem to add.
+	 * Params:
+	 * child = The GtkMenuItem to add.
 	 */
 	public void append(Widget child)
 	{
@@ -320,10 +346,8 @@ public class MenuShell : Container
 	
 	/**
 	 * Adds a new GtkMenuItem to the beginning of the menu shell's item list.
-	 * menu_shell:
-	 * a GtkMenuShell.
-	 * child:
-	 * The GtkMenuItem to add.
+	 * Params:
+	 * child = The GtkMenuItem to add.
 	 */
 	public void prepend(Widget child)
 	{
@@ -334,12 +358,9 @@ public class MenuShell : Container
 	/**
 	 * Adds a new GtkMenuItem to the menu shell's item list at the position
 	 * indicated by position.
-	 * menu_shell:
-	 * a GtkMenuShell.
-	 * child:
-	 * The GtkMenuItem to add.
-	 * position:
-	 * The position in the item list where child is added.
+	 * Params:
+	 * child = The GtkMenuItem to add.
+	 * position = The position in the item list where child is added.
 	 * Positions are numbered from 0 to n-1.
 	 */
 	public void insert(Widget child, int position)
@@ -351,8 +372,6 @@ public class MenuShell : Container
 	/**
 	 * Deactivates the menu shell. Typically this results in the menu shell
 	 * being erased from the screen.
-	 * menu_shell:
-	 * a GtkMenuShell.
 	 */
 	public void deactivate()
 	{
@@ -362,10 +381,8 @@ public class MenuShell : Container
 	
 	/**
 	 * Selects the menu item from the menu shell.
-	 * menu_shell:
-	 * a GtkMenuShell.
-	 * menu_item:
-	 * The GtkMenuItem to select.
+	 * Params:
+	 * menuItem = The GtkMenuItem to select.
 	 */
 	public void selectItem(Widget menuItem)
 	{
@@ -377,15 +394,13 @@ public class MenuShell : Container
 	 * Select the first visible or selectable child of the menu shell;
 	 * don't select tearoff items unless the only item is a tearoff
 	 * item.
-	 * menu_shell:
-	 *  a GtkMenuShell
-	 * search_sensitive:
-	 *  if TRUE, search for the first selectable
+	 * Since 2.2
+	 * Params:
+	 * searchSensitive =  if TRUE, search for the first selectable
 	 *  menu item, otherwise select nothing if
 	 *  the first item isn't sensitive. This
 	 *  should be FALSE if the menu is being
 	 *  popped up initially.
-	 * Since 2.2
 	 */
 	public void selectFirst(int searchSensitive)
 	{
@@ -395,8 +410,6 @@ public class MenuShell : Container
 	
 	/**
 	 * Deselects the currently selected item from the menu shell, if any.
-	 * menu_shell:
-	 * a GtkMenuShell.
 	 */
 	public void deselect()
 	{
@@ -406,12 +419,9 @@ public class MenuShell : Container
 	
 	/**
 	 * Activates the menu item within the menu shell.
-	 * menu_shell:
-	 * a GtkMenuShell.
-	 * menu_item:
-	 * The GtkMenuItem to activate.
-	 * force_deactivate:
-	 * If TRUE, force the deactivation of the menu shell
+	 * Params:
+	 * menuItem = The GtkMenuItem to activate.
+	 * forceDeactivate = If TRUE, force the deactivation of the menu shell
 	 * after the menu item is activated.
 	 */
 	public void activateItem(Widget menuItem, int forceDeactivate)
@@ -422,8 +432,6 @@ public class MenuShell : Container
 	
 	/**
 	 * Cancels the selection within the menu shell.
-	 * menu_shell:
-	 *  a GtkMenuShell
 	 * Since 2.4
 	 */
 	public void cancel()
@@ -444,19 +452,9 @@ public class MenuShell : Container
 	 * about recursively setting it for your entire menu hierarchy. Only when
 	 * programmatically picking a submenu and popping it up manually, the
 	 * take_focus property of the submenu needs to be set explicitely.
-	 * Note that setting it to FALSE has side-effects:
-	 * If the focus is in some other app, it keeps the focus and keynav in
-	 * the menu doesn't work. Consequently, keynav on the menu will only
-	 * work if the focus is on some toplevel owned by the onscreen keyboard.
-	 * To avoid confusing the user, menus with take_focus set to FALSE
-	 * should not display mnemonics or accelerators, since it cannot be
-	 * guaranteed that they will work.
-	 * See also gdk_keyboard_grab()
-	 * menu_shell:
-	 *  a GtkMenuShell
-	 * take_focus:
-	 *  TRUE if the menu shell should take the keyboard focus on popup.
 	 * Since 2.8
+	 * Params:
+	 * takeFocus =  TRUE if the menu shell should take the keyboard focus on popup.
 	 */
 	public void setTakeFocus(int takeFocus)
 	{
@@ -466,17 +464,15 @@ public class MenuShell : Container
 	
 	/**
 	 * Returns TRUE if the menu shell will take the keyboard focus on popup.
-	 * menu_shell:
-	 *  a GtkMenuShell
-	 * Returns:
-	 *  TRUE if the menu shell will take the keyboard focus on popup.
 	 * Since 2.8
+	 * Returns: TRUE if the menu shell will take the keyboard focus on popup.
 	 */
 	public int getTakeFocus()
 	{
 		// gboolean gtk_menu_shell_get_take_focus (GtkMenuShell *menu_shell);
 		return gtk_menu_shell_get_take_focus(gtkMenuShell);
 	}
+	
 	
 	
 	

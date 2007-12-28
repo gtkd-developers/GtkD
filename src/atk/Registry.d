@@ -64,6 +64,7 @@ private import gtkc.atk;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -73,7 +74,6 @@ private import gtkc.atk;
  * GObject classes via the atk_registry_set_factory_type call, passing the
  * appropriate GType for application custom widget classes.
  */
-private import gobject.ObjectG;
 public class Registry : ObjectG
 {
 	
@@ -127,16 +127,9 @@ public class Registry : ObjectG
 	
 	
 	/**
-	 * Associate an AtkObjectFactory subclass with a GType. Note:
-	 * The associated factory_type will thereafter be responsible for
-	 * the creation of new AtkObject implementations for instances
-	 * appropriate for type.
-	 * registry:
-	 *  the AtkRegistry in which to register the type association
-	 * type:
-	 *  an AtkObject type
-	 * factory_type:
-	 *  an AtkObjectFactory type to associate with type. Must
+	 * Params:
+	 * type =  an AtkObject type
+	 * factoryType =  an AtkObjectFactory type to associate with type. Must
 	 * implement AtkObject appropriate for type.
 	 */
 	public void setFactoryType(GType type, GType factoryType)
@@ -148,13 +141,10 @@ public class Registry : ObjectG
 	/**
 	 * Provides a GType indicating the AtkObjectFactory subclass
 	 * associated with type.
-	 * registry:
-	 *  an AtkRegistry
-	 * type:
-	 *  a GType with which to look up the associated AtkObjectFactory
+	 * Params:
+	 * type =  a GType with which to look up the associated AtkObjectFactory
 	 * subclass
-	 * Returns:
-	 *  a GType associated with type type
+	 * Returns: a GType associated with type type
 	 */
 	public GType getFactoryType(GType type)
 	{
@@ -165,13 +155,9 @@ public class Registry : ObjectG
 	/**
 	 * Gets an AtkObjectFactory appropriate for creating AtkObjects
 	 * appropriate for type.
-	 * registry:
-	 *  an AtkRegistry
-	 * type:
-	 *  a GType with which to look up the associated AtkObjectFactory
-	 * Returns:
-	 *  an AtkObjectFactory appropriate for creating AtkObjects
-	 * appropriate for type.
+	 * Params:
+	 * type =  a GType with which to look up the associated AtkObjectFactory
+	 * Returns: an AtkObjectFactory appropriate for creating AtkObjectsappropriate for type.
 	 */
 	public AtkObjectFactory* getFactory(GType type)
 	{
@@ -187,9 +173,7 @@ public class Registry : ObjectG
 	 * a call to this function, maintainers may call atk_registry_set_factory_type()
 	 * to associate an AtkObjectFactory subclass with the GType of objects
 	 * for whom accessibility information will be provided.
-	 * Returns:
-	 *  a default implementation of the AtkObjectFactory/type
-	 * registry
+	 * Returns: a default implementation of the AtkObjectFactory/typeregistry
 	 */
 	public static AtkRegistry* atkGetDefaultRegistry()
 	{

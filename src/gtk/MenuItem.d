@@ -75,6 +75,7 @@ private import gtk.AccelGroup;
 
 
 
+private import gtk.Item;
 
 /**
  * Description
@@ -84,7 +85,6 @@ private import gtk.AccelGroup;
  * As it derives from GtkBin it can hold any valid child widget, altough
  * only a few are really useful.
  */
-private import gtk.Item;
 public class MenuItem : Item
 {
 	
@@ -194,13 +194,11 @@ public class MenuItem : Item
 	
 	/**
 	 * Creates a new GtkMenuItem whose child is a GtkLabel.
-	 * If mnemonic is true the label
-	 * will be created using gtk_label_new_with_mnemonic(), so underscores
-	 * in label indicate the mnemonic for the menu item.
-	 * label:
-	 * the text for the label
-	 * Returns:
-	 * the newly created GtkMenuItem
+	 * Params:
+	 *  label = the text for the label
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the menu item.
 	 */
 	public this (char[] label, bool mnemonic=true)
 	{
@@ -219,8 +217,8 @@ public class MenuItem : Item
 	
 	/**
 	 * Emits the "activate" signal on the given item
-	 * menu_item:
-	 * the menu item
+	 * Params:
+	 *  menu_item = the menu item
 	 */
 	public void itemActivate()
 	{
@@ -353,8 +351,6 @@ public class MenuItem : Item
 	
 	/**
 	 * Creates a new GtkMenuItem.
-	 * Returns:
-	 * the newly created GtkMenuItem
 	 */
 	public this ()
 	{
@@ -370,10 +366,8 @@ public class MenuItem : Item
 	 * items, but is now considered a bad idea. (If the widget
 	 * layout is reversed for a right-to-left language like Hebrew
 	 * or Arabic, right-justified-menu-items appear at the left.)
-	 * menu_item:
-	 *  a GtkMenuItem.
-	 * right_justified:
-	 *  if TRUE the menu item will appear at the
+	 * Params:
+	 * rightJustified =  if TRUE the menu item will appear at the
 	 *  far right if added to a menu bar.
 	 */
 	public void setRightJustified(int rightJustified)
@@ -383,11 +377,10 @@ public class MenuItem : Item
 	}
 	
 	/**
-	 * Sets the widget submenu, or changes it.
-	 * menu_item:
-	 * the menu item widget
-	 * submenu:
-	 * the submenu
+	 * Sets or replaces the menu item's submenu, or removes it when a NULL
+	 * submenu is passed.
+	 * Params:
+	 * submenu =  the submenu, or NULL
 	 */
 	public void setSubmenu(Widget submenu)
 	{
@@ -408,10 +401,8 @@ public class MenuItem : Item
 	 * the menu item.
 	 * Note that you do need to set an accelerator on the parent menu with
 	 * gtk_menu_set_accel_group() for this to work.
-	 * menu_item:
-	 *  a valid GtkMenuItem
-	 * accel_path:
-	 *  accelerator path, corresponding to this menu item's
+	 * Params:
+	 * accelPath =  accelerator path, corresponding to this menu item's
 	 *  functionality, or NULL to unset the current path.
 	 */
 	public void setAccelPath(char[] accelPath)
@@ -421,9 +412,11 @@ public class MenuItem : Item
 	}
 	
 	/**
+	 * Warning
+	 * gtk_menu_item_remove_submenu has been deprecated since version 2.12 and should not be used in newly-written code. gtk_menu_item_remove_submenu() is deprecated and
+	 *  should not be used in newly written code. Use
+	 *  gtk_menu_item_set_submenu() instead.
 	 * Removes the widget's submenu.
-	 * menu_item:
-	 * the menu item widget
 	 */
 	public void removeSubmenu()
 	{
@@ -434,8 +427,6 @@ public class MenuItem : Item
 	/**
 	 * Emits the "select" signal on the given item. Behaves exactly like
 	 * gtk_item_select.
-	 * menu_item:
-	 * the menu item
 	 */
 	public void select()
 	{
@@ -446,8 +437,6 @@ public class MenuItem : Item
 	/**
 	 * Emits the "deselect" signal on the given item. Behaves exactly like
 	 * gtk_item_deselect.
-	 * menu_item:
-	 * the menu item
 	 */
 	public void deselect()
 	{
@@ -458,10 +447,8 @@ public class MenuItem : Item
 	
 	/**
 	 * Emits the "toggle_size_request" signal on the given item.
-	 * menu_item:
-	 * the menu item
-	 * requisition:
-	 * the requisition to use as signal data.
+	 * Params:
+	 * requisition = the requisition to use as signal data.
 	 */
 	public void toggleSizeRequest(int* requisition)
 	{
@@ -471,10 +458,8 @@ public class MenuItem : Item
 	
 	/**
 	 * Emits the "toggle_size_allocate" signal on the given item.
-	 * menu_item:
-	 * the menu item.
-	 * allocation:
-	 * the allocation to use as signal data.
+	 * Params:
+	 * allocation = the allocation to use as signal data.
 	 */
 	public void toggleSizeAllocate(int allocation)
 	{
@@ -486,11 +471,7 @@ public class MenuItem : Item
 	/**
 	 * Gets whether the menu item appears justified at the right
 	 * side of the menu bar.
-	 * menu_item:
-	 *  a GtkMenuItem
-	 * Returns:
-	 *  TRUE if the menu item will appear at the
-	 *  far right if added to a menu bar.
+	 * Returns: TRUE if the menu item will appear at the far right if added to a menu bar.
 	 */
 	public int getRightJustified()
 	{
@@ -501,16 +482,7 @@ public class MenuItem : Item
 	/**
 	 * Gets the submenu underneath this menu item, if any. See
 	 * gtk_menu_item_set_submenu().
-	 * menu_item:
-	 *  a GtkMenuItem
-	 * Returns:
-	 *  submenu for this menu item, or NULL if none.
-	 * Style Property Details
-	 * The "arrow-spacing" style property
-	 *  "arrow-spacing" gint : Read
-	 * Space between label and arrow.
-	 * Allowed values: >= 0
-	 * Default value: 10
+	 * Returns: submenu for this menu item, or NULL if none.
 	 */
 	public Widget getSubmenu()
 	{

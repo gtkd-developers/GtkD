@@ -72,6 +72,7 @@ private import glib.Str;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -83,7 +84,6 @@ private import glib.Str;
  *  an animation you don't need to understand its representation, however; you just
  *  ask gdk-pixbuf what should be displayed at a given point in time.
  */
-private import gobject.ObjectG;
 public class PixbufAnimation : ObjectG
 {
 	
@@ -142,15 +142,9 @@ public class PixbufAnimation : ObjectG
 	 * detected automatically. If the file's format does not support multi-frame
 	 * images, then an animation with a single frame will be created. Possible errors
 	 * are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains.
-	 * filename:
-	 *  Name of file to load, in the GLib file name encoding
-	 * error:
-	 *  return location for error
-	 * Returns:
-	 *  A newly-created animation with a reference count of 1, or NULL
-	 * if any of several error conditions ocurred: the file could not be opened,
-	 * there was no loader for the file's format, there was not enough memory to
-	 * allocate the image buffer, or the image file contained invalid data.
+	 * Params:
+	 * filename =  Name of file to load, in the GLib file name encoding
+	 * error =  return location for error
 	 */
 	public this (char[] filename, GError** error)
 	{
@@ -162,10 +156,7 @@ public class PixbufAnimation : ObjectG
 	 * Warning
 	 * gdk_pixbuf_animation_ref is deprecated and should not be used in newly-written code. Use g_object_ref().
 	 * Adds a reference to an animation.
-	 * animation:
-	 *  An animation.
-	 * Returns:
-	 *  The same as the animation argument.
+	 * Returns: The same as the animation argument.
 	 */
 	public PixbufAnimation doref()
 	{
@@ -177,8 +168,6 @@ public class PixbufAnimation : ObjectG
 	 * Warning
 	 * gdk_pixbuf_animation_unref is deprecated and should not be used in newly-written code. Use g_object_unref().
 	 * Removes a reference from an animation.
-	 * animation:
-	 *  An animation.
 	 */
 	public void unref()
 	{
@@ -188,10 +177,7 @@ public class PixbufAnimation : ObjectG
 	
 	/**
 	 * Queries the width of the bounding box of a pixbuf animation.
-	 * animation:
-	 *  An animation.
-	 * Returns:
-	 *  Width of the bounding box of the animation.
+	 * Returns: Width of the bounding box of the animation.
 	 */
 	public int getWidth()
 	{
@@ -201,10 +187,7 @@ public class PixbufAnimation : ObjectG
 	
 	/**
 	 * Queries the height of the bounding box of a pixbuf animation.
-	 * animation:
-	 *  An animation.
-	 * Returns:
-	 *  Height of the bounding box of the animation.
+	 * Returns: Height of the bounding box of the animation.
 	 */
 	public int getHeight()
 	{
@@ -241,12 +224,9 @@ public class PixbufAnimation : ObjectG
 	 * the frame itself. So your timeout should be reinstalled after any
 	 * area_updated signal.
 	 * A delay time of -1 is possible, indicating "infinite."
-	 * animation:
-	 *  a GdkPixbufAnimation
-	 * start_time:
-	 *  time when the animation starts playing
-	 * Returns:
-	 *  an iterator to move over the animation
+	 * Params:
+	 * startTime =  time when the animation starts playing
+	 * Returns: an iterator to move over the animation
 	 */
 	public GdkPixbufAnimationIter* getIter(GTimeVal* startTime)
 	{
@@ -259,10 +239,7 @@ public class PixbufAnimation : ObjectG
 	 * out to be a plain, unanimated image, then this function will return
 	 * TRUE. Use gdk_pixbuf_animation_get_static_image() to retrieve
 	 * the image.
-	 * animation:
-	 *  a GdkPixbufAnimation
-	 * Returns:
-	 *  TRUE if the "animation" was really just an image
+	 * Returns: TRUE if the "animation" was really just an image
 	 */
 	public int isStaticImage()
 	{
@@ -277,10 +254,7 @@ public class PixbufAnimation : ObjectG
 	 * unanimated image, which might be the first frame, or something more
 	 * sophisticated. If an animation hasn't loaded any frames yet, this
 	 * function will return NULL.
-	 * animation:
-	 *  a GdkPixbufAnimation
-	 * Returns:
-	 *  unanimated image representing the animation
+	 * Returns: unanimated image representing the animation
 	 */
 	public Pixbuf getStaticImage()
 	{
@@ -305,12 +279,10 @@ public class PixbufAnimation : ObjectG
 	 * display, assuming the display had been rendered prior to advancing;
 	 * if TRUE, you need to call gdk_animation_iter_get_pixbuf() and update the
 	 * display with the new pixbuf.
-	 * iter:
-	 *  a GdkPixbufAnimationIter
-	 * current_time:
-	 *  current time
-	 * Returns:
-	 *  TRUE if the image may need updating
+	 * Params:
+	 * iter =  a GdkPixbufAnimationIter
+	 * currentTime =  current time
+	 * Returns: TRUE if the image may need updating
 	 */
 	public static int iterAdvance(GdkPixbufAnimationIter* iter, GTimeVal* currentTime)
 	{
@@ -323,10 +295,9 @@ public class PixbufAnimation : ObjectG
 	 * or -1 if the current pixbuf should be displayed forever. g_timeout_add()
 	 * conveniently takes a timeout in milliseconds, so you can use a timeout
 	 * to schedule the next update.
-	 * iter:
-	 *  an animation iterator
-	 * Returns:
-	 *  delay time in milliseconds (thousandths of a second)
+	 * Params:
+	 * iter =  an animation iterator
+	 * Returns: delay time in milliseconds (thousandths of a second)
 	 */
 	public static int iterGetDelayTime(GdkPixbufAnimationIter* iter)
 	{
@@ -340,10 +311,9 @@ public class PixbufAnimation : ObjectG
 	 * for an area of the frame currently streaming in to the loader. So if
 	 * you're on the currently loading frame, you need to redraw the screen for
 	 * the updated area.
-	 * iter:
-	 *  a GdkPixbufAnimationIter
-	 * Returns:
-	 *  TRUE if the frame we're on is partially loaded, or the last frame
+	 * Params:
+	 * iter =  a GdkPixbufAnimationIter
+	 * Returns: TRUE if the frame we're on is partially loaded, or the last frame
 	 */
 	public static int iterOnCurrentlyLoadingFrame(GdkPixbufAnimationIter* iter)
 	{
@@ -363,10 +333,9 @@ public class PixbufAnimation : ObjectG
 	 * gdk_pixbuf_animation_iter_advance(). Copy the pixbuf to keep it
 	 * (don't just add a reference), as it may get recycled as you advance
 	 * the iterator.
-	 * iter:
-	 *  an animation iterator
-	 * Returns:
-	 *  the pixbuf to be displayed
+	 * Params:
+	 * iter =  an animation iterator
+	 * Returns: the pixbuf to be displayed
 	 */
 	public static Pixbuf iterGetPixbuf(GdkPixbufAnimationIter* iter)
 	{
@@ -377,15 +346,12 @@ public class PixbufAnimation : ObjectG
 	
 	/**
 	 * Creates a new, empty animation.
-	 * width:
-	 *  the width of the animation
-	 * height:
-	 *  the height of the animation
-	 * rate:
-	 *  the speed of the animation, in frames per second
-	 * Returns:
-	 *  a newly allocated GdkPixbufSimpleAnim
 	 * Since 2.8
+	 * Params:
+	 * width =  the width of the animation
+	 * height =  the height of the animation
+	 * rate =  the speed of the animation, in frames per second
+	 * Returns: a newly allocated GdkPixbufSimpleAnim
 	 */
 	public static GdkPixbufSimpleAnim* gdkPixbufSimpleAnimNew(int width, int height, float rate)
 	{
@@ -397,13 +363,10 @@ public class PixbufAnimation : ObjectG
 	 * Adds a new frame to animation. The pixbuf must
 	 * have the dimensions specified when the animation
 	 * was constructed.
-	 * animation:
-	 *  a GdkPixbufSimpleAnim
-	 * pixbuf:
-	 *  the pixbuf to add
 	 * Since 2.8
-	 * See Also
-	 *  GdkPixbufLoader
+	 * Params:
+	 * animation =  a GdkPixbufSimpleAnim
+	 * pixbuf =  the pixbuf to add
 	 */
 	public static void gdkPixbufSimpleAnimAddFrame(GdkPixbufSimpleAnim* animation, Pixbuf pixbuf)
 	{

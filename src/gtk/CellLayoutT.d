@@ -88,6 +88,24 @@ private import glib.Str;
  * cell renderer. Finally, it is possible to specify a function with
  * gtk_cell_layout_set_cell_data_func() that is called to determine the value
  * of the attribute for each cell that is rendered.
+ * GtkCellLayouts as GtkBuildable
+ * Implementations of GtkCellLayout which also implement the GtkBuildable
+ * interface (GtkCellView, GtkIconView, GtkComboBox, GtkComboBoxEntry,
+ * GtkEntryCompletion, GtkTreeViewColumn) accept GtkCellRenderer objects
+ * as <child> elements in UI definitions. They support a custom
+ * <attributes> element for their children, which can contain
+ * multiple <attribute> elements. Each <attribute> element has
+ * a name attribute which specifies a property of the cell renderer; the
+ * content of the element is the attribute value.
+ * Example20.A UI definition fragment specifying attributes
+ * <object class="GtkCellView">
+ *  <child>
+ *  <object class="GtkCellRendererText"/>
+ *  <attributes>
+ *  <attribute name="text">0</attribute>
+ *  </attributes>
+ *  </child>"
+ * </object>
  */
 public template CellLayoutT(TStruct)
 {
@@ -113,13 +131,10 @@ public template CellLayoutT(TStruct)
 	 * then the cell is allocated no more space than it needs. Any unused space
 	 * is divided evenly between cells for which expand is TRUE.
 	 * Note that reusing the same cell renderer is not supported.
-	 * cell_layout:
-	 *  A GtkCellLayout.
-	 * cell:
-	 *  A GtkCellRenderer.
-	 * expand:
-	 *  TRUE if cell is to be given extra space allocated to cell_layout.
 	 * Since 2.4
+	 * Params:
+	 * cell =  A GtkCellRenderer.
+	 * expand =  TRUE if cell is to be given extra space allocated to cell_layout.
 	 */
 	public void packStart(CellRenderer cell, int expand)
 	{
@@ -132,13 +147,10 @@ public template CellLayoutT(TStruct)
 	 * cell is allocated no more space than it needs. Any unused space is
 	 * divided evenly between cells for which expand is TRUE.
 	 * Note that reusing the same cell renderer is not supported.
-	 * cell_layout:
-	 *  A GtkCellLayout.
-	 * cell:
-	 *  A GtkCellRenderer.
-	 * expand:
-	 *  TRUE if cell is to be given extra space allocated to cell_layout.
 	 * Since 2.4
+	 * Params:
+	 * cell =  A GtkCellRenderer.
+	 * expand =  TRUE if cell is to be given extra space allocated to cell_layout.
 	 */
 	public void packEnd(CellRenderer cell, int expand)
 	{
@@ -148,13 +160,8 @@ public template CellLayoutT(TStruct)
 	
 	/**
 	 * Returns the cell renderers which have been added to cell_layout.
-	 * cell_layout:
-	 *  a GtkCellLayout
-	 * Returns:
-	 *  a list of cell renderers. The list, but not the
-	 *  renderers has been newly allocated and should be freed with
-	 *  g_list_free() when no longer needed.
 	 * Since 2.12
+	 * Returns: a list of cell renderers. The list, but not the renderers has been newly allocated and should be freed with g_list_free() when no longer needed.
 	 */
 	public GList* getCells()
 	{
@@ -165,13 +172,10 @@ public template CellLayoutT(TStruct)
 	/**
 	 * Re-inserts cell at position. Note that cell has already to be packed
 	 * into cell_layout for this to function properly.
-	 * cell_layout:
-	 *  A GtkCellLayout.
-	 * cell:
-	 *  A GtkCellRenderer to reorder.
-	 * position:
-	 *  New position to insert cell at.
 	 * Since 2.4
+	 * Params:
+	 * cell =  A GtkCellRenderer to reorder.
+	 * position =  New position to insert cell at.
 	 */
 	public void reorder(CellRenderer cell, int position)
 	{
@@ -182,8 +186,6 @@ public template CellLayoutT(TStruct)
 	/**
 	 * Unsets all the mappings on all renderers on cell_layout and
 	 * removes all renderers from cell_layout.
-	 * cell_layout:
-	 *  A GtkCellLayout.
 	 * Since 2.4
 	 */
 	public void clear()
@@ -197,13 +199,10 @@ public template CellLayoutT(TStruct)
 	 * attributes should be in attribute/column order, as in
 	 * gtk_cell_layout_add_attribute(). All existing attributes are removed, and
 	 * replaced with the new attributes.
-	 * cell_layout:
-	 *  A GtkCellLayout.
-	 * cell:
-	 *  A GtkCellRenderer.
-	 * ...:
-	 *  A NULL-terminated list of attributes.
 	 * Since 2.4
+	 * Params:
+	 * cell =  A GtkCellRenderer.
+	 * ... =  A NULL-terminated list of attributes.
 	 */
 	public void setAttributes(CellRenderer cell, ... )
 	{
@@ -217,15 +216,11 @@ public template CellLayoutT(TStruct)
 	 * parameter on cell to be set from the value. So for example if column 2
 	 * of the model contains strings, you could have the "text" attribute of a
 	 * GtkCellRendererText get its values from column 2.
-	 * cell_layout:
-	 *  A GtkCellLayout.
-	 * cell:
-	 *  A GtkCellRenderer.
-	 * attribute:
-	 *  An attribute on the renderer.
-	 * column:
-	 *  The column position on the model to get the attribute from.
 	 * Since 2.4
+	 * Params:
+	 * cell =  A GtkCellRenderer.
+	 * attribute =  An attribute on the renderer.
+	 * column =  The column position on the model to get the attribute from.
 	 */
 	public void addAttribute(CellRenderer cell, char[] attribute, int column)
 	{
@@ -238,17 +233,12 @@ public template CellLayoutT(TStruct)
 	 * is used instead of the standard attributes mapping for setting the
 	 * column value, and should set the value of cell_layout's cell renderer(s)
 	 * as appropriate. func may be NULL to remove and older one.
-	 * cell_layout:
-	 *  A GtkCellLayout.
-	 * cell:
-	 *  A GtkCellRenderer.
-	 * func:
-	 *  The GtkCellLayoutDataFunc to use.
-	 * func_data:
-	 *  The user data for func.
-	 * destroy:
-	 *  The destroy notification for func_data.
 	 * Since 2.4
+	 * Params:
+	 * cell =  A GtkCellRenderer.
+	 * func =  The GtkCellLayoutDataFunc to use.
+	 * funcData =  The user data for func.
+	 * destroy =  The destroy notification for func_data.
 	 */
 	public void setCellDataFunc(CellRenderer cell, GtkCellLayoutDataFunc func, void* funcData, GDestroyNotify destroy)
 	{
@@ -259,11 +249,9 @@ public template CellLayoutT(TStruct)
 	/**
 	 * Clears all existing attributes previously set with
 	 * gtk_cell_layout_set_attributes().
-	 * cell_layout:
-	 *  A GtkCellLayout.
-	 * cell:
-	 *  A GtkCellRenderer to clear the attribute mapping on.
 	 * Since 2.4
+	 * Params:
+	 * cell =  A GtkCellRenderer to clear the attribute mapping on.
 	 */
 	public void clearAttributes(CellRenderer cell)
 	{

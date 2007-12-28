@@ -71,6 +71,7 @@ private import gtk.Widget;
 
 
 
+private import gtk.Container;
 
 /**
  * Description
@@ -85,7 +86,6 @@ private import gtk.Widget;
  * GTK_WIDGET (layout)->window, as you would for a drawing
  * area.
  */
-private import gtk.Container;
 public class Layout : Container
 {
 	
@@ -176,12 +176,9 @@ public class Layout : Container
 	 * Creates a new GtkLayout. Unless you have a specific adjustment
 	 * you'd like the layout to use for scrolling, pass NULL for
 	 * hadjustment and vadjustment.
-	 * hadjustment:
-	 *  horizontal scroll adjustment, or NULL
-	 * vadjustment:
-	 *  vertical scroll adjustment, or NULL
-	 * Returns:
-	 *  a new GtkLayout
+	 * Params:
+	 * hadjustment =  horizontal scroll adjustment, or NULL
+	 * vadjustment =  vertical scroll adjustment, or NULL
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
@@ -192,14 +189,10 @@ public class Layout : Container
 	/**
 	 * Adds child_widget to layout, at position (x,y).
 	 * layout becomes the new parent container of child_widget.
-	 * layout:
-	 *  a GtkLayout
-	 * child_widget:
-	 *  child widget
-	 * x:
-	 *  X position of child widget
-	 * y:
-	 *  Y position of child widget
+	 * Params:
+	 * childWidget =  child widget
+	 * x =  X position of child widget
+	 * y =  Y position of child widget
 	 */
 	public void put(Widget childWidget, int x, int y)
 	{
@@ -209,14 +202,10 @@ public class Layout : Container
 	
 	/**
 	 * Moves a current child of layout to a new position.
-	 * layout:
-	 *  a GtkLayout
-	 * child_widget:
-	 *  a current child of layout
-	 * x:
-	 *  X position to move to
-	 * y:
-	 *  Y position to move to
+	 * Params:
+	 * childWidget =  a current child of layout
+	 * x =  X position to move to
+	 * y =  Y position to move to
 	 */
 	public void move(Widget childWidget, int x, int y)
 	{
@@ -226,12 +215,9 @@ public class Layout : Container
 	
 	/**
 	 * Sets the size of the scrollable area of the layout.
-	 * layout:
-	 *  a GtkLayout
-	 * width:
-	 *  width of entire scrollable area
-	 * height:
-	 *  height of entire scrollable area
+	 * Params:
+	 * width =  width of entire scrollable area
+	 * height =  height of entire scrollable area
 	 */
 	public void setSize(uint width, uint height)
 	{
@@ -243,12 +229,9 @@ public class Layout : Container
 	 * Gets the size that has been set on the layout, and that determines
 	 * the total extents of the layout's scrollbar area. See
 	 * gtk_layout_set_size().
-	 * layout:
-	 *  a GtkLayout
-	 * width:
-	 *  location to store the width set on layout, or NULL
-	 * height:
-	 *  location to store the height set on layout, or NULL
+	 * Params:
+	 * width =  location to store the width set on layout, or NULL
+	 * height =  location to store the height set on layout, or NULL
 	 */
 	public void getSize(uint* width, uint* height)
 	{
@@ -260,8 +243,6 @@ public class Layout : Container
 	 * Warning
 	 * gtk_layout_freeze is deprecated and should not be used in newly-written code.
 	 * This is a deprecated function, it doesn't do anything useful.
-	 * layout:
-	 *  a GtkLayout
 	 */
 	public void freeze()
 	{
@@ -273,8 +254,6 @@ public class Layout : Container
 	 * Warning
 	 * gtk_layout_thaw is deprecated and should not be used in newly-written code.
 	 * This is a deprecated function, it doesn't do anything useful.
-	 * layout:
-	 *  a GtkLayout
 	 */
 	public void thaw()
 	{
@@ -288,10 +267,7 @@ public class Layout : Container
 	 * scrolling. It returns the GtkAdjustment used for communication
 	 * between the horizontal scrollbar and layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-	 * layout:
-	 *  a GtkLayout
-	 * Returns:
-	 *  horizontal scroll adjustment
+	 * Returns: horizontal scroll adjustment
 	 */
 	public Adjustment getHadjustment()
 	{
@@ -305,10 +281,7 @@ public class Layout : Container
 	 * scrolling. It returns the GtkAdjustment used for communication
 	 * between the vertical scrollbar and layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-	 * layout:
-	 *  a GtkLayout
-	 * Returns:
-	 *  vertical scroll adjustment
+	 * Returns: vertical scroll adjustment
 	 */
 	public Adjustment getVadjustment()
 	{
@@ -319,10 +292,8 @@ public class Layout : Container
 	/**
 	 * Sets the horizontal scroll adjustment for the layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-	 * layout:
-	 *  a GtkLayout
-	 * adjustment:
-	 *  new scroll adjustment
+	 * Params:
+	 * adjustment =  new scroll adjustment
 	 */
 	public void setHadjustment(Adjustment adjustment)
 	{
@@ -333,14 +304,8 @@ public class Layout : Container
 	/**
 	 * Sets the vertical scroll adjustment for the layout.
 	 * See GtkScrolledWindow, GtkScrollbar, GtkAdjustment for details.
-	 * layout:
-	 *  a GtkLayout
-	 * adjustment:
-	 *  new scroll adjustment
-	 * Property Details
-	 * The "hadjustment" property
-	 *  "hadjustment" GtkAdjustment : Read / Write
-	 * The GtkAdjustment for the horizontal position.
+	 * Params:
+	 * adjustment =  new scroll adjustment
 	 */
 	public void setVadjustment(Adjustment adjustment)
 	{

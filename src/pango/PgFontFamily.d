@@ -245,11 +245,7 @@ public class PgFontFamily
 	 * Gets the name of the family. The name is unique among all
 	 * fonts for the font backend and can be used in a PangoFontDescription
 	 * to specify that a face from this family is desired.
-	 * family:
-	 *  a PangoFontFamily
-	 * Returns:
-	 *  the name of the family. This string is owned
-	 *  by the family object and must not be modified or freed.
+	 * Returns: the name of the family. This string is owned by the family object and must not be modified or freed.
 	 */
 	public char[] getName()
 	{
@@ -269,11 +265,7 @@ public class PgFontFamily
 	 * pango_font_metrics_get_approximate_digit_width(), since the results
 	 * of pango_font_metrics_get_approximate_char_width() may be affected
 	 * by double-width characters.
-	 * family:
-	 *  a PangoFontFamily
-	 * Returns:
-	 *  TRUE if the family is monospace.
-	 * Since 1.4
+	 * Returns: TRUE if the family is monospace.Since 1.4
 	 */
 	public int isMonospace()
 	{
@@ -285,20 +277,18 @@ public class PgFontFamily
 	 * Lists the different font faces that make up family. The faces
 	 * in a family share a common design, but differ in slant, weight,
 	 * width and other aspects.
-	 * family:
-	 *  a PangoFontFamily
-	 * faces:
-	 *  location to store an array of pointers to PangoFontFace
+	 * Params:
+	 * faces =  location to store an array of pointers to PangoFontFace
 	 *  objects, or NULL. This array should be freed with g_free()
 	 *  when it is no longer needed.
-	 * n_faces:
-	 *  location to store number of elements in faces.
+	 * nFaces =  location to store number of elements in faces.
 	 */
 	public void listFaces(PangoFontFace*** faces, int* nFaces)
 	{
 		// void pango_font_family_list_faces (PangoFontFamily *family,  PangoFontFace ***faces,  int *n_faces);
 		pango_font_family_list_faces(pangoFontFamily, faces, nFaces);
 	}
+	
 	
 	
 	

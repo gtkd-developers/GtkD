@@ -163,8 +163,8 @@ public class Date
 	
 	/**
 	 * Equivalent to the UNIX gettimeofday() function, but portable.
-	 * result:
-	 *  GTimeVal structure in which to store current time.
+	 * Params:
+	 * result =  GTimeVal structure in which to store current time.
 	 */
 	public static void gGetCurrentTime(GTimeVal* result)
 	{
@@ -178,8 +178,8 @@ public class Date
 	 * G_USEC_PER_SEC macro). g_usleep() may have limited precision,
 	 * depending on hardware and operating system; don't rely on the exact
 	 * length of the sleep.
-	 * microseconds:
-	 * number of microseconds to pause.
+	 * Params:
+	 * microseconds = number of microseconds to pause.
 	 */
 	public static void gUsleep(uint microseconds)
 	{
@@ -190,10 +190,9 @@ public class Date
 	/**
 	 * Adds the given number of microseconds to time_. microseconds can
 	 * also be negative to decrease the value of time_.
-	 * time_:
-	 *  a GTimeVal
-	 * microseconds:
-	 *  number of microseconds to add to time
+	 * Params:
+	 * time =  a GTimeVal
+	 * microseconds =  number of microseconds to add to time
 	 */
 	public static void gTimeValAdd(GTimeVal* time, int microseconds)
 	{
@@ -204,13 +203,11 @@ public class Date
 	/**
 	 * Converts a string containing an ISO 8601 encoded date and time
 	 * to a GTimeVal and puts it into time_.
-	 * iso_date:
-	 *  a ISO 8601 encoded date string
-	 * time_:
-	 *  a GTimeVal
-	 * Returns:
-	 *  TRUE if the conversion was successful.
 	 * Since 2.12
+	 * Params:
+	 * isoDate =  a ISO 8601 encoded date string
+	 * time =  a GTimeVal
+	 * Returns: TRUE if the conversion was successful.
 	 */
 	public static int gTimeValFromIso8601(char[] isoDate, GTimeVal* time)
 	{
@@ -221,11 +218,10 @@ public class Date
 	/**
 	 * Converts time_ into a ISO 8601 encoded string, relative to the
 	 * Coordinated Universal Time (UTC).
-	 * time_:
-	 *  a GTimeVal
-	 * Returns:
-	 *  a newly allocated string containing a ISO 8601 date
 	 * Since 2.12
+	 * Params:
+	 * time =  a GTimeVal
+	 * Returns: a newly allocated string containing a ISO 8601 date
 	 */
 	public static char[] gTimeValToIso8601(GTimeVal* time)
 	{
@@ -247,8 +243,6 @@ public class Date
 	 * Allocates a GDate and initializes it to a sane state. The new date will
 	 * be cleared (as if you'd called g_date_clear()) but invalid (it won't
 	 * represent an existing day). Free the return value with g_date_free().
-	 * Returns:
-	 * a newly-allocated GDate.
 	 */
 	public this ()
 	{
@@ -260,14 +254,10 @@ public class Date
 	 * Like g_date_new(), but also sets the value of the date. Assuming the
 	 * day-month-year triplet you pass in represents an existing day, the
 	 * returned date will be valid.
-	 * day:
-	 * day of the month.
-	 * month:
-	 * month of the year.
-	 * year:
-	 * year
-	 * Returns:
-	 * a newly-allocated GDate initialized with day, month, and year.
+	 * Params:
+	 * day = day of the month.
+	 * month = month of the year.
+	 * year = year
 	 */
 	public this (GDateDay day, GDateMonth month, GDateYear year)
 	{
@@ -279,10 +269,8 @@ public class Date
 	 * Like g_date_new(), but also sets the value of the date. Assuming the
 	 * Julian day number you pass in is valid (greater than 0, less than an
 	 * unreasonably large number), the returned date will be valid.
-	 * julian_day:
-	 * days since January 1, Year 1.
-	 * Returns:
-	 * a newly-allocated GDate initialized with julian_day.
+	 * Params:
+	 * julianDay = days since January 1, Year 1.
 	 */
 	public this (uint julianDay)
 	{
@@ -295,10 +283,8 @@ public class Date
 	 * state. The cleared dates will not represent an existing date, but will
 	 * not contain garbage. Useful to init a date declared on the stack.
 	 * Validity can be tested with g_date_valid().
-	 * date:
-	 * pointer to one or more dates to clear.
-	 * n_dates:
-	 * number of dates to clear.
+	 * Params:
+	 * nDates = number of dates to clear.
 	 */
 	public void clear(uint nDates)
 	{
@@ -308,8 +294,6 @@ public class Date
 	
 	/**
 	 * Frees a GDate returned from g_date_new().
-	 * date:
-	 * a GDate.
 	 */
 	public void free()
 	{
@@ -320,10 +304,8 @@ public class Date
 	/**
 	 * Sets the day of the month for a GDate. If the resulting day-month-year
 	 * triplet is invalid, the date will be invalid.
-	 * date:
-	 * a GDate.
-	 * day:
-	 * day to set.
+	 * Params:
+	 * day = day to set.
 	 */
 	public void setDay(GDateDay day)
 	{
@@ -334,10 +316,8 @@ public class Date
 	/**
 	 * Sets the month of the year for a GDate. If the resulting
 	 * day-month-year triplet is invalid, the date will be invalid.
-	 * date:
-	 * a GDate.
-	 * month:
-	 * month to set.
+	 * Params:
+	 * month = month to set.
 	 */
 	public void setMonth(GDateMonth month)
 	{
@@ -348,10 +328,8 @@ public class Date
 	/**
 	 * Sets the year for a GDate. If the resulting day-month-year triplet is
 	 * invalid, the date will be invalid.
-	 * date:
-	 * a GDate.
-	 * year:
-	 * year to set.
+	 * Params:
+	 * year = year to set.
 	 */
 	public void setYear(GDateYear year)
 	{
@@ -363,14 +341,10 @@ public class Date
 	 * Sets the value of a GDate from a day, month, and year. The day-month-year
 	 * triplet must be valid; if you aren't sure it is, call g_date_valid_dmy() to
 	 * check before you set it.
-	 * date:
-	 * a GDate.
-	 * day:
-	 * day.
-	 * month:
-	 * month.
-	 * y:
-	 * year.
+	 * Params:
+	 * day = day.
+	 * month = month.
+	 * y = year.
 	 */
 	public void setDmy(GDateDay day, GDateMonth month, GDateYear y)
 	{
@@ -380,10 +354,8 @@ public class Date
 	
 	/**
 	 * Sets the value of a GDate from a Julian day number.
-	 * date:
-	 * a GDate.
-	 * julian_date:
-	 * Julian day number (days since January 1, Year 1).
+	 * Params:
+	 * julianDate = Julian day number (days since January 1, Year 1).
 	 */
 	public void setJulian(uint julianDate)
 	{
@@ -396,10 +368,8 @@ public class Date
 	 * g_date_set_time is deprecated and should not be used in newly-written code.
 	 * Sets the value of a date from a GTime value.
 	 * Deprecated:2.10: Use g_date_set_time_t() instead.
-	 * date:
-	 *  a GDate.
-	 * time_:
-	 *  GTime value to set.
+	 * Params:
+	 * time =  GTime value to set.
 	 */
 	public void setTime(GTime time)
 	{
@@ -409,13 +379,9 @@ public class Date
 	
 	/**
 	 * Sets the value of a date from a time_t value.
-	 * To set the value of a date to the current day, you could write:
-	 *  g_date_set_time_t (date, time (NULL));
-	 * date:
-	 *  a GDate
-	 * timet:
-	 *  time_t value to set
 	 * Since 2.10
+	 * Params:
+	 * timet =  time_t value to set
 	 */
 	public void setTimeT(uint timet)
 	{
@@ -427,11 +393,9 @@ public class Date
 	 * Sets the value of a date from a GTimeVal value. Note that the
 	 * tv_usec member is ignored, because GDate can't make use of the
 	 * additional precision.
-	 * date:
-	 *  a GDate
-	 * timeval:
-	 *  GTimeVal value to set
 	 * Since 2.10
+	 * Params:
+	 * timeval =  GTimeVal value to set
 	 */
 	public void setTimeVal(GTimeVal* timeval)
 	{
@@ -450,10 +414,8 @@ public class Date
 	 * locale. It's intended to be a heuristic routine that guesses what the
 	 * user means by a given string (and it does work pretty well in that
 	 * capacity).
-	 * date:
-	 * a GDate to fill in.
-	 * str:
-	 * string to parse.
+	 * Params:
+	 * str = string to parse.
 	 */
 	public void setParse(char[] str)
 	{
@@ -464,10 +426,8 @@ public class Date
 	/**
 	 * Increments a date some number of days. To move forward by weeks, add
 	 * weeks*7 days. The date must be valid.
-	 * date:
-	 * a GDate to increment.
-	 * n_days:
-	 * number of days to move the date forward.
+	 * Params:
+	 * nDays = number of days to move the date forward.
 	 */
 	public void addDays(uint nDays)
 	{
@@ -478,10 +438,8 @@ public class Date
 	/**
 	 * Moves a date some number of days into the past. To move by weeks, just
 	 * move by weeks*7 days. The date must be valid.
-	 * date:
-	 * a GDate to decrement.
-	 * n_days:
-	 * number of days to move.
+	 * Params:
+	 * nDays = number of days to move.
 	 */
 	public void subtractDays(uint nDays)
 	{
@@ -494,10 +452,8 @@ public class Date
 	 * greater than 28, this routine may change the day of the month (because
 	 * the destination month may not have the current day in it). The date
 	 * must be valid.
-	 * date:
-	 * a GDate to increment.
-	 * n_months:
-	 * number of months to move forward.
+	 * Params:
+	 * nMonths = number of months to move forward.
 	 */
 	public void addMonths(uint nMonths)
 	{
@@ -509,10 +465,8 @@ public class Date
 	 * Moves a date some number of months into the past. If the current day of
 	 * the month doesn't exist in the destination month, the day of the month
 	 * may change. The date must be valid.
-	 * date:
-	 * a GDate to decrement.
-	 * n_months:
-	 * number of months to move.
+	 * Params:
+	 * nMonths = number of months to move.
 	 */
 	public void subtractMonths(uint nMonths)
 	{
@@ -524,10 +478,8 @@ public class Date
 	 * Increments a date by some number of years. If the date is February 29,
 	 * and the destination year is not a leap year, the date will be changed
 	 * to February 28. The date must be valid.
-	 * date:
-	 * a GDate to increment.
-	 * n_years:
-	 * number of years to move forward.
+	 * Params:
+	 * nYears = number of years to move forward.
 	 */
 	public void addYears(uint nYears)
 	{
@@ -540,10 +492,8 @@ public class Date
 	 * doesn't exist in the destination year (i.e. it's February 29 and you
 	 * move to a non-leap-year) then the day is changed to February 29. The date
 	 * must be valid.
-	 * date:
-	 * a GDate to decrement.
-	 * n_years:
-	 * number of years to move.
+	 * Params:
+	 * nYears = number of years to move.
 	 */
 	public void subtractYears(uint nYears)
 	{
@@ -555,12 +505,9 @@ public class Date
 	 * Computes the number of days between two dates.
 	 * If date2 is prior to date1, the returned value is negative.
 	 * Both dates must be valid.
-	 * date1:
-	 * the first date.
-	 * date2:
-	 * the second date.
-	 * Returns:
-	 * the number of days between date1 and date2.
+	 * Params:
+	 * date2 = the second date.
+	 * Returns:the number of days between date1 and date2.
 	 */
 	public int daysBetween(Date date2)
 	{
@@ -571,13 +518,9 @@ public class Date
 	/**
 	 * qsort()-style comparsion function for dates. Both
 	 * dates must be valid.
-	 * lhs:
-	 * first date to compare.
-	 * rhs:
-	 * second date to compare.
-	 * Returns:
-	 * 0 for equal, less than zero if lhs is less than rhs,
-	 * greater than zero if lhs is greater than rhs.
+	 * Params:
+	 * rhs = second date to compare.
+	 * Returns:0 for equal, less than zero if lhs is less than rhs,greater than zero if lhs is greater than rhs.
 	 */
 	public int compare(Date rhs)
 	{
@@ -590,12 +533,9 @@ public class Date
 	 * If date falls after max_date, sets date equal to max_date.
 	 * Either min_date and max_date may be NULL. All non-NULL dates
 	 * must be valid.
-	 * date:
-	 * a GDate to clamp.
-	 * min_date:
-	 * minimum accepted value for date.
-	 * max_date:
-	 * maximum accepted value for date.
+	 * Params:
+	 * minDate = minimum accepted value for date.
+	 * maxDate = maximum accepted value for date.
 	 */
 	public void clamp(Date minDate, Date maxDate)
 	{
@@ -606,10 +546,8 @@ public class Date
 	/**
 	 * Checks if date1 is less than or equal to date2,
 	 * and swap the values if this is not the case.
-	 * date1:
-	 * the first date.
-	 * date2:
-	 * the second date.
+	 * Params:
+	 * date2 = the second date.
 	 */
 	public void order(Date date2)
 	{
@@ -619,10 +557,7 @@ public class Date
 	
 	/**
 	 * Returns the day of the month. The date must be valid.
-	 * date:
-	 * a GDate to extract the day of the month from.
-	 * Returns:
-	 * day of the month.
+	 * Returns:day of the month.
 	 */
 	public GDateDay getDay()
 	{
@@ -632,10 +567,7 @@ public class Date
 	
 	/**
 	 * Returns the month of the year. The date must be valid.
-	 * date:
-	 * a GDate to get the month from.
-	 * Returns:
-	 * month of the year as a GDateMonth.
+	 * Returns:month of the year as a GDateMonth.
 	 */
 	public GDateMonth getMonth()
 	{
@@ -645,10 +577,7 @@ public class Date
 	
 	/**
 	 * Returns the year of a GDate. The date must be valid.
-	 * date:
-	 * a GDate.
-	 * Returns:
-	 * year in which the date falls.
+	 * Returns:year in which the date falls.
 	 */
 	public GDateYear getYear()
 	{
@@ -661,10 +590,7 @@ public class Date
 	 * Julian day is simply the number of days since January 1, Year 1; i.e.,
 	 * January 1, Year 1 is Julian day 1; January 2, Year 1 is Julian day 2,
 	 * etc. The date must be valid.
-	 * date:
-	 * a GDate to extract the Julian day from.
-	 * Returns:
-	 * Julian day.
+	 * Returns:Julian day.
 	 */
 	public uint getJulian()
 	{
@@ -674,10 +600,7 @@ public class Date
 	
 	/**
 	 * Returns the day of the week for a GDate. The date must be valid.
-	 * date:
-	 * a GDate.
-	 * Returns:
-	 * day of the week as a GDateWeekday.
+	 * Returns:day of the week as a GDateWeekday.
 	 */
 	public GDateWeekday getWeekday()
 	{
@@ -688,10 +611,7 @@ public class Date
 	/**
 	 * Returns the day of the year, where Jan 1 is the first day of the
 	 * year. The date must be valid.
-	 * date:
-	 * a GDate to extract day of year from.
-	 * Returns:
-	 * day of the year.
+	 * Returns:day of the year.
 	 */
 	public uint getDayOfYear()
 	{
@@ -701,12 +621,10 @@ public class Date
 	
 	/**
 	 * Returns the number of days in a month, taking leap years into account.
-	 * month:
-	 * month.
-	 * year:
-	 * year.
-	 * Returns:
-	 * number of days in month during the year.
+	 * Params:
+	 * month = month.
+	 * year = year.
+	 * Returns:number of days in month during the year.
 	 */
 	public static byte getDaysInMonth(GDateMonth month, GDateYear year)
 	{
@@ -716,10 +634,7 @@ public class Date
 	
 	/**
 	 * Returns TRUE if the date is on the first of a month. The date must be valid.
-	 * date:
-	 * a GDate to check.
-	 * Returns:
-	 * TRUE if the date is the first of the month.
+	 * Returns:TRUE if the date is the first of the month.
 	 */
 	public int isFirstOfMonth()
 	{
@@ -729,10 +644,7 @@ public class Date
 	
 	/**
 	 * Returns TRUE if the date is the last day of the month. The date must be valid.
-	 * date:
-	 * a GDate to check.
-	 * Returns:
-	 * TRUE if the date is the last day of the month.
+	 * Returns:TRUE if the date is the last day of the month.
 	 */
 	public int isLastOfMonth()
 	{
@@ -742,10 +654,9 @@ public class Date
 	
 	/**
 	 * Returns TRUE if the year is a leap year.
-	 * year:
-	 * year to check.
-	 * Returns:
-	 * TRUE if the year is a leap year.
+	 * Params:
+	 * year = year to check.
+	 * Returns:TRUE if the year is a leap year.
 	 */
 	public static int isLeapYear(GDateYear year)
 	{
@@ -757,10 +668,7 @@ public class Date
 	 * Returns the week of the year, where weeks are understood to start on
 	 * Monday. If the date is before the first Monday of the year, return
 	 * 0. The date must be valid.
-	 * date:
-	 * a GDate.
-	 * Returns:
-	 * week of the year.
+	 * Returns:week of the year.
 	 */
 	public uint getMondayWeekOfYear()
 	{
@@ -775,10 +683,9 @@ public class Date
 	 * year. This function is basically telling you how many Mondays are in
 	 * the year, i.e. there are 53 Mondays if one of the extra days happens
 	 * to be a Monday.)
-	 * year:
-	 * a year.
-	 * Returns:
-	 * number of Mondays in the year.
+	 * Params:
+	 * year = a year.
+	 * Returns:number of Mondays in the year.
 	 */
 	public static byte getMondayWeeksInYear(GDateYear year)
 	{
@@ -790,10 +697,7 @@ public class Date
 	 * Returns the week of the year during which this date falls, if weeks
 	 * are understood to being on Sunday. The date must be valid. Can return 0 if
 	 * the day is before the first Sunday of the year.
-	 * date:
-	 * a GDate.
-	 * Returns:
-	 * week number.
+	 * Returns:week number.
 	 */
 	public uint getSundayWeekOfYear()
 	{
@@ -808,10 +712,9 @@ public class Date
 	 * year. This function is basically telling you how many Sundays are in
 	 * the year, i.e. there are 53 Sundays if one of the extra days happens
 	 * to be a Sunday.)
-	 * year:
-	 * year to count weeks in.
-	 * Returns:
-	 * number of weeks.
+	 * Params:
+	 * year = year to count weeks in.
+	 * Returns:number of weeks.
 	 */
 	public static byte getSundayWeeksInYear(GDateYear year)
 	{
@@ -822,11 +725,8 @@ public class Date
 	/**
 	 * Returns the week of the year, where weeks are interpreted according
 	 * to ISO 8601.
-	 * date:
-	 *  a valid GDate
-	 * Returns:
-	 *  ISO 8601 week number of the year.
 	 * Since 2.6
+	 * Returns: ISO 8601 week number of the year.
 	 */
 	public uint getIso8601_WeekOfYear()
 	{
@@ -845,16 +745,12 @@ public class Date
 	 * to those implemented by the platform's C library. For example, don't
 	 * expect that using g_date_strftime() would make the F provided by the C99
 	 * strftime() work on Windows where the C library only complies to C89.
-	 * s:
-	 * destination buffer.
-	 * slen:
-	 * buffer size.
-	 * format:
-	 * format string.
-	 * date:
-	 * valid GDate.
-	 * Returns:
-	 * number of characters written to the buffer, or 0 the buffer was too small.
+	 * Params:
+	 * s = destination buffer.
+	 * slen = buffer size.
+	 * format = format string.
+	 * date = valid GDate.
+	 * Returns:number of characters written to the buffer, or 0 the buffer was too small.
 	 */
 	public static uint strftime(char[] s, uint slen, char[] format, Date date)
 	{
@@ -866,10 +762,8 @@ public class Date
 	 * Fills in the date-related bits of a struct tm
 	 * using the date value. Initializes the non-date parts with something
 	 * sane but meaningless.
-	 * date:
-	 * a GDate to set the struct tm from.
-	 * tm:
-	 * struct tm to fill.
+	 * Params:
+	 * tm = struct tm to fill.
 	 */
 	public void toStructTm(void* tm)
 	{
@@ -881,10 +775,7 @@ public class Date
 	 * Returns TRUE if the GDate represents an existing day. The date must not
 	 * contain garbage; it should have been initialized with g_date_clear()
 	 * if it wasn't allocated by one of the g_date_new() variants.
-	 * date:
-	 * a GDate to check.
-	 * Returns:
-	 * Whether the date is valid.
+	 * Returns:Whether the date is valid.
 	 */
 	public int valid()
 	{
@@ -895,10 +786,9 @@ public class Date
 	/**
 	 * Returns TRUE if the day of the month is valid (a day is valid if it's
 	 * between 1 and 31 inclusive).
-	 * day:
-	 * day to check.
-	 * Returns:
-	 * TRUE if the day is valid.
+	 * Params:
+	 * day = day to check.
+	 * Returns:TRUE if the day is valid.
 	 */
 	public static int validDay(GDateDay day)
 	{
@@ -909,10 +799,9 @@ public class Date
 	/**
 	 * Returns TRUE if the month value is valid. The 12 GDateMonth
 	 * enumeration values are the only valid months.
-	 * month:
-	 * month.
-	 * Returns:
-	 * TRUE if the month is valid.
+	 * Params:
+	 * month = month.
+	 * Returns:TRUE if the month is valid.
 	 */
 	public static int validMonth(GDateMonth month)
 	{
@@ -923,10 +812,9 @@ public class Date
 	/**
 	 * Returns TRUE if the year is valid. Any year greater than 0 is valid,
 	 * though there is a 16-bit limit to what GDate will understand.
-	 * year:
-	 * year.
-	 * Returns:
-	 * TRUE if the year is valid.
+	 * Params:
+	 * year = year.
+	 * Returns:TRUE if the year is valid.
 	 */
 	public static int validYear(GDateYear year)
 	{
@@ -938,14 +826,11 @@ public class Date
 	 * Returns TRUE if the day-month-year triplet forms a valid, existing day
 	 * in the range of days GDate understands (Year 1 or later, no more than
 	 * a few thousand years in the future).
-	 * day:
-	 * day.
-	 * month:
-	 * month.
-	 * year:
-	 * year.
-	 * Returns:
-	 * TRUE if the date is a valid one.
+	 * Params:
+	 * day = day.
+	 * month = month.
+	 * year = year.
+	 * Returns:TRUE if the date is a valid one.
 	 */
 	public static int validDmy(GDateDay day, GDateMonth month, GDateYear year)
 	{
@@ -956,10 +841,9 @@ public class Date
 	/**
 	 * Returns TRUE if the Julian day is valid. Anything greater than zero is basically a
 	 * valid Julian, though there is a 32-bit limit.
-	 * julian_date:
-	 * Julian day to check.
-	 * Returns:
-	 * TRUE if the Julian day is valid.
+	 * Params:
+	 * julianDate = Julian day to check.
+	 * Returns:TRUE if the Julian day is valid.
 	 */
 	public static int validJulian(uint julianDate)
 	{
@@ -970,10 +854,9 @@ public class Date
 	/**
 	 * Returns TRUE if the weekday is valid. The 7 GDateWeekday enumeration
 	 * values are the only valid weekdays.
-	 * weekday:
-	 * weekday.
-	 * Returns:
-	 * TRUE if the weekday is valid.
+	 * Params:
+	 * weekday = weekday.
+	 * Returns:TRUE if the weekday is valid.
 	 */
 	public static int validWeekday(GDateWeekday weekday)
 	{

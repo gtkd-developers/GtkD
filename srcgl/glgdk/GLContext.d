@@ -67,11 +67,11 @@ private import glgdk.GLDrawable;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-private import gobject.ObjectG;
 public class GLContext : ObjectG
 {
 	
@@ -126,19 +126,14 @@ public class GLContext : ObjectG
 	
 	/**
 	 * Creates a new OpenGL rendering context.
-	 * gldrawable:
-	 *  a GdkGLDrawable.
-	 * share_list:
-	 *  the GdkGLContext with which to share display lists and texture
+	 * Params:
+	 * gldrawable =  a GdkGLDrawable.
+	 * shareList =  the GdkGLContext with which to share display lists and texture
 	 *  objects. NULL indicates that no sharing is to take place.
-	 * direct:
-	 *  whether rendering is to be done with a direct connection to
+	 * direct =  whether rendering is to be done with a direct connection to
 	 *  the graphics system.
-	 * render_type:
-	 *  GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
+	 * renderType =  GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
 	 *  used).
-	 * Returns:
-	 *  the new GdkGLContext.
 	 */
 	public this (GLDrawable gldrawable, GdkGLContext* shareList, int direct, int renderType)
 	{
@@ -149,8 +144,6 @@ public class GLContext : ObjectG
 	/**
 	 * Destroys the OpenGL resources associated with glcontext and
 	 * decrements glcontext's reference count.
-	 * glcontext:
-	 *  a GdkGLContext.
 	 */
 	public void destroy()
 	{
@@ -163,13 +156,9 @@ public class GLContext : ObjectG
 	 * mask contains the bitwise-OR of the same symbolic names that are passed to
 	 * the glPushAttrib() function. You can use GL_ALL_ATTRIB_BITS to copy all the
 	 * rendering state information.
-	 * glcontext:
-	 *  a GdkGLContext.
-	 * src:
-	 *  the source context.
-	 * Param3:
-	 * Returns:
-	 *  FALSE if it fails, TRUE otherwise.
+	 * Params:
+	 * src =  the source context.
+	 * Returns: FALSE if it fails, TRUE otherwise.
 	 */
 	public int copy(GdkGLContext* src, ulong mask)
 	{
@@ -179,10 +168,7 @@ public class GLContext : ObjectG
 	
 	/**
 	 * Gets GdkGLDrawable to which the glcontext is bound.
-	 * glcontext:
-	 *  a GdkGLContext.
-	 * Returns:
-	 *  the GdkGLDrawable or NULL if no GdkGLDrawable is bound.
+	 * Returns: the GdkGLDrawable or NULL if no GdkGLDrawable is bound.
 	 */
 	public GLDrawable getGLDrawable()
 	{
@@ -192,10 +178,7 @@ public class GLContext : ObjectG
 	
 	/**
 	 * Gets GdkGLConfig with which the glcontext is configured.
-	 * glcontext:
-	 *  a GdkGLContext.
-	 * Returns:
-	 *  the GdkGLConfig.
+	 * Returns: the GdkGLConfig.
 	 */
 	public GdkGLConfig* getGLConfig()
 	{
@@ -206,10 +189,7 @@ public class GLContext : ObjectG
 	/**
 	 * Gets GdkGLContext with which the glcontext shares the display lists and
 	 * texture objects.
-	 * glcontext:
-	 *  a GdkGLContext.
-	 * Returns:
-	 *  the GdkGLContext.
+	 * Returns: the GdkGLContext.
 	 */
 	public GdkGLContext* getShareList()
 	{
@@ -219,10 +199,7 @@ public class GLContext : ObjectG
 	
 	/**
 	 * Returns whether the glcontext is a direct rendering context.
-	 * glcontext:
-	 *  a GdkGLContext.
-	 * Returns:
-	 *  TRUE if the glcontext is a direct rendering contest.
+	 * Returns: TRUE if the glcontext is a direct rendering contest.
 	 */
 	public int isDirect()
 	{
@@ -232,10 +209,7 @@ public class GLContext : ObjectG
 	
 	/**
 	 * Gets render_type of the glcontext.
-	 * glcontext:
-	 *  a GdkGLContext.
-	 * Returns:
-	 *  GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE.
+	 * Returns: GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE.
 	 */
 	public int getRenderType()
 	{
@@ -245,11 +219,7 @@ public class GLContext : ObjectG
 	
 	/**
 	 * Returns the current GdkGLContext.
-	 * Returns:
-	 *  the current GdkGLContext or NULL if there is no current
-	 *  context.
-	 * <<Frame Buffer Configuration
-	 * Rendering Surface>>
+	 * Returns: the current GdkGLContext or NULL if there is no current context.<<Frame Buffer ConfigurationRendering Surface>>
 	 */
 	public static GdkGLContext* getCurrent()
 	{

@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Widget;
 
 /**
  * Description
@@ -81,7 +82,6 @@ private import gtkc.gtk;
  * The selected date can be retrieved from a GtkCalendar using
  * gtk_calendar_get_date().
  */
-private import gtk.Widget;
 public class Calendar : Widget
 {
 	
@@ -339,8 +339,6 @@ public class Calendar : Widget
 	
 	/**
 	 * Creates a new calendar, with the current date being selected.
-	 * Returns:
-	 *  a newly GtkCalendar widget
 	 */
 	public this ()
 	{
@@ -350,14 +348,10 @@ public class Calendar : Widget
 	
 	/**
 	 * Shifts the calendar to a different month.
-	 * calendar:
-	 *  a GtkCalendar
-	 * month:
-	 *  a month number between 0 and 11.
-	 * year:
-	 *  the year the month is in.
-	 * Returns:
-	 *  TRUE, always
+	 * Params:
+	 * month =  a month number between 0 and 11.
+	 * year =  the year the month is in.
+	 * Returns: TRUE, always
 	 */
 	public int selectMonth(uint month, uint year)
 	{
@@ -367,10 +361,8 @@ public class Calendar : Widget
 	
 	/**
 	 * Selects a day from the current month.
-	 * calendar:
-	 *  a GtkCalendar.
-	 * day:
-	 *  the day number between 1 and 31, or 0 to unselect
+	 * Params:
+	 * day =  the day number between 1 and 31, or 0 to unselect
 	 *  the currently selected day.
 	 */
 	public void selectDay(uint day)
@@ -381,12 +373,9 @@ public class Calendar : Widget
 	
 	/**
 	 * Places a visual marker on a particular day.
-	 * calendar:
-	 *  a GtkCalendar
-	 * day:
-	 *  the day number to mark between 1 and 31.
-	 * Returns:
-	 *  TRUE, always
+	 * Params:
+	 * day =  the day number to mark between 1 and 31.
+	 * Returns: TRUE, always
 	 */
 	public int markDay(uint day)
 	{
@@ -396,12 +385,9 @@ public class Calendar : Widget
 	
 	/**
 	 * Removes the visual marker from a particular day.
-	 * calendar:
-	 *  a GtkCalendar.
-	 * day:
-	 *  the day number to unmark between 1 and 31.
-	 * Returns:
-	 *  TRUE, always
+	 * Params:
+	 * day =  the day number to unmark between 1 and 31.
+	 * Returns: TRUE, always
 	 */
 	public int unmarkDay(uint day)
 	{
@@ -411,8 +397,6 @@ public class Calendar : Widget
 	
 	/**
 	 * Remove all visual markers.
-	 * calendar:
-	 *  a GtkCalendar
 	 */
 	public void clearMarks()
 	{
@@ -422,11 +406,8 @@ public class Calendar : Widget
 	
 	/**
 	 * Returns the current display options of calendar.
-	 * calendar:
-	 *  a GtkCalendar
-	 * Returns:
-	 *  the display options.
 	 * Since 2.4
+	 * Returns: the display options.
 	 */
 	public GtkCalendarDisplayOptions getDisplayOptions()
 	{
@@ -437,11 +418,9 @@ public class Calendar : Widget
 	/**
 	 * Sets display options (whether to display the heading and the month
 	 * headings).
-	 * calendar:
-	 *  a GtkCalendar
-	 * flags:
-	 *  the display options to set
 	 * Since 2.4
+	 * Params:
+	 * flags =  the display options to set
 	 */
 	public void setDisplayOptions(GtkCalendarDisplayOptions flags)
 	{
@@ -453,10 +432,8 @@ public class Calendar : Widget
 	 * Warning
 	 * gtk_calendar_display_options is deprecated and should not be used in newly-written code.
 	 * Sets display options (whether to display the heading and the month headings).
-	 * calendar:
-	 *  a GtkCalendar.
-	 * flags:
-	 *  the display options to set.
+	 * Params:
+	 * flags =  the display options to set.
 	 */
 	public void displayOptions(GtkCalendarDisplayOptions flags)
 	{
@@ -466,14 +443,10 @@ public class Calendar : Widget
 	
 	/**
 	 * Obtains the selected date from a GtkCalendar.
-	 * calendar:
-	 *  a GtkCalendar
-	 * year:
-	 *  location to store the year number, or NULL
-	 * month:
-	 *  location to store the month number (between 0 and 11), or NULL
-	 * day:
-	 *  location to store the day number (between 1 and 31), or NULL
+	 * Params:
+	 * year =  location to store the year number, or NULL
+	 * month =  location to store the month number (between 0 and 11), or NULL
+	 * day =  location to store the day number (between 1 and 31), or NULL
 	 */
 	public void getDate(uint* year, uint* month, uint* day)
 	{
@@ -486,8 +459,6 @@ public class Calendar : Widget
 	 * gtk_calendar_freeze has been deprecated since version 2.8 and should not be used in newly-written code.
 	 * Does nothing. Previously locked the display of the calendar until
 	 * it was thawed with gtk_calendar_thaw().
-	 * calendar:
-	 *  a GtkCalendar
 	 */
 	public void freeze()
 	{
@@ -500,14 +471,6 @@ public class Calendar : Widget
 	 * gtk_calendar_thaw has been deprecated since version 2.8 and should not be used in newly-written code.
 	 * Does nothing. Previously defrosted a calendar; all the changes made
 	 * since the last gtk_calendar_freeze() were displayed.
-	 * calendar:
-	 *  a GtkCalendar
-	 * Property Details
-	 * The "day" property
-	 *  "day" gint : Read / Write
-	 * The selected day (as a number between 1 and 31, or 0 to unselect the currently selected day).
-	 * Allowed values: [0,31]
-	 * Default value: 0
 	 */
 	public void thaw()
 	{

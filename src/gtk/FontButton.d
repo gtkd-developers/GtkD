@@ -67,13 +67,13 @@ private import glib.Str;
 
 
 
+private import gtk.Button;
 
 /**
  * Description
  * The GtkFontButton is a button which displays the currently selected font an allows to open a font selection
  * dialog to change the font. It is suitable widget for selecting a font in a preference dialog.
  */
-private import gtk.Button;
 public class FontButton : Button
 {
 	
@@ -162,8 +162,6 @@ public class FontButton : Button
 	
 	/**
 	 * Creates a new font picker widget.
-	 * Returns:
-	 *  a new font picker widget.
 	 * Since 2.4
 	 */
 	public this ()
@@ -174,11 +172,9 @@ public class FontButton : Button
 	
 	/**
 	 * Creates a new font picker widget.
-	 * fontname:
-	 *  Name of font to display in font selection dialog
-	 * Returns:
-	 *  a new font picker widget.
 	 * Since 2.4
+	 * Params:
+	 * fontname =  Name of font to display in font selection dialog
 	 */
 	public this (char[] fontname)
 	{
@@ -188,14 +184,10 @@ public class FontButton : Button
 	
 	/**
 	 * Sets or updates the currently-displayed font in font picker dialog.
-	 * font_button:
-	 *  a GtkFontButton
-	 * fontname:
-	 *  Name of font to display in font selection dialog
-	 * Returns:
-	 *  Return value of gtk_font_selection_dialog_set_font_name() if the
-	 * font selection dialog exists, otherwise FALSE.
 	 * Since 2.4
+	 * Params:
+	 * fontname =  Name of font to display in font selection dialog
+	 * Returns: Return value of gtk_font_selection_dialog_set_font_name() if thefont selection dialog exists, otherwise FALSE.
 	 */
 	public int setFontName(char[] fontname)
 	{
@@ -205,11 +197,8 @@ public class FontButton : Button
 	
 	/**
 	 * Retrieves the name of the currently selected font.
-	 * font_button:
-	 *  a GtkFontButton
-	 * Returns:
-	 *  an internal copy of the font name which must not be freed.
 	 * Since 2.4
+	 * Returns: an internal copy of the font name which must not be freed.
 	 */
 	public char[] getFontName()
 	{
@@ -219,11 +208,9 @@ public class FontButton : Button
 	
 	/**
 	 * If show_style is TRUE, the font style will be displayed along with name of the selected font.
-	 * font_button:
-	 *  a GtkFontButton
-	 * show_style:
-	 *  TRUE if font style should be displayed in label.
 	 * Since 2.4
+	 * Params:
+	 * showStyle =  TRUE if font style should be displayed in label.
 	 */
 	public void setShowStyle(int showStyle)
 	{
@@ -233,11 +220,8 @@ public class FontButton : Button
 	
 	/**
 	 * Returns whether the name of the font style will be shown in the label.
-	 * font_button:
-	 *  a GtkFontButton
-	 * Returns:
-	 *  whether the font style will be shown in the label.
 	 * Since 2.4
+	 * Returns: whether the font style will be shown in the label.
 	 */
 	public int getShowStyle()
 	{
@@ -247,11 +231,9 @@ public class FontButton : Button
 	
 	/**
 	 * If show_size is TRUE, the font size will be displayed along with the name of the selected font.
-	 * font_button:
-	 *  a GtkFontButton
-	 * show_size:
-	 *  TRUE if font size should be displayed in dialog.
 	 * Since 2.4
+	 * Params:
+	 * showSize =  TRUE if font size should be displayed in dialog.
 	 */
 	public void setShowSize(int showSize)
 	{
@@ -261,11 +243,8 @@ public class FontButton : Button
 	
 	/**
 	 * Returns whether the font size will be shown in the label.
-	 * font_button:
-	 *  a GtkFontButton
-	 * Returns:
-	 *  whether the font size will be shown in the label.
 	 * Since 2.4
+	 * Returns: whether the font size will be shown in the label.
 	 */
 	public int getShowSize()
 	{
@@ -275,11 +254,9 @@ public class FontButton : Button
 	
 	/**
 	 * If use_font is TRUE, the font name will be written using the selected font.
-	 * font_button:
-	 *  a GtkFontButton
-	 * use_font:
-	 *  If TRUE, font name will be written using font chosen.
 	 * Since 2.4
+	 * Params:
+	 * useFont =  If TRUE, font name will be written using font chosen.
 	 */
 	public void setUseFont(int useFont)
 	{
@@ -289,11 +266,8 @@ public class FontButton : Button
 	
 	/**
 	 * Returns whether the selected font is used in the label.
-	 * font_button:
-	 *  a GtkFontButton
-	 * Returns:
-	 *  whether the selected font is used in the label.
 	 * Since 2.4
+	 * Returns: whether the selected font is used in the label.
 	 */
 	public int getUseFont()
 	{
@@ -303,11 +277,9 @@ public class FontButton : Button
 	
 	/**
 	 * If use_size is TRUE, the font name will be written using the selected size.
-	 * font_button:
-	 *  a GtkFontButton
-	 * use_size:
-	 *  If TRUE, font name will be written using the selected size.
 	 * Since 2.4
+	 * Params:
+	 * useSize =  If TRUE, font name will be written using the selected size.
 	 */
 	public void setUseSize(int useSize)
 	{
@@ -317,11 +289,8 @@ public class FontButton : Button
 	
 	/**
 	 * Returns whether the selected size is used in the label.
-	 * font_button:
-	 *  a GtkFontButton
-	 * Returns:
-	 *  whether the selected size is used in the label.
 	 * Since 2.4
+	 * Returns: whether the selected size is used in the label.
 	 */
 	public int getUseSize()
 	{
@@ -331,11 +300,9 @@ public class FontButton : Button
 	
 	/**
 	 * Sets the title for the font selection dialog.
-	 * font_button:
-	 *  a GtkFontButton
-	 * title:
-	 *  a string containing the font selection dialog title
 	 * Since 2.4
+	 * Params:
+	 * title =  a string containing the font selection dialog title
 	 */
 	public void setTitle(char[] title)
 	{
@@ -345,17 +312,8 @@ public class FontButton : Button
 	
 	/**
 	 * Retrieves the title of the font selection dialog.
-	 * font_button:
-	 *  a GtkFontButton
-	 * Returns:
-	 *  an internal copy of the title string which must not be freed.
 	 * Since 2.4
-	 * Property Details
-	 * The "font-name" property
-	 *  "font-name" gchararray : Read / Write
-	 * The name of the currently selected font.
-	 * Default value: "Sans 12"
-	 * Since 2.4
+	 * Returns: an internal copy of the title string which must not be freed.
 	 */
 	public char[] getTitle()
 	{

@@ -101,10 +101,9 @@ public class PgEngine
 	 * the given location.
 	 * Note that script_engine_init() will not be called before this
 	 * function.
-	 * engines:
-	 *  location to store a pointer to an array of engines.
-	 * n_engines:
-	 *  location to store the number of elements in engines.
+	 * Params:
+	 * engines =  location to store a pointer to an array of engines.
+	 * nEngines =  location to store the number of elements in engines.
 	 */
 	public static void list(PangoEngineInfo** engines, int* nEngines)
 	{
@@ -115,8 +114,8 @@ public class PgEngine
 	/**
 	 * Function to be provided by a module to register any
 	 * GObject types in the module.
-	 * module:
-	 *  a GTypeModule structure used to associate any
+	 * Params:
+	 * modul =  a GTypeModule structure used to associate any
 	 *  GObject types created in this module with the module.
 	 */
 	public static void init(GTypeModule* modul)
@@ -138,14 +137,9 @@ public class PgEngine
 	/**
 	 * Function to be provided by the module to create an instance
 	 * of one of the engines implemented by the module.
-	 * id:
-	 *  the ID of an engine as reported by script_engine_list.
-	 * Returns:
-	 *  a newly created PangoEngine of the specified
-	 *  type, or NULL if an error occurred. (In normal operation,
-	 *  a module should not return NULL. A NULL return is only
-	 *  acceptable in the case where system misconfiguration or
-	 *  bugs in the driver routine are encountered.)
+	 * Params:
+	 * id =  the ID of an engine as reported by script_engine_list.
+	 * Returns: a newly created PangoEngine of the specified type, or NULL if an error occurred. (In normal operation, a module should not return NULL. A NULL return is only acceptable in the case where system misconfiguration or bugs in the driver routine are encountered.)
 	 */
 	public static PangoEngine* create(char[] id)
 	{

@@ -133,30 +133,22 @@ public class Cache
 	
 	/**
 	 * Creates a new GCache.
-	 * value_new_func:
-	 * a function to create a new object given a key.
+	 * Params:
+	 * valueNewFunc = a function to create a new object given a key.
 	 * This is called by g_cache_insert() if an object with the given key
 	 * does not already exist.
-	 * value_destroy_func:
-	 * a function to destroy an object. It is
+	 * valueDestroyFunc = a function to destroy an object. It is
 	 * called by g_cache_remove() when the object is no longer needed (i.e. its
 	 * reference count drops to 0).
-	 * key_dup_func:
-	 * a function to copy a key. It is called by
+	 * keyDupFunc = a function to copy a key. It is called by
 	 * g_cache_insert() if the key does not already exist in the GCache.
-	 * key_destroy_func:
-	 * a function to destroy a key. It is
+	 * keyDestroyFunc = a function to destroy a key. It is
 	 * called by g_cache_remove() when the object is no longer needed (i.e. its
 	 * reference count drops to 0).
-	 * hash_key_func:
-	 * a function to create a hash value from a key.
-	 * hash_value_func:
-	 * a function to create a hash value from a value.
-	 * key_equal_func:
-	 * a function to compare two keys. It should return TRUE if
+	 * hashKeyFunc = a function to create a hash value from a key.
+	 * hashValueFunc = a function to create a hash value from a value.
+	 * keyEqualFunc = a function to compare two keys. It should return TRUE if
 	 * the two keys are equivalent.
-	 * Returns:
-	 * a new GCache.
 	 */
 	public this (GCacheNewFunc valueNewFunc, GCacheDestroyFunc valueDestroyFunc, GCacheDupFunc keyDupFunc, GCacheDestroyFunc keyDestroyFunc, GHashFunc hashKeyFunc, GHashFunc hashValueFunc, GEqualFunc keyEqualFunc)
 	{
@@ -174,12 +166,9 @@ public class Cache
 	 * value_new_func. The key is duplicated by calling
 	 * key_dup_func and the duplicated key and value are inserted
 	 * into the GCache.
-	 * cache:
-	 * a GCache.
-	 * key:
-	 * a key describing a GCache object.
-	 * Returns:
-	 * a pointer to a GCache value.
+	 * Params:
+	 * key = a key describing a GCache object.
+	 * Returns:a pointer to a GCache value.
 	 */
 	public void* insert(void* key)
 	{
@@ -191,10 +180,8 @@ public class Cache
 	 * Decreases the reference count of the given value.
 	 * If it drops to 0 then the value and its corresponding key are destroyed,
 	 * using the value_destroy_func and key_destroy_func passed to g_cache_new().
-	 * cache:
-	 * a GCache.
-	 * value:
-	 * the value to remove.
+	 * Params:
+	 * value = the value to remove.
 	 */
 	public void remove(void* value)
 	{
@@ -206,8 +193,6 @@ public class Cache
 	 * Frees the memory allocated for the GCache.
 	 * Note that it does not destroy the keys and values which were contained in the
 	 * GCache.
-	 * cache:
-	 * a GCache.
 	 */
 	public void destroy()
 	{
@@ -222,12 +207,9 @@ public class Cache
 	 * cache entry and the user_data. The order of value and key is different
 	 * from the order in which g_hash_table_foreach() passes key-value pairs
 	 * to its callback function !
-	 * cache:
-	 * a GCache.
-	 * func:
-	 * the function to call with each GCache key.
-	 * user_data:
-	 * user data to pass to the function.
+	 * Params:
+	 * func = the function to call with each GCache key.
+	 * userData = user data to pass to the function.
 	 */
 	public void keyForeach(GHFunc func, void* userData)
 	{
@@ -240,12 +222,9 @@ public class Cache
 	 * g_cache_value_foreach has been deprecated since version 2.10 and should not be used in newly-written code. The reason is that it passes pointers to internal data
 	 * structures to func; use g_cache_key_foreach() instead
 	 * Calls the given function for each of the values in the GCache.
-	 * cache:
-	 * a GCache.
-	 * func:
-	 * the function to call with each GCache value.
-	 * user_data:
-	 * user data to pass to the function.
+	 * Params:
+	 * func = the function to call with each GCache value.
+	 * userData = user data to pass to the function.
 	 */
 	public void valueForeach(GHFunc func, void* userData)
 	{

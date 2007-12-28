@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Box;
 
 /**
  * Description
@@ -73,7 +74,6 @@ private import gtkc.gtk;
  * spacing, height, and alignment of GtkVBox children.
  * All children are allocated the same width.
  */
-private import gtk.Box;
 public class VBox : Box
 {
 	
@@ -128,15 +128,9 @@ public class VBox : Box
 	
 	/**
 	 * Creates a new GtkVBox.
-	 * homogeneous:
-	 * TRUE if all children are to be given equal space allotments.
-	 * spacing:
-	 * the number of pixels to place by default between children.
-	 * Returns:
-	 * a new GtkVBox.
-	 * See Also
-	 * GtkHBox
-	 * a sister class that organizes widgets into a row.
+	 * Params:
+	 * homogeneous = TRUE if all children are to be given equal space allotments.
+	 * spacing = the number of pixels to place by default between children.
 	 */
 	public this (int homogeneous, int spacing)
 	{

@@ -77,6 +77,7 @@ private import glib.Str;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -119,7 +120,6 @@ private import glib.Str;
  *  to get the GdkPixbufAnimation struct and gdk_pixbuf_animation_get_iter()
  *  to get an GdkPixbufAnimationIter for displaying it.
  */
-private import gobject.ObjectG;
 public class PixbufLoader : ObjectG
 {
 	
@@ -175,10 +175,9 @@ public class PixbufLoader : ObjectG
 	 * the image isn't the expected type, for loading image formats
 	 * that can't be reliably identified by looking at the data, or if
 	 * the user manually forces a specific type.
-	 * type:
-	 *  name of the image format or mime to be loaded with the image
-	 * error:
-	 *  return location for an allocated GError, or NULL to ignore errors
+	 * Params:
+	 *  type = name of the image format or mime to be loaded with the image
+	 *  error = return location for an allocated GError, or NULL to ignore errors
 	 * Returns:
 	 *  A newly-created pixbuf loader.
 	 */
@@ -320,8 +319,6 @@ public class PixbufLoader : ObjectG
 	
 	/**
 	 * Creates a new pixbuf loader object.
-	 * Returns:
-	 *  A newly-created pixbuf loader.
 	 */
 	public this ()
 	{
@@ -334,12 +331,8 @@ public class PixbufLoader : ObjectG
 	/**
 	 * Obtains the available information about the format of the
 	 * currently loading image file.
-	 * loader:
-	 *  A pixbuf loader.
-	 * Returns:
-	 *  A GdkPixbufFormat or NULL. The return value is owned
-	 * by GdkPixbuf and should not be freed.
 	 * Since 2.2
+	 * Returns: A GdkPixbufFormat or NULL. The return value is owned by GdkPixbuf and should not be freed.
 	 */
 	public PixbufFormat getFormat()
 	{
@@ -354,17 +347,11 @@ public class PixbufLoader : ObjectG
 	 * will be closed, and will not accept further writes. If FALSE is
 	 * returned, error will be set to an error from the GDK_PIXBUF_ERROR
 	 * or G_FILE_ERROR domains.
-	 * loader:
-	 *  A pixbuf loader.
-	 * buf:
-	 *  Pointer to image data.
-	 * count:
-	 *  Length of the buf buffer in bytes.
-	 * error:
-	 *  return location for errors
-	 * Returns:
-	 *  TRUE if the write was successful, or FALSE if the loader
-	 * cannot parse the buffer.
+	 * Params:
+	 * buf =  Pointer to image data.
+	 * count =  Length of the buf buffer in bytes.
+	 * error =  return location for errors
+	 * Returns: TRUE if the write was successful, or FALSE if the loadercannot parse the buffer.
 	 */
 	public int write(char* buf, uint count, GError** error)
 	{
@@ -379,13 +366,10 @@ public class PixbufLoader : ObjectG
 	 * signal handler for the ::size_prepared signal.
 	 * Attempts to set the desired image size are ignored after the
 	 * emission of the ::size_prepared signal.
-	 * loader:
-	 *  A pixbuf loader.
-	 * width:
-	 *  The desired width of the image being loaded.
-	 * height:
-	 *  The desired height of the image being loaded.
 	 * Since 2.2
+	 * Params:
+	 * width =  The desired width of the image being loaded.
+	 * height =  The desired height of the image being loaded.
 	 */
 	public void setSize(int width, int height)
 	{
@@ -405,11 +389,7 @@ public class PixbufLoader : ObjectG
 	 * using it. Additionally, if the loader is an animation, it will
 	 * return the "static image" of the animation
 	 * (see gdk_pixbuf_animation_get_static_image()).
-	 * loader:
-	 *  A pixbuf loader.
-	 * Returns:
-	 *  The GdkPixbuf that the loader is creating, or NULL if not
-	 * enough data has been read to determine how to create the image buffer.
+	 * Returns: The GdkPixbuf that the loader is creating, or NULL if notenough data has been read to determine how to create the image buffer.
 	 */
 	public Pixbuf getPixbuf()
 	{
@@ -423,11 +403,7 @@ public class PixbufLoader : ObjectG
 	 * signal has been emitted by the loader. If the loader doesn't have enough
 	 * bytes yet (hasn't emitted the "area_prepared" signal) this function will
 	 * return NULL.
-	 * loader:
-	 *  A pixbuf loader
-	 * Returns:
-	 *  The GdkPixbufAnimation that the loader is loading, or NULL if
-	 *  not enough data has been read to determine the information.
+	 * Returns: The GdkPixbufAnimation that the loader is loading, or NULL if not enough data has been read to determine the information.
 	 */
 	public PixbufAnimation getAnimation()
 	{
@@ -445,25 +421,9 @@ public class PixbufLoader : ObjectG
 	 * domains. If you're just cancelling a load rather than expecting it
 	 * to be finished, passing NULL for error to ignore it is
 	 * reasonable.
-	 * loader:
-	 *  A pixbuf loader.
-	 * error:
-	 *  return location for a GError, or NULL to ignore errors
-	 * Returns:
-	 *  TRUE if all image data written so far was successfully
-	 *  passed out via the update_area signal
-	 * Signal Details
-	 * The "area-prepared" signal
-	 * void user_function (GdkPixbufLoader *loader,
-	 *  gpointer user_data) : Run Last
-	 * This signal is emitted when the pixbuf loader has allocated the
-	 * pixbuf in the desired size. After this signal is emitted,
-	 * applications can call gdk_pixbuf_loader_get_pixbuf() to fetch
-	 * the partially-loaded pixbuf.
-	 * loader:
-	 *  the object which received the signal.
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * Params:
+	 * error =  return location for a GError, or NULL to ignore errors
+	 * Returns: TRUE if all image data written so far was successfully passed out via the update_area signalSignal DetailsThe "area-prepared" signalvoid user_function (GdkPixbufLoader *loader, gpointer user_data) : Run LastThis signal is emitted when the pixbuf loader has allocated the pixbuf in the desired size. After this signal is emitted, applications can call gdk_pixbuf_loader_get_pixbuf() to fetch the partially-loaded pixbuf.
 	 */
 	public int close(GError** error)
 	{

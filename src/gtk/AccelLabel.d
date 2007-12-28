@@ -73,6 +73,7 @@ private import gtk.Widget;
 
 
 
+private import gtk.Label;
 
 /**
  * Description
@@ -96,7 +97,7 @@ private import gtk.Widget;
  * set (see GtkAccelFlags).
  * A GtkAccelLabel can display multiple accelerators and even signal names,
  * though it is almost always used to display just one accelerator key.
- * Example1.Creating a simple menu item with an accelerator key.
+ * Example8.Creating a simple menu item with an accelerator key.
  *  GtkWidget *save_item;
  *  GtkAccelGroup *accel_group;
  *  /+* Create a GtkAccelGroup and add it to the window. +/
@@ -113,7 +114,6 @@ private import gtk.Widget;
  *  gtk_widget_add_accelerator (save_item, "activate", accel_group,
  *  GDK_s, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
  */
-private import gtk.Label;
 public class AccelLabel : Label
 {
 	
@@ -168,10 +168,8 @@ public class AccelLabel : Label
 	
 	/**
 	 * Creates a new GtkAccelLabel.
-	 * string:
-	 * the label string. Must be non-NULL.
-	 * Returns:
-	 * a new GtkAccelLabel.
+	 * Params:
+	 * string = the label string. Must be non-NULL.
 	 */
 	public this (char[] string)
 	{
@@ -182,10 +180,8 @@ public class AccelLabel : Label
 	/**
 	 * Sets the closure to be monitored by this accelerator label. The closure
 	 * must be connected to an accelerator group; see gtk_accel_group_connect().
-	 * accel_label:
-	 *  a GtkAccelLabel
-	 * accel_closure:
-	 *  the closure to monitor for accelerator changes.
+	 * Params:
+	 * accelClosure =  the closure to monitor for accelerator changes.
 	 */
 	public void setAccelClosure(Closure accelClosure)
 	{
@@ -196,11 +192,7 @@ public class AccelLabel : Label
 	/**
 	 * Fetches the widget monitored by this accelerator label. See
 	 * gtk_accel_label_set_accel_widget().
-	 * accel_label:
-	 *  a GtkAccelLabel
-	 * Returns:
-	 *  the object monitored by the accelerator label,
-	 *  or NULL.
+	 * Returns: the object monitored by the accelerator label, or NULL.
 	 */
 	public Widget getAccelWidget()
 	{
@@ -210,10 +202,8 @@ public class AccelLabel : Label
 	
 	/**
 	 * Sets the widget to be monitored by this accelerator label.
-	 * accel_label:
-	 *  a GtkAccelLabel
-	 * accel_widget:
-	 *  the widget to be monitored.
+	 * Params:
+	 * accelWidget =  the widget to be monitored.
 	 */
 	public void setAccelWidget(Widget accelWidget)
 	{
@@ -225,10 +215,7 @@ public class AccelLabel : Label
 	 * Returns the width needed to display the accelerator key(s).
 	 * This is used by menus to align all of the GtkMenuItem widgets, and shouldn't
 	 * be needed by applications.
-	 * accel_label:
-	 * a GtkAccelLabel.
-	 * Returns:
-	 * the width needed to display the accelerator key(s).
+	 * Returns:the width needed to display the accelerator key(s).
 	 */
 	public uint getAccelWidth()
 	{
@@ -240,14 +227,7 @@ public class AccelLabel : Label
 	 * Recreates the string representing the accelerator keys.
 	 * This should not be needed since the string is automatically updated whenever
 	 * accelerators are added or removed from the associated widget.
-	 * accel_label:
-	 * a GtkAccelLabel.
-	 * Returns:
-	 * always returns FALSE.
-	 * Property Details
-	 * The "accel-closure" property
-	 *  "accel-closure" GClosure : Read / Write
-	 * The closure to be monitored for accelerator changes.
+	 * Returns:always returns FALSE.
 	 */
 	public int refetch()
 	{

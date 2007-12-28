@@ -259,16 +259,13 @@ public class PgFontMap
 	
 	
 	
+	
 	/**
 	 * Load the font in the fontmap that is the closest match for desc.
-	 * fontmap:
-	 *  a PangoFontMap
-	 * context:
-	 *  the PangoContext the font will be used with
-	 * desc:
-	 *  a PangoFontDescription describing the font to load
-	 * Returns:
-	 * the font loaded, or NULL if no font matched.
+	 * Params:
+	 * context =  the PangoContext the font will be used with
+	 * desc =  a PangoFontDescription describing the font to load
+	 * Returns:the font loaded, or NULL if no font matched.
 	 */
 	public PangoFont* loadFont(PgContext context, PgFontDescription desc)
 	{
@@ -279,16 +276,11 @@ public class PgFontMap
 	/**
 	 * Load a set of fonts in the fontmap that can be used to render
 	 * a font matching desc.
-	 * fontmap:
-	 *  a PangoFontMap
-	 * context:
-	 *  the PangoContext the font will be used with
-	 * desc:
-	 *  a PangoFontDescription describing the font to load
-	 * language:
-	 *  a PangoLanguage the fonts will be used for
-	 * Returns:
-	 * the fontset, or NULL if no font matched.
+	 * Params:
+	 * context =  the PangoContext the font will be used with
+	 * desc =  a PangoFontDescription describing the font to load
+	 * language =  a PangoLanguage the fonts will be used for
+	 * Returns:the fontset, or NULL if no font matched.
 	 */
 	public PangoFontset* loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)
 	{
@@ -298,13 +290,10 @@ public class PgFontMap
 	
 	/**
 	 * List all families for a fontmap.
-	 * fontmap:
-	 *  a PangoFontMap
-	 * families:
-	 *  location to store a pointer to an array of PangoFontFamily *.
+	 * Params:
+	 * families =  location to store a pointer to an array of PangoFontFamily *.
 	 *  This array should be freed with g_free().
-	 * n_families:
-	 *  location to store the number of elements in families
+	 * nFamilies =  location to store the number of elements in families
 	 */
 	public void listFamilies(PangoFontFamily*** families, int* nFamilies)
 	{
@@ -316,13 +305,7 @@ public class PgFontMap
 	 * Returns the render ID for shape engines for this fontmap.
 	 * See the render_type field of
 	 * PangoEngineInfo.
-	 * fontmap:
-	 *  a PangoFontMap
-	 * Returns:
-	 *  the ID string for shape engines for
-	 *  this fontmap. Owned by Pango, should not be modified
-	 *  or freed.
-	 * Since 1.4
+	 * Returns: the ID string for shape engines for this fontmap. Owned by Pango, should not be modified or freed.Since 1.4
 	 */
 	public char[] getShapeEngineType()
 	{

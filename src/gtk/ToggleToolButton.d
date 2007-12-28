@@ -70,6 +70,7 @@ private import gtk.ToolItem;
 
 
 
+private import gtk.ToolButton;
 
 /**
  * Description
@@ -79,7 +80,6 @@ private import gtk.ToolItem;
  *  GtkToggleToolButton. Use gtk_toggle_tool_button_new_from_stock() to
  *  create a new GtkToggleToolButton containing a stock item.
  */
-private import gtk.ToolButton;
 public class ToggleToolButton : ToolButton
 {
 	
@@ -168,8 +168,6 @@ public class ToggleToolButton : ToolButton
 	
 	/**
 	 * Returns a new GtkToggleToolButton
-	 * Returns:
-	 *  a newly created GtkToggleToolButton
 	 * Since 2.4
 	 */
 	public this ()
@@ -183,11 +181,9 @@ public class ToggleToolButton : ToolButton
 	 * stock item. Some stock ids have preprocessor macros like GTK_STOCK_OK
 	 * and GTK_STOCK_APPLY.
 	 * It is an error if stock_id is not a name of a stock item.
-	 * stock_id:
-	 *  the name of the stock item
-	 * Returns:
-	 *  A new GtkToggleToolButton
 	 * Since 2.4
+	 * Params:
+	 * stockId =  the name of the stock item
 	 */
 	public this (char[] stockId)
 	{
@@ -199,11 +195,9 @@ public class ToggleToolButton : ToolButton
 	 * Sets the status of the toggle tool button. Set to TRUE if you
 	 * want the GtkToggleButton to be 'pressed in', and FALSE to raise it.
 	 * This action causes the toggled signal to be emitted.
-	 * button:
-	 *  a GtkToggleToolButton
-	 * is_active:
-	 *  whether button should be active
 	 * Since 2.4
+	 * Params:
+	 * isActive =  whether button should be active
 	 */
 	public void setActive(int isActive)
 	{
@@ -214,35 +208,8 @@ public class ToggleToolButton : ToolButton
 	/**
 	 * Queries a GtkToggleToolButton and returns its current state.
 	 * Returns TRUE if the toggle button is pressed in and FALSE if it is raised.
-	 * button:
-	 *  a GtkToggleToolButton
-	 * Returns:
-	 *  TRUE if the toggle tool button is pressed in, FALSE if not
 	 * Since 2.4
-	 * Property Details
-	 * The "active" property
-	 *  "active" gboolean : Read / Write
-	 * If the toggle tool button should be pressed in or not.
-	 * Default value: FALSE
-	 * Since 2.8
-	 * Signal Details
-	 * The "toggled" signal
-	 * void user_function (GtkToggleToolButton *toggle_tool_button,
-	 *  gpointer user_data) : Run First
-	 * Emitted whenever the toggle tool button changes state.
-	 * toggle_tool_button:
-	 *  the object that emitted the signal
-	 * user_data:
-	 * user data set when the signal handler was connected.
-	 * See Also
-	 * GtkToolbar, GtkToolButton, GtkSeparatorToolItem
-	 * The toolbar widget
-	 * 	The parent class of GtkToggleToolButton. The properties
-	 * 	"label_widget", "label", "icon_widget", and "stock_id" on
-	 * 	GtkToolButton determine the label and icon used on
-	 * 	GtkToggleToolButtons.
-	 * A subclass of GtkToolItem that separates groups of
-	 * 	items on a toolbar.
+	 * Returns: TRUE if the toggle tool button is pressed in, FALSE if not
 	 */
 	public int getActive()
 	{

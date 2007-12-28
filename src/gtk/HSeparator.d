@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Separator;
 
 /**
  * Description
@@ -77,7 +78,6 @@ private import gtkc.gtk;
  * widget using gtk_separator_menu_item_new() and add it to the menu with
  * gtk_menu_shell_append().
  */
-private import gtk.Separator;
 public class HSeparator : Separator
 {
 	
@@ -132,11 +132,6 @@ public class HSeparator : Separator
 	
 	/**
 	 * Creates a new GtkHSeparator.
-	 * Returns:
-	 * a new GtkHSeparator.
-	 * See Also
-	 * GtkVSeparator
-	 * a vertical separator.
 	 */
 	public this ()
 	{

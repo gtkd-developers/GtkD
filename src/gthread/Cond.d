@@ -100,6 +100,10 @@ private import gthread.Mutex;
  * this rule are GMainLoop and GAsyncQueue,
  * which are threadsafe and needs no further
  * application-level locking to be accessed from multiple threads.
+ * To help debugging problems in multithreaded applications, GLib supports
+ * error-checking mutexes that will give you helpful error messages on
+ * common problems. To use error-checking mutexes, define the symbol
+ * G_ERRORCHECK_MUTEXES when compiling the application.
  */
 public class Cond
 {
@@ -213,8 +217,6 @@ public class Cond
 	/**
 	 * Creates a new GCond. This function will abort, if g_thread_init()
 	 * has not been called yet.
-	 * Returns:
-	 * a new GCond.
 	 */
 	public this ()
 	{
@@ -228,8 +230,6 @@ public class Cond
 	 * calling this function, though not required.
 	 * This function can be used even if g_thread_init() has not yet been called,
 	 * and, in that case, will do nothing.
-	 * cond:
-	 * a GCond.
 	 */
 	public void signal()
 	{
@@ -243,8 +243,6 @@ public class Cond
 	 * this function, though not required.
 	 * This function can be used even if g_thread_init() has not yet been called,
 	 * and, in that case, will do nothing.
-	 * cond:
-	 * a GCond.
 	 */
 	public void broadcast()
 	{
@@ -257,10 +255,8 @@ public class Cond
 	 * before falling asleep and locked again before resuming.
 	 * This function can be used even if g_thread_init() has not yet been
 	 * called, and, in that case, will immediately return.
-	 * cond:
-	 * a GCond.
-	 * mutex:
-	 * a GMutex, that is currently locked.
+	 * Params:
+	 * mutex = a GMutex, that is currently locked.
 	 */
 	public void wait(Mutex mutex)
 	{
@@ -277,14 +273,10 @@ public class Cond
 	 * called, and, in that case, will immediately return TRUE.
 	 * To easily calculate abs_time a combination of g_get_current_time()
 	 * and g_time_val_add() can be used.
-	 * cond:
-	 * a GCond.
-	 * mutex:
-	 * a GMutex that is currently locked.
-	 * abs_time:
-	 * a GTimeVal, determining the final time.
-	 * Returns:
-	 * TRUE if cond was signalled, or FALSE on timeout.
+	 * Params:
+	 * mutex = a GMutex that is currently locked.
+	 * absTime = a GTimeVal, determining the final time.
+	 * Returns:TRUE if cond was signalled, or FALSE on timeout.
 	 */
 	public int timedWait(Mutex mutex, GTimeVal* absTime)
 	{
@@ -294,14 +286,14 @@ public class Cond
 	
 	/**
 	 * Destroys the GCond.
-	 * cond:
-	 * a GCond.
 	 */
 	public void free()
 	{
 		// void g_cond_free (GCond *cond);
 		g_cond_free(gCond);
 	}
+	
+	
 	
 	
 	

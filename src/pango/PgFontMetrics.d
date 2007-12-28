@@ -216,10 +216,7 @@ public class PgFontMetrics
 	
 	/**
 	 * Increase the reference count of a font metrics structure by one.
-	 * metrics:
-	 *  a PangoFontMetrics structure
-	 * Returns:
-	 *  metrics
+	 * Returns: metrics
 	 */
 	public PangoFontMetrics* doref()
 	{
@@ -231,8 +228,6 @@ public class PgFontMetrics
 	 * Decrease the reference count of a font metrics structure by one. If
 	 * the result is zero, frees the structure and any associated
 	 * memory.
-	 * metrics:
-	 *  a PangoFontMetrics structure
 	 */
 	public void unref()
 	{
@@ -246,10 +241,7 @@ public class PgFontMetrics
 	 * of text. (The logical top may be above or below the top of the
 	 * actual drawn ink. It is necessary to lay out the text to figure
 	 * where the ink will be.)
-	 * metrics:
-	 *  a PangoFontMetrics structure
-	 * Returns:
-	 *  the ascent, in Pango units. (1 point == PANGO_SCALE Pango units.)
+	 * Returns: the ascent, in Pango units. (1 point == PANGO_SCALE Pango units.)
 	 */
 	public int getAscent()
 	{
@@ -263,10 +255,7 @@ public class PgFontMetrics
 	 * of text. (The logical bottom may be above or below the bottom of the
 	 * actual drawn ink. It is necessary to lay out the text to figure
 	 * where the ink will be.)
-	 * metrics:
-	 *  a PangoFontMetrics structure
-	 * Returns:
-	 *  the descent, in Pango units. (1 point == PANGO_SCALE Pango units.)
+	 * Returns: the descent, in Pango units. (1 point == PANGO_SCALE Pango units.)
 	 */
 	public int getDescent()
 	{
@@ -279,10 +268,7 @@ public class PgFontMetrics
 	 * This is merely a representative value useful, for example, for
 	 * determining the initial size for a window. Actual characters in
 	 * text will be wider and narrower than this.
-	 * metrics:
-	 *  a PangoFontMetrics structure
-	 * Returns:
-	 *  the character width, in Pango units. (1 point == PANGO_SCALE Pango units.)
+	 * Returns: the character width, in Pango units. (1 point == PANGO_SCALE Pango units.)
 	 */
 	public int getApproximateCharWidth()
 	{
@@ -297,10 +283,7 @@ public class PgFontMetrics
 	 * text can be wider or narrower than this, though this value
 	 * is generally somewhat more accurate than the result of
 	 * pango_font_metrics_get_approximate_char_width() for digits.
-	 * metrics:
-	 *  a PangoFontMetrics structure
-	 * Returns:
-	 *  the digit width, in Pango units. (1 point == PANGO_SCALE Pango units.)
+	 * Returns: the digit width, in Pango units. (1 point == PANGO_SCALE Pango units.)
 	 */
 	public int getApproximateDigitWidth()
 	{
@@ -310,11 +293,7 @@ public class PgFontMetrics
 	
 	/**
 	 * Gets the suggested thickness to draw for the underline.
-	 * metrics:
-	 *  a PangoFontMetrics structure
-	 * Returns:
-	 *  the suggested underline thickness, in Pango units.
-	 * Since 1.6
+	 * Returns: the suggested underline thickness, in Pango units.Since 1.6
 	 */
 	public int getUnderlineThickness()
 	{
@@ -328,11 +307,7 @@ public class PgFontMetrics
 	 * baseline of the top of the underline. Since most fonts have
 	 * underline positions beneath the baseline, this value is typically
 	 * negative.
-	 * metrics:
-	 *  a PangoFontMetrics structure
-	 * Returns:
-	 *  the suggested underline position, in Pango units.
-	 * Since 1.6
+	 * Returns: the suggested underline position, in Pango units.Since 1.6
 	 */
 	public int getUnderlinePosition()
 	{
@@ -342,11 +317,7 @@ public class PgFontMetrics
 	
 	/**
 	 * Gets the suggested thickness to draw for the strikethrough.
-	 * metrics:
-	 *  a PangoFontMetrics structure
-	 * Returns:
-	 *  the suggested strikethrough thickness, in Pango units.
-	 * Since 1.6
+	 * Returns: the suggested strikethrough thickness, in Pango units.Since 1.6
 	 */
 	public int getStrikethroughThickness()
 	{
@@ -358,17 +329,14 @@ public class PgFontMetrics
 	 * Gets the suggested position to draw the strikethrough.
 	 * The value returned is the distance above the
 	 * baseline of the top of the strikethrough.
-	 * metrics:
-	 *  a PangoFontMetrics structure
-	 * Returns:
-	 *  the suggested strikethrough position, in Pango units.
-	 * Since 1.6
+	 * Returns: the suggested strikethrough position, in Pango units.Since 1.6
 	 */
 	public int getStrikethroughPosition()
 	{
 		// int pango_font_metrics_get_strikethrough_position  (PangoFontMetrics *metrics);
 		return pango_font_metrics_get_strikethrough_position(pangoFontMetrics);
 	}
+	
 	
 	
 	

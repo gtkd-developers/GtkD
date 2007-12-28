@@ -77,7 +77,7 @@ private import glib.ListG;
  * g_byte_array_prepend().
  * To set the size of a GByteArray, use g_byte_array_set_size().
  * To free a GByteArray, use g_byte_array_free().
- * Example8.Using a GByteArray
+ * Example22.Using a GByteArray
  *  GByteArray *gbarray;
  *  gint i;
  *  gbarray = g_byte_array_new ();
@@ -145,8 +145,6 @@ public class ByteArray
 	
 	/**
 	 * Creates a new GByteArray.
-	 * Returns:
-	 * the new GByteArray.
 	 */
 	public this ()
 	{
@@ -158,10 +156,9 @@ public class ByteArray
 	 * Creates a new GByteArray with reserved_size bytes preallocated. This
 	 * avoids frequent reallocation, if you are going to add many bytes to
 	 * the array. Note however that the size of the array is still 0.
-	 * reserved_size:
-	 * number of bytes preallocated.
-	 * Returns:
-	 * the new GByteArray.
+	 * Params:
+	 * reservedSize = number of bytes preallocated.
+	 * Returns:the new GByteArray.
 	 */
 	public static GByteArray* sizedNew(uint reservedSize)
 	{
@@ -172,14 +169,10 @@ public class ByteArray
 	/**
 	 * Adds the given bytes to the end of the GByteArray.
 	 * The array will grow in size automatically if necessary.
-	 * array:
-	 * a GByteArray.
-	 * data:
-	 * the byte data to be added.
-	 * len:
-	 * the number of bytes to add.
-	 * Returns:
-	 * the GByteArray.
+	 * Params:
+	 * data = the byte data to be added.
+	 * len = the number of bytes to add.
+	 * Returns:the GByteArray.
 	 */
 	public GByteArray* append(byte* data, uint len)
 	{
@@ -190,14 +183,10 @@ public class ByteArray
 	/**
 	 * Adds the given data to the start of the GByteArray.
 	 * The array will grow in size automatically if necessary.
-	 * array:
-	 * a GByteArray.
-	 * data:
-	 * the byte data to be added.
-	 * len:
-	 * the number of bytes to add.
-	 * Returns:
-	 * the GByteArray.
+	 * Params:
+	 * data = the byte data to be added.
+	 * len = the number of bytes to add.
+	 * Returns:the GByteArray.
 	 */
 	public GByteArray* prepend(byte* data, uint len)
 	{
@@ -208,12 +197,9 @@ public class ByteArray
 	/**
 	 * Removes the byte at the given index from a GByteArray.
 	 * The following bytes are moved down one place.
-	 * array:
-	 * a GByteArray.
-	 * index_:
-	 * the index of the byte to remove.
-	 * Returns:
-	 * the GByteArray.
+	 * Params:
+	 * index = the index of the byte to remove.
+	 * Returns:the GByteArray.
 	 */
 	public GByteArray* removeIndex(uint index)
 	{
@@ -226,12 +212,9 @@ public class ByteArray
 	 * The last element in the array is used to fill in the space, so this function
 	 * does not preserve the order of the GByteArray. But it is faster than
 	 * g_byte_array_remove_index().
-	 * array:
-	 * a GByteArray.
-	 * index_:
-	 * the index of the byte to remove.
-	 * Returns:
-	 * the GByteArray.
+	 * Params:
+	 * index = the index of the byte to remove.
+	 * Returns:the GByteArray.
 	 */
 	public GByteArray* removeIndexFast(uint index)
 	{
@@ -242,15 +225,11 @@ public class ByteArray
 	/**
 	 * Removes the given number of bytes starting at the given index from a
 	 * GByteArray. The following elements are moved to close the gap.
-	 * array:
-	 * a GByteArray.
-	 * index_:
-	 * the index of the first byte to remove.
-	 * length:
-	 * the number of bytes to remove.
-	 * Returns:
-	 * the GByteArray.
 	 * Since 2.4
+	 * Params:
+	 * index = the index of the first byte to remove.
+	 * length = the number of bytes to remove.
+	 * Returns:the GByteArray.
 	 */
 	public GByteArray* removeRange(uint index, uint length)
 	{
@@ -265,10 +244,8 @@ public class ByteArray
 	 * arg).
 	 * If two array elements compare equal, their order in the sorted array is
 	 * undefined.
-	 * array:
-	 * a GByteArray.
-	 * compare_func:
-	 * comparison function.
+	 * Params:
+	 * compareFunc = comparison function.
 	 */
 	public void sort(GCompareFunc compareFunc)
 	{
@@ -279,12 +256,9 @@ public class ByteArray
 	/**
 	 * Like g_byte_array_sort(), but the comparison function takes an extra user data
 	 * argument.
-	 * array:
-	 * a GByteArray.
-	 * compare_func:
-	 * comparison function.
-	 * user_data:
-	 * data to pass to compare_func.
+	 * Params:
+	 * compareFunc = comparison function.
+	 * userData = data to pass to compare_func.
 	 */
 	public void sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
@@ -294,12 +268,9 @@ public class ByteArray
 	
 	/**
 	 * Sets the size of the GByteArray, expanding it if necessary.
-	 * array:
-	 * a GByteArray.
-	 * length:
-	 * the new size of the GByteArray.
-	 * Returns:
-	 * the GByteArray.
+	 * Params:
+	 * length = the new size of the GByteArray.
+	 * Returns:the GByteArray.
 	 */
 	public GByteArray* setSize(uint length)
 	{
@@ -310,12 +281,9 @@ public class ByteArray
 	/**
 	 * Frees the memory allocated by the GByteArray.
 	 * If free_segment is TRUE it frees the actual byte data.
-	 * array:
-	 * a GByteArray.
-	 * free_segment:
-	 * if TRUE the actual byte data is freed as well.
-	 * Returns:
-	 * the element data if free_segment is FALSE, otherwise NULL
+	 * Params:
+	 * freeSegment = if TRUE the actual byte data is freed as well.
+	 * Returns:the element data if free_segment is FALSE, otherwise NULL
 	 */
 	public byte* free(int freeSegment)
 	{

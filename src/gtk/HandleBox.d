@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Bin;
 
 /**
  * Description
@@ -88,7 +89,6 @@ private import gtkc.gtk;
  * allocation will remain fixed as the height of the handlebox shrinks,
  * so the snap edge should be set to GTK_POS_BOTTOM.
  */
-private import gtk.Bin;
 public class HandleBox : Bin
 {
 	
@@ -205,8 +205,6 @@ public class HandleBox : Bin
 	
 	/**
 	 * Create a new handle box.
-	 * Returns:
-	 * a new GtkHandleBox.
 	 */
 	public this ()
 	{
@@ -217,10 +215,8 @@ public class HandleBox : Bin
 	/**
 	 * Sets the type of shadow to be drawn around the border
 	 * of the handle box.
-	 * handle_box:
-	 * a GtkHandleBox
-	 * type:
-	 * the shadow type.
+	 * Params:
+	 * type = the shadow type.
 	 */
 	public void setShadowType(GtkShadowType type)
 	{
@@ -230,10 +226,8 @@ public class HandleBox : Bin
 	
 	/**
 	 * Sets the side of the handlebox where the handle is drawn.
-	 * handle_box:
-	 * a GtkHandleBox
-	 * position:
-	 * the side of the handlebox where the handle should be drawn.
+	 * Params:
+	 * position = the side of the handlebox where the handle should be drawn.
 	 */
 	public void setHandlePosition(GtkPositionType position)
 	{
@@ -254,10 +248,8 @@ public class HandleBox : Bin
 	 * handle position is GTK_POS_RIGHT or GTK_POS_LEFT,
 	 * then the snap edge will be GTK_POS_TOP, otherwise
 	 * it will be GTK_POS_LEFT.
-	 * handle_box:
-	 * a GtkHandleBox
-	 * edge:
-	 * the snap edge, or -1 to unset the value; in which
+	 * Params:
+	 * edge = the snap edge, or -1 to unset the value; in which
 	 * case GTK+ will try to guess an appropriate value
 	 * in the future.
 	 */
@@ -270,10 +262,7 @@ public class HandleBox : Bin
 	/**
 	 * Gets the handle position of the handle box. See
 	 * gtk_handle_box_set_handle_position().
-	 * handle_box:
-	 *  a GtkHandleBox
-	 * Returns:
-	 *  the current handle position.
+	 * Returns: the current handle position.
 	 */
 	public GtkPositionType getHandlePosition()
 	{
@@ -284,10 +273,7 @@ public class HandleBox : Bin
 	/**
 	 * Gets the type of shadow drawn around the handle box. See
 	 * gtk_handle_box_set_shadow_type().
-	 * handle_box:
-	 *  a GtkHandleBox
-	 * Returns:
-	 *  the type of shadow currently drawn around the handle box.
+	 * Returns: the type of shadow currently drawn around the handle box.
 	 */
 	public GtkShadowType getShadowType()
 	{
@@ -298,16 +284,7 @@ public class HandleBox : Bin
 	/**
 	 * Gets the edge used for determining reattachment of the handle box. See
 	 * gtk_handle_box_set_snap_edge().
-	 * handle_box:
-	 *  a GtkHandleBox
-	 * Returns:
-	 *  the edge used for determining reattachment, or (GtkPositionType)-1 if this
-	 *  is determined (as per default) from the handle position.
-	 * Property Details
-	 * The "handle-position" property
-	 *  "handle-position" GtkPositionType : Read / Write
-	 * Position of the handle relative to the child widget.
-	 * Default value: GTK_POS_LEFT
+	 * Returns: the edge used for determining reattachment, or (GtkPositionType)-1 if this is determined (as per default) from the handle position.
 	 */
 	public GtkPositionType getSnapEdge()
 	{

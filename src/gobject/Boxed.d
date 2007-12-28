@@ -86,12 +86,10 @@ public class Boxed
 	
 	/**
 	 * Provide a copy of a boxed structure src_boxed which is of type boxed_type.
-	 * boxed_type:
-	 * The type of src_boxed.
-	 * src_boxed:
-	 *  The boxed structure to be copied.
-	 * Returns:
-	 *  The newly created copy of the boxed structure.
+	 * Params:
+	 * boxedType = The type of src_boxed.
+	 * srcBoxed =  The boxed structure to be copied.
+	 * Returns: The newly created copy of the boxed structure.
 	 */
 	public static void* boxedCopy(GType boxedType, void* srcBoxed)
 	{
@@ -101,10 +99,9 @@ public class Boxed
 	
 	/**
 	 * Free the boxed structure boxed which is of type boxed_type.
-	 * boxed_type:
-	 * The type of boxed.
-	 * boxed:
-	 *  The boxed structure to be freed.
+	 * Params:
+	 * boxedType = The type of boxed.
+	 * boxed =  The boxed structure to be freed.
 	 */
 	public static void boxedFree(GType boxedType, void* boxed)
 	{
@@ -116,14 +113,11 @@ public class Boxed
 	 * This function creates a new G_TYPE_BOXED derived type id for a new
 	 * boxed type with name name. Boxed type handling functions have to be
 	 * provided to copy and free opaque boxed structures of this type.
-	 * name:
-	 * Name of the new boxed type.
-	 * boxed_copy:
-	 * Boxed structure copy function.
-	 * boxed_free:
-	 * Boxed structure free function.
-	 * Returns:
-	 * New G_TYPE_BOXED derived type id for name.
+	 * Params:
+	 * name = Name of the new boxed type.
+	 * boxedCopy = Boxed structure copy function.
+	 * boxedFree = Boxed structure free function.
+	 * Returns:New G_TYPE_BOXED derived type id for name.
 	 */
 	public static GType boxedTypeRegisterStatic(char[] name, GBoxedCopyFunc boxedCopy, GBoxedFreeFunc boxedFree)
 	{
@@ -134,16 +128,16 @@ public class Boxed
 	/**
 	 * Creates a new G_TYPE_POINTER derived type id for a new
 	 * pointer type with name name.
-	 * name:
-	 * the name of the new pointer type.
-	 * Returns:
-	 * a new G_TYPE_POINTER derived type id for name.
+	 * Params:
+	 * name = the name of the new pointer type.
+	 * Returns:a new G_TYPE_POINTER derived type id for name.
 	 */
 	public static GType pointerTypeRegisterStatic(char[] name)
 	{
 		// GType g_pointer_type_register_static (const gchar *name);
 		return g_pointer_type_register_static(Str.toStringz(name));
 	}
+	
 	
 	
 	

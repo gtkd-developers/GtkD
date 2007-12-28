@@ -90,7 +90,7 @@ private import gtkc.glib;
  * to use the new g_slice API instead of g_malloc() and
  * friends, as long as objects are not resized during their lifetime and the
  * object size used at allocation time is still available when freeing.
- * Example1.Using the slice allocator
+ * Example15.Using the slice allocator
  *  gchar *mem[10000];
  *  gint i;
  *  /+* Allocate 10000 blocks. +/
@@ -106,7 +106,7 @@ private import gtkc.glib;
  *  {
 	 *  g_slice_free1 (50, mem[i]);
  *  }
- * Example2.Using the slice allocator with data structures
+ * Example16.Using the slice allocator with data structures
  *  GRealArray *array;
  *  /+* Allocate one block, using the g_slice_new() macro. +/
  *  array = g_slice_new (GRealArray);
@@ -128,16 +128,18 @@ public class MemorySlice
 	
 	/**
 	 * Allocates a block of memory from the slice allocator.
-	 * The block adress handed out is guaranteed to be aligned
-	 * to at least 2 * sizeof (void*).
+	 * The block adress handed out can be expected to be aligned
+	 * to at least 1 * sizeof (void*),
+	 * though in general slices are 2 * sizeof (void*) bytes aligned,
+	 * if a malloc() fallback implementation is used instead,
+	 * the alignment may be reduced in a libc dependent fashion.
 	 * Note that the underlying slice allocation mechanism can
 	 * be changed with the G_SLICE=always-malloc
 	 * environment variable.
-	 * block_size:
-	 * the number of bytes to allocate
-	 * Returns:
-	 * a pointer to the allocated memory block
 	 * Since 2.10
+	 * Params:
+	 * blockSize = the number of bytes to allocate
+	 * Returns:a pointer to the allocated memory block
 	 */
 	public static void* alloc(uint blockSize)
 	{
@@ -151,16 +153,30 @@ public class MemorySlice
 	 * Note that the underlying slice allocation mechanism can
 	 * be changed with the G_SLICE=always-malloc
 	 * environment variable.
-	 * block_size:
-	 * the number of bytes to allocate
-	 * Returns:
-	 * a pointer to the allocated block
 	 * Since 2.10
+	 * Params:
+	 * blockSize = the number of bytes to allocate
+	 * Returns:a pointer to the allocated block
 	 */
 	public static void* alloc0(uint blockSize)
 	{
 		// gpointer g_slice_alloc0 (gsize block_size);
 		return g_slice_alloc0(blockSize);
+	}
+	
+	/**
+	 * Allocates a block of memory from the slice allocator and copies
+	 * block_size bytes into it from mem_block.
+	 * Since 2.14
+	 * Params:
+	 * blockSize = the number of bytes to allocate
+	 * memBlock = the memory to copy
+	 * Returns:a pointer to the allocated memory block
+	 */
+	public static void* copy(uint blockSize, void* memBlock)
+	{
+		// gpointer g_slice_copy (gsize block_size,  gconstpointer mem_block);
+		return g_slice_copy(blockSize, memBlock);
 	}
 	
 	/**
@@ -170,11 +186,10 @@ public class MemorySlice
 	 * Note that the exact release behaviour can be changed with the
 	 * G_DEBUG=gc-friendly environment variable,
 	 * also see G_SLICE for related debugging options.
-	 * block_size:
-	 * the size of the block
-	 * mem_block:
-	 * a pointer to the block to free
 	 * Since 2.10
+	 * Params:
+	 * blockSize = the size of the block
+	 * memBlock = a pointer to the block to free
 	 */
 	public static void free1(uint blockSize, void* memBlock)
 	{
@@ -191,19 +206,19 @@ public class MemorySlice
 	 * Note that the exact release behaviour can be changed with the
 	 * G_DEBUG=gc-friendly environment variable,
 	 * also see G_SLICE for related debugging options.
-	 * block_size:
-	 * the size of the blocks
-	 * mem_chain:
-	 *  a pointer to the first block of the chain
-	 * next_offset:
-	 * the offset of the next field in the blocks
 	 * Since 2.10
+	 * Params:
+	 * blockSize = the size of the blocks
+	 * memChain =  a pointer to the first block of the chain
+	 * nextOffset = the offset of the next field in the blocks
 	 */
 	public static void freeChainWithOffset(uint blockSize, void* memChain, uint nextOffset)
 	{
 		// void g_slice_free_chain_with_offset (gsize block_size,  gpointer mem_chain,  gsize next_offset);
 		g_slice_free_chain_with_offset(blockSize, memChain, nextOffset);
 	}
+	
+	
 	
 	
 	

@@ -94,6 +94,10 @@ private import gtkc.gthread;
  * this rule are GMainLoop and GAsyncQueue,
  * which are threadsafe and needs no further
  * application-level locking to be accessed from multiple threads.
+ * To help debugging problems in multithreaded applications, GLib supports
+ * error-checking mutexes that will give you helpful error messages on
+ * common problems. To use error-checking mutexes, define the symbol
+ * G_ERRORCHECK_MUTEXES when compiling the application.
  */
 public class Mutex
 {
@@ -169,8 +173,6 @@ public class Mutex
 	 * Creates a new GMutex.
 	 * Note
 	 * This function will abort if g_thread_init() has not been called yet.
-	 * Returns:
-	 * a new GMutex.
 	 */
 	public this ()
 	{
@@ -189,8 +191,6 @@ public class Mutex
 	 * i.e. a thread could deadlock while calling g_mutex_lock(), if it
 	 * already has locked mutex. Use GStaticRecMutex, if you need recursive
 	 * mutexes.
-	 * mutex:
-	 * a GMutex.
 	 */
 	public void lock()
 	{
@@ -209,10 +209,7 @@ public class Mutex
 	 * i.e. the return value of g_mutex_trylock() could be both FALSE or
 	 * TRUE, if the current thread already has locked mutex. Use
 	 * GStaticRecMutex, if you need recursive mutexes.
-	 * mutex:
-	 * a GMutex.
-	 * Returns:
-	 * TRUE, if mutex could be locked.
+	 * Returns:TRUE, if mutex could be locked.
 	 */
 	public int trylock()
 	{
@@ -225,8 +222,6 @@ public class Mutex
 	 * for mutex, it will be woken and can lock mutex itself.
 	 * This function can be used even if g_thread_init() has not yet been
 	 * called, and, in that case, will do nothing.
-	 * mutex:
-	 * a GMutex.
 	 */
 	public void unlock()
 	{
@@ -236,14 +231,14 @@ public class Mutex
 	
 	/**
 	 * Destroys mutex.
-	 * mutex:
-	 * a GMutex.
 	 */
 	public void free()
 	{
 		// void g_mutex_free (GMutex *mutex);
 		g_mutex_free(gMutex);
 	}
+	
+	
 	
 	
 	

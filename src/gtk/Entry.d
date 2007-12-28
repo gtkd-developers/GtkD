@@ -70,6 +70,7 @@ private import gtk.EntryCompletion;
 
 
 
+private import gtk.Widget;
 
 /**
  * Description
@@ -79,7 +80,6 @@ private import gtk.EntryCompletion;
  * of the widget, the widget will scroll so that the cursor
  * position is visible.
  */
-private import gtk.Widget;
 public class Entry : Widget
 {
 	
@@ -128,12 +128,14 @@ public class Entry : Widget
 		this.gtkEntry = gtkEntry;
 	}
 	
+	/** */
 	public this (char[] text)
 	{
 		this();
 		setText(text);
 	}
 	
+	/** */
 	public this (char[] text, int max)
 	{
 		this(max);
@@ -432,8 +434,6 @@ public class Entry : Widget
 	
 	/**
 	 * Creates a new entry.
-	 * Returns:
-	 *  a new GtkEntry.
 	 */
 	public this ()
 	{
@@ -451,12 +451,10 @@ public class Entry : Widget
 	 * to gtk_entry_set_max_length() instead. It is not
 	 * expected that this function will be removed, but
 	 * it would be better practice not to use it.
-	 * max:
-	 *  the maximum length of the entry, or 0 for no maximum.
+	 * Params:
+	 * max =  the maximum length of the entry, or 0 for no maximum.
 	 *  (other than the maximum length of entries.) The value passed in will
 	 *  be clamped to the range 0-65536.
-	 * Returns:
-	 *  a new GtkEntry.
 	 */
 	public this (int max)
 	{
@@ -467,10 +465,8 @@ public class Entry : Widget
 	/**
 	 * Sets the text in the widget to the given
 	 * value, replacing the current contents.
-	 * entry:
-	 * a GtkEntry.
-	 * text:
-	 * the new text.
+	 * Params:
+	 * text =  the new text
 	 */
 	public void setText(char[] text)
 	{
@@ -484,10 +480,8 @@ public class Entry : Widget
 	 *  be used in newly-written code. Use gtk_editable_insert_text()
 	 *  instead.
 	 * Appends the given text to the contents of the widget.
-	 * entry:
-	 * a GtkEntry.
-	 * text:
-	 * the text to append.
+	 * Params:
+	 * text =  the text to append
 	 */
 	public void appendText(char[] text)
 	{
@@ -501,10 +495,8 @@ public class Entry : Widget
 	 *  be used in newly-written code. Use gtk_editable_insert_text()
 	 *  instead.
 	 * Prepends the given text to the contents of the widget.
-	 * entry:
-	 * a GtkEntry.
-	 * text:
-	 * the text to prepend.
+	 * Params:
+	 * text =  the text to prepend
 	 */
 	public void prependText(char[] text)
 	{
@@ -514,21 +506,15 @@ public class Entry : Widget
 	
 	/**
 	 * Warning
-	 * gtk_entry_set_position is deprecated and should not be used in newly-written code.
-	 * Sets the cursor position in an entry to the given
-	 * value. This function is obsolete. You should use
-	 * gtk_editable_set_position() instead.
-	 * entry:
-	 * a GtkEntry.
-	 * position:
-	 * the position of the cursor. The cursor is displayed
-	 *  before the character with the given (base 0) index
-	 *  in the widget. The value must be less than or
-	 *  equal to the number of characters in the widget.
-	 *  A value of -1 indicates that the position should
-	 *  be set after the last character in the entry.
-	 *  Note that this position is in characters, not in
-	 *  bytes.
+	 * gtk_entry_set_position is deprecated and should not be used in newly-written code. Use gtk_editable_set_position() instead.
+	 * Sets the cursor position in an entry to the given value.
+	 * Params:
+	 * position =  the position of the cursor. The cursor is displayed
+	 *  before the character with the given (base 0) index in the widget.
+	 *  The value must be less than or equal to the number of characters
+	 *  in the widget. A value of -1 indicates that the position should
+	 *  be set after the last character in the entry. Note that this
+	 *  position is in characters, not in bytes.
 	 */
 	public void setPosition(int position)
 	{
@@ -539,13 +525,7 @@ public class Entry : Widget
 	/**
 	 * Retrieves the contents of the entry widget.
 	 * See also gtk_editable_get_chars().
-	 * entry:
-	 *  a GtkEntry
-	 * Returns:
-	 *  a pointer to the contents of the widget as a
-	 *  string. This string points to internally allocated
-	 *  storage in the widget and must not be freed, modified or
-	 *  stored.
+	 * Returns: a pointer to the contents of the widget as a string. This string points to internally allocated storage in the widget and must not be freed, modified or stored.
 	 */
 	public char[] getText()
 	{
@@ -555,20 +535,15 @@ public class Entry : Widget
 	
 	/**
 	 * Warning
-	 * gtk_entry_select_region is deprecated and should not be used in newly-written code.
-	 * Selects a region of text. The characters that
-	 * are selected are those characters at positions from
-	 * start_pos up to, but not including end_pos. If
-	 * end_pos is negative, then the the characters selected
-	 * will be those characters from start_pos to the end
-	 * of the text. This function is obsolete. You should
-	 * use gtk_editable_select_region() instead.
-	 * entry:
-	 * a GtkEntry.
-	 * start:
-	 * the starting position.
-	 * end:
-	 * the end position.
+	 * gtk_entry_select_region is deprecated and should not be used in newly-written code. Use gtk_editable_select_region() instead.
+	 * Selects a region of text. The characters that are selected are
+	 * those characters at positions from start_pos up to, but not
+	 * including end_pos. If end_pos is negative, then the the characters
+	 * selected will be those characters from start_pos to the end of
+	 * the text.
+	 * Params:
+	 * start =  the starting position
+	 * end =  the end position
 	 */
 	public void selectRegion(int start, int end)
 	{
@@ -577,18 +552,15 @@ public class Entry : Widget
 	}
 	
 	/**
-	 * Sets whether the contents of the entry are visible or
-	 * not. When visibility is set to FALSE, characters
-	 * are displayed as the invisible char, and will also appear
-	 * that way when the text in the entry widget is copied
-	 * elsewhere.
+	 * Sets whether the contents of the entry are visible or not.
+	 * When visibility is set to FALSE, characters are displayed
+	 * as the invisible char, and will also appear that way when
+	 * the text in the entry widget is copied elsewhere.
 	 * The default invisible char is the asterisk '*', but it can
 	 * be changed with gtk_entry_set_invisible_char().
-	 * entry:
-	 * a GtkEntry.
-	 * visible:
-	 * TRUE if the contents of the entry are displayed
-	 *  as plaintext.
+	 * Params:
+	 * visible =  TRUE if the contents of the entry are displayed
+	 *  as plaintext
 	 */
 	public void setVisibility(int visible)
 	{
@@ -604,10 +576,8 @@ public class Entry : Widget
 	 * invisible char is an asterisk ('*'). If you set the invisible char
 	 * to 0, then the user will get no feedback at all; there will be
 	 * no text on the screen as they type.
-	 * entry:
-	 *  a GtkEntry
-	 * ch:
-	 *  a Unicode character
+	 * Params:
+	 * ch =  a Unicode character
 	 */
 	public void setInvisibleChar(gunichar ch)
 	{
@@ -617,15 +587,12 @@ public class Entry : Widget
 	
 	/**
 	 * Warning
-	 * gtk_entry_set_editable is deprecated and should not be used in newly-written code.
+	 * gtk_entry_set_editable is deprecated and should not be used in newly-written code. Use gtk_editable_set_editable() instead.
 	 * Determines if the user can edit the text in the editable
-	 * widget or not. This function is obsolete. You should
-	 * use gtk_editable_set_editable() instead.
-	 * entry:
-	 * a GtkEntry.
-	 * editable:
-	 * TRUE if the user is allowed to edit the text
-	 *  in the widget.
+	 * widget or not.
+	 * Params:
+	 * editable =  TRUE if the user is allowed to edit the text
+	 *  in the widget
 	 */
 	public void setEditable(int editable)
 	{
@@ -637,10 +604,8 @@ public class Entry : Widget
 	 * Sets the maximum allowed length of the contents of the widget. If
 	 * the current contents are longer than the given length, then they
 	 * will be truncated to fit.
-	 * entry:
-	 *  a GtkEntry.
-	 * max:
-	 *  the maximum length of the entry, or 0 for no maximum.
+	 * Params:
+	 * max =  the maximum length of the entry, or 0 for no maximum.
 	 *  (other than the maximum length of entries.) The value passed in will
 	 *  be clamped to the range 0-65536.
 	 */
@@ -652,10 +617,7 @@ public class Entry : Widget
 	
 	/**
 	 * Retrieves the value set by gtk_entry_set_activates_default().
-	 * entry:
-	 *  a GtkEntry
-	 * Returns:
-	 *  TRUE if the entry will activate the default widget
+	 * Returns: TRUE if the entry will activate the default widget
 	 */
 	public int getActivatesDefault()
 	{
@@ -665,10 +627,7 @@ public class Entry : Widget
 	
 	/**
 	 * Gets the value set by gtk_entry_set_has_frame().
-	 * entry:
-	 *  a GtkEntry
-	 * Returns:
-	 *  whether the entry has a beveled frame
+	 * Returns: whether the entry has a beveled frame
 	 */
 	public int getHasFrame()
 	{
@@ -677,13 +636,10 @@ public class Entry : Widget
 	}
 	
 	/**
-	 * This function returns the entry's inner-border property. See
+	 * This function returns the entry's "inner-border" property. See
 	 * gtk_entry_set_inner_border() for more information.
-	 * entry:
-	 *  a GtkEntry
-	 * Returns:
-	 *  the entry's GtkBorder, or NULL if none was set.
 	 * Since 2.10
+	 * Returns: the entry's GtkBorder, or NULL if none was set.
 	 */
 	public GtkBorder* getInnerBorder()
 	{
@@ -693,10 +649,7 @@ public class Entry : Widget
 	
 	/**
 	 * Gets the value set by gtk_entry_set_width_chars().
-	 * entry:
-	 *  a GtkEntry
-	 * Returns:
-	 *  number of chars to request space for, or negative if unset
+	 * Returns: number of chars to request space for, or negative if unset
 	 */
 	public int getWidthChars()
 	{
@@ -712,10 +665,8 @@ public class Entry : Widget
 	 * (For experts: if setting is TRUE, the entry calls
 	 * gtk_window_activate_default() on the window containing the entry, in
 	 * the default handler for the "activate" signal.)
-	 * entry:
-	 *  a GtkEntry
-	 * setting:
-	 *  TRUE to activate window's default widget on Enter keypress
+	 * Params:
+	 * setting =  TRUE to activate window's default widget on Enter keypress
 	 */
 	public void setActivatesDefault(int setting)
 	{
@@ -725,10 +676,8 @@ public class Entry : Widget
 	
 	/**
 	 * Sets whether the entry has a beveled frame around it.
-	 * entry:
-	 *  a GtkEntry
-	 * setting:
-	 *  new value
+	 * Params:
+	 * setting =  new value
 	 */
 	public void setHasFrame(int setting)
 	{
@@ -744,11 +693,9 @@ public class Entry : Widget
 	 * Overriding the style-provided border is useful when you want to do
 	 * in-place editing of some text in a canvas or list widget, where
 	 * pixel-exact positioning of the entry is important.
-	 * entry:
-	 *  a GtkEntry
-	 * border:
-	 *  a GtkBorder, or NULL
 	 * Since 2.10
+	 * Params:
+	 * border =  a GtkBorder, or NULL
 	 */
 	public void setInnerBorder(GtkBorder* border)
 	{
@@ -762,10 +709,8 @@ public class Entry : Widget
 	 * request, the size can still be affected by
 	 * how you pack the widget into containers. If n_chars is -1, the
 	 * size reverts to the default entry size.
-	 * entry:
-	 *  a GtkEntry
-	 * n_chars:
-	 *  width in chars
+	 * Params:
+	 * nChars =  width in chars
 	 */
 	public void setWidthChars(int nChars)
 	{
@@ -775,12 +720,8 @@ public class Entry : Widget
 	
 	/**
 	 * Retrieves the character displayed in place of the real characters
-	 * for entries with visisbility set to false. See gtk_entry_set_invisible_char().
-	 * entry:
-	 *  a GtkEntry
-	 * Returns:
-	 *  the current invisible char, or 0, if the entry does not
-	 *  show invisible text at all.
+	 * for entries with visibility set to false. See gtk_entry_set_invisible_char().
+	 * Returns: the current invisible char, or 0, if the entry does not show invisible text at all.
 	 */
 	public gunichar getInvisibleChar()
 	{
@@ -792,12 +733,10 @@ public class Entry : Widget
 	 * Sets the alignment for the contents of the entry. This controls
 	 * the horizontal positioning of the contents when the displayed
 	 * text is shorter than the width of the entry.
-	 * entry:
-	 *  a GtkEntry
-	 * xalign:
-	 *  The horizontal alignment, from 0 (left) to 1 (right).
-	 *  Reversed for RTL layouts
 	 * Since 2.4
+	 * Params:
+	 * xalign =  The horizontal alignment, from 0 (left) to 1 (right).
+	 *  Reversed for RTL layouts
 	 */
 	public void setAlignment(float xalign)
 	{
@@ -807,11 +746,8 @@ public class Entry : Widget
 	
 	/**
 	 * Gets the value set by gtk_entry_set_alignment().
-	 * entry:
-	 *  a GtkEntry
-	 * Returns:
-	 *  the alignment
 	 * Since 2.4
+	 * Returns: the alignment
 	 */
 	public float getAlignment()
 	{
@@ -829,10 +765,7 @@ public class Entry : Widget
 	 * gtk_entry_layout_index_to_text_index() and
 	 * gtk_entry_text_index_to_layout_index() are needed to convert byte
 	 * indices in the layout to byte indices in the entry contents.
-	 * entry:
-	 *  a GtkEntry
-	 * Returns:
-	 *  the PangoLayout for this entry
+	 * Returns: the PangoLayout for this entry
 	 */
 	public PangoLayout* getLayout()
 	{
@@ -857,12 +790,9 @@ public class Entry : Widget
 	 * gtk_entry_layout_index_to_text_index() and
 	 * gtk_entry_text_index_to_layout_index() are needed to convert byte
 	 * indices in the layout to byte indices in the entry contents.
-	 * entry:
-	 *  a GtkEntry
-	 * x:
-	 *  location to store X offset of layout, or NULL
-	 * y:
-	 *  location to store Y offset of layout, or NULL
+	 * Params:
+	 * x =  location to store X offset of layout, or NULL
+	 * y =  location to store Y offset of layout, or NULL
 	 */
 	public void getLayoutOffsets(int* x, int* y)
 	{
@@ -875,12 +805,9 @@ public class Entry : Widget
 	 * by gtk_entry_get_text()) to a position in the
 	 * entry's PangoLayout (returned by gtk_entry_get_layout(),
 	 * with text retrieved via pango_layout_get_text()).
-	 * entry:
-	 *  a GtkEntry
-	 * layout_index:
-	 *  byte index into the entry layout text
-	 * Returns:
-	 *  byte index into the entry contents
+	 * Params:
+	 * layoutIndex =  byte index into the entry layout text
+	 * Returns: byte index into the entry contents
 	 */
 	public int layoutIndexToTextIndex(int layoutIndex)
 	{
@@ -892,12 +819,9 @@ public class Entry : Widget
 	 * Converts from a position in the entry's PangoLayout (returned by
 	 * gtk_entry_get_layout()) to a position in the entry contents
 	 * (returned by gtk_entry_get_text()).
-	 * entry:
-	 *  a GtkEntry
-	 * text_index:
-	 *  byte index into the entry contents
-	 * Returns:
-	 *  byte index into the entry layout text
+	 * Params:
+	 * textIndex =  byte index into the entry contents
+	 * Returns: byte index into the entry layout text
 	 */
 	public int textIndexToLayoutIndex(int textIndex)
 	{
@@ -908,11 +832,7 @@ public class Entry : Widget
 	/**
 	 * Retrieves the maximum allowed length of the text in
 	 * entry. See gtk_entry_set_max_length().
-	 * entry:
-	 *  a GtkEntry
-	 * Returns:
-	 *  the maximum allowed number of characters
-	 *  in GtkEntry, or 0 if there is no maximum.
+	 * Returns: the maximum allowed number of characters in GtkEntry, or 0 if there is no maximum.
 	 */
 	public int getMaxLength()
 	{
@@ -923,10 +843,7 @@ public class Entry : Widget
 	/**
 	 * Retrieves whether the text in entry is visible. See
 	 * gtk_entry_set_visibility().
-	 * entry:
-	 *  a GtkEntry
-	 * Returns:
-	 *  TRUE if the text is currently visible
+	 * Returns: TRUE if the text is currently visible
 	 */
 	public int getVisibility()
 	{
@@ -939,11 +856,9 @@ public class Entry : Widget
 	 * All further configuration of the completion mechanism is done on
 	 * completion using the GtkEntryCompletion API. Completion is disabled if
 	 * completion is set to NULL.
-	 * entry:
-	 *  A GtkEntry.
-	 * completion:
-	 *  The GtkEntryCompletion or NULL.
 	 * Since 2.4
+	 * Params:
+	 * completion =  The GtkEntryCompletion or NULL
 	 */
 	public void setCompletion(EntryCompletion completion)
 	{
@@ -953,22 +868,45 @@ public class Entry : Widget
 	
 	/**
 	 * Returns the auxiliary completion object currently in use by entry.
-	 * entry:
-	 *  A GtkEntry.
-	 * Returns:
-	 *  The auxiliary completion object currently in use by entry.
 	 * Since 2.4
-	 * Property Details
-	 * The "activates-default" property
-	 *  "activates-default" gboolean : Read / Write
-	 * Whether to activate the default widget (such as the default button in a dialog) when Enter is pressed.
-	 * Default value: FALSE
+	 * Returns: The auxiliary completion object currently in use by entry.
 	 */
 	public EntryCompletion getCompletion()
 	{
 		// GtkEntryCompletion* gtk_entry_get_completion (GtkEntry *entry);
 		return new EntryCompletion( gtk_entry_get_completion(gtkEntry) );
 	}
+	
+	/**
+	 * Hooks up an adjustment to the cursor position in an entry, so that when
+	 * the cursor is moved, the adjustment is scrolled to show that position.
+	 * See gtk_scrolled_window_get_hadjustment() for a typical way of obtaining
+	 * the adjustment.
+	 * The adjustment has to be in pixel units and in the same coordinate system
+	 * as the entry.
+	 * Since 2.12
+	 * Params:
+	 * adjustment =  an adjustment which should be adjusted when the cursor
+	 *  is moved, or NULL
+	 */
+	public void setCursorHadjustment(GtkAdjustment* adjustment)
+	{
+		// void gtk_entry_set_cursor_hadjustment (GtkEntry *entry,  GtkAdjustment *adjustment);
+		gtk_entry_set_cursor_hadjustment(gtkEntry, adjustment);
+	}
+	
+	/**
+	 * Retrieves the horizontal cursor adjustment for the entry.
+	 * See gtk_entry_set_cursor_hadjustment().
+	 * Since 2.12
+	 * Returns: the horizontal cursor adjustment, or NULL  if none has been set.
+	 */
+	public GtkAdjustment* getCursorHadjustment()
+	{
+		// GtkAdjustment* gtk_entry_get_cursor_hadjustment (GtkEntry *entry);
+		return gtk_entry_get_cursor_hadjustment(gtkEntry);
+	}
+	
 	
 	
 	

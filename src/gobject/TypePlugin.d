@@ -168,8 +168,6 @@ public class TypePlugin
 	 * Calls the use_plugin function from the GTypePluginClass of plugin.
 	 * There should be no need to use this function outside of the GObject
 	 * type system itself.
-	 * plugin:
-	 * a GTypePlugin
 	 */
 	public void use()
 	{
@@ -181,8 +179,6 @@ public class TypePlugin
 	 * Calls the unuse_plugin function from the GTypePluginClass of plugin.
 	 * There should be no need to use this function outside of the GObject
 	 * type system itself.
-	 * plugin:
-	 * a GTypePlugin
 	 */
 	public void unuse()
 	{
@@ -194,14 +190,10 @@ public class TypePlugin
 	 * Calls the complete_type_info function from the GTypePluginClass of plugin.
 	 * There should be no need to use this function outside of the GObject
 	 * type system itself.
-	 * plugin:
-	 * a GTypePlugin
-	 * g_type:
-	 * the GType whose info is completed
-	 * info:
-	 * the GTypeInfo struct to fill in
-	 * value_table:
-	 * the GTypeValueTable to fill in
+	 * Params:
+	 * gType = the GType whose info is completed
+	 * info = the GTypeInfo struct to fill in
+	 * valueTable = the GTypeValueTable to fill in
 	 */
 	public void completeTypeInfo(GType gType, GTypeInfo* info, GTypeValueTable* valueTable)
 	{
@@ -213,17 +205,11 @@ public class TypePlugin
 	 * Calls the complete_interface_info function from the GTypePluginClass
 	 * of plugin. There should be no need to use this function outside of the
 	 * GObject type system itself.
-	 * plugin:
-	 * the GTypePlugin
-	 * instance_type:
-	 * the GType of an instantiable type to which the interface
+	 * Params:
+	 * instanceType = the GType of an instantiable type to which the interface
 	 *  is added
-	 * interface_type:
-	 * the GType of the interface whose info is completed
-	 * info:
-	 * the GInterfaceInfo to fill in
-	 * See Also
-	 * GTypeModule and g_type_register_dynamic().
+	 * interfaceType = the GType of the interface whose info is completed
+	 * info = the GInterfaceInfo to fill in
 	 */
 	public void completeInterfaceInfo(GType instanceType, GType interfaceType, GInterfaceInfo* info)
 	{

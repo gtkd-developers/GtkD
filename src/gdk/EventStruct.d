@@ -65,14 +65,6 @@ private import gtkc.gdk;
 
 
 /**
- * Description
- * The event structs contain data specific to each type of event in GDK.
- * Note
- * A common mistake is to forget to set the event mask of a widget so that the
- * required events are received. See gtk_widget_set_events().
- */
-
-/**
  */
 
 

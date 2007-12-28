@@ -89,15 +89,12 @@ public class MessageLog
 	 * Logs an error or debugging message.
 	 * If the log level has been set as fatal, the abort()
 	 * function is called to terminate the program.
-	 * log_domain:
-	 * the log domain, usually G_LOG_DOMAIN.
-	 * log_level:
-	 * the log level, either from GLogLevelFlags or a user-defined level.
-	 * format:
-	 * the message format. See the printf()
+	 * Params:
+	 * logDomain = the log domain, usually G_LOG_DOMAIN.
+	 * logLevel = the log level, either from GLogLevelFlags or a user-defined level.
+	 * format = the message format. See the printf()
 	 * documentation.
-	 * ...:
-	 * the parameters to insert into the format string.
+	 * ... = the parameters to insert into the format string.
 	 */
 	public static void log(char[] logDomain, GLogLevelFlags logLevel, char[] format, ... )
 	{
@@ -109,15 +106,12 @@ public class MessageLog
 	 * Logs an error or debugging message.
 	 * If the log level has been set as fatal, the abort()
 	 * function is called to terminate the program.
-	 * log_domain:
-	 * the log domain.
-	 * log_level:
-	 * the log level.
-	 * format:
-	 * the message format. See the printf()
+	 * Params:
+	 * logDomain = the log domain.
+	 * logLevel = the log level.
+	 * format = the message format. See the printf()
 	 * documentation.
-	 * args:
-	 * the parameters to insert into the format string.
+	 * args = the parameters to insert into the format string.
 	 */
 	public static void logv(char[] logDomain, GLogLevelFlags logLevel, char[] format, void* args)
 	{
@@ -138,29 +132,25 @@ public class MessageLog
 	 * Note that since the G_LOG_LEVEL_ERROR log level is always fatal, if
 	 * you want to set a handler for this log level you must combine it with
 	 * G_LOG_FLAG_FATAL.
-	 * Example13.Adding a log handler for all warning messages in the default
+	 * Example12.Adding a log handler for all warning messages in the default
 	 * (application) domain
 	 *  g_log_set_handler (NULL, G_LOG_LEVEL_WARNING | G_LOG_FLAG_FATAL
 	 *  | G_LOG_FLAG_RECURSION, my_log_handler, NULL);
-	 * Example14.Adding a log handler for all critical messages from GTK+
+	 * Example13.Adding a log handler for all critical messages from GTK+
 	 *  g_log_set_handler ("Gtk", G_LOG_LEVEL_CRITICAL | G_LOG_FLAG_FATAL
 	 *  | G_LOG_FLAG_RECURSION, my_log_handler, NULL);
-	 * Example15.Adding a log handler for all messages from
+	 * Example14.Adding a log handler for all messages from
 	 * GLib
 	 *  g_log_set_handler ("GLib", G_LOG_LEVEL_MASK | G_LOG_FLAG_FATAL
 	 *  | G_LOG_FLAG_RECURSION, my_log_handler, NULL);
-	 * log_domain:
-	 * the log domain, or NULL for the default "" application domain.
-	 * log_levels:
-	 * the log levels to apply the log handler for. To handle fatal
+	 * Params:
+	 * logDomain = the log domain, or NULL for the default "" application domain.
+	 * logLevels = the log levels to apply the log handler for. To handle fatal
 	 * and recursive messages as well, combine the log levels with the
 	 * G_LOG_FLAG_FATAL and G_LOG_FLAG_RECURSION bit flags.
-	 * log_func:
-	 * the log handler function.
-	 * user_data:
-	 * data passed to the log handler.
-	 * Returns:
-	 * the id of the new handler.
+	 * logFunc = the log handler function.
+	 * userData = data passed to the log handler.
+	 * Returns:the id of the new handler.
 	 */
 	public static uint logSetHandler(char[] logDomain, GLogLevelFlags logLevels, GLogFunc logFunc, void* userData)
 	{
@@ -170,10 +160,9 @@ public class MessageLog
 	
 	/**
 	 * Removes the log handler.
-	 * log_domain:
-	 * the log domain.
-	 * handler_id:
-	 * the id of the handler, which was returned in g_log_set_handler().
+	 * Params:
+	 * logDomain = the log domain.
+	 * handlerId = the id of the handler, which was returned in g_log_set_handler().
 	 */
 	public static void logRemoveHandler(char[] logDomain, uint handlerId)
 	{
@@ -189,11 +178,10 @@ public class MessageLog
 	 * You can also make some message levels
 	 * fatal at runtime by setting the G_DEBUG environment variable (see
 	 * Running GLib Applications).
-	 * fatal_mask:
-	 * the mask containing bits set for each level of error which is
+	 * Params:
+	 * fatalMask = the mask containing bits set for each level of error which is
 	 * to be fatal.
-	 * Returns:
-	 * the old fatal mask.
+	 * Returns:the old fatal mask.
 	 */
 	public static GLogLevelFlags logSetAlwaysFatal(GLogLevelFlags fatalMask)
 	{
@@ -204,12 +192,10 @@ public class MessageLog
 	/**
 	 * Sets the log levels which are fatal in the given domain.
 	 * G_LOG_LEVEL_ERROR is always fatal.
-	 * log_domain:
-	 * the log domain.
-	 * fatal_mask:
-	 * the new fatal mask.
-	 * Returns:
-	 * the old fatal mask for the log domain.
+	 * Params:
+	 * logDomain = the log domain.
+	 * fatalMask = the new fatal mask.
+	 * Returns:the old fatal mask for the log domain.
 	 */
 	public static GLogLevelFlags logSetFatalMask(char[] logDomain, GLogLevelFlags fatalMask)
 	{
@@ -225,14 +211,11 @@ public class MessageLog
 	 * and if the log level is fatal it calls abort().
 	 * stderr is used for levels G_LOG_LEVEL_ERROR, G_LOG_LEVEL_CRITICAL,
 	 * G_LOG_LEVEL_WARNING and G_LOG_LEVEL_MESSAGE. stdout is used for the rest.
-	 * log_domain:
-	 * the log domain of the message.
-	 * log_level:
-	 * the level of the message.
-	 * message:
-	 * the message.
-	 * unused_data:
-	 * data passed from g_log() which is unused.
+	 * Params:
+	 * logDomain = the log domain of the message.
+	 * logLevel = the level of the message.
+	 * message = the message.
+	 * unusedData = data passed from g_log() which is unused.
 	 */
 	public static void logDefaultHandler(char[] logDomain, GLogLevelFlags logLevel, char[] message, void* unusedData)
 	{
@@ -241,17 +224,15 @@ public class MessageLog
 	}
 	
 	/**
-	 * Installs a default log handler which is used is used if no
+	 * Installs a default log handler which is used if no
 	 * log handler has been set for the particular log domain
 	 * and log level combination. By default, GLib uses
 	 * g_log_default_handler() as default log handler.
-	 * log_func:
-	 * the log handler function.
-	 * user_data:
-	 * data passed to the log handler.
-	 * Returns:
-	 * the previous default log handler
 	 * Since 2.6
+	 * Params:
+	 * logFunc = the log handler function.
+	 * userData = data passed to the log handler.
+	 * Returns:the previous default log handler
 	 */
 	public static GLogFunc logSetDefaultHandler(GLogFunc logFunc, void* userData)
 	{

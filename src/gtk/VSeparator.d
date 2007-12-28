@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Separator;
 
 /**
  * Description
@@ -72,7 +73,6 @@ private import gtkc.gtk;
  * widgets within a window. It displays a vertical line with a shadow to
  * make it appear sunken into the interface.
  */
-private import gtk.Separator;
 public class VSeparator : Separator
 {
 	
@@ -127,11 +127,6 @@ public class VSeparator : Separator
 	
 	/**
 	 * Creates a new GtkVSeparator.
-	 * Returns:
-	 * a new GtkVSeparator.
-	 * See Also
-	 * GtkHSeparator
-	 * a horizontal separator.
 	 */
 	public this ()
 	{

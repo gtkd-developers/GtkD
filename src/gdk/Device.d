@@ -200,8 +200,7 @@ public class Device
 	/**
 	 * Returns the list of available input devices for the default display.
 	 * The list is statically allocated and should not be freed.
-	 * Returns:
-	 *  a list of GdkDevice
+	 * Returns: a list of GdkDevice
 	 */
 	public static ListG gdkDevicesList()
 	{
@@ -211,10 +210,8 @@ public class Device
 	
 	/**
 	 * Sets the source type for an input device.
-	 * device:
-	 * a GdkDevice.
-	 * source:
-	 * the source type.
+	 * Params:
+	 * source = the source type.
 	 */
 	public void setSource(GdkInputSource source)
 	{
@@ -226,12 +223,9 @@ public class Device
 	 * Sets a the mode of an input device. The mode controls if the
 	 * device is active and whether the device's range is mapped to the
 	 * entire screen or to a single window.
-	 * device:
-	 * a GdkDevice.
-	 * mode:
-	 * the input mode.
-	 * Returns:
-	 * TRUE if the mode was successfully changed.
+	 * Params:
+	 * mode = the input mode.
+	 * Returns:TRUE if the mode was successfully changed.
 	 */
 	public int setMode(GdkInputMode mode)
 	{
@@ -242,14 +236,10 @@ public class Device
 	/**
 	 * Specifies the X key event to generate when a macro button of a device
 	 * is pressed.
-	 * device:
-	 * a GdkDevice.
-	 * index_:
-	 * the index of the macro button to set.
-	 * keyval:
-	 * the keyval to generate.
-	 * modifiers:
-	 * the modifiers to set.
+	 * Params:
+	 * index = the index of the macro button to set.
+	 * keyval = the keyval to generate.
+	 * modifiers = the modifiers to set.
 	 */
 	public void setKey(uint index, uint keyval, GdkModifierType modifiers)
 	{
@@ -259,12 +249,9 @@ public class Device
 	
 	/**
 	 * Specifies how an axis of a device is used.
-	 * device:
-	 * a GdkDevice.
-	 * index_:
-	 * the index of the axis.
-	 * use:
-	 * specifies how the axis is used.
+	 * Params:
+	 * index = the index of the axis.
+	 * use = specifies how the axis is used.
 	 */
 	public void setAxisUse(uint index, GdkAxisUse use)
 	{
@@ -274,9 +261,7 @@ public class Device
 	
 	/**
 	 * Returns the core pointer device for the default display.
-	 * Returns:
-	 *  the core pointer device; this is owned by the
-	 *  display and should not be freed.
+	 * Returns: the core pointer device; this is owned by the display and should not be freed.
 	 */
 	public static Device getCorePointer()
 	{
@@ -286,15 +271,11 @@ public class Device
 	
 	/**
 	 * Gets the current state of a device.
-	 * device:
-	 * a GdkDevice.
-	 * window:
-	 * a GdkWindow.
-	 * axes:
-	 * an array of doubles to store the values of the axes of device in,
+	 * Params:
+	 * window = a GdkWindow.
+	 * axes = an array of doubles to store the values of the axes of device in,
 	 *  or NULL.
-	 * mask:
-	 * location to store the modifiers, or NULL.
+	 * mask = location to store the modifiers, or NULL.
 	 */
 	public void getState(Window window, double* axes, GdkModifierType* mask)
 	{
@@ -309,21 +290,13 @@ public class Device
 	 * do not support motion history, in which case, FALSE will
 	 * be returned. (This is not distinguishable from the case where
 	 * motion history is supported and no events were found.)
-	 * device:
-	 *  a GdkDevice
-	 * window:
-	 *  the window with respect to which which the event coordinates will be reported
-	 * start:
-	 *  starting timestamp for range of events to return
-	 * stop:
-	 *  ending timestamp for the range of events to return
-	 * events:
-	 *  location to store a newly-allocated array of GdkTimeCoord, or NULL
-	 * n_events:
-	 *  location to store the length of events, or NULL
-	 * Returns:
-	 *  TRUE if the windowing system supports motion history and
-	 *  at least one event was found.
+	 * Params:
+	 * window =  the window with respect to which which the event coordinates will be reported
+	 * start =  starting timestamp for range of events to return
+	 * stop =  ending timestamp for the range of events to return
+	 * events =  location to store a newly-allocated array of GdkTimeCoord, or NULL
+	 * nEvents =  location to store the length of events, or NULL
+	 * Returns: TRUE if the windowing system supports motion history and at least one event was found.
 	 */
 	public int getHistory(Window window, uint start, uint stop, GdkTimeCoord*** events, int* nEvents)
 	{
@@ -333,10 +306,9 @@ public class Device
 	
 	/**
 	 * Frees an array of GdkTimeCoord that was returned by gdk_device_get_history().
-	 * events:
-	 * an array of GdkTimeCoord.
-	 * n_events:
-	 * the length of the array.
+	 * Params:
+	 * events = an array of GdkTimeCoord.
+	 * nEvents = the length of the array.
 	 */
 	public static void freeHistory(GdkTimeCoord** events, int nEvents)
 	{
@@ -348,16 +320,11 @@ public class Device
 	/**
 	 * Interprets an array of double as axis values for a given device,
 	 * and locates the value in the array for a given axis use.
-	 * device:
-	 *  a GdkDevice
-	 * axes:
-	 *  pointer to an array of axes
-	 * use:
-	 *  the use to look for
-	 * value:
-	 *  location to store the found value.
-	 * Returns:
-	 *  TRUE if the given axis use was found, otherwise FALSE
+	 * Params:
+	 * axes =  pointer to an array of axes
+	 * use =  the use to look for
+	 * value =  location to store the found value.
+	 * Returns: TRUE if the given axis use was found, otherwise FALSE
 	 */
 	public int getAxis(double* axes, GdkAxisUse use, double* value)
 	{
@@ -368,12 +335,10 @@ public class Device
 	/**
 	 * Turns extension events on or off for a particular window,
 	 * and specifies the event mask for extension events.
-	 * window:
-	 * a GdkWindow.
-	 * mask:
-	 * the event mask
-	 * mode:
-	 * the type of extension events that are desired.
+	 * Params:
+	 * window = a GdkWindow.
+	 * mask = the event mask
+	 * mode = the type of extension events that are desired.
 	 */
 	public static void gdkInputSetExtensionEvents(Window window, int mask, GdkExtensionMode mode)
 	{

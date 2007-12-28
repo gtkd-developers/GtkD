@@ -32,6 +32,7 @@ alias void* GdkAtom;
 alias void* GdkNativeWindow;
 
 
+
 /**
  * typedef guint32			 GdkWChar;
  * Specifies a wide character type, used to represent character codes.
@@ -225,6 +226,38 @@ alias GdkGCValuesMask GCValuesMask;
  * tables. Only a couple of these values are usually useful; for colored
  * images, only GDK_COPY, GDK_XOR and GDK_INVERT are generally
  * useful. For bitmaps, GDK_AND and GDK_OR are also useful.
+ * GDK_COPY
+ * dst = src
+ * GDK_INVERT
+ * dst = NOT dst
+ * GDK_XOR
+ * dst = src XOR dst
+ * GDK_CLEAR
+ * dst = 0
+ * GDK_AND
+ * dst = dst AND src
+ * GDK_AND_REVERSE
+ * dst = src AND (NOT dst)
+ * GDK_AND_INVERT
+ * dst = (NOT src) AND dst
+ * GDK_NOOP
+ * dst = dst
+ * GDK_OR
+ * dst = src OR dst
+ * GDK_EQUIV
+ * dst = (NOT src) XOR dst
+ * GDK_OR_REVERSE
+ * dst = src OR (NOT dst)
+ * GDK_COPY_INVERT
+ * dst = NOT src
+ * GDK_OR_INVERT
+ * dst = (NOT src) OR dst
+ * GDK_NAND
+ * dst = (NOT src) OR (NOT dst)
+ * GDK_NOR
+ * dst = (NOT src) AND (NOT dst)
+ * GDK_SET
+ * dst = 1
  */
 public enum GdkFunction
 {
@@ -680,7 +713,7 @@ alias GdkCursorType CursorType;
  * GDK_WINDOW_TOPLEVEL
  * toplevel window (used to implement GtkWindow)
  * GDK_WINDOW_CHILD
- * child window (used to implement e.g. GtkButton)
+ * child window (used to implement e.g. GtkEntry)
  * GDK_WINDOW_DIALOG
  * useless/deprecated compatibility type
  * GDK_WINDOW_TEMP
@@ -844,11 +877,7 @@ alias GdkWindowEdge WindowEdge;
  * GDK_WINDOW_TYPE_HINT_DIALOG
  * Dialog window.
  * GDK_WINDOW_TYPE_HINT_MENU
- * Window used to implement a menu.
- * GDK_WINDOW_TYPE_HINT_TOOLBAR
- * Window used to implement toolbars.
- * GDK_WINDOW_TYPE_HINT_SPLASHSCREEN
- * Window used to display a splash
+ * Window used to implement a menu; GTK+ uses
  */
 public enum GdkWindowTypeHint
 {
@@ -892,6 +921,8 @@ alias GdkWindowTypeHint WindowTypeHint;
  * Honor the wmclass_class and wmclass_name fields
  * GDK_WA_NOREDIR
  * Honor the override_redirect field
+ * GDK_WA_TYPE_HINT
+ * Honor the type_hint field
  */
 public enum GdkWindowAttributesType
 {
@@ -902,7 +933,8 @@ public enum GdkWindowAttributesType
 	WA_COLORMAP = 1 << 5,
 	WA_VISUAL = 1 << 6,
 	WA_WMCLASS = 1 << 7,
-	WA_NOREDIR = 1 << 8
+	WA_NOREDIR = 1 << 8,
+	WA_TYPE_HINT = 1 << 9
 }
 alias GdkWindowAttributesType WindowAttributesType;
 
@@ -1163,10 +1195,11 @@ alias GdkEventType EventType;
  * number of GDK_MOTION_NOTIFY events received. Normally a GDK_MOTION_NOTIFY
  * event is received each time the mouse moves. However, if the application
  * spends a lot of time processing the event (updating the display, for example),
- * it can easily lag behind the position of the mouse. When using the
- * GDK_POINTER_MOTION_HINT_MASK the server will only send a single
- * GDK_MOTION_NOTIFY event (which is marked as a hint) until the application
- * asks for more, by calling gdk_window_get_pointer().
+ * it can lag behind the position of the mouse. When using
+ * GDK_POINTER_MOTION_HINT_MASK, fewer GDK_MOTION_NOTIFY events will be sent,
+ * some of which are marked as a hint (the is_hint member is TRUE).
+ * To receive more motion events after a motion hint event, the application
+ * needs to asks for more, by calling gdk_event_request_motions().
  * GDK_EXPOSURE_MASK
  * receive expose events
  * GDK_POINTER_MOTION_MASK
@@ -1783,15 +1816,16 @@ public struct GdkPixmap{}
  * GdkWindow, can often be used interchangeably. The type GdkDrawable
  * refers generically to any of these types.
  */
-public struct GdkBitmap
-{
-	void* userData;
-}
+public struct GdkBitmap{}
 
 
 /**
  * A private data structure which maps color indices to actual RGB
  * colors. This is used only for gdk_draw_indexed_image().
+ * guint32colors[256];
+ * The colors, represented as 0xRRGGBB integer values.
+ * gintn_colors;
+ * The number of colors in the cmap.
  */
 public struct GdkRgbCmap{}
 // uint colors[256];
@@ -2055,6 +2089,8 @@ public struct GdkGeometry{}
  * don't use (see gtk_window_set_wmclass())
  * gbooleanoverride_redirect;
  * TRUE to bypass the window manager
+ * GdkWindowTypeHinttype_hint;
+ * a hint of the function of the window
  */
 public struct GdkWindowAttr{}
 // char *title;
@@ -2082,6 +2118,8 @@ public struct GdkWindowAttr{}
 // char *wmclassClass;
 // gdk-Windows.html
 // int overrideRedirect;
+// gdk-Windows.html
+// GdkWindowTypeHint typeHint;
 // gdk-Windows.html
 
 
@@ -2940,11 +2978,12 @@ public struct GdkTimeCoord{}
 // #define gdk_window_copy_area(drawable,gc,x,y,source_drawable,source_x,source_y,width,height)
 
 /*
- * This macro marks the beginning of a critical section in which GDK and GTK+
- * functions can be called. Only one thread at a time can be in such a
- * critial section. The macro expands to a no-op if G_THREADS_ENABLED
- * has not been defined. Typically gdk_threads_enter() should be used
- * instead of this macro.
+ * This macro marks the beginning of a critical section in which GDK and
+ * GTK+ functions can be called safely and without causing race
+ * conditions. Only one thread at a time can be in such a critial
+ * section. The macro expands to a no-op if G_THREADS_ENABLED has not
+ * been defined. Typically gdk_threads_enter() should be used instead of
+ * this macro.
  */
 // TODO
 // #define GDK_THREADS_ENTER()

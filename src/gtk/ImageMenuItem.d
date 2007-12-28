@@ -75,6 +75,7 @@ private import gtk.AccelGroup;
 
 
 
+private import gtk.MenuItem;
 
 /**
  * Description
@@ -82,7 +83,6 @@ private import gtk.AccelGroup;
  * Note that the user can disable display of menu icons, so make sure to still
  * fill in the text label.
  */
-private import gtk.MenuItem;
 public class ImageMenuItem : MenuItem
 {
 	
@@ -136,8 +136,8 @@ public class ImageMenuItem : MenuItem
 	 * If mnemonic it true the label
 	 * will be created using gtk_label_new_with_mnemonic(), so underscores
 	 * in label indicate the mnemonic for the menu item.
-	 * label:
-	 *  the text of the menu item.
+	 * Params:
+	 *  label = the text of the menu item.
 	 * Returns:
 	 *  a new GtkImageMenuItem.
 	 */
@@ -163,10 +163,8 @@ public class ImageMenuItem : MenuItem
 	 * Sets the image of image_menu_item to the given widget.
 	 * Note that it depends on the show-menu-images setting whether
 	 * the image will be displayed or not.
-	 * image_menu_item:
-	 *  a GtkImageMenuItem.
-	 * image:
-	 *  a widget to set as the image for the menu item.
+	 * Params:
+	 * image =  a widget to set as the image for the menu item.
 	 */
 	public void setImage(Widget image)
 	{
@@ -177,10 +175,7 @@ public class ImageMenuItem : MenuItem
 	/**
 	 * Gets the widget that is currently set as the image of image_menu_item.
 	 * See gtk_image_menu_item_set_image().
-	 * image_menu_item:
-	 *  a GtkImageMenuItem.
-	 * Returns:
-	 *  the widget set as image of image_menu_item.
+	 * Returns: the widget set as image of image_menu_item.
 	 */
 	public Widget getImage()
 	{
@@ -190,8 +185,6 @@ public class ImageMenuItem : MenuItem
 	
 	/**
 	 * Creates a new GtkImageMenuItem with an empty label.
-	 * Returns:
-	 *  a new GtkImageMenuItem.
 	 */
 	public this ()
 	{
@@ -208,13 +201,10 @@ public class ImageMenuItem : MenuItem
 	 * appropriate path for the menu item, use gtk_stock_lookup() to look up the
 	 * standard accelerator for the stock item, and if one is found, call
 	 * gtk_accel_map_add_entry() to register it.
-	 * stock_id:
-	 *  the name of the stock item.
-	 * accel_group:
-	 *  the GtkAccelGroup to add the menu items accelerator to,
+	 * Params:
+	 * stockId =  the name of the stock item.
+	 * accelGroup =  the GtkAccelGroup to add the menu items accelerator to,
 	 *  or NULL.
-	 * Returns:
-	 *  a new GtkImageMenuItem.
 	 */
 	public this (char[] stockId, AccelGroup accelGroup)
 	{

@@ -15,7 +15,7 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
+ 
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
@@ -35,7 +35,7 @@ private Linker cairo_Linker;
 
 static this()
 {
- cairo_Linker = new Linker(libPath ~ importLibs[LIBRARY.CAIROLIB] );
+ cairo_Linker = new Linker(libPath ~ importLibs[LIBRARY.CAIRO] );
  cairo_Linker.link(cairoLinks);
  debug writefln("* Finished static this(): cairo");
 }
@@ -46,10 +46,10 @@ static ~this()
  debug writefln("* Finished static ~this(): cairo");
 }
 
-extern(C)
-{
-	// cairoLib.Cairo
-
+extern(C) 
+{	
+	// cairo.Context
+	
 	cairo_t* function(cairo_surface_t* target)cairo_create;
 	cairo_t* function(cairo_t* cr)cairo_reference;
 	void function(cairo_t* cr)cairo_destroy;
@@ -145,9 +145,9 @@ extern(C)
 	void function(cairo_t* cr, cairo_scaled_font_t* scaledFont)cairo_set_scaled_font;
 	void function(cairo_t* cr, char* utf8, cairo_text_extents_t* extents)cairo_text_extents;
 	void function(cairo_t* cr, cairo_glyph_t* glyphs, int numGlyphs, cairo_text_extents_t* extents)cairo_glyph_extents;
-
-	// cairoLib.Pattern
-
+	
+	// cairo.Pattern
+	
 	void function(cairo_pattern_t* pattern, double offset, double red, double green, double blue)cairo_pattern_add_color_stop_rgb;
 	void function(cairo_pattern_t* pattern, double offset, double red, double green, double blue, double alpha)cairo_pattern_add_color_stop_rgba;
 	cairo_pattern_t* function(double red, double green, double blue)cairo_pattern_create_rgb;
@@ -165,18 +165,18 @@ extern(C)
 	void function(cairo_pattern_t* pattern, cairo_matrix_t* matrix)cairo_pattern_set_matrix;
 	void function(cairo_pattern_t* pattern, cairo_matrix_t* matrix)cairo_pattern_get_matrix;
 	cairo_pattern_type_t function(cairo_pattern_t* pattern)cairo_pattern_get_type;
-
-	// cairoLib.FontFace
-
+	
+	// cairo.FontFace
+	
 	cairo_font_face_t* function(cairo_font_face_t* fontFace)cairo_font_face_reference;
 	void function(cairo_font_face_t* fontFace)cairo_font_face_destroy;
 	cairo_status_t function(cairo_font_face_t* fontFace)cairo_font_face_status;
 	void* function(cairo_font_face_t* fontFace, cairo_user_data_key_t* key)cairo_font_face_get_user_data;
 	cairo_status_t function(cairo_font_face_t* fontFace, cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)cairo_font_face_set_user_data;
 	cairo_font_type_t function(cairo_font_face_t* fontFace)cairo_font_face_get_type;
-
-	// cairoLib.ScaledFont
-
+	
+	// cairo.ScaledFont
+	
 	cairo_scaled_font_t* function(cairo_font_face_t* fontFace, cairo_matrix_t* fontMatrix, cairo_matrix_t* ctm, cairo_font_options_t* options)cairo_scaled_font_create;
 	cairo_scaled_font_t* function(cairo_scaled_font_t* scaledFont)cairo_scaled_font_reference;
 	void function(cairo_scaled_font_t* scaledFont)cairo_scaled_font_destroy;
@@ -189,9 +189,9 @@ extern(C)
 	void function(cairo_scaled_font_t* scaledFont, cairo_matrix_t* fontMatrix)cairo_scaled_font_get_font_matrix;
 	void function(cairo_scaled_font_t* scaledFont, cairo_matrix_t* ctm)cairo_scaled_font_get_ctm;
 	cairo_font_type_t function(cairo_scaled_font_t* scaledFont)cairo_scaled_font_get_type;
-
-	// cairoLib.FontOption
-
+	
+	// cairo.FontOption
+	
 	cairo_font_options_t* function()cairo_font_options_create;
 	cairo_font_options_t* function(cairo_font_options_t* original)cairo_font_options_copy;
 	void function(cairo_font_options_t* options)cairo_font_options_destroy;
@@ -207,9 +207,9 @@ extern(C)
 	cairo_hint_style_t function(cairo_font_options_t* options)cairo_font_options_get_hint_style;
 	void function(cairo_font_options_t* options, cairo_hint_metrics_t hintMetrics)cairo_font_options_set_hint_metrics;
 	cairo_hint_metrics_t function(cairo_font_options_t* options)cairo_font_options_get_hint_metrics;
-
-	// cairoLib.Surface
-
+	
+	// cairo.Surface
+	
 	cairo_surface_t* function(cairo_surface_t* other, cairo_content_t content, int width, int height)cairo_surface_create_similar;
 	void function(cairo_surface_t* surface)cairo_surface_destroy;
 	void function(cairo_surface_t* surface)cairo_surface_finish;
@@ -233,9 +233,9 @@ extern(C)
 	int function(cairo_surface_t* surface)cairo_image_surface_get_width;
 	int function(cairo_surface_t* surface)cairo_image_surface_get_height;
 	int function(cairo_surface_t* surface)cairo_image_surface_get_stride;
-
-	// cairoLib.Matrix
-
+	
+	// cairo.Matrix
+	
 	void function(cairo_matrix_t* matrix, double xx, double yx, double xy, double yy, double x0, double y0)cairo_matrix_init;
 	void function(cairo_matrix_t* matrix)cairo_matrix_init_identity;
 	void function(cairo_matrix_t* matrix, double tx, double ty)cairo_matrix_init_translate;
@@ -248,24 +248,24 @@ extern(C)
 	void function(cairo_matrix_t* result, cairo_matrix_t* a, cairo_matrix_t* b)cairo_matrix_multiply;
 	void function(cairo_matrix_t* matrix, double* dx, double* dy)cairo_matrix_transform_distance;
 	void function(cairo_matrix_t* matrix, double* x, double* y)cairo_matrix_transform_point;
-
-	// cairoLib.Status
-
+	
+	// cairo.Status
+	
 	char* function(cairo_status_t status)cairo_status_to_string;
 	void function()cairo_debug_reset_static_data;
-
-	// cairoLib.Version
-
+	
+	// cairo.Version
+	
 	int function()cairo_version;
 	char* function()cairo_version_string;
-
-	// cairoLib.
-
+	
+	// cairo.
+	
 
 
 }
 
-Symbol[] cairoLinks =
+Symbol[] cairoLinks = 
 [
 
 	{ "cairo_create",  cast(void**)& cairo_create},

@@ -142,12 +142,10 @@ public class StringCompletion
 	
 	/**
 	 * Creates a new GCompletion.
-	 * func:
-	 * the function to be called to return the string representing an item
+	 * Params:
+	 * func = the function to be called to return the string representing an item
 	 * in the GCompletion, or NULL if strings are going to be used as the
 	 * GCompletion items.
-	 * Returns:
-	 * the new GCompletion.
 	 */
 	public this (GCompletionFunc func)
 	{
@@ -158,10 +156,8 @@ public class StringCompletion
 	
 	/**
 	 * Adds items to the GCompletion.
-	 * cmp:
-	 * the GCompletion.
-	 * items:
-	 * the list of items to add.
+	 * Params:
+	 * items = the list of items to add.
 	 */
 	public void addItems(ListG items)
 	{
@@ -171,10 +167,8 @@ public class StringCompletion
 	
 	/**
 	 * Removes items from a GCompletion.
-	 * cmp:
-	 * the GCompletion.
-	 * items:
-	 * the items to remove.
+	 * Params:
+	 * items = the items to remove.
 	 */
 	public void removeItems(ListG items)
 	{
@@ -184,8 +178,6 @@ public class StringCompletion
 	
 	/**
 	 * Removes all items from the GCompletion.
-	 * cmp:
-	 * the GCompletion.
 	 */
 	public void clearItems()
 	{
@@ -195,18 +187,13 @@ public class StringCompletion
 	
 	/**
 	 * Attempts to complete the string prefix using the GCompletion target items.
-	 * cmp:
-	 * the GCompletion.
-	 * prefix:
-	 * the prefix string, typically typed by the user, which is compared
+	 * Params:
+	 * prefix = the prefix string, typically typed by the user, which is compared
 	 * with each of the items.
-	 * new_prefix:
-	 * if non-NULL, returns the longest prefix which is common to all
+	 * newPrefix = if non-NULL, returns the longest prefix which is common to all
 	 * items that matched prefix, or NULL if no items matched prefix.
 	 * This string should be freed when no longer needed.
-	 * Returns:
-	 * the list of items whose strings begin with prefix. This should
-	 * not be changed.
+	 * Returns:the list of items whose strings begin with prefix. This shouldnot be changed.
 	 */
 	public ListG complete(char[] prefix, char** newPrefix)
 	{
@@ -221,19 +208,14 @@ public class StringCompletion
 	 * character.
 	 * You should use this function instead of g_completion_complete() if your
 	 * items are UTF-8 strings.
-	 * cmp:
-	 *  the GCompletion
-	 * prefix:
-	 *  the prefix string, typically used by the user, which is compared
+	 * Since 2.4
+	 * Params:
+	 * prefix =  the prefix string, typically used by the user, which is compared
 	 *  with each of the items
-	 * new_prefix:
-	 *  if non-NULL, returns the longest prefix which is common to all
+	 * newPrefix =  if non-NULL, returns the longest prefix which is common to all
 	 *  items that matched prefix, or NULL if no items matched prefix.
 	 *  This string should be freed when no longer needed.
-	 * Returns:
-	 *  the list of items whose strings begin with prefix. This should
-	 * not be changed.
-	 * Since 2.4
+	 * Returns: the list of items whose strings begin with prefix. This shouldnot be changed.
 	 */
 	public ListG completeUtf8(char[] prefix, char** newPrefix)
 	{
@@ -244,10 +226,9 @@ public class StringCompletion
 	/**
 	 * Sets the function to use for string comparisons. The default
 	 * string comparison function is strncmp().
-	 * cmp:
-	 * a GCompletion.
-	 * strncmp_func:
-	 * the string comparison function.
+	 * Params:
+	 * cmp = a GCompletion.
+	 * strncmpFunc = the string comparison function.
 	 */
 	public void setCompare(GCompletionStrncmpFunc strncmpFunc)
 	{
@@ -258,8 +239,6 @@ public class StringCompletion
 	
 	/**
 	 * Frees all memory used by the GCompletion.
-	 * cmp:
-	 * the GCompletion.
 	 */
 	public void free()
 	{

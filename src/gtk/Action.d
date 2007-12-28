@@ -79,6 +79,7 @@ private import gtk.AccelGroup;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -107,7 +108,6 @@ private import gtk.AccelGroup;
  * the action's state changes. When the proxy is activated, it should
  * activate its action.
  */
-private import gobject.ObjectG;
 public class Action : ObjectG
 {
 	
@@ -200,17 +200,13 @@ public class Action : ObjectG
 	 * call gtk_action_group_add_action_with_accel().
 	 * See the section called UI Definitions for information on allowed action
 	 * names.
-	 * name:
-	 *  A unique name for the action
-	 * label:
-	 *  the label displayed in menu items and on buttons
-	 * tooltip:
-	 *  a tooltip for the action
-	 * stock_id:
-	 *  the stock icon to display in widgets representing the action
-	 * Returns:
-	 *  a new GtkAction
 	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  the label displayed in menu items and on buttons, or NULL
+	 * tooltip =  a tooltip for the action, or NULL
+	 * stockId =  the stock icon to display in widgets representing the
+	 *  action, or NULL
 	 */
 	public this (char[] name, char[] label, char[] tooltip, char[] stockId)
 	{
@@ -220,12 +216,8 @@ public class Action : ObjectG
 	
 	/**
 	 * Returns the name of the action.
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  the name of the action. The string belongs to GTK+ and should not
-	 *  be freed.
 	 * Since 2.4
+	 * Returns: the name of the action. The string belongs to GTK+ and should not be freed.
 	 */
 	public char[] getName()
 	{
@@ -235,12 +227,8 @@ public class Action : ObjectG
 	
 	/**
 	 * Returns whether the action is effectively sensitive.
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  TRUE if the action and its associated action group
-	 * are both sensitive.
 	 * Since 2.4
+	 * Returns: TRUE if the action and its associated action group are both sensitive.
 	 */
 	public int isSensitive()
 	{
@@ -252,11 +240,8 @@ public class Action : ObjectG
 	 * Returns whether the action itself is sensitive. Note that this doesn't
 	 * necessarily mean effective sensitivity. See gtk_action_is_sensitive()
 	 * for that.
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  TRUE if the action itself is sensitive.
 	 * Since 2.4
+	 * Returns: TRUE if the action itself is sensitive.
 	 */
 	public int getSensitive()
 	{
@@ -269,11 +254,9 @@ public class Action : ObjectG
 	 * this doesn't necessarily mean effective sensitivity. See
 	 * gtk_action_is_sensitive()
 	 * for that.
-	 * action:
-	 *  the action object
-	 * sensitive:
-	 *  TRUE to make the action sensitive
 	 * Since 2.6
+	 * Params:
+	 * sensitive =  TRUE to make the action sensitive
 	 */
 	public void setSensitive(int sensitive)
 	{
@@ -283,12 +266,8 @@ public class Action : ObjectG
 	
 	/**
 	 * Returns whether the action is effectively visible.
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  TRUE if the action and its associated action group
-	 * are both visible.
 	 * Since 2.4
+	 * Returns: TRUE if the action and its associated action group are both visible.
 	 */
 	public int isVisible()
 	{
@@ -300,11 +279,8 @@ public class Action : ObjectG
 	 * Returns whether the action itself is visible. Note that this doesn't
 	 * necessarily mean effective visibility. See gtk_action_is_sensitive()
 	 * for that.
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  TRUE if the action itself is visible.
 	 * Since 2.4
+	 * Returns: TRUE if the action itself is visible.
 	 */
 	public int getVisible()
 	{
@@ -317,11 +293,9 @@ public class Action : ObjectG
 	 * this doesn't necessarily mean effective visibility. See
 	 * gtk_action_is_visible()
 	 * for that.
-	 * action:
-	 *  the action object
-	 * visible:
-	 *  TRUE to make the action visible
 	 * Since 2.6
+	 * Params:
+	 * visible =  TRUE to make the action visible
 	 */
 	public void setVisible(int visible)
 	{
@@ -334,8 +308,6 @@ public class Action : ObjectG
 	 * insensitive. This gets called by the proxy widgets when they get
 	 * activated.
 	 * It can also be used to manually activate an action.
-	 * action:
-	 *  the action object
 	 * Since 2.4
 	 */
 	public void activate()
@@ -347,13 +319,10 @@ public class Action : ObjectG
 	/**
 	 * This function is intended for use by action implementations to
 	 * create icons displayed in the proxy widgets.
-	 * action:
-	 *  the action object
-	 * icon_size:
-	 *  the size of the icon that should be created.
-	 * Returns:
-	 *  a widget that displays the icon for this action.
 	 * Since 2.4
+	 * Params:
+	 * iconSize =  the size of the icon that should be created.
+	 * Returns: a widget that displays the icon for this action.
 	 */
 	public Widget createIcon(GtkIconSize iconSize)
 	{
@@ -363,11 +332,8 @@ public class Action : ObjectG
 	
 	/**
 	 * Creates a menu item widget that proxies for the given action.
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  a menu item connected to the action.
 	 * Since 2.4
+	 * Returns: a menu item connected to the action.
 	 */
 	public Widget createMenuItem()
 	{
@@ -377,16 +343,26 @@ public class Action : ObjectG
 	
 	/**
 	 * Creates a toolbar item widget that proxies for the given action.
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  a toolbar item connected to the action.
 	 * Since 2.4
+	 * Returns: a toolbar item connected to the action.
 	 */
 	public Widget createToolItem()
 	{
 		// GtkWidget* gtk_action_create_tool_item (GtkAction *action);
 		return new Widget( gtk_action_create_tool_item(gtkAction) );
+	}
+	
+	/**
+	 * If action provides a GtkMenu widget as a submenu for the menu
+	 * item or the toolbar item it creates, this function returns an
+	 * instance of that menu.
+	 * Since 2.12
+	 * Returns: the menu item provided by the action, or NULL.
+	 */
+	public Widget createMenu()
+	{
+		// GtkWidget* gtk_action_create_menu (GtkAction *action);
+		return new Widget( gtk_action_create_menu(gtkAction) );
 	}
 	
 	/**
@@ -396,11 +372,9 @@ public class Action : ObjectG
 	 * action gets activated when the proxy widget does.
 	 * If the widget is already connected to an action, it is disconnected
 	 * first.
-	 * action:
-	 *  the action object
-	 * proxy:
-	 *  the proxy widget
 	 * Since 2.4
+	 * Params:
+	 * proxy =  the proxy widget
 	 */
 	public void connectProxy(Widget proxy)
 	{
@@ -411,11 +385,9 @@ public class Action : ObjectG
 	/**
 	 * Disconnects a proxy widget from an action.
 	 * Does not destroy the widget, however.
-	 * action:
-	 *  the action object
-	 * proxy:
-	 *  the proxy widget
 	 * Since 2.4
+	 * Params:
+	 * proxy =  the proxy widget
 	 */
 	public void disconnectProxy(Widget proxy)
 	{
@@ -426,12 +398,8 @@ public class Action : ObjectG
 	/**
 	 * Returns the proxy widgets for an action.
 	 * See also gtk_widget_get_action().
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  a GSList of proxy widgets. The list is owned by GTK+
-	 * and must not be modified.
 	 * Since 2.4
+	 * Returns: a GSList of proxy widgets. The list is owned by GTK+and must not be modified.
 	 */
 	public ListSG getProxies()
 	{
@@ -447,8 +415,6 @@ public class Action : ObjectG
 	 * of the accelerator, the action counts the number of times this
 	 * function has been called and doesn't remove the accelerator until
 	 * gtk_action_disconnect_accelerator() has been called as many times.
-	 * action:
-	 *  a GtkAction
 	 * Since 2.4
 	 */
 	public void connectAccelerator()
@@ -459,8 +425,6 @@ public class Action : ObjectG
 	
 	/**
 	 * Undoes the effect of one call to gtk_action_connect_accelerator().
-	 * action:
-	 *  a GtkAction
 	 * Since 2.4
 	 */
 	public void disconnectAccelerator()
@@ -474,11 +438,9 @@ public class Action : ObjectG
 	 * function by signals on the given proxy widget. This is used to
 	 * break notification loops for things like check or radio actions.
 	 * This function is intended for use by action implementations.
-	 * action:
-	 *  the action object
-	 * proxy:
-	 *  a proxy widget
 	 * Since 2.4
+	 * Params:
+	 * proxy =  a proxy widget
 	 */
 	public void blockActivateFrom(Widget proxy)
 	{
@@ -491,11 +453,9 @@ public class Action : ObjectG
 	 * function by signals on the given proxy widget. This undoes the
 	 * blocking done by gtk_action_block_activate_from().
 	 * This function is intended for use by action implementations.
-	 * action:
-	 *  the action object
-	 * proxy:
-	 *  a proxy widget
 	 * Since 2.4
+	 * Params:
+	 * proxy =  a proxy widget
 	 */
 	public void unblockActivateFrom(Widget proxy)
 	{
@@ -505,13 +465,8 @@ public class Action : ObjectG
 	
 	/**
 	 * Returns the accel path for this action.
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  the accel path for this action, or NULL
-	 *  if none is set. The returned string is owned by GTK+
-	 *  and must not be freed or modified.
 	 * Since 2.6
+	 * Returns: the accel path for this action, or NULL if none is set. The returned string is owned by GTK+  and must not be freed or modified.
 	 */
 	public char[] getAccelPath()
 	{
@@ -523,11 +478,9 @@ public class Action : ObjectG
 	 * Sets the accel path for this action. All proxy widgets associated
 	 * with the action will have this accel path, so that their
 	 * accelerators are consistent.
-	 * action:
-	 *  the action object
-	 * accel_path:
-	 *  the accelerator path
 	 * Since 2.4
+	 * Params:
+	 * accelPath =  the accelerator path
 	 */
 	public void setAccelPath(char[] accelPath)
 	{
@@ -537,12 +490,8 @@ public class Action : ObjectG
 	
 	/**
 	 * Returns the accel closure for this action.
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  the accel closure for this action. The returned closure is
-	 *  owned by GTK+ and must not be unreffed or modified.
 	 * Since 2.8
+	 * Returns: the accel closure for this action. The returned closure is owned by GTK+ and must not be unreffed or modified.
 	 */
 	public Closure getAccelClosure()
 	{
@@ -553,15 +502,9 @@ public class Action : ObjectG
 	/**
 	 * Sets the GtkAccelGroup in which the accelerator for this action
 	 * will be installed.
-	 * action:
-	 *  the action object
-	 * accel_group:
-	 *  a GtkAccelGroup or NULL
 	 * Since 2.4
-	 * Property Details
-	 * The "action-group" property
-	 *  "action-group" GtkActionGroup : Read / Write
-	 * The GtkActionGroup this GtkAction is associated with, or NULL (for internal use).
+	 * Params:
+	 * accelGroup =  a GtkAccelGroup or NULL
 	 */
 	public void setAccelGroup(AccelGroup accelGroup)
 	{

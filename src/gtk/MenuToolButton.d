@@ -81,6 +81,7 @@ private import gtk.Menu;
 
 
 
+private import gtk.ToolButton;
 
 /**
  * Description
@@ -91,7 +92,6 @@ private import gtk.Menu;
  *  GtkMenuToolButton. Use gtk_menu_tool_button_new_from_stock() to
  *  create a new GtkMenuToolButton containing a stock item.
  */
-private import gtk.ToolButton;
 public class MenuToolButton : ToolButton
 {
 	
@@ -143,13 +143,10 @@ public class MenuToolButton : ToolButton
 	/**
 	 * Creates a new GtkMenuToolButton using icon_widget as icon and
 	 * label as label.
-	 * icon_widget:
-	 *  a widget that will be used as icon widget, or NULL
-	 * label:
-	 *  a string that will be used as label, or NULL
-	 * Returns:
-	 *  the new GtkMenuToolButton
 	 * Since 2.6
+	 * Params:
+	 *  iconWidget = a widget that will be used as icon widget, or NULL
+	 *  label = a string that will be used as label, or NULL
 	 */
 	public this(Widget iconWidget, char[] label)
 	{
@@ -163,12 +160,10 @@ public class MenuToolButton : ToolButton
 	/**
 	 * Creates a new GtkMenuToolButton.
 	 * The new GtkMenuToolButton will contain an icon and label from
-	 * the stock item indicated by stock_id.
-	 * stock_id:
-	 *  the name of a stock item
-	 * Returns:
-	 *  the new GtkMenuToolButton
+	 * the stock item indicated by stockID.
 	 * Since 2.6
+	 * Params:
+	 * stockID = the name of a stock item
 	 */
 	public this(StockID stockId)
 	{
@@ -181,11 +176,11 @@ public class MenuToolButton : ToolButton
 	
 	/**
 	 * Gets the GtkMenu associated with GtkMenuToolButton.
-	 * button:
-	 *  a GtkMenuToolButton
+	 * Since 2.6
+	 * Params:
+	 *  button = a GtkMenuToolButton
 	 * Returns:
 	 *  the GtkMenu associated with GtkMenuToolButton
-	 * Since 2.6
 	 */
 	public Menu getMenu()
 	{
@@ -253,11 +248,9 @@ public class MenuToolButton : ToolButton
 	/**
 	 * Sets the GtkMenu that is popped up when the user clicks on the arrow.
 	 * If menu is NULL, the arrow button becomes insensitive.
-	 * button:
-	 *  a GtkMenuToolButton
-	 * menu:
-	 *  the GtkMenu associated with GtkMenuToolButton
 	 * Since 2.6
+	 * Params:
+	 * menu =  the GtkMenu associated with GtkMenuToolButton
 	 */
 	public void setMenu(Widget menu)
 	{
@@ -267,41 +260,49 @@ public class MenuToolButton : ToolButton
 	
 	
 	/**
+	 * Warning
+	 * gtk_menu_tool_button_set_arrow_tooltip has been deprecated since version 2.12 and should not be used in newly-written code. Use gtk_menu_tool_button_set_arrow_tooltip_text()
+	 * instead.
 	 * Sets the GtkTooltips object to be used for arrow button which
 	 * pops up the menu. See gtk_tool_item_set_tooltip() for setting
 	 * a tooltip on the whole GtkMenuToolButton.
-	 * button:
-	 *  a GtkMenuToolButton
-	 * tooltips:
-	 *  the GtkTooltips object to be used
-	 * tip_text:
-	 *  text to be used as tooltip text for tool_item
-	 * tip_private:
-	 *  text to be used as private tooltip text
 	 * Since 2.6
-	 * Property Details
-	 * The "menu" property
-	 *  "menu" GtkMenu : Read / Write
-	 * The dropdown menu.
-	 * Signal Details
-	 * The "show-menu" signal
-	 * void user_function (GtkMenuToolButton *menutoolbutton,
-	 *  gpointer user_data) : Run First
-	 * menutoolbutton:
-	 * the object which received the signal.
-	 * user_data:
-	 * user data set when the signal handler was connected.
-	 * See Also
-	 * GtkToolbar, GtkToolButton
-	 * The toolbar widget
-	 * 	The parent class of GtkMenuToolButton. The properties
-	 * 	"label_widget", "label", "icon_widget", and "stock_id" on
-	 * 	GtkToolButton determine the label and icon used on
-	 * 	GtkMenuToolButtons.
+	 * Params:
+	 * tooltips =  the GtkTooltips object to be used
+	 * tipText =  text to be used as tooltip text for tool_item
+	 * tipPrivate =  text to be used as private tooltip text
 	 */
 	public void setArrowTooltip(Tooltips tooltips, char[] tipText, char[] tipPrivate)
 	{
 		// void gtk_menu_tool_button_set_arrow_tooltip  (GtkMenuToolButton *button,  GtkTooltips *tooltips,  const gchar *tip_text,  const gchar *tip_private);
 		gtk_menu_tool_button_set_arrow_tooltip(gtkMenuToolButton, (tooltips is null) ? null : tooltips.getTooltipsStruct(), Str.toStringz(tipText), Str.toStringz(tipPrivate));
+	}
+	
+	/**
+	 * Sets the tooltip text to be used as tooltip for the arrow button which
+	 * pops up the menu. See gtk_tool_item_set_tooltip() for setting a tooltip
+	 * on the whole GtkMenuToolButton.
+	 * Since 2.12
+	 * Params:
+	 * text =  text to be used as tooltip text for button's arrow button
+	 */
+	public void setArrowTooltipText(char[] text)
+	{
+		// void gtk_menu_tool_button_set_arrow_tooltip_text  (GtkMenuToolButton *button,  const gchar *text);
+		gtk_menu_tool_button_set_arrow_tooltip_text(gtkMenuToolButton, Str.toStringz(text));
+	}
+	
+	/**
+	 * Sets the tooltip markup text to be used as tooltip for the arrow button
+	 * which pops up the menu. See gtk_tool_item_set_tooltip() for setting a
+	 * tooltip on the whole GtkMenuToolButton.
+	 * Since 2.12
+	 * Params:
+	 * markup =  markup text to be used as tooltip text for button's arrow button
+	 */
+	public void setArrowTooltipMarkup(char[] markup)
+	{
+		// void gtk_menu_tool_button_set_arrow_tooltip_markup  (GtkMenuToolButton *button,  const gchar *markup);
+		gtk_menu_tool_button_set_arrow_tooltip_markup(gtkMenuToolButton, Str.toStringz(markup));
 	}
 }

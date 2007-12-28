@@ -117,6 +117,8 @@ extern(C)
 	void function(GStaticMutex* mutex)g_static_mutex_unlock;
 	GMutex* function(GStaticMutex* mutex)g_static_mutex_get_mutex;
 	void function(GStaticMutex* mutex)g_static_mutex_free;
+	gboolean function(gsize* valueLocation)g_once_init_enter;
+	void function(gsize* valueLocation, gsize initializationValue)g_once_init_leave;
 
 
 }
@@ -173,5 +175,7 @@ Symbol[] gthreadLinks =
 	{ "g_static_mutex_unlock",  cast(void**)& g_static_mutex_unlock},
 	{ "g_static_mutex_get_mutex",  cast(void**)& g_static_mutex_get_mutex},
 	{ "g_static_mutex_free",  cast(void**)& g_static_mutex_free},
+	{ "g_once_init_enter",  cast(void**)& g_once_init_enter},
+	{ "g_once_init_leave",  cast(void**)& g_once_init_leave},
 
 ];

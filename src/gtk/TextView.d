@@ -98,6 +98,7 @@ private import glib.ListG;
 
 
 
+private import gtk.Container;
 
 /**
  * Description
@@ -105,7 +106,6 @@ private import glib.ListG;
  * conceptual overview which gives an overview of all the objects and data
  * types related to the text widget and how they work together.
  */
-private import gtk.Container;
 public class TextView : Container
 {
 	
@@ -175,7 +175,8 @@ public class TextView : Container
 	
 	/**
 	 * Simply appends some on the cursor position
-	 * @param text the text to append
+	 * Params:
+	 *  text = the text to append
 	 */
 	void insertText(char[] text)
 	{
@@ -185,7 +186,8 @@ public class TextView : Container
 	
 	/**
 	 * Simply appends some text to this view
-	 * @param text the text to append
+	 * Params:
+	 *  text = the text to append
 	 */
 	void appendText(char[] text, bool ensureVisible=true)
 	body
@@ -229,7 +231,7 @@ public class TextView : Container
 		}
 		onBackspaceListeners ~= dlg;
 	}
-	extern(C) static void callBackBackspace(GtkTextView* textviewStruct, TextView textView)
+	extern(C) static void callBackBackspace(GtkTextView* textViewStruct, TextView textView)
 	{
 		bool consumed = false;
 		
@@ -257,7 +259,7 @@ public class TextView : Container
 		}
 		onCopyClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCopyClipboard(GtkTextView* textviewStruct, TextView textView)
+	extern(C) static void callBackCopyClipboard(GtkTextView* textViewStruct, TextView textView)
 	{
 		bool consumed = false;
 		
@@ -285,7 +287,7 @@ public class TextView : Container
 		}
 		onCutClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCutClipboard(GtkTextView* textviewStruct, TextView textView)
+	extern(C) static void callBackCutClipboard(GtkTextView* textViewStruct, TextView textView)
 	{
 		bool consumed = false;
 		
@@ -313,13 +315,13 @@ public class TextView : Container
 		}
 		onDeleteFromCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackDeleteFromCursor(GtkTextView* textviewStruct, GtkDeleteType arg1, gint arg2, TextView textView)
+	extern(C) static void callBackDeleteFromCursor(GtkTextView* textViewStruct, GtkDeleteType type, gint count, TextView textView)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(GtkDeleteType, gint, TextView) dlg ; textView.onDeleteFromCursorListeners )
 		{
-			dlg(arg1, arg2, textView);
+			dlg(type, count, textView);
 		}
 		
 		return consumed;
@@ -369,41 +371,13 @@ public class TextView : Container
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkTextView* widgetStruct, GtkMovementStep step, gint count, gboolean extendSelection, TextView textView)
+	extern(C) static void callBackMoveCursor(GtkTextView* textViewStruct, GtkMovementStep step, gint count, gboolean extendSelection, TextView textView)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(GtkMovementStep, gint, gboolean, TextView) dlg ; textView.onMoveCursorListeners )
 		{
 			dlg(step, count, extendSelection, textView);
-		}
-		
-		return consumed;
-	}
-	
-	void delegate(GtkDirectionType, TextView)[] onMoveFocusListeners;
-	void addOnMoveFocus(void delegate(GtkDirectionType, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("move-focus" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"move-focus",
-			cast(GCallback)&callBackMoveFocus,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["move-focus"] = 1;
-		}
-		onMoveFocusListeners ~= dlg;
-	}
-	extern(C) static void callBackMoveFocus(GtkTextView* textviewStruct, GtkDirectionType arg1, TextView textView)
-	{
-		bool consumed = false;
-		
-		foreach ( void delegate(GtkDirectionType, TextView) dlg ; textView.onMoveFocusListeners )
-		{
-			dlg(arg1, textView);
 		}
 		
 		return consumed;
@@ -425,13 +399,13 @@ public class TextView : Container
 		}
 		onMoveViewportListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveViewport(GtkTextView* textviewStruct, GtkScrollStep arg1, gint arg2, TextView textView)
+	extern(C) static void callBackMoveViewport(GtkTextView* textViewStruct, GtkScrollStep step, gint count, TextView textView)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(GtkScrollStep, gint, TextView) dlg ; textView.onMoveViewportListeners )
 		{
-			dlg(arg1, arg2, textView);
+			dlg(step, count, textView);
 		}
 		
 		return consumed;
@@ -453,13 +427,13 @@ public class TextView : Container
 		}
 		onPageHorizontallyListeners ~= dlg;
 	}
-	extern(C) static void callBackPageHorizontally(GtkTextView* textviewStruct, gint arg1, gboolean arg2, TextView textView)
+	extern(C) static void callBackPageHorizontally(GtkTextView* textViewStruct, gint count, gboolean extendSelection, TextView textView)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(gint, gboolean, TextView) dlg ; textView.onPageHorizontallyListeners )
 		{
-			dlg(arg1, arg2, textView);
+			dlg(count, extendSelection, textView);
 		}
 		
 		return consumed;
@@ -481,7 +455,7 @@ public class TextView : Container
 		}
 		onPasteClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackPasteClipboard(GtkTextView* textviewStruct, TextView textView)
+	extern(C) static void callBackPasteClipboard(GtkTextView* textViewStruct, TextView textView)
 	{
 		bool consumed = false;
 		
@@ -537,13 +511,13 @@ public class TextView : Container
 		}
 		onSelectAllListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectAll(GtkTextView* textviewStruct, gboolean arg1, TextView textView)
+	extern(C) static void callBackSelectAll(GtkTextView* textViewStruct, gboolean select, TextView textView)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(gboolean, TextView) dlg ; textView.onSelectAllListeners )
 		{
-			dlg(arg1, textView);
+			dlg(select, textView);
 		}
 		
 		return consumed;
@@ -605,6 +579,34 @@ public class TextView : Container
 		return consumed;
 	}
 	
+	void delegate(TextView)[] onToggleCursorVisibleListeners;
+	void addOnToggleCursorVisible(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("toggle-cursor-visible" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"toggle-cursor-visible",
+			cast(GCallback)&callBackToggleCursorVisible,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["toggle-cursor-visible"] = 1;
+		}
+		onToggleCursorVisibleListeners ~= dlg;
+	}
+	extern(C) static void callBackToggleCursorVisible(GtkTextView* textViewStruct, TextView textView)
+	{
+		bool consumed = false;
+		
+		foreach ( void delegate(TextView) dlg ; textView.onToggleCursorVisibleListeners )
+		{
+			dlg(textView);
+		}
+		
+		return consumed;
+	}
+	
 	void delegate(TextView)[] onToggleOverwriteListeners;
 	void addOnToggleOverwrite(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -621,7 +623,7 @@ public class TextView : Container
 		}
 		onToggleOverwriteListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleOverwrite(GtkTextView* textviewStruct, TextView textView)
+	extern(C) static void callBackToggleOverwrite(GtkTextView* textViewStruct, TextView textView)
 	{
 		bool consumed = false;
 		
@@ -641,8 +643,6 @@ public class TextView : Container
 	 * before using the text view, an empty default buffer will be created
 	 * for you. Get the buffer with gtk_text_view_get_buffer(). If you want
 	 * to specify your own buffer, consider gtk_text_view_new_with_buffer().
-	 * Returns:
-	 *  a new GtkTextView
 	 */
 	public this ()
 	{
@@ -657,10 +657,8 @@ public class TextView : Container
 	 * this function is equivalent to gtk_text_view_new(). The
 	 * text view adds its own reference count to the buffer; it does not
 	 * take over an existing reference.
-	 * buffer:
-	 *  a GtkTextBuffer
-	 * Returns:
-	 *  a new GtkTextView.
+	 * Params:
+	 * buffer =  a GtkTextBuffer
 	 */
 	public this (TextBuffer buffer)
 	{
@@ -674,10 +672,8 @@ public class TextView : Container
 	 * added to buffer. If you owned a reference to buffer before passing it
 	 * to this function, you must remove that reference yourself; GtkTextView
 	 * will not "adopt" it.
-	 * text_view:
-	 *  a GtkTextView
-	 * buffer:
-	 *  a GtkTextBuffer
+	 * Params:
+	 * buffer =  a GtkTextBuffer
 	 */
 	public void setBuffer(TextBuffer buffer)
 	{
@@ -689,10 +685,7 @@ public class TextView : Container
 	 * Returns the GtkTextBuffer being displayed by this text view.
 	 * The reference count on the buffer is not incremented; the caller
 	 * of this function won't own a new reference.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  a GtkTextBuffer
+	 * Returns: a GtkTextBuffer
 	 */
 	public TextBuffer getBuffer()
 	{
@@ -703,22 +696,18 @@ public class TextView : Container
 	/**
 	 * Scrolls text_view so that mark is on the screen in the position
 	 * indicated by xalign and yalign. An alignment of 0.0 indicates
-	 * left or top, 1.0 indicates right or bottom, 0.5 means center. If use_align
-	 * is FALSE, the text scrolls the minimal distance to get the mark onscreen,
-	 * possibly not scrolling at all. The effective screen for purposes
-	 * of this function is reduced by a margin of size within_margin.
-	 * text_view:
-	 *  a GtkTextView
-	 * mark:
-	 *  a GtkTextMark
-	 * within_margin:
-	 *  margin as a [0.0,0.5) fraction of screen size
-	 * use_align:
-	 *  whether to use alignment arguments (if FALSE, just get the mark onscreen)
-	 * xalign:
-	 *  horizontal alignment of mark within visible area.
-	 * yalign:
-	 *  vertical alignment of mark within visible area
+	 * left or top, 1.0 indicates right or bottom, 0.5 means center.
+	 * If use_align is FALSE, the text scrolls the minimal distance to
+	 * get the mark onscreen, possibly not scrolling at all. The effective
+	 * screen for purposes of this function is reduced by a margin of size
+	 * within_margin.
+	 * Params:
+	 * mark =  a GtkTextMark
+	 * withinMargin =  margin as a [0.0,0.5) fraction of screen size
+	 * useAlign =  whether to use alignment arguments (if FALSE, just
+	 *  get the mark onscreen)
+	 * xalign =  horizontal alignment of mark within visible area
+	 * yalign =  vertical alignment of mark within visible area
 	 */
 	public void scrollToMark(TextMark mark, double withinMargin, int useAlign, double xalign, double yalign)
 	{
@@ -729,30 +718,25 @@ public class TextView : Container
 	/**
 	 * Scrolls text_view so that iter is on the screen in the position
 	 * indicated by xalign and yalign. An alignment of 0.0 indicates
-	 * left or top, 1.0 indicates right or bottom, 0.5 means center. If use_align
-	 * is FALSE, the text scrolls the minimal distance to get the mark onscreen,
-	 * possibly not scrolling at all. The effective screen for purposes
-	 * of this function is reduced by a margin of size within_margin.
-	 * NOTE: This function uses the currently-computed height of the
-	 * lines in the text buffer. Note that line heights are computed
-	 * in an idle handler; so this function may not have the desired effect
-	 * if it's called before the height computations. To avoid oddness,
-	 * consider using gtk_text_view_scroll_to_mark() which saves a point
-	 * to be scrolled to after line validation.
-	 * text_view:
-	 *  a GtkTextView
-	 * iter:
-	 *  a GtkTextIter
-	 * within_margin:
-	 *  margin as a [0.0,0.5) fraction of screen size
-	 * use_align:
-	 *  whether to use alignment arguments (if FALSE, just get the mark onscreen)
-	 * xalign:
-	 *  horizontal alignment of mark within visible area.
-	 * yalign:
-	 *  vertical alignment of mark within visible area
-	 * Returns:
-	 *  TRUE if scrolling occurred
+	 * left or top, 1.0 indicates right or bottom, 0.5 means center.
+	 * If use_align is FALSE, the text scrolls the minimal distance to
+	 * get the mark onscreen, possibly not scrolling at all. The effective
+	 * screen for purposes of this function is reduced by a margin of size
+	 * within_margin.
+	 * Note that this function uses the currently-computed height of the
+	 * lines in the text buffer. Line heights are computed in an idle
+	 * handler; so this function may not have the desired effect if it's
+	 * called before the height computations. To avoid oddness, consider
+	 * using gtk_text_view_scroll_to_mark() which saves a point to be
+	 * scrolled to after line validation.
+	 * Params:
+	 * iter =  a GtkTextIter
+	 * withinMargin =  margin as a [0.0,0.5) fraction of screen size
+	 * useAlign =  whether to use alignment arguments (if FALSE,
+	 *  just get the mark onscreen)
+	 * xalign =  horizontal alignment of mark within visible area
+	 * yalign =  vertical alignment of mark within visible area
+	 * Returns: TRUE if scrolling occurred
 	 */
 	public int scrollToIter(TextIter iter, double withinMargin, int useAlign, double xalign, double yalign)
 	{
@@ -763,10 +747,8 @@ public class TextView : Container
 	/**
 	 * Scrolls text_view the minimum distance such that mark is contained
 	 * within the visible area of the widget.
-	 * text_view:
-	 *  a GtkTextView
-	 * mark:
-	 *  a mark in the buffer for text_view
+	 * Params:
+	 * mark =  a mark in the buffer for text_view
 	 */
 	public void scrollMarkOnscreen(TextMark mark)
 	{
@@ -777,12 +759,9 @@ public class TextView : Container
 	/**
 	 * Moves a mark within the buffer so that it's
 	 * located within the currently-visible text area.
-	 * text_view:
-	 *  a GtkTextView
-	 * mark:
-	 *  a GtkTextMark
-	 * Returns:
-	 *  TRUE if the mark moved (wasn't already onscreen)
+	 * Params:
+	 * mark =  a GtkTextMark
+	 * Returns: TRUE if the mark moved (wasn't already onscreen)
 	 */
 	public int moveMarkOnscreen(TextMark mark)
 	{
@@ -793,10 +772,7 @@ public class TextView : Container
 	/**
 	 * Moves the cursor to the currently visible region of the
 	 * buffer, it it isn't there already.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  TRUE if the cursor had to be moved.
+	 * Returns: TRUE if the cursor had to be moved.
 	 */
 	public int placeCursorOnscreen()
 	{
@@ -808,10 +784,8 @@ public class TextView : Container
 	 * Fills visible_rect with the currently-visible
 	 * region of the buffer, in buffer coordinates. Convert to window coordinates
 	 * with gtk_text_view_buffer_to_window_coords().
-	 * text_view:
-	 *  a GtkTextView
-	 * visible_rect:
-	 *  rectangle to fill
+	 * Params:
+	 * visibleRect =  rectangle to fill
 	 */
 	public void getVisibleRect(Rectangle visibleRect)
 	{
@@ -824,12 +798,9 @@ public class TextView : Container
 	 * The rectangle position is in buffer coordinates; use
 	 * gtk_text_view_buffer_to_window_coords() to convert these
 	 * coordinates to coordinates for one of the windows in the text view.
-	 * text_view:
-	 *  a GtkTextView
-	 * iter:
-	 *  a GtkTextIter
-	 * location:
-	 *  bounds of the character at iter
+	 * Params:
+	 * iter =  a GtkTextIter
+	 * location =  bounds of the character at iter
 	 */
 	public void getIterLocation(TextIter iter, Rectangle location)
 	{
@@ -843,14 +814,10 @@ public class TextView : Container
 	 * window coordinates with gtk_text_view_window_to_buffer_coords().
 	 * If non-NULL, line_top will be filled with the coordinate of the top
 	 * edge of the line.
-	 * text_view:
-	 *  a GtkTextView
-	 * target_iter:
-	 *  a GtkTextIter
-	 * y:
-	 *  a y coordinate
-	 * line_top:
-	 *  return location for top coordinate of the line
+	 * Params:
+	 * targetIter =  a GtkTextIter
+	 * y =  a y coordinate
+	 * lineTop =  return location for top coordinate of the line
 	 */
 	public void getLineAtY(TextIter targetIter, int y, int* lineTop)
 	{
@@ -862,14 +829,10 @@ public class TextView : Container
 	 * Gets the y coordinate of the top of the line containing iter,
 	 * and the height of the line. The coordinate is a buffer coordinate;
 	 * convert to window coordinates with gtk_text_view_buffer_to_window_coords().
-	 * text_view:
-	 *  a GtkTextView
-	 * iter:
-	 *  a GtkTextIter
-	 * y:
-	 *  return location for a y coordinate
-	 * height:
-	 *  return location for a height
+	 * Params:
+	 * iter =  a GtkTextIter
+	 * y =  return location for a y coordinate
+	 * height =  return location for a height
 	 */
 	public void getLineYrange(TextIter iter, int* y, int* height)
 	{
@@ -883,14 +846,10 @@ public class TextView : Container
 	 * currently-displayed portion. If you have coordinates from an
 	 * event, you have to convert those to buffer coordinates with
 	 * gtk_text_view_window_to_buffer_coords().
-	 * text_view:
-	 *  a GtkTextView
-	 * iter:
-	 *  a GtkTextIter
-	 * x:
-	 *  x position, in buffer coordinates
-	 * y:
-	 *  y position, in buffer coordinates
+	 * Params:
+	 * iter =  a GtkTextIter
+	 * x =  x position, in buffer coordinates
+	 * y =  y position, in buffer coordinates
 	 */
 	public void getIterAtLocation(TextIter iter, int x, int y)
 	{
@@ -908,20 +867,15 @@ public class TextView : Container
 	 * Note that this is different from gtk_text_view_get_iter_at_location(),
 	 * which returns cursor locations, i.e. positions between
 	 * characters.
-	 * text_view:
-	 *  a GtkTextView
-	 * iter:
-	 *  a GtkTextIter
-	 * trailing:
-	 *  location to store an integer indicating where
+	 * Since 2.6
+	 * Params:
+	 * iter =  a GtkTextIter
+	 * trailing =  location to store an integer indicating where
 	 *  in the grapheme the user clicked. It will either be
 	 *  zero, or the number of characters in the grapheme.
 	 *  0 represents the trailing edge of the grapheme.
-	 * x:
-	 *  x position, in buffer coordinates
-	 * y:
-	 *  y position, in buffer coordinates
-	 * Since 2.6
+	 * x =  x position, in buffer coordinates
+	 * y =  y position, in buffer coordinates
 	 */
 	public void getIterAtPosition(TextIter iter, int* trailing, int x, int y)
 	{
@@ -934,18 +888,12 @@ public class TextView : Container
 	 * win, and stores the result in (window_x, window_y).
 	 * Note that you can't convert coordinates for a nonexisting window (see
 	 * gtk_text_view_set_border_window_size()).
-	 * text_view:
-	 *  a GtkTextView
-	 * win:
-	 *  a GtkTextWindowType except GTK_TEXT_WINDOW_PRIVATE
-	 * buffer_x:
-	 *  buffer x coordinate
-	 * buffer_y:
-	 *  buffer y coordinate
-	 * window_x:
-	 *  window x coordinate return location
-	 * window_y:
-	 *  window y coordinate return location
+	 * Params:
+	 * win =  a GtkTextWindowType except GTK_TEXT_WINDOW_PRIVATE
+	 * bufferX =  buffer x coordinate
+	 * bufferY =  buffer y coordinate
+	 * windowX =  window x coordinate return location
+	 * windowY =  window y coordinate return location
 	 */
 	public void bufferToWindowCoords(GtkTextWindowType win, int bufferX, int bufferY, int* windowX, int* windowY)
 	{
@@ -958,18 +906,12 @@ public class TextView : Container
 	 * coordinates, storing the result in (buffer_x,buffer_y).
 	 * Note that you can't convert coordinates for a nonexisting window (see
 	 * gtk_text_view_set_border_window_size()).
-	 * text_view:
-	 *  a GtkTextView
-	 * win:
-	 *  a GtkTextWindowType except GTK_TEXT_WINDOW_PRIVATE
-	 * window_x:
-	 *  window x coordinate
-	 * window_y:
-	 *  window y coordinate
-	 * buffer_x:
-	 *  buffer x coordinate return location
-	 * buffer_y:
-	 *  buffer y coordinate return location
+	 * Params:
+	 * win =  a GtkTextWindowType except GTK_TEXT_WINDOW_PRIVATE
+	 * windowX =  window x coordinate
+	 * windowY =  window y coordinate
+	 * bufferX =  buffer x coordinate return location
+	 * bufferY =  buffer y coordinate return location
 	 */
 	public void windowToBufferCoords(GtkTextWindowType win, int windowX, int windowY, int* bufferX, int* bufferY)
 	{
@@ -984,12 +926,9 @@ public class TextView : Container
 	 * text buffer. Windows are NULL and nonexistent if their width or
 	 * height is 0, and are nonexistent before the widget has been
 	 * realized.
-	 * text_view:
-	 *  a GtkTextView
-	 * win:
-	 *  window to get
-	 * Returns:
-	 *  a GdkWindow, or NULL
+	 * Params:
+	 * win =  window to get
+	 * Returns: a GdkWindow, or NULL
 	 */
 	public Window getWindow(GtkTextWindowType win)
 	{
@@ -1002,12 +941,9 @@ public class TextView : Container
 	 * If you connect to an event signal on text_view, this function
 	 * should be called on event->window to
 	 * see which window it was.
-	 * text_view:
-	 *  a GtkTextView
-	 * window:
-	 *  a window type
-	 * Returns:
-	 *  the window type.
+	 * Params:
+	 * window =  a window type
+	 * Returns: the window type.
 	 */
 	public GtkTextWindowType getWindowType(Window window)
 	{
@@ -1023,12 +959,9 @@ public class TextView : Container
 	 * function can only be used for the "border windows," it doesn't work
 	 * with GTK_TEXT_WINDOW_WIDGET, GTK_TEXT_WINDOW_TEXT, or
 	 * GTK_TEXT_WINDOW_PRIVATE.
-	 * text_view:
-	 *  a GtkTextView
-	 * type:
-	 *  window to affect
-	 * size:
-	 *  width or height of the window
+	 * Params:
+	 * type =  window to affect
+	 * size =  width or height of the window
 	 */
 	public void setBorderWindowSize(GtkTextWindowType type, int size)
 	{
@@ -1039,12 +972,9 @@ public class TextView : Container
 	/**
 	 * Gets the width of the specified border window. See
 	 * gtk_text_view_set_border_window_size().
-	 * text_view:
-	 *  a GtkTextView
-	 * type:
-	 *  window to return size from
-	 * Returns:
-	 *  width of window
+	 * Params:
+	 * type =  window to return size from
+	 * Returns: width of window
 	 */
 	public int getBorderWindowSize(GtkTextWindowType type)
 	{
@@ -1053,20 +983,17 @@ public class TextView : Container
 	}
 	
 	/**
-	 * Moves the given iter forward by one display (wrapped) line. A
-	 * display line is different from a paragraph. Paragraphs are
+	 * Moves the given iter forward by one display (wrapped) line.
+	 * A display line is different from a paragraph. Paragraphs are
 	 * separated by newlines or other paragraph separator characters.
 	 * Display lines are created by line-wrapping a paragraph. If
 	 * wrapping is turned off, display lines and paragraphs will be the
 	 * same. Display lines are divided differently for each view, since
 	 * they depend on the view's width; paragraphs are the same in all
 	 * views, since they depend on the contents of the GtkTextBuffer.
-	 * text_view:
-	 *  a GtkTextView
-	 * iter:
-	 *  a GtkTextIter
-	 * Returns:
-	 *  TRUE if iter was moved and is not on the end iterator
+	 * Params:
+	 * iter =  a GtkTextIter
+	 * Returns: TRUE if iter was moved and is not on the end iterator
 	 */
 	public int forwardDisplayLine(TextIter iter)
 	{
@@ -1075,20 +1002,17 @@ public class TextView : Container
 	}
 	
 	/**
-	 * Moves the given iter backward by one display (wrapped) line. A
-	 * display line is different from a paragraph. Paragraphs are
+	 * Moves the given iter backward by one display (wrapped) line.
+	 * A display line is different from a paragraph. Paragraphs are
 	 * separated by newlines or other paragraph separator characters.
 	 * Display lines are created by line-wrapping a paragraph. If
 	 * wrapping is turned off, display lines and paragraphs will be the
 	 * same. Display lines are divided differently for each view, since
 	 * they depend on the view's width; paragraphs are the same in all
 	 * views, since they depend on the contents of the GtkTextBuffer.
-	 * text_view:
-	 *  a GtkTextView
-	 * iter:
-	 *  a GtkTextIter
-	 * Returns:
-	 *  TRUE if iter was moved and is not on the end iterator
+	 * Params:
+	 * iter =  a GtkTextIter
+	 * Returns: TRUE if iter was moved and is not on the end iterator
 	 */
 	public int backwardDisplayLine(TextIter iter)
 	{
@@ -1097,20 +1021,17 @@ public class TextView : Container
 	}
 	
 	/**
-	 * Moves the given iter forward to the next display line end. A
-	 * display line is different from a paragraph. Paragraphs are
+	 * Moves the given iter forward to the next display line end.
+	 * A display line is different from a paragraph. Paragraphs are
 	 * separated by newlines or other paragraph separator characters.
 	 * Display lines are created by line-wrapping a paragraph. If
 	 * wrapping is turned off, display lines and paragraphs will be the
 	 * same. Display lines are divided differently for each view, since
 	 * they depend on the view's width; paragraphs are the same in all
 	 * views, since they depend on the contents of the GtkTextBuffer.
-	 * text_view:
-	 *  a GtkTextView
-	 * iter:
-	 *  a GtkTextIter
-	 * Returns:
-	 *  TRUE if iter was moved and is not on the end iterator
+	 * Params:
+	 * iter =  a GtkTextIter
+	 * Returns: TRUE if iter was moved and is not on the end iterator
 	 */
 	public int forwardDisplayLineEnd(TextIter iter)
 	{
@@ -1119,20 +1040,17 @@ public class TextView : Container
 	}
 	
 	/**
-	 * Moves the given iter backward to the next display line start. A
-	 * display line is different from a paragraph. Paragraphs are
+	 * Moves the given iter backward to the next display line start.
+	 * A display line is different from a paragraph. Paragraphs are
 	 * separated by newlines or other paragraph separator characters.
 	 * Display lines are created by line-wrapping a paragraph. If
 	 * wrapping is turned off, display lines and paragraphs will be the
 	 * same. Display lines are divided differently for each view, since
 	 * they depend on the view's width; paragraphs are the same in all
 	 * views, since they depend on the contents of the GtkTextBuffer.
-	 * text_view:
-	 *  a GtkTextView
-	 * iter:
-	 *  a GtkTextIter
-	 * Returns:
-	 *  TRUE if iter was moved and is not on the end iterator
+	 * Params:
+	 * iter =  a GtkTextIter
+	 * Returns: TRUE if iter was moved and is not on the end iterator
 	 */
 	public int backwardDisplayLineStart(TextIter iter)
 	{
@@ -1144,12 +1062,9 @@ public class TextView : Container
 	 * Determines whether iter is at the start of a display line.
 	 * See gtk_text_view_forward_display_line() for an explanation of
 	 * display lines vs. paragraphs.
-	 * text_view:
-	 *  a GtkTextView
-	 * iter:
-	 *  a GtkTextIter
-	 * Returns:
-	 *  TRUE if iter begins a wrapped line
+	 * Params:
+	 * iter =  a GtkTextIter
+	 * Returns: TRUE if iter begins a wrapped line
 	 */
 	public int startsDisplayLine(TextIter iter)
 	{
@@ -1164,18 +1079,15 @@ public class TextView : Container
 	 * the old cursor position. If count is negative then the new strong
 	 * cursor position will be count positions to the left of the old
 	 * cursor position.
-	 * In the presence of bidirection text, the correspondence
+	 * In the presence of bi-directional text, the correspondence
 	 * between logical and visual order will depend on the direction
 	 * of the current run, and there may be jumps when the cursor
 	 * is moved off of the end of a run.
-	 * text_view:
-	 *  a GtkTextView
-	 * iter:
-	 *  a GtkTextIter
-	 * count:
-	 *  number of characters to move (negative moves left, positive moves right)
-	 * Returns:
-	 *  TRUE if iter moved and is not on the end iterator
+	 * Params:
+	 * iter =  a GtkTextIter
+	 * count =  number of characters to move (negative moves left,
+	 *  positive moves right)
+	 * Returns: TRUE if iter moved and is not on the end iterator
 	 */
 	public int moveVisually(TextIter iter, int count)
 	{
@@ -1185,12 +1097,9 @@ public class TextView : Container
 	
 	/**
 	 * Adds a child widget in the text buffer, at the given anchor.
-	 * text_view:
-	 *  a GtkTextView
-	 * child:
-	 *  a GtkWidget
-	 * anchor:
-	 *  a GtkTextChildAnchor in the GtkTextBuffer for text_view
+	 * Params:
+	 * child =  a GtkWidget
+	 * anchor =  a GtkTextChildAnchor in the GtkTextBuffer for text_view
 	 */
 	public void addChildAtAnchor(Widget child, TextChildAnchor anchor)
 	{
@@ -1219,16 +1128,11 @@ public class TextView : Container
 	 * would be to update all child positions when the scroll adjustments
 	 * change or the text buffer changes. See bug 64518 on
 	 * bugzilla.gnome.org for status of fixing this issue.
-	 * text_view:
-	 *  a GtkTextView
-	 * child:
-	 *  a GtkWidget
-	 * which_window:
-	 *  which window the child should appear in
-	 * xpos:
-	 *  X position of child in window coordinates
-	 * ypos:
-	 *  Y position of child in window coordinates
+	 * Params:
+	 * child =  a GtkWidget
+	 * whichWindow =  which window the child should appear in
+	 * xpos =  X position of child in window coordinates
+	 * ypos =  Y position of child in window coordinates
 	 */
 	public void addChildInWindow(Widget child, GtkTextWindowType whichWindow, int xpos, int ypos)
 	{
@@ -1238,14 +1142,10 @@ public class TextView : Container
 	
 	/**
 	 * Updates the position of a child, as for gtk_text_view_add_child_in_window().
-	 * text_view:
-	 *  a GtkTextView
-	 * child:
-	 *  child widget already added to the text view
-	 * xpos:
-	 *  new X position in window coordinates
-	 * ypos:
-	 *  new Y position in window coordinates
+	 * Params:
+	 * child =  child widget already added to the text view
+	 * xpos =  new X position in window coordinates
+	 * ypos =  new Y position in window coordinates
 	 */
 	public void moveChild(Widget child, int xpos, int ypos)
 	{
@@ -1255,10 +1155,8 @@ public class TextView : Container
 	
 	/**
 	 * Sets the line wrapping for the view.
-	 * text_view:
-	 *  a GtkTextView
-	 * wrap_mode:
-	 *  a GtkWrapMode
+	 * Params:
+	 * wrapMode =  a GtkWrapMode
 	 */
 	public void setWrapMode(GtkWrapMode wrapMode)
 	{
@@ -1268,10 +1166,7 @@ public class TextView : Container
 	
 	/**
 	 * Gets the line wrapping for the view.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  the line wrap setting
+	 * Returns: the line wrap setting
 	 */
 	public GtkWrapMode getWrapMode()
 	{
@@ -1283,10 +1178,8 @@ public class TextView : Container
 	 * Sets the default editability of the GtkTextView. You can override
 	 * this default setting with tags in the buffer, using the "editable"
 	 * attribute of tags.
-	 * text_view:
-	 *  a GtkTextView
-	 * setting:
-	 *  whether it's editable
+	 * Params:
+	 * setting =  whether it's editable
 	 */
 	public void setEditable(int setting)
 	{
@@ -1297,10 +1190,7 @@ public class TextView : Container
 	/**
 	 * Returns the default editability of the GtkTextView. Tags in the
 	 * buffer may override this setting for some ranges of text.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  whether text is editable by default
+	 * Returns: whether text is editable by default
 	 */
 	public int getEditable()
 	{
@@ -1312,10 +1202,8 @@ public class TextView : Container
 	 * Toggles whether the insertion point is displayed. A buffer with no editable
 	 * text probably shouldn't have a visible cursor, so you may want to turn
 	 * the cursor off.
-	 * text_view:
-	 *  a GtkTextView
-	 * setting:
-	 *  whether to show the insertion cursor
+	 * Params:
+	 * setting =  whether to show the insertion cursor
 	 */
 	public void setCursorVisible(int setting)
 	{
@@ -1325,10 +1213,7 @@ public class TextView : Container
 	
 	/**
 	 * Find out whether the cursor is being displayed.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  whether the insertion mark is visible
+	 * Returns: whether the insertion mark is visible
 	 */
 	public int getCursorVisible()
 	{
@@ -1338,11 +1223,9 @@ public class TextView : Container
 	
 	/**
 	 * Changes the GtkTextView overwrite mode.
-	 * text_view:
-	 *  a GtkTextView
-	 * overwrite:
-	 *  TRUE to turn on overwrite mode, FALSE to turn it off
 	 * Since 2.4
+	 * Params:
+	 * overwrite =  TRUE to turn on overwrite mode, FALSE to turn it off
 	 */
 	public void setOverwrite(int overwrite)
 	{
@@ -1352,11 +1235,8 @@ public class TextView : Container
 	
 	/**
 	 * Returns whether the GtkTextView is in overwrite mode or not.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  whether text_view is in overwrite mode or not.
 	 * Since 2.4
+	 * Returns: whether text_view is in overwrite mode or not.
 	 */
 	public int getOverwrite()
 	{
@@ -1367,10 +1247,8 @@ public class TextView : Container
 	/**
 	 * Sets the default number of blank pixels above paragraphs in text_view.
 	 * Tags in the buffer for text_view may override the defaults.
-	 * text_view:
-	 *  a GtkTextView
-	 * pixels_above_lines:
-	 *  pixels above paragraphs
+	 * Params:
+	 * pixelsAboveLines =  pixels above paragraphs
 	 */
 	public void setPixelsAboveLines(int pixelsAboveLines)
 	{
@@ -1380,10 +1258,7 @@ public class TextView : Container
 	
 	/**
 	 * Gets the default number of pixels to put above paragraphs.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  default number of pixels above paragraphs
+	 * Returns: default number of pixels above paragraphs
 	 */
 	public int getPixelsAboveLines()
 	{
@@ -1395,10 +1270,8 @@ public class TextView : Container
 	 * Sets the default number of pixels of blank space
 	 * to put below paragraphs in text_view. May be overridden
 	 * by tags applied to text_view's buffer.
-	 * text_view:
-	 *  a GtkTextView
-	 * pixels_below_lines:
-	 *  pixels below paragraphs
+	 * Params:
+	 * pixelsBelowLines =  pixels below paragraphs
 	 */
 	public void setPixelsBelowLines(int pixelsBelowLines)
 	{
@@ -1408,10 +1281,7 @@ public class TextView : Container
 	
 	/**
 	 * Gets the value set by gtk_text_view_set_pixels_below_lines().
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  default number of blank pixels below paragraphs
+	 * Returns: default number of blank pixels below paragraphs
 	 */
 	public int getPixelsBelowLines()
 	{
@@ -1423,10 +1293,8 @@ public class TextView : Container
 	 * Sets the default number of pixels of blank space to leave between
 	 * display/wrapped lines within a paragraph. May be overridden by
 	 * tags in text_view's buffer.
-	 * text_view:
-	 *  a GtkTextView
-	 * pixels_inside_wrap:
-	 *  default number of pixels between wrapped lines
+	 * Params:
+	 * pixelsInsideWrap =  default number of pixels between wrapped lines
 	 */
 	public void setPixelsInsideWrap(int pixelsInsideWrap)
 	{
@@ -1436,10 +1304,7 @@ public class TextView : Container
 	
 	/**
 	 * Gets the value set by gtk_text_view_set_pixels_inside_wrap().
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  default number of pixels of blank space between wrapped lines
+	 * Returns: default number of pixels of blank space between wrapped lines
 	 */
 	public int getPixelsInsideWrap()
 	{
@@ -1450,10 +1315,8 @@ public class TextView : Container
 	/**
 	 * Sets the default justification of text in text_view.
 	 * Tags in the view's buffer may override the default.
-	 * text_view:
-	 *  a GtkTextView
-	 * justification:
-	 *  justification
+	 * Params:
+	 * justification =  justification
 	 */
 	public void setJustification(GtkJustification justification)
 	{
@@ -1464,10 +1327,7 @@ public class TextView : Container
 	/**
 	 * Gets the default justification of paragraphs in text_view.
 	 * Tags in the buffer may override the default.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  default justification
+	 * Returns: default justification
 	 */
 	public GtkJustification getJustification()
 	{
@@ -1478,10 +1338,8 @@ public class TextView : Container
 	/**
 	 * Sets the default left margin for text in text_view.
 	 * Tags in the buffer may override the default.
-	 * text_view:
-	 *  a GtkTextView
-	 * left_margin:
-	 *  left margin in pixels
+	 * Params:
+	 * leftMargin =  left margin in pixels
 	 */
 	public void setLeftMargin(int leftMargin)
 	{
@@ -1492,10 +1350,7 @@ public class TextView : Container
 	/**
 	 * Gets the default left margin size of paragraphs in the text_view.
 	 * Tags in the buffer may override the default.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  left margin in pixels
+	 * Returns: left margin in pixels
 	 */
 	public int getLeftMargin()
 	{
@@ -1506,10 +1361,8 @@ public class TextView : Container
 	/**
 	 * Sets the default right margin for text in the text view.
 	 * Tags in the buffer may override the default.
-	 * text_view:
-	 *  a GtkTextView
-	 * right_margin:
-	 *  right margin in pixels
+	 * Params:
+	 * rightMargin =  right margin in pixels
 	 */
 	public void setRightMargin(int rightMargin)
 	{
@@ -1520,10 +1373,7 @@ public class TextView : Container
 	/**
 	 * Gets the default right margin for text in text_view. Tags
 	 * in the buffer may override the default.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  right margin in pixels
+	 * Returns: right margin in pixels
 	 */
 	public int getRightMargin()
 	{
@@ -1534,10 +1384,8 @@ public class TextView : Container
 	/**
 	 * Sets the default indentation for paragraphs in text_view.
 	 * Tags in the buffer may override the default.
-	 * text_view:
-	 *  a GtkTextView
-	 * indent:
-	 *  indentation in pixels
+	 * Params:
+	 * indent =  indentation in pixels
 	 */
 	public void setIndent(int indent)
 	{
@@ -1549,10 +1397,7 @@ public class TextView : Container
 	 * Gets the default indentation of paragraphs in text_view.
 	 * Tags in the view's buffer may override the default.
 	 * The indentation may be negative.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  number of pixels of indentation
+	 * Returns: number of pixels of indentation
 	 */
 	public int getIndent()
 	{
@@ -1563,10 +1408,8 @@ public class TextView : Container
 	/**
 	 * Sets the default tab stops for paragraphs in text_view.
 	 * Tags in the buffer may override the default.
-	 * text_view:
-	 *  a GtkTextView
-	 * tabs:
-	 *  tabs as a PangoTabArray
+	 * Params:
+	 * tabs =  tabs as a PangoTabArray
 	 */
 	public void setTabs(PgTabArray tabs)
 	{
@@ -1579,10 +1422,7 @@ public class TextView : Container
 	 * override the defaults. The returned array will be NULL if
 	 * "standard" (8-space) tabs are used. Free the return value
 	 * with pango_tab_array_free().
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  copy of default tab array, or NULL if "standard" tabs are used; must be freed with pango_tab_array_free().
+	 * Returns: copy of default tab array, or NULL if "standard"  tabs are used; must be freed with pango_tab_array_free().
 	 */
 	public PgTabArray getTabs()
 	{
@@ -1591,14 +1431,15 @@ public class TextView : Container
 	}
 	
 	/**
-	 * Sets the behavior of the text widget when the Tab key is pressed. If accepts_tab
-	 * is TRUE a tab character is inserted. If accepts_tab is FALSE the keyboard focus
-	 * is moved to the next widget in the focus chain.
-	 * text_view:
-	 *  A GtkTextView
-	 * accepts_tab:
-	 *  TRUE if pressing the Tab key should insert a tab character, FALSE, if pressing the Tab key should move the keyboard focus.
+	 * Sets the behavior of the text widget when the Tab key is pressed.
+	 * If accepts_tab is TRUE, a tab character is inserted. If accepts_tab
+	 * is FALSE the keyboard focus is moved to the next widget in the focus
+	 * chain.
 	 * Since 2.4
+	 * Params:
+	 * acceptsTab =  TRUE if pressing the Tab key should insert a tab
+	 *  character, FALSE, if pressing the Tab key should move the
+	 *  keyboard focus.
 	 */
 	public void setAcceptsTab(int acceptsTab)
 	{
@@ -1609,11 +1450,8 @@ public class TextView : Container
 	/**
 	 * Returns whether pressing the Tab key inserts a tab characters.
 	 * gtk_text_view_set_accepts_tab().
-	 * text_view:
-	 *  A GtkTextView
-	 * Returns:
-	 *  TRUE if pressing the Tab key inserts a tab character, FALSE if pressing the Tab key moves the keyboard focus.
 	 * Since 2.4
+	 * Returns: TRUE if pressing the Tab key inserts a tab character,  FALSE if pressing the Tab key moves the keyboard focus.
 	 */
 	public int getAcceptsTab()
 	{
@@ -1629,10 +1467,7 @@ public class TextView : Container
 	 * attributes in effect at a given text position.
 	 * The return value is a copy owned by the caller of this function,
 	 * and should be freed.
-	 * text_view:
-	 *  a GtkTextView
-	 * Returns:
-	 *  a new GtkTextAttributes
+	 * Returns: a new GtkTextAttributes
 	 */
 	public TextAttributes getDefaultAttributes()
 	{

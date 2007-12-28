@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Range;
 
 /**
  * Description
@@ -78,7 +79,6 @@ private import gtkc.gtk;
  * subclasses GtkHScale and GtkVScale. To create a scale widget,
  * call gtk_hscale_new_with_range() or gtk_vscale_new_with_range().
  */
-private import gtk.Range;
 public class Scale : Range
 {
 	
@@ -169,10 +169,8 @@ public class Scale : Range
 	 * Sets the number of decimal places that are displayed in the value. Also causes
 	 * the value of the adjustment to be rounded off to this number of digits, so the
 	 * retrieved value matches the value the user saw.
-	 * scale:
-	 * a GtkScale.
-	 * digits:
-	 * the number of decimal places to display, e.g. use 1 to display 1.0,
+	 * Params:
+	 * digits = the number of decimal places to display, e.g. use 1 to display 1.0,
 	 * 2 to display 1.00 etc.
 	 */
 	public void setDigits(int digits)
@@ -184,10 +182,8 @@ public class Scale : Range
 	/**
 	 * Specifies whether the current value is displayed as a string next to the
 	 * slider.
-	 * scale:
-	 * a GtkScale.
-	 * draw_value:
-	 * a boolean.
+	 * Params:
+	 * drawValue = a boolean.
 	 */
 	public void setDrawValue(int drawValue)
 	{
@@ -197,10 +193,8 @@ public class Scale : Range
 	
 	/**
 	 * Sets the position in which the current value is displayed.
-	 * scale:
-	 * a GtkScale.
-	 * pos:
-	 * the position in which the current value is displayed.
+	 * Params:
+	 * pos = the position in which the current value is displayed.
 	 */
 	public void setValuePos(GtkPositionType pos)
 	{
@@ -210,10 +204,7 @@ public class Scale : Range
 	
 	/**
 	 * Gets the number of decimal places that are displayed in the value.
-	 * scale:
-	 * a GtkScale.
-	 * Returns:
-	 * the number of decimal places that are displayed.
+	 * Returns:the number of decimal places that are displayed.
 	 */
 	public int getDigits()
 	{
@@ -224,10 +215,7 @@ public class Scale : Range
 	/**
 	 * Returns whether the current value is displayed as a string next to the
 	 * slider.
-	 * scale:
-	 * a GtkScale.
-	 * Returns:
-	 * whether the current value is displayed as a string.
+	 * Returns:whether the current value is displayed as a string.
 	 */
 	public int getDrawValue()
 	{
@@ -237,10 +225,7 @@ public class Scale : Range
 	
 	/**
 	 * Gets the position in which the current value is displayed.
-	 * scale:
-	 * a GtkScale.
-	 * Returns:
-	 * the position in which the current value is displayed.
+	 * Returns:the position in which the current value is displayed.
 	 */
 	public GtkPositionType getValuePos()
 	{
@@ -249,14 +234,11 @@ public class Scale : Range
 	}
 	
 	/**
-	 * Gets the PangoLayout used to display the scale. The returned object
-	 * is owned by the scale so does not need to be freed by the caller.
-	 * scale:
-	 *  A GtkScale
-	 * Returns:
-	 *  the PangoLayout for this scale, or NULL if the draw_value property
-	 *  is FALSE.
+	 * Gets the PangoLayout used to display the scale.
+	 * The returned object is owned by the scale so does
+	 * not need to be freed by the caller.
 	 * Since 2.4
+	 * Returns: the PangoLayout for this scale, or NULL  if the "draw-value" property is FALSE.
 	 */
 	public PangoLayout* getLayout()
 	{
@@ -265,25 +247,16 @@ public class Scale : Range
 	}
 	
 	/**
-	 * Obtains the coordinates where the scale will draw the PangoLayout
-	 * representing the text in the scale. Remember
+	 * Obtains the coordinates where the scale will draw the
+	 * PangoLayout representing the text in the scale. Remember
 	 * when using the PangoLayout function you need to convert to
 	 * and from pixels using PANGO_PIXELS() or PANGO_SCALE.
-	 * If the draw_value property is FALSE, the return values are
-	 * undefined.
-	 * scale:
-	 *  a GtkScale
-	 * x:
-	 *  location to store X offset of layout, or NULL
-	 * y:
-	 *  location to store Y offset of layout, or NULL
+	 * If the "draw-value" property is FALSE, the return
+	 * values are undefined.
 	 * Since 2.4
-	 * Property Details
-	 * The "digits" property
-	 *  "digits" gint : Read / Write
-	 * The number of decimal places that are displayed in the value.
-	 * Allowed values: [-1,64]
-	 * Default value: 1
+	 * Params:
+	 * x =  location to store X offset of layout, or NULL
+	 * y =  location to store Y offset of layout, or NULL
 	 */
 	public void getLayoutOffsets(int* x, int* y)
 	{

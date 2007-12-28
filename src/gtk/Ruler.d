@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Widget;
 
 /**
  * Description
@@ -83,7 +84,6 @@ private import gtkc.gtk;
  * ruler. See GtkHRuler to learn how to create a new horizontal ruler. See
  * GtkVRuler to learn how to create a new vertical ruler.
  */
-private import gtk.Widget;
 public class Ruler : Widget
 {
 	
@@ -141,10 +141,8 @@ public class Ruler : Widget
 	 * This calls the GTKMetricType to set the ruler to units defined. Available units
 	 * are GTK_PIXELS, GTK_INCHES, or GTK_CENTIMETERS. The default unit of measurement
 	 * is GTK_PIXELS.
-	 * ruler:
-	 * the gtkruler
-	 * metric:
-	 * the unit of measurement
+	 * Params:
+	 * metric = the unit of measurement
 	 */
 	public void setMetric(GtkMetricType metric)
 	{
@@ -153,17 +151,13 @@ public class Ruler : Widget
 	}
 	
 	/**
-	 * This sets the range of the ruler using gfloat lower, gfloat upper, gfloat position, and gfloat max_size.
-	 * ruler:
-	 * the gtkruler
-	 * lower:
-	 * the lower limit of the ruler
-	 * upper:
-	 * the upper limit of the ruler
-	 * position:
-	 * the mark on the ruler
-	 * max_size:
-	 * the maximum size of the ruler
+	 * This sets the range of the ruler.
+	 * Params:
+	 * lower =  the lower limit of the ruler
+	 * upper =  the upper limit of the ruler
+	 * position =  the mark on the ruler
+	 * maxSize =  the maximum size of the ruler used when calculating the space to
+	 * leave for the text
 	 */
 	public void setRange(double lower, double upper, double position, double maxSize)
 	{
@@ -173,10 +167,7 @@ public class Ruler : Widget
 	
 	/**
 	 * Gets the units used for a GtkRuler. See gtk_ruler_set_metric().
-	 * ruler:
-	 *  a GtkRuler
-	 * Returns:
-	 *  the units currently used for ruler
+	 * Returns: the units currently used for ruler
 	 */
 	public GtkMetricType getMetric()
 	{
@@ -187,22 +178,12 @@ public class Ruler : Widget
 	/**
 	 * Retrieves values indicating the range and current position of a GtkRuler.
 	 * See gtk_ruler_set_range().
-	 * ruler:
-	 *  a GtkRuler
-	 * lower:
-	 *  location to store lower limit of the ruler, or NULL
-	 * upper:
-	 *  location to store upper limit of the ruler, or NULL
-	 * position:
-	 *  location to store the current position of the mark on the ruler, or NULL
-	 * max_size:
-	 *  location to store the maximum size of the ruler used when calculating
+	 * Params:
+	 * lower =  location to store lower limit of the ruler, or NULL
+	 * upper =  location to store upper limit of the ruler, or NULL
+	 * position =  location to store the current position of the mark on the ruler, or NULL
+	 * maxSize =  location to store the maximum size of the ruler used when calculating
 	 *  the space to leave for the text, or NULL.
-	 * Property Details
-	 * The "lower" property
-	 *  "lower" gdouble : Read / Write
-	 * Lower limit of ruler.
-	 * Default value: 0
 	 */
 	public void getRange(double* lower, double* upper, double* position, double* maxSize)
 	{

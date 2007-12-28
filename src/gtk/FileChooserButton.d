@@ -78,6 +78,7 @@ private import gtk.FileChooser;;
 
 
 
+private import gtk.HBox;
 
 /**
  * Description
@@ -87,7 +88,7 @@ private import gtk.FileChooser;;
  * The user can then use that dialog to change the file associated with
  * that button. This widget does not support setting the "select-multiple"
  * property to TRUE.
- * Example6.Create a button to let the user select a file in /etc
+ * Example34.Create a button to let the user select a file in /etc
  * {
 	 *  GtkWidget *button;
 	 *  button = gtk_file_chooser_button_new (_("Select a file"),
@@ -103,7 +104,6 @@ private import gtk.FileChooser;;
  * gtk_file_chooser_button_set_width_chars(), or pack the button in
  * such a way that other interface elements give space to the widget.
  */
-private import gtk.HBox;
 public class FileChooserButton : HBox
 {
 	
@@ -154,6 +154,7 @@ public class FileChooserButton : HBox
 	
 	private FileChooser fileChooser;
 	
+	/** */
 	public FileChooser getFileChooser()
 	{
 		if ( fileChooser is null )
@@ -203,13 +204,10 @@ public class FileChooserButton : HBox
 	
 	/**
 	 * Creates a new file-selecting button widget.
-	 * title:
-	 *  the title of the browse dialog.
-	 * action:
-	 *  the open mode for the widget.
-	 * Returns:
-	 *  a new button widget.
 	 * Since 2.6
+	 * Params:
+	 * title =  the title of the browse dialog.
+	 * action =  the open mode for the widget.
 	 */
 	public this (char[] title, GtkFileChooserAction action)
 	{
@@ -219,15 +217,11 @@ public class FileChooserButton : HBox
 	
 	/**
 	 * Creates a new file-selecting button widget using backend.
-	 * title:
-	 *  the title of the browse dialog.
-	 * action:
-	 *  the open mode for the widget.
-	 * backend:
-	 *  the name of the GtkFileSystem backend to use.
-	 * Returns:
-	 *  a new button widget.
 	 * Since 2.6
+	 * Params:
+	 * title =  the title of the browse dialog.
+	 * action =  the open mode for the widget.
+	 * backend =  the name of the GtkFileSystem backend to use.
 	 */
 	public this (char[] title, GtkFileChooserAction action, char[] backend)
 	{
@@ -236,15 +230,17 @@ public class FileChooserButton : HBox
 	}
 	
 	/**
-	 * Creates a GtkFileChooserButton widget which uses dialog as it's
-	 * file-picking window. Note that dialog must be a GtkDialog (or
-	 * subclass) which implements the GtkFileChooser interface and must
-	 * not have GTK_DIALOG_DESTROY_WITH_PARENT set.
-	 * dialog:
-	 *  the widget to use as dialog
-	 * Returns:
-	 *  a new button widget.
+	 * Creates a GtkFileChooserButton widget which uses dialog as its
+	 * file-picking window.
+	 * Note that dialog must be a GtkDialog (or subclass) which
+	 * implements the GtkFileChooser interface and must not have
+	 * GTK_DIALOG_DESTROY_WITH_PARENT set.
+	 * Also note that the dialog needs to have its confirmative button
+	 * added with response GTK_RESPONSE_ACCEPT or GTK_RESPONSE_OK in
+	 * order for the button to take over the file selected in the dialog.
 	 * Since 2.6
+	 * Params:
+	 * dialog =  the widget to use as dialog
 	 */
 	public this (Widget dialog)
 	{
@@ -255,11 +251,8 @@ public class FileChooserButton : HBox
 	/**
 	 * Retrieves the title of the browse dialog used by button. The returned value
 	 * should not be modified or freed.
-	 * button:
-	 *  the button widget to examine.
-	 * Returns:
-	 *  a pointer to the browse dialog's title.
 	 * Since 2.6
+	 * Returns: a pointer to the browse dialog's title.
 	 */
 	public char[] getTitle()
 	{
@@ -269,11 +262,9 @@ public class FileChooserButton : HBox
 	
 	/**
 	 * Modifies the title of the browse dialog used by button.
-	 * button:
-	 *  the button widget to modify.
-	 * title:
-	 *  the new browse dialog title.
 	 * Since 2.6
+	 * Params:
+	 * title =  the new browse dialog title.
 	 */
 	public void setTitle(char[] title)
 	{
@@ -283,11 +274,8 @@ public class FileChooserButton : HBox
 	
 	/**
 	 * Retrieves the width in characters of the button widget's entry and/or label.
-	 * button:
-	 *  the button widget to examine.
-	 * Returns:
-	 *  an integer width (in characters) that the button will use to size itself.
 	 * Since 2.6
+	 * Returns: an integer width (in characters) that the button will use to size itself.
 	 */
 	public int getWidthChars()
 	{
@@ -297,11 +285,9 @@ public class FileChooserButton : HBox
 	
 	/**
 	 * Sets the width (in characters) that button will use to n_chars.
-	 * button:
-	 *  the button widget to examine.
-	 * n_chars:
-	 *  the new width, in characters.
 	 * Since 2.6
+	 * Params:
+	 * nChars =  the new width, in characters.
 	 */
 	public void setWidthChars(int nChars)
 	{
@@ -312,12 +298,8 @@ public class FileChooserButton : HBox
 	/**
 	 * Returns whether the button grabs focus when it is clicked with the mouse.
 	 * See gtk_file_chooser_button_set_focus_on_click().
-	 * button:
-	 *  a GtkFileChooserButton
-	 * Returns:
-	 *  TRUE if the button grabs focus when it is clicked with
-	 *  the mouse.
 	 * Since 2.10
+	 * Returns: TRUE if the button grabs focus when it is clicked with the mouse.
 	 */
 	public int getFocusOnClick()
 	{
@@ -330,16 +312,9 @@ public class FileChooserButton : HBox
 	 * Making mouse clicks not grab focus is useful in places like toolbars where
 	 * you don't want the keyboard focus removed from the main area of the
 	 * application.
-	 * button:
-	 *  a GtkFileChooserButton
-	 * focus_on_click:
-	 *  whether the button grabs focus when clicked with the mouse
 	 * Since 2.10
-	 * Property Details
-	 * The "dialog" property
-	 *  "dialog" GtkFileChooser : Write / Construct Only
-	 * Instance of the GtkFileChooserDialog associated with the button.
-	 * Since 2.6
+	 * Params:
+	 * focusOnClick =  whether the button grabs focus when clicked with the mouse
 	 */
 	public void setFocusOnClick(int focusOnClick)
 	{

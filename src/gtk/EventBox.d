@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Bin;
 
 /**
  * Description
@@ -72,7 +73,6 @@ private import gtkc.gtk;
  * It is useful since it allows you to catch events for widgets which do not
  * have their own window.
  */
-private import gtk.Bin;
 public class EventBox : Bin
 {
 	
@@ -127,8 +127,6 @@ public class EventBox : Bin
 	
 	/**
 	 * Creates a new GtkEventBox.
-	 * Returns:
-	 * a new GtkEventBox.
 	 */
 	public this ()
 	{
@@ -143,11 +141,9 @@ public class EventBox : Bin
 	 * in windows of child widgets will first got to that widget, and then
 	 * to its parents.
 	 * The default is to keep the window below the child.
-	 * event_box:
-	 *  a GtkEventBox
-	 * above_child:
-	 *  TRUE if the event box window is above the windows of its child
 	 * Since 2.4
+	 * Params:
+	 * aboveChild =  TRUE if the event box window is above the windows of its child
 	 */
 	public void setAboveChild(int aboveChild)
 	{
@@ -159,12 +155,8 @@ public class EventBox : Bin
 	 * Returns whether the event box window is above or below the
 	 * windows of its child. See gtk_event_box_set_above_child() for
 	 * details.
-	 * event_box:
-	 *  a GtkEventBox
-	 * Returns:
-	 *  TRUE if the event box window is above the window
-	 * of its child.
 	 * Since 2.4
+	 * Returns: TRUE if the event box window is above the windowof its child.
 	 */
 	public int getAboveChild()
 	{
@@ -201,11 +193,9 @@ public class EventBox : Bin
 	 * This problem doesn't occur for visible event boxes, because in
 	 * that case, the event box window is actually the ancestor of the
 	 * descendant windows, not just at the same place on the screen.
-	 * event_box:
-	 *  a GtkEventBox
-	 * visible_window:
-	 *  boolean value
 	 * Since 2.4
+	 * Params:
+	 * visibleWindow =  boolean value
 	 */
 	public void setVisibleWindow(int visibleWindow)
 	{
@@ -216,16 +206,8 @@ public class EventBox : Bin
 	/**
 	 * Returns whether the event box has a visible window.
 	 * See gtk_event_box_set_visible_window() for details.
-	 * event_box:
-	 *  a GtkEventBox
-	 * Returns:
-	 *  TRUE if the event box window is visible
 	 * Since 2.4
-	 * Property Details
-	 * The "above-child" property
-	 *  "above-child" gboolean : Read / Write
-	 * Whether the event-trapping window of the eventbox is above the window of the child widget as opposed to below it.
-	 * Default value: FALSE
+	 * Returns: TRUE if the event box window is visible
 	 */
 	public int getVisibleWindow()
 	{

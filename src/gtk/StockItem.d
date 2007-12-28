@@ -150,10 +150,8 @@ public class StockItem
 	 * any pointer into items and items can be freed. Use
 	 * gtk_stock_add_static() if items is persistent and GTK+ need not
 	 * copy the array.
-	 * items:
-	 *  a GtkStockItem or array of items
-	 * n_items:
-	 *  number of GtkStockItem in items
+	 * Params:
+	 * nItems =  number of GtkStockItem in items
 	 */
 	public void add(uint nItems)
 	{
@@ -164,10 +162,8 @@ public class StockItem
 	/**
 	 * Same as gtk_stock_add(), but doesn't copy items, so
 	 * items must persist until application exit.
-	 * items:
-	 *  a GtkStockItem or array of GtkStockItem
-	 * n_items:
-	 *  number of items
+	 * Params:
+	 * nItems =  number of items
 	 */
 	public void addStatic(uint nItems)
 	{
@@ -177,10 +173,9 @@ public class StockItem
 	
 	/**
 	 * Copies a stock item, mostly useful for language bindings and not in applications.
-	 * item:
-	 *  a GtkStockItem
-	 * Returns:
-	 *  a new GtkStockItem
+	 * Params:
+	 * item =  a GtkStockItem
+	 * Returns: a new GtkStockItem
 	 */
 	public StockItem itemCopy()
 	{
@@ -192,8 +187,8 @@ public class StockItem
 	 * Frees a stock item allocated on the heap, such as one returned by
 	 * gtk_stock_item_copy(). Also frees the fields inside the stock item,
 	 * if they are not NULL.
-	 * item:
-	 *  a GtkStockItem
+	 * Params:
+	 * item =  a GtkStockItem
 	 */
 	public void itemFree()
 	{
@@ -205,8 +200,7 @@ public class StockItem
 	 * Retrieves a list of all known stock IDs added to a GtkIconFactory
 	 * or registered with gtk_stock_add(). The list must be freed with g_slist_free(),
 	 * and each string in the list must be freed with g_free().
-	 * Returns:
-	 *  a list of known stock IDs
+	 * Returns: a list of known stock IDs
 	 */
 	public static ListSG listIds()
 	{
@@ -217,12 +211,10 @@ public class StockItem
 	/**
 	 * Fills item with the registered values for stock_id, returning TRUE
 	 * if stock_id was known.
-	 * stock_id:
-	 *  a stock item name
-	 * item:
-	 *  stock item to initialize with values
-	 * Returns:
-	 *  TRUE if item was initialized
+	 * Params:
+	 * stockId =  a stock item name
+	 * item =  stock item to initialize with values
+	 * Returns: TRUE if item was initialized
 	 */
 	public static int lookup(char[] stockId, StockItem item)
 	{
@@ -235,22 +227,20 @@ public class StockItem
 	 * a stock item.
 	 * If no function is registered for a translation domain,
 	 * dgettext() is used.
-	 * domain:
-	 *  the translation domain for which func shall be used
-	 * func:
-	 *  a GtkTranslateFunc
-	 * data:
-	 *  data to pass to func
-	 * notify:
-	 *  a GtkDestroyNotify that is called when data is
-	 *  no longer needed
 	 * Since 2.8
+	 * Params:
+	 * domain =  the translation domain for which func shall be used
+	 * func =  a GtkTranslateFunc
+	 * data =  data to pass to func
+	 * notify =  a GtkDestroyNotify that is called when data is
+	 *  no longer needed
 	 */
 	public static void setTranslateFunc(char[] domain, GtkTranslateFunc func, void* data, GtkDestroyNotify notify)
 	{
 		// void gtk_stock_set_translate_func (const gchar *domain,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
 		gtk_stock_set_translate_func(Str.toStringz(domain), func, data, notify);
 	}
+	
 	
 	
 	

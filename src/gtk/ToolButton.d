@@ -72,6 +72,7 @@ private import gtk.Widget;
 
 
 
+private import gtk.ToolItem;
 
 /**
  * Description
@@ -91,7 +92,6 @@ private import gtk.Widget;
  * non-NULL, the icon is determined by the stock item. Otherwise,
  * the button does not have a label.
  */
-private import gtk.ToolItem;
 public class ToolButton : ToolItem
 {
 	
@@ -143,21 +143,23 @@ public class ToolButton : ToolItem
 	/** An arbitrary string to be used by the application */
 	private char[] action;
 	
+	/** */
 	public void setActionName(char[] action)
 	{
 		this.action = action.dup;
 	}
 	
+	/** */
 	public char[] getActionName()
 	{
 		return action;
 	}
 	
+	/** */
 	public this (StockID stockID)
 	{
 		this(StockDesc[stockID]);
 	}
-	
 	
 	/**
 	 */
@@ -200,13 +202,10 @@ public class ToolButton : ToolItem
 	/**
 	 * Creates a new GtkToolButton using icon_widget as icon and label as
 	 * label.
-	 * icon_widget:
-	 *  a widget that will be used as icon widget, or NULL
-	 * label:
-	 *  a string that will be used as label, or NULL
-	 * Returns:
-	 *  A new GtkToolButton
 	 * Since 2.4
+	 * Params:
+	 * iconWidget =  a widget that will be used as icon widget, or NULL
+	 * label =  a string that will be used as label, or NULL
 	 */
 	public this (Widget iconWidget, char[] label)
 	{
@@ -219,11 +218,9 @@ public class ToolButton : ToolItem
 	 * stock item. Some stock ids have preprocessor macros like GTK_STOCK_OK
 	 * and GTK_STOCK_APPLY.
 	 * It is an error if stock_id is not a name of a stock item.
-	 * stock_id:
-	 *  the name of the stock item
-	 * Returns:
-	 *  A new GtkToolButton
 	 * Since 2.4
+	 * Params:
+	 * stockId =  the name of the stock item
 	 */
 	public this (char[] stockId)
 	{
@@ -237,11 +234,9 @@ public class ToolButton : ToolItem
 	 * If both the "label_widget" and "label" properties are NULL, the label
 	 * is determined by the "stock_id" property. If the "stock_id" property is also
 	 * NULL, button will not have a label.
-	 * button:
-	 *  a GtkToolButton
-	 * label:
-	 *  a string that will be used as label, or NULL.
 	 * Since 2.4
+	 * Params:
+	 * label =  a string that will be used as label, or NULL.
 	 */
 	public void setLabel(char[] label)
 	{
@@ -253,11 +248,8 @@ public class ToolButton : ToolItem
 	 * Returns the label used by the tool button, or NULL if the tool button
 	 * doesn't have a label. or uses a the label from a stock item. The returned
 	 * string is owned by GTK+, and must not be modified or freed.
-	 * button:
-	 *  a GtkToolButton
-	 * Returns:
-	 *  The label, or NULL
 	 * Since 2.4
+	 * Returns: The label, or NULL
 	 */
 	public char[] getLabel()
 	{
@@ -273,11 +265,9 @@ public class ToolButton : ToolItem
 	 * menu will have an underlined 'O'.
 	 * Labels shown on tool buttons never have mnemonics on them; this property
 	 * only affects the menu item on the overflow menu.
-	 * button:
-	 *  a GtkToolButton
-	 * use_underline:
-	 *  whether the button label has the form "_Open"
 	 * Since 2.4
+	 * Params:
+	 * useUnderline =  whether the button label has the form "_Open"
 	 */
 	public void setUseUnderline(int useUnderline)
 	{
@@ -288,12 +278,8 @@ public class ToolButton : ToolItem
 	/**
 	 * Returns whether underscores in the label property are used as mnemonics
 	 * on menu items on the overflow menu. See gtk_tool_button_set_use_underline().
-	 * button:
-	 *  a GtkToolButton
-	 * Returns:
-	 *  TRUE if underscores in the label property are used as
-	 * mnemonics on menu items on the overflow menu.
 	 * Since 2.4
+	 * Returns: TRUE if underscores in the label property are used asmnemonics on menu items on the overflow menu.
 	 */
 	public int getUseUnderline()
 	{
@@ -305,11 +291,9 @@ public class ToolButton : ToolItem
 	 * Sets the name of the stock item. See gtk_tool_button_new_from_stock().
 	 * The stock_id property only has an effect if not
 	 * overridden by non-NULL "label" and "icon_widget" properties.
-	 * button:
-	 *  a GtkToolButton
-	 * stock_id:
-	 *  a name of a stock item, or NULL
 	 * Since 2.4
+	 * Params:
+	 * stockId =  a name of a stock item, or NULL
 	 */
 	public void setStockId(char[] stockId)
 	{
@@ -320,11 +304,8 @@ public class ToolButton : ToolItem
 	/**
 	 * Returns the name of the stock item. See gtk_tool_button_set_stock_id().
 	 * The returned string is owned by GTK+ and must not be freed or modifed.
-	 * button:
-	 *  a GtkToolButton
-	 * Returns:
-	 *  the name of the stock item for button.
 	 * Since 2.4
+	 * Returns: the name of the stock item for button.
 	 */
 	public char[] getStockId()
 	{
@@ -338,11 +319,9 @@ public class ToolButton : ToolItem
 	 * The "icon_name" property only has an effect if not
 	 * overridden by non-NULL "label", "icon_widget" and "stock_id"
 	 * properties.
-	 * button:
-	 *  a GtkToolButton
-	 * icon_name:
-	 *  the name of the themed icon
 	 * Since 2.8
+	 * Params:
+	 * iconName =  the name of the themed icon
 	 */
 	public void setIconName(char[] iconName)
 	{
@@ -353,12 +332,8 @@ public class ToolButton : ToolItem
 	/**
 	 * Returns the name of the themed icon for the tool button,
 	 * see gtk_tool_button_set_icon_name().
-	 * button:
-	 *  a GtkToolButton
-	 * Returns:
-	 *  the icon name or NULL if the tool button has
-	 * no themed icon
 	 * Since 2.8
+	 * Returns: the icon name or NULL if the tool button hasno themed icon
 	 */
 	public char[] getIconName()
 	{
@@ -370,11 +345,9 @@ public class ToolButton : ToolItem
 	 * Sets icon as the widget used as icon on button. If icon_widget is
 	 * NULL the icon is determined by the "stock_id" property. If the
 	 * "stock_id" property is also NULL, button will not have an icon.
-	 * button:
-	 *  a GtkToolButton
-	 * icon_widget:
-	 *  the widget used as icon, or NULL
 	 * Since 2.4
+	 * Params:
+	 * iconWidget =  the widget used as icon, or NULL
 	 */
 	public void setIconWidget(Widget iconWidget)
 	{
@@ -385,11 +358,8 @@ public class ToolButton : ToolItem
 	/**
 	 * Return the widget used as icon widget on button. See
 	 * gtk_tool_button_set_icon_widget().
-	 * button:
-	 *  a GtkToolButton
-	 * Returns:
-	 *  The widget used as icon on button, or NULL.
 	 * Since 2.4
+	 * Returns: The widget used as icon on button, or NULL.
 	 */
 	public Widget getIconWidget()
 	{
@@ -403,11 +373,9 @@ public class ToolButton : ToolItem
 	 * as label. If "label" is also NULL, the label in the stock item
 	 * determined by the "stock_id" property is used as label. If
 	 * "stock_id" is also NULL, button does not have a label.
-	 * button:
-	 *  a GtkToolButton
-	 * label_widget:
-	 *  the widget used as label, or NULL
 	 * Since 2.4
+	 * Params:
+	 * labelWidget =  the widget used as label, or NULL
 	 */
 	public void setLabelWidget(Widget labelWidget)
 	{
@@ -418,19 +386,8 @@ public class ToolButton : ToolItem
 	/**
 	 * Returns the widget used as label on button. See
 	 * gtk_tool_button_set_label_widget().
-	 * button:
-	 *  a GtkToolButton
-	 * Returns:
-	 *  The widget used as label on button, or NULL.
 	 * Since 2.4
-	 * Property Details
-	 * The "icon-name" property
-	 *  "icon-name" gchararray : Read / Write
-	 * The name of the themed icon displayed on the item.
-	 * This property only has an effect if not overridden by "label",
-	 * "icon_widget" or "stock_id" properties.
-	 * Default value: NULL
-	 * Since 2.8
+	 * Returns: The widget used as label on button, or NULL.
 	 */
 	public Widget getLabelWidget()
 	{

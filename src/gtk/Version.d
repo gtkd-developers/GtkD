@@ -105,21 +105,15 @@ public class Version
 	 * linked against an old version of GTK+ and calling the
 	 * old version of gtk_check_version(), but still get loaded
 	 * into an application using a newer version of GTK+.
-	 * required_major:
-	 *  the required major version.
-	 * required_minor:
-	 *  the required minor version.
-	 * required_micro:
-	 *  the required micro version.
-	 * Returns:
-	 *  NULL if the GTK+ library is compatible with the
-	 *  given version, or a string describing the version mismatch.
-	 *  The returned string is owned by GTK+ and should not be modified
-	 *  or freed.
+	 * Params:
+	 * requiredMajor =  the required major version.
+	 * requiredMinor =  the required minor version.
+	 * requiredMicro =  the required micro version.
+	 * Returns: NULL if the GTK+ library is compatible with the given version, or a string describing the version mismatch. The returned string is owned by GTK+ and should not be modified or freed.
 	 */
 	public static char[] checkVersion(uint requiredMajor, uint requiredMinor, uint requiredMicro)
 	{
-		// gchar* gtk_check_version (guint required_major,  guint required_minor,  guint required_micro);
+		// const gchar* gtk_check_version (guint required_major,  guint required_minor,  guint required_micro);
 		return Str.toString(gtk_check_version(requiredMajor, requiredMinor, requiredMicro) );
 	}
 	

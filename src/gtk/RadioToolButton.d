@@ -73,6 +73,7 @@ private import glib.ListSG;
 
 
 
+private import gtk.ToggleToolButton;
 
 /**
  * Description
@@ -87,7 +88,6 @@ private import glib.ListSG;
  * gtk_radio_tool_button_new_from_widget_with_stock() to create a new
  * GtkRAdioToolButton containing a stock item.
  */
-private import gtk.ToggleToolButton;
 public class RadioToolButton : ToggleToolButton
 {
 	
@@ -142,11 +142,9 @@ public class RadioToolButton : ToggleToolButton
 	
 	/**
 	 * Creates a new GtkRadioToolButton, adding it to group.
-	 * group:
-	 *  An existing radio button group, or NULL if you are creating a new group
-	 * Returns:
-	 *  The new GtkRadioToolButton
 	 * Since 2.4
+	 * Params:
+	 * group =  An existing radio button group, or NULL if you are creating a new group
 	 */
 	public this (ListSG group)
 	{
@@ -158,13 +156,10 @@ public class RadioToolButton : ToggleToolButton
 	 * Creates a new GtkRadioToolButton, adding it to group.
 	 * The new GtkRadioToolButton will contain an icon and label from the
 	 * stock item indicated by stock_id.
-	 * group:
-	 *  an existing radio button group, or NULL if you are creating a new group
-	 * stock_id:
-	 *  the name of a stock item
-	 * Returns:
-	 *  The new GtkRadioToolItem
 	 * Since 2.4
+	 * Params:
+	 * group =  an existing radio button group, or NULL if you are creating a new group
+	 * stockId =  the name of a stock item
 	 */
 	public this (ListSG group, char[] stockId)
 	{
@@ -174,10 +169,6 @@ public class RadioToolButton : ToggleToolButton
 	
 	/**
 	 * Creates a new GtkRadioToolButton adding it to the same group as gruup
-	 * group:
-	 *  An existing GtkRadioToolButton
-	 * Returns:
-	 *  The new GtkRadioToolButton
 	 * Since 2.4
 	 */
 	public this ()
@@ -190,13 +181,9 @@ public class RadioToolButton : ToggleToolButton
 	 * Creates a new GtkRadioToolButton adding it to the same group as group.
 	 * The new GtkRadioToolButton will contain an icon and label from the
 	 * stock item indicated by stock_id.
-	 * group:
-	 *  An existing GtkRadioToolButton.
-	 * stock_id:
-	 *  the name of a stock item
-	 * Returns:
-	 *  A new GtkRadioToolButton
 	 * Since 2.4
+	 * Params:
+	 * stockId =  the name of a stock item
 	 */
 	public this (char[] stockId)
 	{
@@ -206,11 +193,8 @@ public class RadioToolButton : ToggleToolButton
 	
 	/**
 	 * Returns the radio button group button belongs to.
-	 * button:
-	 *  a GtkRadioToolButton
-	 * Returns:
-	 *  The group button belongs to.
 	 * Since 2.4
+	 * Returns: The group button belongs to.
 	 */
 	public ListSG getGroup()
 	{
@@ -220,28 +204,9 @@ public class RadioToolButton : ToggleToolButton
 	
 	/**
 	 * Adds button to group, removing it from the group it belonged to before.
-	 * button:
-	 *  a GtkRadioToolButton
-	 * group:
-	 *  an existing radio button group
 	 * Since 2.4
-	 * Property Details
-	 * The "group" property
-	 *  "group" GtkRadioToolButton : Write
-	 * Sets a new group for a radio tool button.
-	 * Since 2.4
-	 * See Also
-	 * GtkToolbar
-	 * The toolbar widget
-	 * GtkToolButton
-	 *  An ancestor class of GtkRadioToolButton. The properties
-	 *  "label_widget", "label", "icon_widget", and "stock_id" on
-	 *  GtkToolButton determine the label and icon used on a
-	 *  GtkRadioToolButton.
-	 * GtkSeparatorToolItem
-	 * A subclass of GtkToolItem that separates groups of
-	 *  items on a toolbar. It is usually a good idea to put a separator
-	 *  before and after a group of GtkRadioToolButtons on a GtkToolbar.
+	 * Params:
+	 * group =  an existing radio button group
 	 */
 	public void setGroup(ListSG group)
 	{

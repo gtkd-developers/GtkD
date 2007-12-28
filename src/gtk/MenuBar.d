@@ -74,12 +74,12 @@ private import gtk.MenuItem;;
 
 
 
+private import gtk.MenuShell;
 
 /**
  * Description
  * The GtkMenuBar is a subclass of GtkMenuShell which contains one to many GtkMenuItem. The result is a standard menu bar which can hold many menu items. GtkMenuBar allows for a shadow type to be set for aesthetic purposes. The shadow types are defined in the gtk_menu_bar_set_shadow_type function.
  */
-private import gtk.MenuShell;
 public class MenuBar : MenuShell
 {
 	
@@ -128,6 +128,7 @@ public class MenuBar : MenuShell
 		this.gtkMenuBar = gtkMenuBar;
 	}
 	
+	/** */
 	Menu append(char[] label, bool rightJustify=false)
 	{
 		MenuItem item = new MenuItem(label);
@@ -138,6 +139,7 @@ public class MenuBar : MenuShell
 		return menu;
 	}
 	
+	/** */
 	public void append(Widget widget)
 	{
 		super.append(widget);
@@ -149,8 +151,6 @@ public class MenuBar : MenuShell
 	
 	/**
 	 * Creates the new GtkMenuBar
-	 * Returns:
-	 * the GtkMenuBar
 	 */
 	public this ()
 	{
@@ -164,11 +164,9 @@ public class MenuBar : MenuShell
 	
 	/**
 	 * Sets how items should be packed inside a menubar.
-	 * menubar:
-	 *  a GtkMenuBar.
-	 * pack_dir:
-	 *  a new GtkPackDirection.
 	 * Since 2.8
+	 * Params:
+	 * packDir =  a new GtkPackDirection.
 	 */
 	public void setPackDirection(GtkPackDirection packDir)
 	{
@@ -179,11 +177,8 @@ public class MenuBar : MenuShell
 	/**
 	 * Retrieves the current pack direction of the menubar. See
 	 * gtk_menu_bar_set_pack_direction().
-	 * menubar:
-	 *  a GtkMenuBar
-	 * Returns:
-	 *  the pack direction
 	 * Since 2.8
+	 * Returns: the pack direction
 	 */
 	public GtkPackDirection getPackDirection()
 	{
@@ -193,11 +188,9 @@ public class MenuBar : MenuShell
 	
 	/**
 	 * Sets how widgets should be packed inside the children of a menubar.
-	 * menubar:
-	 *  a GtkMenuBar.
-	 * child_pack_dir:
-	 *  a new GtkPackDirection.
 	 * Since 2.8
+	 * Params:
+	 * childPackDir =  a new GtkPackDirection.
 	 */
 	public void setChildPackDirection(GtkPackDirection childPackDir)
 	{
@@ -208,18 +201,8 @@ public class MenuBar : MenuShell
 	/**
 	 * Retrieves the current child pack direction of the menubar. See
 	 * gtk_menu_bar_set_child_pack_direction().
-	 * menubar:
-	 *  a GtkMenuBar
-	 * Returns:
-	 *  the child pack direction
 	 * Since 2.8
-	 * Property Details
-	 * The "child-pack-direction" property
-	 *  "child-pack-direction" GtkPackDirection : Read / Write
-	 * The pack direction of the menubar. It determines how
-	 * the widgets contained in child menuitems are arranged.
-	 * Default value: GTK_PACK_DIRECTION_LTR
-	 * Since 2.8
+	 * Returns: the child pack direction
 	 */
 	public GtkPackDirection getChildPackDirection()
 	{

@@ -145,7 +145,7 @@ public class CellEditable
 		}
 		onEditingDoneListeners ~= dlg;
 	}
-	extern(C) static void callBackEditingDone(GtkCellEditable* celleditableStruct, CellEditable cellEditable)
+	extern(C) static void callBackEditingDone(GtkCellEditable* cellEditableStruct, CellEditable cellEditable)
 	{
 		bool consumed = false;
 		
@@ -173,7 +173,7 @@ public class CellEditable
 		}
 		onRemoveWidgetListeners ~= dlg;
 	}
-	extern(C) static void callBackRemoveWidget(GtkCellEditable* celleditableStruct, CellEditable cellEditable)
+	extern(C) static void callBackRemoveWidget(GtkCellEditable* cellEditableStruct, CellEditable cellEditable)
 	{
 		bool consumed = false;
 		
@@ -189,13 +189,11 @@ public class CellEditable
 	
 	
 	/**
-	 * Begins editing on a cell_editable. event is the GdkEvent that began the
-	 * editing process. It may be NULL, in the instance that editing was initiated
-	 * through programatic means.
-	 * cell_editable:
-	 *  A GtkCellEditable
-	 * event:
-	 *  A GdkEvent, or NULL
+	 * Begins editing on a cell_editable. event is the GdkEvent that began
+	 * the editing process. It may be NULL, in the instance that editing was
+	 * initiated through programatic means.
+	 * Params:
+	 * event =  A GdkEvent, or NULL
 	 */
 	public void startEditing(Event event)
 	{
@@ -204,10 +202,7 @@ public class CellEditable
 	}
 	
 	/**
-	 * Emits the "editing_done" signal. This signal is a sign for the cell renderer
-	 * to update its value from the cell.
-	 * cell_editable:
-	 *  A GtkTreeEditable
+	 * Emits the "editing-done" signal.
 	 */
 	public void editingDone()
 	{
@@ -216,18 +211,7 @@ public class CellEditable
 	}
 	
 	/**
-	 * Emits the "remove_widget" signal. This signal is meant to indicate that the
-	 * cell is finished editing, and the widget may now be destroyed.
-	 * cell_editable:
-	 *  A GtkTreeEditable
-	 * Signal Details
-	 * The "editing-done" signal
-	 * void user_function (GtkCellEditable *celleditable,
-	 *  gpointer user_data) : Run Last
-	 * celleditable:
-	 * the object which received the signal.
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * Emits the "remove-widget" signal.
 	 */
 	public void removeWidget()
 	{

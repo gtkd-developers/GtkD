@@ -145,14 +145,12 @@ public class ListG
 		this.gList = gList;
 	}
 	
-	
+	/** */
 	void* data()
 	{
 		int* pt =cast(int*)getStruct();
 		return cast(void *)(*pt);
 	}
-	
-	
 	
 	/**
 	 */
@@ -176,12 +174,9 @@ public class ListG
 	 *  /+* This is a list of integers. +/
 	 *  number_list = g_list_append (number_list, GINT_TO_POINTER (27));
 	 *  number_list = g_list_append (number_list, GINT_TO_POINTER (14));
-	 * list:
-	 * a pointer to a GList.
-	 * data:
-	 * the data for the new element.
-	 * Returns:
-	 * the new start of the GList.
+	 * Params:
+	 * data = the data for the new element.
+	 * Returns:the new start of the GList.
 	 */
 	public ListG append(void* data)
 	{
@@ -198,12 +193,9 @@ public class ListG
 	 *  GList *list = NULL;
 	 *  list = g_list_prepend (list, "last");
 	 *  list = g_list_prepend (list, "first");
-	 * list:
-	 * a pointer to a GList.
-	 * data:
-	 * the data for the new element.
-	 * Returns:
-	 * the new start of the GList.
+	 * Params:
+	 * data = the data for the new element.
+	 * Returns:the new start of the GList.
 	 */
 	public ListG prepend(void* data)
 	{
@@ -213,16 +205,12 @@ public class ListG
 	
 	/**
 	 * Inserts a new element into the list at the given position.
-	 * list:
-	 * a pointer to a GList.
-	 * data:
-	 * the data for the new element.
-	 * position:
-	 * the position to insert the element. If this is negative, or is
+	 * Params:
+	 * data = the data for the new element.
+	 * position = the position to insert the element. If this is negative, or is
 	 * larger than the number of elements in the list, the new element is added on
 	 * to the end of the list.
-	 * Returns:
-	 * the new start of the GList.
+	 * Returns:the new start of the GList.
 	 */
 	public ListG insert(void* data, int position)
 	{
@@ -232,15 +220,11 @@ public class ListG
 	
 	/**
 	 * Inserts a new element into the list before the given position.
-	 * list:
-	 * a pointer to a GList.
-	 * sibling:
-	 * the list element before which the new element is inserted
+	 * Params:
+	 * sibling = the list element before which the new element is inserted
 	 *  or NULL to insert at the end of the list.
-	 * data:
-	 * the data for the new element.
-	 * Returns:
-	 * the new start of the GList.
+	 * data = the data for the new element.
+	 * Returns:the new start of the GList.
 	 */
 	public ListG insertBefore(ListG sibling, void* data)
 	{
@@ -251,16 +235,12 @@ public class ListG
 	/**
 	 * Inserts a new element into the list, using the given comparison function
 	 * to determine its position.
-	 * list:
-	 * a pointer to a GList.
-	 * data:
-	 * the data for the new element.
-	 * func:
-	 * the function to compare elements in the list. It should return a
+	 * Params:
+	 * data = the data for the new element.
+	 * func = the function to compare elements in the list. It should return a
 	 * number > 0 if the first parameter comes after the second parameter in
 	 * the sort order.
-	 * Returns:
-	 * the new start of the GList.
+	 * Returns:the new start of the GList.
 	 */
 	public ListG insertSorted(void* data, GCompareFunc func)
 	{
@@ -272,12 +252,9 @@ public class ListG
 	 * Removes an element from a GList.
 	 * If two elements contain the same data, only the first is removed.
 	 * If none of the elements contain the data, the GList is unchanged.
-	 * list:
-	 * a GList.
-	 * data:
-	 * the data of the element to remove.
-	 * Returns:
-	 * the new start of the GList.
+	 * Params:
+	 * data = the data of the element to remove.
+	 * Returns:the new start of the GList.
 	 */
 	public ListG remove(void* data)
 	{
@@ -289,12 +266,9 @@ public class ListG
 	 * Removes an element from a GList, without freeing the element.
 	 * The removed element's prev and next links are set to NULL, so that it becomes a
 	 * self-contained list with one element.
-	 * list:
-	 * a GList.
-	 * llink:
-	 * an element in the GList.
-	 * Returns:
-	 * the new start of the GList, without the element.
+	 * Params:
+	 * llink = an element in the GList.
+	 * Returns:the new start of the GList, without the element.
 	 */
 	public ListG removeLink(ListG llink)
 	{
@@ -304,12 +278,9 @@ public class ListG
 	
 	/**
 	 * Deletes the node link_ from list.
-	 * list:
-	 * a GList.
-	 * link_:
-	 * node to delete from list.
-	 * Returns:
-	 * the new head of list.
+	 * Params:
+	 * link = node to delete from list.
+	 * Returns:the new head of list.
 	 */
 	public ListG deleteLink(ListG link)
 	{
@@ -321,12 +292,9 @@ public class ListG
 	 * Removes all list nodes with data equal to data. Returns the new
 	 * head of the list. Contrast with g_list_remove() which removes only
 	 * the first node matching the given data.
-	 * list:
-	 * a GList.
-	 * data:
-	 * data to remove.
-	 * Returns:
-	 * new head of list.
+	 * Params:
+	 * data = data to remove.
+	 * Returns:new head of list.
 	 */
 	public ListG removeAll(void* data)
 	{
@@ -340,8 +308,6 @@ public class ListG
 	 * Note
 	 * If list elements contain dynamically-allocated memory, they should be freed
 	 * first.
-	 * list:
-	 * a GList.
 	 */
 	public void free()
 	{
@@ -353,8 +319,7 @@ public class ListG
 	 * Allocates space for one GList element.
 	 * It is called by g_list_append(), g_list_prepend(), g_list_insert() and
 	 * g_list_insert_sorted() and so is rarely used on its own.
-	 * Returns:
-	 * a pointer to the newly-allocated GList element.
+	 * Returns:a pointer to the newly-allocated GList element.
 	 */
 	public static ListG alloc()
 	{
@@ -365,8 +330,6 @@ public class ListG
 	/**
 	 * Frees one GList element.
 	 * It is usually used after g_list_remove_link().
-	 * list:
-	 * a GList element.
 	 */
 	public void free1()
 	{
@@ -377,10 +340,7 @@ public class ListG
 	
 	/**
 	 * Gets the number of elements in a GList.
-	 * list:
-	 * a GList.
-	 * Returns:
-	 * the number of elements in the GList.
+	 * Returns:the number of elements in the GList.
 	 */
 	public uint length()
 	{
@@ -392,10 +352,7 @@ public class ListG
 	 * Copies a GList.
 	 * Note that this is a "shallow" copy. If the list elements consist of pointers
 	 * to data, the pointers are copied but the actual data isn't.
-	 * list:
-	 * a GList.
-	 * Returns:
-	 * a copy of list.
+	 * Returns:a copy of list.
 	 */
 	public ListG copy()
 	{
@@ -406,10 +363,7 @@ public class ListG
 	/**
 	 * Reverses a GList.
 	 * It simply switches the next and prev pointers of each element.
-	 * list:
-	 * a GList.
-	 * Returns:
-	 * the start of the reversed GList.
+	 * Returns:the start of the reversed GList.
 	 */
 	public ListG reverse()
 	{
@@ -419,16 +373,13 @@ public class ListG
 	
 	/**
 	 * Sorts a GList using the given comparison function.
-	 * list:
-	 * a GList.
-	 * compare_func:
-	 * the comparison function used to sort the GList.
+	 * Params:
+	 * compareFunc = the comparison function used to sort the GList.
 	 * This function is passed the data from 2 elements of the GList and should
 	 * return 0 if they are equal, a negative value if the first element
 	 * comes before the second, or a positive value if the first element
 	 * comes after the second.
-	 * Returns:
-	 * the start of the sorted GList.
+	 * Returns:the start of the sorted GList.
 	 */
 	public ListG sort(GCompareFunc compareFunc)
 	{
@@ -440,19 +391,14 @@ public class ListG
 	/**
 	 * Inserts a new element into the list, using the given comparison function
 	 * to determine its position.
-	 * list:
-	 * a pointer to a GList.
-	 * data:
-	 * the data for the new element.
-	 * func:
-	 * the function to compare elements in the list. It should return a
+	 * Since 2.10
+	 * Params:
+	 * data = the data for the new element.
+	 * func = the function to compare elements in the list. It should return a
 	 * number > 0 if the first parameter comes after the second parameter in
 	 * the sort order.
-	 * user_data:
-	 * user data to pass to comparison function.
-	 * Returns:
-	 * the new start of the GList.
-	 * Since 2.10
+	 * userData = user data to pass to comparison function.
+	 * Returns:the new start of the GList.
 	 */
 	public ListG insertSortedWithData(void* data, GCompareDataFunc func, void* userData)
 	{
@@ -462,14 +408,10 @@ public class ListG
 	
 	/**
 	 * Like g_list_sort(), but the comparison function accepts a user data argument.
-	 * list:
-	 * a GList.
-	 * compare_func:
-	 * comparison function.
-	 * user_data:
-	 * user data to pass to comparison function.
-	 * Returns:
-	 * the new head of list.
+	 * Params:
+	 * compareFunc = comparison function.
+	 * userData = user data to pass to comparison function.
+	 * Returns:the new head of list.
 	 */
 	public ListG sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
@@ -482,12 +424,9 @@ public class ListG
 	 * Adds the second GList onto the end of the first GList.
 	 * Note that the elements of the second GList are not copied.
 	 * They are used directly.
-	 * list1:
-	 * a GList.
-	 * list2:
-	 * the GList to add to the end of the first GList.
-	 * Returns:
-	 * the start of the new GList.
+	 * Params:
+	 * list2 = the GList to add to the end of the first GList.
+	 * Returns:the start of the new GList.
 	 */
 	public ListG concat(ListG list2)
 	{
@@ -497,12 +436,9 @@ public class ListG
 	
 	/**
 	 * Calls a function for each element of a GList.
-	 * list:
-	 * a GList.
-	 * func:
-	 * the function to call with each element's data.
-	 * user_data:
-	 * user data to pass to the function.
+	 * Params:
+	 * func = the function to call with each element's data.
+	 * userData = user data to pass to the function.
 	 */
 	public void foreac(GFunc func, void* userData)
 	{
@@ -513,10 +449,7 @@ public class ListG
 	
 	/**
 	 * Gets the first element in a GList.
-	 * list:
-	 * a GList.
-	 * Returns:
-	 * the first element in a GList, or NULL if the GList has no elements.
+	 * Returns:the first element in a GList, or NULL if the GList has no elements.
 	 */
 	public ListG first()
 	{
@@ -526,11 +459,7 @@ public class ListG
 	
 	/**
 	 * Gets the last element in a GList.
-	 * list:
-	 * a GList.
-	 * Returns:
-	 * the last element in the GList, or NULL if the GList has no
-	 * elements.
+	 * Returns:the last element in the GList, or NULL if the GList has noelements.
 	 */
 	public ListG last()
 	{
@@ -542,12 +471,9 @@ public class ListG
 	
 	/**
 	 * Gets the element at the given position in a GList.
-	 * list:
-	 * a GList.
-	 * n:
-	 * the position of the element, counting from 0.
-	 * Returns:
-	 * the element, or NULL if the position is off the end of the GList.
+	 * Params:
+	 * n = the position of the element, counting from 0.
+	 * Returns:the element, or NULL if the position is off the end of the GList.
 	 */
 	public ListG nth(uint n)
 	{
@@ -557,13 +483,9 @@ public class ListG
 	
 	/**
 	 * Gets the data of the element at the given position.
-	 * list:
-	 * a GList.
-	 * n:
-	 * the position of the element.
-	 * Returns:
-	 * the element's data, or NULL if the position is off the end of the
-	 * GList.
+	 * Params:
+	 * n = the position of the element.
+	 * Returns:the element's data, or NULL if the position is off the end of theGList.
 	 */
 	public void* nthData(uint n)
 	{
@@ -573,12 +495,9 @@ public class ListG
 	
 	/**
 	 * Gets the element n places before list.
-	 * list:
-	 * a GList.
-	 * n:
-	 * the position of the element, counting from 0.
-	 * Returns:
-	 * the element, or NULL if the position is off the end of the GList.
+	 * Params:
+	 * n = the position of the element, counting from 0.
+	 * Returns:the element, or NULL if the position is off the end of the GList.
 	 */
 	public ListG nthPrev(uint n)
 	{
@@ -588,12 +507,9 @@ public class ListG
 	
 	/**
 	 * Finds the element in a GList which contains the given data.
-	 * list:
-	 * a GList.
-	 * data:
-	 * the element data to find.
-	 * Returns:
-	 * the found GList element, or NULL if it is not found.
+	 * Params:
+	 * data = the element data to find.
+	 * Returns:the found GList element, or NULL if it is not found.
 	 */
 	public ListG find(void* data)
 	{
@@ -608,15 +524,11 @@ public class ListG
 	 * when the desired element is found.
 	 * The function takes two gconstpointer arguments, the GList element's data as
 	 * the first argument and the given user data.
-	 * list:
-	 * a GList.
-	 * data:
-	 * user data passed to the function.
-	 * func:
-	 * the function to call for each element. It should return 0 when the
+	 * Params:
+	 * data = user data passed to the function.
+	 * func = the function to call for each element. It should return 0 when the
 	 * desired element is found.
-	 * Returns:
-	 * the found GList element, or NULL if it is not found.
+	 * Returns:the found GList element, or NULL if it is not found.
 	 */
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
@@ -626,13 +538,9 @@ public class ListG
 	
 	/**
 	 * Gets the position of the given element in the GList (starting from 0).
-	 * list:
-	 * a GList.
-	 * llink:
-	 * an element in the GList.
-	 * Returns:
-	 * the position of the element in the GList, or -1 if the element is
-	 * not found.
+	 * Params:
+	 * llink = an element in the GList.
+	 * Returns:the position of the element in the GList, or -1 if the element isnot found.
 	 */
 	public int position(ListG llink)
 	{
@@ -642,13 +550,9 @@ public class ListG
 	
 	/**
 	 * Gets the position of the element containing the given data (starting from 0).
-	 * list:
-	 * a GList.
-	 * data:
-	 * the data to find.
-	 * Returns:
-	 * the index of the element containing the data, or -1 if the data
-	 * is not found.
+	 * Params:
+	 * data = the data to find.
+	 * Returns:the index of the element containing the data, or -1 if the datais not found.
 	 */
 	public int index(void* data)
 	{
@@ -664,8 +568,8 @@ public class ListG
 	 * Use g_list_pop_allocator() to restore the previous allocator.
 	 * Note that this function is not available if GLib has been compiled
 	 * with --disable-mem-pools
-	 * allocator:
-	 * the GAllocator to use when allocating GList elements.
+	 * Params:
+	 * allocator = the GAllocator to use when allocating GList elements.
 	 */
 	public static void pushAllocator(void* allocator)
 	{

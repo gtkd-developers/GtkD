@@ -73,13 +73,13 @@ private import glib.Str;
 
 
 
+private import gtk.ToggleButton;
 
 /**
  * Description
  * A GtkCheckButton places a discrete GtkToggleButton next to a widget, (usually a GtkLabel). See the section on GtkToggleButton widgets for more information about toggle/check buttons.
  * The important signal ('toggled') is also inherited from GtkToggleButton.
  */
-private import gtk.ToggleButton;
 public class CheckButton : ToggleButton
 {
 	
@@ -133,13 +133,10 @@ public class CheckButton : ToggleButton
 	 * If mnemonic is true the label
 	 * will be created using gtk_label_new_with_mnemonic(), so underscores
 	 * in label indicate the mnemonic for the check button.
-	 * label:
-	 *  The text of the button, with an underscore in front of the
+	 * Params:
+	 *  label = The text of the button, with an underscore in front of the
 	 *  mnemonic character
-	 * label:
-	 * the text for the check button.
-	 * Returns:
-	 * a GtkWidget.
+	 *  mnemonic = true if the button has an mnemnonic
 	 */
 	public this (char[] label, bool mnemonic=true)
 	{
@@ -155,6 +152,7 @@ public class CheckButton : ToggleButton
 		}
 	}
 	
+	/** */
 	public this(char[] label, void delegate(CheckButton) onClicked, bool mnemonic=true)
 	{
 		this(label, mnemonic);
@@ -168,8 +166,6 @@ public class CheckButton : ToggleButton
 	
 	/**
 	 * Creates a new GtkCheckButton.
-	 * Returns:
-	 * a GtkWidget.
 	 */
 	public this ()
 	{

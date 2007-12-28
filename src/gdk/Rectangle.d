@@ -137,16 +137,16 @@ public class Rectangle
 	
 	
 	/**
-	 * Calculates the intersection of two rectangles.
-	 * It is allowed for dest to be the same as either src1 or src2.
-	 * src1:
-	 *  a GdkRectangle
-	 * src2:
-	 *  a GdkRectangle
-	 * dest:
-	 *  return location for the intersection of src1 and src2
-	 * Returns:
-	 *  TRUE if the rectangles intersect.
+	 * Calculates the intersection of two rectangles. It is allowed for
+	 * dest to be the same as either src1 or src2. If the rectangles
+	 * do not intersect, dest's width and height is set to 0 and its x
+	 * and y values are undefined. If you are only interested in whether
+	 * the rectangles intersect, but not in the intersecting area itself,
+	 * pass NULL for dest.
+	 * Params:
+	 * src2 =  a GdkRectangle
+	 * dest =  return location for the intersection of src1 and src2, or NULL
+	 * Returns: TRUE if the rectangles intersect.
 	 */
 	public int intersect(Rectangle src2, Rectangle dest)
 	{
@@ -159,12 +159,9 @@ public class Rectangle
 	 * The union of rectangles src1 and src2 is the smallest rectangle which
 	 * includes both src1 and src2 within it.
 	 * It is allowed for dest to be the same as either src1 or src2.
-	 * src1:
-	 *  a GdkRectangle
-	 * src2:
-	 *  a GdkRectangle
-	 * dest:
-	 *  return location for the union of src1 and src2
+	 * Params:
+	 * src2 =  a GdkRectangle
+	 * dest =  return location for the union of src1 and src2
 	 */
 	public void unio(Rectangle src2, Rectangle dest)
 	{

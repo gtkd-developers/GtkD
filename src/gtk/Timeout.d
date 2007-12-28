@@ -126,7 +126,6 @@ public class Timeout
 	 *    	interval = 	the timeout in milieconds
 	 *    	delegate() = 	the delegate to be executed
 	 *    	fireNow = 	When true the delegate will be executed emmidiatly
-	 * Returns:
 	 */
 	this(uint interval, bool delegate() dlg, bool fireNow=false)
 	{
@@ -141,6 +140,7 @@ public class Timeout
 		}
 	}
 	
+	/** */
 	public void stop()
 	{
 		if ( timeoutID > 0 )
@@ -152,7 +152,6 @@ public class Timeout
 	
 	/**
 	 * Removes the timeout from gtk
-	 * Returns:
 	 */
 	~this()
 	{
@@ -162,7 +161,7 @@ public class Timeout
 	/**
 	 * Adds a new delegate to this timeout cycle
 	 * Params:
-	 *    	delegate() =
+	 *    	dlg =
 	 *    	fireNow =
 	 */
 	public void addListener(bool delegate() dlg, bool fireNow=false)
@@ -251,19 +250,14 @@ public class Timeout
 	 * Registers a function to be called periodically. The function will be called
 	 * repeatedly after interval milliseconds until it returns FALSE at which
 	 * point the timeout is destroyed and will not be called again.
-	 * interval:
-	 * The time between calls to the function, in milliseconds
+	 * Params:
+	 * interval = The time between calls to the function, in milliseconds
 	 * 	(1/1000ths of a second.)
-	 * function:
-	 * The function to call periodically.
-	 * marshal:
-	 * The marshaller to use instead of the function (if non-NULL).
-	 * data:
-	 * The data to pass to the function.
-	 * destroy:
-	 * Function to call when the timeout is destroyed or NULL.
-	 * Returns:
-	 * A unique id for the event source.
+	 * funct = The function to call periodically.
+	 * marshal = The marshaller to use instead of the function (if non-NULL).
+	 * data = The data to pass to the function.
+	 * destroy = Function to call when the timeout is destroyed or NULL.
+	 * Returns:A unique id for the event source.
 	 */
 	public static uint addFull(uint interval, GtkFunction funct, GtkCallbackMarshal marshal, void* data, GtkDestroyNotify destroy)
 	{
@@ -277,15 +271,12 @@ public class Timeout
 	 * Registers a function to be called periodically. The function will be called
 	 * repeatedly after interval milliseconds until it returns FALSE at which
 	 * point the timeout is destroyed and will not be called again.
-	 * interval:
-	 * The time between calls to the function, in milliseconds
+	 * Params:
+	 * interval = The time between calls to the function, in milliseconds
 	 * 	(1/1000ths of a second.)
-	 * function:
-	 * The function to call periodically.
-	 * data:
-	 * The data to pass to the function.
-	 * Returns:
-	 * A unique id for the event source.
+	 * funct = The function to call periodically.
+	 * data = The data to pass to the function.
+	 * Returns:A unique id for the event source.
 	 */
 	public static uint add(uint interval, GtkFunction funct, void* data)
 	{
@@ -297,8 +288,8 @@ public class Timeout
 	 * Warning
 	 * gtk_timeout_remove has been deprecated since version 2.4 and should not be used in newly-written code. Use g_source_remove() instead.
 	 * Removes the given timeout destroying all information about it.
-	 * timeout_handler_id:
-	 * The identifier returned when installing the timeout.
+	 * Params:
+	 * timeoutHandlerId = The identifier returned when installing the timeout.
 	 */
 	public static void remove(uint timeoutHandlerId)
 	{

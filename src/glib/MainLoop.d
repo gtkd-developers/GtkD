@@ -193,8 +193,8 @@ public class MainLoop
 	
 	/**
 	 * Increases the reference count on a GMainLoop object by one.
-	 * loop:
-	 *  a GMainLoop
+	 * Params:
+	 *  loop = a GMainLoop
 	 * Returns:
 	 *  loop
 	 */
@@ -210,14 +210,11 @@ public class MainLoop
 	
 	/**
 	 * Creates a new GMainLoop structure.
-	 * context:
-	 *  a GMainContext (if NULL, the default context will be used).
-	 * is_running:
-	 *  set to TRUE to indicate that the loop is running. This
+	 * Params:
+	 * context =  a GMainContext (if NULL, the default context will be used).
+	 * isRunning =  set to TRUE to indicate that the loop is running. This
 	 * is not very important since calling g_main_loop_run() will set this to
 	 * TRUE anyway.
-	 * Returns:
-	 *  a new GMainLoop.
 	 */
 	public this (MainContext context, int isRunning)
 	{
@@ -229,8 +226,6 @@ public class MainLoop
 	/**
 	 * Decreases the reference count on a GMainLoop object by one. If
 	 * the result is zero, free the loop and free all associated memory.
-	 * loop:
-	 *  a GMainLoop
 	 */
 	public void unref()
 	{
@@ -243,8 +238,6 @@ public class MainLoop
 	 * If this is called for the thread of the loop's GMainContext,
 	 * it will process events from the loop, otherwise it will
 	 * simply wait.
-	 * loop:
-	 *  a GMainLoop
 	 */
 	public void run()
 	{
@@ -255,8 +248,6 @@ public class MainLoop
 	/**
 	 * Stops a GMainLoop from running. Any calls to g_main_loop_run()
 	 * for the loop will return.
-	 * loop:
-	 *  a GMainLoop
 	 */
 	public void quit()
 	{
@@ -266,10 +257,7 @@ public class MainLoop
 	
 	/**
 	 * Checks to see if the main loop is currently being run via g_main_loop_run().
-	 * loop:
-	 *  a GMainLoop.
-	 * Returns:
-	 *  TRUE if the mainloop is currently being run.
+	 * Returns: TRUE if the mainloop is currently being run.
 	 */
 	public int isRunning()
 	{
@@ -279,10 +267,7 @@ public class MainLoop
 	
 	/**
 	 * Returns the GMainContext of loop.
-	 * loop:
-	 *  a GMainLoop.
-	 * Returns:
-	 *  the GMainContext of loop
+	 * Returns: the GMainContext of loop
 	 */
 	public MainContext getContext()
 	{
@@ -327,93 +312,14 @@ public class MainLoop
 	
 	
 	/**
-	 * Return value: The main loop recursion level in the current thread
-	 * Returns:
-	 * the depth of the stack of calls to
+	 * Returns the depth of the stack of calls to
 	 * g_main_context_dispatch() on any GMainContext in the current thread.
 	 *  That is, when called from the toplevel, it gives 0. When
 	 * called from within a callback from g_main_context_iteration()
 	 * (or g_main_loop_run(), etc.) it returns 1. When called from within
 	 * a callback to a recursive call to g_main_context_iterate(),
 	 * it returns 2. And so forth.
-	 * This function is useful in a situation like the following:
-	 * Imagine an extremely simple "garbage collected" system.
-	 * Example1.
-	 * static GList *free_list;
-	 * gpointer
-	 * allocate_memory (gsize size)
-	 * {
-		 *  gpointer result = g_malloc (size);
-		 *  free_list = g_list_prepend (free_list, result);
-		 *  return result;
-	 * }
-	 * void
-	 * free_allocated_memory (void)
-	 * {
-		 *  GList *l;
-		 *  for (l = free_list; l; l = l->next);
-		 *  g_free (l->data);
-		 *  g_list_free (free_list);
-		 *  free_list = NULL;
-	 *  }
-	 * [...]
-	 * while (TRUE);
-	 *  {
-		 *  g_main_context_iteration (NULL, TRUE);
-		 *  free_allocated_memory();
-	 *  }
-	 * This works from an application, however, if you want to do the same
-	 * thing from a library, it gets more difficult, since you no longer
-	 * control the main loop. You might think you can simply use an idle
-	 * function to make the call to free_allocated_memory(), but that
-	 * doesn't work, since the idle function could be called from a
-	 * recursive callback. This can be fixed by using g_main_depth()
-	 * Example2.
-	 * gpointer
-	 * allocate_memory (gsize size)
-	 * {
-		 *  FreeListBlock *block = g_new (FreeListBlock, 1);\
-		 *  block->mem = g_malloc (size);
-		 *  block->depth = g_main_depth();
-		 *  free_list = g_list_prepend (free_list, block);
-		 *  return block->mem;
-	 * }
-	 * void
-	 * free_allocated_memory (void)
-	 * {
-		 *  GList *l;
-		 *  int depth = g_main_depth();
-		 *  for (l = free_list; l; );
-		 *  {
-			 *  GList *next = l->next;
-			 *  FreeListBlock *block = l->data;
-			 *  if (block->depth > depth)
-			 *  {
-				 *  g_free (block->mem);
-				 *  g_free (block);
-				 *  free_list = g_list_delete_link (free_list, l);
-			 *  }
-			 *  l = next;
-		 *  }
-	 *  }
-	 * There is a temptation to use g_main_depth() to solve
-	 * problems with reentrancy. For instance, while waiting for data
-	 * to be received from the network in response to a menu item,
-	 * the menu item might be selected again. It might seem that
-	 * one could make the menu item's callback return immediately
-	 * and do nothing if g_main_depth() returns a value greater than 1.
-	 * However, this should be avoided since the user then sees selecting
-	 * the menu item do nothing. Furthermore, you'll find yourself adding
-	 * these checks all over your code, since there are doubtless many,
-	 * many things that the user could do. Instead, you can use the
-	 * following techniques:
-	 *  Use gtk_widget_set_sensitive() or modal dialogs to prevent
-	 *  the user from interacting with elements while the main
-	 *  loop is recursing.
-	 *  Avoid main loop recursion in situations where you can't handle
-	 *  arbitrary callbacks. Instead, structure your code so that you
-	 *  simply return to the main loop and then get called again when
-	 *  there is more work to do.
+	 * Returns: The main loop recursion level in the current thread
 	 */
 	public static int gMainDepth()
 	{
@@ -423,15 +329,15 @@ public class MainLoop
 	
 	/**
 	 * Returns the currently firing source for this thread.
-	 * Returns:
-	 *  The currently firing source or NULL.
 	 * Since 2.12
+	 * Returns: The currently firing source or NULL.
 	 */
 	public static Source gMainCurrentSource()
 	{
 		// GSource* g_main_current_source (void);
 		return new Source( g_main_current_source() );
 	}
+	
 	
 	
 	
@@ -446,8 +352,7 @@ public class MainLoop
 	 * executed. Note that the default priority for idle sources is
 	 * G_PRIORITY_DEFAULT_IDLE, as compared to other sources which
 	 * have a default priority of G_PRIORITY_DEFAULT.
-	 * Returns:
-	 *  the newly-created idle source
+	 * Returns: the newly-created idle source
 	 */
 	public static Source gIdleSourceNew()
 	{
@@ -461,12 +366,10 @@ public class MainLoop
 	 * default idle priority, G_PRIORITY_DEFAULT_IDLE. If the function
 	 * returns FALSE it is automatically removed from the list of event
 	 * sources and will not be called again.
-	 * function:
-	 *  function to call
-	 * data:
-	 *  data to pass to function.
-	 * Returns:
-	 *  the ID (greater than 0) of the event source.
+	 * Params:
+	 * funct =  function to call
+	 * data =  data to pass to function.
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint gIdleAdd(GSourceFunc funct, void* data)
 	{
@@ -478,17 +381,13 @@ public class MainLoop
 	 * Adds a function to be called whenever there are no higher priority
 	 * events pending. If the function returns FALSE it is automatically
 	 * removed from the list of event sources and will not be called again.
-	 * priority:
-	 *  the priority of the idle source. Typically this will be in the
+	 * Params:
+	 * priority =  the priority of the idle source. Typically this will be in the
 	 *  range btweeen G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-	 * function:
-	 *  function to call
-	 * data:
-	 *  data to pass to function
-	 * notify:
-	 *  function to call when the idle is removed, or NULL
-	 * Returns:
-	 *  the ID (greater than 0) of the event source.
+	 * funct =  function to call
+	 * data =  data to pass to function
+	 * notify =  function to call when the idle is removed, or NULL
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint gIdleAddFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
@@ -498,10 +397,9 @@ public class MainLoop
 	
 	/**
 	 * Removes the idle function with the given data.
-	 * data:
-	 *  the data for the idle source's callback.
-	 * Returns:
-	 *  TRUE if an idle source was found and removed.
+	 * Params:
+	 * data =  the data for the idle source's callback.
+	 * Returns: TRUE if an idle source was found and removed.
 	 */
 	public static int gIdleRemoveByData(void* data)
 	{

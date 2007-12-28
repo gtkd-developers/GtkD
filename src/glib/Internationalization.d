@@ -79,6 +79,8 @@ private import glib.Str;
  * the GETTEXT_PACKAGE macro suitably for your library:
  * #define GETTEXT_PACKAGE "gtk20"
  * #include <glib/gi18n-lib.h>
+ * The gettext manual covers details of how to set up message extraction
+ * with xgettext.
  */
 public class Internationalization
 {
@@ -91,15 +93,11 @@ public class Internationalization
 	
 	/**
 	 * An auxiliary function for gettext() support (see Q_()).
-	 * msgid:
-	 *  a string
-	 * msgval:
-	 *  another string
-	 * Returns:
-	 *  msgval, unless msgval is identical to msgid and contains
-	 *  a '|' character, in which case a pointer to the substring of msgid after
-	 *  the first '|' character is returned.
 	 * Since 2.4
+	 * Params:
+	 * msgid =  a string
+	 * msgval =  another string
+	 * Returns: msgval, unless msgval is identical to msgid and contains a '|' character, in which case a pointer to the substring of msgid after the first '|' character is returned.
 	 */
 	public static char[] stripContext(char[] msgid, char[] msgval)
 	{
@@ -117,12 +115,8 @@ public class Internationalization
 	 * This function consults the environment variables LANGUAGE,
 	 * LC_ALL, LC_MESSAGES and LANG
 	 * to find the list of locales specified by the user.
-	 * Returns:
-	 *  a NULL-terminated array of strings owned by GLib
-	 *  that must not be modified or freed.
 	 * Since 2.6
-	 * See Also
-	 * The gettext manual.
+	 * Returns: a NULL-terminated array of strings owned by GLib  that must not be modified or freed.
 	 */
 	public static char** getLanguageNames()
 	{

@@ -66,6 +66,7 @@ private import glib.Str;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -75,7 +76,6 @@ private import glib.Str;
  * to refer to inline embedded content, since it allows specification of a start
  * and end offset within the host AtkHypertext object.
  */
-private import gobject.ObjectG;
 public class Hyperlink : ObjectG
 {
 	
@@ -167,12 +167,9 @@ public class Hyperlink : ObjectG
 	 * Get a the URI associated with the anchor specified
 	 * by i of link_.
 	 * Multiple anchors are primarily used by client-side image maps.
-	 * link_:
-	 *  an AtkHyperlink
-	 * i:
-	 *  a (zero-index) integer specifying the desired anchor
-	 * Returns:
-	 *  a string specifying the URI
+	 * Params:
+	 * i =  a (zero-index) integer specifying the desired anchor
+	 * Returns: a string specifying the URI
 	 */
 	public char[] _GetUri(int i)
 	{
@@ -186,12 +183,9 @@ public class Hyperlink : ObjectG
 	 * if link_ is a text hyperlink, AtkImage if link_ is an image
 	 * hyperlink etc.
 	 * Multiple anchors are primarily used by client-side image maps.
-	 * link_:
-	 *  an AtkHyperlink
-	 * i:
-	 *  a (zero-index) integer specifying the desired anchor
-	 * Returns:
-	 *  an AtkObject associated with this hyperlinks i-th anchor
+	 * Params:
+	 * i =  a (zero-index) integer specifying the desired anchor
+	 * Returns: an AtkObject associated with this hyperlinks i-th anchor
 	 */
 	public AtkObject* _GetObject(int i)
 	{
@@ -201,10 +195,7 @@ public class Hyperlink : ObjectG
 	
 	/**
 	 * Gets the index with the hypertext document at which this link ends.
-	 * link_:
-	 *  an AtkHyperlink
-	 * Returns:
-	 *  the index with the hypertext document at which this link ends
+	 * Returns: the index with the hypertext document at which this link ends
 	 */
 	public int _GetEndIndex()
 	{
@@ -214,10 +205,7 @@ public class Hyperlink : ObjectG
 	
 	/**
 	 * Gets the index with the hypertext document at which this link begins.
-	 * link_:
-	 *  an AtkHyperlink
-	 * Returns:
-	 *  the index with the hypertext document at which this link begins
+	 * Returns: the index with the hypertext document at which this link begins
 	 */
 	public int _GetStartIndex()
 	{
@@ -229,10 +217,7 @@ public class Hyperlink : ObjectG
 	 * Since the document that a link is associated with may have changed
 	 * this method returns TRUE if the link is still valid (with
 	 * respect to the document it references) and FALSE otherwise.
-	 * link_:
-	 *  an AtkHyperlink
-	 * Returns:
-	 *  whether or not this link is still valid
+	 * Returns: whether or not this link is still valid
 	 */
 	public int _IsValid()
 	{
@@ -246,10 +231,7 @@ public class Hyperlink : ObjectG
 	 *  FALSE, but an inline lt;srcgt; HTML element will return
 	 *  TRUE.
 	 * a *
-	 * link_:
-	 *  an AtkHyperlink
-	 * Returns:
-	 *  whether or not this link displays its content inline.
+	 * Returns: whether or not this link displays its content inline.
 	 */
 	public int _IsInline()
 	{
@@ -259,10 +241,7 @@ public class Hyperlink : ObjectG
 	
 	/**
 	 * Gets the number of anchors associated with this hyperlink.
-	 * link_:
-	 *  an AtkHyperlink
-	 * Returns:
-	 *  the number of anchors associated with this hyperlink
+	 * Returns: the number of anchors associated with this hyperlink
 	 */
 	public int _GetNAnchors()
 	{
@@ -272,21 +251,7 @@ public class Hyperlink : ObjectG
 	
 	/**
 	 * Determines whether this AtkHyperlink is selected
-	 * Returns:
-	 * link_:
-	 *  an AtkHyperlink
-	 * Returns:
-	 *  True is the AtkHyperlink is selected, False otherwise
-	 * Since ATK 1.4
-	 * @Deprecated: This method is deprecated since ATK version 1.8.
-	 * Please use ATK_STATE_SELECTED to indicate when a hyperlink within a
-	 * Hypertext container is selected.
-	 * Property Details
-	 * The "end-index" property
-	 *  "end-index" gint : Read
-	 * The end index of the AtkHyperlink object.
-	 * Allowed values: >= 0
-	 * Default value: 0
+	 * Returns:Returns: True is the AtkHyperlink is selected, False otherwiseSince ATK 1.4@Deprecated: This method is deprecated since ATK version 1.8.Please use ATK_STATE_SELECTED to indicate when a hyperlink within aHypertext container is selected.
 	 */
 	public int _IsSelectedLink()
 	{

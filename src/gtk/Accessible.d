@@ -65,11 +65,11 @@ private import gtkc.gtk;
 
 
 
+private import atk.ObjectAtk;
 
 /**
  * Description
  */
-private import atk.ObjectAtk;
 public class Accessible : ObjectAtk
 {
 	
@@ -125,8 +125,6 @@ public class Accessible : ObjectAtk
 	/**
 	 * This function specifies the callback function to be called when the widget
 	 * corresponding to a GtkAccessible is destroyed.
-	 * accessible:
-	 *  a GtkAccessible
 	 */
 	public void connectWidgetDestroyed()
 	{

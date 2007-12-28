@@ -237,11 +237,9 @@ public class PgLanguage
 	 * than letters and '-'.
 	 * Use pango_language_get_default() if you want to get the PangoLanguage for
 	 * the current locale of the process.
-	 * language:
-	 *  a string representing a language tag
-	 * Returns:
-	 *  an opaque pointer to a PangoLanguage structure.
-	 *  this will be valid forever after.
+	 * Params:
+	 * language =  a string representing a language tag
+	 * Returns: an opaque pointer to a PangoLanguage structure. this will be valid forever after.
 	 */
 	public static PangoLanguage* fromString(char[] language)
 	{
@@ -256,16 +254,12 @@ public class PgLanguage
 	 * in the list if the range is '*', the range is exactly the tag,
 	 * or the range is a prefix of the tag, and the character after it
 	 * in the tag is '-'.
-	 * language:
-	 *  a language tag (see pango_language_from_string()),
-	 *  NULL is allowed and matches nothing but '*'
-	 * range_list:
-	 *  a list of language ranges, separated by ';', ':',
+	 * Params:
+	 * rangeList =  a list of language ranges, separated by ';', ':',
 	 *  ',', or space characters.
 	 *  Each element must either be '*', or a RFC 3066 language range
 	 *  canonicalized as by pango_language_from_string()
-	 * Returns:
-	 *  TRUE if a match was found.
+	 * Returns: TRUE if a match was found.
 	 */
 	public int matches(char[] rangeList)
 	{

@@ -70,6 +70,7 @@ private import gdk.Font;
 
 
 
+private import gtk.Dialog;
 
 /**
  * Description
@@ -79,8 +80,12 @@ private import gdk.Font;
  * To get the selected font use gtk_font_selection_dialog_get_font_name().
  * To change the text which is shown in the preview area, use
  * gtk_font_selection_dialog_set_preview_text().
+ * GtkFontSelectionDialog as GtkBuildable
+ * The GtkFontSelectionDialog implementation of the GtkBuildable interface
+ * exposes the embedded GtkFontSelection as internal child with the
+ * name "font_selection". It also exposes the buttons with the names
+ * "ok_button", "cancel_button" and "apply_button".
  */
-private import gtk.Dialog;
 public class FontSelectionDialog : Dialog
 {
 	
@@ -135,10 +140,8 @@ public class FontSelectionDialog : Dialog
 	
 	/**
 	 * Creates a new GtkFontSelectionDialog.
-	 * title:
-	 * the title of the dialog box.
-	 * Returns:
-	 * a new GtkFontSelectionDialog.
+	 * Params:
+	 * title = the title of the dialog box.
 	 */
 	public this (char[] title)
 	{
@@ -150,10 +153,7 @@ public class FontSelectionDialog : Dialog
 	 * Warning
 	 * gtk_font_selection_dialog_get_font is deprecated and should not be used in newly-written code.
 	 * Gets the currently-selected font.
-	 * fsd:
-	 * a GtkFontSelectionDialog.
-	 * Returns:
-	 * the currently-selected font, or NULL if no font is selected.
+	 * Returns:the currently-selected font, or NULL if no font is selected.
 	 */
 	public Font getFont()
 	{
@@ -168,11 +168,7 @@ public class FontSelectionDialog : Dialog
 	 * with a different structure. For example, "Helvetica Italic Bold 12" could be
 	 * normalized to "Helvetica Bold Italic 12". Use pango_font_description_equal()
 	 * if you want to compare two font descriptions.
-	 * fsd:
-	 *  a GtkFontSelectionDialog
-	 * Returns:
-	 *  A string with the name of the current font, or NULL if no font
-	 * is selected. You must free this string with g_free().
+	 * Returns: A string with the name of the current font, or NULL if no fontis selected. You must free this string with g_free().
 	 */
 	public char[] getFontName()
 	{
@@ -182,12 +178,9 @@ public class FontSelectionDialog : Dialog
 	
 	/**
 	 * Sets the currently-selected font.
-	 * fsd:
-	 * a GtkFontSelectionDialog.
-	 * fontname:
-	 * a fontname.
-	 * Returns:
-	 * TRUE if the font was found.
+	 * Params:
+	 * fontname = a fontname.
+	 * Returns:TRUE if the font was found.
 	 */
 	public int setFontName(char[] fontname)
 	{
@@ -197,11 +190,7 @@ public class FontSelectionDialog : Dialog
 	
 	/**
 	 * Gets the text displayed in the preview area.
-	 * fsd:
-	 * a GtkFontSelectionDialog.
-	 * Returns:
-	 * the text displayed in the preview area. This string is owned
-	 *  by the widget and should not be modified or freed.
+	 * Returns:the text displayed in the preview area. This string is owned by the widget and should not be modified or freed.
 	 */
 	public char[] getPreviewText()
 	{
@@ -211,15 +200,8 @@ public class FontSelectionDialog : Dialog
 	
 	/**
 	 * Sets the text displayed in the preview area.
-	 * fsd:
-	 * a GtkFontSelectionDialog.
-	 * text:
-	 * the text to display in the preview area.
-	 * See Also
-	 * GtkFontSelection, GtkDialog
-	 * the underlying widget for selecting
-	 * fonts.
-	 * the parent class of GtkFontSelectionDialog
+	 * Params:
+	 * text = the text to display in the preview area.
 	 */
 	public void setPreviewText(char[] text)
 	{

@@ -65,13 +65,13 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Bin;
 
 /**
  * Description
  * The GtkItem widget is an abstract base class for GtkMenuItem, GtkListItem
  * and GtkTreeItem.
  */
-private import gtk.Bin;
 public class Item : Bin
 {
 	
@@ -216,8 +216,6 @@ public class Item : Bin
 	
 	/**
 	 * Emits the "select" signal on the given item.
-	 * item:
-	 * a GtkItem.
 	 */
 	public void select()
 	{
@@ -227,8 +225,6 @@ public class Item : Bin
 	
 	/**
 	 * Emits the "deselect" signal on the given item.
-	 * item:
-	 * a GtkItem.
 	 */
 	public void deselect()
 	{
@@ -238,17 +234,6 @@ public class Item : Bin
 	
 	/**
 	 * Emits the "toggle" signal on the given item.
-	 * item:
-	 * a GtkItem.
-	 * Signal Details
-	 * The "deselect" signal
-	 * void user_function (GtkItem *item,
-	 *  gpointer user_data) : Run First
-	 * Emitted when the item is deselected.
-	 * item:
-	 * the object which received the signal.
-	 * user_data:
-	 * user data set when the signal handler was connected.
 	 */
 	public void toggle()
 	{

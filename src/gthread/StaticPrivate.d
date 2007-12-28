@@ -97,6 +97,10 @@ private import glib.Dataset;
  * this rule are GMainLoop and GAsyncQueue,
  * which are threadsafe and needs no further
  * application-level locking to be accessed from multiple threads.
+ * To help debugging problems in multithreaded applications, GLib supports
+ * error-checking mutexes that will give you helpful error messages on
+ * common problems. To use error-checking mutexes, define the symbol
+ * G_ERRORCHECK_MUTEXES when compiling the application.
  */
 public class StaticPrivate
 {
@@ -222,8 +226,6 @@ public class StaticPrivate
 	/**
 	 * Initializes private_key. Alternatively you can initialize it with
 	 * G_STATIC_PRIVATE_INIT.
-	 * private_key:
-	 * a GStaticPrivate to be initialized.
 	 */
 	public void init()
 	{
@@ -234,10 +236,7 @@ public class StaticPrivate
 	/**
 	 * Works like g_private_get() only for a GStaticPrivate.
 	 * This function works even if g_thread_init() has not yet been called.
-	 * private_key:
-	 * a GStaticPrivate.
-	 * Returns:
-	 * the corresponding pointer.
+	 * Returns:the corresponding pointer.
 	 */
 	public void* get()
 	{
@@ -256,12 +255,9 @@ public class StaticPrivate
 	 * Note
 	 * notify is used quite differently from destructor in
 	 * g_private_new().
-	 * private_key:
-	 * a GStaticPrivate.
-	 * data:
-	 * the new pointer.
-	 * notify:
-	 * a function to be called with the pointer whenever the
+	 * Params:
+	 * data = the new pointer.
+	 * notify = a function to be called with the pointer whenever the
 	 * current thread ends or sets this pointer again.
 	 */
 	public void set(void* data, GDestroyNotify notify)
@@ -276,14 +272,14 @@ public class StaticPrivate
 	 * unbounded lifetime, i.e. objects declared 'static', but if you have a
 	 * GStaticPrivate as a member of a structure and the structure is freed,
 	 * you should also free the GStaticPrivate.
-	 * private_key:
-	 * a GStaticPrivate to be freed.
 	 */
 	public void free()
 	{
 		// void g_static_private_free (GStaticPrivate *private_key);
 		g_static_private_free(gStaticPrivate);
 	}
+	
+	
 	
 	
 	

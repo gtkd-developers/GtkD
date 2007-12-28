@@ -104,14 +104,11 @@ public class Dataset
 	 * function to call when the data element is destroyed.
 	 * Any previous data with the same key is removed, and its
 	 * destroy function is called.
-	 * dataset_location:
-	 * the location identifying the dataset.
-	 * key_id:
-	 * the GQuark id to identify the data element.
-	 * data:
-	 * the data element.
-	 * destroy_func:
-	 * the function to call when the data element is removed. This
+	 * Params:
+	 * datasetLocation = the location identifying the dataset.
+	 * keyId = the GQuark id to identify the data element.
+	 * data = the data element.
+	 * destroyFunc = the function to call when the data element is removed. This
 	 * function will be called with the data element and can be used to free any
 	 * memory allocated for it.
 	 */
@@ -124,13 +121,10 @@ public class Dataset
 	
 	/**
 	 * Gets the data element corresponding to a GQuark.
-	 * dataset_location:
-	 * the location identifying the dataset.
-	 * key_id:
-	 * the GQuark id to identify the data element.
-	 * Returns:
-	 * the data element corresponding to the GQuark, or NULL if it is
-	 * not found.
+	 * Params:
+	 * datasetLocation = the location identifying the dataset.
+	 * keyId = the GQuark id to identify the data element.
+	 * Returns:the data element corresponding to the GQuark, or NULL if it isnot found.
 	 */
 	public static void* idGetData(void* datasetLocation, GQuark keyId)
 	{
@@ -141,12 +135,10 @@ public class Dataset
 	
 	/**
 	 * Removes an element, without calling its destroy notification function.
-	 * dataset_location:
-	 * the location identifying the dataset.
-	 * key_id:
-	 * the GQuark ID identifying the data element.
-	 * Returns:
-	 * the data previously stored at key_id, or NULL if none.
+	 * Params:
+	 * datasetLocation = the location identifying the dataset.
+	 * keyId = the GQuark ID identifying the data element.
+	 * Returns:the data previously stored at key_id, or NULL if none.
 	 */
 	public static void* idRemoveNoNotify(void* datasetLocation, GQuark keyId)
 	{
@@ -165,12 +157,10 @@ public class Dataset
 	 * Note that this function is NOT thread-safe. So unless datalist
 	 * can be protected from any modifications during invocation of this
 	 * function, it should not be called.
-	 * dataset_location:
-	 * the location identifying the dataset.
-	 * func:
-	 * the function to call for each data element.
-	 * user_data:
-	 * user data to pass to the function.
+	 * Params:
+	 * datasetLocation = the location identifying the dataset.
+	 * func = the function to call for each data element.
+	 * userData = user data to pass to the function.
 	 */
 	public static void foreac(void* datasetLocation, GDataForeachFunc func, void* userData)
 	{
@@ -182,8 +172,8 @@ public class Dataset
 	/**
 	 * Destroys the dataset, freeing all memory allocated, and calling any
 	 * destroy functions set for data elements.
-	 * dataset_location:
-	 * the location identifying the dataset.
+	 * Params:
+	 * datasetLocation = the location identifying the dataset.
 	 */
 	public static void destroy(void* datasetLocation)
 	{

@@ -134,14 +134,10 @@ public class Image
 	/**
 	 * Gets the position of the image in the form of a point specifying the
 	 * images top-left corner.
-	 * image:
-	 *  a GObject instance that implements AtkImageIface
-	 * x:
-	 *  address of gint to put x coordinate position; otherwise, -1 if value cannot be obtained.
-	 * y:
-	 *  address of gint to put y coordinate position; otherwise, -1 if value cannot be obtained.
-	 * coord_type:
-	 *  specifies whether the coordinates are relative to the screen
+	 * Params:
+	 * x =  address of gint to put x coordinate position; otherwise, -1 if value cannot be obtained.
+	 * y =  address of gint to put y coordinate position; otherwise, -1 if value cannot be obtained.
+	 * coordType =  specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
 	 */
 	public void getImagePosition(int* x, int* y, AtkCoordType coordType)
@@ -152,10 +148,7 @@ public class Image
 	
 	/**
 	 * Get a textual description of this image.
-	 * image:
-	 *  a GObject instance that implements AtkImageIface
-	 * Returns:
-	 *  a string representing the image description
+	 * Returns: a string representing the image description
 	 */
 	public char[] getImageDescription()
 	{
@@ -165,13 +158,9 @@ public class Image
 	
 	/**
 	 * Sets the textual description for this image.
-	 * image:
-	 *  a GObject instance that implements AtkImageIface
-	 * description:
-	 *  a string description to set for image
-	 * Returns:
-	 *  boolean TRUE, or FALSE if operation could
-	 * not be completed.
+	 * Params:
+	 * description =  a string description to set for image
+	 * Returns: boolean TRUE, or FALSE if operation couldnot be completed.
 	 */
 	public int setImageDescription(char[] description)
 	{
@@ -183,12 +172,9 @@ public class Image
 	 * Get the width and height in pixels for the specified image.
 	 * The values of width and height are returned as -1 if the
 	 * values cannot be obtained (for instance, if the object is not onscreen).
-	 * image:
-	 *  a GObject instance that implements AtkImageIface
-	 * width:
-	 *  filled with the image width, or -1 if the value cannot be obtained.
-	 * height:
-	 *  filled with the image height, or -1 if the value cannot be obtained.
+	 * Params:
+	 * width =  filled with the image width, or -1 if the value cannot be obtained.
+	 * height =  filled with the image height, or -1 if the value cannot be obtained.
 	 */
 	public void getImageSize(int* width, int* height)
 	{
@@ -198,10 +184,7 @@ public class Image
 	
 	/**
 	 * Since ATK 1.12
-	 * image:
-	 *  An AtkImage
-	 * Returns:
-	 * a string corresponding to the POSIX LC_MESSAGES locale used by the image description, or NULL if the image does not specify a locale.
+	 * Returns:a string corresponding to the POSIX LC_MESSAGES locale used by the image description, or NULL if the image does not specify a locale.
 	 */
 	public char[] getImageLocale()
 	{

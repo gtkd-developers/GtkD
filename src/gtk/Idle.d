@@ -122,10 +122,9 @@ public class Idle
 	/**
 	 * Creates a new idle cycle.
 	 * Params:
-	 *    	interval = 	the idle in milieconds
-	 *    	delegate() = 	the delegate to be executed
-	 *    	fireNow = 	When true the delegate will be executed emmidiatly
-	 * Returns:
+	 *    	interval = the idle in milieconds
+	 *    	dlg = the delegate to be executed
+	 *    	fireNow = When true the delegate will be executed emmidiatly
 	 */
 	this(bool delegate() dlg, bool fireNow=false)
 	{
@@ -140,6 +139,7 @@ public class Idle
 		}
 	}
 	
+	/** */
 	public void stop()
 	{
 		if ( idleID > 0 )
@@ -151,7 +151,6 @@ public class Idle
 	
 	/**
 	 * Removes the idle from gtk
-	 * Returns:
 	 */
 	~this()
 	{
@@ -161,7 +160,7 @@ public class Idle
 	/**
 	 * Adds a new delegate to this idle cycle
 	 * Params:
-	 *    	delegate() =
+	 *    	dlg =
 	 *    	fireNow =
 	 */
 	public void addListener(bool delegate() dlg, bool fireNow=false)
@@ -253,12 +252,10 @@ public class Idle
 	 * Causes the mainloop to call the given function whenever no events with
 	 * higher priority are to be processed. The default priority is
 	 * GTK_PRIORITY_DEFAULT, which is rather low.
-	 * function:
-	 * The function to call.
-	 * data:
-	 * The information to pass to the function.
-	 * Returns:
-	 * a unique handle for this registration.
+	 * Params:
+	 * funct = The function to call.
+	 * data = The information to pass to the function.
+	 * Returns:a unique handle for this registration.
 	 */
 	public static uint add(GtkFunction funct, void* data)
 	{
@@ -272,16 +269,13 @@ public class Idle
 	 * Like gtk_idle_add() this function allows you to have a function called
 	 * when the event loop is idle. The difference is that you can give a
 	 * priority different from GTK_PRIORITY_DEFAULT to the idle function.
-	 * priority:
-	 * The priority which should not be above G_PRIORITY_HIGH_IDLE.
+	 * Params:
+	 * priority = The priority which should not be above G_PRIORITY_HIGH_IDLE.
 	 * Note that you will interfere with GTK+ if you use a priority above
 	 * GTK_PRIORITY_RESIZE.
-	 * function:
-	 * The function to call.
-	 * data:
-	 * Data to pass to that function.
-	 * Returns:
-	 * A unique id for the event source.
+	 * funct = The function to call.
+	 * data = Data to pass to that function.
+	 * Returns:A unique id for the event source.
 	 */
 	public static uint addPriority(int priority, GtkFunction funct, void* data)
 	{
@@ -295,20 +289,15 @@ public class Idle
 	 * Like gtk_idle_add() this function allows you to have a function called
 	 * when the event loop is idle. The difference is that you can give a
 	 * priority different from GTK_PRIORITY_DEFAULT to the idle function.
-	 * priority:
-	 * The priority which should not be above G_PRIORITY_HIGH_IDLE.
+	 * Params:
+	 * priority = The priority which should not be above G_PRIORITY_HIGH_IDLE.
 	 * Note that you will interfere with GTK+ if you use a priority above
 	 * GTK_PRIORITY_RESIZE.
-	 * function:
-	 * The function to call.
-	 * marshal:
-	 * The marshaller to use instead of the function (if non-NULL).
-	 * data:
-	 * Data to pass to that function.
-	 * destroy:
-	 * Function to call when the timeout is destroyed or NULL.
-	 * Returns:
-	 * A unique id for the event source.
+	 * funct = The function to call.
+	 * marshal = The marshaller to use instead of the function (if non-NULL).
+	 * data = Data to pass to that function.
+	 * destroy = Function to call when the timeout is destroyed or NULL.
+	 * Returns:A unique id for the event source.
 	 */
 	public static uint addFull(int priority, GtkFunction funct, GtkCallbackMarshal marshal, void* data, GtkDestroyNotify destroy)
 	{
@@ -320,8 +309,8 @@ public class Idle
 	 * Warning
 	 * gtk_idle_remove has been deprecated since version 2.4 and should not be used in newly-written code. Use g_source_remove() instead.
 	 * Removes the idle function with the given id.
-	 * idle_handler_id:
-	 * Identifies the idle function to remove.
+	 * Params:
+	 * idleHandlerId = Identifies the idle function to remove.
 	 */
 	public static void remove(uint idleHandlerId)
 	{
@@ -333,8 +322,8 @@ public class Idle
 	 * Warning
 	 * gtk_idle_remove_by_data has been deprecated since version 2.4 and should not be used in newly-written code. Use g_idle_remove_by_data() instead.
 	 * Removes the idle function identified by the user data.
-	 * data:
-	 * remove the idle function which was registered with this user data.
+	 * Params:
+	 * data = remove the idle function which was registered with this user data.
 	 */
 	public static void removeByData(void* data)
 	{

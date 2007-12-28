@@ -92,10 +92,9 @@ public class Gdk
 	 * updated accordingly.
 	 * GTK+ initializes GDK in gtk_init() and so this function is not usually needed
 	 * by GTK+ applications.
-	 * argc:
-	 * the number of command line arguments.
-	 * argv:
-	 * the array of command line arguments.
+	 * Params:
+	 * argc = the number of command line arguments.
+	 * argv = the array of command line arguments.
 	 */
 	public static void init(int* argc, char*** argv)
 	{
@@ -110,12 +109,10 @@ public class Gdk
 	 * updated accordingly.
 	 * GTK+ initializes GDK in gtk_init() and so this function is not usually needed
 	 * by GTK+ applications.
-	 * argc:
-	 * the number of command line arguments.
-	 * argv:
-	 * the array of command line arguments.
-	 * Returns:
-	 * TRUE if initialization succeeded.
+	 * Params:
+	 * argc = the number of command line arguments.
+	 * argv = the array of command line arguments.
+	 * Returns:TRUE if initialization succeeded.
 	 */
 	public static int initCheck(int* argc, char*** argv)
 	{
@@ -130,11 +127,10 @@ public class Gdk
 	 * updated accordingly.
 	 * You shouldn't call this function explicitely if you are using
 	 * gtk_init(), gtk_init_check(), gdk_init(), or gdk_init_check().
-	 * argc:
-	 *  the number of command line arguments.
-	 * argv:
-	 *  the array of command line arguments.
 	 * Since 2.2
+	 * Params:
+	 * argc =  the number of command line arguments.
+	 * argv =  the array of command line arguments.
 	 */
 	public static void parseArgs(int* argc, char*** argv)
 	{
@@ -145,10 +141,8 @@ public class Gdk
 	/**
 	 * Gets the display name specified in the command line arguments passed
 	 * to gdk_init() or gdk_parse_args(), if any.
-	 * Returns:
-	 *  the display name, if specified explicitely, otherwise NULL
-	 *  this string is owned by GTK+ and must not be modified or freed.
 	 * Since 2.2
+	 * Returns: the display name, if specified explicitely, otherwise NULL this string is owned by GTK+ and must not be modified or freed.
 	 */
 	public static char[] getDisplayArgName()
 	{
@@ -161,13 +155,7 @@ public class Gdk
 	 * system call. This function is called by gtk_set_locale() and so GTK+
 	 * applications should use that instead.
 	 * The locale to use is determined by the LANG environment variable,
-	 * so to run an application in a certain locale you can do something like this:
-	 *  export LANG="fr"
-	 *  ... run application ...
-	 * If the locale is not supported by X then it is reset to the standard "C"
-	 * locale.
-	 * Returns:
-	 * the resulting locale.
+	 * Returns:the resulting locale.
 	 */
 	public static char[] setLocale()
 	{
@@ -183,8 +171,8 @@ public class Gdk
 	 * session management and the Inter-Client Communication Conventions Manual
 	 * (ICCCM) for information on the WM_CLIENT_LEADER property.
 	 * (Both documents are part of the X Window System distribution.)
-	 * sm_client_id:
-	 *  the client id assigned by the session manager when the
+	 * Params:
+	 * smClientId =  the client id assigned by the session manager when the
 	 *  connection was opened, or NULL to remove the property.
 	 */
 	public static void setSmClientId(char[] smClientId)
@@ -201,8 +189,8 @@ public class Gdk
 	 * perform tasks necessary to exit the application cleanly. Those tasks are now
 	 * performed in a function which is automatically called on exit (via the use
 	 * of g_atexit()).
-	 * error_code:
-	 * the error code to pass to the exit() call.
+	 * Params:
+	 * errorCode = the error code to pass to the exit() call.
 	 */
 	public static void exit(int errorCode)
 	{
@@ -227,12 +215,29 @@ public class Gdk
 	}
 	
 	/**
+	 * Indicates to the GUI environment that the application has finished
+	 * loading, using a given identifier.
+	 * GTK+ will call this function automatically for GtkWindow with custom
+	 * startup-notification identifier unless
+	 * gtk_window_set_auto_startup_notification() is called to disable
+	 * that feature.
+	 * Since 2.12
+	 * Params:
+	 * startupId =  a startup-notification identifier, for which notification
+	 *  process should be completed
+	 */
+	public static void notifyStartupCompleteWithId(char[] startupId)
+	{
+		// void gdk_notify_startup_complete_with_id (const gchar *startup_id);
+		gdk_notify_startup_complete_with_id(Str.toStringz(startupId));
+	}
+	
+	/**
 	 * Gets the program class. Unless the program class has explicitly
 	 * been set with gdk_set_program_class() or with the --class
 	 * commandline option, the default value is the program name (determined
 	 * with g_get_prgname()) with the first character converted to uppercase.
-	 * Returns:
-	 * the program class.
+	 * Returns:the program class.
 	 */
 	public static char[] getProgramClass()
 	{
@@ -244,8 +249,8 @@ public class Gdk
 	 * Sets the program class. The X11 backend uses the program class to set
 	 * the class name part of the WM_CLASS property on
 	 * toplevel windows; see the ICCCM.
-	 * program_class:
-	 * a string.
+	 * Params:
+	 * programClass = a string.
 	 */
 	public static void setProgramClass(char[] programClass)
 	{
@@ -256,8 +261,7 @@ public class Gdk
 	/**
 	 * Gets the name of the display, which usually comes from the DISPLAY
 	 * environment variable or the --display command line option.
-	 * Returns:
-	 * the name of the display.
+	 * Returns:the name of the display.
 	 */
 	public static char[] getDisplay()
 	{
@@ -278,8 +282,7 @@ public class Gdk
 	
 	/**
 	 * Returns the width of the default screen in pixels.
-	 * Returns:
-	 *  the width of the default screen in pixels.
+	 * Returns: the width of the default screen in pixels.
 	 */
 	public static int screenWidth()
 	{
@@ -289,8 +292,7 @@ public class Gdk
 	
 	/**
 	 * Returns the height of the default screen in pixels.
-	 * Returns:
-	 *  the height of the default screen in pixels.
+	 * Returns: the height of the default screen in pixels.
 	 */
 	public static int screenHeight()
 	{
@@ -301,9 +303,7 @@ public class Gdk
 	/**
 	 * Returns the width of the default screen in millimeters.
 	 * Note that on many X servers this value will not be correct.
-	 * Returns:
-	 *  the width of the default screen in millimeters,
-	 * though it is not always correct.
+	 * Returns: the width of the default screen in millimeters,though it is not always correct.
 	 */
 	public static int screenWidthMm()
 	{
@@ -314,9 +314,7 @@ public class Gdk
 	/**
 	 * Returns the height of the default screen in millimeters.
 	 * Note that on many X servers this value will not be correct.
-	 * Returns:
-	 *  the height of the default screen in millimeters,
-	 * though it is not always correct.
+	 * Returns: the height of the default screen in millimeters,though it is not always correct.
 	 */
 	public static int screenHeightMm()
 	{
@@ -344,33 +342,27 @@ public class Gdk
 	 * If you set up anything at the time you take the grab that needs to be cleaned
 	 * up when the grab ends, you should handle the GdkEventGrabBroken events that
 	 * are emitted when the grab ends unvoluntarily.
-	 * window:
-	 * the GdkWindow which will own the grab (the grab window).
-	 * owner_events:
-	 * if FALSE then all pointer events are reported with respect to
+	 * Params:
+	 * window = the GdkWindow which will own the grab (the grab window).
+	 * ownerEvents = if FALSE then all pointer events are reported with respect to
 	 * window and are only reported if selected by event_mask. If TRUE then pointer
 	 * events for this application are reported as normal, but pointer events outside
 	 * this application are reported with respect to window and only if selected by
 	 * event_mask. In either mode, unreported events are discarded.
-	 * event_mask:
-	 * specifies the event mask, which is used in accordance with
+	 * eventMask = specifies the event mask, which is used in accordance with
 	 * owner_events. Note that only pointer events (i.e. button and motion events)
 	 *  may be selected.
-	 * confine_to:
-	 * If non-NULL, the pointer will be confined to this
+	 * confineTo = If non-NULL, the pointer will be confined to this
 	 * window during the grab. If the pointer is outside confine_to, it will
 	 * automatically be moved to the closest edge of confine_to and enter
 	 * and leave events will be generated as necessary.
-	 * cursor:
-	 * the cursor to display while the grab is active. If this is NULL then
+	 * cursor = the cursor to display while the grab is active. If this is NULL then
 	 * the normal cursors are used for window and its descendants, and the cursor
 	 * for window is used for all other windows.
-	 * time_:
-	 * the timestamp of the event which led to this pointer grab. This usually
+	 * time = the timestamp of the event which led to this pointer grab. This usually
 	 * comes from a GdkEventButton struct, though GDK_CURRENT_TIME can be used if
 	 * the time isn't known.
-	 * Returns:
-	 * GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns:GDK_GRAB_SUCCESS if the grab was successful.
 	 */
 	public static GdkGrabStatus pointerGrab(Window window, int ownerEvents, GdkEventMask eventMask, Window confineTo, Cursor cursor, uint time)
 	{
@@ -382,8 +374,8 @@ public class Gdk
 	/**
 	 * Ungrabs the pointer on the default display, if it is grabbed by this
 	 * application.
-	 * time_:
-	 *  a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
+	 * Params:
+	 * time =  a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
 	 *  timestamp is available.
 	 */
 	public static void pointerUngrab(uint time)
@@ -397,8 +389,7 @@ public class Gdk
 	 * grabbed by this application.
 	 * Note that this does not take the inmplicit pointer grab on button
 	 * presses into account.
-	 * Returns:
-	 *  TRUE if the pointer is currently grabbed by this application.*
+	 * Returns: TRUE if the pointer is currently grabbed by this application.*
 	 */
 	public static int pointerIsGrabbed()
 	{
@@ -412,8 +403,8 @@ public class Gdk
 	 * See also gdk_display_set_double_click_distance().
 	 * Applications should not set this, it is a
 	 * global user-configured setting.
-	 * msec:
-	 *  double click time in milliseconds (thousandths of a second)
+	 * Params:
+	 * msec =  double click time in milliseconds (thousandths of a second)
 	 */
 	public static void setDoubleClickTime(uint msec)
 	{
@@ -428,19 +419,16 @@ public class Gdk
 	 * If you set up anything at the time you take the grab that needs to be cleaned
 	 * up when the grab ends, you should handle the GdkEventGrabBroken events that
 	 * are emitted when the grab ends unvoluntarily.
-	 * window:
-	 * the GdkWindow which will own the grab (the grab window).
-	 * owner_events:
-	 * if FALSE then all keyboard events are reported with respect to
+	 * Params:
+	 * window = the GdkWindow which will own the grab (the grab window).
+	 * ownerEvents = if FALSE then all keyboard events are reported with respect to
 	 * window. If TRUE then keyboard events for this application are reported as
 	 * normal, but keyboard events outside this application are reported with respect
 	 * to window. Both key press and key release events are always reported,
 	 * independant of the event mask set by the application.
-	 * time_:
-	 * a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no timestamp is
+	 * time = a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no timestamp is
 	 * available.
-	 * Returns:
-	 * GDK_GRAB_SUCCESS if the grab was successful.
+	 * Returns:GDK_GRAB_SUCCESS if the grab was successful.
 	 */
 	public static GdkGrabStatus keyboardGrab(Window window, int ownerEvents, uint time)
 	{
@@ -451,8 +439,8 @@ public class Gdk
 	/**
 	 * Ungrabs the keyboard on the default display, if it is grabbed by this
 	 * application.
-	 * time_:
-	 *  a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
+	 * Params:
+	 * time =  a timestamp from a GdkEvent, or GDK_CURRENT_TIME if no
 	 *  timestamp is available.
 	 */
 	public static void keyboardUngrab(uint time)
@@ -479,8 +467,7 @@ public class Gdk
 	 * It enables much faster drawing by communicating with the X server through
 	 * SYSV shared memory calls. However, it can only be used if the X client and
 	 * server are on the same machine and the server supports it.
-	 * Returns:
-	 * TRUE if use of the MIT shared memory extension will be attempted.
+	 * Returns:TRUE if use of the MIT shared memory extension will be attempted.
 	 */
 	public static int getUseXshm()
 	{
@@ -495,8 +482,8 @@ public class Gdk
 	 * This function is mainly for internal use. It is only safe for an application
 	 * to set this to FALSE, since if it is set to TRUE and the server does not
 	 * support the extension it may cause warning messages to be output.
-	 * use_xshm:
-	 * TRUE if use of the MIT shared memory extension should be attempted.
+	 * Params:
+	 * useXshm = TRUE if use of the MIT shared memory extension should be attempted.
 	 */
 	public static void setUseXshm(int useXshm)
 	{
@@ -526,15 +513,13 @@ public class Gdk
 	
 	/**
 	 * Removes the X error trap installed with gdk_error_trap_push().
-	 * Returns:
-	 * the X error code, or 0 if no error occurred.
+	 * Returns:the X error code, or 0 if no error occurred.
 	 */
 	public static int errorTrapPop()
 	{
 		// gint gdk_error_trap_pop (void);
 		return gdk_error_trap_pop();
 	}
-	
 	
 	
 }

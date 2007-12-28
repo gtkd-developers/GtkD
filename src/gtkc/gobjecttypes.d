@@ -458,13 +458,15 @@ public struct GObject{}
 public struct GObjectClass{}
 // GTypeClass gTypeClass;
 // gobject-The-Base-Object-Type.html
-// /+* overridable methods +/
+// /+* seldomly overidden +/
 // gobject-The-Base-Object-Type.html
 // GObject* (*constructor) (GType type,
 // gobject-The-Base-Object-Type.html
 // uint nConstructProperties,
 // gobject-The-Base-Object-Type.html
 // GObjectConstructParam *constructProperties);
+// gobject-The-Base-Object-Type.html
+// /+* overridable methods +/
 // gobject-The-Base-Object-Type.html
 // void (*setProperty) (GObject *object,
 // gobject-The-Base-Object-Type.html
@@ -499,6 +501,10 @@ public struct GObjectClass{}
 // void (*notify) (GObject *object,
 // gobject-The-Base-Object-Type.html
 // GParamSpec *pspec);
+// gobject-The-Base-Object-Type.html
+// /+* called when done constructing +/
+// gobject-The-Base-Object-Type.html
+// void (*constructed) (GObject *object);
 // gobject-The-Base-Object-Type.html
 
 
@@ -1576,10 +1582,16 @@ public struct GValueArray{}
  * instance and class structure and the definitions of the instance and class
  * init functions.
  * TN:
+ * The name of the new type, in Camel case.
  * t_n:
+ * The name of the new type, in lowercase, with words
+ *  separated by '_'.
  * T_P:
+ * The GType of the parent type.
  * _f_:
+ * GTypeFlags to pass to g_type_register_static()
  * _C_:
+ * Custom code that gets inserted in the *_get_type() function.
  * Since 2.4
  */
 // TODO
@@ -1776,7 +1788,7 @@ public struct GValueArray{}
 // #define G_OBJECT_CLASS_NAME(class) (g_type_name (G_OBJECT_CLASS_TYPE (class)))
 
 /*
- * This macros should be used to emit a standard warning about unexpected
+ * This macro should be used to emit a standard warning about unexpected
  * properties in set_property() and get_property() implementations.
  * object:
  * the GObject on which set_property() or get_property() was called

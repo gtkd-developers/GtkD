@@ -73,6 +73,7 @@ private import gtk.TreeModel;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -99,7 +100,6 @@ private import gtk.TreeModel;
  * to differentiate them clearly from completion strings. When an action is
  * selected, the ::action-activated signal is emitted.
  */
-private import gobject.ObjectG;
 public class EntryCompletion : ObjectG
 {
 	
@@ -184,6 +184,34 @@ public class EntryCompletion : ObjectG
 		return consumed;
 	}
 	
+	gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion)[] onCursorOnMatchListeners;
+	void addOnCursorOnMatch(gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("cursor-on-match" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"cursor-on-match",
+			cast(GCallback)&callBackCursorOnMatch,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["cursor-on-match"] = 1;
+		}
+		onCursorOnMatchListeners ~= dlg;
+	}
+	extern(C) static void callBackCursorOnMatch(GtkEntryCompletion* widgetStruct, GtkTreeModel* model, GtkTreeIter* iter, EntryCompletion entryCompletion)
+	{
+		bool consumed = false;
+		
+		foreach ( gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion) dlg ; entryCompletion.onCursorOnMatchListeners )
+		{
+			dlg(new TreeModel(model), iter, entryCompletion);
+		}
+		
+		return consumed;
+	}
+	
 	gboolean delegate(char[], EntryCompletion)[] onInsertPrefixListeners;
 	void addOnInsertPrefix(gboolean delegate(char[], EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -245,8 +273,6 @@ public class EntryCompletion : ObjectG
 	
 	/**
 	 * Creates a new GtkEntryCompletion object.
-	 * Returns:
-	 *  A newly created GtkEntryCompletion object.
 	 * Since 2.4
 	 */
 	public this ()
@@ -257,11 +283,8 @@ public class EntryCompletion : ObjectG
 	
 	/**
 	 * Gets the entry completion has been attached to.
-	 * completion:
-	 *  A GtkEntryCompletion.
-	 * Returns:
-	 *  The entry completion has been attached to.
 	 * Since 2.4
+	 * Returns: The entry completion has been attached to.
 	 */
 	public Widget getEntry()
 	{
@@ -273,11 +296,9 @@ public class EntryCompletion : ObjectG
 	 * Sets the model for a GtkEntryCompletion. If completion already has
 	 * a model set, it will remove it before setting the new model.
 	 * If model is NULL, then it will unset the model.
-	 * completion:
-	 *  A GtkEntryCompletion.
-	 * model:
-	 *  The GtkTreeModel.
 	 * Since 2.4
+	 * Params:
+	 * model =  The GtkTreeModel.
 	 */
 	public void setModel(TreeModel model)
 	{
@@ -288,11 +309,8 @@ public class EntryCompletion : ObjectG
 	/**
 	 * Returns the model the GtkEntryCompletion is using as data source.
 	 * Returns NULL if the model is unset.
-	 * completion:
-	 *  A GtkEntryCompletion.
-	 * Returns:
-	 *  A GtkTreeModel, or NULL if none is currently being used.
 	 * Since 2.4
+	 * Returns: A GtkTreeModel, or NULL if none is currently being used.
 	 */
 	public TreeModel getModel()
 	{
@@ -304,15 +322,11 @@ public class EntryCompletion : ObjectG
 	 * Sets the match function for completion to be func. The match function
 	 * is used to determine if a row should or should not be in the completion
 	 * list.
-	 * completion:
-	 *  A GtkEntryCompletion.
-	 * func:
-	 *  The GtkEntryCompletionMatchFunc to use.
-	 * func_data:
-	 *  The user data for func.
-	 * func_notify:
-	 *  Destroy notifier for func_data.
 	 * Since 2.4
+	 * Params:
+	 * func =  The GtkEntryCompletionMatchFunc to use.
+	 * funcData =  The user data for func.
+	 * funcNotify =  Destroy notifier for func_data.
 	 */
 	public void setMatchFunc(GtkEntryCompletionMatchFunc func, void* funcData, GDestroyNotify funcNotify)
 	{
@@ -325,11 +339,9 @@ public class EntryCompletion : ObjectG
 	 * length. This is useful for long lists, where completing using a small
 	 * key takes a lot of time and will come up with meaningless results anyway
 	 * (ie, a too large dataset).
-	 * completion:
-	 *  A GtkEntryCompletion.
-	 * length:
-	 *  The minimum length of the key in order to start completing.
 	 * Since 2.4
+	 * Params:
+	 * length =  The minimum length of the key in order to start completing.
 	 */
 	public void setMinimumKeyLength(int length)
 	{
@@ -339,11 +351,8 @@ public class EntryCompletion : ObjectG
 	
 	/**
 	 * Returns the minimum key length as set for completion.
-	 * completion:
-	 *  A GtkEntryCompletion.
-	 * Returns:
-	 *  The currently used minimum key length.
 	 * Since 2.4
+	 * Returns: The currently used minimum key length.
 	 */
 	public int getMinimumKeyLength()
 	{
@@ -355,8 +364,6 @@ public class EntryCompletion : ObjectG
 	 * Requests a completion operation, or in other words a refiltering of the
 	 * current list with completions, using the current key. The completion list
 	 * view will be updated accordingly.
-	 * completion:
-	 *  A GtkEntryCompletion.
 	 * Since 2.4
 	 */
 	public void complete()
@@ -366,9 +373,19 @@ public class EntryCompletion : ObjectG
 	}
 	
 	/**
+	 * Get the original text entered by the user that triggered
+	 * the completion or NULL if there's no completion ongoing.
+	 * Since 2.12
+	 * Returns: the prefix for the current completion
+	 */
+	public char[] getCompletionPrefix()
+	{
+		// const gchar* gtk_entry_completion_get_completion_prefix  (GtkEntryCompletion *completion);
+		return Str.toString(gtk_entry_completion_get_completion_prefix(gtkEntryCompletion) );
+	}
+	
+	/**
 	 * Requests a prefix insertion.
-	 * completion:
-	 *  a GtkEntryCompletion
 	 * Since 2.6
 	 */
 	public void insertPrefix()
@@ -381,13 +398,10 @@ public class EntryCompletion : ObjectG
 	 * Inserts an action in completion's action item list at position index_
 	 * with text text. If you want the action item to have markup, use
 	 * gtk_entry_completion_insert_action_markup().
-	 * completion:
-	 *  A GtkEntryCompletion.
-	 * index_:
-	 *  The index of the item to insert.
-	 * text:
-	 *  Text of the item to insert.
 	 * Since 2.4
+	 * Params:
+	 * index =  The index of the item to insert.
+	 * text =  Text of the item to insert.
 	 */
 	public void insertActionText(int index, char[] text)
 	{
@@ -398,13 +412,10 @@ public class EntryCompletion : ObjectG
 	/**
 	 * Inserts an action in completion's action item list at position index_
 	 * with markup markup.
-	 * completion:
-	 *  A GtkEntryCompletion.
-	 * index_:
-	 *  The index of the item to insert.
-	 * markup:
-	 *  Markup of the item to insert.
 	 * Since 2.4
+	 * Params:
+	 * index =  The index of the item to insert.
+	 * markup =  Markup of the item to insert.
 	 */
 	public void insertActionMarkup(int index, char[] markup)
 	{
@@ -414,11 +425,9 @@ public class EntryCompletion : ObjectG
 	
 	/**
 	 * Deletes the action at index_ from completion's action list.
-	 * completion:
-	 *  A GtkEntryCompletion.
-	 * index_:
-	 *  The index of the item to Delete.
 	 * Since 2.4
+	 * Params:
+	 * index =  The index of the item to Delete.
 	 */
 	public void deleteAction(int index)
 	{
@@ -434,11 +443,9 @@ public class EntryCompletion : ObjectG
 	 * This functions creates and adds a GtkCellRendererText for the selected
 	 * column. If you need to set the text column, but don't want the cell
 	 * renderer, use g_object_set() to set the ::text_column property directly.
-	 * completion:
-	 *  A GtkEntryCompletion.
-	 * column:
-	 *  The column in the model of completion to get strings from.
 	 * Since 2.4
+	 * Params:
+	 * column =  The column in the model of completion to get strings from.
 	 */
 	public void setTextColumn(int column)
 	{
@@ -448,11 +455,8 @@ public class EntryCompletion : ObjectG
 	
 	/**
 	 * Returns the column in the model of completion to get strings from.
-	 * completion:
-	 *  a GtkEntryCompletion
-	 * Returns:
-	 *  the column containing the strings
 	 * Since 2.6
+	 * Returns: the column containing the strings
 	 */
 	public int getTextColumn()
 	{
@@ -463,11 +467,9 @@ public class EntryCompletion : ObjectG
 	/**
 	 * Sets whether the common prefix of the possible completions should
 	 * be automatically inserted in the entry.
-	 * completion:
-	 *  a GtkEntryCompletion
-	 * inline_completion:
-	 *  TRUE to do inline completion
 	 * Since 2.6
+	 * Params:
+	 * inlineCompletion =  TRUE to do inline completion
 	 */
 	public void setInlineCompletion(int inlineCompletion)
 	{
@@ -478,11 +480,8 @@ public class EntryCompletion : ObjectG
 	/**
 	 * Returns whether the common prefix of the possible completions should
 	 * be automatically inserted in the entry.
-	 * completion:
-	 *  a GtkEntryCompletion
-	 * Returns:
-	 *  TRUE if inline completion is turned on
 	 * Since 2.6
+	 * Returns: TRUE if inline completion is turned on
 	 */
 	public int getInlineCompletion()
 	{
@@ -491,12 +490,34 @@ public class EntryCompletion : ObjectG
 	}
 	
 	/**
+	 * Sets whether it is possible to cycle through the possible completions
+	 * inside the entry.
+	 * Since 2.12
+	 * Params:
+	 * inlineSelection =  TRUE to do inline selection
+	 */
+	public void setInlineSelection(int inlineSelection)
+	{
+		// void gtk_entry_completion_set_inline_selection  (GtkEntryCompletion *completion,  gboolean inline_selection);
+		gtk_entry_completion_set_inline_selection(gtkEntryCompletion, inlineSelection);
+	}
+	
+	/**
+	 * Returns TRUE if inline-selection mode is turned on.
+	 * Since 2.12
+	 * Returns: TRUE if inline-selection mode is on
+	 */
+	public int getInlineSelection()
+	{
+		// gboolean gtk_entry_completion_get_inline_selection  (GtkEntryCompletion *completion);
+		return gtk_entry_completion_get_inline_selection(gtkEntryCompletion);
+	}
+	
+	/**
 	 * Sets whether the completions should be presented in a popup window.
-	 * completion:
-	 *  a GtkEntryCompletion
-	 * popup_completion:
-	 *  TRUE to do popup completion
 	 * Since 2.6
+	 * Params:
+	 * popupCompletion =  TRUE to do popup completion
 	 */
 	public void setPopupCompletion(int popupCompletion)
 	{
@@ -506,11 +527,8 @@ public class EntryCompletion : ObjectG
 	
 	/**
 	 * Returns whether the completions should be presented in a popup window.
-	 * completion:
-	 *  a GtkEntryCompletion
-	 * Returns:
-	 *  TRUE if popup completion is turned on
 	 * Since 2.6
+	 * Returns: TRUE if popup completion is turned on
 	 */
 	public int getPopupCompletion()
 	{
@@ -521,11 +539,9 @@ public class EntryCompletion : ObjectG
 	/**
 	 * Sets whether the completion popup window will be resized to be the same
 	 * width as the entry.
-	 * completion:
-	 *  a GtkEntryCompletion
-	 * popup_set_width:
-	 *  TRUE to make the width of the popup the same as the entry
 	 * Since 2.8
+	 * Params:
+	 * popupSetWidth =  TRUE to make the width of the popup the same as the entry
 	 */
 	public void setPopupSetWidth(int popupSetWidth)
 	{
@@ -536,12 +552,8 @@ public class EntryCompletion : ObjectG
 	/**
 	 * Returns whether the completion popup window will be resized to the
 	 * width of the entry.
-	 * completion:
-	 *  a GtkEntryCompletion
-	 * Returns:
-	 *  TRUE if the popup window will be resized to the width of
-	 *  the entry
 	 * Since 2.8
+	 * Returns: TRUE if the popup window will be resized to the width of  the entry
 	 */
 	public int getPopupSetWidth()
 	{
@@ -554,12 +566,10 @@ public class EntryCompletion : ObjectG
 	 * only a single match. You may want to set this to FALSE if you
 	 * are using inline
 	 * completion.
-	 * completion:
-	 *  a GtkEntryCompletion
-	 * popup_single_match:
-	 *  TRUE if the popup should appear even for a single
-	 *  match
 	 * Since 2.8
+	 * Params:
+	 * popupSingleMatch =  TRUE if the popup should appear even for a single
+	 *  match
 	 */
 	public void setPopupSingleMatch(int popupSingleMatch)
 	{
@@ -570,27 +580,16 @@ public class EntryCompletion : ObjectG
 	/**
 	 * Returns whether the completion popup window will appear even if there is
 	 * only a single match.
-	 * completion:
-	 *  a GtkEntryCompletion
-	 * Returns:
-	 *  TRUE if the popup window will appear regardless of the
-	 *  number of matches.
 	 * Since 2.8
-	 * Property Details
-	 * The "inline-completion" property
-	 *  "inline-completion" gboolean : Read / Write
-	 * Determines whether the common prefix of the possible completions
-	 * should be inserted automatically in the entry. Note that this
-	 * requires text-column to be set, even if you are using a custom
-	 * match function.
-	 * Default value: FALSE
-	 * Since 2.6
+	 * Returns: TRUE if the popup window will appear regardless of the number of matches.
 	 */
 	public int getPopupSingleMatch()
 	{
 		// gboolean gtk_entry_completion_get_popup_single_match  (GtkEntryCompletion *completion);
 		return gtk_entry_completion_get_popup_single_match(gtkEntryCompletion);
 	}
+	
+	
 	
 	
 	

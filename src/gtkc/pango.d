@@ -190,6 +190,7 @@ extern(C)
 	char* function(PangoFontFace* face)pango_font_face_get_face_name;
 	void function(PangoFontFace* face, int** sizes, int* nSizes)pango_font_face_list_sizes;
 	PangoFontDescription* function(PangoFontFace* face)pango_font_face_describe;
+	gboolean function(PangoFontFace* face)pango_font_face_is_synthesized;
 	
 	// pango.PgFontMap
 	
@@ -527,6 +528,7 @@ Symbol[] pangoLinks =
 	{ "pango_font_face_get_face_name",  cast(void**)& pango_font_face_get_face_name},
 	{ "pango_font_face_list_sizes",  cast(void**)& pango_font_face_list_sizes},
 	{ "pango_font_face_describe",  cast(void**)& pango_font_face_describe},
+	{ "pango_font_face_is_synthesized",  cast(void**)& pango_font_face_is_synthesized},
 	{ "pango_font_map_load_font",  cast(void**)& pango_font_map_load_font},
 	{ "pango_font_map_load_fontset",  cast(void**)& pango_font_map_load_fontset},
 	{ "pango_font_map_list_families",  cast(void**)& pango_font_map_list_families},

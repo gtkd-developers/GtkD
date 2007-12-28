@@ -85,7 +85,7 @@ private import glib.ListG;
  * To access an element of a pointer array, use g_ptr_array_index().
  * To set the size of a pointer array, use g_ptr_array_set_size().
  * To free a pointer array, use g_ptr_array_free().
- * Example7.Using a GPtrArray
+ * Example21.Using a GPtrArray
  *  GPtrArray *gparray;
  *  gchar *string1 = "one", *string2 = "two", *string3 = "three";
  *  gparray = g_ptr_array_new ();
@@ -150,8 +150,6 @@ public class PtrArray
 	
 	/**
 	 * Creates a new GPtrArray.
-	 * Returns:
-	 * the new GPtrArray.
 	 */
 	public this ()
 	{
@@ -164,10 +162,9 @@ public class PtrArray
 	 * preallocated. This avoids frequent reallocation, if you are going to
 	 * add many pointers to the array. Note however that the size of the
 	 * array is still 0.
-	 * reserved_size:
-	 * number of pointers preallocated.
-	 * Returns:
-	 * the new GPtrArray.
+	 * Params:
+	 * reservedSize = number of pointers preallocated.
+	 * Returns:the new GPtrArray.
 	 */
 	public static PtrArray sizedNew(uint reservedSize)
 	{
@@ -178,10 +175,8 @@ public class PtrArray
 	/**
 	 * Adds a pointer to the end of the pointer array.
 	 * The array will grow in size automatically if necessary.
-	 * array:
-	 * a GPtrArray.
-	 * data:
-	 * the pointer to add.
+	 * Params:
+	 * data = the pointer to add.
 	 */
 	public void add(void* data)
 	{
@@ -194,13 +189,9 @@ public class PtrArray
 	 * The following elements are moved down one place.
 	 * It returns TRUE if the pointer was removed, or FALSE if the pointer
 	 * was not found.
-	 * array:
-	 * a GPtrArray.
-	 * data:
-	 * the pointer to remove.
-	 * Returns:
-	 * TRUE if the pointer is removed. FALSE if the pointer is not found
-	 * in the array.
+	 * Params:
+	 * data = the pointer to remove.
+	 * Returns:TRUE if the pointer is removed. FALSE if the pointer is not foundin the array.
 	 */
 	public int remove(void* data)
 	{
@@ -211,12 +202,9 @@ public class PtrArray
 	/**
 	 * Removes the pointer at the given index from the pointer array.
 	 * The following elements are moved down one place.
-	 * array:
-	 * a GPtrArray.
-	 * index_:
-	 * the index of the pointer to remove.
-	 * Returns:
-	 * the pointer which was removed.
+	 * Params:
+	 * index = the index of the pointer to remove.
+	 * Returns:the pointer which was removed.
 	 */
 	public void* removeIndex(uint index)
 	{
@@ -231,12 +219,9 @@ public class PtrArray
 	 * g_ptr_array_remove().
 	 * It returns TRUE if the pointer was removed, or FALSE if the pointer
 	 * was not found.
-	 * array:
-	 * a GPtrArray.
-	 * data:
-	 * the pointer to remove.
-	 * Returns:
-	 * TRUE if the pointer was found in the array.
+	 * Params:
+	 * data = the pointer to remove.
+	 * Returns:TRUE if the pointer was found in the array.
 	 */
 	public int removeFast(void* data)
 	{
@@ -249,12 +234,9 @@ public class PtrArray
 	 * The last element in the array is used to fill in the space, so this function
 	 * does not preserve the order of the array. But it is faster than
 	 * g_ptr_array_remove_index().
-	 * array:
-	 * a GPtrArray.
-	 * index_:
-	 * the index of the pointer to remove.
-	 * Returns:
-	 * the pointer which was removed.
+	 * Params:
+	 * index = the index of the pointer to remove.
+	 * Returns:the pointer which was removed.
 	 */
 	public void* removeIndexFast(uint index)
 	{
@@ -265,13 +247,10 @@ public class PtrArray
 	/**
 	 * Removes the given number of pointers starting at the given index from a
 	 * GPtrArray. The following elements are moved to close the gap.
-	 * array:
-	 * a GPtrArray.
-	 * index_:
-	 * the index of the first pointer to remove.
-	 * length:
-	 * the number of pointers to remove.
 	 * Since 2.4
+	 * Params:
+	 * index = the index of the first pointer to remove.
+	 * length = the number of pointers to remove.
 	 */
 	public void removeRange(uint index, uint length)
 	{
@@ -288,10 +267,8 @@ public class PtrArray
 	 * Note
 	 * The comparison function for g_ptr_array_sort() doesn't take the pointers
 	 * from the array as arguments, it takes pointers to the pointers in the array.
-	 * array:
-	 * a GPtrArray.
-	 * compare_func:
-	 * comparison function.
+	 * Params:
+	 * compareFunc = comparison function.
 	 */
 	public void sort(GCompareFunc compareFunc)
 	{
@@ -306,12 +283,9 @@ public class PtrArray
 	 * The comparison function for g_ptr_array_sort_with_data() doesn't take the
 	 * pointers from the array as arguments, it takes pointers to the pointers in
 	 * the array.
-	 * array:
-	 * a GPtrArray.
-	 * compare_func:
-	 * comparison function.
-	 * user_data:
-	 * data to pass to compare_func.
+	 * Params:
+	 * compareFunc = comparison function.
+	 * userData = data to pass to compare_func.
 	 */
 	public void sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
@@ -322,10 +296,8 @@ public class PtrArray
 	/**
 	 * Sets the size of the array, expanding it if necessary.
 	 * New elements are set to NULL.
-	 * array:
-	 * a GPtrArray.
-	 * length:
-	 * the new length of the pointer array.
+	 * Params:
+	 * length = the new length of the pointer array.
 	 */
 	public void setSize(int length)
 	{
@@ -336,13 +308,9 @@ public class PtrArray
 	
 	/**
 	 * Frees all of the memory allocated for the pointer array.
-	 * array:
-	 * a GPtrArray.
-	 * free_seg:
-	 * if TRUE the array of pointers (pdata) is freed.
-	 * Returns:
-	 * NULL if free_seg is TRUE, otherwise the array of
-	 * pointers (pdata) is returned.
+	 * Params:
+	 * freeSeg = if TRUE the array of pointers (pdata) is freed.
+	 * Returns:NULL if free_seg is TRUE, otherwise the array of pointers (pdata) is returned.
 	 */
 	public void** free(int freeSeg)
 	{
@@ -352,13 +320,10 @@ public class PtrArray
 	
 	/**
 	 * Calls a function for each element of a GPtrArray.
-	 * array:
-	 *  a GPtrArray
-	 * func:
-	 *  the function to call for each array element
-	 * user_data:
-	 *  user data to pass to the function
 	 * Since 2.4
+	 * Params:
+	 * func =  the function to call for each array element
+	 * userData =  user data to pass to the function
 	 */
 	public void foreac(GFunc func, void* userData)
 	{

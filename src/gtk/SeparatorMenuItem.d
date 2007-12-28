@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.MenuItem;
 
 /**
  * Description
@@ -72,7 +73,6 @@ private import gtkc.gtk;
  * items within a menu. It displays a horizontal line with a shadow to
  * make it appear sunken into the interface.
  */
-private import gtk.MenuItem;
 public class SeparatorMenuItem : MenuItem
 {
 	
@@ -127,8 +127,6 @@ public class SeparatorMenuItem : MenuItem
 	
 	/**
 	 * Creates a new GtkSeparatorMenuItem.
-	 * Returns:
-	 * a new GtkSeparatorMenuItem.
 	 */
 	public this ()
 	{

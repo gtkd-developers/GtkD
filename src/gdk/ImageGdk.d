@@ -142,19 +142,14 @@ public class ImageGdk
 	
 	/**
 	 * Creates a new GdkImage.
-	 * type:
-	 * the type of the GdkImage, one of GDK_IMAGE_NORMAL, GDK_IMAGE_SHARED
+	 * Params:
+	 * type = the type of the GdkImage, one of GDK_IMAGE_NORMAL, GDK_IMAGE_SHARED
 	 * and GDK_IMAGE_FASTEST. GDK_IMAGE_FASTEST is probably the best choice, since
 	 * it will try creating a GDK_IMAGE_SHARED image first and if that fails it will
 	 * then use GDK_IMAGE_NORMAL.
-	 * visual:
-	 * the GdkVisual to use for the image.
-	 * width:
-	 * the width of the image in pixels.
-	 * height:
-	 * the height of the image in pixels.
-	 * Returns:
-	 * a new GdkImage, or NULL if the image could not be created.
+	 * visual = the GdkVisual to use for the image.
+	 * width = the width of the image in pixels.
+	 * height = the height of the image in pixels.
 	 */
 	public this (GdkImageType type, Visual visual, int width, int height)
 	{
@@ -171,16 +166,11 @@ public class ImageGdk
 	 * THIS FUNCTION IS INCREDIBLY BROKEN. The passed-in data must
 	 * be allocated by malloc() (NOT g_malloc()) and will be freed when the
 	 * image is freed.
-	 * visual:
-	 *  the GdkVisual to use for the image.
-	 * data:
-	 *  the pixel data.
-	 * width:
-	 *  the width of the image in pixels.
-	 * height:
-	 *  the height of the image in pixels.
-	 * Returns:
-	 *  a new GdkImage.
+	 * Params:
+	 * visual =  the GdkVisual to use for the image.
+	 * data =  the pixel data.
+	 * width =  the width of the image in pixels.
+	 * height =  the height of the image in pixels.
 	 */
 	public this (Visual visual, void* data, int width, int height)
 	{
@@ -195,18 +185,13 @@ public class ImageGdk
 	 * gdk_drawable_get_image() should be used instead. Or even better: in
 	 * most cases gdk_pixbuf_get_from_drawable() is the most convenient
 	 * choice.
-	 * drawable:
-	 *  a GdkDrawable
-	 * x:
-	 *  x coordinate in window
-	 * y:
-	 *  y coordinate in window
-	 * width:
-	 *  width of area in window
-	 * height:
-	 *  height of area in window
-	 * Returns:
-	 *  a new GdkImage or NULL
+	 * Params:
+	 * drawable =  a GdkDrawable
+	 * x =  x coordinate in window
+	 * y =  y coordinate in window
+	 * width =  width of area in window
+	 * height =  height of area in window
+	 * Returns: a new GdkImage or NULL
 	 */
 	public static GdkImage* get(Drawable drawable, int x, int y, int width, int height)
 	{
@@ -218,10 +203,7 @@ public class ImageGdk
 	 * Warning
 	 * gdk_image_ref is deprecated and should not be used in newly-written code.
 	 * Deprecated function; use g_object_ref() instead.
-	 * image:
-	 *  a GdkImage
-	 * Returns:
-	 *  the image
+	 * Returns: the image
 	 */
 	public GdkImage* doref()
 	{
@@ -233,8 +215,6 @@ public class ImageGdk
 	 * Warning
 	 * gdk_image_unref is deprecated and should not be used in newly-written code.
 	 * Deprecated function; use g_object_unref() instead.
-	 * image:
-	 *  a GdkImage
 	 */
 	public void unref()
 	{
@@ -248,10 +228,7 @@ public class ImageGdk
 	 * will have a colormap if the drawable from which it was created has
 	 * a colormap, or if a colormap was set explicitely with
 	 * gdk_image_set_colormap().
-	 * image:
-	 *  a GdkImage
-	 * Returns:
-	 *  colormap for the image
+	 * Returns: colormap for the image
 	 */
 	public Colormap getColormap()
 	{
@@ -265,10 +242,8 @@ public class ImageGdk
 	 * correct colormap if you get the image from a drawable. If you
 	 * create the image from scratch, use the colormap of the drawable you
 	 * intend to render the image to.
-	 * image:
-	 *  a GdkImage
-	 * colormap:
-	 *  a GdkColormap
+	 * Params:
+	 * colormap =  a GdkColormap
 	 */
 	public void setColormap(Colormap colormap)
 	{
@@ -278,14 +253,10 @@ public class ImageGdk
 	
 	/**
 	 * Sets a pixel in a GdkImage to a given pixel value.
-	 * image:
-	 * a GdkImage.
-	 * x:
-	 * the x coordinate of the pixel to set.
-	 * y:
-	 * the y coordinate of the pixel to set.
-	 * pixel:
-	 * the pixel value to set.
+	 * Params:
+	 * x = the x coordinate of the pixel to set.
+	 * y = the y coordinate of the pixel to set.
+	 * pixel = the pixel value to set.
 	 */
 	public void putPixel(int x, int y, uint pixel)
 	{
@@ -295,25 +266,10 @@ public class ImageGdk
 	
 	/**
 	 * Gets a pixel value at a specified position in a GdkImage.
-	 * image:
-	 * a GdkImage.
-	 * x:
-	 * the x coordinate of the pixel to get.
-	 * y:
-	 * the y coordinate of the pixel to get.
-	 * Returns:
-	 * the pixel value at the given position.
-	 * See Also
-	 * Bitmaps and Pixmaps
-	 * Graphics which are stored on the X Windows server.
-	 * Since these are stored on the server they can be drawn very quickly, and all
-	 * of the Drawing Primitives can be
-	 * used to draw on them. Their main disadvantage is that manipulating individual
-	 * pixels can be very slow.
-	 * GdkRGB
-	 * Built on top of GdkImage, this provides much more functionality,
-	 * including the dithering of colors to produce better output on low-color
-	 * displays.
+	 * Params:
+	 * x = the x coordinate of the pixel to get.
+	 * y = the y coordinate of the pixel to get.
+	 * Returns:the pixel value at the given position.
 	 */
 	public uint getPixel(int x, int y)
 	{

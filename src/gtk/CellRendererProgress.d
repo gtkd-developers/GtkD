@@ -68,6 +68,7 @@ private import gtk.CellRenderer;
 
 
 
+private import gtk.CellRenderer;
 
 /**
  * Description
@@ -75,7 +76,6 @@ private import gtk.CellRenderer;
  * Additionally, it can display a text on top of the progress bar.
  * The GtkCellRendererProgress cell renderer was added in GTK+ 2.6.
  */
-private import gtk.CellRenderer;
 public class CellRendererProgress : CellRenderer
 {
 	
@@ -130,29 +130,16 @@ public class CellRendererProgress : CellRenderer
 	
 	/**
 	 * Creates a new GtkCellRendererProgress.
-	 * Returns:
-	 *  the new cell renderer
 	 * Since 2.6
-	 * Property Details
-	 * The "pulse" property
-	 *  "pulse" gint : Read / Write
-	 * Setting this to a non-negative value causes the cell renderer to
-	 * enter "activity mode", where a block bounces back and forth to
-	 * indicate that some progress is made, without specifying exactly how
-	 * much.
-	 * Each increment of the property causes the block to move by a little
-	 * bit.
-	 * To indicate that the activity has not started yet, set the property
-	 * to zero. To indicate completion, set the property to G_MAXINT.
-	 * Allowed values: >= -1
-	 * Default value: -1
-	 * Since 2.12
 	 */
 	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_progress_new (void);
 		this(cast(GtkCellRendererProgress*)gtk_cell_renderer_progress_new() );
 	}
+	
+	
+	
 	
 	
 }

@@ -67,6 +67,7 @@ private import gobject.ObjectG;
 
 
 
+private import atk.ObjectFactory;
 
 /**
  * Description
@@ -74,7 +75,6 @@ private import gobject.ObjectG;
  * created by an AtkRegistry if no factory type has not been specified to
  * create an accessible object of a particular type.
  */
-private import atk.ObjectFactory;
 public class NoOpObjectFactory : ObjectFactory
 {
 	
@@ -130,8 +130,7 @@ public class NoOpObjectFactory : ObjectFactory
 	/**
 	 * Creates an instance of an AtkObjectFactory which generates primitive
 	 * (non-functioning) AtkObjects.
-	 * Returns:
-	 *  an instance of an AtkObjectFactory
+	 * Returns: an instance of an AtkObjectFactory
 	 */
 	public static AtkObjectFactory* _New()
 	{

@@ -147,7 +147,7 @@ private import gobject.Value;
  * provided. The first example shows three ways of getting the iter at the
  * location 3:2:5. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
- * Example1.Acquiring a GtkTreeIter
+ * Example15.Acquiring a GtkTreeIter
  * /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
@@ -172,7 +172,7 @@ private import gobject.Value;
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
- * Example2.Reading data from a GtkTreeModel
+ * Example16.Reading data from a GtkTreeModel
  * enum
  * {
 	 *  STRING_COLUMN,
@@ -281,12 +281,9 @@ public class TreeModel
 	
 	/**
 	 * Sets iter to a valid iterator pointing to path.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The uninitialized GtkTreeIter.
-	 * path:
-	 *  The GtkTreePath.
+	 * Params:
+	 *  iter = The uninitialized GtkTreeIter.
+	 *  path = The GtkTreePath.
 	 * Returns:
 	 *  TRUE, if iter was set.
 	 */
@@ -488,10 +485,7 @@ public class TreeModel
 	 * Returns a set of flags supported by this interface. The flags are a bitwise
 	 * combination of GtkTreeModelFlags. The flags supported should not change
 	 * during the lifecycle of the tree_model.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * Returns:
-	 *  The flags supported by this interface.
+	 * Returns: The flags supported by this interface.
 	 */
 	public GtkTreeModelFlags getFlags()
 	{
@@ -501,10 +495,7 @@ public class TreeModel
 	
 	/**
 	 * Returns the number of columns supported by tree_model.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * Returns:
-	 *  The number of columns.
+	 * Returns: The number of columns.
 	 */
 	public int getNColumns()
 	{
@@ -514,12 +505,9 @@ public class TreeModel
 	
 	/**
 	 * Returns the type of the column.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * index_:
-	 *  The column index.
-	 * Returns:
-	 *  The type of the column.
+	 * Params:
+	 * index =  The column index.
+	 * Returns: The type of the column.
 	 */
 	public GType getColumnType(int index)
 	{
@@ -531,14 +519,10 @@ public class TreeModel
 	/**
 	 * Sets iter to a valid iterator pointing to path_string, if it
 	 * exists. Otherwise, iter is left invalid and FALSE is returned.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  An uninitialized GtkTreeIter.
-	 * path_string:
-	 *  A string representation of a GtkTreePath.
-	 * Returns:
-	 *  TRUE, if iter was set.
+	 * Params:
+	 * iter =  An uninitialized GtkTreeIter.
+	 * pathString =  A string representation of a GtkTreePath.
+	 * Returns: TRUE, if iter was set.
 	 */
 	public int getIterFromString(TreeIter iter, char[] pathString)
 	{
@@ -549,12 +533,9 @@ public class TreeModel
 	/**
 	 * Initializes iter with the first iterator in the tree (the one at the path
 	 * "0") and returns TRUE. Returns FALSE if the tree is empty.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The uninitialized GtkTreeIter.
-	 * Returns:
-	 *  TRUE, if iter was set.
+	 * Params:
+	 * iter =  The uninitialized GtkTreeIter.
+	 * Returns: TRUE, if iter was set.
 	 */
 	public int getIterFirst(TreeIter iter)
 	{
@@ -566,12 +547,9 @@ public class TreeModel
 	/**
 	 * Returns a newly-created GtkTreePath referenced by iter. This path should
 	 * be freed with gtk_tree_path_free().
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The GtkTreeIter.
-	 * Returns:
-	 *  a newly-created GtkTreePath.
+	 * Params:
+	 * iter =  The GtkTreeIter.
+	 * Returns: a newly-created GtkTreePath.
 	 */
 	public TreePath getPath(TreeIter iter)
 	{
@@ -582,14 +560,10 @@ public class TreeModel
 	/**
 	 * Sets initializes and sets value to that at column. When done with value,
 	 * g_value_unset() needs to be called to free any allocated memory.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The GtkTreeIter.
-	 * column:
-	 *  The column to lookup the value at.
-	 * value:
-	 *  An empty GValue to set.
+	 * Params:
+	 * iter =  The GtkTreeIter.
+	 * column =  The column to lookup the value at.
+	 * value =  An empty GValue to set.
 	 */
 	public void getValue(TreeIter iter, int column, Value value)
 	{
@@ -600,12 +574,9 @@ public class TreeModel
 	/**
 	 * Sets iter to point to the node following it at the current level. If there
 	 * is no next iter, FALSE is returned and iter is set to be invalid.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The GtkTreeIter.
-	 * Returns:
-	 *  TRUE if iter has been changed to the next node.
+	 * Params:
+	 * iter =  The GtkTreeIter.
+	 * Returns: TRUE if iter has been changed to the next node.
 	 */
 	public int iterNext(TreeIter iter)
 	{
@@ -619,14 +590,10 @@ public class TreeModel
 	 * will remain a valid node after this function has been called.
 	 * If parent is NULL returns the first node, equivalent to
 	 * gtk_tree_model_get_iter_first (tree_model, iter);
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The new GtkTreeIter to be set to the child.
-	 * parent:
-	 *  The GtkTreeIter, or NULL
-	 * Returns:
-	 *  TRUE, if child has been set to the first child.
+	 * Params:
+	 * iter =  The new GtkTreeIter to be set to the child.
+	 * parent =  The GtkTreeIter, or NULL
+	 * Returns: TRUE, if child has been set to the first child.
 	 */
 	public int iterChildren(TreeIter iter, TreeIter parent)
 	{
@@ -636,12 +603,9 @@ public class TreeModel
 	
 	/**
 	 * Returns TRUE if iter has children, FALSE otherwise.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The GtkTreeIter to test for children.
-	 * Returns:
-	 *  TRUE if iter has children.
+	 * Params:
+	 * iter =  The GtkTreeIter to test for children.
+	 * Returns: TRUE if iter has children.
 	 */
 	public int iterHasChild(TreeIter iter)
 	{
@@ -652,12 +616,9 @@ public class TreeModel
 	/**
 	 * Returns the number of children that iter has. As a special case, if iter
 	 * is NULL, then the number of toplevel nodes is returned.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The GtkTreeIter, or NULL.
-	 * Returns:
-	 *  The number of children of iter.
+	 * Params:
+	 * iter =  The GtkTreeIter, or NULL.
+	 * Returns: The number of children of iter.
 	 */
 	public int iterNChildren(TreeIter iter)
 	{
@@ -671,16 +632,11 @@ public class TreeModel
 	 * to an invalid iterator and FALSE is returned. parent will remain a valid
 	 * node after this function has been called. As a special case, if parent is
 	 * NULL, then the nth root node is set.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The GtkTreeIter to set to the nth child.
-	 * parent:
-	 *  The GtkTreeIter to get the child from, or NULL.
-	 * n:
-	 *  Then index of the desired child.
-	 * Returns:
-	 *  TRUE, if parent has an nth child.
+	 * Params:
+	 * iter =  The GtkTreeIter to set to the nth child.
+	 * parent =  The GtkTreeIter to get the child from, or NULL.
+	 * n =  Then index of the desired child.
+	 * Returns: TRUE, if parent has an nth child.
 	 */
 	public int iterNthChild(TreeIter iter, TreeIter parent, int n)
 	{
@@ -693,14 +649,10 @@ public class TreeModel
 	 * doesn't have a parent, then iter is set to an invalid iterator and FALSE
 	 * is returned. child will remain a valid node after this function has been
 	 * called.
-	 * tree_model:
-	 *  A GtkTreeModel
-	 * iter:
-	 *  The new GtkTreeIter to set to the parent.
-	 * child:
-	 *  The GtkTreeIter.
-	 * Returns:
-	 *  TRUE, if iter is set to the parent of child.
+	 * Params:
+	 * iter =  The new GtkTreeIter to set to the parent.
+	 * child =  The GtkTreeIter.
+	 * Returns: TRUE, if iter is set to the parent of child.
 	 */
 	public int iterParent(TreeIter iter, TreeIter child)
 	{
@@ -712,13 +664,10 @@ public class TreeModel
 	 * Generates a string representation of the iter. This string is a ':'
 	 * separated list of numbers. For example, "4:10:0:3" would be an
 	 * acceptable return value for this string.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  An GtkTreeIter.
-	 * Returns:
-	 *  A newly-allocated string. Must be freed with g_free().
 	 * Since 2.2
+	 * Params:
+	 * iter =  An GtkTreeIter.
+	 * Returns: A newly-allocated string. Must be freed with g_free().
 	 */
 	public char[] getStringFromIter(TreeIter iter)
 	{
@@ -737,10 +686,8 @@ public class TreeModel
 	 * displayed by every current view.
 	 * A model should be expected to be able to get an iter independent of its
 	 * reffed state.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The GtkTreeIter.
+	 * Params:
+	 * iter =  The GtkTreeIter.
 	 */
 	public void refNode(TreeIter iter)
 	{
@@ -754,10 +701,8 @@ public class TreeModel
 	 * primarily for performance reasons.
 	 * For more information on what this means, see gtk_tree_model_ref_node().
 	 * Please note that nodes that are deleted are not unreffed.
-	 * tree_model:
-	 *  A GtkTreeModel.
-	 * iter:
-	 *  The GtkTreeIter.
+	 * Params:
+	 * iter =  The GtkTreeIter.
 	 */
 	public void unrefNode(TreeIter iter)
 	{
@@ -775,12 +720,9 @@ public class TreeModel
 	 * where place_string_here is a gchar* to be
 	 * filled with the string.
 	 * If appropriate, the returned values have to be freed or unreferenced.
-	 * tree_model:
-	 *  a GtkTreeModel
-	 * iter:
-	 *  a row in tree_model
-	 * ...:
-	 *  pairs of column number and value return locations, terminated by -1
+	 * Params:
+	 * iter =  a row in tree_model
+	 * ... =  pairs of column number and value return locations, terminated by -1
 	 */
 	public void get(TreeIter iter, ... )
 	{
@@ -791,12 +733,9 @@ public class TreeModel
 	/**
 	 * See gtk_tree_model_get(), this version takes a va_list
 	 * for language bindings to use.
-	 * tree_model:
-	 *  a GtkTreeModel
-	 * iter:
-	 *  a row in tree_model
-	 * var_args:
-	 *  va_list of column/return location pairs
+	 * Params:
+	 * iter =  a row in tree_model
+	 * varArgs =  va_list of column/return location pairs
 	 */
 	public void getValist(TreeIter iter, void* varArgs)
 	{
@@ -808,12 +747,9 @@ public class TreeModel
 	 * Calls func on each node in model in a depth-first fashion.
 	 * If func returns TRUE, then the tree ceases to be walked, and
 	 * gtk_tree_model_foreach() returns.
-	 * model:
-	 *  A GtkTreeModel
-	 * func:
-	 *  A function to be called on each row
-	 * user_data:
-	 *  User data to passed to func.
+	 * Params:
+	 * func =  A function to be called on each row
+	 * userData =  User data to passed to func.
 	 */
 	public void foreac(GtkTreeModelForeachFunc func, void* userData)
 	{
@@ -823,12 +759,9 @@ public class TreeModel
 	
 	/**
 	 * Emits the "row_changed" signal on tree_model.
-	 * tree_model:
-	 *  A GtkTreeModel
-	 * path:
-	 *  A GtkTreePath pointing to the changed row
-	 * iter:
-	 *  A valid GtkTreeIter pointing to the changed row
+	 * Params:
+	 * path =  A GtkTreePath pointing to the changed row
+	 * iter =  A valid GtkTreeIter pointing to the changed row
 	 */
 	public void rowChanged(TreePath path, TreeIter iter)
 	{
@@ -838,12 +771,9 @@ public class TreeModel
 	
 	/**
 	 * Emits the "row_inserted" signal on tree_model
-	 * tree_model:
-	 *  A GtkTreeModel
-	 * path:
-	 *  A GtkTreePath pointing to the inserted row
-	 * iter:
-	 *  A valid GtkTreeIter pointing to the inserted row
+	 * Params:
+	 * path =  A GtkTreePath pointing to the inserted row
+	 * iter =  A valid GtkTreeIter pointing to the inserted row
 	 */
 	public void rowInserted(TreePath path, TreeIter iter)
 	{
@@ -854,12 +784,9 @@ public class TreeModel
 	/**
 	 * Emits the "row_has_child_toggled" signal on tree_model. This should be
 	 * called by models after the child state of a node changes.
-	 * tree_model:
-	 *  A GtkTreeModel
-	 * path:
-	 *  A GtkTreePath pointing to the changed row
-	 * iter:
-	 *  A valid GtkTreeIter pointing to the changed row
+	 * Params:
+	 * path =  A GtkTreePath pointing to the changed row
+	 * iter =  A valid GtkTreeIter pointing to the changed row
 	 */
 	public void rowHasChildToggled(TreePath path, TreeIter iter)
 	{
@@ -872,10 +799,8 @@ public class TreeModel
 	 * models after a row has been removed. The location pointed to by path
 	 * should be the location that the row previously was at. It may not be a
 	 * valid location anymore.
-	 * tree_model:
-	 *  A GtkTreeModel
-	 * path:
-	 *  A GtkTreePath pointing to the previous location of the deleted row.
+	 * Params:
+	 * path =  A GtkTreePath pointing to the previous location of the deleted row.
 	 */
 	public void rowDeleted(TreePath path)
 	{
@@ -886,16 +811,12 @@ public class TreeModel
 	/**
 	 * Emits the "rows_reordered" signal on tree_model. This should be called by
 	 * models when their rows have been reordered.
-	 * tree_model:
-	 *  A GtkTreeModel
-	 * path:
-	 *  A GtkTreePath pointing to the tree node whose children have been
+	 * Params:
+	 * path =  A GtkTreePath pointing to the tree node whose children have been
 	 *  reordered
-	 * iter:
-	 *  A valid GtkTreeIter pointing to the node whose children have been
+	 * iter =  A valid GtkTreeIter pointing to the node whose children have been
 	 *  reordered, or NULL if the depth of path is 0.
-	 * new_order:
-	 *  an array of integers mapping the current position of each child
+	 * newOrder =  an array of integers mapping the current position of each child
 	 *  to its old position before the re-ordering,
 	 *  i.e. new_order[newpos] = oldpos.
 	 * Signal Details
@@ -905,14 +826,8 @@ public class TreeModel
 	 *  GtkTreeIter *iter,
 	 *  gpointer user_data) : Run Last
 	 * This signal is emitted when a row in the model has changed.
-	 * tree_model:
-	 *  the GtkTreeModel on which the signal is emitted
-	 * path:
-	 *  a GtkTreePath identifying the changed row
-	 * iter:
-	 *  a valid GtkTreeIter pointing to the changed row
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * path =  a GtkTreePath identifying the changed row
+	 * iter =  a valid GtkTreeIter pointing to the changed row
 	 */
 	public void rowsReordered(TreePath path, TreeIter iter, int* newOrder)
 	{

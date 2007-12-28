@@ -68,6 +68,7 @@ private import gdk.Display;
 
 
 
+private import gtk.Window;
 
 /**
  * Description
@@ -83,7 +84,6 @@ private import gdk.Display;
  * The GtkPlug and GtkSocket widgets are currently not available
  * on all platforms supported by GTK+.
  */
-private import gtk.Window;
 public class Plug : Window
 {
 	
@@ -173,10 +173,8 @@ public class Plug : Window
 	/**
 	 * Finish the initialization of plug for a given GtkSocket identified by
 	 * socket_id. This function will generally only be used by classes deriving from GtkPlug.
-	 * plug:
-	 *  a GtkPlug.
-	 * socket_id:
-	 *  the XID of the socket's window.
+	 * Params:
+	 * socketId =  the XID of the socket's window.
 	 */
 	public void construct(GdkNativeWindow socketId)
 	{
@@ -188,14 +186,11 @@ public class Plug : Window
 	 * Finish the initialization of plug for a given GtkSocket identified by
 	 * socket_id which is currently displayed on display.
 	 * This function will generally only be used by classes deriving from GtkPlug.
-	 * plug:
-	 *  a GtkPlug.
-	 * display:
-	 *  the GdkDisplay associated with socket_id's
-	 *  GtkSocket.
-	 * socket_id:
-	 *  the XID of the socket's window.
 	 * Since 2.2
+	 * Params:
+	 * display =  the GdkDisplay associated with socket_id's
+	 *  GtkSocket.
+	 * socketId =  the XID of the socket's window.
 	 */
 	public void constructForDisplay(Display display, GdkNativeWindow socketId)
 	{
@@ -207,10 +202,8 @@ public class Plug : Window
 	 * Creates a new plug widget inside the GtkSocket identified
 	 * by socket_id. If socket_id is 0, the plug is left "unplugged" and
 	 * can later be plugged into a GtkSocket by gtk_socket_add_id().
-	 * socket_id:
-	 *  the window ID of the socket, or 0.
-	 * Returns:
-	 *  the new GtkPlug widget.
+	 * Params:
+	 * socketId =  the window ID of the socket, or 0.
 	 */
 	public this (GdkNativeWindow socketId)
 	{
@@ -220,13 +213,10 @@ public class Plug : Window
 	
 	/**
 	 * Create a new plug widget inside the GtkSocket identified by socket_id.
-	 * display:
-	 *  the GdkDisplay on which socket_id is displayed
-	 * socket_id:
-	 *  the XID of the socket's window.
-	 * Returns:
-	 *  the new GtkPlug widget.
 	 * Since 2.2
+	 * Params:
+	 * display =  the GdkDisplay on which socket_id is displayed
+	 * socketId =  the XID of the socket's window.
 	 */
 	public this (Display display, GdkNativeWindow socketId)
 	{
@@ -238,27 +228,7 @@ public class Plug : Window
 	 * Gets the window ID of a GtkPlug widget, which can then
 	 * be used to embed this window inside another window, for
 	 * instance with gtk_socket_add_id().
-	 * plug:
-	 *  a GtkPlug.
-	 * Returns:
-	 *  the window ID for the plug
-	 * Property Details
-	 * The "embedded" property
-	 *  "embedded" gboolean : Read
-	 * TRUE if the plug is embedded in a socket.
-	 * Default value: FALSE
-	 * Since 2.12
-	 * Signal Details
-	 * The "embedded" signal
-	 * void user_function (GtkPlug *plug,
-	 *  gpointer user_data) : Run Last
-	 * plug:
-	 * the object which received the signal.
-	 * user_data:
-	 * user data set when the signal handler was connected.
-	 * See Also
-	 * GtkSocket
-	 * the widget that a GtkPlug plugs into.
+	 * Returns: the window ID for the plug
 	 */
 	public GdkNativeWindow getId()
 	{

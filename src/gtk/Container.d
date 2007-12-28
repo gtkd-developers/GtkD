@@ -78,49 +78,63 @@ private import gobject.Value;
 
 
 
+private import gtk.Widget;
 
 /**
  * Description
- * A GTK+ user interface is constructed by nesting widgets inside widgets. Container widgets are the inner
- * nodes in the resulting tree of widgets: they contain other widgets. So, for example, you might have a
- * GtkWindow containing a GtkFrame containing a GtkLabel. If you wanted an image instead of a textual label
- * inside the frame, you might replace the GtkLabel widget with a GtkImage widget.
- * There are two major kinds of container widgets in GTK+. Both are subclasses of the abstract GtkContainer
- * base class.
- * The first type of container widget has a single child widget and derives from GtkBin. These containers
- * are decorators, which add some kind of functionality to the child. For example,
- * a GtkButton makes its child into a clickable button; a GtkFrame draws a frame around its child and
- * a GtkWindow places its child widget inside a top-level window.
- * The second type of container can have more than one child; its purpose is to manage
- * layout. This means that these containers assign sizes and positions to their children.
- * For example, a GtkHBox arranges its children in a horizontal row, and a GtkTable arranges the widgets it
- * contains in a two-dimensional grid.
- * To fulfill its task, a layout container must negotiate the size requirements with its parent and its children.
- * This negotiation is carried out in two phases, size requisition and
- * size allocation.
+ * A GTK+ user interface is constructed by nesting widgets inside widgets.
+ * Container widgets are the inner nodes in the resulting tree of widgets:
+ * they contain other widgets. So, for example, you might have a GtkWindow
+ * containing a GtkFrame containing a GtkLabel. If you wanted an image instead
+ * of a textual label inside the frame, you might replace the GtkLabel widget
+ * with a GtkImage widget.
+ * There are two major kinds of container widgets in GTK+. Both are subclasses
+ * of the abstract GtkContainer base class.
+ * The first type of container widget has a single child widget and derives
+ * from GtkBin. These containers are decorators, which
+ * add some kind of functionality to the child. For example, a GtkButton makes
+ * its child into a clickable button; a GtkFrame draws a frame around its child
+ * and a GtkWindow places its child widget inside a top-level window.
+ * The second type of container can have more than one child; its purpose is to
+ * manage layout. This means that these containers assign
+ * sizes and positions to their children. For example, a GtkHBox arranges its
+ * children in a horizontal row, and a GtkTable arranges the widgets it contains
+ * in a two-dimensional grid.
+ * To fulfill its task, a layout container must negotiate the size requirements
+ * with its parent and its children. This negotiation is carried out in two
+ * phases, size requisition and size
+ * allocation.
  * Size Requisition
- * The size requisition of a widget is it's desired width and height. This is represented by a GtkRequisition.
- * How a widget determines its desired size depends on the widget. A GtkLabel, for example, requests enough space
- * to display all its text. Container widgets generally base their size request on the requisitions of their
- * children.
- * The size requisition phase of the widget layout process operates top-down. It starts at a top-level widget,
- * typically a GtkWindow. The top-level widget asks its child for its size requisition by calling
- * gtk_widget_size_request(). To determine its requisition, the child asks its own children for their requisitions
- * and so on. Finally, the top-level widget will get a requisition back from its child.
+ * The size requisition of a widget is it's desired width and height.
+ * This is represented by a GtkRequisition.
+ * How a widget determines its desired size depends on the widget.
+ * A GtkLabel, for example, requests enough space to display all its text.
+ * Container widgets generally base their size request on the requisitions
+ * of their children.
+ * The size requisition phase of the widget layout process operates top-down.
+ * It starts at a top-level widget, typically a GtkWindow. The top-level widget
+ * asks its child for its size requisition by calling gtk_widget_size_request().
+ * To determine its requisition, the child asks its own children for their
+ * requisitions and so on. Finally, the top-level widget will get a requisition
+ * back from its child.
  * <hr>
  * Size Allocation
- * When the top-level widget has determined how much space its child would like to have, the second phase of the
- * size negotiation, size allocation, begins. Depending on its configuration (see gtk_window_set_resizable()), the
- * top-level widget may be able to expand in order to satisfy the size request or it may have to ignore the size
- * request and keep its fixed size. It then tells its child widget how much space it gets by calling
- * gtk_widget_size_allocate(). The child widget divides the space among its children and tells each child how much
- * space it got, and so on. Under normal circumstances, a GtkWindow will always give its child the amount of space
- * the child requested.
- * A child's size allocation is represented by a GtkAllocation. This struct contains not only a width and height,
- * but also a position (i.e. X and Y coordinates), so that containers can tell their children not only how much
- * space they have gotten, but also where they are positioned inside the space available to the container.
- * Widgets are required to honor the size allocation they receive; a size request is only a request, and widgets
- * must be able to cope with any size.
+ * When the top-level widget has determined how much space its child would like
+ * to have, the second phase of the size negotiation, size allocation, begins.
+ * Depending on its configuration (see gtk_window_set_resizable()), the top-level
+ * widget may be able to expand in order to satisfy the size request or it may
+ * have to ignore the size request and keep its fixed size. It then tells its
+ * child widget how much space it gets by calling gtk_widget_size_allocate().
+ * The child widget divides the space among its children and tells each child
+ * how much space it got, and so on. Under normal circumstances, a GtkWindow
+ * will always give its child the amount of space the child requested.
+ * A child's size allocation is represented by a GtkAllocation. This struct
+ * contains not only a width and height, but also a position (i.e. X and Y
+ * coordinates), so that containers can tell their children not only how much
+ * space they have gotten, but also where they are positioned inside the space
+ * available to the container.
+ * Widgets are required to honor the size allocation they receive; a size
+ * request is only a request, and widgets must be able to cope with any size.
  * <hr>
  * Child properties
  * GtkContainer introduces child
@@ -138,8 +152,22 @@ private import gobject.Value;
  * gtk_container_child_get_property(), gtk_container_child_get() or
  * gtk_container_child_get_valist(). To emit notification about child property
  * changes, use gtk_widget_child_notify().
+ * <hr>
+ * GtkContainer as GtkBuildable
+ * The GtkContainer implementation of the GtkBuildable interface
+ * supports a <packing> element for children, which can
+ * contain multiple <property> elements that specify
+ * child properties for the child.
+ * Example45.Child properties in UI definitions
+ * <object class="GtkVBox">
+ *  <child>
+ *  <object class="GtkLabel"/>
+ *  <packing>
+ *  <property name="pack-type">start</property>
+ *  </packing>
+ *  </child>
+ * </object>
  */
-private import gtk.Widget;
 public class Container : Widget
 {
 	
@@ -338,10 +366,8 @@ public class Container : Widget
 	 * gtk_table_attach() as an alternative to gtk_container_add() in
 	 * those cases. A widget may be added to only one container at a time;
 	 * you can't place the same widget inside two different containers.
-	 * container:
-	 *  a GtkContainer
-	 * widget:
-	 *  a widget to be placed inside container
+	 * Params:
+	 * widget =  a widget to be placed inside container
 	 */
 	public void add(Widget widget)
 	{
@@ -359,10 +385,8 @@ public class Container : Widget
 	 * again it's usually more efficient to simply destroy it directly
 	 * using gtk_widget_destroy() since this will remove it from the
 	 * container and help break any circular reference count cycles.
-	 * container:
-	 *  a GtkContainer
-	 * widget:
-	 *  a current child of container
+	 * Params:
+	 * widget =  a current child of container
 	 */
 	public void remove(Widget widget)
 	{
@@ -373,15 +397,11 @@ public class Container : Widget
 	/**
 	 * Adds widget to container, setting child properties at the same time.
 	 * See gtk_container_add() and gtk_container_child_set() for more details.
-	 * container:
-	 *  a GtkContainer
-	 * widget:
-	 *  a widget to be placed inside container
-	 * first_prop_name:
-	 *  the name of the first child property to set
-	 * ...:
-	 *  a NULL-terminated list of property names and values, starting
-	 *  with first_prop_name.
+	 * Params:
+	 * widget =  a widget to be placed inside container
+	 * firstPropName =  the name of the first child property to set
+	 * ... =  a NULL-terminated list of property names and values, starting
+	 *  with first_prop_name
 	 */
 	public void addWithProperties(Widget widget, char[] firstPropName, ... )
 	{
@@ -392,10 +412,7 @@ public class Container : Widget
 	/**
 	 * Returns the resize mode for the container. See
 	 * gtk_container_set_resize_mode().
-	 * container:
-	 *  a GtkContainer
-	 * Returns:
-	 *  the current resize mode
+	 * Returns: the current resize mode
 	 */
 	public GtkResizeMode getResizeMode()
 	{
@@ -408,10 +425,8 @@ public class Container : Widget
 	 * The resize mode of a container determines whether a resize request
 	 * will be passed to the container's parent, queued for later execution
 	 * or executed immediately.
-	 * container:
-	 *  a GtkContainer.
-	 * resize_mode:
-	 *  the new resize mode.
+	 * Params:
+	 * resizeMode =  the new resize mode
 	 */
 	public void setResizeMode(GtkResizeMode resizeMode)
 	{
@@ -420,7 +435,6 @@ public class Container : Widget
 	}
 	
 	/**
-	 * container:
 	 */
 	public void checkResize()
 	{
@@ -433,12 +447,9 @@ public class Container : Widget
 	 * gtk_container_forall() for details on what constitutes an
 	 * "internal" child. Most applications should use
 	 * gtk_container_foreach(), rather than gtk_container_forall().
-	 * container:
-	 *  a GtkContainer
-	 * callback:
-	 *  a callback
-	 * callback_data:
-	 *  callback user data
+	 * Params:
+	 * callback =  a callback
+	 * callbackData =  callback user data
 	 */
 	public void foreac(GtkCallback callback, void* callbackData)
 	{
@@ -449,11 +460,7 @@ public class Container : Widget
 	/**
 	 * Warning
 	 * gtk_container_foreach_full is deprecated and should not be used in newly-written code. Use gtk_container_foreach() instead.
-	 * container:
-	 * callback:
-	 * marshal:
-	 * callback_data:
-	 * notify:
+	 * Params:
 	 */
 	public void foreachFull(GtkCallback callback, GtkCallbackMarshal marshal, void* callbackData, GtkDestroyNotify notify)
 	{
@@ -465,10 +472,7 @@ public class Container : Widget
 	/**
 	 * Returns the container's non-internal children. See
 	 * gtk_container_forall() for details on what constitutes an "internal" child.
-	 * container:
-	 *  a GtkContainer.
-	 * Returns:
-	 *  a newly-allocated list of the container's non-internal children.
+	 * Returns: a newly-allocated list of the container's non-internal children.
 	 */
 	public ListG getChildren()
 	{
@@ -480,10 +484,8 @@ public class Container : Widget
 	 * Sets the reallocate_redraws flag of the container to the given value.
 	 * Containers requesting reallocation redraws get automatically
 	 * redrawn if any of their children changed allocation.
-	 * container:
-	 *  a GtkContainer.
-	 * needs_redraws:
-	 *  the new value for the container's reallocate_redraws flag.
+	 * Params:
+	 * needsRedraws =  the new value for the container's reallocate_redraws flag
 	 */
 	public void setReallocateRedraws(int needsRedraws)
 	{
@@ -492,8 +494,7 @@ public class Container : Widget
 	}
 	
 	/**
-	 * container:
-	 * child:
+	 * Params:
 	 */
 	public void setFocusChild(Widget child)
 	{
@@ -504,11 +505,7 @@ public class Container : Widget
 	/**
 	 * Retrieves the vertical focus adjustment for the container. See
 	 * gtk_container_set_focus_vadjustment().
-	 * container:
-	 *  a GtkContainer
-	 * Returns:
-	 *  the vertical focus adjustment, or NULL if
-	 *  none has been set.
+	 * Returns: the vertical focus adjustment, or NULL if none has been set.
 	 */
 	public Adjustment getFocusVadjustment()
 	{
@@ -517,18 +514,17 @@ public class Container : Widget
 	}
 	
 	/**
-	 * Hooks up an adjustment to focus handling in a container, so when a child of the
-	 * container is focused, the adjustment is scrolled to show that widget. This function
-	 * sets the vertical alignment. See gtk_scrolled_window_get_vadjustment() for a typical
-	 * way of obtaining the adjustment and gtk_container_set_focus_hadjustment() for setting
+	 * Hooks up an adjustment to focus handling in a container, so when a
+	 * child of the container is focused, the adjustment is scrolled to
+	 * show that widget. This function sets the vertical alignment. See
+	 * gtk_scrolled_window_get_vadjustment() for a typical way of obtaining
+	 * the adjustment and gtk_container_set_focus_hadjustment() for setting
 	 * the horizontal adjustment.
-	 * The adjustments have to be in pixel units and in the same coordinate system as the
-	 * allocation for immediate children of the container.
-	 * container:
-	 *  a GtkContainer
-	 * adjustment:
-	 *  an adjustment which should be adjusted when the focus is moved among the
-	 *  descendents of container
+	 * The adjustments have to be in pixel units and in the same coordinate
+	 * system as the allocation for immediate children of the container.
+	 * Params:
+	 * adjustment =  an adjustment which should be adjusted when the focus
+	 *  is moved among the descendents of container
 	 */
 	public void setFocusVadjustment(Adjustment adjustment)
 	{
@@ -539,11 +535,7 @@ public class Container : Widget
 	/**
 	 * Retrieves the horizontal focus adjustment for the container. See
 	 * gtk_container_set_focus_hadjustment().
-	 * container:
-	 *  a GtkContainer
-	 * Returns:
-	 *  the horizontal focus adjustment, or NULL if
-	 *  none has been set.
+	 * Returns: the horizontal focus adjustment, or NULL if none has been set.
 	 */
 	public Adjustment getFocusHadjustment()
 	{
@@ -552,18 +544,17 @@ public class Container : Widget
 	}
 	
 	/**
-	 * Hooks up an adjustment to focus handling in a container, so when a child of the
-	 * container is focused, the adjustment is scrolled to show that widget. This function
-	 * sets the horizontal alignment. See gtk_scrolled_window_get_hadjustment() for a typical
-	 * way of obtaining the adjustment and gtk_container_set_focus_vadjustment() for setting
+	 * Hooks up an adjustment to focus handling in a container, so when a child
+	 * of the container is focused, the adjustment is scrolled to show that
+	 * widget. This function sets the horizontal alignment.
+	 * See gtk_scrolled_window_get_hadjustment() for a typical way of obtaining
+	 * the adjustment and gtk_container_set_focus_vadjustment() for setting
 	 * the vertical adjustment.
-	 * The adjustments have to be in pixel units and in the same coordinate system as the
-	 * allocation for immediate children of the container.
-	 * container:
-	 *  a GtkContainer
-	 * adjustment:
-	 *  an adjustment which should be adjusted when the focus is moved among the
-	 *  descendents of container
+	 * The adjustments have to be in pixel units and in the same coordinate
+	 * system as the allocation for immediate children of the container.
+	 * Params:
+	 * adjustment =  an adjustment which should be adjusted when the focus is
+	 *  moved among the descendents of container
 	 */
 	public void setFocusHadjustment(Adjustment adjustment)
 	{
@@ -572,7 +563,6 @@ public class Container : Widget
 	}
 	
 	/**
-	 * container:
 	 */
 	public void resizeChildren()
 	{
@@ -585,10 +575,7 @@ public class Container : Widget
 	 * Note that this may return G_TYPE_NONE to indicate that no more
 	 * children can be added, e.g. for a GtkPaned which already has two
 	 * children.
-	 * container:
-	 *  a GtkContainer.
-	 * Returns:
-	 *  a GType.
+	 * Returns: a GType.
 	 */
 	public GType childType()
 	{
@@ -598,15 +585,11 @@ public class Container : Widget
 	
 	/**
 	 * Gets the values of one or more child properties for child and container.
-	 * container:
-	 *  a GtkContainer
-	 * child:
-	 *  a widget which is a child of container
-	 * first_prop_name:
-	 *  the name of the first property to get
-	 * ...:
-	 *  a NULL-terminated list of property names and GValue*,
-	 *  starting with first_prop_name.
+	 * Params:
+	 * child =  a widget which is a child of container
+	 * firstPropName =  the name of the first property to get
+	 * ... =  a NULL-terminated list of property names and GValue*,
+	 *  starting with first_prop_name
 	 */
 	public void childGet(Widget child, char[] firstPropName, ... )
 	{
@@ -616,15 +599,11 @@ public class Container : Widget
 	
 	/**
 	 * Sets one or more child properties for child and container.
-	 * container:
-	 *  a GtkContainer
-	 * child:
-	 *  a widget which is a child of container
-	 * first_prop_name:
-	 *  the name of the first property to set
-	 * ...:
-	 *  a NULL-terminated list of property names and values, starting
-	 *  with first_prop_name.
+	 * Params:
+	 * child =  a widget which is a child of container
+	 * firstPropName =  the name of the first property to set
+	 * ... =  a NULL-terminated list of property names and values, starting
+	 *  with first_prop_name
 	 */
 	public void childSet(Widget child, char[] firstPropName, ... )
 	{
@@ -634,14 +613,10 @@ public class Container : Widget
 	
 	/**
 	 * Gets the value of a child property for child and container.
-	 * container:
-	 *  a GtkContainer
-	 * child:
-	 *  a widget which is a child of container
-	 * property_name:
-	 *  the name of the property to get
-	 * value:
-	 *  a location to return the value
+	 * Params:
+	 * child =  a widget which is a child of container
+	 * propertyName =  the name of the property to get
+	 * value =  a location to return the value
 	 */
 	public void childGetProperty(Widget child, char[] propertyName, Value value)
 	{
@@ -651,14 +626,10 @@ public class Container : Widget
 	
 	/**
 	 * Sets a child property for child and container.
-	 * container:
-	 *  a GtkContainer
-	 * child:
-	 *  a widget which is a child of container
-	 * property_name:
-	 *  the name of the property to set
-	 * value:
-	 *  the value to set the property to
+	 * Params:
+	 * child =  a widget which is a child of container
+	 * propertyName =  the name of the property to set
+	 * value =  the value to set the property to
 	 */
 	public void childSetProperty(Widget child, char[] propertyName, Value value)
 	{
@@ -668,14 +639,10 @@ public class Container : Widget
 	
 	/**
 	 * Gets the values of one or more child properties for child and container.
-	 * container:
-	 *  a GtkContainer
-	 * child:
-	 *  a widget which is a child of container
-	 * first_property_name:
-	 *  the name of the first property to get
-	 * var_args:
-	 *  a NULL-terminated list of property names and GValue*,
+	 * Params:
+	 * child =  a widget which is a child of container
+	 * firstPropertyName =  the name of the first property to get
+	 * varArgs =  a NULL-terminated list of property names and GValue*,
 	 *  starting with first_prop_name.
 	 */
 	public void childGetValist(Widget child, char[] firstPropertyName, void* varArgs)
@@ -686,15 +653,11 @@ public class Container : Widget
 	
 	/**
 	 * Sets one or more child properties for child and container.
-	 * container:
-	 *  a GtkContainer
-	 * child:
-	 *  a widget which is a child of container
-	 * first_property_name:
-	 *  the name of the first property to set
-	 * var_args:
-	 *  a NULL-terminated list of property names and values, starting
-	 *  with first_prop_name.
+	 * Params:
+	 * child =  a widget which is a child of container
+	 * firstPropertyName =  the name of the first property to set
+	 * varArgs =  a NULL-terminated list of property names and values, starting
+	 *  with first_prop_name
 	 */
 	public void childSetValist(Widget child, char[] firstPropertyName, void* varArgs)
 	{
@@ -709,12 +672,9 @@ public class Container : Widget
 	 * of the container, but were added by the container implementation
 	 * itself. Most applications should use gtk_container_foreach(),
 	 * rather than gtk_container_forall().
-	 * container:
-	 *  a GtkContainer
-	 * callback:
-	 *  a callback
-	 * callback_data:
-	 *  callback user data
+	 * Params:
+	 * callback =  a callback
+	 * callbackData =  callback user data
 	 */
 	public void forall(GtkCallback callback, void* callbackData)
 	{
@@ -725,10 +685,7 @@ public class Container : Widget
 	/**
 	 * Retrieves the border width of the container. See
 	 * gtk_container_set_border_width().
-	 * container:
-	 *  a GtkContainer
-	 * Returns:
-	 *  the current border width
+	 * Returns: the current border width
 	 */
 	public uint getBorderWidth()
 	{
@@ -743,13 +700,12 @@ public class Container : Widget
 	 * GtkWindow; because toplevel windows can't leave space outside,
 	 * they leave the space inside. The border is added on all sides of
 	 * the container. To add space to only one side, one approach is to
-	 * create a GtkAlignment widget, call gtk_widget_set_usize() to give
-	 * it a size, and place it on the side of the container as a spacer.
-	 * container:
-	 *  a GtkContainer
-	 * border_width:
-	 *  amount of blank space to leave outside the container.
-	 *  Valid values are in the range 0-65535 pixels.
+	 * create a GtkAlignment widget, call gtk_widget_set_size_request()
+	 * to give it a size, and place it on the side of the container as
+	 * a spacer.
+	 * Params:
+	 * borderWidth =  amount of blank space to leave outside
+	 *  the container. Valid values are in the range 0-65535 pixels.
 	 */
 	public void setBorderWidth(uint borderWidth)
 	{
@@ -767,14 +723,11 @@ public class Container : Widget
 	 * an expose event needs to be sent to the child, intersecting
 	 * the event's area with the child area, and sending the event.
 	 * In most cases, a container can simply either simply inherit the
-	 * ::expose implementation from GtkContainer, or, do some drawing
+	 * "expose" implementation from GtkContainer, or, do some drawing
 	 * and then chain to the ::expose implementation from GtkContainer.
-	 * container:
-	 *  a GtkContainer
-	 * child:
-	 *  a child of container
-	 * event:
-	 *  a expose event sent to container
+	 * Params:
+	 * child =  a child of container
+	 * event =  a expose event sent to container
 	 */
 	public void propagateExpose(Widget child, GdkEventExpose* event)
 	{
@@ -788,17 +741,13 @@ public class Container : Widget
 	 * set, GTK+ computes the focus chain based on the positions
 	 * of the children. In that case, GTK+ stores NULL in
 	 * focusable_widgets and returns FALSE.
-	 * container:
-	 *  a GtkContainer
-	 * focusable_widgets:
-	 *  location to store the focus chain of the
+	 * Params:
+	 * focusableWidgets =  location to store the focus chain of the
 	 *  container, or NULL. You should free this list
 	 *  using g_list_free() when you are done with it, however
 	 *  no additional reference count is added to the
 	 *  individual widgets in the focus chain.
-	 * Returns:
-	 *  TRUE if the focus chain of the container
-	 * has been set explicitly.
+	 * Returns: TRUE if the focus chain of the container has been set explicitly.
 	 */
 	public int getFocusChain(GList** focusableWidgets)
 	{
@@ -813,10 +762,8 @@ public class Container : Widget
 	 * to set the focus chain before you pack the widgets, or have a widget
 	 * in the chain that isn't always packed. The necessary checks are done
 	 * when the focus chain is actually traversed.
-	 * container:
-	 *  a GtkContainer.
-	 * focusable_widgets:
-	 *  the new focus chain.
+	 * Params:
+	 * focusableWidgets =  the new focus chain
 	 */
 	public void setFocusChain(ListG focusableWidgets)
 	{
@@ -826,8 +773,6 @@ public class Container : Widget
 	
 	/**
 	 * Removes a focus chain explicitly set with gtk_container_set_focus_chain().
-	 * container:
-	 *  a GtkContainer.
 	 */
 	public void unsetFocusChain()
 	{
@@ -837,13 +782,10 @@ public class Container : Widget
 	
 	/**
 	 * Finds a child property of a container class by name.
-	 * cclass:
-	 *  a GtkContainerClass
-	 * property_name:
-	 *  the name of the child property to find
-	 * Returns:
-	 *  the GParamSpec of the child property or NULL if class has no
-	 *  child property with that name.
+	 * Params:
+	 * cclass =  a GtkContainerClass
+	 * propertyName =  the name of the child property to find
+	 * Returns: the GParamSpec of the child property or NULL if class has no child property with that name.
 	 */
 	public static GParamSpec* classFindChildProperty(GObjectClass* cclass, char[] propertyName)
 	{
@@ -853,12 +795,10 @@ public class Container : Widget
 	
 	/**
 	 * Installs a child property on a container class.
-	 * cclass:
-	 *  a GtkContainerClass
-	 * property_id:
-	 *  the id for the property
-	 * pspec:
-	 *  the GParamSpec for the property
+	 * Params:
+	 * cclass =  a GtkContainerClass
+	 * propertyId =  the id for the property
+	 * pspec =  the GParamSpec for the property
 	 */
 	public static void classInstallChildProperty(Container cclass, uint propertyId, GParamSpec* pspec)
 	{
@@ -868,19 +808,10 @@ public class Container : Widget
 	
 	/**
 	 * Returns all child properties of a container class.
-	 * cclass:
-	 *  a GtkContainerClass
-	 * n_properties:
-	 *  location to return the number of child properties found
-	 * Returns:
-	 *  a newly allocated NULL-terminated array of GParamSpec*.
-	 *  The array must be freed with g_free().
-	 * Property Details
-	 * The "border-width" property
-	 *  "border-width" guint : Read / Write
-	 * The width of the empty border outside the containers children.
-	 * Allowed values: <= G_MAXINT
-	 * Default value: 0
+	 * Params:
+	 * cclass =  a GtkContainerClass
+	 * nProperties =  location to return the number of child properties found
+	 * Returns: a newly allocated NULL-terminated array of GParamSpec*.  The array must be freed with g_free().
 	 */
 	public static GParamSpec** classListChildProperties(GObjectClass* cclass, uint* nProperties)
 	{

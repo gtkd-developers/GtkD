@@ -69,6 +69,7 @@ private import glib.Str;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -76,7 +77,6 @@ private import glib.Str;
  * other objects. The actual relations that an object has with other objects
  * are defined as an AtkRelationSet, which is a set of AtkRelations.
  */
-private import gobject.ObjectG;
 public class Relation : ObjectG
 {
 	
@@ -132,10 +132,9 @@ public class Relation : ObjectG
 	
 	/**
 	 * Associate name with a new AtkRelationType
-	 * name:
-	 *  a name string
-	 * Returns:
-	 *  an AtkRelationType associated with name
+	 * Params:
+	 * name =  a name string
+	 * Returns: an AtkRelationType associated with name
 	 */
 	public static AtkRelationType typeRegister(char[] name)
 	{
@@ -145,10 +144,9 @@ public class Relation : ObjectG
 	
 	/**
 	 * Gets the description string describing the AtkRelationType type.
-	 * type:
-	 *  The AtkRelationType whose name is required
-	 * Returns:
-	 *  the string describing the AtkRelationType
+	 * Params:
+	 * type =  The AtkRelationType whose name is required
+	 * Returns: the string describing the AtkRelationType
 	 */
 	public static char[] typeGetName(AtkRelationType type)
 	{
@@ -158,11 +156,9 @@ public class Relation : ObjectG
 	
 	/**
 	 * Get the AtkRelationType type corresponding to a relation name.
-	 * name:
-	 *  a string which is the (non-localized) name of an ATK relation type.
-	 * Returns:
-	 *  the AtkRelationType enumerated type corresponding to the specified name,
-	 *  or ATK_RELATION_NULL if no matching relation type is found.
+	 * Params:
+	 * name =  a string which is the (non-localized) name of an ATK relation type.
+	 * Returns: the AtkRelationType enumerated type corresponding to the specified name, or ATK_RELATION_NULL if no matching relation type is found.
 	 */
 	public static AtkRelationType typeForName(char[] name)
 	{
@@ -172,16 +168,12 @@ public class Relation : ObjectG
 	
 	/**
 	 * Create a new relation for the specified key and the specified list
-	 * of targets.
-	 * targets:
-	 *  an array of pointers to AtkObjects
-	 * n_targets:
-	 *  number of AtkObjects pointed to by targets
-	 * relationship:
-	 *  an AtkRelationType with which to create the new
+	 * of targets. See also atk_object_add_relationship().
+	 * Params:
+	 * targets =  an array of pointers to AtkObjects
+	 * nTargets =  number of AtkObjects pointed to by targets
+	 * relationship =  an AtkRelationType with which to create the new
 	 *  AtkRelation
-	 * Returns:
-	 *  a pointer to a new AtkRelation
 	 */
 	public this (AtkObject** targets, int nTargets, AtkRelationType relationship)
 	{
@@ -191,10 +183,7 @@ public class Relation : ObjectG
 	
 	/**
 	 * Gets the type of relation
-	 * relation:
-	 *  an AtkRelation
-	 * Returns:
-	 *  the type of relation
+	 * Returns: the type of relation
 	 */
 	public AtkRelationType getRelationType()
 	{
@@ -204,10 +193,7 @@ public class Relation : ObjectG
 	
 	/**
 	 * Gets the target list of relation
-	 * relation:
-	 *  an AtkRelation
-	 * Returns:
-	 *  the target list of relation
+	 * Returns: the target list of relation
 	 */
 	public PtrArray getTarget()
 	{
@@ -217,17 +203,10 @@ public class Relation : ObjectG
 	
 	/**
 	 * Adds the specified AtkObject to the target for the relation, if it is
-	 * not already present.
-	 * relation:
-	 *  an AtkRelation
-	 * target:
-	 *  an AtkObject
+	 * not already present. See also atk_object_add_relationship().
+	 * Params:
+	 * target =  an AtkObject
 	 * Since ATK 1.9
-	 * Property Details
-	 * The "relation-type" property
-	 *  "relation-type" AtkRelationType : Read / Write
-	 * The type of the relation.
-	 * Default value: ATK_RELATION_NULL
 	 */
 	public void addTarget(AtkObject* target)
 	{

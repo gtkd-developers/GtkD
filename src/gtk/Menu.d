@@ -81,6 +81,7 @@ private import gtk.MenuItem;
 
 
 
+private import gtk.MenuShell;
 
 /**
  * Description
@@ -95,11 +96,11 @@ private import gtk.MenuItem;
  * Applications can display a GtkMenu as a popup menu by calling the
  * gtk_menu_popup() function. The example below shows how an application
  * can pop up a menu when the 3rd mouse button is pressed.
- * Example1.Connecting the popup signal handler.
+ * Example24.Connecting the popup signal handler.
  *  /+* connect our handler which will popup the menu +/
  *  g_signal_connect_swapped (window, "button_press_event",
  * 	G_CALLBACK (my_popup_handler), menu);
- * Example2.Signal handler which displays a popup menu.
+ * Example25.Signal handler which displays a popup menu.
  * static gint
  * my_popup_handler (GtkWidget *widget, GdkEvent *event)
  * {
@@ -125,7 +126,6 @@ private import gtk.MenuItem;
 	 *  return FALSE;
  * }
  */
-private import gtk.MenuShell;
 public class Menu : MenuShell
 {
 	
@@ -174,6 +174,7 @@ public class Menu : MenuShell
 		this.gtkMenu = gtkMenu;
 	}
 	
+	/** */
 	public void append(Widget widget)
 	{
 		super.append(widget);
@@ -181,8 +182,9 @@ public class Menu : MenuShell
 	
 	/**
 	 * Popups up this menu
-	 * @param button ??? you can pass a button number here
-	 * @param activateTime ??? you can pass the time from an event here
+	 * Params:
+	 *  button = you can pass a button number here
+	 *  activateTime = you can pass the time from an event here
 	 */
 	void popup(guint button, guint32 activateTime)
 	{
@@ -192,8 +194,9 @@ public class Menu : MenuShell
 	/**
 	 * Creates and append a submenu to this menu.
 	 * This menu item that actualy has the sub menu is also created.
-	 * @param label the sub menu item label
-	 * @return the new menu
+	 * Params:
+	 *  label = the sub menu item label
+	 * Returns: the new menu
 	 */
 	Menu appendSubmenu(char[] label)
 	{
@@ -204,6 +207,7 @@ public class Menu : MenuShell
 		return submenu;
 	}
 	
+	/** */
 	void appendSubmenu(char[] label, Menu submenu)
 	{
 		MenuItem item = new MenuItem(label);
@@ -211,6 +215,7 @@ public class Menu : MenuShell
 		item.setSubmenu(submenu);
 	}
 	
+	/** */
 	Menu prependSubmenu(char[] label)
 	{
 		MenuItem item = new MenuItem(label);
@@ -219,7 +224,6 @@ public class Menu : MenuShell
 		item.setSubmenu(submenu);
 		return submenu;
 	}
-	
 	
 	/**
 	 */
@@ -261,8 +265,6 @@ public class Menu : MenuShell
 	
 	/**
 	 * Creates a new GtkMenu.
-	 * Returns:
-	 * a new GtkMenu.
 	 */
 	public this ()
 	{
@@ -272,12 +274,10 @@ public class Menu : MenuShell
 	
 	/**
 	 * Sets the GdkScreen on which the menu will be displayed.
-	 * menu:
-	 *  a GtkMenu.
-	 * screen:
-	 *  a GdkScreen, or NULL if the screen should be
-	 *  determined by the widget the menu is attached to.
 	 * Since 2.2
+	 * Params:
+	 * screen =  a GdkScreen, or NULL if the screen should be
+	 *  determined by the widget the menu is attached to.
 	 */
 	public void setScreen(Screen screen)
 	{
@@ -290,12 +290,9 @@ public class Menu : MenuShell
 	
 	/**
 	 * Moves a GtkMenuItem to a new position within the GtkMenu.
-	 * menu:
-	 * a GtkMenu.
-	 * child:
-	 * the GtkMenuItem to move.
-	 * position:
-	 * the new position to place child. Positions are numbered from
+	 * Params:
+	 * child = the GtkMenuItem to move.
+	 * position = the new position to place child. Positions are numbered from
 	 * 0 to n-1.
 	 */
 	public void reorderChild(Widget child, int position)
@@ -311,19 +308,13 @@ public class Menu : MenuShell
 	 * rightmost, uppermost and lower column and row numbers of the table.
 	 * (Columns and rows are indexed from zero).
 	 * Note that this function is not related to gtk_menu_detach().
-	 * menu:
-	 *  a GtkMenu.
-	 * child:
-	 *  a GtkMenuItem.
-	 * left_attach:
-	 *  The column number to attach the left side of the item to.
-	 * right_attach:
-	 *  The column number to attach the right side of the item to.
-	 * top_attach:
-	 *  The row number to attach the top of the item to.
-	 * bottom_attach:
-	 *  The row number to attach the bottom of the item to.
 	 * Since 2.4
+	 * Params:
+	 * child =  a GtkMenuItem.
+	 * leftAttach =  The column number to attach the left side of the item to.
+	 * rightAttach =  The column number to attach the right side of the item to.
+	 * topAttach =  The row number to attach the top of the item to.
+	 * bottomAttach =  The row number to attach the bottom of the item to.
 	 */
 	public void attach(Widget child, uint leftAttach, uint rightAttach, uint topAttach, uint bottomAttach)
 	{
@@ -341,23 +332,19 @@ public class Menu : MenuShell
 	 * the menu popup. If the menu popup was initiated by something other than
 	 * a mouse button press, such as a mouse button release or a keypress,
 	 * button should be 0.
-	 * The activate_time parameter should be the time stamp of the event that
-	 * initiated the popup. If such an event is not available, use
-	 * gtk_get_current_event_time() instead.
-	 * menu:
-	 *  a GtkMenu.
-	 * parent_menu_shell:
-	 *  the menu shell containing the triggering menu item, or NULL
-	 * parent_menu_item:
-	 *  the menu item whose activation triggered the popup, or NULL
-	 * func:
-	 *  a user supplied function used to position the menu, or NULL
-	 * data:
-	 *  user supplied data to be passed to func.
-	 * button:
-	 *  the mouse button which was pressed to initiate the event.
-	 * activate_time:
-	 *  the time at which the activation event occurred.
+	 * The activate_time parameter is used to conflict-resolve initiation of
+	 * concurrent requests for mouse/keyboard grab requests. To function
+	 * properly, this needs to be the time stamp of the user event (such as
+	 * a mouse click or key press) that caused the initiation of the popup.
+	 * Only if no such event is available, gtk_get_current_event_time() can
+	 * be used instead.
+	 * Params:
+	 * parentMenuShell =  the menu shell containing the triggering menu item, or NULL
+	 * parentMenuItem =  the menu item whose activation triggered the popup, or NULL
+	 * func =  a user supplied function used to position the menu, or NULL
+	 * data =  user supplied data to be passed to func.
+	 * button =  the mouse button which was pressed to initiate the event.
+	 * activateTime =  the time at which the activation event occurred.
 	 */
 	public void popup(Widget parentMenuShell, Widget parentMenuItem, GtkMenuPositionFunc func, void* data, uint button, uint activateTime)
 	{
@@ -370,10 +357,8 @@ public class Menu : MenuShell
 	 * This accelerator group needs to also be added to all windows that
 	 * this menu is being used in with gtk_window_add_accel_group(), in order
 	 * for those windows to support all the accelerators contained in this group.
-	 * menu:
-	 * a GtkMenu.
-	 * accel_group:
-	 * the GtkAccelGroup to be associated with the menu.
+	 * Params:
+	 * accelGroup = the GtkAccelGroup to be associated with the menu.
 	 */
 	public void setAccelGroup(AccelGroup accelGroup)
 	{
@@ -384,10 +369,7 @@ public class Menu : MenuShell
 	/**
 	 * Gets the GtkAccelGroup which holds global accelerators for the menu.
 	 * See gtk_menu_set_accel_group().
-	 * menu:
-	 * a GtkMenu.
-	 * Returns:
-	 * the GtkAccelGroup associated with the menu.
+	 * Returns:the GtkAccelGroup associated with the menu.
 	 */
 	public AccelGroup getAccelGroup()
 	{
@@ -406,15 +388,8 @@ public class Menu : MenuShell
 	 * automatically gets an accel path assigned. For example, a menu containing
 	 * menu items "New" and "Exit", will, after
 	 * gtk_menu_set_accel_path (menu, "<Gnumeric-Sheet>/File");
-	 * has been called, assign its items the accel paths:
-	 * "<Gnumeric-Sheet>/File/New" and "<Gnumeric-Sheet>/File/Exit".
-	 * Assigning accel paths to menu items then enables the user to change
-	 * their accelerators at runtime. More details about accelerator paths
-	 * and their default setups can be found at gtk_accel_map_add_entry().
-	 * menu:
-	 *  a valid GtkMenu
-	 * accel_path:
-	 *  a valid accelerator path
+	 * Params:
+	 * accelPath =  a valid accelerator path
 	 */
 	public void setAccelPath(char[] accelPath)
 	{
@@ -427,10 +402,8 @@ public class Menu : MenuShell
 	 * is shown as a tearoff menu. If title is NULL, the menu will see if it is
 	 * attached to a parent menu item, and if so it will try to use the same text as
 	 * that menu item's label.
-	 * menu:
-	 *  a GtkMenu
-	 * title:
-	 *  a string containing the title for the menu.
+	 * Params:
+	 * title =  a string containing the title for the menu.
 	 */
 	public void setTitle(char[] title)
 	{
@@ -441,10 +414,7 @@ public class Menu : MenuShell
 	/**
 	 * Returns whether the menu is torn off. See
 	 * gtk_menu_set_tearoff_state().
-	 * menu:
-	 *  a GtkMenu
-	 * Returns:
-	 *  TRUE if the menu is currently torn off.
+	 * Returns: TRUE if the menu is currently torn off.
 	 */
 	public int getTearoffState()
 	{
@@ -454,12 +424,7 @@ public class Menu : MenuShell
 	
 	/**
 	 * Returns the title of the menu. See gtk_menu_set_title().
-	 * menu:
-	 *  a GtkMenu
-	 * Returns:
-	 *  the title of the menu, or NULL if the menu has no
-	 * title set on it. This string is owned by the widget and should
-	 * not be modified or freed.
+	 * Returns: the title of the menu, or NULL if the menu has notitle set on it. This string is owned by the widget and shouldnot be modified or freed.
 	 */
 	public char[] getTitle()
 	{
@@ -469,8 +434,6 @@ public class Menu : MenuShell
 	
 	/**
 	 * Removes the menu from the screen.
-	 * menu:
-	 * a GtkMenu.
 	 */
 	public void popdown()
 	{
@@ -480,8 +443,6 @@ public class Menu : MenuShell
 	
 	/**
 	 * Repositions the menu according to its position function.
-	 * menu:
-	 * a GtkMenu.
 	 */
 	public void reposition()
 	{
@@ -492,11 +453,7 @@ public class Menu : MenuShell
 	/**
 	 * Returns the selected menu item from the menu. This is used by the
 	 * GtkOptionMenu.
-	 * menu:
-	 * a GtkMenu.
-	 * Returns:
-	 * the GtkMenuItem that was last selected in the menu. If a
-	 * selection has not yet been made, the first menu item is selected.
+	 * Returns:the GtkMenuItem that was last selected in the menu. If a selection has not yet been made, the first menu item is selected.
 	 */
 	public Widget getActive()
 	{
@@ -507,10 +464,8 @@ public class Menu : MenuShell
 	/**
 	 * Selects the specified menu item within the menu. This is used by the
 	 * GtkOptionMenu and should not be used by anyone else.
-	 * menu:
-	 * a GtkMenu.
-	 * index_:
-	 * the index of the menu item to select. Index values are from
+	 * Params:
+	 * index = the index of the menu item to select. Index values are from
 	 * 0 to n-1.
 	 */
 	public void setActive(uint index)
@@ -524,10 +479,8 @@ public class Menu : MenuShell
 	 * as drop down menu which persists as long as the menu is active. It can
 	 * also be displayed as a tearoff menu which persists until it is closed
 	 * or reattached.
-	 * menu:
-	 * a GtkMenu.
-	 * torn_off:
-	 * If TRUE, menu is displayed as a tearoff menu.
+	 * Params:
+	 * tornOff = If TRUE, menu is displayed as a tearoff menu.
 	 */
 	public void setTearoffState(int tornOff)
 	{
@@ -538,12 +491,9 @@ public class Menu : MenuShell
 	/**
 	 * Attaches the menu to the widget and provides a callback function that will
 	 * be invoked when the menu calls gtk_menu_detach() during its destruction.
-	 * menu:
-	 * a GtkMenu.
-	 * attach_widget:
-	 * the GtkWidget that the menu will be attached to.
-	 * detacher:
-	 * the user supplied callback function that will be called when
+	 * Params:
+	 * attachWidget = the GtkWidget that the menu will be attached to.
+	 * detacher = the user supplied callback function that will be called when
 	 * the menu calls gtk_menu_detach().
 	 */
 	public void attachToWidget(Widget attachWidget, GtkMenuDetachFunc detacher)
@@ -556,8 +506,6 @@ public class Menu : MenuShell
 	 * Detaches the menu from the widget to which it had been attached.
 	 * This function will call the callback function, detacher, provided
 	 * when the gtk_menu_attach_to_widget() function was called.
-	 * menu:
-	 * a GtkMenu.
 	 */
 	public void detach()
 	{
@@ -567,10 +515,7 @@ public class Menu : MenuShell
 	
 	/**
 	 * Returns the GtkWidget that the menu is attached to.
-	 * menu:
-	 * a GtkMenu.
-	 * Returns:
-	 * the GtkWidget that the menu is attached to.
+	 * Returns:the GtkWidget that the menu is attached to.
 	 */
 	public Widget getAttachWidget()
 	{
@@ -581,11 +526,10 @@ public class Menu : MenuShell
 	/**
 	 * Returns a list of the menus which are attached to this widget.
 	 * This list is owned by GTK+ and must not be modified.
-	 * widget:
-	 *  a GtkWidget
-	 * Returns:
-	 *  the list of menus attached to his widget.
 	 * Since 2.6
+	 * Params:
+	 * widget =  a GtkWidget
+	 * Returns: the list of menus attached to his widget.
 	 */
 	public static ListG getForAttachWidget(Widget widget)
 	{
@@ -603,18 +547,10 @@ public class Menu : MenuShell
 	 * information can't be reliably inferred from the coordinates returned
 	 * by a GtkMenuPositionFunc, since, for very long menus, these coordinates
 	 * may extend beyond the monitor boundaries or even the screen boundaries.
-	 * menu:
-	 *  a GtkMenu
-	 * monitor_num:
-	 *  the number of the monitor on which the menu should
-	 *  be popped up
 	 * Since 2.4
-	 * Property Details
-	 * The "tearoff-state" property
-	 *  "tearoff-state" gboolean : Read / Write
-	 * A boolean that indicates whether the menu is torn-off.
-	 * Default value: FALSE
-	 * Since 2.6
+	 * Params:
+	 * monitorNum =  the number of the monitor on which the menu should
+	 *  be popped up
 	 */
 	public void setMonitor(int monitorNum)
 	{

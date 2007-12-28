@@ -145,12 +145,12 @@ public class X11
 	
 	
 	
+        /+ Manual edit. Won't compile.
 	
 	
 	
 	
 	
-	/+TEMP because this doesn't compile
 	
 	
 	
@@ -163,11 +163,9 @@ public class X11
 	 * This may fail if the window has been destroyed.
 	 * For example in the X backend, a native window handle is an Xlib
 	 * XID.
-	 * anid:
-	 *  a native window handle.
-	 * Returns:
-	 *  the newly-created GdkWindow wrapper for the
-	 *  native window or NULL if the window has been destroyed.
+	 * Params:
+	 * anid =  a native window handle.
+	 * Returns: the newly-created GdkWindow wrapper for the  native window or NULL if the window has been destroyed.
 	 */
 	public static Window gdkWindowForeignNew(GdkNativeWindow anid)
 	{
@@ -178,11 +176,9 @@ public class X11
 	
 	/**
 	 * Returns the Gdk object associated with the given X id.
-	 * xid:
-	 *  an X id.
-	 * Returns:
-	 *  the associated Gdk object, which may be a GdkPixmap,
-	 * a GdkWindow or a GdkFont.
+	 * Params:
+	 * xid =  an X id.
+	 * Returns: the associated Gdk object, which may be a GdkPixmap,a GdkWindow or a GdkFont.
 	 */
 	public static void* gdkXidTableLookup(XID xid)
 	{
@@ -195,11 +191,9 @@ public class X11
 	 * Looks up the GdkWindow that wraps the given native window handle.
 	 * For example in the X backend, a native window handle is an Xlib
 	 * XID.
-	 * anid:
-	 *  a native window handle.
-	 * Returns:
-	 *  the GdkWindow wrapper for the native window,
-	 *  or NULL if there is none.
+	 * Params:
+	 * anid =  a native window handle.
+	 * Returns: the GdkWindow wrapper for the native window,  or NULL if there is none.
 	 */
 	public static Window gdkWindowLookup(GdkNativeWindow anid)
 	{
@@ -212,11 +206,9 @@ public class X11
 	 * Looks up the GdkPixmap that wraps the given native pixmap handle.
 	 * For example in the X backend, a native pixmap handle is an Xlib
 	 * XID.
-	 * anid:
-	 *  a native pixmap handle.
-	 * Returns:
-	 *  the GdkWindow wrapper for the native window,
-	 *  or NULL if there is none.
+	 * Params:
+	 * anid =  a native pixmap handle.
+	 * Returns: the GdkWindow wrapper for the native window, or NULL if there is none.
 	 */
 	public static GdkPixmap* gdkPixmapLookup(GdkNativeWindow anid)
 	{
@@ -230,12 +222,11 @@ public class X11
 	
 	/**
 	 * Routine to get the current X server time stamp.
-	 * window:
-	 *  a GdkWindow, used for communication with the server.
+	 * Params:
+	 * window =  a GdkWindow, used for communication with the server.
 	 *  The window must have GDK_PROPERTY_CHANGE_MASK in its
 	 *  events mask or a hang will result.
-	 * Returns:
-	 *  the time stamp.
+	 * Returns: the time stamp.
 	 */
 	public static uint getServerTime(Window window)
 	{
@@ -259,11 +250,10 @@ public class X11
 	 * Note that this property is automatically updated by GDK, so this
 	 * function should only be used by applications which handle input
 	 * events bypassing GDK.
-	 * window:
-	 *  A toplevel GdkWindow
-	 * timestamp:
-	 *  An XServer timestamp to which the property should be set
 	 * Since 2.6
+	 * Params:
+	 * window =  A toplevel GdkWindow
+	 * timestamp =  An XServer timestamp to which the property should be set
 	 */
 	public static void windowSetUserTime(Window window, uint timestamp)
 	{
@@ -277,9 +267,9 @@ public class X11
 	 * in the Extended
 	 * Window Manager Hints. Will not do anything if the
 	 * window is already on all workspaces.
-	 * window:
-	 *  a GdkWindow
 	 * Since 2.8
+	 * Params:
+	 * window =  a GdkWindow
 	 */
 	public static void windowMoveToCurrentDesktop(Window window)
 	{
@@ -293,6 +283,42 @@ public class X11
 	
 	
 	
+	/**
+	 * Sends a startup notification message of type message_type to
+	 * display.
+	 * This is a convenience function for use by code that implements the
+	 * freedesktop startup notification specification. Applications should
+	 * not normally need to call it directly. See the Startup
+	 * Notification Protocol specification for
+	 * definitions of the message types and keys that can be used.
+	 * Since 2.12
+	 * Params:
+	 * display =  a GdkDisplay
+	 * messageType =  startup notification message type ("new", "change",
+	 * or "remove")
+	 * ... =  a list of key/value pairs (as strings), terminated by a
+	 * NULL key. (A NULL value for a key will cause that key to be
+	 * skipped in the output.)
+	 */
+	public static void displayBroadcastStartupMessage(Display display, char[] messageType, ... )
+	{
+		// void gdk_x11_display_broadcast_startup_message  (GdkDisplay *display,  const char *message_type,  ...);
+		gdk_x11_display_broadcast_startup_message((display is null) ? null : display.getDisplayStruct(), Str.toStringz(messageType));
+	}
+	
+	/**
+	 * Gets the startup notification ID for a display.
+	 * Since 2.12
+	 * Params:
+	 * display =  a GdkDisplay
+	 * Returns: the startup notification ID for display
+	 */
+	public static char[] displayGetStartupNotificationId(Display display)
+	{
+		// const gchar* gdk_x11_display_get_startup_notification_id  (GdkDisplay *display);
+		return Str.toString(gdk_x11_display_get_startup_notification_id((display is null) ? null : display.getDisplayStruct()) );
+	}
+	
 	
 	
 	+/
@@ -301,23 +327,18 @@ public class X11
 	
 	/**
 	 * Returns the X resource (window or pixmap) belonging to a GdkDrawable.
-	 * drawable:
-	 *  a GdkDrawable.
-	 * Returns:
-	 *  the ID of drawable's X resource.
+	 * Params:
+	 * drawable =  a GdkDrawable.
+	 * Returns: the ID of drawable's X resource.
 	 */
 	public static XID drawableGetXid(Drawable drawable)
 	{
 		// XID gdk_x11_drawable_get_xid (GdkDrawable *drawable);
 		return gdk_x11_drawable_get_xid((drawable is null) ? null : drawable.getDrawableStruct());
 	}
+
+        /+
 	
-	
-	/+
-	 
-	
-	 
-	 
 	/**
 	 * Warning
 	 * gdk_x11_font_get_name is deprecated and should not be used in newly-written code.
@@ -325,11 +346,9 @@ public class X11
 	 * or comma separated list of XLFDs (for font->type == GDK_FONT_FONTSET)
 	 * that was used to load the font. If the same font was loaded
 	 * via multiple names, which name is returned is undefined.
-	 * font:
-	 *  a GdkFont.
-	 * Returns:
-	 *  the name of the font. This string is owned
-	 *  by GDK and must not be modified or freed.
+	 * Params:
+	 * font =  a GdkFont.
+	 * Returns: the name of the font. This string is owned by GDK and must not be modified or freed.
 	 */
 	public static char[] fontGetName(GdkFont* font)
 	{
@@ -342,10 +361,9 @@ public class X11
 	 * Warning
 	 * gdk_x11_font_get_xfont is deprecated and should not be used in newly-written code.
 	 * Returns the X font belonging to a GdkFont.
-	 * font:
-	 *  a GdkFont.
-	 * Returns:
-	 *  an Xlib XFontStruct* or an XFontSet.
+	 * Params:
+	 * font =  a GdkFont.
+	 * Returns: an Xlib XFontStruct* or an XFontSet.
 	 */
 	public static void* fontGetXfont(GdkFont* font)
 	{
@@ -358,10 +376,7 @@ public class X11
 	
 	/**
 	 * Gets the default GTK+ screen number.
-	 * Returns:
-	 *  returns the screen number specified by
-	 *  the --display command line option or the DISPLAY environment
-	 *  variable when gdk_init() calls XOpenDisplay().
+	 * Returns: returns the screen number specified by the --display command line option or the DISPLAY environment variable when gdk_init() calls XOpenDisplay().
 	 */
 	public static int getDefaultScreen()
 	{
@@ -396,9 +411,9 @@ public class X11
 	}
 	
 	
+	
+	
 	+/
-	
-	
 	
 	
 	

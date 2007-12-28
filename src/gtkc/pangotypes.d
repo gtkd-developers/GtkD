@@ -373,8 +373,8 @@ public enum PangoAlignment
  * systems. The values correspond to the names as defined in the
  * Unicode standard.
  * Note that new types may be added in the future. Applications should be ready
- * to handle unknown values.
- * See Unicode Standard Annex
+ * to handle unknown values. This enumeration is interchangeable with
+ * GUnicodeScript. See Unicode Standard Annex
  * 24: Script names.
  * PANGO_SCRIPT_INVALID_CODE
  * a value never returned from pango_script_for_unichar()
@@ -544,9 +544,11 @@ public struct PangoItem{}
  * guint8level;
  * the bidirectional level for this segment.
  * guint8gravity;
- * the glyph orientation for this segment.
+ * the glyph orientation for this segment (A PangoGravity).
  * guint8flags;
  * boolean flags for this segment (currently only one) (Since: 1.16).
+ * guint8script;
+ * the detected script for this segment (A PangoScript) (Since: 1.18).
  * PangoLanguage*language;
  * the detected language for this segment.
  * GSList*extra_attrs;
@@ -564,6 +566,8 @@ public struct PangoAnalysis{}
 // byte gravity; /+* PangoGravity +/
 // pango-Text-Processing.html
 // byte flags;
+// pango-Text-Processing.html
+// byte script; /+* PangoScript +/
 // pango-Text-Processing.html
 // PangoLanguage *language;
 // pango-Text-Processing.html
@@ -594,9 +598,9 @@ public struct PangoLogAttr{}
 // pango-Text-Processing.html
 // uint isWhite : 1; /+* Whitespace character +/
 // pango-Text-Processing.html
-// /+* cursor can appear inn front of character (i.e. this is a grapheme
+// /+* Cursor can appear inn front of character (i.e. this is a grapheme
 // pango-Text-Processing.html
-// * boundary, or the first character inn the text)
+// * boundary, or the first character inn the text).
 // pango-Text-Processing.html
 // +/
 // pango-Text-Processing.html
@@ -606,7 +610,7 @@ public struct PangoLogAttr{}
 // pango-Text-Processing.html
 // * some text, most likely for sentences (e.g. no space after a period, so
 // pango-Text-Processing.html
-// * the next sentence starts right away)
+// * the next sentence starts right away).
 // pango-Text-Processing.html
 // +/
 // pango-Text-Processing.html
@@ -636,13 +640,21 @@ public struct PangoLogAttr{}
 // pango-Text-Processing.html
 // uint isSentenceEnd : 1; /+* first non-sentence char after a sentence +/
 // pango-Text-Processing.html
-// /+* if set, backspace deletes one character rather than
+// /+* If set, backspace deletes one character rather than
 // pango-Text-Processing.html
-// * the entire grapheme cluster
+// * the entire grapheme cluster.
 // pango-Text-Processing.html
 // +/
 // pango-Text-Processing.html
 // uint backspaceDeletesCharacter : 1;
+// pango-Text-Processing.html
+// /+* Only few space variants (U+0020 and U+00A0) have variable
+// pango-Text-Processing.html
+// * width during justification.
+// pango-Text-Processing.html
+// +/
+// pango-Text-Processing.html
+// uint isExpandableSpace : 1;
 // pango-Text-Processing.html
 
 
@@ -1414,6 +1426,8 @@ public struct PangoEngineShapeClass{}
  * Converts a dimension to device units by rounding.
  * d:
  * a dimension in Pango units.
+ * Returns:
+ * rounded dimension in device units.
  */
 // TODO
 // #define PANGO_PIXELS(d) (((int)(d) + 512) >> 10)
@@ -1422,6 +1436,9 @@ public struct PangoEngineShapeClass{}
  * Converts a dimension to device units by flooring.
  * d:
  * a dimension in Pango units.
+ * Returns:
+ * floored dimension in device units.
+ * Since 1.14
  */
 // TODO
 // #define PANGO_PIXELS_FLOOR(d) (((int)(d)) >> 10)
@@ -1430,9 +1447,24 @@ public struct PangoEngineShapeClass{}
  * Converts a dimension to device units by ceiling.
  * d:
  * a dimension in Pango units.
+ * Returns:
+ * ceiled dimension in device units.
+ * Since 1.14
  */
 // TODO
 // #define PANGO_PIXELS_CEIL(d) (((int)(d) + 1023) >> 10)
+
+/*
+ * Rounds a dimension to whole device units, but does not
+ * convert it to device units.
+ * d:
+ * a dimension in Pango units.
+ * Returns:
+ * rounded dimension in Pango units.
+ * Since 1.18
+ */
+// TODO
+// #define PANGO_UNITS_ROUND(d)
 
 /*
  * Extracts the ascent from a PangoRectangle

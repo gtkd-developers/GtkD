@@ -68,6 +68,7 @@ private import gdk.Screen;
 
 
 
+private import gtk.Widget;
 
 /**
  * Description
@@ -76,7 +77,6 @@ private import gdk.Screen;
  * It is used for reliable pointer grabs and selection handling in the code
  * for drag-and-drop.
  */
-private import gtk.Widget;
 public class Invisible : Widget
 {
 	
@@ -131,8 +131,6 @@ public class Invisible : Widget
 	
 	/**
 	 * Creates a new GtkInvisible.
-	 * Returns:
-	 *  a new GtkInvisible.
 	 */
 	public this ()
 	{
@@ -142,12 +140,10 @@ public class Invisible : Widget
 	
 	/**
 	 * Creates a new GtkInvisible object for a specified screen
-	 * screen:
-	 *  a GdkScreen which identifies on which
-	 *  the new GtkInvisible will be created.
-	 * Returns:
-	 *  a newly created GtkInvisible object
 	 * Since 2.2
+	 * Params:
+	 * screen =  a GdkScreen which identifies on which
+	 *  the new GtkInvisible will be created.
 	 */
 	public this (Screen screen)
 	{
@@ -157,11 +153,9 @@ public class Invisible : Widget
 	
 	/**
 	 * Sets the GdkScreen where the GtkInvisible object will be displayed.
-	 * invisible:
-	 *  a GtkInvisible.
-	 * screen:
-	 *  a GdkScreen.
 	 * Since 2.2
+	 * Params:
+	 * screen =  a GdkScreen.
 	 */
 	public void setScreen(Screen screen)
 	{
@@ -171,15 +165,8 @@ public class Invisible : Widget
 	
 	/**
 	 * Returns the GdkScreen object associated with invisible
-	 * invisible:
-	 *  a GtkInvisible.
-	 * Returns:
-	 *  the associated GdkScreen.
 	 * Since 2.2
-	 * Property Details
-	 * The "screen" property
-	 *  "screen" GdkScreen : Read / Write
-	 * The screen where this window will be displayed.
+	 * Returns: the associated GdkScreen.
 	 */
 	public Screen getScreen()
 	{

@@ -147,13 +147,10 @@ public class Enums
 	
 	/**
 	 * Returns the GEnumValue for a value.
-	 * enum_class:
-	 * a GEnumClass
-	 * value:
-	 * the value to look up
-	 * Returns:
-	 * the GEnumValue for value, or NULL if value is not
-	 * a member of the enumeration
+	 * Params:
+	 * enumClass = a GEnumClass
+	 * value = the value to look up
+	 * Returns:the GEnumValue for value, or NULL if value is not a member of the enumeration
 	 */
 	public static GEnumValue* getValue(GEnumClass* enumClass, int value)
 	{
@@ -163,13 +160,10 @@ public class Enums
 	
 	/**
 	 * Looks up a GEnumValue by name.
-	 * enum_class:
-	 * a GEnumClass
-	 * name:
-	 * the name to look up
-	 * Returns:
-	 * the GEnumValue with name name, or NULL if the enumeration doesn'
-	 * t have a member with that name
+	 * Params:
+	 * enumClass = a GEnumClass
+	 * name = the name to look up
+	 * Returns:the GEnumValue with name name, or NULL if the enumeration doesn't have a member with that name
 	 */
 	public static GEnumValue* getValueByName(GEnumClass* enumClass, char[] name)
 	{
@@ -179,13 +173,10 @@ public class Enums
 	
 	/**
 	 * Looks up a GEnumValue by nickname.
-	 * enum_class:
-	 * a GEnumClass
-	 * nick:
-	 * the nickname to look up
-	 * Returns:
-	 * the GEnumValue with nickname nick, or NULL if the enumeration doesn'
-	 * t have a member with that nickname
+	 * Params:
+	 * enumClass = a GEnumClass
+	 * nick = the nickname to look up
+	 * Returns:the GEnumValue with nickname nick, or NULL if the enumeration doesn't have a member with that nickname
 	 */
 	public static GEnumValue* getValueByNick(GEnumClass* enumClass, char[] nick)
 	{
@@ -201,45 +192,27 @@ public class Enums
 	 * It is normally more convenient to let glib-mkenums
 	 * generate a my_enum_get_type() function from a usual C enumeration definition
 	 * than to write one yourself using g_enum_register_static().
-	 * name:
-	 * A nul-terminated string used as the name of the new type.
-	 * _static_values:
-	 * Returns:
-	 * The new type identifier.
+	 * Params:
+	 * name = A nul-terminated string used as the name of the new type.
+	 * Returns:The new type identifier.
 	 */
 	public static GType registerStatic(char[] name, GEnumValue* _StaticValues)
 	{
-		// GType g_enum_register_static (const gchar *name,  const GEnumValue *const _static_values);
+		// GType g_enum_register_static (const gchar *name,  const GEnumValue *const_static_values);
 		return g_enum_register_static(Str.toStringz(name), _StaticValues);
 	}
 	
 	
 	/**
 	 * This function is meant to be called from the complete_type_info() function
-	 * of a GTypePlugin implementation, as in the following example:
-	 * static void
-	 * my_enum_complete_type_info (GTypePlugin *plugin,
-	 *  GType g_type,
-	 *  GTypeInfo *info,
-	 *  GTypeValueTable *value_table)
-	 * {
-		 *  static const GEnumValue values[] = {
-			 *  { MY_ENUM_FOO, "MY_ENUM_FOO", "foo" },
-			 *  { MY_ENUM_BAR, "MY_ENUM_BAR", "bar" },
-		 *  { 0, NULL, NULL }
-	 *  };
-	 *  g_enum_complete_type_info (type, info, values);
- * }
- * g_enum_type:
- * the type identifier of the type being completed
- * info:
- * the GTypeInfo struct to be filled in
- * _values:
- */
-public static void completeTypeInfo(GType type, GTypeInfo* info, GEnumValue* _Values)
-{
-	// void g_enum_complete_type_info (GType g_enum_type,  GTypeInfo *info,  const GEnumValue *const _values);
-	g_enum_complete_type_info(type, info, _Values);
-}
-
+	 * Params:
+	 * type = the type identifier of the type being completed
+	 * info = the GTypeInfo struct to be filled in
+	 */
+	public static void completeTypeInfo(GType type, GTypeInfo* info, GEnumValue* _Values)
+	{
+		// void g_enum_complete_type_info (GType g_enum_type,  GTypeInfo *info,  const GEnumValue *const_values);
+		g_enum_complete_type_info(type, info, _Values);
+	}
+	
 }

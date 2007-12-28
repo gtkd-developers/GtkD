@@ -155,8 +155,7 @@ public class ListSG
 	 * Allocates space for one GSList element.
 	 * It is called by the g_slist_append(), g_slist_prepend(), g_slist_insert() and
 	 * g_slist_insert_sorted() functions and so is rarely used on its own.
-	 * Returns:
-	 * a pointer to the newly-allocated GSList element.
+	 * Returns:a pointer to the newly-allocated GSList element.
 	 */
 	public static ListSG alloc()
 	{
@@ -182,12 +181,9 @@ public class ListSG
 	 *  /+* This is a list of integers. +/
 	 *  number_list = g_slist_append (number_list, GINT_TO_POINTER (27));
 	 *  number_list = g_slist_append (number_list, GINT_TO_POINTER (14));
-	 * list:
-	 * a GSList.
-	 * data:
-	 * the data for the new element.
-	 * Returns:
-	 * the new start of the GSList.
+	 * Params:
+	 * data = the data for the new element.
+	 * Returns:the new start of the GSList.
 	 */
 	public ListSG append(void* data)
 	{
@@ -204,12 +200,9 @@ public class ListSG
 	 *  GSList *list = NULL;
 	 *  list = g_slist_prepend (list, "last");
 	 *  list = g_slist_prepend (list, "first");
-	 * list:
-	 * a GSList.
-	 * data:
-	 * the data for the new element.
-	 * Returns:
-	 * the new start of the GSList.
+	 * Params:
+	 * data = the data for the new element.
+	 * Returns:the new start of the GSList.
 	 */
 	public ListSG prepend(void* data)
 	{
@@ -219,16 +212,12 @@ public class ListSG
 	
 	/**
 	 * Inserts a new element into the list at the given position.
-	 * list:
-	 * a GSList.
-	 * data:
-	 * the data for the new element.
-	 * position:
-	 * the position to insert the element. If this is negative, or is
+	 * Params:
+	 * data = the data for the new element.
+	 * position = the position to insert the element. If this is negative, or is
 	 * larger than the number of elements in the list, the new element is added on
 	 * to the end of the list.
-	 * Returns:
-	 * the new start of the GSList.
+	 * Returns:the new start of the GSList.
 	 */
 	public ListSG insert(void* data, int position)
 	{
@@ -238,14 +227,10 @@ public class ListSG
 	
 	/**
 	 * Inserts a node before sibling containing data. Returns the new head of the list.
-	 * slist:
-	 * a GSList.
-	 * sibling:
-	 * node to insert data before.
-	 * data:
-	 * data to put in the newly-inserted node.
-	 * Returns:
-	 * new head of the list.
+	 * Params:
+	 * sibling = node to insert data before.
+	 * data = data to put in the newly-inserted node.
+	 * Returns:new head of the list.
 	 */
 	public ListSG insertBefore(ListSG sibling, void* data)
 	{
@@ -256,16 +241,12 @@ public class ListSG
 	/**
 	 * Inserts a new element into the list, using the given comparison function
 	 * to determine its position.
-	 * list:
-	 * a GSList.
-	 * data:
-	 * the data for the new element.
-	 * func:
-	 * the function to compare elements in the list. It should return a
+	 * Params:
+	 * data = the data for the new element.
+	 * func = the function to compare elements in the list. It should return a
 	 * number > 0 if the first parameter comes after the second parameter in
 	 * the sort order.
-	 * Returns:
-	 * the new start of the GSList.
+	 * Returns:the new start of the GSList.
 	 */
 	public ListSG insertSorted(void* data, GCompareFunc func)
 	{
@@ -277,12 +258,9 @@ public class ListSG
 	 * Removes an element from a GSList.
 	 * If two elements contain the same data, only the first is removed.
 	 * If none of the elements contain the data, the GSList is unchanged.
-	 * list:
-	 * a GSList.
-	 * data:
-	 * the data of the element to remove.
-	 * Returns:
-	 * the new start of the GSList.
+	 * Params:
+	 * data = the data of the element to remove.
+	 * Returns:the new start of the GSList.
 	 */
 	public ListSG remove(void* data)
 	{
@@ -294,12 +272,9 @@ public class ListSG
 	 * Removes an element from a GSList, without freeing the element.
 	 * The removed element's next link is set to NULL, so that it becomes a
 	 * self-contained list with one element.
-	 * list:
-	 * a GSList.
-	 * link_:
-	 * an element in the GSList.
-	 * Returns:
-	 * the new start of the GSList, without the element.
+	 * Params:
+	 * link = an element in the GSList.
+	 * Returns:the new start of the GSList, without the element.
 	 */
 	public ListSG removeLink(ListSG link)
 	{
@@ -309,12 +284,9 @@ public class ListSG
 	
 	/**
 	 * Deletes a node of list. Returns the new list head.
-	 * list:
-	 * a GSList.
-	 * link_:
-	 * node to delete.
-	 * Returns:
-	 * new head of list.
+	 * Params:
+	 * link = node to delete.
+	 * Returns:new head of list.
 	 */
 	public ListSG deleteLink(ListSG link)
 	{
@@ -326,12 +298,9 @@ public class ListSG
 	 * Removes all list nodes with data equal to data. Returns the new
 	 * head of the list. Contrast with g_slist_remove() which removes only
 	 * the first node matching the given data.
-	 * list:
-	 * a GSList.
-	 * data:
-	 * data to remove.
-	 * Returns:
-	 * new head of list.
+	 * Params:
+	 * data = data to remove.
+	 * Returns:new head of list.
 	 */
 	public ListSG removeAll(void* data)
 	{
@@ -342,8 +311,6 @@ public class ListSG
 	/**
 	 * Frees all of the memory used by a GSList.
 	 * The freed elements are returned to the slice allocator.
-	 * list:
-	 * a GSList.
 	 */
 	public void free()
 	{
@@ -354,8 +321,6 @@ public class ListSG
 	/**
 	 * Frees one GSList element.
 	 * It is usually used after g_slist_remove_link().
-	 * list:
-	 * a GSList element.
 	 */
 	public void free1()
 	{
@@ -366,10 +331,7 @@ public class ListSG
 	
 	/**
 	 * Gets the number of elements in a GSList.
-	 * list:
-	 * a GSList.
-	 * Returns:
-	 * the number of elements in the GSList.
+	 * Returns:the number of elements in the GSList.
 	 */
 	public uint length()
 	{
@@ -381,10 +343,7 @@ public class ListSG
 	 * Copies a GSList.
 	 * Note that this is a "shallow" copy. If the list elements consist of pointers
 	 * to data, the pointers are copied but the actual data isn't.
-	 * list:
-	 * a GSList.
-	 * Returns:
-	 * a copy of list.
+	 * Returns:a copy of list.
 	 */
 	public ListSG copy()
 	{
@@ -394,10 +353,7 @@ public class ListSG
 	
 	/**
 	 * Reverses a GSList.
-	 * list:
-	 * a GSList.
-	 * Returns:
-	 * the start of the reversed GSList.
+	 * Returns:the start of the reversed GSList.
 	 */
 	public ListSG reverse()
 	{
@@ -408,19 +364,14 @@ public class ListSG
 	/**
 	 * Inserts a new element into the list, using the given comparison function
 	 * to determine its position.
-	 * list:
-	 * a GSList.
-	 * data:
-	 * the data for the new element.
-	 * func:
-	 * the function to compare elements in the list. It should return a
+	 * Since 2.10
+	 * Params:
+	 * data = the data for the new element.
+	 * func = the function to compare elements in the list. It should return a
 	 * number > 0 if the first parameter comes after the second parameter in
 	 * the sort order.
-	 * user_data:
-	 * data to pass to comparison function.
-	 * Returns:
-	 * the new start of the GSList.
-	 * Since 2.10
+	 * userData = data to pass to comparison function.
+	 * Returns:the new start of the GSList.
 	 */
 	public ListSG insertSortedWithData(void* data, GCompareDataFunc func, void* userData)
 	{
@@ -430,16 +381,13 @@ public class ListSG
 	
 	/**
 	 * Sorts a GSList using the given comparison function.
-	 * list:
-	 * a GSList.
-	 * compare_func:
-	 * the comparison function used to sort the GSList.
+	 * Params:
+	 * compareFunc = the comparison function used to sort the GSList.
 	 * This function is passed the data from 2 elements of the GSList and should
 	 * return 0 if they are equal, a negative value if the first element
 	 * comes before the second, or a positive value if the first element
 	 * comes after the second.
-	 * Returns:
-	 * the start of the sorted GSList.
+	 * Returns:the start of the sorted GSList.
 	 */
 	public ListSG sort(GCompareFunc compareFunc)
 	{
@@ -449,14 +397,10 @@ public class ListSG
 	
 	/**
 	 * Like g_slist_sort(), but the sort function accepts a user data argument.
-	 * list:
-	 * a GSList
-	 * compare_func:
-	 * comparison function.
-	 * user_data:
-	 * data to pass to comparison function.
-	 * Returns:
-	 * new head of the list.
+	 * Params:
+	 * compareFunc = comparison function.
+	 * userData = data to pass to comparison function.
+	 * Returns:new head of the list.
 	 */
 	public ListSG sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
@@ -468,12 +412,9 @@ public class ListSG
 	 * Adds the second GSList onto the end of the first GSList.
 	 * Note that the elements of the second GSList are not copied.
 	 * They are used directly.
-	 * list1:
-	 * a GSList.
-	 * list2:
-	 * the GSList to add to the end of the first GSList.
-	 * Returns:
-	 * the start of the new GSList.
+	 * Params:
+	 * list2 = the GSList to add to the end of the first GSList.
+	 * Returns:the start of the new GSList.
 	 */
 	public ListSG concat(ListSG list2)
 	{
@@ -483,12 +424,9 @@ public class ListSG
 	
 	/**
 	 * Calls a function for each element of a GSList.
-	 * list:
-	 * a GSList.
-	 * func:
-	 * the function to call with each element's data.
-	 * user_data:
-	 * user data to pass to the function.
+	 * Params:
+	 * func = the function to call with each element's data.
+	 * userData = user data to pass to the function.
 	 */
 	public void foreac(GFunc func, void* userData)
 	{
@@ -498,11 +436,7 @@ public class ListSG
 	
 	/**
 	 * Gets the last element in a GSList.
-	 * list:
-	 * a GSList.
-	 * Returns:
-	 * the last element in the GSList, or NULL if the GSList has no
-	 * elements.
+	 * Returns:the last element in the GSList, or NULL if the GSList has noelements.
 	 */
 	public ListSG last()
 	{
@@ -513,12 +447,9 @@ public class ListSG
 	
 	/**
 	 * Gets the element at the given position in a GSList.
-	 * list:
-	 * a GSList.
-	 * n:
-	 * the position of the element, counting from 0.
-	 * Returns:
-	 * the element, or NULL if the position is off the end of the GSList.
+	 * Params:
+	 * n = the position of the element, counting from 0.
+	 * Returns:the element, or NULL if the position is off the end of the GSList.
 	 */
 	public ListSG nth(uint n)
 	{
@@ -528,13 +459,9 @@ public class ListSG
 	
 	/**
 	 * Gets the data of the element at the given position.
-	 * list:
-	 * a GSList.
-	 * n:
-	 * the position of the element.
-	 * Returns:
-	 * the element's data, or NULL if the position is off the end of the
-	 * GSList.
+	 * Params:
+	 * n = the position of the element.
+	 * Returns:the element's data, or NULL if the position is off the end of theGSList.
 	 */
 	public void* nthData(uint n)
 	{
@@ -544,12 +471,9 @@ public class ListSG
 	
 	/**
 	 * Finds the element in a GSList which contains the given data.
-	 * list:
-	 * a GSList.
-	 * data:
-	 * the element data to find.
-	 * Returns:
-	 * the found GSList element, or NULL if it is not found.
+	 * Params:
+	 * data = the element data to find.
+	 * Returns:the found GSList element, or NULL if it is not found.
 	 */
 	public ListSG find(void* data)
 	{
@@ -564,15 +488,11 @@ public class ListSG
 	 * when the desired element is found.
 	 * The function takes two gconstpointer arguments, the GSList element's data as
 	 * the first argument and the given user data.
-	 * list:
-	 * a GSList.
-	 * data:
-	 * user data passed to the function.
-	 * func:
-	 * the function to call for each element. It should return 0 when the
+	 * Params:
+	 * data = user data passed to the function.
+	 * func = the function to call for each element. It should return 0 when the
 	 * desired element is found.
-	 * Returns:
-	 * the found GSList element, or NULL if it is not found.
+	 * Returns:the found GSList element, or NULL if it is not found.
 	 */
 	public ListSG findCustom(void* data, GCompareFunc func)
 	{
@@ -582,13 +502,9 @@ public class ListSG
 	
 	/**
 	 * Gets the position of the given element in the GSList (starting from 0).
-	 * list:
-	 * a GSList.
-	 * llink:
-	 * an element in the GSList.
-	 * Returns:
-	 * the position of the element in the GSList, or -1 if the element
-	 * is not found.
+	 * Params:
+	 * llink = an element in the GSList.
+	 * Returns:the position of the element in the GSList, or -1 if the elementis not found.
 	 */
 	public int position(ListSG llink)
 	{
@@ -598,13 +514,9 @@ public class ListSG
 	
 	/**
 	 * Gets the position of the element containing the given data (starting from 0).
-	 * list:
-	 * a GSList.
-	 * data:
-	 * the data to find.
-	 * Returns:
-	 * the index of the element containing the data, or -1 if the data
-	 * is not found.
+	 * Params:
+	 * data = the data to find.
+	 * Returns:the index of the element containing the data, or -1 if the datais not found.
 	 */
 	public int index(void* data)
 	{
@@ -620,8 +532,8 @@ public class ListSG
 	 * Use g_slist_pop_allocator() to restore the previous allocator.
 	 * Note that this function is not available if GLib has been compiled
 	 * with --disable-mem-pools
-	 * dummy:
-	 * the GAllocator to use when allocating GSList elements.
+	 * Params:
+	 * dummy = the GAllocator to use when allocating GSList elements.
 	 */
 	public static void pushAllocator(void* dummy)
 	{

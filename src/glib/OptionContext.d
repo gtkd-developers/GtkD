@@ -215,17 +215,15 @@ public class OptionContext
 	 * in the same line as the usage. For a longer description of the
 	 * program functionality that should be displayed as a paragraph
 	 * below the usage line, use g_option_context_set_summary().
-	 * Note that the parameter_string is translated (see
-	 * g_option_context_set_translate_func()).
-	 * parameter_string:
-	 *  a string which is displayed in
+	 * Note that the parameter_string is translated using the
+	 * function set with g_option_context_set_translate_func(), so
+	 * it should normally be passed untranslated.
+	 * Since 2.6
+	 * Params:
+	 * parameterString =  a string which is displayed in
 	 *  the first line of --help output, after the
 	 *  usage summary
 	 *  programname [OPTION...]
-	 * Returns:
-	 *  a newly created GOptionContext, which must be
-	 *  freed with g_option_context_free() after use.
-	 * Since 2.6
 	 */
 	public this (char[] parameterString)
 	{
@@ -238,13 +236,11 @@ public class OptionContext
 	 * before the list of options. This is typically a summary of the
 	 * program functionality.
 	 * Note that the summary is translated (see
-	 * g_option_context_set_translate_func()).
-	 * context:
-	 *  a GOptionContext
-	 * summary:
-	 *  a string to be shown in --help output
-	 *  before the list of options, or NULL
+	 * g_option_context_set_translate_func(), g_option_context_set_translation_domain()).
 	 * Since 2.12
+	 * Params:
+	 * summary =  a string to be shown in --help output
+	 *  before the list of options, or NULL
 	 */
 	public void setSummary(char[] summary)
 	{
@@ -254,11 +250,8 @@ public class OptionContext
 	
 	/**
 	 * Returns the summary. See g_option_context_set_summary().
-	 * context:
-	 *  a GOptionContext
-	 * Returns:
-	 *  the summary
 	 * Since 2.12
+	 * Returns: the summary
 	 */
 	public char[] getSummary()
 	{
@@ -272,12 +265,10 @@ public class OptionContext
 	 * address.
 	 * Note that the summary is translated (see
 	 * g_option_context_set_translate_func()).
-	 * context:
-	 *  a GOptionContext
-	 * description:
-	 *  a string to be shown in --help output
-	 *  after the list of options, or NULL
 	 * Since 2.12
+	 * Params:
+	 * description =  a string to be shown in --help output
+	 *  after the list of options, or NULL
 	 */
 	public void setDescription(char[] description)
 	{
@@ -287,11 +278,8 @@ public class OptionContext
 	
 	/**
 	 * Returns the description. See g_option_context_set_description().
-	 * context:
-	 *  a GOptionContext
-	 * Returns:
-	 *  the description
 	 * Since 2.12
+	 * Returns: the description
 	 */
 	public char[] getDescription()
 	{
@@ -305,20 +293,16 @@ public class OptionContext
 	 * user-visible strings, for --help output.
 	 * If func is NULL, strings are not translated.
 	 * Note that option groups have their own translation functions,
-	 * this function only affects the parameter_string (see g_option_context_nex()),
+	 * this function only affects the parameter_string (see g_option_context_new()),
 	 * the summary (see g_option_context_set_summary()) and the description
 	 * (see g_option_context_set_description()).
 	 * If you are using gettext(), you only need to set the translation
 	 * domain, see g_context_group_set_translation_domain().
-	 * context:
-	 *  a GOptionContext
-	 * func:
-	 *  the GTranslateFunc, or NULL
-	 * data:
-	 *  user data to pass to func, or NULL
-	 * destroy_notify:
-	 *  a function which gets called to free data, or NULL
 	 * Since 2.12
+	 * Params:
+	 * func =  the GTranslateFunc, or NULL
+	 * data =  user data to pass to func, or NULL
+	 * destroyNotify =  a function which gets called to free data, or NULL
 	 */
 	public void setTranslateFunc(GTranslateFunc func, void* data, GDestroyNotify destroyNotify)
 	{
@@ -329,11 +313,9 @@ public class OptionContext
 	/**
 	 * A convenience function to use gettext() for translating
 	 * user-visible strings.
-	 * context:
-	 *  a GOptionContext
-	 * domain:
-	 *  the domain to use
 	 * Since 2.12
+	 * Params:
+	 * domain =  the domain to use
 	 */
 	public void setTranslationDomain(char[] domain)
 	{
@@ -344,8 +326,6 @@ public class OptionContext
 	/**
 	 * Frees context and all the groups which have been
 	 * added to it.
-	 * context:
-	 *  a GOptionContext
 	 * Since 2.6
 	 */
 	public void free()
@@ -374,18 +354,12 @@ public class OptionContext
 	 * current locale for
 	 * automatic character set conversion of string and filename
 	 * arguments.
-	 * context:
-	 *  a GOptionContext
-	 * argc:
-	 *  a pointer to the number of command line arguments
-	 * argv:
-	 *  a pointer to the array of command line arguments
-	 * error:
-	 *  a return location for errors
-	 * Returns:
-	 *  TRUE if the parsing was successful,
-	 *  FALSE if an error occurred
 	 * Since 2.6
+	 * Params:
+	 * argc =  a pointer to the number of command line arguments
+	 * argv =  a pointer to the array of command line arguments
+	 * error =  a return location for errors
+	 * Returns: TRUE if the parsing was successful,  FALSE if an error occurred
 	 */
 	public int parse(int* argc, char*** argv, GError** error)
 	{
@@ -399,11 +373,9 @@ public class OptionContext
 	 * --help, -?, --help-all
 	 * and --help-groupname and creates
 	 * suitable output to stdout.
-	 * context:
-	 *  a GOptionContext
-	 * help_enabled:
-	 *  TRUE to enable --help, FALSE to disable it
 	 * Since 2.6
+	 * Params:
+	 * helpEnabled =  TRUE to enable --help, FALSE to disable it
 	 */
 	public void setHelpEnabled(int helpEnabled)
 	{
@@ -414,11 +386,8 @@ public class OptionContext
 	/**
 	 * Returns whether automatic --help generation
 	 * is turned on for context. See g_option_context_set_help_enabled().
-	 * context:
-	 *  a GOptionContext
-	 * Returns:
-	 *  TRUE if automatic help generation is turned on.
 	 * Since 2.6
+	 * Returns: TRUE if automatic help generation is turned on.
 	 */
 	public int getHelpEnabled()
 	{
@@ -433,12 +402,10 @@ public class OptionContext
 	 * This setting does not affect non-option arguments (i.e. arguments
 	 * which don't start with a dash). But note that GOption cannot reliably
 	 * determine whether a non-option belongs to a preceding unknown option.
-	 * context:
-	 *  a GOptionContext
-	 * ignore_unknown:
-	 *  TRUE to ignore unknown options, FALSE to produce
-	 *  an error when unknown options are met
 	 * Since 2.6
+	 * Params:
+	 * ignoreUnknown =  TRUE to ignore unknown options, FALSE to produce
+	 *  an error when unknown options are met
 	 */
 	public void setIgnoreUnknownOptions(int ignoreUnknown)
 	{
@@ -449,16 +416,33 @@ public class OptionContext
 	/**
 	 * Returns whether unknown options are ignored or not. See
 	 * g_option_context_set_ignore_unknown_options().
-	 * context:
-	 *  a GOptionContext
-	 * Returns:
-	 *  TRUE if unknown options are ignored.
 	 * Since 2.6
+	 * Returns: TRUE if unknown options are ignored.
 	 */
 	public int getIgnoreUnknownOptions()
 	{
 		// gboolean g_option_context_get_ignore_unknown_options  (GOptionContext *context);
 		return g_option_context_get_ignore_unknown_options(gOptionContext);
+	}
+	
+	/**
+	 * Returns a formatted, translated help text for the given context.
+	 * To obtain the text produced by --help, call
+	 * g_option_context_get_help (context, TRUE, NULL).
+	 * To obtain the text produced by --help-all, call
+	 * g_option_context_get_help (context, FALSE, NULL).
+	 * To obtain the help text for an option group, call
+	 * g_option_context_get_help (context, FALSE, group).
+	 * Since 2.14
+	 * Params:
+	 * mainHelp =  if TRUE, only include the main group
+	 * group =  the GOptionGroup to create help for, or NULL
+	 * Returns: A newly allocated string containing the help text
+	 */
+	public char[] getHelp(int mainHelp, OptionGroup group)
+	{
+		// gchar* g_option_context_get_help (GOptionContext *context,  gboolean main_help,  GOptionGroup *group);
+		return Str.toString(g_option_context_get_help(gOptionContext, mainHelp, (group is null) ? null : group.getOptionGroupStruct()) );
 	}
 	
 	
@@ -468,15 +452,12 @@ public class OptionContext
 	/**
 	 * A convenience function which creates a main group if it doesn't
 	 * exist, adds the entries to it and sets the translation domain.
-	 * context:
-	 *  a GOptionContext
-	 * entries:
-	 *  a NULL-terminated array of GOptionEntrys
-	 * translation_domain:
-	 *  a translation domain to use for translating
+	 * Since 2.6
+	 * Params:
+	 * entries =  a NULL-terminated array of GOptionEntrys
+	 * translationDomain =  a translation domain to use for translating
 	 *  the --help output for the options in entries
 	 *  with gettext(), or NULL
-	 * Since 2.6
 	 */
 	public void addMainEntries(GOptionEntry* entries, char[] translationDomain)
 	{
@@ -491,11 +472,9 @@ public class OptionContext
 	 * be freed together with the context when g_option_context_free() is
 	 * called, so you must not free the group yourself after adding it
 	 * to a context.
-	 * context:
-	 *  a GOptionContext
-	 * group:
-	 *  the group to add
 	 * Since 2.6
+	 * Params:
+	 * group =  the group to add
 	 */
 	public void addGroup(OptionGroup group)
 	{
@@ -508,11 +487,9 @@ public class OptionContext
 	 * This has the same effect as calling g_option_context_add_group(),
 	 * the only difference is that the options in the main group are
 	 * treated differently when generating --help output.
-	 * context:
-	 *  a GOptionContext
-	 * group:
-	 *  the group to set as main group
 	 * Since 2.6
+	 * Params:
+	 * group =  the group to set as main group
 	 */
 	public void setMainGroup(OptionGroup group)
 	{
@@ -522,13 +499,8 @@ public class OptionContext
 	
 	/**
 	 * Returns a pointer to the main group of context.
-	 * context:
-	 *  a GOptionContext
-	 * Returns:
-	 *  the main group of context, or NULL if context doesn't
-	 *  have a main group. Note that group belongs to context and should
-	 *  not be modified or freed.
 	 * Since 2.6
+	 * Returns: the main group of context, or NULL if context doesn't have a main group. Note that group belongs to context and should not be modified or freed.
 	 */
 	public OptionGroup getMainGroup()
 	{

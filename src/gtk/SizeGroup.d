@@ -68,6 +68,7 @@ private import gtk.Widget;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -100,8 +101,22 @@ private import gtk.Widget;
  * vertical size from the vertical requisition of all widgets that can be
  * reached from the widget by a chain of size groups of type
  * GTK_SIZE_GROUP_VERTICAL or GTK_SIZE_GROUP_BOTH.
+ * GtkSizeGroup as GtkBuildable
+ * Size groups can be specified in a UI definition by placing an
+ * <object> element with class="GtkSizeGroup"
+ * somewhere in the UI definition. The widgets that belong to the
+ * size group are specified by a <widgets> element that may
+ * contain multiple <widget> elements, one for each member
+ * of the size group. The name attribute gives the id of the widget.
+ * Example44.A UI definition fragment with GtkSizeGroup
+ * <object class="GtkSizeGroup">
+ *  <property name="mode">GTK_SIZE_GROUP_HORIZONTAL</property>
+ *  <widgets>
+ *  <widget name="radio1"/>
+ *  <widget name="radio2"/>
+ *  </widgets>
+ * </object>
  */
-private import gobject.ObjectG;
 public class SizeGroup : ObjectG
 {
 	
@@ -157,10 +172,8 @@ public class SizeGroup : ObjectG
 	
 	/**
 	 * Create a new GtkSizeGroup.
-	 * mode:
-	 *  the mode for the new size group.
-	 * Returns:
-	 *  a newly created GtkSizeGroup
+	 * Params:
+	 * mode =  the mode for the new size group.
 	 */
 	public this (GtkSizeGroupMode mode)
 	{
@@ -175,10 +188,8 @@ public class SizeGroup : ObjectG
 	 * all have the same vertical requisition (GTK_SIZE_GROUP_MODE_VERTICAL),
 	 * or should all have the same requisition in both directions
 	 * (GTK_SIZE_GROUP_MODE_BOTH).
-	 * size_group:
-	 *  a GtkSizeGroup
-	 * mode:
-	 *  the mode to set for the size group.
+	 * Params:
+	 * mode =  the mode to set for the size group.
 	 */
 	public void setMode(GtkSizeGroupMode mode)
 	{
@@ -188,10 +199,7 @@ public class SizeGroup : ObjectG
 	
 	/**
 	 * Gets the current mode of the size group. See gtk_size_group_set_mode().
-	 * size_group:
-	 *  a GtkSizeGroup
-	 * Returns:
-	 *  the current mode of the size group.
+	 * Returns: the current mode of the size group.
 	 */
 	public GtkSizeGroupMode getMode()
 	{
@@ -202,12 +210,10 @@ public class SizeGroup : ObjectG
 	/**
 	 * Sets whether unmapped widgets should be ignored when
 	 * calculating the size.
-	 * size_group:
-	 *  a GtkSizeGroup
-	 * ignore_hidden:
-	 *  whether unmapped widgets should be ignored
-	 *  when calculating the size
 	 * Since 2.8
+	 * Params:
+	 * ignoreHidden =  whether unmapped widgets should be ignored
+	 *  when calculating the size
 	 */
 	public void setIgnoreHidden(int ignoreHidden)
 	{
@@ -217,11 +223,8 @@ public class SizeGroup : ObjectG
 	
 	/**
 	 * Returns if invisible widgets are ignored when calculating the size.
-	 * size_group:
-	 *  a GtkSizeGroup
-	 * Returns:
-	 *  TRUE if invisible widgets are ignored.
 	 * Since 2.8
+	 * Returns: TRUE if invisible widgets are ignored.
 	 */
 	public int getIgnoreHidden()
 	{
@@ -235,10 +238,10 @@ public class SizeGroup : ObjectG
 	 * and the requisition of the other widgets in the size group.
 	 * Whether this applies horizontally, vertically, or in both directions
 	 * depends on the mode of the size group. See gtk_size_group_set_mode().
-	 * size_group:
-	 *  a GtkSizeGroup
-	 * widget:
-	 *  the GtkWidget to add
+	 * When the widget is destroyed or no longer referenced elsewhere, it will
+	 * be removed from the size group.
+	 * Params:
+	 * widget =  the GtkWidget to add
 	 */
 	public void addWidget(Widget widget)
 	{
@@ -248,10 +251,8 @@ public class SizeGroup : ObjectG
 	
 	/**
 	 * Removes a widget from a GtkSizeGroup.
-	 * size_group:
-	 *  a GtkSizeGrup
-	 * widget:
-	 *  the GtkWidget to remove
+	 * Params:
+	 * widget =  the GtkWidget to remove
 	 */
 	public void removeWidget(Widget widget)
 	{
@@ -261,19 +262,8 @@ public class SizeGroup : ObjectG
 	
 	/**
 	 * Returns the list of widgets associated with size_group.
-	 * size_group:
-	 *  a GtkSizeGrup
-	 * Returns:
-	 *  a GSList of widgets. The list is owned by GTK+
-	 *  and should not be modified.
 	 * Since 2.10
-	 * Property Details
-	 * The "ignore-hidden" property
-	 *  "ignore-hidden" gboolean : Read / Write
-	 * If TRUE, unmapped widgets are ignored when determining
-	 * the size of the group.
-	 * Default value: FALSE
-	 * Since 2.8
+	 * Returns: a GSList of widgets. The list is owned by GTK+  and should not be modified.
 	 */
 	public GSList* getWidgets()
 	{

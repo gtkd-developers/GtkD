@@ -68,6 +68,7 @@ private import gtk.CellRenderer;
 
 
 
+private import gtk.CellRendererText;
 
 /**
  * Description
@@ -84,7 +85,6 @@ private import gtk.CellRenderer;
  * editing-started signal.
  * The GtkCellRendererCombo cell renderer was added in GTK+ 2.6.
  */
-private import gtk.CellRendererText;
 public class CellRendererCombo : CellRendererText
 {
 	
@@ -145,15 +145,6 @@ public class CellRendererCombo : CellRendererText
 	 * in a GtkTreeModel. For example, you can bind the "text" property
 	 * on the cell renderer to a string value in the model, thus rendering
 	 * a different string in each row of the GtkTreeView.
-	 * Returns:
-	 *  the new cell renderer
-	 * Since 2.6
-	 * Property Details
-	 * The "has-entry" property
-	 *  "has-entry" gboolean : Read / Write
-	 * If TRUE, the cell renderer will include an entry and allow to enter values
-	 * other than the ones in the popup list.
-	 * Default value: TRUE
 	 * Since 2.6
 	 */
 	public this ()

@@ -82,6 +82,7 @@ private import glib.Str;
 
 
 
+private import gtk.Dialog;
 
 /**
  * Description
@@ -94,7 +95,7 @@ private import glib.Str;
  *  Note that GtkFileChooserDialog does not have any methods of its
  *  own. Instead, you should use the functions that work on a
  *  GtkFileChooser.
- * Example7.Typical usage
+ * Example35.Typical usage
  * 	In the simplest of cases, you can the following code to use
  * 	GtkFileChooserDialog to select a file for opening:
  * GtkWidget *dialog;
@@ -169,7 +170,6 @@ private import glib.Str;
  * 	code when you use GtkFileChooserDialog to ensure
  * 	proper operation.
  */
-private import gtk.Dialog;
 public class FileChooserDialog : Dialog
 {
 	
@@ -220,6 +220,7 @@ public class FileChooserDialog : Dialog
 	
 	private FileChooser fileChooser;
 	
+	/** */
 	public FileChooser getFileChooser()
 	{
 		if ( fileChooser is null )
@@ -232,19 +233,15 @@ public class FileChooserDialog : Dialog
 	/**
 	 * Creates a new GtkFileChooserDialog. This function is analogous to
 	 * gtk_dialog_new_with_buttons().
-	 * title:
-	 *  Title of the dialog, or NULL
-	 * parent:
-	 *  Transient parent of the dialog, or NULL
-	 * action:
-	 *  Open or save mode for the dialog
-	 * first_button_text:
-	 *  stock ID or text to go in the first button, or NULL
-	 * ...:
-	 *  response ID for the first button, then additional (button, id) pairs, ending with NULL
+	 * Since 2.4
+	 * Params:
+	 *  title = Title of the dialog, or NULL
+	 *  parent = Transient parent of the dialog, or NULL
+	 *  action = Open or save mode for the dialog
+	 *  buttonsText = text to go in the buttons
+	 *  responses = response ID's for the buttons
 	 * Returns:
 	 *  a new GtkFileChooserDialog
-	 * Since 2.4
 	 */
 	this(char[] title, Window parent, FileChooserAction action,  char[][] buttonsText=null, ResponseType[] responses=null)
 	{
@@ -274,22 +271,17 @@ public class FileChooserDialog : Dialog
 	 * especially useful if you use gtk_file_chooser_set_local_only() to allow
 	 * non-local files and you use a more expressive vfs, such as gnome-vfs,
 	 * to load files.
-	 * title:
-	 *  Title of the dialog, or NULL
-	 * parent:
-	 *  Transient parent of the dialog, or NULL
-	 * action:
-	 *  Open or save mode for the dialog
-	 * backend:
-	 *  The name of the specific filesystem backend to use.
-	 * first_button_text:
-	 *  stock ID or text to go in the first button, or NULL
-	 * ...:
-	 *  response ID for the first button, then additional (button, id) pairs, ending with NULL
+	 * Since 2.4
+	 * Params:
+	 *  title = Title of the dialog, or NULL
+	 *  parent = Transient parent of the dialog, or NULL
+	 *  action = Open or save mode for the dialog
+	 *  backend = The name of the specific filesystem backend to use.
+	 *  buttonsText = text to go in the buttons
+	 *  responses = response ID's for the buttons
 	 * Returns:
 	 *  a new GtkFileChooserDialog
-	 * Since 2.4
-	 * See Also
+	 * See_Also:
 	 *  GtkFileChooser, GtkDialog
 	 */
 	public this (char[] title, Window parent, GtkFileChooserAction action, char[] backend,  char[][] buttonsText=null, ResponseType[] responses=null)

@@ -144,7 +144,7 @@ public class TextChildAnchor
 		}
 		onBackspaceListeners ~= dlg;
 	}
-	extern(C) static void callBackBackspace(GtkTextView* textviewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackBackspace(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
 	{
 		bool consumed = false;
 		
@@ -172,7 +172,7 @@ public class TextChildAnchor
 		}
 		onCopyClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCopyClipboard(GtkTextView* textviewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackCopyClipboard(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
 	{
 		bool consumed = false;
 		
@@ -200,7 +200,7 @@ public class TextChildAnchor
 		}
 		onCutClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackCutClipboard(GtkTextView* textviewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackCutClipboard(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
 	{
 		bool consumed = false;
 		
@@ -228,13 +228,13 @@ public class TextChildAnchor
 		}
 		onDeleteFromCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackDeleteFromCursor(GtkTextView* textviewStruct, GtkDeleteType arg1, gint arg2, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackDeleteFromCursor(GtkTextView* textViewStruct, GtkDeleteType type, gint count, TextChildAnchor textChildAnchor)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(GtkDeleteType, gint, TextChildAnchor) dlg ; textChildAnchor.onDeleteFromCursorListeners )
 		{
-			dlg(arg1, arg2, textChildAnchor);
+			dlg(type, count, textChildAnchor);
 		}
 		
 		return consumed;
@@ -284,41 +284,13 @@ public class TextChildAnchor
 		}
 		onMoveCursorListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveCursor(GtkTextView* widgetStruct, GtkMovementStep step, gint count, gboolean extendSelection, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackMoveCursor(GtkTextView* textViewStruct, GtkMovementStep step, gint count, gboolean extendSelection, TextChildAnchor textChildAnchor)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(GtkMovementStep, gint, gboolean, TextChildAnchor) dlg ; textChildAnchor.onMoveCursorListeners )
 		{
 			dlg(step, count, extendSelection, textChildAnchor);
-		}
-		
-		return consumed;
-	}
-	
-	void delegate(GtkDirectionType, TextChildAnchor)[] onMoveFocusListeners;
-	void addOnMoveFocus(void delegate(GtkDirectionType, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("move-focus" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"move-focus",
-			cast(GCallback)&callBackMoveFocus,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["move-focus"] = 1;
-		}
-		onMoveFocusListeners ~= dlg;
-	}
-	extern(C) static void callBackMoveFocus(GtkTextView* textviewStruct, GtkDirectionType arg1, TextChildAnchor textChildAnchor)
-	{
-		bool consumed = false;
-		
-		foreach ( void delegate(GtkDirectionType, TextChildAnchor) dlg ; textChildAnchor.onMoveFocusListeners )
-		{
-			dlg(arg1, textChildAnchor);
 		}
 		
 		return consumed;
@@ -340,13 +312,13 @@ public class TextChildAnchor
 		}
 		onMoveViewportListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveViewport(GtkTextView* textviewStruct, GtkScrollStep arg1, gint arg2, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackMoveViewport(GtkTextView* textViewStruct, GtkScrollStep step, gint count, TextChildAnchor textChildAnchor)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(GtkScrollStep, gint, TextChildAnchor) dlg ; textChildAnchor.onMoveViewportListeners )
 		{
-			dlg(arg1, arg2, textChildAnchor);
+			dlg(step, count, textChildAnchor);
 		}
 		
 		return consumed;
@@ -368,13 +340,13 @@ public class TextChildAnchor
 		}
 		onPageHorizontallyListeners ~= dlg;
 	}
-	extern(C) static void callBackPageHorizontally(GtkTextView* textviewStruct, gint arg1, gboolean arg2, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackPageHorizontally(GtkTextView* textViewStruct, gint count, gboolean extendSelection, TextChildAnchor textChildAnchor)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(gint, gboolean, TextChildAnchor) dlg ; textChildAnchor.onPageHorizontallyListeners )
 		{
-			dlg(arg1, arg2, textChildAnchor);
+			dlg(count, extendSelection, textChildAnchor);
 		}
 		
 		return consumed;
@@ -396,7 +368,7 @@ public class TextChildAnchor
 		}
 		onPasteClipboardListeners ~= dlg;
 	}
-	extern(C) static void callBackPasteClipboard(GtkTextView* textviewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackPasteClipboard(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
 	{
 		bool consumed = false;
 		
@@ -452,13 +424,13 @@ public class TextChildAnchor
 		}
 		onSelectAllListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectAll(GtkTextView* textviewStruct, gboolean arg1, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackSelectAll(GtkTextView* textViewStruct, gboolean select, TextChildAnchor textChildAnchor)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(gboolean, TextChildAnchor) dlg ; textChildAnchor.onSelectAllListeners )
 		{
-			dlg(arg1, textChildAnchor);
+			dlg(select, textChildAnchor);
 		}
 		
 		return consumed;
@@ -520,6 +492,34 @@ public class TextChildAnchor
 		return consumed;
 	}
 	
+	void delegate(TextChildAnchor)[] onToggleCursorVisibleListeners;
+	void addOnToggleCursorVisible(void delegate(TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("toggle-cursor-visible" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"toggle-cursor-visible",
+			cast(GCallback)&callBackToggleCursorVisible,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["toggle-cursor-visible"] = 1;
+		}
+		onToggleCursorVisibleListeners ~= dlg;
+	}
+	extern(C) static void callBackToggleCursorVisible(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
+	{
+		bool consumed = false;
+		
+		foreach ( void delegate(TextChildAnchor) dlg ; textChildAnchor.onToggleCursorVisibleListeners )
+		{
+			dlg(textChildAnchor);
+		}
+		
+		return consumed;
+	}
+	
 	void delegate(TextChildAnchor)[] onToggleOverwriteListeners;
 	void addOnToggleOverwrite(void delegate(TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
@@ -536,7 +536,7 @@ public class TextChildAnchor
 		}
 		onToggleOverwriteListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleOverwrite(GtkTextView* textviewStruct, TextChildAnchor textChildAnchor)
+	extern(C) static void callBackToggleOverwrite(GtkTextView* textViewStruct, TextChildAnchor textChildAnchor)
 	{
 		bool consumed = false;
 		
@@ -585,8 +585,6 @@ public class TextChildAnchor
 	 * it into a GtkTextBuffer with gtk_text_buffer_insert_child_anchor().
 	 * To perform the creation and insertion in one step, use the
 	 * convenience function gtk_text_buffer_create_child_anchor().
-	 * Returns:
-	 *  a new GtkTextChildAnchor
 	 */
 	public this ()
 	{
@@ -597,10 +595,7 @@ public class TextChildAnchor
 	/**
 	 * Gets a list of all widgets anchored at this child anchor.
 	 * The returned list should be freed with g_list_free().
-	 * anchor:
-	 *  a GtkTextChildAnchor
-	 * Returns:
-	 *  list of widgets anchored at anchor
+	 * Returns: list of widgets anchored at anchor
 	 */
 	public GList* getWidgets()
 	{
@@ -615,10 +610,7 @@ public class TextChildAnchor
 	 * hold your own reference (with g_object_ref()) if you plan
 	 * to use this function  otherwise all deleted child anchors
 	 * will also be finalized.
-	 * anchor:
-	 *  a GtkTextChildAnchor
-	 * Returns:
-	 *  TRUE if the child anchor has been deleted from its buffer
+	 * Returns: TRUE if the child anchor has been deleted from its buffer
 	 */
 	public int getDeleted()
 	{

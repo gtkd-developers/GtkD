@@ -162,12 +162,10 @@ public class SimpleXML
 	 * Note that this function doesn't protect whitespace and line endings
 	 * from being processed according to the XML rules for normalization
 	 * of line endings and attribute values.
-	 * text:
-	 *  some valid UTF-8 text
-	 * length:
-	 *  length of text in bytes, or -1 if the text is nul-terminated
-	 * Returns:
-	 *  a newly allocated string with the escaped text
+	 * Params:
+	 * text =  some valid UTF-8 text
+	 * length =  length of text in bytes, or -1 if the text is nul-terminated
+	 * Returns: a newly allocated string with the escaped text
 	 */
 	public static char[] gMarkupEscapeText(char[] text, int length)
 	{
@@ -190,14 +188,11 @@ public class SimpleXML
 	 *  "<item>%s</item>"
 	 *  "</purchase>",
 	 *  store, item);
-	 * format:
-	 *  printf() style format string
-	 * ...:
-	 *  the arguments to insert in the format string
-	 * Returns:
-	 *  newly allocated result from formatting
-	 *  operation. Free with g_free().
 	 * Since 2.4
+	 * Params:
+	 * format =  printf() style format string
+	 * ... =  the arguments to insert in the format string
+	 * Returns: newly allocated result from formatting operation. Free with g_free().
 	 */
 	public static char[] gMarkupPrintfEscaped(char[] format, ... )
 	{
@@ -209,14 +204,11 @@ public class SimpleXML
 	 * Formats the data in args according to format, escaping
 	 * all string and character arguments in the fashion
 	 * of g_markup_escape_text(). See g_markup_printf_escaped().
-	 * format:
-	 *  printf() style format string
-	 * args:
-	 *  variable argument list, similar to vprintf()
-	 * Returns:
-	 *  newly allocated result from formatting
-	 *  operation. Free with g_free().
 	 * Since 2.4
+	 * Params:
+	 * format =  printf() style format string
+	 * args =  variable argument list, similar to vprintf()
+	 * Returns: newly allocated result from formatting operation. Free with g_free().
 	 */
 	public static char[] gMarkupVprintfEscaped(char[] format, void* args)
 	{
@@ -229,12 +221,9 @@ public class SimpleXML
 	 * fed into the parse context with g_markup_parse_context_parse().
 	 * This function reports an error if the document isn't complete,
 	 * for example if elements are still open.
-	 * context:
-	 *  a GMarkupParseContext
-	 * error:
-	 *  return location for a GError
-	 * Returns:
-	 *  TRUE on success, FALSE if an error was set
+	 * Params:
+	 * error =  return location for a GError
+	 * Returns: TRUE on success, FALSE if an error was set
 	 */
 	public int endParse(GError** error)
 	{
@@ -245,8 +234,6 @@ public class SimpleXML
 	/**
 	 * Frees a GMarkupParseContext. Can't be called from inside
 	 * one of the GMarkupParser functions.
-	 * context:
-	 *  a GMarkupParseContext
 	 */
 	public void free()
 	{
@@ -259,12 +246,9 @@ public class SimpleXML
 	 * that line. Intended for use in error messages; there are no strict
 	 * semantics for what constitutes the "current" line number other than
 	 * "the best number we could come up with for error messages."
-	 * context:
-	 *  a GMarkupParseContext
-	 * line_number:
-	 *  return location for a line number, or NULL
-	 * char_number:
-	 *  return location for a char-on-line number, or NULL
+	 * Params:
+	 * lineNumber =  return location for a line number, or NULL
+	 * charNumber =  return location for a char-on-line number, or NULL
 	 */
 	public void getPosition(int* lineNumber, int* charNumber)
 	{
@@ -274,11 +258,8 @@ public class SimpleXML
 	
 	/**
 	 * Retrieves the name of the currently open element.
-	 * context:
-	 *  a GMarkupParseContext
-	 * Returns:
-	 *  the name of the currently open element, or NULL
 	 * Since 2.2
+	 * Returns: the name of the currently open element, or NULL
 	 */
 	public char[] getElement()
 	{
@@ -292,16 +273,11 @@ public class SimpleXML
 	 * a context, as long as no errors occur; once an error occurs,
 	 * the parse context can't continue to parse text (you have to free it
 	 * and create a new parse context).
-	 * parser:
-	 *  a GMarkupParser
-	 * flags:
-	 *  one or more GMarkupParseFlags
-	 * user_data:
-	 *  user data to pass to GMarkupParser functions
-	 * user_data_dnotify:
-	 *  user data destroy notifier called when the parse context is freed
-	 * Returns:
-	 *  a new GMarkupParseContext
+	 * Params:
+	 * parser =  a GMarkupParser
+	 * flags =  one or more GMarkupParseFlags
+	 * userData =  user data to pass to GMarkupParser functions
+	 * userDataDnotify =  user data destroy notifier called when the parse context is freed
 	 */
 	public this (GMarkupParser* parser, GMarkupParseFlags flags, void* userData, GDestroyNotify userDataDnotify)
 	{
@@ -318,17 +294,11 @@ public class SimpleXML
 	 * you feed each received chunk of data into this function, aborting
 	 * the process if an error occurs. Once an error is reported, no further
 	 * data may be fed to the GMarkupParseContext; all errors are fatal.
-	 * context:
-	 *  a GMarkupParseContext
-	 * text:
-	 *  chunk of text to parse
-	 * text_len:
-	 *  length of text in bytes
-	 * error:
-	 *  return location for a GError
-	 * Returns:
-	 *  FALSE if an error occurred, TRUE on success
-	 * [4] XML specification
+	 * Params:
+	 * text =  chunk of text to parse
+	 * textLen =  length of text in bytes
+	 * error =  return location for a GError
+	 * Returns: FALSE if an error occurred, TRUE on success
 	 */
 	public int parse(char[] text, int textLen, GError** error)
 	{

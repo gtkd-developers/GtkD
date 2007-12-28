@@ -272,13 +272,11 @@ public class PgFontsetSimple
 	
 	
 	
+	
 	/**
 	 * Creates a new PangoFontsetSimple for the given language.
-	 * language:
-	 *  a PangoLanguage tag
-	 * Returns:
-	 *  the newly allocated PangoFontsetSimple, which should
-	 *  be freed with g_object_unref().
+	 * Params:
+	 * language =  a PangoLanguage tag
 	 */
 	public this (PgLanguage language)
 	{
@@ -288,10 +286,8 @@ public class PgFontsetSimple
 	
 	/**
 	 * Adds a font to the fontset.
-	 * fontset:
-	 *  a PangoFontsetSimple.
-	 * font:
-	 *  a PangoFont.
+	 * Params:
+	 * font =  a PangoFont.
 	 */
 	public void append(PangoFont* font)
 	{
@@ -301,10 +297,7 @@ public class PgFontsetSimple
 	
 	/**
 	 * Returns the number of fonts in the fontset.
-	 * fontset:
-	 *  a PangoFontsetSimple.
-	 * Returns:
-	 *  the size of fontset.
+	 * Returns: the size of fontset.
 	 */
 	public int size()
 	{

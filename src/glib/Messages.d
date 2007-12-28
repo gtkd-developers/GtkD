@@ -70,6 +70,15 @@ private import glib.Str;
 /**
  * Description
  * These functions provide support for outputting messages.
+ * The g_return family of macros (g_return_if_fail(),
+ * g_return_val_if_fail(), g_return_if_reached(), g_return_val_if_reached())
+ * should only be used for programming errors, a typical use case is
+ * checking for invalid parameters at the beginning of a public function.
+ * They should not be used if you just mean "if (error) return", they
+ * should only be used if you mean "if (bug in program) return".
+ * The program behavior is generally considered undefined after one of these
+ * checks fails. They are not intended for normal control flow, only to
+ * give a perhaps-helpful warning before giving up.
  */
 public class Messages
 {
@@ -85,11 +94,9 @@ public class Messages
 	 * windows or even files.
 	 * Instead, libraries should use g_log(), or the convenience functions
 	 * g_message(), g_warning() and g_error().
-	 * format:
-	 * the message format. See the printf()
-	 * documentation.
-	 * ...:
-	 * the parameters to insert into the format string.
+	 * Params:
+	 * format = the message format. See the printf() documentation.
+	 * ... = the parameters to insert into the format string.
 	 */
 	public static void print(char[] format, ... )
 	{
@@ -103,10 +110,9 @@ public class Messages
 	 * The default handler simply outputs the message to stdout.
 	 * By providing your own handler you can redirect the output, to a GTK+
 	 * widget or a log file for example.
-	 * func:
-	 * the new print handler.
-	 * Returns:
-	 * the old print handler.
+	 * Params:
+	 * func = the new print handler.
+	 * Returns:the old print handler.
 	 */
 	public static GPrintFunc setPrintHandler(GPrintFunc func)
 	{
@@ -120,11 +126,9 @@ public class Messages
 	 * The default handler simply outputs the message to stderr.
 	 * g_printerr() should not be used from within libraries. Instead g_log() should
 	 * be used, or the convenience functions g_message(), g_warning() and g_error().
-	 * format:
-	 * the message format. See the printf()
-	 * documentation.
-	 * ...:
-	 * the parameters to insert into the format string.
+	 * Params:
+	 * format = the message format. See the printf() documentation.
+	 * ... = the parameters to insert into the format string.
 	 */
 	public static void printerr(char[] format, ... )
 	{
@@ -138,10 +142,9 @@ public class Messages
 	 * The default handler simply outputs the message to stderr.
 	 * By providing your own handler you can redirect the output, to a GTK+
 	 * widget or a log file for example.
-	 * func:
-	 * the new error message handler.
-	 * Returns:
-	 * the old error message handler.
+	 * Params:
+	 * func = the new error message handler.
+	 * Returns:the old error message handler.
 	 */
 	public static GPrintFunc setPrinterrHandler(GPrintFunc func)
 	{
@@ -188,8 +191,8 @@ public class Messages
 		 * The prompt is then shown again.
 		 * If [P]roceed is selected, the function returns.
 		 * This function may cause different actions on non-UNIX platforms.
-		 * prg_name:
-		 * the program name, needed by gdb for the [S]tack trace option.
+		 * Params:
+		 * prgName = the program name, needed by gdb for the [S]tack trace option.
 		 * If prg_name is NULL, g_get_prgname() is called to get the program name
 		 * (which will work correctly if gdk_init() or gtk_init() has been called).
 		 */
@@ -203,8 +206,8 @@ public class Messages
 		 * Invokes gdb, which attaches to the current process and shows a stack trace.
 		 * Called by g_on_error_query() when the [S]tack trace option is selected.
 		 * This function may cause different actions on non-UNIX platforms.
-		 * prg_name:
-		 * the program name, needed by gdb for the [S]tack trace option.
+		 * Params:
+		 * prgName = the program name, needed by gdb for the [S]tack trace option.
 		 * If prg_name is NULL, g_get_prgname() is called to get the program name
 		 * (which will work correctly if gdk_init() or gtk_init() has been called).
 		 */

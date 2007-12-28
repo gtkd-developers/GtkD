@@ -84,12 +84,11 @@ public class GLdInit
 	 * This function will terminate your program if it was unable to initialize
 	 * the library for some reason. If you want your program to fall back to a
 	 * textual interface you want to call gdk_gl_init_check() instead.
-	 * argc:
-	 *  Address of the argc parameter of your
+	 * Params:
+	 * argc =  Address of the argc parameter of your
 	 *  main() function. Changed if any arguments
 	 *  were handled.
-	 * argv:
-	 *  Address of the argv parameter of
+	 * argv =  Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gdk_gl_init() are stripped before return.
 	 */
@@ -105,17 +104,14 @@ public class GLdInit
 	 * initialized. Instead it returns FALSE on failure.
 	 * This way the application can fall back to some other means of communication
 	 * with the user - for example a curses or command line interface.
-	 * argc:
-	 *  Address of the argc parameter of your
+	 * Params:
+	 * argc =  Address of the argc parameter of your
 	 *  main() function. Changed if any arguments
 	 *  were handled.
-	 * argv:
-	 *  Address of the argv parameter of
+	 * argv =  Address of the argv parameter of
 	 *  main(). Any parameters understood by
 	 *  gdk_gl_init() are stripped before return.
-	 * Returns:
-	 *  TRUE if the GUI has been successfully initialized,
-	 *  FALSE otherwise.
+	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 */
 	public static int initCheck(int* argc, char*** argv)
 	{
@@ -130,14 +126,10 @@ public class GLdInit
 	 * argc and argv are updated accordingly.
 	 * You shouldn't call this function explicitely if you are using
 	 * gdk_gl_init(), or gdk_gl_init_check().
-	 * argc:
-	 *  the number of command line arguments.
-	 * argv:
-	 *  the array of command line arguments.
-	 * Returns:
-	 *  TRUE if initialization succeeded, otherwise FALSE.
-	 * <<PartII.GdkGLExt API Reference
-	 * Query>>
+	 * Params:
+	 * argc =  the number of command line arguments.
+	 * argv =  the array of command line arguments.
+	 * Returns: TRUE if initialization succeeded, otherwise FALSE.<<PartII.GdkGLExt API ReferenceQuery>>
 	 */
 	public static int parseArgs(int* argc, char*** argv)
 	{

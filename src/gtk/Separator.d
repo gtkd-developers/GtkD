@@ -65,13 +65,13 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Widget;
 
 /**
  * Description
  * The GtkSeparator widget is an abstract class, used only for deriving the
  * subclasses GtkHSeparator and GtkVSeparator.
  */
-private import gtk.Widget;
 public class Separator : Widget
 {
 	

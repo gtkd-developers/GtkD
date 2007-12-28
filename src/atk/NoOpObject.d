@@ -67,6 +67,7 @@ private import gobject.ObjectG;
 
 
 
+private import atk.ObjectAtk;
 
 /**
  * Description
@@ -74,7 +75,6 @@ private import gobject.ObjectG;
  * interfaces. It is the type of AtkObject which is created if an accessible
  * object is requested for an object type for which no factory type is specified.
  */
-private import atk.ObjectAtk;
 public class NoOpObject : ObjectAtk
 {
 	
@@ -130,10 +130,9 @@ public class NoOpObject : ObjectAtk
 	/**
 	 * Provides a default (non-functioning stub) AtkObject.
 	 * Application maintainers should not use this method.
-	 * obj:
-	 *  a GObject
-	 * Returns:
-	 *  a default (non-functioning stub) AtkObject
+	 * Params:
+	 * obj =  a GObject
+	 * Returns: a default (non-functioning stub) AtkObject
 	 */
 	public static AtkObject* newNoOpObject(ObjectG obj)
 	{

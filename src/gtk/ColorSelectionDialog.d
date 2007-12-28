@@ -67,14 +67,19 @@ private import glib.Str;
 
 
 
+private import gtk.Dialog;
 
 /**
  * Description
  * The GtkColorSelectionDialog provides a standard dialog which
  * allows the user to select a color much like the GtkFileSelection
  * provides a standard dialog for file selection.
+ * GtkColorSelectionDialog as GtkBuildable
+ * The GtkColorSelectionDialog implementation of the GtkBuildable interface
+ * exposes the embedded GtkColorSelection as internal child with the
+ * name "color_selection". It also exposes the buttons with the names
+ * "ok_button", "cancel_button" and "help_button".
  */
-private import gtk.Dialog;
 public class ColorSelectionDialog : Dialog
 {
 	
@@ -129,10 +134,8 @@ public class ColorSelectionDialog : Dialog
 	
 	/**
 	 * Creates a new GtkColorSelectionDialog.
-	 * title:
-	 * a string containing the title text for the dialog.
-	 * Returns:
-	 * a GtkColorSelectionDialog.
+	 * Params:
+	 * title = a string containing the title text for the dialog.
 	 */
 	public this (char[] title)
 	{

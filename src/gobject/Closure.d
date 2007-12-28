@@ -182,14 +182,11 @@ public class Closure
 	 * field of the closure and calls g_object_watch_closure() on object and the
 	 * created closure. This function is mainly useful when implementing new types
 	 * of closures.
-	 * sizeof_closure:
-	 * the size of the structure to allocate, must be at least
+	 * Params:
+	 * sizeofClosure = the size of the structure to allocate, must be at least
 	 * sizeof (GClosure)
-	 * object:
-	 * a GObject pointer to store in the data field of the newly
+	 * object = a GObject pointer to store in the data field of the newly
 	 *  allocated GClosure
-	 * Returns:
-	 * a newly allocated GClosure
 	 */
 	public this (uint sizeofClosure, ObjectG object)
 	{
@@ -200,10 +197,7 @@ public class Closure
 	/**
 	 * Increments the reference count on a closure to force it staying
 	 * alive while the caller holds a pointer to it.
-	 * closure:
-	 * GClosure to increment the reference count on
-	 * Returns:
-	 * The closure passed in, for convenience
+	 * Returns:The closure passed in, for convenience
 	 */
 	public Closure doref()
 	{
@@ -213,7 +207,7 @@ public class Closure
 	
 	/**
 	 * Takes over the initial ownership of a closure.
-	 * Each closure is initially created in afloating state,
+	 * Each closure is initially created in a floating state,
 	 * which means that the initial reference count is not owned by any caller.
 	 * g_closure_sink() checks to see if the object is still floating, and if so,
 	 * unsets the floating state and decreases the reference count. If the closure
@@ -226,26 +220,6 @@ public class Closure
 	 * initial reference count, if it is unowned, we instead can write:
 	 * g_source_set_closure (source, g_cclosure_new (cb_func, cb_data));
 	 * Generally, this function is used together with g_closure_ref(). Ane example
-	 * of storing a closure for later notification looks like:
-	 * static GClosure *notify_closure = NULL;
-	 * void
-	 * foo_notify_set_closure (GClosure *closure)
-	 * {
-		 *  if (notify_closure)
-		 *  g_closure_unref (notify_closure);
-		 *  notify_closure = closure;
-		 *  if (notify_closure)
-		 *  {
-			 *  g_closure_ref (notify_closure);
-			 *  g_closure_sink (notify_closure);
-		 *  }
-	 * }
-	 * Because g_closure_sink() may decrement the reference count of a closure
-	 * (if it hasn't been called on closure yet) just like g_closure_unref(),
-	 * g_closure_ref() should be called prior to this function.
-	 * closure:
-	 * GClosure to decrement the initial reference count on, if it's
-	 *  still being held
 	 */
 	public void sink()
 	{
@@ -257,8 +231,6 @@ public class Closure
 	 * Decrements the reference count of a closure after it was previously
 	 * incremented by the same caller. If no other callers are using the closure,
 	 * then the closure will be destroyed and freed.
-	 * closure:
-	 * GClosure to decrement the reference count on
 	 */
 	public void unref()
 	{
@@ -268,18 +240,13 @@ public class Closure
 	
 	/**
 	 * Invokes the closure, i.e. executes the callback represented by the closure.
-	 * closure:
-	 * a GClosure
-	 * return_value:
-	 * a GValue to store the return value. May be NULL if the
+	 * Params:
+	 * returnValue = a GValue to store the return value. May be NULL if the
 	 *  callback of closure doesn't return a value.
-	 * n_param_values:
-	 * the length of the param_values array
-	 * param_values:
-	 * an array of GValues holding the arguments on
+	 * nParamValues = the length of the param_values array
+	 * paramValues = an array of GValues holding the arguments on
 	 *  which to invoke the callback of closure
-	 * invocation_hint:
-	 * a context-dependent invocation hint
+	 * invocationHint = a context-dependent invocation hint
 	 */
 	public void invoke(Value returnValue, uint nParamValues, Value paramValues, void* invocationHint)
 	{
@@ -298,8 +265,6 @@ public class Closure
 	 * previously called g_closure_ref().
 	 * Note that g_closure_invalidate() will also be called when the reference count
 	 * of a closure drops to zero (unless it has already been invalidated before).
-	 * closure:
-	 * GClosure to invalidate
 	 */
 	public void invalidate()
 	{
@@ -314,12 +279,9 @@ public class Closure
 	 * g_closure_unref() results in the closure being both invalidated and
 	 * finalized, then the invalidate notifiers will be run before the finalize
 	 * notifiers.
-	 * closure:
-	 * a GClosure
-	 * notify_data:
-	 * data to pass to notify_func
-	 * notify_func:
-	 * the callback function to register
+	 * Params:
+	 * notifyData = data to pass to notify_func
+	 * notifyFunc = the callback function to register
 	 */
 	public void addFinalizeNotifier(void* notifyData, GClosureNotify notifyFunc)
 	{
@@ -331,12 +293,9 @@ public class Closure
 	 * Registers an invalidation notifier which will be called when the closure
 	 * is invalidated with g_closure_invalidate(). Invalidation notifiers are
 	 * invoked before finalization notifiers, in an unspecified order.
-	 * closure:
-	 * a GClosure
-	 * notify_data:
-	 * data to pass to notify_func
-	 * notify_func:
-	 * the callback function to register
+	 * Params:
+	 * notifyData = data to pass to notify_func
+	 * notifyFunc = the callback function to register
 	 */
 	public void addInvalidateNotifier(void* notifyData, GClosureNotify notifyFunc)
 	{
@@ -345,15 +304,12 @@ public class Closure
 	}
 	
 	/**
-	 * Removes a finalization notifier. Notifiers are automatically removed after
-	 * they are run.
-	 * closure:
-	 * a GClosure
-	 * notify_data:
-	 * data which was passed to g_closure_add_finalize_notifier()
+	 * Removes a finalization notifier.
+	 * Notice that notifiers are automatically removed after they are run.
+	 * Params:
+	 * notifyData = data which was passed to g_closure_add_finalize_notifier()
 	 *  when registering notify_func
-	 * notify_func:
-	 * the callback function to remove
+	 * notifyFunc = the callback function to remove
 	 */
 	public void removeFinalizeNotifier(void* notifyData, GClosureNotify notifyFunc)
 	{
@@ -362,15 +318,12 @@ public class Closure
 	}
 	
 	/**
-	 * Removes a invalidation notifier. Notifiers are automatically removed after
-	 * they are run.
-	 * closure:
-	 * a GClosure
-	 * notify_data:
-	 * data which was passed to g_closure_add_invalidate_notifier()
+	 * Removes an invalidation notifier.
+	 * Notice that notifiers are automatically removed after they are run.
+	 * Params:
+	 * notifyData = data which was passed to g_closure_add_invalidate_notifier()
 	 *  when registering notify_func
-	 * notify_func:
-	 * the callback function to remove
+	 * notifyFunc = the callback function to remove
 	 */
 	public void removeInvalidateNotifier(void* notifyData, GClosureNotify notifyFunc)
 	{
@@ -406,13 +359,10 @@ public class Closure
 		 *  my_closure_finalize);
 		 *  return my_closure;
 	 * }
-	 * sizeof_closure:
-	 * the size of the structure to allocate, must be at least
+	 * Params:
+	 * sizeofClosure = the size of the structure to allocate, must be at least
 	 * sizeof (GClosure)
-	 * data:
-	 * data to store in the data field of the newly allocated GClosure
-	 * Returns:
-	 * a newly allocated GClosure
+	 * data = data to store in the data field of the newly allocated GClosure
 	 */
 	public this (uint sizeofClosure, void* data)
 	{
@@ -421,15 +371,14 @@ public class Closure
 	}
 	
 	/**
-	 * Sets the marshaller of closure. The marshal_data provides a way for a
-	 * meta marshaller to provide additional information to the marshaller.
-	 * (See g_closure_set_meta_marshal().) For GObject's C predefined marshallers
-	 * (the g_cclosure_marshal_*() functions), what it provides is a callback
-	 * function to use instead of closure->callback.
-	 * closure:
-	 * a GClosure
-	 * marshal:
-	 * a GClosureMarshal function
+	 * Sets the marshaller of closure. The marshal_data
+	 * of marshal provides a way for a meta marshaller to provide additional
+	 * information to the marshaller. (See g_closure_set_meta_marshal().) For
+	 * GObject's C predefined marshallers (the g_cclosure_marshal_*()
+	 * functions), what it provides is a callback function to use instead of
+	 * closure->callback.
+	 * Params:
+	 * marshal = a GClosureMarshal function
 	 */
 	public void setMarshal(GClosureMarshal marshal)
 	{
@@ -442,16 +391,11 @@ public class Closure
 	 * callback, respectively. This is typically used to protect the extra arguments
 	 * for the duration of the callback. See g_object_watch_closure() for an
 	 * example of marshal guards.
-	 * closure:
-	 * a GClosure
-	 * pre_marshal_data:
-	 * data to pass to pre_marshal_notify
-	 * pre_marshal_notify:
-	 * a function to call before the closure callback
-	 * post_marshal_data:
-	 * data to pass to post_marshal_notify
-	 * post_marshal_notify:
-	 * a function to call after the closure callback
+	 * Params:
+	 * preMarshalData = data to pass to pre_marshal_notify
+	 * preMarshalNotify = a function to call before the closure callback
+	 * postMarshalData = data to pass to post_marshal_notify
+	 * postMarshalNotify = a function to call after the closure callback
 	 */
 	public void addMarshalGuards(void* preMarshalData, GClosureNotify preMarshalNotify, void* postMarshalData, GClosureNotify postMarshalNotify)
 	{
@@ -466,18 +410,15 @@ public class Closure
 	 * The same marshallers (generated by
 	 * glib-genmarshal) are used everywhere,
 	 * but the way that we get the callback function differs. In most cases we want
-	 * to use closure->callback, but in other cases we want to use use some
-	 * different technique to retrieve the callbakc function.
+	 * to use closure->callback, but in other cases we want to use some
+	 * different technique to retrieve the callback function.
 	 * For example, class closures for signals (see g_signal_type_cclosure_new())
 	 * retrieve the callback function from a fixed offset in the class structure.
 	 * The meta marshaller retrieves the right callback and passes it to the
 	 * marshaller as the marshal_data argument.
-	 * closure:
-	 * a GClosure
-	 * marshal_data:
-	 * context-dependent data to pass to meta_marshal
-	 * meta_marshal:
-	 * a GClosureMarshal function
+	 * Params:
+	 * marshalData = context-dependent data to pass to meta_marshal
+	 * metaMarshal = a GClosureMarshal function
 	 */
 	public void setMetaMarshal(void* marshalData, GClosureMarshal metaMarshal)
 	{
@@ -490,10 +431,9 @@ public class Closure
 	 * If the source is not one of the standard GLib types, the closure_callback
 	 * and closure_marshal fields of the GSourceFuncs structure must have been
 	 * filled in with pointers to appropriate functions.
-	 * source:
-	 * the source
-	 * closure:
-	 * a GClosure
+	 * Params:
+	 * source = the source
+	 * closure = a GClosure
 	 */
 	public static void gSourceSetClosure(Source source, Closure closure)
 	{

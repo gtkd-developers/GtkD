@@ -261,6 +261,7 @@ public class Source
 	
 	
 	
+	
 	/**
 	 * Creates a new GSource structure. The size is specified to
 	 * allow creating structures derived from GSource that contain
@@ -269,13 +270,10 @@ public class Source
 	 * The source will not initially be associated with any GMainContext
 	 * and must be added to one with g_source_attach() before it will be
 	 * executed.
-	 * source_funcs:
-	 *  structure containing functions that implement
+	 * Params:
+	 * sourceFuncs =  structure containing functions that implement
 	 *  the sources behavior.
-	 * struct_size:
-	 *  size of the GSource structure to create.
-	 * Returns:
-	 *  the newly-created GSource.
+	 * structSize =  size of the GSource structure to create.
 	 */
 	public this (GSourceFuncs* sourceFuncs, uint structSize)
 	{
@@ -285,10 +283,7 @@ public class Source
 	
 	/**
 	 * Increases the reference count on a source by one.
-	 * source:
-	 *  a GSource
-	 * Returns:
-	 *  source
+	 * Returns: source
 	 */
 	public Source doref()
 	{
@@ -300,8 +295,6 @@ public class Source
 	 * Decreases the reference count of a source by one. If the
 	 * resulting reference count is zero the source and associated
 	 * memory will be destroyed.
-	 * source:
-	 *  a GSource
 	 */
 	public void unref()
 	{
@@ -312,11 +305,9 @@ public class Source
 	/**
 	 * Sets the source functions (can be used to override
 	 * default implementations) of an unattached source.
-	 * source:
-	 *  a GSource
-	 * funcs:
-	 *  the new GSourceFuncs
 	 * Since 2.12
+	 * Params:
+	 * funcs =  the new GSourceFuncs
 	 */
 	public void setFuncs(GSourceFuncs* funcs)
 	{
@@ -327,13 +318,9 @@ public class Source
 	/**
 	 * Adds a GSource to a context so that it will be executed within
 	 * that context.
-	 * source:
-	 *  a GSource
-	 * context:
-	 *  a GMainContext (if NULL, the default context will be used)
-	 * Returns:
-	 *  the ID (greater than 0) for the source within the
-	 *  GMainContext.
+	 * Params:
+	 * context =  a GMainContext (if NULL, the default context will be used)
+	 * Returns: the ID (greater than 0) for the source within the  GMainContext.
 	 */
 	public uint attach(MainContext context)
 	{
@@ -345,8 +332,6 @@ public class Source
 	 * Removes a source from its GMainContext, if any, and mark it as
 	 * destroyed. The source cannot be subsequently added to another
 	 * context.
-	 * source:
-	 *  a GSource
 	 */
 	public void destroy()
 	{
@@ -399,11 +384,8 @@ public class Source
 		 *  GDK_THREADS_LEAVE ();
 		 *  return FALSE;
 	 * }
-	 * source:
-	 *  a GSource
-	 * Returns:
-	 *  TRUE if the source has been destroyed
 	 * Since 2.12
+	 * Returns: TRUE if the source has been destroyed
 	 */
 	public int isDestroyed()
 	{
@@ -415,10 +397,8 @@ public class Source
 	 * Sets the priority of a source. While the main loop is being
 	 * run, a source will be dispatched if it is ready to be dispatched and no sources
 	 * at a higher (numerically smaller) priority are ready to be dispatched.
-	 * source:
-	 *  a GSource
-	 * priority:
-	 *  the new priority.
+	 * Params:
+	 * priority =  the new priority.
 	 */
 	public void setPriority(int priority)
 	{
@@ -428,10 +408,7 @@ public class Source
 	
 	/**
 	 * Gets the priority of a source.
-	 * source:
-	 *  a GSource
-	 * Returns:
-	 *  the priority of the source
+	 * Returns: the priority of the source
 	 */
 	public int getPriority()
 	{
@@ -444,10 +421,8 @@ public class Source
 	 * TRUE, then while the source is being dispatched then this source
 	 * will be processed normally. Otherwise, all processing of this
 	 * source is blocked until the dispatch function returns.
-	 * source:
-	 *  a GSource
-	 * can_recurse:
-	 *  whether recursion is allowed for this source
+	 * Params:
+	 * canRecurse =  whether recursion is allowed for this source
 	 */
 	public void setCanRecurse(int canRecurse)
 	{
@@ -458,10 +433,7 @@ public class Source
 	/**
 	 * Checks whether a source is allowed to be called recursively.
 	 * see g_source_set_can_recurse().
-	 * source:
-	 *  a GSource
-	 * Returns:
-	 *  whether recursion is allowed.
+	 * Returns: whether recursion is allowed.
 	 */
 	public int getCanRecurse()
 	{
@@ -474,10 +446,7 @@ public class Source
 	 * is a positive integer which is unique within a particular main loop
 	 * context. The reverse
 	 * mapping from ID to source is done by g_main_context_find_source_by_id().
-	 * source:
-	 *  a GSource
-	 * Returns:
-	 *  the ID (greater than 0) for the source
+	 * Returns: the ID (greater than 0) for the source
 	 */
 	public uint getId()
 	{
@@ -488,12 +457,7 @@ public class Source
 	/**
 	 * Gets the GMainContext with which the source is associated.
 	 * Calling this function on a destroyed source is an error.
-	 * source:
-	 *  a GSource
-	 * Returns:
-	 *  the GMainContext with which the source is associated,
-	 *  or NULL if the context has not yet been added
-	 *  to a source.
+	 * Returns: the GMainContext with which the source is associated, or NULL if the context has not yet been added to a source.
 	 */
 	public MainContext getContext()
 	{
@@ -509,14 +473,10 @@ public class Source
 	 * parameter.
 	 * Typically, you won't use this function. Instead use functions specific
 	 * to the type of source you are using.
-	 * source:
-	 *  the source
-	 * func:
-	 *  a callback function
-	 * data:
-	 *  the data to pass to callback function
-	 * notify:
-	 *  a function to call when data is no longer in use, or NULL.
+	 * Params:
+	 * func =  a callback function
+	 * data =  the data to pass to callback function
+	 * notify =  a function to call when data is no longer in use, or NULL.
 	 */
 	public void setCallback(GSourceFunc func, void* data, GDestroyNotify notify)
 	{
@@ -532,12 +492,9 @@ public class Source
 	 * an initial reference count on callback_data, and thus
 	 * callback_funcs->unref will eventually be called once more
 	 * than callback_funcs->ref.
-	 * source:
-	 *  the source
-	 * callback_data:
-	 *  pointer to callback data "object"
-	 * callback_funcs:
-	 *  functions for reference counting callback_data
+	 * Params:
+	 * callbackData =  pointer to callback data "object"
+	 * callbackFuncs =  functions for reference counting callback_data
 	 *  and getting the callback and data
 	 */
 	public void setCallbackIndirect(void* callbackData, GSourceCallbackFuncs* callbackFuncs)
@@ -552,10 +509,8 @@ public class Source
 	 * event source. The event source's check function will typically test
 	 * the revents field in the GPollFD struct and return TRUE if events need
 	 * to be processed.
-	 * source:
-	 * a GSource
-	 * fd:
-	 *  a GPollFD structure holding information about a file
+	 * Params:
+	 * fd =  a GPollFD structure holding information about a file
 	 *  descriptor to watch.
 	 */
 	public void addPoll(GPollFD* fd)
@@ -567,10 +522,8 @@ public class Source
 	/**
 	 * Removes a file descriptor from the set of file descriptors polled for
 	 * this source.
-	 * source:
-	 * a GSource
-	 * fd:
-	 *  a GPollFD structure previously passed to g_source_add_poll().
+	 * Params:
+	 * fd =  a GPollFD structure previously passed to g_source_add_poll().
 	 */
 	public void removePoll(GPollFD* fd)
 	{
@@ -584,10 +537,8 @@ public class Source
 	 * calling g_get_current_time() directly is that when
 	 * checking multiple sources, GLib can cache a single value
 	 * instead of having to repeatedly get the system time.
-	 * source:
-	 *  a GSource
-	 * timeval:
-	 *  GTimeVal structure in which to store current time.
+	 * Params:
+	 * timeval =  GTimeVal structure in which to store current time.
 	 */
 	public void getCurrentTime(GTimeVal* timeval)
 	{
@@ -603,10 +554,9 @@ public class Source
 	 * g_timeout_add(), g_timeout_add_full(), g_child_watch_add(),
 	 * g_child_watch_add_full(), g_io_add_watch(), and g_io_add_watch_full().
 	 * See also g_source_destroy().
-	 * tag:
-	 *  the ID of the source to remove.
-	 * Returns:
-	 *  TRUE if the source was found and removed.
+	 * Params:
+	 * tag =  the ID of the source to remove.
+	 * Returns: TRUE if the source was found and removed.
 	 */
 	public static int remove(uint tag)
 	{
@@ -618,12 +568,10 @@ public class Source
 	 * Removes a source from the default main loop context given the
 	 * source functions and user data. If multiple sources exist with the
 	 * same source functions and user data, only one will be destroyed.
-	 * funcs:
-	 *  The source_funcs passed to g_source_new()
-	 * user_data:
-	 *  the user data for the callback
-	 * Returns:
-	 *  TRUE if a source was found and removed.
+	 * Params:
+	 * funcs =  The source_funcs passed to g_source_new()
+	 * userData =  the user data for the callback
+	 * Returns: TRUE if a source was found and removed.
 	 */
 	public static int removeByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
@@ -635,10 +583,9 @@ public class Source
 	 * Removes a source from the default main loop context given the user
 	 * data for the callback. If multiple sources exist with the same user
 	 * data, only one will be destroyed.
-	 * user_data:
-	 *  the user_data for the callback.
-	 * Returns:
-	 *  TRUE if a source was found and removed.
+	 * Params:
+	 * userData =  the user_data for the callback.
+	 * Returns: TRUE if a source was found and removed.
 	 */
 	public static int removeByUserData(void* userData)
 	{

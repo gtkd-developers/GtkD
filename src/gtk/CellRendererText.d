@@ -70,6 +70,7 @@ private import gtk.CellRenderer;
 
 
 
+private import gtk.CellRenderer;
 
 /**
  * Description
@@ -80,7 +81,6 @@ private import gtk.CellRenderer;
  * If the mode is GTK_CELL_RENDERER_MODE_EDITABLE,
  * the GtkCellRendererText allows to edit its text using an entry.
  */
-private import gtk.CellRenderer;
 public class CellRendererText : CellRenderer
 {
 	
@@ -175,8 +175,6 @@ public class CellRendererText : CellRenderer
 	 * you can bind the "text" property on the cell renderer to a string
 	 * value in the model, thus rendering a different string in each row
 	 * of the GtkTreeView
-	 * Returns:
-	 *  the new cell renderer
 	 */
 	public this ()
 	{
@@ -192,15 +190,9 @@ public class CellRendererText : CellRenderer
 	 * if calculating the size of a cell is too slow (ie, a massive number of cells
 	 * displayed). If number_of_rows is -1, then the fixed height is unset, and
 	 * the height is determined by the properties again.
-	 * renderer:
-	 *  A GtkCellRendererText
-	 * number_of_rows:
-	 *  Number of rows of text each cell renderer is allocated, or -1
-	 * Property Details
-	 * The "align-set" property
-	 *  "align-set" gboolean : Read / Write
-	 * Whether this tag affects the alignment mode.
-	 * Default value: FALSE
+	 * Params:
+	 * renderer =  A GtkCellRendererText
+	 * numberOfRows =  Number of rows of text each cell renderer is allocated, or -1
 	 */
 	public static void setFixedHeightFromFont(GtkCellRendererText* renderer, int numberOfRows)
 	{

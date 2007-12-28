@@ -145,7 +145,7 @@ private import gobject.Value;;
  * provided. The first example shows three ways of getting the iter at the
  * location 3:2:5. While the first method shown is easier,
  * the second is much more common, as you often get paths from callbacks.
- * Example1.Acquiring a GtkTreeIter
+ * Example15.Acquiring a GtkTreeIter
  * /+* Three ways of getting the iter pointing to the location
  *  +/
  * {
@@ -170,7 +170,7 @@ private import gobject.Value;;
  * populate_model function used below is not shown, as
  * it is specific to the GtkListStore. For information on how to write
  * such a function, see the GtkListStore documentation.
- * Example2.Reading data from a GtkTreeModel
+ * Example16.Reading data from a GtkTreeModel
  * enum
  * {
 	 *  STRING_COLUMN,
@@ -261,16 +261,19 @@ public class TreeIter
 	 */
 	GtkTreeModel *gtkTreeModel;
 	
+	/** */
 	public void setModel(GtkTreeModel *gtkTreeModel)
 	{
 		this.gtkTreeModel = gtkTreeModel;
 	}
 	
+	/** */
 	public void setModel(TreeModel treeModel)
 	{
 		this.gtkTreeModel = treeModel.getTreeModelStruct();
 	}
 	
+	/** */
 	public this(TreeModel treeModel, TreePath treePath)
 	{
 		this();
@@ -295,9 +298,9 @@ public class TreeIter
 	
 	/**
 	 * Get Value
-	 * @param iter
-	 * @param column
-	 * @param value
+	 * Params:
+	 *  column =
+	 *  value =
 	 */
 	void getValue(int column, Value value)
 	{
@@ -310,8 +313,9 @@ public class TreeIter
 	
 	/**
 	 * Get the value of a column as a string
-	 * @para column the column number
-	 * @return a string representing the value of the column
+	 * Params:
+	 *  column = the column number
+	 * Returns: a string representing the value of the column
 	 */
 	char[] getValueString(int column)
 	{
@@ -327,8 +331,9 @@ public class TreeIter
 	
 	/**
 	 * Get the value of a column as an int
-	 * @para column the column number
-	 * @return a string representing the value of the column
+	 * Params:
+	 *  column = the column number
+	 * Returns: a string representing the value of the column
 	 */
 	int getValueInt(int column)
 	{
@@ -341,6 +346,7 @@ public class TreeIter
 		return value.getInt();
 	}
 	
+	/** */
 	TreePath getTreePath()
 	{
 		if ( gtkTreeModel  is  null )
@@ -377,8 +383,7 @@ public class TreeIter
 	
 	/**
 	 * Gets the parent of this iter
-	 * @param child
-	 * @return the parent iter or null if can't get parent or an error occured
+	 * Returns: the parent iter or null if can't get parent or an error occured
 	 */
 	TreeIter getParent()
 	{
@@ -396,7 +401,7 @@ public class TreeIter
 		return parent;
 	}
 	
-	
+	/** */
 	TreeIter getGrandParent()
 	{
 		if ( gtkTreeModel  is  null )
@@ -608,10 +613,7 @@ public class TreeIter
 	 * function is not intended for use in applications, because you can just copy
 	 * the structs by value (GtkTreeIter new_iter = iter;). You
 	 * must free this iter with gtk_tree_iter_free().
-	 * iter:
-	 *  A GtkTreeIter.
-	 * Returns:
-	 *  a newly-allocated copy of iter.
+	 * Returns: a newly-allocated copy of iter.
 	 */
 	public TreeIter copy()
 	{
@@ -622,8 +624,6 @@ public class TreeIter
 	/**
 	 * Frees an iterator that has been allocated on the heap. This function is
 	 * mainly used for language bindings.
-	 * iter:
-	 *  A dynamically allocated tree iterator.
 	 */
 	public void free()
 	{

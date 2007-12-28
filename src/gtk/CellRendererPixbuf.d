@@ -68,6 +68,7 @@ private import gtk.CellRenderer;
 
 
 
+private import gtk.CellRenderer;
 
 /**
  * Description
@@ -86,7 +87,6 @@ private import gtk.CellRenderer;
  * pixbuf-expander-closed
  * property is set to a pixbuf, it renders that one.
  */
-private import gtk.CellRenderer;
 public class CellRendererPixbuf : CellRenderer
 {
 	
@@ -147,15 +147,6 @@ public class CellRendererPixbuf : CellRenderer
 	 * can bind the "pixbuf" property on the cell renderer to a pixbuf value
 	 * in the model, thus rendering a different image in each row of the
 	 * GtkTreeView.
-	 * Returns:
-	 *  the new cell renderer
-	 * Property Details
-	 * The "follow-state" property
-	 *  "follow-state" gboolean : Read / Write
-	 * Specifies whether the rendered pixbuf should be colorized
-	 * according to the GtkCellRendererState.
-	 * Default value: FALSE
-	 * Since 2.8
 	 */
 	public this ()
 	{

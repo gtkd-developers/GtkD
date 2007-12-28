@@ -72,6 +72,7 @@ private import gobject.Flags;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -101,7 +102,6 @@ private import gobject.Flags;
  * derive from GTypeModule and implement the load and unload functions
  * in GTypeModuleClass.
  */
-private import gobject.ObjectG;
 public class TypeModule : ObjectG
 {
 	
@@ -158,11 +158,7 @@ public class TypeModule : ObjectG
 	/**
 	 * Increases the use count of a GTypeModule by one. If the
 	 * use count was zero before, the plugin will be loaded.
-	 * module:
-	 * a GTypeModule
-	 * Returns:
-	 * FALSE if the plugin needed to be loaded and
-	 *  loading the plugin failed.
+	 * Returns:FALSE if the plugin needed to be loaded and loading the plugin failed.
 	 */
 	public int use()
 	{
@@ -176,8 +172,6 @@ public class TypeModule : ObjectG
 	 * GTypeModule will not be freed, and types associated with the
 	 * GTypeModule are not unregistered. Once a GTypeModule is
 	 * initialized, it must exist forever.)
-	 * module:
-	 * a GTypeModule
 	 */
 	public void unuse()
 	{
@@ -187,10 +181,8 @@ public class TypeModule : ObjectG
 	
 	/**
 	 * Sets the name for a GTypeModule
-	 * module:
-	 * a GTypeModule.
-	 * name:
-	 * a human-readable name to use in error messages.
+	 * Params:
+	 * name = a human-readable name to use in error messages.
 	 */
 	public void setName(char[] name)
 	{
@@ -208,18 +200,12 @@ public class TypeModule : ObjectG
 	 * be the same as they were previously.
 	 * As long as any instances of the type exist, the type plugin will
 	 * not be unloaded.
-	 * module:
-	 *  a GTypeModule
-	 * parent_type:
-	 *  the type for the parent class
-	 * type_name:
-	 *  name for the type
-	 * type_info:
-	 *  type information structure
-	 * flags:
-	 *  flags field providing details about the type
-	 * Returns:
-	 * the new or existing type ID
+	 * Params:
+	 * parentType =  the type for the parent class
+	 * typeName =  name for the type
+	 * typeInfo =  type information structure
+	 * flags =  flags field providing details about the type
+	 * Returns:the new or existing type ID
 	 */
 	public GType registerType(GType parentType, char[] typeName, GTypeInfo* typeInfo, GTypeFlags flags)
 	{
@@ -233,14 +219,10 @@ public class TypeModule : ObjectG
 	 * for the type in this plugin, nothing will be done.
 	 * As long as any instances of the type exist, the type plugin will
 	 * not be unloaded.
-	 * module:
-	 * a GTypeModule
-	 * instance_type:
-	 * type to which to add the interface.
-	 * interface_type:
-	 * interface type to add
-	 * interface_info:
-	 * type information structure
+	 * Params:
+	 * instanceType = type to which to add the interface.
+	 * interfaceType = interface type to add
+	 * interfaceInfo = type information structure
 	 */
 	public void addInterface(GType instanceType, GType interfaceType, GInterfaceInfo* interfaceInfo)
 	{
@@ -255,18 +237,14 @@ public class TypeModule : ObjectG
 	 * is newly registered, and the resulting GType identifier returned.
 	 * As long as any instances of the type exist, the type plugin will
 	 * not be unloaded.
-	 * module:
-	 *  a GTypeModule
-	 * name:
-	 *  name for the type
-	 * _static_values:
-	 * Returns:
-	 * the new or existing type ID
 	 * Since 2.6
+	 * Params:
+	 * name =  name for the type
+	 * Returns:the new or existing type ID
 	 */
 	public GType registerEnum(char[] name, Enums _StaticValues)
 	{
-		// GType g_type_module_register_enum (GTypeModule *module,  const gchar *name,  const GEnumValue *const _static_values);
+		// GType g_type_module_register_enum (GTypeModule *module,  const gchar *name,  const GEnumValue *const_static_values);
 		return g_type_module_register_enum(gTypeModule, Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getEnumsStruct());
 	}
 	
@@ -277,18 +255,14 @@ public class TypeModule : ObjectG
 	 * is newly registered, and the resulting GType identifier returned.
 	 * As long as any instances of the type exist, the type plugin will
 	 * not be unloaded.
-	 * module:
-	 *  a GTypeModule
-	 * name:
-	 *  name for the type
-	 * _static_values:
-	 * Returns:
-	 * the new or existing type ID
 	 * Since 2.6
+	 * Params:
+	 * name =  name for the type
+	 * Returns:the new or existing type ID
 	 */
 	public GType registerFlags(char[] name, Flags _StaticValues)
 	{
-		// GType g_type_module_register_flags (GTypeModule *module,  const gchar *name,  const GFlagsValue *const _static_values);
+		// GType g_type_module_register_flags (GTypeModule *module,  const gchar *name,  const GFlagsValue *const_static_values);
 		return g_type_module_register_flags(gTypeModule, Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
 	}
 	

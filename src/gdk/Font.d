@@ -275,10 +275,9 @@ public class Font
 	 * Loads a font.
 	 * The font may be newly loaded or looked up the font in a cache.
 	 * You should make no assumptions about the initial reference count.
-	 * font_name:
-	 *  a XLFD describing the font to load.
-	 * Returns:
-	 *  a GdkFont, or NULL if the font could not be loaded.
+	 * Params:
+	 * fontName =  a XLFD describing the font to load.
+	 * Returns: a GdkFont, or NULL if the font could not be loaded.
 	 */
 	public static Font load(char[] fontName)
 	{
@@ -292,13 +291,11 @@ public class Font
 	 * Loads a font for use on display.
 	 * The font may be newly loaded or looked up the font in a cache.
 	 * You should make no assumptions about the initial reference count.
-	 * display:
-	 *  a GdkDisplay
-	 * font_name:
-	 *  a XLFD describing the font to load.
-	 * Returns:
-	 *  a GdkFont, or NULL if the font could not be loaded.
 	 * Since 2.2
+	 * Params:
+	 * display =  a GdkDisplay
+	 * fontName =  a XLFD describing the font to load.
+	 * Returns: a GdkFont, or NULL if the font could not be loaded.
 	 */
 	public static Font loadForDisplay(Display display, char[] fontName)
 	{
@@ -312,11 +309,10 @@ public class Font
 	 * Loads a fontset.
 	 * The fontset may be newly loaded or looked up in a cache.
 	 * You should make no assumptions about the initial reference count.
-	 * fontset_name:
-	 *  a comma-separated list of XLFDs describing
+	 * Params:
+	 * fontsetName =  a comma-separated list of XLFDs describing
 	 *  the component fonts of the fontset to load.
-	 * Returns:
-	 *  a GdkFont, or NULL if the fontset could not be loaded.
+	 * Returns: a GdkFont, or NULL if the fontset could not be loaded.
 	 */
 	public static Font fontsetLoad(char[] fontsetName)
 	{
@@ -330,14 +326,12 @@ public class Font
 	 * Loads a fontset for use on display.
 	 * The fontset may be newly loaded or looked up in a cache.
 	 * You should make no assumptions about the initial reference count.
-	 * display:
-	 *  a GdkDisplay
-	 * fontset_name:
-	 *  a comma-separated list of XLFDs describing
-	 *  the component fonts of the fontset to load.
-	 * Returns:
-	 *  a GdkFont, or NULL if the fontset could not be loaded.
 	 * Since 2.2
+	 * Params:
+	 * display =  a GdkDisplay
+	 * fontsetName =  a comma-separated list of XLFDs describing
+	 *  the component fonts of the fontset to load.
+	 * Returns: a GdkFont, or NULL if the fontset could not be loaded.
 	 */
 	public static Font fontsetLoadForDisplay(Display display, char[] fontsetName)
 	{
@@ -353,11 +347,9 @@ public class Font
 	 * internationalization will not be handled correctly. This function
 	 * should only be used for legacy code that cannot be easily converted
 	 * to use Pango. Using Pango directly will produce better results.
-	 * font_desc:
-	 *  a PangoFontDescription.
-	 * Returns:
-	 *  the newly loaded font, or NULL if the font
-	 * cannot be loaded.
+	 * Params:
+	 * fontDesc =  a PangoFontDescription.
+	 * Returns: the newly loaded font, or NULL if the fontcannot be loaded.
 	 */
 	public static Font fromDescription(PangoFontDescription* fontDesc)
 	{
@@ -373,14 +365,11 @@ public class Font
 	 * internationalization will not be handled correctly. This function
 	 * should only be used for legacy code that cannot be easily converted
 	 * to use Pango. Using Pango directly will produce better results.
-	 * display:
-	 *  a GdkDisplay
-	 * font_desc:
-	 *  a PangoFontDescription.
-	 * Returns:
-	 *  the newly loaded font, or NULL if the font
-	 * cannot be loaded.
 	 * Since 2.2
+	 * Params:
+	 * display =  a GdkDisplay
+	 * fontDesc =  a PangoFontDescription.
+	 * Returns: the newly loaded font, or NULL if the fontcannot be loaded.
 	 */
 	public static Font fromDescriptionForDisplay(Display display, PangoFontDescription* fontDesc)
 	{
@@ -392,11 +381,8 @@ public class Font
 	 * Warning
 	 * gdk_font_get_display is deprecated and should not be used in newly-written code.
 	 * Returns the GdkDisplay for font.
-	 * font:
-	 *  the GdkFont.
-	 * Returns:
-	 *  the corresponding GdkDisplay.
 	 * Since 2.2
+	 * Returns: the corresponding GdkDisplay.
 	 */
 	public Display getDisplay()
 	{
@@ -408,10 +394,7 @@ public class Font
 	 * Warning
 	 * gdk_font_ref is deprecated and should not be used in newly-written code.
 	 * Increases the reference count of a font by one.
-	 * font:
-	 *  a GdkFont
-	 * Returns:
-	 *  font
+	 * Returns: font
 	 */
 	public Font doref()
 	{
@@ -424,8 +407,6 @@ public class Font
 	 * gdk_font_unref is deprecated and should not be used in newly-written code.
 	 * Decreases the reference count of a font by one.
 	 * If the result is zero, destroys the font.
-	 * font:
-	 *  a GdkFont
 	 */
 	public void unref()
 	{
@@ -437,10 +418,7 @@ public class Font
 	 * Warning
 	 * gdk_font_id is deprecated and should not be used in newly-written code.
 	 * Returns the X Font ID for the given font.
-	 * font:
-	 *  a GdkFont.
-	 * Returns:
-	 *  the numeric X Font ID
+	 * Returns: the numeric X Font ID
 	 */
 	public int id()
 	{
@@ -454,12 +432,9 @@ public class Font
 	 * Compares two fonts for equality. Single fonts compare equal
 	 * if they have the same X font ID. This operation does
 	 * not currently work correctly for fontsets.
-	 * fonta:
-	 *  a GdkFont.
-	 * fontb:
-	 *  another GdkFont.
-	 * Returns:
-	 *  TRUE if the fonts are equal.
+	 * Params:
+	 * fontb =  another GdkFont.
+	 * Returns: TRUE if the fonts are equal.
 	 */
 	public int equal(Font fontb)
 	{
@@ -471,20 +446,13 @@ public class Font
 	 * Warning
 	 * gdk_string_extents is deprecated and should not be used in newly-written code.
 	 * Gets the metrics of a nul-terminated string.
-	 * font:
-	 *  a GdkFont.
-	 * string:
-	 *  the nul-terminated string to measure.
-	 * lbearing:
-	 *  the left bearing of the string.
-	 * rbearing:
-	 *  the right bearing of the string.
-	 * width:
-	 *  the width of the string.
-	 * ascent:
-	 *  the ascent of the string.
-	 * descent:
-	 *  the descent of the string.
+	 * Params:
+	 * string =  the nul-terminated string to measure.
+	 * lbearing =  the left bearing of the string.
+	 * rbearing =  the right bearing of the string.
+	 * width =  the width of the string.
+	 * ascent =  the ascent of the string.
+	 * descent =  the descent of the string.
 	 */
 	public void stringExtents(char[] string, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
 	{
@@ -496,24 +464,16 @@ public class Font
 	 * Warning
 	 * gdk_text_extents is deprecated and should not be used in newly-written code.
 	 * Gets the metrics of a string.
-	 * font:
-	 *  a GdkFont
-	 * text:
-	 *  the text to measure
-	 * text_length:
-	 *  the length of the text in bytes. (If the
+	 * Params:
+	 * text =  the text to measure
+	 * textLength =  the length of the text in bytes. (If the
 	 *  font is a 16-bit font, this is twice the length
 	 *  of the text in characters.)
-	 * lbearing:
-	 *  the left bearing of the string.
-	 * rbearing:
-	 *  the right bearing of the string.
-	 * width:
-	 *  the width of the string.
-	 * ascent:
-	 *  the ascent of the string.
-	 * descent:
-	 *  the descent of the string.
+	 * lbearing =  the left bearing of the string.
+	 * rbearing =  the right bearing of the string.
+	 * width =  the width of the string.
+	 * ascent =  the ascent of the string.
+	 * descent =  the descent of the string.
 	 */
 	public void textExtents(char[] text, int textLength, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
 	{
@@ -525,22 +485,14 @@ public class Font
 	 * Warning
 	 * gdk_text_extents_wc is deprecated and should not be used in newly-written code.
 	 * Gets the metrics of a string of wide characters.
-	 * font:
-	 *  a GdkFont
-	 * text:
-	 *  the text to measure.
-	 * text_length:
-	 *  the length of the text in character.
-	 * lbearing:
-	 *  the left bearing of the string.
-	 * rbearing:
-	 *  the right bearing of the string.
-	 * width:
-	 *  the width of the string.
-	 * ascent:
-	 *  the ascent of the string.
-	 * descent:
-	 *  the descent of the string.
+	 * Params:
+	 * text =  the text to measure.
+	 * textLength =  the length of the text in character.
+	 * lbearing =  the left bearing of the string.
+	 * rbearing =  the right bearing of the string.
+	 * width =  the width of the string.
+	 * ascent =  the ascent of the string.
+	 * descent =  the descent of the string.
 	 */
 	public void textExtentsWc(GdkWChar* text, int textLength, int* lbearing, int* rbearing, int* width, int* ascent, int* descent)
 	{
@@ -555,12 +507,9 @@ public class Font
 	 * (The distance from the origin of the string to the
 	 * point where the next string in a sequence of strings
 	 * should be drawn)
-	 * font:
-	 *  a GdkFont
-	 * string:
-	 *  the nul-terminated string to measure
-	 * Returns:
-	 *  the width of the string in pixels.
+	 * Params:
+	 * string =  the nul-terminated string to measure
+	 * Returns: the width of the string in pixels.
 	 */
 	public int stringWidth(char[] string)
 	{
@@ -572,14 +521,10 @@ public class Font
 	 * Warning
 	 * gdk_text_width is deprecated and should not be used in newly-written code.
 	 * Determines the width of a given string.
-	 * font:
-	 *  a GdkFont
-	 * text:
-	 *  the text to measure.
-	 * text_length:
-	 *  the length of the text in bytes.
-	 * Returns:
-	 *  the width of the string in pixels.
+	 * Params:
+	 * text =  the text to measure.
+	 * textLength =  the length of the text in bytes.
+	 * Returns: the width of the string in pixels.
 	 */
 	public int textWidth(char[] text, int textLength)
 	{
@@ -591,14 +536,10 @@ public class Font
 	 * Warning
 	 * gdk_text_width_wc is deprecated and should not be used in newly-written code.
 	 * Determines the width of a given wide-character string.
-	 * font:
-	 *  a GdkFont
-	 * text:
-	 *  the text to measure.
-	 * text_length:
-	 *  the length of the text in characters.
-	 * Returns:
-	 *  the width of the string in pixels.
+	 * Params:
+	 * text =  the text to measure.
+	 * textLength =  the length of the text in characters.
+	 * Returns: the width of the string in pixels.
 	 */
 	public int textWidthWc(GdkWChar* text, int textLength)
 	{
@@ -610,12 +551,9 @@ public class Font
 	 * Warning
 	 * gdk_char_width is deprecated and should not be used in newly-written code. Use gdk_text_extents() instead.
 	 * Determines the width of a given character.
-	 * font:
-	 *  a GdkFont
-	 * character:
-	 *  the character to measure.
-	 * Returns:
-	 *  the width of the character in pixels.
+	 * Params:
+	 * character =  the character to measure.
+	 * Returns: the width of the character in pixels.
 	 */
 	public int charWidth(char character)
 	{
@@ -628,12 +566,9 @@ public class Font
 	 * gdk_char_width_wc is deprecated and should not be used in newly-written code.
 	 * Determines the width of a given wide character. (Encoded
 	 * in the wide-character encoding of the current locale).
-	 * font:
-	 *  a GdkFont
-	 * character:
-	 *  the character to measure.
-	 * Returns:
-	 *  the width of the character in pixels.
+	 * Params:
+	 * character =  the character to measure.
+	 * Returns: the width of the character in pixels.
 	 */
 	public int charWidthWc(GdkWChar character)
 	{
@@ -649,12 +584,9 @@ public class Font
 	 * correct value for determining the origin of the next
 	 * portion when drawing text in multiple pieces.
 	 * See gdk_string_width().
-	 * font:
-	 *  a GdkFont
-	 * string:
-	 *  the nul-terminated string to measure.
-	 * Returns:
-	 *  the right bearing of the string in pixels.
+	 * Params:
+	 * string =  the nul-terminated string to measure.
+	 * Returns: the right bearing of the string in pixels.
 	 */
 	public int stringMeasure(char[] string)
 	{
@@ -670,14 +602,10 @@ public class Font
 	 * correct value for determining the origin of the next
 	 * portion when drawing text in multiple pieces.
 	 * See gdk_text_width().
-	 * font:
-	 *  a GdkFont
-	 * text:
-	 *  the text to measure.
-	 * text_length:
-	 *  the length of the text in bytes.
-	 * Returns:
-	 *  the right bearing of the string in pixels.
+	 * Params:
+	 * text =  the text to measure.
+	 * textLength =  the length of the text in bytes.
+	 * Returns: the right bearing of the string in pixels.
 	 */
 	public int textMeasure(char[] text, int textLength)
 	{
@@ -692,12 +620,9 @@ public class Font
 	 * portion of a character when drawn. This is not the
 	 * correct value for determining the origin of the next
 	 * portion when drawing text in multiple pieces.
-	 * font:
-	 *  a GdkFont
-	 * character:
-	 *  the character to measure.
-	 * Returns:
-	 *  the right bearing of the character in pixels.
+	 * Params:
+	 * character =  the character to measure.
+	 * Returns: the right bearing of the character in pixels.
 	 */
 	public int charMeasure(char character)
 	{
@@ -712,12 +637,9 @@ public class Font
 	 * string. This value is not generally useful, because you
 	 * cannot determine how this total height will be drawn in
 	 * relation to the baseline. See gdk_string_extents().
-	 * font:
-	 *  a GdkFont
-	 * string:
-	 *  the nul-terminated string to measure.
-	 * Returns:
-	 *  the height of the string in pixels.
+	 * Params:
+	 * string =  the nul-terminated string to measure.
+	 * Returns: the height of the string in pixels.
 	 */
 	public int stringHeight(char[] string)
 	{
@@ -732,14 +654,10 @@ public class Font
 	 * This value is not generally useful, because you cannot
 	 * determine how this total height will be drawn in
 	 * relation to the baseline. See gdk_text_extents().
-	 * font:
-	 *  a GdkFont
-	 * text:
-	 *  the text to measure.
-	 * text_length:
-	 *  the length of the text in bytes.
-	 * Returns:
-	 *  the height of the string in pixels.
+	 * Params:
+	 * text =  the text to measure.
+	 * textLength =  the length of the text in bytes.
+	 * Returns: the height of the string in pixels.
 	 */
 	public int textHeight(char[] text, int textLength)
 	{
@@ -754,12 +672,9 @@ public class Font
 	 * This value is not generally useful, because you cannot
 	 * determine how this total height will be drawn in
 	 * relation to the baseline. See gdk_text_extents().
-	 * font:
-	 *  a GdkFont
-	 * character:
-	 *  the character to measure.
-	 * Returns:
-	 *  the height of the character in pixels.
+	 * Params:
+	 * character =  the character to measure.
+	 * Returns: the height of the character in pixels.
 	 */
 	public int charHeight(char character)
 	{
@@ -774,12 +689,9 @@ public class Font
 	 * Converts a wide character string to a multi-byte string.
 	 * (The function name comes from an acronym of 'Wide Character String TO
 	 * Multi-Byte String').
-	 * src:
-	 *  a wide character string.
-	 * Returns:
-	 *  the multi-byte string corresponding to src, or NULL if the
-	 * conversion failed. The returned string should be freed with g_free() when no
-	 * longer needed.
+	 * Params:
+	 * src =  a wide character string.
+	 * Returns: the multi-byte string corresponding to src, or NULL if theconversion failed. The returned string should be freed with g_free() when nolonger needed.
 	 */
 	public static char[] wcstombs(GdkWChar* src)
 	{
@@ -793,15 +705,11 @@ public class Font
 	 * Converts a multi-byte string to a wide character string.
 	 * (The function name comes from an acronym of 'Multi-Byte String TO Wide
 	 * Character String').
-	 * dest:
-	 *  the space to place the converted wide character string into.
-	 * src:
-	 *  the multi-byte string to convert, which must be nul-terminated.
-	 * dest_max:
-	 *  the maximum number of wide characters to place in dest.
-	 * Returns:
-	 *  the number of wide characters written into dest, or -1 if
-	 *  the conversion failed.
+	 * Params:
+	 * dest =  the space to place the converted wide character string into.
+	 * src =  the multi-byte string to convert, which must be nul-terminated.
+	 * destMax =  the maximum number of wide characters to place in dest.
+	 * Returns: the number of wide characters written into dest, or -1 if  the conversion failed.
 	 */
 	public static int mbstowcs(GdkWChar* dest, char[] src, int destMax)
 	{

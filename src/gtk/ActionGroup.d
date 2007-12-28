@@ -73,6 +73,7 @@ private import glib.ListG;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -92,8 +93,28 @@ private import glib.ListG;
  * and a shortcut is associated with this accelerator path. All menuitems and
  * toolitems take on this accelerator path. The GTK+ accelerator map code makes
  * sure that the correct shortcut is displayed next to the menu item.
+ * GtkActionGroup as GtkBuildable
+ * The GtkActionGroup implementation of the GtkBuildable interface accepts
+ * GtkAction objects as <child> elements in UI definitions.
+ * Note that it is probably more common to define actions and action groups
+ * in the code, since they are directly related to what the code can do.
+ * The GtkActionGroup implementation of the GtkBuildable interface supports a
+ * custom <accelerator> element, which has attributes named key and
+ * modifiers and allows to specify accelerators. This is similar to the
+ * <accelerator> element of GtkWidget, the main difference is that
+ * it doesn't allow you to specify a signal.
+ * Example29.A GtkDialog UI definition fragment.
+ * <object class="GtkActionGroup" id="actiongroup">
+ *  <child>
+ *  <object class="GtkAction" id="About">
+ *  <property name="name">About</property>
+ *  <property name="stock_id">gtk-about</property>
+ *  <signal handler="about_activate" name="activate"/>
+ *  </object>
+ *  <accelerator key="F1" modifiers="GDK_CONTROL_MASK | GDK_SHIFT_MASK"/>
+ *  </child>
+ * </object>
  */
-private import gobject.ObjectG;
 public class ActionGroup : ObjectG
 {
 	
@@ -268,11 +289,9 @@ public class ActionGroup : ObjectG
 	 * Creates a new GtkActionGroup object. The name of the action group
 	 * is used when associating keybindings
 	 * with the actions.
-	 * name:
-	 *  the name of the action group.
-	 * Returns:
-	 *  the new GtkActionGroup
 	 * Since 2.4
+	 * Params:
+	 * name =  the name of the action group.
 	 */
 	public this (char[] name)
 	{
@@ -282,11 +301,8 @@ public class ActionGroup : ObjectG
 	
 	/**
 	 * Gets the name of the action group.
-	 * action_group:
-	 *  the action group
-	 * Returns:
-	 *  the name of the action group.
 	 * Since 2.4
+	 * Returns: the name of the action group.
 	 */
 	public char[] getName()
 	{
@@ -299,11 +315,8 @@ public class ActionGroup : ObjectG
 	 * can only be logically sensitive (see gtk_action_is_sensitive()) if
 	 * they are sensitive (see gtk_action_get_sensitive()) and their group
 	 * is sensitive.
-	 * action_group:
-	 *  the action group
-	 * Returns:
-	 *  TRUE if the group is sensitive.
 	 * Since 2.4
+	 * Returns: TRUE if the group is sensitive.
 	 */
 	public int getSensitive()
 	{
@@ -313,11 +326,9 @@ public class ActionGroup : ObjectG
 	
 	/**
 	 * Changes the sensitivity of action_group
-	 * action_group:
-	 *  the action group
-	 * sensitive:
-	 *  new sensitivity
 	 * Since 2.4
+	 * Params:
+	 * sensitive =  new sensitivity
 	 */
 	public void setSensitive(int sensitive)
 	{
@@ -330,11 +341,8 @@ public class ActionGroup : ObjectG
 	 * can only be logically visible (see gtk_action_is_visible()) if
 	 * they are visible (see gtk_action_get_visible()) and their group
 	 * is visible.
-	 * action_group:
-	 *  the action group
-	 * Returns:
-	 *  TRUE if the group is visible.
 	 * Since 2.4
+	 * Returns: TRUE if the group is visible.
 	 */
 	public int getVisible()
 	{
@@ -344,11 +352,9 @@ public class ActionGroup : ObjectG
 	
 	/**
 	 * Changes the visible of action_group.
-	 * action_group:
-	 *  the action group
-	 * visible:
-	 *  new visiblity
 	 * Since 2.4
+	 * Params:
+	 * visible =  new visiblity
 	 */
 	public void setVisible(int visible)
 	{
@@ -358,13 +364,10 @@ public class ActionGroup : ObjectG
 	
 	/**
 	 * Looks up an action in the action group by name.
-	 * action_group:
-	 *  the action group
-	 * action_name:
-	 *  the name of the action
-	 * Returns:
-	 *  the action, or NULL if no action by that name exists
 	 * Since 2.4
+	 * Params:
+	 * actionName =  the name of the action
+	 * Returns: the action, or NULL if no action by that name exists
 	 */
 	public Action getAction(char[] actionName)
 	{
@@ -374,11 +377,8 @@ public class ActionGroup : ObjectG
 	
 	/**
 	 * Lists the actions in the action group.
-	 * action_group:
-	 *  the action group
-	 * Returns:
-	 *  an allocated list of the action objects in the action group
 	 * Since 2.4
+	 * Returns: an allocated list of the action objects in the action group
 	 */
 	public ListG listActions()
 	{
@@ -393,11 +393,9 @@ public class ActionGroup : ObjectG
 	 * the action. Therefore you must either set the accel path yourself with
 	 * gtk_action_set_accel_path(), or use
 	 * gtk_action_group_add_action_with_accel (..., NULL).
-	 * action_group:
-	 *  the action group
-	 * action:
-	 *  an action
 	 * Since 2.4
+	 * Params:
+	 * action =  an action
 	 */
 	public void addAction(Action action)
 	{
@@ -411,15 +409,12 @@ public class ActionGroup : ObjectG
 	 * with the stock_id of the action.
 	 * Accel paths are set to
 	 * <Actions>/group-name/action-name.
-	 * action_group:
-	 *  the action group
-	 * action:
-	 *  the action to add
-	 * accelerator:
-	 *  the accelerator for the action, in
+	 * Since 2.4
+	 * Params:
+	 * action =  the action to add
+	 * accelerator =  the accelerator for the action, in
 	 *  the format understood by gtk_accelerator_parse(), or "" for no accelerator, or
 	 *  NULL to use the stock accelerator
-	 * Since 2.4
 	 */
 	public void addActionWithAccel(Action action, char[] accelerator)
 	{
@@ -429,11 +424,9 @@ public class ActionGroup : ObjectG
 	
 	/**
 	 * Removes an action object from the action group.
-	 * action_group:
-	 *  the action group
-	 * action:
-	 *  an action
 	 * Since 2.4
+	 * Params:
+	 * action =  an action
 	 */
 	public void removeAction(Action action)
 	{
@@ -448,15 +441,11 @@ public class ActionGroup : ObjectG
 	 * The "activate" signals of the actions are connected to the callbacks and
 	 * their accel paths are set to
 	 * <Actions>/group-name/action-name.
-	 * action_group:
-	 *  the action group
-	 * entries:
-	 *  an array of action descriptions
-	 * n_entries:
-	 *  the number of entries
-	 * user_data:
-	 *  data to pass to the action callbacks
 	 * Since 2.4
+	 * Params:
+	 * entries =  an array of action descriptions
+	 * nEntries =  the number of entries
+	 * userData =  data to pass to the action callbacks
 	 */
 	public void addActions(GtkActionEntry* entries, uint nEntries, void* userData)
 	{
@@ -467,17 +456,12 @@ public class ActionGroup : ObjectG
 	/**
 	 * This variant of gtk_action_group_add_actions() adds a GDestroyNotify
 	 * callback for user_data.
-	 * action_group:
-	 *  the action group
-	 * entries:
-	 *  an array of action descriptions
-	 * n_entries:
-	 *  the number of entries
-	 * user_data:
-	 *  data to pass to the action callbacks
-	 * destroy:
-	 *  destroy notification callback for user_data
 	 * Since 2.4
+	 * Params:
+	 * entries =  an array of action descriptions
+	 * nEntries =  the number of entries
+	 * userData =  data to pass to the action callbacks
+	 * destroy =  destroy notification callback for user_data
 	 */
 	public void addActionsFull(GtkActionEntry* entries, uint nEntries, void* userData, GDestroyNotify destroy)
 	{
@@ -492,15 +476,11 @@ public class ActionGroup : ObjectG
 	 * The "activate" signals of the actions are connected to the callbacks and
 	 * their accel paths are set to
 	 * <Actions>/group-name/action-name.
-	 * action_group:
-	 *  the action group
-	 * entries:
-	 *  an array of toggle action descriptions
-	 * n_entries:
-	 *  the number of entries
-	 * user_data:
-	 *  data to pass to the action callbacks
 	 * Since 2.4
+	 * Params:
+	 * entries =  an array of toggle action descriptions
+	 * nEntries =  the number of entries
+	 * userData =  data to pass to the action callbacks
 	 */
 	public void addToggleActions(GtkToggleActionEntry* entries, uint nEntries, void* userData)
 	{
@@ -511,17 +491,12 @@ public class ActionGroup : ObjectG
 	/**
 	 * This variant of gtk_action_group_add_toggle_actions() adds a
 	 * GDestroyNotify callback for user_data.
-	 * action_group:
-	 *  the action group
-	 * entries:
-	 *  an array of toggle action descriptions
-	 * n_entries:
-	 *  the number of entries
-	 * user_data:
-	 *  data to pass to the action callbacks
-	 * destroy:
-	 *  destroy notification callback for user_data
 	 * Since 2.4
+	 * Params:
+	 * entries =  an array of toggle action descriptions
+	 * nEntries =  the number of entries
+	 * userData =  data to pass to the action callbacks
+	 * destroy =  destroy notification callback for user_data
 	 */
 	public void addToggleActionsFull(GtkToggleActionEntry* entries, uint nEntries, void* userData, GDestroyNotify destroy)
 	{
@@ -536,20 +511,14 @@ public class ActionGroup : ObjectG
 	 * The "changed" signal of the first radio action is connected to the
 	 * on_change callback and the accel paths of the actions are set to
 	 * <Actions>/group-name/action-name.
-	 * action_group:
-	 *  the action group
-	 * entries:
-	 *  an array of radio action descriptions
-	 * n_entries:
-	 *  the number of entries
-	 * value:
-	 *  the value of the action to activate initially, or -1 if
-	 *  no action should be activated
-	 * on_change:
-	 *  the callback to connect to the changed signal
-	 * user_data:
-	 *  data to pass to the action callbacks
 	 * Since 2.4
+	 * Params:
+	 * entries =  an array of radio action descriptions
+	 * nEntries =  the number of entries
+	 * value =  the value of the action to activate initially, or -1 if
+	 *  no action should be activated
+	 * onChange =  the callback to connect to the changed signal
+	 * userData =  data to pass to the action callbacks
 	 */
 	public void addRadioActions(GtkRadioActionEntry* entries, uint nEntries, int value, GCallback onChange, void* userData)
 	{
@@ -560,22 +529,15 @@ public class ActionGroup : ObjectG
 	/**
 	 * This variant of gtk_action_group_add_radio_actions() adds a
 	 * GDestroyNotify callback for user_data.
-	 * action_group:
-	 *  the action group
-	 * entries:
-	 *  an array of radio action descriptions
-	 * n_entries:
-	 *  the number of entries
-	 * value:
-	 *  the value of the action to activate initially, or -1 if
-	 *  no action should be activated
-	 * on_change:
-	 *  the callback to connect to the changed signal
-	 * user_data:
-	 *  data to pass to the action callbacks
-	 * destroy:
-	 *  destroy notification callback for user_data
 	 * Since 2.4
+	 * Params:
+	 * entries =  an array of radio action descriptions
+	 * nEntries =  the number of entries
+	 * value =  the value of the action to activate initially, or -1 if
+	 *  no action should be activated
+	 * onChange =  the callback to connect to the changed signal
+	 * userData =  data to pass to the action callbacks
+	 * destroy =  destroy notification callback for user_data
 	 */
 	public void addRadioActionsFull(GtkRadioActionEntry* entries, uint nEntries, int value, GCallback onChange, void* userData, GDestroyNotify destroy)
 	{
@@ -588,16 +550,12 @@ public class ActionGroup : ObjectG
 	 * GtkActionGroupEntrys added by gtk_action_group_add_actions().
 	 * If you're using gettext(), it is enough to set the translation domain
 	 * with gtk_action_group_set_translation_domain().
-	 * action_group:
-	 *  a GtkActionGroup
-	 * func:
-	 *  a GtkTranslateFunc
-	 * data:
-	 *  data to be passed to func and notify
-	 * notify:
-	 *  a GtkDestroyNotify function to be called when action_group is
-	 *  destroyed and when the translation function is changed again
 	 * Since 2.4
+	 * Params:
+	 * func =  a GtkTranslateFunc
+	 * data =  data to be passed to func and notify
+	 * notify =  a GtkDestroyNotify function to be called when action_group is
+	 *  destroyed and when the translation function is changed again
 	 */
 	public void setTranslateFunc(GtkTranslateFunc func, void* data, GtkDestroyNotify notify)
 	{
@@ -611,11 +569,9 @@ public class ActionGroup : ObjectG
 	 * gtk_action_group_add_actions().
 	 * If you're not using gettext() for localization, see
 	 * gtk_action_group_set_translate_func().
-	 * action_group:
-	 *  a GtkActionGroup
-	 * domain:
-	 *  the translation domain to use for dgettext() calls
 	 * Since 2.4
+	 * Params:
+	 * domain =  the translation domain to use for dgettext() calls
 	 */
 	public void setTranslationDomain(char[] domain)
 	{
@@ -626,18 +582,10 @@ public class ActionGroup : ObjectG
 	/**
 	 * Translates a string using the specified translate_func(). This
 	 * is mainly intended for language bindings.
-	 * action_group:
-	 *  a GtkActionGroup
-	 * string:
-	 *  a string
-	 * Returns:
-	 *  the translation of string
 	 * Since 2.6
-	 * Property Details
-	 * The "name" property
-	 *  "name" gchararray : Read / Write / Construct Only
-	 * A name for the action group.
-	 * Default value: NULL
+	 * Params:
+	 * string =  a string
+	 * Returns: the translation of string
 	 */
 	public char[] translateString(char[] string)
 	{

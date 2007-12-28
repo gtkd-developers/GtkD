@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.ButtonBox;
 
 /**
  * Description
@@ -84,7 +85,6 @@ private import gtkc.gtk;
  * arrangement and layout of the buttons can be changed with
  * gtk_button_box_set_layout().
  */
-private import gtk.ButtonBox;
 public class HButtonBox : ButtonBox
 {
 	
@@ -152,8 +152,6 @@ public class HButtonBox : ButtonBox
 	
 	/**
 	 * Creates a new horizontal button box.
-	 * Returns:
-	 * a new button box GtkWidget.
 	 */
 	public this ()
 	{
@@ -166,8 +164,7 @@ public class HButtonBox : ButtonBox
 	 * gtk_hbutton_box_get_spacing_default is deprecated and should not be used in newly-written code.
 	 * Retrieves the current default spacing for horizontal button boxes. This is the number of pixels
 	 * to be placed between the buttons when they are arranged.
-	 * Returns:
-	 * the default number of pixels between buttons.
+	 * Returns:the default number of pixels between buttons.
 	 */
 	public static int getSpacingDefault()
 	{
@@ -179,8 +176,7 @@ public class HButtonBox : ButtonBox
 	 * Warning
 	 * gtk_hbutton_box_get_layout_default is deprecated and should not be used in newly-written code.
 	 * Retrieves the current layout used to arrange buttons in button box widgets.
-	 * Returns:
-	 * the current GtkButtonBoxStyle.
+	 * Returns:the current GtkButtonBoxStyle.
 	 */
 	public static GtkButtonBoxStyle getLayoutDefault()
 	{
@@ -193,8 +189,8 @@ public class HButtonBox : ButtonBox
 	 * gtk_hbutton_box_set_spacing_default is deprecated and should not be used in newly-written code.
 	 * Changes the default spacing that is placed between widgets in an
 	 * horizontal button box.
-	 * spacing:
-	 * an integer value.
+	 * Params:
+	 * spacing = an integer value.
 	 */
 	public static void setSpacingDefault(int spacing)
 	{
@@ -206,15 +202,8 @@ public class HButtonBox : ButtonBox
 	 * Warning
 	 * gtk_hbutton_box_set_layout_default is deprecated and should not be used in newly-written code.
 	 * Sets a new layout mode that will be used by all button boxes.
-	 * layout:
-	 * a new GtkButtonBoxStyle.
-	 * See Also
-	 * GtkBox
-	 * Used to pack widgets into button boxes.
-	 * GtkButtonBox
-	 * Provides functions for controlling button boxes.
-	 * GtkVButtonBox
-	 * Pack buttons vertically
+	 * Params:
+	 * layout = a new GtkButtonBoxStyle.
 	 */
 	public static void setLayoutDefault(GtkButtonBoxStyle layout)
 	{

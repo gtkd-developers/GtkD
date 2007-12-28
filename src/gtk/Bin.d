@@ -69,6 +69,7 @@ private import gtk.Widget;
 
 
 
+private import gtk.Container;
 
 /**
  * Description
@@ -78,7 +79,6 @@ private import gtk.Widget;
  * Many GTK+ widgets are subclasses of GtkBin, including GtkWindow, GtkButton,
  * GtkFrame, GtkHandleBox, and GtkScrolledWindow.
  */
-private import gtk.Container;
 public class Bin : Container
 {
 	
@@ -131,8 +131,6 @@ public class Bin : Container
 	 * Gets the child of the GtkBin, or NULL if the bin contains
 	 * no child widget. The returned widget does not have a reference
 	 * added, so you do not need to unref it.
-	 * bin:
-	 *  a GtkBin
 	 * Returns:
 	 *  pointer to child of the GtkBin
 	 */

@@ -126,8 +126,7 @@ public class Timer
 	/**
 	 * Creates a new timer, and starts timing (i.e. g_timer_start() is implicitly
 	 * called for you).
-	 * Returns:
-	 * a new GTimer.
+	 * Returns:a new GTimer.
 	 */
 	public static Timer _New()
 	{
@@ -140,8 +139,6 @@ public class Timer
 	 * time since g_timer_start() was called. g_timer_new() automatically marks the
 	 * start time, so no need to call g_timer_start() immediately after creating the
 	 * timer.
-	 * timer:
-	 * a GTimer.
 	 */
 	public void _Start()
 	{
@@ -152,8 +149,6 @@ public class Timer
 	/**
 	 * Marks an end time, so calls to g_timer_elapsed() will return the difference
 	 * between this end time and the start time.
-	 * timer:
-	 * a GTimer.
 	 */
 	public void _Stop()
 	{
@@ -164,8 +159,6 @@ public class Timer
 	/**
 	 * Resumes a timer that has previously been stopped with g_timer_stop().
 	 * g_timer_stop() must be called before using this function.
-	 * timer:
-	 * a GTimer.
 	 * Since 2.4
 	 */
 	public void _Continue()
@@ -180,15 +173,11 @@ public class Timer
 	 * it was started and the time it was stopped. The return value is the number of
 	 * seconds elapsed, including any fractional part. The microseconds
 	 * out parameter is essentially useless.
-	 * timer:
-	 * a GTimer.
-	 * microseconds:
-	 * return location for the fractional part of seconds elapsed,
+	 * Params:
+	 * microseconds = return location for the fractional part of seconds elapsed,
 	 *  in microseconds (that is, the total number of microseconds elapsed, modulo
 	 *  1000000), or NULL
-	 * Returns:
-	 * seconds elapsed as a floating point value, including
-	 *  any fractional part.
+	 * Returns:seconds elapsed as a floating point value, including  any fractional part.
 	 */
 	public double _Elapsed(uint* microseconds)
 	{
@@ -200,8 +189,6 @@ public class Timer
 	 * This function is useless; it's fine to call g_timer_start() on an
 	 * already-started timer to reset the start time, so g_timer_reset() serves no
 	 * purpose.
-	 * timer:
-	 * a GTimer.
 	 */
 	public void _Reset()
 	{
@@ -211,8 +198,6 @@ public class Timer
 	
 	/**
 	 * Destroys a timer, freeing associated resources.
-	 * timer:
-	 * a GTimer to destroy.
 	 */
 	public void _Destroy()
 	{

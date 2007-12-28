@@ -73,6 +73,7 @@ private import gtk.Window;
 
 
 
+private import gtk.Dialog;
 
 /**
  * Description
@@ -93,8 +94,20 @@ private import gtk.Window;
  * To make constructing a GtkAboutDialog as convenient as possible, you can
  * use the function gtk_show_about_dialog() which constructs and shows a dialog
  * and keeps it around so that it can be shown again.
+ * Note that GTK+ sets a default title of _("About %s")
+ * on the dialog window (where %s is replaced by the name of the
+ * application, but in order to ensure proper translation of the title,
+ * applications should set the title property explicitly when constructing
+ * a GtkAboutDialog, as shown in the following example:
+ * gtk_show_about_dialog (NULL,
+ *  "program-name", "ExampleCode",
+ *  "logo", example_logo,
+ *  "title" _("About ExampleCode"),
+ *  NULL);
+ * Note that prior to GTK+ 2.12, the "program-name" property
+ * was called "name". This was changed to avoid the conflict with the
+ * "name" property.
  */
-private import gtk.Dialog;
 public class AboutDialog : Dialog
 {
 	
@@ -149,8 +162,6 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Creates a new GtkAboutDialog.
-	 * Returns:
-	 *  a newly created GtkAboutDialog
 	 * Since 2.6
 	 */
 	public this ()
@@ -160,13 +171,12 @@ public class AboutDialog : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_about_dialog_get_name is deprecated and should not be used in newly-written code.
 	 * Returns the program name displayed in the about dialog.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  The program name. The string is owned by the about
-	 *  dialog and must not be modified.
 	 * Since 2.6
+	 * @Deprecated: 2.12: Use gtk_about_dialog_get_program_name() instead.
+	 * Returns: The program name. The string is owned by the about dialog and must not be modified.
 	 */
 	public char[] getName()
 	{
@@ -175,13 +185,14 @@ public class AboutDialog : Dialog
 	}
 	
 	/**
+	 * Warning
+	 * gtk_about_dialog_set_name is deprecated and should not be used in newly-written code.
 	 * Sets the name to display in the about dialog.
 	 * If this is not set, it defaults to g_get_application_name().
-	 * about:
-	 *  a GtkAboutDialog
-	 * name:
-	 *  the program name
 	 * Since 2.6
+	 * @Deprecated: 2.12: Use gtk_about_dialog_set_program_name() instead.
+	 * Params:
+	 * name =  the program name
 	 */
 	public void setName(char[] name)
 	{
@@ -190,13 +201,33 @@ public class AboutDialog : Dialog
 	}
 	
 	/**
+	 * Returns the program name displayed in the about dialog.
+	 * Since 2.12
+	 * Returns: The program name. The string is owned by the about dialog and must not be modified.
+	 */
+	public char[] getProgramName()
+	{
+		// const gchar* gtk_about_dialog_get_program_name (GtkAboutDialog *about);
+		return Str.toString(gtk_about_dialog_get_program_name(gtkAboutDialog) );
+	}
+	
+	/**
+	 * Sets the name to display in the about dialog.
+	 * If this is not set, it defaults to g_get_application_name().
+	 * Since 2.12
+	 * Params:
+	 * name =  the program name
+	 */
+	public void setProgramName(char[] name)
+	{
+		// void gtk_about_dialog_set_program_name (GtkAboutDialog *about,  const gchar *name);
+		gtk_about_dialog_set_program_name(gtkAboutDialog, Str.toStringz(name));
+	}
+	
+	/**
 	 * Returns the version string.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  The version string. The string is owned by the about
-	 *  dialog and must not be modified.
 	 * Since 2.6
+	 * Returns: The version string. The string is owned by the about dialog and must not be modified.
 	 */
 	public char[] getVersion()
 	{
@@ -206,11 +237,9 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Sets the version string to display in the about dialog.
-	 * about:
-	 *  a GtkAboutDialog
-	 * version:
-	 *  the version string
 	 * Since 2.6
+	 * Params:
+	 * versio =  the version string
 	 */
 	public void setVersion(char[] versio)
 	{
@@ -220,12 +249,8 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Returns the copyright string.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  The copyright string. The string is owned by the about
-	 *  dialog and must not be modified.
 	 * Since 2.6
+	 * Returns: The copyright string. The string is owned by the about dialog and must not be modified.
 	 */
 	public char[] getCopyright()
 	{
@@ -236,11 +261,9 @@ public class AboutDialog : Dialog
 	/**
 	 * Sets the copyright string to display in the about dialog.
 	 * This should be a short string of one or two lines.
-	 * about:
-	 *  a GtkAboutDialog
-	 * copyright:
-	 *  the copyright string
 	 * Since 2.6
+	 * Params:
+	 * copyright =  the copyright string
 	 */
 	public void setCopyright(char[] copyright)
 	{
@@ -250,12 +273,8 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Returns the comments string.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  The comments. The string is owned by the about
-	 *  dialog and must not be modified.
 	 * Since 2.6
+	 * Returns: The comments. The string is owned by the about dialog and must not be modified.
 	 */
 	public char[] getComments()
 	{
@@ -267,11 +286,9 @@ public class AboutDialog : Dialog
 	 * Sets the comments string to display in the about
 	 * dialog. This should be a short string of one or
 	 * two lines.
-	 * about:
-	 *  a GtkAboutDialog
-	 * comments:
-	 *  a comments string
 	 * Since 2.6
+	 * Params:
+	 * comments =  a comments string
 	 */
 	public void setComments(char[] comments)
 	{
@@ -281,12 +298,8 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Returns the license information.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  The license information. The string is owned by the about
-	 *  dialog and must not be modified.
 	 * Since 2.6
+	 * Returns: The license information. The string is owned by the about dialog and must not be modified.
 	 */
 	public char[] getLicense()
 	{
@@ -298,11 +311,9 @@ public class AboutDialog : Dialog
 	 * Sets the license information to be displayed in the secondary
 	 * license dialog. If license is NULL, the license button is
 	 * hidden.
-	 * about:
-	 *  a GtkAboutDialog
-	 * license:
-	 *  the license information or NULL
 	 * Since 2.6
+	 * Params:
+	 * license =  the license information or NULL
 	 */
 	public void setLicense(char[] license)
 	{
@@ -313,11 +324,8 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns whether the license text in about is
 	 * automatically wrapped.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  TRUE if the license text is wrapped
 	 * Since 2.8
+	 * Returns: TRUE if the license text is wrapped
 	 */
 	public int getWrapLicense()
 	{
@@ -328,11 +336,9 @@ public class AboutDialog : Dialog
 	/**
 	 * Sets whether the license text in about is
 	 * automatically wrapped.
-	 * about:
-	 *  a GtkAboutDialog
-	 * wrap_license:
-	 *  whether to wrap the license
 	 * Since 2.8
+	 * Params:
+	 * wrapLicense =  whether to wrap the license
 	 */
 	public void setWrapLicense(int wrapLicense)
 	{
@@ -342,12 +348,8 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Returns the website URL.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  The website URL. The string is owned by the about
-	 *  dialog and must not be modified.
 	 * Since 2.6
+	 * Returns: The website URL. The string is owned by the about dialog and must not be modified.
 	 */
 	public char[] getWebsite()
 	{
@@ -357,11 +359,9 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Sets the URL to use for the website link.
-	 * about:
-	 *  a GtkAboutDialog
-	 * website:
-	 *  a URL string starting with "http://"
 	 * Since 2.6
+	 * Params:
+	 * website =  a URL string starting with "http://"
 	 */
 	public void setWebsite(char[] website)
 	{
@@ -371,12 +371,8 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Returns the label used for the website link.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  The label used for the website link. The string is owned by the about
-	 *  dialog and must not be modified.
 	 * Since 2.6
+	 * Returns: The label used for the website link. The string is owned by the about dialog and must not be modified.
 	 */
 	public char[] getWebsiteLabel()
 	{
@@ -387,11 +383,9 @@ public class AboutDialog : Dialog
 	/**
 	 * Sets the label to be used for the website link.
 	 * It defaults to the website URL.
-	 * about:
-	 *  a GtkAboutDialog
-	 * website_label:
-	 *  the label used for the website link
 	 * Since 2.6
+	 * Params:
+	 * websiteLabel =  the label used for the website link
 	 */
 	public void setWebsiteLabel(char[] websiteLabel)
 	{
@@ -402,13 +396,8 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the string which are displayed in the authors tab
 	 * of the secondary credits dialog.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  A NULL-terminated string array containing
-	 *  the authors. The array is owned by the about dialog
-	 *  and must not be modified.
 	 * Since 2.6
+	 * Returns: A NULL-terminated string array containing the authors. The array is owned by the about dialog  and must not be modified.
 	 */
 	public char** getAuthors()
 	{
@@ -419,11 +408,9 @@ public class AboutDialog : Dialog
 	/**
 	 * Sets the strings which are displayed in the authors tab
 	 * of the secondary credits dialog.
-	 * about:
-	 *  a GtkAboutDialog
-	 * authors:
-	 *  a NULL-terminated array of strings
 	 * Since 2.6
+	 * Params:
+	 * authors =  a NULL-terminated array of strings
 	 */
 	public void setAuthors(char** authors)
 	{
@@ -434,13 +421,8 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the string which are displayed in the artists tab
 	 * of the secondary credits dialog.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  A NULL-terminated string array containing
-	 *  the artists. The array is owned by the about dialog
-	 *  and must not be modified.
 	 * Since 2.6
+	 * Returns: A NULL-terminated string array containing the artists. The array is owned by the about dialog  and must not be modified.
 	 */
 	public char** getArtists()
 	{
@@ -451,11 +433,9 @@ public class AboutDialog : Dialog
 	/**
 	 * Sets the strings which are displayed in the artists tab
 	 * of the secondary credits dialog.
-	 * about:
-	 *  a GtkAboutDialog
-	 * artists:
-	 *  a NULL-terminated array of strings
 	 * Since 2.6
+	 * Params:
+	 * artists =  a NULL-terminated array of strings
 	 */
 	public void setArtists(char** artists)
 	{
@@ -466,13 +446,8 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the string which are displayed in the documenters
 	 * tab of the secondary credits dialog.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  A NULL-terminated string array containing
-	 *  the documenters. The array is owned by the about dialog
-	 *  and must not be modified.
 	 * Since 2.6
+	 * Returns: A NULL-terminated string array containing the documenters. The array is owned by the about dialog  and must not be modified.
 	 */
 	public char** getDocumenters()
 	{
@@ -483,11 +458,9 @@ public class AboutDialog : Dialog
 	/**
 	 * Sets the strings which are displayed in the documenters tab
 	 * of the secondary credits dialog.
-	 * about:
-	 *  a GtkAboutDialog
-	 * documenters:
-	 *  a NULL-terminated array of strings
 	 * Since 2.6
+	 * Params:
+	 * documenters =  a NULL-terminated array of strings
 	 */
 	public void setDocumenters(char** documenters)
 	{
@@ -498,12 +471,8 @@ public class AboutDialog : Dialog
 	/**
 	 * Returns the translator credits string which is displayed
 	 * in the translators tab of the secondary credits dialog.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  The translator credits string. The string is
-	 *  owned by the about dialog and must not be modified.
 	 * Since 2.6
+	 * Returns: The translator credits string. The string is owned by the about dialog and must not be modified.
 	 */
 	public char[] getTranslatorCredits()
 	{
@@ -517,17 +486,9 @@ public class AboutDialog : Dialog
 	 * The intended use for this string is to display the translator
 	 * of the language which is currently used in the user interface.
 	 * Using gettext(), a simple way to achieve that is to mark the
-	 * string for translation:
-	 *  gtk_about_dialog_set_translator_credits (about, _("translator-credits"));
-	 * It is a good idea to use the customary msgid "translator-credits" for this
-	 * purpose, since translators will already know the purpose of that msgid, and
-	 * since GtkAboutDialog will detect if "translator-credits" is untranslated
-	 * and hide the tab.
-	 * about:
-	 *  a GtkAboutDialog
-	 * translator_credits:
-	 *  the translator credits
 	 * Since 2.6
+	 * Params:
+	 * translatorCredits =  the translator credits
 	 */
 	public void setTranslatorCredits(char[] translatorCredits)
 	{
@@ -537,13 +498,8 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Returns the pixbuf displayed as logo in the about dialog.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  the pixbuf displayed as logo. The pixbuf is
-	 *  owned by the about dialog. If you want to keep a reference
-	 *  to it, you have to call g_object_ref() on it.
 	 * Since 2.6
+	 * Returns: the pixbuf displayed as logo. The pixbuf is owned by the about dialog. If you want to keep a reference to it, you have to call g_object_ref() on it.
 	 */
 	public Pixbuf getLogo()
 	{
@@ -556,11 +512,9 @@ public class AboutDialog : Dialog
 	 * the about dialog. If it is NULL, the default
 	 * window icon set with gtk_window_set_default_icon()
 	 * will be used.
-	 * about:
-	 *  a GtkAboutDialog
-	 * logo:
-	 *  a GdkPixbuf, or NULL
 	 * Since 2.6
+	 * Params:
+	 * logo =  a GdkPixbuf, or NULL
 	 */
 	public void setLogo(Pixbuf logo)
 	{
@@ -570,13 +524,8 @@ public class AboutDialog : Dialog
 	
 	/**
 	 * Returns the icon name displayed as logo in the about dialog.
-	 * about:
-	 *  a GtkAboutDialog
-	 * Returns:
-	 *  the icon name displayed as logo. The string is
-	 *  owned by the dialog. If you want to keep a reference
-	 *  to it, you have to call g_strdup() on it.
 	 * Since 2.6
+	 * Returns: the icon name displayed as logo. The string is owned by the dialog. If you want to keep a reference to it, you have to call g_strdup() on it.
 	 */
 	public char[] getLogoIconName()
 	{
@@ -589,11 +538,9 @@ public class AboutDialog : Dialog
 	 * the about dialog. If it is NULL, the default
 	 * window icon set with gtk_window_set_default_icon()
 	 * will be used.
-	 * about:
-	 *  a GtkAboutDialog
-	 * icon_name:
-	 *  an icon name, or NULL
 	 * Since 2.6
+	 * Params:
+	 * iconName =  an icon name, or NULL
 	 */
 	public void setLogoIconName(char[] iconName)
 	{
@@ -605,15 +552,12 @@ public class AboutDialog : Dialog
 	/**
 	 * Installs a global function to be called whenever the user activates an
 	 * email link in an about dialog.
-	 * func:
-	 *  a function to call when an email link is activated.
-	 * data:
-	 *  data to pass to func
-	 * destroy:
-	 *  GDestroyNotify for data
-	 * Returns:
-	 *  the previous email hook.
 	 * Since 2.6
+	 * Params:
+	 * func =  a function to call when an email link is activated.
+	 * data =  data to pass to func
+	 * destroy =  GDestroyNotify for data
+	 * Returns: the previous email hook.
 	 */
 	public static GtkAboutDialogActivateLinkFunc setEmailHook(GtkAboutDialogActivateLinkFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -624,15 +568,12 @@ public class AboutDialog : Dialog
 	/**
 	 * Installs a global function to be called whenever the user activates a
 	 * URL link in an about dialog.
-	 * func:
-	 *  a function to call when a URL link is activated.
-	 * data:
-	 *  data to pass to func
-	 * destroy:
-	 *  GDestroyNotify for data
-	 * Returns:
-	 *  the previous URL hook.
 	 * Since 2.6
+	 * Params:
+	 * func =  a function to call when a URL link is activated.
+	 * data =  data to pass to func
+	 * destroy =  GDestroyNotify for data
+	 * Returns: the previous URL hook.
 	 */
 	public static GtkAboutDialogActivateLinkFunc setUrlHook(GtkAboutDialogActivateLinkFunc func, void* data, GDestroyNotify destroy)
 	{
@@ -644,20 +585,11 @@ public class AboutDialog : Dialog
 	 * This is a convenience function for showing an application's about box.
 	 * The constructed dialog is associated with the parent window and
 	 * reused for future invocations of this function.
-	 * parent:
-	 *  transient parent, or NULL for none
-	 * first_property_name:
-	 *  the name of the first property
-	 * ...:
-	 *  value of first property, followed by more properties, NULL-terminated
 	 * Since 2.6
-	 * Property Details
-	 * The "artists" property
-	 *  "artists" GStrv : Read / Write
-	 * The people who contributed artwork to the program, as a NULL-terminated array of strings.
-	 * Each string may contain email addresses and URLs, which will be displayed
-	 * as links, see the introduction for more details.
-	 * Since 2.6
+	 * Params:
+	 * parent =  transient parent, or NULL for none
+	 * firstPropertyName =  the name of the first property
+	 * ... =  value of first property, followed by more properties, NULL-terminated
 	 */
 	public static void showAboutDialog(Window parent, char[] firstPropertyName, ... )
 	{

@@ -175,11 +175,11 @@ public class PgScriptIter
 	 * Unicode Standard Annex 24). No check is made for ch being a
 	 * valid Unicode character; if you pass in invalid character, the
 	 * result is undefined.
-	 * ch:
-	 *  a Unicode character
-	 * Returns:
-	 *  the PangoScript for the character.
-	 * Since 1.4
+	 * As of Pango 1.18, this function simply returns the return value of
+	 * g_unichar_get_script().
+	 * Params:
+	 * ch =  a Unicode character
+	 * Returns: the PangoScript for the character.Since 1.4
 	 */
 	public static PangoScript pangoScriptForUnichar(gunichar ch)
 	{
@@ -190,24 +190,9 @@ public class PgScriptIter
 	/**
 	 * Given a script, finds a language tag that is reasonably
 	 * representative of that script. This will usually be the
-	 * most widely spoken or used language written in that script:
-	 * for instance, the sample language for PANGO_SCRIPT_CYRILLIC
-	 * is ru (Russian), the sample language
-	 * for PANGO_SCRIPT_ARABIC is ar.
-	 * For some
-	 * scripts, no sample language will be returned because there
-	 * is no language that is sufficiently representative. The best
-	 * example of this is PANGO_SCRIPT_HAN, where various different
-	 * variants of written Chinese, Japanese, and Korean all use
-	 * significantly different sets of Han characters and forms
-	 * of shared characters. No sample language can be provided
-	 * for many historical scripts as well.
-	 * script:
-	 *  a PangoScript
-	 * Returns:
-	 *  a PangoLanguage that is representative
-	 * of the script, or NULL if no such language exists.
-	 * Since 1.4
+	 * Params:
+	 * script =  a PangoScript
+	 * Returns: a PangoLanguage that is representativeof the script, or NULL if no such language exists.Since 1.4
 	 */
 	public static PgLanguage pangoScriptGetSampleLanguage(PangoScript script)
 	{
@@ -225,14 +210,10 @@ public class PgScriptIter
 	 * determining if a supplied language tag is relevant to
 	 * a particular section of text. It probably is not useful for
 	 * applications in most circumstances.
-	 * language:
-	 *  a PangoLanguage
-	 * script:
-	 *  a PangoScript
-	 * Returns:
-	 *  TRUE if script is one of the scripts used
-	 * to write language, or if nothing is known about language.
-	 * Since 1.4
+	 * Params:
+	 * language =  a PangoLanguage, or NULL
+	 * script =  a PangoScript
+	 * Returns: TRUE if script is one of the scripts usedto write language or if nothing is known about language(including the case that language is NULL),FALSE otherwise.Since 1.4
 	 */
 	public static int pangoLanguageIncludesScript(PgLanguage language, PangoScript script)
 	{
@@ -245,16 +226,9 @@ public class PgScriptIter
 	 * Unicode into runs by text. No copy is made of text, so
 	 * the caller needs to make sure it remains valid until
 	 * the iterator is freed with pango_script_iter_free().x
-	 * text:
-	 *  a UTF-8 string
-	 * length:
-	 *  length of text, or -1 if text is nul-terminated.
-	 * Returns:
-	 *  the new script iterator, initialized
-	 *  to point at the first range in the text, which should be
-	 *  freed with pango_script_iter_free(). If the string is
-	 *  empty, it will point at an empty range.
-	 * Since 1.4
+	 * Params:
+	 * text =  a UTF-8 string
+	 * length =  length of text, or -1 if text is nul-terminated.
 	 */
 	public this (char[] text, int length)
 	{
@@ -266,14 +240,10 @@ public class PgScriptIter
 	 * Gets information about the range to which iter currently points.
 	 * The range is the set of locations p where *start <= p < *end.
 	 * (That is, it doesn't include the character stored at *end)
-	 * iter:
-	 *  a PangoScriptIter
-	 * start:
-	 *  location to store start position of the range, or NULL
-	 * end:
-	 *  location to store end position of the range, or NULL
-	 * script:
-	 *  location to store script for range, or NULL
+	 * Params:
+	 * start =  location to store start position of the range, or NULL
+	 * end =  location to store end position of the range, or NULL
+	 * script =  location to store script for range, or NULL
 	 * Since 1.4
 	 */
 	public void getRange(char** start, char** end, PangoScript* script)
@@ -286,11 +256,7 @@ public class PgScriptIter
 	 * Advances a PangoScriptIter to the next range. If iter
 	 * is already at the end, it is left unchanged and FALSE
 	 * is returned.
-	 * iter:
-	 *  a PangoScriptIter
-	 * Returns:
-	 *  TRUE if iter was successfully advanced.
-	 * Since 1.4
+	 * Returns: TRUE if iter was successfully advanced.Since 1.4
 	 */
 	public int next()
 	{
@@ -300,9 +266,6 @@ public class PgScriptIter
 	
 	/**
 	 * Frees a PangoScriptIter created with pango_script_iter_new().
-	 * iter:
-	 *  a PangoScriptIter
-	 * Since 1.4
 	 */
 	public void free()
 	{

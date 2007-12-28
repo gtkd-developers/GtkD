@@ -157,8 +157,6 @@ public class Tuples
 	 * This should always be called after g_relation_select() when you are
 	 * finished with the records.
 	 * The records are not removed from the GRelation.
-	 * tuples:
-	 * the tuple data to free.
 	 */
 	public void destroy()
 	{
@@ -170,14 +168,10 @@ public class Tuples
 	 * Gets a field from the records returned by g_relation_select().
 	 * It returns the given field of the record at the given index.
 	 * The returned value should not be changed.
-	 * tuples:
-	 * the tuple data, returned by g_relation_select().
-	 * index_:
-	 * the index of the record.
-	 * field:
-	 * the field to return.
-	 * Returns:
-	 * the field of the record.
+	 * Params:
+	 * index = the index of the record.
+	 * field = the field to return.
+	 * Returns:the field of the record.
 	 */
 	public void* index(int index, int field)
 	{

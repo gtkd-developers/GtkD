@@ -67,11 +67,11 @@ private import glgdk.GLConfig;
 
 
 
+private import gdk.Drawable;
 
 /**
  * Description
  */
-private import gdk.Drawable;
 public class GLPixmap : Drawable
 {
 	
@@ -128,14 +128,10 @@ public class GLPixmap : Drawable
 	 * Creates an off-screen rendering area.
 	 * attrib_list is currently unused. This must be set to NULL or empty
 	 * (first attribute of None). See GLX 1.3 spec.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * pixmap:
-	 *  the GdkPixmap to be used as the rendering area.
-	 * attrib_list:
-	 *  this must be set to NULL or empty (first attribute of None).
-	 * Returns:
-	 *  the new GdkGLPixmap.
+	 * Params:
+	 * glconfig =  a GdkGLConfig.
+	 * pixmap =  the GdkPixmap to be used as the rendering area.
+	 * attribList =  this must be set to NULL or empty (first attribute of None).
 	 */
 	public this (GdkGLConfig* glconfig, GdkPixmap* pixmap, int* attribList)
 	{
@@ -146,8 +142,6 @@ public class GLPixmap : Drawable
 	/**
 	 * Destroys the OpenGL resources associated with glpixmap and
 	 * decrements glpixmap's reference count.
-	 * glpixmap:
-	 *  a GdkGLPixmap.
 	 */
 	public void destroy()
 	{
@@ -159,10 +153,7 @@ public class GLPixmap : Drawable
 	 * Returns the GdkPixmap associated with glpixmap.
 	 * Notice that GdkGLPixmap is not GdkPixmap, but another
 	 * GdkDrawable which have an associated GdkPixmap.
-	 * glpixmap:
-	 *  a GdkGLPixmap.
-	 * Returns:
-	 *  the GdkPixmap associated with glpixmap.
+	 * Returns: the GdkPixmap associated with glpixmap.
 	 */
 	public GdkPixmap* getPixmap()
 	{
@@ -175,15 +166,11 @@ public class GLPixmap : Drawable
 	 * This function creates a new GdkGLPixmap held by the pixmap.
 	 * attrib_list is currently unused. This must be set to NULL or empty
 	 * (first attribute of None).
-	 * pixmap:
-	 *  the GdkPixmap to be used as the rendering area.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * attrib_list:
-	 *  this must be set to NULL or empty (first attribute of None).
-	 * Returns:
-	 *  the GdkGLPixmap used by the pixmap if it is successful,
-	 *  NULL otherwise.
+	 * Params:
+	 * pixmap =  the GdkPixmap to be used as the rendering area.
+	 * glconfig =  a GdkGLConfig.
+	 * attribList =  this must be set to NULL or empty (first attribute of None).
+	 * Returns: the GdkGLPixmap used by the pixmap if it is successful, NULL otherwise.
 	 */
 	public static GdkGLPixmap* gdkPixmapSetGLCapability(GdkPixmap* pixmap, GdkGLConfig* glconfig, int* attribList)
 	{
@@ -194,8 +181,8 @@ public class GLPixmap : Drawable
 	/**
 	 * Unset the OpenGL-capability of the pixmap.
 	 * This function destroys the GdkGLPixmap held by the pixmap.
-	 * pixmap:
-	 *  a GdkPixmap.
+	 * Params:
+	 * pixmap =  a GdkPixmap.
 	 */
 	public static void gdkPixmapUnsetGLCapability(GdkPixmap* pixmap)
 	{
@@ -205,10 +192,9 @@ public class GLPixmap : Drawable
 	
 	/**
 	 * Returns whether the pixmap is OpenGL-capable.
-	 * pixmap:
-	 *  a GdkPixmap.
-	 * Returns:
-	 *  TRUE if the pixmap is OpenGL-capable, FALSE otherwise.
+	 * Params:
+	 * pixmap =  a GdkPixmap.
+	 * Returns: TRUE if the pixmap is OpenGL-capable, FALSE otherwise.
 	 */
 	public static int gdkPixmapIsGLCapable(GdkPixmap* pixmap)
 	{
@@ -218,10 +204,9 @@ public class GLPixmap : Drawable
 	
 	/**
 	 * Returns the GdkGLPixmap held by the pixmap.
-	 * pixmap:
-	 *  a GdkPixmap.
-	 * Returns:
-	 *  the GdkGLPixmap.
+	 * Params:
+	 * pixmap =  a GdkPixmap.
+	 * Returns: the GdkGLPixmap.
 	 */
 	public static GdkGLPixmap* gdkPixmapGetGLPixmap(GdkPixmap* pixmap)
 	{

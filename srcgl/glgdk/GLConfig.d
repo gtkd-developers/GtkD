@@ -69,11 +69,11 @@ private import gdk.Screen;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-private import gobject.ObjectG;
 public class GLConfig : ObjectG
 {
 	
@@ -125,7 +125,9 @@ public class GLConfig : ObjectG
 	/**
 	 * Creates a mew OpenGL frame buffer configuration that match the specified display mode,
 	 * or the fallback mode.
-	 * @param mode display mode bit mask.
+	 * Params:
+	 *  mode = display mode bit mask.
+	 *  fallback = Try this mode if first fails.
 	 */
 	this(GLConfigMode mode, GLConfigMode fallback)
 	{
@@ -133,14 +135,14 @@ public class GLConfig : ObjectG
 		gdkGLConfig = cast(GdkGLConfig*)gdk_gl_config_new_by_mode(mode);
 		if ( gdkGLConfig is null )
 		{
-			//printf ("*** Cannot find the double-buffered visual.\n");
-			//printf ("*** Trying single-buffered visual.\n");
+			printf ("*** Cannot find the double-buffered visual.\n");
+			printf ("*** Trying single-buffered visual.\n");
 			gdkGLConfig = cast(GdkGLConfig*)gdk_gl_config_new_by_mode(fallback);
 		}
 		if ( gdkGLConfig is null )
 		{
-			//printf ("*** No appropriate OpenGL-capable visual found.\n");
-			throw new Exception("GL configure failed");//Error("GL configure failed");
+			printf ("*** No appropriate OpenGL-capable visual found.\n");
+			throw new Error("GL configure failed");
 		}
 		this(gdkGLConfig);
 	}
@@ -161,11 +163,9 @@ public class GLConfig : ObjectG
 	 * GDK_GL_RED_SIZE, GDK_GL_GREEN_SIZE, GDK_GL_BLUE_SIZE, GDK_GL_ALPHA_SIZE,
 	 * GDK_GL_DEPTH_SIZE, GDK_GL_STENCIL_SIZE, GDK_GL_ACCUM_RED_SIZE,
 	 * GDK_GL_ACCUM_GREEN_SIZE, GDK_GL_ACCUM_BLUE_SIZE, GDK_GL_ACCUM_ALPHA_SIZE.
-	 * attrib_list:
-	 *  a list of attribute/value pairs. The last attribute must
+	 * Params:
+	 * attribList =  a list of attribute/value pairs. The last attribute must
 	 *  be GDK_GL_ATTRIB_LIST_NONE.
-	 * Returns:
-	 *  the new GdkGLConfig.
 	 */
 	public this (int* attribList)
 	{
@@ -176,13 +176,10 @@ public class GLConfig : ObjectG
 	/**
 	 * Returns an OpenGL frame buffer configuration that match the specified
 	 * attributes.
-	 * screen:
-	 *  target screen.
-	 * attrib_list:
-	 *  a list of attribute/value pairs. The last attribute must
+	 * Params:
+	 * screen =  target screen.
+	 * attribList =  a list of attribute/value pairs. The last attribute must
 	 *  be GDK_GL_ATTRIB_LIST_NONE.
-	 * Returns:
-	 *  the new GdkGLConfig.
 	 */
 	public this (Screen screen, int* attribList)
 	{
@@ -193,10 +190,8 @@ public class GLConfig : ObjectG
 	/**
 	 * Returns an OpenGL frame buffer configuration that match the specified
 	 * display mode.
-	 * mode:
-	 *  display mode bit mask.
-	 * Returns:
-	 *  the new GdkGLConfig.
+	 * Params:
+	 * mode =  display mode bit mask.
 	 */
 	public this (GdkGLConfigMode mode)
 	{
@@ -207,12 +202,9 @@ public class GLConfig : ObjectG
 	/**
 	 * Returns an OpenGL frame buffer configuration that match the specified
 	 * display mode.
-	 * screen:
-	 *  target screen.
-	 * mode:
-	 *  display mode bit mask.
-	 * Returns:
-	 *  the new GdkGLConfig.
+	 * Params:
+	 * screen =  target screen.
+	 * mode =  display mode bit mask.
 	 */
 	public this (Screen screen, GdkGLConfigMode mode)
 	{
@@ -222,10 +214,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Gets GdkScreen.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  the GdkScreen.
+	 * Returns: the GdkScreen.
 	 */
 	public Screen getScreen()
 	{
@@ -235,14 +224,10 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Gets information about a OpenGL frame buffer configuration.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * attribute:
-	 *  the attribute to be returned.
-	 * value:
-	 *  returns the requested value.
-	 * Returns:
-	 *  TRUE if it succeeded, FALSE otherwise.
+	 * Params:
+	 * attribute =  the attribute to be returned.
+	 * value =  returns the requested value.
+	 * Returns: TRUE if it succeeded, FALSE otherwise.
 	 */
 	public int getAttrib(int attribute, int* value)
 	{
@@ -253,10 +238,7 @@ public class GLConfig : ObjectG
 	/**
 	 * Gets the GdkColormap that is appropriate for the OpenGL frame buffer
 	 * configuration.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  the appropriate GdkColormap.
+	 * Returns: the appropriate GdkColormap.
 	 */
 	public GdkColormap* getColormap()
 	{
@@ -267,10 +249,7 @@ public class GLConfig : ObjectG
 	/**
 	 * Gets the GdkVisual that is appropriate for the OpenGL frame buffer
 	 * configuration.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  the appropriate GdkVisual.
+	 * Returns: the appropriate GdkVisual.
 	 */
 	public GdkVisual* getVisual()
 	{
@@ -280,10 +259,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Gets the color depth of the OpenGL-capable visual.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  number of bits per pixel
+	 * Returns: number of bits per pixel
 	 */
 	public int getDepth()
 	{
@@ -297,10 +273,7 @@ public class GLConfig : ObjectG
 	 * Positive layer planes correspond to frame buffers that overlay the default
 	 * buffer, and negative layer planes correspond to frame buffers that underlie
 	 * the default frame buffer.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  layer plane.
+	 * Returns: layer plane.
 	 */
 	public int getLayerPlane()
 	{
@@ -310,10 +283,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Gets the number of auxiliary color buffers.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  number of auxiliary color buffers.
+	 * Returns: number of auxiliary color buffers.
 	 */
 	public int getNAuxBuffers()
 	{
@@ -323,10 +293,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Gets the number of multisample buffers.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  number of multisample buffers.
+	 * Returns: number of multisample buffers.
 	 */
 	public int getNSampleBuffers()
 	{
@@ -336,11 +303,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Returns whether the configured frame buffer is RGBA mode.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  TRUE if the configured frame buffer is RGBA mode, FALSE
-	 *  otherwise.
+	 * Returns: TRUE if the configured frame buffer is RGBA mode, FALSE otherwise.
 	 */
 	public int isRgba()
 	{
@@ -350,11 +313,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Returns whether the configuration supports the double-buffered visual.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  TRUE if the double-buffered visual is supported, FALSE
-	 *  otherwise.
+	 * Returns: TRUE if the double-buffered visual is supported, FALSE otherwise.
 	 */
 	public int isDoubleBuffered()
 	{
@@ -364,10 +323,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Returns whether the configuration supports the stereo visual.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  TRUE if the stereo visual is supported, FALSE otherwise.
+	 * Returns: TRUE if the stereo visual is supported, FALSE otherwise.
 	 */
 	public int isStereo()
 	{
@@ -377,10 +333,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Returns whether the configured color buffer has alpha bits.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  TRUE if the color buffer has alpha bits, FALSE otherwise.
+	 * Returns: TRUE if the color buffer has alpha bits, FALSE otherwise.
 	 */
 	public int hasAlpha()
 	{
@@ -390,10 +343,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Returns whether the configured frame buffer has depth buffer.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  TRUE if the frame buffer has depth buffer, FALSE otherwise.
+	 * Returns: TRUE if the frame buffer has depth buffer, FALSE otherwise.
 	 */
 	public int hasDepthBuffer()
 	{
@@ -403,10 +353,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Returns whether the configured frame buffer has stencil buffer.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  TRUE if the frame buffer has stencil buffer, FALSE otherwise.
+	 * Returns: TRUE if the frame buffer has stencil buffer, FALSE otherwise.
 	 */
 	public int hasStencilBuffer()
 	{
@@ -416,13 +363,7 @@ public class GLConfig : ObjectG
 	
 	/**
 	 * Returns whether the configured frame buffer has accumulation buffer.
-	 * glconfig:
-	 *  a GdkGLConfig.
-	 * Returns:
-	 *  TRUE if the frame buffer has accumulation buffer, FALSE
-	 *  otherwise.
-	 * <<Query
-	 * Rendering Context>>
+	 * Returns: TRUE if the frame buffer has accumulation buffer, FALSE otherwise.<<QueryRendering Context>>
 	 */
 	public int hasAccumBuffer()
 	{

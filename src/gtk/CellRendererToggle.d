@@ -70,6 +70,7 @@ private import gtk.CellRenderer;
 
 
 
+private import gtk.CellRenderer;
 
 /**
  * Description
@@ -78,7 +79,6 @@ private import gtk.CellRenderer;
  * radio
  * property. When activated, it emits the toggled signal.
  */
-private import gtk.CellRenderer;
 public class CellRendererToggle : CellRenderer
 {
 	
@@ -173,8 +173,6 @@ public class CellRendererToggle : CellRenderer
 	 * can bind the "active" property on the cell renderer to a boolean value
 	 * in the model, thus causing the check button to reflect the state of
 	 * the model.
-	 * Returns:
-	 *  the new cell renderer
 	 */
 	public this ()
 	{
@@ -184,10 +182,9 @@ public class CellRendererToggle : CellRenderer
 	
 	/**
 	 * Returns whether we're rendering radio toggles rather than checkboxes.
-	 * toggle:
-	 *  a GtkCellRendererToggle
-	 * Returns:
-	 *  TRUE if we're rendering radio toggles rather than checkboxes
+	 * Params:
+	 * toggle =  a GtkCellRendererToggle
+	 * Returns: TRUE if we're rendering radio toggles rather than checkboxes
 	 */
 	public static int getRadio(GtkCellRendererToggle* toggle)
 	{
@@ -203,10 +200,9 @@ public class CellRendererToggle : CellRenderer
 	 * before rendering each cell in the model (for GtkTreeView, you set
 	 * up a per-row setting using GtkTreeViewColumn to associate model
 	 * columns with cell renderer properties).
-	 * toggle:
-	 *  a GtkCellRendererToggle
-	 * radio:
-	 *  TRUE to make the toggle look like a radio button
+	 * Params:
+	 * toggle =  a GtkCellRendererToggle
+	 * radio =  TRUE to make the toggle look like a radio button
 	 */
 	public static void setRadio(GtkCellRendererToggle* toggle, int radio)
 	{
@@ -217,10 +213,9 @@ public class CellRendererToggle : CellRenderer
 	/**
 	 * Returns whether the cell renderer is active. See
 	 * gtk_cell_renderer_toggle_set_active().
-	 * toggle:
-	 *  a GtkCellRendererToggle
-	 * Returns:
-	 *  TRUE if the cell renderer is active.
+	 * Params:
+	 * toggle =  a GtkCellRendererToggle
+	 * Returns: TRUE if the cell renderer is active.
 	 */
 	public static int getActive(GtkCellRendererToggle* toggle)
 	{
@@ -230,15 +225,9 @@ public class CellRendererToggle : CellRenderer
 	
 	/**
 	 * Activates or deactivates a cell renderer.
-	 * toggle:
-	 *  a GtkCellRendererToggle.
-	 * setting:
-	 *  the value to set.
-	 * Property Details
-	 * The "activatable" property
-	 *  "activatable" gboolean : Read / Write
-	 * The toggle button can be activated.
-	 * Default value: TRUE
+	 * Params:
+	 * toggle =  a GtkCellRendererToggle.
+	 * setting =  the value to set.
 	 */
 	public static void setActive(GtkCellRendererToggle* toggle, int setting)
 	{

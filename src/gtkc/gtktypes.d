@@ -38,7 +38,7 @@ alias void GtkContainerClass;
 //alias GtkSignalRunType.G_SIGNAL_ACTION G_SIGNAL_ACTION;
 //alias GtkSignalRunType.G_SIGNAL_NO_HOOKS G_SIGNAL_NO_HOOKS;
 
-alias int GtkDragResult;
+//alias int GtkDragResult;
 alias int GtkTooltip;
 
 
@@ -141,7 +141,9 @@ alias GtkDestDefaults DestDefaults;
 public enum GtkTargetFlags
 {
 	SAME_APP = 1 << 0, /+*< nick=same-app >+/
-	SAME_WIDGET = 1 << 1 /+*< nick=same-widget >+/
+	SAME_WIDGET = 1 << 1, /+*< nick=same-widget >+/
+	OTHER_APP = 1 << 2, /+*< nick=other-app >+/
+	OTHER_WIDGET = 1 << 3 /+*< nick=other-widget >+/
 }
 alias GtkTargetFlags TargetFlags;
 
@@ -153,7 +155,8 @@ public enum GtkIconLookupFlags
 {
 	NO_SVG = 1 << 0,
 	FORCE_SVG = 1 << 1,
-	USE_BUILTIN = 1 << 2
+	USE_BUILTIN = 1 << 2,
+	GENERIC_FALLBACK = 1 << 3
 }
 alias GtkIconLookupFlags IconLookupFlags;
 
@@ -331,16 +334,11 @@ alias GtkAttachOptions AttachOptions;
  * GTK_BUTTONBOX_DEFAULT_STYLE
  * Default packing.
  * GTK_BUTTONBOX_SPREAD
- * Buttons are evenly spread across the ButtonBox.
+ * Buttons are evenly spread across the box.
  * GTK_BUTTONBOX_EDGE
- * Buttons are placed at the edges of the ButtonBox.
+ * Buttons are placed at the edges of the box.
  * GTK_BUTTONBOX_START
- * Buttons are grouped towards the start of box, (on the
- * left for a HBox, or the top for a VBox).
- * GTK_BUTTONBOX_END
- * Buttons are grouped towards the end of a box, (on the
- * right for a HBox, or the bottom for a VBox).
- * GTK_BUTTONBOX_CENTER
+ * Buttons are grouped towards the start of the box,
  */
 public enum GtkButtonBoxStyle
 {
@@ -910,6 +908,32 @@ public enum GtkSortType
 alias GtkSortType SortType;
 
 /**
+ * Gives an indication why a drag operation failed.
+ * The value can by obtained by connecting to the
+ * "drag-failed" signal.
+ * GTK_DRAG_RESULT_SUCCESS
+ * The drag operation was successful
+ * GTK_DRAG_RESULT_NO_TARGET
+ * No suitable drag target
+ * GTK_DRAG_RESULT_USER_CANCELLED
+ * The user cancelled the drag operation
+ * GTK_DRAG_RESULT_TIMEOUT_EXPIRED
+ * The drag operation timed out
+ * GTK_DRAG_RESULT_GRAB_BROKEN
+ * The pointer or keyboard grab used
+ */
+public enum GtkDragResult
+{
+	SUCCESS,
+	NO_TARGET,
+	USER_CANCELLED,
+	TIMEOUT_EXPIRED,
+	GRAB_BROKEN,
+	ERROR
+}
+alias GtkDragResult DragResult;
+
+/**
  * Warning
  * GtkSignalRunType is deprecated and should not be used in newly-written code.
  * These configure the signal's emission. They control
@@ -1344,6 +1368,7 @@ alias GtkIconViewDropPosition IconViewDropPosition;
  * GTK_CELL_RENDERER_SORTED
  * The cell is in a sorted row
  * GTK_CELL_RENDERER_FOCUSED
+ * The cell is in the focus row.
  */
 public enum GtkCellRendererState
 {
@@ -1833,9 +1858,10 @@ public struct GtkSettingsValue{}
  * Main Gtk struct.
  * A binding set maintains a list of activatable key bindings.
  * A single binding set can match multiple types of widgets.
- * Similar to styles, widgets can be mapped by widget name paths, widget class paths or widget class types.
- * When a binding within a set is matched upon activation, an action signal is emitted on
- * the target widget to carry out the actual activation.
+ * Similar to styles, widgets can be mapped by widget name paths, widget
+ * class paths or widget class types. When a binding within a set is
+ * matched upon activation, an action signal is emitted on the target
+ * widget to carry out the actual activation.
  * gchar*set_name;
  */
 public struct GtkBindingSet{}
@@ -1858,7 +1884,8 @@ public struct GtkBindingSet{}
 
 
 /**
- * Each key binding element of a binding sets binding list is represented by a GtkBindingEntry.
+ * Each key binding element of a binding sets binding list is represented by
+ * a GtkBindingEntry.
  * guintkeyval;
  */
 public struct GtkBindingEntry{}
@@ -2833,6 +2860,85 @@ public struct GtkCellLayoutIface{}
 public struct GtkCellRenderer{}
 
 
+public struct GtkCellRendererClass{}
+// GtkObjectClass parentClass;
+// GtkCellRenderer.html
+// /+* vtable - not signals +/
+// GtkCellRenderer.html
+// void (* getSize) (GtkCellRenderer *cell,
+// GtkCellRenderer.html
+// GtkWidget *widget,
+// GtkCellRenderer.html
+// GdkRectangle *cellArea,
+// GtkCellRenderer.html
+// int *xOffset,
+// GtkCellRenderer.html
+// int *yOffset,
+// GtkCellRenderer.html
+// int *width,
+// GtkCellRenderer.html
+// int *height);
+// GtkCellRenderer.html
+// void (* render) (GtkCellRenderer *cell,
+// GtkCellRenderer.html
+// GdkDrawable *window,
+// GtkCellRenderer.html
+// GtkWidget *widget,
+// GtkCellRenderer.html
+// GdkRectangle *backgroundArea,
+// GtkCellRenderer.html
+// GdkRectangle *cellArea,
+// GtkCellRenderer.html
+// GdkRectangle *exposeArea,
+// GtkCellRenderer.html
+// GtkCellRendererState flags);
+// GtkCellRenderer.html
+// int (* activate) (GtkCellRenderer *cell,
+// GtkCellRenderer.html
+// GdkEvent *event,
+// GtkCellRenderer.html
+// GtkWidget *widget,
+// GtkCellRenderer.html
+// char *path,
+// GtkCellRenderer.html
+// GdkRectangle *backgroundArea,
+// GtkCellRenderer.html
+// GdkRectangle *cellArea,
+// GtkCellRenderer.html
+// GtkCellRendererState flags);
+// GtkCellRenderer.html
+// GtkCellEditable *(* startEditing) (GtkCellRenderer *cell,
+// GtkCellRenderer.html
+// GdkEvent *event,
+// GtkCellRenderer.html
+// GtkWidget *widget,
+// GtkCellRenderer.html
+// char *path,
+// GtkCellRenderer.html
+// GdkRectangle *backgroundArea,
+// GtkCellRenderer.html
+// GdkRectangle *cellArea,
+// GtkCellRenderer.html
+// GtkCellRendererState flags);
+// GtkCellRenderer.html
+// /+* Signals +/
+// GtkCellRenderer.html
+// void (* editingCanceled) (GtkCellRenderer *cell);
+// GtkCellRenderer.html
+// void (* editingStarted) (GtkCellRenderer *cell,
+// GtkCellRenderer.html
+// GtkCellEditable *editable,
+// GtkCellRenderer.html
+// char *path);
+// GtkCellRenderer.html
+// /+* Padding for future expansion +/
+// GtkCellRenderer.html
+// void (*_GtkReserved1) (void);
+// GtkCellRenderer.html
+// void (*_GtkReserved2) (void);
+// GtkCellRenderer.html
+
+
 /**
  * Main Gtk struct.
  */
@@ -2999,7 +3105,15 @@ public struct GtkToolbar{}
 // GtkToolbar.html
 // GtkIconSize iconSize;
 // GtkToolbar.html
+// #ifndef GTK_DISABLE_DEPRECATED
+// GtkToolbar.html
 // GtkTooltips *tooltips;
+// GtkToolbar.html
+// #else
+// GtkToolbar.html
+// void* _Tooltips;
+// GtkToolbar.html
+// #endif
 // GtkToolbar.html
 
 
@@ -3564,8 +3678,6 @@ public struct GtkHScrollbar{}
 
 /**
  * Main Gtk struct.
- * The GtkVScrollbar struct contains private data and should be accessed
- * using the functions below.
  */
 public struct GtkVScrollbar{}
 
@@ -3691,12 +3803,16 @@ public struct GtkSizeGroup{}
 
 /**
  * Main Gtk struct.
+ * Warning
+ * GtkTooltips is deprecated and should not be used in newly-written code.
  * Holds information about a group of tooltips. Fields should be changed using the functions provided, rather than directly accessing the struct's members.
  */
 public struct GtkTooltips{}
 
 
 /**
+ * Warning
+ * GtkTooltipsData has been deprecated since version 2.12 and should not be used in newly-written code.
  * tooltips is the GtkTooltips group that this tooltip belongs to. widget is the GtkWidget that this tooltip data is associated with. tip_text is a string containing the tooltip message itself.
  * tip_private is a string that is not shown as the default tooltip. Instead, this message may be more informative and go towards forming a context-sensitive help system for your application. (FIXME: how to actually "switch on" private tips?)
  */
@@ -3736,19 +3852,11 @@ public struct GtkBin{}
 
 /**
  * Main Gtk struct.
- * The GtkBox describes an instance of GtkBox and contains the following fields.
- * (These fields should be considered read-only. They should never be set by
- * an application.)
- * GList * children;
- * a list of children belonging the GtkBox. The data is a list of
- * structures of type GtkBoxChild.
- * gint16 spacing;
- * the number of pixels to put between children of the GtkBox, zero
- * by default. Use gtk_box_set_spacing() to set this field.
- * guint homogeneous;
- * a flag that if TRUE forces all children to get equal space in
- * the GtkBox; FALSE by default. Use gtk_box_set_homogeneous() to set this
- * field.
+ * The GtkBox describes an instance of GtkBox and contains the
+ * following fields. (These fields should be considered read-only.
+ * They should never be set by an application.)
+ * GList*children;
+ * a list of children belonging the GtkBox.
  */
 public struct GtkBox{}
 // GList *children;
@@ -3769,25 +3877,10 @@ public struct GtkBox{}
  * GtkBoxChild contains the following fields. (These fields
  * should be considered read-only. They should never be directly set by an
  * application.)
- * GtkWidget * widget;
+ * GtkWidget*widget;
  * the child widget, packed into the GtkBox.
- * guint16 padding;
+ * guint16padding;
  * the number of extra pixels to put between this child and its
- * neighbors, set when packed, zero by default.
- * guint expand;
- * flag indicates whether extra space should be given to this
- * child. Any extra space given to the parent GtkBox is divided up among
- * all children with this attribute set to TRUE; set when packed, TRUE by
- * default.
- * guint fill;
- * flag indicates whether any extra space given to this child due to its
- * expand attribute being set is actually
- * allocated to the child, rather than being used as padding
- * around the widget; set when packed, TRUE by default.
- * guint pack;
- * one of
- * GtkPackType indicating whether the child is packed with reference to
- * the start (top/left) or end (bottom/right) of the GtkBox.
  */
 public struct GtkBoxChild{}
 // GtkWidget *widget;
@@ -5115,9 +5208,15 @@ public struct GtkProgress{}
 // #define GTK_IS_RESIZE_CONTAINER(widget) (GTK_IS_CONTAINER (widget)  ((GtkContainer*) (widget))->resize_mode != GTK_RESIZE_PARENT)
 
 /*
+ * This macro should be used to emit a standard warning about unexpected
+ * properties in set_child_property() and get_child_property() implementations.
  * object:
+ * the GObject on which set_child_property() or get_child_property()
+ *  was called
  * property_id:
+ * the numeric id of the property
  * pspec:
+ * the GParamSpec of the property
  */
 // TODO
 // #define GTK_CONTAINER_WARN_INVALID_CHILD_PROPERTY_ID(object, property_id, pspec)
@@ -5688,14 +5787,14 @@ public typedef extern(C) void  function (GtkObject*, void*, uint, GtkArg*) GtkCa
  * link is activated.
  * about:
  * the GtkAboutDialog in which the link was activated
- * link:
- * the URL or email address to whiche the activated link points
+ * link_:
+ * the URL or email address to which the activated link points
  * data:
  * user data that was passed when the function was registered
  *  with gtk_about_dialog_set_email_hook() or
  *  gtk_about_dialog_set_url_hook()
  */
-// void (*GtkAboutDialogActivateLinkFunc) (GtkAboutDialog *about,  const gchar *link,  gpointer data);
+// void (*GtkAboutDialogActivateLinkFunc) (GtkAboutDialog *about,  const gchar *link_,  gpointer data);
 public typedef extern(C) void  function (GtkAboutDialog*, char[], void*) GtkAboutDialogActivateLinkFunc;
 
 /*
@@ -5797,10 +5896,15 @@ public typedef extern(C) void  function (GtkTextTag*, void*) GtkTextTagTableFore
 
 /*
  * model:
+ * The GtkTreeModel currently being iterated
  * path:
+ * The current GtkTreePath
  * iter:
+ * The current GtkTreeIter
  * data:
+ * The user data passed to gtk_tree_model_foreach()
  * Returns:
+ * TRUE to stop iterating, FALSE to continue.
  */
 // gboolean (*GtkTreeModelForeachFunc) (GtkTreeModel *model,  GtkTreePath *path,  GtkTreeIter *iter,  gpointer data);
 public typedef extern(C) int  function (GtkTreeModel*, GtkTreePath*, GtkTreeIter*, void*) GtkTreeModelForeachFunc;
@@ -6058,8 +6162,19 @@ public typedef extern(C) void  function (GtkCellLayout*, GtkCellRenderer*, GtkTr
  * address of the gint representing the vertical position where the
  * menu shall be drawn. This is an output parameter.
  * push_in:
- * whether the menu should be pushed in to be completely inside the
- *  screen instead of just clamped to the size to the screen.
+ * This parameter controls how menus placed outside the monitor are handled.
+ *  If this is set to TRUE and part of the menu is outside the monitor then
+ *  GTK+ pushes the window into the visible area, effectively modifying the
+ *  popup position.
+ *  Note that moving and possibly resizing the menu around will alter the
+ *  scroll position to keep the menu items "in place", i.e. at the same monitor
+ *  position they would have been without resizing.
+ *  In practice, this behavior is only useful for combobox popups or option
+ *  menus and cannot be used to simply confine a menu to monitor boundaries.
+ *  In that case, changing the scroll offset is not desirable.
+ *  To simply constrain the menu within the monitor, get its size with
+ *  gtk_widget_size_request() before showing it, and alter the coordinates
+ *  passed to gtk_menu_popup() accordingly.
  * user_data:
  * the data supplied by the user in the gtk_menu_popup() data
  * parameter.
@@ -6296,6 +6411,12 @@ enum StockID
 	 * Since 2.6
 	 */
 	DIRECTORY,
+	
+	/**
+	 * The "Discard" item.
+	 * Since 2.12
+	 */
+	DISCARD,
 	
 	/**
 	 * The "Disconnect" icon.
@@ -6749,6 +6870,7 @@ char[][] StockDesc =
 	"gtk-dialog-question",
 	"gtk-dialog-warning",
 	"gtk-directory",
+	"gtk-discard",
 	"gtk-disconnect",
 	"gtk-dnd",
 	"gtk-dnd-multiple",

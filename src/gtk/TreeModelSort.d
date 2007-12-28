@@ -76,6 +76,7 @@ private import gtk.TreeIter;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -93,7 +94,7 @@ private import gtk.TreeIter;
  * view of the data without affecting the other. By contrast, if we
  * simply put the same model in each widget, then sorting the first would
  * sort the second.
- * Example3.Using a GtkTreeModelSort
+ * Example18.Using a GtkTreeModelSort
  * {
 	 *  GtkTreeView *tree_view1;
 	 *  GtkTreeView *tree_view2;
@@ -119,7 +120,7 @@ private import gtk.TreeIter;
  * "changed" signal. In this callback, we get a string from COLUMN_1 of
  * the model. We then modify the string, find the same selected row on the
  * child model, and change the row there.
- * Example4.Accessing the child model of in a selection changed callback
+ * Example19.Accessing the child model of in a selection changed callback
  * void
  * selection_changed (GtkTreeSelection *selection, gpointer data)
  * {
@@ -157,7 +158,6 @@ private import gtk.TreeIter;
 	 *  g_free (modified_data);
  * }
  */
-private import gobject.ObjectG;
 public class TreeModelSort : ObjectG
 {
 	
@@ -212,10 +212,9 @@ public class TreeModelSort : ObjectG
 	
 	/**
 	 * Creates a new GtkTreeModel, with child_model as the child model.
-	 * child_model:
-	 *  A GtkTreeModel
-	 * Returns:
-	 *  A new GtkTreeModel.
+	 * Params:
+	 * childModel =  A GtkTreeModel
+	 * Returns: A new GtkTreeModel.
 	 */
 	public static TreeModel newWithModel(TreeModel childModel)
 	{
@@ -225,10 +224,7 @@ public class TreeModelSort : ObjectG
 	
 	/**
 	 * Returns the model the GtkTreeModelSort is sorting.
-	 * tree_model:
-	 *  a GtkTreeModelSort
-	 * Returns:
-	 *  the "child model" being sorted
+	 * Returns: the "child model" being sorted
 	 */
 	public TreeModel getModel()
 	{
@@ -241,12 +237,9 @@ public class TreeModelSort : ObjectG
 	 * child_path points to a path in the child model. The returned path will
 	 * point to the same row in the sorted model. If child_path isn't a valid
 	 * path on the child model, then NULL is returned.
-	 * tree_model_sort:
-	 *  A GtkTreeModelSort
-	 * child_path:
-	 *  A GtkTreePath to convert
-	 * Returns:
-	 *  A newly allocated GtkTreePath, or NULL
+	 * Params:
+	 * childPath =  A GtkTreePath to convert
+	 * Returns: A newly allocated GtkTreePath, or NULL
 	 */
 	public TreePath convertChildPathToPath(TreePath childPath)
 	{
@@ -257,12 +250,9 @@ public class TreeModelSort : ObjectG
 	/**
 	 * Sets sort_iter to point to the row in tree_model_sort that corresponds to
 	 * the row pointed at by child_iter.
-	 * tree_model_sort:
-	 *  A GtkTreeModelSort
-	 * sort_iter:
-	 *  An uninitialized GtkTreeIter.
-	 * child_iter:
-	 *  A valid GtkTreeIter pointing to a row on the child model
+	 * Params:
+	 * sortIter =  An uninitialized GtkTreeIter.
+	 * childIter =  A valid GtkTreeIter pointing to a row on the child model
 	 */
 	public void convertChildIterToIter(TreeIter sortIter, TreeIter childIter)
 	{
@@ -276,12 +266,9 @@ public class TreeModelSort : ObjectG
 	 * returned path will point to the same location in the model not being
 	 * sorted. If sorted_path does not point to a location in the child model,
 	 * NULL is returned.
-	 * tree_model_sort:
-	 *  A GtkTreeModelSort
-	 * sorted_path:
-	 *  A GtkTreePath to convert
-	 * Returns:
-	 *  A newly allocated GtkTreePath, or NULL
+	 * Params:
+	 * sortedPath =  A GtkTreePath to convert
+	 * Returns: A newly allocated GtkTreePath, or NULL
 	 */
 	public TreePath convertPathToChildPath(TreePath sortedPath)
 	{
@@ -291,12 +278,9 @@ public class TreeModelSort : ObjectG
 	
 	/**
 	 * Sets child_iter to point to the row pointed to by sorted_iter.
-	 * tree_model_sort:
-	 *  A GtkTreeModelSort
-	 * child_iter:
-	 *  An uninitialized GtkTreeIter
-	 * sorted_iter:
-	 *  A valid GtkTreeIter pointing to a row on tree_model_sort.
+	 * Params:
+	 * childIter =  An uninitialized GtkTreeIter
+	 * sortedIter =  A valid GtkTreeIter pointing to a row on tree_model_sort.
 	 */
 	public void convertIterToChildIter(TreeIter childIter, TreeIter sortedIter)
 	{
@@ -309,8 +293,6 @@ public class TreeModelSort : ObjectG
 	 * is, it is in the same order as the child model. It will re-sort the model
 	 * to be in the same order as the child model only if the GtkTreeModelSort
 	 * is in 'unsorted' state.
-	 * tree_model_sort:
-	 *  A GtkTreeModelSort
 	 */
 	public void resetDefaultSortFunc()
 	{
@@ -325,8 +307,6 @@ public class TreeModelSort : ObjectG
 	 * sorted is static (and doesn't change often) and there has been a lot of
 	 * unreffed access to nodes. As a side effect of this function, all unreffed
 	 * iters will be invalid.
-	 * tree_model_sort:
-	 *  A GtkTreeModelSort
 	 */
 	public void clearCache()
 	{
@@ -338,19 +318,10 @@ public class TreeModelSort : ObjectG
 	 * Warning
 	 * This function is slow. Only use it for debugging and/or testing purposes.
 	 * Checks if the given iter is a valid iter for this GtkTreeModelSort.
-	 * tree_model_sort:
-	 *  A GtkTreeModelSort.
-	 * iter:
-	 *  A GtkTreeIter.
-	 * Returns:
-	 *  TRUE if the iter is valid, FALSE if the iter is invalid.
 	 * Since 2.2
-	 * Property Details
-	 * The "model" property
-	 *  "model" GtkTreeModel : Read / Write / Construct Only
-	 * The model for the TreeModelSort to sort.
-	 * See Also
-	 * GtkTreeModel, GtkListStore, GtkTreeStore, GtkTreeSortable, GtkTreeModelFilter
+	 * Params:
+	 * iter =  A GtkTreeIter.
+	 * Returns: TRUE if the iter is valid, FALSE if the iter is invalid.
 	 */
 	public int iterIsValid(TreeIter iter)
 	{

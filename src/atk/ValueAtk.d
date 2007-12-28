@@ -131,10 +131,8 @@ public class ValueAtk
 	
 	/**
 	 * Gets the value of this object.
-	 * obj:
-	 *  a GObject instance that implements AtkValueIface
-	 * value:
-	 *  a GValue representing the current accessible value
+	 * Params:
+	 * value =  a GValue representing the current accessible value
 	 */
 	public void getCurrentValue(Value value)
 	{
@@ -144,10 +142,8 @@ public class ValueAtk
 	
 	/**
 	 * Gets the maximum value of this object.
-	 * obj:
-	 *  a GObject instance that implements AtkValueIface
-	 * value:
-	 *  a GValue representing the maximum accessible value
+	 * Params:
+	 * value =  a GValue representing the maximum accessible value
 	 */
 	public void getMaximumValue(Value value)
 	{
@@ -157,10 +153,8 @@ public class ValueAtk
 	
 	/**
 	 * Gets the minimum value of this object.
-	 * obj:
-	 *  a GObject instance that implements AtkValueIface
-	 * value:
-	 *  a GValue representing the minimum accessible value
+	 * Params:
+	 * value =  a GValue representing the minimum accessible value
 	 */
 	public void getMinimumValue(Value value)
 	{
@@ -170,12 +164,9 @@ public class ValueAtk
 	
 	/**
 	 * Sets the value of this object.
-	 * obj:
-	 *  a GObject instance that implements AtkValueIface
-	 * value:
-	 *  a GValue which is the desired new accessible value.
-	 * Returns:
-	 *  TRUE if new value is successfully set, FALSE otherwise.
+	 * Params:
+	 * value =  a GValue which is the desired new accessible value.
+	 * Returns: TRUE if new value is successfully set, FALSE otherwise.
 	 */
 	public int setCurrentValue(Value value)
 	{
@@ -187,10 +178,8 @@ public class ValueAtk
 	 * Gets the minimum increment by which the value of this object may be changed. If zero,
 	 * the minimum increment is undefined, which may mean that it is limited only by the
 	 * floating point precision of the platform.
-	 * obj:
-	 *  a GObject instance that implements AtkValueIface
-	 * value:
-	 *  a GValue representing the minimum increment by which the accessible value may be changed
+	 * Params:
+	 * value =  a GValue representing the minimum increment by which the accessible value may be changed
 	 * Since ATK 1.12
 	 */
 	public void getMinimumIncrement(Value value)

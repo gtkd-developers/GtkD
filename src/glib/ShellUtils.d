@@ -90,16 +90,12 @@ public class ShellUtils
 	 * does contain such expansions, they are passed through
 	 * literally. Possible errors are those from the G_SHELL_ERROR
 	 * domain. Free the returned vector with g_strfreev().
-	 * command_line:
-	 *  command line to parse
-	 * argcp:
-	 *  return location for number of args
-	 * argvp:
-	 *  return location for array of args
-	 * error:
-	 *  return location for error
-	 * Returns:
-	 *  TRUE on success, FALSE if error set
+	 * Params:
+	 * commandLine =  command line to parse
+	 * argcp =  return location for number of args
+	 * argvp =  return location for array of args
+	 * error =  return location for error
+	 * Returns: TRUE on success, FALSE if error set
 	 */
 	public static int parseArgv(char[] commandLine, int* argcp, char*** argvp, GError** error)
 	{
@@ -114,10 +110,9 @@ public class ShellUtils
 	 * function. The return value must be freed with g_free(). The
 	 * quoting style used is undefined (single or double quotes may be
 	 * used).
-	 * unquoted_string:
-	 *  a literal string
-	 * Returns:
-	 *  quoted string
+	 * Params:
+	 * unquotedString =  a literal string
+	 * Returns: quoted string
 	 */
 	public static char[] quote(char[] unquotedString)
 	{
@@ -146,12 +141,10 @@ public class ShellUtils
 	 * like 'foo'\''bar'. Double quotes allow $, `, ", \, and newline to
 	 * be escaped with backslash. Otherwise double quotes preserve things
 	 * literally.
-	 * quoted_string:
-	 *  shell-quoted string
-	 * error:
-	 *  error return location or NULL
-	 * Returns:
-	 *  an unquoted string
+	 * Params:
+	 * quotedString =  shell-quoted string
+	 * error =  error return location or NULL
+	 * Returns: an unquoted string
 	 */
 	public static char[] unquote(char[] quotedString, GError** error)
 	{

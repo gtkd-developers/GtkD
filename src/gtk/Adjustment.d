@@ -68,6 +68,7 @@ private import gtk.ObjectGtk;
 
 
 
+private import gtk.ObjectGtk;
 
 /**
  * Description
@@ -82,52 +83,7 @@ private import gtk.ObjectGtk;
  * gtk_adjustment_value_changed() and gtk_adjustment_changed() functions
  * after changing the value and its bounds. This results in the emission of the
  * "value_changed" or "changed" signal respectively.
- * Numerical Precision
- * The values in a GtkAdjustment are stored as double precision floating point values.
- * More about the different floating point types can be found in the corresponding
- * IEEE Floating Point Standard.
- * In most GtkAdjustment applications, the value member contains a computed number, for instance because
- * the adjustment is updated by a GtkSpinButton or GtkRange widget which assign adjustment values based
- * on computations which use user input with pixel precision.
- * When floats/doubles are computed, they almost never represent the exact number wanted or needed,
- * but only an approximation of the real value, because floating point numbers are approximations of
- * real numbers by design (needed to represent infinite precision numbers in a finite number of memory cells).
- * In the case of a range, spin button or similar widget where the current value is represented by a
- * floating point number (i.e. an inexact approximation of the real value needed),
- * adjustment->upper and adjustment->lower may or may not be represented exactly in adjustment->value,
- * depending on the implementation.
- * That means, even if a spinner or range looks like it represents adjustment->lower or
- * adjustment->upper in the graphical display, the actual adjustment->value may very well be off
- * by a small number (epsilon) that corresponds to ca. half a pixel at the GUI.
- * To compensate for such boundary cases accurately in user code, additional logic may be required, for instance:
- * Example1.Epsilon comparison for adjustments
- *  /+* retrieve a computed floating point value +/
- *  double myval = gtk_spin_button_get_value (spinner);
- *  double myval = gtk_range_get_value (range);
- *  double myval = gtk_progress_get_value (progress_widget);
- *  double myval = gtk_adjustment_get_value (adjustment);
- *  /+* adjust for border cases, assuming a screen resolution < 65536 pixels +/
- *  const double epsilon = 0.0000152587890625; /+* 1.0 / 2^16 +/
- *  if (fabs (myval - adjustment->lower) < epsilon)
- *  myval = adjustment->lower;
- *  if (fabs (myval - (adjustment->upper - adjustment->page_size)) < epsilon)
- *  myval = adjustment->upper - adjustment->page_size;
- * While this compensation code makes some more implicit assumptions,
- * like the range (adjustment->upper - adjustment->lower) not being significantly smaller than
- * 1 and only being a few magnitudes larger than the amount of pixels on screen,
- * and while all code that deals with floating point numbers always warrants a detailed precision
- * analysis, it should work out well in practice for the vast majority of cases in Gtk+ and uses
- * of adjustment->value in Gtk+ applications.
- * But as mentioned, there are more issues that need to be taken care of when dealing with
- * floating point numbers.
- * Many of those are addressed by books like Numerical Recipes in C,
- * in particular the chapter
- * 1.3 Error, Accuracy, and Stability
- * is a highly recommended read.
- * And a further recommended reading is the paper
- * What Every Computer Scientist Should Know About Floating-Point Arithmetic.
  */
-private import gtk.ObjectGtk;
 public class Adjustment : ObjectGtk
 {
 	
@@ -244,20 +200,13 @@ public class Adjustment : ObjectGtk
 	
 	/**
 	 * Creates a new GtkAdjustment.
-	 * value:
-	 * the initial value.
-	 * lower:
-	 * the minimum value.
-	 * upper:
-	 * the maximum value.
-	 * step_increment:
-	 * the step increment.
-	 * page_increment:
-	 * the page increment.
-	 * page_size:
-	 * the page size.
-	 * Returns:
-	 * a new GtkAdjustment.
+	 * Params:
+	 * value = the initial value.
+	 * lower = the minimum value.
+	 * upper = the maximum value.
+	 * stepIncrement = the step increment.
+	 * pageIncrement = the page increment.
+	 * pageSize = the page size.
 	 */
 	public this (double value, double lower, double upper, double stepIncrement, double pageIncrement, double pageSize)
 	{
@@ -268,10 +217,7 @@ public class Adjustment : ObjectGtk
 	/**
 	 * Gets the current value of the adjustment. See
 	 * gtk_adjustment_set_value().
-	 * adjustment:
-	 *  a GtkAdjustment
-	 * Returns:
-	 *  The current value of the adjustment.
+	 * Returns: The current value of the adjustment.
 	 */
 	public double getValue()
 	{
@@ -286,10 +232,8 @@ public class Adjustment : ObjectGtk
 	 * Note that for adjustments which are used in a GtkScrollbar, the effective
 	 * range of allowed values goes from adjustment->lower to
 	 * adjustment->upper - adjustment->page_size.
-	 * adjustment:
-	 * a GtkAdjustment.
-	 * value:
-	 * the new value.
+	 * Params:
+	 * value = the new value.
 	 */
 	public void setValue(double value)
 	{
@@ -304,12 +248,9 @@ public class Adjustment : ObjectGtk
 	 * If the range is larger than the page size, then only the start of it will
 	 * be in the current page.
 	 * A "changed" signal will be emitted if the value is changed.
-	 * adjustment:
-	 * a GtkAdjustment.
-	 * lower:
-	 * the lower value.
-	 * upper:
-	 * the upper value.
+	 * Params:
+	 * lower = the lower value.
+	 * upper = the upper value.
 	 */
 	public void clampPage(double lower, double upper)
 	{
@@ -321,8 +262,6 @@ public class Adjustment : ObjectGtk
 	 * Emits a "changed" signal from the GtkAdjustment.
 	 * This is typically called by the owner of the GtkAdjustment after it has
 	 * changed any of the GtkAdjustment fields other than the value.
-	 * adjustment:
-	 * a GtkAdjustment
 	 */
 	public void changed()
 	{
@@ -334,14 +273,6 @@ public class Adjustment : ObjectGtk
 	 * Emits a "value_changed" signal from the GtkAdjustment.
 	 * This is typically called by the owner of the GtkAdjustment after it has
 	 * changed the GtkAdjustment value field.
-	 * adjustment:
-	 * a GtkAdjustment
-	 * Property Details
-	 * The "lower" property
-	 *  "lower" gdouble : Read / Write
-	 * The minimum value of the adjustment.
-	 * Default value: 0
-	 * Since 2.4
 	 */
 	public void valueChanged()
 	{

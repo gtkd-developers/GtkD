@@ -68,6 +68,7 @@ private import gtk.Widget;
 
 
 
+private import gtk.Container;
 
 /**
  * Description
@@ -87,7 +88,8 @@ private import gtk.Widget;
  * is called the gutter.) Often, it is useful
  * to put each child inside a GtkFrame with the
  * shadow type set to GTK_SHADOW_IN so that the
- * gutter appears as a ridge.
+ * gutter appears as a ridge. No separator is drawn
+ * if one of the children is missing.
  * Each child has two options that can be set,
  * resize and shrink. If resize is true, then when the
  * GtkPaned is resized, that child will expand
@@ -101,7 +103,7 @@ private import gtk.Widget;
  * The application can set the position of the slider
  * as if it were set by the user, by calling
  * gtk_paned_set_position().
- * Example1.Creating a paned widget with minimum sizes.
+ * Example46.Creating a paned widget with minimum sizes.
  * GtkWidget *hpaned = gtk_hpaned_new ();
  * GtkWidget *frame1 = gtk_frame_new (NULL);
  * GtkWidget *frame2 = gtk_frame_new (NULL);
@@ -113,7 +115,6 @@ private import gtk.Widget;
  * gtk_paned_pack2 (GTK_PANED (hpaned), frame2, FALSE, FALSE);
  * gtk_widget_set_size_request (frame2, 50, -1);
  */
-private import gtk.Container;
 public class Paned : Container
 {
 	
@@ -162,6 +163,7 @@ public class Paned : Container
 		this.gtkPaned = gtkPaned;
 	}
 	
+	/** */
 	public void add(Widget child1, Widget child2)
 	{
 		add1(child1);
@@ -192,7 +194,7 @@ public class Paned : Container
 		}
 		onAcceptPositionListeners ~= dlg;
 	}
-	extern(C) static void callBackAcceptPosition(GtkPaned* panedStruct, Paned paned)
+	extern(C) static void callBackAcceptPosition(GtkPaned* widgetStruct, Paned paned)
 	{
 		bool consumed = false;
 		
@@ -220,7 +222,7 @@ public class Paned : Container
 		}
 		onCancelPositionListeners ~= dlg;
 	}
-	extern(C) static void callBackCancelPosition(GtkPaned* panedStruct, Paned paned)
+	extern(C) static void callBackCancelPosition(GtkPaned* widgetStruct, Paned paned)
 	{
 		bool consumed = false;
 		
@@ -248,13 +250,13 @@ public class Paned : Container
 		}
 		onCycleChildFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackCycleChildFocus(GtkPaned* panedStruct, gboolean arg1, Paned paned)
+	extern(C) static void callBackCycleChildFocus(GtkPaned* widgetStruct, gboolean reversed, Paned paned)
 	{
 		bool consumed = false;
 		
 		foreach ( gboolean delegate(gboolean, Paned) dlg ; paned.onCycleChildFocusListeners )
 		{
-			dlg(arg1, paned);
+			dlg(reversed, paned);
 		}
 		
 		return consumed;
@@ -276,13 +278,13 @@ public class Paned : Container
 		}
 		onCycleHandleFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackCycleHandleFocus(GtkPaned* panedStruct, gboolean arg1, Paned paned)
+	extern(C) static void callBackCycleHandleFocus(GtkPaned* widgetStruct, gboolean reversed, Paned paned)
 	{
 		bool consumed = false;
 		
 		foreach ( gboolean delegate(gboolean, Paned) dlg ; paned.onCycleHandleFocusListeners )
 		{
-			dlg(arg1, paned);
+			dlg(reversed, paned);
 		}
 		
 		return consumed;
@@ -304,13 +306,13 @@ public class Paned : Container
 		}
 		onMoveHandleListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveHandle(GtkPaned* panedStruct, GtkScrollType arg1, Paned paned)
+	extern(C) static void callBackMoveHandle(GtkPaned* widgetStruct, GtkScrollType scrollType, Paned paned)
 	{
 		bool consumed = false;
 		
 		foreach ( gboolean delegate(GtkScrollType, Paned) dlg ; paned.onMoveHandleListeners )
 		{
-			dlg(arg1, paned);
+			dlg(scrollType, paned);
 		}
 		
 		return consumed;
@@ -332,7 +334,7 @@ public class Paned : Container
 		}
 		onToggleHandleFocusListeners ~= dlg;
 	}
-	extern(C) static void callBackToggleHandleFocus(GtkPaned* panedStruct, Paned paned)
+	extern(C) static void callBackToggleHandleFocus(GtkPaned* widgetStruct, Paned paned)
 	{
 		bool consumed = false;
 		
@@ -350,10 +352,8 @@ public class Paned : Container
 	 * Adds a child to the top or left pane with
 	 * default parameters. This is equivalent
 	 * to gtk_paned_pack1 (paned, child, FALSE, TRUE).
-	 * paned:
-	 * a paned widget
-	 * child:
-	 * the child to add
+	 * Params:
+	 * child = the child to add
 	 */
 	public void add1(Widget child)
 	{
@@ -365,10 +365,8 @@ public class Paned : Container
 	 * Adds a child to the bottom or right pane with default
 	 * parameters. This is equivalent to
 	 * gtk_paned_pack2 (paned, child, TRUE, TRUE).
-	 * paned:
-	 * a paned widget
-	 * child:
-	 * the child to add
+	 * Params:
+	 * child = the child to add
 	 */
 	public void add2(Widget child)
 	{
@@ -379,14 +377,10 @@ public class Paned : Container
 	
 	/**
 	 * Adds a child to the top or left pane.
-	 * paned:
-	 * a paned widget
-	 * child:
-	 * the child to add
-	 * resize:
-	 * should this child expand when the paned widget is resized.
-	 * shrink:
-	 * can this child be made smaller than its requisition.
+	 * Params:
+	 * child = the child to add
+	 * resize = should this child expand when the paned widget is resized.
+	 * shrink = can this child be made smaller than its requisition.
 	 */
 	public void pack1(Widget child, int resize, int shrink)
 	{
@@ -396,14 +390,10 @@ public class Paned : Container
 	
 	/**
 	 * Adds a child to the bottom or right pane.
-	 * paned:
-	 * a paned widget
-	 * child:
-	 * the child to add
-	 * resize:
-	 * should this child expand when the paned widget is resized.
-	 * shrink:
-	 * can this child be made smaller than its requisition.
+	 * Params:
+	 * child = the child to add
+	 * resize = should this child expand when the paned widget is resized.
+	 * shrink = can this child be made smaller than its requisition.
 	 */
 	public void pack2(Widget child, int resize, int shrink)
 	{
@@ -413,11 +403,8 @@ public class Paned : Container
 	
 	/**
 	 * Obtains the first child of the paned widget.
-	 * paned:
-	 *  a GtkPaned widget
-	 * Returns:
-	 *  first child, or NULL if it is not set.
 	 * Since 2.4
+	 * Returns: first child, or NULL if it is not set.
 	 */
 	public Widget getChild1()
 	{
@@ -427,11 +414,8 @@ public class Paned : Container
 	
 	/**
 	 * Obtains the second child of the paned widget.
-	 * paned:
-	 *  a GtkPaned widget
-	 * Returns:
-	 *  second child, or NULL if it is not set.
 	 * Since 2.4
+	 * Returns: second child, or NULL if it is not set.
 	 */
 	public Widget getChild2()
 	{
@@ -442,10 +426,8 @@ public class Paned : Container
 	
 	/**
 	 * Sets the position of the divider between the two panes.
-	 * paned:
-	 *  a GtkPaned widget
-	 * position:
-	 *  pixel position of divider, a negative value means that the position
+	 * Params:
+	 * position =  pixel position of divider, a negative value means that the position
 	 *  is unset.
 	 */
 	public void setPosition(int position)
@@ -456,18 +438,7 @@ public class Paned : Container
 	
 	/**
 	 * Obtains the position of the divider between the two panes.
-	 * paned:
-	 *  a GtkPaned widget
-	 * Returns:
-	 *  position of the divider
-	 * Property Details
-	 * The "max-position" property
-	 *  "max-position" gint : Read
-	 * The largest possible value for the position property. This property is derived from the
-	 * size and shrinkability of the widget's children.
-	 * Allowed values: >= 0
-	 * Default value: 2147483647
-	 * Since 2.4
+	 * Returns: position of the divider
 	 */
 	public int getPosition()
 	{

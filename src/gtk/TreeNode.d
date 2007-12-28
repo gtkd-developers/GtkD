@@ -65,9 +65,6 @@ private import gtkc.gtk;
 
 
 /**
- */
-
-/**
  * TreeNode interface
  */
 public interface TreeNode

@@ -156,10 +156,9 @@ public class IconSource
 	
 	/**
 	 * Creates a copy of source; mostly useful for language bindings.
-	 * source:
-	 *  a GtkIconSource
-	 * Returns:
-	 *  a new GtkIconSource
+	 * Params:
+	 * source =  a GtkIconSource
+	 * Returns: a new GtkIconSource
 	 */
 	public GtkIconSource* sourceCopy()
 	{
@@ -170,8 +169,8 @@ public class IconSource
 	/**
 	 * Frees a dynamically-allocated icon source, along with its
 	 * filename, size, and pixbuf fields if those are not NULL.
-	 * source:
-	 *  a GtkIconSource
+	 * Params:
+	 * source =  a GtkIconSource
 	 */
 	public void sourceFree()
 	{
@@ -190,12 +189,10 @@ public class IconSource
 	 * override your application's default icons. If an icon already
 	 * existed in factory for stock_id, it is unreferenced and replaced
 	 * with the new icon_set.
-	 * factory:
-	 *  a GtkIconFactory
-	 * stock_id:
-	 *  icon name
-	 * icon_set:
-	 *  icon set
+	 * Params:
+	 * factory =  a GtkIconFactory
+	 * stockId =  icon name
+	 * iconSet =  icon set
 	 */
 	public static void factoryAdd(GtkIconFactory* factory, char[] stockId, GtkIconSet* iconSet)
 	{
@@ -210,8 +207,8 @@ public class IconSource
 	 * There will normally be an icon factory added for each library or
 	 * application that comes with icons. The default icon factories
 	 * can be overridden by themes.
-	 * factory:
-	 *  a GtkIconFactory
+	 * Params:
+	 * factory =  a GtkIconFactory
 	 */
 	public static void factoryAddDefault(GtkIconFactory* factory)
 	{
@@ -225,12 +222,10 @@ public class IconSource
 	 * use gtk_style_lookup_icon_set() on the GtkStyle for the
 	 * widget that will display the icon, instead of using this
 	 * function directly, so that themes are taken into account.
-	 * factory:
-	 *  a GtkIconFactory
-	 * stock_id:
-	 *  an icon name
-	 * Returns:
-	 *  icon set of stock_id.
+	 * Params:
+	 * factory =  a GtkIconFactory
+	 * stockId =  an icon name
+	 * Returns: icon set of stock_id.
 	 */
 	public static GtkIconSet* factoryLookup(GtkIconFactory* factory, char[] stockId)
 	{
@@ -244,10 +239,9 @@ public class IconSource
 	 * the GtkStyle for the widget that will display the icon, instead of
 	 * using this function directly, so that themes are taken into
 	 * account.
-	 * stock_id:
-	 *  an icon name
-	 * Returns:
-	 *  a GtkIconSet, or NULL
+	 * Params:
+	 * stockId =  an icon name
+	 * Returns: a GtkIconSet, or NULL
 	 */
 	public static GtkIconSet* factoryLookupDefault(char[] stockId)
 	{
@@ -269,8 +263,7 @@ public class IconSource
 	 * gtk_icon_factory_remove_default(). Applications with icons should
 	 * add a default icon factory with their icons, which will allow
 	 * themes to override the icons for the application.
-	 * Returns:
-	 *  a new GtkIconFactory
+	 * Returns: a new GtkIconFactory
 	 */
 	public static GtkIconFactory* factoryNew()
 	{
@@ -282,8 +275,8 @@ public class IconSource
 	 * Removes an icon factory from the list of default icon
 	 * factories. Not normally used; you might use it for a library that
 	 * can be unloaded or shut down.
-	 * factory:
-	 *  a GtkIconFactory previously added with gtk_icon_factory_add_default()
+	 * Params:
+	 * factory =  a GtkIconFactory previously added with gtk_icon_factory_add_default()
 	 */
 	public static void factoryRemoveDefault(GtkIconFactory* factory)
 	{
@@ -313,10 +306,9 @@ public class IconSource
 	 * add the sources to the icon set does not matter.
 	 * gtk_icon_set_new_from_pixbuf() creates a new icon set with a
 	 * default icon source based on the given pixbuf.
-	 * icon_set:
-	 *  a GtkIconSet
-	 * source:
-	 *  a GtkIconSource
+	 * Params:
+	 * iconSet =  a GtkIconSet
+	 * source =  a GtkIconSource
 	 */
 	public static void setAddSource(GtkIconSet* iconSet, GtkIconSource* source)
 	{
@@ -326,10 +318,9 @@ public class IconSource
 	
 	/**
 	 * Copies icon_set by value.
-	 * icon_set:
-	 *  a GtkIconSet
-	 * Returns:
-	 *  a new GtkIconSet identical to the first.
+	 * Params:
+	 * iconSet =  a GtkIconSet
+	 * Returns: a new GtkIconSet identical to the first.
 	 */
 	public static GtkIconSet* setCopy(GtkIconSet* iconSet)
 	{
@@ -346,8 +337,7 @@ public class IconSource
 	 * using GtkIconSet directly. The one case where you'd use
 	 * GtkIconSet is to create application-specific icon sets to place in
 	 * a GtkIconFactory.
-	 * Returns:
-	 *  a new GtkIconSet
+	 * Returns: a new GtkIconSet
 	 */
 	public static GtkIconSet* setNew()
 	{
@@ -361,10 +351,9 @@ public class IconSource
 	 * icon set, all variants of the icon will be created from pixbuf,
 	 * using scaling, pixelation, etc. as required to adjust the icon size
 	 * or make the icon look insensitive/prelighted.
-	 * pixbuf:
-	 *  a GdkPixbuf
-	 * Returns:
-	 *  a new GtkIconSet
+	 * Params:
+	 * pixbuf =  a GdkPixbuf
+	 * Returns: a new GtkIconSet
 	 */
 	public static GtkIconSet* setNewFromPixbuf(Pixbuf pixbuf)
 	{
@@ -374,10 +363,9 @@ public class IconSource
 	
 	/**
 	 * Increments the reference count on icon_set.
-	 * icon_set:
-	 *  a GtkIconSet.
-	 * Returns:
-	 *  icon_set.
+	 * Params:
+	 * iconSet =  a GtkIconSet.
+	 * Returns: icon_set.
 	 */
 	public static GtkIconSet* setRef(GtkIconSet* iconSet)
 	{
@@ -392,27 +380,20 @@ public class IconSource
 	 * function never returns NULL; if the icon can't be rendered
 	 * (perhaps because an image file fails to load), a default "missing
 	 * image" icon will be returned instead.
-	 * icon_set:
-	 *  a GtkIconSet
-	 * style:
-	 *  a GtkStyle associated with widget, or NULL
-	 * direction:
-	 *  text direction
-	 * state:
-	 *  widget state
-	 * size:
-	 *  icon size. A size of (GtkIconSize)-1
+	 * Params:
+	 * iconSet =  a GtkIconSet
+	 * style =  a GtkStyle associated with widget, or NULL
+	 * direction =  text direction
+	 * state =  widget state
+	 * size =  icon size. A size of (GtkIconSize)-1
 	 *  means render at the size of the source and don't scale.
-	 * widget:
-	 *  widget that will display the icon, or NULL.
+	 * widget =  widget that will display the icon, or NULL.
 	 *  The only use that is typically made of this
 	 *  is to determine the appropriate GdkScreen.
-	 * detail:
-	 *  detail to pass to the theme engine, or NULL.
+	 * detail =  detail to pass to the theme engine, or NULL.
 	 *  Note that passing a detail of anything but NULL
 	 *  will disable caching.
-	 * Returns:
-	 *  a GdkPixbuf to be displayed
+	 * Returns: a GdkPixbuf to be displayed
 	 */
 	public static Pixbuf setRenderIcon(GtkIconSet* iconSet, Style style, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, char[] detail)
 	{
@@ -423,8 +404,8 @@ public class IconSource
 	/**
 	 * Decrements the reference count on icon_set, and frees memory
 	 * if the reference count reaches 0.
-	 * icon_set:
-	 *  a GtkIconSet
+	 * Params:
+	 * iconSet =  a GtkIconSet
 	 */
 	public static void setUnref(GtkIconSet* iconSet)
 	{
@@ -444,14 +425,11 @@ public class IconSource
 	 * the width/height returned by gtk_icon_size_lookup(), because themes
 	 * are free to render the pixbuf however they like, including changing
 	 * the usual size.
-	 * size:
-	 *  an icon size
-	 * width:
-	 *  location to store icon width
-	 * height:
-	 *  location to store icon height
-	 * Returns:
-	 *  TRUE if size was a valid size
+	 * Params:
+	 * size =  an icon size
+	 * width =  location to store icon width
+	 * height =  location to store icon height
+	 * Returns: TRUE if size was a valid size
 	 */
 	public static int sizeLookup(GtkIconSize size, int* width, int* height)
 	{
@@ -470,18 +448,14 @@ public class IconSource
 	 * the width/height returned by gtk_icon_size_lookup(), because themes
 	 * are free to render the pixbuf however they like, including changing
 	 * the usual size.
-	 * settings:
-	 *  a GtkSettings object, used to determine
-	 *  which set of user preferences to used.
-	 * size:
-	 *  an icon size
-	 * width:
-	 *  location to store icon width
-	 * height:
-	 *  location to store icon height
-	 * Returns:
-	 *  TRUE if size was a valid size
 	 * Since 2.2
+	 * Params:
+	 * settings =  a GtkSettings object, used to determine
+	 *  which set of user preferences to used.
+	 * size =  an icon size
+	 * width =  location to store icon width
+	 * height =  location to store icon height
+	 * Returns: TRUE if size was a valid size
 	 */
 	public static int sizeLookupForSettings(Settings settings, GtkIconSize size, int* width, int* height)
 	{
@@ -492,14 +466,11 @@ public class IconSource
 	/**
 	 * Registers a new icon size, along the same lines as GTK_ICON_SIZE_MENU,
 	 * etc. Returns the integer value for the size.
-	 * name:
-	 *  name of the icon size
-	 * width:
-	 *  the icon width
-	 * height:
-	 *  the icon height
-	 * Returns:
-	 *  integer value representing the size
+	 * Params:
+	 * name =  name of the icon size
+	 * width =  the icon width
+	 * height =  the icon height
+	 * Returns: integer value representing the size
 	 */
 	public static GtkIconSize sizeRegister(char[] name, int width, int height)
 	{
@@ -511,10 +482,9 @@ public class IconSource
 	 * Registers alias as another name for target.
 	 * So calling gtk_icon_size_from_name() with alias as argument
 	 * will return target.
-	 * alias:
-	 *  an alias for target
-	 * target:
-	 *  an existing icon size
+	 * Params:
+	 * alia =  an alias for target
+	 * target =  an existing icon size
 	 */
 	public static void sizeRegisterAlias(char[] alia, GtkIconSize target)
 	{
@@ -524,10 +494,9 @@ public class IconSource
 	
 	/**
 	 * Looks up the icon size associated with name.
-	 * name:
-	 *  the name to look up.
-	 * Returns:
-	 *  the icon size with the given name.
+	 * Params:
+	 * name =  the name to look up.
+	 * Returns: the icon size with the given name.
 	 */
 	public static GtkIconSize sizeFromName(char[] name)
 	{
@@ -538,10 +507,9 @@ public class IconSource
 	/**
 	 * Gets the canonical name of the given icon size. The returned string
 	 * is statically allocated and should not be freed.
-	 * size:
-	 *  a GtkIconSize.
-	 * Returns:
-	 *  the name of the given icon size.
+	 * Params:
+	 * size =  a GtkIconSize.
+	 * Returns: the name of the given icon size.
 	 */
 	public static char[] sizeGetName(GtkIconSize size)
 	{
@@ -552,12 +520,10 @@ public class IconSource
 	/**
 	 * Obtains a list of icon sizes this icon set can render. The returned
 	 * array must be freed with g_free().
-	 * icon_set:
-	 *  a GtkIconSet
-	 * sizes:
-	 *  return location for array of sizes
-	 * n_sizes:
-	 *  location to store number of elements in returned array
+	 * Params:
+	 * iconSet =  a GtkIconSet
+	 * sizes =  return location for array of sizes
+	 * nSizes =  location to store number of elements in returned array
 	 */
 	public static void setGetSizes(GtkIconSet* iconSet, GtkIconSize** sizes, int* nSizes)
 	{
@@ -569,10 +535,9 @@ public class IconSource
 	 * Obtains the text direction this icon source applies to. The return
 	 * value is only useful/meaningful if the text direction is not
 	 * wildcarded.
-	 * source:
-	 *  a GtkIconSource
-	 * Returns:
-	 *  text direction this source matches
+	 * Params:
+	 * source =  a GtkIconSource
+	 * Returns: text direction this source matches
 	 */
 	public GtkTextDirection sourceGetDirection()
 	{
@@ -582,10 +547,9 @@ public class IconSource
 	
 	/**
 	 * Gets the value set by gtk_icon_source_set_direction_wildcarded().
-	 * source:
-	 *  a GtkIconSource
-	 * Returns:
-	 *  TRUE if this icon source is a base for any text direction variant
+	 * Params:
+	 * source =  a GtkIconSource
+	 * Returns: TRUE if this icon source is a base for any text direction variant
 	 */
 	public int sourceGetDirectionWildcarded()
 	{
@@ -597,11 +561,9 @@ public class IconSource
 	 * Retrieves the source filename, or NULL if none is set. The
 	 * filename is not a copy, and should not be modified or expected to
 	 * persist beyond the lifetime of the icon source.
-	 * source:
-	 *  a GtkIconSource
-	 * Returns:
-	 *  image filename. This string must not be modified
-	 * or freed.
+	 * Params:
+	 * source =  a GtkIconSource
+	 * Returns: image filename. This string must not be modifiedor freed.
 	 */
 	public char[] sourceGetFilename()
 	{
@@ -617,10 +579,9 @@ public class IconSource
 	 * for the GtkIconSource passed to the GtkStyle::render_icon()
 	 * virtual function. The reference count on the pixbuf is
 	 * not incremented.
-	 * source:
-	 *  a GtkIconSource
-	 * Returns:
-	 *  source pixbuf
+	 * Params:
+	 * source =  a GtkIconSource
+	 * Returns: source pixbuf
 	 */
 	public Pixbuf sourceGetPixbuf()
 	{
@@ -632,10 +593,9 @@ public class IconSource
 	 * Retrieves the source icon name, or NULL if none is set. The
 	 * icon_name is not a copy, and should not be modified or expected to
 	 * persist beyond the lifetime of the icon source.
-	 * source:
-	 *  a GtkIconSource
-	 * Returns:
-	 *  icon name. This string must not be modified or freed.
+	 * Params:
+	 * source =  a GtkIconSource
+	 * Returns: icon name. This string must not be modified or freed.
 	 */
 	public char[] sourceGetIconName()
 	{
@@ -646,10 +606,9 @@ public class IconSource
 	/**
 	 * Obtains the icon size this source applies to. The return value
 	 * is only useful/meaningful if the icon size is not wildcarded.
-	 * source:
-	 *  a GtkIconSource
-	 * Returns:
-	 *  icon size this source matches.
+	 * Params:
+	 * source =  a GtkIconSource
+	 * Returns: icon size this source matches.
 	 */
 	public GtkIconSize sourceGetSize()
 	{
@@ -659,10 +618,9 @@ public class IconSource
 	
 	/**
 	 * Gets the value set by gtk_icon_source_set_size_wildcarded().
-	 * source:
-	 *  a GtkIconSource
-	 * Returns:
-	 *  TRUE if this icon source is a base for any icon size variant
+	 * Params:
+	 * source =  a GtkIconSource
+	 * Returns: TRUE if this icon source is a base for any icon size variant
 	 */
 	public int sourceGetSizeWildcarded()
 	{
@@ -674,10 +632,9 @@ public class IconSource
 	 * Obtains the widget state this icon source applies to. The return
 	 * value is only useful/meaningful if the widget state is not
 	 * wildcarded.
-	 * source:
-	 *  a GtkIconSource
-	 * Returns:
-	 *  widget state this source matches
+	 * Params:
+	 * source =  a GtkIconSource
+	 * Returns: widget state this source matches
 	 */
 	public GtkStateType sourceGetState()
 	{
@@ -687,10 +644,9 @@ public class IconSource
 	
 	/**
 	 * Gets the value set by gtk_icon_source_set_state_wildcarded().
-	 * source:
-	 *  a GtkIconSource
-	 * Returns:
-	 *  TRUE if this icon source is a base for any widget state variant
+	 * Params:
+	 * source =  a GtkIconSource
+	 * Returns: TRUE if this icon source is a base for any widget state variant
 	 */
 	public int sourceGetStateWildcarded()
 	{
@@ -723,8 +679,7 @@ public class IconSource
 	 * By default, the icon source has all parameters wildcarded. That is,
 	 * the icon source will be used as the base icon for any desired text
 	 * direction, widget state, or icon size.
-	 * Returns:
-	 *  a new GtkIconSource
+	 * Returns: a new GtkIconSource
 	 */
 	public static GtkIconSource* sourceNew()
 	{
@@ -739,10 +694,9 @@ public class IconSource
 	 * if the text direction is wildcarded. Therefore, you should usually
 	 * call gtk_icon_source_set_direction_wildcarded() to un-wildcard it
 	 * in addition to calling this function.
-	 * source:
-	 *  a GtkIconSource
-	 * direction:
-	 *  text direction this source applies to
+	 * Params:
+	 * source =  a GtkIconSource
+	 * direction =  text direction this source applies to
 	 */
 	public void sourceSetDirection(GtkTextDirection direction)
 	{
@@ -759,10 +713,9 @@ public class IconSource
 	 * will only be used with that text direction.
 	 * GtkIconSet prefers non-wildcarded sources (exact matches) over
 	 * wildcarded sources, and will use an exact match when possible.
-	 * source:
-	 *  a GtkIconSource
-	 * setting:
-	 *  TRUE to wildcard the text direction
+	 * Params:
+	 * source =  a GtkIconSource
+	 * setting =  TRUE to wildcard the text direction
 	 */
 	public void sourceSetDirectionWildcarded(int setting)
 	{
@@ -773,10 +726,9 @@ public class IconSource
 	/**
 	 * Sets the name of an image file to use as a base image when creating
 	 * icon variants for GtkIconSet. The filename must be absolute.
-	 * source:
-	 *  a GtkIconSource
-	 * filename:
-	 *  image file to use
+	 * Params:
+	 * source =  a GtkIconSource
+	 * filename =  image file to use
 	 */
 	public void sourceSetFilename(char[] filename)
 	{
@@ -787,10 +739,9 @@ public class IconSource
 	/**
 	 * Sets a pixbuf to use as a base image when creating icon variants
 	 * for GtkIconSet.
-	 * source:
-	 *  a GtkIconSource
-	 * pixbuf:
-	 *  pixbuf to use as a source
+	 * Params:
+	 * source =  a GtkIconSource
+	 * pixbuf =  pixbuf to use as a source
 	 */
 	public void sourceSetPixbuf(Pixbuf pixbuf)
 	{
@@ -801,10 +752,9 @@ public class IconSource
 	/**
 	 * Sets the name of an icon to look up in the current icon theme
 	 * to use as a base image when creating icon variants for GtkIconSet.
-	 * source:
-	 *  a GtkIconSource
-	 * icon_name:
-	 *  name of icon to use
+	 * Params:
+	 * source =  a GtkIconSource
+	 * iconName =  name of icon to use
 	 */
 	public void sourceSetIconName(char[] iconName)
 	{
@@ -819,10 +769,9 @@ public class IconSource
 	 * if the size is wildcarded. Therefore, you should usually
 	 * call gtk_icon_source_set_size_wildcarded() to un-wildcard it
 	 * in addition to calling this function.
-	 * source:
-	 *  a GtkIconSource
-	 * size:
-	 *  icon size this source applies to
+	 * Params:
+	 * source =  a GtkIconSource
+	 * size =  icon size this source applies to
 	 */
 	public void sourceSetSize(GtkIconSize size)
 	{
@@ -841,10 +790,9 @@ public class IconSource
 	 * GtkIconSet will normally scale wildcarded source images to produce
 	 * an appropriate icon at a given size, but will not change the size
 	 * of source images that match exactly.
-	 * source:
-	 *  a GtkIconSource
-	 * setting:
-	 *  TRUE to wildcard the widget state
+	 * Params:
+	 * source =  a GtkIconSource
+	 * setting =  TRUE to wildcard the widget state
 	 */
 	public void sourceSetSizeWildcarded(int setting)
 	{
@@ -859,10 +807,9 @@ public class IconSource
 	 * if the state is wildcarded. Therefore, you should usually
 	 * call gtk_icon_source_set_state_wildcarded() to un-wildcard it
 	 * in addition to calling this function.
-	 * source:
-	 *  a GtkIconSource
-	 * state:
-	 *  widget state this source applies to
+	 * Params:
+	 * source =  a GtkIconSource
+	 * state =  widget state this source applies to
 	 */
 	public void sourceSetState(GtkStateType state)
 	{
@@ -882,10 +829,9 @@ public class IconSource
 	 * produce an appropriate icon for a given state, for example
 	 * lightening an image on prelight, but will not modify source images
 	 * that match exactly.
-	 * source:
-	 *  a GtkIconSource
-	 * setting:
-	 *  TRUE to wildcard the widget state
+	 * Params:
+	 * source =  a GtkIconSource
+	 * setting =  TRUE to wildcard the widget state
 	 */
 	public void sourceSetStateWildcarded(int setting)
 	{

@@ -68,6 +68,7 @@ private import gtk.ToolItem;
 
 
 
+private import gtk.ToolItem;
 
 /**
  * Description
@@ -79,7 +80,6 @@ private import gtk.ToolItem;
  * to the ends of the toolbar.
  *  Use gtk_separator_tool_item_new() to create a new GtkSeparatorToolItem.
  */
-private import gtk.ToolItem;
 public class SeparatorToolItem : ToolItem
 {
 	
@@ -134,8 +134,6 @@ public class SeparatorToolItem : ToolItem
 	
 	/**
 	 * Create a new GtkSeparatorToolItem
-	 * Returns:
-	 *  the new GtkSeparatorToolItem
 	 * Since 2.4
 	 */
 	public this ()
@@ -148,11 +146,9 @@ public class SeparatorToolItem : ToolItem
 	 * When separator_tool_items is drawn as a vertical line, or just blank.
 	 * Setting this FALSE along with gtk_tool_item_set_expand() is useful
 	 * to create an item that forces following items to the end of the toolbar.
-	 * item:
-	 *  a GtkSeparatorToolItem
-	 * draw:
-	 *  whether separator_tool_item is drawn as a vertical line
 	 * Since 2.4
+	 * Params:
+	 * draw =  whether separator_tool_item is drawn as a vertical line
 	 */
 	public void setDraw(int draw)
 	{
@@ -163,22 +159,8 @@ public class SeparatorToolItem : ToolItem
 	/**
 	 * Returns whether separator_tool_item is drawn as a
 	 * line, or just blank. See gtk_separator_tool_item_set_draw().
-	 * item:
-	 *  a GtkSeparatorToolItem
-	 * Returns:
-	 *  TRUE if separator_tool_item is drawn as a line, or just blank.
 	 * Since 2.4
-	 * Property Details
-	 * The "draw" property
-	 *  "draw" gboolean : Read / Write
-	 * Whether the separator is drawn, or just blank.
-	 * Default value: TRUE
-	 * See Also
-	 * GtkToolbar
-	 * The toolbar widget
-	 * GtkRadioToolButton
-	 * A toolbar item containing a radio
-	 * 	 button
+	 * Returns: TRUE if separator_tool_item is drawn as a line, or just blank.
 	 */
 	public int getDraw()
 	{

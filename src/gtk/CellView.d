@@ -84,6 +84,7 @@ private import glib.ListG;
 
 
 
+private import gtk.Widget;
 
 /**
  * Description
@@ -92,7 +93,6 @@ private import glib.ListG;
  * some of the more complex features of GtkTreeView, like cell editing
  * and drag and drop.
  */
-private import gtk.Widget;
 public class CellView : Widget
 {
 	
@@ -146,11 +146,11 @@ public class CellView : Widget
 	 * to it, and makes its show text.
 	 * If markup is true the text can be marked up with the Pango text
 	 * markup language.
-	 * text:
-	 *  the text to display in the cell view
+	 * Since 2.6
+	 * Params:
+	 *  text = the text to display in the cell view
 	 * Returns:
 	 *  A newly created GtkCellView widget.
-	 * Since 2.6
 	 */
 	public this (char[] text, bool markup=true)
 	{
@@ -172,8 +172,6 @@ public class CellView : Widget
 	
 	/**
 	 * Creates a new GtkCellView widget.
-	 * Returns:
-	 *  A newly created GtkCellView widget.
 	 * Since 2.6
 	 */
 	public this ()
@@ -187,11 +185,9 @@ public class CellView : Widget
 	/**
 	 * Creates a new GtkCellView widget, adds a GtkCellRendererPixbuf
 	 * to it, and makes its show pixbuf.
-	 * pixbuf:
-	 *  the image to display in the cell view
-	 * Returns:
-	 *  A newly created GtkCellView widget.
 	 * Since 2.6
+	 * Params:
+	 * pixbuf =  the image to display in the cell view
 	 */
 	public this (Pixbuf pixbuf)
 	{
@@ -203,11 +199,9 @@ public class CellView : Widget
 	 * Sets the model for cell_view. If cell_view already has a model
 	 * set, it will remove it before setting the new model. If model is
 	 * NULL, then it will unset the old model.
-	 * cell_view:
-	 *  a GtkCellView
-	 * model:
-	 *  a GtkTreeModel
 	 * Since 2.6
+	 * Params:
+	 * model =  a GtkTreeModel
 	 */
 	public void setModel(TreeModel model)
 	{
@@ -222,11 +216,9 @@ public class CellView : Widget
 	 * this is not normally a desired result, but may be
 	 * a needed intermediate state if say, the model for
 	 * the GtkCellView becomes temporarily empty.
-	 * cell_view:
-	 *  a GtkCellView
-	 * path:
-	 *  a GtkTreePath or NULL to unset.
 	 * Since 2.6
+	 * Params:
+	 * path =  a GtkTreePath or NULL to unset.
 	 */
 	public void setDisplayedRow(TreePath path)
 	{
@@ -238,11 +230,8 @@ public class CellView : Widget
 	 * Returns a GtkTreePath referring to the currently
 	 * displayed row. If no row is currently displayed,
 	 * NULL is returned.
-	 * cell_view:
-	 *  a GtkCellView
-	 * Returns:
-	 *  the currently displayed row or NULL
 	 * Since 2.6
+	 * Returns: the currently displayed row or NULL
 	 */
 	public TreePath getDisplayedRow()
 	{
@@ -253,15 +242,11 @@ public class CellView : Widget
 	/**
 	 * Sets requisition to the size needed by cell_view to display
 	 * the model row pointed to by path.
-	 * cell_view:
-	 *  a GtkCellView
-	 * path:
-	 *  a GtkTreePath
-	 * requisition:
-	 *  return location for the size
-	 * Returns:
-	 *  TRUE
 	 * Since 2.6
+	 * Params:
+	 * path =  a GtkTreePath
+	 * requisition =  return location for the size
+	 * Returns: TRUE
 	 */
 	public int getSizeOfRow(TreePath path, GtkRequisition* requisition)
 	{
@@ -271,11 +256,9 @@ public class CellView : Widget
 	
 	/**
 	 * Sets the background color of view.
-	 * cell_view:
-	 *  a GtkCellView
-	 * color:
-	 *  the new background color
 	 * Since 2.6
+	 * Params:
+	 * color =  the new background color
 	 */
 	public void setBackgroundColor(Color color)
 	{
@@ -285,18 +268,8 @@ public class CellView : Widget
 	
 	/**
 	 * Returns the cell renderers which have been added to cell_view.
-	 * cell_view:
-	 *  a GtkCellView
-	 * Returns:
-	 *  a list of cell renderers. The list, but not the
-	 *  renderers has been newly allocated and should be freed with
-	 *  g_list_free() when no longer needed.
 	 * Since 2.6
-	 * Property Details
-	 * The "background" property
-	 *  "background" gchararray : Write
-	 * Background color as a string.
-	 * Default value: NULL
+	 * Returns: a list of cell renderers. The list, but not the renderers has been newly allocated and should be freed with g_list_free() when no longer needed.
 	 */
 	public ListG getCellRenderers()
 	{

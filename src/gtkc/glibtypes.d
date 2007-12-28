@@ -115,7 +115,8 @@ public alias ushort GDateYear;
 
 /**
  * typedef guint32 GQuark;
- * A GQuark is an integer which uniquely identifies a particular string.
+ * A GQuark is a non-zero integer which uniquely identifies a particular string.
+ * A GQuark value of zero is associated to NULL.
  */
 public alias uint GQuark;
 /**
@@ -208,8 +209,8 @@ public enum GIOChannelError
 alias GIOChannelError IOChannelError;
 
 /**
- * A bitwise combination representing a condition to watch for on an event
- * source.
+ * A bitwise combination representing a condition to watch for on
+ * an event source.
  * G_IO_IN
  * There is data to read.
  * G_IO_OUT
@@ -237,7 +238,7 @@ alias GIOCondition IOCondition;
  * be read with g_io_channel_get_flags(), but not changed with
  * g_io_channel_set_flags().
  * G_IO_FLAG_APPEND
- * turns on append mode, corresponds to O_APPEND (see the
+ * turns on append mode, corresponds to O_APPEND
  */
 public enum GIOFlags
 {
@@ -274,7 +275,15 @@ public enum GIOError
 alias GIOError IOError;
 
 /**
- * Flags specifying the level of log messages.
+ * Flags specifying the level of log messages. It is possible to change
+ * how GLib treats messages of the various levels using g_log_set_handler()
+ * and g_log_set_fatal_mask().
+ * G_LOG_FLAG_RECURSION
+ * internal flag
+ * G_LOG_FLAG_FATAL
+ * internal flag
+ * G_LOG_LEVEL_ERROR
+ * log level for errors, see g_error().
  */
 public enum GLogLevelFlags
 {
@@ -471,11 +480,12 @@ alias GUnicodeBreakType UnicodeBreakType;
 /**
  * The GUnicodeScript enumeration identifies different writing
  * systems. The values correspond to the names as defined in the
- * Unicode standard. The enumeration has been added in GLib 2.14.
+ * Unicode standard. The enumeration has been added in GLib 2.14,
+ * and is interchangeable with PangoScript.
  * Note that new types may be added in the future. Applications
  * should be ready to handle unknown values.
  * See Unicode Standard Annex
- * 24: Script names.
+ * "" Script names.
  * G_UNICODE_SCRIPT_INVALID_CODE
  * a value never returned from g_unichar_get_script()
  * G_UNICODE_SCRIPT_COMMON
@@ -675,6 +685,29 @@ public enum GDateWeekday
 	SUNDAY = 7
 }
 alias GDateWeekday DateWeekday;
+
+/**
+ * These are logical ids for special directories which are defined
+ * depending on the platform used. You should use g_get_user_special_dir()
+ * to retrieve the full path associated to the logical id.
+ * The GUserDirectory enumeration can be extended at later date. Not
+ * every platform has a directory for every logical id in this
+ * enumeration.
+ * G_USER_DIRECTORY_DESKTOP
+ */
+public enum GUserDirectory
+{
+	DESKTOP,
+	DOCUMENTS,
+	DOWNLOAD,
+	MUSIC,
+	PICTURES,
+	PUBLIC_SHARE,
+	TEMPLATES,
+	VIDEOS,
+	G_USER_N_DIRECTORIES
+}
+alias GUserDirectory UserDirectory;
 
 /**
  * The possible types of token returned from each g_scanner_get_next_token() call.
@@ -886,15 +919,7 @@ alias GFileError FileError;
 /**
  * A test to perform on a file using g_file_test().
  * G_FILE_TEST_IS_REGULAR
- * TRUE if the file is a regular file (not a symlink or directory)
- * G_FILE_TEST_IS_SYMLINK
- * TRUE if the file is a symlink.
- * G_FILE_TEST_IS_DIR
- * TRUE if the file is a directory.
- * G_FILE_TEST_IS_EXECUTABLE
- * TRUE if the file is executable.
- * G_FILE_TEST_EXISTS
- * TRUE if the file exists. It may or may not be a regular file.
+ * TRUE if the file is a regular file (not a directory).
  */
 public enum GFileTest
 {
@@ -1331,8 +1356,8 @@ public struct GIOChannel{}
 
 
 /**
- * A table of functions used to handle different types of GIOChannel in a
- * generic way.
+ * A table of functions used to handle different types of GIOChannel
+ * in a generic way.
  */
 public struct GIOFuncs{}
 // GIOStatus (*ioRead) (GIOChannel *channel,
@@ -1507,6 +1532,13 @@ public struct GDebugKey
  * If you want to use your own message handler you can set the
  * msg_handler field. The type of the message
  * handler function is declared by GScannerMsgFunc.
+ * gpointeruser_data;
+ * guintmax_parse_errors;
+ * guintparse_errors;
+ * constgchar*input_name;
+ * GData*qdata;
+ * GScannerConfig*config;
+ * GTokenTypetoken;
  */
 public struct GScanner{}
 // /+* unused fields +/
@@ -1572,7 +1604,8 @@ public struct GScanner{}
 
 
 /**
- * Specifies the GScanner settings.
+ * Specifies the GScanner parser configuration. Most settings can be changed during
+ * the parsing phase and will affect the lexical parsing of the next unpeeked token.
  * cset_skip_characters specifies which characters
  * should be skipped by the scanner (the default is the whitespace characters:
  * space, tab, carriage-return and line-feed).
@@ -1983,13 +2016,8 @@ public struct GHashTable{}
 /**
  * Main Gtk struct.
  * The GString struct contains the public fields of a GString.
- * The str field points to the character data.
- * It may move as text is added.
- * The len field contains the length of the string,
- * not including the terminating nul byte.
- * The str field is nul-terminated and so can be used as an ordinary C
- * string. But it may be moved when text is appended or inserted into the
- * string.
+ * gchar*str;
+ * points to the character data. It may move as text is added.
  */
 public struct GString
 {
@@ -2067,15 +2095,11 @@ public struct GTree{}
  * Main Gtk struct.
  * The GNode struct represents one node in a
  * N-ary Tree.
- * The data field contains the actual data of the node.
- * The next and prev
- * fields point to the node's siblings (a sibling is another GNode with the
- * same parent).
- * The parent field points to the parent of the GNode,
- * or is NULL if the GNode is the root of the tree.
- * The children field points to the first child of the
- * GNode. The other children are accessed by using the
- * next pointer of each child.
+ * fields
+ * gpointerdata;
+ * contains the actual data of the node.
+ * GNode*next;
+ * points to the node's next sibling (a sibling is another
  */
 public struct GNode{}
 // void* data;
@@ -2353,8 +2377,8 @@ public struct GAllocator{}
 
 /*
  * Allocates size bytes on the stack; these bytes will be freed when the current
- * stack frame is cleaned up. This macro essentially just wraps the
- * alloca() function present on most UNIX variants.
+ * stack frame is cleaned up. This macro essentially just wraps the alloca()
+ * function present on most UNIX variants.
  * Thus it provides the same advantages and pitfalls as alloca():
  *  + alloca() is very fast, as on most systems it's implemented by just adjusting
  *  the stack pointer register.
@@ -2470,7 +2494,9 @@ public struct GAllocator{}
 // #define g_assert_not_reached()
 
 /*
- * Inserts a breakpoint instruction into the code (on x86 machines only).
+ * Inserts a breakpoint instruction into the code. On x86 and alpha systems
+ * this is implemented as a soft interrupt and on other architectures it raises
+ * a SIGTRAP signal.
  */
 // TODO
 // #define G_BREAKPOINT()
@@ -2572,6 +2598,9 @@ public struct GAllocator{}
  * differently depending on whether it's the name of a character set or a
  * language. This could be solved by using "charset|Russian" and
  * "language|Russian".
+ * Note
+ * If you are using the Q_() macro, you need to make sure that you
+ * pass --keyword=Q_ to xgettext when extracting messages.
  * String:
  * the string to be translated, with a '|'-separated prefix which
  *  must not be translated
@@ -2624,26 +2653,6 @@ public struct GAllocator{}
 
 /*
  * Warning
- * g_scanner_freeze_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
- * There is no reason to use this macro, since it does nothing.
- * scanner:
- * a GScanner.
- */
-// TODO
-// #define g_scanner_freeze_symbol_table(scanner)
-
-/*
- * Warning
- * g_scanner_thaw_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
- * There is no reason to use this macro, since it does nothing.
- * scanner:
- * a GScanner.
- */
-// TODO
-// #define g_scanner_thaw_symbol_table(scanner)
-
-/*
- * Warning
  * g_scanner_add_symbol has been deprecated since version 2.2 and should not be used in newly-written code. Use g_scanner_scope_add_symbol() instead.
  * Adds a symbol to the default scope.
  * scanner:
@@ -2683,18 +2692,28 @@ public struct GAllocator{}
 // #define g_scanner_foreach_symbol( scanner, func, data )
 
 /*
- * Provided for UNIX emulation on Windows; see documentation for pipe()
- * in any UNIX manual.
- * phandles:
- * file descriptors, the first one for reading, the second one for writing.
+ * Warning
+ * g_scanner_freeze_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
+ * There is no reason to use this macro, since it does nothing.
+ * scanner:
+ * a GScanner.
  */
 // TODO
-// #define pipe(phandles)	_pipe (phandles, 4096, _O_BINARY)
+// #define g_scanner_freeze_symbol_table(scanner)
 
 /*
- * On Windows, this macro defines a DllMain() function
- * that stores the actual DLL name that the code being compiled will be
- * included in.
+ * Warning
+ * g_scanner_thaw_symbol_table has been deprecated since version 2.2 and should not be used in newly-written code. This macro does nothing.
+ * There is no reason to use this macro, since it does nothing.
+ * scanner:
+ * a GScanner.
+ */
+// TODO
+// #define g_scanner_thaw_symbol_table(scanner)
+
+/*
+ * On Windows, this macro defines a DllMain() function that stores the actual
+ * DLL name that the code being compiled will be included in.
  * On non-Windows platforms, expands to nothing.
  * static:
  * empty or "static".
@@ -2730,8 +2749,9 @@ public struct GAllocator{}
 
 /*
  * A convenience macro to allocate a block of memory from the slice allocator.
- * It calls g_slice_alloc() with sizeof (type) and casts the returned pointer
- * to a pointer of the given type, avoiding a type cast in the source code.
+ * It calls g_slice_alloc() with sizeof (type) and casts
+ * the returned pointer to a pointer of the given type, avoiding a type cast
+ * in the source code.
  * Note that the underlying slice allocation mechanism can
  * be changed with the G_SLICE=always-malloc
  * environment variable.
@@ -2746,9 +2766,9 @@ public struct GAllocator{}
 
 /*
  * A convenience macro to allocate a block of memory from the slice allocator
- * and set the memory to 0. It calls g_slice_alloc0() with sizeof (type) and
- * casts the returned pointer to a pointer of the given type, avoiding a type
- * cast in the source code.
+ * and set the memory to 0. It calls g_slice_alloc0() with
+ * sizeof (type) and casts the returned pointer to a pointer
+ * of the given type, avoiding a type cast in the source code.
  * Note that the underlying slice allocation mechanism can
  * be changed with the G_SLICE=always-malloc
  * environment variable.
@@ -2760,6 +2780,25 @@ public struct GAllocator{}
  */
 // TODO
 // #define g_slice_new0(type)
+
+/*
+ * A convenience macro to duplicate a block of memory using the slice allocator.
+ * It calls g_slice_copy() with sizeof (type) and casts
+ * the returned pointer to a pointer of the given type, avoiding a type cast
+ * in the source code.
+ * Note that the underlying slice allocation mechanism can
+ * be changed with the G_SLICE=always-malloc
+ * environment variable.
+ * type:
+ * the type to duplicate, typically a structure name
+ * mem:
+ * the memory to copy into the allocated block
+ * Returns:
+ * a pointer to the allocated block, cast to a pointer to type.
+ * Since 2.14
+ */
+// TODO
+// #define g_slice_dup(type, mem)
 
 /*
  * A convenience macro to free a block of memory that has been allocated
@@ -2793,11 +2832,6 @@ public struct GAllocator{}
  * next:
  *  the field name of the next pointer in type
  * Since 2.10
- * [5]
- * [Bonwick94] Jeff Bonwick, The slab allocator: An object-caching kernel
- * memory allocator. USENIX 1994, and
- * [Bonwick01] Bonwick and Jonathan Adams, Magazines and vmem: Extending the
- * slab allocator to many cpu's and arbitrary resources. USENIX 2001
  */
 // TODO
 // #define g_slice_free_chain(type, mem_chain, next)
@@ -2983,7 +3017,7 @@ public struct GAllocator{}
 /*
  * Returns the element of a GArray at the given index.
  * The return value is cast to the given type.
- * Example6.Getting a pointer to an element in a GArray
+ * Example20.Getting a pointer to an element in a GArray
  *  EDayViewEvent *event;
  *  /+* This gets a pointer to the 3rd element in the array of EDayViewEvent
  *  structs. +/
@@ -3082,7 +3116,7 @@ public struct GAllocator{}
  * node:
  * a GNode.
  * Returns:
- * the last child of node, or NULL if node is NULL or has no children.
+ * the first child of node, or NULL if node is NULL or has no children.
  */
 // TODO
 // #define g_node_first_child(node)
@@ -3384,17 +3418,17 @@ public typedef extern(C) void  function (GModule*) GModuleUnload;
 
 /*
  * Specifies the type of function passed to g_io_add_watch() or
- * g_io_add_watch_full(), which is called when the requested condition on a
- * GIOChannel is satisfied.
+ * g_io_add_watch_full(), which is called when the requested
+ * condition on a GIOChannel is satisfied.
  * source:
- * the GIOChannel event source.
+ * the GIOChannel event source
  * condition:
- * the condition which has been satisfied.
+ * the condition which has been satisfied
  * data:
- * user data set in g_io_add_watch() or g_io_add_watch_full().
+ * user data set in g_io_add_watch() or g_io_add_watch_full()
  * Returns:
- * the function should return FALSE if the event source should be
- * removed.
+ * the function should return FALSE if the event source
+ *  should be removed
  */
 // gboolean (*GIOFunc) (GIOChannel *source,  GIOCondition condition,  gpointer data);
 public typedef extern(C) int  function (GIOChannel*, GIOCondition, void*) GIOFunc;
@@ -3485,9 +3519,8 @@ public typedef extern(C) int  function (char[], char[], uint) GCompletionStrncmp
  * Specifies the type of the setup function passed to g_spawn_async(),
  * g_spawn_sync() and g_spawn_async_with_pipes(). On POSIX platforms it
  * is called in the child after GLib has performed all the setup it plans
- * to perform but before calling exec(). On POSIX
- * actions taken in this function will thus only affect the child, not
- * the parent.
+ * to perform but before calling exec(). On POSIX actions taken in this
+ * function will thus only affect the child, not the parent.
  * On Windows the function is called in the parent. Its usefulness on
  * Windows is thus questionable. In many cases executing the child setup
  * function in the parent can have ill effects, and you should be very

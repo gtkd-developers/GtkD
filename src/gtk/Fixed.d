@@ -68,6 +68,7 @@ private import gtk.Widget;
 
 
 
+private import gtk.Container;
 
 /**
  * Description
@@ -99,7 +100,6 @@ private import gtk.Widget;
  * and prefer the simplicity of GtkFixed, by all means use the
  * widget. But you should be aware of the tradeoffs.
  */
-private import gtk.Container;
 public class Fixed : Container
 {
 	
@@ -155,8 +155,6 @@ public class Fixed : Container
 	
 	/**
 	 * Creates a new GtkFixed.
-	 * Returns:
-	 * a new GtkFixed.
 	 */
 	public this ()
 	{
@@ -166,14 +164,10 @@ public class Fixed : Container
 	
 	/**
 	 * Adds a widget to a GtkFixed container at the given position.
-	 * fixed:
-	 * a GtkFixed.
-	 * widget:
-	 * the widget to add.
-	 * x:
-	 * the horizontal position to place the widget at.
-	 * y:
-	 * the vertical position to place the widget at.
+	 * Params:
+	 * widget = the widget to add.
+	 * x = the horizontal position to place the widget at.
+	 * y = the vertical position to place the widget at.
 	 */
 	public void put(Widget widget, int x, int y)
 	{
@@ -183,14 +177,10 @@ public class Fixed : Container
 	
 	/**
 	 * Moves a child of a GtkFixed container to the given position.
-	 * fixed:
-	 * a GtkFixed.
-	 * widget:
-	 * the child widget.
-	 * x:
-	 * the horizontal position to move the widget to.
-	 * y:
-	 * the vertical position to move the widget to.
+	 * Params:
+	 * widget = the child widget.
+	 * x = the horizontal position to move the widget to.
+	 * y = the vertical position to move the widget to.
 	 */
 	public void move(Widget widget, int x, int y)
 	{
@@ -201,10 +191,7 @@ public class Fixed : Container
 	/**
 	 * Gets whether the GtkFixed has its own GdkWindow.
 	 * See gdk_fixed_set_has_window().
-	 * fixed:
-	 *  a GtkWidget
-	 * Returns:
-	 *  TRUE if fixed has its own window.
+	 * Returns: TRUE if fixed has its own window.
 	 */
 	public int getHasWindow()
 	{
@@ -220,10 +207,8 @@ public class Fixed : Container
 	 * window is created.
 	 * This function was added to provide an easy migration path for
 	 * older applications which may expect GtkFixed to have a separate window.
-	 * fixed:
-	 *  a GtkFixed
-	 * has_window:
-	 *  TRUE if a separate window should be created
+	 * Params:
+	 * hasWindow =  TRUE if a separate window should be created
 	 * Child Property Details
 	 * The "x" child property
 	 *  "x" gint : Read / Write

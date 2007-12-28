@@ -67,6 +67,7 @@ private import gtk.Widget;
 
 
 
+private import gtk.Bin;
 
 /**
  * Description
@@ -81,7 +82,6 @@ private import gtk.Widget;
  * Of course, if the scale settings are both set to 1, the alignment settings
  * have no effect.
  */
-private import gtk.Bin;
 public class Alignment : Bin
 {
 	
@@ -130,6 +130,7 @@ public class Alignment : Bin
 		this.gtkAlignment = gtkAlignment;
 	}
 	
+	/** */
 	public static Alignment center(Widget widget)
 	{
 		Alignment a = new Alignment(0.5, 0.5, 0, 0);
@@ -137,6 +138,7 @@ public class Alignment : Bin
 		return a;
 	}
 	
+	/** */
 	public static Alignment north(Widget widget)
 	{
 		Alignment a = new Alignment(0.5, 0.0, 0, 0);
@@ -144,6 +146,7 @@ public class Alignment : Bin
 		return a;
 	}
 	
+	/** */
 	public static Alignment south(Widget widget)
 	{
 		Alignment a = new Alignment(0.5, 1.0, 0, 0);
@@ -151,6 +154,7 @@ public class Alignment : Bin
 		return a;
 	}
 	
+	/** */
 	public static Alignment east(Widget widget)
 	{
 		Alignment a = new Alignment(1.0, 0.5, 0, 0);
@@ -158,6 +162,7 @@ public class Alignment : Bin
 		return a;
 	}
 	
+	/** */
 	public static Alignment west(Widget widget)
 	{
 		Alignment a = new Alignment(0.0, 0.5, 0, 0);
@@ -165,6 +170,7 @@ public class Alignment : Bin
 		return a;
 	}
 	
+	/** */
 	public static Alignment northWest(Widget widget)
 	{
 		Alignment a = new Alignment(0.0, 0.0, 0, 0);
@@ -172,6 +178,7 @@ public class Alignment : Bin
 		return a;
 	}
 	
+	/** */
 	public static Alignment southWest(Widget widget)
 	{
 		Alignment a = new Alignment(0.0, 0.5, 0, 0);
@@ -179,6 +186,7 @@ public class Alignment : Bin
 		return a;
 	}
 	
+	/** */
 	public static Alignment northEast(Widget widget)
 	{
 		Alignment a = new Alignment(1.0, 0.0, 0, 0);
@@ -186,6 +194,7 @@ public class Alignment : Bin
 		return a;
 	}
 	
+	/** */
 	public static Alignment southEast(Widget widget)
 	{
 		Alignment a = new Alignment(1.0, 1.0, 0, 0);
@@ -199,23 +208,18 @@ public class Alignment : Bin
 	
 	/**
 	 * Creates a new GtkAlignment.
-	 * xalign:
-	 * the horizontal alignment of the child widget, from 0 (left) to 1
+	 * Params:
+	 * xalign = the horizontal alignment of the child widget, from 0 (left) to 1
 	 * (right).
-	 * yalign:
-	 * the vertical alignment of the child widget, from 0 (top) to 1
+	 * yalign = the vertical alignment of the child widget, from 0 (top) to 1
 	 * (bottom).
-	 * xscale:
-	 * the amount that the child widget expands horizontally to fill up
+	 * xscale = the amount that the child widget expands horizontally to fill up
 	 * unused space, from 0 to 1.
 	 * A value of 0 indicates that the child widget should never expand.
 	 * A value of 1 indicates that the child widget will expand to fill all of the
 	 * space allocated for the GtkAlignment.
-	 * yscale:
-	 * the amount that the child widget expands vertically to fill up
+	 * yscale = the amount that the child widget expands vertically to fill up
 	 * unused space, from 0 to 1. The values are similar to xscale.
-	 * Returns:
-	 * the new GtkAlignment.
 	 */
 	public this (float xalign, float yalign, float xscale, float yscale)
 	{
@@ -225,22 +229,17 @@ public class Alignment : Bin
 	
 	/**
 	 * Sets the GtkAlignment values.
-	 * alignment:
-	 * a GtkAlignment.
-	 * xalign:
-	 * the horizontal alignment of the child widget, from 0 (left) to 1
+	 * Params:
+	 * xalign = the horizontal alignment of the child widget, from 0 (left) to 1
 	 * (right).
-	 * yalign:
-	 * the vertical alignment of the child widget, from 0 (top) to 1
+	 * yalign = the vertical alignment of the child widget, from 0 (top) to 1
 	 * (bottom).
-	 * xscale:
-	 * the amount that the child widget expands horizontally to fill up
+	 * xscale = the amount that the child widget expands horizontally to fill up
 	 * unused space, from 0 to 1.
 	 * A value of 0 indicates that the child widget should never expand.
 	 * A value of 1 indicates that the child widget will expand to fill all of the
 	 * space allocated for the GtkAlignment.
-	 * yscale:
-	 * the amount that the child widget expands vertically to fill up
+	 * yscale = the amount that the child widget expands vertically to fill up
 	 * unused space, from 0 to 1. The values are similar to xscale.
 	 */
 	public void set(float xalign, float yalign, float xscale, float yscale)
@@ -252,17 +251,12 @@ public class Alignment : Bin
 	/**
 	 * Gets the padding on the different sides of the widget.
 	 * See gtk_alignment_set_padding().
-	 * alignment:
-	 *  a GtkAlignment
-	 * padding_top:
-	 *  location to store the padding for the top of the widget, or NULL
-	 * padding_bottom:
-	 *  location to store the padding for the bottom of the widget, or NULL
-	 * padding_left:
-	 *  location to store the padding for the left of the widget, or NULL
-	 * padding_right:
-	 *  location to store the padding for the right of the widget, or NULL
 	 * Since 2.4
+	 * Params:
+	 * paddingTop =  location to store the padding for the top of the widget, or NULL
+	 * paddingBottom =  location to store the padding for the bottom of the widget, or NULL
+	 * paddingLeft =  location to store the padding for the left of the widget, or NULL
+	 * paddingRight =  location to store the padding for the right of the widget, or NULL
 	 */
 	public void getPadding(uint* paddingTop, uint* paddingBottom, uint* paddingLeft, uint* paddingRight)
 	{
@@ -275,24 +269,12 @@ public class Alignment : Bin
 	 * The padding adds blank space to the sides of the widget. For instance,
 	 * this can be used to indent the child widget towards the right by adding
 	 * padding on the left.
-	 * alignment:
-	 *  a GtkAlignment
-	 * padding_top:
-	 *  the padding at the top of the widget
-	 * padding_bottom:
-	 *  the padding at the bottom of the widget
-	 * padding_left:
-	 *  the padding at the left of the widget
-	 * padding_right:
-	 *  the padding at the right of the widget.
 	 * Since 2.4
-	 * Property Details
-	 * The "bottom-padding" property
-	 *  "bottom-padding" guint : Read / Write
-	 * The padding to insert at the bottom of the widget.
-	 * Allowed values: <= G_MAXINT
-	 * Default value: 0
-	 * Since 2.4
+	 * Params:
+	 * paddingTop =  the padding at the top of the widget
+	 * paddingBottom =  the padding at the bottom of the widget
+	 * paddingLeft =  the padding at the left of the widget
+	 * paddingRight =  the padding at the right of the widget.
 	 */
 	public void setPadding(uint paddingTop, uint paddingBottom, uint paddingLeft, uint paddingRight)
 	{

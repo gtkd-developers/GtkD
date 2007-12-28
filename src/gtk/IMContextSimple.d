@@ -68,11 +68,11 @@ private import gtk.IMContext;
 
 
 
+private import gtk.IMContext;
 
 /**
  * Description
  */
-private import gtk.IMContext;
 public class IMContextSimple : IMContext
 {
 	
@@ -127,8 +127,7 @@ public class IMContextSimple : IMContext
 	
 	/**
 	 * Creates a new GtkIMContextSimple.
-	 * Returns:
-	 *  a new GtkIMContextSimple.
+	 * Returns: a new GtkIMContextSimple.
 	 */
 	public static IMContext newIMContextSimple()
 	{
@@ -145,15 +144,11 @@ public class IMContextSimple : IMContext
 	 * The table must be sorted in dictionary order on the
 	 * numeric value of the key symbol fields. (Values beyond
 	 * the length of the sequence should be zero.)
-	 * context_simple:
-	 *  A GtkIMContextSimple
-	 * data:
-	 *  the table
-	 * max_seq_len:
-	 *  Maximum length of a sequence in the table
+	 * Params:
+	 * data =  the table
+	 * maxSeqLen =  Maximum length of a sequence in the table
 	 *  (cannot be greater than GTK_MAX_COMPOSE_LEN)
-	 * n_seqs:
-	 *  number of sequences in the table
+	 * nSeqs =  number of sequences in the table
 	 */
 	public void addTable(ushort* data, int maxSeqLen, int nSeqs)
 	{

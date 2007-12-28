@@ -89,7 +89,7 @@ private import gdk.Colormap;
  * colormap of the system. If you are using GdkRGB,
  * there is another colormap that is important - the
  * colormap in which GdkRGB works, retrieved with
- * gdk_rgb_get_cmap(). However, when using GdkRGB,
+ * gdk_rgb_get_colormap(). However, when using GdkRGB,
  * it is not generally necessary to allocate colors
  * directly.
  * In previous revisions of this interface, a number
@@ -158,6 +158,7 @@ public class Color
 		this(new GdkColor);
 	}
 	
+	/** */
 	this(ubyte red, ubyte green, ubyte blue)
 	{
 		this();
@@ -166,9 +167,10 @@ public class Color
 	
 	/**
 	 * Creates a new Color with RGB values
-	 * @param red
-	 * @param green
-	 * @param blue
+	 * Params:
+	 *  red =
+	 *  green =
+	 *  blue =
 	 */
 	this(guint16 red, guint16 green, guint16 blue)
 	{
@@ -177,6 +179,7 @@ public class Color
 		set(red,green,blue);
 	}
 	
+	/** */
 	this(uint rgb)
 	{
 		this();
@@ -184,6 +187,7 @@ public class Color
 		set( ((rgb&0xFFFF)),((rgb&0xFFFF00000000)>>32),(rgb&0xFFFF0000)>>16);
 	}
 	
+	/** */
 	this(int rgb)
 	{
 		this();
@@ -191,6 +195,7 @@ public class Color
 		set8( cast(byte)((rgb&0xFF0000)>>16),cast(byte)((rgb&0x00FF00)>>8),cast(byte)(rgb&0xFF));
 	}
 	
+	/** */
 	static Color black()
 	{
 		if ( !_black )
@@ -199,6 +204,8 @@ public class Color
 		}
 		return _black;
 	}
+	
+	/** */
 	static Color white()
 	{
 		if ( !_white )
@@ -210,9 +217,10 @@ public class Color
 	
 	/**
 	 * Sets the Color with RGB values
-	 * @param red
-	 * @param green
-	 * @param blue
+	 * Params:
+	 *  red =
+	 *  green =
+	 *  blue =
 	 */
 	void set(guint16 red, guint16 green, guint16 blue)
 	{
@@ -226,6 +234,7 @@ public class Color
 		//printf("set pixel = %X\n", gdkColor.pixel);
 	}
 	
+	/** */
 	void set8(ubyte red, ubyte green, ubyte blue)
 	{
 		//printf("Color.set %X %X %X\n",red,green,blue);
@@ -237,16 +246,19 @@ public class Color
 		//printf("set8 pixel = %X\n", gdkColor.pixel);
 	}
 	
+	/** */
 	uint getValue()
 	{
 		return (gdkColor.red <<32) | (gdkColor.green << 16) | (gdkColor.blue);
 	}
 	
+	/** */
 	int getValue24()
 	{
 		return ((gdkColor.red&0xFF00)<<8 ) | ((gdkColor.green&0xFF00)) | ((gdkColor.blue&0xFF00) >>8);
 	}
 	
+	/** */
 	uint getPixelValue()
 	{
 		return gdkColor.pixel;
@@ -274,10 +286,7 @@ public class Color
 	/**
 	 * Makes a copy of a color structure. The result
 	 * must be freed using gdk_color_free().
-	 * color:
-	 *  a GdkColor.
-	 * Returns:
-	 *  a copy of color.
+	 * Returns: a copy of color.
 	 */
 	public Color copy()
 	{
@@ -288,8 +297,6 @@ public class Color
 	/**
 	 * Frees a color structure created with
 	 * gdk_color_copy().
-	 * color:
-	 *  a GdkColor.
 	 */
 	public void free()
 	{
@@ -304,12 +311,10 @@ public class Color
 	 * gdk_color_white is deprecated and should not be used in newly-written code.
 	 * Returns the white color for a given colormap. The resulting
 	 * value has already allocated been allocated.
-	 * colormap:
-	 *  a GdkColormap.
-	 * color:
-	 *  the location to store the color.
-	 * Returns:
-	 *  TRUE if the allocation succeeded.
+	 * Params:
+	 * colormap =  a GdkColormap.
+	 * color =  the location to store the color.
+	 * Returns: TRUE if the allocation succeeded.
 	 */
 	public static int white(Colormap colormap, Color color)
 	{
@@ -322,12 +327,10 @@ public class Color
 	 * gdk_color_black is deprecated and should not be used in newly-written code.
 	 * Returns the black color for a given colormap. The resulting
 	 * value has already benn allocated.
-	 * colormap:
-	 *  a GdkColormap.
-	 * color:
-	 *  the location to store the color.
-	 * Returns:
-	 *  TRUE if the allocation succeeded.
+	 * Params:
+	 * colormap =  a GdkColormap.
+	 * color =  the location to store the color.
+	 * Returns: TRUE if the allocation succeeded.
 	 */
 	public static int black(Colormap colormap, Color color)
 	{
@@ -347,12 +350,10 @@ public class Color
 	 * name for a color from rgb.txt, such as
 	 * DarkSlateGray, or a hex specification
 	 * such as #3050b2 or #35b.
-	 * spec:
-	 *  the string specifying the color.
-	 * color:
-	 *  the GdkColor to fill in
-	 * Returns:
-	 *  TRUE if the parsing succeeded.
+	 * Params:
+	 * spec =  the string specifying the color.
+	 * color =  the GdkColor to fill in
+	 * Returns: TRUE if the parsing succeeded.
 	 */
 	public static int parse(char[] spec, Color color)
 	{
@@ -364,13 +365,11 @@ public class Color
 	 * Warning
 	 * gdk_color_alloc is deprecated and should not be used in newly-written code. Use gdk_colormap_alloc_color() instead.
 	 * Allocates a single color from a colormap.
-	 * colormap:
-	 *  a GdkColormap.
-	 * color:
-	 *  The color to allocate. On return, the
+	 * Params:
+	 * colormap =  a GdkColormap.
+	 * color =  The color to allocate. On return, the
 	 *  pixel field will be filled in.
-	 * Returns:
-	 *  TRUE if the allocation succeeded.
+	 * Returns: TRUE if the allocation succeeded.
 	 */
 	public static int alloc(Colormap colormap, Color color)
 	{
@@ -386,14 +385,12 @@ public class Color
 	 * colormap, then the color must have been allocated
 	 * using gdk_colormap_alloc_colors() with the
 	 * writeable set to TRUE.
-	 * colormap:
-	 *  a GdkColormap.
-	 * color:
-	 *  a GdkColor, with the color to change
+	 * Params:
+	 * colormap =  a GdkColormap.
+	 * color =  a GdkColor, with the color to change
 	 * in the pixel field,
 	 * and the new value in the remaining fields.
-	 * Returns:
-	 *  TRUE if the color was successfully changed.
+	 * Returns: TRUE if the color was successfully changed.
 	 */
 	public static int change(Colormap colormap, Color color)
 	{
@@ -403,12 +400,9 @@ public class Color
 	
 	/**
 	 * Compares two colors.
-	 * colora:
-	 *  a GdkColor.
-	 * colorb:
-	 *  another GdkColor.
-	 * Returns:
-	 *  TRUE if the two colors compare equal
+	 * Params:
+	 * colorb =  another GdkColor.
+	 * Returns: TRUE if the two colors compare equal
 	 */
 	public int equal(Color colorb)
 	{
@@ -419,10 +413,7 @@ public class Color
 	/**
 	 * A hash function suitable for using for a hash
 	 * table that stores GdkColor's.
-	 * colora:
-	 *  a GdkColor.
-	 * Returns:
-	 *  The hash function applied to colora
+	 * Returns: The hash function applied to colora
 	 */
 	public uint hash()
 	{
@@ -435,11 +426,8 @@ public class Color
 	 * #rrrrggggbbbb, where r,
 	 * g and b are hex digits
 	 * representing the red, green and blue components respectively.
-	 * color:
-	 *  a GdkColor
-	 * Returns:
-	 *  a newly-allocated text string
 	 * Since 2.12
+	 * Returns: a newly-allocated text string
 	 */
 	public char[] toString()
 	{

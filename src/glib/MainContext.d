@@ -219,8 +219,6 @@ public class MainContext
 	
 	/**
 	 * Creates a new GMainContext strcuture
-	 * Returns:
-	 *  the new GMainContext
 	 */
 	public this ()
 	{
@@ -230,10 +228,7 @@ public class MainContext
 	
 	/**
 	 * Increases the reference count on a GMainContext object by one.
-	 * context:
-	 *  a GMainContext
-	 * Returns:
-	 *  the context that was passed in (since 2.6)
+	 * Returns: the context that was passed in (since 2.6)
 	 */
 	public MainContext doref()
 	{
@@ -244,8 +239,6 @@ public class MainContext
 	/**
 	 * Decreases the reference count on a GMainContext object by one. If
 	 * the result is zero, free the context and free all associated memory.
-	 * context:
-	 *  a GMainContext
 	 */
 	public void unref()
 	{
@@ -257,8 +250,7 @@ public class MainContext
 	 * Returns the default main context. This is the main context used
 	 * for main loop functions when a main loop is not explicitly
 	 * specified.
-	 * Returns:
-	 *  the default main context.
+	 * Returns: the default main context.
 	 */
 	public static MainContext defaulx()
 	{
@@ -275,12 +267,9 @@ public class MainContext
 	 * it is still possible for g_main_context_iteration() to return
 	 * FALSE, since the the wait may be interrupted for other
 	 * reasons than an event source becoming ready.
-	 * context:
-	 *  a GMainContext (if NULL, the default context will be used)
-	 * may_block:
-	 *  whether the call may block.
-	 * Returns:
-	 *  TRUE if events were dispatched.
+	 * Params:
+	 * mayBlock =  whether the call may block.
+	 * Returns: TRUE if events were dispatched.
 	 */
 	public int iteration(int mayBlock)
 	{
@@ -291,10 +280,7 @@ public class MainContext
 	
 	/**
 	 * Checks if any sources have pending events for the given context.
-	 * context:
-	 *  a GMainContext (if NULL, the default context will be used)
-	 * Returns:
-	 *  TRUE if events are pending.
+	 * Returns: TRUE if events are pending.
 	 */
 	public int pending()
 	{
@@ -305,12 +291,9 @@ public class MainContext
 	
 	/**
 	 * Finds a GSource given a pair of context and ID.
-	 * context:
-	 *  a GMainContext (if NULL, the default context will be used)
-	 * source_id:
-	 *  the source ID, as returned by g_source_get_id().
-	 * Returns:
-	 *  the GSource if found, otherwise, NULL
+	 * Params:
+	 * sourceId =  the source ID, as returned by g_source_get_id().
+	 * Returns: the GSource if found, otherwise, NULL
 	 */
 	public Source findSourceById(uint sourceId)
 	{
@@ -322,12 +305,9 @@ public class MainContext
 	 * Finds a source with the given user data for the callback. If
 	 * multiple sources exist with the same user data, the first
 	 * one found will be returned.
-	 * context:
-	 *  a GMainContext
-	 * user_data:
-	 *  the user_data for the callback.
-	 * Returns:
-	 *  the source, if one was found, otherwise NULL
+	 * Params:
+	 * userData =  the user_data for the callback.
+	 * Returns: the source, if one was found, otherwise NULL
 	 */
 	public Source findSourceByUserData(void* userData)
 	{
@@ -339,14 +319,10 @@ public class MainContext
 	 * Finds a source with the given source functions and user data. If
 	 * multiple sources exist with the same source function and user data,
 	 * the first one found will be returned.
-	 * context:
-	 *  a GMainContext (if NULL, the default context will be used).
-	 * funcs:
-	 *  the source_funcs passed to g_source_new().
-	 * user_data:
-	 *  the user data from the callback.
-	 * Returns:
-	 *  the source, if one was found, otherwise NULL
+	 * Params:
+	 * funcs =  the source_funcs passed to g_source_new().
+	 * userData =  the user data from the callback.
+	 * Returns: the source, if one was found, otherwise NULL
 	 */
 	public Source findSourceByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
@@ -357,8 +333,6 @@ public class MainContext
 	/**
 	 * If context is currently waiting in a poll(), interrupt
 	 * the poll(), and continue the iteration process.
-	 * context:
-	 *  a GMainContext
 	 */
 	public void wakeup()
 	{
@@ -376,11 +350,7 @@ public class MainContext
 	 * You must be the owner of a context before you
 	 * can call g_main_context_prepare(), g_main_context_query(),
 	 * g_main_context_check(), g_main_context_dispatch().
-	 * context:
-	 *  a GMainContext
-	 * Returns:
-	 *  TRUE if the operation succeeded, and
-	 *  this thread is now the owner of context.
+	 * Returns: TRUE if the operation succeeded, and this thread is now the owner of context.
 	 */
 	public int acquire()
 	{
@@ -393,8 +363,6 @@ public class MainContext
 	 * with g_main_context_acquire(). If the context was acquired multiple
 	 * times, the only release ownership when g_main_context_release()
 	 * is called as many times as it was acquired.
-	 * context:
-	 *  a GMainContext
 	 */
 	public void release()
 	{
@@ -407,11 +375,8 @@ public class MainContext
 	 * ownership of this GMaincontext. This is useful to
 	 * know before waiting on another thread that may be
 	 * blocking to get ownership of context.
-	 * context:
-	 *  a GMainContext
-	 * Returns:
-	 *  TRUE if current thread is owner of context.
 	 * Since 2.10
+	 * Returns: TRUE if current thread is owner of context.
 	 */
 	public int isOwner()
 	{
@@ -425,15 +390,10 @@ public class MainContext
 	 * is the owner, atomically drop mutex and wait on cond until
 	 * that owner releases ownership or until cond is signaled, then
 	 * try again (once) to become the owner.
-	 * context:
-	 *  a GMainContext
-	 * cond:
-	 *  a condition variable
-	 * mutex:
-	 *  a mutex, currently held
-	 * Returns:
-	 *  TRUE if the operation succeeded, and
-	 *  this thread is now the owner of context.
+	 * Params:
+	 * cond =  a condition variable
+	 * mutex =  a mutex, currently held
+	 * Returns: TRUE if the operation succeeded, and this thread is now the owner of context.
 	 */
 	public int wait(Cond cond, Mutex mutex)
 	{
@@ -444,14 +404,10 @@ public class MainContext
 	/**
 	 * Prepares to poll sources within a main loop. The resulting information
 	 * for polling is determined by calling g_main_context_query().
-	 * context:
-	 *  a GMainContext
-	 * priority:
-	 *  location to store priority of highest priority
+	 * Params:
+	 * priority =  location to store priority of highest priority
 	 *  source already ready.
-	 * Returns:
-	 *  TRUE if some source is ready to be dispatched
-	 *  prior to polling.
+	 * Returns: TRUE if some source is ready to be dispatched prior to polling.
 	 */
 	public int prepare(int* priority)
 	{
@@ -461,20 +417,12 @@ public class MainContext
 	
 	/**
 	 * Determines information necessary to poll this main loop.
-	 * context:
-	 *  a GMainContext
-	 * max_priority:
-	 *  maximum priority source to check
-	 * timeout_:
-	 *  location to store timeout to be used in polling
-	 * fds:
-	 *  location to store GPollFD records that need to be polled.
-	 * n_fds:
-	 *  length of fds.
-	 * Returns:
-	 *  the number of records actually stored in fds,
-	 *  or, if more than n_fds records need to be stored, the number
-	 *  of records that need to be stored.
+	 * Params:
+	 * maxPriority =  maximum priority source to check
+	 * timeout =  location to store timeout to be used in polling
+	 * fds =  location to store GPollFD records that need to be polled.
+	 * nFds =  length of fds.
+	 * Returns: the number of records actually stored in fds, or, if more than n_fds records need to be stored, the number of records that need to be stored.
 	 */
 	public int query(int maxPriority, int* timeout, GPollFD* fds, int nFds)
 	{
@@ -484,17 +432,12 @@ public class MainContext
 	
 	/**
 	 * Passes the results of polling back to the main loop.
-	 * context:
-	 *  a GMainContext
-	 * max_priority:
-	 *  the maximum numerical priority of sources to check
-	 * fds:
-	 *  array of GPollFD's that was passed to the last call to
+	 * Params:
+	 * maxPriority =  the maximum numerical priority of sources to check
+	 * fds =  array of GPollFD's that was passed to the last call to
 	 *  g_main_context_query()
-	 * n_fds:
-	 *  return value of g_main_context_query()
-	 * Returns:
-	 *  TRUE if some sources are ready to be dispatched.
+	 * nFds =  return value of g_main_context_query()
+	 * Returns: TRUE if some sources are ready to be dispatched.
 	 */
 	public int check(int maxPriority, GPollFD* fds, int nFds)
 	{
@@ -504,8 +447,6 @@ public class MainContext
 	
 	/**
 	 * Dispatches all pending sources.
-	 * context:
-	 *  a GMainContext
 	 */
 	public void dispatch()
 	{
@@ -520,10 +461,8 @@ public class MainContext
 	 * poll() isn't available).
 	 * This function could possibly be used to integrate the GLib event
 	 * loop with an external event loop.
-	 * context:
-	 *  a GMainContext
-	 * func:
-	 *  the function to call to poll all file descriptors
+	 * Params:
+	 * func =  the function to call to poll all file descriptors
 	 */
 	public void setPollFunc(GPollFunc func)
 	{
@@ -533,10 +472,7 @@ public class MainContext
 	
 	/**
 	 * Gets the poll function set by g_main_context_set_poll_func().
-	 * context:
-	 *  a GMainContext
-	 * Returns:
-	 *  the poll function
+	 * Returns: the poll function
 	 */
 	public GPollFunc getPollFunc()
 	{
@@ -549,13 +485,10 @@ public class MainContext
 	 * Adds a file descriptor to the set of file descriptors polled for
 	 * this context. This will very seldomly be used directly. Instead
 	 * a typical event source will use g_source_add_poll() instead.
-	 * context:
-	 *  a GMainContext (or NULL for the default context)
-	 * fd:
-	 *  a GPollFD structure holding information about a file
+	 * Params:
+	 * fd =  a GPollFD structure holding information about a file
 	 *  descriptor to watch.
-	 * priority:
-	 *  the priority for this file descriptor which should be
+	 * priority =  the priority for this file descriptor which should be
 	 *  the same as the priority used for g_source_attach() to ensure that the
 	 *  file descriptor is polled whenever the results may be needed.
 	 */
@@ -568,16 +501,15 @@ public class MainContext
 	/**
 	 * Removes file descriptor from the set of file descriptors to be
 	 * polled for a particular context.
-	 * context:
-	 * a GMainContext
-	 * fd:
-	 *  a GPollFD descriptor previously added with g_main_context_add_poll()
+	 * Params:
+	 * fd =  a GPollFD descriptor previously added with g_main_context_add_poll()
 	 */
 	public void removePoll(GPollFD* fd)
 	{
 		// void g_main_context_remove_poll (GMainContext *context,  GPollFD *fd);
 		g_main_context_remove_poll(gMainContext, fd);
 	}
+	
 	
 	
 	

@@ -67,6 +67,7 @@ private import glib.Str;
 
 
 
+private import gtk.Frame;
 
 /**
  * Description
@@ -78,7 +79,6 @@ private import glib.Str;
  * a frame around the child. The frame will be
  * "shrink-wrapped" to the size of the child.
  */
-private import gtk.Frame;
 public class AspectFrame : Frame
 {
 	
@@ -133,23 +133,17 @@ public class AspectFrame : Frame
 	
 	/**
 	 * Create a new GtkAspectFrame.
-	 * label:
-	 * Label text.
-	 * xalign:
-	 * Horizontal alignment of the child within the allocation of
+	 * Params:
+	 * label = Label text.
+	 * xalign = Horizontal alignment of the child within the allocation of
 	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
 	 * to 1.0 (right aligned)
-	 * yalign:
-	 * Vertical alignment of the child within the allocation of
+	 * yalign = Vertical alignment of the child within the allocation of
 	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
 	 * to 1.0 (right aligned)
-	 * ratio:
-	 * The desired aspect ratio.
-	 * obey_child:
-	 * If TRUE, ratio is ignored, and the aspect
+	 * ratio = The desired aspect ratio.
+	 * obeyChild = If TRUE, ratio is ignored, and the aspect
 	 *  ratio is taken from the requistion of the child.
-	 * Returns:
-	 * the new GtkAspectFrame.
 	 */
 	public this (char[] label, float xalign, float yalign, float ratio, int obeyChild)
 	{
@@ -159,26 +153,16 @@ public class AspectFrame : Frame
 	
 	/**
 	 * Set parameters for an existing GtkAspectFrame.
-	 * aspect_frame:
-	 * a GtkAspectFrame
-	 * xalign:
-	 * Horizontal alignment of the child within the allocation of
+	 * Params:
+	 * xalign = Horizontal alignment of the child within the allocation of
 	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
 	 * to 1.0 (right aligned)
-	 * yalign:
-	 * Vertical alignment of the child within the allocation of
+	 * yalign = Vertical alignment of the child within the allocation of
 	 * the GtkAspectFrame. This ranges from 0.0 (left aligned)
 	 * to 1.0 (right aligned)
-	 * ratio:
-	 * The desired aspect ratio.
-	 * obey_child:
-	 * If TRUE, ratio is ignored, and the aspect
+	 * ratio = The desired aspect ratio.
+	 * obeyChild = If TRUE, ratio is ignored, and the aspect
 	 *  ratio is taken from the requistion of the child.
-	 * Property Details
-	 * The "obey-child" property
-	 *  "obey-child" gboolean : Read / Write
-	 * Force aspect ratio to match that of the frame's child.
-	 * Default value: TRUE
 	 */
 	public void set(float xalign, float yalign, float ratio, int obeyChild)
 	{

@@ -84,16 +84,12 @@ public class GLFont
 	
 	/**
 	 * Creates bitmap display lists from a PangoFont.
-	 * font_desc:
-	 *  a PangoFontDescription describing the font to use.
-	 * first:
-	 *  the index of the first glyph to be taken.
-	 * count:
-	 *  the number of glyphs to be taken.
-	 * list_base:
-	 *  the index of the first display list to be generated.
-	 * Returns:
-	 *  the PangoFont used, or NULL if no font matched.
+	 * Params:
+	 * fontDesc =  a PangoFontDescription describing the font to use.
+	 * first =  the index of the first glyph to be taken.
+	 * count =  the number of glyphs to be taken.
+	 * listBase =  the index of the first display list to be generated.
+	 * Returns: the PangoFont used, or NULL if no font matched.
 	 */
 	public static PangoFont* usePangoFont(PgFontDescription fontDesc, int first, int count, int listBase)
 	{
@@ -103,20 +99,13 @@ public class GLFont
 	
 	/**
 	 * Creates bitmap display lists from a PangoFont.
-	 * display:
-	 *  a GdkDisplay.
-	 * font_desc:
-	 *  a PangoFontDescription describing the font to use.
-	 * first:
-	 *  the index of the first glyph to be taken.
-	 * count:
-	 *  the number of glyphs to be taken.
-	 * list_base:
-	 *  the index of the first display list to be generated.
-	 * Returns:
-	 *  the PangoFont used, or NULL if no font matched.
-	 * <<OpenGL Window
-	 * Geometric Object Rendering>>
+	 * Params:
+	 * display =  a GdkDisplay.
+	 * fontDesc =  a PangoFontDescription describing the font to use.
+	 * first =  the index of the first glyph to be taken.
+	 * count =  the number of glyphs to be taken.
+	 * listBase =  the index of the first display list to be generated.
+	 * Returns: the PangoFont used, or NULL if no font matched.<<OpenGL WindowGeometric Object Rendering>>
 	 */
 	public static PangoFont* usePangoFontForDisplay(Display display, PgFontDescription fontDesc, int first, int count, int listBase)
 	{

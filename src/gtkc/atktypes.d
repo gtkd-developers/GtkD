@@ -399,7 +399,7 @@ public struct AtkObject{}
 
 
 /**
- * The AtkImplementor structure does not contain any fields.
+ * The AtkImplementor interface is implemented by objects for which AtkObject peers may be obtained via calls to iface->(ref_accessible)(implementor);
  */
 public struct AtkImplementor{}
 

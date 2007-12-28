@@ -94,6 +94,10 @@ private import gtkc.gthread;
  * this rule are GMainLoop and GAsyncQueue,
  * which are threadsafe and needs no further
  * application-level locking to be accessed from multiple threads.
+ * To help debugging problems in multithreaded applications, GLib supports
+ * error-checking mutexes that will give you helpful error messages on
+ * common problems. To use error-checking mutexes, define the symbol
+ * G_ERRORCHECK_MUTEXES when compiling the application.
  */
 public class StaticRecMutex
 {
@@ -190,8 +194,6 @@ public class StaticRecMutex
 	 * A GStaticRecMutex must be initialized with this function before it
 	 * can be used. Alternatively you can initialize it with
 	 * G_STATIC_REC_MUTEX_INIT.
-	 * mutex:
-	 * a GStaticRecMutex to be initialized.
 	 */
 	public void init()
 	{
@@ -204,8 +206,6 @@ public class StaticRecMutex
 	 * current thread will block until mutex is unlocked by the other
 	 * thread. If mutex is already locked by the calling thread, this
 	 * functions increases the depth of mutex and returns immediately.
-	 * mutex:
-	 * a GStaticRecMutex to lock.
 	 */
 	public void lock()
 	{
@@ -218,10 +218,7 @@ public class StaticRecMutex
 	 * it immediately returns FALSE. Otherwise it locks mutex and returns
 	 * TRUE. If mutex is already locked by the calling thread, this
 	 * functions increases the depth of mutex and immediately returns TRUE.
-	 * mutex:
-	 * a GStaticRecMutex to lock.
-	 * Returns:
-	 * TRUE, if mutex could be locked.
+	 * Returns:TRUE, if mutex could be locked.
 	 */
 	public int trylock()
 	{
@@ -230,13 +227,11 @@ public class StaticRecMutex
 	}
 	
 	/**
-	 * Unlocks mutex. Another thread can will be allowed to lock mutex only
+	 * Unlocks mutex. Another thread will be allowed to lock mutex only
 	 * when it has been unlocked as many times as it had been locked
 	 * before. If mutex is completely unlocked and another thread is blocked
 	 * in a g_static_rec_mutex_lock() call for mutex, it will be woken and
 	 * can lock mutex itself.
-	 * mutex:
-	 * a GStaticRecMutex to unlock.
 	 */
 	public void unlock()
 	{
@@ -246,10 +241,8 @@ public class StaticRecMutex
 	
 	/**
 	 * Works like calling g_static_rec_mutex_lock() for mutex depth times.
-	 * mutex:
-	 * a GStaticRecMutex to lock.
-	 * depth:
-	 * number of times this mutex has to be unlocked to be completely unlocked.
+	 * Params:
+	 * depth = number of times this mutex has to be unlocked to be completely unlocked.
 	 */
 	public void lockFull(uint depth)
 	{
@@ -265,10 +258,7 @@ public class StaticRecMutex
 	 * before the call to g_static_rec_mutex_unlock_full() you can call
 	 * g_static_rec_mutex_lock_full() with the depth returned by this
 	 * function.
-	 * mutex:
-	 * a GStaticRecMutex to completely unlock.
-	 * Returns:
-	 * number of times mutex has been locked by the current thread.
+	 * Returns:number of times mutex has been locked by the current thread.
 	 */
 	public uint unlockFull()
 	{
@@ -282,14 +272,14 @@ public class StaticRecMutex
 	 * unbounded lifetime, i.e. objects declared 'static', but if you have a
 	 * GStaticRecMutex as a member of a structure and the structure is
 	 * freed, you should also free the GStaticRecMutex.
-	 * mutex:
-	 * a GStaticRecMutex to be freed.
 	 */
 	public void free()
 	{
 		// void g_static_rec_mutex_free (GStaticRecMutex *mutex);
 		g_static_rec_mutex_free(gStaticRecMutex);
 	}
+	
+	
 	
 	
 	

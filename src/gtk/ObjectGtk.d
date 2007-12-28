@@ -67,6 +67,7 @@ private import glib.Str;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -108,7 +109,7 @@ private import glib.Str;
  * the "destroy" signal. Freeing memory (referred to as
  * finalization only happens if the reference count reaches
  * zero.
- * Some simple rules for handling GtkObject:
+ * Some simple rules for handling ""
  * Never call g_object_unref() unless you have previously called g_object_ref(),
  * even if you created the GtkObject. (Note: this is not
  * true for GObject; for GObject, the creator of the object owns a reference.)
@@ -118,7 +119,6 @@ private import glib.Str;
  * worry about reference counting for widgets and toplevel windows, unless you
  * explicitly call g_object_ref() yourself.
  */
-private import gobject.ObjectG;
 public class ObjectGtk : ObjectG
 {
 	
@@ -167,6 +167,7 @@ public class ObjectGtk : ObjectG
 		this.gtkObject = gtkObject;
 	}
 	
+	/** */
 	public static char[] getId(StockID id)
 	{
 		return StockDesc[id];
@@ -221,18 +222,14 @@ public class ObjectGtk : ObjectG
 	 * gtk_object_new is deprecated and should not be used in newly-written code. Use g_object_new() instead.
 	 * Constructs an object given its arguments, enumerated in the call to the
 	 * function.
-	 * type:
-	 * the type identifying this object. Returned by gtk_type_unique()
+	 * Params:
+	 * type = the type identifying this object. Returned by gtk_type_unique()
 	 * (although for a properly-written object it should be accessible through
 	 * a GTK_TYPE_FOO macro.)
-	 * first_property_name:
-	 * name of the first property to set when constructing
+	 * firstPropertyName = name of the first property to set when constructing
 	 *  the object.
-	 * ...:
-	 * the first argument's value, followed by any number of
+	 * ... = the first argument's value, followed by any number of
 	 * name/argument-value pairs, terminated with NULL.
-	 * Returns:
-	 * the new GtkObject.
 	 */
 	public this (GtkType type, char[] firstPropertyName, ... )
 	{
@@ -246,8 +243,6 @@ public class ObjectGtk : ObjectG
 	 * Removes the floating reference from a GtkObject, if it exists;
 	 * otherwise does nothing. See the GtkObject overview documentation at
 	 * the top of the page.
-	 * object:
-	 * the object to sink.
 	 */
 	public void sink()
 	{
@@ -259,10 +254,7 @@ public class ObjectGtk : ObjectG
 	 * Warning
 	 * gtk_object_ref is deprecated and should not be used in newly-written code. Use g_object_ref() instead.
 	 * Increases the reference count of the object.
-	 * object:
-	 * the object to reference.
-	 * Returns:
-	 * object.
+	 * Returns:object.
 	 */
 	public GtkObject* doref()
 	{
@@ -275,8 +267,6 @@ public class ObjectGtk : ObjectG
 	 * gtk_object_unref is deprecated and should not be used in newly-written code. Use g_object_unref() instead.
 	 * Decreases the reference count of an object. When its reference count drops
 	 * to 0, the object is finalized (i.e. its memory is freed).
-	 * object:
-	 * the object to dereference.
 	 */
 	public void unref()
 	{
@@ -291,12 +281,9 @@ public class ObjectGtk : ObjectG
 	 * finalized. They are called "weak references" because they allow you to safely
 	 * hold a pointer to an object without calling g_object_ref() (g_object_ref() adds
 	 * a strong reference, that is, forces the object to stay alive).
-	 * object:
-	 * object to weakly reference.
-	 * notify:
-	 * callback to invoke before the object is freed.
-	 * data:
-	 * extra data to pass to notify.
+	 * Params:
+	 * notify = callback to invoke before the object is freed.
+	 * data = extra data to pass to notify.
 	 */
 	public void weakref(GtkDestroyNotify notify, void* data)
 	{
@@ -308,12 +295,9 @@ public class ObjectGtk : ObjectG
 	 * Warning
 	 * gtk_object_weakunref is deprecated and should not be used in newly-written code. Use g_object_weak_unref() instead.
 	 * Removes a weak reference callback to an object.
-	 * object:
-	 * object stop weakly referencing.
-	 * notify:
-	 * callback to search for.
-	 * data:
-	 * data to search for.
+	 * Params:
+	 * notify = callback to search for.
+	 * data = data to search for.
 	 */
 	public void weakunref(GtkDestroyNotify notify, void* data)
 	{
@@ -328,8 +312,6 @@ public class ObjectGtk : ObjectG
 	 * The memory for the object itself won't be deleted until
 	 * its reference count actually drops to 0; gtk_object_destroy() merely asks
 	 * reference holders to release their references, it does not free the object.
-	 * object:
-	 * the object to destroy.
 	 */
 	public void destroy()
 	{
@@ -341,12 +323,9 @@ public class ObjectGtk : ObjectG
 	 * Warning
 	 * gtk_object_get is deprecated and should not be used in newly-written code. Use g_object_get() instead.
 	 * Gets properties of an object.
-	 * object:
-	 * a GtkObject.
-	 * first_property_name:
-	 * name of first property to get the value for.
-	 * ...:
-	 * NULL-terminated list of name-return location pairs.
+	 * Params:
+	 * firstPropertyName = name of first property to get the value for.
+	 * ... = NULL-terminated list of name-return location pairs.
 	 */
 	public void get(char[] firstPropertyName, ... )
 	{
@@ -364,12 +343,9 @@ public class ObjectGtk : ObjectG
 		 *  "spacing", 8,
 		 * 				 NULL);
 	 * }
-	 * object:
-	 * a GtkObject.
-	 * first_property_name:
-	 * name of the first property to set
-	 * ...:
-	 * the value of the first argument, followed optionally
+	 * Params:
+	 * firstPropertyName = name of the first property to set
+	 * ... = the value of the first argument, followed optionally
 	 * by more name/value pairs, followed by NULL.
 	 */
 	public void set(char[] firstPropertyName, ... )
@@ -385,12 +361,9 @@ public class ObjectGtk : ObjectG
 	 * strings to pointers. This function lets you set an association.
 	 * If the object already had an association with that name,
 	 * the old association will be destroyed.
-	 * object:
-	 * object containing the associations.
-	 * key:
-	 * name of the key.
-	 * data:
-	 * data to associate with that key.
+	 * Params:
+	 * key = name of the key.
+	 * data = data to associate with that key.
 	 */
 	public void setData(char[] key, void* data)
 	{
@@ -404,14 +377,10 @@ public class ObjectGtk : ObjectG
 	 * Like gtk_object_set_data() except it adds notification
 	 * for when the association is destroyed, either by
 	 * gtk_object_remove_data() or when the object is destroyed.
-	 * object:
-	 * object containing the associations.
-	 * key:
-	 * name of the key.
-	 * data:
-	 * data to associate with that key.
-	 * destroy:
-	 * function to call when the association is destroyed.
+	 * Params:
+	 * key = name of the key.
+	 * data = data to associate with that key.
+	 * destroy = function to call when the association is destroyed.
 	 */
 	public void setDataFull(char[] key, void* data, GtkDestroyNotify destroy)
 	{
@@ -426,10 +395,8 @@ public class ObjectGtk : ObjectG
 	 * Subsequent calls to gtk_object_get_data() will return NULL.
 	 * If you specified a destroy handler with gtk_object_set_data_full(),
 	 * it will be invoked.
-	 * object:
-	 * the object maintaining the association.
-	 * key:
-	 * name of the key for that association.
+	 * Params:
+	 * key = name of the key for that association.
 	 */
 	public void removeData(char[] key)
 	{
@@ -441,12 +408,9 @@ public class ObjectGtk : ObjectG
 	 * Warning
 	 * gtk_object_get_data is deprecated and should not be used in newly-written code. Use g_object_get_data() instead.
 	 * Get a named field from the object's table of associations (the object_data).
-	 * object:
-	 * the object maintaining the associations.
-	 * key:
-	 * name of the key for that association.
-	 * Returns:
-	 * the data if found, or NULL if no such data exists.
+	 * Params:
+	 * key = name of the key for that association.
+	 * Returns:the data if found, or NULL if no such data exists.
 	 */
 	public void* getData(char[] key)
 	{
@@ -462,10 +426,8 @@ public class ObjectGtk : ObjectG
 	 * Just like gtk_object_remove_data() except that any destroy handler
 	 * will be ignored.
 	 * Therefore this only affects data set using gtk_object_set_data_full().
-	 * object:
-	 * the object maintaining the association.
-	 * key:
-	 * name of the key for that association.
+	 * Params:
+	 * key = name of the key for that association.
 	 */
 	public void removeNoNotify(char[] key)
 	{
@@ -478,10 +440,8 @@ public class ObjectGtk : ObjectG
 	 * gtk_object_set_user_data is deprecated and should not be used in newly-written code. Use g_object_set_data() instead.
 	 * For convenience, every object offers a generic user data
 	 * pointer. This function sets it.
-	 * object:
-	 * the object whose user data should be set.
-	 * data:
-	 * the new value for the user data.
+	 * Params:
+	 * data = the new value for the user data.
 	 */
 	public void setUserData(void* data)
 	{
@@ -495,10 +455,7 @@ public class ObjectGtk : ObjectG
 	 * Get the object's user data pointer.
 	 * This is intended to be a pointer for your convenience in
 	 * writing applications.
-	 * object:
-	 * the object.
-	 * Returns:
-	 * the user data field for object.
+	 * Returns:the user data field for object.
 	 */
 	public void* getUserData()
 	{
@@ -512,15 +469,12 @@ public class ObjectGtk : ObjectG
 	 * Deprecated in favor of the GObject property system including GParamSpec.
 	 * Add a new type of argument to an object class.
 	 * Usually this is called when registering a new type of object.
-	 * arg_name:
-	 * fully qualify object name, for example GtkObject::user_data.
-	 * arg_type:
-	 * type of the argument.
-	 * arg_flags:
-	 * bitwise-OR of the GtkArgFlags enum. (Whether the argument is
+	 * Params:
+	 * argName = fully qualify object name, for example GtkObject::user_data.
+	 * argType = type of the argument.
+	 * argFlags = bitwise-OR of the GtkArgFlags enum. (Whether the argument is
 	 * settable or gettable, whether it is set when the object is constructed.)
-	 * arg_id:
-	 * an internal number, passed in from here to the "set_arg" and
+	 * argId = an internal number, passed in from here to the "set_arg" and
 	 * "get_arg" handlers of the object.
 	 */
 	public static void addArgType(char[] argName, GtkType argType, uint argFlags, uint argId)
@@ -536,12 +490,9 @@ public class ObjectGtk : ObjectG
 	 * a GQuark instead of a string, so it is slightly faster.
 	 * Use gtk_object_data_try_key() and gtk_object_data_force_id()
 	 * to get an id from a string.
-	 * object:
-	 * object containing the associations.
-	 * data_id:
-	 * quark of the key.
-	 * data:
-	 * data to associate with that key.
+	 * Params:
+	 * dataId = quark of the key.
+	 * data = data to associate with that key.
 	 */
 	public void setDataById(GQuark dataId, void* data)
 	{
@@ -556,14 +507,10 @@ public class ObjectGtk : ObjectG
 	 * a GQuark instead of a string, so it is slightly faster.
 	 * Use gtk_object_data_try_key() and gtk_object_data_force_id()
 	 * to get an id from a string.
-	 * object:
-	 * object containing the associations.
-	 * data_id:
-	 * quark of the key.
-	 * data:
-	 * data to associate with that key.
-	 * destroy:
-	 * function to call when the association is destroyed.
+	 * Params:
+	 * dataId = quark of the key.
+	 * data = data to associate with that key.
+	 * destroy = function to call when the association is destroyed.
 	 */
 	public void setDataByIdFull(GQuark dataId, void* data, GtkDestroyNotify destroy)
 	{
@@ -578,12 +525,9 @@ public class ObjectGtk : ObjectG
 	 * a GQuark instead of a string, so it is slightly faster.
 	 * Use gtk_object_data_try_key() and gtk_object_data_force_id()
 	 * to get an id from a string.
-	 * object:
-	 * object containing the associations.
-	 * data_id:
-	 * quark of the key.
-	 * Returns:
-	 * the data if found, or NULL if no such data exists.
+	 * Params:
+	 * dataId = quark of the key.
+	 * Returns:the data if found, or NULL if no such data exists.
 	 */
 	public void* getDataById(GQuark dataId)
 	{
@@ -600,10 +544,8 @@ public class ObjectGtk : ObjectG
 	 * Subsequent calls to gtk_object_get_data() will return NULL.
 	 * Use gtk_object_data_try_key() and gtk_object_data_force_id()
 	 * to get an id from a string.
-	 * object:
-	 * object containing the associations.
-	 * data_id:
-	 * quark of the key.
+	 * Params:
+	 * dataId = quark of the key.
 	 */
 	public void removeDataById(GQuark dataId)
 	{
@@ -618,10 +560,8 @@ public class ObjectGtk : ObjectG
 	 * a GQuark instead of a string, so it is slightly faster.
 	 * Use gtk_object_data_try_key() and gtk_object_data_force_id()
 	 * to get an id from a string.
-	 * object:
-	 * object containing the associations.
-	 * key_id:
-	 * quark of the key.
+	 * Params:
+	 * keyId = quark of the key.
 	 */
 	public void removeNoNotifyById(GQuark keyId)
 	{

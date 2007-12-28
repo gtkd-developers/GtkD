@@ -155,10 +155,8 @@ public class Cursor
 	 * See gdk_cursor_new_for_display().
 	 * To make the cursor invisible, use gdk_cursor_new_from_pixmap() to create
 	 * a cursor with no pixels in it.
-	 * cursor_type:
-	 *  cursor to create
-	 * Returns:
-	 *  a new GdkCursor
+	 * Params:
+	 * cursorType =  cursor to create
 	 */
 	public this (GdkCursorType cursorType)
 	{
@@ -196,23 +194,16 @@ public class Cursor
 	 *  gdk_pixmap_unref (source);
 	 *  gdk_pixmap_unref (mask);
 	 *  gdk_window_set_cursor (widget->window, cursor);
-	 * source:
-	 *  the pixmap specifying the cursor.
-	 * mask:
-	 *  the pixmap specifying the mask, which must be the same size as
+	 * Params:
+	 * source =  the pixmap specifying the cursor.
+	 * mask =  the pixmap specifying the mask, which must be the same size as
 	 *  source.
-	 * fg:
-	 *  the foreground color, used for the bits in the source which are 1.
+	 * fg =  the foreground color, used for the bits in the source which are 1.
 	 *  The color does not have to be allocated first.
-	 * bg:
-	 *  the background color, used for the bits in the source which are 0.
+	 * bg =  the background color, used for the bits in the source which are 0.
 	 *  The color does not have to be allocated first.
-	 * x:
-	 *  the horizontal offset of the 'hotspot' of the cursor.
-	 * y:
-	 *  the vertical offset of the 'hotspot' of the cursor.
-	 * Returns:
-	 *  a new GdkCursor.
+	 * x =  the horizontal offset of the 'hotspot' of the cursor.
+	 * y =  the vertical offset of the 'hotspot' of the cursor.
 	 */
 	public this (Pixmap source, Pixmap mask, Color fg, Color bg, int x, int y)
 	{
@@ -232,17 +223,12 @@ public class Cursor
 	 * cursor sizes.
 	 * On the X backend, support for RGBA cursors requires a
 	 * sufficently new version of the X Render extension.
-	 * display:
-	 *  the GdkDisplay for which the cursor will be created
-	 * pixbuf:
-	 *  the GdkPixbuf containing the cursor image
-	 * x:
-	 *  the horizontal offset of the 'hotspot' of the cursor.
-	 * y:
-	 *  the vertical offset of the 'hotspot' of the cursor.
-	 * Returns:
-	 *  a new GdkCursor.
 	 * Since 2.4
+	 * Params:
+	 * display =  the GdkDisplay for which the cursor will be created
+	 * pixbuf =  the GdkPixbuf containing the cursor image
+	 * x =  the horizontal offset of the 'hotspot' of the cursor.
+	 * y =  the vertical offset of the 'hotspot' of the cursor.
 	 */
 	public this (Display display, Pixbuf pixbuf, int x, int y)
 	{
@@ -253,14 +239,10 @@ public class Cursor
 	/**
 	 * Creates a new cursor by looking up name in the current cursor
 	 * theme.
-	 * display:
-	 *  the GdkDisplay for which the cursor will be created
-	 * name:
-	 *  the name of the cursor
-	 * Returns:
-	 *  a new GdkCursor, or NULL if there is no cursor with
-	 *  the given name
 	 * Since 2.8
+	 * Params:
+	 * display =  the GdkDisplay for which the cursor will be created
+	 * name =  the name of the cursor
 	 */
 	public this (Display display, char[] name)
 	{
@@ -270,33 +252,10 @@ public class Cursor
 	
 	/**
 	 * Creates a new cursor from the set of builtin cursors.
-	 * Some useful ones are:
-	 *   GDK_RIGHT_PTR (right-facing arrow)
-	 *   GDK_CROSSHAIR (crosshair)
-	 *   GDK_XTERM (I-beam)
-	 *  GDK_WATCH (busy)
-	 *  GDK_FLEUR (for moving objects)
-	 *  GDK_HAND1 (a right-pointing hand)
-	 *  GDK_HAND2 (a left-pointing hand)
-	 *  GDK_LEFT_SIDE (resize left side)
-	 *  GDK_RIGHT_SIDE (resize right side)
-	 *  GDK_TOP_LEFT_CORNER (resize northwest corner)
-	 *  GDK_TOP_RIGHT_CORNER (resize northeast corner)
-	 *  GDK_BOTTOM_LEFT_CORNER (resize southwest corner)
-	 *  GDK_BOTTOM_RIGHT_CORNER (resize southeast corner)
-	 *  GDK_TOP_SIDE (resize top side)
-	 *  GDK_BOTTOM_SIDE (resize bottom side)
-	 *  GDK_SB_H_DOUBLE_ARROW (move vertical splitter)
-	 *  GDK_SB_V_DOUBLE_ARROW (move horizontal splitter)
-	 * To make the cursor invisible, use gdk_cursor_new_from_pixmap() to create
-	 * a cursor with no pixels in it.
-	 * display:
-	 *  the GdkDisplay for which the cursor will be created
-	 * cursor_type:
-	 *  cursor to create
-	 * Returns:
-	 *  a new GdkCursor
 	 * Since 2.2
+	 * Params:
+	 * display =  the GdkDisplay for which the cursor will be created
+	 * cursorType =  cursor to create
 	 */
 	public this (Display display, GdkCursorType cursorType)
 	{
@@ -306,11 +265,8 @@ public class Cursor
 	
 	/**
 	 * Returns the display on which the GdkCursor is defined.
-	 * cursor:
-	 *  a GdkCursor.
-	 * Returns:
-	 *  the GdkDisplay associated to cursor
 	 * Since 2.2
+	 * Returns: the GdkDisplay associated to cursor
 	 */
 	public Display getDisplay()
 	{
@@ -323,11 +279,8 @@ public class Cursor
 	 * Note that depending on the capabilities of the windowing system and
 	 * on the cursor, GDK may not be able to obtain the image data. In this
 	 * case, NULL is returned.
-	 * cursor:
-	 *  a GdkCursor
-	 * Returns:
-	 *  a GdkPixbuf representing cursor, or NULL
 	 * Since 2.8
+	 * Returns: a GdkPixbuf representing cursor, or NULL
 	 */
 	public Pixbuf getImage()
 	{
@@ -337,10 +290,7 @@ public class Cursor
 	
 	/**
 	 * Adds a reference to cursor.
-	 * cursor:
-	 *  a GdkCursor
-	 * Returns:
-	 *  Same cursor that was passed in
+	 * Returns: Same cursor that was passed in
 	 */
 	public Cursor doref()
 	{
@@ -351,8 +301,6 @@ public class Cursor
 	/**
 	 * Removes a reference from cursor, deallocating the cursor
 	 * if no references remain.
-	 * cursor:
-	 *  a GdkCursor
 	 */
 	public void unref()
 	{

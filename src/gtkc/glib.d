@@ -114,6 +114,7 @@ extern(C)
 	guint function(guint interval, GSourceFunc funct, gpointer data)g_timeout_add;
 	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify)g_timeout_add_full;
 	guint function(guint interval, GSourceFunc funct, gpointer data)g_timeout_add_seconds;
+	guint function(gint priority, guint interval, GSourceFunc funct, gpointer data, GDestroyNotify notify)g_timeout_add_seconds_full;
 	
 	// glib.Child
 	
@@ -381,16 +382,17 @@ extern(C)
 	gboolean function(gunichar c)g_unichar_isalnum;
 	gboolean function(gunichar c)g_unichar_isalpha;
 	gboolean function(gunichar c)g_unichar_iscntrl;
+	gboolean function(gunichar c)g_unichar_isdefined;
 	gboolean function(gunichar c)g_unichar_isdigit;
 	gboolean function(gunichar c)g_unichar_isgraph;
 	gboolean function(gunichar c)g_unichar_islower;
+	gboolean function(gunichar c)g_unichar_ismark;
 	gboolean function(gunichar c)g_unichar_isprint;
 	gboolean function(gunichar c)g_unichar_ispunct;
 	gboolean function(gunichar c)g_unichar_isspace;
+	gboolean function(gunichar c)g_unichar_istitle;
 	gboolean function(gunichar c)g_unichar_isupper;
 	gboolean function(gunichar c)g_unichar_isxdigit;
-	gboolean function(gunichar c)g_unichar_istitle;
-	gboolean function(gunichar c)g_unichar_isdefined;
 	gboolean function(gunichar c)g_unichar_iswide;
 	gboolean function(gunichar c)g_unichar_iswide_cjk;
 	gboolean function(gunichar c)g_unichar_iszerowidth;
@@ -401,6 +403,7 @@ extern(C)
 	gint function(gunichar c)g_unichar_xdigit_value;
 	GUnicodeType function(gunichar c)g_unichar_type;
 	GUnicodeBreakType function(gunichar c)g_unichar_break_type;
+	gint function(gunichar uc)g_unichar_combining_class;
 	void function(gunichar* string, gsize len)g_unicode_canonical_ordering;
 	gunichar* function(gunichar ch, gsize* resultLen)g_unicode_canonical_decomposition;
 	gboolean function(gunichar ch, gunichar* mirroredCh)g_unichar_get_mirror_char;
@@ -529,6 +532,7 @@ extern(C)
 	gchar* function()g_get_user_cache_dir;
 	gchar* function()g_get_user_data_dir;
 	gchar* function()g_get_user_config_dir;
+	gchar* function(GUserDirectory directory)g_get_user_special_dir;
 	gchar** function()g_get_system_data_dirs;
 	gchar** function()g_get_system_config_dirs;
 	gchar* function()g_get_host_name;
@@ -557,16 +561,17 @@ extern(C)
 	// glib.ScannerG
 	
 	GScanner* function(GScannerConfig* configTempl)g_scanner_new;
+	void function(GScanner* scanner)g_scanner_destroy;
 	void function(GScanner* scanner, gint inputFd)g_scanner_input_file;
 	void function(GScanner* scanner)g_scanner_sync_file_offset;
 	void function(GScanner* scanner, gchar* text, guint textLen)g_scanner_input_text;
 	GTokenType function(GScanner* scanner)g_scanner_peek_next_token;
 	GTokenType function(GScanner* scanner)g_scanner_get_next_token;
+	gboolean function(GScanner* scanner)g_scanner_eof;
 	guint function(GScanner* scanner)g_scanner_cur_line;
 	guint function(GScanner* scanner)g_scanner_cur_position;
 	GTokenType function(GScanner* scanner)g_scanner_cur_token;
 	GTokenValue function(GScanner* scanner)g_scanner_cur_value;
-	gboolean function(GScanner* scanner)g_scanner_eof;
 	guint function(GScanner* scanner, guint scopeId)g_scanner_set_scope;
 	void function(GScanner* scanner, guint scopeId, gchar* symbol, gpointer value)g_scanner_scope_add_symbol;
 	void function(GScanner* scanner, guint scopeId, GHFunc func, gpointer userData)g_scanner_scope_foreach_symbol;
@@ -576,7 +581,6 @@ extern(C)
 	void function(GScanner* scanner, gchar* format, ... )g_scanner_warn;
 	void function(GScanner* scanner, gchar* format, ... )g_scanner_error;
 	void function(GScanner* scanner, GTokenType expectedToken, gchar* identifierSpec, gchar* symbolSpec, gchar* symbolName, gchar* message, gint isError)g_scanner_unexp_token;
-	void function(GScanner* scanner)g_scanner_destroy;
 	
 	// glib.StringCompletion
 	
@@ -662,6 +666,7 @@ extern(C)
 	gboolean function(GOptionContext* context)g_option_context_get_help_enabled;
 	void function(GOptionContext* context, gboolean ignoreUnknown)g_option_context_set_ignore_unknown_options;
 	gboolean function(GOptionContext* context)g_option_context_get_ignore_unknown_options;
+	gchar* function(GOptionContext* context, gboolean mainHelp, GOptionGroup* group)g_option_context_get_help;
 	void function(GOptionContext* context, GOptionEntry* entries, gchar* translationDomain)g_option_context_add_main_entries;
 	void function(GOptionContext* context, GOptionGroup* group)g_option_context_add_group;
 	void function(GOptionContext* context, GOptionGroup* group)g_option_context_set_main_group;
@@ -706,6 +711,7 @@ extern(C)
 	gboolean function(GKeyFile* keyFile, gchar* file, GKeyFileFlags flags, GError** error)g_key_file_load_from_file;
 	gboolean function(GKeyFile* keyFile, gchar* data, gsize length, GKeyFileFlags flags, GError** error)g_key_file_load_from_data;
 	gboolean function(GKeyFile* keyFile, gchar* file, gchar** fullPath, GKeyFileFlags flags, GError** error)g_key_file_load_from_data_dirs;
+	gboolean function(GKeyFile* keyFile, gchar* file, gchar** searchDirs, gchar** fullPath, GKeyFileFlags flags, GError** error)g_key_file_load_from_dirs;
 	gchar* function(GKeyFile* keyFile, gsize* length, GError** error)g_key_file_to_data;
 	gchar* function(GKeyFile* keyFile)g_key_file_get_start_group;
 	gchar** function(GKeyFile* keyFile, gsize* length)g_key_file_get_groups;
@@ -753,6 +759,7 @@ extern(C)
 	
 	gpointer function(gsize blockSize)g_slice_alloc;
 	gpointer function(gsize blockSize)g_slice_alloc0;
+	gpointer function(gsize blockSize, gconstpointer memBlock)g_slice_copy;
 	void function(gsize blockSize, gpointer memBlock)g_slice_free1;
 	void function(gsize blockSize, gpointer memChain, gsize nextOffset)g_slice_free_chain_with_offset;
 	
@@ -839,6 +846,8 @@ extern(C)
 	
 	GQueue* function()g_queue_new;
 	void function(GQueue* queue)g_queue_free;
+	void function(GQueue* queue)g_queue_init;
+	void function(GQueue* queue)g_queue_clear;
 	gboolean function(GQueue* queue)g_queue_is_empty;
 	guint function(GQueue* queue)g_queue_get_length;
 	void function(GQueue* queue)g_queue_reverse;
@@ -899,6 +908,8 @@ extern(C)
 	guint function(GHashTable* hashTable, GHRFunc func, gpointer userData)g_hash_table_foreach_steal;
 	void function(GHashTable* hashTable)g_hash_table_remove_all;
 	void function(GHashTable* hashTable)g_hash_table_steal_all;
+	GList* function(GHashTable* hashTable)g_hash_table_get_keys;
+	GList* function(GHashTable* hashTable)g_hash_table_get_values;
 	void function(GHashTable* hashTable)g_hash_table_destroy;
 	GHashTable* function(GHashTable* hashTable)g_hash_table_ref;
 	void function(GHashTable* hashTable)g_hash_table_unref;
@@ -915,6 +926,8 @@ extern(C)
 	GString* function(gchar* init, gssize len)g_string_new_len;
 	GString* function(gsize dflSize)g_string_sized_new;
 	GString* function(GString* string, gchar* rval)g_string_assign;
+	void function(GString* string, gchar* format, va_list args)g_string_vprintf;
+	void function(GString* string, gchar* format, va_list args)g_string_append_vprintf;
 	void function(GString* string, gchar* format, ... )g_string_printf;
 	void function(GString* string, gchar* format, ... )g_string_append_printf;
 	GString* function(GString* string, gchar* val)g_string_append;
@@ -929,6 +942,8 @@ extern(C)
 	GString* function(GString* string, gssize pos, gchar c)g_string_insert_c;
 	GString* function(GString* string, gssize pos, gunichar wc)g_string_insert_unichar;
 	GString* function(GString* string, gssize pos, gchar* val, gssize len)g_string_insert_len;
+	GString* function(GString* string, gsize pos, gchar* val)g_string_overwrite;
+	GString* function(GString* string, gsize pos, gchar* val, gssize len)g_string_overwrite_len;
 	GString* function(GString* string, gssize pos, gssize len)g_string_erase;
 	GString* function(GString* string, gsize len)g_string_truncate;
 	GString* function(GString* string, gsize len)g_string_set_size;
@@ -1158,6 +1173,7 @@ Symbol[] glibLinks =
 	{ "g_timeout_add",  cast(void**)& g_timeout_add},
 	{ "g_timeout_add_full",  cast(void**)& g_timeout_add_full},
 	{ "g_timeout_add_seconds",  cast(void**)& g_timeout_add_seconds},
+	{ "g_timeout_add_seconds_full",  cast(void**)& g_timeout_add_seconds_full},
 	{ "g_child_watch_source_new",  cast(void**)& g_child_watch_source_new},
 	{ "g_child_watch_add",  cast(void**)& g_child_watch_add},
 	{ "g_child_watch_add_full",  cast(void**)& g_child_watch_add_full},
@@ -1386,16 +1402,17 @@ Symbol[] glibLinks =
 	{ "g_unichar_isalnum",  cast(void**)& g_unichar_isalnum},
 	{ "g_unichar_isalpha",  cast(void**)& g_unichar_isalpha},
 	{ "g_unichar_iscntrl",  cast(void**)& g_unichar_iscntrl},
+	{ "g_unichar_isdefined",  cast(void**)& g_unichar_isdefined},
 	{ "g_unichar_isdigit",  cast(void**)& g_unichar_isdigit},
 	{ "g_unichar_isgraph",  cast(void**)& g_unichar_isgraph},
 	{ "g_unichar_islower",  cast(void**)& g_unichar_islower},
+	{ "g_unichar_ismark",  cast(void**)& g_unichar_ismark},
 	{ "g_unichar_isprint",  cast(void**)& g_unichar_isprint},
 	{ "g_unichar_ispunct",  cast(void**)& g_unichar_ispunct},
 	{ "g_unichar_isspace",  cast(void**)& g_unichar_isspace},
+	{ "g_unichar_istitle",  cast(void**)& g_unichar_istitle},
 	{ "g_unichar_isupper",  cast(void**)& g_unichar_isupper},
 	{ "g_unichar_isxdigit",  cast(void**)& g_unichar_isxdigit},
-	{ "g_unichar_istitle",  cast(void**)& g_unichar_istitle},
-	{ "g_unichar_isdefined",  cast(void**)& g_unichar_isdefined},
 	{ "g_unichar_iswide",  cast(void**)& g_unichar_iswide},
 	{ "g_unichar_iswide_cjk",  cast(void**)& g_unichar_iswide_cjk},
 	{ "g_unichar_iszerowidth",  cast(void**)& g_unichar_iszerowidth},
@@ -1406,6 +1423,7 @@ Symbol[] glibLinks =
 	{ "g_unichar_xdigit_value",  cast(void**)& g_unichar_xdigit_value},
 	{ "g_unichar_type",  cast(void**)& g_unichar_type},
 	{ "g_unichar_break_type",  cast(void**)& g_unichar_break_type},
+	{ "g_unichar_combining_class",  cast(void**)& g_unichar_combining_class},
 	{ "g_unicode_canonical_ordering",  cast(void**)& g_unicode_canonical_ordering},
 	{ "g_unicode_canonical_decomposition",  cast(void**)& g_unicode_canonical_decomposition},
 	{ "g_unichar_get_mirror_char",  cast(void**)& g_unichar_get_mirror_char},
@@ -1522,6 +1540,7 @@ Symbol[] glibLinks =
 	{ "g_get_user_cache_dir",  cast(void**)& g_get_user_cache_dir},
 	{ "g_get_user_data_dir",  cast(void**)& g_get_user_data_dir},
 	{ "g_get_user_config_dir",  cast(void**)& g_get_user_config_dir},
+	{ "g_get_user_special_dir",  cast(void**)& g_get_user_special_dir},
 	{ "g_get_system_data_dirs",  cast(void**)& g_get_system_data_dirs},
 	{ "g_get_system_config_dirs",  cast(void**)& g_get_system_config_dirs},
 	{ "g_get_host_name",  cast(void**)& g_get_host_name},
@@ -1547,16 +1566,17 @@ Symbol[] glibLinks =
 	{ "g_qsort_with_data",  cast(void**)& g_qsort_with_data},
 	{ "g_nullify_pointer",  cast(void**)& g_nullify_pointer},
 	{ "g_scanner_new",  cast(void**)& g_scanner_new},
+	{ "g_scanner_destroy",  cast(void**)& g_scanner_destroy},
 	{ "g_scanner_input_file",  cast(void**)& g_scanner_input_file},
 	{ "g_scanner_sync_file_offset",  cast(void**)& g_scanner_sync_file_offset},
 	{ "g_scanner_input_text",  cast(void**)& g_scanner_input_text},
 	{ "g_scanner_peek_next_token",  cast(void**)& g_scanner_peek_next_token},
 	{ "g_scanner_get_next_token",  cast(void**)& g_scanner_get_next_token},
+	{ "g_scanner_eof",  cast(void**)& g_scanner_eof},
 	{ "g_scanner_cur_line",  cast(void**)& g_scanner_cur_line},
 	{ "g_scanner_cur_position",  cast(void**)& g_scanner_cur_position},
 	{ "g_scanner_cur_token",  cast(void**)& g_scanner_cur_token},
 	{ "g_scanner_cur_value",  cast(void**)& g_scanner_cur_value},
-	{ "g_scanner_eof",  cast(void**)& g_scanner_eof},
 	{ "g_scanner_set_scope",  cast(void**)& g_scanner_set_scope},
 	{ "g_scanner_scope_add_symbol",  cast(void**)& g_scanner_scope_add_symbol},
 	{ "g_scanner_scope_foreach_symbol",  cast(void**)& g_scanner_scope_foreach_symbol},
@@ -1566,7 +1586,6 @@ Symbol[] glibLinks =
 	{ "g_scanner_warn",  cast(void**)& g_scanner_warn},
 	{ "g_scanner_error",  cast(void**)& g_scanner_error},
 	{ "g_scanner_unexp_token",  cast(void**)& g_scanner_unexp_token},
-	{ "g_scanner_destroy",  cast(void**)& g_scanner_destroy},
 	{ "g_completion_new",  cast(void**)& g_completion_new},
 	{ "g_completion_add_items",  cast(void**)& g_completion_add_items},
 	{ "g_completion_remove_items",  cast(void**)& g_completion_remove_items},
@@ -1634,6 +1653,7 @@ Symbol[] glibLinks =
 	{ "g_option_context_get_help_enabled",  cast(void**)& g_option_context_get_help_enabled},
 	{ "g_option_context_set_ignore_unknown_options",  cast(void**)& g_option_context_set_ignore_unknown_options},
 	{ "g_option_context_get_ignore_unknown_options",  cast(void**)& g_option_context_get_ignore_unknown_options},
+	{ "g_option_context_get_help",  cast(void**)& g_option_context_get_help},
 	{ "g_option_context_add_main_entries",  cast(void**)& g_option_context_add_main_entries},
 	{ "g_option_context_add_group",  cast(void**)& g_option_context_add_group},
 	{ "g_option_context_set_main_group",  cast(void**)& g_option_context_set_main_group},
@@ -1666,6 +1686,7 @@ Symbol[] glibLinks =
 	{ "g_key_file_load_from_file",  cast(void**)& g_key_file_load_from_file},
 	{ "g_key_file_load_from_data",  cast(void**)& g_key_file_load_from_data},
 	{ "g_key_file_load_from_data_dirs",  cast(void**)& g_key_file_load_from_data_dirs},
+	{ "g_key_file_load_from_dirs",  cast(void**)& g_key_file_load_from_dirs},
 	{ "g_key_file_to_data",  cast(void**)& g_key_file_to_data},
 	{ "g_key_file_get_start_group",  cast(void**)& g_key_file_get_start_group},
 	{ "g_key_file_get_groups",  cast(void**)& g_key_file_get_groups},
@@ -1707,6 +1728,7 @@ Symbol[] glibLinks =
 	{ "g_win32_locale_filename_from_utf8",  cast(void**)& g_win32_locale_filename_from_utf8},
 	{ "g_slice_alloc",  cast(void**)& g_slice_alloc},
 	{ "g_slice_alloc0",  cast(void**)& g_slice_alloc0},
+	{ "g_slice_copy",  cast(void**)& g_slice_copy},
 	{ "g_slice_free1",  cast(void**)& g_slice_free1},
 	{ "g_slice_free_chain_with_offset",  cast(void**)& g_slice_free_chain_with_offset},
 	{ "g_mem_chunk_new",  cast(void**)& g_mem_chunk_new},
@@ -1781,6 +1803,8 @@ Symbol[] glibLinks =
 	{ "g_slist_pop_allocator",  cast(void**)& g_slist_pop_allocator},
 	{ "g_queue_new",  cast(void**)& g_queue_new},
 	{ "g_queue_free",  cast(void**)& g_queue_free},
+	{ "g_queue_init",  cast(void**)& g_queue_init},
+	{ "g_queue_clear",  cast(void**)& g_queue_clear},
 	{ "g_queue_is_empty",  cast(void**)& g_queue_is_empty},
 	{ "g_queue_get_length",  cast(void**)& g_queue_get_length},
 	{ "g_queue_reverse",  cast(void**)& g_queue_reverse},
@@ -1835,6 +1859,8 @@ Symbol[] glibLinks =
 	{ "g_hash_table_foreach_steal",  cast(void**)& g_hash_table_foreach_steal},
 	{ "g_hash_table_remove_all",  cast(void**)& g_hash_table_remove_all},
 	{ "g_hash_table_steal_all",  cast(void**)& g_hash_table_steal_all},
+	{ "g_hash_table_get_keys",  cast(void**)& g_hash_table_get_keys},
+	{ "g_hash_table_get_values",  cast(void**)& g_hash_table_get_values},
 	{ "g_hash_table_destroy",  cast(void**)& g_hash_table_destroy},
 	{ "g_hash_table_ref",  cast(void**)& g_hash_table_ref},
 	{ "g_hash_table_unref",  cast(void**)& g_hash_table_unref},
@@ -1848,6 +1874,8 @@ Symbol[] glibLinks =
 	{ "g_string_new_len",  cast(void**)& g_string_new_len},
 	{ "g_string_sized_new",  cast(void**)& g_string_sized_new},
 	{ "g_string_assign",  cast(void**)& g_string_assign},
+	{ "g_string_vprintf",  cast(void**)& g_string_vprintf},
+	{ "g_string_append_vprintf",  cast(void**)& g_string_append_vprintf},
 	{ "g_string_printf",  cast(void**)& g_string_printf},
 	{ "g_string_append_printf",  cast(void**)& g_string_append_printf},
 	{ "g_string_append",  cast(void**)& g_string_append},
@@ -1862,6 +1890,8 @@ Symbol[] glibLinks =
 	{ "g_string_insert_c",  cast(void**)& g_string_insert_c},
 	{ "g_string_insert_unichar",  cast(void**)& g_string_insert_unichar},
 	{ "g_string_insert_len",  cast(void**)& g_string_insert_len},
+	{ "g_string_overwrite",  cast(void**)& g_string_overwrite},
+	{ "g_string_overwrite_len",  cast(void**)& g_string_overwrite_len},
 	{ "g_string_erase",  cast(void**)& g_string_erase},
 	{ "g_string_truncate",  cast(void**)& g_string_truncate},
 	{ "g_string_set_size",  cast(void**)& g_string_set_size},

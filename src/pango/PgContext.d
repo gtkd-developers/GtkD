@@ -117,6 +117,7 @@ private import glib.Str;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -125,7 +126,6 @@ private import glib.Str;
  * The functions described in this section accomplish
  * various steps of this process.
  */
-private import gobject.ObjectG;
 public class PgContext : ObjectG
 {
 	
@@ -193,23 +193,15 @@ public class PgContext : ObjectG
 	 * range before or containing start_index; cached_iter will be advanced to
 	 * the range covering the position just after start_index + length.
 	 * (i.e. if itemizing in a loop, just keep passing in the same cached_iter).
-	 * context:
-	 *  a structure holding information that affects
-	 * 	 the itemization process.
-	 * text:
-	 *  the text to itemize.
-	 * start_index:
-	 *  first byte in text to process
-	 * length:
-	 *  the number of bytes (not characters) to process
+	 * Params:
+	 * text =  the text to itemize.
+	 * startIndex =  first byte in text to process
+	 * length =  the number of bytes (not characters) to process
 	 *  after start_index.
 	 *  This must be >= 0.
-	 * attrs:
-	 *  the set of attributes that apply to text.
-	 * cached_iter:
-	 *  Cached attribute iterator, or NULL
-	 * Returns:
-	 *  a GList of PangoItem structures.
+	 * attrs =  the set of attributes that apply to text.
+	 * cachedIter =  Cached attribute iterator, or NULL
+	 * Returns: a GList of PangoItem structures.
 	 */
 	public ListG pangoItemize(char[] text, int startIndex, int length, PangoAttrList* attrs, PangoAttrIterator* cachedIter)
 	{
@@ -221,26 +213,16 @@ public class PgContext : ObjectG
 	 * Like pango_itemize(), but the base direction to use when
 	 * computing bidirectional levels (see pango_context_set_base_dir()),
 	 * is specified explicitly rather than gotten from the PangoContext.
-	 * context:
-	 *  a structure holding information that affects
-	 * 	 the itemization process.
-	 * base_dir:
-	 *  base direction to use for bidirectional processing
-	 * text:
-	 *  the text to itemize.
-	 * start_index:
-	 *  first byte in text to process
-	 * length:
-	 *  the number of bytes (not characters) to process
+	 * Params:
+	 * baseDir =  base direction to use for bidirectional processing
+	 * text =  the text to itemize.
+	 * startIndex =  first byte in text to process
+	 * length =  the number of bytes (not characters) to process
 	 *  after start_index.
 	 *  This must be >= 0.
-	 * attrs:
-	 *  the set of attributes that apply to text.
-	 * cached_iter:
-	 *  Cached attribute iterator, or NULL
-	 * Returns:
-	 *  a GList of PangoItem structures.
-	 * Since 1.4
+	 * attrs =  the set of attributes that apply to text.
+	 * cachedIter =  Cached attribute iterator, or NULL
+	 * Returns: a GList of PangoItem structures. The items should befreed using pango_item_free() probably in combination with g_list_foreach(),and the list itself using g_list_free().Since 1.4
 	 */
 	public ListG pangoItemizeWithBaseDir(PangoDirection baseDir, char[] text, int startIndex, int length, PangoAttrList* attrs, PangoAttrIterator* cachedIter)
 	{
@@ -256,13 +238,9 @@ public class PgContext : ObjectG
 	 * From a list of items in logical order and the associated
 	 * directional levels, produce a list in visual order.
 	 * The original list is unmodified.
-	 * logical_items:
-	 *  a GList of PangoItem in logical order.
-	 * Returns:
-	 * a GList of PangoItem structures in visual order.
-	 * (Please open a bug if you use this function.
-	 *  It is not a particularly convenient interface, and the code
-	 *  is duplicated elsewhere in Pango for that reason.)
+	 * Params:
+	 * logicalItems =  a GList of PangoItem in logical order.
+	 * Returns:a GList of PangoItem structures in visual order.(Please open a bug if you use this function. It is not a particularly convenient interface, and the code is duplicated elsewhere in Pango for that reason.)
 	 */
 	public static ListG pangoReorderItems(ListG logicalItems)
 	{
@@ -282,9 +260,6 @@ public class PgContext : ObjectG
 	 * For instance, the GTK+ toolkit has, among others,
 	 * gdk_pango_context_get_for_screen(), and
 	 * gtk_widget_get_pango_context().
-	 * Returns:
-	 *  the newly allocated PangoContext, which should
-	 *  be freed with g_object_unref().
 	 */
 	public this ()
 	{
@@ -296,10 +271,8 @@ public class PgContext : ObjectG
 	 * Sets the font map to be searched when fonts are looked-up in this context.
 	 * This is only for internal use by Pango backends, a PangoContext obtained
 	 * via one of the recommended methods should already have a suitable font map.
-	 * context:
-	 *  a PangoContext
-	 * font_map:
-	 *  the PangoFontMap to set.
+	 * Params:
+	 * fontMap =  the PangoFontMap to set.
 	 */
 	public void setFontMap(PgFontMap fontMap)
 	{
@@ -309,12 +282,7 @@ public class PgContext : ObjectG
 	
 	/**
 	 * Gets the PangoFontmap used to look up fonts for this context.
-	 * context:
-	 *  a PangoContext
-	 * Returns:
-	 *  the font map for the PangoContext. This value
-	 *  is owned by Pango and should not be unreferenced.
-	 * Since 1.6
+	 * Returns: the font map for the PangoContext. This value is owned by Pango and should not be unreferenced.Since 1.6
 	 */
 	public PgFontMap getFontMap()
 	{
@@ -324,11 +292,7 @@ public class PgContext : ObjectG
 	
 	/**
 	 * Retrieve the default font description for the context.
-	 * context:
-	 *  a PangoContext
-	 * Returns:
-	 *  a pointer to the context's default font description.
-	 *  This value must not be modified or freed.
+	 * Returns: a pointer to the context's default font description. This value must not be modified or freed.
 	 */
 	public PgFontDescription getFontDescription()
 	{
@@ -338,10 +302,8 @@ public class PgContext : ObjectG
 	
 	/**
 	 * Set the default font description for the context
-	 * context:
-	 *  a PangoContext
-	 * desc:
-	 *  the new pango font description
+	 * Params:
+	 * desc =  the new pango font description
 	 */
 	public void setFontDescription(PgFontDescription desc)
 	{
@@ -351,10 +313,7 @@ public class PgContext : ObjectG
 	
 	/**
 	 * Retrieves the global language tag for the context.
-	 * context:
-	 *  a PangoContext
-	 * Returns:
-	 *  the global language tag.
+	 * Returns: the global language tag.
 	 */
 	public PgLanguage getLanguage()
 	{
@@ -366,10 +325,8 @@ public class PgContext : ObjectG
 	 * Sets the global language tag for the context. The default language
 	 * for the locale of the running process can be found using
 	 * pango_language_get_default().
-	 * context:
-	 *  a PangoContext
-	 * language:
-	 *  the new language tag.
+	 * Params:
+	 * language =  the new language tag.
 	 */
 	public void setLanguage(PgLanguage language)
 	{
@@ -380,10 +337,7 @@ public class PgContext : ObjectG
 	/**
 	 * Retrieves the base direction for the context. See
 	 * pango_context_set_base_dir().
-	 * context:
-	 *  a PangoContext
-	 * Returns:
-	 *  the base direction for the context.
+	 * Returns: the base direction for the context.
 	 */
 	public PangoDirection getBaseDir()
 	{
@@ -399,10 +353,8 @@ public class PgContext : ObjectG
 	 * direction in the Unicode bidirectional algorithm. A value of
 	 * PANGO_DIRECTION_WEAK_LTR or PANGO_DIRECTION_WEAK_RTL is used only
 	 * for paragraphs that do not contain any strong characters themselves.
-	 * context:
-	 *  a PangoContext
-	 * direction:
-	 *  the new base direction
+	 * Params:
+	 * direction =  the new base direction
 	 */
 	public void setBaseDir(PangoDirection direction)
 	{
@@ -413,11 +365,7 @@ public class PgContext : ObjectG
 	/**
 	 * Retrieves the base gravity for the context. See
 	 * pango_context_set_base_gravity().
-	 * context:
-	 *  a PangoContext
-	 * Returns:
-	 *  the base gravity for the context.
-	 * Since 1.16
+	 * Returns: the base gravity for the context.Since 1.16
 	 */
 	public PangoGravity getBaseGravity()
 	{
@@ -428,10 +376,8 @@ public class PgContext : ObjectG
 	/**
 	 * Sets the base gravity for the context.
 	 * The base gravity is used in laying vertical text out.
-	 * context:
-	 *  a PangoContext
-	 * gravity:
-	 *  the new base gravity
+	 * Params:
+	 * gravity =  the new base gravity
 	 * Since 1.16
 	 */
 	public void setBaseGravity(PangoGravity gravity)
@@ -445,11 +391,7 @@ public class PgContext : ObjectG
 	 * pango_context_get_base_gravity(), except for when the base gravity
 	 * is PANGO_GRAVITY_AUTO for which pango_gravity_get_for_matrix() is used
 	 * to return the gravity from the current context matrix.
-	 * context:
-	 *  a PangoContext
-	 * Returns:
-	 *  the resolved gravity for the context.
-	 * Since 1.16
+	 * Returns: the resolved gravity for the context.Since 1.16
 	 */
 	public PangoGravity getGravity()
 	{
@@ -460,11 +402,7 @@ public class PgContext : ObjectG
 	/**
 	 * Retrieves the gravity hint for the context. See
 	 * pango_context_set_gravity_hint() for details.
-	 * context:
-	 *  a PangoContext
-	 * Returns:
-	 *  the gravity hint for the context.
-	 * Since 1.16
+	 * Returns: the gravity hint for the context.Since 1.16
 	 */
 	public PangoGravityHint getGravityHint()
 	{
@@ -477,10 +415,8 @@ public class PgContext : ObjectG
 	 * The gravity hint is used in laying vertical text out, and is only relevant
 	 * if gravity of the context as returned by pango_context_get_gravity()
 	 * is set PANGO_GRAVITY_EAST or PANGO_GRAVITY_WEST.
-	 * context:
-	 *  a PangoContext
-	 * hint:
-	 *  the new gravity hint
+	 * Params:
+	 * hint =  the new gravity hint
 	 * Since 1.16
 	 */
 	public void setGravityHint(PangoGravityHint hint)
@@ -492,14 +428,7 @@ public class PgContext : ObjectG
 	/**
 	 * Gets the transformation matrix that will be applied when
 	 * rendering with this context. See pango_context_set_matrix().
-	 * context:
-	 *  a PangoContext
-	 * Returns:
-	 *  the matrix, or NULL if no matrix has been set
-	 *  (which is the same as the identity matrix). The returned
-	 *  matrix is owned by Pango and must not be modified or
-	 *  freed.
-	 * Since 1.6
+	 * Returns: the matrix, or NULL if no matrix has been set (which is the same as the identity matrix). The returned matrix is owned by Pango and must not be modified or freed.Since 1.6
 	 */
 	public PangoMatrix* getMatrix()
 	{
@@ -514,10 +443,8 @@ public class PgContext : ObjectG
 	 * coordinates after the application of the matrix. So, they don't scale
 	 * with the matrix, though they may change slightly for different
 	 * matrices, depending on how the text is fit to the pixel grid.
-	 * context:
-	 *  a PangoContext
-	 * matrix:
-	 *  a PangoMatrix, or NULL to unset any existing matrix.
+	 * Params:
+	 * matrix =  a PangoMatrix, or NULL to unset any existing matrix.
 	 *  (No matrix set is the same as setting the identity matrix.)
 	 * Since 1.6
 	 */
@@ -530,12 +457,9 @@ public class PgContext : ObjectG
 	/**
 	 * Loads the font in one of the fontmaps in the context
 	 * that is the closest match for desc.
-	 * context:
-	 *  a PangoContext
-	 * desc:
-	 *  a PangoFontDescription describing the font to load
-	 * Returns:
-	 * the font loaded, or NULL if no font matched.
+	 * Params:
+	 * desc =  a PangoFontDescription describing the font to load
+	 * Returns:the font loaded, or NULL if no font matched.
 	 */
 	public PangoFont* loadFont(PgFontDescription desc)
 	{
@@ -546,14 +470,10 @@ public class PgContext : ObjectG
 	/**
 	 * Load a set of fonts in the context that can be used to render
 	 * a font matching desc.
-	 * context:
-	 *  a PangoContext
-	 * desc:
-	 *  a PangoFontDescription describing the fonts to load
-	 * language:
-	 *  a PangoLanguage the fonts will be used for
-	 * Returns:
-	 * the fontset, or NULL if no font matched.
+	 * Params:
+	 * desc =  a PangoFontDescription describing the fonts to load
+	 * language =  a PangoLanguage the fonts will be used for
+	 * Returns:the fontset, or NULL if no font matched.
 	 */
 	public PangoFontset* loadFontset(PgFontDescription desc, PgLanguage language)
 	{
@@ -573,20 +493,15 @@ public class PgContext : ObjectG
 	 * would be used to render the string, then the returned fonts would
 	 * be a composite of the metrics for the fonts loaded for the
 	 * individual families.
-	 * context:
-	 *  a PangoContext
-	 * desc:
-	 *  a PangoFontDescription structure
-	 * language:
-	 *  language tag used to determine which script to get the metrics
+	 * Params:
+	 * desc =  a PangoFontDescription structure
+	 * language =  language tag used to determine which script to get the metrics
 	 *  for. NULL means that the language tag from the context will
 	 *  be used. If no language tag is set on the context, metrics
 	 *  large enough to cover a range of languages will be returned.
 	 *  The process of determining such metrics is slow, so it is best
 	 *  to always make sure some real language tag will be used.
-	 * Returns:
-	 *  a PangoFontMetrics object. The caller must call pango_font_metrics_unref()
-	 *  when finished using the object.
+	 * Returns: a PangoFontMetrics object. The caller must call pango_font_metrics_unref() when finished using the object.
 	 */
 	public PgFontMetrics getMetrics(PgFontDescription desc, PgLanguage language)
 	{
@@ -596,13 +511,10 @@ public class PgContext : ObjectG
 	
 	/**
 	 * List all families for a context.
-	 * context:
-	 *  a PangoContext
-	 * families:
-	 *  location to store a pointer to an array of PangoFontFamily *.
+	 * Params:
+	 * families =  location to store a pointer to an array of PangoFontFamily *.
 	 *  This array should be freed with g_free().
-	 * n_families:
-	 *  location to store the number of elements in descs
+	 * nFamilies =  location to store the number of elements in descs
 	 */
 	public void listFamilies(PangoFontFamily*** families, int* nFamilies)
 	{
@@ -618,13 +530,10 @@ public class PgContext : ObjectG
 	 * glyph, puts that character in the address pointed to by mirrored_ch.
 	 * Use g_unichar_get_mirror_char() instead; the docs for that function
 	 * provide full details.
-	 * ch:
-	 *  a Unicode character
-	 * mirrored_ch:
-	 *  location to store the mirrored character
-	 * Returns:
-	 *  TRUE if ch has a mirrored character and mirrored_ch is
-	 * filled in, FALSE otherwise
+	 * Params:
+	 * ch =  a Unicode character
+	 * mirroredCh =  location to store the mirrored character
+	 * Returns: TRUE if ch has a mirrored character and mirrored_ch isfilled in, FALSE otherwise
 	 */
 	public static int pangoGetMirrorChar(gunichar ch, gunichar* mirroredCh)
 	{
@@ -636,11 +545,9 @@ public class PgContext : ObjectG
 	 * Determines the direction of a character; either
 	 * PANGO_DIRECTION_LTR, PANGO_DIRECTION_RTL, or
 	 * PANGO_DIRECTION_NEUTRAL.
-	 * ch:
-	 *  a Unicode character
-	 * Returns:
-	 *  the direction of the character, as used in the
-	 * Unicode bidirectional algorithm.
+	 * Params:
+	 * ch =  a Unicode character
+	 * Returns: the direction of the character, as used in theUnicode bidirectional algorithm.
 	 */
 	public static PangoDirection pangoUnicharDirection(gunichar ch)
 	{
@@ -651,14 +558,10 @@ public class PgContext : ObjectG
 	/**
 	 * Searches a string the first character that has a strong
 	 * direction, according to the Unicode bidirectional algorithm.
-	 * text:
-	 *  the text to process
-	 * length:
-	 *  length of text in bytes (may be -1 if text is nul-terminated)
-	 * Returns:
-	 *  The direction corresponding to the first strong character.
-	 * If no such character is found, then PANGO_DIRECTION_NEUTRAL is returned.
-	 * Since 1.4
+	 * Params:
+	 * text =  the text to process
+	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
+	 * Returns: The direction corresponding to the first strong character.If no such character is found, then PANGO_DIRECTION_NEUTRAL is returned.Since 1.4
 	 */
 	public static PangoDirection pangoFindBaseDir(char[] text, int length)
 	{
@@ -667,13 +570,14 @@ public class PgContext : ObjectG
 	}
 	
 	/**
-	 * Converts a PangoGravity value to its rotation value.
+	 * Converts a PangoGravity value to its natural rotation in radians.
 	 * gravity should not be PANGO_GRAVITY_AUTO.
-	 * gravity:
-	 *  gravity to query
-	 * Returns:
-	 *  the rotation value corresponding to gravity.
-	 * Since 1.16
+	 * Note that pango_matrix_rotate() takes angle in degrees, not radians.
+	 * So, to call pango_matrix_rotate() with the output of this function
+	 * you should multiply it by (180. / G_PI).
+	 * Params:
+	 * gravity =  gravity to query
+	 * Returns: the rotation value corresponding to gravity.Since 1.16
 	 */
 	public static double pangoGravityToRotation(PangoGravity gravity)
 	{
@@ -685,16 +589,12 @@ public class PgContext : ObjectG
 	 * Determines possible line, word, and character breaks
 	 * for a string of Unicode text with a single analysis. For most
 	 * purposes you may want to use pango_get_log_attrs().
-	 * text:
-	 *  the text to process
-	 * length:
-	 *  length of text in bytes (may be -1 if text is nul-terminated)
-	 * analysis:
-	 *  PangoAnalysis structure from pango_itemize()
-	 * attrs:
-	 *  an array to store character information in
-	 * attrs_len:
-	 *  size of the array passed as attrs
+	 * Params:
+	 * text =  the text to process
+	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
+	 * analysis =  PangoAnalysis structure from pango_itemize()
+	 * attrs =  an array to store character information in
+	 * attrsLen =  size of the array passed as attrs
 	 */
 	public static void pangoBreak(char[] text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
 	{
@@ -710,18 +610,13 @@ public class PgContext : ObjectG
 	 * paragraph; logical attributes can't be computed without context
 	 * (for example you need to see spaces on either side of a word to know
 	 * the word is a word).
-	 * text:
-	 *  text to process
-	 * length:
-	 *  length in bytes of text
-	 * level:
-	 *  embedding level, or -1 if unknown
-	 * language:
-	 *  language tag
-	 * log_attrs:
-	 *  array with one PangoLogAttr per character in text, plus one extra, to be filled in
-	 * attrs_len:
-	 *  length of log_attrs array
+	 * Params:
+	 * text =  text to process
+	 * length =  length in bytes of text
+	 * level =  embedding level, or -1 if unknown
+	 * language =  language tag
+	 * logAttrs =  array with one PangoLogAttr per character in text, plus one extra, to be filled in
+	 * attrsLen =  length of log_attrs array
 	 */
 	public static void pangoGetLogAttrs(char[] text, int length, int level, PgLanguage language, PangoLogAttr* logAttrs, int attrsLen)
 	{
@@ -739,14 +634,11 @@ public class PgContext : ObjectG
 	 * If no delimiters are found, both paragraph_delimiter_index and
 	 * next_paragraph_start are filled with the length of text (an index one
 	 * off the end).
-	 * text:
-	 *  UTF-8 text
-	 * length:
-	 *  length of text in bytes, or -1 if nul-terminated
-	 * paragraph_delimiter_index:
-	 *  return location for index of delimiter
-	 * next_paragraph_start:
-	 *  return location for start of next paragraph
+	 * Params:
+	 * text =  UTF-8 text
+	 * length =  length of text in bytes, or -1 if nul-terminated
+	 * paragraphDelimiterIndex =  return location for index of delimiter
+	 * nextParagraphStart =  return location for start of next paragraph
 	 */
 	public static void pangoFindParagraphBoundary(char[] text, int length, int* paragraphDelimiterIndex, int* nextParagraphStart)
 	{
@@ -762,16 +654,12 @@ public class PgContext : ObjectG
 	 * you're doing. If you need an analysis to pass to pango_break(),
 	 * you need to pango_itemize(). In most cases however you should
 	 * simply use pango_get_log_attrs().
-	 * text:
-	 *  text to break
-	 * length:
-	 *  length of text in bytes (may be -1 if text is nul-terminated)
-	 * analysis:
-	 *  a PangoAnalysis for the text
-	 * attrs:
-	 *  logical attributes to fill in
-	 * attrs_len:
-	 *  size of the array passed as attrs
+	 * Params:
+	 * text =  text to break
+	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
+	 * analysis =  a PangoAnalysis for the text
+	 * attrs =  logical attributes to fill in
+	 * attrsLen =  size of the array passed as attrs
 	 */
 	public static void pangoDefaultBreak(char[] text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
 	{
@@ -785,14 +673,11 @@ public class PgContext : ObjectG
 	 * PangoAnalysis structure returned from pango_itemize(),
 	 * convert the characters into glyphs. You may also pass
 	 * in only a substring of the item from pango_itemize().
-	 * text:
-	 *  the text to process
-	 * length:
-	 *  the length (in bytes) of text
-	 * analysis:
-	 *  PangoAnalysis structure from pango_itemize()
-	 * glyphs:
-	 *  glyph string in which to store results
+	 * Params:
+	 * text =  the text to process
+	 * length =  the length (in bytes) of text
+	 * analysis =  PangoAnalysis structure from pango_itemize()
+	 * glyphs =  glyph string in which to store results
 	 */
 	public static void pangoShape(char[] text, int length, PangoAnalysis* analysis, PangoGlyphString* glyphs)
 	{

@@ -72,6 +72,7 @@ private import gdk.Display;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -127,7 +128,6 @@ private import gdk.Display;
  * contains this keyval, however, so you don't normally need to call
  * gdk_keymap_translate_keyboard_state() just to get the keyval.
  */
-private import gobject.ObjectG;
 public class Keymap : ObjectG
 {
 	
@@ -245,8 +245,7 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Returns the GdkKeymap attached to the default display.
-	 * Returns:
-	 *  the GdkKeymap attached to the default display.
+	 * Returns: the GdkKeymap attached to the default display.
 	 */
 	public static Keymap getDefault()
 	{
@@ -256,11 +255,10 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Returns the GdkKeymap attached to display.
-	 * display:
-	 *  the GdkDisplay.
-	 * Returns:
-	 *  the GdkKeymap attached to display.
 	 * Since 2.2
+	 * Params:
+	 * display =  the GdkDisplay.
+	 * Returns: the GdkKeymap attached to display.
 	 */
 	public static Keymap getForDisplay(Display display)
 	{
@@ -274,12 +272,9 @@ public class Keymap : ObjectG
 	 * you want to use gdk_keymap_translate_keyboard_state() instead of
 	 * this function, since the effective group/level may not be
 	 * the same as the current keyboard state.
-	 * keymap:
-	 *  a GdkKeymap or NULL to use the default keymap
-	 * key:
-	 *  a GdkKeymapKey with keycode, group, and level initialized
-	 * Returns:
-	 *  a keyval, or 0 if none was mapped to the given key
+	 * Params:
+	 * key =  a GdkKeymapKey with keycode, group, and level initialized
+	 * Returns: a keyval, or 0 if none was mapped to the given key
 	 */
 	public uint lookupKey(GdkKeymapKey* key)
 	{
@@ -315,41 +310,16 @@ public class Keymap : ObjectG
 	 * An older interpretation consumed_modifiers was that it contained
 	 * all modifiers that might affect the translation of the key;
 	 * this allowed accelerators to be stored with irrelevant consumed
-	 * modifiers, by doing:
-	 * /+* XXX Don't do this XXX +/
-	 * if (keyval == accel_keyval
-	 *  (event->state  ~consumed  ALL_ACCELS_MASK) == (accel_mods  ~consumed))
-	 *  /+* Accelerator was pressed +/
-	 * However, this did not work if multi-modifier combinations were
-	 * used in the keymap, since, for instance, <Control>
-	 * would be masked out even if only <Control><Alt>
-	 * was used in the keymap. To support this usage as well as well as
-	 * possible, all single modifier combinations
-	 * that could affect the key for any combination of modifiers will
-	 * be returned in consumed_modifiers; multi-modifier combinations
-	 * are returned only when actually found in state. When you store
-	 * accelerators, you should always store them with consumed modifiers
-	 * removed. Store <Control>plus,
-	 * not <Control><Shift>plus,
-	 * keymap:
-	 *  a GdkKeymap, or NULL to use the default
-	 * hardware_keycode:
-	 *  a keycode
-	 * state:
-	 *  a modifier state
-	 * group:
-	 *  active keyboard group
-	 * keyval:
-	 *  return location for keyval, or NULL
-	 * effective_group:
-	 *  return location for effective group, or NULL
-	 * level:
-	 *  return location for level, or NULL
-	 * consumed_modifiers:
-	 *  return location for modifiers that were used to
+	 * Params:
+	 * hardwareKeycode =  a keycode
+	 * state =  a modifier state
+	 * group =  active keyboard group
+	 * keyval =  return location for keyval, or NULL
+	 * effectiveGroup =  return location for effective group, or NULL
+	 * level =  return location for level, or NULL
+	 * consumedModifiers =  return location for modifiers that were used to
 	 *  determine the group or level, or NULL
-	 * Returns:
-	 *  TRUE if there was a keyval bound to the keycode/state/group
+	 * Returns: TRUE if there was a keyval bound to the keycode/state/group
 	 */
 	public int translateKeyboardState(uint hardwareKeycode, GdkModifierType state, int group, uint* keyval, int* effectiveGroup, int* level, GdkModifierType* consumedModifiers)
 	{
@@ -369,16 +339,11 @@ public class Keymap : ObjectG
 	 * keyboard group. The level is computed from the modifier mask.
 	 * The returned array should be freed
 	 * with g_free().
-	 * keymap:
-	 *  a GdkKeymap, or NULL to use the default keymap
-	 * keyval:
-	 *  a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
-	 * keys:
-	 *  return location for an array of GdkKeymapKey
-	 * n_keys:
-	 *  return location for number of elements in returned array
-	 * Returns:
-	 *  TRUE if keys were found and returned
+	 * Params:
+	 * keyval =  a keyval, such as GDK_a, GDK_Up, GDK_Return, etc.
+	 * keys =  return location for an array of GdkKeymapKey
+	 * nKeys =  return location for number of elements in returned array
+	 * Returns: TRUE if keys were found and returned
 	 */
 	public int getEntriesForKeyval(uint keyval, GdkKeymapKey** keys, int* nKeys)
 	{
@@ -393,18 +358,12 @@ public class Keymap : ObjectG
 	 * When a keycode is pressed by the user, the keyval from
 	 * this list of entries is selected by considering the effective
 	 * keyboard group and level. See gdk_keymap_translate_keyboard_state().
-	 * keymap:
-	 *  a GdkKeymap or NULL to use the default keymap
-	 * hardware_keycode:
-	 *  a keycode
-	 * keys:
-	 *  return location for array of GdkKeymapKey, or NULL
-	 * keyvals:
-	 *  return location for array of keyvals, or NULL
-	 * n_entries:
-	 *  length of keys and keyvals
-	 * Returns:
-	 *  TRUE if there were any entries
+	 * Params:
+	 * hardwareKeycode =  a keycode
+	 * keys =  return location for array of GdkKeymapKey, or NULL
+	 * keyvals =  return location for array of keyvals, or NULL
+	 * nEntries =  length of keys and keyvals
+	 * Returns: TRUE if there were any entries
 	 */
 	public int getEntriesForKeycode(uint hardwareKeycode, GdkKeymapKey** keys, uint** keyvals, int* nEntries)
 	{
@@ -414,11 +373,7 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Returns the direction of the keymap.
-	 * keymap:
-	 * a GdkKeymap or NULL to use the default keymap.
-	 * Returns: PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL.
-	 * Returns:
-	 * the direction of the keymap.
+	 * Returns:the direction of effective layout of the keymap.Returns: PANGO_DIRECTION_LTR or PANGO_DIRECTION_RTL  if it can determine the direction. PANGO_DIRECTION_NEUTRAL  otherwise.
 	 */
 	public PangoDirection getDirection()
 	{
@@ -427,14 +382,24 @@ public class Keymap : ObjectG
 	}
 	
 	/**
+	 * Determines if keyboard layouts for both right-to-left and left-to-right
+	 * languages are in use.
+	 * Since 2.12
+	 * Returns: TRUE if there are layouts in both directions, FALSE otherwise
+	 */
+	public int haveBidiLayouts()
+	{
+		// gboolean gdk_keymap_have_bidi_layouts (GdkKeymap *keymap);
+		return gdk_keymap_have_bidi_layouts(gdkKeymap);
+	}
+	
+	/**
 	 * Converts a key value into a symbolic name.
 	 * The names are the same as those in the <gdk/gdkkeysyms.h> header file
 	 * but without the leading "GDK_".
-	 * keyval:
-	 * a key value.
-	 * Returns:
-	 * a string containing the name of the key, or NULL if keyval is not
-	 * a valid key. The string should not be modified.
+	 * Params:
+	 * keyval = a key value.
+	 * Returns:a string containing the name of the key, or NULL if keyval is nota valid key. The string should not be modified.
 	 */
 	public static char[] gdkKeyvalName(uint keyval)
 	{
@@ -444,11 +409,9 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Converts a key name to a key value.
-	 * keyval_name:
-	 * a key name.
-	 * Returns:
-	 * the corresponding key value, or GDK_VoidSymbol if the key name is
-	 * not a valid key.
+	 * Params:
+	 * keyvalName = a key name.
+	 * Returns:the corresponding key value, or GDK_VoidSymbol if the key name isnot a valid key.
 	 */
 	public static uint gdkKeyvalFromName(char[] keyvalName)
 	{
@@ -459,12 +422,10 @@ public class Keymap : ObjectG
 	/**
 	 * Obtains the upper- and lower-case versions of the keyval symbol.
 	 * Examples of keyvals are GDK_a, GDK_Enter, GDK_F1, etc.
-	 * symbol:
-	 *  a keyval
-	 * lower:
-	 *  return location for lowercase version of symbol
-	 * upper:
-	 *  return location for uppercase version of symbol
+	 * Params:
+	 * symbol =  a keyval
+	 * lower =  return location for lowercase version of symbol
+	 * upper =  return location for uppercase version of symbol
 	 */
 	public static void gdkKeyvalConvertCase(uint symbol, uint* lower, uint* upper)
 	{
@@ -474,11 +435,9 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Converts a key value to upper case, if applicable.
-	 * keyval:
-	 * a key value.
-	 * Returns:
-	 * the upper case form of keyval, or keyval itself if it is already
-	 * in upper case or it is not subject to case conversion.
+	 * Params:
+	 * keyval = a key value.
+	 * Returns:the upper case form of keyval, or keyval itself if it is alreadyin upper case or it is not subject to case conversion.
 	 */
 	public static uint gdkKeyvalToUpper(uint keyval)
 	{
@@ -488,11 +447,9 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Converts a key value to lower case, if applicable.
-	 * keyval:
-	 * a key value.
-	 * Returns:
-	 * the lower case form of keyval, or keyval itself if it is already
-	 * in lower case or it is not subject to case conversion.
+	 * Params:
+	 * keyval = a key value.
+	 * Returns:the lower case form of keyval, or keyval itself if it is alreadyin lower case or it is not subject to case conversion.
 	 */
 	public static uint gdkKeyvalToLower(uint keyval)
 	{
@@ -502,11 +459,9 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Returns TRUE if the given key value is in upper case.
-	 * keyval:
-	 * a key value.
-	 * Returns:
-	 * TRUE if keyval is in upper case, or if keyval is not subject to
-	 * case conversion.
+	 * Params:
+	 * keyval = a key value.
+	 * Returns:TRUE if keyval is in upper case, or if keyval is not subject tocase conversion.
 	 */
 	public static int gdkKeyvalIsUpper(uint keyval)
 	{
@@ -516,11 +471,9 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Returns TRUE if the given key value is in lower case.
-	 * keyval:
-	 * a key value.
-	 * Returns:
-	 * TRUE if keyval is in lower case, or if keyval is not subject to
-	 * case conversion.
+	 * Params:
+	 * keyval = a key value.
+	 * Returns:TRUE if keyval is in lower case, or if keyval is not subject tocase conversion.
 	 */
 	public static int gdkKeyvalIsLower(uint keyval)
 	{
@@ -531,11 +484,9 @@ public class Keymap : ObjectG
 	/**
 	 * Convert from a GDK key symbol to the corresponding ISO10646 (Unicode)
 	 * character.
-	 * keyval:
-	 *  a GDK key symbol
-	 * Returns:
-	 *  the corresponding unicode character, or 0 if there
-	 *  is no corresponding character.
+	 * Params:
+	 * keyval =  a GDK key symbol
+	 * Returns: the corresponding unicode character, or 0 if there is no corresponding character.
 	 */
 	public static uint gdkKeyvalToUnicode(uint keyval)
 	{
@@ -545,23 +496,10 @@ public class Keymap : ObjectG
 	
 	/**
 	 * Convert from a ISO10646 character to a key symbol.
-	 * wc:
-	 *  a ISO10646 encoded character
-	 * Returns:
-	 *  the corresponding GDK key symbol, if one exists.
-	 *  or, if there is no corresponding symbol,
-	 *  wc | 0x01000000
-	 * Signal Details
-	 * The "direction-changed" signal
-	 * void user_function (GdkKeymap *keymap,
-	 *  gpointer user_data) : Run Last
-	 * The ::direction_changed signal gets emitted when the direction of
-	 * the keymap changes.
-	 * keymap:
-	 *  the object on which the signal is emitted
-	 * user_data:
-	 * user data set when the signal handler was connected.
 	 * Since 2.0
+	 * Params:
+	 * wc =  a ISO10646 encoded character
+	 * Returns: the corresponding GDK key symbol, if one exists. or, if there is no corresponding symbol,  wc | 0x01000000Signal DetailsThe "direction-changed" signalvoid user_function (GdkKeymap *keymap, gpointer user_data) : Run LastThe ::direction_changed signal gets emitted when the direction ofthe keymap changes.
 	 */
 	public static uint gdkUnicodeToKeyval(uint wc)
 	{

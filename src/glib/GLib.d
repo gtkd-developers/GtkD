@@ -98,18 +98,12 @@ public class Version
 	 * the running library must be binary compatible with the
 	 * version required_major.required_minor.required_micro
 	 * (same major version.)
-	 * required_major:
-	 *  the required major version.
-	 * required_minor:
-	 *  the required minor version.
-	 * required_micro:
-	 *  the required micro version.
-	 * Returns:
-	 *  NULL if the GLib library is compatible with the
-	 *  given version, or a string describing the version mismatch.
-	 *  The returned string is owned by GLib and must not be modified
-	 *  or freed.
 	 * Since 2.6
+	 * Params:
+	 * requiredMajor =  the required major version.
+	 * requiredMinor =  the required minor version.
+	 * requiredMicro =  the required micro version.
+	 * Returns: NULL if the GLib library is compatible with the given version, or a string describing the version mismatch. The returned string is owned by GLib and must not be modified or freed.
 	 */
 	public static char[] checkVersion(uint requiredMajor, uint requiredMinor, uint requiredMicro)
 	{

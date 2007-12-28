@@ -72,24 +72,24 @@ private import gtk.Widget;
 
 
 
+private import gtk.Bin;
 
 /**
  * Description
- * A GtkExpander allows the user to hide or show its child by clicking on an expander triangle similar to
- * the triangles used in a GtkTreeView.
- *  Normally you use an expander as you would use any other descendant
- *  of GtkBin; you create the child widget and use
- *  gtk_container_add() to add it to the expander. When the expander
- *  is toggled, it will take care of showing and hiding the child
- *  automatically.
+ * A GtkExpander allows the user to hide or show its child by clicking
+ * on an expander triangle similar to the triangles used in a GtkTreeView.
+ * Normally you use an expander as you would use any other descendant
+ * of GtkBin; you create the child widget and use gtk_container_add()
+ * to add it to the expander. When the expander is toggled, it will take
+ * care of showing and hiding the child automatically.
  * Special Usage
- *  There are situations in which you may prefer to show and
- *  hide the expanded widget yourself, such as when you want to
- *  actually create the widget at expansion time. In this case,
- *  create a GtkExpander but do not add a child to it. The
- *  expander widget has an expanded property
- *  which can be used to monitor its expansion state. You should
- *  watch this property with a signal connection as follows:
+ * There are situations in which you may prefer to show and hide the
+ * expanded widget yourself, such as when you want to actually create
+ * the widget at expansion time. In this case, create a GtkExpander
+ * but do not add a child to it. The expander widget has an
+ * expanded property which can be used to monitor
+ * its expansion state. You should watch this property with a signal
+ * connection as follows:
  * expander = gtk_expander_new_with_mnemonic ("_More Options");
  * g_signal_connect (expander, "notify::expanded",
  *  G_CALLBACK (expander_callback), NULL);
@@ -110,8 +110,22 @@ private import gtk.Widget;
 		 *  /+* Hide or destroy widgets +/
 	 *  }
  * }
+ * GtkExpander as GtkBuildable
+ * The GtkExpander implementation of the GtkBuildable interface
+ * supports placing a child in the label position by specifying
+ * "label" as the "type" attribute of a <child> element.
+ * A normal content child can be specified without specifying
+ * a <child> type attribute.
+ * Example37.A UI definition fragment with GtkExpander
+ * <object class="GtkExpander">
+ *  <child type="label">
+ *  <object class="GtkLabel" id="expander-label"/>
+ *  </child>
+ *  <child>
+ *  <object class="GtkEntry" id="expander-content"/>
+ *  </child>
+ * </object>
  */
-private import gtk.Bin;
 public class Expander : Bin
 {
 	
@@ -162,16 +176,14 @@ public class Expander : Bin
 	
 	/**
 	 * Creates a new expander using label as the text of the label.
-	 * If mnemonic os true
-	 * If characters in label are preceded by an underscore, they are underlined.
-	 * If you need a literal underscore character in a label, use '__' (two
-	 * underscores). The first underlined character represents a keyboard
-	 * accelerator called a mnemonic.
-	 * label:
-	 *  the text of the label
-	 * Returns:
-	 *  a new GtkExpander widget.
 	 * Since 2.4
+	 * Params:
+	 *  label = the text of the label
+	 *  mnemonic = if true characters in label that are preceded by an underscore,
+	 *  are underlined.
+	 *  If you need a literal underscore character in a label, use '__' (two
+	 *  underscores). The first underlined character represents a keyboard
+	 *  accelerator called a mnemonic.
 	 */
 	public this (char[] label, bool mnemonic=true)
 	{
@@ -231,11 +243,9 @@ public class Expander : Bin
 	 * Sets the state of the expander. Set to TRUE, if you want
 	 * the child widget to be revealed, and FALSE if you want the
 	 * child widget to be hidden.
-	 * expander:
-	 *  a GtkExpander
-	 * expanded:
-	 *  whether the child widget is revealed
 	 * Since 2.4
+	 * Params:
+	 * expanded =  whether the child widget is revealed
 	 */
 	public void setExpanded(int expanded)
 	{
@@ -247,11 +257,8 @@ public class Expander : Bin
 	 * Queries a GtkExpander and returns its current state. Returns TRUE
 	 * if the child widget is revealed.
 	 * See gtk_expander_set_expanded().
-	 * expander:
-	 * a GtkExpander
-	 * Returns:
-	 *  the current state of the expander.
 	 * Since 2.4
+	 * Returns: the current state of the expander.
 	 */
 	public int getExpanded()
 	{
@@ -262,11 +269,9 @@ public class Expander : Bin
 	/**
 	 * Sets the spacing field of expander, which is the number of pixels to
 	 * place between expander and the child.
-	 * expander:
-	 *  a GtkExpander
-	 * spacing:
-	 *  distance between the expander and child in pixels.
 	 * Since 2.4
+	 * Params:
+	 * spacing =  distance between the expander and child in pixels.
 	 */
 	public void setSpacing(int spacing)
 	{
@@ -276,11 +281,8 @@ public class Expander : Bin
 	
 	/**
 	 * Gets the value set by gtk_expander_set_spacing().
-	 * expander:
-	 *  a GtkExpander
-	 * Returns:
-	 *  spacing between the expander and child.
 	 * Since 2.4
+	 * Returns: spacing between the expander and child.
 	 */
 	public int getSpacing()
 	{
@@ -291,11 +293,9 @@ public class Expander : Bin
 	/**
 	 * Sets the text of the label of the expander to label.
 	 * This will also clear any previously set labels.
-	 * expander:
-	 *  a GtkExpander
-	 * label:
-	 *  a string
 	 * Since 2.4
+	 * Params:
+	 * label =  a string
 	 */
 	public void setLabel(char[] label)
 	{
@@ -309,12 +309,8 @@ public class Expander : Bin
 	 * been set the return value will be NULL. This will be the
 	 * case if you create an empty button with gtk_button_new() to
 	 * use as a container.
-	 * expander:
-	 *  a GtkExpander
-	 * Returns:
-	 *  The text of the label widget. This string is owned
-	 * by the widget and must not be modified or freed.
 	 * Since 2.4
+	 * Returns: The text of the label widget. This string is ownedby the widget and must not be modified or freed.
 	 */
 	public char[] getLabel()
 	{
@@ -325,11 +321,9 @@ public class Expander : Bin
 	/**
 	 * If true, an underline in the text of the expander label indicates
 	 * the next character should be used for the mnemonic accelerator key.
-	 * expander:
-	 *  a GtkExpander
-	 * use_underline:
-	 *  TRUE if underlines in the text indicate mnemonics
 	 * Since 2.4
+	 * Params:
+	 * useUnderline =  TRUE if underlines in the text indicate mnemonics
 	 */
 	public void setUseUnderline(int useUnderline)
 	{
@@ -340,12 +334,8 @@ public class Expander : Bin
 	/**
 	 * Returns whether an embedded underline in the expander label indicates a
 	 * mnemonic. See gtk_expander_set_use_underline().
-	 * expander:
-	 *  a GtkExpander
-	 * Returns:
-	 *  TRUE if an embedded underline in the expander label
-	 *  indicates the mnemonic accelerator keys.
 	 * Since 2.4
+	 * Returns: TRUE if an embedded underline in the expander label indicates the mnemonic accelerator keys.
 	 */
 	public int getUseUnderline()
 	{
@@ -356,11 +346,9 @@ public class Expander : Bin
 	/**
 	 * Sets whether the text of the label contains markup in Pango's text markup
 	 * language. See gtk_label_set_markup().
-	 * expander:
-	 *  a GtkExpander
-	 * use_markup:
-	 *  TRUE if the label's text should be parsed for markup
 	 * Since 2.4
+	 * Params:
+	 * useMarkup =  TRUE if the label's text should be parsed for markup
 	 */
 	public void setUseMarkup(int useMarkup)
 	{
@@ -372,11 +360,8 @@ public class Expander : Bin
 	 * Returns whether the label's text is interpreted as marked up with
 	 * the Pango text markup
 	 * language. See gtk_expander_set_use_markup().
-	 * expander:
-	 *  a GtkExpander
-	 * Returns:
-	 *  TRUE if the label's text will be parsed for markup
 	 * Since 2.4
+	 * Returns: TRUE if the label's text will be parsed for markup
 	 */
 	public int getUseMarkup()
 	{
@@ -387,11 +372,9 @@ public class Expander : Bin
 	/**
 	 * Set the label widget for the expander. This is the widget
 	 * that will appear embedded alongside the expander arrow.
-	 * expander:
-	 *  a GtkExpander
-	 * label_widget:
-	 *  the new label widget
 	 * Since 2.4
+	 * Params:
+	 * labelWidget =  the new label widget
 	 */
 	public void setLabelWidget(Widget labelWidget)
 	{
@@ -402,16 +385,8 @@ public class Expander : Bin
 	/**
 	 * Retrieves the label widget for the frame. See
 	 * gtk_expander_set_label_widget().
-	 * expander:
-	 *  a GtkExpander
-	 * Returns:
-	 *  the label widget, or NULL if there is none.
 	 * Since 2.4
-	 * Property Details
-	 * The "expanded" property
-	 *  "expanded" gboolean : Read / Write / Construct
-	 * Whether the expander has been opened to reveal the child widget.
-	 * Default value: FALSE
+	 * Returns: the label widget, or NULL if there is none.
 	 */
 	public Widget getLabelWidget()
 	{

@@ -70,11 +70,11 @@ private import gtk.AccelMap;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-private import gobject.ObjectG;
 public class AccelMap : ObjectG
 {
 	
@@ -175,14 +175,10 @@ public class AccelMap : ObjectG
 	 * The Category1/.../Action portion is most appropriately chosen by the action the
 	 * accelerator triggers, i.e. for accelerators on menu items, choose the item's menu path,
 	 * e.g. "File/Save As", "Image/View/Zoom" or "Edit/Select All".
-	 * So a full valid accelerator path may look like:
-	 * "<Gimp-Toolbox>/File/Dialogs/Tool Options...".
-	 * accel_path:
-	 *  valid accelerator path
-	 * accel_key:
-	 *  the accelerator key
-	 * accel_mods:
-	 *  the accelerator modifiers
+	 * Params:
+	 * accelPath =  valid accelerator path
+	 * accelKey =  the accelerator key
+	 * accelMods =  the accelerator modifiers
 	 */
 	public static void addEntry(char[] accelPath, uint accelKey, GdkModifierType accelMods)
 	{
@@ -192,12 +188,10 @@ public class AccelMap : ObjectG
 	
 	/**
 	 * Looks up the accelerator entry for accel_path and fills in key.
-	 * accel_path:
-	 *  a valid accelerator path
-	 * key:
-	 *  the accelerator key to be filled in (optional)
-	 * Returns:
-	 *  TRUE if accel_path is known, FALSE otherwise
+	 * Params:
+	 * accelPath =  a valid accelerator path
+	 * key =  the accelerator key to be filled in (optional)
+	 * Returns: TRUE if accel_path is known, FALSE otherwise
 	 */
 	public static int lookupEntry(char[] accelPath, GtkAccelKey* key)
 	{
@@ -212,16 +206,12 @@ public class AccelMap : ObjectG
 	 * conflicts. A change will only occur if all conflicts could be resolved (which
 	 * might not be the case if conflicting accelerators are locked). Successful
 	 * changes are indicated by a TRUE return value.
-	 * accel_path:
-	 *  a valid accelerator path
-	 * accel_key:
-	 *  the new accelerator key
-	 * accel_mods:
-	 *  the new accelerator modifiers
-	 * replace:
-	 *  TRUE if other accelerators may be deleted upon conflicts
-	 * Returns:
-	 *  TRUE if the accelerator could be changed, FALSE otherwise
+	 * Params:
+	 * accelPath =  a valid accelerator path
+	 * accelKey =  the new accelerator key
+	 * accelMods =  the new accelerator modifiers
+	 * replace =  TRUE if other accelerators may be deleted upon conflicts
+	 * Returns: TRUE if the accelerator could be changed, FALSE otherwise
 	 */
 	public static int changeEntry(char[] accelPath, uint accelKey, GdkModifierType accelMods, int replace)
 	{
@@ -232,8 +222,8 @@ public class AccelMap : ObjectG
 	/**
 	 * Parses a file previously saved with gtk_accel_map_save() for
 	 * accelerator specifications, and propagates them accordingly.
-	 * file_name:
-	 *  a file containing accelerator specifications,
+	 * Params:
+	 * fileName =  a file containing accelerator specifications,
 	 *  in the GLib file name encoding
 	 */
 	public static void load(char[] fileName)
@@ -247,8 +237,8 @@ public class AccelMap : ObjectG
 	 * and modifiers) to file_name.
 	 * The file is written in a format suitable to be read back in by
 	 * gtk_accel_map_load().
-	 * file_name:
-	 *  the name of the file to contain accelerator specifications,
+	 * Params:
+	 * fileName =  the name of the file to contain accelerator specifications,
 	 *  in the GLib file name encoding
 	 */
 	public static void save(char[] fileName)
@@ -264,10 +254,9 @@ public class AccelMap : ObjectG
 	 * that of GtkAccelMapForeach, the changed parameter indicates whether
 	 * this accelerator was changed during runtime (thus, would need
 	 * saving during an accelerator map dump).
-	 * data:
-	 *  data to be passed into foreach_func
-	 * foreach_func:
-	 *  function to be executed for each accel map entry which
+	 * Params:
+	 * data =  data to be passed into foreach_func
+	 * foreachFunc =  function to be executed for each accel map entry which
 	 *  is not filtered out
 	 */
 	public static void foreac(void* data, GtkAccelMapForeach foreachFunc)
@@ -279,8 +268,8 @@ public class AccelMap : ObjectG
 	/**
 	 * Filedescriptor variant of gtk_accel_map_load().
 	 * Note that the file descriptor will not be closed by this function.
-	 * fd:
-	 *  a valid readable file descriptor
+	 * Params:
+	 * fd =  a valid readable file descriptor
 	 */
 	public static void loadFd(int fd)
 	{
@@ -291,8 +280,8 @@ public class AccelMap : ObjectG
 	/**
 	 * Filedescriptor variant of gtk_accel_map_save().
 	 * Note that the file descriptor will not be closed by this function.
-	 * fd:
-	 *  a valid writable file descriptor
+	 * Params:
+	 * fd =  a valid writable file descriptor
 	 */
 	public static void saveFd(int fd)
 	{
@@ -302,8 +291,8 @@ public class AccelMap : ObjectG
 	
 	/**
 	 * GScanner variant of gtk_accel_map_load().
-	 * scanner:
-	 *  a GScanner which has already been provided with an input file
+	 * Params:
+	 * scanner =  a GScanner which has already been provided with an input file
 	 */
 	public static void loadScanner(GScanner* scanner)
 	{
@@ -318,8 +307,8 @@ public class AccelMap : ObjectG
 	 * This function is intended for GTK+ modules that create their own
 	 * menus, but don't want them to be saved into the applications accelerator
 	 * map dump.
-	 * filter_pattern:
-	 *  a pattern (see GPatternSpec)
+	 * Params:
+	 * filterPattern =  a pattern (see GPatternSpec)
 	 */
 	public static void addFilter(char[] filterPattern)
 	{
@@ -333,10 +322,9 @@ public class AccelMap : ObjectG
 	 * GtkAccelMapForeach, the changed parameter indicates whether
 	 * this accelerator was changed during runtime (thus, would need
 	 * saving during an accelerator map dump).
-	 * data:
-	 *  data to be passed into foreach_func
-	 * foreach_func:
-	 *  function to be executed for each accel map entry
+	 * Params:
+	 * data =  data to be passed into foreach_func
+	 * foreachFunc =  function to be executed for each accel map entry
 	 */
 	public static void foreachUnfiltered(void* data, GtkAccelMapForeach foreachFunc)
 	{
@@ -349,9 +337,8 @@ public class AccelMap : ObjectG
 	 * is useful only for notification of changes to the accelerator
 	 * map via the ::changed signal; it isn't a parameter to the
 	 * other accelerator map functions.
-	 * Returns:
-	 *  the global GtkAccelMap object
 	 * Since 2.4
+	 * Returns: the global GtkAccelMap object
 	 */
 	public static AccelMap get()
 	{
@@ -373,9 +360,9 @@ public class AccelMap : ObjectG
 	 * locking the GtkAccelGroup containing them. For runtime accelerator
 	 * changes to be possible both the accelerator path and its GtkAccelGroup
 	 * have to be unlocked.
-	 * accel_path:
-	 *  a valid accelerator path
 	 * Since 2.4
+	 * Params:
+	 * accelPath =  a valid accelerator path
 	 */
 	public static void lockPath(char[] accelPath)
 	{
@@ -386,8 +373,6 @@ public class AccelMap : ObjectG
 	/**
 	 * Undoes the last call to gtk_accel_map_lock_path() on this accel_path.
 	 * Refer to gtk_accel_map_lock_path() for information about accelerator path locking.
-	 * accel_path:
-	 *  a valid accelerator path
 	 * Since 2.4
 	 * Signal Details
 	 * The "changed" signal
@@ -400,17 +385,10 @@ public class AccelMap : ObjectG
 	 * The path is also used as the detail for the signal,
 	 * so it is possible to connect to
 	 * changed::accel_path.
-	 * object:
-	 *  the global accel map object
-	 * accel_path:
-	 *  the path of the accelerator that changed
-	 * accel_key:
-	 *  the key value for the new accelerator
-	 * accel_mods:
-	 *  the modifier mask for the new accelerator
-	 * user_data:
-	 * user data set when the signal handler was connected.
 	 * Since 2.4
+	 * Params:
+	 * accelPath =  a valid accelerator path
+	 * accelPath =  the path of the accelerator that changed
 	 */
 	public static void unlockPath(char[] accelPath)
 	{

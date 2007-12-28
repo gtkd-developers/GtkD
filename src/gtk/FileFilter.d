@@ -67,6 +67,7 @@ private import glib.Str;
 
 
 
+private import gtk.ObjectGtk;
 
 /**
  * Description
@@ -84,7 +85,6 @@ private import glib.Str;
  * see gtk_file_chooser_add_filter(), but it is also possible
  * to manually use a filter on a file with gtk_file_filter_filter().
  */
-private import gtk.ObjectGtk;
 public class FileFilter : ObjectGtk
 {
 	
@@ -146,11 +146,6 @@ public class FileFilter : ObjectGtk
 	 * particularly useful until you add rules with
 	 * gtk_file_filter_add_mime_type(), gtk_file_filter_add_pattern(),
 	 * or gtk_file_filter_add_custom(). To create a filter
-	 * that accepts any file, use:
-	 * GtkFileFilter *filter = gtk_file_filter_new ();
-	 * gtk_file_filter_add_pattern (filter, "*");
-	 * Returns:
-	 *  a new GtkFileFilter
 	 * Since 2.4
 	 */
 	public this ()
@@ -163,12 +158,10 @@ public class FileFilter : ObjectGtk
 	 * Sets the human-readable name of the filter; this is the string
 	 * that will be displayed in the file selector user interface if
 	 * there is a selectable list of filters.
-	 * filter:
-	 *  a GtkFileFilter
-	 * name:
-	 *  the human-readable-name for the filter, or NULL
-	 *  to remove any existing name.
 	 * Since 2.4
+	 * Params:
+	 * name =  the human-readable-name for the filter, or NULL
+	 *  to remove any existing name.
 	 */
 	public void setName(char[] name)
 	{
@@ -178,13 +171,8 @@ public class FileFilter : ObjectGtk
 	
 	/**
 	 * Gets the human-readable name for the filter. See gtk_file_filter_set_name().
-	 * filter:
-	 *  a GtkFileFilter
-	 * Returns:
-	 *  The human-readable name of the filter,
-	 *  or NULL. This value is owned by GTK+ and must not
-	 *  be modified or freed.
 	 * Since 2.4
+	 * Returns: The human-readable name of the filter, or NULL. This value is owned by GTK+ and must not be modified or freed.
 	 */
 	public char[] getName()
 	{
@@ -194,11 +182,9 @@ public class FileFilter : ObjectGtk
 	
 	/**
 	 * Adds a rule allowing a given mime type to filter.
-	 * filter:
-	 *  A GtkFileFilter
-	 * mime_type:
-	 *  name of a MIME type
 	 * Since 2.4
+	 * Params:
+	 * mimeType =  name of a MIME type
 	 */
 	public void addMimeType(char[] mimeType)
 	{
@@ -208,11 +194,9 @@ public class FileFilter : ObjectGtk
 	
 	/**
 	 * Adds a rule allowing a shell style glob to a filter.
-	 * filter:
-	 *  a GtkFileFilter
-	 * pattern:
-	 *  a shell style glob
 	 * Since 2.4
+	 * Params:
+	 * pattern =  a shell style glob
 	 */
 	public void addPattern(char[] pattern)
 	{
@@ -223,8 +207,6 @@ public class FileFilter : ObjectGtk
 	/**
 	 * Adds a rule allowing image files in the formats supported
 	 * by GdkPixbuf.
-	 * filter:
-	 *  a GtkFileFilter
 	 * Since 2.6
 	 */
 	public void addPixbufFormats()
@@ -239,19 +221,14 @@ public class FileFilter : ObjectGtk
 	 * about what sorts of information that the filter function needs;
 	 * this allows GTK+ to avoid retrieving expensive information when
 	 * it isn't needed by the filter.
-	 * filter:
-	 *  a GtkFileFilter
-	 * needed:
-	 *  bitfield of flags indicating the information that the custom
-	 *  filter function needs.
-	 * func:
-	 *  callback function; if the function returns TRUE, then
-	 *  the file will be displayed.
-	 * data:
-	 *  data to pass to func
-	 * notify:
-	 *  function to call to free data when it is no longer needed.
 	 * Since 2.4
+	 * Params:
+	 * needed =  bitfield of flags indicating the information that the custom
+	 *  filter function needs.
+	 * func =  callback function; if the function returns TRUE, then
+	 *  the file will be displayed.
+	 * data =  data to pass to func
+	 * notify =  function to call to free data when it is no longer needed.
 	 */
 	public void addCustom(GtkFileFilterFlags needed, GtkFileFilterFunc func, void* data, GDestroyNotify notify)
 	{
@@ -265,12 +242,8 @@ public class FileFilter : ObjectGtk
 	 * This function will not typically be used by applications; it
 	 * is intended principally for use in the implementation of
 	 * GtkFileChooser.
-	 * filter:
-	 *  a GtkFileFilter
-	 * Returns:
-	 *  bitfield of flags indicating needed fields when
-	 *  calling gtk_file_filter_filter()
 	 * Since 2.4
+	 * Returns: bitfield of flags indicating needed fields when calling gtk_file_filter_filter()
 	 */
 	public GtkFileFilterFlags getNeeded()
 	{
@@ -285,16 +258,12 @@ public class FileFilter : ObjectGtk
 	 * This function will not typically be used by applications; it
 	 * is intended principally for use in the implementation of
 	 * GtkFileChooser.
-	 * filter:
-	 *  a GtkFileFilter
-	 * filter_info:
-	 *  a GtkFileFilterInfo structure containing information
-	 *  about a file.
-	 * Returns:
-	 *  TRUE if the file should be displayed
 	 * Since 2.4
-	 * See Also
-	 * GtkFileChooser
+	 * Params:
+	 * filter =  a GtkFileFilter
+	 * filterInfo =  a GtkFileFilterInfo structure containing information
+	 *  about a file.
+	 * Returns: TRUE if the file should be displayed
 	 */
 	public int filter(GtkFileFilterInfo* filterInfo)
 	{

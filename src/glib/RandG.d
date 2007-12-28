@@ -150,10 +150,9 @@ public class RandG
 	
 	/**
 	 * Creates a new random number generator initialized with seed.
-	 * seed:
-	 *  a value to initialize the random number generator.
-	 * Returns:
-	 *  the new GRand.
+	 * Params:
+	 * seed =  a value to initialize the random number generator.
+	 * Returns: the new GRand.
 	 */
 	public static RandG randNewWithSeed(uint seed)
 	{
@@ -163,13 +162,11 @@ public class RandG
 	
 	/**
 	 * Creates a new random number generator initialized with seed.
-	 * seed:
-	 *  an array of seeds to initialize the random number generator.
-	 * seed_length:
-	 *  an array of seeds to initialize the random number generator.
-	 * Returns:
-	 *  the new GRand.
 	 * Since 2.4
+	 * Params:
+	 * seed =  an array of seeds to initialize the random number generator.
+	 * seedLength =  an array of seeds to initialize the random number generator.
+	 * Returns: the new GRand.
 	 */
 	public static RandG randNewWithSeedArray(uint* seed, uint seedLength)
 	{
@@ -181,8 +178,7 @@ public class RandG
 	 * Creates a new random number generator initialized with a seed taken
 	 * either from /dev/urandom (if existing) or from
 	 * the current time (as a fallback).
-	 * Returns:
-	 *  the new GRand.
+	 * Returns: the new GRand.
 	 */
 	public static RandG randNew()
 	{
@@ -194,11 +190,10 @@ public class RandG
 	 * Copies a GRand into a new one with the same exact state as before.
 	 * This way you can take a snapshot of the random number generator for
 	 * replaying later.
-	 * rand_:
-	 *  a GRand.
-	 * Returns:
-	 *  the new GRand.
 	 * Since 2.4
+	 * Params:
+	 * rand =  a GRand.
+	 * Returns: the new GRand.
 	 */
 	public RandG randCopy()
 	{
@@ -208,8 +203,8 @@ public class RandG
 	
 	/**
 	 * Frees the memory allocated for the GRand.
-	 * rand_:
-	 *  a GRand.
+	 * Params:
+	 * rand =  a GRand.
 	 */
 	public void randFree()
 	{
@@ -219,10 +214,9 @@ public class RandG
 	
 	/**
 	 * Sets the seed for the random number generator GRand to seed.
-	 * rand_:
-	 *  a GRand.
-	 * seed:
-	 *  a value to reinitialize the random number generator.
+	 * Params:
+	 * rand =  a GRand.
+	 * seed =  a value to reinitialize the random number generator.
 	 */
 	public void randSetSeed(uint seed)
 	{
@@ -236,13 +230,11 @@ public class RandG
 	 * first 624 values are taken. This function is useful
 	 * if you have many low entropy seeds, or if you require more then
 	 * 32bits of actual entropy for your application.
-	 * rand_:
-	 *  a GRand.
-	 * seed:
-	 *  array to initialize with
-	 * seed_length:
-	 *  length of array
 	 * Since 2.4
+	 * Params:
+	 * rand =  a GRand.
+	 * seed =  array to initialize with
+	 * seedLength =  length of array
 	 */
 	public void randSetSeedArray(uint* seed, uint seedLength)
 	{
@@ -254,10 +246,9 @@ public class RandG
 	/**
 	 * Returns the next random guint32 from rand_ equally distributed over
 	 * the range [0..2^32-1].
-	 * rand_:
-	 *  a GRand.
-	 * Returns:
-	 *  A random number.
+	 * Params:
+	 * rand =  a GRand.
+	 * Returns: A random number.
 	 */
 	public uint randInt()
 	{
@@ -268,14 +259,11 @@ public class RandG
 	/**
 	 * Returns the next random gint32 from rand_ equally distributed over
 	 * the range [begin..end-1].
-	 * rand_:
-	 *  a GRand.
-	 * begin:
-	 *  lower closed bound of the interval.
-	 * end:
-	 *  upper open bound of the interval.
-	 * Returns:
-	 *  A random number.
+	 * Params:
+	 * rand =  a GRand.
+	 * begin =  lower closed bound of the interval.
+	 * end =  upper open bound of the interval.
+	 * Returns: A random number.
 	 */
 	public int randIntRange(int begin, int end)
 	{
@@ -286,10 +274,9 @@ public class RandG
 	/**
 	 * Returns the next random gdouble from rand_ equally distributed over
 	 * the range [0..1).
-	 * rand_:
-	 *  a GRand.
-	 * Returns:
-	 *  A random number.
+	 * Params:
+	 * rand =  a GRand.
+	 * Returns: A random number.
 	 */
 	public double randDouble()
 	{
@@ -300,14 +287,11 @@ public class RandG
 	/**
 	 * Returns the next random gdouble from rand_ equally distributed over
 	 * the range [begin..end).
-	 * rand_:
-	 *  a GRand.
-	 * begin:
-	 *  lower closed bound of the interval.
-	 * end:
-	 *  upper open bound of the interval.
-	 * Returns:
-	 *  A random number.
+	 * Params:
+	 * rand =  a GRand.
+	 * begin =  lower closed bound of the interval.
+	 * end =  upper open bound of the interval.
+	 * Returns: A random number.
 	 */
 	public double randDoubleRange(double begin, double end)
 	{
@@ -318,8 +302,8 @@ public class RandG
 	/**
 	 * Sets the seed for the global random number generator, which is used
 	 * by the g_random_* functions, to seed.
-	 * seed:
-	 *  a value to reinitialize the global random number generator.
+	 * Params:
+	 * seed =  a value to reinitialize the global random number generator.
 	 */
 	public static void randomSetSeed(uint seed)
 	{
@@ -331,8 +315,7 @@ public class RandG
 	/**
 	 * Return a random guint32 equally distributed over the range
 	 * [0..2^32-1].
-	 * Returns:
-	 *  A random number.
+	 * Returns: A random number.
 	 */
 	public static uint randomInt()
 	{
@@ -343,12 +326,10 @@ public class RandG
 	/**
 	 * Returns a random gint32 equally distributed over the range
 	 * [begin..end-1].
-	 * begin:
-	 *  lower closed bound of the interval.
-	 * end:
-	 *  upper open bound of the interval.
-	 * Returns:
-	 *  A random number.
+	 * Params:
+	 * begin =  lower closed bound of the interval.
+	 * end =  upper open bound of the interval.
+	 * Returns: A random number.
 	 */
 	public static int randomIntRange(int begin, int end)
 	{
@@ -358,8 +339,7 @@ public class RandG
 	
 	/**
 	 * Returns a random gdouble equally distributed over the range [0..1).
-	 * Returns:
-	 *  A random number.
+	 * Returns: A random number.
 	 */
 	public static double randomDouble()
 	{
@@ -369,12 +349,10 @@ public class RandG
 	
 	/**
 	 * Returns a random gdouble equally distributed over the range [begin..end).
-	 * begin:
-	 *  lower closed bound of the interval.
-	 * end:
-	 *  upper open bound of the interval.
-	 * Returns:
-	 *  A random number.
+	 * Params:
+	 * begin =  lower closed bound of the interval.
+	 * end =  upper open bound of the interval.
+	 * Returns: A random number.
 	 */
 	public static double randomDoubleRange(double begin, double end)
 	{

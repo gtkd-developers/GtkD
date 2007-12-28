@@ -243,13 +243,12 @@ public class IconInfo
 	
 	
 	
+	
+	
 	/**
 	 * Make a copy of a GtkIconInfo.
-	 * icon_info:
-	 *  a GtkIconInfo
-	 * Returns:
-	 *  the new GtkIconInfo
 	 * Since 2.4
+	 * Returns: the new GtkIconInfo
 	 */
 	public IconInfo copy()
 	{
@@ -259,8 +258,6 @@ public class IconInfo
 	
 	/**
 	 * Free a GtkIconInfo and associated information
-	 * icon_info:
-	 *  a GtkIconInfo
 	 * Since 2.4
 	 */
 	public void free()
@@ -278,12 +275,8 @@ public class IconInfo
 	 * to a larger icon. These icons will be given
 	 * the same base size as the larger icons to which
 	 * they are attached.
-	 * icon_info:
-	 *  a GtkIconInfo
-	 * Returns:
-	 *  the base size, or 0, if no base
-	 *  size is known for the icon.
 	 * Since 2.4
+	 * Returns: the base size, or 0, if no base size is known for the icon.
 	 */
 	public int getBaseSize()
 	{
@@ -297,14 +290,8 @@ public class IconInfo
 	 * to gtk_icon_theme_lookup_icon(), there may be
 	 * no filename if a builtin icon is returned; in this
 	 * case, you should use gtk_icon_info_get_builtin_pixbuf().
-	 * icon_info:
-	 *  a GtkIconInfo
-	 * Returns:
-	 *  the filename for the icon, or NULL
-	 *  if gtk_icon_info_get_builtin_pixbuf() should
-	 *  be used instead. The return value is owned by
-	 *  GTK+ and should not be modified or freed.
 	 * Since 2.4
+	 * Returns: the filename for the icon, or NULL if gtk_icon_info_get_builtin_pixbuf() should be used instead. The return value is owned by GTK+ and should not be modified or freed.
 	 */
 	public char[] getFilename()
 	{
@@ -317,14 +304,8 @@ public class IconInfo
 	 * GTK+ to use built in icon images, you must pass the
 	 * GTK_ICON_LOOKUP_USE_BUILTIN to
 	 * gtk_icon_theme_lookup_icon().
-	 * icon_info:
-	 *  a GtkIconInfo structure
-	 * Returns:
-	 *  the built-in image pixbuf, or NULL. No
-	 *  extra reference is added to the returned pixbuf, so if
-	 *  you want to keep it around, you must use g_object_ref().
-	 *  The returned image must not be modified.
 	 * Since 2.4
+	 * Returns: the built-in image pixbuf, or NULL. No extra reference is added to the returned pixbuf, so if you want to keep it around, you must use g_object_ref(). The returned image must not be modified.
 	 */
 	public Pixbuf getBuiltinPixbuf()
 	{
@@ -341,16 +322,10 @@ public class IconInfo
 	 * will avoid scaling icons that it considers sufficiently close to the
 	 * requested size or for which the source image would have to be scaled
 	 * up too far. (This maintains sharpness.)
-	 * icon_info:
-	 *  a GtkIconInfo structure from gtk_icon_theme_lookup_icon()
-	 * error:
-	 *  location to store error information on failure, or NULL.
-	 * Returns:
-	 *  the rendered icon; this may be a newly created icon
-	 *  or a new reference to an internal icon, so you must not modify
-	 *  the icon. Use g_object_unref() to release your reference to the
-	 *  icon.
 	 * Since 2.4
+	 * Params:
+	 * error =  location to store error information on failure, or NULL.
+	 * Returns: the rendered icon; this may be a newly created icon or a new reference to an internal icon, so you must not modify the icon. Use g_object_unref() to release your reference to the icon.
 	 */
 	public Pixbuf loadIcon(GError** error)
 	{
@@ -371,13 +346,11 @@ public class IconInfo
 	 * and ends in '.svg'.
 	 * This function is provided primarily to allow compatibility wrappers
 	 * for older API's, and is not expected to be useful for applications.
-	 * icon_info:
-	 *  a GtkIconInfo
-	 * raw_coordinates:
-	 *  whether the coordinates of embedded rectangles
+	 * Since 2.4
+	 * Params:
+	 * rawCoordinates =  whether the coordinates of embedded rectangles
 	 *  and attached points should be returned in their original
 	 *  (unscaled) form.
-	 * Since 2.4
 	 */
 	public void setRawCoordinates(int rawCoordinates)
 	{
@@ -391,15 +364,12 @@ public class IconInfo
 	 * as a preview of the contents of a text file.
 	 * See gtk_icon_info_set_raw_coordinates() for further
 	 * information about the coordinate system.
-	 * icon_info:
-	 *  a GtkIconInfo
-	 * rectangle:
-	 *  GdkRectangle in which to store embedded
+	 * Since 2.4
+	 * Params:
+	 * rectangle =  GdkRectangle in which to store embedded
 	 *  rectangle coordinates; coordinates are only stored
 	 *  when this function returns TRUE.
-	 * Returns:
-	 *  TRUE if the icon has an embedded rectangle
-	 * Since 2.4
+	 * Returns: TRUE if the icon has an embedded rectangle
 	 */
 	public int getEmbeddedRect(GdkRectangle* rectangle)
 	{
@@ -411,16 +381,12 @@ public class IconInfo
 	 * Fetches the set of attach points for an icon. An attach point
 	 * is a location in the icon that can be used as anchor points for attaching
 	 * emblems or overlays to the icon.
-	 * icon_info:
-	 *  a GtkIconInfo
-	 * points:
-	 *  location to store pointer to an array of points, or NULL
-	 *  free the array of points with g_free().
-	 * n_points:
-	 *  location to store the number of points in points, or NULL
-	 * Returns:
-	 *  TRUE if there are any attach points for the icon.
 	 * Since 2.4
+	 * Params:
+	 * points =  location to store pointer to an array of points, or NULL
+	 *  free the array of points with g_free().
+	 * nPoints =  location to store the number of points in points, or NULL
+	 * Returns: TRUE if there are any attach points for the icon.
 	 */
 	public int getAttachPoints(GdkPoint** points, int* nPoints)
 	{
@@ -432,12 +398,6 @@ public class IconInfo
 	 * Gets the display name for an icon. A display name is a
 	 * string to be used in place of the icon name in a user
 	 * visible context like a list of icons.
-	 * icon_info:
-	 *  a GtkIconInfo
-	 * Returns:
-	 *  the display name for the icon or NULL, if
-	 *  the icon doesn't have a specified display name. This value
-	 *  is owned icon_info and must not be modified or free.
 	 * Since 2.4
 	 * Signal Details
 	 * The "changed" signal
@@ -446,10 +406,7 @@ public class IconInfo
 	 * Emitted when the current icon theme is switched or GTK+ detects
 	 * that a change has occurred in the contents of the current
 	 * icon theme.
-	 * icon_theme:
-	 *  the icon theme
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * Returns: the display name for the icon or NULL, if the icon doesn't have a specified display name. This value is owned icon_info and must not be modified or free.
 	 */
 	public char[] getDisplayName()
 	{

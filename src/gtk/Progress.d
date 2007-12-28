@@ -70,6 +70,7 @@ private import gtk.Adjustment;
 
 
 
+private import gtk.Widget;
 
 /**
  * Description
@@ -77,7 +78,6 @@ private import gtk.Adjustment;
  * a GtkProgressBar which provides a visual representation of
  * the progress of a long running operation.
  */
-private import gtk.Widget;
 public class Progress : Widget
 {
 	
@@ -134,10 +134,8 @@ public class Progress : Widget
 	 * Warning
 	 * gtk_progress_set_show_text is deprecated and should not be used in newly-written code.
 	 * Controls whether progress text is shown.
-	 * progress:
-	 * a GtkProgress.
-	 * show_text:
-	 * a boolean indicating whether the progress text
+	 * Params:
+	 * showText = a boolean indicating whether the progress text
 	 * is shown.
 	 */
 	public void setShowText(int showText)
@@ -150,13 +148,10 @@ public class Progress : Widget
 	 * Warning
 	 * gtk_progress_set_text_alignment is deprecated and should not be used in newly-written code.
 	 * Controls the alignment of the text within the progress bar area.
-	 * progress:
-	 * a GtkProgress.
-	 * x_align:
-	 * a number between 0.0 and 1.0 indicating the horizontal
+	 * Params:
+	 * xAlign = a number between 0.0 and 1.0 indicating the horizontal
 	 * alignment of the progress text within the GtkProgress.
-	 * y_align:
-	 * a number between 0.0 and 1.0 indicating the vertical
+	 * yAlign = a number between 0.0 and 1.0 indicating the vertical
 	 * alignment of the progress text within the GtkProgress.
 	 */
 	public void setTextAlignment(float xAlign, float yAlign)
@@ -169,15 +164,8 @@ public class Progress : Widget
 	 * Warning
 	 * gtk_progress_set_format_string is deprecated and should not be used in newly-written code.
 	 * Sets a format string used to display text indicating the
-	 * current progress. The string can contain the following substitution characters:
-	 * %v - the current progress value.
-	 * %l - the lower bound for the progress value.
-	 * %u - the upper bound for the progress value.
-	 * %p - the current progress percentage.
-	 * progress:
-	 * a GtkProgress.
-	 * format:
-	 * a string used to display progress text, or NULL
+	 * Params:
+	 * format = a string used to display progress text, or NULL
 	 *  to restore to the default format.
 	 */
 	public void setFormatString(char[] format)
@@ -192,10 +180,8 @@ public class Progress : Widget
 	 * Associates a GtkAdjustment with the GtkProgress. A GtkAdjustment
 	 * is used to represent the upper and lower bounds and the step interval
 	 * of the underlying value for which progress is shown.
-	 * progress:
-	 * a GtkProgress.
-	 * adjustment:
-	 * the GtkAdjustment to be associated with the GtkProgress.
+	 * Params:
+	 * adjustment = the GtkAdjustment to be associated with the GtkProgress.
 	 */
 	public void setAdjustment(Adjustment adjustment)
 	{
@@ -207,10 +193,8 @@ public class Progress : Widget
 	 * Warning
 	 * gtk_progress_set_percentage is deprecated and should not be used in newly-written code.
 	 * Sets the current percentage completion for the GtkProgress.
-	 * progress:
-	 * a GtkProgress.
-	 * percentage:
-	 * the percentage complete which must be between 0.0
+	 * Params:
+	 * percentage = the percentage complete which must be between 0.0
 	 * and 1.0.
 	 */
 	public void setPercentage(double percentage)
@@ -225,10 +209,8 @@ public class Progress : Widget
 	 * Sets the value within the GtkProgress to an absolute value.
 	 * The value must be within the valid range of values for the
 	 * underlying GtkAdjustment.
-	 * progress:
-	 * a GtkProgress.
-	 * value:
-	 * the value indicating the current completed amount.
+	 * Params:
+	 * value = the value indicating the current completed amount.
 	 */
 	public void setValue(double value)
 	{
@@ -240,10 +222,7 @@ public class Progress : Widget
 	 * Warning
 	 * gtk_progress_get_value is deprecated and should not be used in newly-written code.
 	 * Returns the current progress complete value.
-	 * progress:
-	 * a GtkProgress.
-	 * Returns:
-	 * the current progress complete value.
+	 * Returns:the current progress complete value.
 	 */
 	public double getValue()
 	{
@@ -258,10 +237,8 @@ public class Progress : Widget
 	 * mode (the default) and activity mode. In activity mode, the
 	 * progress is simply indicated as activity rather than as a percentage
 	 * complete.
-	 * progress:
-	 * a GtkProgress.
-	 * activity_mode:
-	 * a boolean, TRUE for activity mode.
+	 * Params:
+	 * activityMode = a boolean, TRUE for activity mode.
 	 */
 	public void setActivityMode(int activityMode)
 	{
@@ -275,10 +252,7 @@ public class Progress : Widget
 	 * Returns the current text associated with the GtkProgress. This
 	 * text is the based on the underlying format string after any substitutions
 	 * are made.
-	 * progress:
-	 * a GtkProgress.
-	 * Returns:
-	 * the text indicating the current progress.
+	 * Returns:the text indicating the current progress.
 	 */
 	public char[] getCurrentText()
 	{
@@ -291,12 +265,9 @@ public class Progress : Widget
 	 * gtk_progress_get_text_from_value is deprecated and should not be used in newly-written code.
 	 * Returns the text indicating the progress based on the supplied value.
 	 * The current value for the GtkProgress remains unchanged.
-	 * progress:
-	 * a GtkProgress.
-	 * value:
-	 * an absolute progress value to use when formatting the progress text.
-	 * Returns:
-	 * a string indicating the progress.
+	 * Params:
+	 * value = an absolute progress value to use when formatting the progress text.
+	 * Returns:a string indicating the progress.
 	 */
 	public char[] getTextFromValue(double value)
 	{
@@ -308,10 +279,7 @@ public class Progress : Widget
 	 * Warning
 	 * gtk_progress_get_current_percentage is deprecated and should not be used in newly-written code.
 	 * Returns the current progress as a percentage.
-	 * progress:
-	 * a GtkProgress.
-	 * Returns:
-	 * a number between 0.0 and 1.0 indicating the percentage complete.
+	 * Returns:a number between 0.0 and 1.0 indicating the percentage complete.
 	 */
 	public double getCurrentPercentage()
 	{
@@ -324,13 +292,9 @@ public class Progress : Widget
 	 * gtk_progress_get_percentage_from_value is deprecated and should not be used in newly-written code.
 	 * Returns the progress as a percentage calculated from the supplied
 	 * absolute progress value.
-	 * progress:
-	 * a GtkProgress.
-	 * value:
-	 * an absolute progress value.
-	 * Returns:
-	 * a number between 0.0 and 1.0 indicating the percentage complete
-	 * represented by value.
+	 * Params:
+	 * value = an absolute progress value.
+	 * Returns:a number between 0.0 and 1.0 indicating the percentage completerepresented by value.
 	 */
 	public double getPercentageFromValue(double value)
 	{
@@ -343,18 +307,9 @@ public class Progress : Widget
 	 * gtk_progress_configure is deprecated and should not be used in newly-written code.
 	 * Allows the configuration of the minimum, maximum, and current values for
 	 * the GtkProgress.
-	 * progress:
-	 * a GtkProgress.
-	 * value:
-	 * the current progress value.
-	 * hmin:
-	 * max:
-	 * the maximum progress value.
-	 * Property Details
-	 * The "activity-mode" property
-	 *  "activity-mode" gboolean : Read / Write
-	 * If TRUE, the GtkProgress is in activity mode, meaning that it signals something is happening, but not how much of the activity is finished. This is used when you're doing something but don't know how long it will take.
-	 * Default value: FALSE
+	 * Params:
+	 * value = the current progress value.
+	 * max = the maximum progress value.
 	 */
 	public void configure(double value, double hmin, double max)
 	{

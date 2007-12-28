@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Ruler;
 
 /**
  * Description
@@ -83,7 +84,6 @@ private import gtkc.gtk;
  * and GTK_CENTIMETERS. GTK_PIXELS is the default.
  * rulers.
  */
-private import gtk.Ruler;
 public class HRuler : Ruler
 {
 	
@@ -138,8 +138,6 @@ public class HRuler : Ruler
 	
 	/**
 	 * Creates a new horizontal ruler.
-	 * Returns:
-	 * a new GtkHRuler.
 	 */
 	public this ()
 	{

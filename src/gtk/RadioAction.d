@@ -70,6 +70,7 @@ private import glib.ListSG;
 
 
 
+private import gtk.ToggleAction;
 
 /**
  * Description
@@ -77,7 +78,6 @@ private import glib.ListSG;
  * actions can be linked together so that only one may be active at any
  * one time.
  */
-private import gtk.ToggleAction;
 public class RadioAction : ToggleAction
 {
 	
@@ -168,20 +168,15 @@ public class RadioAction : ToggleAction
 	 * Creates a new GtkRadioAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
-	 * name:
-	 *  A unique name for the action
-	 * label:
-	 *  The label displayed in menu items and on buttons
-	 * tooltip:
-	 *  A tooltip for this action
-	 * stock_id:
-	 *  The stock icon to display in widgets representing this action
-	 * value:
-	 *  The value which gtk_radio_action_get_current_value() should return
-	 *  if this action is selected.
-	 * Returns:
-	 *  a new GtkRadioAction
 	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  The label displayed in menu items and on buttons, or NULL
+	 * tooltip =  A tooltip for this action, or NULL
+	 * stockId =  The stock icon to display in widgets representing this
+	 *  action, or NULL
+	 * value =  The value which gtk_radio_action_get_current_value() should
+	 *  return if this action is selected.
 	 */
 	public this (char[] name, char[] label, char[] tooltip, char[] stockId, int value)
 	{
@@ -193,20 +188,8 @@ public class RadioAction : ToggleAction
 	 * Returns the list representing the radio group for this object.
 	 * Note that the returned list is only valid until the next change
 	 * to the group.
-	 * A common way to set up a group of radio group is the following:
-	 *  GSList *group = NULL;
-	 *  GtkRadioAction *action;
-	 *  while (/+* more actions to add +/)
-	 *  {
-		 *  action = gtk_radio_action_new (...);
-		 *  gtk_radio_action_set_group (action, group);
-		 *  group = gtk_radio_action_get_group (action);
-	 *  }
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  the list representing the radio group for this object
 	 * Since 2.4
+	 * Returns: the list representing the radio group for this object
 	 */
 	public ListSG getGroup()
 	{
@@ -216,11 +199,9 @@ public class RadioAction : ToggleAction
 	
 	/**
 	 * Sets the radio group for the radio action object.
-	 * action:
-	 *  the action object
-	 * group:
-	 *  a list representing a radio group
 	 * Since 2.4
+	 * Params:
+	 * group =  a list representing a radio group
 	 */
 	public void setGroup(ListSG group)
 	{
@@ -231,11 +212,8 @@ public class RadioAction : ToggleAction
 	/**
 	 * Obtains the value property of the currently active member of
 	 * the group to which action belongs.
-	 * action:
-	 *  a GtkRadioAction
-	 * Returns:
-	 *  The value of the currently active group member
 	 * Since 2.4
+	 * Returns: The value of the currently active group member
 	 */
 	public int getCurrentValue()
 	{
@@ -246,18 +224,9 @@ public class RadioAction : ToggleAction
 	/**
 	 * Sets the currently active group member to the member with value
 	 * property current_value.
-	 * action:
-	 *  a GtkRadioAction
-	 * current_value:
-	 *  the new value
 	 * Since 2.10
-	 * Property Details
-	 * The "current-value" property
-	 *  "current-value" gint : Read / Write
-	 * The value property of the currently active member of the group to which
-	 * this action belongs.
-	 * Default value: 0
-	 * Since 2.10
+	 * Params:
+	 * currentValue =  the new value
 	 */
 	public void setCurrentValue(int currentValue)
 	{

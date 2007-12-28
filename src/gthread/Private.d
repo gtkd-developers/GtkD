@@ -97,6 +97,10 @@ private import glib.Dataset;
  * this rule are GMainLoop and GAsyncQueue,
  * which are threadsafe and needs no further
  * application-level locking to be accessed from multiple threads.
+ * To help debugging problems in multithreaded applications, GLib supports
+ * error-checking mutexes that will give you helpful error messages on
+ * common problems. To use error-checking mutexes, define the symbol
+ * G_ERRORCHECK_MUTEXES when compiling the application.
  */
 public class Private
 {
@@ -227,11 +231,9 @@ public class Private
 	 * shortage, or use GStaticPrivate.
 	 * Note
 	 * This function will abort if g_thread_init() has not been called yet.
-	 * destructor:
-	 * a function to destroy the data keyed to GPrivate when a
+	 * Params:
+	 * destructor = a function to destroy the data keyed to GPrivate when a
 	 * thread ends.
-	 * Returns:
-	 * a new GPrivate.
 	 */
 	public this (GDestroyNotify destructor)
 	{
@@ -243,12 +245,13 @@ public class Private
 	 * Returns the pointer keyed to private_key for the current thread.
 	 * If g_private_set() hasn't been called for the
 	 * current private_key and thread yet, this pointer will be NULL.
-	 * This function can be used even if g_thread_init() has not yet been
-	 * called, and, in that case, will return the value of private_key casted to gpointer.
-	 * private_key:
-	 * a GPrivate.
-	 * Returns:
-	 * the corresponding pointer.
+	 * This function can be used even if g_thread_init() has not yet been called, and,
+	 * in that case, will return the value of private_key casted to gpointer.
+	 * Note however, that private data set before g_thread_init() will
+	 * not be retained after the call. Instead, NULL
+	 * will be returned in all threads directly after g_thread_init(), regardless of
+	 * any g_private_set() calls issued before threading system intialization.
+	 * Returns:the corresponding pointer.
 	 */
 	public void* get()
 	{
@@ -260,16 +263,17 @@ public class Private
 	 * Sets the pointer keyed to private_key for the current thread.
 	 * This function can be used even if g_thread_init() has not yet been
 	 * called, and, in that case, will set private_key to data casted to GPrivate*.
-	 * private_key:
-	 * a GPrivate.
-	 * data:
-	 * the new pointer.
+	 * See g_private_get() for resulting caveats.
+	 * Params:
+	 * data = the new pointer.
 	 */
 	public void set(void* data)
 	{
 		// void g_private_set (GPrivate *private_key,  gpointer data);
 		g_private_set(gPrivate, data);
 	}
+	
+	
 	
 	
 	

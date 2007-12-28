@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Ruler;
 
 /**
  * Description
@@ -83,7 +84,6 @@ private import gtkc.gtk;
  * and GTK_CENTIMETERS. GTK_PIXELS is the default.
  * rulers.
  */
-private import gtk.Ruler;
 public class VRuler : Ruler
 {
 	
@@ -138,8 +138,6 @@ public class VRuler : Ruler
 	
 	/**
 	 * Creates a new vertical ruler
-	 * Returns:
-	 * a new GtkVRuler.
 	 */
 	public this ()
 	{

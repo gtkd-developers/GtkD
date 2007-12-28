@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.VBox;
 
 /**
  * Description
@@ -85,7 +86,6 @@ private import gtkc.gtk;
  * free), and the other 2 set the curve to a particular gamma value, or reset it
  * to a straight line.
  */
-private import gtk.VBox;
 public class GammaCurve : VBox
 {
 	
@@ -140,8 +140,6 @@ public class GammaCurve : VBox
 	
 	/**
 	 * Creates a new GtkGammaCurve.
-	 * Returns:
-	 * a new GtkGammaCurve.
 	 */
 	public this ()
 	{

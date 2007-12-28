@@ -253,11 +253,7 @@ public class PgFontFace
 	 * different faces in the PangoFontFamily for the face. This
 	 * name is unique among all faces in the family and is suitable
 	 * for displaying to users.
-	 * face:
-	 *  a PangoFontFace.
-	 * Returns:
-	 *  the face name for the face. This string is
-	 *  owned by the face object and must not be modified or freed.
+	 * Returns: the face name for the face. This string is owned by the face object and must not be modified or freed.
 	 */
 	public char[] getFaceName()
 	{
@@ -270,13 +266,10 @@ public class PgFontFace
 	 * fonts. For scalable fonts, stores NULL at the location pointed to by
 	 * sizes and 0 at the location pointed to by n_sizes. The sizes returned
 	 * are in Pango units and are sorted in ascending order.
-	 * face:
-	 *  a PangoFontFace.
-	 * sizes:
-	 *  location to store a pointer to an array of int. This array
+	 * Params:
+	 * sizes =  location to store a pointer to an array of int. This array
 	 *  should be freed with g_free().
-	 * n_sizes:
-	 *  location to store the number of elements in sizes
+	 * nSizes =  location to store the number of elements in sizes
 	 * Since 1.4
 	 */
 	public void listSizes(int** sizes, int* nSizes)
@@ -289,17 +282,24 @@ public class PgFontFace
 	 * Returns the family, style, variant, weight and stretch of
 	 * a PangoFontFace. The size field of the resulting font description
 	 * will be unset.
-	 * face:
-	 *  a PangoFontFace
-	 * Returns:
-	 *  a newly-created PangoFontDescription structure
-	 *  holding the description of the face. Use pango_font_description_free()
-	 *  to free the result.
+	 * Returns: a newly-created PangoFontDescription structure holding the description of the face. Use pango_font_description_free() to free the result.
 	 */
 	public PgFontDescription describe()
 	{
 		// PangoFontDescription* pango_font_face_describe (PangoFontFace *face);
 		return new PgFontDescription( pango_font_face_describe(pangoFontFace) );
+	}
+	
+	/**
+	 * Returns whether a PangoFontFace is synthesized by the underlying
+	 * font rendering engine from another face, perhaps by shearing, emboldening,
+	 * or lightening it.
+	 * Returns: whether face is synthesized.Since 1.18
+	 */
+	public int isSynthesized()
+	{
+		// gboolean pango_font_face_is_synthesized (PangoFontFace *face);
+		return pango_font_face_is_synthesized(pangoFontFace);
 	}
 	
 	

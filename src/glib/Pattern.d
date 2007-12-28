@@ -138,10 +138,8 @@ public class Pattern
 	
 	/**
 	 * Compiles a pattern to a GPatternSpec.
-	 * pattern:
-	 * a zero-terminated UTF-8 encoded string.
-	 * Returns:
-	 * a newly-allocated GPatternSpec.
+	 * Params:
+	 * pattern = a zero-terminated UTF-8 encoded string.
 	 */
 	public this (char[] pattern)
 	{
@@ -151,8 +149,6 @@ public class Pattern
 	
 	/**
 	 * Frees the memory allocated for the GPatternSpec.
-	 * pspec:
-	 * a GPatternSpec.
 	 */
 	public void free()
 	{
@@ -163,12 +159,9 @@ public class Pattern
 	/**
 	 * Compares two compiled pattern specs and returns whether they
 	 * will match the same set of strings.
-	 * pspec1:
-	 * a GPatternSpec.
-	 * pspec2:
-	 * another GPatternSpec.
-	 * Returns:
-	 * Whether the compiled patterns are equal.
+	 * Params:
+	 * pspec2 = another GPatternSpec.
+	 * Returns:Whether the compiled patterns are equal.
 	 */
 	public int equal(Pattern pspec2)
 	{
@@ -190,17 +183,12 @@ public class Pattern
 	 * Note also that the reverse of a UTF-8 encoded string can in general
 	 * not be obtained by g_strreverse().
 	 * This works only if the string doesn't contain any multibyte characters.
-	 * Glib offers the g_utf_strreverse() function to reverse UTF-8 encoded strings.
-	 * pspec:
-	 * a GPatternSpec.
-	 * string_length:
-	 * the length of string.
-	 * string:
-	 * the UTF-8 encoded string to match.
-	 * string_reversed:
-	 * the reverse of string or NULL.
-	 * Returns:
-	 * TRUE if string matches pspec.
+	 * Glib offers the g_utf8_strreverse() function to reverse UTF-8 encoded strings.
+	 * Params:
+	 * stringLength = the length of string.
+	 * string = the UTF-8 encoded string to match.
+	 * stringReversed = the reverse of string or NULL.
+	 * Returns:TRUE if string matches pspec.
 	 */
 	public int gPatternMatch(uint stringLength, char[] string, char[] stringReversed)
 	{
@@ -212,12 +200,9 @@ public class Pattern
 	 * Matches a string against a compiled pattern. If the string is to
 	 * be matched against more than one pattern, consider using
 	 * g_pattern_match() instead while supplying the reversed string.
-	 * pspec:
-	 * a GPatternSpec.
-	 * string:
-	 * the UTF-8 encoded string to match.
-	 * Returns:
-	 * TRUE if string matches pspec.
+	 * Params:
+	 * string = the UTF-8 encoded string to match.
+	 * Returns:TRUE if string matches pspec.
 	 */
 	public int string(char[] string)
 	{
@@ -230,12 +215,10 @@ public class Pattern
 	 * If this function is to be called in a loop, it's more efficient to compile
 	 * the pattern once with g_pattern_spec_new() and call g_pattern_match_string()
 	 * repetively.
-	 * pattern:
-	 * the UTF-8 encoded pattern.
-	 * string:
-	 * the UTF-8 encoded string to match.
-	 * Returns:
-	 * TRUE if string matches pspec.
+	 * Params:
+	 * pattern = the UTF-8 encoded pattern.
+	 * string = the UTF-8 encoded string to match.
+	 * Returns:TRUE if string matches pspec.
 	 */
 	public static int simple(char[] pattern, char[] string)
 	{

@@ -166,13 +166,9 @@ public class Component
 	 * Add the specified handler to the set of functions to be called
 	 * when this object receives focus events (in or out). If the handler is
 	 * already added it is not added again
-	 * component:
-	 *  The AtkComponent to attach the handler to
-	 * handler:
-	 *  The AtkFocusHandler to be attached to component
-	 * Returns:
-	 *  a handler id which can be used in atk_component_remove_focus_handler
-	 * or zero if the handler was already added.
+	 * Params:
+	 * handler =  The AtkFocusHandler to be attached to component
+	 * Returns: a handler id which can be used in atk_component_remove_focus_handleror zero if the handler was already added.
 	 */
 	public uint addFocusHandler(AtkFocusHandler handler)
 	{
@@ -182,18 +178,12 @@ public class Component
 	
 	/**
 	 * Checks whether the specified point is within the extent of the component.
-	 * component:
-	 *  the AtkComponent
-	 * x:
-	 *  x coordinate
-	 * y:
-	 *  y coordinate
-	 * coord_type:
-	 *  specifies whether the coordinates are relative to the screen
+	 * Params:
+	 * x =  x coordinate
+	 * y =  y coordinate
+	 * coordType =  specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
-	 * Returns:
-	 *  TRUE or FALSE indicating whether the specified point is within
-	 * the extent of the component or not
+	 * Returns: TRUE or FALSE indicating whether the specified point is withinthe extent of the component or not
 	 */
 	public int contains(int x, int y, AtkCoordType coordType)
 	{
@@ -203,18 +193,12 @@ public class Component
 	
 	/**
 	 * Gets the rectangle which gives the extent of the component.
-	 * component:
-	 *  an AtkComponent
-	 * x:
-	 *  address of gint to put x coordinate
-	 * y:
-	 *  address of gint to put y coordinate
-	 * width:
-	 *  address of gint to put width
-	 * height:
-	 *  address of gint to put height
-	 * coord_type:
-	 *  specifies whether the coordinates are relative to the screen
+	 * Params:
+	 * x =  address of gint to put x coordinate
+	 * y =  address of gint to put y coordinate
+	 * width =  address of gint to put width
+	 * height =  address of gint to put height
+	 * coordType =  specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
 	 */
 	public void getExtents(int* x, int* y, int* width, int* height, AtkCoordType coordType)
@@ -225,10 +209,7 @@ public class Component
 	
 	/**
 	 * Gets the layer of the component.
-	 * component:
-	 *  an AtkComponent
-	 * Returns:
-	 *  an AtkLayer which is the layer of the component
+	 * Returns: an AtkLayer which is the layer of the component
 	 */
 	public AtkLayer getLayer()
 	{
@@ -239,12 +220,7 @@ public class Component
 	/**
 	 * Gets the zorder of the component. The value G_MININT will be returned
 	 * if the layer of the component is not ATK_LAYER_MDI or ATK_LAYER_WINDOW.
-	 * component:
-	 *  an AtkComponent
-	 * Returns:
-	 *  a gint which is the zorder of the component, i.e. the depth at
-	 * which the component is shown in relation to other components in the same
-	 * container.
+	 * Returns: a gint which is the zorder of the component, i.e. the depth at which the component is shown in relation to other components in the same container.
 	 */
 	public int getMdiZorder()
 	{
@@ -255,14 +231,10 @@ public class Component
 	/**
 	 * Gets the position of component in the form of
 	 * a point specifying component's top-left corner.
-	 * component:
-	 *  an AtkComponent
-	 * x:
-	 *  address of gint to put x coordinate position
-	 * y:
-	 *  address of gint to put y coordinate position
-	 * coord_type:
-	 *  specifies whether the coordinates are relative to the screen
+	 * Params:
+	 * x =  address of gint to put x coordinate position
+	 * y =  address of gint to put y coordinate position
+	 * coordType =  specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
 	 */
 	public void getPosition(int* x, int* y, AtkCoordType coordType)
@@ -273,12 +245,9 @@ public class Component
 	
 	/**
 	 * Gets the size of the component in terms of width and height.
-	 * component:
-	 *  an AtkComponent
-	 * width:
-	 *  address of gint to put width of component
-	 * height:
-	 *  address of gint to put height of component
+	 * Params:
+	 * width =  address of gint to put width of component
+	 * height =  address of gint to put height of component
 	 */
 	public void getSize(int* width, int* height)
 	{
@@ -288,10 +257,7 @@ public class Component
 	
 	/**
 	 * Grabs focus for this component.
-	 * component:
-	 *  an AtkComponent
-	 * Returns:
-	 *  TRUE if successful, FALSE otherwise.
+	 * Returns: TRUE if successful, FALSE otherwise.
 	 */
 	public int grabFocus()
 	{
@@ -302,17 +268,12 @@ public class Component
 	/**
 	 * Gets a reference to the accessible child, if one exists, at the
 	 * coordinate point specified by x and y.
-	 * component:
-	 *  the AtkComponent
-	 * x:
-	 *  x coordinate
-	 * y:
-	 *  y coordinate
-	 * coord_type:
-	 *  specifies whether the coordinates are relative to the screen
+	 * Params:
+	 * x =  x coordinate
+	 * y =  y coordinate
+	 * coordType =  specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
-	 * Returns:
-	 *  a reference to the accessible child, if one exists
+	 * Returns: a reference to the accessible child, if one exists
 	 */
 	public AtkObject* refAccessibleAtPoint(int x, int y, AtkCoordType coordType)
 	{
@@ -324,10 +285,8 @@ public class Component
 	 * Remove the handler specified by handler_id from the list of
 	 * functions to be executed when this object receives focus events
 	 * (in or out).
-	 * component:
-	 *  the AtkComponent to remove the focus handler from
-	 * handler_id:
-	 *  the handler id of the focus handler to be removed
+	 * Params:
+	 * handlerId =  the handler id of the focus handler to be removed
 	 * from component
 	 */
 	public void removeFocusHandler(uint handlerId)
@@ -338,21 +297,14 @@ public class Component
 	
 	/**
 	 * Sets the extents of component.
-	 * component:
-	 *  an AtkComponent
-	 * x:
-	 *  x coordinate
-	 * y:
-	 *  y coordinate
-	 * width:
-	 *  width to set for component
-	 * height:
-	 *  height to set for component
-	 * coord_type:
-	 *  specifies whether the coordinates are relative to the screen
+	 * Params:
+	 * x =  x coordinate
+	 * y =  y coordinate
+	 * width =  width to set for component
+	 * height =  height to set for component
+	 * coordType =  specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
-	 * Returns:
-	 *  TRUE or FALSE whether the extents were set or not
+	 * Returns: TRUE or FALSE whether the extents were set or not
 	 */
 	public int setExtents(int x, int y, int width, int height, AtkCoordType coordType)
 	{
@@ -362,17 +314,12 @@ public class Component
 	
 	/**
 	 * Sets the postition of component.
-	 * component:
-	 *  an AtkComponent
-	 * x:
-	 *  x coordinate
-	 * y:
-	 *  y coordinate
-	 * coord_type:
-	 *  specifies whether the coordinates are relative to the screen
+	 * Params:
+	 * x =  x coordinate
+	 * y =  y coordinate
+	 * coordType =  specifies whether the coordinates are relative to the screen
 	 * or to the components top level window
-	 * Returns:
-	 *  TRUE or FALSE whether or not the position was set or not
+	 * Returns: TRUE or FALSE whether or not the position was set or not
 	 */
 	public int setPosition(int x, int y, AtkCoordType coordType)
 	{
@@ -382,14 +329,10 @@ public class Component
 	
 	/**
 	 * Set the size of the component in terms of width and height.
-	 * component:
-	 *  an AtkComponent
-	 * width:
-	 *  width to set for component
-	 * height:
-	 *  height to set for component
-	 * Returns:
-	 *  TRUE or FALSE whether the size was set or not
+	 * Params:
+	 * width =  width to set for component
+	 * height =  height to set for component
+	 * Returns: TRUE or FALSE whether the size was set or not
 	 */
 	public int setSize(int width, int height)
 	{
@@ -401,24 +344,7 @@ public class Component
 	 * Returns the alpha value (i.e. the opacity) for this
 	 * component, on a scale from 0 (fully transparent) to 1.0
 	 * (fully opaque).
-	 * component:
-	 *  an AtkComponent
-	 * Returns:
-	 *  An alpha value from 0 to 1.0, inclusive.
-	 * Since ATK 1.12
-	 * Signal Details
-	 * The "bounds-changed" signal
-	 * void user_function (AtkComponent *atkcomponent,
-	 *  AtkRectangle *arg1,
-	 *  gpointer user_data) : Run Last
-	 * The 'bounds-changed" signal is emitted when the bposition or size of the
-	 * a component changes.
-	 * atkcomponent:
-	 * the object which received the signal.
-	 * arg1:
-	 * The AtkRectangle giving the new position and size.
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * Returns: An alpha value from 0 to 1.0, inclusive.Since ATK 1.12Signal DetailsThe "bounds-changed" signalvoid user_function (AtkComponent *atkcomponent, AtkRectangle *arg1, gpointer user_data) : Run LastThe 'bounds-changed" signal is emitted when the bposition or size of the a component changes.
 	 */
 	public double getAlpha()
 	{

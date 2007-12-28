@@ -80,7 +80,6 @@ public class WindowsUtils
 	 */
 	
 	
-	
 	/**
 	 * Translate a Win32 error code (as returned by GetLastError()) into
 	 * the corresponding message. The message is either language neutral,
@@ -88,10 +87,9 @@ public class WindowsUtils
 	 * language, or US English (see docs for FormatMessage()). The
 	 * returned string is in UTF-8. It should be deallocated with
 	 * g_free().
-	 * error:
-	 *  error code.
-	 * Returns:
-	 *  newly-allocated error message
+	 * Params:
+	 * error =  error code.
+	 * Returns: newly-allocated error message
 	 */
 	public static char[] errorMessage(int error)
 	{
@@ -107,8 +105,7 @@ public class WindowsUtils
 	 * and returns it as a string of the above form for use in forming
 	 * file names etc. The returned string should be deallocated with
 	 * g_free().
-	 * Returns:
-	 *  newly-allocated locale name.
+	 * Returns: newly-allocated locale name.
 	 */
 	public static char[] getlocale()
 	{
@@ -118,14 +115,22 @@ public class WindowsUtils
 	
 	/**
 	 * Try to determine the installation directory for a software package.
-	 * Typically used by GNU software packages.
 	 * package should be a short identifier for the package. Typically it
 	 * is the same identifier as used for
-	 * GETTEXT_PACKAGE in software configured according
-	 * to GNU standards. The function first looks in the Windows Registry
-	 * for the value #InstallationDirectory in the key
+	 * GETTEXT_PACKAGE in software configured using GNU
+	 * autotools. The function first looks in the Windows Registry for the
+	 * value #InstallationDirectory in the key
 	 * #HKLM\Software\package, and if that value
 	 * exists and is a string, returns that.
+	 * It is strongly recommended that packagers of GLib-using libraries
+	 * for Windows do not store installation paths in the Registry to be
+	 * used by this function as that interfers with having several
+	 * parallel installations of the library. Parallel installations of
+	 * different versions of some GLib-using library, or GLib itself,
+	 * might well be desirable for various reasons.
+	 * For the same reason it is recommeded to always pass NULL as
+	 * package to this function, to avoid the temptation to use the
+	 * Registry.
 	 * If package is NULL, or the above value isn't found in the
 	 * Registry, but dll_name is non-NULL, it should name a DLL loaded
 	 * into the current process. Typically that would be the name of the
@@ -138,15 +143,10 @@ public class WindowsUtils
 	 * If both package and dll_name are NULL, the directory from where
 	 * the main executable of the process was loaded is used instead in
 	 * the same way as above.
-	 * package:
-	 *  An identifier for a software package, or NULL, in UTF-8
-	 * dll_name:
-	 *  The name of a DLL that a package provides, or NULL, in UTF-8
-	 * Returns:
-	 *  a string containing the installation directory for
-	 * package. The string is in the GLib file name encoding, i.e. UTF-8
-	 * on Windows. The return value should be freed with g_free() when not
-	 * needed any longer.
+	 * Params:
+	 * p =  An identifier for a software package, or NULL, in UTF-8
+	 * dllName =  The name of a DLL that a package provides, or NULL, in UTF-8
+	 * Returns: a string containing the installation directory forpackage. The string is in the GLib file name encoding, i.e. UTF-8on Windows. The return value should be freed with g_free() when notneeded any longer.
 	 */
 	public static char[] getPackageInstallationDirectory(char[] p, char[] dllName)
 	{
@@ -158,18 +158,15 @@ public class WindowsUtils
 	 * Returns a newly-allocated string containing the path of the
 	 * subdirectory subdir in the return value from calling
 	 * g_win32_get_package_installation_directory() with the package and
-	 * dll_name parameters.
-	 * package:
-	 *  An identifier for a software package, in UTF-8, or NULL
-	 * dll_name:
-	 *  The name of a DLL that a package provides, in UTF-8, or NULL
-	 * subdir:
-	 *  A subdirectory of the package installation directory, also in UTF-8
-	 * Returns:
-	 *  a string containing the complete path to subdir inside
-	 * the installation directory of package. The returned string is in
-	 * the GLib file name encoding, i.e. UTF-8 on Windows. The return
-	 * value should be freed with g_free() when no longer needed.
+	 * dll_name parameters. See the documentation for
+	 * g_win32_get_package_installation_directory() for more details. In
+	 * particular, note that it is recomended to always pass NULL as
+	 * package.
+	 * Params:
+	 * p =  An identifier for a software package, in UTF-8, or NULL
+	 * dllName =  The name of a DLL that a package provides, in UTF-8, or NULL
+	 * subdir =  A subdirectory of the package installation directory, also in UTF-8
+	 * Returns: a string containing the complete path to subdir insidethe installation directory of package. The returned string is inthe GLib file name encoding, i.e. UTF-8 on Windows. The returnvalue should be freed with g_free() when no longer needed.
 	 */
 	public static char[] getPackageInstallationSubdirectory(char[] p, char[] dllName, char[] subdir)
 	{
@@ -187,9 +184,8 @@ public class WindowsUtils
 	 * Windows NT 4, and 5 on Windows XP. Software that needs really
 	 * detailled version and feature information should use Win32 API like
 	 * GetVersionEx() and VerifyVersionInfo().
-	 * Returns:
-	 *  The version information.
 	 * Since 2.6
+	 * Returns: The version information.
 	 */
 	public static uint getWindowsVersion()
 	{
@@ -214,12 +210,10 @@ public class WindowsUtils
 	 * possible, NULL is returned.
 	 * The return value is dynamically allocated and should be freed with
 	 * g_free() when no longer needed.
-	 * utf8filename:
-	 *  a UTF-8 encoded filename.
-	 * Returns:
-	 *  The converted filename, or NULL on conversion
-	 * failure and lack of short names.
 	 * Since 2.8
+	 * Params:
+	 * utf8filename =  a UTF-8 encoded filename.
+	 * Returns: The converted filename, or NULL on conversionfailure and lack of short names.
 	 */
 	public static char[] localeFilenameFromUtf8(char[] utf8filename)
 	{

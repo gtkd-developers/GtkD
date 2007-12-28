@@ -142,10 +142,9 @@ public class Quark
 	 * Gets the GQuark identifying the given string.
 	 * If the string does not currently have an associated GQuark, a new
 	 * GQuark is created, using a copy of the string.
-	 * string:
-	 * a string.
-	 * Returns:
-	 * the GQuark identifying the string.
+	 * Params:
+	 * string = a string.
+	 * Returns:the GQuark identifying the string, or 0 if string is NULL.
 	 */
 	public static GQuark fromString(char[] string)
 	{
@@ -165,10 +164,9 @@ public class Quark
 	 * allocated memory in dynamically loaded modules, if you expect to
 	 * ever unload the module again (e.g. do not use this function in
 	 * GTK+ theme engines).
-	 * string:
-	 * a string.
-	 * Returns:
-	 * the GQuark identifying the string.
+	 * Params:
+	 * string = a string.
+	 * Returns:the GQuark identifying the string, or 0 if string is NULL.
 	 */
 	public static GQuark fromStaticString(char[] string)
 	{
@@ -178,10 +176,9 @@ public class Quark
 	
 	/**
 	 * Gets the string associated with the given GQuark.
-	 * quark:
-	 * a GQuark.
-	 * Returns:
-	 * the string associated with the GQuark.
+	 * Params:
+	 * quark = a GQuark.
+	 * Returns:the string associated with the GQuark.
 	 */
 	public static char[] toString(GQuark quark)
 	{
@@ -190,15 +187,13 @@ public class Quark
 	}
 	
 	/**
-	 * Gets the GQuark associated with the given string, or 0 if the string has
-	 * no associated GQuark.
+	 * Gets the GQuark associated with the given string, or 0 if string is
+	 * NULL or it has no associated GQuark.
 	 * If you want the GQuark to be created if it doesn't already exist, use
 	 * g_quark_from_string() or g_quark_from_static_string().
-	 * string:
-	 * a string.
-	 * Returns:
-	 * the GQuark associated with the string, or 0 if there is no
-	 * GQuark associated with the string.
+	 * Params:
+	 * string = a string.
+	 * Returns:the GQuark associated with the string, or 0 if string isNULL or there is no GQuark associated with it.
 	 */
 	public static GQuark tryString(char[] string)
 	{
@@ -209,11 +204,10 @@ public class Quark
 	/**
 	 * Returns a canonical representation for string. Interned strings can
 	 * be compared for equality by comparing the pointers, instead of using strcmp().
-	 * string:
-	 *  a string
-	 * Returns:
-	 *  a canonical representation for the string
 	 * Since 2.10
+	 * Params:
+	 * string =  a string
+	 * Returns: a canonical representation for the string
 	 */
 	public static char[] gInternString(char[] string)
 	{
@@ -226,11 +220,10 @@ public class Quark
 	 * be compared for equality by comparing the pointers, instead of using strcmp().
 	 * g_intern_static_string() does not copy the string, therefore string must
 	 * not be freed or modified.
-	 * string:
-	 *  a static string
-	 * Returns:
-	 *  a canonical representation for the string
 	 * Since 2.10
+	 * Params:
+	 * string =  a static string
+	 * Returns: a canonical representation for the string
 	 */
 	public static char[] gInternStaticString(char[] string)
 	{

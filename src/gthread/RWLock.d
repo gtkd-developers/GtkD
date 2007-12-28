@@ -94,6 +94,10 @@ private import gtkc.gthread;
  * this rule are GMainLoop and GAsyncQueue,
  * which are threadsafe and needs no further
  * application-level locking to be accessed from multiple threads.
+ * To help debugging problems in multithreaded applications, GLib supports
+ * error-checking mutexes that will give you helpful error messages on
+ * common problems. To use error-checking mutexes, define the symbol
+ * G_ERRORCHECK_MUTEXES when compiling the application.
  */
 public class RWLock
 {
@@ -199,8 +203,6 @@ public class RWLock
 	 * A GStaticRWLock must be initialized with this function before it can
 	 * be used. Alternatively you can initialize it with
 	 * G_STATIC_RW_LOCK_INIT.
-	 * lock:
-	 * a GStaticRWLock to be initialized.
 	 */
 	public void init()
 	{
@@ -219,8 +221,6 @@ public class RWLock
 	 * GStaticRWLock is not recursive. It might seem to be possible to
 	 * recursively lock for reading, but that can result in a deadlock, due
 	 * to writer preference.
-	 * lock:
-	 * a GStaticRWLock to lock for reading.
 	 */
 	public void readerLock()
 	{
@@ -234,10 +234,9 @@ public class RWLock
 	 * lock lock for writing, immediately returns FALSE. Otherwise locks
 	 * lock for reading and returns TRUE. This lock has to be unlocked by
 	 * g_static_rw_lock_reader_unlock().
-	 * lock:
-	 * a GStaticRWLock to lock for reading.
-	 * Returns:
-	 * TRUE, if lock could be locked for reading.
+	 * Params:
+	 * lock = a GStaticRWLock to lock for reading.
+	 * Returns:TRUE, if lock could be locked for reading.
 	 */
 	public int readerTrylock()
 	{
@@ -249,8 +248,8 @@ public class RWLock
 	 * Unlocks lock. If a thread waits to lock lock for writing and all
 	 * locks for reading have been unlocked, the waiting thread is woken up
 	 * and can lock lock for writing.
-	 * lock:
-	 * a GStaticRWLock to unlock after reading.
+	 * Params:
+	 * lock = a GStaticRWLock to unlock after reading.
 	 */
 	public void readerUnlock()
 	{
@@ -266,8 +265,6 @@ public class RWLock
 	 * reading. When lock is locked for writing, no other thread can lock
 	 * lock (neither for reading nor writing). This lock has to be unlocked
 	 * by g_static_rw_lock_writer_unlock().
-	 * lock:
-	 * a GStaticRWLock to lock for writing.
 	 */
 	public void writerLock()
 	{
@@ -280,10 +277,9 @@ public class RWLock
 	 * either reading or writing) by another thread, it immediately returns
 	 * FALSE. Otherwise it locks lock for writing and returns TRUE. This
 	 * lock has to be unlocked by g_static_rw_lock_writer_unlock().
-	 * lock:
-	 * a GStaticRWLock to lock for writing.
-	 * Returns:
-	 * TRUE, if lock could be locked for writing.
+	 * Params:
+	 * lock = a GStaticRWLock to lock for writing.
+	 * Returns:TRUE, if lock could be locked for writing.
 	 */
 	public int writerTrylock()
 	{
@@ -298,8 +294,8 @@ public class RWLock
 	 * lock for writing, and some thread or threads are waiting to lock lock
 	 * for reading, the waiting threads are woken up and can lock lock for
 	 * reading.
-	 * lock:
-	 * a GStaticRWLock to unlock after writing.
+	 * Params:
+	 * lock = a GStaticRWLock to unlock after writing.
 	 */
 	public void writerUnlock()
 	{
@@ -313,14 +309,14 @@ public class RWLock
 	 * unbounded lifetime, i.e. objects declared 'static', but if you have a
 	 * GStaticRWLock as a member of a structure, and the structure is freed,
 	 * you should also free the GStaticRWLock.
-	 * lock:
-	 * a GStaticRWLock to be freed.
 	 */
 	public void free()
 	{
 		// void g_static_rw_lock_free (GStaticRWLock *lock);
 		g_static_rw_lock_free(gStaticRWLock);
 	}
+	
+	
 	
 	
 	

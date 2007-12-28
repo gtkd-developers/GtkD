@@ -80,6 +80,7 @@ private import gdk.Pixmap;
 
 
 
+private import gtk.Container;
 
 /**
  * Description
@@ -90,7 +91,6 @@ private import gdk.Pixmap;
  * In addition to selection with the arrow keys, GtkIconView supports
  * rubberband selection, which is controlled by dragging the pointer.
  */
-private import gtk.Container;
 public class IconView : Container
 {
 	
@@ -404,8 +404,6 @@ public class IconView : Container
 	
 	/**
 	 * Creates a new GtkIconView widget
-	 * Returns:
-	 *  A newly created GtkIconView widget
 	 * Since 2.6
 	 */
 	public this ()
@@ -416,11 +414,9 @@ public class IconView : Container
 	
 	/**
 	 * Creates a new GtkIconView widget with the model model.
-	 * model:
-	 *  The model.
-	 * Returns:
-	 *  A newly created GtkIconView widget.
 	 * Since 2.6
+	 * Params:
+	 * model =  The model.
 	 */
 	public this (TreeModel model)
 	{
@@ -433,11 +429,9 @@ public class IconView : Container
 	 * If the icon_view already has a model set, it will remove
 	 * it before setting the new model. If model is NULL, then
 	 * it will unset the old model.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * model:
-	 *  The model.
 	 * Since 2.6
+	 * Params:
+	 * model =  The model.
 	 */
 	public void setModel(TreeModel model)
 	{
@@ -448,11 +442,8 @@ public class IconView : Container
 	/**
 	 * Returns the model the GtkIconView is based on. Returns NULL if the
 	 * model is unset.
-	 * icon_view:
-	 *  a GtkIconView
-	 * Returns:
-	 *  A GtkTreeModel, or NULL if none is currently being used.
 	 * Since 2.6
+	 * Returns: A GtkTreeModel, or NULL if none is currently being used.
 	 */
 	public TreeModel getModel()
 	{
@@ -463,11 +454,9 @@ public class IconView : Container
 	/**
 	 * Sets the column with text for icon_view to be column. The text
 	 * column must be of type G_TYPE_STRING.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * column:
-	 *  A column in the currently used model, or -1 to display no text
 	 * Since 2.6
+	 * Params:
+	 * column =  A column in the currently used model, or -1 to display no text
 	 */
 	public void setTextColumn(int column)
 	{
@@ -477,11 +466,8 @@ public class IconView : Container
 	
 	/**
 	 * Returns the column with text for icon_view.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * Returns:
-	 *  the text column, or -1 if it's unset.
 	 * Since 2.6
+	 * Returns: the text column, or -1 if it's unset.
 	 */
 	public int getTextColumn()
 	{
@@ -494,11 +480,9 @@ public class IconView : Container
 	 * column. The markup column must be of type G_TYPE_STRING.
 	 * If the markup column is set to something, it overrides
 	 * the text column set by gtk_icon_view_set_text_column().
-	 * icon_view:
-	 *  A GtkIconView.
-	 * column:
-	 *  A column in the currently used model, or -1 to display no text
 	 * Since 2.6
+	 * Params:
+	 * column =  A column in the currently used model, or -1 to display no text
 	 */
 	public void setMarkupColumn(int column)
 	{
@@ -508,11 +492,8 @@ public class IconView : Container
 	
 	/**
 	 * Returns the column with markup text for icon_view.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * Returns:
-	 *  the markup column, or -1 if it's unset.
 	 * Since 2.6
+	 * Returns: the markup column, or -1 if it's unset.
 	 */
 	public int getMarkupColumn()
 	{
@@ -523,11 +504,9 @@ public class IconView : Container
 	/**
 	 * Sets the column with pixbufs for icon_view to be column. The pixbuf
 	 * column must be of type GDK_TYPE_PIXBUF
-	 * icon_view:
-	 *  A GtkIconView.
-	 * column:
-	 *  A column in the currently used model, or -1 to disable
 	 * Since 2.6
+	 * Params:
+	 * column =  A column in the currently used model, or -1 to disable
 	 */
 	public void setPixbufColumn(int column)
 	{
@@ -537,11 +516,8 @@ public class IconView : Container
 	
 	/**
 	 * Returns the column with pixbufs for icon_view.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * Returns:
-	 *  the pixbuf column, or -1 if it's unset.
 	 * Since 2.6
+	 * Returns: the pixbuf column, or -1 if it's unset.
 	 */
 	public int getPixbufColumn()
 	{
@@ -550,19 +526,16 @@ public class IconView : Container
 	}
 	
 	/**
-	 * Finds the path at the point (x, y), relative to widget coordinates.
+	 * Finds the path at the point (x, y), relative to bin_window coordinates.
 	 * See gtk_icon_view_get_item_at_pos(), if you are also interested in
 	 * the cell at the specified position.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * x:
-	 *  The x position to be identified
-	 * y:
-	 *  The y position to be identified
-	 * Returns:
-	 *  The GtkTreePath corresponding to the icon or NULL
-	 * if no icon exists at that position.
+	 * See gtk_icon_view_convert_widget_to_bin_window_coords() for converting
+	 * widget coordinates to bin_window coordinates.
 	 * Since 2.6
+	 * Params:
+	 * x =  The x position to be identified
+	 * y =  The y position to be identified
+	 * Returns: The GtkTreePath corresponding to the icon or NULLif no icon exists at that position.
 	 */
 	public TreePath getPathAtPos(int x, int y)
 	{
@@ -571,29 +544,41 @@ public class IconView : Container
 	}
 	
 	/**
-	 * Finds the path at the point (x, y), relative to widget coordinates.
+	 * Finds the path at the point (x, y), relative to bin_window coordinates.
 	 * In contrast to gtk_icon_view_get_path_at_pos(), this function also
 	 * obtains the cell at the specified position. The returned path should
 	 * be freed with gtk_tree_path_free().
-	 * icon_view:
-	 *  A GtkIconView.
-	 * x:
-	 *  The x position to be identified
-	 * y:
-	 *  The y position to be identified
-	 * path:
-	 *  Return location for the path, or NULL
-	 * cell:
-	 *  Return location for the renderer responsible for the cell
-	 *  at (x, y), or NULL
-	 * Returns:
-	 *  TRUE if an item exists at the specified position
+	 * See gtk_icon_view_convert_widget_to_bin_window_coords() for converting
+	 * widget coordinates to bin_window coordinates.
 	 * Since 2.8
+	 * Params:
+	 * x =  The x position to be identified
+	 * y =  The y position to be identified
+	 * path =  Return location for the path, or NULL
+	 * cell =  Return location for the renderer responsible for the cell
+	 *  at (x, y), or NULL
+	 * Returns: TRUE if an item exists at the specified position
 	 */
 	public int getItemAtPos(int x, int y, GtkTreePath** path, GtkCellRenderer** cell)
 	{
 		// gboolean gtk_icon_view_get_item_at_pos (GtkIconView *icon_view,  gint x,  gint y,  GtkTreePath **path,  GtkCellRenderer **cell);
 		return gtk_icon_view_get_item_at_pos(gtkIconView, x, y, path, cell);
+	}
+	
+	/**
+	 * Converts widget coordinates to coordinates for the bin_window,
+	 * as expected by e.g. gtk_icon_view_get_path_at_pos().
+	 * Since 2.12
+	 * Params:
+	 * wx =  X coordinate relative to the widget
+	 * wy =  Y coordinate relative to the widget
+	 * bx =  return location for bin_window X coordinate
+	 * by =  return location for bin_window Y coordinate
+	 */
+	public void convertWidgetToBinWindowCoords(int wx, int wy, int* bx, int* by)
+	{
+		// void gtk_icon_view_convert_widget_to_bin_window_coords  (GtkIconView *icon_view,  gint wx,  gint wy,  gint *bx,  gint *by);
+		gtk_icon_view_convert_widget_to_bin_window_coords(gtkIconView, wx, wy, bx, by);
 	}
 	
 	/**
@@ -605,15 +590,11 @@ public class IconView : Container
 	 * This function is often followed by gtk_widget_grab_focus
 	 * (icon_view) in order to give keyboard focus to the widget.
 	 * Please note that editing can only happen when the widget is realized.
-	 * icon_view:
-	 *  A GtkIconView
-	 * path:
-	 *  A GtkTreePath
-	 * cell:
-	 *  One of the cell renderers of icon_view, or NULL
-	 * start_editing:
-	 *  TRUE if the specified cell should start being edited.
 	 * Since 2.8
+	 * Params:
+	 * path =  A GtkTreePath
+	 * cell =  One of the cell renderers of icon_view, or NULL
+	 * startEditing =  TRUE if the specified cell should start being edited.
 	 */
 	public void setCursor(TreePath path, CellRenderer cell, int startEditing)
 	{
@@ -626,15 +607,11 @@ public class IconView : Container
 	 * If the cursor isn't currently set, then *path will be NULL.
 	 * If no cell currently has focus, then *cell will be NULL.
 	 * The returned GtkTreePath must be freed with gtk_tree_path_free().
-	 * icon_view:
-	 *  A GtkIconView
-	 * path:
-	 *  Return location for the current cursor path, or NULL
-	 * cell:
-	 *  Return location the current focus cell, or NULL
-	 * Returns:
-	 *  TRUE if the cursor is set.
 	 * Since 2.8
+	 * Params:
+	 * path =  Return location for the current cursor path, or NULL
+	 * cell =  Return location the current focus cell, or NULL
+	 * Returns: TRUE if the cursor is set.
 	 */
 	public int getCursor(GtkTreePath** path, GtkCellRenderer** cell)
 	{
@@ -645,13 +622,10 @@ public class IconView : Container
 	/**
 	 * Calls a function for each selected icon. Note that the model or
 	 * selection cannot be modified from within this function.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * func:
-	 *  The funcion to call for each selected icon.
-	 * data:
-	 *  User data to pass to the function.
 	 * Since 2.6
+	 * Params:
+	 * func =  The funcion to call for each selected icon.
+	 * data =  User data to pass to the function.
 	 */
 	public void selectedForeach(GtkIconViewForeachFunc func, void* data)
 	{
@@ -661,11 +635,9 @@ public class IconView : Container
 	
 	/**
 	 * Sets the selection mode of the icon_view.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * mode:
-	 *  The selection mode
 	 * Since 2.6
+	 * Params:
+	 * mode =  The selection mode
 	 */
 	public void setSelectionMode(GtkSelectionMode mode)
 	{
@@ -675,11 +647,8 @@ public class IconView : Container
 	
 	/**
 	 * Gets the selection mode of the icon_view.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * Returns:
-	 *  the current selection mode
 	 * Since 2.6
+	 * Returns: the current selection mode
 	 */
 	public GtkSelectionMode getSelectionMode()
 	{
@@ -690,11 +659,9 @@ public class IconView : Container
 	/**
 	 * Sets the ::orientation property which determines whether the labels
 	 * are drawn beside the icons instead of below.
-	 * icon_view:
-	 *  a GtkIconView
-	 * orientation:
-	 *  the relative position of texts and icons
 	 * Since 2.6
+	 * Params:
+	 * orientation =  the relative position of texts and icons
 	 */
 	public void setOrientation(GtkOrientation orientation)
 	{
@@ -705,11 +672,8 @@ public class IconView : Container
 	/**
 	 * Returns the value of the ::orientation property which determines
 	 * whether the labels are drawn beside the icons instead of below.
-	 * icon_view:
-	 *  a GtkIconView
-	 * Returns:
-	 *  the relative position of texts and icons
 	 * Since 2.6
+	 * Returns: the relative position of texts and icons
 	 */
 	public GtkOrientation getOrientation()
 	{
@@ -722,11 +686,9 @@ public class IconView : Container
 	 * many columns the icons are arranged. If columns is
 	 * -1, the number of columns will be chosen automatically
 	 * to fill the available area.
-	 * icon_view:
-	 *  a GtkIconView
-	 * columns:
-	 *  the number of columns
 	 * Since 2.6
+	 * Params:
+	 * columns =  the number of columns
 	 */
 	public void setColumns(int columns)
 	{
@@ -736,11 +698,8 @@ public class IconView : Container
 	
 	/**
 	 * Returns the value of the ::columns property.
-	 * icon_view:
-	 *  a GtkIconView
-	 * Returns:
-	 *  the number of columns, or -1
 	 * Since 2.6
+	 * Returns: the number of columns, or -1
 	 */
 	public int getColumns()
 	{
@@ -752,11 +711,9 @@ public class IconView : Container
 	 * Sets the ::item-width property which specifies the width
 	 * to use for each item. If it is set to -1, the icon view will
 	 * automatically determine a suitable item size.
-	 * icon_view:
-	 *  a GtkIconView
-	 * item_width:
-	 *  the width for each item
 	 * Since 2.6
+	 * Params:
+	 * itemWidth =  the width for each item
 	 */
 	public void setItemWidth(int itemWidth)
 	{
@@ -766,11 +723,8 @@ public class IconView : Container
 	
 	/**
 	 * Returns the value of the ::item-width property.
-	 * icon_view:
-	 *  a GtkIconView
-	 * Returns:
-	 *  the width of a single item, or -1
 	 * Since 2.6
+	 * Returns: the width of a single item, or -1
 	 */
 	public int getItemWidth()
 	{
@@ -782,11 +736,9 @@ public class IconView : Container
 	 * Sets the ::spacing property which specifies the space
 	 * which is inserted between the cells (i.e. the icon and
 	 * the text) of an item.
-	 * icon_view:
-	 *  a GtkIconView
-	 * spacing:
-	 *  the spacing
 	 * Since 2.6
+	 * Params:
+	 * spacing =  the spacing
 	 */
 	public void setSpacing(int spacing)
 	{
@@ -796,11 +748,8 @@ public class IconView : Container
 	
 	/**
 	 * Returns the value of the ::spacing property.
-	 * icon_view:
-	 *  a GtkIconView
-	 * Returns:
-	 *  the space between cells
 	 * Since 2.6
+	 * Returns: the space between cells
 	 */
 	public int getSpacing()
 	{
@@ -811,11 +760,9 @@ public class IconView : Container
 	/**
 	 * Sets the ::row-spacing property which specifies the space
 	 * which is inserted between the rows of the icon view.
-	 * icon_view:
-	 *  a GtkIconView
-	 * row_spacing:
-	 *  the row spacing
 	 * Since 2.6
+	 * Params:
+	 * rowSpacing =  the row spacing
 	 */
 	public void setRowSpacing(int rowSpacing)
 	{
@@ -825,11 +772,8 @@ public class IconView : Container
 	
 	/**
 	 * Returns the value of the ::row-spacing property.
-	 * icon_view:
-	 *  a GtkIconView
-	 * Returns:
-	 *  the space between rows
 	 * Since 2.6
+	 * Returns: the space between rows
 	 */
 	public int getRowSpacing()
 	{
@@ -840,11 +784,9 @@ public class IconView : Container
 	/**
 	 * Sets the ::column-spacing property which specifies the space
 	 * which is inserted between the columns of the icon view.
-	 * icon_view:
-	 *  a GtkIconView
-	 * column_spacing:
-	 *  the column spacing
 	 * Since 2.6
+	 * Params:
+	 * columnSpacing =  the column spacing
 	 */
 	public void setColumnSpacing(int columnSpacing)
 	{
@@ -854,11 +796,8 @@ public class IconView : Container
 	
 	/**
 	 * Returns the value of the ::column-spacing property.
-	 * icon_view:
-	 *  a GtkIconView
-	 * Returns:
-	 *  the space between columns
 	 * Since 2.6
+	 * Returns: the space between columns
 	 */
 	public int getColumnSpacing()
 	{
@@ -870,11 +809,9 @@ public class IconView : Container
 	 * Sets the ::margin property which specifies the space
 	 * which is inserted at the top, bottom, left and right
 	 * of the icon view.
-	 * icon_view:
-	 *  a GtkIconView
-	 * margin:
-	 *  the margin
 	 * Since 2.6
+	 * Params:
+	 * margin =  the margin
 	 */
 	public void setMargin(int margin)
 	{
@@ -884,11 +821,8 @@ public class IconView : Container
 	
 	/**
 	 * Returns the value of the ::margin property.
-	 * icon_view:
-	 *  a GtkIconView
-	 * Returns:
-	 *  the space at the borders
 	 * Since 2.6
+	 * Returns: the space at the borders
 	 */
 	public int getMargin()
 	{
@@ -898,11 +832,9 @@ public class IconView : Container
 	
 	/**
 	 * Selects the row at path.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * path:
-	 *  The GtkTreePath to be selected.
 	 * Since 2.6
+	 * Params:
+	 * path =  The GtkTreePath to be selected.
 	 */
 	public void selectPath(TreePath path)
 	{
@@ -912,11 +844,9 @@ public class IconView : Container
 	
 	/**
 	 * Unselects the row at path.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * path:
-	 *  The GtkTreePath to be unselected.
 	 * Since 2.6
+	 * Params:
+	 * path =  The GtkTreePath to be unselected.
 	 */
 	public void unselectPath(TreePath path)
 	{
@@ -927,13 +857,10 @@ public class IconView : Container
 	/**
 	 * Returns TRUE if the icon pointed to by path is currently
 	 * selected. If path does not point to a valid location, FALSE is returned.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * path:
-	 *  A GtkTreePath to check selection on.
-	 * Returns:
-	 *  TRUE if path is selected.
 	 * Since 2.6
+	 * Params:
+	 * path =  A GtkTreePath to check selection on.
+	 * Returns: TRUE if path is selected.
 	 */
 	public int pathIsSelected(TreePath path)
 	{
@@ -946,14 +873,8 @@ public class IconView : Container
 	 * planning on modifying the model after calling this function, you may
 	 * want to convert the returned list into a list of GtkTreeRowReferences.
 	 * To do this, you can use gtk_tree_row_reference_new().
-	 * To free the return value, use:
-	 * g_list_foreach (list, gtk_tree_path_free, NULL);
-	 * g_list_free (list);
-	 * icon_view:
-	 *  A GtkIconView.
-	 * Returns:
-	 *  A GList containing a GtkTreePath for each selected row.
 	 * Since 2.6
+	 * Returns: A GList containing a GtkTreePath for each selected row.
 	 */
 	public ListG getSelectedItems()
 	{
@@ -964,8 +885,6 @@ public class IconView : Container
 	/**
 	 * Selects all the icons. icon_view must has its selection mode set
 	 * to GTK_SELECTION_MULTIPLE.
-	 * icon_view:
-	 *  A GtkIconView.
 	 * Since 2.6
 	 */
 	public void selectAll()
@@ -976,8 +895,6 @@ public class IconView : Container
 	
 	/**
 	 * Unselects all the icons.
-	 * icon_view:
-	 *  A GtkIconView.
 	 * Since 2.6
 	 */
 	public void unselectAll()
@@ -988,11 +905,9 @@ public class IconView : Container
 	
 	/**
 	 * Activates the item determined by path.
-	 * icon_view:
-	 *  A GtkIconView
-	 * path:
-	 *  The GtkTreePath to be activated
 	 * Since 2.6
+	 * Params:
+	 * path =  The GtkTreePath to be activated
 	 */
 	public void itemActivated(TreePath path)
 	{
@@ -1013,17 +928,12 @@ public class IconView : Container
 	 * This function only works if the model is set, and path is a valid row on
 	 * the model. If the model changes before the icon_view is realized, the
 	 * centered path will be modified to reflect this change.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * path:
-	 *  The path of the item to move to.
-	 * use_align:
-	 *  whether to use alignment arguments, or FALSE.
-	 * row_align:
-	 *  The vertical alignment of the item specified by path.
-	 * col_align:
-	 *  The horizontal alignment of the item specified by path.
 	 * Since 2.8
+	 * Params:
+	 * path =  The path of the item to move to.
+	 * useAlign =  whether to use alignment arguments, or FALSE.
+	 * rowAlign =  The vertical alignment of the item specified by path.
+	 * colAlign =  The horizontal alignment of the item specified by path.
 	 */
 	public void scrollToPath(TreePath path, int useAlign, float rowAlign, float colAlign)
 	{
@@ -1035,15 +945,11 @@ public class IconView : Container
 	 * Sets start_path and end_path to be the first and last visible path.
 	 * Note that there may be invisible paths in between.
 	 * Both paths should be freed with gtk_tree_path_free() after use.
-	 * icon_view:
-	 *  A GtkIconView
-	 * start_path:
-	 *  Return location for start of region, or NULL
-	 * end_path:
-	 *  Return location for end of region, or NULL
-	 * Returns:
-	 *  TRUE, if valid paths were placed in start_path and end_path
 	 * Since 2.8
+	 * Params:
+	 * startPath =  Return location for start of region, or NULL
+	 * endPath =  Return location for end of region, or NULL
+	 * Returns: TRUE, if valid paths were placed in start_path and end_path
 	 */
 	public int getVisibleRange(GtkTreePath** startPath, GtkTreePath** endPath)
 	{
@@ -1051,21 +957,101 @@ public class IconView : Container
 		return gtk_icon_view_get_visible_range(gtkIconView, startPath, endPath);
 	}
 	
+	/**
+	 * Sets the tip area of tooltip to be the area covered by the item at path.
+	 * See also gtk_tooltip_set_tip_area().
+	 * Since 2.12
+	 * Params:
+	 * tooltip =  a GtkTooltip
+	 * path =  a GtkTreePath
+	 */
+	public void setTooltipItem(GtkTooltip* tooltip, TreePath path)
+	{
+		// void gtk_icon_view_set_tooltip_item (GtkIconView *icon_view,  GtkTooltip *tooltip,  GtkTreePath *path);
+		gtk_icon_view_set_tooltip_item(gtkIconView, tooltip, (path is null) ? null : path.getTreePathStruct());
+	}
+	
+	/**
+	 * Sets the tip area of tooltip to the area which cell occupies in
+	 * the item pointed to by path. See also gtk_tooltip_set_tip_area().
+	 * Since 2.12
+	 * Params:
+	 * tooltip =  a GtkTooltip
+	 * path =  a GtkTreePath
+	 * cell =  a GtkCellRenderer or NULL
+	 */
+	public void setTooltipCell(GtkTooltip* tooltip, TreePath path, CellRenderer cell)
+	{
+		// void gtk_icon_view_set_tooltip_cell (GtkIconView *icon_view,  GtkTooltip *tooltip,  GtkTreePath *path,  GtkCellRenderer *cell);
+		gtk_icon_view_set_tooltip_cell(gtkIconView, tooltip, (path is null) ? null : path.getTreePathStruct(), (cell is null) ? null : cell.getCellRendererStruct());
+	}
+	
+	/**
+	 * This function is supposed to be used in a "query-tooltip"
+	 * signal handler for GtkIconView. The x, y and keyboard_tip values
+	 * which are received in the signal handler, should be passed to this
+	 * function without modification.
+	 * The return value indicates whether there is an icon view item at the given
+	 * coordinates (TRUE) or not (FALSE) for mouse tooltips. For keyboard
+	 * tooltips the item returned will be the cursor item. When TRUE, then any of
+	 * model, path and iter which have been provided will be set to point to
+	 * that row and the corresponding model. x and y will always be converted
+	 * to be relative to icon_view's bin_window if keyboard_tooltip is FALSE.
+	 * Since 2.12
+	 * Params:
+	 * x =  the x coordinate (relative to widget coordinates)
+	 * y =  the y coordinate (relative to widget coordinates)
+	 * keyboardTip =  whether this is a keyboard tooltip or not
+	 * model =  a pointer to receive a GtkTreeModel or NULL
+	 * path =  a pointer to receive a GtkTreePath or NULL
+	 * iter =  a pointer to receive a GtkTreeIter or NULL
+	 * Returns: whether or not the given tooltip context points to a item
+	 */
+	public int getTooltipContext(int* x, int* y, int keyboardTip, GtkTreeModel** model, GtkTreePath** path, GtkTreeIter* iter)
+	{
+		// gboolean gtk_icon_view_get_tooltip_context (GtkIconView *icon_view,  gint *x,  gint *y,  gboolean keyboard_tip,  GtkTreeModel **model,  GtkTreePath **path,  GtkTreeIter *iter);
+		return gtk_icon_view_get_tooltip_context(gtkIconView, x, y, keyboardTip, model, path, iter);
+	}
+	
+	/**
+	 * column: an integer, which is a valid column number for icon_view's model
+	 * If you only plan to have simple (text-only) tooltips on full items, you
+	 * can use this function to have GtkIconView handle these automatically
+	 * for you. column should be set to the column in icon_view's model
+	 * containing the tooltip texts, or -1 to disable this feature.
+	 * When enabled, "has-tooltip" will be set to TRUE and
+	 * icon_view will connect a "query-tooltip" signal handler.
+	 * Since 2.12
+	 * Params:
+	 */
+	public void setTooltipColumn(int column)
+	{
+		// void gtk_icon_view_set_tooltip_column (GtkIconView *icon_view,  gint column);
+		gtk_icon_view_set_tooltip_column(gtkIconView, column);
+	}
+	
+	/**
+	 * Returns the column of icon_view's model which is being used for
+	 * displaying tooltips on icon_view's rows.
+	 * Since 2.12
+	 * Returns: the index of the tooltip column that is currently beingused, or -1 if this is disabled.
+	 */
+	public int getTooltipColumn()
+	{
+		// gint gtk_icon_view_get_tooltip_column (GtkIconView *icon_view);
+		return gtk_icon_view_get_tooltip_column(gtkIconView);
+	}
+	
 	
 	/**
 	 * Turns icon_view into a drag source for automatic DND.
-	 * icon_view:
-	 *  a GtkIconTreeView
-	 * start_button_mask:
-	 *  Mask of allowed buttons to start drag
-	 * targets:
-	 *  the table of targets that the drag will support
-	 * n_targets:
-	 *  the number of items in targets
-	 * actions:
-	 *  the bitmask of possible actions for a drag from this
-	 *  widget
 	 * Since 2.8
+	 * Params:
+	 * startButtonMask =  Mask of allowed buttons to start drag
+	 * targets =  the table of targets that the drag will support
+	 * nTargets =  the number of items in targets
+	 * actions =  the bitmask of possible actions for a drag from this
+	 *  widget
 	 */
 	public void enableModelDragSource(GdkModifierType startButtonMask, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
 	{
@@ -1075,16 +1061,12 @@ public class IconView : Container
 	
 	/**
 	 * Turns icon_view into a drop destination for automatic DND.
-	 * icon_view:
-	 *  a GtkIconView
-	 * targets:
-	 *  the table of targets that the drag will support
-	 * n_targets:
-	 *  the number of items in targets
-	 * actions:
-	 *  the bitmask of possible actions for a drag to this
-	 *  widget
 	 * Since 2.8
+	 * Params:
+	 * targets =  the table of targets that the drag will support
+	 * nTargets =  the number of items in targets
+	 * actions =  the bitmask of possible actions for a drag to this
+	 *  widget
 	 */
 	public void enableModelDragDest(GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
 	{
@@ -1094,8 +1076,6 @@ public class IconView : Container
 	
 	/**
 	 * Undoes the effect of gtk_icon_view_enable_model_drag_source().
-	 * icon_view:
-	 *  a GtkIconView
 	 * Since 2.8
 	 */
 	public void unsetModelDragSource()
@@ -1106,8 +1086,6 @@ public class IconView : Container
 	
 	/**
 	 * Undoes the effect of gtk_icon_view_enable_model_drag_dest().
-	 * icon_view:
-	 *  a GtkIconView
 	 * Since 2.8
 	 */
 	public void unsetModelDragDest()
@@ -1126,11 +1104,9 @@ public class IconView : Container
 	 * This function does not give you any degree of control over the order -- any
 	 * reordering is allowed. If more control is needed, you should probably
 	 * handle drag and drop manually.
-	 * icon_view:
-	 *  A GtkIconView.
-	 * reorderable:
-	 *  TRUE, if the list of items can be reordered.
 	 * Since 2.8
+	 * Params:
+	 * reorderable =  TRUE, if the list of items can be reordered.
 	 */
 	public void setReorderable(int reorderable)
 	{
@@ -1141,11 +1117,8 @@ public class IconView : Container
 	/**
 	 * Retrieves whether the user can reorder the list via drag-and-drop.
 	 * See gtk_icon_view_set_reorderable().
-	 * icon_view:
-	 *  a GtkIconView
-	 * Returns:
-	 *  TRUE if the list can be reordered.
 	 * Since 2.8
+	 * Returns: TRUE if the list can be reordered.
 	 */
 	public int getReorderable()
 	{
@@ -1155,13 +1128,10 @@ public class IconView : Container
 	
 	/**
 	 * Sets the item that is highlighted for feedback.
-	 * icon_view:
-	 *  a GtkIconView
-	 * path:
-	 *  The path of the item to highlight, or NULL.
-	 * pos:
-	 *  Specifies where to drop, relative to the item
 	 * Since 2.8
+	 * Params:
+	 * path =  The path of the item to highlight, or NULL.
+	 * pos =  Specifies where to drop, relative to the item
 	 */
 	public void setDragDestItem(TreePath path, GtkIconViewDropPosition pos)
 	{
@@ -1171,13 +1141,10 @@ public class IconView : Container
 	
 	/**
 	 * Gets information about the item that is highlighted for feedback.
-	 * icon_view:
-	 *  a GtkIconView
-	 * path:
-	 *  Return location for the path of the highlighted item, or NULL.
-	 * pos:
-	 *  Return location for the drop position, or NULL
 	 * Since 2.8
+	 * Params:
+	 * path =  Return location for the path of the highlighted item, or NULL.
+	 * pos =  Return location for the drop position, or NULL
 	 */
 	public void getDragDestItem(GtkTreePath** path, GtkIconViewDropPosition* pos)
 	{
@@ -1187,19 +1154,13 @@ public class IconView : Container
 	
 	/**
 	 * Determines the destination item for a given position.
-	 * icon_view:
-	 *  a GtkIconView
-	 * drag_x:
-	 *  the position to determine the destination item for
-	 * drag_y:
-	 *  the position to determine the destination item for
-	 * path:
-	 *  Return location for the path of the item, or NULL.
-	 * pos:
-	 *  Return location for the drop position, or NULL
-	 * Returns:
-	 *  whether there is an item at the given position.
 	 * Since 2.8
+	 * Params:
+	 * dragX =  the position to determine the destination item for
+	 * dragY =  the position to determine the destination item for
+	 * path =  Return location for the path of the item, or NULL.
+	 * pos =  Return location for the drop position, or NULL
+	 * Returns: whether there is an item at the given position.
 	 */
 	public int getDestItemAtPos(int dragX, int dragY, GtkTreePath** path, GtkIconViewDropPosition* pos)
 	{
@@ -1210,27 +1171,17 @@ public class IconView : Container
 	/**
 	 * Creates a GdkPixmap representation of the item at path.
 	 * This image is used for a drag icon.
-	 * icon_view:
-	 *  a GtkIconView
-	 * path:
-	 *  a GtkTreePath in icon_view
-	 * Returns:
-	 *  a newly-allocated pixmap of the drag icon.
 	 * Since 2.8
-	 * Property Details
-	 * The "column-spacing" property
-	 *  "column-spacing" gint : Read / Write
-	 * The column-spacing property specifies the space which is inserted between
-	 * the columns of the icon view.
-	 * Allowed values: >= 0
-	 * Default value: 6
-	 * Since 2.6
+	 * Params:
+	 * path =  a GtkTreePath in icon_view
+	 * Returns: a newly-allocated pixmap of the drag icon.
 	 */
 	public Pixmap createDragIcon(TreePath path)
 	{
 		// GdkPixmap* gtk_icon_view_create_drag_icon (GtkIconView *icon_view,  GtkTreePath *path);
 		return new Pixmap( gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct()) );
 	}
+	
 	
 	
 	

@@ -138,10 +138,7 @@ public class StreamableContent
 	
 	/**
 	 * Gets the number of mime types supported by this object.
-	 * streamable:
-	 *  a GObject instance that implements AtkStreamableContentIface
-	 * Returns:
-	 *  a gint which is the number of mime types supported by the object.
+	 * Returns: a gint which is the number of mime types supported by the object.
 	 */
 	public int getNMimeTypes()
 	{
@@ -152,13 +149,9 @@ public class StreamableContent
 	/**
 	 * Gets the character string of the specified mime type. The first mime
 	 * type is at position 0, the second at position 1, and so on.
-	 * streamable:
-	 *  a GObject instance that implements AtkStreamableContent
-	 * i:
-	 *  a gint representing the position of the mime type starting from 0
-	 * Returns:
-	 * : a gchar* representing the specified mime type; the caller
-	 * should not free the character string.
+	 * Params:
+	 * i =  a gint representing the position of the mime type starting from 0
+	 * Returns:: a gchar* representing the specified mime type; the callershould not free the character string.
 	 */
 	public char[] getMimeType(int i)
 	{
@@ -168,13 +161,9 @@ public class StreamableContent
 	
 	/**
 	 * Gets the content in the specified mime type.
-	 * streamable:
-	 *  a GObject instance that implements AtkStreamableContentIface
-	 * mime_type:
-	 *  a gchar* representing the mime type
-	 * Returns:
-	 *  A GIOChannel which contains the content in the specified mime
-	 * type.
+	 * Params:
+	 * mimeType =  a gchar* representing the mime type
+	 * Returns: A GIOChannel which contains the content in the specified mimetype.
 	 */
 	public IOChannel getStream(char[] mimeType)
 	{
@@ -190,15 +179,10 @@ public class StreamableContent
 	 * returned.
 	 * Note that it is possible for get_uri to return NULL but for
 	 * get_stream to work nonetheless, since not all GIOChannels connect to URIs.
-	 * streamable:
-	 *  a GObject instance that implements AtkStreamableContentIface
-	 * mime_type:
-	 *  a gchar* representing the mime type, or NULL to request a URI
+	 * Params:
+	 * mimeType =  a gchar* representing the mime type, or NULL to request a URI
 	 * for the default mime type.
-	 * Returns:
-	 *  Returns a string representing a URI, or NULL if no corresponding URI
-	 * can be constructed.
-	 * Since ATK 1.12
+	 * Returns: Returns a string representing a URI, or NULL if no corresponding URIcan be constructed.Since ATK 1.12
 	 */
 	public char[] getUri(char[] mimeType)
 	{

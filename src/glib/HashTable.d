@@ -145,21 +145,18 @@ public class HashTable
 	
 	/**
 	 * Creates a new GHashTable with a reference count of 1.
-	 * hash_func:
-	 *  a function to create a hash value from a key.
+	 * Params:
+	 * hashFunc =  a function to create a hash value from a key.
 	 *  Hash values are used to determine where keys are stored within the
 	 *  GHashTable data structure. The g_direct_hash(), g_int_hash() and
 	 *  g_str_hash() functions are provided for some common types of keys.
 	 *  If hash_func is NULL, g_direct_hash() is used.
-	 * key_equal_func:
-	 *  a function to check two keys for equality. This is
+	 * keyEqualFunc =  a function to check two keys for equality. This is
 	 *  used when looking up keys in the GHashTable. The g_direct_equal(),
 	 *  g_int_equal() and g_str_equal() functions are provided for the most
 	 *  common types of keys. If key_equal_func is NULL, keys are compared
 	 *  directly in a similar fashion to g_direct_equal(), but without the
 	 *  overhead of a function call.
-	 * Returns:
-	 *  a new GHashTable.
 	 */
 	public this (GHashFunc hashFunc, GEqualFunc keyEqualFunc)
 	{
@@ -171,20 +168,15 @@ public class HashTable
 	 * Creates a new GHashTable like g_hash_table_new() with a reference count
 	 * of 1 and allows to specify functions to free the memory allocated for the
 	 * key and value that get called when removing the entry from the GHashTable.
-	 * hash_func:
-	 *  a function to create a hash value from a key.
-	 * key_equal_func:
-	 *  a function to check two keys for equality.
-	 * key_destroy_func:
-	 *  a function to free the memory allocated for the key
+	 * Params:
+	 * hashFunc =  a function to create a hash value from a key.
+	 * keyEqualFunc =  a function to check two keys for equality.
+	 * keyDestroyFunc =  a function to free the memory allocated for the key
 	 *  used when removing the entry from the GHashTable or NULL if you
 	 *  don't want to supply such a function.
-	 * value_destroy_func:
-	 *  a function to free the memory allocated for the
+	 * valueDestroyFunc =  a function to free the memory allocated for the
 	 *  value used when removing the entry from the GHashTable or NULL if
 	 *  you don't want to supply such a function.
-	 * Returns:
-	 *  a new GHashTable.
 	 */
 	public this (GHashFunc hashFunc, GEqualFunc keyEqualFunc, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
@@ -201,12 +193,9 @@ public class HashTable
 	 * GHashTable, the old value is freed using that function. If you supplied
 	 * a key_destroy_func when creating the GHashTable, the passed key is freed
 	 * using that function.
-	 * hash_table:
-	 *  a GHashTable.
-	 * key:
-	 *  a key to insert.
-	 * value:
-	 *  the value to associate with the key.
+	 * Params:
+	 * key =  a key to insert.
+	 * value =  the value to associate with the key.
 	 */
 	public void insert(void* key, void* value)
 	{
@@ -221,12 +210,9 @@ public class HashTable
 	 * value_destroy_func when creating the GHashTable, the old value is freed
 	 * using that function. If you supplied a key_destroy_func when creating the
 	 * GHashTable, the old key is freed using that function.
-	 * hash_table:
-	 *  a GHashTable.
-	 * key:
-	 *  a key to insert.
-	 * value:
-	 *  the value to associate with the key.
+	 * Params:
+	 * key =  a key to insert.
+	 * value =  the value to associate with the key.
 	 */
 	public void replace(void* key, void* value)
 	{
@@ -236,10 +222,7 @@ public class HashTable
 	
 	/**
 	 * Returns the number of elements contained in the GHashTable.
-	 * hash_table:
-	 *  a GHashTable.
-	 * Returns:
-	 *  the number of key/value pairs in the GHashTable.
+	 * Returns: the number of key/value pairs in the GHashTable.
 	 */
 	public uint size()
 	{
@@ -252,12 +235,9 @@ public class HashTable
 	 * distinguish between a key that is not present and one which is present
 	 * and has the value NULL. If you need this distinction, use
 	 * g_hash_table_lookup_extended().
-	 * hash_table:
-	 *  a GHashTable.
-	 * key:
-	 *  the key to look up.
-	 * Returns:
-	 *  the associated value, or NULL if the key is not found.
+	 * Params:
+	 * key =  the key to look up.
+	 * Returns: the associated value, or NULL if the key is not found.
 	 */
 	public void* lookup(void* key)
 	{
@@ -270,16 +250,11 @@ public class HashTable
 	 * associated value and a gboolean which is TRUE if the key was found. This
 	 * is useful if you need to free the memory allocated for the original key,
 	 * for example before calling g_hash_table_remove().
-	 * hash_table:
-	 *  a GHashTable.
-	 * lookup_key:
-	 *  the key to look up.
-	 * orig_key:
-	 *  returns the original key.
-	 * value:
-	 *  returns the value associated with the key.
-	 * Returns:
-	 *  TRUE if the key was found in the GHashTable.
+	 * Params:
+	 * lookupKey =  the key to look up.
+	 * origKey =  returns the original key.
+	 * value =  returns the value associated with the key.
+	 * Returns: TRUE if the key was found in the GHashTable.
 	 */
 	public int lookupExtended(void* lookupKey, void** origKey, void** value)
 	{
@@ -294,12 +269,11 @@ public class HashTable
 	 * be modified while iterating over it (you can't add/remove
 	 * items). To remove all items matching a predicate, use
 	 * g_hash_table_foreach_remove().
-	 * hash_table:
-	 *  a GHashTable.
-	 * func:
-	 *  the function to call for each key/value pair.
-	 * user_data:
-	 *  user data to pass to the function.
+	 * See g_hash_table_find() for performance caveats for linear
+	 * order searches in contrast to g_hash_table_lookup().
+	 * Params:
+	 * func =  the function to call for each key/value pair.
+	 * userData =  user data to pass to the function.
 	 */
 	public void foreac(GHFunc func, void* userData)
 	{
@@ -312,17 +286,19 @@ public class HashTable
 	 * predicate returns TRUE. The function is passed the key and value of
 	 * each pair, and the given user_data parameter. The hash table may not
 	 * be modified while iterating over it (you can't add/remove items).
-	 * hash_table:
-	 *  a GHashTable.
-	 * predicate:
-	 *  function to test the key/value pairs for a certain property.
-	 * user_data:
-	 *  user data to pass to the function.
-	 * Returns:
-	 *  The value of the first key/value pair is returned, for which
-	 * func evaluates to TRUE. If no pair with the requested property is found,
-	 * NULL is returned.
+	 * Note, that hash tables are really only optimized for forward lookups,
+	 * i.e. g_hash_table_lookup().
+	 * So code that frequently issues g_hash_table_find() or
+	 * g_hash_table_foreach() (e.g. in the order of once per every entry in a
+	 * hash table) should probably be reworked to use additional or different
+	 * data structures for reverse lookups (keep in mind that an O(n) find/foreach
+	 * operation issued for all n values in a hash table ends up needing O(n*n)
+	 * operations).
 	 * Since 2.4
+	 * Params:
+	 * predicate =  function to test the key/value pairs for a certain property.
+	 * userData =  user data to pass to the function.
+	 * Returns: The value of the first key/value pair is returned, for whichfunc evaluates to TRUE. If no pair with the requested property is found,NULL is returned.
 	 */
 	public void* find(GHRFunc predicate, void* userData)
 	{
@@ -337,12 +313,9 @@ public class HashTable
 	 * key and value are freed using the supplied destroy functions, otherwise
 	 * you have to make sure that any dynamically allocated values are freed
 	 * yourself.
-	 * hash_table:
-	 *  a GHashTable.
-	 * key:
-	 *  the key to remove.
-	 * Returns:
-	 *  TRUE if the key was found and removed from the GHashTable.
+	 * Params:
+	 * key =  the key to remove.
+	 * Returns: TRUE if the key was found and removed from the GHashTable.
 	 */
 	public int remove(void* key)
 	{
@@ -353,12 +326,9 @@ public class HashTable
 	/**
 	 * Removes a key and its associated value from a GHashTable without
 	 * calling the key and value destroy functions.
-	 * hash_table:
-	 *  a GHashTable.
-	 * key:
-	 *  the key to remove.
-	 * Returns:
-	 *  TRUE if the key was found and removed from the GHashTable.
+	 * Params:
+	 * key =  the key to remove.
+	 * Returns: TRUE if the key was found and removed from the GHashTable.
 	 */
 	public int steal(void* key)
 	{
@@ -372,14 +342,10 @@ public class HashTable
 	 * GHashTable. If you supplied key or value destroy functions when creating
 	 * the GHashTable, they are used to free the memory allocated for the removed
 	 * keys and values.
-	 * hash_table:
-	 *  a GHashTable.
-	 * func:
-	 *  the function to call for each key/value pair.
-	 * user_data:
-	 *  user data to pass to the function.
-	 * Returns:
-	 *  the number of key/value pairs removed.
+	 * Params:
+	 * func =  the function to call for each key/value pair.
+	 * userData =  user data to pass to the function.
+	 * Returns: the number of key/value pairs removed.
 	 */
 	public uint foreachRemove(GHRFunc func, void* userData)
 	{
@@ -391,14 +357,10 @@ public class HashTable
 	 * Calls the given function for each key/value pair in the GHashTable.
 	 * If the function returns TRUE, then the key/value pair is removed from the
 	 * GHashTable, but no key or value destroy functions are called.
-	 * hash_table:
-	 *  a GHashTable.
-	 * func:
-	 *  the function to call for each key/value pair.
-	 * user_data:
-	 *  user data to pass to the function.
-	 * Returns:
-	 *  the number of key/value pairs removed.
+	 * Params:
+	 * func =  the function to call for each key/value pair.
+	 * userData =  user data to pass to the function.
+	 * Returns: the number of key/value pairs removed.
 	 */
 	public uint foreachSteal(GHRFunc func, void* userData)
 	{
@@ -412,8 +374,6 @@ public class HashTable
 	 * and values are freed using the supplied destroy functions, otherwise you
 	 * have to make sure that any dynamically allocated values are freed
 	 * yourself.
-	 * hash_table:
-	 *  a GHashTable
 	 * Since 2.12
 	 */
 	public void removeAll()
@@ -425,14 +385,36 @@ public class HashTable
 	/**
 	 * Removes all keys and their associated values from a GHashTable
 	 * without calling the key and value destroy functions.
-	 * hash_table:
-	 *  a GHashTable.
 	 * Since 2.12
 	 */
 	public void stealAll()
 	{
 		// void g_hash_table_steal_all (GHashTable *hash_table);
 		g_hash_table_steal_all(gHashTable);
+	}
+	
+	/**
+	 * Retrieves every key inside hash_table. The returned data is valid
+	 * until hash_table is modified.
+	 * Since 2.14
+	 * Returns: a GList containing all the keys inside the hash table. The content of the list is owned by the hash table and should not be modified or freed. Use g_list_free() when done using the list.
+	 */
+	public GList* getKeys()
+	{
+		// GList* g_hash_table_get_keys (GHashTable *hash_table);
+		return g_hash_table_get_keys(gHashTable);
+	}
+	
+	/**
+	 * Retrieves every value inside hash_table. The returned data is
+	 * valid until hash_table is modified.
+	 * Since 2.14
+	 * Returns: a GList containing all the values inside the hash table. The content of the list is owned by the hash table and should not be modified or freed. Use g_list_free() when done using the list.
+	 */
+	public GList* getValues()
+	{
+		// GList* g_hash_table_get_values (GHashTable *hash_table);
+		return g_hash_table_get_values(gHashTable);
 	}
 	
 	
@@ -445,8 +427,6 @@ public class HashTable
 	 * notifiers using g_hash_table_new_full(). In the latter case the destroy
 	 * functions you supplied will be called on all keys and values during the
 	 * destruction phase.
-	 * hash_table:
-	 *  a GHashTable.
 	 */
 	public void destroy()
 	{
@@ -457,11 +437,8 @@ public class HashTable
 	/**
 	 * Atomically increments the reference count of hash_table by one.
 	 * This function is MT-safe and may be called from any thread.
-	 * hash_table:
-	 *  a valid GHashTable.
-	 * Returns:
-	 *  the passed in GHashTable.
 	 * Since 2.10
+	 * Returns: the passed in GHashTable.
 	 */
 	public HashTable doref()
 	{
@@ -474,8 +451,6 @@ public class HashTable
 	 * If the reference count drops to 0, all keys and values will be
 	 * destroyed, and all memory allocated by the hash table is released.
 	 * This function is MT-safe and may be called from any thread.
-	 * hash_table:
-	 *  a valid GHashTable.
 	 * Since 2.10
 	 */
 	public void unref()
@@ -488,12 +463,10 @@ public class HashTable
 	 * Compares two gpointer arguments and returns TRUE if they are equal.
 	 * It can be passed to g_hash_table_new() as the key_equal_func
 	 * parameter, when using pointers as keys in a GHashTable.
-	 * v1:
-	 *  a key.
-	 * v2:
-	 *  a key to compare with v1.
-	 * Returns:
-	 *  TRUE if the two keys match.
+	 * Params:
+	 * v1 =  a key.
+	 * v2 =  a key to compare with v1.
+	 * Returns: TRUE if the two keys match.
 	 */
 	public static int gDirectEqual(void* v1, void* v2)
 	{
@@ -505,10 +478,9 @@ public class HashTable
 	 * Converts a gpointer to a hash value.
 	 * It can be passed to g_hash_table_new() as the hash_func parameter,
 	 * when using pointers as keys in a GHashTable.
-	 * v:
-	 *  a gpointer key
-	 * Returns:
-	 *  a hash value corresponding to the key.
+	 * Params:
+	 * v =  a gpointer key
+	 * Returns: a hash value corresponding to the key.
 	 */
 	public static uint gDirectHash(void* v)
 	{
@@ -521,12 +493,10 @@ public class HashTable
 	 * TRUE if they are equal.
 	 * It can be passed to g_hash_table_new() as the key_equal_func
 	 * parameter, when using pointers to integers as keys in a GHashTable.
-	 * v1:
-	 *  a pointer to a gint key.
-	 * v2:
-	 *  a pointer to a gint key to compare with v1.
-	 * Returns:
-	 *  TRUE if the two keys match.
+	 * Params:
+	 * v1 =  a pointer to a gint key.
+	 * v2 =  a pointer to a gint key to compare with v1.
+	 * Returns: TRUE if the two keys match.
 	 */
 	public static int gIntEqual(void* v1, void* v2)
 	{
@@ -538,10 +508,9 @@ public class HashTable
 	 * Converts a pointer to a gint to a hash value.
 	 * It can be passed to g_hash_table_new() as the hash_func parameter,
 	 * when using pointers to integers values as keys in a GHashTable.
-	 * v:
-	 *  a pointer to a gint key
-	 * Returns:
-	 *  a hash value corresponding to the key.
+	 * Params:
+	 * v =  a pointer to a gint key
+	 * Returns: a hash value corresponding to the key.
 	 */
 	public static uint gIntHash(void* v)
 	{
@@ -550,15 +519,13 @@ public class HashTable
 	}
 	
 	/**
-	 * Compares two strings and returns TRUE if they are equal.
-	 * It can be passed to g_hash_table_new() as the key_equal_func
-	 * parameter, when using strings as keys in a GHashTable.
-	 * v1:
-	 *  a key.
-	 * v2:
-	 *  a key to compare with v1.
-	 * Returns:
-	 *  TRUE if the two keys match.
+	 * Compares two strings for byte-by-byte equality and returns TRUE
+	 * if they are equal. It can be passed to g_hash_table_new() as the
+	 * key_equal_func parameter, when using strings as keys in a GHashTable.
+	 * Params:
+	 * v1 =  a key
+	 * v2 =  a key to compare with v1
+	 * Returns: TRUE if the two keys match
 	 */
 	public static int gStrEqual(void* v1, void* v2)
 	{
@@ -568,12 +535,11 @@ public class HashTable
 	
 	/**
 	 * Converts a string to a hash value.
-	 * It can be passed to g_hash_table_new() as the hash_func parameter,
-	 * when using strings as keys in a GHashTable.
-	 * v:
-	 *  a string key.
-	 * Returns:
-	 *  a hash value corresponding to the key.
+	 * It can be passed to g_hash_table_new() as the hash_func
+	 * parameter, when using strings as keys in a GHashTable.
+	 * Params:
+	 * v =  a string key
+	 * Returns: a hash value corresponding to the key
 	 */
 	public static uint gStrHash(void* v)
 	{

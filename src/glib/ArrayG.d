@@ -83,7 +83,7 @@ private import glib.Str;
  * To access an element of an array, use g_array_index().
  * To set the size of an array, use g_array_set_size().
  * To free an array, use g_array_free().
- * Example5.Using a GArray to store gint values
+ * Example19.Using a GArray to store gint values
  *  GArray *garray;
  *  gint i;
  *  /+* We create a new array to store gint values.
@@ -150,16 +150,12 @@ public class ArrayG
 	
 	/**
 	 * Creates a new GArray.
-	 * zero_terminated:
-	 * TRUE if the array should have an extra element at the end
+	 * Params:
+	 * zeroTerminated = TRUE if the array should have an extra element at the end
 	 * which is set to 0.
-	 * clear_:
-	 * TRUE if GArray elements should be automatically cleared to 0
+	 * clear = TRUE if GArray elements should be automatically cleared to 0
 	 * when they are allocated.
-	 * element_size:
-	 * the size of each element in bytes.
-	 * Returns:
-	 * the new GArray.
+	 * elementSize = the size of each element in bytes.
 	 */
 	public this (int zeroTerminated, int clear, uint elementSize)
 	{
@@ -172,16 +168,12 @@ public class ArrayG
 	 * preallocated. This avoids frequent reallocation, if you are going to
 	 * add many elements to the array. Note however that the size of the
 	 * array is still 0.
-	 * zero_terminated:
-	 * TRUE if the array should have an extra element at the end with all bits cleared.
-	 * clear_:
-	 * TRUE if all bits in the array should be cleared to 0 on allocation.
-	 * element_size:
-	 * size of each element in the array.
-	 * reserved_size:
-	 * number of elements preallocated.
-	 * Returns:
-	 * the new GArray.
+	 * Params:
+	 * zeroTerminated = TRUE if the array should have an extra element at the end with all bits cleared.
+	 * clear = TRUE if all bits in the array should be cleared to 0 on allocation.
+	 * elementSize = size of each element in the array.
+	 * reservedSize = number of elements preallocated.
+	 * Returns:the new GArray.
 	 */
 	public static ArrayG sizedNew(int zeroTerminated, int clear, uint elementSize, uint reservedSize)
 	{
@@ -192,14 +184,10 @@ public class ArrayG
 	
 	/**
 	 * Adds len elements onto the end of the array.
-	 * array:
-	 * a GArray.
-	 * data:
-	 * a pointer to the elements to append to the end of the array.
-	 * len:
-	 * the number of elements to append.
-	 * Returns:
-	 * the GArray.
+	 * Params:
+	 * data = a pointer to the elements to append to the end of the array.
+	 * len = the number of elements to append.
+	 * Returns:the GArray.
 	 */
 	public ArrayG appendVals(void* data, uint len)
 	{
@@ -212,14 +200,10 @@ public class ArrayG
 	 * Adds len elements onto the start of the array.
 	 * This operation is slower than g_array_append_vals() since the existing elements
 	 * in the array have to be moved to make space for the new elements.
-	 * array:
-	 * a GArray.
-	 * data:
-	 * a pointer to the elements to prepend to the start of the array.
-	 * len:
-	 * the number of elements to prepend.
-	 * Returns:
-	 * the GArray.
+	 * Params:
+	 * data = a pointer to the elements to prepend to the start of the array.
+	 * len = the number of elements to prepend.
+	 * Returns:the GArray.
 	 */
 	public ArrayG prependVals(void* data, uint len)
 	{
@@ -230,16 +214,11 @@ public class ArrayG
 	
 	/**
 	 * Inserts len elements into a GArray at the given index.
-	 * array:
-	 * a GArray.
-	 * index_:
-	 * the index to place the elements at.
-	 * data:
-	 * a pointer to the elements to insert.
-	 * len:
-	 * the number of elements to insert.
-	 * Returns:
-	 * the GArray.
+	 * Params:
+	 * index = the index to place the elements at.
+	 * data = a pointer to the elements to insert.
+	 * len = the number of elements to insert.
+	 * Returns:the GArray.
 	 */
 	public ArrayG insertVals(uint index, void* data, uint len)
 	{
@@ -250,12 +229,9 @@ public class ArrayG
 	/**
 	 * Removes the element at the given index from a GArray.
 	 * The following elements are moved down one place.
-	 * array:
-	 * a GArray.
-	 * index_:
-	 * the index of the element to remove.
-	 * Returns:
-	 * the GArray.
+	 * Params:
+	 * index = the index of the element to remove.
+	 * Returns:the GArray.
 	 */
 	public ArrayG removeIndex(uint index)
 	{
@@ -268,12 +244,9 @@ public class ArrayG
 	 * The last element in the array is used to fill in the space, so this function
 	 * does not preserve the order of the GArray. But it is faster than
 	 * g_array_remove_index().
-	 * array:
-	 * a GArray.
-	 * index_:
-	 * the index of the element to remove.
-	 * Returns:
-	 * the GArray.
+	 * Params:
+	 * index = the index of the element to remove.
+	 * Returns:the GArray.
 	 */
 	public ArrayG removeIndexFast(uint index)
 	{
@@ -284,15 +257,11 @@ public class ArrayG
 	/**
 	 * Removes the given number of elements starting at the given index from a
 	 * GArray. The following elements are moved to close the gap.
-	 * array:
-	 * a GArray.
-	 * index_:
-	 * the index of the first element to remove.
-	 * length:
-	 * the number of elements to remove.
-	 * Returns:
-	 * the GArray.
 	 * Since 2.4
+	 * Params:
+	 * index = the index of the first element to remove.
+	 * length = the number of elements to remove.
+	 * Returns:the GArray.
 	 */
 	public ArrayG removeRange(uint index, uint length)
 	{
@@ -306,10 +275,8 @@ public class ArrayG
 	 * zero for equal, greater zero if first arg is greater than second arg).
 	 * If two array elements compare equal, their order in the sorted array is
 	 * undefined.
-	 * array:
-	 * a GArray.
-	 * compare_func:
-	 * comparison function.
+	 * Params:
+	 * compareFunc = comparison function.
 	 */
 	public void sort(GCompareFunc compareFunc)
 	{
@@ -320,12 +287,9 @@ public class ArrayG
 	/**
 	 * Like g_array_sort(), but the comparison function receives an extra user data
 	 * argument.
-	 * array:
-	 * a GArray.
-	 * compare_func:
-	 * comparison function.
-	 * user_data:
-	 * data to pass to compare_func.
+	 * Params:
+	 * compareFunc = comparison function.
+	 * userData = data to pass to compare_func.
 	 */
 	public void sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
@@ -337,12 +301,9 @@ public class ArrayG
 	/**
 	 * Sets the size of the array, expanding it if necessary.
 	 * If the array was created with clear_ set to TRUE, the new elements are set to 0.
-	 * array:
-	 * a GArray.
-	 * length:
-	 * the new size of the GArray.
-	 * Returns:
-	 * the GArray.
+	 * Params:
+	 * length = the new size of the GArray.
+	 * Returns:the GArray.
 	 */
 	public ArrayG setSize(uint length)
 	{
@@ -358,12 +319,9 @@ public class ArrayG
 	 * Note
 	 * If array elements contain dynamically-allocated memory, they should be freed
 	 * first.
-	 * array:
-	 * a GArray.
-	 * free_segment:
-	 * if TRUE the actual element data is freed as well.
-	 * Returns:
-	 * the element data if free_segment is FALSE, otherwise NULL
+	 * Params:
+	 * freeSegment = if TRUE the actual element data is freed as well.
+	 * Returns:the element data if free_segment is FALSE, otherwise NULL
 	 */
 	public char[] free(int freeSegment)
 	{

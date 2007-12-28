@@ -74,6 +74,7 @@ private import gtk.VButtonBox;
 
 
 
+private import gtk.Box;
 
 /**
  * Description
@@ -93,7 +94,6 @@ private import gtk.VButtonBox;
  * Therefore it ignores the homogeneous property which it inherited from GtkBox, and always
  * behaves as if homogeneous was TRUE.
  */
-private import gtk.Box;
 public class ButtonBox : Box
 {
 	
@@ -142,6 +142,7 @@ public class ButtonBox : Box
 		this.gtkButtonBox = gtkButtonBox;
 	}
 	
+	/** */
 	static ButtonBox createActionBox(
 	void delegate(Button) onClicked,
 	StockID[] stocks,
@@ -170,6 +171,7 @@ public class ButtonBox : Box
 		return bBox;
 	}
 	
+	/** */
 	static ButtonBox createOkBox(void delegate(Button) onClicked)
 	{
 		static StockID[] stocks = [StockID.OK];
@@ -178,6 +180,7 @@ public class ButtonBox : Box
 		return createActionBox(onClicked, stocks, actions);
 	}
 	
+	/** */
 	static ButtonBox createOkCancelBox(void delegate(Button) onClicked)
 	{
 		static StockID[] stocks = [StockID.OK, StockID.CANCEL];
@@ -195,10 +198,7 @@ public class ButtonBox : Box
 	
 	/**
 	 * Retrieves the method being used to arrange the buttons in a button box.
-	 * widget:
-	 * a GtkButtonBox.
-	 * Returns:
-	 * the method used to layout buttons in widget.
+	 * Returns:the method used to layout buttons in widget.
 	 */
 	public GtkButtonBoxStyle getLayout()
 	{
@@ -212,12 +212,9 @@ public class ButtonBox : Box
 	 * "child-min-width/-height" instead.
 	 * Retrieves the current width and height of all child widgets in a button box.
 	 * min_width and min_height are filled with those values, respectively.
-	 * widget:
-	 * a GtkButtonBox.
-	 * min_width:
-	 * the width of the buttons contained by widget.
-	 * min_height:
-	 * the height of the buttons contained by widget.
+	 * Params:
+	 * minWidth = the width of the buttons contained by widget.
+	 * minHeight = the height of the buttons contained by widget.
 	 */
 	public void getChildSize(int* minWidth, int* minHeight)
 	{
@@ -230,12 +227,9 @@ public class ButtonBox : Box
 	 * gtk_button_box_get_child_ipadding is deprecated and should not be used in newly-written code. Use the style properties
 	 * "child-internal-pad-x/-y" instead.
 	 * Gets the default number of pixels that pad the buttons in a given button box.
-	 * widget:
-	 * a GtkButtonBox.
-	 * ipad_x:
-	 * the horizontal padding used by buttons in widget.
-	 * ipad_y:
-	 * the vertical padding used by buttons in widget.
+	 * Params:
+	 * ipadX = the horizontal padding used by buttons in widget.
+	 * ipadY = the vertical padding used by buttons in widget.
 	 */
 	public void getChildIpadding(int* ipadX, int* ipadY)
 	{
@@ -245,13 +239,10 @@ public class ButtonBox : Box
 	
 	/**
 	 * Returns whether child should appear in a secondary group of children.
-	 * widget:
-	 *  a GtkButtonBox
-	 * child:
-	 *  a child of widget
-	 * Returns:
-	 *  whether child should appear in a secondary group of children.
 	 * Since 2.4
+	 * Params:
+	 * child =  a child of widget
+	 * Returns: whether child should appear in a secondary group of children.
 	 */
 	public int getChildSecondary(Widget child)
 	{
@@ -262,10 +253,8 @@ public class ButtonBox : Box
 	
 	/**
 	 * Changes the way buttons are arranged in their container.
-	 * widget:
-	 * a GtkButtonBox.
-	 * layout_style:
-	 * the new layout style.
+	 * Params:
+	 * layoutStyle = the new layout style.
 	 */
 	public void setLayout(GtkButtonBoxStyle layoutStyle)
 	{
@@ -278,12 +267,9 @@ public class ButtonBox : Box
 	 * gtk_button_box_set_child_size is deprecated and should not be used in newly-written code. Use the style properties
 	 * "child-min-width/-height" instead.
 	 * Sets a new default size for the children of a given button box.
-	 * widget:
-	 * a GtkButtonBox.
-	 * min_width:
-	 * a default width for buttons in widget.
-	 * min_height:
-	 * a default height for buttons in widget.
+	 * Params:
+	 * minWidth = a default width for buttons in widget.
+	 * minHeight = a default height for buttons in widget.
 	 */
 	public void setChildSize(int minWidth, int minHeight)
 	{
@@ -297,12 +283,9 @@ public class ButtonBox : Box
 	 * "child-internal-pad-x/-y" instead.
 	 * Changes the amount of internal padding used by all buttons in a given button
 	 * box.
-	 * widget:
-	 * a GtkButtonBox.
-	 * ipad_x:
-	 * the horizontal padding that should be used by each button in widget.
-	 * ipad_y:
-	 * the vertical padding that should be used by each button in widget.
+	 * Params:
+	 * ipadX = the horizontal padding that should be used by each button in widget.
+	 * ipadY = the vertical padding that should be used by each button in widget.
 	 */
 	public void setChildIpadding(int ipadX, int ipadY)
 	{
@@ -322,29 +305,10 @@ public class ButtonBox : Box
 	 * or GTK_BUTTONBOX_END, then the secondary children are aligned at
 	 * the other end of the button box from the main children. For the
 	 * other styles, they appear immediately next to the main children.
-	 * widget:
-	 *  a GtkButtonBox
-	 * child:
-	 *  a child of widget
-	 * is_secondary:
-	 *  if TRUE, the child appears in a secondary group of the
+	 * Params:
+	 * child =  a child of widget
+	 * isSecondary =  if TRUE, the child appears in a secondary group of the
 	 *  button box.
-	 * Property Details
-	 * The "layout-style" property
-	 *  "layout-style" GtkButtonBoxStyle : Read / Write
-	 * How to layout the buttons in the box. Possible values are default, spread, edge, start and end.
-	 * Default value: GTK_BUTTONBOX_DEFAULT_STYLE
-	 * Child Property Details
-	 * The "secondary" child property
-	 *  "secondary" gboolean : Read / Write
-	 * If TRUE, the child appears in a secondary group of children, suitable for, e.g., help buttons.
-	 * Default value: FALSE
-	 * Style Property Details
-	 * The "child-internal-pad-x" style property
-	 *  "child-internal-pad-x" gint : Read
-	 * Amount to increase child's size on either side.
-	 * Allowed values: >= 0
-	 * Default value: 4
 	 */
 	public void setChildSecondary(Widget child, int isSecondary)
 	{

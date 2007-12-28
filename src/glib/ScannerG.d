@@ -127,15 +127,15 @@ public class ScannerG
 	 */
 	
 	
+	
 	/**
 	 * Creates a new GScanner.
 	 * The config_templ structure specifies the initial settings of the scanner,
 	 * which are copied into the GScanner config field.
 	 * If you pass NULL then the default settings are used.
-	 * config_templ:
-	 * the initial scanner settings.
-	 * Returns:
-	 * the new GScanner.
+	 * Params:
+	 * configTempl = the initial scanner settings.
+	 * Returns:the new GScanner.
 	 */
 	public static ScannerG _New(GScannerConfig* configTempl)
 	{
@@ -143,13 +143,19 @@ public class ScannerG
 		return new ScannerG( g_scanner_new(configTempl) );
 	}
 	
+	/**
+	 * Frees all memory used by the GScanner.
+	 */
+	public void _Destroy()
+	{
+		// void g_scanner_destroy (GScanner *scanner);
+		g_scanner_destroy(gScanner);
+	}
 	
 	/**
 	 * Prepares to scan a file.
-	 * scanner:
-	 * a GScanner.
-	 * input_fd:
-	 * a file descriptor.
+	 * Params:
+	 * inputFd = a file descriptor.
 	 */
 	public void _InputFile(int inputFd)
 	{
@@ -162,8 +168,6 @@ public class ScannerG
 	 * the file read ahead buffer. This is useful for third party uses of
 	 * the scanners filedescriptor, which hooks onto the current scanning
 	 * position.
-	 * scanner:
-	 * a GScanner.
 	 */
 	public void _SyncFileOffset()
 	{
@@ -173,12 +177,9 @@ public class ScannerG
 	
 	/**
 	 * Prepares to scan a text buffer.
-	 * scanner:
-	 * a GScanner.
-	 * text:
-	 * the text buffer to scan.
-	 * text_len:
-	 * the length of the text buffer.
+	 * Params:
+	 * text = the text buffer to scan.
+	 * textLen = the length of the text buffer.
 	 */
 	public void _InputText(char[] text, uint textLen)
 	{
@@ -187,7 +188,7 @@ public class ScannerG
 	}
 	
 	/**
-	 * Gets the next token, without removing it from the input stream.
+	 * Parses the next token, without removing it from the input stream.
 	 * The token data is placed in the
 	 * next_token,
 	 * next_value,
@@ -196,14 +197,11 @@ public class ScannerG
 	 * Note that, while the token is not removed from the input stream (i.e.
 	 * the next call to g_scanner_get_next_token() will return the same token),
 	 * it will not be reevaluated. This can lead to surprising results when
-	 * changing scope after peeking for the next token. Getting the next token
-	 * after switching the scope will return whatever was peeked before,
-	 * regardless of any symbols that may have been added or removed in the
-	 * new scope.
-	 * scanner:
-	 * a GScanner.
-	 * Returns:
-	 * the type of the token.
+	 * changing scope or the scanner configuration after peeking the next token.
+	 * Getting the next token after switching the scope or configuration will
+	 * return whatever was peeked before, regardless of any symbols that may
+	 * have been added or removed in the new scope.
+	 * Returns:the type of the token.
 	 */
 	public GTokenType _PeekNextToken()
 	{
@@ -212,16 +210,14 @@ public class ScannerG
 	}
 	
 	/**
-	 * Gets the next token, removing it from the input stream.
+	 * Parses the next token just like g_scanner_peek_next_token() and also
+	 * removes it from the input stream.
 	 * The token data is placed in the
 	 * token,
 	 * value,
 	 * line, and
 	 * position fields of the GScanner structure.
-	 * scanner:
-	 * a GScanner.
-	 * Returns:
-	 * the type of the token.
+	 * Returns:the type of the token.
 	 */
 	public GTokenType _GetNextToken()
 	{
@@ -230,11 +226,19 @@ public class ScannerG
 	}
 	
 	/**
-	 * Gets the current line in the input stream (counting from 1).
-	 * scanner:
-	 * a GScanner.
-	 * Returns:
-	 * the current line.
+	 * Returns TRUE if the scanner has reached the end of the file or text buffer.
+	 * Returns:TRUE if the scanner has reached the end of the file or text buffer.
+	 */
+	public int _Eof()
+	{
+		// gboolean g_scanner_eof (GScanner *scanner);
+		return g_scanner_eof(gScanner);
+	}
+	
+	/**
+	 * Returns the current line in the input stream (counting from 1).
+	 * This is the line of the last token parsed via g_scanner_get_next_token().
+	 * Returns:the current line.
 	 */
 	public uint _CurLine()
 	{
@@ -243,11 +247,9 @@ public class ScannerG
 	}
 	
 	/**
-	 * Gets the current position in the current line (counting from 0).
-	 * scanner:
-	 * a GScanner.
-	 * Returns:
-	 * the current position on the line.
+	 * Returns the current position in the current line (counting from 0).
+	 * This is the position of the last token parsed via g_scanner_get_next_token().
+	 * Returns:the current position on the line.
 	 */
 	public uint _CurPosition()
 	{
@@ -259,10 +261,7 @@ public class ScannerG
 	 * Gets the current token type.
 	 * This is simply the token field in the GScanner
 	 * structure.
-	 * scanner:
-	 * a GScanner.
-	 * Returns:
-	 * the current token type.
+	 * Returns:the current token type.
 	 */
 	public GTokenType _CurToken()
 	{
@@ -274,10 +273,7 @@ public class ScannerG
 	 * Gets the current token value.
 	 * This is simply the value field in the GScanner
 	 * structure.
-	 * scanner:
-	 * a GScanner.
-	 * Returns:
-	 * the current token value.
+	 * Returns:the current token value.
 	 */
 	public GTokenValue _CurValue()
 	{
@@ -286,26 +282,10 @@ public class ScannerG
 	}
 	
 	/**
-	 * Returns TRUE if the scanner has reached the end of the file or text buffer.
-	 * scanner:
-	 * a GScanner.
-	 * Returns:
-	 * TRUE if the scanner has reached the end of the file or text buffer.
-	 */
-	public int _Eof()
-	{
-		// gboolean g_scanner_eof (GScanner *scanner);
-		return g_scanner_eof(gScanner);
-	}
-	
-	/**
 	 * Sets the current scope.
-	 * scanner:
-	 * a GScanner.
-	 * scope_id:
-	 * the new scope id.
-	 * Returns:
-	 * the old scope id.
+	 * Params:
+	 * scopeId = the new scope id.
+	 * Returns:the old scope id.
 	 */
 	public uint _SetScope(uint scopeId)
 	{
@@ -315,14 +295,10 @@ public class ScannerG
 	
 	/**
 	 * Adds a symbol to the given scope.
-	 * scanner:
-	 * a GScanner.
-	 * scope_id:
-	 * the scope id.
-	 * symbol:
-	 * the symbol to add.
-	 * value:
-	 * the value of the symbol.
+	 * Params:
+	 * scopeId = the scope id.
+	 * symbol = the symbol to add.
+	 * value = the value of the symbol.
 	 */
 	public void _ScopeAddSymbol(uint scopeId, char[] symbol, void* value)
 	{
@@ -334,14 +310,10 @@ public class ScannerG
 	 * Calls the given function for each of the symbol/value pairs in the
 	 * given scope of the GScanner. The function is passed the symbol and
 	 * value of each pair, and the given user_data parameter.
-	 * scanner:
-	 * a GScanner.
-	 * scope_id:
-	 * the scope id.
-	 * func:
-	 * the function to call for each symbol/value pair.
-	 * user_data:
-	 * user data to pass to the function.
+	 * Params:
+	 * scopeId = the scope id.
+	 * func = the function to call for each symbol/value pair.
+	 * userData = user data to pass to the function.
 	 */
 	public void _ScopeForeachSymbol(uint scopeId, GHFunc func, void* userData)
 	{
@@ -352,15 +324,10 @@ public class ScannerG
 	/**
 	 * Looks up a symbol in a scope and return its value. If the
 	 * symbol is not bound in the scope, NULL is returned.
-	 * scanner:
-	 * a GScanner.
-	 * scope_id:
-	 * the scope id.
-	 * symbol:
-	 * the symbol to look up.
-	 * Returns:
-	 * the value of symbol in the given scope, or NULL
-	 * if symbol is not bound in the given scope.
+	 * Params:
+	 * scopeId = the scope id.
+	 * symbol = the symbol to look up.
+	 * Returns:the value of symbol in the given scope, or NULLif symbol is not bound in the given scope.
 	 */
 	public void* _ScopeLookupSymbol(uint scopeId, char[] symbol)
 	{
@@ -370,12 +337,9 @@ public class ScannerG
 	
 	/**
 	 * Removes a symbol from a scope.
-	 * scanner:
-	 * a GScanner.
-	 * scope_id:
-	 * the scope id.
-	 * symbol:
-	 * the symbol to remove.
+	 * Params:
+	 * scopeId = the scope id.
+	 * symbol = the symbol to remove.
 	 */
 	public void _ScopeRemoveSymbol(uint scopeId, char[] symbol)
 	{
@@ -385,16 +349,15 @@ public class ScannerG
 	
 	
 	
+	
+	
+	
 	/**
 	 * Looks up a symbol in the current scope and return its value. If the
 	 * symbol is not bound in the current scope, NULL is returned.
-	 * scanner:
-	 * a GScanner.
-	 * symbol:
-	 * the symbol to look up.
-	 * Returns:
-	 * the value of symbol in the current scope, or NULL
-	 * if symbol is not bound in the current scope.
+	 * Params:
+	 * symbol = the symbol to look up.
+	 * Returns:the value of symbol in the current scope, or NULLif symbol is not bound in the current scope.
 	 */
 	public void* _LookupSymbol(char[] symbol)
 	{
@@ -404,13 +367,10 @@ public class ScannerG
 	
 	/**
 	 * Outputs a warning message, via the GScanner message handler.
-	 * scanner:
-	 * a GScanner.
-	 * format:
-	 * the message format. See the printf()
+	 * Params:
+	 * format = the message format. See the printf()
 	 * documentation.
-	 * ...:
-	 * the parameters to insert into the format string.
+	 * ... = the parameters to insert into the format string.
 	 */
 	public void _Warn(char[] format, ... )
 	{
@@ -420,13 +380,10 @@ public class ScannerG
 	
 	/**
 	 * Outputs an error message, via the GScanner message handler.
-	 * scanner:
-	 * a GScanner.
-	 * format:
-	 * the message format. See the printf()
+	 * Params:
+	 * format = the message format. See the printf()
 	 * documentation.
-	 * ...:
-	 * the parameters to insert into the format string.
+	 * ... = the parameters to insert into the format string.
 	 */
 	public void _Error(char[] format, ... )
 	{
@@ -442,27 +399,20 @@ public class ScannerG
 	 * g_scanner_get_next_token(), as g_scanner_unexp_token() evaluates the
 	 * scanner's current token (not the peeked token) to construct part
 	 * of the message.
-	 * scanner:
-	 * a GScanner.
-	 * expected_token:
-	 * the expected token.
-	 * identifier_spec:
-	 * a string describing how the scanner's user refers to
+	 * Params:
+	 * expectedToken = the expected token.
+	 * identifierSpec = a string describing how the scanner's user refers to
 	 *  identifiers (NULL defaults to "identifier").
 	 *  This is used if expected_token is G_TOKEN_IDENTIFIER
 	 *  or G_TOKEN_IDENTIFIER_NULL.
-	 * symbol_spec:
-	 * a string describing how the scanner's user refers to
+	 * symbolSpec = a string describing how the scanner's user refers to
 	 *  symbols (NULL defaults to "symbol").
 	 *  This is used if expected_token is G_TOKEN_SYMBOL or
 	 *  any token value greater than G_TOKEN_LAST.
-	 * symbol_name:
-	 * the name of the symbol, if the scanner's current token
+	 * symbolName = the name of the symbol, if the scanner's current token
 	 *  is a symbol.
-	 * message:
-	 * a message string to output at the end of the warning/error, or NULL.
-	 * is_error:
-	 * if TRUE it is output as an error. If FALSE it is output as a
+	 * message = a message string to output at the end of the warning/error, or NULL.
+	 * isError = if TRUE it is output as an error. If FALSE it is output as a
 	 *  warning.
 	 */
 	public void _UnexpToken(GTokenType expectedToken, char[] identifierSpec, char[] symbolSpec, char[] symbolName, char[] message, int isError)
@@ -470,20 +420,6 @@ public class ScannerG
 		// void g_scanner_unexp_token (GScanner *scanner,  GTokenType expected_token,  const gchar *identifier_spec,  const gchar *symbol_spec,  const gchar *symbol_name,  const gchar *message,  gint is_error);
 		g_scanner_unexp_token(gScanner, expectedToken, Str.toStringz(identifierSpec), Str.toStringz(symbolSpec), Str.toStringz(symbolName), Str.toStringz(message), isError);
 	}
-	
-	
-	/**
-	 * Frees all memory used by the GScanner.
-	 * scanner:
-	 * a GScanner.
-	 */
-	public void _Destroy()
-	{
-		// void g_scanner_destroy (GScanner *scanner);
-		g_scanner_destroy(gScanner);
-	}
-	
-	
 	
 	
 	

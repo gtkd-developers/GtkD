@@ -70,6 +70,7 @@ private import gtk.TextBuffer;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -94,7 +95,6 @@ private import gtk.TextBuffer;
  * GtkTextMark object around.
  * Marks are typically created using the gtk_text_buffer_create_mark() function.
  */
-private import gobject.ObjectG;
 public class TextMark : ObjectG
 {
 	
@@ -148,15 +148,34 @@ public class TextMark : ObjectG
 	
 	
 	/**
+	 * Creates a text mark. Add it to a buffer using gtk_text_buffer_add_mark().
+	 * If name is NULL, the mark is anonymous; otherwise, the mark can be
+	 * retrieved by name using gtk_text_buffer_get_mark(). If a mark has left
+	 * gravity, and text is inserted at the mark's current location, the mark
+	 * will be moved to the left of the newly-inserted text. If the mark has
+	 * right gravity (left_gravity = FALSE), the mark will end up on the
+	 * right of newly-inserted text. The standard left-to-right cursor is a
+	 * mark with right gravity (when you type, the cursor stays on the right
+	 * side of the text you're typing).
+	 * Since 2.12
+	 * Params:
+	 * name =  mark name or NULL
+	 * leftGravity =  whether the mark should have left gravity
+	 */
+	public this (char[] name, int leftGravity)
+	{
+		// GtkTextMark* gtk_text_mark_new (const gchar *name,  gboolean left_gravity);
+		this(cast(GtkTextMark*)gtk_text_mark_new(Str.toStringz(name), leftGravity) );
+	}
+	
+	/**
 	 * Sets the visibility of mark; the insertion point is normally
 	 * visible, i.e. you can see it as a vertical bar. Also, the text
 	 * widget uses a visible mark to indicate where a drop will occur when
 	 * dragging-and-dropping text. Most other marks are not visible.
 	 * Marks are not visible by default.
-	 * mark:
-	 *  a GtkTextMark
-	 * setting:
-	 *  visibility of mark
+	 * Params:
+	 * setting =  visibility of mark
 	 */
 	public void setVisible(int setting)
 	{
@@ -166,11 +185,8 @@ public class TextMark : ObjectG
 	
 	/**
 	 * Returns TRUE if the mark is visible (i.e. a cursor is displayed
-	 * for it)
-	 * mark:
-	 *  a GtkTextMark
-	 * Returns:
-	 *  TRUE if visible
+	 * for it).
+	 * Returns: TRUE if visible
 	 */
 	public int getVisible()
 	{
@@ -180,12 +196,9 @@ public class TextMark : ObjectG
 	
 	/**
 	 * Returns TRUE if the mark has been removed from its buffer
-	 * with gtk_text_buffer_delete_mark(). Marks can't be used
-	 * once deleted.
-	 * mark:
-	 *  a GtkTextMark
-	 * Returns:
-	 *  whether the mark is deleted
+	 * with gtk_text_buffer_delete_mark(). See gtk_text_buffer_add_mark()
+	 * for a way to add it to a buffer again.
+	 * Returns: whether the mark is deleted
 	 */
 	public int getDeleted()
 	{
@@ -195,10 +208,7 @@ public class TextMark : ObjectG
 	
 	/**
 	 * Returns the mark name; returns NULL for anonymous marks.
-	 * mark:
-	 *  a GtkTextMark
-	 * Returns:
-	 *  mark name
+	 * Returns: mark name
 	 */
 	public char[] getName()
 	{
@@ -209,10 +219,7 @@ public class TextMark : ObjectG
 	/**
 	 * Gets the buffer this mark is located inside,
 	 * or NULL if the mark is deleted.
-	 * mark:
-	 *  a GtkTextMark
-	 * Returns:
-	 *  the mark's GtkTextBuffer
+	 * Returns: the mark's GtkTextBuffer
 	 */
 	public TextBuffer getBuffer()
 	{
@@ -222,18 +229,12 @@ public class TextMark : ObjectG
 	
 	/**
 	 * Determines whether the mark has left gravity.
-	 * mark:
-	 *  a GtkTextMark
-	 * Returns:
-	 *  TRUE if the mark has left gravity, FALSE otherwise
-	 * [3]
-	 * "left" and "right" here refer to logical direction (left is the toward the start
-	 * of the buffer); in some languages such as Hebrew the logically-leftmost text is
-	 * not actually on the left when displayed.
+	 * Returns: TRUE if the mark has left gravity, FALSE otherwise
 	 */
 	public int getLeftGravity()
 	{
 		// gboolean gtk_text_mark_get_left_gravity (GtkTextMark *mark);
 		return gtk_text_mark_get_left_gravity(gtkTextMark);
 	}
+	
 }

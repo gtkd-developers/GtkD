@@ -84,11 +84,10 @@ public class Util
 	/**
 	 * Adds the specified function to the list of functions to be called
 	 * when an object receives focus.
-	 * focus_tracker:
-	 *  Function to be added to the list of functions to be called
+	 * Params:
+	 * focusTracker =  Function to be added to the list of functions to be called
 	 * when an object receives focus.
-	 * Returns:
-	 *  added focus tracker id, or 0 on failure.
+	 * Returns: added focus tracker id, or 0 on failure.
 	 */
 	public static uint addFocusTracker(AtkEventListener focusTracker)
 	{
@@ -99,8 +98,8 @@ public class Util
 	/**
 	 * Removes the specified focus tracker from the list of functions
 	 * to be called when any object receives focus.
-	 * tracker_id:
-	 *  the id of the focus tracker to remove
+	 * Params:
+	 * trackerId =  the id of the focus tracker to remove
 	 */
 	public static void removeFocusTracker(uint trackerId)
 	{
@@ -113,8 +112,8 @@ public class Util
 	 * This function should be called by an implementation of the
 	 * ATK interface if any specific work needs to be done to enable
 	 * focus tracking.
-	 * init:
-	 *  Function to be called for focus tracker initialization
+	 * Params:
+	 * init =  Function to be called for focus tracker initialization
 	 */
 	public static void focusTrackerInit(AtkEventListenerInit init)
 	{
@@ -125,8 +124,8 @@ public class Util
 	/**
 	 * Cause the focus tracker functions which have been specified to be
 	 * executed for the object.
-	 * object:
-	 *  an AtkObject
+	 * Params:
+	 * object =  an AtkObject
 	 */
 	public static void focusTrackerNotify(AtkObject* object)
 	{
@@ -139,12 +138,10 @@ public class Util
 	/**
 	 * Adds the specified function to the list of functions to be called
 	 * when an event of type event_type occurs.
-	 * listener:
-	 *  the listener to notify
-	 * event_type:
-	 *  the type of event for which notification is requested
-	 * Returns:
-	 *  added event listener id, or 0 on failure.
+	 * Params:
+	 * listener =  the listener to notify
+	 * eventType =  the type of event for which notification is requested
+	 * Returns: added event listener id, or 0 on failure.
 	 */
 	public static uint addGlobalEventListener(GSignalEmissionHook listener, char[] eventType)
 	{
@@ -154,8 +151,8 @@ public class Util
 	
 	/**
 	 * Removes the specified event listener
-	 * listener_id:
-	 *  the id of the event listener to remove
+	 * Params:
+	 * listenerId =  the id of the event listener to remove
 	 */
 	public static void removeGlobalEventListener(uint listenerId)
 	{
@@ -170,13 +167,11 @@ public class Util
 	 * Adds the specified function to the list of functions to be called
 	 *  when a key event occurs. The data element will be passed to the
 	 *  AtkKeySnoopFunc (listener) as the func_data param, on notification.
-	 * listener:
-	 *  the listener to notify
-	 * data:
-	 *  a gpointer that points to a block of data that should be sent to the registered listeners,
+	 * Params:
+	 * listener =  the listener to notify
+	 * data =  a gpointer that points to a block of data that should be sent to the registered listeners,
 	 *  along with the event notification, when it occurs.
-	 * Returns:
-	 *  added event listener id, or 0 on failure.
+	 * Returns: added event listener id, or 0 on failure.
 	 */
 	public static uint addKeyEventListener(AtkKeySnoopFunc listener, void* data)
 	{
@@ -186,8 +181,8 @@ public class Util
 	
 	/**
 	 * Removes the specified event listener
-	 * listener_id:
-	 *  the id of the event listener to remove
+	 * Params:
+	 * listenerId =  the id of the event listener to remove
 	 */
 	public static void removeKeyEventListener(uint listenerId)
 	{
@@ -197,8 +192,7 @@ public class Util
 	
 	/**
 	 * Gets the root accessible container for the current application.
-	 * Returns:
-	 *  the root accessible container for the current application
+	 * Returns: the root accessible container for the current application
 	 */
 	public static AtkObject* getRoot()
 	{
@@ -208,10 +202,7 @@ public class Util
 	
 	/**
 	 * Gets the currently focused object.
-	 * Returns:
-	 * Returns:
-	 *  the currently focused object for the current application
-	 * Since ATK 1.6
+	 * Returns:Returns: the currently focused object for the current applicationSince ATK 1.6
 	 */
 	public static AtkObject* getFocusObject()
 	{
@@ -221,8 +212,7 @@ public class Util
 	
 	/**
 	 * Gets name string for the GUI toolkit implementing ATK for this application.
-	 * Returns:
-	 *  name string for the GUI toolkit implementing ATK for this application
+	 * Returns: name string for the GUI toolkit implementing ATK for this application
 	 */
 	public static char[] getToolkitName()
 	{
@@ -232,8 +222,7 @@ public class Util
 	
 	/**
 	 * Gets version string for the GUI toolkit implementing ATK for this application.
-	 * Returns:
-	 *  version string for the GUI toolkit implementing ATK for this application
+	 * Returns: version string for the GUI toolkit implementing ATK for this application
 	 */
 	public static char[] getToolkitVersion()
 	{

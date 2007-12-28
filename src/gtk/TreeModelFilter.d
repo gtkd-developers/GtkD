@@ -74,6 +74,7 @@ private import gtk.TreeIter;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -91,7 +92,6 @@ private import gtk.TreeIter;
  * Set a different root node, also known as a "virtual root". You can pass in
  * a GtkTreePath indicating the root node for the filter at construction time.
  */
-private import gobject.ObjectG;
 public class TreeModelFilter : ObjectG
 {
 	
@@ -149,13 +149,11 @@ public class TreeModelFilter : ObjectG
 	/**
 	 * Creates a new GtkTreeModel, with child_model as the child_model
 	 * and root as the virtual root.
-	 * child_model:
-	 *  A GtkTreeModel.
-	 * root:
-	 *  A GtkTreePath or NULL.
-	 * Returns:
-	 *  A new GtkTreeModel.
 	 * Since 2.4
+	 * Params:
+	 * childModel =  A GtkTreeModel.
+	 * root =  A GtkTreePath or NULL.
+	 * Returns: A new GtkTreeModel.
 	 */
 	public static TreeModel newTreeModelFilter(TreeModel childModel, TreePath root)
 	{
@@ -171,15 +169,11 @@ public class TreeModelFilter : ObjectG
 	 * it depends on some global parameters), you must call
 	 * gtk_tree_model_filter_refilter() to keep the visibility information of
 	 * the model uptodate.
-	 * filter:
-	 *  A GtkTreeModelFilter.
-	 * func:
-	 *  A GtkTreeModelFilterVisibleFunc, the visible function.
-	 * data:
-	 *  User data to pass to the visible function, or NULL.
-	 * destroy:
-	 *  Destroy notifier of data, or NULL.
 	 * Since 2.4
+	 * Params:
+	 * func =  A GtkTreeModelFilterVisibleFunc, the visible function.
+	 * data =  User data to pass to the visible function, or NULL.
+	 * destroy =  Destroy notifier of data, or NULL.
 	 */
 	public void setVisibleFunc(GtkTreeModelFilterVisibleFunc func, void* data, GtkDestroyNotify destroy)
 	{
@@ -195,19 +189,13 @@ public class TreeModelFilter : ObjectG
 	 * data access, the goal of the modify function is to return the data which
 	 * should be displayed at the location specified using the parameters of the
 	 * modify function.
-	 * filter:
-	 *  A GtkTreeModelFilter.
-	 * n_columns:
-	 *  The number of columns in the filter model.
-	 * types:
-	 *  The GTypes of the columns.
-	 * func:
-	 *  A GtkTreeModelFilterModifyFunc
-	 * data:
-	 *  User data to pass to the modify function, or NULL.
-	 * destroy:
-	 *  Destroy notifier of data, or NULL.
 	 * Since 2.4
+	 * Params:
+	 * nColumns =  The number of columns in the filter model.
+	 * types =  The GTypes of the columns.
+	 * func =  A GtkTreeModelFilterModifyFunc
+	 * data =  User data to pass to the modify function, or NULL.
+	 * destroy =  Destroy notifier of data, or NULL.
 	 */
 	public void setModifyFunc(int nColumns, GType* types, GtkTreeModelFilterModifyFunc func, void* data, GtkDestroyNotify destroy)
 	{
@@ -220,11 +208,9 @@ public class TreeModelFilter : ObjectG
 	 * look for visibility information. columns should be a column of type
 	 * G_TYPE_BOOLEAN, where TRUE means that a row is visible, and FALSE
 	 * if not.
-	 * filter:
-	 *  A GtkTreeModelFilter.
-	 * column:
-	 *  A gint which is the column containing the visible information.
 	 * Since 2.4
+	 * Params:
+	 * column =  A gint which is the column containing the visible information.
 	 */
 	public void setVisibleColumn(int column)
 	{
@@ -234,11 +220,8 @@ public class TreeModelFilter : ObjectG
 	
 	/**
 	 * Returns a pointer to the child model of filter.
-	 * filter:
-	 *  A GtkTreeModelFilter.
-	 * Returns:
-	 *  A pointer to a GtkTreeModel.
 	 * Since 2.4
+	 * Returns: A pointer to a GtkTreeModel.
 	 */
 	public TreeModel getModel()
 	{
@@ -250,16 +233,12 @@ public class TreeModelFilter : ObjectG
 	 * Sets filter_iter to point to the row in filter that corresponds to the
 	 * row pointed at by child_iter. If filter_iter was not set, FALSE is
 	 * returned.
-	 * filter:
-	 *  A GtkTreeModelFilter.
-	 * filter_iter:
-	 *  An uninitialized GtkTreeIter.
-	 * child_iter:
-	 *  A valid GtkTreeIter pointing to a row on the child model.
-	 * Returns:
-	 *  TRUE, if filter_iter was set, i.e. if child_iter is a
-	 * valid iterator pointing to a visible row in child model.
 	 * Since 2.4
+	 * Params:
+	 * filter =  A GtkTreeModelFilter.
+	 * filterIter =  An uninitialized GtkTreeIter.
+	 * childIter =  A valid GtkTreeIter pointing to a row on the child model.
+	 * Returns: TRUE, if filter_iter was set, i.e. if child_iter is avalid iterator pointing to a visible row in child model.
 	 */
 	public int convertChildIterToIter(TreeIter filterIter, TreeIter childIter)
 	{
@@ -269,13 +248,11 @@ public class TreeModelFilter : ObjectG
 	
 	/**
 	 * Sets child_iter to point to the row pointed to by filter_iter.
-	 * filter:
-	 *  A GtkTreeModelFilter.
-	 * child_iter:
-	 *  An uninitialized GtkTreeIter.
-	 * filter_iter:
-	 *  A valid GtkTreeIter pointing to a row on filter.
 	 * Since 2.4
+	 * Params:
+	 * filter =  A GtkTreeModelFilter.
+	 * childIter =  An uninitialized GtkTreeIter.
+	 * filterIter =  A valid GtkTreeIter pointing to a row on filter.
 	 */
 	public void convertIterToChildIter(TreeIter childIter, TreeIter filterIter)
 	{
@@ -289,13 +266,10 @@ public class TreeModelFilter : ObjectG
 	 * same row in the filtered model. If child_path isn't a valid path on the
 	 * child model or points to a row which is not visible in filter, then NULL
 	 * is returned.
-	 * filter:
-	 *  A GtkTreeModelFilter.
-	 * child_path:
-	 *  A GtkTreePath to convert.
-	 * Returns:
-	 *  A newly allocated GtkTreePath, or NULL.
 	 * Since 2.4
+	 * Params:
+	 * childPath =  A GtkTreePath to convert.
+	 * Returns: A newly allocated GtkTreePath, or NULL.
 	 */
 	public TreePath convertChildPathToPath(TreePath childPath)
 	{
@@ -308,13 +282,11 @@ public class TreeModelFilter : ObjectG
 	 * filter_path points to a location in filter. The returned path will
 	 * point to the same location in the model not being filtered. If filter_path
 	 * does not point to a location in the child model, NULL is returned.
-	 * filter:
-	 *  A GtkTreeModelFilter.
-	 * filter_path:
-	 *  A GtkTreePath to convert.
-	 * Returns:
-	 *  A newly allocated GtkTreePath, or NULL.
 	 * Since 2.4
+	 * Params:
+	 * filter =  A GtkTreeModelFilter.
+	 * filterPath =  A GtkTreePath to convert.
+	 * Returns: A newly allocated GtkTreePath, or NULL.
 	 */
 	public TreePath convertPathToChildPath(TreePath filterPath)
 	{
@@ -325,9 +297,9 @@ public class TreeModelFilter : ObjectG
 	/**
 	 * Emits ::row_changed for each row in the child model, which causes
 	 * the filter to re-evaluate whether a row is visible or not.
-	 * filter:
-	 *  A GtkTreeModelFilter.
 	 * Since 2.4
+	 * Params:
+	 * filter =  A GtkTreeModelFilter.
 	 */
 	public void refilter()
 	{
@@ -342,13 +314,7 @@ public class TreeModelFilter : ObjectG
 	 * being filtered is static (and doesn't change often) and there has been
 	 * a lot of unreffed access to nodes. As a side effect of this function,
 	 * all unreffed iters will be invalid.
-	 * filter:
-	 *  A GtkTreeModelFilter.
 	 * Since 2.4
-	 * Property Details
-	 * The "child-model" property
-	 *  "child-model" GtkTreeModel : Read / Write / Construct Only
-	 * The model for the filtermodel to filter.
 	 */
 	public void clearCache()
 	{

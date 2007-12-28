@@ -71,11 +71,11 @@ private import gtk.MenuShell;
 
 
 
+private import gtk.IMContext;
 
 /**
  * Description
  */
-private import gtk.IMContext;
 public class IMMulticontext : IMContext
 {
 	
@@ -130,8 +130,7 @@ public class IMMulticontext : IMContext
 	
 	/**
 	 * Creates a new GtkIMMulticontext.
-	 * Returns:
-	 *  a new GtkIMMulticontext.
+	 * Returns: a new GtkIMMulticontext.
 	 */
 	public static IMContext newIMMulticontext()
 	{
@@ -143,10 +142,8 @@ public class IMMulticontext : IMContext
 	 * Add menuitems for various available input methods to a menu;
 	 * the menuitems, when selected, will switch the input method
 	 * for the context and the global default input method.
-	 * context:
-	 *  a GtkIMMultiContext
-	 * menushell:
-	 *  a GtkMenuShell
+	 * Params:
+	 * menushell =  a GtkMenuShell
 	 */
 	public void appendMenuitems(MenuShell menushell)
 	{

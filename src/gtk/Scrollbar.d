@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Range;
 
 /**
  * Description
@@ -79,7 +80,6 @@ private import gtkc.gtk;
  * used when the user asks to step down (using the small stepper arrows)
  * or page down (using for example the PageDown key).
  */
-private import gtk.Range;
 public class Scrollbar : Range
 {
 	

@@ -153,12 +153,10 @@ public class Flags
 	
 	/**
 	 * Returns the first GFlagsValue which is set in value.
-	 * flags_class:
-	 * a GFlagsClass
-	 * value:
-	 * the value
-	 * Returns:
-	 * the first GFlagsValue which is set in value, or NULL if none is set
+	 * Params:
+	 * flagsClass = a GFlagsClass
+	 * value = the value
+	 * Returns:the first GFlagsValue which is set in value, or NULL if none is set
 	 */
 	public static Flags getFirstValue(GFlagsClass* flagsClass, uint value)
 	{
@@ -168,13 +166,10 @@ public class Flags
 	
 	/**
 	 * Looks up a GFlagsValue by name.
-	 * flags_class:
-	 * a GFlagsClass
-	 * name:
-	 * the name to look up
-	 * Returns:
-	 * the GFlagsValue with name name, or NULL if there is no flag with
-	 * that name
+	 * Params:
+	 * flagsClass = a GFlagsClass
+	 * name = the name to look up
+	 * Returns:the GFlagsValue with name name, or NULL if there is no flag withthat name
 	 */
 	public static Flags getValueByName(GFlagsClass* flagsClass, char[] name)
 	{
@@ -184,13 +179,10 @@ public class Flags
 	
 	/**
 	 * Looks up a GFlagsValue by nickname.
-	 * flags_class:
-	 * a GFlagsClass
-	 * nick:
-	 * the nickname to look up
-	 * Returns:
-	 * the GFlagsValue with nickname nick, or NULL if there is no flag
-	 * with that nickname
+	 * Params:
+	 * flagsClass = a GFlagsClass
+	 * nick = the nickname to look up
+	 * Returns:the GFlagsValue with nickname nick, or NULL if there is no flagwith that nickname
 	 */
 	public static Flags getValueByNick(GFlagsClass* flagsClass, char[] nick)
 	{
@@ -204,15 +196,13 @@ public class Flags
 	 * It is normally more convenient to let glib-mkenums
 	 * generate a my_flags_get_type() function from a usual C enumeration definition
 	 * than to write one yourself using g_flags_register_static().
-	 * name:
-	 * A nul-terminated string used as the name of the new type.
-	 * _static_values:
-	 * Returns:
-	 * The new type identifier.
+	 * Params:
+	 * name = A nul-terminated string used as the name of the new type.
+	 * Returns:The new type identifier.
 	 */
 	public static GType registerStatic(char[] name, Flags _StaticValues)
 	{
-		// GType g_flags_register_static (const gchar *name,  const GFlagsValue *const _static_values);
+		// GType g_flags_register_static (const gchar *name,  const GFlagsValue *const_static_values);
 		return g_flags_register_static(Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
 	}
 	
@@ -221,18 +211,13 @@ public class Flags
 	 * This function is meant to be called from the complete_type_info() function
 	 * of a GTypePlugin implementation, see the example for
 	 * g_enumeration_complete_type_info() above.
-	 * g_flags_type:
-	 * the type identifier of the type being completed
-	 * info:
-	 * the GTypeInfo struct to be filled in
-	 * _values:
-	 * See Also
-	 * GParamSpecEnum, GParamSpecFlags, g_param_spec_enum(), g_param_spec_flags(),
-	 * glib-mkenums
+	 * Params:
+	 * type = the type identifier of the type being completed
+	 * info = the GTypeInfo struct to be filled in
 	 */
 	public static void completeTypeInfo(GType type, GTypeInfo* info, Flags _Values)
 	{
-		// void g_flags_complete_type_info (GType g_flags_type,  GTypeInfo *info,  const GFlagsValue *const _values);
+		// void g_flags_complete_type_info (GType g_flags_type,  GTypeInfo *info,  const GFlagsValue *const_values);
 		g_flags_complete_type_info(type, info, (_Values is null) ? null : _Values.getFlagsStruct());
 	}
 }

@@ -78,7 +78,7 @@ private import glib.Str;
  * As an example of the latter usage, by connecting
  * the following handler to "insert_text", an application
  * can convert all entry into a widget into uppercase.
- * Example3.Forcing entry to uppercase.
+ * Example14.Forcing entry to uppercase.
  * #include <ctype.h>
  * void
  * insert_text_handler (GtkEditable *editable,
@@ -246,12 +246,9 @@ public class Editable
 	 * end_pos is negative, then the the characters selected
 	 * will be those characters from start_pos to the end
 	 * of the text.
-	 * editable:
-	 * a GtkEditable widget.
-	 * start:
-	 * the starting position.
-	 * end:
-	 * the end position.
+	 * Params:
+	 * start = the starting position.
+	 * end = the end position.
 	 */
 	public void selectRegion(int start, int end)
 	{
@@ -261,14 +258,10 @@ public class Editable
 	
 	/**
 	 * Gets the current selection bounds, if there is a selection.
-	 * editable:
-	 * a GtkEditable widget.
-	 * start:
-	 * location to store the starting position, or NULL.
-	 * end:
-	 * location to store the end position, or NULL.
-	 * Returns:
-	 * TRUE if there is a selection.
+	 * Params:
+	 * start = location to store the starting position, or NULL.
+	 * end = location to store the end position, or NULL.
+	 * Returns:TRUE if there is a selection.
 	 */
 	public int getSelectionBounds(int* start, int* end)
 	{
@@ -278,14 +271,10 @@ public class Editable
 	
 	/**
 	 * Inserts text at a given position.
-	 * editable:
-	 * a GtkEditable widget.
-	 * new_text:
-	 * the text to insert.
-	 * new_text_length:
-	 * the length of the text to insert, in bytes
-	 * position:
-	 * an inout parameter. The caller initializes it to
+	 * Params:
+	 * newText = the text to insert.
+	 * newTextLength = the length of the text to insert, in bytes
+	 * position = an inout parameter. The caller initializes it to
 	 *  the position at which to insert the text. After the
 	 *  call it points at the position after the newly
 	 *  inserted text.
@@ -303,12 +292,9 @@ public class Editable
 	 * end_pos is negative, then the the characters deleted
 	 * will be those characters from start_pos to the end
 	 * of the text.
-	 * editable:
-	 * a GtkEditable widget.
-	 * start_pos:
-	 * the starting position.
-	 * end_pos:
-	 * the end position.
+	 * Params:
+	 * startPos = the starting position.
+	 * endPos = the end position.
 	 */
 	public void deleteText(int startPos, int endPos)
 	{
@@ -323,16 +309,10 @@ public class Editable
 	 * end_pos is negative, then the the characters retrieved
 	 * will be those characters from start_pos to the end
 	 * of the text.
-	 * editable:
-	 * a GtkEditable widget.
-	 * start_pos:
-	 * the starting position.
-	 * end_pos:
-	 * the end position.
-	 * Returns:
-	 * the characters in the indicated region.
-	 *  The result must be freed with g_free() when
-	 *  the application is finished with it.
+	 * Params:
+	 * startPos = the starting position.
+	 * endPos = the end position.
+	 * Returns:the characters in the indicated region. The result must be freed with g_free() when the application is finished with it.
 	 */
 	public char[] getChars(int startPos, int endPos)
 	{
@@ -344,8 +324,6 @@ public class Editable
 	 * Causes the characters in the current selection to
 	 * be copied to the clipboard and then deleted from
 	 * the widget.
-	 * editable:
-	 * a GtkEditable widget.
 	 */
 	public void cutClipboard()
 	{
@@ -356,8 +334,6 @@ public class Editable
 	/**
 	 * Causes the characters in the current selection to
 	 * be copied to the clipboard.
-	 * editable:
-	 * a GtkEditable widget.
 	 */
 	public void copyClipboard()
 	{
@@ -368,8 +344,6 @@ public class Editable
 	/**
 	 * Causes the contents of the clipboard to be pasted into
 	 * the given widget at the current cursor position.
-	 * editable:
-	 * a GtkEditable widget.
 	 */
 	public void pasteClipboard()
 	{
@@ -380,8 +354,6 @@ public class Editable
 	/**
 	 * Deletes the current contents of the widgets selection and
 	 * disclaims the selection.
-	 * editable:
-	 * a GtkEditable widget.
 	 */
 	public void deleteSelection()
 	{
@@ -391,10 +363,8 @@ public class Editable
 	
 	/**
 	 * Sets the cursor position.
-	 * editable:
-	 * a GtkEditable widget.
-	 * position:
-	 * the position of the cursor. The cursor is displayed
+	 * Params:
+	 * position = the position of the cursor. The cursor is displayed
 	 *  before the character with the given (base 0) index
 	 *  in the widget. The value must be less than or
 	 *  equal to the number of characters in the widget.
@@ -411,15 +381,7 @@ public class Editable
 	
 	/**
 	 * Retrieves the current cursor position.
-	 * editable:
-	 * a GtkEditable widget.
-	 * Returns:
-	 * the position of the cursor. The cursor is displayed
-	 *  before the character with the given (base 0) index
-	 *  in the widget. The value will be less than or
-	 *  equal to the number of characters in the widget.
-	 *  Note that this position is in characters, not in
-	 *  bytes.
+	 * Returns:the position of the cursor. The cursor is displayed before the character with the given (base 0) index in the widget. The value will be less than or equal to the number of characters in the widget. Note that this position is in characters, not in bytes.
 	 */
 	public int getPosition()
 	{
@@ -430,10 +392,8 @@ public class Editable
 	/**
 	 * Determines if the user can edit the text in the editable
 	 * widget or not.
-	 * editable:
-	 * a GtkEditable widget.
-	 * is_editable:
-	 * TRUE if the user is allowed to edit the text
+	 * Params:
+	 * isEditable = TRUE if the user is allowed to edit the text
 	 *  in the widget.
 	 */
 	public void setEditable(int isEditable)
@@ -445,20 +405,7 @@ public class Editable
 	/**
 	 * Retrieves whether editable is editable. See
 	 * gtk_editable_set_editable().
-	 * editable:
-	 *  a GtkEditable
-	 * Returns:
-	 *  TRUE if editable is editable.
-	 * Signal Details
-	 * The "changed" signal
-	 * void user_function (GtkEditable *editable,
-	 *  gpointer user_data) : Run Last
-	 * Indicates that the user has changed the contents
-	 * of the widget.
-	 * editable:
-	 * the object which received the signal.
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * Returns: TRUE if editable is editable.Signal DetailsThe "changed" signalvoid user_function (GtkEditable *editable, gpointer user_data) : Run LastIndicates that the user has changed the contentsof the widget.
 	 */
 	public int getEditable()
 	{

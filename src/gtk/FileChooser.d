@@ -130,7 +130,7 @@ private import gtk.FileFilter;
  * 	get notification about when the preview needs to be updated.
  * 	To install a preview widget, use
  * 	gtk_file_chooser_set_preview_widget(). Then, connect to the
- * 	GtkFileChooser::update-preview signal to get notified when
+ * 	"update-preview" signal to get notified when
  * 	you need to update the contents of the preview.
  * 	Your callback should use
  * 	gtk_file_chooser_get_preview_filename() to see what needs
@@ -139,7 +139,7 @@ private import gtk.FileFilter;
  * 	gtk_file_chooser_set_preview_widget_active() with a boolean
  * 	flag that indicates whether your callback could successfully
  * 	generate a preview.
- * Example2.Sample Usage
+ * Example30.Sample Usage
  * {
 	 *  GtkImage *preview;
 	 *  ...
@@ -173,7 +173,7 @@ private import gtk.FileFilter;
  * 	file in read-only mode. You can use
  * 	gtk_file_chooser_set_extra_widget() to insert additional
  * 	widgets in a file chooser.
- * Example3.Sample Usage
+ * Example31.Sample Usage
  * {
 	 *  GtkWidget *toggle;
 	 *  ...
@@ -194,28 +194,28 @@ private import gtk.FileFilter;
  * 	widget has several key
  * 	bindings and their associated signals. This section
  * 	describes the available key binding signals.
- * Example4.GtkFileChooser key binding example
+ * Example32.GtkFileChooser key binding example
  * 	 The default keys that activate the key-binding signals in
  * 	 GtkFileChooserDefaultClass are as
  * 	 follows:
  * Signal name
  * Default key combinations
  * location-popup
- * 		 Control-L (empty path);
+ * 		 Control+L (empty path);
  * 		 / (path of "/")[a];
  * 		 ~ (path of "~")
  * up-folder
- * 		 Alt-Up[b]
+ * 		 Alt+Up[b]
  * 		 ;
  * 		 Backspace
  * down-folder
- * Alt-Down
+ * Alt+Down
  * home-folder
- * Alt-Home
+ * Alt+Home
  * desktop-folder
- * Alt-D
+ * Alt+D
  * quick-bookmark
- * Alt-1 through Alt-0
+ * Alt+1 through Alt+0
  * [a]
  * 		 Both the individual / key and the
  * 		 numeric keypad's "divide" key are supported.
@@ -247,7 +247,7 @@ private import gtk.FileFilter;
  * 	 the file he wishes to select. The
  * 	 path argument is a string that gets
  * 	 put in the text entry for the file name. By default this is bound to
- * 	 Control-L
+ * 	 Control+L
  * 	 with a path string of "" (the empty
  * 	 string). It is also bound to / with a
  * 	 path string of "/"
@@ -267,7 +267,7 @@ private import gtk.FileFilter;
  * 	 path strings, and have a crude form
  * 	 of easily-to-type bookmarks. For example, say you access
  * 	 the path /home/username/misc very
- * 	 frequently. You could then create an Alt-M
+ * 	 frequently. You could then create an Alt+M
  * 	 shortcut by including the following in your
  * 	 .gtkrc-2.0:
  * binding "misc-shortcut" {
@@ -282,7 +282,7 @@ private import gtk.FileFilter;
  * 	 This is used to make the file chooser go to the parent of
  * 	 the current folder in the file hierarchy. By default this
  * 	 is bound to Backspace and
- * 	 Alt-Up
+ * 	 Alt+Up
  * 	 (the Up key in the numeric keypad also works).
  * chooser:
  * 		the object which received the signal.
@@ -298,7 +298,7 @@ private import gtk.FileFilter;
  * 	 "/foo/bar/baz", then this will cause
  * 	 the file chooser to switch to the "baz" subfolder. By
  * 	 default this is bound to
- * 	 Alt-Down
+ * 	 Alt+Down
  * 	 (the Down key in the numeric keypad also works).
  * chooser:
  * 		the object which received the signal.
@@ -309,7 +309,7 @@ private import gtk.FileFilter;
  *  gpointer user_data);
  * 	 This is used to make the file chooser show the user's home
  * 	 folder in the file list. By default this is bound to
- * 	 Alt-Home
+ * 	 Alt+Home
  * 	 (the Home key in the numeric keypad also works).
  * chooser:
  * 		the object which received the signal.
@@ -320,7 +320,7 @@ private import gtk.FileFilter;
  *  gpointer user_data);
  * 	 This is used to make the file chooser show the user's Desktop
  * 	 folder in the file list. By default this is bound to
- * 	 Alt-D.
+ * 	 Alt+D.
  * chooser:
  * 		the object which received the signal.
  * user_data:
@@ -333,15 +333,15 @@ private import gtk.FileFilter;
  * 	 specified in the bookmark_index parameter.
  * 	 For example, if you have three bookmarks, you can pass 0, 1, 2 to
  * 	 this signal to switch to each of them, respectively. By default this is bound to
- * 	 Alt-1,
- * 	 Alt-2,
+ * 	 Alt+1,
+ * 	 Alt+2,
  * 	 etc. until
- * 	 Alt-0. Note
+ * 	 Alt+0. Note
  * 	 that in the default binding,
- * 	 that Alt-1 is
+ * 	 that Alt+1 is
  * 	 actually defined to switch to the bookmark at index 0, and so on
  * 	 successively;
- * 	 Alt-0 is
+ * 	 Alt+0 is
  * 	 defined to switch to the bookmark at index 10.
  * chooser:
  * 		the object which received the signal.
@@ -557,11 +557,9 @@ public class FileChooser
 	 * an option to create a new folder might be shown if the action is
 	 * GTK_FILE_CHOOSER_ACTION_SAVE but not if the action is
 	 * GTK_FILE_CHOOSER_ACTION_OPEN.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * action:
-	 *  the action that the file selector is performing
 	 * Since 2.4
+	 * Params:
+	 * action =  the action that the file selector is performing
 	 */
 	public void setAction(GtkFileChooserAction action)
 	{
@@ -572,11 +570,8 @@ public class FileChooser
 	/**
 	 * Gets the type of operation that the file chooser is performing; see
 	 * gtk_file_chooser_set_action().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  the action that the file selector is performing
 	 * Since 2.4
+	 * Returns: the action that the file selector is performing
 	 */
 	public GtkFileChooserAction getAction()
 	{
@@ -594,11 +589,9 @@ public class FileChooser
 	 * GtkFileChooser, like gtk_file_chooser_get_filename(),
 	 * rather than the URI functions like
 	 * gtk_file_chooser_get_uri(),
-	 * chooser:
-	 *  a GtkFileChooser
-	 * local_only:
-	 *  TRUE if only local files can be selected
 	 * Since 2.4
+	 * Params:
+	 * localOnly =  TRUE if only local files can be selected
 	 */
 	public void setLocalOnly(int localOnly)
 	{
@@ -609,11 +602,8 @@ public class FileChooser
 	/**
 	 * Gets whether only local files can be selected in the
 	 * file selector. See gtk_file_chooser_set_local_only()
-	 * chooser:
-	 *  a GtkFileChoosre
-	 * Returns:
-	 *  TRUE if only local files can be selected.
 	 * Since 2.4
+	 * Returns: TRUE if only local files can be selected.
 	 */
 	public int getLocalOnly()
 	{
@@ -625,11 +615,9 @@ public class FileChooser
 	 * Sets whether multiple files can be selected in the file selector. This is
 	 * only relevant if the action is set to be GTK_FILE_CHOOSER_ACTION_OPEN or
 	 * GTK_FILE_CHOOSER_ACTION_SELECT_FOLDER.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * select_multiple:
-	 *  TRUE if multiple files can be selected.
 	 * Since 2.4
+	 * Params:
+	 * selectMultiple =  TRUE if multiple files can be selected.
 	 */
 	public void setSelectMultiple(int selectMultiple)
 	{
@@ -640,11 +628,8 @@ public class FileChooser
 	/**
 	 * Gets whether multiple files can be selected in the file
 	 * selector. See gtk_file_chooser_set_select_multiple().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  TRUE if multiple files can be selected.
 	 * Since 2.4
+	 * Returns: TRUE if multiple files can be selected.
 	 */
 	public int getSelectMultiple()
 	{
@@ -654,11 +639,9 @@ public class FileChooser
 	
 	/**
 	 * Sets whether hidden files and folders are displayed in the file selector.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * show_hidden:
-	 *  TRUE if hidden files and folders should be displayed.
 	 * Since 2.6
+	 * Params:
+	 * showHidden =  TRUE if hidden files and folders should be displayed.
 	 */
 	public void setShowHidden(int showHidden)
 	{
@@ -669,11 +652,8 @@ public class FileChooser
 	/**
 	 * Gets whether hidden files and folders are displayed in the file selector.
 	 * See gtk_file_chooser_set_show_hidden().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  TRUE if hidden files and folders are displayed.
 	 * Since 2.6
+	 * Returns: TRUE if hidden files and folders are displayed.
 	 */
 	public int getShowHidden()
 	{
@@ -691,11 +671,9 @@ public class FileChooser
 	 * You can override the way confirmation is done by actually handling the
 	 * "confirm-overwrite" signal; please refer to its documentation for the
 	 * details.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * do_overwrite_confirmation:
-	 *  whether to confirm overwriting in save mode
 	 * Since 2.8
+	 * Params:
+	 * doOverwriteConfirmation =  whether to confirm overwriting in save mode
 	 */
 	public void setDoOverwriteConfirmation(int doOverwriteConfirmation)
 	{
@@ -706,12 +684,8 @@ public class FileChooser
 	/**
 	 * Queries whether a file chooser is set to confirm for overwriting when the user
 	 * types a file name that already exists.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  TRUE if the file chooser will present a confirmation dialog;
-	 * FALSE otherwise.
 	 * Since 2.8
+	 * Returns: TRUE if the file chooser will present a confirmation dialog;FALSE otherwise.
 	 */
 	public int getDoOverwriteConfirmation()
 	{
@@ -728,11 +702,9 @@ public class FileChooser
 	 * gtk_file_chooser_set_filename() or gtk_file_chooser_set_uri() instead.
 	 * Please see the documentation for those functions for an example of using
 	 * gtk_file_chooser_set_current_name() as well.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * name:
-	 *  the filename to use, as a UTF-8 string
 	 * Since 2.4
+	 * Params:
+	 * name =  the filename to use, as a UTF-8 string
 	 */
 	public void setCurrentName(char[] name)
 	{
@@ -746,13 +718,8 @@ public class FileChooser
 	 * one of the filenames will be returned at random.
 	 * If the file chooser is in folder mode, this function returns the selected
 	 * folder.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  The currently selected filename, or NULL
-	 *  if no file is selected, or the selected file can't
-	 *  be represented with a local filename. Free with g_free().
 	 * Since 2.4
+	 * Returns: The currently selected filename, or NULL if no file is selected, or the selected file can't be represented with a local filename. Free with g_free().
 	 */
 	public char[] getFilename()
 	{
@@ -776,26 +743,10 @@ public class FileChooser
 	 * when the user opens an existing file and then does File/Save As...
 	 * on it. If you don't have a file name already  for example, if the user just created
 	 * a new file and is saving it for the first time, do not call this function. Instead, use
-	 * something similar to this:
-	 * if (document_is_new)
-	 *  {
-		 *  /+* the user just created a new document +/
-		 *  gtk_file_chooser_set_current_folder (chooser, default_folder_for_saving);
-		 *  gtk_file_chooser_set_current_name (chooser, "Untitled document");
-	 *  }
-	 * else
-	 *  {
-		 *  /+* the user edited an existing document +/
-		 *  gtk_file_chooser_set_filename (chooser, existing_filename);
-	 *  }
-	 * chooser:
-	 *  a GtkFileChooser
-	 * filename:
-	 *  the filename to set as current
-	 * Returns:
-	 *  TRUE if both the folder could be changed and the file was
-	 * selected successfully, FALSE otherwise.
 	 * Since 2.4
+	 * Params:
+	 * filename =  the filename to set as current
+	 * Returns: TRUE if both the folder could be changed and the file wasselected successfully, FALSE otherwise.
 	 */
 	public int setFilename(char[] filename)
 	{
@@ -807,14 +758,10 @@ public class FileChooser
 	 * Selects a filename. If the file name isn't in the current
 	 * folder of chooser, then the current folder of chooser will
 	 * be changed to the folder containing filename.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * filename:
-	 *  the filename to select
-	 * Returns:
-	 *  TRUE if both the folder could be changed and the file was
-	 * selected successfully, FALSE otherwise.
 	 * Since 2.4
+	 * Params:
+	 * filename =  the filename to select
+	 * Returns: TRUE if both the folder could be changed and the file wasselected successfully, FALSE otherwise.
 	 */
 	public int selectFilename(char[] filename)
 	{
@@ -826,11 +773,9 @@ public class FileChooser
 	 * Unselects a currently selected filename. If the filename
 	 * is not in the current directory, does not exist, or
 	 * is otherwise not currently selected, does nothing.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * filename:
-	 *  the filename to unselect
 	 * Since 2.4
+	 * Params:
+	 * filename =  the filename to unselect
 	 */
 	public void unselectFilename(char[] filename)
 	{
@@ -840,8 +785,6 @@ public class FileChooser
 	
 	/**
 	 * Selects all the files in the current folder of a file chooser.
-	 * chooser:
-	 *  a GtkFileChooser
 	 * Since 2.4
 	 */
 	public void selectAll()
@@ -852,8 +795,6 @@ public class FileChooser
 	
 	/**
 	 * Unselects all the files in the current folder of a file chooser.
-	 * chooser:
-	 *  a GtkFileChooser
 	 * Since 2.4
 	 */
 	public void unselectAll()
@@ -867,13 +808,8 @@ public class FileChooser
 	 * chooser. The returned names are full absolute paths. If files in the current
 	 * folder cannot be represented as local filenames they will be ignored. (See
 	 * gtk_file_chooser_get_uris())
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  a GSList containing the filenames of all selected
-	 *  files and subfolders in the current folder. Free the returned list
-	 *  with g_slist_free(), and the filenames with g_free().
 	 * Since 2.4
+	 * Returns: a GSList containing the filenames of all selected files and subfolders in the current folder. Free the returned list with g_slist_free(), and the filenames with g_free().
 	 */
 	public ListSG getFilenames()
 	{
@@ -885,14 +821,10 @@ public class FileChooser
 	 * Sets the current folder for chooser from a local filename.
 	 * The user will be shown the full contents of the current folder,
 	 * plus user interface elements for navigating to other folders.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * filename:
-	 *  the full path of the new current folder
-	 * Returns:
-	 *  TRUE if the folder could be changed successfully, FALSE
-	 * otherwise.
 	 * Since 2.4
+	 * Params:
+	 * filename =  the full path of the new current folder
+	 * Returns: TRUE if the folder could be changed successfully, FALSEotherwise.
 	 */
 	public int setCurrentFolder(char[] filename)
 	{
@@ -910,15 +842,8 @@ public class FileChooser
 	 * (e.g. "/home/username/Documents/selected-folder/". To get the
 	 * currently-selected folder in that mode, use gtk_file_chooser_get_uri() as the
 	 * usual way to get the selection.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  the full path of the current folder, or NULL if the current
-	 * path cannot be represented as a local filename. Free with g_free(). This
-	 * function will also return NULL if the file chooser was unable to load the
-	 * last folder that was requested from it; for example, as would be for calling
-	 * gtk_file_chooser_set_current_folder() on a nonexistent folder.
 	 * Since 2.4
+	 * Returns: the full path of the current folder, or NULL if the currentpath cannot be represented as a local filename. Free with g_free(). Thisfunction will also return NULL if the file chooser was unable to load thelast folder that was requested from it; for example, as would be for callinggtk_file_chooser_set_current_folder() on a nonexistent folder.
 	 */
 	public char[] getCurrentFolder()
 	{
@@ -932,12 +857,8 @@ public class FileChooser
 	 * one of the filenames will be returned at random.
 	 * If the file chooser is in folder mode, this function returns the selected
 	 * folder.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  The currently selected URI, or NULL
-	 *  if no file is selected. Free with g_free()
 	 * Since 2.4
+	 * Returns: The currently selected URI, or NULL if no file is selected. Free with g_free()
 	 */
 	public char[] getUri()
 	{
@@ -961,26 +882,10 @@ public class FileChooser
 	 * when the user opens an existing file and then does File/Save As...
 	 * on it. If you don't have a file name already  for example, if the user just created
 	 * a new file and is saving it for the first time, do not call this function. Instead, use
-	 * something similar to this:
-	 * if (document_is_new)
-	 *  {
-		 *  /+* the user just created a new document +/
-		 *  gtk_file_chooser_set_current_folder_uri (chooser, default_folder_for_saving);
-		 *  gtk_file_chooser_set_current_name (chooser, "Untitled document");
-	 *  }
-	 * else
-	 *  {
-		 *  /+* the user edited an existing document +/
-		 *  gtk_file_chooser_set_uri (chooser, existing_uri);
-	 *  }
-	 * chooser:
-	 *  a GtkFileChooser
-	 * uri:
-	 *  the URI to set as current
-	 * Returns:
-	 *  TRUE if both the folder could be changed and the URI was
-	 * selected successfully, FALSE otherwise.
 	 * Since 2.4
+	 * Params:
+	 * uri =  the URI to set as current
+	 * Returns: TRUE if both the folder could be changed and the URI wasselected successfully, FALSE otherwise.
 	 */
 	public int setUri(char[] uri)
 	{
@@ -992,14 +897,10 @@ public class FileChooser
 	 * Selects the file to by uri. If the URI doesn't refer to a
 	 * file in the current folder of chooser, then the current folder of
 	 * chooser will be changed to the folder containing filename.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * uri:
-	 *  the URI to select
-	 * Returns:
-	 *  TRUE if both the folder could be changed and the URI was
-	 * selected successfully, FALSE otherwise.
 	 * Since 2.4
+	 * Params:
+	 * uri =  the URI to select
+	 * Returns: TRUE if both the folder could be changed and the URI wasselected successfully, FALSE otherwise.
 	 */
 	public int selectUri(char[] uri)
 	{
@@ -1011,11 +912,9 @@ public class FileChooser
 	 * Unselects the file referred to by uri. If the file
 	 * is not in the current directory, does not exist, or
 	 * is otherwise not currently selected, does nothing.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * uri:
-	 *  the URI to unselect
 	 * Since 2.4
+	 * Params:
+	 * uri =  the URI to unselect
 	 */
 	public void unselectUri(char[] uri)
 	{
@@ -1026,13 +925,8 @@ public class FileChooser
 	/**
 	 * Lists all the selected files and subfolders in the current folder of
 	 * chooser. The returned names are full absolute URIs.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  a GSList containing the URIs of all selected
-	 *  files and subfolders in the current folder. Free the returned list
-	 *  with g_slist_free(), and the filenames with g_free().
 	 * Since 2.4
+	 * Returns: a GSList containing the URIs of all selected files and subfolders in the current folder. Free the returned list with g_slist_free(), and the filenames with g_free().
 	 */
 	public ListSG getUris()
 	{
@@ -1044,14 +938,10 @@ public class FileChooser
 	 * Sets the current folder for chooser from an URI.
 	 * The user will be shown the full contents of the current folder,
 	 * plus user interface elements for navigating to other folders.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * uri:
-	 *  the URI for the new current folder
-	 * Returns:
-	 *  TRUE if the folder could be changed successfully, FALSE
-	 * otherwise.
 	 * Since 2.4
+	 * Params:
+	 * uri =  the URI for the new current folder
+	 * Returns: TRUE if the folder could be changed successfully, FALSEotherwise.
 	 */
 	public int setCurrentFolderUri(char[] uri)
 	{
@@ -1069,14 +959,8 @@ public class FileChooser
 	 * (e.g. "file:///home/username/Documents/selected-folder/". To get the
 	 * currently-selected folder in that mode, use gtk_file_chooser_get_uri() as the
 	 * usual way to get the selection.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  the URI for the current folder. Free with g_free(). This
-	 * function will also return NULL if the file chooser was unable to load the
-	 * last folder that was requested from it; for example, as would be for calling
-	 * gtk_file_chooser_set_current_folder_uri() on a nonexistent folder.
 	 * Since 2.4
+	 * Returns: the URI for the current folder. Free with g_free(). Thisfunction will also return NULL if the file chooser was unable to load thelast folder that was requested from it; for example, as would be for callinggtk_file_chooser_set_current_folder_uri() on a nonexistent folder.
 	 */
 	public char[] getCurrentFolderUri()
 	{
@@ -1097,11 +981,9 @@ public class FileChooser
 	 * application-supplied preview widget is not active, the file chooser
 	 * may display an internally generated preview of the current file or
 	 * it may display no preview at all.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * preview_widget:
-	 *  widget for displaying preview.
 	 * Since 2.4
+	 * Params:
+	 * previewWidget =  widget for displaying preview.
 	 */
 	public void setPreviewWidget(Widget previewWidget)
 	{
@@ -1112,11 +994,8 @@ public class FileChooser
 	/**
 	 * Gets the current preview widget; see
 	 * gtk_file_chooser_set_preview_widget().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  the current preview widget, or NULL
 	 * Since 2.4
+	 * Returns: the current preview widget, or NULL
 	 */
 	public Widget getPreviewWidget()
 	{
@@ -1131,11 +1010,9 @@ public class FileChooser
 	 * may display an internally generated preview of the current file
 	 * or it may display no preview at all. See
 	 * gtk_file_chooser_set_preview_widget() for more details.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * active:
-	 *  whether to display the user-specified preview widget
 	 * Since 2.4
+	 * Params:
+	 * active =  whether to display the user-specified preview widget
 	 */
 	public void setPreviewWidgetActive(int active)
 	{
@@ -1147,11 +1024,8 @@ public class FileChooser
 	 * Gets whether the preview widget set by gtk_file_chooser_set_preview_widget()
 	 * should be shown for the current filename. See
 	 * gtk_file_chooser_set_preview_widget_active().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  TRUE if the preview widget is active for the current filename.
 	 * Since 2.4
+	 * Returns: TRUE if the preview widget is active for the current filename.
 	 */
 	public int getPreviewWidgetActive()
 	{
@@ -1165,11 +1039,9 @@ public class FileChooser
 	 * want to draw the whole preview area themselves should set this to FALSE and
 	 * display the name themselves in their preview widget.
 	 * See also: gtk_file_chooser_set_preview_widget()
-	 * chooser:
-	 *  a GtkFileChooser
-	 * use_label:
-	 *  whether to display a stock label with the name of the previewed file
 	 * Since 2.4
+	 * Params:
+	 * useLabel =  whether to display a stock label with the name of the previewed file
 	 */
 	public void setUsePreviewLabel(int useLabel)
 	{
@@ -1180,11 +1052,7 @@ public class FileChooser
 	/**
 	 * Gets whether a stock label should be drawn with the name of the previewed
 	 * file. See gtk_file_chooser_set_use_preview_label().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  TRUE if the file chooser is set to display a label with the
-	 * name of the previewed file, FALSE otherwise.
+	 * Returns: TRUE if the file chooser is set to display a label with thename of the previewed file, FALSE otherwise.
 	 */
 	public int getUsePreviewLabel()
 	{
@@ -1195,13 +1063,8 @@ public class FileChooser
 	/**
 	 * Gets the filename that should be previewed in a custom preview
 	 * widget. See gtk_file_chooser_set_preview_widget().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  the filename to preview, or NULL if no file
-	 *  is selected, or if the selected file cannot be represented
-	 *  as a local filename. Free with g_free()
 	 * Since 2.4
+	 * Returns: the filename to preview, or NULL if no file is selected, or if the selected file cannot be represented as a local filename. Free with g_free()
 	 */
 	public char[] getPreviewFilename()
 	{
@@ -1212,12 +1075,8 @@ public class FileChooser
 	/**
 	 * Gets the URI that should be previewed in a custom preview
 	 * widget. See gtk_file_chooser_set_preview_widget().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  the URI for the file to preview, or NULL if no file is
-	 * selected. Free with g_free().
 	 * Since 2.4
+	 * Returns: the URI for the file to preview, or NULL if no file isselected. Free with g_free().
 	 */
 	public char[] getPreviewUri()
 	{
@@ -1227,11 +1086,9 @@ public class FileChooser
 	
 	/**
 	 * Sets an application-supplied widget to provide extra options to the user.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * extra_widget:
-	 *  widget for extra options
 	 * Since 2.4
+	 * Params:
+	 * extraWidget =  widget for extra options
 	 */
 	public void setExtraWidget(Widget extraWidget)
 	{
@@ -1242,11 +1099,8 @@ public class FileChooser
 	/**
 	 * Gets the current preview widget; see
 	 * gtk_file_chooser_set_extra_widget().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  the current extra widget, or NULL
 	 * Since 2.4
+	 * Returns: the current extra widget, or NULL
 	 */
 	public Widget getExtraWidget()
 	{
@@ -1260,11 +1114,9 @@ public class FileChooser
 	 * filter are displayed.
 	 * Note that the chooser takes ownership of the filter, so you have to
 	 * ref and sink it if you want to keep a reference.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * filter:
-	 *  a GtkFileFilter
 	 * Since 2.4
+	 * Params:
+	 * filter =  a GtkFileFilter
 	 */
 	public void addFilter(FileFilter filter)
 	{
@@ -1274,11 +1126,9 @@ public class FileChooser
 	
 	/**
 	 * Removes filter from the list of filters that the user can select between.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * filter:
-	 *  a GtkFileFilter
 	 * Since 2.4
+	 * Params:
+	 * filter =  a GtkFileFilter
 	 */
 	public void removeFilter(FileFilter filter)
 	{
@@ -1289,14 +1139,8 @@ public class FileChooser
 	/**
 	 * Lists the current set of user-selectable filters; see
 	 * gtk_file_chooser_add_filter(), gtk_file_chooser_remove_filter().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  a GSList containing the current set of
-	 *  user selectable filters. The contents of the list are
-	 *  owned by GTK+, but you must free the list itself with
-	 *  g_slist_free() when you are done with it.
 	 * Since 2.4
+	 * Returns: a GSList containing the current set of user selectable filters. The contents of the list are owned by GTK+, but you must free the list itself with g_slist_free() when you are done with it.
 	 */
 	public ListSG listFilters()
 	{
@@ -1311,11 +1155,9 @@ public class FileChooser
 	 * in that list. Setting the current filter when the list of
 	 * filters is empty is useful if you want to restrict the displayed
 	 * set of files without letting the user change it.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * filter:
-	 *  a GtkFileFilter
 	 * Since 2.4
+	 * Params:
+	 * filter =  a GtkFileFilter
 	 */
 	public void setFilter(FileFilter filter)
 	{
@@ -1325,11 +1167,8 @@ public class FileChooser
 	
 	/**
 	 * Gets the current filter; see gtk_file_chooser_set_filter().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  the current filter, or NULL
 	 * Since 2.4
+	 * Returns: the current filter, or NULL
 	 */
 	public FileFilter getFilter()
 	{
@@ -1342,16 +1181,11 @@ public class FileChooser
 	 * Note that shortcut folders do not get saved, as they are provided by the
 	 * application. For example, you can use this to add a
 	 * "/usr/share/mydrawprogram/Clipart" folder to the volume list.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * folder:
-	 *  filename of the folder to add
-	 * error:
-	 *  location to store error, or NULL
-	 * Returns:
-	 *  TRUE if the folder could be added successfully, FALSE
-	 * otherwise. In the latter case, the error will be set as appropriate.
 	 * Since 2.4
+	 * Params:
+	 * folder =  filename of the folder to add
+	 * error =  location to store error, or NULL
+	 * Returns: TRUE if the folder could be added successfully, FALSEotherwise. In the latter case, the error will be set as appropriate.
 	 */
 	public int addShortcutFolder(char[] folder, GError** error)
 	{
@@ -1361,17 +1195,11 @@ public class FileChooser
 	
 	/**
 	 * Removes a folder from a file chooser's list of shortcut folders.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * folder:
-	 *  filename of the folder to remove
-	 * error:
-	 *  location to store error, or NULL
-	 * Returns:
-	 *  TRUE if the operation succeeds, FALSE otherwise.
-	 * In the latter case, the error will be set as appropriate.
-	 * See also: gtk_file_chooser_add_shortcut_folder()
 	 * Since 2.4
+	 * Params:
+	 * folder =  filename of the folder to remove
+	 * error =  location to store error, or NULL
+	 * Returns: TRUE if the operation succeeds, FALSE otherwise. In the latter case, the error will be set as appropriate.See also: gtk_file_chooser_add_shortcut_folder()
 	 */
 	public int removeShortcutFolder(char[] folder, GError** error)
 	{
@@ -1382,13 +1210,8 @@ public class FileChooser
 	/**
 	 * Queries the list of shortcut folders in the file chooser, as set by
 	 * gtk_file_chooser_add_shortcut_folder().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  A list of folder filenames, or NULL if there are no shortcut
-	 * folders. Free the returned list with g_slist_free(), and the filenames with
-	 * g_free().
 	 * Since 2.4
+	 * Returns: A list of folder filenames, or NULL if there are no shortcutfolders. Free the returned list with g_slist_free(), and the filenames withg_free().
 	 */
 	public ListSG listShortcutFolders()
 	{
@@ -1401,16 +1224,11 @@ public class FileChooser
 	 * chooser. Note that shortcut folders do not get saved, as they are provided
 	 * by the application. For example, you can use this to add a
 	 * "file:///usr/share/mydrawprogram/Clipart" folder to the volume list.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * uri:
-	 *  URI of the folder to add
-	 * error:
-	 *  location to store error, or NULL
-	 * Returns:
-	 *  TRUE if the folder could be added successfully, FALSE
-	 * otherwise. In the latter case, the error will be set as appropriate.
 	 * Since 2.4
+	 * Params:
+	 * uri =  URI of the folder to add
+	 * error =  location to store error, or NULL
+	 * Returns: TRUE if the folder could be added successfully, FALSEotherwise. In the latter case, the error will be set as appropriate.
 	 */
 	public int addShortcutFolderUri(char[] uri, GError** error)
 	{
@@ -1420,17 +1238,11 @@ public class FileChooser
 	
 	/**
 	 * Removes a folder URI from a file chooser's list of shortcut folders.
-	 * chooser:
-	 *  a GtkFileChooser
-	 * uri:
-	 *  URI of the folder to remove
-	 * error:
-	 *  location to store error, or NULL
-	 * Returns:
-	 *  TRUE if the operation succeeds, FALSE otherwise.
-	 * In the latter case, the error will be set as appropriate.
-	 * See also: gtk_file_chooser_add_shortcut_folder_uri()
 	 * Since 2.4
+	 * Params:
+	 * uri =  URI of the folder to remove
+	 * error =  location to store error, or NULL
+	 * Returns: TRUE if the operation succeeds, FALSE otherwise. In the latter case, the error will be set as appropriate.See also: gtk_file_chooser_add_shortcut_folder_uri()
 	 */
 	public int removeShortcutFolderUri(char[] uri, GError** error)
 	{
@@ -1441,18 +1253,8 @@ public class FileChooser
 	/**
 	 * Queries the list of shortcut folders in the file chooser, as set by
 	 * gtk_file_chooser_add_shortcut_folder_uri().
-	 * chooser:
-	 *  a GtkFileChooser
-	 * Returns:
-	 *  A list of folder URIs, or NULL if there are no shortcut
-	 * folders. Free the returned list with g_slist_free(), and the URIs with
-	 * g_free().
 	 * Since 2.4
-	 * Property Details
-	 * The "action" property
-	 *  "action" GtkFileChooserAction : Read / Write
-	 * The type of operation that the file selector is performing.
-	 * Default value: GTK_FILE_CHOOSER_ACTION_OPEN
+	 * Returns: A list of folder URIs, or NULL if there are no shortcutfolders. Free the returned list with g_slist_free(), and the URIs withg_free().
 	 */
 	public ListSG listShortcutFolderUris()
 	{

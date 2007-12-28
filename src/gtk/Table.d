@@ -69,6 +69,7 @@ private import gtk.Widget;
 
 
 
+private import gtk.Container;
 
 /**
  * Description
@@ -86,7 +87,6 @@ private import gtk.Widget;
  * gtk_table_set_homogeneous(), can be used to set whether all cells in the
  * table will resize themselves to the size of the largest widget in the table.
  */
-private import gtk.Container;
 public class Table : Container
 {
 	
@@ -157,15 +157,13 @@ public class Table : Container
 	 * specifying how many rows and columns the table should have, although
 	 * this can be changed later with gtk_table_resize(). rows and columns
 	 * must both be in the range 0 .. 65535.
-	 * rows:
-	 * The number of rows the new table should have.
-	 * columns:
-	 * The number of columns the new table should have.
-	 * homogeneous:
-	 * If set to TRUE, all table cells are resized to the size of the cell
-	 * containing the largest widget.
+	 * Params:
+	 *  rows = The number of rows the new table should have.
+	 *  columns = The number of columns the new table should have.
+	 *  homogeneous = If set to TRUE, all table cells are resized to the size of the cell
+	 *  containing the largest widget.
 	 * Returns:
-	 * A pointer to the the newly created table widget.
+	 *  A pointer to the the newly created table widget.
 	 */
 	public this (uint rows, uint columns, int homogeneous)
 	{
@@ -194,7 +192,6 @@ public class Table : Container
 		}
 	}
 	
-	
 	/**
 	 */
 	
@@ -204,12 +201,9 @@ public class Table : Container
 	
 	/**
 	 * If you need to change a table's size after it has been created, this function allows you to do so.
-	 * table:
-	 * The GtkTable you wish to change the size of.
-	 * rows:
-	 * The new number of rows.
-	 * columns:
-	 * The new number of columns.
+	 * Params:
+	 * rows = The new number of rows.
+	 * columns = The new number of columns.
 	 */
 	public void resize(uint rows, uint columns)
 	{
@@ -222,26 +216,16 @@ public class Table : Container
 	 * specified by left_attach, right_attach, top_attach and bottom_attach.
 	 * These each represent the leftmost, rightmost, uppermost and lowest column
 	 * and row numbers of the table. (Columns and rows are indexed from zero).
-	 * table:
-	 * The GtkTable to add a new widget to.
-	 * child:
-	 * The widget to add.
-	 * left_attach:
-	 * the column number to attach the left side of a child widget to.
-	 * right_attach:
-	 * the column number to attach the right side of a child widget to.
-	 * top_attach:
-	 * the row number to attach the top of a child widget to.
-	 * bottom_attach:
-	 * the row number to attach the bottom of a child widget to.
-	 * xoptions:
-	 * Used to specify the properties of the child widget when the table is resized.
-	 * yoptions:
-	 * The same as xoptions, except this field determines behaviour of vertical resizing.
-	 * xpadding:
-	 * An integer value specifying the padding on the left and right of the widget being added to the table.
-	 * ypadding:
-	 * The amount of padding above and below the child widget.
+	 * Params:
+	 * child = The widget to add.
+	 * leftAttach = the column number to attach the left side of a child widget to.
+	 * rightAttach = the column number to attach the right side of a child widget to.
+	 * topAttach = the row number to attach the top of a child widget to.
+	 * bottomAttach = the row number to attach the bottom of a child widget to.
+	 * xoptions = Used to specify the properties of the child widget when the table is resized.
+	 * yoptions = The same as xoptions, except this field determines behaviour of vertical resizing.
+	 * xpadding = An integer value specifying the padding on the left and right of the widget being added to the table.
+	 * ypadding = The amount of padding above and below the child widget.
 	 */
 	public void attach(Widget child, uint leftAttach, uint rightAttach, uint topAttach, uint bottomAttach, GtkAttachOptions xoptions, GtkAttachOptions yoptions, uint xpadding, uint ypadding)
 	{
@@ -251,18 +235,12 @@ public class Table : Container
 	
 	/**
 	 * As there are many options associated with gtk_table_attach(), this convenience function provides the programmer with a means to add children to a table with identical padding and expansion options. The values used for the GtkAttachOptions are GTK_EXPAND | GTK_FILL, and the padding is set to 0.
-	 * table:
-	 * The table to add a new child widget to.
-	 * widget:
-	 * The child widget to add.
-	 * left_attach:
-	 * The column number to attach the left side of the child widget to.
-	 * right_attach:
-	 * The column number to attach the right side of the child widget to.
-	 * top_attach:
-	 * The row number to attach the top of the child widget to.
-	 * bottom_attach:
-	 * The row number to attach the bottom of the child widget to.
+	 * Params:
+	 * widget = The child widget to add.
+	 * leftAttach = The column number to attach the left side of the child widget to.
+	 * rightAttach = The column number to attach the right side of the child widget to.
+	 * topAttach = The row number to attach the top of the child widget to.
+	 * bottomAttach = The row number to attach the bottom of the child widget to.
 	 */
 	public void attachDefaults(Widget widget, uint leftAttach, uint rightAttach, uint topAttach, uint bottomAttach)
 	{
@@ -272,12 +250,9 @@ public class Table : Container
 	
 	/**
 	 * Changes the space between a given table row and the subsequent row.
-	 * table:
-	 * a GtkTable containing the row whose properties you wish to change.
-	 * row:
-	 * row number whose spacing will be changed.
-	 * spacing:
-	 * number of pixels that the spacing should take up.
+	 * Params:
+	 * row = row number whose spacing will be changed.
+	 * spacing = number of pixels that the spacing should take up.
 	 */
 	public void setRowSpacing(uint row, uint spacing)
 	{
@@ -288,12 +263,9 @@ public class Table : Container
 	/**
 	 * Alters the amount of space between a given table column and the following
 	 * column.
-	 * table:
-	 * a GtkTable.
-	 * column:
-	 * the column whose spacing should be changed.
-	 * spacing:
-	 * number of pixels that the spacing should take up.
+	 * Params:
+	 * column = the column whose spacing should be changed.
+	 * spacing = number of pixels that the spacing should take up.
 	 */
 	public void setColSpacing(uint column, uint spacing)
 	{
@@ -303,10 +275,8 @@ public class Table : Container
 	
 	/**
 	 * Sets the space between every row in table equal to spacing.
-	 * table:
-	 * a GtkTable.
-	 * spacing:
-	 * the number of pixels of space to place between every row in the table.
+	 * Params:
+	 * spacing = the number of pixels of space to place between every row in the table.
 	 */
 	public void setRowSpacings(uint spacing)
 	{
@@ -316,10 +286,8 @@ public class Table : Container
 	
 	/**
 	 * Sets the space between every column in table equal to spacing.
-	 * table:
-	 * a GtkTable.
-	 * spacing:
-	 * the number of pixels of space to place between every column in the table.
+	 * Params:
+	 * spacing = the number of pixels of space to place between every column in the table.
 	 */
 	public void setColSpacings(uint spacing)
 	{
@@ -329,10 +297,8 @@ public class Table : Container
 	
 	/**
 	 * Changes the homogenous property of table cells, ie. whether all cells are an equal size or not.
-	 * table:
-	 * The GtkTable you wish to set the homogeneous properties of.
-	 * homogeneous:
-	 * Set to TRUE to ensure all table cells are the same size. Set
+	 * Params:
+	 * homogeneous = Set to TRUE to ensure all table cells are the same size. Set
 	 * to FALSE if this is not your desired behaviour.
 	 */
 	public void setHomogeneous(int homogeneous)
@@ -345,10 +311,7 @@ public class Table : Container
 	 * Gets the default row spacing for the table. This is
 	 * the spacing that will be used for newly added rows.
 	 * (See gtk_table_set_row_spacings())
-	 * table:
-	 *  a GtkTable
-	 * Returns:
-	 * value: the default row spacing
+	 * Returns: the default row spacing
 	 */
 	public uint getDefaultRowSpacing()
 	{
@@ -359,10 +322,7 @@ public class Table : Container
 	/**
 	 * Returns whether the table cells are all constrained to the same
 	 * width and height. (See gtk_table_set_homogenous())
-	 * table:
-	 *  a GtkTable
-	 * Returns:
-	 *  TRUE if the cells are all constrained to the same size
+	 * Returns: TRUE if the cells are all constrained to the same size
 	 */
 	public int getHomogeneous()
 	{
@@ -373,12 +333,9 @@ public class Table : Container
 	/**
 	 * Gets the amount of space between row row, and
 	 * row row + 1. See gtk_table_set_row_spacing().
-	 * table:
-	 *  a GtkTable
-	 * row:
-	 *  a row in the table, 0 indicates the first row
-	 * Returns:
-	 *  the row spacing
+	 * Params:
+	 * row =  a row in the table, 0 indicates the first row
+	 * Returns: the row spacing
 	 */
 	public uint getRowSpacing(uint row)
 	{
@@ -389,12 +346,9 @@ public class Table : Container
 	/**
 	 * Gets the amount of space between column col, and
 	 * column col + 1. See gtk_table_set_col_spacing().
-	 * table:
-	 *  a GtkTable
-	 * column:
-	 *  a column in the table, 0 indicates the first column
-	 * Returns:
-	 *  the column spacing
+	 * Params:
+	 * column =  a column in the table, 0 indicates the first column
+	 * Returns: the column spacing
 	 */
 	public uint getColSpacing(uint column)
 	{
@@ -406,15 +360,7 @@ public class Table : Container
 	 * Gets the default column spacing for the table. This is
 	 * the spacing that will be used for newly added columns.
 	 * (See gtk_table_set_col_spacings())
-	 * table:
-	 *  a GtkTable
-	 * Returns:
-	 * value: the default column spacing
-	 * Property Details
-	 * The "column-spacing" property
-	 *  "column-spacing" guint : Read / Write
-	 * The amount of space between two consecutive columns.
-	 * Default value: 0
+	 * Returns: the default column spacing
 	 */
 	public uint getDefaultColSpacing()
 	{

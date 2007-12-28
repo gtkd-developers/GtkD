@@ -80,12 +80,7 @@ alias GdkPixdataDumpType PixdataDumpType;
 /**
  * Flags which allow a module to specify further details about the supported
  * operations.
- * GDK_PIXBUF_FORMAT_WRITABLE
- * the module can write out images in the format.
- * GDK_PIXBUF_FORMAT_SCALABLE
- * the image format is scalable
- * GDK_PIXBUF_FORMAT_THREADSAFE
- * the module is threadsafe. If this flag is not
+ * Since 2.2
  */
 public enum GdkPixbufFormatFlags
 {

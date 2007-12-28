@@ -142,10 +142,7 @@ public class DragContext
 	
 	/**
 	 * Returns the selection atom for the current source window.
-	 * context:
-	 *  a GdkDragContext.
-	 * Returns:
-	 *  the selection atom.
+	 * Returns: the selection atom.
 	 */
 	public GdkAtom gdkDragGetSelection()
 	{
@@ -156,10 +153,8 @@ public class DragContext
 	/**
 	 * Aborts a drag without dropping.
 	 * This function is called by the drag source.
-	 * context:
-	 *  a GdkDragContext.
-	 * time_:
-	 *  the timestamp for this operation.
+	 * Params:
+	 * time =  the timestamp for this operation.
 	 */
 	public void gdkDragAbort(uint time)
 	{
@@ -171,12 +166,9 @@ public class DragContext
 	 * Accepts or rejects a drop.
 	 * This function is called by the drag destination in response
 	 * to a drop initiated by the drag source.
-	 * context:
-	 *  a GdkDragContext.
-	 * ok:
-	 *  TRUE if the drop is accepted.
-	 * time_:
-	 *  the timestamp for this operation.
+	 * Params:
+	 * ok =  TRUE if the drop is accepted.
+	 * time =  the timestamp for this operation.
 	 */
 	public void gdkDropReply(int ok, uint time)
 	{
@@ -186,8 +178,7 @@ public class DragContext
 	
 	/**
 	 * Creates a new GdkDragContext.
-	 * Returns:
-	 *  the newly created GdkDragContext.
+	 * Returns: the newly created GdkDragContext.
 	 */
 	public static DragContext gdkDragContextNew()
 	{
@@ -198,10 +189,8 @@ public class DragContext
 	/**
 	 * Drops on the current destination.
 	 * This function is called by the drag source.
-	 * context:
-	 *  a GdkDragContext.
-	 * time_:
-	 *  the timestamp for this operation.
+	 * Params:
+	 * time =  the timestamp for this operation.
 	 */
 	public void gdkDragDrop(uint time)
 	{
@@ -214,19 +203,13 @@ public class DragContext
 	 * given pointer position.
 	 * This function is called by the drag source to obtain the
 	 * dest_window and protocol parameters for gdk_drag_motion().
-	 * context:
-	 *  a GdkDragContext.
-	 * drag_window:
-	 *  a window which may be at the pointer position, but
+	 * Params:
+	 * dragWindow =  a window which may be at the pointer position, but
 	 *  should be ignored, since it is put up by the drag source as an icon.
-	 * x_root:
-	 *  the x position of the pointer in root coordinates.
-	 * y_root:
-	 *  the y position of the pointer in root coordinates.
-	 * dest_window:
-	 *  location to store the destination window in.
-	 * protocol:
-	 *  location to store the DND protocol in.
+	 * xRoot =  the x position of the pointer in root coordinates.
+	 * yRoot =  the y position of the pointer in root coordinates.
+	 * destWindow =  location to store the destination window in.
+	 * protocol =  location to store the DND protocol in.
 	 */
 	public void gdkDragFindWindow(Window dragWindow, int xRoot, int yRoot, GdkWindow** destWindow, GdkDragProtocol* protocol)
 	{
@@ -239,22 +222,15 @@ public class DragContext
 	 * given pointer position.
 	 * This function is called by the drag source to obtain the
 	 * dest_window and protocol parameters for gdk_drag_motion().
-	 * context:
-	 *  a GdkDragContext
-	 * drag_window:
-	 *  a window which may be at the pointer position, but
-	 * should be ignored, since it is put up by the drag source as an icon.
-	 * screen:
-	 *  the screen where the destination window is sought.
-	 * x_root:
-	 *  the x position of the pointer in root coordinates.
-	 * y_root:
-	 *  the y position of the pointer in root coordinates.
-	 * dest_window:
-	 *  location to store the destination window in.
-	 * protocol:
-	 *  location to store the DND protocol in.
 	 * Since 2.2
+	 * Params:
+	 * dragWindow =  a window which may be at the pointer position, but
+	 * should be ignored, since it is put up by the drag source as an icon.
+	 * screen =  the screen where the destination window is sought.
+	 * xRoot =  the x position of the pointer in root coordinates.
+	 * yRoot =  the y position of the pointer in root coordinates.
+	 * destWindow =  location to store the destination window in.
+	 * protocol =  location to store the DND protocol in.
 	 */
 	public void gdkDragFindWindowForScreen(Window dragWindow, Screen screen, int xRoot, int yRoot, GdkWindow** destWindow, GdkDragProtocol* protocol)
 	{
@@ -266,8 +242,6 @@ public class DragContext
 	 * Warning
 	 * gdk_drag_context_ref is deprecated and should not be used in newly-written code.
 	 * Deprecated function; use g_object_ref() instead.
-	 * context:
-	 *  a GdkDragContext.
 	 */
 	public void gdkDragContextRef()
 	{
@@ -278,12 +252,10 @@ public class DragContext
 	/**
 	 * Starts a drag and creates a new drag context for it.
 	 * This function is called by the drag source.
-	 * window:
-	 *  the source window for this drag.
-	 * targets:
-	 *  the list of offered targets.
-	 * Returns:
-	 *  a newly created GdkDragContext.
+	 * Params:
+	 * window =  the source window for this drag.
+	 * targets =  the list of offered targets.
+	 * Returns: a newly created GdkDragContext.
 	 */
 	public static DragContext gdkDragBegin(Window window, ListG targets)
 	{
@@ -295,25 +267,16 @@ public class DragContext
 	 * Updates the drag context when the pointer moves or the
 	 * set of actions changes.
 	 * This function is called by the drag source.
-	 * context:
-	 *  a GdkDragContext.
-	 * dest_window:
-	 *  the new destination window, obtained by
+	 * Params:
+	 * destWindow =  the new destination window, obtained by
 	 *  gdk_drag_find_window().
-	 * protocol:
-	 *  the DND protocol in use, obtained by gdk_drag_find_window().
-	 * x_root:
-	 *  the x position of the pointer in root coordinates.
-	 * y_root:
-	 *  the y position of the pointer in root coordinates.
-	 * suggested_action:
-	 *  the suggested action.
-	 * possible_actions:
-	 *  the possible actions.
-	 * time_:
-	 *  the timestamp for this operation.
-	 * Returns:
-	 *  FIXME
+	 * protocol =  the DND protocol in use, obtained by gdk_drag_find_window().
+	 * xRoot =  the x position of the pointer in root coordinates.
+	 * yRoot =  the y position of the pointer in root coordinates.
+	 * suggestedAction =  the suggested action.
+	 * possibleActions =  the possible actions.
+	 * time =  the timestamp for this operation.
+	 * Returns: FIXME
 	 */
 	public int gdkDragMotion(Window destWindow, GdkDragProtocol protocol, int xRoot, int yRoot, GdkDragAction suggestedAction, GdkDragAction possibleActions, uint time)
 	{
@@ -324,12 +287,9 @@ public class DragContext
 	/**
 	 * Ends the drag operation after a drop.
 	 * This function is called by the drag destination.
-	 * context:
-	 *  a GtkDragContext.
-	 * success:
-	 *  TRUE if the data was successfully received.
-	 * time_:
-	 *  the timestamp for this operation.
+	 * Params:
+	 * success =  TRUE if the data was successfully received.
+	 * time =  the timestamp for this operation.
 	 */
 	public void gdkDropFinish(int success, uint time)
 	{
@@ -339,14 +299,10 @@ public class DragContext
 	
 	/**
 	 * Finds out the DND protocol supported by a window.
-	 * xid:
-	 *  the X id of the destination window.
-	 * protocol:
-	 *  location where the supported DND protocol is returned.
-	 * Returns:
-	 *  the X id of the window where the drop should happen. This
-	 *  may be xid or the X id of a proxy window, or None if xid doesn't
-	 *  support Drag and Drop.
+	 * Params:
+	 * xid =  the X id of the destination window.
+	 * protocol =  location where the supported DND protocol is returned.
+	 * Returns: the X id of the window where the drop should happen. This  may be xid or the X id of a proxy window, or None if xid doesn't support Drag and Drop.
 	 */
 	public static uint gdkDragGetProtocol(uint xid, GdkDragProtocol* protocol)
 	{
@@ -356,17 +312,12 @@ public class DragContext
 	
 	/**
 	 * Finds out the DND protocol supported by a window.
-	 * display:
-	 *  the GdkDisplay where the destination window resides
-	 * xid:
-	 *  the X id of the destination window.
-	 * protocol:
-	 *  location where the supported DND protocol is returned.
-	 * Returns:
-	 *  the X id of the window where the drop should happen. This
-	 *  may be xid or the X id of a proxy window, or None if xid doesn't
-	 *  support Drag and Drop.
 	 * Since 2.2
+	 * Params:
+	 * display =  the GdkDisplay where the destination window resides
+	 * xid =  the X id of the destination window.
+	 * protocol =  location where the supported DND protocol is returned.
+	 * Returns: the X id of the window where the drop should happen. This  may be xid or the X id of a proxy window, or None if xid doesn't support Drag and Drop.
 	 */
 	public static uint gdkDragGetProtocolForDisplay(Display display, uint xid, GdkDragProtocol* protocol)
 	{
@@ -379,8 +330,6 @@ public class DragContext
 	 * Warning
 	 * gdk_drag_context_unref is deprecated and should not be used in newly-written code.
 	 * Deprecated function; use g_object_unref() instead.
-	 * context:
-	 *  a GdkDragContext.
 	 */
 	public void gdkDragContextUnref()
 	{
@@ -394,13 +343,10 @@ public class DragContext
 	 * Selects one of the actions offered by the drag source.
 	 * This function is called by the drag destination in response to
 	 * gdk_drag_motion() called by the drag source.
-	 * context:
-	 *  a GdkDragContext.
-	 * action:
-	 *  the selected action which will be taken when a drop happens,
+	 * Params:
+	 * action =  the selected action which will be taken when a drop happens,
 	 *  or 0 to indicate that a drop will not be accepted.
-	 * time_:
-	 *  the timestamp for this operation.
+	 * time =  the timestamp for this operation.
 	 */
 	public void gdkDragStatus(GdkDragAction action, uint time)
 	{
@@ -413,11 +359,8 @@ public class DragContext
 	 * transferred. This function is intended to be used while
 	 * handling a GDK_DROP_FINISHED event, its return value is
 	 * meaningless at other times.
-	 * context:
-	 *  a GdkDragContext
-	 * Returns:
-	 *  TRUE if the drop was successful.
 	 * Since 2.6
+	 * Returns: TRUE if the drop was successful.
 	 */
 	public int gdkDragDropSucceeded()
 	{

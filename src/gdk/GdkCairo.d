@@ -15,7 +15,7 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
+ 
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
@@ -25,15 +25,15 @@
  * inFile  = gdk-Cairo-Interaction.html
  * outPack = gdk
  * outFile = GdkCairo
- * strct   =
+ * strct   = 
  * realStrct=
  * ctorStrct=
- * clss    =
- * interf  =
+ * clss    = 
+ * interf  = 
  * class Code: Yes
  * interface Code: No
  * template for:
- * extend  =
+ * extend  = 
  * implements:
  * prefixes:
  * 	- gdk_cairo_
@@ -47,7 +47,7 @@
  * 	- gdk_cairo_rectangle
  * 	- gdk_cairo_region
  * imports:
- * 	- cairoLib.Cairo
+ * 	- cairo.Context
  * structWrap:
  * 	- GdkColor* -> Color
  * 	- GdkDrawable* -> Drawable
@@ -55,7 +55,7 @@
  * 	- GdkPixmap* -> Pixmap
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkRegion* -> Region
- * 	- cairo_t* -> Cairo
+ * 	- cairo_t* -> Context
  * module aliases:
  * local aliases:
  */
@@ -81,22 +81,10 @@ private import cairo.Context;
 
 
 /**
- * Description
- * Cairo is a graphics
- * library that supports vector graphics and image compositing that
- * can be used with GDK. Since 2.8, GTK+ does most of its drawing
- * using Cairo.
- * GDK does not wrap the Cairo API, instead it allows to create Cairo
- * contexts which can be used to draw on GDK drawables. Additional
- * functions allow to convert GDK's rectangles and regions into
- * Cairo paths and to use pixbufs as sources for drawing operations.
- */
-
-/**
  * This file is not used,
  *
  * It is here just to tell you to look at
- * cairo.Cairo class for the methods that where here..
+ * cairo.Context class for the methods that where here..
  */
 
 

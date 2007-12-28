@@ -163,8 +163,6 @@ public class AsyncQueue
 	
 	/**
 	 * Creates a new asynchronous queue with the initial reference count of 1.
-	 * Returns:
-	 *  the new GAsyncQueue.
 	 */
 	public this ()
 	{
@@ -175,10 +173,7 @@ public class AsyncQueue
 	/**
 	 * Increases the reference count of the asynchronous queue by 1. You
 	 * do not need to hold the lock to call this function.
-	 * queue:
-	 *  a GAsyncQueue.
-	 * Returns:
-	 *  the queue that was passed in (since 2.6)
+	 * Returns: the queue that was passed in (since 2.6)
 	 */
 	public AsyncQueue doref()
 	{
@@ -192,8 +187,6 @@ public class AsyncQueue
 	 * memory allocated will be freed. So you are not allowed to use the
 	 * queue afterwards, as it might have disappeared. You do not need to
 	 * hold the lock to call this function.
-	 * queue:
-	 *  a GAsyncQueue.
 	 */
 	public void unref()
 	{
@@ -203,10 +196,8 @@ public class AsyncQueue
 	
 	/**
 	 * Pushes the data into the queue. data must not be NULL.
-	 * queue:
-	 *  a GAsyncQueue.
-	 * data:
-	 *  data to push into the queue.
+	 * Params:
+	 * data =  data to push into the queue.
 	 */
 	public void push(void* data)
 	{
@@ -222,19 +213,15 @@ public class AsyncQueue
 	 * This function will lock queue before it sorts the queue and unlock
 	 * it when it is finished.
 	 * For an example of func see g_async_queue_sort().
-	 * queue:
-	 *  a GAsyncQueue
-	 * data:
-	 *  the data to push into the queue
-	 * func:
-	 *  the GCompareDataFunc is used to sort queue. This function
+	 * Since 2.10
+	 * Params:
+	 * data =  the data to push into the queue
+	 * func =  the GCompareDataFunc is used to sort queue. This function
 	 *  is passed two elements of the queue. The function should return
 	 *  0 if they are equal, a negative value if the first element
 	 *  should be higher in the queue or a positive value if the first
 	 *  element should be lower in the queue than the second element.
-	 * user_data:
-	 *  user data passed to func.
-	 * Since 2.10
+	 * userData =  user data passed to func.
 	 */
 	public void pushSorted(void* data, GCompareDataFunc func, void* userData)
 	{
@@ -245,10 +232,7 @@ public class AsyncQueue
 	/**
 	 * Pops data from the queue. This function blocks until data become
 	 * available.
-	 * queue:
-	 *  a GAsyncQueue.
-	 * Returns:
-	 *  data from the queue.
+	 * Returns: data from the queue.
 	 */
 	public void* pop()
 	{
@@ -259,11 +243,7 @@ public class AsyncQueue
 	/**
 	 * Tries to pop data from the queue. If no data is available, NULL is
 	 * returned.
-	 * queue:
-	 *  a GAsyncQueue.
-	 * Returns:
-	 *  data from the queue or NULL, when no data is
-	 * available immediately.
+	 * Returns: data from the queue or NULL, when no data isavailable immediately.
 	 */
 	public void* tryPop()
 	{
@@ -276,13 +256,9 @@ public class AsyncQueue
 	 * NULL is returned.
 	 * To easily calculate end_time a combination of g_get_current_time()
 	 * and g_time_val_add() can be used.
-	 * queue:
-	 *  a GAsyncQueue.
-	 * end_time:
-	 *  a GTimeVal, determining the final time.
-	 * Returns:
-	 *  data from the queue or NULL, when no data is
-	 * received before end_time.
+	 * Params:
+	 * endTime =  a GTimeVal, determining the final time.
+	 * Returns: data from the queue or NULL, when no data isreceived before end_time.
 	 */
 	public void* timedPop(GTimeVal* endTime)
 	{
@@ -298,10 +274,7 @@ public class AsyncQueue
 	 * of 0 could mean 'n' entries in the queue and 'n' thread waiting.
 	 * That can happen due to locking of the queue or due to
 	 * scheduling.
-	 * queue:
-	 *  a GAsyncQueue.
-	 * Returns:
-	 *  the length of the queue.
+	 * Returns: the length of the queue.
 	 */
 	public int length()
 	{
@@ -314,24 +287,15 @@ public class AsyncQueue
 	 * This function will lock queue before it sorts the queue and unlock
 	 * it when it is finished.
 	 * If you were sorting a list of priority numbers to make sure the
-	 * lowest priority would be at the top of the queue, you could use:
-	 *  gint32 id1;
-	 *  gint32 id2;
-	 *  id1 = GPOINTER_TO_INT (element1);
-	 *  id2 = GPOINTER_TO_INT (element2);
-	 *  return (id1 > id2 ? +1 : id1 == id2 ? 0 : -1);
-	 * queue:
-	 *  a GAsyncQueue
-	 * func:
-	 *  the GCompareDataFunc is used to sort queue. This
+	 * Since 2.10
+	 * Params:
+	 * func =  the GCompareDataFunc is used to sort queue. This
 	 *  function is passed two elements of the queue. The function
 	 *  should return 0 if they are equal, a negative value if the
 	 *  first element should be higher in the queue or a positive
 	 *  value if the first element should be lower in the queue than
 	 *  the second element.
-	 * user_data:
-	 *  user data passed to func
-	 * Since 2.10
+	 * userData =  user data passed to func
 	 */
 	public void sort(GCompareDataFunc func, void* userData)
 	{
@@ -343,8 +307,6 @@ public class AsyncQueue
 	 * Acquires the queue's lock. After that you can only call the
 	 * g_async_queue_*_unlocked() function variants on that
 	 * queue. Otherwise it will deadlock.
-	 * queue:
-	 *  a GAsyncQueue.
 	 */
 	public void lock()
 	{
@@ -354,8 +316,6 @@ public class AsyncQueue
 	
 	/**
 	 * Releases the queue's lock.
-	 * queue:
-	 *  a GAsyncQueue.
 	 */
 	public void unlock()
 	{
@@ -370,8 +330,6 @@ public class AsyncQueue
 	 * Deprecated: Since 2.8, reference counting is done atomically
 	 * so g_async_queue_ref() can be used regardless of the queue's
 	 * lock.
-	 * queue:
-	 *  a GAsyncQueue.
 	 */
 	public void refUnlocked()
 	{
@@ -389,8 +347,6 @@ public class AsyncQueue
 	 * Deprecated: Since 2.8, reference counting is done atomically
 	 * so g_async_queue_unref() can be used regardless of the queue's
 	 * lock.
-	 * queue:
-	 *  a GAsyncQueue.
 	 */
 	public void unrefAndUnlock()
 	{
@@ -401,10 +357,8 @@ public class AsyncQueue
 	/**
 	 * Pushes the data into the queue. data must not be NULL. This
 	 * function must be called while holding the queue's lock.
-	 * queue:
-	 *  a GAsyncQueue.
-	 * data:
-	 *  data to push into the queue.
+	 * Params:
+	 * data =  data to push into the queue.
 	 */
 	public void pushUnlocked(void* data)
 	{
@@ -419,19 +373,15 @@ public class AsyncQueue
 	 * new elements.
 	 * This function is called while holding the queue's lock.
 	 * For an example of func see g_async_queue_sort().
-	 * queue:
-	 *  a GAsyncQueue
-	 * data:
-	 *  the data to push into the queue
-	 * func:
-	 *  the GCompareDataFunc is used to sort queue. This function
+	 * Since 2.10
+	 * Params:
+	 * data =  the data to push into the queue
+	 * func =  the GCompareDataFunc is used to sort queue. This function
 	 *  is passed two elements of the queue. The function should return
 	 *  0 if they are equal, a negative value if the first element
 	 *  should be higher in the queue or a positive value if the first
 	 *  element should be lower in the queue than the second element.
-	 * user_data:
-	 *  user data passed to func.
-	 * Since 2.10
+	 * userData =  user data passed to func.
 	 */
 	public void pushSortedUnlocked(void* data, GCompareDataFunc func, void* userData)
 	{
@@ -443,10 +393,7 @@ public class AsyncQueue
 	 * Pops data from the queue. This function blocks until data become
 	 * available. This function must be called while holding the queue's
 	 * lock.
-	 * queue:
-	 *  a GAsyncQueue.
-	 * Returns:
-	 *  data from the queue.
+	 * Returns: data from the queue.
 	 */
 	public void* popUnlocked()
 	{
@@ -458,11 +405,7 @@ public class AsyncQueue
 	 * Tries to pop data from the queue. If no data is available, NULL is
 	 * returned. This function must be called while holding the queue's
 	 * lock.
-	 * queue:
-	 *  a GAsyncQueue.
-	 * Returns:
-	 *  data from the queue or NULL, when no data is
-	 * available immediately.
+	 * Returns: data from the queue or NULL, when no data isavailable immediately.
 	 */
 	public void* tryPopUnlocked()
 	{
@@ -476,13 +419,9 @@ public class AsyncQueue
 	 * queue's lock.
 	 * To easily calculate end_time a combination of g_get_current_time()
 	 * and g_time_val_add() can be used.
-	 * queue:
-	 *  a GAsyncQueue.
-	 * end_time:
-	 *  a GTimeVal, determining the final time.
-	 * Returns:
-	 *  data from the queue or NULL, when no data is
-	 * received before end_time.
+	 * Params:
+	 * endTime =  a GTimeVal, determining the final time.
+	 * Returns: data from the queue or NULL, when no data isreceived before end_time.
 	 */
 	public void* timedPopUnlocked(GTimeVal* endTime)
 	{
@@ -499,10 +438,7 @@ public class AsyncQueue
 	 * That can happen due to locking of the queue or due to
 	 * scheduling. This function must be called while holding the queue's
 	 * lock.
-	 * queue:
-	 *  a GAsyncQueue.
-	 * Returns:
-	 *  the length of the queue.
+	 * Returns: the length of the queue.
 	 */
 	public int lengthUnlocked()
 	{
@@ -513,18 +449,15 @@ public class AsyncQueue
 	/**
 	 * Sorts queue using func.
 	 * This function is called while holding the queue's lock.
-	 * queue:
-	 *  a GAsyncQueue
-	 * func:
-	 *  the GCompareDataFunc is used to sort queue. This
+	 * Since 2.10
+	 * Params:
+	 * func =  the GCompareDataFunc is used to sort queue. This
 	 *  function is passed two elements of the queue. The function
 	 *  should return 0 if they are equal, a negative value if the
 	 *  first element should be higher in the queue or a positive
 	 *  value if the first element should be lower in the queue than
 	 *  the second element.
-	 * user_data:
-	 *  user data passed to func
-	 * Since 2.10
+	 * userData =  user data passed to func
 	 */
 	public void sortUnlocked(GCompareDataFunc func, void* userData)
 	{

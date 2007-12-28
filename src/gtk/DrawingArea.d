@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Widget;
 
 /**
  * Description
@@ -88,7 +89,7 @@ private import gtkc.gtk;
  * Note that GDK automatically clears the exposed area
  * to the background color before sending the expose event, and
  * that drawing is implicitly clipped to the exposed area.
- * Example2.Simple GtkDrawingArea usage.
+ * Example43.Simple GtkDrawingArea usage.
  * gboolean
  * expose_event_callback (GtkWidget *widget, GdkEventExpose *event, gpointer data)
  * {
@@ -111,7 +112,7 @@ private import gtkc.gtk;
  * gdk_window_invalidate_rect() are equally good ways to do this. You'll
  * then get an expose event for the invalid region.
  * The available routines for drawing are documented on the GDK Drawing Primitives page.
- * See also gdk_pixbuf_render_to_drawable() for drawing a GdkPixbuf.
+ * See also gdk_draw_pixbuf() for drawing a GdkPixbuf.
  * To receive mouse events on a drawing area, you will need to enable
  * them with gtk_widget_add_events(). To receive keyboard events, you
  * will need to set the GTK_CAN_FOCUS flag on the drawing area, and
@@ -120,7 +121,6 @@ private import gtkc.gtk;
  * handler to decide whether to draw the focus indicator. See
  * gtk_paint_focus() for one way to draw focus.
  */
-private import gtk.Widget;
 public class DrawingArea : Widget
 {
 	
@@ -174,7 +174,6 @@ public class DrawingArea : Widget
 	 * Params:
 	 *    	width =
 	 *    	height =
-	 * Returns:
 	 */
 	this(int width, int height)
 	{
@@ -189,8 +188,6 @@ public class DrawingArea : Widget
 	
 	/**
 	 * Creates a new drawing area.
-	 * Returns:
-	 * a new GtkDrawingArea
 	 */
 	public this ()
 	{
@@ -207,17 +204,9 @@ public class DrawingArea : Widget
 	 * drawing area may actually be allocated a size
 	 * larger than this depending on how it is packed
 	 * within the enclosing containers.
-	 * darea:
-	 * a GtkDrawingArea.
-	 * width:
-	 * the width to request.
-	 * height:
-	 * the height to request.
-	 * See Also
-	 * Sometimes GtkImage is a useful alternative to a drawing area.
-	 * You can put a GdkPixmap in the GtkImage and draw to the GdkPixmap,
-	 * calling gtk_widget_queue_draw() on the GtkImage when you want to
-	 * refresh to the screen.
+	 * Params:
+	 * width = the width to request.
+	 * height = the height to request.
 	 */
 	public void size(int width, int height)
 	{

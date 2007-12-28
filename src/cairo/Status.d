@@ -15,7 +15,7 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
+ 
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
@@ -23,17 +23,17 @@
 /*
  * Conversion parameters:
  * inFile  = cairo-Error-handling.html
- * outPack = cairoLib
+ * outPack = cairo
  * outFile = Status
  * strct   = cairo_status_t
  * realStrct=
  * ctorStrct=
  * clss    = Status
- * interf  =
+ * interf  = 
  * class Code: No
  * interface Code: No
  * template for:
- * extend  =
+ * extend  = 
  * implements:
  * prefixes:
  * 	- cairo_status_t
@@ -72,23 +72,23 @@ private import glib.Str;
  */
 public class Status
 {
-
+	
 	/** the main Gtk struct */
 	protected cairo_status_t* cairo_status;
-
-
+	
+	
 	public cairo_status_t* getStatusStruct()
 	{
 		return cairo_status;
 	}
-
-
+	
+	
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
 		return cast(void*)cairo_status;
 	}
-
+	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
@@ -116,24 +116,23 @@ public class Status
 		}
 		this.cairo_status = cairo_status;
 	}
-
+	
 	/**
 	 */
-
-
+	
+	
 	/**
 	 * Provides a human-readable description of a cairo_status_t.
-	 * status:
-	 *  a cairo status
-	 * Returns:
-	 * a string representation of the status
+	 * Params:
+	 * status =  a cairo status
+	 * Returns:a string representation of the status
 	 */
 	public static char[] oString(cairo_status_t status)
 	{
 		// const char* cairo_status_to_string (cairo_status_t status);
 		return Str.toString(cairo_status_to_string(status) );
 	}
-
+	
 	/**
 	 * Resets all static data within cairo to its original state,
 	 * (ie. identical to the state at the time of program invocation). For

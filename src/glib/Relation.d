@@ -152,10 +152,8 @@ public class Relation
 	/**
 	 * Creates a new GRelation with the given number of fields.
 	 * Note that currently the number of fields must be 2.
-	 * fields:
-	 * the number of fields.
-	 * Returns:
-	 * a new GRelation.
+	 * Params:
+	 * fields = the number of fields.
 	 */
 	public this (int fields)
 	{
@@ -166,14 +164,10 @@ public class Relation
 	/**
 	 * Creates an index on the given field.
 	 * Note that this must be called before any records are added to the GRelation.
-	 * relation:
-	 * a GRelation.
-	 * field:
-	 * the field to index, counting from 0.
-	 * hash_func:
-	 * a function to produce a hash value from the field data.
-	 * key_equal_func:
-	 * a function to compare two values of the given field.
+	 * Params:
+	 * field = the field to index, counting from 0.
+	 * hashFunc = a function to produce a hash value from the field data.
+	 * keyEqualFunc = a function to compare two values of the given field.
 	 */
 	public void index(int field, GHashFunc hashFunc, GEqualFunc keyEqualFunc)
 	{
@@ -183,10 +177,8 @@ public class Relation
 	
 	/**
 	 * Inserts a record into a GRelation.
-	 * relation:
-	 * a GRelation.
-	 * ...:
-	 * the fields of the record to add. These must match the number of
+	 * Params:
+	 * ... = the fields of the record to add. These must match the number of
 	 * fields in the GRelation, and of type gpointer or gconstpointer.
 	 */
 	public void insert(... )
@@ -199,13 +191,10 @@ public class Relation
 	 * Returns TRUE if a record with the given values exists in a GRelation.
 	 * Note that the values are compared directly, so that, for example, two
 	 * copies of the same string will not match.
-	 * relation:
-	 * a GRelation.
-	 * ...:
-	 * the fields of the record to compare. The number must match the
+	 * Params:
+	 * ... = the fields of the record to compare. The number must match the
 	 * number of fields in the GRelation.
-	 * Returns:
-	 * TRUE if a record matches.
+	 * Returns:TRUE if a record matches.
 	 */
 	public int exists(... )
 	{
@@ -216,14 +205,10 @@ public class Relation
 	/**
 	 * Returns the number of tuples in a GRelation that have the given value
 	 * in the given field.
-	 * relation:
-	 * a GRelation.
-	 * key:
-	 * the value to compare with.
-	 * field:
-	 * the field of each record to match.
-	 * Returns:
-	 * the number of matches.
+	 * Params:
+	 * key = the value to compare with.
+	 * field = the field of each record to match.
+	 * Returns:the number of matches.
 	 */
 	public int count(void* key, int field)
 	{
@@ -235,14 +220,10 @@ public class Relation
 	 * Returns all of the tuples which have the given key in the given field.
 	 * Use g_tuples_index() to access the returned records.
 	 * The returned records should be freed with g_tuples_destroy().
-	 * relation:
-	 * a GRelation.
-	 * key:
-	 * the value to compare with.
-	 * field:
-	 * the field of each record to match.
-	 * Returns:
-	 * the records (tuples) that matched.
+	 * Params:
+	 * key = the value to compare with.
+	 * field = the field of each record to match.
+	 * Returns:the records (tuples) that matched.
 	 */
 	public Tuples select(void* key, int field)
 	{
@@ -253,14 +234,10 @@ public class Relation
 	/**
 	 * Deletes any records from a GRelation that have the given key value in
 	 * the given field.
-	 * relation:
-	 * a GRelation.
-	 * key:
-	 * the value to compare with.
-	 * field:
-	 * the field of each record to match.
-	 * Returns:
-	 * the number of records deleted.
+	 * Params:
+	 * key = the value to compare with.
+	 * field = the field of each record to match.
+	 * Returns:the number of records deleted.
 	 */
 	public int delet(void* key, int field)
 	{
@@ -272,8 +249,6 @@ public class Relation
 	 * Destroys the GRelation, freeing all memory allocated.
 	 * However, it does not free memory allocated for the
 	 * tuple data, so you should free that first if appropriate.
-	 * relation:
-	 * a GRelation.
 	 */
 	public void destroy()
 	{
@@ -284,8 +259,6 @@ public class Relation
 	/**
 	 * Outputs information about all records in a GRelation, as well as the indexes.
 	 * It is for debugging.
-	 * relation:
-	 * a GRelation.
 	 */
 	public void print()
 	{

@@ -196,22 +196,17 @@ public class PgAttribute
 	 * and the first character so marked will be returned in accel_char.
 	 * Two accel_marker characters following each other produce a single
 	 * literal accel_marker character.
-	 * markup_text:
-	 *  markup to parse (see markup format)
-	 * length:
-	 *  length of markup_text, or -1 if nul-terminated
-	 * accel_marker:
-	 *  character that precedes an accelerator, or 0 for none
-	 * attr_list:
-	 *  address of return location for a PangoAttrList, or NULL
-	 * text:
-	 *  address of return location for text with tags stripped, or NULL
-	 * accel_char:
-	 *  address of return location for accelerator char, or NULL
-	 * error:
-	 *  address of return location for errors, or NULL
-	 * Returns:
-	 *  FALSE if error is set, otherwise TRUE
+	 * If any error happens, none of the output arguments are touched except
+	 * for error.
+	 * Params:
+	 * markupText =  markup to parse (see markup format)
+	 * length =  length of markup_text, or -1 if nul-terminated
+	 * accelMarker =  character that precedes an accelerator, or 0 for none
+	 * attrList =  address of return location for a PangoAttrList, or NULL
+	 * text =  address of return location for text with tags stripped, or NULL
+	 * accelChar =  address of return location for accelerator char, or NULL
+	 * error =  address of return location for errors, or NULL
+	 * Returns: FALSE if error is set, otherwise TRUE
 	 */
 	public static int pangoParseMarkup(char[] markupText, int length, gunichar accelMarker, PangoAttrList** attrList, char** text, gunichar* accelChar, GError** error)
 	{
@@ -221,10 +216,9 @@ public class PgAttribute
 	
 	/**
 	 * Allocate a new attribute type ID.
-	 * name:
-	 *  an identifier for the type (currently unused.)
-	 * Returns:
-	 *  the new type ID.
+	 * Params:
+	 * name =  an identifier for the type (currently unused.)
+	 * Returns: the new type ID.
 	 */
 	public static PangoAttrType typeRegister(char[] name)
 	{
@@ -234,11 +228,7 @@ public class PgAttribute
 	
 	/**
 	 * Make a copy of an attribute.
-	 * attr:
-	 *  a PangoAttribute
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public PangoAttribute* pangoAttributeCopy()
 	{
@@ -250,12 +240,9 @@ public class PgAttribute
 	 * Compare two attributes for equality. This compares only the
 	 * actual value of the two attributes and not the ranges that the
 	 * attributes apply to.
-	 * attr1:
-	 *  a PangoAttribute
-	 * attr2:
-	 *  another PangoAttribute
-	 * Returns:
-	 *  TRUE if the two attributes have the same value.
+	 * Params:
+	 * attr2 =  another PangoAttribute
+	 * Returns: TRUE if the two attributes have the same value.
 	 */
 	public int pangoAttributeEqual(PangoAttribute* attr2)
 	{
@@ -265,8 +252,6 @@ public class PgAttribute
 	
 	/**
 	 * Destroy a PangoAttribute and free all associated memory.
-	 * attr:
-	 *  a PangoAttribute.
 	 */
 	public void pangoAttributeDestroy()
 	{
@@ -276,11 +261,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new language tag attribute.
-	 * language:
-	 *  language tag
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * language =  language tag
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* languageNew(PgLanguage language)
 	{
@@ -290,11 +273,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new font family attribute.
-	 * family:
-	 *  the family or comma separated list of families
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * family =  the family or comma separated list of families
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* familyNew(char[] family)
 	{
@@ -304,11 +285,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new font slant style attribute.
-	 * style:
-	 *  the slant style
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * style =  the slant style
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* styleNew(PangoStyle style)
 	{
@@ -318,11 +297,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new font variant attribute (normal or small caps)
-	 * variant:
-	 *  the variant
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * variant =  the variant
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* variantNew(PangoVariant variant)
 	{
@@ -332,11 +309,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new font stretch attribute
-	 * stretch:
-	 *  the stretch
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * stretch =  the stretch
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* stretchNew(PangoStretch stretch)
 	{
@@ -346,11 +321,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new font weight attribute.
-	 * weight:
-	 *  the weight
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * weight =  the weight
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* weightNew(PangoWeight weight)
 	{
@@ -360,11 +333,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new font-size attribute in fractional points.
-	 * size:
-	 *  the font size, in PANGO_SCALEths of a point.
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * size =  the font size, in PANGO_SCALEths of a point.
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* sizeNew(int size)
 	{
@@ -374,12 +345,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new font-size attribute in device units.
-	 * size:
-	 *  the font size, in PANGO_SCALEths of a device unit.
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
-	 * Since 1.8
+	 * Params:
+	 * size =  the font size, in PANGO_SCALEths of a device unit.
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().Since 1.8
 	 */
 	public static PangoAttribute* sizeNewAbsolute(int size)
 	{
@@ -391,11 +359,9 @@ public class PgAttribute
 	 * Create a new font description attribute. This attribute
 	 * allows setting family, style, weight, variant, stretch,
 	 * and size simultaneously.
-	 * desc:
-	 *  the font description
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * desc =  the font description
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* fontDescNew(PgFontDescription desc)
 	{
@@ -405,15 +371,11 @@ public class PgAttribute
 	
 	/**
 	 * Create a new foreground color attribute.
-	 * red:
-	 *  the red value (ranging from 0 to 65535)
-	 * green:
-	 *  the green value
-	 * blue:
-	 *  the blue value
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * red =  the red value (ranging from 0 to 65535)
+	 * green =  the green value
+	 * blue =  the blue value
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* foregroundNew(ushort red, ushort green, ushort blue)
 	{
@@ -423,15 +385,11 @@ public class PgAttribute
 	
 	/**
 	 * Create a new background color attribute.
-	 * red:
-	 *  the red value (ranging from 0 to 65535)
-	 * green:
-	 *  the green value
-	 * blue:
-	 *  the blue value
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * red =  the red value (ranging from 0 to 65535)
+	 * green =  the green value
+	 * blue =  the blue value
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* backgroundNew(ushort red, ushort green, ushort blue)
 	{
@@ -441,11 +399,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new strike-through attribute.
-	 * strikethrough:
-	 *  TRUE if the text should be struck-through.
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * strikethrough =  TRUE if the text should be struck-through.
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* strikethroughNew(int strikethrough)
 	{
@@ -457,16 +413,11 @@ public class PgAttribute
 	 * Create a new strikethrough color attribute. This attribute
 	 * modifies the color of strikethrough lines. If not set, strikethrough
 	 * lines will use the foreground color.
-	 * red:
-	 *  the red value (ranging from 0 to 65535)
-	 * green:
-	 *  the green value
-	 * blue:
-	 *  the blue value
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
-	 * Since 1.8
+	 * Params:
+	 * red =  the red value (ranging from 0 to 65535)
+	 * green =  the green value
+	 * blue =  the blue value
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().Since 1.8
 	 */
 	public static PangoAttribute* strikethroughColorNew(ushort red, ushort green, ushort blue)
 	{
@@ -476,11 +427,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new underline-style attribute.
-	 * underline:
-	 *  the underline style.
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * underline =  the underline style.
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* underlineNew(PangoUnderline underline)
 	{
@@ -492,16 +441,11 @@ public class PgAttribute
 	 * Create a new underline color attribute. This attribute
 	 * modifies the color of underlines. If not set, underlines
 	 * will use the foreground color.
-	 * red:
-	 *  the red value (ranging from 0 to 65535)
-	 * green:
-	 *  the green value
-	 * blue:
-	 *  the blue value
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
-	 * Since 1.8
+	 * Params:
+	 * red =  the red value (ranging from 0 to 65535)
+	 * green =  the green value
+	 * blue =  the blue value
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().Since 1.8
 	 */
 	public static PangoAttribute* underlineColorNew(ushort red, ushort green, ushort blue)
 	{
@@ -516,13 +460,10 @@ public class PgAttribute
 	 * particular ink and logical rectangle on the result of shaping a
 	 * particular glyph. This might be used, for instance, for
 	 * embedding a picture or a widget inside a PangoLayout.
-	 * ink_rect:
-	 *  ink rectangle to assign to each character
-	 * logical_rect:
-	 *  logical rectangle to assign to each character
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * inkRect =  ink rectangle to assign to each character
+	 * logicalRect =  logical rectangle to assign to each character
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* shapeNew(PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
@@ -534,23 +475,16 @@ public class PgAttribute
 	 * Like pango_attr_shape_new(), but a user data pointer is also
 	 * provided; this pointer can be accessed when later
 	 * rendering the glyph.
-	 * ink_rect:
-	 *  ink rectangle to assign to each character
-	 * logical_rect:
-	 *  logical rectangle to assign to each character
-	 * data:
-	 *  user data pointer
-	 * copy_func:
-	 *  function to copy data when the attribute
+	 * Params:
+	 * inkRect =  ink rectangle to assign to each character
+	 * logicalRect =  logical rectangle to assign to each character
+	 * data =  user data pointer
+	 * copyFunc =  function to copy data when the attribute
 	 *  is copied. If NULL, data is simply copied
 	 *  as a pointer.
-	 * destroy_func:
-	 *  function to free data when the attribute
+	 * destroyFunc =  function to free data when the attribute
 	 *  is freed, or NULL
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
-	 * Since 1.8
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().Since 1.8
 	 */
 	public static PangoAttribute* shapeNewWithData(PangoRectangle* inkRect, PangoRectangle* logicalRect, void* data, PangoAttrDataCopyFunc copyFunc, GDestroyNotify destroyFunc)
 	{
@@ -562,11 +496,9 @@ public class PgAttribute
 	/**
 	 * Create a new font size scale attribute. The base font for the
 	 * affected text will have its size multiplied by scale_factor.
-	 * scale_factor:
-	 *  factor to scale the font
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Params:
+	 * scaleFactor =  factor to scale the font
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* scaleNew(double scaleFactor)
 	{
@@ -583,12 +515,10 @@ public class PgAttribute
 	
 	/**
 	 * Create a new baseline displacement attribute.
-	 * rise:
-	 *  the amount that the text should be displaced vertically,
+	 * Params:
+	 * rise =  the amount that the text should be displaced vertically,
 	 *  in Pango units. Positive values displace the text upwards.
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().
 	 */
 	public static PangoAttribute* riseNew(int rise)
 	{
@@ -598,13 +528,10 @@ public class PgAttribute
 	
 	/**
 	 * Create a new letter-spacing attribute.
-	 * letter_spacing:
-	 *  amount of extra space to add between graphemes
+	 * Params:
+	 * letterSpacing =  amount of extra space to add between graphemes
 	 *  of the text, in Pango units.
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
-	 * Since 1.6
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().Since 1.6
 	 */
 	public static PangoAttribute* letterSpacingNew(int letterSpacing)
 	{
@@ -618,13 +545,10 @@ public class PgAttribute
 	 * closest matching font on the system. No fallback will be done to
 	 * other fonts on the system that might contain the characters in the
 	 * text.
-	 * enable_fallback:
-	 *  TRUE if we should fall back on other fonts
+	 * Params:
+	 * enableFallback =  TRUE if we should fall back on other fonts
 	 *  for characters the active font is missing.
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
-	 * Since 1.4
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().Since 1.4
 	 */
 	public static PangoAttribute* fallbackNew(int enableFallback)
 	{
@@ -634,12 +558,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new gravity attribute.
-	 * gravity:
-	 *  the gravity value; should not be PANGO_GRAVITY_AUTO.
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
-	 * Since 1.16
+	 * Params:
+	 * gravity =  the gravity value; should not be PANGO_GRAVITY_AUTO.
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().Since 1.16
 	 */
 	public static PangoAttribute* gravityNew(PangoGravity gravity)
 	{
@@ -649,12 +570,9 @@ public class PgAttribute
 	
 	/**
 	 * Create a new gravity hint attribute.
-	 * hint:
-	 *  the gravity hint value.
-	 * Returns:
-	 *  the newly allocated PangoAttribute, which should be
-	 *  freed with pango_attribute_destroy().
-	 * Since 1.16
+	 * Params:
+	 * hint =  the gravity hint value.
+	 * Returns: the newly allocated PangoAttribute, which should be freed with pango_attribute_destroy().Since 1.16
 	 */
 	public static PangoAttribute* gravityHintNew(PangoGravityHint hint)
 	{
@@ -672,13 +590,10 @@ public class PgAttribute
 	 * 'r', 'g' and 'b' are hex digits of the red, green, and blue
 	 * components of the color, respectively. (White in the four
 	 * forms is '#fff' '#ffffff' '#fffffffff' and '#ffffffffffff')
-	 * color:
-	 *  a PangoColor structure in which to store the result
-	 * spec:
-	 *  a string specifying the new color
-	 * Returns:
-	 *  TRUE if parsing of the specifier succeeded,
-	 *  otherwise false.
+	 * Params:
+	 * color =  a PangoColor structure in which to store the result
+	 * spec =  a string specifying the new color
+	 * Returns: TRUE if parsing of the specifier succeeded, otherwise false.
 	 */
 	public static int pangoColorParse(PangoColor* color, char[] spec)
 	{
@@ -691,11 +606,9 @@ public class PgAttribute
 	 * pango_color_free(). Primarily used by language bindings,
 	 * not that useful otherwise (since colors can just be copied
 	 * by assignment in C).
-	 * src:
-	 *  color to copy
-	 * Returns:
-	 *  the newly allocated PangoColor, which should
-	 *  be freed with pango_color_free().
+	 * Params:
+	 * src =  color to copy
+	 * Returns: the newly allocated PangoColor, which should be freed with pango_color_free().
 	 */
 	public static PangoColor* pangoColorCopy(PangoColor* src)
 	{
@@ -705,8 +618,8 @@ public class PgAttribute
 	
 	/**
 	 * Frees a color allocated by pango_color_copy().
-	 * color:
-	 *  an allocated PangoColor
+	 * Params:
+	 * color =  an allocated PangoColor
 	 */
 	public static void pangoColorFree(PangoColor* color)
 	{
@@ -719,11 +632,9 @@ public class PgAttribute
 	 * #rrrrggggbbbb, where r,
 	 * g and b are hex digits representing
 	 * the red, green, and blue components respectively.
-	 * color:
-	 *  a PangoColor
-	 * Returns:
-	 *  a newly-allocated text string that must be freed with g_free().
-	 * Since 1.16
+	 * Params:
+	 * color =  a PangoColor
+	 * Returns: a newly-allocated text string that must be freed with g_free().Since 1.16
 	 */
 	public static char[] pangoColorToString(PangoColor* color)
 	{
@@ -740,9 +651,7 @@ public class PgAttribute
 	
 	/**
 	 * Create a new empty attribute list with a reference count of one.
-	 * Returns:
-	 *  the newly allocated PangoAttrList, which should
-	 *  be freed with pango_attr_list_unref().
+	 * Returns: the newly allocated PangoAttrList, which should be freed with pango_attr_list_unref().
 	 */
 	public static PangoAttrList* listNew()
 	{
@@ -752,11 +661,9 @@ public class PgAttribute
 	
 	/**
 	 * Increase the reference count of the given attribute list by one.
-	 * list:
-	 *  a PangoAttrList
-	 * Returns:
-	 *  The attribute list passed in
-	 * Since 1.10
+	 * Params:
+	 * list =  a PangoAttrList
+	 * Returns: The attribute list passed inSince 1.10
 	 */
 	public static PangoAttrList* listRef(PangoAttrList* list)
 	{
@@ -768,8 +675,8 @@ public class PgAttribute
 	 * Decrease the reference count of the given attribute list by one.
 	 * If the result is zero, free the attribute list and the attributes
 	 * it contains.
-	 * list:
-	 *  a PangoAttrList
+	 * Params:
+	 * list =  a PangoAttrList
 	 */
 	public static void listUnref(PangoAttrList* list)
 	{
@@ -779,12 +686,9 @@ public class PgAttribute
 	
 	/**
 	 * Copy list and return an identical new list.
-	 * list:
-	 *  a PangoAttrList
-	 * Returns:
-	 *  the newly allocated PangoAttrList, with a
-	 *  reference count of one, which should
-	 *  be freed with pango_attr_list_unref().
+	 * Params:
+	 * list =  a PangoAttrList
+	 * Returns: the newly allocated PangoAttrList, with a reference count of one, which should be freed with pango_attr_list_unref().
 	 */
 	public static PangoAttrList* listCopy(PangoAttrList* list)
 	{
@@ -796,10 +700,9 @@ public class PgAttribute
 	 * Insert the given attribute into the PangoAttrList. It will
 	 * be inserted after all other attributes with a matching
 	 * start_index.
-	 * list:
-	 *  a PangoAttrList
-	 * attr:
-	 *  the attribute to insert. Ownership of this value is
+	 * Params:
+	 * list =  a PangoAttrList
+	 * attr =  the attribute to insert. Ownership of this value is
 	 *  assumed by the list.
 	 */
 	public static void listInsert(PangoAttrList* list, PangoAttribute* attr)
@@ -812,10 +715,9 @@ public class PgAttribute
 	 * Insert the given attribute into the PangoAttrList. It will
 	 * be inserted before all other attributes with a matching
 	 * start_index.
-	 * list:
-	 *  a PangoAttrList
-	 * attr:
-	 *  the attribute to insert. Ownership of this value is
+	 * Params:
+	 * list =  a PangoAttrList
+	 * attr =  the attribute to insert. Ownership of this value is
 	 *  assumed by the list.
 	 */
 	public static void listInsertBefore(PangoAttrList* list, PangoAttribute* attr)
@@ -833,10 +735,9 @@ public class PgAttribute
 	 * for large lists). However, pango_attr_list_insert() is not
 	 * suitable for continually changing a set of attributes
 	 * since it never removes or combines existing attributes.
-	 * list:
-	 *  a PangoAttrList
-	 * attr:
-	 *  the attribute to insert. Ownership of this value is
+	 * Params:
+	 * list =  a PangoAttrList
+	 * attr =  the attribute to insert. Ownership of this value is
 	 *  assumed by the list.
 	 */
 	public static void listChange(PangoAttrList* list, PangoAttribute* attr)
@@ -854,14 +755,11 @@ public class PgAttribute
 	 * of each attribute in other in sequence (offset in position by pos).
 	 * This operation proves useful for, for instance, inserting
 	 * a pre-edit string in the middle of an edit buffer.
-	 * list:
-	 *  a PangoAttrList
-	 * other:
-	 *  another PangoAttrList
-	 * pos:
-	 *  the position in list at which to insert other
-	 * len:
-	 *  the length of the spliced segment. (Note that this
+	 * Params:
+	 * list =  a PangoAttrList
+	 * other =  another PangoAttrList
+	 * pos =  the position in list at which to insert other
+	 * len =  the length of the spliced segment. (Note that this
 	 *  must be specified since the attributes in other
 	 *  may only be present at some subsection of this range)
 	 */
@@ -875,17 +773,12 @@ public class PgAttribute
 	 * Given a PangoAttrList and callback function, removes any elements
 	 * of list for which func returns TRUE and inserts them into
 	 * a new list.
-	 * list:
-	 *  a PangoAttrList
-	 * func:
-	 *  callback function; returns TRUE if an attribute
+	 * Params:
+	 * list =  a PangoAttrList
+	 * func =  callback function; returns TRUE if an attribute
 	 *  should be filtered out.
-	 * data:
-	 *  Data to be passed to func
-	 * Returns:
-	 *  the new PangoAttrList or NULL if
-	 *  no attributes of the given types were found.
-	 * Since 1.2
+	 * data =  Data to be passed to func
+	 * Returns: the new PangoAttrList or NULL if no attributes of the given types were found.Since 1.2
 	 */
 	public static PangoAttrList* listFilter(PangoAttrList* list, PangoAttrFilterFunc func, void* data)
 	{
@@ -897,11 +790,9 @@ public class PgAttribute
 	/**
 	 * Create a iterator initialized to the beginning of the list.
 	 * list must not be modified until this iterator is freed.
-	 * list:
-	 *  a PangoAttrList
-	 * Returns:
-	 *  the newly allocated PangoAttrIterator, which should
-	 *  be freed with pango_attr_iterator_destroy().
+	 * Params:
+	 * list =  a PangoAttrList
+	 * Returns: the newly allocated PangoAttrIterator, which should be freed with pango_attr_iterator_destroy().
 	 */
 	public static PangoAttrIterator* listGetIterator(PangoAttrList* list)
 	{
@@ -912,11 +803,9 @@ public class PgAttribute
 	
 	/**
 	 * Copy a PangoAttrIterator
-	 * iterator:
-	 *  a PangoAttrIterator.
-	 * Returns:
-	 *  the newly allocated PangoAttrIterator, which should
-	 *  be freed with pango_attr_iterator_destroy().
+	 * Params:
+	 * iterator =  a PangoAttrIterator.
+	 * Returns: the newly allocated PangoAttrIterator, which should be freed with pango_attr_iterator_destroy().
 	 */
 	public static PangoAttrIterator* iteratorCopy(PangoAttrIterator* iterator)
 	{
@@ -926,10 +815,9 @@ public class PgAttribute
 	
 	/**
 	 * Advance the iterator until the next change of style.
-	 * iterator:
-	 *  a PangoAttrIterator
-	 * Returns:
-	 *  FALSE if the iterator is at the end of the list, otherwise TRUE
+	 * Params:
+	 * iterator =  a PangoAttrIterator
+	 * Returns: FALSE if the iterator is at the end of the list, otherwise TRUE
 	 */
 	public static int iteratorNext(PangoAttrIterator* iterator)
 	{
@@ -943,12 +831,10 @@ public class PgAttribute
 	 * the values in PangoAttribute. To deal with this API
 	 * oversight, stored return values that wouldn't fit into
 	 * a signed integer are clamped to G_MAXINT.
-	 * iterator:
-	 *  a PangoAttrIterator
-	 * start:
-	 *  location to store the start of the range
-	 * end:
-	 *  location to store the end of the range
+	 * Params:
+	 * iterator =  a PangoAttrIterator
+	 * start =  location to store the start of the range
+	 * end =  location to store the end of the range
 	 */
 	public static void iteratorRange(PangoAttrIterator* iterator, int* start, int* end)
 	{
@@ -961,14 +847,10 @@ public class PgAttribute
 	 * location. When multiple attributes of the same type overlap,
 	 * the attribute whose range starts closest to the current location
 	 * is used.
-	 * iterator:
-	 *  a PangoAttrIterator
-	 * type:
-	 *  the type of attribute to find.
-	 * Returns:
-	 *  the current attribute of the given type, or NULL
-	 *  if no attribute of that type applies to the current
-	 *  location.
+	 * Params:
+	 * iterator =  a PangoAttrIterator
+	 * type =  the type of attribute to find.
+	 * Returns: the current attribute of the given type, or NULL if no attribute of that type applies to the current location.
 	 */
 	public static PangoAttribute* iteratorGet(PangoAttrIterator* iterator, PangoAttrType type)
 	{
@@ -978,20 +860,15 @@ public class PgAttribute
 	
 	/**
 	 * Get the font and other attributes at the current iterator position.
-	 * iterator:
-	 *  a PangoAttrIterator
-	 * desc:
-	 *  a PangoFontDescription to fill in with the current values.
+	 * Params:
+	 * iterator =  a PangoAttrIterator
+	 * desc =  a PangoFontDescription to fill in with the current values.
 	 *  The family name in this structure will be set using
 	 *  pango_font_description_set_family_static() using values from
 	 *  an attribute in the PangoAttrList associated with the iterator,
-	 *  so if you plan to keep it around, you must call:
-	 *  pango_font_description_set_family (desc, pango_font_description_get_family (desc)).
-	 * language:
-	 *  if non-NULL, location to store language tag for item, or NULL
+	 * language =  if non-NULL, location to store language tag for item, or NULL
 	 *  if none is found.
-	 * extra_attrs:
-	 *  if non-NULL, location in which to store a list of non-font
+	 * extraAttrs =  if non-NULL, location in which to store a list of non-font
 	 *  attributes at the the current position; only the highest priority
 	 *  value of each attribute will be added to this list. In order
 	 *  to free this value, you must call pango_attribute_destroy() on
@@ -1006,13 +883,9 @@ public class PgAttribute
 	/**
 	 * Gets a list of all attributes at the current position of the
 	 * iterator.
-	 * iterator:
-	 *  a PangoAttrIterator
-	 * Returns:
-	 *  a list of all attributes for the current range.
-	 *  To free this value, call pango_attribute_destroy() on
-	 *  each value and g_slist_free() on the list.
-	 * Since 1.2
+	 * Params:
+	 * iterator =  a PangoAttrIterator
+	 * Returns: a list of all attributes for the current range. To free this value, call pango_attribute_destroy() on each value and g_slist_free() on the list.Since 1.2
 	 */
 	public static ListSG iteratorGetAttrs(PangoAttrIterator* iterator)
 	{
@@ -1022,8 +895,8 @@ public class PgAttribute
 	
 	/**
 	 * Destroy a PangoAttrIterator and free all associated memory.
-	 * iterator:
-	 *  a PangoAttrIterator.
+	 * Params:
+	 * iterator =  a PangoAttrIterator.
 	 */
 	public static void iteratorDestroy(PangoAttrIterator* iterator)
 	{

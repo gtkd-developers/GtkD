@@ -104,11 +104,10 @@ public class Atomic
 	/**
 	 * Reads the value of the integer pointed to by atomic. Also acts as
 	 * a memory barrier.
-	 * atomic:
-	 * a pointer to an integer
-	 * Returns:
-	 * the value of *atomic
 	 * Since 2.4
+	 * Params:
+	 * atomic = a pointer to an integer
+	 * Returns:the value of *atomic
 	 */
 	public static int intGet(int* atomic)
 	{
@@ -119,11 +118,10 @@ public class Atomic
 	/**
 	 * Sets the value of the integer pointed to by atomic.
 	 * Also acts as a memory barrier.
-	 * atomic:
-	 * a pointer to an integer
-	 * newval:
-	 * the new value
 	 * Since 2.10
+	 * Params:
+	 * atomic = a pointer to an integer
+	 * newval = the new value
 	 */
 	public static void intSet(int* atomic, int newval)
 	{
@@ -134,11 +132,10 @@ public class Atomic
 	/**
 	 * Atomically adds val to the integer pointed to by atomic.
 	 * Also acts as a memory barrier.
-	 * atomic:
-	 * a pointer to an integer.
-	 * val:
-	 * the value to add to *atomic.
 	 * Since 2.4
+	 * Params:
+	 * atomic = a pointer to an integer.
+	 * val = the value to add to *atomic.
 	 */
 	public static void intAdd(int* atomic, int val)
 	{
@@ -150,13 +147,11 @@ public class Atomic
 	 * Atomically adds val to the integer pointed to by atomic. It returns
 	 * the value of *atomic just before the addition took place.
 	 * Also acts as a memory barrier.
-	 * atomic:
-	 * a pointer to an integer.
-	 * val:
-	 * the value to add to *atomic.
-	 * Returns:
-	 * the value of *atomic before the addition.
 	 * Since 2.4
+	 * Params:
+	 * atomic = a pointer to an integer.
+	 * val = the value to add to *atomic.
+	 * Returns:the value of *atomic before the addition.
 	 */
 	public static int intExchangeAndAdd(int* atomic, int val)
 	{
@@ -168,15 +163,12 @@ public class Atomic
 	 * Compares oldval with the integer pointed to by atomic and
 	 * if they are equal, atomically exchanges *atomic with newval.
 	 * Also acts as a memory barrier.
-	 * atomic:
-	 * a pointer to an integer.
-	 * oldval:
-	 * the assumed old value of *atomic.
-	 * newval:
-	 * the new value of *atomic.
-	 * Returns:
-	 * TRUE, if *atomic was equal oldval. FALSE otherwise.
 	 * Since 2.4
+	 * Params:
+	 * atomic = a pointer to an integer.
+	 * oldval = the assumed old value of *atomic.
+	 * newval = the new value of *atomic.
+	 * Returns:TRUE, if *atomic was equal oldval. FALSE otherwise.
 	 */
 	public static int intCompareAndExchange(int* atomic, int oldval, int newval)
 	{
@@ -187,11 +179,10 @@ public class Atomic
 	/**
 	 * Reads the value of the pointer pointed to by atomic. Also acts as
 	 * a memory barrier.
-	 * atomic:
-	 * a pointer to a gpointer.
-	 * Returns:
-	 * the value to add to *atomic.
 	 * Since 2.4
+	 * Params:
+	 * atomic = a pointer to a gpointer.
+	 * Returns:the value to add to *atomic.
 	 */
 	public static void* pointerGet(void** atomic)
 	{
@@ -202,11 +193,10 @@ public class Atomic
 	/**
 	 * Sets the value of the pointer pointed to by atomic.
 	 * Also acts as a memory barrier.
-	 * atomic:
-	 * a pointer to a gpointer
-	 * newval:
-	 * the new value
 	 * Since 2.10
+	 * Params:
+	 * atomic = a pointer to a gpointer
+	 * newval = the new value
 	 */
 	public static void pointerSet(void** atomic, void* newval)
 	{
@@ -218,15 +208,12 @@ public class Atomic
 	 * Compares oldval with the pointer pointed to by atomic and
 	 * if they are equal, atomically exchanges *atomic with newval.
 	 * Also acts as a memory barrier.
-	 * atomic:
-	 * a pointer to a gpointer.
-	 * oldval:
-	 * the assumed old value of *atomic.
-	 * newval:
-	 * the new value of *atomic.
-	 * Returns:
-	 * TRUE, if *atomic was equal oldval. FALSE otherwise.
 	 * Since 2.4
+	 * Params:
+	 * atomic = a pointer to a gpointer.
+	 * oldval = the assumed old value of *atomic.
+	 * newval = the new value of *atomic.
+	 * Returns:TRUE, if *atomic was equal oldval. FALSE otherwise.
 	 */
 	public static int pointerCompareAndExchange(void** atomic, void* oldval, void* newval)
 	{
@@ -236,9 +223,9 @@ public class Atomic
 	
 	/**
 	 * Atomically increments the integer pointed to by atomic by 1.
-	 * atomic:
-	 * a pointer to an integer.
 	 * Since 2.4
+	 * Params:
+	 * atomic = a pointer to an integer.
 	 */
 	public static void intInc(int* atomic)
 	{
@@ -248,15 +235,10 @@ public class Atomic
 	
 	/**
 	 * Atomically decrements the integer pointed to by atomic by 1.
-	 * atomic:
-	 * a pointer to an integer.
-	 * Returns:
-	 * TRUE, if the integer pointed to by atomic is 0 after
-	 * decrementing it.
 	 * Since 2.4
-	 * See Also
-	 * GMutex
-	 * GLib mutual exclusions.
+	 * Params:
+	 * atomic = a pointer to an integer.
+	 * Returns:TRUE, if the integer pointed to by atomic is 0 afterdecrementing it.
 	 */
 	public static int intDecAndTest(int* atomic)
 	{

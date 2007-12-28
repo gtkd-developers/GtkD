@@ -68,11 +68,11 @@ private import gtk.Window;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-private import gobject.ObjectG;
 public class WindowGroup : ObjectG
 {
 	
@@ -128,8 +128,6 @@ public class WindowGroup : ObjectG
 	/**
 	 * Creates a new GtkWindowGroup object. Grabs added with
 	 * gtk_grab_add() only affect windows within the same GtkWindowGroup.
-	 * Returns:
-	 *  a new GtkWindowGroup.
 	 */
 	public this ()
 	{
@@ -139,10 +137,8 @@ public class WindowGroup : ObjectG
 	
 	/**
 	 * Adds a window to a GtkWindowGroup.
-	 * window_group:
-	 *  a GtkWindowGroup
-	 * window:
-	 *  the GtkWindow to add
+	 * Params:
+	 * window =  the GtkWindow to add
 	 */
 	public void addWindow(Window window)
 	{
@@ -152,10 +148,8 @@ public class WindowGroup : ObjectG
 	
 	/**
 	 * Removes a window from a GtkWindowGroup.
-	 * window_group:
-	 *  a GtkWindowGroup
-	 * window:
-	 *  the GtkWindow to remove
+	 * Params:
+	 * window =  the GtkWindow to remove
 	 */
 	public void removeWindow(Window window)
 	{

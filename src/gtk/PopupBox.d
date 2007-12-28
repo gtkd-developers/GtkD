@@ -75,8 +75,9 @@ public class PopupBox
 	
 	/**
 	 * Create an information popup dialog.
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static void information(char[] message, char[] title)
 	{
@@ -85,9 +86,10 @@ public class PopupBox
 	
 	/**
 	 * Create an information popup dialog.
-	 * @param parent The parent window of this popup dialog
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static void information(Window parent, char[] message, char[] title)
 	{
@@ -104,8 +106,9 @@ public class PopupBox
 	
 	/**
 	 * Create an error popup dialog.
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static void error(char[] message, char[] title)
 	{
@@ -114,9 +117,10 @@ public class PopupBox
 	
 	/**
 	 * Create an error popup dialog.
-	 * @param parent The parent window of this popup dialog
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static void error(Window parent, char[] message, char[] title)
 	{
@@ -134,8 +138,9 @@ public class PopupBox
 	
 	/**
 	 * Create an 'yes' or 'no' popup dialog.
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static bool yesNo(char[] message, char[] title)
 	{
@@ -144,9 +149,10 @@ public class PopupBox
 	
 	/**
 	 * Create an 'yes' or 'no' popup dialog.
-	 * @param parent The parent window of this popup dialog
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static bool yesNo(Window parent, char[] message, char[] title)
 	{
@@ -166,8 +172,9 @@ public class PopupBox
 	
 	/**
 	 * Create an 'yes', 'no' or 'cancel' popup dialog.
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static ResponseType yesNoCancel(char[] message, char[] title)
 	{
@@ -176,9 +183,10 @@ public class PopupBox
 	
 	/**
 	 * Create an 'yes', 'no' or 'cancel' popup dialog.
-	 * @param parent The parent window of this popup dialog
-	 * @param message The message to show on the dialog
-	 * @param title The title of the dialog
+	 * Params:
+	 *  parent = The parent window of this popup dialog
+	 *  message = The message to show on the dialog
+	 *  title = The title of the dialog
 	 */
 	public static ResponseType yesNoCancel(Window parent, char[] message, char[] title)
 	{

@@ -65,177 +65,6 @@ private import gtkc.gdk;
 
 
 /**
- * Description
- * For thread safety, GDK relies on the thread primitives in GLib,
- * and on the thread-safe GLib main loop.
- * GLib is completely thread safe (all global data is automatically
- * locked), but individual data structure instances are not automatically
- * locked for performance reasons. So e.g. you must coordinate
- * accesses to the same GHashTable from multiple threads.
- * GTK+ is "thread aware" but not thread safe  it provides a
- * global lock controlled by gdk_threads_enter()/gdk_threads_leave()
- * which protects all use of GTK+. That is, only one thread can use GTK+
- * at any given time.
- * Unfortunately the above holds with the X11 backend only. With the
- * Win32 backend, GDK calls should not be attempted from multiple threads
- * at all.
- * You must call g_thread_init() and gdk_threads_init() before executing
- * any other GTK+ or GDK functions in a threaded GTK+ program.
- * Idles, timeouts, and input functions are executed outside
- * of the main GTK+ lock. So, if you need to call GTK+
- * inside of such a callback, you must surround the callback
- * with a gdk_threads_enter()/gdk_threads_leave() pair.
- * (However, signals are still executed within the main
- * GTK+ lock.)
- * In particular, this means, if you are writing widgets that might
- * be used in threaded programs, you must surround
- * timeouts and idle functions in this matter.
- * As always, you must also surround any calls to GTK+ not made within
- * a signal handler with a gdk_threads_enter()/gdk_threads_leave() pair.
- * Before calling gdk_threads_leave() from a thread other
- * than your main thread, you probably want to call gdk_flush()
- * to send all pending commands to the windowing system.
- * (The reason you don't need to do this from the main thread
- * is that GDK always automatically flushes pending commands
- * when it runs out of incoming events to process and has
- * to sleep while waiting for more events.)
- * A minimal main program for a threaded GTK+ application
- * looks like:
- * int
- * main (int argc, char *argv[])
- * {
-	 *  GtkWidget *window;
-	 *  g_thread_init (NULL);
-	 *  gdk_threads_init ();
-	 *  gdk_threads_enter ();
-	 *  gtk_init (argc, argv);
-	 *  window = create_window ();
-	 *  gtk_widget_show (window);
-	 *  gtk_main ();
-	 *  gdk_threads_leave ();
-	 *  return 0;
- * }
- * Callbacks require a bit of attention. Callbacks from GTK+ signals
- * are made within the GTK+ lock. However callbacks from GLib (timeouts,
- * IO callbacks, and idle functions) are made outside of the GTK+
- * lock. So, within a signal handler you do not need to call
- * gdk_threads_enter(), but within the other types of callbacks, you
- * do.
- * Erik Mouw contributed the following code example to
- * illustrate how to use threads within GTK+ programs.
- * /+*-------------------------------------------------------------------------
- *  * Filename: gtk-thread.c
- *  * Version: 0.99.1
- *  * Copyright: Copyright (C) 1999, Erik Mouw
- *  * Author: Erik Mouw <J.A.K.Mouw@its.tudelft.nl>
- *  * Description: GTK threads example.
- *  * Created at: Sun Oct 17 21:27:09 1999
- *  * Modified by: Erik Mouw <J.A.K.Mouw@its.tudelft.nl>
- *  * Modified at: Sun Oct 24 17:21:41 1999
- *  *-----------------------------------------------------------------------+/
- * /+*
- *  * Compile with:
- *  *
- *  * cc -o gtk-thread gtk-thread.c `gtk-config --cflags --libs gthread`
- *  *
- *  * Thanks to Sebastian Wilhelmi and Owen Taylor for pointing out some
- *  * bugs.
- *  *
- *  +/
- * #include <stdio.h>
- * #include <stdlib.h>
- * #include <unistd.h>
- * #include <time.h>
- * #include <gtk/gtk.h>
- * #include <glib.h>
- * #include <pthread.h>
- * #define YES_IT_IS (1)
- * #define NO_IT_IS_NOT (0)
- * typedef struct
- * {
-	 *  GtkWidget *label;
-	 *  int what;
- * } yes_or_no_args;
- * G_LOCK_DEFINE_STATIC (yes_or_no);
- * static volatile int yes_or_no = YES_IT_IS;
- * void destroy (GtkWidget *widget, gpointer data)
- * {
-	 *  gtk_main_quit ();
- * }
- * void *argument_thread (void *args)
- * {
-	 *  yes_or_no_args *data = (yes_or_no_args *)args;
-	 *  gboolean say_something;
-	 *  for (;;)
-	 *  {
-		 *  /+* sleep a while +/
-		 *  sleep(rand() / (RAND_MAX / 3) + 1);
-		 *  /+* lock the yes_or_no_variable +/
-		 *  G_LOCK(yes_or_no);
-		 *  /+* do we have to say something? +/
-		 *  say_something = (yes_or_no != data->what);
-		 *  if(say_something)
-		 * 	{
-			 * 	 /+* set the variable +/
-			 * 	 yes_or_no = data->what;
-		 * 	}
-		 *  /+* Unlock the yes_or_no variable +/
-		 *  G_UNLOCK (yes_or_no);
-		 *  if (say_something)
-		 * 	{
-			 * 	 /+* get GTK thread lock +/
-			 * 	 gdk_threads_enter ();
-			 * 	 /+* set label text +/
-			 * 	 if(data->what == YES_IT_IS)
-			 * 	 gtk_label_set_text (GTK_LABEL (data->label), "O yes, it is!");
-			 * 	 else
-			 * 	 gtk_label_set_text (GTK_LABEL (data->label), "O no, it isn't!");
-			 * 	 /+* release GTK thread lock +/
-			 * 	 gdk_threads_leave ();
-		 * 	}
-	 *  }
-	 *  return NULL;
- * }
- * int main (int argc, char *argv[])
- * {
-	 *  GtkWidget *window;
-	 *  GtkWidget *label;
-	 *  yes_or_no_args yes_args, no_args;
-	 *  pthread_t no_tid, yes_tid;
-	 *  /+* init threads +/
-	 *  g_thread_init (NULL);
-	 *  gdk_threads_init ();
-	 *  gdk_threads_enter ();
-	 *  /+* init gtk +/
-	 *  gtk_init(argc, argv);
-	 *  /+* init random number generator +/
-	 *  srand ((unsigned int) time (NULL));
-	 *  /+* create a window +/
-	 *  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
-	 *  gtk_signal_connect (GTK_OBJECT (window), "destroy",
-	 * 		 GTK_SIGNAL_FUNC (destroy), NULL);
-	 *  gtk_container_set_border_width (GTK_CONTAINER (window), 10);
-	 *  /+* create a label +/
-	 *  label = gtk_label_new ("And now for something completely different ...");
-	 *  gtk_container_add (GTK_CONTAINER (window), label);
-	 *  /+* show everything +/
-	 *  gtk_widget_show (label);
-	 *  gtk_widget_show (window);
-	 *  /+* create the threads +/
-	 *  yes_args.label = label;
-	 *  yes_args.what = YES_IT_IS;
-	 *  pthread_create (yes_tid, NULL, argument_thread, yes_args);
-	 *  no_args.label = label;
-	 *  no_args.what = NO_IT_IS_NOT;
-	 *  pthread_create (no_tid, NULL, argument_thread, no_args);
-	 *  /+* enter the GTK main loop +/
-	 *  gtk_main ();
-	 *  gdk_threads_leave ();
-	 *  return 0;
- * }
- */
-
-/**
  */
 
 
@@ -254,9 +83,9 @@ public static void gdkThreadsInit()
 }
 
 /**
- * This macro marks the beginning of a critical section
- * in which GDK and GTK+ functions can be called.
- * Only one thread at a time can be in such a critial
+ * This macro marks the beginning of a critical section in which GDK and
+ * GTK+ functions can be called safely and without causing race
+ * conditions. Only one thread at a time can be in such a critial
  * section.
  */
 public static void gdkThreadsEnter()
@@ -293,11 +122,10 @@ public static void gdkThreadsLeave()
  * Most threaded GTK+ apps won't need to use this method.
  * This method must be called before gdk_threads_init(), and cannot
  * be called multiple times.
- * enter_fn:
- *  function called to guard GDK
- * leave_fn:
- *  function called to release the guard
  * Since 2.4
+ * Params:
+ * enterFn =  function called to guard GDK
+ * leaveFn =  function called to release the guard
  */
 public static void gdkThreadsSetLockFunctions(GCallback enterFn, GCallback leaveFn)
 {
@@ -309,12 +137,11 @@ public static void gdkThreadsSetLockFunctions(GCallback enterFn, GCallback leave
  * A wrapper for the common usage of gdk_threads_add_idle_full()
  * assigning the default priority, G_PRIORITY_DEFAULT_IDLE.
  * See gdk_threads_add_idle_full().
- * function:
- *  function to call
- * data:
- *  data to pass to function
- * Returns:
  * Since 2.12
+ * Params:
+ * funct =  function to call
+ * data =  data to pass to function
+ * Returns: the ID (greater than 0) of the event source.
  */
 public static uint gdkThreadsAddIdle(GSourceFunc funct, void* data)
 {
@@ -330,37 +157,14 @@ public static uint gdkThreadsAddIdle(GSourceFunc funct, void* data)
  * held. It can be thought of a MT-safe version for GTK+ widgets for the
  * following use case, where you have to worry about idle_callback()
  * running in thread A and accessing self after it has been finalized
- * in thread B:
- * static gboolean idle_callback (gpointer data)
- * {
-	 *  SomeWidget *self = data;
-	 *  /+* do stuff with self +/
-	 *  self->idle_id = 0;
-	 *  return FALSE;
- * }
- * static void some_widget_do_stuff_later (SomeWidget *self)
- * {
-	 *  self->idle_id = g_idle_add (idle_callback, self)
- * }
- * static void some_widget_finalize (GObject *object)
- * {
-	 *  SomeWidget *self = SOME_WIDGET(object);
-	 *  if (self->idle_id)
-	 *  g_source_remove (self->idle_id);
-	 *  G_OBJECT_CLASS (parent_class)->finalize (object);
- * }
- * priority:
- *  the priority of the idle source. Typically this will be in the
- *  range btweeen G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE
- * function:
- *  function to call
- * data:
- *  data to pass to function
- * notify:
- *  function to call when the idle is removed, or NULL
- * Returns:
- *  the ID (greater than 0) of the event source.
  * Since 2.12
+ * Params:
+ * priority =  the priority of the idle source. Typically this will be in the
+ *  range btweeen G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE
+ * funct =  function to call
+ * data =  data to pass to function
+ * notify =  function to call when the idle is removed, or NULL
+ * Returns: the ID (greater than 0) of the event source.
  */
 public static uint gdkThreadsAddIdleFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
 {
@@ -372,15 +176,13 @@ public static uint gdkThreadsAddIdleFull(int priority, GSourceFunc funct, void* 
  * A wrapper for the common usage of gdk_threads_add_timeout_full()
  * assigning the default priority, G_PRIORITY_DEFAULT.
  * See gdk_threads_add_timeout_full().
- * interval:
- *  the time between calls to the function, in milliseconds
- *  (1/1000ths of a second)
- * function:
- *  function to call
- * data:
- *  data to pass to function
- * Returns:
  * Since 2.12
+ * Params:
+ * interval =  the time between calls to the function, in milliseconds
+ *  (1/1000ths of a second)
+ * funct =  function to call
+ * data =  data to pass to function
+ * Returns: the ID (greater than 0) of the event source.
  */
 public static uint gdkThreadsAddTimeout(uint interval, GSourceFunc funct, void* data)
 {
@@ -401,40 +203,16 @@ public static uint gdkThreadsAddTimeout(uint interval, GSourceFunc funct, void* 
  * timeout is recalculated based on the current time and the given interval
  * (it does not try to 'catch up' time lost in delays).
  * This variant of g_timeout_add_full() can be thought of a MT-safe version
- * for GTK+ widgets for the following use case:
- * static gboolean timeout_callback (gpointer data)
- * {
-	 *  SomeWidget *self = data;
-	 *  /+* do stuff with self +/
-	 *  self->timeout_id = 0;
-	 *  return FALSE;
- * }
- * static void some_widget_do_stuff_later (SomeWidget *self)
- * {
-	 *  self->timeout_id = g_timeout_add (timeout_callback, self)
- * }
- * static void some_widget_finalize (GObject *object)
- * {
-	 *  SomeWidget *self = SOME_WIDGET(object);
-	 *  if (self->timeout_id)
-	 *  g_source_remove (self->timeout_id);
-	 *  G_OBJECT_CLASS (parent_class)->finalize (object);
- * }
- * priority:
- *  the priority of the timeout source. Typically this will be in the
- *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
- * interval:
- *  the time between calls to the function, in milliseconds
- *  (1/1000ths of a second)
- * function:
- *  function to call
- * data:
- *  data to pass to function
- * notify:
- *  function to call when the timeout is removed, or NULL
- * Returns:
- *  the ID (greater than 0) of the event source.
  * Since 2.12
+ * Params:
+ * priority =  the priority of the timeout source. Typically this will be in the
+ *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
+ * interval =  the time between calls to the function, in milliseconds
+ *  (1/1000ths of a second)
+ * funct =  function to call
+ * data =  data to pass to function
+ * notify =  function to call when the timeout is removed, or NULL
+ * Returns: the ID (greater than 0) of the event source.
  */
 public static uint gdkThreadsAddTimeoutFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
 {

@@ -77,6 +77,7 @@ private import gtk.TextIter;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -90,7 +91,6 @@ private import gtk.TextIter;
  * The "invisible" property was not implemented for GTK+ 2.0; it's
  * planned to be implemented in future releases.
  */
-private import gobject.ObjectG;
 public class TextTag : ObjectG
 {
 	
@@ -163,13 +163,13 @@ public class TextTag : ObjectG
 		}
 		onListeners ~= dlg;
 	}
-	extern(C) static void callBack(GtkTextTag* texttagStruct, GObject* arg1, GdkEvent* event, GtkTextIter* arg2, TextTag textTag)
+	extern(C) static void callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextTag textTag)
 	{
 		bool consumed = false;
 		
 		foreach ( gboolean delegate(ObjectG, Event, TextIter, TextTag) dlg ; textTag.onListeners )
 		{
-			dlg(new ObjectG(arg1), new Event(event), new TextIter(arg2), textTag);
+			dlg(new ObjectG(object), new Event(event), new TextIter(iter), textTag);
 		}
 		
 		return consumed;
@@ -182,10 +182,8 @@ public class TextTag : ObjectG
 	/**
 	 * Creates a GtkTextTag. Configure the tag using object arguments,
 	 * i.e. using g_object_set().
-	 * name:
-	 *  tag name, or NULL
-	 * Returns:
-	 *  a new GtkTextTag
+	 * Params:
+	 * name =  tag name, or NULL
 	 */
 	public this (char[] name)
 	{
@@ -195,10 +193,7 @@ public class TextTag : ObjectG
 	
 	/**
 	 * Get the tag priority.
-	 * tag:
-	 *  a GtkTextTag
-	 * Returns:
-	 *  The tag's priority.
+	 * Returns: The tag's priority.
 	 */
 	public int getPriority()
 	{
@@ -218,10 +213,8 @@ public class TextTag : ObjectG
 	 * is the order in which they were added to the table, or created with
 	 * gtk_text_buffer_create_tag(), which adds the tag to the buffer's table
 	 * automatically.
-	 * tag:
-	 *  a GtkTextTag
-	 * priority:
-	 *  the new priority
+	 * Params:
+	 * priority =  the new priority
 	 */
 	public void setPriority(int priority)
 	{
@@ -231,22 +224,18 @@ public class TextTag : ObjectG
 	
 	/**
 	 * Emits the "event" signal on the GtkTextTag.
-	 * tag:
-	 *  a GtkTextTag
-	 * event_object:
-	 *  object that received the event, such as a widget
-	 * event:
-	 *  the event
-	 * iter:
-	 *  location where the event was received
-	 * Returns:
-	 *  result of signal emission (whether the event was handled)
+	 * Params:
+	 * eventObject =  object that received the event, such as a widget
+	 * event =  the event
+	 * iter =  location where the event was received
+	 * Returns: result of signal emission (whether the event was handled)
 	 */
 	public int event(ObjectG eventObject, Event event, TextIter iter)
 	{
 		// gboolean gtk_text_tag_event (GtkTextTag *tag,  GObject *event_object,  GdkEvent *event,  const GtkTextIter *iter);
 		return gtk_text_tag_event(gtkTextTag, (eventObject is null) ? null : eventObject.getObjectGStruct(), (event is null) ? null : event.getEventStruct(), (iter is null) ? null : iter.getTextIterStruct());
 	}
+	
 	
 	
 	

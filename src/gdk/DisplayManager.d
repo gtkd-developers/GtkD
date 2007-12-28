@@ -76,6 +76,7 @@ private import gdk.Device;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -83,7 +84,6 @@ private import gdk.Device;
  * notification when displays appear or disappear or the default display
  * changes.
  */
-private import gobject.ObjectG;
 public class DisplayManager : ObjectG
 {
 	
@@ -173,9 +173,8 @@ public class DisplayManager : ObjectG
 	/**
 	 * Returns the global GdkDisplayManager singleton; gdk_parse_pargs(),
 	 * gdk_init(), or gdk_init_check() must have been called first.
-	 * Returns:
-	 *  the singleton GdkDisplayManager object.
 	 * Since 2.2
+	 * Returns: the singleton GdkDisplayManager object.
 	 */
 	public static DisplayManager get()
 	{
@@ -185,12 +184,8 @@ public class DisplayManager : ObjectG
 	
 	/**
 	 * Gets the default GdkDisplay.
-	 * display_manager:
-	 *  a GdkDisplayManager
-	 * Returns:
-	 *  a GdkDisplay, or NULL if there is no default
-	 *  display.
 	 * Since 2.2
+	 * Returns: a GdkDisplay, or NULL if there is no default display.
 	 */
 	public Display getDefaultDisplay()
 	{
@@ -200,11 +195,9 @@ public class DisplayManager : ObjectG
 	
 	/**
 	 * Sets display as the default display.
-	 * display_manager:
-	 *  a GdkDisplayManager
-	 * display:
-	 *  a GdkDisplay
 	 * Since 2.2
+	 * Params:
+	 * display =  a GdkDisplay
 	 */
 	public void setDefaultDisplay(Display display)
 	{
@@ -214,12 +207,8 @@ public class DisplayManager : ObjectG
 	
 	/**
 	 * List all currently open displays.
-	 * display_manager:
-	 *  a GdkDisplayManager
-	 * Returns:
-	 *  a newly allocated GSList of GdkDisplay objects.
-	 *  Free this list with g_slist_free() when you are done with it.
 	 * Since 2.2
+	 * Returns: a newly allocated GSList of GdkDisplay objects. Free this list with g_slist_free() when you are done with it.
 	 */
 	public ListSG listDisplays()
 	{
@@ -229,29 +218,10 @@ public class DisplayManager : ObjectG
 	
 	/**
 	 * Returns the core pointer device for the given display
-	 * display:
-	 *  a GdkDisplay
-	 * Returns:
-	 *  the core pointer device; this is owned by the
-	 *  display and should not be freed.
 	 * Since 2.2
-	 * Property Details
-	 * The "default-display" property
-	 *  "default-display" GdkDisplay : Read / Write
-	 * The default display for GDK.
-	 * Signal Details
-	 * The "display-opened" signal
-	 * void user_function (GdkDisplayManager *display_manager,
-	 *  GdkDisplay *display,
-	 *  gpointer user_data) : Run Last
-	 * The ::display_opened signal is emitted when a display is opened.
-	 * display_manager:
-	 *  the object on which the signal is emitted
-	 * display:
-	 *  the opened display
-	 * user_data:
-	 * user data set when the signal handler was connected.
-	 * Since 2.2
+	 * Params:
+	 * display =  a GdkDisplay
+	 * Returns: the core pointer device; this is owned by the display and should not be freed.
 	 */
 	public static Device gdkDisplayGetCorePointer(Display display)
 	{

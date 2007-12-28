@@ -73,11 +73,11 @@ private import gdk.Rectangle;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-private import gobject.ObjectG;
 public class IMContext : ObjectG
 {
 	
@@ -309,10 +309,8 @@ public class IMContext : ObjectG
 	 * GdkWindow in which the input appears. This window is
 	 * used in order to correctly position status windows, and may
 	 * also be used for purposes internal to the input method.
-	 * context:
-	 *  a GtkIMContext
-	 * window:
-	 *  the client window. This may be NULL to indicate
+	 * Params:
+	 * window =  the client window. This may be NULL to indicate
 	 *  that the previous client window no longer exists.
 	 */
 	public void setClientWindow(Window window)
@@ -326,17 +324,13 @@ public class IMContext : ObjectG
 	 * and a list of attributes to apply to the string.
 	 * This string should be displayed inserted at the insertion
 	 * point.
-	 * context:
-	 *  a GtkIMContext
-	 * str:
-	 *  location to store the retrieved string. The
+	 * Params:
+	 * str =  location to store the retrieved string. The
 	 *  string retrieved must be freed with g_free().
-	 * attrs:
-	 *  location to store the retrieved attribute list.
+	 * attrs =  location to store the retrieved attribute list.
 	 *  When you are done with this list, you must
 	 *  unreference it with pango_attr_list_unref().
-	 * cursor_pos:
-	 *  location to store position of cursor (in characters)
+	 * cursorPos =  location to store position of cursor (in characters)
 	 *  within the preedit string.
 	 */
 	public void getPreeditString(char** str, PangoAttrList** attrs, int* cursorPos)
@@ -349,12 +343,9 @@ public class IMContext : ObjectG
 	 * Allow an input method to internally handle key press and release
 	 * events. If this function returns TRUE, then no further processing
 	 * should be done for this key event.
-	 * context:
-	 *  a GtkIMContext
-	 * event:
-	 *  the key event
-	 * Returns:
-	 *  TRUE if the input method handled the key event.
+	 * Params:
+	 * event =  the key event
+	 * Returns: TRUE if the input method handled the key event.
 	 */
 	public int filterKeypress(GdkEventKey* event)
 	{
@@ -367,8 +358,6 @@ public class IMContext : ObjectG
 	 * input context corresponds has gained focus. The input method
 	 * may, for example, change the displayed feedback to reflect
 	 * this change.
-	 * context:
-	 *  a GtkIMContext
 	 */
 	public void focusIn()
 	{
@@ -381,8 +370,6 @@ public class IMContext : ObjectG
 	 * input context corresponds has lost focus. The input method
 	 * may, for example, change the displayed feedback or reset the contexts
 	 * state to reflect this change.
-	 * context:
-	 *  a GtkIMContext
 	 */
 	public void focusOut()
 	{
@@ -394,8 +381,6 @@ public class IMContext : ObjectG
 	 * Notify the input method that a change such as a change in cursor
 	 * position has been made. This will typically cause the input
 	 * method to clear the preedit state.
-	 * context:
-	 *  a GtkIMContext
 	 */
 	public void reset()
 	{
@@ -407,10 +392,8 @@ public class IMContext : ObjectG
 	 * Notify the input method that a change in cursor
 	 * position has been made. The location is relative to the client
 	 * window.
-	 * context:
-	 *  a GtkIMContext
-	 * area:
-	 *  new location
+	 * Params:
+	 * area =  new location
 	 */
 	public void setCursorLocation(Rectangle area)
 	{
@@ -423,10 +406,8 @@ public class IMContext : ObjectG
 	 * to display feedback. If use_preedit is FALSE (default
 	 * is TRUE), then the IM context may use some other method to display
 	 * feedback, such as displaying it in a child of the root window.
-	 * context:
-	 *  a GtkIMContext
-	 * use_preedit:
-	 *  whether the IM context should use the preedit string.
+	 * Params:
+	 * usePreedit =  whether the IM context should use the preedit string.
 	 */
 	public void setUsePreedit(int usePreedit)
 	{
@@ -439,16 +420,12 @@ public class IMContext : ObjectG
 	 * string. This function is expected to be called in response to the
 	 * GtkIMContext::retrieve_surrounding signal, and will likely have no
 	 * effect if called at other times.
-	 * context:
-	 *  a GtkIMContext
-	 * text:
-	 *  text surrounding the insertion point, as UTF-8.
+	 * Params:
+	 * text =  text surrounding the insertion point, as UTF-8.
 	 *  the preedit string should not be included within
 	 *  text.
-	 * len:
-	 *  the length of text, or -1 if text is nul-terminated
-	 * cursor_index:
-	 *  the byte index of the insertion cursor within text.
+	 * len =  the length of text, or -1 if text is nul-terminated
+	 * cursorIndex =  the byte index of the insertion cursor within text.
 	 */
 	public void setSurrounding(char[] text, int len, int cursorIndex)
 	{
@@ -468,19 +445,14 @@ public class IMContext : ObjectG
 	 * gtk_im_context_set_surrounding(). Note that there is no obligation
 	 * for a widget to respond to the ::retrieve_surrounding signal, so input
 	 * methods must be prepared to function without context.
-	 * context:
-	 *  a GtkIMContext
-	 * text:
-	 *  location to store a UTF-8 encoded string of text
+	 * Params:
+	 * text =  location to store a UTF-8 encoded string of text
 	 *  holding context around the insertion point.
 	 *  If the function returns TRUE, then you must free
 	 *  the result stored in this location with g_free().
-	 * cursor_index:
-	 *  location to store byte index of the insertion cursor
+	 * cursorIndex =  location to store byte index of the insertion cursor
 	 *  within text.
-	 * Returns:
-	 *  TRUE if surrounding text was provided; in this case
-	 *  you must free the result stored in *text.
+	 * Returns: TRUE if surrounding text was provided; in this case you must free the result stored in *text.
 	 */
 	public int getSurrounding(char** text, int* cursorIndex)
 	{
@@ -503,25 +475,11 @@ public class IMContext : ObjectG
 	 * This function is used by an input method that wants to make
 	 * subsitutions in the existing text in response to new input. It is
 	 * not useful for applications.
-	 * context:
-	 *  a GtkIMContext
-	 * offset:
-	 *  offset from cursor position in chars;
+	 * Params:
+	 * offset =  offset from cursor position in chars;
 	 *  a negative value means start before the cursor.
-	 * n_chars:
-	 *  number of characters to delete.
-	 * Returns:
-	 *  TRUE if the signal was handled.
-	 * Signal Details
-	 * The "commit" signal
-	 * void user_function (GtkIMContext *imcontext,
-	 *  gchar *arg1,
-	 *  gpointer user_data) : Run Last
-	 * imcontext:
-	 * the object which received the signal.
-	 * arg1:
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * nChars =  number of characters to delete.
+	 * Returns: TRUE if the signal was handled.Signal DetailsThe "commit" signalvoid user_function (GtkIMContext *imcontext, gchar *arg1, gpointer user_data) : Run Last
 	 */
 	public int deleteSurrounding(int offset, int nChars)
 	{

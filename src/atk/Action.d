@@ -144,12 +144,9 @@ public class Action
 	
 	/**
 	 * Perform the specified action on the object.
-	 * action:
-	 *  a GObject instance that implements AtkActionIface
-	 * i:
-	 *  the action index corresponding to the action to be performed
-	 * Returns:
-	 *  TRUE if success, FALSE otherwise
+	 * Params:
+	 * i =  the action index corresponding to the action to be performed
+	 * Returns: TRUE if success, FALSE otherwise
 	 */
 	public int doAction(int i)
 	{
@@ -161,11 +158,7 @@ public class Action
 	 * Gets the number of accessible actions available on the object.
 	 * If there are more than one, the first one is considered the
 	 * "default" action of the object.
-	 * action:
-	 *  a GObject instance that implements AtkActionIface
-	 * Returns:
-	 *  a the number of actions, or 0 if action does not
-	 * implement this interface.
+	 * Returns: a the number of actions, or 0 if action does notimplement this interface.
 	 */
 	public int getNActions()
 	{
@@ -175,13 +168,9 @@ public class Action
 	
 	/**
 	 * Returns a description of the specified action of the object.
-	 * action:
-	 *  a GObject instance that implements AtkActionIface
-	 * i:
-	 *  the action index corresponding to the action to be performed
-	 * Returns:
-	 * a description string, or NULL
-	 * if action does not implement this interface.
+	 * Params:
+	 * i =  the action index corresponding to the action to be performed
+	 * Returns:a description string, or NULLif action does not implement this interface.
 	 */
 	public char[] getDescription(int i)
 	{
@@ -203,13 +192,9 @@ public class Action
 	 * reported action is actually 'bound' to a nontrivial user event;
 	 * i.e. the result of some actions via atk_action_do_action() may be
 	 * NIL.
-	 * action:
-	 *  a GObject instance that implements AtkActionIface
-	 * i:
-	 *  the action index corresponding to the action to be performed
-	 * Returns:
-	 * a name string, or NULL
-	 * if action does not implement this interface.
+	 * Params:
+	 * i =  the action index corresponding to the action to be performed
+	 * Returns:a name string, or NULLif action does not implement this interface.
 	 */
 	public char[] getName(int i)
 	{
@@ -219,13 +204,9 @@ public class Action
 	
 	/**
 	 * Returns the localized name of the specified action of the object.
-	 * action:
-	 *  a GObject instance that implements AtkActionIface
-	 * i:
-	 *  the action index corresponding to the action to be performed
-	 * Returns:
-	 * a name string, or NULL
-	 * if action does not implement this interface.
+	 * Params:
+	 * i =  the action index corresponding to the action to be performed
+	 * Returns:a name string, or NULLif action does not implement this interface.
 	 */
 	public char[] getLocalizedName(int i)
 	{
@@ -245,13 +226,9 @@ public class Action
 	 * above string, if non-empty, represents a keyboard shortcut which
 	 * invokes the same action without posting the component or its
 	 * enclosing menus or dialogs.
-	 * action:
-	 *  a GObject instance that implements AtkActionIface
-	 * i:
-	 *  the action index corresponding to the action to be performed
-	 * Returns:
-	 * a string representing the available keybindings, or NULL
-	 * if there is no keybinding for this action.
+	 * Params:
+	 * i =  the action index corresponding to the action to be performed
+	 * Returns:a string representing the available keybindings, or NULLif there is no keybinding for this action.
 	 */
 	public char[] getKeybinding(int i)
 	{
@@ -261,14 +238,10 @@ public class Action
 	
 	/**
 	 * Sets a description of the specified action of the object.
-	 * action:
-	 *  a GObject instance that implements AtkActionIface
-	 * i:
-	 *  the action index corresponding to the action to be performed
-	 * desc:
-	 *  the description to be assigned to this action
-	 * Returns:
-	 *  a gboolean representing if the description was successfully set;
+	 * Params:
+	 * i =  the action index corresponding to the action to be performed
+	 * desc =  the description to be assigned to this action
+	 * Returns: a gboolean representing if the description was successfully set;
 	 */
 	public int setDescription(int i, char[] desc)
 	{

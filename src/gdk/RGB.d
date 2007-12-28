@@ -87,7 +87,7 @@ private import gdk.Visual;
  * possible, handling issues such as colormaps, visuals, dithering,
  * temporary buffers, and so on. Most code should use the higher-level
  * GdkPixbuf features in place of this module; for example,
- * gdk_pixbuf_render_to_drawable() uses GdkRGB in its implementation.
+ * gdk_draw_pixbuf() uses GdkRGB in its implementation.
  * GdkRGB allocates a color cube to use when rendering images. You can
  * set the threshold for installing colormaps with
  * gdk_rgb_set_min_colors(). The default is 5x5x5 (125). If a colorcube
@@ -104,6 +104,10 @@ private import gdk.Visual;
  * away with ignoring the colormap and visual - a colormap is always
  * created in grayscale and direct color modes, and the visual is changed
  * in cases where a "better" visual than the default is available.
+ * If GDK is built with the Sun mediaLib library, the GdkRGB functions are
+ * accelerated using mediaLib, which provides hardware acceleration on Intel,
+ * AMD, and Sparc chipsets. If desired, mediaLib support can be turned off
+ * by setting the GDK_DISABLE_MEDIALIB environment variable.
  * Example4.A simple example program using GdkRGB
  * #include <gtk/gtk.h>
  * #define IMAGE_WIDTH	256
@@ -182,25 +186,17 @@ public class RGB
 	 * the pixel (x + i, y + j) is colored with red value rgb_buf[j *
 	 * rowstride + i * 3], green value rgb_buf[j * rowstride + i * 3 +
 	 * 1], and blue value rgb_buf[j * rowstride + i * 3 + 2].
-	 * drawable:
-	 * The GdkDrawable to draw in (usually a GdkWindow).
-	 * gc:
-	 * The graphics context (all GDK drawing operations require one; its
+	 * Params:
+	 * drawable = The GdkDrawable to draw in (usually a GdkWindow).
+	 * gc = The graphics context (all GDK drawing operations require one; its
 	 * contents are ignored).
-	 * x:
-	 * The x coordinate of the top-left corner in the drawable.
-	 * y:
-	 * The y coordinate of the top-left corner in the drawable.
-	 * width:
-	 * The width of the rectangle to be drawn.
-	 * height:
-	 * The height of the rectangle to be drawn.
-	 * dith:
-	 * A GdkRgbDither value, selecting the desired dither mode.
-	 * rgb_buf:
-	 * The pixel data, represented as packed 24-bit data.
-	 * rowstride:
-	 * The number of bytes from the start of one row in rgb_buf to the
+	 * x = The x coordinate of the top-left corner in the drawable.
+	 * y = The y coordinate of the top-left corner in the drawable.
+	 * width = The width of the rectangle to be drawn.
+	 * height = The height of the rectangle to be drawn.
+	 * dith = A GdkRgbDither value, selecting the desired dither mode.
+	 * rgbBuf = The pixel data, represented as packed 24-bit data.
+	 * rowstride = The number of bytes from the start of one row in rgb_buf to the
 	 * start of the next.
 	 */
 	public static void drawRgbImage(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* rgbBuf, int rowstride)
@@ -219,29 +215,19 @@ public class RGB
 	 * Setting the dither alignment correctly allows updating of small parts
 	 * of the screen while avoiding visible "seams" between the different
 	 * dither textures.
-	 * drawable:
-	 * The GdkDrawable to draw in (usually a GdkWindow).
-	 * gc:
-	 * The graphics context.
-	 * x:
-	 * The x coordinate of the top-left corner in the drawable.
-	 * y:
-	 * The y coordinate of the top-left corner in the drawable.
-	 * width:
-	 * The width of the rectangle to be drawn.
-	 * height:
-	 * The height of the rectangle to be drawn.
-	 * dith:
-	 * A GdkRgbDither value, selecting the desired dither mode.
-	 * rgb_buf:
-	 * The pixel data, represented as packed 24-bit data.
-	 * rowstride:
-	 * The number of bytes from the start of one row in rgb_buf to the
+	 * Params:
+	 * drawable = The GdkDrawable to draw in (usually a GdkWindow).
+	 * gc = The graphics context.
+	 * x = The x coordinate of the top-left corner in the drawable.
+	 * y = The y coordinate of the top-left corner in the drawable.
+	 * width = The width of the rectangle to be drawn.
+	 * height = The height of the rectangle to be drawn.
+	 * dith = A GdkRgbDither value, selecting the desired dither mode.
+	 * rgbBuf = The pixel data, represented as packed 24-bit data.
+	 * rowstride = The number of bytes from the start of one row in rgb_buf to the
 	 * start of the next.
-	 * xdith:
-	 * An x offset for dither alignment.
-	 * ydith:
-	 * A y offset for dither alignment.
+	 * xdith = An x offset for dither alignment.
+	 * ydith = A y offset for dither alignment.
 	 */
 	public static void drawRgbImageDithalign(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* rgbBuf, int rowstride, int xdith, int ydith)
 	{
@@ -252,27 +238,18 @@ public class RGB
 	/**
 	 * Draws an indexed image in the drawable, using a GdkRgbCmap to assign
 	 * actual colors to the color indices.
-	 * drawable:
-	 * The GdkDrawable to draw in (usually a GdkWindow).
-	 * gc:
-	 * The graphics context.
-	 * x:
-	 * The x coordinate of the top-left corner in the drawable.
-	 * y:
-	 * The y coordinate of the top-left corner in the drawable.
-	 * width:
-	 * The width of the rectangle to be drawn.
-	 * height:
-	 * The height of the rectangle to be drawn.
-	 * dith:
-	 * A GdkRgbDither value, selecting the desired dither mode.
-	 * buf:
-	 * The pixel data, represented as 8-bit color indices.
-	 * rowstride:
-	 * The number of bytes from the start of one row in buf to the
+	 * Params:
+	 * drawable = The GdkDrawable to draw in (usually a GdkWindow).
+	 * gc = The graphics context.
+	 * x = The x coordinate of the top-left corner in the drawable.
+	 * y = The y coordinate of the top-left corner in the drawable.
+	 * width = The width of the rectangle to be drawn.
+	 * height = The height of the rectangle to be drawn.
+	 * dith = A GdkRgbDither value, selecting the desired dither mode.
+	 * buf = The pixel data, represented as 8-bit color indices.
+	 * rowstride = The number of bytes from the start of one row in buf to the
 	 * start of the next.
-	 * cmap:
-	 * The GdkRgbCmap used to assign colors to the color indices.
+	 * cmap = The GdkRgbCmap used to assign colors to the color indices.
 	 */
 	public static void drawIndexedImage(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride, GdkRgbCmap* cmap)
 	{
@@ -282,24 +259,16 @@ public class RGB
 	
 	/**
 	 * Draws a grayscale image in the drawable.
-	 * drawable:
-	 * The GdkDrawable to draw in (usually a GdkWindow).
-	 * gc:
-	 * The graphics context.
-	 * x:
-	 * The x coordinate of the top-left corner in the drawable.
-	 * y:
-	 * The y coordinate of the top-left corner in the drawable.
-	 * width:
-	 * The width of the rectangle to be drawn.
-	 * height:
-	 * The height of the rectangle to be drawn.
-	 * dith:
-	 * A GdkRgbDither value, selecting the desired dither mode.
-	 * buf:
-	 * The pixel data, represented as 8-bit gray values.
-	 * rowstride:
-	 * The number of bytes from the start of one row in buf to the
+	 * Params:
+	 * drawable = The GdkDrawable to draw in (usually a GdkWindow).
+	 * gc = The graphics context.
+	 * x = The x coordinate of the top-left corner in the drawable.
+	 * y = The y coordinate of the top-left corner in the drawable.
+	 * width = The width of the rectangle to be drawn.
+	 * height = The height of the rectangle to be drawn.
+	 * dith = A GdkRgbDither value, selecting the desired dither mode.
+	 * buf = The pixel data, represented as 8-bit gray values.
+	 * rowstride = The number of bytes from the start of one row in buf to the
 	 * start of the next.
 	 */
 	public static void drawGrayImage(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride)
@@ -316,24 +285,16 @@ public class RGB
 	 * gains in practice. In my experience, the performance gain from having
 	 * pixels aligned to 32-bit boundaries is cancelled out by the increased
 	 * memory bandwidth.
-	 * drawable:
-	 * The GdkDrawable to draw in (usually a GdkWindow).
-	 * gc:
-	 * The graphics context.
-	 * x:
-	 * The x coordinate of the top-left corner in the drawable.
-	 * y:
-	 * The y coordinate of the top-left corner in the drawable.
-	 * width:
-	 * The width of the rectangle to be drawn.
-	 * height:
-	 * The height of the rectangle to be drawn.
-	 * dith:
-	 * A GdkRgbDither value, selecting the desired dither mode.
-	 * buf:
-	 * The pixel data, represented as padded 32-bit data.
-	 * rowstride:
-	 * The number of bytes from the start of one row in buf to the
+	 * Params:
+	 * drawable = The GdkDrawable to draw in (usually a GdkWindow).
+	 * gc = The graphics context.
+	 * x = The x coordinate of the top-left corner in the drawable.
+	 * y = The y coordinate of the top-left corner in the drawable.
+	 * width = The width of the rectangle to be drawn.
+	 * height = The height of the rectangle to be drawn.
+	 * dith = A GdkRgbDither value, selecting the desired dither mode.
+	 * buf = The pixel data, represented as padded 32-bit data.
+	 * rowstride = The number of bytes from the start of one row in buf to the
 	 * start of the next.
 	 */
 	public static void drawRgb32_Image(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride)
@@ -345,28 +306,18 @@ public class RGB
 	/**
 	 * Like gdk_draw_rgb_32_image(), but allows you to specify the dither
 	 * offsets. See gdk_draw_rgb_image_dithalign() for more details.
-	 * drawable:
-	 *  a GdkDrawable
-	 * gc:
-	 *  a GdkGC
-	 * x:
-	 *  X coordinate on drawable where image should go
-	 * y:
-	 *  Y coordinate on drawable where image should go
-	 * width:
-	 *  width of area of image to draw
-	 * height:
-	 *  height of area of image to draw
-	 * dith:
-	 *  dithering mode
-	 * buf:
-	 *  RGB image data
-	 * rowstride:
-	 *  rowstride of RGB image data
-	 * xdith:
-	 *  X dither offset
-	 * ydith:
-	 *  Y dither offset
+	 * Params:
+	 * drawable =  a GdkDrawable
+	 * gc =  a GdkGC
+	 * x =  X coordinate on drawable where image should go
+	 * y =  Y coordinate on drawable where image should go
+	 * width =  width of area of image to draw
+	 * height =  height of area of image to draw
+	 * dith =  dithering mode
+	 * buf =  RGB image data
+	 * rowstride =  rowstride of RGB image data
+	 * xdith =  X dither offset
+	 * ydith =  Y dither offset
 	 */
 	public static void drawRgb32_ImageDithalign(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride, int xdith, int ydith)
 	{
@@ -380,12 +331,10 @@ public class RGB
 	 * RGB colors. If n_colors is less than 256, then images containing
 	 * color values greater than or equal to n_colors will produce undefined
 	 * results, including possibly segfaults.
-	 * colors:
-	 * The colors, represented as 0xRRGGBB integer values.
-	 * n_colors:
-	 * The number of colors in the cmap.
-	 * Returns:
-	 * The newly created GdkRgbCmap
+	 * Params:
+	 * colors = The colors, represented as 0xRRGGBB integer values.
+	 * nColors = The number of colors in the cmap.
+	 * Returns:The newly created GdkRgbCmap
 	 */
 	public static GdkRgbCmap* rgbCmapNew(uint* colors, int nColors)
 	{
@@ -395,8 +344,8 @@ public class RGB
 	
 	/**
 	 * Frees the memory associated with a GdkRgbCmap created by gdk_rgb_cmap_new().
-	 * cmap:
-	 * The GdkRgbCmap to free.
+	 * Params:
+	 * cmap = The GdkRgbCmap to free.
 	 */
 	public static void rgbCmapFree(GdkRgbCmap* cmap)
 	{
@@ -410,10 +359,9 @@ public class RGB
 	 * gdk_rgb_gc_set_foreground is deprecated and should not be used in newly-written code.
 	 * Sets the foreground color in gc to the specified color (or the
 	 * closest approximation, in the case of limited visuals).
-	 * gc:
-	 * The GdkGC to modify.
-	 * rgb:
-	 * The color, represented as a 0xRRGGBB integer value.
+	 * Params:
+	 * gc = The GdkGC to modify.
+	 * rgb = The color, represented as a 0xRRGGBB integer value.
 	 */
 	public static void rgbGcSetForeground(GC gc, uint rgb)
 	{
@@ -426,10 +374,9 @@ public class RGB
 	 * gdk_rgb_gc_set_background is deprecated and should not be used in newly-written code.
 	 * Sets the background color in gc to the specified color (or the
 	 * closest approximation, in the case of limited visuals).
-	 * gc:
-	 * The GdkGC to modify.
-	 * rgb:
-	 * The color, represented as a 0xRRGGBB integer value.
+	 * Params:
+	 * gc = The GdkGC to modify.
+	 * rgb = The color, represented as a 0xRRGGBB integer value.
 	 */
 	public static void rgbGcSetBackground(GC gc, uint rgb)
 	{
@@ -443,10 +390,9 @@ public class RGB
 	 * Finds the X pixel closest in color to the rgb color specified. This
 	 * value may be used to set the pixel field of
 	 * a GdkColor struct.
-	 * rgb:
-	 * The color, represented as a 0xRRGGBB integer value.
-	 * Returns:
-	 * The X pixel value.
+	 * Params:
+	 * rgb = The color, represented as a 0xRRGGBB integer value.
+	 * Returns:The X pixel value.
 	 */
 	public static uint rgbXpixelFromRgb(uint rgb)
 	{
@@ -467,10 +413,9 @@ public class RGB
 	 * gdk_gc_set_rgb_fg_color() or gdk_gc_set_rgb_bg_color(), which
 	 * do not expect pixel to be initialized in advance. If you use those
 	 * functions, there's no need for gdk_rgb_find_color().
-	 * colormap:
-	 *  a GdkColormap
-	 * color:
-	 *  a GdkColor
+	 * Params:
+	 * colormap =  a GdkColormap
+	 * color =  a GdkColor
 	 */
 	public static void rgbFindColor(Colormap colormap, Color color)
 	{
@@ -485,8 +430,8 @@ public class RGB
 	 * sufficient cube cannot be allocated.
 	 * A private colormap has more colors, leading to better quality display,
 	 * but also leads to the dreaded "colormap flashing" effect.
-	 * install:
-	 * TRUE to set install mode.
+	 * Params:
+	 * install = TRUE to set install mode.
 	 */
 	public static void rgbSetInstall(int install)
 	{
@@ -499,8 +444,8 @@ public class RGB
 	 * GdkRGB tries to allocate the largest color cube it can. If it can't
 	 * allocate a color cube at least as large as min_colors, it installs a
 	 * private colormap.
-	 * min_colors:
-	 * The minimum number of colors accepted.
+	 * Params:
+	 * minColors = The minimum number of colors accepted.
 	 */
 	public static void rgbSetMinColors(int minColors)
 	{
@@ -515,8 +460,7 @@ public class RGB
 	 * it's simply the visual GdkRGB would have chosen as the optimal one
 	 * in those previous versions. GdkRGB can now render to drawables with
 	 * any visual.
-	 * Returns:
-	 *  The GdkVisual chosen by GdkRGB.
+	 * Returns: The GdkVisual chosen by GdkRGB.
 	 */
 	public static Visual rgbGetVisual()
 	{
@@ -530,8 +474,7 @@ public class RGB
 	 * data to one colormap and visual, but in the current version it can
 	 * render to any colormap and visual. So there's no need to call this
 	 * function.
-	 * Returns:
-	 *  the preferred colormap
+	 * Returns: the preferred colormap
 	 */
 	public static Colormap rgbGetColormap()
 	{
@@ -545,8 +488,7 @@ public class RGB
 	 * useful for presenting a user interface choice to the user about which
 	 * dither mode is desired; if the display is not ditherable, it may make
 	 * sense to gray out or hide the corresponding UI widget.
-	 * Returns:
-	 * TRUE if the preferred visual is ditherable.
+	 * Returns:TRUE if the preferred visual is ditherable.
 	 */
 	public static int rgbDitherable()
 	{
@@ -559,10 +501,9 @@ public class RGB
 	 * function may be useful for presenting a user interface choice to the user
 	 * about which dither mode is desired; if the display is not ditherable, it may
 	 * make sense to gray out or hide the corresponding UI widget.
-	 * cmap:
-	 * a GdkColormap
-	 * Returns:
-	 * TRUE if the visual associated with cmap is ditherable.
+	 * Params:
+	 * cmap = a GdkColormap
+	 * Returns:TRUE if the visual associated with cmap is ditherable.
 	 */
 	public static int rgbColormapDitherable(Colormap cmap)
 	{
@@ -572,14 +513,8 @@ public class RGB
 	
 	/**
 	 * Sets the "verbose" flag. This is generally only useful for debugging.
-	 * verbose:
-	 * TRUE if verbose messages are desired.
-	 * See Also
-	 * GdkColor
-	 * The underlying GDK mechanism for allocating
-	 * colors.
-	 * GdkPixbuf and gdk_pixbuf_render_to_drawable()
-	 * Higher-level image handling.
+	 * Params:
+	 * verbose = TRUE if verbose messages are desired.
 	 */
 	public static void rgbSetVerbose(int verbose)
 	{

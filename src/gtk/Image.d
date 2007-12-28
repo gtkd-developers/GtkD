@@ -81,6 +81,7 @@ private import gdk.Pixmap;
 
 
 
+private import gtk.Misc;
 
 /**
  * Description
@@ -106,7 +107,7 @@ private import gdk.Pixmap;
  * so by default does not receive events. If you want to receive events
  * on the image, such as button clicks, place the image inside a
  * GtkEventBox, then connect to the event signals on the event box.
- * Example2.Handling button press events on a
+ * Example9.Handling button press events on a
  * GtkImage.
  *  static gboolean
  *  button_press_callback (GtkWidget *event_box,
@@ -149,7 +150,6 @@ private import gdk.Pixmap;
  * can then be loaded into a GdkPixbuf using
  * gdk_pixbuf_new_from_inline().
  */
-private import gtk.Misc;
 public class Image : Misc
 {
 	
@@ -206,10 +206,9 @@ public class Image : Misc
 	 * icon name isn't known, the image will be empty.
 	 * You can register your own stock icon names, see
 	 * gtk_icon_factory_add_default() and gtk_icon_factory_add().
-	 * stock_id:
-	 *  a stock icon name
-	 * size:
-	 *  a stock icon size
+	 * Params:
+	 *  StockID = a stock icon name
+	 *  size = a stock icon size
 	 * Returns:
 	 *  a new GtkImage displaying the stock icon
 	 */
@@ -223,14 +222,12 @@ public class Image : Misc
 	 * Creates a GtkImage displaying an icon from the current icon theme.
 	 * If the icon name isn't known, a "broken image" icon will be
 	 * displayed instead. If the current icon theme is changed, the icon
-	 * will be updated appropriately.
-	 * icon_name:
-	 *  an icon name
-	 * size:
-	 *  a stock icon size
+	 * will be updated appropriately. Since 2.6
+	 * Params:
+	 *  iconName = an icon name
+	 *  size = a stock icon size
 	 * Returns:
 	 *  a new GtkImage displaying the themed icon
-	 * Since 2.6
 	 */
 	public this (char[] iconName, GtkIconSize size)
 	{
@@ -248,12 +245,9 @@ public class Image : Misc
 	 * Gets the icon set and size being displayed by the GtkImage.
 	 * The storage type of the image must be GTK_IMAGE_EMPTY or
 	 * GTK_IMAGE_ICON_SET (see gtk_image_get_storage_type()).
-	 * image:
-	 *  a GtkImage
-	 * icon_set:
-	 *  location to store a GtkIconSet
-	 * size:
-	 *  location to store a stock icon size
+	 * Params:
+	 * iconSet =  location to store a GtkIconSet
+	 * size =  location to store a stock icon size
 	 */
 	public void getIconSet(GtkIconSet** iconSet, GtkIconSize* size)
 	{
@@ -267,12 +261,9 @@ public class Image : Misc
 	 * GTK_IMAGE_IMAGE (see gtk_image_get_storage_type()).
 	 * The caller of this function does not own a reference to the
 	 * returned image and mask.
-	 * image:
-	 *  a GtkImage
-	 * gdk_image:
-	 *  return location for a GtkImage
-	 * mask:
-	 *  return location for a GdkBitmap
+	 * Params:
+	 * gdkImage =  return location for a GtkImage
+	 * mask =  return location for a GdkBitmap
 	 */
 	public void getImage(GdkImage** gdkImage, GdkBitmap** mask)
 	{
@@ -286,10 +277,7 @@ public class Image : Misc
 	 * GTK_IMAGE_PIXBUF (see gtk_image_get_storage_type()).
 	 * The caller of this function does not own a reference to the
 	 * returned pixbuf.
-	 * image:
-	 *  a GtkImage
-	 * Returns:
-	 *  the displayed pixbuf, or NULL if the image is empty
+	 * Returns: the displayed pixbuf, or NULL if the image is empty
 	 */
 	public Pixbuf getPixbuf()
 	{
@@ -303,12 +291,9 @@ public class Image : Misc
 	 * GTK_IMAGE_PIXMAP (see gtk_image_get_storage_type()).
 	 * The caller of this function does not own a reference to the
 	 * returned pixmap and mask.
-	 * image:
-	 *  a GtkImage
-	 * pixmap:
-	 *  location to store the pixmap, or NULL
-	 * mask:
-	 *  location to store the mask, or NULL
+	 * Params:
+	 * pixmap =  location to store the pixmap, or NULL
+	 * mask =  location to store the mask, or NULL
 	 */
 	public void getPixmap(GdkPixmap** pixmap, GdkBitmap** mask)
 	{
@@ -322,12 +307,9 @@ public class Image : Misc
 	 * GTK_IMAGE_STOCK (see gtk_image_get_storage_type()).
 	 * The returned string is owned by the GtkImage and should not
 	 * be freed.
-	 * image:
-	 *  a GtkImage
-	 * stock_id:
-	 *  place to store a stock icon name
-	 * size:
-	 *  place to store a stock icon size
+	 * Params:
+	 * stockId =  place to store a stock icon name
+	 * size =  place to store a stock icon size
 	 */
 	public void getStock(char** stockId, GtkIconSize* size)
 	{
@@ -341,10 +323,7 @@ public class Image : Misc
 	 * GTK_IMAGE_ANIMATION (see gtk_image_get_storage_type()).
 	 * The caller of this function does not own a reference to the
 	 * returned animation.
-	 * image:
-	 *  a GtkImage
-	 * Returns:
-	 *  the displayed animation, or NULL if the image is empty
+	 * Returns: the displayed animation, or NULL if the image is empty
 	 */
 	public GdkPixbufAnimation* getAnimation()
 	{
@@ -358,13 +337,10 @@ public class Image : Misc
 	 * GTK_IMAGE_ICON_NAME (see gtk_image_get_storage_type()).
 	 * The returned string is owned by the GtkImage and should not
 	 * be freed.
-	 * image:
-	 *  a GtkImage
-	 * icon_name:
-	 *  place to store an icon name
-	 * size:
-	 *  place to store an icon size
 	 * Since 2.6
+	 * Params:
+	 * iconName =  place to store an icon name
+	 * size =  place to store an icon size
 	 */
 	public void getIconName(char** iconName, GtkIconSize* size)
 	{
@@ -376,10 +352,7 @@ public class Image : Misc
 	 * Gets the type of representation being used by the GtkImage
 	 * to store image data. If the GtkImage has no image data,
 	 * the return value will be GTK_IMAGE_EMPTY.
-	 * image:
-	 *  a GtkImage
-	 * Returns:
-	 *  image representation being used
+	 * Returns: image representation being used
 	 */
 	public GtkImageType getStorageType()
 	{
@@ -401,10 +374,8 @@ public class Image : Misc
 	 * The storage type (gtk_image_get_storage_type()) of the returned
 	 * image is not defined, it will be whatever is appropriate for
 	 * displaying the file.
-	 * filename:
-	 *  a filename
-	 * Returns:
-	 *  a new GtkImage
+	 * Params:
+	 * filename =  a filename
 	 */
 	public this (char[] filename)
 	{
@@ -423,12 +394,9 @@ public class Image : Misc
 	 * The GtkImage does not assume a reference to the
 	 * icon set; you still need to unref it if you own references.
 	 * GtkImage will add its own reference rather than adopting yours.
-	 * icon_set:
-	 *  a GtkIconSet
-	 * size:
-	 *  a stock icon size
-	 * Returns:
-	 *  a new GtkImage
+	 * Params:
+	 * iconSet =  a GtkIconSet
+	 * size =  a stock icon size
 	 */
 	public this (GtkIconSet* iconSet, GtkIconSize size)
 	{
@@ -439,16 +407,12 @@ public class Image : Misc
 	/**
 	 * Creates a GtkImage widget displaying a image with a mask.
 	 * A GdkImage is a client-side image buffer in the pixel format of the
-	 * current display.
-	 * The GtkImage does not assume a reference to the
+	 * current display. The GtkImage does not assume a reference to the
 	 * image or mask; you still need to unref them if you own references.
 	 * GtkImage will add its own reference rather than adopting yours.
-	 * image:
-	 *  a GdkImage, or NULL
-	 * mask:
-	 *  a GdkBitmap, or NULL
-	 * Returns:
-	 *  a new GtkImage
+	 * Params:
+	 * image =  a GdkImage, or NULL
+	 * mask =  a GdkBitmap, or NULL
 	 */
 	public this (ImageGdk image, Bitmap mask)
 	{
@@ -462,12 +426,10 @@ public class Image : Misc
 	 * pixbuf; you still need to unref it if you own references.
 	 * GtkImage will add its own reference rather than adopting yours.
 	 * Note that this function just creates an GtkImage from the pixbuf. The
-	 * GtkImage created will not react to state changes. Should you want that, you
-	 * should use gtk_image_new_from_icon_set().
-	 * pixbuf:
-	 *  a GdkPixbuf, or NULL
-	 * Returns:
-	 *  a new GtkImage
+	 * GtkImage created will not react to state changes. Should you want that,
+	 * you should use gtk_image_new_from_icon_set().
+	 * Params:
+	 * pixbuf =  a GdkPixbuf, or NULL
 	 */
 	public this (Pixbuf pixbuf)
 	{
@@ -481,12 +443,9 @@ public class Image : Misc
 	 * current display. The GtkImage does not assume a reference to the
 	 * pixmap or mask; you still need to unref them if you own references.
 	 * GtkImage will add its own reference rather than adopting yours.
-	 * pixmap:
-	 *  a GdkPixmap, or NULL
-	 * mask:
-	 *  a GdkBitmap, or NULL
-	 * Returns:
-	 *  a new GtkImage
+	 * Params:
+	 * pixmap =  a GdkPixmap, or NULL
+	 * mask =  a GdkBitmap, or NULL
 	 */
 	public this (Pixmap pixmap, Bitmap mask)
 	{
@@ -504,10 +463,8 @@ public class Image : Misc
 	 * G_PRIORITY_DEFAULT. When using animations to indicate busyness,
 	 * keep in mind that the animation will only be shown if the main loop
 	 * is not busy with something that has a higher priority.
-	 * animation:
-	 *  an animation
-	 * Returns:
-	 *  a new GtkImage widget
+	 * Params:
+	 * animation =  an animation
 	 */
 	public this (GdkPixbufAnimation* animation)
 	{
@@ -518,10 +475,8 @@ public class Image : Misc
 	
 	/**
 	 * See gtk_image_new_from_file() for details.
-	 * image:
-	 *  a GtkImage
-	 * filename:
-	 *  a filename or NULL
+	 * Params:
+	 * filename =  a filename or NULL
 	 */
 	public void setFromFile(char[] filename)
 	{
@@ -531,12 +486,9 @@ public class Image : Misc
 	
 	/**
 	 * See gtk_image_new_from_icon_set() for details.
-	 * image:
-	 *  a GtkImage
-	 * icon_set:
-	 *  a GtkIconSet
-	 * size:
-	 *  a stock icon size
+	 * Params:
+	 * iconSet =  a GtkIconSet
+	 * size =  a stock icon size
 	 */
 	public void setFromIconSet(GtkIconSet* iconSet, GtkIconSize size)
 	{
@@ -546,12 +498,9 @@ public class Image : Misc
 	
 	/**
 	 * See gtk_image_new_from_image() for details.
-	 * image:
-	 *  a GtkImage
-	 * gdk_image:
-	 *  a GdkImage or NULL
-	 * mask:
-	 *  a GdkBitmap or NULL
+	 * Params:
+	 * gdkImage =  a GdkImage or NULL
+	 * mask =  a GdkBitmap or NULL
 	 */
 	public void setFromImage(ImageGdk gdkImage, Bitmap mask)
 	{
@@ -561,10 +510,8 @@ public class Image : Misc
 	
 	/**
 	 * See gtk_image_new_from_pixbuf() for details.
-	 * image:
-	 *  a GtkImage
-	 * pixbuf:
-	 *  a GdkPixbuf or NULL
+	 * Params:
+	 * pixbuf =  a GdkPixbuf or NULL
 	 */
 	public void setFromPixbuf(Pixbuf pixbuf)
 	{
@@ -574,12 +521,9 @@ public class Image : Misc
 	
 	/**
 	 * See gtk_image_new_from_pixmap() for details.
-	 * image:
-	 *  a GtkImage
-	 * pixmap:
-	 *  a GdkPixmap or NULL
-	 * mask:
-	 *  a GdkBitmap or NULL
+	 * Params:
+	 * pixmap =  a GdkPixmap or NULL
+	 * mask =  a GdkBitmap or NULL
 	 */
 	public void setFromPixmap(Pixmap pixmap, Bitmap mask)
 	{
@@ -589,12 +533,9 @@ public class Image : Misc
 	
 	/**
 	 * See gtk_image_new_from_stock() for details.
-	 * image:
-	 *  a GtkImage
-	 * stock_id:
-	 *  a stock icon name
-	 * size:
-	 *  a stock icon size
+	 * Params:
+	 * stockId =  a stock icon name
+	 * size =  a stock icon size
 	 */
 	public void setFromStock(char[] stockId, GtkIconSize size)
 	{
@@ -605,10 +546,8 @@ public class Image : Misc
 	/**
 	 * Causes the GtkImage to display the given animation (or display
 	 * nothing, if you set the animation to NULL).
-	 * image:
-	 *  a GtkImage
-	 * animation:
-	 *  the GdkPixbufAnimation
+	 * Params:
+	 * animation =  the GdkPixbufAnimation
 	 */
 	public void setFromAnimation(GdkPixbufAnimation* animation)
 	{
@@ -618,13 +557,10 @@ public class Image : Misc
 	
 	/**
 	 * See gtk_image_new_from_icon_name() for details.
-	 * image:
-	 *  a GtkImage
-	 * icon_name:
-	 *  an icon name
-	 * size:
-	 *  an icon size
 	 * Since 2.6
+	 * Params:
+	 * iconName =  an icon name
+	 * size =  an icon size
 	 */
 	public void setFromIconName(char[] iconName, GtkIconSize size)
 	{
@@ -634,8 +570,6 @@ public class Image : Misc
 	
 	/**
 	 * Resets the image to be empty.
-	 * image:
-	 *  a GtkImage
 	 * Since 2.8
 	 */
 	public void clear()
@@ -646,8 +580,6 @@ public class Image : Misc
 	
 	/**
 	 * Creates a new empty GtkImage widget.
-	 * Returns:
-	 *  a newly created GtkImage widget.
 	 */
 	public this ()
 	{
@@ -659,12 +591,9 @@ public class Image : Misc
 	 * Warning
 	 * gtk_image_set is deprecated and should not be used in newly-written code.
 	 * Sets the GtkImage.
-	 * image:
-	 * a GtkImage
-	 * val:
-	 * a GdkImage
-	 * mask:
-	 * a GdkBitmap that indicates which parts of the image should be transparent.
+	 * Params:
+	 * val = a GdkImage
+	 * mask = a GdkBitmap that indicates which parts of the image should be transparent.
 	 */
 	public void set(ImageGdk val, Bitmap mask)
 	{
@@ -676,12 +605,9 @@ public class Image : Misc
 	 * Warning
 	 * gtk_image_get is deprecated and should not be used in newly-written code.
 	 * Gets the GtkImage.
-	 * image:
-	 * a GtkImage
-	 * val:
-	 * return location for a GdkImage
-	 * mask:
-	 * a GdkBitmap that indicates which parts of the image should be transparent.
+	 * Params:
+	 * val = return location for a GdkImage
+	 * mask = a GdkBitmap that indicates which parts of the image should be transparent.
 	 */
 	public void get(GdkImage** val, GdkBitmap** mask)
 	{
@@ -693,11 +619,9 @@ public class Image : Misc
 	 * Sets the pixel size to use for named icons. If the pixel size is set
 	 * to a value != -1, it is used instead of the icon size set by
 	 * gtk_image_set_from_icon_name().
-	 * image:
-	 *  a GtkImage
-	 * pixel_size:
-	 *  the new pixel size
 	 * Since 2.6
+	 * Params:
+	 * pixelSize =  the new pixel size
 	 */
 	public void setPixelSize(int pixelSize)
 	{
@@ -707,16 +631,8 @@ public class Image : Misc
 	
 	/**
 	 * Gets the pixel size used for named icons.
-	 * image:
-	 *  a GtkImage
-	 * Returns:
-	 *  the pixel size used for named icons.
 	 * Since 2.6
-	 * Property Details
-	 * The "file" property
-	 *  "file" gchararray : Read / Write
-	 * Filename to load and display.
-	 * Default value: NULL
+	 * Returns: the pixel size used for named icons.
 	 */
 	public int getPixelSize()
 	{

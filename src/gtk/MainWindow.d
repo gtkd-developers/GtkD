@@ -73,9 +73,6 @@ private import gdk.Event;
 
 
 /**
- */
-
-/**
  * A top Level window that will stop the main event cycle when it's closed.
  * Closing the last of the windows of class "MainWindow" will end the application.
  */
@@ -97,7 +94,7 @@ public class MainWindow : Window
 	
 	/**
 	 * Executed when the user tries to close the window
-	 * @return true to refuse to close the window
+	 * Returns: true to refuse to close the window
 	 */
 	protected int windowDelete(Event event, Widget widget)
 	{
@@ -113,9 +110,10 @@ public class MainWindow : Window
 	
 	/**
 	 * Allows the application to close and decide if it can exit
-	 * @param code the code reason to exit
-	 * @param force if true the application must expect to be closed even against it's will
-	 * @return false to refuse to exit
+	 * Params:
+	 *  code = the code reason to exit
+	 *  force = if true the application must expect to be closed even against it's will
+	 * Returns: false to refuse to exit
 	 */
 	protected bool exit(int code, bool force)
 	{

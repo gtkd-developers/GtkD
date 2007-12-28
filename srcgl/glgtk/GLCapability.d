@@ -64,9 +64,6 @@ private import gtkglc.glgtk;
 
 
 
-/**
- */
-
 // SNEAKY MIXIN PROBLEM:
 //
 // These need to be public imports
@@ -76,7 +73,7 @@ private import gtkglc.glgtk;
 // May as well be explicit about it:
 
 
-//public import std.stdio;
+public import std.stdio;
 public import glgtk.GLWidget;
 private import glgdk.GLDrawable;
 public import gdk.Event;
@@ -249,11 +246,7 @@ template GLCapability()
 		return consumeEvent;
 	}
 	
-	version(Tango) {
-	private import tango.core.Memory;
-} else {
 	private import std.gc;
-}
 	
 	int configureFrame(GdkEventConfigure* event, Widget widget)
 	{
@@ -262,15 +255,7 @@ template GLCapability()
 			width = event.width;
 			height = event.height;
 		}
-		version(Tango)
-		{
-			GC.disable();	
-		}
-		else 
-		{
-			std.gc.disable();	
-		}
-		
+		std.gc.disable();
 		//writefln("configureFrame 1");
 		//printf("GLCapabilityT.configureFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
@@ -306,14 +291,8 @@ template GLCapability()
 		drawable.glEnd();
 		//writefln("configureFrame 9");
 		/*** OpenGL END ***/
-		version(Tango)
-		{
-			GC.enable();	
-		}
-		else 
-		{
-			std.gc.enable();
-		}
+		
+		std.gc.enable();
 		return consumeEvent;
 	}
 	

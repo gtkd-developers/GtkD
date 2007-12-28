@@ -68,6 +68,7 @@ private import gtk.Adjustment;
 
 
 
+private import gtk.Scale;
 
 /**
  * Description
@@ -76,7 +77,6 @@ private import gtk.Adjustment;
  * The position to show the current value, and the number of decimal places
  * shown can be set using the parent GtkScale class's functions.
  */
-private import gtk.Scale;
 public class VScale : Scale
 {
 	
@@ -131,10 +131,8 @@ public class VScale : Scale
 	
 	/**
 	 * Creates a new GtkVScale.
-	 * adjustment:
-	 * the GtkAdjustment which sets the range of the scale.
-	 * Returns:
-	 * a new GtkVScale.
+	 * Params:
+	 * adjustment = the GtkAdjustment which sets the range of the scale.
 	 */
 	public this (Adjustment adjustment)
 	{
@@ -150,14 +148,10 @@ public class VScale : Scale
 	 * Note that the way in which the precision is derived works best if step
 	 * is a power of ten. If the resulting precision is not suitable for your
 	 * needs, use gtk_scale_set_digits() to correct it.
-	 * min:
-	 *  minimum value
-	 * max:
-	 *  maximum value
-	 * step:
-	 *  step increment (tick size) used with keyboard shortcuts
-	 * Returns:
-	 *  a new GtkVScale
+	 * Params:
+	 * min =  minimum value
+	 * max =  maximum value
+	 * step =  step increment (tick size) used with keyboard shortcuts
 	 */
 	public this (double min, double max, double step)
 	{

@@ -67,6 +67,7 @@ private import gobject.ObjectG;
 
 
 
+private import atk.ObjectAtk;
 
 /**
  * Description
@@ -75,7 +76,6 @@ private import gobject.ObjectG;
  * GtkWidget. One example of its use is in providing an accessible object
  * for GnomeCanvasItem in the GAIL library.
  */
-private import atk.ObjectAtk;
 public class GObjectAccessible : ObjectAtk
 {
 	
@@ -130,10 +130,9 @@ public class GObjectAccessible : ObjectAtk
 	
 	/**
 	 * Gets the accessible object for the specified obj.
-	 * obj:
-	 *  a GObject
-	 * Returns:
-	 *  a AtkObject which is the accessible object for the obj
+	 * Params:
+	 * obj =  a GObject
+	 * Returns: a AtkObject which is the accessible object for the obj
 	 */
 	public static AtkObject* _ForObject(ObjectG obj)
 	{
@@ -143,10 +142,7 @@ public class GObjectAccessible : ObjectAtk
 	
 	/**
 	 * Gets the GObject for which obj is the accessible object.
-	 * obj:
-	 *  a AtkObject
-	 * Returns:
-	 *  a GObject which is the object for which obj is the accessible objedct
+	 * Returns: a GObject which is the object for which obj is the accessible objedct
 	 */
 	public ObjectG _GetObject()
 	{

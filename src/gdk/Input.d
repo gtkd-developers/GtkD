@@ -84,20 +84,14 @@ public class Input
 	 * gdk_input_add_full is deprecated and should not be used in newly-written code.
 	 * Establish a callback when a condition becomes true on
 	 * a file descriptor.
-	 * source:
-	 * a file descriptor.
-	 * condition:
-	 * the condition.
-	 * function:
-	 * the callback function.
-	 * data:
-	 * callback data passed to function.
-	 * destroy:
-	 * callback function to call with data when the input
+	 * Params:
+	 * source = a file descriptor.
+	 * condition = the condition.
+	 * funct = the callback function.
+	 * data = callback data passed to function.
+	 * destroy = callback function to call with data when the input
 	 *  handler is removed.
-	 * Returns:
-	 * a tag that can later be used as an argument to
-	 *  gdk_input_remove().
+	 * Returns:a tag that can later be used as an argument to gdk_input_remove().
 	 */
 	public static int addFull(int source, GdkInputCondition condition, GdkInputFunction funct, void* data, GdkDestroyNotify destroy)
 	{
@@ -113,17 +107,12 @@ public class Input
 	 * gdk_input_add is deprecated and should not be used in newly-written code.
 	 * Establish a callback when a condition becomes true on
 	 * a file descriptor.
-	 * source:
-	 * a file descriptor.
-	 * condition:
-	 * the condition.
-	 * function:
-	 * the callback function.
-	 * data:
-	 * callback data passed to function.
-	 * Returns:
-	 * a tag that can later be used as an argument to
-	 *  gdk_input_remove().
+	 * Params:
+	 * source = a file descriptor.
+	 * condition = the condition.
+	 * funct = the callback function.
+	 * data = callback data passed to function.
+	 * Returns:a tag that can later be used as an argument to gdk_input_remove().
 	 */
 	public static int add(int source, GdkInputCondition condition, GdkInputFunction funct, void* data)
 	{
@@ -136,14 +125,8 @@ public class Input
 	 * gdk_input_remove is deprecated and should not be used in newly-written code.
 	 * Remove a callback added with gdk_input_add() or
 	 * gdk_input_add_full().
-	 * tag:
-	 * the tag returned when the callback was set up.
-	 * See Also
-	 * GLib Main Loop
-	 * The main loop in which input callbacks run.
-	 * IO Channels
-	 * A newer and more flexible way of doing IO
-	 * callbacks.
+	 * Params:
+	 * tag = the tag returned when the callback was set up.
 	 */
 	public static void remove(int tag)
 	{

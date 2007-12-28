@@ -88,9 +88,8 @@ public class Util
 	 * g_set_application_name() has not been called, returns the result of
 	 * g_get_prgname() (which may be NULL if g_set_prgname() has also not
 	 * been called).
-	 * Returns:
-	 *  human-readable application name. may return NULL
 	 * Since 2.2
+	 * Returns: human-readable application name. may return NULL
 	 */
 	public static char[] getApplicationName()
 	{
@@ -108,8 +107,8 @@ public class Util
 	 * be called once.
 	 * The application name will be used in contexts such as error messages,
 	 * or when displaying an application's name in the task list.
-	 * application_name:
-	 *  localized name of the application
+	 * Params:
+	 * applicationName =  localized name of the application
 	 */
 	public static void setApplicationName(char[] applicationName)
 	{
@@ -123,9 +122,7 @@ public class Util
 	 * (If you are using GDK or GTK+ the program name is set in gdk_init(),
 	 * which is called by gtk_init(). The program name is found by taking
 	 * the last component of argv[0].)
-	 * Returns:
-	 *  the name of the program. The returned string belongs
-	 * to GLib and must not be modified or freed.
+	 * Returns: the name of the program. The returned string belongs to GLib and must not be modified or freed.
 	 */
 	public static char[] getPrgname()
 	{
@@ -137,8 +134,8 @@ public class Util
 	 * Sets the name of the program. This name should not
 	 * be localized, contrast with g_set_application_name(). Note that for
 	 * thread-safety reasons this function can only be called once.
-	 * prgname:
-	 *  the name of the program.
+	 * Params:
+	 * prgname =  the name of the program.
 	 */
 	public static void setPrgname(char[] prgname)
 	{
@@ -153,13 +150,9 @@ public class Util
 	 * and encoding. On Windows, it is in UTF-8. On Windows, in case the
 	 * environment variable's value contains references to other
 	 * environment variables, they are expanded.
-	 * variable:
-	 *  the environment variable to get, in the GLib file name encoding.
-	 * Returns:
-	 *  the value of the environment variable, or NULL if
-	 * the environment variable is not found. The returned string may be
-	 * overwritten by the next call to g_getenv(), g_setenv() or
-	 * g_unsetenv().
+	 * Params:
+	 * variable =  the environment variable to get, in the GLib file name encoding.
+	 * Returns: the value of the environment variable, or NULL ifthe environment variable is not found. The returned string may beoverwritten by the next call to g_getenv(), g_setenv() org_unsetenv().
 	 */
 	public static char[] getenv(char[] variable)
 	{
@@ -174,15 +167,12 @@ public class Util
 	 * UTF-8.
 	 * Note that on some systems, when variables are overwritten, the memory
 	 * used for the previous variables and its value isn't reclaimed.
-	 * variable:
-	 *  the environment variable to set, must not contain '='.
-	 * value:
-	 *  the value for to set the variable to.
-	 * overwrite:
-	 *  whether to change the variable if it already exists.
-	 * Returns:
-	 *  FALSE if the environment variable couldn't be set.
 	 * Since 2.4
+	 * Params:
+	 * variable =  the environment variable to set, must not contain '='.
+	 * value =  the value for to set the variable to.
+	 * overwrite =  whether to change the variable if it already exists.
+	 * Returns: FALSE if the environment variable couldn't be set.
 	 */
 	public static int setenv(char[] variable, char[] value, int overwrite)
 	{
@@ -196,9 +186,9 @@ public class Util
 	 * used for the previous variables and its value isn't reclaimed.
 	 * Furthermore, this function can't be guaranteed to operate in a
 	 * threadsafe way.
-	 * variable:
-	 *  the environment variable to remove, must not contain '='.
 	 * Since 2.4
+	 * Params:
+	 * variable =  the environment variable to remove, must not contain '='.
 	 */
 	public static void unsetenv(char[] variable)
 	{
@@ -208,16 +198,8 @@ public class Util
 	
 	/**
 	 * Gets the names of all variables set in the environment.
-	 * Returns:
-	 *  a NULL-terminated list of strings which must be freed
-	 * with g_strfreev().
-	 * Programs that want to be portable to Windows should typically use
-	 * this function and g_getenv() instead of using the environ array
-	 * from the C library directly. On Windows, the strings in the environ
-	 * array are in system codepage encoding, while in most of the typical
-	 * use cases for environment variables in GLib-using programs you want
-	 * the UTF-8 encoding that this function and g_getenv() provide.
 	 * Since 2.8
+	 * Returns: a NULL-terminated list of strings which must be freedwith g_strfreev().Programs that want to be portable to Windows should typically usethis function and g_getenv() instead of using the environ arrayfrom the C library directly. On Windows, the strings in the environarray are in system codepage encoding, while in most of the typicaluse cases for environment variables in GLib-using programs you wantthe UTF-8 encoding that this function and g_getenv() provide.
 	 */
 	public static char** listenv()
 	{
@@ -230,8 +212,7 @@ public class Util
 	 * string is system-defined. On UNIX, it might be the preferred file name
 	 * encoding, or something else, and there is no guarantee that it is even
 	 * consistent on a machine. On Windows, it is always UTF-8.
-	 * Returns:
-	 *  the user name of the current user.
+	 * Returns: the user name of the current user.
 	 */
 	public static char[] getUserName()
 	{
@@ -245,8 +226,7 @@ public class Util
 	 * string is system-defined. (On Windows, it is, however, always UTF-8.)
 	 * If the real user name cannot be determined, the string "Unknown" is
 	 * returned.
-	 * Returns:
-	 *  the user's real name.
+	 * Returns: the user's real name.
 	 */
 	public static char[] getRealName()
 	{
@@ -260,10 +240,8 @@ public class Util
 	 * On UNIX platforms this is determined using the mechanisms described in
 	 * the
 	 * XDG Base Directory Specification
-	 * Returns:
-	 *  a string owned by GLib that must not be modified
-	 *  or freed.
 	 * Since 2.6
+	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
 	public static char[] getUserCacheDir()
 	{
@@ -277,10 +255,8 @@ public class Util
 	 * On UNIX platforms this is determined using the mechanisms described in
 	 * the
 	 * XDG Base Directory Specification
-	 * Returns:
-	 *  a string owned by GLib that must not be modified
-	 *  or freed.
 	 * Since 2.6
+	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
 	public static char[] getUserDataDir()
 	{
@@ -294,15 +270,31 @@ public class Util
 	 * On UNIX platforms this is determined using the mechanisms described in
 	 * the
 	 * XDG Base Directory Specification
-	 * Returns:
-	 *  a string owned by GLib that must not be modified
-	 *  or freed.
 	 * Since 2.6
+	 * Returns: a string owned by GLib that must not be modified  or freed.
 	 */
 	public static char[] getUserConfigDir()
 	{
 		// const gchar* g_get_user_config_dir (void);
 		return Str.toString(g_get_user_config_dir() );
+	}
+	
+	
+	/**
+	 * Returns the full path of a special directory using its logical id.
+	 * On Unix this is done using the XDG special user directories.
+	 * Depending on the platform, the user might be able to change the path
+	 * of the special directory without requiring the session to restart; GLib
+	 * will not reflect any change once the special directories are loaded.
+	 * Since 2.14
+	 * Params:
+	 * directory =  the logical id of special directory
+	 * Returns: the path to the specified special directory, or NULL if the logical id was not found. The returned string is owned by GLib and should not be modified or freed.
+	 */
+	public static char[] getUserSpecialDir(GUserDirectory directory)
+	{
+		// const gchar* g_get_user_special_dir (GUserDirectory directory);
+		return Str.toString(g_get_user_special_dir(directory) );
 	}
 	
 	/**
@@ -328,10 +320,8 @@ public class Util
 	 * itself.
 	 * Note that on Windows the returned list can vary depending on where
 	 * this function is called.
-	 * Returns:
-	 *  a NULL-terminated array of strings owned by GLib that must
-	 *  not be modified or freed.
 	 * Since 2.6
+	 * Returns: a NULL-terminated array of strings owned by GLib that must  not be modified or freed.
 	 */
 	public static char** getSystemDataDirs()
 	{
@@ -345,10 +335,8 @@ public class Util
 	 * On UNIX platforms this is determined using the mechanisms described in
 	 * the
 	 * XDG Base Directory Specification
-	 * Returns:
-	 *  a NULL-terminated array of strings owned by GLib that must
-	 *  not be modified or freed.
 	 * Since 2.6
+	 * Returns: a NULL-terminated array of strings owned by GLib that must  not be modified or freed.
 	 */
 	public static char** getSystemConfigDirs()
 	{
@@ -368,9 +356,8 @@ public class Util
 	 * string is owned by GLib and should not be modified or freed. If no
 	 * name can be determined, a default fixed string "localhost" is
 	 * returned.
-	 * Returns:
-	 *  the host name of the machine.
 	 * Since 2.8
+	 * Returns: the host name of the machine.
 	 */
 	public static char[] getHostName()
 	{
@@ -384,8 +371,17 @@ public class Util
 	 * Note that in contrast to traditional UNIX tools, this function
 	 * prefers passwd entries over the HOME
 	 * environment variable.
-	 * Returns:
-	 *  the current user's home directory.
+	 * One of the reasons for this decision is that applications in many
+	 * cases need special handling to deal with the case where
+	 * HOME is
+	 * Not owned by the user
+	 * Not writeable
+	 * Not even readable
+	 * Since applications are in general not written
+	 * to deal with these situations it was considered better to make
+	 * g_get_homedir() not pay attention to HOME and to
+	 * return the real home directory for the user. If applications
+	 * Returns: the current user's home directory
 	 */
 	public static char[] getHomeDir()
 	{
@@ -400,8 +396,7 @@ public class Util
 	 * of those are defined "/tmp" is returned on UNIX and "C:\" on Windows.
 	 * The encoding of the returned string is system-defined. On Windows,
 	 * it is always UTF-8. The return value is never NULL.
-	 * Returns:
-	 *  the directory to use for temporary files.
+	 * Returns: the directory to use for temporary files.
 	 */
 	public static char[] getTmpDir()
 	{
@@ -413,8 +408,7 @@ public class Util
 	 * Gets the current directory.
 	 * The returned string should be freed when no longer needed. The encoding
 	 * of the returned string is system defined. On Windows, it is always UTF-8.
-	 * Returns:
-	 *  the current directory.
+	 * Returns: the current directory.
 	 */
 	public static char[] getCurrentDir()
 	{
@@ -429,10 +423,9 @@ public class Util
 	 * this function which returns a pointer into the argument.
 	 * Gets the name of the file without any leading directory components.
 	 * It returns a pointer into the given file name string.
-	 * file_name:
-	 *  the name of the file.
-	 * Returns:
-	 *  the name of the file without any leading directory components.
+	 * Params:
+	 * fileName =  the name of the file.
+	 * Returns: the name of the file without any leading directory components.
 	 */
 	public static char[] basename(char[] fileName)
 	{
@@ -445,10 +438,9 @@ public class Util
 	 * Returns TRUE if the given file_name is an absolute file name,
 	 * i.e. it contains a full path from the root directory such as "/usr/local"
 	 * on UNIX or "C:\windows" on Windows systems.
-	 * file_name:
-	 *  a file name.
-	 * Returns:
-	 *  TRUE if file_name is an absolute path.
+	 * Params:
+	 * fileName =  a file name.
+	 * Returns: TRUE if file_name is an absolute path.
 	 */
 	public static int pathIsAbsolute(char[] fileName)
 	{
@@ -460,10 +452,9 @@ public class Util
 	 * Returns a pointer into file_name after the root component, i.e. after
 	 * the "/" in UNIX or "C:\" under Windows. If file_name is not an absolute
 	 * path it returns NULL.
-	 * file_name:
-	 *  a file name.
-	 * Returns:
-	 *  a pointer into file_name after the root component.
+	 * Params:
+	 * fileName =  a file name.
+	 * Returns: a pointer into file_name after the root component.
 	 */
 	public static char[] pathSkipRoot(char[] fileName)
 	{
@@ -477,11 +468,9 @@ public class Util
 	 * file_name consists only of directory separators (and on Windows,
 	 * possibly a drive letter), a single separator is returned. If
 	 * file_name is empty, it gets ".".
-	 * file_name:
-	 *  the name of the file.
-	 * Returns:
-	 *  a newly allocated string containing the last component of
-	 *  the filename.
+	 * Params:
+	 * fileName =  the name of the file.
+	 * Returns: a newly allocated string containing the last component of  the filename.
 	 */
 	public static char[] pathGetBasename(char[] fileName)
 	{
@@ -493,10 +482,9 @@ public class Util
 	 * Gets the directory components of a file name. If the file name has no
 	 * directory components "." is returned. The returned string should be
 	 * freed when no longer needed.
-	 * file_name:
-	 *  the name of the file.
-	 * Returns:
-	 *  the directory components of the file.
+	 * Params:
+	 * fileName =  the name of the file.
+	 * Returns: the directory components of the file.
 	 */
 	public static char[] pathGetDirname(char[] fileName)
 	{
@@ -518,12 +506,10 @@ public class Util
 	 * No attempt is made to force the resulting filename to be an absolute
 	 * path. If the first element is a relative path, the result will
 	 * be a relative path.
-	 * first_element:
-	 *  the first element in the path
-	 * ...:
-	 *  remaining elements in path, terminated by NULL
-	 * Returns:
-	 *  a newly-allocated string that must be freed with g_free().
+	 * Params:
+	 * firstElement =  the first element in the path
+	 * ... =  remaining elements in path, terminated by NULL
+	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
 	public static char[] buildFilename(char[] firstElement, ... )
 	{
@@ -535,11 +521,10 @@ public class Util
 	 * Behaves exactly like g_build_filename(), but takes the path elements
 	 * as a string array, instead of varargs. This function is mainly
 	 * meant for language bindings.
-	 * args:
-	 *  NULL-terminated array of strings containing the path elements.
-	 * Returns:
-	 *  a newly-allocated string that must be freed with g_free().
 	 * Since 2.8
+	 * Params:
+	 * args =  NULL-terminated array of strings containing the path elements.
+	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
 	public static char[] buildFilenamev(char** args)
 	{
@@ -570,14 +555,11 @@ public class Util
 	 * Other than for determination of the number of leading and trailing
 	 * copies of the separator, elements consisting only of copies
 	 * of the separator are ignored.
-	 * separator:
-	 *  a string used to separator the elements of the path.
-	 * first_element:
-	 *  the first element in the path
-	 * ...:
-	 *  remaining elements in path, terminated by NULL
-	 * Returns:
-	 *  a newly-allocated string that must be freed with g_free().
+	 * Params:
+	 * separator =  a string used to separator the elements of the path.
+	 * firstElement =  the first element in the path
+	 * ... =  remaining elements in path, terminated by NULL
+	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
 	public static char[] buildPath(char[] separator, char[] firstElement, ... )
 	{
@@ -589,13 +571,11 @@ public class Util
 	 * Behaves exactly like g_build_path(), but takes the path elements
 	 * as a string array, instead of varargs. This function is mainly
 	 * meant for language bindings.
-	 * separator:
-	 *  a string used to separator the elements of the path.
-	 * args:
-	 *  NULL-terminated array of strings containing the path elements.
-	 * Returns:
-	 *  a newly-allocated string that must be freed with g_free().
 	 * Since 2.8
+	 * Params:
+	 * separator =  a string used to separator the elements of the path.
+	 * args =  NULL-terminated array of strings containing the path elements.
+	 * Returns: a newly-allocated string that must be freed with g_free().
 	 */
 	public static char[] buildPathv(char[] separator, char** args)
 	{
@@ -619,10 +599,9 @@ public class Util
 	 * finally in the directories in the PATH environment
 	 * variable. If the program is found, the return value contains the
 	 * full name including the type suffix.
-	 * program:
-	 *  a program name in the GLib file name encoding
-	 * Returns:
-	 *  absolute path, or NULL
+	 * Params:
+	 * program =  a program name in the GLib file name encoding
+	 * Returns: absolute path, or NULL
 	 */
 	public static char[] findProgramInPath(char[] program)
 	{
@@ -635,12 +614,10 @@ public class Util
 	 * including) nth_bit upwards. Bits are numbered from 0 (least significant)
 	 * to sizeof(gulong) * 8 - 1 (31 or 63, usually). To start searching from the
 	 * 0th bit, set nth_bit to -1.
-	 * mask:
-	 * a gulong containing flags.
-	 * nth_bit:
-	 * the index of the bit to start the search from.
-	 * Returns:
-	 * the index of the first bit set which is higher than nth_bit.
+	 * Params:
+	 * mask = a gulong containing flags.
+	 * nthBit = the index of the bit to start the search from.
+	 * Returns:the index of the first bit set which is higher than nth_bit.
 	 */
 	public static int bitNthLsf(uint mask, int nthBit)
 	{
@@ -653,12 +630,10 @@ public class Util
 	 * including) nth_bit downwards. Bits are numbered from 0 (least significant)
 	 * to sizeof(gulong) * 8 - 1 (31 or 63, usually). To start searching from the
 	 * last bit, set nth_bit to -1 or GLIB_SIZEOF_LONG * 8.
-	 * mask:
-	 * a gulong containing flags.
-	 * nth_bit:
-	 * the index of the bit to start the search from.
-	 * Returns:
-	 * the index of the first bit set which is lower than nth_bit.
+	 * Params:
+	 * mask = a gulong containing flags.
+	 * nthBit = the index of the bit to start the search from.
+	 * Returns:the index of the first bit set which is lower than nth_bit.
 	 */
 	public static int bitNthMsf(uint mask, int nthBit)
 	{
@@ -669,10 +644,9 @@ public class Util
 	/**
 	 * Gets the number of bits used to hold number,
 	 * e.g. if number is 4, 3 bits are needed.
-	 * number:
-	 * a guint.
-	 * Returns:
-	 * the number of bits used to hold number.
+	 * Params:
+	 * number = a guint.
+	 * Returns:the number of bits used to hold number.
 	 */
 	public static uint bitStorage(uint number)
 	{
@@ -686,11 +660,9 @@ public class Util
 	 * size of a GHashTable.
 	 * The built-in array of primes ranges from 11 to 13845163 such that
 	 * each prime is approximately 1.5-2 times the previous prime.
-	 * num:
-	 * a guint.
-	 * Returns:
-	 * the smallest prime number from a built-in array of primes which is
-	 * larger than num.
+	 * Params:
+	 * num = a guint.
+	 * Returns:the smallest prime number from a built-in array of primes which islarger than num.
 	 */
 	public static uint spacedPrimesClosest(uint num)
 	{
@@ -723,8 +695,8 @@ public class Util
 	 * As can be seen from the above, for portability it's best to avoid
 	 * calling g_atexit() (or atexit()) except in the main executable of a
 	 * program.
-	 * func:
-	 *  the function to call on normal program termination.
+	 * Params:
+	 * func =  the function to call on normal program termination.
 	 */
 	public static void atexit(GVoidFunc func)
 	{
@@ -737,16 +709,13 @@ public class Util
 	 * into a guint containing bit flags. This is used
 	 * within GDK and GTK+ to parse the debug options passed on the
 	 * command line or through environment variables.
-	 * string:
-	 *  a list of debug options separated by colons, spaces, or
+	 * Params:
+	 * string =  a list of debug options separated by colons, spaces, or
 	 * commas; or the string "all" to set all flags.
-	 * keys:
-	 *  pointer to an array of GDebugKey which associate
+	 * keys =  pointer to an array of GDebugKey which associate
 	 *  strings with bit flags.
-	 * nkeys:
-	 *  the number of GDebugKeys in the array.
-	 * Returns:
-	 *  the combined set of bit flags.
+	 * nkeys =  the number of GDebugKeys in the array.
+	 * Returns: the combined set of bit flags.
 	 */
 	public static uint parseDebugString(char[] string, GDebugKey* keys, uint nkeys)
 	{
@@ -760,16 +729,12 @@ public class Util
 	/**
 	 * This is just like the standard C qsort() function, but
 	 * the comparison routine accepts a user data argument.
-	 * pbase:
-	 *  start of array to sort
-	 * total_elems:
-	 *  elements in the array
-	 * size:
-	 *  size of each element
-	 * compare_func:
-	 *  function to compare elements
-	 * user_data:
-	 *  data to pass to compare_func
+	 * Params:
+	 * pbase =  start of array to sort
+	 * totalElems =  elements in the array
+	 * size =  size of each element
+	 * compareFunc =  function to compare elements
+	 * userData =  data to pass to compare_func
 	 */
 	public static void qsortWithData(void* pbase, int totalElems, uint size, GCompareDataFunc compareFunc, void* userData)
 	{
@@ -779,8 +744,8 @@ public class Util
 	
 	/**
 	 * Set the pointer at the specified location to NULL.
-	 * nullify_location:
-	 *  the memory address of the pointer.
+	 * Params:
+	 * nullifyLocation =  the memory address of the pointer.
 	 */
 	public static void nullifyPointer(void** nullifyLocation)
 	{

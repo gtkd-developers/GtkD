@@ -176,35 +176,24 @@ public class Signals
 	 * gtk_signal_new is deprecated and should not be used in newly-written code. Use g_signal_new() instead.
 	 * Creates a new signal type. (This is usually done in the
 	 * class initializer.)
-	 * name:
-	 * the event name for the signal, e.g. "clicked".
-	 * signal_flags:
-	 * a combination of GTK_RUN flags
+	 * Params:
+	 * name = the event name for the signal, e.g. "clicked".
+	 * signalFlags = a combination of GTK_RUN flags
 	 * specifying detail of when the default handler is to be invoked.
 	 * You should at least specify GTK_RUN_FIRST
 	 * or GTK_RUN_LAST.
-	 * object_type:
-	 * the type of object this signal pertains to.
+	 * objectType = the type of object this signal pertains to.
 	 * It will also pertain to derivers of this type automatically.
-	 * function_offset:
-	 * How many bytes the function pointer is in
+	 * functionOffset = How many bytes the function pointer is in
 	 * the class structure for this type. Used to invoke a class
 	 * method generically.
-	 * marshaller:
-	 * the function to translate between an array
+	 * marshaller = the function to translate between an array
 	 * of GtkArgs and the native calling convention. Usually they
-	 * are identified just by the type of arguments they take:
-	 * for example, gtk_marshal_BOOL__STRING() describes a marshaller
-	 * which takes a string and returns a boolean value.
-	 * return_val:
-	 * the type of return value, or GTK_TYPE_NONE for a signal
+	 * returnVal = the type of return value, or GTK_TYPE_NONE for a signal
 	 * without a return value.
-	 * n_args:
-	 * the number of parameter the handlers may take.
-	 * ...:
-	 * a list of GTK_TYPE_*, one for each parameter.
-	 * Returns:
-	 * the signal id.
+	 * nArgs = the number of parameter the handlers may take.
+	 * ... = a list of GTK_TYPE_*, one for each parameter.
+	 * Returns:the signal id.
 	 */
 	public static uint newSignals(char[] name, GtkSignalRunType signalFlags, GtkType objectType, uint functionOffset, GtkSignalMarshaller marshaller, GtkType returnVal, uint nArgs, ... )
 	{
@@ -219,26 +208,18 @@ public class Signals
 	 * class initializer.)
 	 * This function take the types as an array, instead of a list
 	 * following the arguments. Otherwise the same as gtk_signal_new().
-	 * name:
-	 * the name of the signal to create.
-	 * signal_flags:
-	 * see gtk_signal_new().
-	 * object_type:
-	 * the type of GtkObject to associate the signal with.
-	 * function_offset:
-	 * how many bytes the function pointer is in
+	 * Params:
+	 * name = the name of the signal to create.
+	 * signalFlags = see gtk_signal_new().
+	 * objectType = the type of GtkObject to associate the signal with.
+	 * functionOffset = how many bytes the function pointer is in
 	 * the class structure for this type.
-	 * marshaller:
-	 * return_val:
-	 * the type of the return value, or GTK_TYPE_NONE if
+	 * returnVal = the type of the return value, or GTK_TYPE_NONE if
 	 * you don't want a return value.
-	 * n_args:
-	 * the number of parameters to the user-defined handlers.
-	 * args:
-	 * an array of GtkTypes, describing the prototype to
+	 * nArgs = the number of parameters to the user-defined handlers.
+	 * args = an array of GtkTypes, describing the prototype to
 	 * the callbacks.
-	 * Returns:
-	 * the signal id.
+	 * Returns:the signal id.
 	 */
 	public static uint newv(char[] name, GtkSignalRunType signalFlags, GtkType objectType, uint functionOffset, GtkSignalMarshaller marshaller, GtkType returnVal, uint nArgs, GtkType* args)
 	{
@@ -253,17 +234,10 @@ public class Signals
 	 * gtk_signal_emit is deprecated and should not be used in newly-written code. Use g_signal_emit() instead.
 	 * Emits a signal. This causes the default handler and user-defined
 	 * handlers to be run.
-	 * Here is what gtk_signal_emit() does:
-	 * 1. Calls the default handler and the user-connected handlers.
-	 * The default handler will be called first if
-	 * GTK_RUN_FIRST is set, and last if GTK_RUN_LAST is set.
-	 * 2. Calls all handlers connected with the "after" flag set.
-	 * object:
-	 * the object that emits the signal.
-	 * signal_id:
-	 * the signal identifier.
-	 * ...:
-	 * the parameters to the function, followed
+	 * Params:
+	 * object = the object that emits the signal.
+	 * signalId = the signal identifier.
+	 * ... = the parameters to the function, followed
 	 * by a pointer to the return type, if any.
 	 */
 	public static void emit(ObjectGtk object, uint signalId, ... )
@@ -277,12 +251,10 @@ public class Signals
 	 * gtk_signal_emit_by_name is deprecated and should not be used in newly-written code. Use g_signal_emit_by_name() instead.
 	 * Emits a signal. This causes the default handler and user-connected
 	 * handlers to be run.
-	 * object:
-	 * the object that emits the signal.
-	 * name:
-	 * the name of the signal.
-	 * ...:
-	 * the parameters to the function, followed
+	 * Params:
+	 * object = the object that emits the signal.
+	 * name = the name of the signal.
+	 * ... = the parameters to the function, followed
 	 * by a pointer to the return type, if any.
 	 */
 	public static void emitByName(ObjectGtk object, char[] name, ... )
@@ -297,12 +269,10 @@ public class Signals
 	 * Emits a signal. This causes the default handler and user-connected
 	 * handlers to be run. This differs from gtk_signal_emit() by taking
 	 * an array of GtkArgs instead of using C's varargs mechanism.
-	 * object:
-	 * the object to emit the signal to.
-	 * signal_id:
-	 * the signal identifier.
-	 * args:
-	 * an array of GtkArgs, one for each parameter,
+	 * Params:
+	 * object = the object to emit the signal to.
+	 * signalId = the signal identifier.
+	 * args = an array of GtkArgs, one for each parameter,
 	 * followed by one which is a pointer to the return type.
 	 */
 	public static void emitv(ObjectGtk object, uint signalId, GtkArg* args)
@@ -317,12 +287,10 @@ public class Signals
 	 * Emits a signal by name. This causes the default handler and user-connected
 	 * handlers to be run. This differs from gtk_signal_emit() by taking
 	 * an array of GtkArgs instead of using C's varargs mechanism.
-	 * object:
-	 * the object to emit the signal to.
-	 * name:
-	 * the name of the signal.
-	 * args:
-	 * an array of GtkArgs, one for each parameter,
+	 * Params:
+	 * object = the object to emit the signal to.
+	 * name = the name of the signal.
+	 * args = an array of GtkArgs, one for each parameter,
 	 * followed by one which is a pointer to the return type.
 	 */
 	public static void emitvByName(ObjectGtk object, char[] name, GtkArg* args)
@@ -338,10 +306,9 @@ public class Signals
 	 * This function aborts a signal's current emission.
 	 * It is just like gtk_signal_emit_stop()
 	 * except it will lookup the signal id for you.
-	 * object:
-	 * the object whose signal handlers you wish to stop.
-	 * name:
-	 * the name of the signal you wish to stop.
+	 * Params:
+	 * object = the object whose signal handlers you wish to stop.
+	 * name = the name of the signal you wish to stop.
 	 */
 	public static void emitStopByName(ObjectGtk object, char[] name)
 	{
@@ -358,30 +325,22 @@ public class Signals
 	 * gtk_signal_connect_full is deprecated and should not be used in newly-written code. Use g_signal_connect_data() instead.
 	 * Attaches a function pointer and user data to a signal with
 	 * more control.
-	 * object:
-	 * the object which emits the signal. For example, a button
+	 * Params:
+	 * object = the object which emits the signal. For example, a button
 	 * in the button press signal.
-	 * name:
-	 * the name of the signal.
-	 * func:
-	 * function pointer to attach to the signal.
-	 * unsupported:
-	 * data:
-	 * the user data associated with the function.
-	 * destroy_func:
-	 * function to call when this particular hook is
+	 * name = the name of the signal.
+	 * func = function pointer to attach to the signal.
+	 * data = the user data associated with the function.
+	 * destroyFunc = function to call when this particular hook is
 	 * disconnected.
-	 * object_signal:
-	 * whether this is an object signal-- basically an "object
+	 * objectSignal = whether this is an object signal-- basically an "object
 	 * signal" is one that wants its user_data and object fields switched,
 	 * which is useful for calling functions which operate on another
 	 * object primarily.
-	 * after:
-	 * whether to invoke the user-defined handler after the signal, or to let
+	 * after = whether to invoke the user-defined handler after the signal, or to let
 	 * the signal's default behavior preside (i.e. depending on GTK_RUN_FIRST
 	 * and GTK_RUN_LAST).
-	 * Returns:
-	 * the connection id.
+	 * Returns:the connection id.
 	 */
 	public static uint connectFull(ObjectGtk object, char[] name, GtkSignalFunc func, GtkCallbackMarshal unsupported, void* data, GtkDestroyNotify destroyFunc, int objectSignal, int after)
 	{
@@ -402,16 +361,12 @@ public class Signals
 	 * to explicitly delete all attachments to this object. This
 	 * is perhaps not recommended since it could be confused
 	 * with an integer masquerading as a pointer (through GINT_TO_POINTER()).)
-	 * object:
-	 * the object that emits the signal.
-	 * name:
-	 * name of the signal.
-	 * func:
-	 * function pointer to attach to the signal.
-	 * func_data:
-	 * pointer to pass to func.
-	 * alive_object:
-	 * object whose death should cause the handler connection
+	 * Params:
+	 * object = the object that emits the signal.
+	 * name = name of the signal.
+	 * func = function pointer to attach to the signal.
+	 * funcData = pointer to pass to func.
+	 * aliveObject = object whose death should cause the handler connection
 	 * to be destroyed.
 	 */
 	public static void connectWhileAlive(ObjectGtk object, char[] name, GtkSignalFunc func, void* funcData, ObjectGtk aliveObject)
@@ -432,14 +387,11 @@ public class Signals
 	 * This function acts just like gtk_signal_connect_object() except
 	 * it traps the "destroy" signal to prevent you from having to
 	 * clean up the handler.
-	 * object:
-	 * the object associated with the signal.
-	 * name:
-	 * name of the signal.
-	 * func:
-	 * function pointer to attach to the signal.
-	 * alive_object:
-	 * the user data, which must be an object, whose destruction
+	 * Params:
+	 * object = the object associated with the signal.
+	 * name = name of the signal.
+	 * func = function pointer to attach to the signal.
+	 * aliveObject = the user data, which must be an object, whose destruction
 	 * should signal the removal of this signal.
 	 */
 	public static void connectObjectWhileAlive(ObjectGtk object, char[] name, GtkSignalFunc func, ObjectGtk aliveObject)

@@ -136,18 +136,14 @@ public class Bitmap
 	
 	/**
 	 * Creates a new bitmap from data in XBM format.
-	 * drawable:
-	 * a GdkDrawable, used to determine default values
+	 * Params:
+	 * drawable = a GdkDrawable, used to determine default values
 	 * for the new pixmap. Can be NULL, in which case the root
 	 * window is used.
-	 * data:
-	 * a pointer to the XBM data.
-	 * width:
-	 * the width of the new pixmap in pixels.
-	 * height:
-	 * the height of the new pixmap in pixels.
-	 * Returns:
-	 * the GdkBitmap
+	 * data = a pointer to the XBM data.
+	 * width = the width of the new pixmap in pixels.
+	 * height = the height of the new pixmap in pixels.
+	 * Returns:the GdkBitmap
 	 */
 	public static Bitmap createFromData(Drawable drawable, char[] data, int width, int height)
 	{

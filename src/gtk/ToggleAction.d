@@ -67,13 +67,13 @@ private import glib.Str;
 
 
 
+private import gtk.Action;
 
 /**
  * Description
  * A GtkToggleAction corresponds roughly to a GtkCheckMenuItem. It has an
  * "active" state specifying whether the action has been checked or not.
  */
-private import gtk.Action;
 public class ToggleAction : Action
 {
 	
@@ -164,17 +164,13 @@ public class ToggleAction : Action
 	 * Creates a new GtkToggleAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
-	 * name:
-	 *  A unique name for the action
-	 * label:
-	 *  The label displayed in menu items and on buttons
-	 * tooltip:
-	 *  A tooltip for the action
-	 * stock_id:
-	 *  The stock icon to display in widgets representing the action
-	 * Returns:
-	 *  a new GtkToggleAction
 	 * Since 2.4
+	 * Params:
+	 * name =  A unique name for the action
+	 * label =  The label displayed in menu items and on buttons, or NULL
+	 * tooltip =  A tooltip for the action, or NULL
+	 * stockId =  The stock icon to display in widgets representing the
+	 *  action, or NULL
 	 */
 	public this (char[] name, char[] label, char[] tooltip, char[] stockId)
 	{
@@ -184,8 +180,6 @@ public class ToggleAction : Action
 	
 	/**
 	 * Emits the "toggled" signal on the toggle action.
-	 * action:
-	 *  the action object
 	 * Since 2.4
 	 */
 	public void toggled()
@@ -196,11 +190,9 @@ public class ToggleAction : Action
 	
 	/**
 	 * Sets the checked state on the toggle action.
-	 * action:
-	 *  the action object
-	 * is_active:
-	 *  whether the action should be checked or not
 	 * Since 2.4
+	 * Params:
+	 * isActive =  whether the action should be checked or not
 	 */
 	public void setActive(int isActive)
 	{
@@ -210,11 +202,8 @@ public class ToggleAction : Action
 	
 	/**
 	 * Returns the checked state of the toggle action.
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  the checked state of the toggle action
 	 * Since 2.4
+	 * Returns: the checked state of the toggle action
 	 */
 	public int getActive()
 	{
@@ -224,12 +213,10 @@ public class ToggleAction : Action
 	
 	/**
 	 * Sets whether the action should have proxies like a radio action.
-	 * action:
-	 *  the action object
-	 * draw_as_radio:
-	 *  whether the action should have proxies like a radio
-	 *  action
 	 * Since 2.4
+	 * Params:
+	 * drawAsRadio =  whether the action should have proxies like a radio
+	 *  action
 	 */
 	public void setDrawAsRadio(int drawAsRadio)
 	{
@@ -239,17 +226,8 @@ public class ToggleAction : Action
 	
 	/**
 	 * Returns whether the action should have proxies like a radio action.
-	 * action:
-	 *  the action object
-	 * Returns:
-	 *  whether the action should have proxies like a radio action.
 	 * Since 2.4
-	 * Property Details
-	 * The "active" property
-	 *  "active" gboolean : Read / Write
-	 * If the toggle action should be active in or not.
-	 * Default value: FALSE
-	 * Since 2.10
+	 * Returns: whether the action should have proxies like a radio action.
 	 */
 	public int getDrawAsRadio()
 	{

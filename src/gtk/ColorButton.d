@@ -70,6 +70,7 @@ private import gdk.Color;
 
 
 
+private import gtk.Button;
 
 /**
  * Description
@@ -77,7 +78,6 @@ private import gdk.Color;
  * an allows to open a color selection dialog to change the color. It is suitable
  * widget for selecting a color in a preference dialog.
  */
-private import gtk.Button;
 public class ColorButton : Button
 {
 	
@@ -170,8 +170,6 @@ public class ColorButton : Button
 	 * color. When the button is clicked, a color-selection dialog will open,
 	 * allowing the user to select a color. The swatch will be updated to reflect
 	 * the new color when the user finishes.
-	 * Returns:
-	 *  a new color button.
 	 * Since 2.4
 	 */
 	public this ()
@@ -182,11 +180,9 @@ public class ColorButton : Button
 	
 	/**
 	 * Creates a new color button.
-	 * color:
-	 *  A GdkColor to set the current color with.
-	 * Returns:
-	 *  a new color button.
 	 * Since 2.4
+	 * Params:
+	 * color =  A GdkColor to set the current color with.
 	 */
 	public this (Color color)
 	{
@@ -196,11 +192,9 @@ public class ColorButton : Button
 	
 	/**
 	 * Sets the current color to be color.
-	 * color_button:
-	 *  a GtkColorButton.
-	 * color:
-	 *  A GdkColor to set the current color with.
 	 * Since 2.4
+	 * Params:
+	 * color =  A GdkColor to set the current color with.
 	 */
 	public void setColor(Color color)
 	{
@@ -210,11 +204,9 @@ public class ColorButton : Button
 	
 	/**
 	 * Sets color to be the current color in the GtkColorButton widget.
-	 * color_button:
-	 *  a GtkColorButton.
-	 * color:
-	 *  a GdkColor to fill in with the current color.
 	 * Since 2.4
+	 * Params:
+	 * color =  a GdkColor to fill in with the current color.
 	 */
 	public void getColor(Color color)
 	{
@@ -224,11 +216,9 @@ public class ColorButton : Button
 	
 	/**
 	 * Sets the current opacity to be alpha.
-	 * color_button:
-	 *  a GtkColorButton.
-	 * alpha:
-	 *  an integer between 0 and 65535.
 	 * Since 2.4
+	 * Params:
+	 * alpha =  an integer between 0 and 65535.
 	 */
 	public void setAlpha(ushort alpha)
 	{
@@ -238,11 +228,8 @@ public class ColorButton : Button
 	
 	/**
 	 * Returns the current alpha value.
-	 * color_button:
-	 *  a GtkColorButton.
-	 * Returns:
-	 *  an integer between 0 and 65535.
 	 * Since 2.4
+	 * Returns: an integer between 0 and 65535.
 	 */
 	public ushort getAlpha()
 	{
@@ -252,11 +239,9 @@ public class ColorButton : Button
 	
 	/**
 	 * Sets whether or not the color button should use the alpha channel.
-	 * color_button:
-	 *  a GtkColorButton.
-	 * use_alpha:
-	 *  TRUE if color button should use alpha channel, FALSE if not.
 	 * Since 2.4
+	 * Params:
+	 * useAlpha =  TRUE if color button should use alpha channel, FALSE if not.
 	 */
 	public void setUseAlpha(int useAlpha)
 	{
@@ -266,11 +251,8 @@ public class ColorButton : Button
 	
 	/**
 	 * Does the color selection dialog use the alpha channel?
-	 * color_button:
-	 *  a GtkColorButton.
-	 * Returns:
-	 *  TRUE if the color sample uses alpha channel, FALSE if not.
 	 * Since 2.4
+	 * Returns: TRUE if the color sample uses alpha channel, FALSE if not.
 	 */
 	public int getUseAlpha()
 	{
@@ -280,11 +262,9 @@ public class ColorButton : Button
 	
 	/**
 	 * Sets the title for the color selection dialog.
-	 * color_button:
-	 *  a GtkColorButton
-	 * title:
-	 *  String containing new window title.
 	 * Since 2.4
+	 * Params:
+	 * title =  String containing new window title.
 	 */
 	public void setTitle(char[] title)
 	{
@@ -294,18 +274,8 @@ public class ColorButton : Button
 	
 	/**
 	 * Gets the title of the color selection dialog.
-	 * color_button:
-	 *  a GtkColorButton
-	 * Returns:
-	 *  An internal string, do not free the return value
 	 * Since 2.4
-	 * Property Details
-	 * The "alpha" property
-	 *  "alpha" guint : Read / Write
-	 * The selected opacity value (0 fully transparent, 65535 fully opaque).
-	 * Allowed values: <= 65535
-	 * Default value: 65535
-	 * Since 2.4
+	 * Returns: An internal string, do not free the return value
 	 */
 	public char[] getTitle()
 	{

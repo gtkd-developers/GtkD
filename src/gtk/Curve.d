@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.DrawingArea;
 
 /**
  * Description
@@ -85,7 +86,6 @@ private import gtkc.gtk;
  * on the curve which are connected by straight lines. In free mode the user can
  * draw the points of the curve freely, and they are not connected at all.
  */
-private import gtk.DrawingArea;
 public class Curve : DrawingArea
 {
 	
@@ -174,8 +174,6 @@ public class Curve : DrawingArea
 	
 	/**
 	 * Creates a new GtkCurve.
-	 * Returns:
-	 * a new GtkCurve.
 	 */
 	public this ()
 	{
@@ -187,8 +185,6 @@ public class Curve : DrawingArea
 	 * Resets the curve to a straight line from the minimum x and y values to the
 	 * maximum x and y values (i.e. from the bottom-left to the top-right corners).
 	 * The curve type is not changed.
-	 * curve:
-	 * a GtkCurve.
 	 */
 	public void reset()
 	{
@@ -202,10 +198,8 @@ public class Curve : DrawingArea
 	 * in a curve above the straight line. Values less than 1 result in a curve
 	 * below the straight line. The curve type is changed to GTK_CURVE_TYPE_FREE.
 	 * FIXME: Needs a more precise definition of gamma.
-	 * curve:
-	 * a GtkCurve.
-	 * gamma_:
-	 * the gamma value.
+	 * Params:
+	 * gamma = the gamma value.
 	 */
 	public void setGamma(float gamma)
 	{
@@ -216,16 +210,11 @@ public class Curve : DrawingArea
 	/**
 	 * Sets the minimum and maximum x and y values of the curve.
 	 * The curve is also reset with a call to gtk_curve_reset().
-	 * curve:
-	 * a GtkCurve.
-	 * min_x:
-	 * the minimum x value.
-	 * max_x:
-	 * the maximum x value.
-	 * min_y:
-	 * the minimum y value.
-	 * max_y:
-	 * the maximum y value.
+	 * Params:
+	 * minX = the minimum x value.
+	 * maxX = the maximum x value.
+	 * minY = the minimum y value.
+	 * maxY = the maximum y value.
 	 */
 	public void setRange(float minX, float maxX, float minY, float maxY)
 	{
@@ -235,12 +224,9 @@ public class Curve : DrawingArea
 	
 	/**
 	 * Returns a vector of points representing the curve.
-	 * curve:
-	 * a GtkCurve.
-	 * veclen:
-	 * the number of points to calculate.
-	 * vector:
-	 * returns the points.
+	 * Params:
+	 * veclen = the number of points to calculate.
+	 * vector = returns the points.
 	 */
 	public void getVector(int veclen, float[] vector)
 	{
@@ -251,12 +237,9 @@ public class Curve : DrawingArea
 	/**
 	 * Sets the vector of points on the curve.
 	 * The curve type is set to GTK_CURVE_TYPE_FREE.
-	 * curve:
-	 * a GtkCurve.
-	 * veclen:
-	 * the number of points.
-	 * vector:
-	 * the points on the curve.
+	 * Params:
+	 * veclen = the number of points.
+	 * vector = the points on the curve.
 	 */
 	public void setVector(int veclen, float[] vector)
 	{
@@ -268,15 +251,8 @@ public class Curve : DrawingArea
 	 * Sets the type of the curve. The curve will remain unchanged except when
 	 * changing from a free curve to a linear or spline curve, in which case the
 	 * curve will be changed as little as possible.
-	 * curve:
-	 * a GtkCurve.
-	 * type:
-	 * the type of the curve.
-	 * Property Details
-	 * The "curve-type" property
-	 *  "curve-type" GtkCurveType : Read / Write
-	 * Is this curve linear, spline interpolated, or free-form.
-	 * Default value: GTK_CURVE_TYPE_LINEAR
+	 * Params:
+	 * type = the type of the curve.
 	 */
 	public void setCurveType(GtkCurveType type)
 	{

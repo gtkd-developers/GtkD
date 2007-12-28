@@ -68,6 +68,7 @@ private import gtk.Widget;
 
 
 
+private import gtk.Paned;
 
 /**
  * Description
@@ -76,7 +77,6 @@ private import gtk.Widget;
  * the two panes is adjustable by the user by dragging
  * a handle. See GtkPaned for details.
  */
-private import gtk.Paned;
 public class HPaned : Paned
 {
 	
@@ -127,8 +127,9 @@ public class HPaned : Paned
 	
 	/**
 	 * Creates a new HPaned and adds two widgets as it's children
-	 * @param child1
-	 * @param child2
+	 * Params:
+	 *  child1 =
+	 *  child2 =
 	 */
 	this(Widget child1, Widget child2)
 	{
@@ -144,8 +145,6 @@ public class HPaned : Paned
 	
 	/**
 	 * Create a new GtkHPaned
-	 * Returns:
-	 * the new GtkHPaned
 	 */
 	public this ()
 	{

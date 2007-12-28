@@ -68,11 +68,17 @@ private import gtk.Adjustment;
 
 
 
+private import gtk.Widget;
 
 /**
  * Description
+ * GtkRange is the common base class for widgets which visualize an
+ * adjustment, e.g scales or scrollbars.
+ * Apart from signals for monitoring the parameters of the adjustment,
+ * GtkRange provides properties and methods for influencing the sensitivity
+ * of the "steppers". It also provides properties and methods for setting a
+ * "fill level" on range widgets. See gtk_range_set_fill_level().
  */
-private import gtk.Widget;
 public class Range : Widget
 {
 	
@@ -201,13 +207,13 @@ public class Range : Widget
 		}
 		onMoveSliderListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveSlider(GtkRange* rangeStruct, GtkScrollType arg1, Range range)
+	extern(C) static void callBackMoveSlider(GtkRange* rangeStruct, GtkScrollType step, Range range)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(GtkScrollType, Range) dlg ; range.onMoveSliderListeners )
 		{
-			dlg(arg1, range);
+			dlg(step, range);
 		}
 		
 		return consumed;
@@ -244,11 +250,9 @@ public class Range : Widget
 	
 	
 	/**
-	 * range:
-	 *  A GtkRange
-	 * Returns:
-	 *  The current position of the fill level indicator.
+	 * Gets the current position of the fill level indicator.
 	 * Since 2.12
+	 * Returns: The current fill level
 	 */
 	public double getFillLevel()
 	{
@@ -257,11 +261,9 @@ public class Range : Widget
 	}
 	
 	/**
-	 * range:
-	 *  A GtkRange
-	 * Returns:
-	 *  Whether GtkRange is restricted to the fill level.
+	 * Gets whether the range is restricted to the fill level.
 	 * Since 2.12
+	 * Returns: TRUE if range is restricted to the fill level.
 	 */
 	public int getRestrictToFillLevel()
 	{
@@ -270,11 +272,9 @@ public class Range : Widget
 	}
 	
 	/**
-	 * range:
-	 *  A GtkRange
-	 * Returns:
-	 *  Whether GtkRange displays a fill level graphics.
+	 * Gets whether the range displays the fill level graphically.
 	 * Since 2.12
+	 * Returns: TRUE if range shows the fill level.
 	 */
 	public int getShowFillLevel()
 	{
@@ -297,10 +297,9 @@ public class Range : Widget
 	 * to values which are smaller than the fill level. This is controller
 	 * by gtk_range_set_restrict_to_fill_level() and is by default
 	 * enabled.
-	 * range:
-	 *  A GtkRange
-	 * fill_level:
 	 * Since 2.12
+	 * Params:
+	 * fillLevel =  the new position of the fill level indicator
 	 */
 	public void setFillLevel(double fillLevel)
 	{
@@ -312,11 +311,9 @@ public class Range : Widget
 	 * Sets whether the slider is restricted to the fill level. See
 	 * gtk_range_set_fill_level() for a general description of the fill
 	 * level concept.
-	 * range:
-	 *  A GtkRange
-	 * restrict_to_fill_level:
-	 *  Whether the fill level restricts slider movement.
 	 * Since 2.12
+	 * Params:
+	 * restrictToFillLevel =  Whether the fill level restricts slider movement.
 	 */
 	public void setRestrictToFillLevel(int restrictToFillLevel)
 	{
@@ -328,11 +325,9 @@ public class Range : Widget
 	 * Sets whether a graphical fill level is show on the trough. See
 	 * gtk_range_set_fill_level() for a general description of the fill
 	 * level concept.
-	 * range:
-	 *  A GtkRange
-	 * show_fill_level:
-	 *  Whether a fill level indicator graphics is shown.
 	 * Since 2.12
+	 * Params:
+	 * showFillLevel =  Whether a fill level indicator graphics is shown.
 	 */
 	public void setShowFillLevel(int showFillLevel)
 	{
@@ -345,10 +340,7 @@ public class Range : Widget
 	 * See gtk_range_set_adjustment() for details.
 	 * The return value does not have a reference added, so should not
 	 * be unreferenced.
-	 * range:
-	 *  a GtkRange
-	 * Returns:
-	 *  a GtkAdjustment
+	 * Returns: a GtkAdjustment
 	 */
 	public Adjustment getAdjustment()
 	{
@@ -365,10 +357,8 @@ public class Range : Widget
 	 * continuous. GTK_UPDATE_DISCONTINUOUS means that the value will only
 	 * be updated when the user releases the button and ends the slider
 	 * drag operation.
-	 * range:
-	 *  a GtkRange
-	 * policy:
-	 *  update policy
+	 * Params:
+	 * policy =  update policy
 	 */
 	public void setUpdatePolicy(GtkUpdateType policy)
 	{
@@ -384,10 +374,8 @@ public class Range : Widget
 	 * is normally 0 for GtkScale and nonzero for GtkScrollbar, and
 	 * indicates the size of the visible area of the widget being scrolled.
 	 * The page size affects the size of the scrollbar slider.
-	 * range:
-	 *  a GtkRange
-	 * adjustment:
-	 *  a GtkAdjustment
+	 * Params:
+	 * adjustment =  a GtkAdjustment
 	 */
 	public void setAdjustment(Adjustment adjustment)
 	{
@@ -397,10 +385,7 @@ public class Range : Widget
 	
 	/**
 	 * Gets the value set by gtk_range_set_inverted().
-	 * range:
-	 *  a GtkRange
-	 * Returns:
-	 *  TRUE if the range is inverted
+	 * Returns: TRUE if the range is inverted
 	 */
 	public int getInverted()
 	{
@@ -413,10 +398,8 @@ public class Range : Widget
 	 * slider moves from top to bottom or left to right. Inverted
 	 * ranges have higher values at the top or on the right rather than
 	 * on the bottom or left.
-	 * range:
-	 *  a GtkRange
-	 * setting:
-	 *  TRUE to invert the range
+	 * Params:
+	 * setting =  TRUE to invert the range
 	 */
 	public void setInverted(int setting)
 	{
@@ -426,10 +409,7 @@ public class Range : Widget
 	
 	/**
 	 * Gets the update policy of range. See gtk_range_set_update_policy().
-	 * range:
-	 *  a GtkRange
-	 * Returns:
-	 *  the current update policy
+	 * Returns: the current update policy
 	 */
 	public GtkUpdateType getUpdatePolicy()
 	{
@@ -439,10 +419,7 @@ public class Range : Widget
 	
 	/**
 	 * Gets the current value of the range.
-	 * range:
-	 *  a GtkRange
-	 * Returns:
-	 *  current value of the range.
+	 * Returns: current value of the range.
 	 */
 	public double getValue()
 	{
@@ -455,12 +432,9 @@ public class Range : Widget
 	 * The step size is used when the user clicks the GtkScrollbar
 	 * arrows or moves GtkScale via arrow keys. The page size
 	 * is used for example when moving via Page Up or Page Down keys.
-	 * range:
-	 *  a GtkRange
-	 * step:
-	 *  step size
-	 * page:
-	 *  page size
+	 * Params:
+	 * step =  step size
+	 * page =  page size
 	 */
 	public void setIncrements(double step, double page)
 	{
@@ -472,12 +446,9 @@ public class Range : Widget
 	 * Sets the allowable values in the GtkRange, and clamps the range
 	 * value to be between min and max. (If the range has a non-zero
 	 * page size, it is clamped between min and max - page-size.)
-	 * range:
-	 *  a GtkRange
-	 * min:
-	 *  minimum range value
-	 * max:
-	 *  maximum range value
+	 * Params:
+	 * min =  minimum range value
+	 * max =  maximum range value
 	 */
 	public void setRange(double min, double max)
 	{
@@ -488,12 +459,10 @@ public class Range : Widget
 	/**
 	 * Sets the current value of the range; if the value is outside the
 	 * minimum or maximum range values, it will be clamped to fit inside
-	 * them. The range emits the "value_changed" signal if the value
-	 * changes.
-	 * range:
-	 *  a GtkRange
-	 * value:
-	 *  new value of the range
+	 * them. The range emits the "value-changed" signal if the
+	 * value changes.
+	 * Params:
+	 * value =  new value of the range
 	 */
 	public void setValue(double value)
 	{
@@ -505,11 +474,9 @@ public class Range : Widget
 	/**
 	 * Sets the sensitivity policy for the stepper that points to the
 	 * 'lower' end of the GtkRange's adjustment.
-	 * range:
-	 *  a GtkRange
-	 * sensitivity:
-	 *  the lower stepper's sensitivity policy.
 	 * Since 2.10
+	 * Params:
+	 * sensitivity =  the lower stepper's sensitivity policy.
 	 */
 	public void setLowerStepperSensitivity(GtkSensitivityType sensitivity)
 	{
@@ -520,11 +487,8 @@ public class Range : Widget
 	/**
 	 * Gets the sensitivity policy for the stepper that points to the
 	 * 'lower' end of the GtkRange's adjustment.
-	 * range:
-	 *  a GtkRange
-	 * Returns:
-	 *  The lower stepper's sensitivity policy.
 	 * Since 2.10
+	 * Returns: The lower stepper's sensitivity policy.
 	 */
 	public GtkSensitivityType getLowerStepperSensitivity()
 	{
@@ -535,11 +499,9 @@ public class Range : Widget
 	/**
 	 * Sets the sensitivity policy for the stepper that points to the
 	 * 'upper' end of the GtkRange's adjustment.
-	 * range:
-	 *  a GtkRange
-	 * sensitivity:
-	 *  the upper stepper's sensitivity policy.
 	 * Since 2.10
+	 * Params:
+	 * sensitivity =  the upper stepper's sensitivity policy.
 	 */
 	public void setUpperStepperSensitivity(GtkSensitivityType sensitivity)
 	{
@@ -550,15 +512,8 @@ public class Range : Widget
 	/**
 	 * Gets the sensitivity policy for the stepper that points to the
 	 * 'upper' end of the GtkRange's adjustment.
-	 * range:
-	 *  a GtkRange
-	 * Returns:
-	 *  The upper stepper's sensitivity policy.
 	 * Since 2.10
-	 * Property Details
-	 * The "adjustment" property
-	 *  "adjustment" GtkAdjustment : Read / Write / Construct
-	 * The GtkAdjustment that contains the current value of this range object.
+	 * Returns: The upper stepper's sensitivity policy.
 	 */
 	public GtkSensitivityType getUpperStepperSensitivity()
 	{

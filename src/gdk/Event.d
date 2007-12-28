@@ -137,12 +137,14 @@ public class Event
 		this.gdkEvent = gdkEvent;
 	}
 	
+	/** */
 	public static bool isDoubleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
 		return eventButton.button==buttonNumber
 		&& eventButton.type == EventType.DOUBLE_BUTTON_PRESS;
 	}
 	
+	/** */
 	public static bool isTrippleClick(GdkEventButton* eventButton, int buttonNumber=1)
 	{
 		return eventButton.button==buttonNumber
@@ -159,8 +161,7 @@ public class Event
 	
 	/**
 	 * Checks if any events are ready to be processed for any display.
-	 * Returns:
-	 *  TRUE if any events are pending.
+	 * Returns: TRUE if any events are pending.
 	 */
 	public static int gdkEventsPending()
 	{
@@ -171,10 +172,7 @@ public class Event
 	/**
 	 * If there is an event waiting in the event queue of some open
 	 * display, returns a copy of it. See gdk_display_peek_event().
-	 * Returns:
-	 *  a copy of the first GdkEvent on some event queue, or NULL if no
-	 * events are in any queues. The returned GdkEvent should be freed with
-	 * gdk_event_free().
+	 * Returns: a copy of the first GdkEvent on some event queue, or NULL if noevents are in any queues. The returned GdkEvent should be freed withgdk_event_free().
 	 */
 	public static Event peek()
 	{
@@ -186,9 +184,7 @@ public class Event
 	 * Checks all open displays for a GdkEvent to process,to be processed
 	 * on, fetching events from the windowing system if necessary.
 	 * See gdk_display_get_event().
-	 * Returns:
-	 *  the next GdkEvent to be processed, or NULL if no events
-	 * are pending. The returned GdkEvent should be freed with gdk_event_free().
+	 * Returns: the next GdkEvent to be processed, or NULL if no eventsare pending. The returned GdkEvent should be freed with gdk_event_free().
 	 */
 	public static Event get()
 	{
@@ -200,11 +196,9 @@ public class Event
 	 * Waits for a GraphicsExpose or NoExpose event from the X server.
 	 * This is used in the GtkText and GtkCList widgets in GTK+ to make sure any
 	 * GraphicsExpose events are handled before the widget is scrolled.
-	 * window:
-	 *  the GdkWindow to wait for the events for.
-	 * Returns:
-	 *  a GdkEventExpose if a GraphicsExpose was received, or NULL if a
-	 * NoExpose event was received.
+	 * Params:
+	 * window =  the GdkWindow to wait for the events for.
+	 * Returns: a GdkEventExpose if a GraphicsExpose was received, or NULL if aNoExpose event was received.
 	 */
 	public static Event getGraphicsExpose(Window window)
 	{
@@ -216,8 +210,6 @@ public class Event
 	 * Appends a copy of the given event onto the front of the event
 	 * queue for event->any.window's display, or the default event
 	 * queue if event->any.window is NULL. See gdk_display_put_event().
-	 * event:
-	 *  a GdkEvent.
 	 */
 	public void put()
 	{
@@ -227,12 +219,9 @@ public class Event
 	
 	/**
 	 * Creates a new event of the given type. All fields are set to 0.
-	 * type:
-	 *  a GdkEventType
-	 * Returns:
-	 *  a newly-allocated GdkEvent. The returned GdkEvent
-	 * should be freed with gdk_event_free().
 	 * Since 2.2
+	 * Params:
+	 * type =  a GdkEventType
 	 */
 	public this (GdkEventType type)
 	{
@@ -243,11 +232,7 @@ public class Event
 	/**
 	 * Copies a GdkEvent, copying or incrementing the reference count of the
 	 * resources associated with it (e.g. GdkWindow's and strings).
-	 * event:
-	 *  a GdkEvent
-	 * Returns:
-	 *  a copy of event. The returned GdkEvent should be freed with
-	 * gdk_event_free().
+	 * Returns: a copy of event. The returned GdkEvent should be freed withgdk_event_free().
 	 */
 	public Event copy()
 	{
@@ -260,8 +245,6 @@ public class Event
 	 * Note that this function should only be called with events returned from
 	 * functions such as gdk_event_peek(), gdk_event_get(),
 	 * gdk_event_get_graphics_expose() and gdk_event_copy().
-	 * event:
-	 *  a GdkEvent.
 	 */
 	public void free()
 	{
@@ -272,10 +255,7 @@ public class Event
 	/**
 	 * Returns the time stamp from event, if there is one; otherwise
 	 * returns GDK_CURRENT_TIME. If event is NULL, returns GDK_CURRENT_TIME.
-	 * event:
-	 *  a GdkEvent
-	 * Returns:
-	 *  time stamp field from event
+	 * Returns: time stamp field from event
 	 */
 	public uint getTime()
 	{
@@ -288,12 +268,9 @@ public class Event
 	 * stores an empty state (0). Returns TRUE if there was a state field
 	 * in the event. event may be NULL, in which case it's treated
 	 * as if the event had no state field.
-	 * event:
-	 *  a GdkEvent or NULL
-	 * state:
-	 *  return location for state
-	 * Returns:
-	 *  TRUE if there was a state field in the event
+	 * Params:
+	 * state =  return location for state
+	 * Returns: TRUE if there was a state field in the event
 	 */
 	public int getState(GdkModifierType* state)
 	{
@@ -304,14 +281,10 @@ public class Event
 	/**
 	 * Extract the axis value for a particular axis use from
 	 * an event structure.
-	 * event:
-	 *  a GdkEvent
-	 * axis_use:
-	 *  the axis use to look for
-	 * value:
-	 *  location to store the value found
-	 * Returns:
-	 *  TRUE if the specified axis was found, otherwise FALSE
+	 * Params:
+	 * axisUse =  the axis use to look for
+	 * value =  location to store the value found
+	 * Returns: TRUE if the specified axis was found, otherwise FALSE
 	 */
 	public int getAxis(GdkAxisUse axisUse, double* value)
 	{
@@ -321,14 +294,10 @@ public class Event
 	
 	/**
 	 * Extract the event window relative x/y coordinates from an event.
-	 * event:
-	 *  a GdkEvent
-	 * x_win:
-	 *  location to put event window x coordinate
-	 * y_win:
-	 *  location to put event window y coordinate
-	 * Returns:
-	 *  TRUE if the event delivered event window coordinates
+	 * Params:
+	 * xWin =  location to put event window x coordinate
+	 * yWin =  location to put event window y coordinate
+	 * Returns: TRUE if the event delivered event window coordinates
 	 */
 	public int getCoords(double* xWin, double* yWin)
 	{
@@ -338,14 +307,10 @@ public class Event
 	
 	/**
 	 * Extract the root window relative x/y coordinates from an event.
-	 * event:
-	 *  a GdkEvent
-	 * x_root:
-	 *  location to put root window x coordinate
-	 * y_root:
-	 *  location to put root window y coordinate
-	 * Returns:
-	 *  TRUE if the event delivered root window coordinates
+	 * Params:
+	 * xRoot =  location to put root window x coordinate
+	 * yRoot =  location to put root window y coordinate
+	 * Returns: TRUE if the event delivered root window coordinates
 	 */
 	public int getRootCoords(double* xRoot, double* yRoot)
 	{
@@ -354,17 +319,31 @@ public class Event
 	}
 	
 	/**
+	 * Request more motion notifies if event is a motion notify hint event.
+	 * This function should be used instead of gdk_window_get_pointer() to
+	 * request further motion notifies, because it also works for extension
+	 * events where motion notifies are provided for devices other than the
+	 * core pointer. Coordinate extraction, processing and requesting more
+	 * Since 2.12
+	 * Params:
+	 * event =  a valid GdkEvent
+	 */
+	public static void requestMotions(GdkEventMotion* event)
+	{
+		// void gdk_event_request_motions (GdkEventMotion *event);
+		gdk_event_request_motions(event);
+	}
+	
+	/**
 	 * Sets the function to call to handle all events from GDK.
 	 * Note that GTK+ uses this to install its own event handler, so it is
 	 * usually not useful for GTK+ applications. (Although an application
 	 * can call this function then call gtk_main_do_event() to pass
 	 * events to GTK+.)
-	 * func:
-	 *  the function to call to handle events from GDK.
-	 * data:
-	 *  user data to pass to the function.
-	 * notify:
-	 *  the function to call when the handler function is removed, i.e. when
+	 * Params:
+	 * func =  the function to call to handle events from GDK.
+	 * data =  user data to pass to the function.
+	 * notify =  the function to call when the handler function is removed, i.e. when
 	 *  gdk_event_handler_set() is called with another event handler.
 	 */
 	public static void handlerSet(GdkEventFunc func, void* data, GDestroyNotify notify)
@@ -379,12 +358,9 @@ public class Event
 	 * on the default GdkDisplay.)
 	 * This could be used for communicating between different applications,
 	 * though the amount of data is limited to 20 bytes.
-	 * event:
-	 *  the GdkEvent to send, which should be a GdkEventClient.
-	 * winid:
-	 *  the window to send the X ClientMessage event to.
-	 * Returns:
-	 *  non-zero on success.
+	 * Params:
+	 * winid =  the window to send the X ClientMessage event to.
+	 * Returns: non-zero on success.
 	 */
 	public int sendClientMessage(GdkNativeWindow winid)
 	{
@@ -399,15 +375,12 @@ public class Event
 	 * This could be used for communicating between different
 	 * applications, though the amount of data is limited to 20 bytes on
 	 * X11, and to just four bytes on Windows.
-	 * display:
-	 *  the GdkDisplay for the window where the message is to be sent.
-	 * event:
-	 *  the GdkEvent to send, which should be a GdkEventClient.
-	 * winid:
-	 *  the window to send the client message to.
-	 * Returns:
-	 *  non-zero on success.
 	 * Since 2.2
+	 * Params:
+	 * display =  the GdkDisplay for the window where the message is to be sent.
+	 * event =  the GdkEvent to send, which should be a GdkEventClient.
+	 * winid =  the window to send the client message to.
+	 * Returns: non-zero on success.
 	 */
 	public static int sendClientMessageForDisplay(Display display, Event event, GdkNativeWindow winid)
 	{
@@ -422,8 +395,6 @@ public class Event
 	 * described in the Inter-Client Communication Conventions Manual (ICCCM).
 	 * If no windows are found with the WM_STATE property set, the message is sent
 	 * to all children of the root window.
-	 * event:
-	 *  the GdkEvent to send, which should be a GdkEventClient.
 	 */
 	public void sendClientmessageToall()
 	{
@@ -434,14 +405,12 @@ public class Event
 	/**
 	 * Adds a filter to the default display to be called when X ClientMessage events
 	 * are received. See gdk_display_add_client_message_filter().
-	 * message_type:
-	 *  the type of ClientMessage events to receive. This will be
+	 * Params:
+	 * messageType =  the type of ClientMessage events to receive. This will be
 	 *  checked against the message_type field of the
 	 *  XClientMessage event struct.
-	 * func:
-	 *  the function to call to process the event.
-	 * data:
-	 *  user data to pass to func.
+	 * func =  the function to call to process the event.
+	 * data =  user data to pass to func.
 	 */
 	public static void gdkAddClientMessageFilter(GdkAtom messageType, GdkFilterFunc func, void* data)
 	{
@@ -451,8 +420,7 @@ public class Event
 	
 	/**
 	 * Gets whether event debugging output is enabled.
-	 * Returns:
-	 *  TRUE if event debugging output is enabled.
+	 * Returns: TRUE if event debugging output is enabled.
 	 */
 	public static int gdkGetShowEvents()
 	{
@@ -465,8 +433,8 @@ public class Event
 	 * Note that GTK+ must be compiled with debugging (that is,
 	 * configured using the --enable-debug option)
 	 * to use this option.
-	 * show_events:
-	 *  TRUE to output event debugging information.
+	 * Params:
+	 * showEvents =  TRUE to output event debugging information.
 	 */
 	public static void gdkSetShowEvents(int showEvents)
 	{
@@ -478,11 +446,9 @@ public class Event
 	 * Sets the screen for event to screen. The event must
 	 * have been allocated by GTK+, for instance, by
 	 * gdk_event_copy().
-	 * event:
-	 *  a GdkEvent
-	 * screen:
-	 *  a GdkScreen
 	 * Since 2.2
+	 * Params:
+	 * screen =  a GdkScreen
 	 */
 	public void setScreen(Screen screen)
 	{
@@ -498,11 +464,8 @@ public class Event
 	 * that is, the screen which has the root window
 	 * to which event->motion.x_root and
 	 * event->motion.y_root are relative.
-	 * event:
-	 *  a GdkEvent
-	 * Returns:
-	 *  the screen for the event
 	 * Since 2.2
+	 * Returns: the screen for the event
 	 */
 	public Screen getScreen()
 	{
@@ -513,16 +476,10 @@ public class Event
 	/**
 	 * Obtains a desktop-wide setting, such as the double-click time,
 	 * for the default screen. See gdk_screen_get_setting().
-	 * name:
-	 *  the name of the setting.
-	 * value:
-	 *  location to store the value of the setting.
-	 * Returns:
-	 * : TRUE if the setting existed and a value was stored
-	 *  in value, FALSE otherwise.
-	 * See Also
-	 * Event Structures
-	 * The structs used for each type of event.
+	 * Params:
+	 * name =  the name of the setting.
+	 * value =  location to store the value of the setting.
+	 * Returns:: TRUE if the setting existed and a value was stored in value, FALSE otherwise.
 	 */
 	public static int gdkSettingGet(char[] name, Value value)
 	{

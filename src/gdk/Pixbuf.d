@@ -186,27 +186,18 @@ public class Pixbuf
 	 * This function calls gdk_drawable_get_image() internally and
 	 * converts the resulting image to a GdkPixbuf, so the
 	 * documentation for gdk_drawable_get_image() may also be relevant.
-	 * dest:
-	 *  Destination pixbuf, or NULL if a new pixbuf should be created.
-	 * src:
-	 *  Source drawable.
-	 * cmap:
-	 *  A colormap if src doesn't have one set.
-	 * src_x:
-	 *  Source X coordinate within drawable.
-	 * src_y:
-	 *  Source Y coordinate within drawable.
-	 * dest_x:
-	 *  Destination X coordinate in pixbuf, or 0 if dest is NULL.
-	 * dest_y:
-	 *  Destination Y coordinate in pixbuf, or 0 if dest is NULL.
-	 * width:
-	 *  Width in pixels of region to get.
-	 * height:
-	 *  Height in pixels of region to get.
+	 * Params:
+	 * 	src = Source drawable.
+	 *  cmap = A colormap if src doesn't have one set.
+	 *  srcX = Source X coordinate within drawable.
+	 *  srcY = Source Y coordinate within drawable.
+	 *  destX = Destination X coordinate in pixbuf, or 0 if dest is NULL.
+	 *  destY = Destination Y coordinate in pixbuf, or 0 if dest is NULL.
+	 *  width = Width in pixels of region to get.
+	 *  height = Height in pixels of region to get.
 	 * Returns:
 	 *  The same pixbuf as dest if it was non-NULL, or a newly-created
-	 * pixbuf with a reference count of 1 if no destination pixbuf was specified, or NULL on error
+	 *  pixbuf with a reference count of 1 if no destination pixbuf was specified, or NULL on error
 	 */
 	public Pixbuf getFromDrawable(Drawable src, Colormap cmap, int srcX, int srcY, int destX, int destY, int width, int height)
 	{
@@ -387,6 +378,12 @@ public class Pixbuf
 	 *  gdk_pixbuf_composite_color_simple() which create a new pixbuf of a
 	 *  given size, scale an original image to fit, and then return the
 	 *  new pixbuf.
+	 *  Scaling and compositing functions take advantage of MMX hardware
+	 *  acceleration on systems where MMX is supported. If gdk-pixbuf is built
+	 *  with the Sun mediaLib library, these functions are instead accelerated
+	 *  using mediaLib, which provides hardware acceleration on Intel, AMD,
+	 *  and Sparc chipsets. If desired, mediaLib support can be turned off by
+	 *  setting the GDK_DISABLE_MEDIALIB environment variable.
 	 *  The following example demonstrates handling an expose event by
 	 *  rendering the appropriate area of a source image (which is scaled
 	 *  to fit the widget) onto the widget's window. The source image is
@@ -408,7 +405,7 @@ public class Pixbuf
 		 *  (double) widget->allocation.height / gdk_pixbuf_get_height (pixbuf),
 		 *  GDK_INTERP_BILINEAR, 255,
 		 *  event->area.x, event->area.y, 16, 0xaaaaaa, 0x555555);
-		 *  gdk_pixbuf_render_to_drawable (dest, widget->window, widget->style->fg_gc[GTK_STATE_NORMAL],
+		 *  gdk_draw_pixbuf (widget->window, widget->style->fg_gc[GTK_STATE_NORMAL], dest,
 		 *  0, 0, event->area.x, event->area.y,
 		 *  event->area.width, event->area.height,
 		 *  GDK_RGB_DITHER_NORMAL, event->area.x, event->area.y);
@@ -429,24 +426,15 @@ public class Pixbuf
 	 * Takes the opacity values in a rectangular portion of a pixbuf and thresholds
 	 * them to produce a bi-level alpha mask that can be used as a clipping mask for
 	 * a drawable.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * bitmap:
-	 *  Bitmap where the bilevel mask will be painted to.
-	 * src_x:
-	 *  Source X coordinate.
-	 * src_y:
-	 *  source Y coordinate.
-	 * dest_x:
-	 *  Destination X coordinate.
-	 * dest_y:
-	 *  Destination Y coordinate.
-	 * width:
-	 *  Width of region to threshold, or -1 to use pixbuf width
-	 * height:
-	 *  Height of region to threshold, or -1 to use pixbuf height
-	 * alpha_threshold:
-	 *  Opacity values below this will be painted as zero; all
+	 * Params:
+	 * bitmap =  Bitmap where the bilevel mask will be painted to.
+	 * srcX =  Source X coordinate.
+	 * srcY =  source Y coordinate.
+	 * destX =  Destination X coordinate.
+	 * destY =  Destination Y coordinate.
+	 * width =  Width of region to threshold, or -1 to use pixbuf width
+	 * height =  Height of region to threshold, or -1 to use pixbuf height
+	 * alphaThreshold =  Opacity values below this will be painted as zero; all
 	 * other values will be painted as one.
 	 */
 	public void renderThresholdAlpha(Bitmap bitmap, int srcX, int srcY, int destX, int destY, int width, int height, int alphaThreshold)
@@ -469,30 +457,18 @@ public class Pixbuf
 	 * base position change, as in scrolling. The dither matrix has to be shifted
 	 * for consistent visual results. If you do not have any of these cases, the
 	 * dither offsets can be both zero.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * drawable:
-	 *  Destination drawable.
-	 * gc:
-	 *  GC used for rendering.
-	 * src_x:
-	 *  Source X coordinate within pixbuf.
-	 * src_y:
-	 *  Source Y coordinate within pixbuf.
-	 * dest_x:
-	 *  Destination X coordinate within drawable.
-	 * dest_y:
-	 *  Destination Y coordinate within drawable.
-	 * width:
-	 *  Width of region to render, in pixels, or -1 to use pixbuf width
-	 * height:
-	 *  Height of region to render, in pixels, or -1 to use pixbuf height
-	 * dither:
-	 *  Dithering mode for GdkRGB.
-	 * x_dither:
-	 *  X offset for dither.
-	 * y_dither:
-	 *  Y offset for dither.
+	 * Params:
+	 * drawable =  Destination drawable.
+	 * gc =  GC used for rendering.
+	 * srcX =  Source X coordinate within pixbuf.
+	 * srcY =  Source Y coordinate within pixbuf.
+	 * destX =  Destination X coordinate within drawable.
+	 * destY =  Destination Y coordinate within drawable.
+	 * width =  Width of region to render, in pixels, or -1 to use pixbuf width
+	 * height =  Height of region to render, in pixels, or -1 to use pixbuf height
+	 * dither =  Dithering mode for GdkRGB.
+	 * xDither =  X offset for dither.
+	 * yDither =  Y offset for dither.
 	 */
 	public void renderToDrawable(Drawable drawable, GdkGC* gc, int srcX, int srcY, int destX, int destY, int width, int height, GdkRgbDither dither, int xDither, int yDither)
 	{
@@ -509,32 +485,19 @@ public class Pixbuf
 	 * Otherwise a colormap must be set on them with gdk_drawable_set_colormap.
 	 * On older X servers, rendering pixbufs with an alpha channel involves round trips
 	 * to the X server, and may be somewhat slow.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * drawable:
-	 *  Destination drawable.
-	 * src_x:
-	 *  Source X coordinate within pixbuf.
-	 * src_y:
-	 *  Source Y coordinates within pixbuf.
-	 * dest_x:
-	 *  Destination X coordinate within drawable.
-	 * dest_y:
-	 *  Destination Y coordinate within drawable.
-	 * width:
-	 *  Width of region to render, in pixels, or -1 to use pixbuf width.
-	 * height:
-	 *  Height of region to render, in pixels, or -1 to use pixbuf height.
-	 * alpha_mode:
-	 *  Ignored. Present for backwards compatibility.
-	 * alpha_threshold:
-	 *  Ignored. Present for backwards compatibility
-	 * dither:
-	 *  Dithering mode for GdkRGB.
-	 * x_dither:
-	 *  X offset for dither.
-	 * y_dither:
-	 *  Y offset for dither.
+	 * Params:
+	 * drawable =  Destination drawable.
+	 * srcX =  Source X coordinate within pixbuf.
+	 * srcY =  Source Y coordinates within pixbuf.
+	 * destX =  Destination X coordinate within drawable.
+	 * destY =  Destination Y coordinate within drawable.
+	 * width =  Width of region to render, in pixels, or -1 to use pixbuf width.
+	 * height =  Height of region to render, in pixels, or -1 to use pixbuf height.
+	 * alphaMode =  Ignored. Present for backwards compatibility.
+	 * alphaThreshold =  Ignored. Present for backwards compatibility
+	 * dither =  Dithering mode for GdkRGB.
+	 * xDither =  X offset for dither.
+	 * yDither =  Y offset for dither.
 	 */
 	public void renderToDrawableAlpha(Drawable drawable, int srcX, int srcY, int destX, int destY, int width, int height, GdkPixbufAlphaMode alphaMode, int alphaThreshold, GdkRgbDither dither, int xDither, int yDither)
 	{
@@ -554,16 +517,12 @@ public class Pixbuf
 	 * gdk_pixbuf_render_pixmap_and_mask_for_colormap().
 	 * If the pixbuf does not have an alpha channel, then *mask_return will be set
 	 * to NULL.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * pixmap_return:
-	 *  Location to store a pointer to the created pixmap,
+	 * Params:
+	 * pixmapReturn =  Location to store a pointer to the created pixmap,
 	 *  or NULL if the pixmap is not needed.
-	 * mask_return:
-	 *  Location to store a pointer to the created mask,
+	 * maskReturn =  Location to store a pointer to the created mask,
 	 *  or NULL if the mask is not needed.
-	 * alpha_threshold:
-	 *  Threshold value for opacity values.
+	 * alphaThreshold =  Threshold value for opacity values.
 	 */
 	public void renderPixmapAndMask(GdkPixmap** pixmapReturn, GdkBitmap** maskReturn, int alphaThreshold)
 	{
@@ -582,18 +541,13 @@ public class Pixbuf
 	 * will eventually be used or an error will result.
 	 * If the pixbuf does not have an alpha channel, then *mask_return will be set
 	 * to NULL.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * colormap:
-	 *  A GdkColormap
-	 * pixmap_return:
-	 *  Location to store a pointer to the created pixmap,
+	 * Params:
+	 * colormap =  A GdkColormap
+	 * pixmapReturn =  Location to store a pointer to the created pixmap,
 	 *  or NULL if the pixmap is not needed.
-	 * mask_return:
-	 *  Location to store a pointer to the created mask,
+	 * maskReturn =  Location to store a pointer to the created mask,
 	 *  or NULL if the mask is not needed.
-	 * alpha_threshold:
-	 *  Threshold value for opacity values.
+	 * alphaThreshold =  Threshold value for opacity values.
 	 */
 	public void renderPixmapAndMaskForColormap(Colormap colormap, GdkPixmap** pixmapReturn, GdkBitmap** maskReturn, int alphaThreshold)
 	{
@@ -605,26 +559,17 @@ public class Pixbuf
 	/**
 	 * Same as gdk_pixbuf_get_from_drawable() but gets the pixbuf from
 	 * an image.
-	 * dest:
-	 *  Destination pixbuf, or NULL if a new pixbuf should be created.
-	 * src:
-	 *  Source GdkImage.
-	 * cmap:
-	 *  A colormap, or NULL to use the one for src
-	 * src_x:
-	 *  Source X coordinate within drawable.
-	 * src_y:
-	 *  Source Y coordinate within drawable.
-	 * dest_x:
-	 *  Destination X coordinate in pixbuf, or 0 if dest is NULL.
-	 * dest_y:
-	 *  Destination Y coordinate in pixbuf, or 0 if dest is NULL.
-	 * width:
-	 *  Width in pixels of region to get.
-	 * height:
-	 *  Height in pixels of region to get.
-	 * Returns:
-	 *  dest, newly-created pixbuf if dest was NULL, NULL on error
+	 * Params:
+	 * dest =  Destination pixbuf, or NULL if a new pixbuf should be created.
+	 * src =  Source GdkImage.
+	 * cmap =  A colormap, or NULL to use the one for src
+	 * srcX =  Source X coordinate within drawable.
+	 * srcY =  Source Y coordinate within drawable.
+	 * destX =  Destination X coordinate in pixbuf, or 0 if dest is NULL.
+	 * destY =  Destination Y coordinate in pixbuf, or 0 if dest is NULL.
+	 * width =  Width in pixels of region to get.
+	 * height =  Height in pixels of region to get.
+	 * Returns: dest, newly-created pixbuf if dest was NULL, NULL on error
 	 */
 	public Pixbuf getFromImage(ImageGdk src, Colormap cmap, int srcX, int srcY, int destX, int destY, int width, int height)
 	{
@@ -643,19 +588,7 @@ public class Pixbuf
 	 * Creates a new GdkPixbuf structure and allocates a buffer for it. The
 	 * buffer has an optimal rowstride. Note that the buffer is not cleared;
 	 * you will have to fill it completely yourself.
-	 * colorspace:
-	 *  Color space for image
-	 * has_alpha:
-	 *  Whether the image should have transparency information
-	 * bits_per_sample:
-	 *  Number of bits per color sample
-	 * width:
-	 *  Width of image in pixels, must be > 0
-	 * height:
-	 *  Height of image in pixels, must be > 0
-	 * Returns:
-	 *  A newly-created GdkPixbuf with a reference count of 1, or
-	 * NULL if not enough memory could be allocated for the image buffer.
+	 * Returns: A newly-created GdkPixbuf with a reference count of 1, or NULL if not enough memory could be allocated for the image buffer.
 	 */
 	public static GType getType()
 	{
@@ -666,27 +599,17 @@ public class Pixbuf
 	/**
 	 * Creates a new GdkPixbuf out of in-memory image data. Currently only RGB
 	 * images with 8 bits per sample are supported.
-	 * data:
-	 *  Image data in 8-bit/sample packed format
-	 * colorspace:
-	 *  Colorspace for the image data
-	 * has_alpha:
-	 *  Whether the data has an opacity channel
-	 * bits_per_sample:
-	 *  Number of bits per sample
-	 * width:
-	 *  Width of the image in pixels, must be > 0
-	 * height:
-	 *  Height of the image in pixels, must be > 0
-	 * rowstride:
-	 *  Distance in bytes between row starts
-	 * destroy_fn:
-	 *  Function used to free the data when the pixbuf's reference count
+	 * Params:
+	 * data =  Image data in 8-bit/sample packed format
+	 * colorspace =  Colorspace for the image data
+	 * hasAlpha =  Whether the data has an opacity channel
+	 * bitsPerSample =  Number of bits per sample
+	 * width =  Width of the image in pixels, must be > 0
+	 * height =  Height of the image in pixels, must be > 0
+	 * rowstride =  Distance in bytes between row starts
+	 * destroyFn =  Function used to free the data when the pixbuf's reference count
 	 * drops to zero, or NULL if the data should not be freed
-	 * destroy_fn_data:
-	 *  Closure data to pass to the destroy notification function
-	 * Returns:
-	 *  A newly-created GdkPixbuf structure with a reference count of 1.
+	 * destroyFnData =  Closure data to pass to the destroy notification function
 	 */
 	public this (char* data, GdkColorspace colorspace, int hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, void* destroyFnData)
 	{
@@ -697,10 +620,8 @@ public class Pixbuf
 	/**
 	 * Creates a new pixbuf by parsing XPM data in memory. This data is commonly
 	 * the result of including an XPM file into a program's C source.
-	 * data:
-	 *  Pointer to inline XPM data.
-	 * Returns:
-	 *  A newly-created pixbuf with a reference count of 1.
+	 * Params:
+	 * data =  Pointer to inline XPM data.
 	 */
 	public this (char** data)
 	{
@@ -716,34 +637,13 @@ public class Pixbuf
 	 * GTK+ ships with a program called gdk-pixbuf-csource
 	 * which allows for conversion of GdkPixbufs into such a inline representation.
 	 * In almost all cases, you should pass the --raw flag to
-	 * gdk-pixbuf-csource. A sample invocation would be:
-	 *  gdk-pixbuf-csource --raw --name=myimage_inline myimage.png
-	 * For the typical case where the inline pixbuf is read-only static data,
-	 * you don't need to copy the pixel data unless you intend to write to
-	 * it, so you can pass FALSE for copy_pixels. (If you pass
-	 * --rle to gdk-pixbuf-csource, a copy
-	 * will be made even if copy_pixels is FALSE, so using this option is
-	 * generally a bad idea.)
-	 * If you create a pixbuf from const inline data compiled into your
-	 * program, it's probably safe to ignore errors and disable length checks,
-	 * since things will always succeed:
-	 * pixbuf = gdk_pixbuf_new_from_inline (-1, myimage_inline, FALSE, NULL);
-	 * For non-const inline data, you could get out of memory. For untrusted
-	 * inline data located at runtime, you could have corrupt inline data in
-	 * addition.
-	 * data_length:
-	 *  Length in bytes of the data argument or -1 to
+	 * Params:
+	 * dataLength =  Length in bytes of the data argument or -1 to
 	 *  disable length checks
-	 * data:
-	 *  Byte data containing a serialized GdkPixdata structure
-	 * copy_pixels:
-	 *  Whether to copy the pixel data, or use direct pointers
+	 * data =  Byte data containing a serialized GdkPixdata structure
+	 * copyPixels =  Whether to copy the pixel data, or use direct pointers
 	 *  data for the resulting pixbuf
-	 * error:
-	 *  GError return location, may be NULL to ignore errors
-	 * Returns:
-	 *  A newly-created GdkPixbuf structure with a reference,
-	 *  count of 1, or NULL if an error occurred.
+	 * error =  GError return location, may be NULL to ignore errors
 	 */
 	public this (int dataLength, byte* data, int copyPixels, GError** error)
 	{
@@ -758,18 +658,11 @@ public class Pixbuf
 	 * The new pixbuf holds a reference to src_pixbuf, so
 	 * src_pixbuf will not be finalized until the new pixbuf
 	 * is finalized.
-	 * src_pixbuf:
-	 *  a GdkPixbuf
-	 * src_x:
-	 *  X coord in src_pixbuf
-	 * src_y:
-	 *  Y coord in src_pixbuf
-	 * width:
-	 *  width of region in src_pixbuf
-	 * height:
-	 *  height of region in src_pixbuf
-	 * Returns:
-	 *  a new pixbuf
+	 * Params:
+	 * srcX =  X coord in src_pixbuf
+	 * srcY =  Y coord in src_pixbuf
+	 * width =  width of region in src_pixbuf
+	 * height =  height of region in src_pixbuf
 	 */
 	public this (int srcX, int srcY, int width, int height)
 	{
@@ -780,13 +673,7 @@ public class Pixbuf
 	/**
 	 * Creates a new GdkPixbuf with a copy of the information in the specified
 	 * pixbuf.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * Returns:
-	 *  A newly-created pixbuf with a reference count of 1, or NULL if
-	 * not enough memory could be allocated.
-	 * See Also
-	 *  gdk_pixbuf_finalize().
+	 * Returns: A newly-created pixbuf with a reference count of 1, or NULL ifnot enough memory could be allocated.
 	 */
 	public Pixbuf copy()
 	{
@@ -801,10 +688,7 @@ public class Pixbuf
 	
 	/**
 	 * Queries the color space of a pixbuf.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * Returns:
-	 *  Color space.
+	 * Returns: Color space.
 	 */
 	public GdkColorspace getColorspace()
 	{
@@ -814,10 +698,7 @@ public class Pixbuf
 	
 	/**
 	 * Queries the number of channels of a pixbuf.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * Returns:
-	 *  Number of channels.
+	 * Returns: Number of channels.
 	 */
 	public int getNChannels()
 	{
@@ -827,10 +708,7 @@ public class Pixbuf
 	
 	/**
 	 * Queries whether a pixbuf has an alpha channel (opacity information).
-	 * pixbuf:
-	 *  A pixbuf.
-	 * Returns:
-	 *  TRUE if it has an alpha channel, FALSE otherwise.
+	 * Returns: TRUE if it has an alpha channel, FALSE otherwise.
 	 */
 	public int getHasAlpha()
 	{
@@ -840,10 +718,7 @@ public class Pixbuf
 	
 	/**
 	 * Queries the number of bits per color sample in a pixbuf.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * Returns:
-	 *  Number of bits per color sample.
+	 * Returns: Number of bits per color sample.
 	 */
 	public int getBitsPerSample()
 	{
@@ -853,12 +728,7 @@ public class Pixbuf
 	
 	/**
 	 * Queries a pointer to the pixel data of a pixbuf.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * Returns:
-	 *  A pointer to the pixbuf's pixel data. Please see the section called Image Data
-	 * for information about how the pixel data is stored in
-	 * memory.
+	 * Returns: A pointer to the pixbuf's pixel data. Please see the section called Image Datafor information about how the pixel data is stored inmemory.
 	 */
 	public char* getPixels()
 	{
@@ -868,10 +738,7 @@ public class Pixbuf
 	
 	/**
 	 * Queries the width of a pixbuf.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * Returns:
-	 *  Width in pixels.
+	 * Returns: Width in pixels.
 	 */
 	public int getWidth()
 	{
@@ -881,10 +748,7 @@ public class Pixbuf
 	
 	/**
 	 * Queries the height of a pixbuf.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * Returns:
-	 *  Height in pixels.
+	 * Returns: Height in pixels.
 	 */
 	public int getHeight()
 	{
@@ -895,10 +759,7 @@ public class Pixbuf
 	/**
 	 * Queries the rowstride of a pixbuf, which is the number of bytes between the start of a row
 	 * and the start of the next row.
-	 * pixbuf:
-	 *  A pixbuf.
-	 * Returns:
-	 *  Distance between row starts.
+	 * Returns: Distance between row starts.
 	 */
 	public int getRowstride()
 	{
@@ -908,21 +769,17 @@ public class Pixbuf
 	
 	/**
 	 * Looks up key in the list of options that may have been attached to the
-	 * pixbuf when it was loaded.
-	 * pixbuf:
-	 *  a GdkPixbuf
-	 * key:
-	 *  a nul-terminated string.
-	 * Returns:
-	 *  the value associated with key. This is a nul-terminated
-	 * string that should not be freed or NULL if key was not found.
-	 * Property Details
-	 * The "bits-per-sample" property
-	 *  "bits-per-sample" gint : Read / Write / Construct Only
-	 * The number of bits per sample.
-	 * Currently only 8 bit per sample are supported.
-	 * Allowed values: [1,16]
-	 * Default value: 8
+	 * pixbuf when it was loaded, or that may have been attached by another
+	 * function using gdk_pixbuf_set_option().
+	 * For instance, the ANI loader provides "Title" and "Artist" options.
+	 * The ICO, XBM, and XPM loaders provide "x_hot" and "y_hot" hot-spot
+	 * options for cursor definitions. The PNG loader provides the tEXt ancillary
+	 * chunk key/value pairs as options. Since 2.12, the TIFF and JPEG loaders
+	 * return an "orientation" option string that corresponds to the embedded
+	 * TIFF/Exif orientation tag (if present).
+	 * Params:
+	 * key =  a nul-terminated string.
+	 * Returns: the value associated with key. This is a nul-terminated string that should not be freed or NULL if key was not found.
 	 */
 	public char[] getOption(char[] key)
 	{
@@ -944,15 +801,9 @@ public class Pixbuf
 	 * Creates a new pixbuf by loading an image from a file. The file format is
 	 * detected automatically. If NULL is returned, then error will be set.
 	 * Possible errors are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains.
-	 * filename:
-	 *  Name of file to load, in the GLib file name encoding
-	 * error:
-	 *  Return location for an error
-	 * Returns:
-	 *  A newly-created pixbuf with a reference count of 1, or NULL if
-	 * any of several error conditions occurred: the file could not be opened,
-	 * there was no loader for the file's format, there was not enough memory to
-	 * allocate the image buffer, or the image file contained invalid data.
+	 * Params:
+	 * filename =  Name of file to load, in the GLib file name encoding
+	 * error =  Return location for an error
 	 */
 	public this (char[] filename, GError** error)
 	{
@@ -966,21 +817,12 @@ public class Pixbuf
 	 * Possible errors are in the GDK_PIXBUF_ERROR and G_FILE_ERROR domains.
 	 * The image will be scaled to fit in the requested size, preserving
 	 * the image's aspect ratio.
-	 * filename:
-	 *  Name of file to load, in the GLib file name encoding
-	 * width:
-	 *  The width the image should have or -1 to not constrain the width
-	 * height:
-	 *  The height the image should have or -1 to not constrain the height
-	 * error:
-	 *  Return location for an error
-	 * Returns:
-	 *  A newly-created pixbuf with a reference count of 1, or
-	 * NULL if any of several error conditions occurred: the file could not
-	 * be opened, there was no loader for the file's format, there was not
-	 * enough memory to allocate the image buffer, or the image file contained
-	 * invalid data.
 	 * Since 2.4
+	 * Params:
+	 * filename =  Name of file to load, in the GLib file name encoding
+	 * width =  The width the image should have or -1 to not constrain the width
+	 * height =  The height the image should have or -1 to not constrain the height
+	 * error =  Return location for an error
 	 */
 	public this (char[] filename, int width, int height, GError** error)
 	{
@@ -1000,22 +842,13 @@ public class Pixbuf
 	 * aspect ratio, a width or height of -1 means to not scale the image
 	 * at all in that dimension. Negative values for width and height are
 	 * allowed since 2.8.
-	 * filename:
-	 *  Name of file to load, in the GLib file name encoding
-	 * width:
-	 *  The width the image should have or -1 to not constrain the width
-	 * height:
-	 *  The height the image should have or -1 to not constrain the height
-	 * preserve_aspect_ratio:
-	 *  TRUE to preserve the image's aspect ratio
-	 * error:
-	 *  Return location for an error
-	 * Returns:
-	 *  A newly-created pixbuf with a reference count of 1, or NULL
-	 * if any of several error conditions occurred: the file could not be opened,
-	 * there was no loader for the file's format, there was not enough memory to
-	 * allocate the image buffer, or the image file contained invalid data.
 	 * Since 2.6
+	 * Params:
+	 * filename =  Name of file to load, in the GLib file name encoding
+	 * width =  The width the image should have or -1 to not constrain the width
+	 * height =  The height the image should have or -1 to not constrain the height
+	 * preserveAspectRatio =  TRUE to preserve the image's aspect ratio
+	 * error =  Return location for an error
 	 */
 	public this (char[] filename, int width, int height, int preserveAspectRatio, GError** error)
 	{
@@ -1028,20 +861,13 @@ public class Pixbuf
 	 * Saves pixbuf to a file in type, which is currently "jpeg", "png", "tiff", "ico" or "bmp".
 	 * If error is set, FALSE will be returned.
 	 * See gdk_pixbuf_save() for more details.
-	 * pixbuf:
-	 *  a GdkPixbuf.
-	 * filename:
-	 *  name of file to save.
-	 * type:
-	 *  name of file format.
-	 * option_keys:
-	 *  name of options to set, NULL-terminated
-	 * option_values:
-	 *  values for named options
-	 * error:
-	 *  return location for error, or NULL
-	 * Returns:
-	 *  whether an error was set
+	 * Params:
+	 * filename =  name of file to save.
+	 * type =  name of file format.
+	 * optionKeys =  name of options to set, NULL-terminated
+	 * optionValues =  values for named options
+	 * error =  return location for error, or NULL
+	 * Returns: whether an error was set
 	 */
 	public int savev(char[] filename, char[] type, char** optionKeys, char** optionValues, GError** error)
 	{
@@ -1053,45 +879,12 @@ public class Pixbuf
 	 * Saves pixbuf to a file in format type. By default, "jpeg", "png", "ico"
 	 * and "bmp" are possible file formats to save in, but more formats may be
 	 * installed. The list of all writable formats can be determined in the
-	 * following way:
-	 * void add_if_writable (GdkPixbufFormat *data, GSList **list)
-	 * {
-		 *  if (gdk_pixbuf_format_is_writable (data))
-		 *  *list = g_slist_prepend (*list, data);
-	 * }
-	 * GSList *formats = gdk_pixbuf_get_formats ();
-	 * GSList *writable_formats = NULL;
-	 * g_slist_foreach (formats, add_if_writable, writable_formats);
-	 * g_slist_free (formats);
-	 * If error is set, FALSE will be returned. Possible errors include
-	 * those in the GDK_PIXBUF_ERROR domain and those in the G_FILE_ERROR domain.
-	 * The variable argument list should be NULL-terminated; if not empty,
-	 * it should contain pairs of strings that modify the save
-	 * parameters. For example:
-	 * gdk_pixbuf_save (pixbuf, handle, "jpeg", error,
-	 *  "quality", "100", NULL);
-	 * Currently only few parameters exist. JPEG images can be saved with a
-	 * "quality" parameter; its value should be in the range [0,100].
-	 * Text chunks can be attached to PNG images by specifying parameters of
-	 * the form "tEXt::key", where key is an ASCII string of length 1-79.
-	 * The values are UTF-8 encoded strings. The PNG compression level can
-	 * be specified using the "compression" parameter; it's value is in an
-	 * integer in the range of [0,9].
-	 * ICO images can be saved in depth 16, 24, or 32, by using the "depth"
-	 * parameter. When the ICO saver is given "x_hot" and "y_hot" parameters,
-	 * it produces a CUR instead of an ICO.
-	 * pixbuf:
-	 *  a GdkPixbuf.
-	 * filename:
-	 *  name of file to save.
-	 * type:
-	 *  name of file format.
-	 * error:
-	 *  return location for error, or NULL
-	 * ...:
-	 *  list of key-value save options
-	 * Returns:
-	 *  whether an error was set
+	 * Params:
+	 * filename =  name of file to save.
+	 * type =  name of file format.
+	 * error =  return location for error, or NULL
+	 * ... =  list of key-value save options
+	 * Returns: whether an error was set
 	 */
 	public int save(char[] filename, char[] type, GError** error, ... )
 	{
@@ -1108,22 +901,15 @@ public class Pixbuf
 	 * include those in the GDK_PIXBUF_ERROR domain and whatever the save
 	 * function generates.
 	 * See gdk_pixbuf_save() for more details.
-	 * pixbuf:
-	 *  a GdkPixbuf.
-	 * save_func:
-	 *  a function that is called to save each block of data that
-	 *  the save routine generates.
-	 * user_data:
-	 *  user data to pass to the save function.
-	 * type:
-	 *  name of file format.
-	 * error:
-	 *  return location for error, or NULL
-	 * ...:
-	 *  list of key-value save options
-	 * Returns:
-	 *  whether an error was set
 	 * Since 2.4
+	 * Params:
+	 * saveFunc =  a function that is called to save each block of data that
+	 *  the save routine generates.
+	 * userData =  user data to pass to the save function.
+	 * type =  name of file format.
+	 * error =  return location for error, or NULL
+	 * ... =  list of key-value save options
+	 * Returns: whether an error was set
 	 */
 	public int saveToCallback(GdkPixbufSaveFunc saveFunc, void* userData, char[] type, GError** error, ... )
 	{
@@ -1135,24 +921,16 @@ public class Pixbuf
 	 * Saves pixbuf to a callback in format type, which is currently "jpeg",
 	 * "png", "tiff", "ico" or "bmp". If error is set, FALSE will be returned. See
 	 * gdk_pixbuf_save_to_callback() for more details.
-	 * pixbuf:
-	 *  a GdkPixbuf.
-	 * save_func:
-	 *  a function that is called to save each block of data that
-	 *  the save routine generates.
-	 * user_data:
-	 *  user data to pass to the save function.
-	 * type:
-	 *  name of file format.
-	 * option_keys:
-	 *  name of options to set, NULL-terminated
-	 * option_values:
-	 *  values for named options
-	 * error:
-	 *  return location for error, or NULL
-	 * Returns:
-	 *  whether an error was set
 	 * Since 2.4
+	 * Params:
+	 * saveFunc =  a function that is called to save each block of data that
+	 *  the save routine generates.
+	 * userData =  user data to pass to the save function.
+	 * type =  name of file format.
+	 * optionKeys =  name of options to set, NULL-terminated
+	 * optionValues =  values for named options
+	 * error =  return location for error, or NULL
+	 * Returns: whether an error was set
 	 */
 	public int saveToCallbackv(GdkPixbufSaveFunc saveFunc, void* userData, char[] type, char** optionKeys, char** optionValues, GError** error)
 	{
@@ -1169,21 +947,14 @@ public class Pixbuf
 	 * NULL. Possible errors include those in the GDK_PIXBUF_ERROR
 	 * domain.
 	 * See gdk_pixbuf_save() for more details.
-	 * pixbuf:
-	 *  a GdkPixbuf.
-	 * buffer:
-	 *  location to receive a pointer to the new buffer.
-	 * buffer_size:
-	 *  location to receive the size of the new buffer.
-	 * type:
-	 *  name of file format.
-	 * error:
-	 *  return location for error, or NULL
-	 * ...:
-	 *  list of key-value save options
-	 * Returns:
-	 *  whether an error was set
 	 * Since 2.4
+	 * Params:
+	 * buffer =  location to receive a pointer to the new buffer.
+	 * bufferSize =  location to receive the size of the new buffer.
+	 * type =  name of file format.
+	 * error =  return location for error, or NULL
+	 * ... =  list of key-value save options
+	 * Returns: whether an error was set
 	 */
 	public int saveToBuffer(char** buffer, uint* bufferSize, char[] type, GError** error, ... )
 	{
@@ -1194,23 +965,15 @@ public class Pixbuf
 	/**
 	 * Saves pixbuf to a new buffer in format type, which is currently "jpeg",
 	 * "tiff", "png", "ico" or "bmp". See gdk_pixbuf_save_to_buffer() for more details.
-	 * pixbuf:
-	 *  a GdkPixbuf.
-	 * buffer:
-	 *  location to receive a pointer to the new buffer.
-	 * buffer_size:
-	 *  location to receive the size of the new buffer.
-	 * type:
-	 *  name of file format.
-	 * option_keys:
-	 *  name of options to set, NULL-terminated
-	 * option_values:
-	 *  values for named options
-	 * error:
-	 *  return location for error, or NULL
-	 * Returns:
-	 *  whether an error was set
 	 * Since 2.4
+	 * Params:
+	 * buffer =  location to receive a pointer to the new buffer.
+	 * bufferSize =  location to receive the size of the new buffer.
+	 * type =  name of file format.
+	 * optionKeys =  name of options to set, NULL-terminated
+	 * optionValues =  values for named options
+	 * error =  return location for error, or NULL
+	 * Returns: whether an error was set
 	 */
 	public int saveToBufferv(char** buffer, uint* bufferSize, char[] type, char** optionKeys, char** optionValues, GError** error)
 	{
@@ -1230,17 +993,11 @@ public class Pixbuf
 	 * pointing into src; see gdk_pixbuf_new_subpixbuf().
 	 * For more complicated scaling/compositing see gdk_pixbuf_scale()
 	 * and gdk_pixbuf_composite().
-	 * src:
-	 *  a GdkPixbuf
-	 * dest_width:
-	 *  the width of destination image
-	 * dest_height:
-	 *  the height of destination image
-	 * interp_type:
-	 *  the interpolation type for the transformation.
-	 * Returns:
-	 *  the new GdkPixbuf, or NULL if not enough memory could be
-	 * allocated for it.
+	 * Params:
+	 * destWidth =  the width of destination image
+	 * destHeight =  the height of destination image
+	 * interpType =  the interpolation type for the transformation.
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
 	 */
 	public Pixbuf scaleSimple(int destWidth, int destHeight, GdkInterpType interpType)
 	{
@@ -1257,28 +1014,20 @@ public class Pixbuf
 	 * Try to use gdk_pixbuf_scale_simple() first, this function is
 	 * the industrial-strength power tool you can fall back to if
 	 * gdk_pixbuf_scale_simple() isn't powerful enough.
-	 * src:
-	 *  a GdkPixbuf
-	 * dest:
-	 *  the GdkPixbuf into which to render the results
-	 * dest_x:
-	 *  the left coordinate for region to render
-	 * dest_y:
-	 *  the top coordinate for region to render
-	 * dest_width:
-	 *  the width of the region to render
-	 * dest_height:
-	 *  the height of the region to render
-	 * offset_x:
-	 *  the offset in the X direction (currently rounded to an integer)
-	 * offset_y:
-	 *  the offset in the Y direction (currently rounded to an integer)
-	 * scale_x:
-	 *  the scale factor in the X direction
-	 * scale_y:
-	 *  the scale factor in the Y direction
-	 * interp_type:
-	 *  the interpolation type for the transformation.
+	 * If the source rectangle overlaps the destination rectangle on the
+	 * same pixbuf, it will be overwritten during the scaling which
+	 * results in rendering artifacts.
+	 * Params:
+	 * dest =  the GdkPixbuf into which to render the results
+	 * destX =  the left coordinate for region to render
+	 * destY =  the top coordinate for region to render
+	 * destWidth =  the width of the region to render
+	 * destHeight =  the height of the region to render
+	 * offsetX =  the offset in the X direction (currently rounded to an integer)
+	 * offsetY =  the offset in the Y direction (currently rounded to an integer)
+	 * scaleX =  the scale factor in the X direction
+	 * scaleY =  the scale factor in the Y direction
+	 * interpType =  the interpolation type for the transformation.
 	 */
 	public void scale(Pixbuf dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType)
 	{
@@ -1290,25 +1039,15 @@ public class Pixbuf
 	 * Creates a new GdkPixbuf by scaling src to dest_width x
 	 * dest_height and compositing the result with a checkboard of colors
 	 * color1 and color2.
-	 * src:
-	 *  a GdkPixbuf
-	 * dest_width:
-	 *  the width of destination image
-	 * dest_height:
-	 *  the height of destination image
-	 * interp_type:
-	 *  the interpolation type for the transformation.
-	 * overall_alpha:
-	 *  overall alpha for source image (0..255)
-	 * check_size:
-	 *  the size of checks in the checkboard (must be a power of two)
-	 * color1:
-	 *  the color of check at upper left
-	 * color2:
-	 *  the color of the other check
-	 * Returns:
-	 *  the new GdkPixbuf, or NULL if not enough memory could be
-	 * allocated for it.
+	 * Params:
+	 * destWidth =  the width of destination image
+	 * destHeight =  the height of destination image
+	 * interpType =  the interpolation type for the transformation.
+	 * overallAlpha =  overall alpha for source image (0..255)
+	 * checkSize =  the size of checks in the checkboard (must be a power of two)
+	 * color1 =  the color of check at upper left
+	 * color2 =  the color of the other check
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
 	 */
 	public Pixbuf compositeColorSimple(int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, uint color1, uint color2)
 	{
@@ -1327,30 +1066,18 @@ public class Pixbuf
 	 * image, the data at the edges of the source image is replicated
 	 * to infinity.
 	 * Figure1.Compositing of pixbufs
-	 * src:
-	 *  a GdkPixbuf
-	 * dest:
-	 *  the GdkPixbuf into which to render the results
-	 * dest_x:
-	 *  the left coordinate for region to render
-	 * dest_y:
-	 *  the top coordinate for region to render
-	 * dest_width:
-	 *  the width of the region to render
-	 * dest_height:
-	 *  the height of the region to render
-	 * offset_x:
-	 *  the offset in the X direction (currently rounded to an integer)
-	 * offset_y:
-	 *  the offset in the Y direction (currently rounded to an integer)
-	 * scale_x:
-	 *  the scale factor in the X direction
-	 * scale_y:
-	 *  the scale factor in the Y direction
-	 * interp_type:
-	 *  the interpolation type for the transformation.
-	 * overall_alpha:
-	 *  overall alpha for source image (0..255)
+	 * Params:
+	 * dest =  the GdkPixbuf into which to render the results
+	 * destX =  the left coordinate for region to render
+	 * destY =  the top coordinate for region to render
+	 * destWidth =  the width of the region to render
+	 * destHeight =  the height of the region to render
+	 * offsetX =  the offset in the X direction (currently rounded to an integer)
+	 * offsetY =  the offset in the Y direction (currently rounded to an integer)
+	 * scaleX =  the scale factor in the X direction
+	 * scaleY =  the scale factor in the Y direction
+	 * interpType =  the interpolation type for the transformation.
+	 * overallAlpha =  overall alpha for source image (0..255)
 	 */
 	public void composite(Pixbuf dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType, int overallAlpha)
 	{
@@ -1367,40 +1094,23 @@ public class Pixbuf
 	 * image.
 	 * See gdk_pixbuf_composite_color_simple() for a simpler variant of this
 	 * function suitable for many tasks.
-	 * src:
-	 *  a GdkPixbuf
-	 * dest:
-	 *  the GdkPixbuf into which to render the results
-	 * dest_x:
-	 *  the left coordinate for region to render
-	 * dest_y:
-	 *  the top coordinate for region to render
-	 * dest_width:
-	 *  the width of the region to render
-	 * dest_height:
-	 *  the height of the region to render
-	 * offset_x:
-	 *  the offset in the X direction (currently rounded to an integer)
-	 * offset_y:
-	 *  the offset in the Y direction (currently rounded to an integer)
-	 * scale_x:
-	 *  the scale factor in the X direction
-	 * scale_y:
-	 *  the scale factor in the Y direction
-	 * interp_type:
-	 *  the interpolation type for the transformation.
-	 * overall_alpha:
-	 *  overall alpha for source image (0..255)
-	 * check_x:
-	 *  the X offset for the checkboard (origin of checkboard is at -check_x, -check_y)
-	 * check_y:
-	 *  the Y offset for the checkboard
-	 * check_size:
-	 *  the size of checks in the checkboard (must be a power of two)
-	 * color1:
-	 *  the color of check at upper left
-	 * color2:
-	 *  the color of the other check
+	 * Params:
+	 * dest =  the GdkPixbuf into which to render the results
+	 * destX =  the left coordinate for region to render
+	 * destY =  the top coordinate for region to render
+	 * destWidth =  the width of the region to render
+	 * destHeight =  the height of the region to render
+	 * offsetX =  the offset in the X direction (currently rounded to an integer)
+	 * offsetY =  the offset in the Y direction (currently rounded to an integer)
+	 * scaleX =  the scale factor in the X direction
+	 * scaleY =  the scale factor in the Y direction
+	 * interpType =  the interpolation type for the transformation.
+	 * overallAlpha =  overall alpha for source image (0..255)
+	 * checkX =  the X offset for the checkboard (origin of checkboard is at -check_x, -check_y)
+	 * checkY =  the Y offset for the checkboard
+	 * checkSize =  the size of checks in the checkboard (must be a power of two)
+	 * color1 =  the color of check at upper left
+	 * color2 =  the color of the other check
 	 */
 	public void compositeColor(Pixbuf dest, int destX, int destY, int destWidth, int destHeight, double offsetX, double offsetY, double scaleX, double scaleY, GdkInterpType interpType, int overallAlpha, int checkX, int checkY, int checkSize, uint color1, uint color2)
 	{
@@ -1412,13 +1122,10 @@ public class Pixbuf
 	/**
 	 * Rotates a pixbuf by a multiple of 90 degrees, and returns the
 	 * result in a new pixbuf.
-	 * src:
-	 *  a GdkPixbuf
-	 * angle:
-	 *  the angle to rotate by
-	 * Returns:
-	 *  a new pixbuf
 	 * Since 2.6
+	 * Params:
+	 * angle =  the angle to rotate by
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
 	 */
 	public Pixbuf rotateSimple(GdkPixbufRotation angle)
 	{
@@ -1429,15 +1136,10 @@ public class Pixbuf
 	/**
 	 * Flips a pixbuf horizontally or vertically and returns the
 	 * result in a new pixbuf.
-	 * src:
-	 *  a GdkPixbuf
-	 * horizontal:
-	 *  TRUE to flip horizontally, FALSE to flip vertically
-	 * Returns:
-	 *  a new pixbuf.
 	 * Since 2.6
-	 * See Also
-	 *  GdkRGB.
+	 * Params:
+	 * horizontal =  TRUE to flip horizontally, FALSE to flip vertically
+	 * Returns: the new GdkPixbuf, or NULL if not enough memory could beallocated for it.
 	 */
 	public Pixbuf flip(int horizontal)
 	{
@@ -1453,19 +1155,13 @@ public class Pixbuf
 	 * If substitute_color is TRUE, then the color specified by (r, g, b) will be
 	 * assigned zero opacity. That is, if you pass (255, 255, 255) for the
 	 * substitute color, all white pixels will become fully transparent.
-	 * pixbuf:
-	 *  A GdkPixbuf.
-	 * substitute_color:
-	 *  Whether to set a color to zero opacity. If this
+	 * Params:
+	 * substituteColor =  Whether to set a color to zero opacity. If this
 	 * is FALSE, then the (r, g, b) arguments will be ignored.
-	 * r:
-	 *  Red value to substitute.
-	 * g:
-	 *  Green value to substitute.
-	 * b:
-	 *  Blue value to substitute.
-	 * Returns:
-	 *  A newly-created pixbuf with a reference count of 1.
+	 * r =  Red value to substitute.
+	 * g =  Green value to substitute.
+	 * b =  Blue value to substitute.
+	 * Returns: A newly-created pixbuf with a reference count of 1.
 	 */
 	public Pixbuf addAlpha(int substituteColor, char r, char g, char b)
 	{
@@ -1476,22 +1172,17 @@ public class Pixbuf
 	/**
 	 * Copies a rectangular area from src_pixbuf to dest_pixbuf. Conversion of
 	 * pixbuf formats is done automatically.
-	 * src_pixbuf:
-	 *  Source pixbuf.
-	 * src_x:
-	 *  Source X coordinate within src_pixbuf.
-	 * src_y:
-	 *  Source Y coordinate within src_pixbuf.
-	 * width:
-	 *  Width of the area to copy.
-	 * height:
-	 *  Height of the area to copy.
-	 * dest_pixbuf:
-	 *  Destination pixbuf.
-	 * dest_x:
-	 *  X coordinate within dest_pixbuf.
-	 * dest_y:
-	 *  Y coordinate within dest_pixbuf.
+	 * If the source rectangle overlaps the destination rectangle on the
+	 * same pixbuf, it will be overwritten during the copy operation.
+	 * Therefore, you can not use this function to scroll a pixbuf.
+	 * Params:
+	 * srcX =  Source X coordinate within src_pixbuf.
+	 * srcY =  Source Y coordinate within src_pixbuf.
+	 * width =  Width of the area to copy.
+	 * height =  Height of the area to copy.
+	 * destPixbuf =  Destination pixbuf.
+	 * destX =  X coordinate within dest_pixbuf.
+	 * destY =  Y coordinate within dest_pixbuf.
 	 */
 	public void copyArea(int srcX, int srcY, int width, int height, Pixbuf destPixbuf, int destX, int destY)
 	{
@@ -1508,14 +1199,10 @@ public class Pixbuf
 	 * is TRUE, then pixels are faded in a checkerboard pattern to create a
 	 * pixelated image. src and dest must have the same image format, size, and
 	 * rowstride.
-	 * src:
-	 *  source image
-	 * dest:
-	 *  place to write modified version of src
-	 * saturation:
-	 *  saturation factor
-	 * pixelate:
-	 *  whether to pixelate
+	 * Params:
+	 * dest =  place to write modified version of src
+	 * saturation =  saturation factor
+	 * pixelate =  whether to pixelate
 	 */
 	public void saturateAndPixelate(Pixbuf dest, float saturation, int pixelate)
 	{
@@ -1524,16 +1211,30 @@ public class Pixbuf
 	}
 	
 	/**
+	 * Takes an existing pixbuf and checks for the presence of an
+	 * associated "orientation" option, which may be provided by the
+	 * jpeg loader (which reads the exif orientation tag) or the
+	 * tiff loader (which reads the tiff orientation tag, and
+	 * compensates it for the partial transforms performed by
+	 * libtiff). If an orientation option/tag is present, the
+	 * appropriate transform will be performed so that the pixbuf
+	 * is oriented correctly.
+	 * Since 2.12
+	 * Returns: A newly-created pixbuf, or a reference to theinput pixbuf (with an increased reference count).
+	 */
+	public Pixbuf applyEmbeddedOrientation()
+	{
+		// GdkPixbuf* gdk_pixbuf_apply_embedded_orientation  (GdkPixbuf *src);
+		return new Pixbuf( gdk_pixbuf_apply_embedded_orientation(gdkPixbuf) );
+	}
+	
+	/**
 	 * Clears a pixbuf to the given RGBA value, converting the RGBA value into
 	 * the pixbuf's pixel format. The alpha will be ignored if the pixbuf
 	 * doesn't have an alpha channel.
-	 * pixbuf:
-	 *  a GdkPixbuf
-	 * pixel:
-	 *  RGBA pixel to clear to
+	 * Params:
+	 * pixel =  RGBA pixel to clear to
 	 *  (0xffffffff is opaque white, 0x00000000 transparent black)
-	 * See Also
-	 *  GdkPixbuf
 	 */
 	public void fill(uint pixel)
 	{

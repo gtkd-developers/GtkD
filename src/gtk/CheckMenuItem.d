@@ -69,6 +69,7 @@ private import glib.Str;
 
 
 
+private import gtk.MenuItem;
 
 /**
  * Description
@@ -79,7 +80,6 @@ private import glib.Str;
  * at the left side of the GtkMenuItem. Activating the GtkMenuItem
  * toggles the value.
  */
-private import gtk.MenuItem;
 public class CheckMenuItem : MenuItem
 {
 	
@@ -130,13 +130,11 @@ public class CheckMenuItem : MenuItem
 	
 	/**
 	 * Creates a new GtkCheckMenuItem with a label.
-	 * If mnemonic it true the label
-	 * will be created using gtk_label_new_with_mnemonic(), so underscores
-	 * in label indicate the mnemonic for the menu item.
-	 * label:
-	 * the string to use for the label.
-	 * Returns:
-	 * a new GtkCheckMenuItem.
+	 * Params:
+	 *  label = the string to use for the label.
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the menu item.
 	 */
 	public this (char[] label, bool mnemonic=true)
 	{
@@ -192,8 +190,6 @@ public class CheckMenuItem : MenuItem
 	
 	/**
 	 * Creates a new GtkCheckMenuItem.
-	 * Returns:
-	 * a new GtkCheckMenuItem.
 	 */
 	public this ()
 	{
@@ -207,10 +203,7 @@ public class CheckMenuItem : MenuItem
 	/**
 	 * Returns whether the check menu item is active. See
 	 * gtk_check_menu_item_set_active().
-	 * check_menu_item:
-	 *  a GtkCheckMenuItem
-	 * Returns:
-	 *  TRUE if the menu item is checked.
+	 * Returns: TRUE if the menu item is checked.
 	 */
 	public int getActive()
 	{
@@ -220,10 +213,8 @@ public class CheckMenuItem : MenuItem
 	
 	/**
 	 * Sets the active state of the menu item's check box.
-	 * check_menu_item:
-	 * a GtkCheckMenuItem.
-	 * is_active:
-	 * boolean value indicating whether the check box is active.
+	 * Params:
+	 * isActive = boolean value indicating whether the check box is active.
 	 */
 	public void setActive(int isActive)
 	{
@@ -237,10 +228,8 @@ public class CheckMenuItem : MenuItem
 	 * Controls whether the check box is shown at all times.
 	 * Normally the check box is shown only when it is active or while the
 	 * menu item is selected.
-	 * menu_item:
-	 * a GtkCheckMenuItem.
-	 * always:
-	 * boolean value indicating whether to always show the check box.
+	 * Params:
+	 * always = boolean value indicating whether to always show the check box.
 	 */
 	public void setShowToggle(int always)
 	{
@@ -250,8 +239,6 @@ public class CheckMenuItem : MenuItem
 	
 	/**
 	 * Emits the GtkCheckMenuItem::toggled signal.
-	 * check_menu_item:
-	 * a GtkCheckMenuItem.
 	 */
 	public void toggled()
 	{
@@ -261,10 +248,7 @@ public class CheckMenuItem : MenuItem
 	
 	/**
 	 * Retrieves the value set by gtk_check_menu_item_set_inconsistent().
-	 * check_menu_item:
-	 *  a GtkCheckMenuItem
-	 * Returns:
-	 *  TRUE if inconsistent
+	 * Returns: TRUE if inconsistent
 	 */
 	public int getInconsistent()
 	{
@@ -281,10 +265,8 @@ public class CheckMenuItem : MenuItem
 	 * state again if the user explicitly selects a setting. This has to be
 	 * done manually, gtk_check_menu_item_set_inconsistent() only affects
 	 * visual appearance, it doesn't affect the semantics of the widget.
-	 * check_menu_item:
-	 *  a GtkCheckMenuItem
-	 * setting:
-	 *  TRUE to display an "inconsistent" third state check
+	 * Params:
+	 * setting =  TRUE to display an "inconsistent" third state check
 	 */
 	public void setInconsistent(int setting)
 	{
@@ -294,11 +276,9 @@ public class CheckMenuItem : MenuItem
 	
 	/**
 	 * Sets whether check_menu_item is drawn like a GtkRadioMenuItem
-	 * check_menu_item:
-	 *  a GtkCheckMenuItem
-	 * draw_as_radio:
-	 *  whether check_menu_item is drawn like a GtkRadioMenuItem
 	 * Since 2.4
+	 * Params:
+	 * drawAsRadio =  whether check_menu_item is drawn like a GtkRadioMenuItem
 	 */
 	public void setDrawAsRadio(int drawAsRadio)
 	{
@@ -308,16 +288,8 @@ public class CheckMenuItem : MenuItem
 	
 	/**
 	 * Returns whether check_menu_item looks like a GtkRadioMenuItem
-	 * check_menu_item:
-	 *  a GtkCheckMenuItem
-	 * Returns:
-	 *  Whether check_menu_item looks like a GtkRadioMenuItem
 	 * Since 2.4
-	 * Property Details
-	 * The "active" property
-	 *  "active" gboolean : Read / Write
-	 * Whether the menu item is checked.
-	 * Default value: FALSE
+	 * Returns: Whether check_menu_item looks like a GtkRadioMenuItem
 	 */
 	public int getDrawAsRadio()
 	{

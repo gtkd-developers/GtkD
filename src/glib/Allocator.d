@@ -130,16 +130,13 @@ public class Allocator
 	 * g_allocator_new has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice allocator
 	 * instead
 	 * Creates a new GAllocator.
-	 * name:
-	 * the name of the GAllocator. This name is used to set the name of the
+	 * Params:
+	 * name = the name of the GAllocator. This name is used to set the name of the
 	 * GMemChunk used by the GAllocator, and is only used for debugging.
-	 * n_preallocs:
-	 * the number of elements in each block of memory allocated.
+	 * nPreallocs = the number of elements in each block of memory allocated.
 	 * Larger blocks mean less calls to g_malloc(), but some memory may be wasted.
 	 * (GLib uses 128 elements per block by default.) The value must be between 1
 	 * and 65535.
-	 * Returns:
-	 * a new GAllocator.
 	 */
 	public this (char[] name, uint nPreallocs)
 	{
@@ -152,8 +149,6 @@ public class Allocator
 	 * g_allocator_free has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice allocator
 	 * instead
 	 * Frees all of the memory allocated by the GAllocator.
-	 * allocator:
-	 * a GAllocator.
 	 */
 	public void free()
 	{

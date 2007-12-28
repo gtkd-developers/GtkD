@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Container;
 
 /**
  * Description
@@ -80,7 +81,7 @@ private import gtkc.gtk;
  * gtk_socket_get_id(). Before using this function,
  * the socket must have been realized, and for hence,
  * have been added to its parent.
- * Example1.Obtaining the window ID of a socket.
+ * Example48.Obtaining the window ID of a socket.
  * GtkWidget *socket = gtk_socket_new ();
  * gtk_widget_show (socket);
  * gtk_container_add (GTK_CONTAINER (parent), socket);
@@ -106,7 +107,8 @@ private import gtkc.gtk;
  * destroyed, then it will destroy the socket as well. You
  * should always, therefore, be prepared for your sockets
  * to be destroyed at any time when the main event loop
- * is running.
+ * is running. To prevent this from happening, you can
+ * connect to the "plug-removed" signal.
  * The communication between a GtkSocket and a GtkPlug follows the
  * XEmbed
  * protocol. This protocol has also been implemented in other toolkits, e.g.
@@ -120,7 +122,6 @@ private import gtkc.gtk;
  * The GtkPlug and GtkSocket widgets are currently not available
  * on all platforms supported by GTK+.
  */
-private import gtk.Container;
 public class Socket : Container
 {
 	
@@ -237,8 +238,6 @@ public class Socket : Container
 	
 	/**
 	 * Create a new empty GtkSocket.
-	 * Returns:
-	 *  the new GtkSocket.
 	 */
 	public this ()
 	{
@@ -255,10 +254,8 @@ public class Socket : Container
 	 * this function is not recommended.
 	 * The GtkSocket must have already be added into a toplevel window
 	 *  before you can make this call.
-	 * socket_:
-	 *  a GtkSocket
-	 * wid:
-	 *  the window ID of an existing toplevel window.
+	 * Params:
+	 * wid =  the window ID of an existing toplevel window.
 	 */
 	public void steal(GdkNativeWindow wid)
 	{
@@ -277,10 +274,8 @@ public class Socket : Container
 	 * ID.
 	 * The GtkSocket must have already be added into a toplevel window
 	 *  before you can make this call.
-	 * socket_:
-	 *  a GtkSocket
-	 * window_id:
-	 *  the window ID of a client participating in the XEMBED protocol.
+	 * Params:
+	 * windowId =  the window ID of a client participating in the XEMBED protocol.
 	 */
 	public void addId(GdkNativeWindow windowId)
 	{
@@ -294,20 +289,7 @@ public class Socket : Container
 	 * instance with gtk_plug_new().
 	 * The GtkSocket must have already be added into a toplevel window
 	 * before you can make this call.
-	 * socket_:
-	 *  a GtkSocket.
-	 * Returns:
-	 *  the window ID for the socket
-	 * Signal Details
-	 * The "plug-added" signal
-	 * void user_function (GtkSocket *socket,
-	 *  gpointer user_data) : Run Last
-	 * This signal is emitted when a client is successfully
-	 * added to the socket.
-	 * socket:
-	 * the object which received the signal.
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * Returns: the window ID for the socketSignal DetailsThe "plug-added" signalvoid user_function (GtkSocket *socket_, gpointer user_data) : Run LastThis signal is emitted when a client is successfullyadded to the socket.
 	 */
 	public GdkNativeWindow getId()
 	{

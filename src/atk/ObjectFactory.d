@@ -67,6 +67,7 @@ private import gobject.ObjectG;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -76,7 +77,6 @@ private import gobject.ObjectG;
  * in the registry the factory type to be used to create an accessible of a
  * particular GType.
  */
-private import gobject.ObjectG;
 public class ObjectFactory : ObjectG
 {
 	
@@ -132,14 +132,9 @@ public class ObjectFactory : ObjectG
 	/**
 	 * Provides an AtkObject that implements an accessibility interface
 	 * on behalf of obj
-	 * factory:
-	 *  The AtkObjectFactory associated with obj's
-	 * object type
-	 * obj:
-	 *  a GObject
-	 * Returns:
-	 *  an AtkObject that implements an accessibility interface
-	 * on behalf of obj
+	 * Params:
+	 * obj =  a GObject
+	 * Returns: an AtkObject that implements an accessibility interfaceon behalf of obj
 	 */
 	public AtkObject* createAccessible(ObjectG obj)
 	{
@@ -149,11 +144,7 @@ public class ObjectFactory : ObjectG
 	
 	/**
 	 * Gets the GType of the accessible which is created by the factory.
-	 * factory:
-	 *  an AtkObjectFactory
-	 * Returns:
-	 *  the type of the accessible which is created by the factory.
-	 * The value G_TYPE_INVALID is returned if no type if found.
+	 * Returns: the type of the accessible which is created by the factory.The value G_TYPE_INVALID is returned if no type if found.
 	 */
 	public GType getAccessibleType()
 	{
@@ -167,10 +158,6 @@ public class ObjectFactory : ObjectG
 	 * AtkObjects which it has created that they need to be re-instantiated.
 	 * Note: primarily used for runtime replacement of AtkObjectFactorys
 	 * in object registries.
-	 * factory:
-	 *  an AtkObjectFactory to invalidate
-	 * See Also
-	 * AtkRegistry
 	 */
 	public void invalidate()
 	{

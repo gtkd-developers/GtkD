@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.MenuItem;
 
 /**
  * Description
@@ -79,7 +80,6 @@ private import gtkc.gtk;
  * the tearoff menu can be reattached. Activating it will erase the tearoff
  * menu window.
  */
-private import gtk.MenuItem;
 public class TearoffMenuItem : MenuItem
 {
 	
@@ -134,11 +134,6 @@ public class TearoffMenuItem : MenuItem
 	
 	/**
 	 * Creates a new GtkTearoffMenuItem.
-	 * Returns:
-	 * a new GtkTearoffMenuItem.
-	 * See Also
-	 * GtkMenu
-	 * for further discussion of menus in GTK.
 	 */
 	public this ()
 	{

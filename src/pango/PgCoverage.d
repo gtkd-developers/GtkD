@@ -83,11 +83,7 @@ public class PgCoverage
 	
 	/**
 	 * Create a new PangoCoverage
-	 * Returns:
-	 *  the newly allocated PangoCoverage,
-	 *  initialized to PANGO_COVERAGE_NONE
-	 *  with a reference count of one, which
-	 *  should be freed with pango_coverage_unref().
+	 * Returns: the newly allocated PangoCoverage, initialized to PANGO_COVERAGE_NONE with a reference count of one, which should be freed with pango_coverage_unref().
 	 */
 	public static PangoCoverage* newPgCoverage()
 	{
@@ -97,10 +93,9 @@ public class PgCoverage
 	
 	/**
 	 * Increase the reference count on the PangoCoverage by one
-	 * coverage:
-	 *  a PangoCoverage
-	 * Returns:
-	 *  coverage
+	 * Params:
+	 * coverage =  a PangoCoverage
+	 * Returns: coverage
 	 */
 	public static PangoCoverage* doref(PangoCoverage* coverage)
 	{
@@ -111,8 +106,8 @@ public class PgCoverage
 	/**
 	 * Increase the reference count on the PangoCoverage by one.
 	 * if the result is zero, free the coverage and all associated memory.
-	 * coverage:
-	 *  a PangoCoverage
+	 * Params:
+	 * coverage =  a PangoCoverage
 	 */
 	public static void unref(PangoCoverage* coverage)
 	{
@@ -123,12 +118,9 @@ public class PgCoverage
 	/**
 	 * Copy an existing PangoCoverage. (This function may now be unnecessary
 	 * since we refcount the structure. File a bug if you use it.)
-	 * coverage:
-	 *  a PangoCoverage
-	 * Returns:
-	 *  the newly allocated PangoCoverage,
-	 *  with a reference count of one, which
-	 *  should be freed with pango_coverage_unref().
+	 * Params:
+	 * coverage =  a PangoCoverage
+	 * Returns: the newly allocated PangoCoverage, with a reference count of one, which should be freed with pango_coverage_unref().
 	 */
 	public static PangoCoverage* copy(PangoCoverage* coverage)
 	{
@@ -138,12 +130,10 @@ public class PgCoverage
 	
 	/**
 	 * Determine whether a particular index is covered by coverage
-	 * coverage:
-	 *  a PangoCoverage
-	 * index_:
-	 *  the index to check
-	 * Returns:
-	 *  the coverage level of coverage for character index_.
+	 * Params:
+	 * coverage =  a PangoCoverage
+	 * index =  the index to check
+	 * Returns: the coverage level of coverage for character index_.
 	 */
 	public static PangoCoverageLevel get(PangoCoverage* coverage, int index)
 	{
@@ -155,10 +145,9 @@ public class PgCoverage
 	 * Set the coverage for each index in coverage to be the max (better)
 	 * value of the current coverage for the index and the coverage for
 	 * the corresponding index in other.
-	 * coverage:
-	 *  a PangoCoverage
-	 * other:
-	 *  another PangoCoverage
+	 * Params:
+	 * coverage =  a PangoCoverage
+	 * other =  another PangoCoverage
 	 */
 	public static void max(PangoCoverage* coverage, PangoCoverage* other)
 	{
@@ -168,12 +157,10 @@ public class PgCoverage
 	
 	/**
 	 * Modify a particular index within coverage
-	 * coverage:
-	 *  a PangoCoverage
-	 * index_:
-	 *  the index to modify
-	 * level:
-	 *  the new level for index_
+	 * Params:
+	 * coverage =  a PangoCoverage
+	 * index =  the index to modify
+	 * level =  the new level for index_
 	 */
 	public static void set(PangoCoverage* coverage, int index, PangoCoverageLevel level)
 	{
@@ -183,12 +170,10 @@ public class PgCoverage
 	
 	/**
 	 * Convert a PangoCoverage structure into a flat binary format
-	 * coverage:
-	 *  a PangoCoverage
-	 * bytes:
-	 *  location to store result (must be freed with g_free())
-	 * n_bytes:
-	 *  location to store size of result
+	 * Params:
+	 * coverage =  a PangoCoverage
+	 * bytes =  location to store result (must be freed with g_free())
+	 * nBytes =  location to store size of result
 	 */
 	public static void toBytes(PangoCoverage* coverage, char** bytes, int* nBytes)
 	{
@@ -199,13 +184,10 @@ public class PgCoverage
 	/**
 	 * Convert data generated from pango_converage_to_bytes() back
 	 * to a PangoCoverage
-	 * bytes:
-	 *  binary data representing a PangoCoverage
-	 * n_bytes:
-	 *  the size of bytes in bytes
-	 * Returns:
-	 *  a newly allocated PangoCoverage, or NULL if
-	 *  the data was invalid.
+	 * Params:
+	 * bytes =  binary data representing a PangoCoverage
+	 * nBytes =  the size of bytes in bytes
+	 * Returns: a newly allocated PangoCoverage, or NULL if the data was invalid.
 	 */
 	public static PangoCoverage* fromBytes(char* bytes, int nBytes)
 	{

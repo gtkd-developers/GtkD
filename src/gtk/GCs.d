@@ -92,17 +92,13 @@ public class GCs
 	 * otherwise a new GdkGC is created.
 	 * The returned GdkGC should be released with gtk_gc_release() when it is no
 	 * longer needed.
-	 * depth:
-	 * the depth of the GdkGC to create.
-	 * colormap:
-	 * the GdkColormap (FIXME: I don't know why this is needed).
-	 * values:
-	 * a GdkGCValues struct containing settings for the GdkGC.
-	 * values_mask:
-	 * a set of flags indicating which of the fields in values has
+	 * Params:
+	 * depth = the depth of the GdkGC to create.
+	 * colormap = the GdkColormap (FIXME: I don't know why this is needed).
+	 * values = a GdkGCValues struct containing settings for the GdkGC.
+	 * valuesMask = a set of flags indicating which of the fields in values has
 	 * been set.
-	 * Returns:
-	 * a GdkGC.
+	 * Returns:a GdkGC.
 	 */
 	public static GC get(int depth, Colormap colormap, GdkGCValues* values, GdkGCValuesMask valuesMask)
 	{
@@ -112,8 +108,8 @@ public class GCs
 	
 	/**
 	 * Releases a GdkGC allocated using gtk_gc_get().
-	 * gc:
-	 * a GdkGC.
+	 * Params:
+	 * gc = a GdkGC.
 	 */
 	public static void release(GC gc)
 	{

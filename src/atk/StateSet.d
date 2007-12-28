@@ -124,8 +124,6 @@ public class StateSet
 	
 	/**
 	 * Creates a new empty state set.
-	 * Returns:
-	 *  a new AtkStateSet
 	 */
 	public this ()
 	{
@@ -135,10 +133,7 @@ public class StateSet
 	
 	/**
 	 * Checks whether the state set is empty, i.e. has no states set.
-	 * set:
-	 *  an AtkStateType
-	 * Returns:
-	 *  TRUE if set has no states set, otherwise FALSE
+	 * Returns: TRUE if set has no states set, otherwise FALSE
 	 */
 	public int isEmpty()
 	{
@@ -149,12 +144,9 @@ public class StateSet
 	/**
 	 * Add a new state for the specified type to the current state set if
 	 * it is not already present.
-	 * set:
-	 *  an AtkStateSet
-	 * type:
-	 *  an AtkStateType
-	 * Returns:
-	 *  TRUE if the state for type is not already in set.
+	 * Params:
+	 * type =  an AtkStateType
+	 * Returns: TRUE if the state for type is not already in set.
 	 */
 	public int addState(AtkStateType type)
 	{
@@ -164,12 +156,9 @@ public class StateSet
 	
 	/**
 	 * Add the states for the specified types to the current state set.
-	 * set:
-	 *  an AtkStateSet
-	 * types:
-	 *  an array of AtkStateType
-	 * n_types:
-	 *  The number of elements in the array
+	 * Params:
+	 * types =  an array of AtkStateType
+	 * nTypes =  The number of elements in the array
 	 */
 	public void addStates(AtkStateType* types, int nTypes)
 	{
@@ -179,8 +168,6 @@ public class StateSet
 	
 	/**
 	 * Removes all states from the state set.
-	 * set:
-	 *  an AtkStateSet
 	 */
 	public void clearStates()
 	{
@@ -190,12 +177,9 @@ public class StateSet
 	
 	/**
 	 * Checks whether the state for the specified type is in the specified set.
-	 * set:
-	 *  an AtkStateSet
-	 * type:
-	 *  an AtkStateType
-	 * Returns:
-	 *  TRUE if type is the state type is in set.
+	 * Params:
+	 * type =  an AtkStateType
+	 * Returns: TRUE if type is the state type is in set.
 	 */
 	public int containsState(AtkStateType type)
 	{
@@ -206,14 +190,10 @@ public class StateSet
 	/**
 	 * Checks whether the states for all the specified types are in the
 	 * specified set.
-	 * set:
-	 *  an AtkStateSet
-	 * types:
-	 *  an array of AtkStateType
-	 * n_types:
-	 *  The number of elements in the array
-	 * Returns:
-	 *  TRUE if all the states for type are in set.
+	 * Params:
+	 * types =  an array of AtkStateType
+	 * nTypes =  The number of elements in the array
+	 * Returns: TRUE if all the states for type are in set.
 	 */
 	public int containsStates(AtkStateType* types, int nTypes)
 	{
@@ -223,12 +203,9 @@ public class StateSet
 	
 	/**
 	 * Removes the state for the specified type from the state set.
-	 * set:
-	 *  an AtkStateSet
-	 * type:
-	 *  an AtkType
-	 * Returns:
-	 *  TRUE if type was the state type is in set.
+	 * Params:
+	 * type =  an AtkType
+	 * Returns: TRUE if type was the state type is in set.
 	 */
 	public int removeState(AtkStateType type)
 	{
@@ -239,12 +216,9 @@ public class StateSet
 	/**
 	 * Constructs the intersection of the two sets, returning NULL if the
 	 * intersection is empty.
-	 * set:
-	 *  an AtkStateSet
-	 * compare_set:
-	 *  another AtkStateSet
-	 * Returns:
-	 *  a new AtkStateSet which is the intersection of the two sets.
+	 * Params:
+	 * compareSet =  another AtkStateSet
+	 * Returns: a new AtkStateSet which is the intersection of the two sets.
 	 */
 	public AtkStateSet* andSets(AtkStateSet* compareSet)
 	{
@@ -254,13 +228,9 @@ public class StateSet
 	
 	/**
 	 * Constructs the union of the two sets.
-	 * set:
-	 *  an AtkStateSet
-	 * compare_set:
-	 *  another AtkStateSet
-	 * Returns:
-	 *  a new AtkStateSet which is the union of the two sets,
-	 * returning NULL is empty.
+	 * Params:
+	 * compareSet =  another AtkStateSet
+	 * Returns: a new AtkStateSet which is the union of the two sets,returning NULL is empty.
 	 */
 	public AtkStateSet* orSets(AtkStateSet* compareSet)
 	{
@@ -272,13 +242,9 @@ public class StateSet
 	 * Constructs the exclusive-or of the two sets, returning NULL is empty.
 	 * The set returned by this operation contains the states in exactly
 	 * one of the two sets.
-	 * set:
-	 *  an AtkStateSet
-	 * compare_set:
-	 *  another AtkStateSet
-	 * Returns:
-	 *  a new AtkStateSet which contains the states which are
-	 * in exactly one of the two sets.
+	 * Params:
+	 * compareSet =  another AtkStateSet
+	 * Returns: a new AtkStateSet which contains the states which are in exactly one of the two sets.
 	 */
 	public AtkStateSet* xorSets(AtkStateSet* compareSet)
 	{

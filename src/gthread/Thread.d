@@ -115,6 +115,10 @@ private import glib.ListG;
  * this rule are GMainLoop and GAsyncQueue,
  * which are threadsafe and needs no further
  * application-level locking to be accessed from multiple threads.
+ * To help debugging problems in multithreaded applications, GLib supports
+ * error-checking mutexes that will give you helpful error messages on
+ * common problems. To use error-checking mutexes, define the symbol
+ * G_ERRORCHECK_MUTEXES when compiling the application.
  */
 public class Thread
 {
@@ -185,21 +189,8 @@ public class Thread
 	 * calling g_thread_init().
 	 * g_thread_init() might only be called once. On the second call
 	 * it will abort with an error. If you want to make sure that the thread
-	 * system is initialized, you can do this:
-	 * if (!g_thread_supported ()) g_thread_init (NULL);
-	 * After that line, either the thread system is initialized or, if no
-	 * thread system is available in GLib (i.e. either G_THREADS_ENABLED is
-	 * not defined or G_THREADS_IMPL_NONE is defined), the program will
-	 * abort.
-	 * If no thread system is available and vtable is NULL or if not all
-	 * elements of vtable are non-NULL, then g_thread_init() will abort.
-	 * Note
-	 * To use g_thread_init() in your program, you have to link with the
-	 * libraries that the command pkg-config --libs gthread-2.0
-	 * outputs. This is not the case for all the other thread related functions of
-	 * GLib. Those can be used without having to link with the thread libraries.
-	 * vtable:
-	 * a function table of type GThreadFunctions, that provides the
+	 * Params:
+	 * vtable = a function table of type GThreadFunctions, that provides the
 	 * entry points to the thread system to be used.
 	 */
 	public static void init(GThreadFunctions* vtable)
@@ -214,8 +205,7 @@ public class Thread
 	 * Note
 	 * This function is actually a macro. Apart from taking the address of it
 	 * you can however use it as if it was a function.
-	 * Returns:
-	 * TRUE, if the thread system is initialized.
+	 * Returns:TRUE, if the thread system is initialized.
 	 */
 	public static int supported()
 	{
@@ -235,16 +225,12 @@ public class Thread
 	 * data. If the thread was created successfully, it is returned.
 	 * error can be NULL to ignore errors, or non-NULL to report errors. The
 	 * error is set, if and only if the function returns NULL.
-	 * func:
-	 * a function to execute in the new thread.
-	 * data:
-	 * an argument to supply to the new thread.
-	 * joinable:
-	 * should this thread be joinable?
-	 * error:
-	 * return location for error.
-	 * Returns:
-	 * the new GThread on success.
+	 * Params:
+	 * func = a function to execute in the new thread.
+	 * data = an argument to supply to the new thread.
+	 * joinable = should this thread be joinable?
+	 * error = return location for error.
+	 * Returns:the new GThread on success.
 	 */
 	public static Thread create(GThreadFunc func, void* data, int joinable, GError** error)
 	{
@@ -280,22 +266,15 @@ public class Thread
 	 * g_thread_create() instead. g_thread_create() does not take
 	 * stack_size, bound, and priority as arguments, as they should only
 	 * be used in cases in which it is unavoidable.
-	 * func:
-	 * a function to execute in the new thread.
-	 * data:
-	 * an argument to supply to the new thread.
-	 * stack_size:
-	 * a stack size for the new thread.
-	 * joinable:
-	 * should this thread be joinable?
-	 * bound:
-	 * should this thread be bound to a system thread?
-	 * priority:
-	 * a priority for the thread.
-	 * error:
-	 * return location for error.
-	 * Returns:
-	 * the new GThread on success.
+	 * Params:
+	 * func = a function to execute in the new thread.
+	 * data = an argument to supply to the new thread.
+	 * stackSize = a stack size for the new thread.
+	 * joinable = should this thread be joinable?
+	 * bound = should this thread be bound to a system thread?
+	 * priority = a priority for the thread.
+	 * error = return location for error.
+	 * Returns:the new GThread on success.
 	 */
 	public static Thread createFull(GThreadFunc func, void* data, uint stackSize, int joinable, int bound, GThreadPriority priority, GError** error)
 	{
@@ -305,8 +284,7 @@ public class Thread
 	
 	/**
 	 * This functions returns the GThread corresponding to the calling thread.
-	 * Returns:
-	 * the current thread.
+	 * Returns:the current thread.
 	 */
 	public static Thread self()
 	{
@@ -321,10 +299,7 @@ public class Thread
 	 * released. thread must have been created with joinable=TRUE in
 	 * g_thread_create(). The value returned by func or given to
 	 * g_thread_exit() by thread is returned by this function.
-	 * thread:
-	 * a GThread to be waited for.
-	 * Returns:
-	 * the return value of the thread.
+	 * Returns:the return value of the thread.
 	 */
 	public void* join()
 	{
@@ -340,10 +315,8 @@ public class Thread
 	 * priorities. On other systems (e.g. Solaris) there doesn't seem to be
 	 * different scheduling for different priorities. All in all try to avoid
 	 * being dependent on priorities.
-	 * thread:
-	 * a GThread.
-	 * priority:
-	 * a new priority for thread.
+	 * Params:
+	 * priority = a new priority for thread.
 	 */
 	public void setPriority(GThreadPriority priority)
 	{
@@ -376,8 +349,8 @@ public class Thread
 	 * Note
 	 * Never call g_thread_exit() from within a thread of a GThreadPool, as
 	 * that will mess up the bookkeeping and lead to funny and unwanted results.
-	 * retval:
-	 * the return value of this thread.
+	 * Params:
+	 * retval = the return value of this thread.
 	 */
 	public static void exit(void* retval)
 	{
@@ -394,11 +367,10 @@ public class Thread
 	 * which are known to have exited already.
 	 * Due to thread lifetime checks, this function has an execution complexity
 	 * which is quadratic in the number of existing threads.
-	 * thread_func:
-	 *  function to call for all GThread structures
-	 * user_data:
-	 *  second argument to thread_func
 	 * Since 2.10
+	 * Params:
+	 * threadFunc =  function to call for all GThread structures
+	 * userData =  second argument to thread_func
 	 */
 	public static void foreac(GFunc threadFunc, void* userData)
 	{
@@ -417,8 +389,8 @@ public class Thread
 	/**
 	 * Initializes mutex. Alternatively you can initialize it with
 	 * G_STATIC_MUTEX_INIT.
-	 * mutex:
-	 * a GStaticMutex to be initialized.
+	 * Params:
+	 * mutex = a GStaticMutex to be initialized.
 	 */
 	public static void gStaticMutexInit(GStaticMutex* mutex)
 	{
@@ -428,8 +400,8 @@ public class Thread
 	
 	/**
 	 * Works like g_mutex_lock(), but for a GStaticMutex.
-	 * mutex:
-	 * a GStaticMutex.
+	 * Params:
+	 * mutex = a GStaticMutex.
 	 */
 	public static void gStaticMutexLock(GStaticMutex* mutex)
 	{
@@ -439,10 +411,9 @@ public class Thread
 	
 	/**
 	 * Works like g_mutex_trylock(), but for a GStaticMutex.
-	 * mutex:
-	 * a GStaticMutex.
-	 * Returns:
-	 * TRUE, if the GStaticMutex could be locked.
+	 * Params:
+	 * mutex = a GStaticMutex.
+	 * Returns:TRUE, if the GStaticMutex could be locked.
 	 */
 	public static int gStaticMutexTrylock(GStaticMutex* mutex)
 	{
@@ -452,8 +423,8 @@ public class Thread
 	
 	/**
 	 * Works like g_mutex_unlock(), but for a GStaticMutex.
-	 * mutex:
-	 * a GStaticMutex.
+	 * Params:
+	 * mutex = a GStaticMutex.
 	 */
 	public static void gStaticMutexUnlock(GStaticMutex* mutex)
 	{
@@ -465,10 +436,9 @@ public class Thread
 	 * For some operations (like g_cond_wait()) you must have a GMutex
 	 * instead of a GStaticMutex. This function will return the
 	 * corresponding GMutex for mutex.
-	 * mutex:
-	 * a GStaticMutex.
-	 * Returns:
-	 * the GMutex corresponding to mutex.
+	 * Params:
+	 * mutex = a GStaticMutex.
+	 * Returns:the GMutex corresponding to mutex.
 	 */
 	public static Mutex gStaticMutexGetMutex(GStaticMutex* mutex)
 	{
@@ -482,8 +452,8 @@ public class Thread
 	 * unbounded lifetime, i.e. objects declared 'static', but if you have a
 	 * GStaticMutex as a member of a structure and the structure is freed,
 	 * you should also free the GStaticMutex.
-	 * mutex:
-	 * a GStaticMutex to be freed.
+	 * Params:
+	 * mutex = a GStaticMutex to be freed.
 	 */
 	public static void gStaticMutexFree(GStaticMutex* mutex)
 	{
@@ -536,4 +506,37 @@ public class Thread
 	
 	
 	
+	
+	/**
+	 * Function to be called when starting a critical initialization section.
+	 * The argument value_location must point to a static 0-initialized variable
+	 * that will be set to a value other than 0 at the end of the initialization section.
+	 * In combination with g_once_init_leave() and the unique address value_location,
+	 * it can be ensured that an initialization section will be executed only once
+	 * during a program's life time, and that concurrent threads are blocked until
+	 * Since 2.14
+	 * Params:
+	 * valueLocation = location of a static initializable variable containing 0.
+	 * Returns:TRUE if the initialization section should be entered, FALSE and blocks otheriwse
+	 */
+	public static int gOnceInitEnter(uint* valueLocation)
+	{
+		// gboolean g_once_init_enter (volatile gsize *value_location);
+		return g_once_init_enter(valueLocation);
+	}
+	
+	/**
+	 * Counterpart to g_once_init_enter(). Expects a location of a static 0-initialized
+	 * initialization variable, and an initialization value other than 0. Sets the variable
+	 * to the initialization value, and releases concurrent threads blocking in
+	 * g_once_init_enter() on this initialization variable.
+	 * Since 2.14
+	 * Params:
+	 * valueLocation = location of a static initializable variable containing 0.
+	 */
+	public static void gOnceInitLeave(uint* valueLocation, uint initializationValue)
+	{
+		// void g_once_init_leave (volatile gsize *value_location,  gsize initialization_value);
+		g_once_init_leave(valueLocation, initializationValue);
+	}
 }

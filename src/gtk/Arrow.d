@@ -65,6 +65,7 @@ private import gtkc.gtk;
 
 
 
+private import gtk.Misc;
 
 /**
  * Description
@@ -79,7 +80,6 @@ private import gtkc.gtk;
  * Arrows are created with a call to gtk_arrow_new(). The direction or
  * style of an arrow can be changed after creation by using gtk_arrow_set().
  */
-private import gtk.Misc;
 public class Arrow : Misc
 {
 	
@@ -134,12 +134,9 @@ public class Arrow : Misc
 	
 	/**
 	 * Creates a new arrow widget.
-	 * arrow_type:
-	 * a valid GtkArrowType.
-	 * shadow_type:
-	 * a valid GtkShadowType.
-	 * Returns:
-	 * the new GtkArrow widget.
+	 * Params:
+	 * arrowType = a valid GtkArrowType.
+	 * shadowType = a valid GtkShadowType.
 	 */
 	public this (GtkArrowType arrowType, GtkShadowType shadowType)
 	{
@@ -149,17 +146,10 @@ public class Arrow : Misc
 	
 	/**
 	 * Sets the direction and style of the GtkArrow, arrow.
-	 * arrow:
-	 * a widget of type GtkArrow.
-	 * arrow_type:
-	 * a valid GtkArrowType.
-	 * shadow_type:
-	 * a valid GtkShadowType.
-	 * Property Details
-	 * The "arrow-type" property
-	 *  "arrow-type" GtkArrowType : Read / Write
-	 * The direction the arrow should point.
-	 * Default value: GTK_ARROW_RIGHT
+	 * Params:
+	 * arrow = a widget of type GtkArrow.
+	 * arrowType = a valid GtkArrowType.
+	 * shadowType = a valid GtkShadowType.
 	 */
 	public void set(GtkArrowType arrowType, GtkShadowType shadowType)
 	{

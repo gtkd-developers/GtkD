@@ -176,8 +176,6 @@ public class PgItem
 	
 	/**
 	 * Free a PangoItem and all associated memory.
-	 * item:
-	 *  a PangoItem
 	 */
 	public void free()
 	{
@@ -187,11 +185,7 @@ public class PgItem
 	
 	/**
 	 * Copy an existing PangoItem structure.
-	 * item:
-	 *  a PangoItem
-	 * Returns:
-	 *  the newly allocated PangoItem, which should
-	 *  be freed with pango_item_free().
+	 * Returns: the newly allocated PangoItem, which should be freed with pango_item_free().
 	 */
 	public PangoItem* copy()
 	{
@@ -201,9 +195,6 @@ public class PgItem
 	
 	/**
 	 * Creates a new PangoItem structure initialized to default values.
-	 * Returns:
-	 *  the newly allocated PangoItem, which should
-	 *  be freed with pango_item_free().
 	 */
 	public this ()
 	{
@@ -222,15 +213,10 @@ public class PgItem
 	 * chars, and must be provided because the text used to generate the
 	 * item isn't available, so pango_item_split() can't count the char
 	 * length of the split items itself.
-	 * orig:
-	 *  a PangoItem
-	 * split_index:
-	 *  byte index of position to split item, relative to the start of the item
-	 * split_offset:
-	 *  number of chars between start of orig and split_index
-	 * Returns:
-	 *  new item representing text before split_index, which
-	 *  should be freed with pango_item_free().
+	 * Params:
+	 * splitIndex =  byte index of position to split item, relative to the start of the item
+	 * splitOffset =  number of chars between start of orig and split_index
+	 * Returns: new item representing text before split_index, which should be freed with pango_item_free().
 	 */
 	public PangoItem* split(int splitIndex, int splitOffset)
 	{

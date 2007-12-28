@@ -113,10 +113,9 @@ public class FileUtils
 	 * Normally a GFileError value goes into a GError returned
 	 * from a function that manipulates files. So you would use
 	 * g_file_error_from_errno() when constructing a GError.
-	 * err_no:
-	 *  an "errno" value
-	 * Returns:
-	 *  GFileError corresponding to the given errno
+	 * Params:
+	 * errNo =  an "errno" value
+	 * Returns: GFileError corresponding to the given errno
 	 */
 	public static GFileError fileErrorFromErrno(int errNo)
 	{
@@ -134,16 +133,12 @@ public class FileUtils
 	 * FALSE and sets error. The error domain is G_FILE_ERROR. Possible error
 	 * codes are those in the GFileError enumeration. In the error case,
 	 * contents is set to NULL and length is set to zero.
-	 * filename:
-	 *  name of a file to read contents from, in the GLib file name encoding
-	 * contents:
-	 *  location to store an allocated string
-	 * length:
-	 *  location to store length in bytes of the contents, or NULL
-	 * error:
-	 *  return location for a GError, or NULL
-	 * Returns:
-	 *  TRUE on success, FALSE if an error occurred
+	 * Params:
+	 * filename =  name of a file to read contents from, in the GLib file name encoding
+	 * contents =  location to store an allocated string
+	 * length =  location to store length in bytes of the contents, or NULL
+	 * error =  return location for a GError, or NULL
+	 * Returns: TRUE on success, FALSE if an error occurred
 	 */
 	public static int fileGetContents(char[] filename, char** contents, uint* length, GError** error)
 	{
@@ -155,32 +150,14 @@ public class FileUtils
 	 * Writes all of contents to a file named filename, with good error checking.
 	 * If a file called filename already exists it will be overwritten.
 	 * This write is atomic in the sense that it is first written to a temporary
-	 * file which is then renamed to the final name. Notes:
-	 *  On Unix, if filename already exists hard links to filename will break.
-	 *  Also since the file is recreated, existing permissions, access control
-	 *  lists, metadata etc. may be lost. If filename is a symbolic link,
-	 *  the link itself will be replaced, not the linked file.
-	 *  On Windows renaming a file will not remove an existing file with the
-	 *  new name, so on Windows there is a race condition between the existing
-	 *  file being removed and the temporary file being renamed.
-	 *  On Windows there is no way to remove a file that is open to some
-	 *  process, or mapped into memory. Thus, this function will fail if
-	 *  filename already exists and is open.
-	 * If the call was sucessful, it returns TRUE. If the call was not successful,
-	 * it returns FALSE and sets error. The error domain is G_FILE_ERROR.
-	 * Possible error codes are those in the GFileError enumeration.
-	 * filename:
-	 *  name of a file to write contents to, in the GLib file name
-	 *  encoding
-	 * contents:
-	 *  string to write to the file
-	 * length:
-	 *  length of contents, or -1 if contents is a nul-terminated string
-	 * error:
-	 *  return location for a GError, or NULL
-	 * Returns:
-	 *  TRUE on success, FALSE if an error occurred
 	 * Since 2.8
+	 * Params:
+	 * filename =  name of a file to write contents to, in the GLib file name
+	 *  encoding
+	 * contents =  string to write to the file
+	 * length =  length of contents, or -1 if contents is a nul-terminated string
+	 * error =  return location for a GError, or NULL
+	 * Returns: TRUE on success, FALSE if an error occurred
 	 */
 	public static int fileSetContents(char[] filename, char[] contents, int length, GError** error)
 	{
@@ -222,12 +199,10 @@ public class FileUtils
 	 * G_FILE_TEST_IS_EXECUTABLE will just check that the file exists and
 	 * its name indicates that it is executable, checking for well-known
 	 * extensions and those listed in the PATHEXT environment variable.
-	 * filename:
-	 *  a filename to test in the GLib file name encoding
-	 * test:
-	 *  bitfield of GFileTest flags
-	 * Returns:
-	 *  whether a test was TRUE
+	 * Params:
+	 * filename =  a filename to test in the GLib file name encoding
+	 * test =  bitfield of GFileTest flags
+	 * Returns: whether a test was TRUE
 	 */
 	public static int fileTest(char[] filename, GFileTest test)
 	{
@@ -246,13 +221,9 @@ public class FileUtils
 	 * be modified to form the name of a file that didn't exist.
 	 * The string should be in the GLib file name encoding. Most importantly,
 	 * on Windows it should be in UTF-8.
-	 * tmpl:
-	 *  template filename
-	 * Returns:
-	 *  A file handle (as from open()) to the file
-	 * opened for reading and writing. The file is opened in binary mode
-	 * on platforms where there is a difference. The file handle should be
-	 * closed with close(). In case of errors, -1 is returned.
+	 * Params:
+	 * tmpl =  template filename
+	 * Returns: A file handle (as from open()) to the fileopened for reading and writing. The file is opened in binary modeon platforms where there is a difference. The file handle should beclosed with close(). In case of errors, -1 is returned.
 	 */
 	public static int mkstemp(char[] tmpl)
 	{
@@ -273,19 +244,12 @@ public class FileUtils
 	 * The actual name used is returned in name_used if non-NULL. This
 	 * string should be freed with g_free() when not needed any longer.
 	 * The returned name is in the GLib file name encoding.
-	 * tmpl:
-	 *  Template for file name, as in g_mkstemp(), basename only,
+	 * Params:
+	 * tmpl =  Template for file name, as in g_mkstemp(), basename only,
 	 *  or NULL, to a default template
-	 * name_used:
-	 *  location to store actual name used
-	 * error:
-	 *  return location for a GError
-	 * Returns:
-	 *  A file handle (as from open()) to
-	 * the file opened for reading and writing. The file is opened in binary
-	 * mode on platforms where there is a difference. The file handle should be
-	 * closed with close(). In case of errors, -1 is returned
-	 * and error will be set.
+	 * nameUsed =  location to store actual name used
+	 * error =  return location for a GError
+	 * Returns: A file handle (as from open()) to the file opened for reading and writing. The file is opened in binary mode on platforms where there is a difference. The file handle should beclosed with close(). In case of errors, -1 is returned and error will be set.
 	 */
 	public static int fileOpenTmp(char[] tmpl, char** nameUsed, GError** error)
 	{
@@ -297,14 +261,11 @@ public class FileUtils
 	 * Reads the contents of the symbolic link filename like the POSIX
 	 * readlink() function. The returned string is in the encoding used
 	 * for filenames. Use g_filename_to_utf8() to convert it to UTF-8.
-	 * filename:
-	 *  the symbolic link
-	 * error:
-	 *  return location for a GError
-	 * Returns:
-	 *  A newly allocated string with the contents of the symbolic link,
-	 *  or NULL if an error occurred.
 	 * Since 2.4
+	 * Params:
+	 * filename =  the symbolic link
+	 * error =  return location for a GError
+	 * Returns: A newly allocated string with the contents of the symbolic link,  or NULL if an error occurred.
 	 */
 	public static char[] fileReadLink(char[] filename, GError** error)
 	{
@@ -315,14 +276,11 @@ public class FileUtils
 	/**
 	 * Create a directory if it doesn't already exist. Create intermediate
 	 * parent directories as needed, too.
-	 * pathname:
-	 *  a pathname in the GLib file name encoding
-	 * mode:
-	 *  permissions to use for newly created directories
-	 * Returns:
-	 *  0 if the directory already exists, or was successfully
-	 * created. Returns -1 if an error occurred, with errno set.
 	 * Since 2.8
+	 * Params:
+	 * pathname =  a pathname in the GLib file name encoding
+	 * mode =  permissions to use for newly created directories
+	 * Returns: 0 if the directory already exists, or was successfullycreated. Returns -1 if an error occurred, with errno set.
 	 */
 	public static int mkdirWithParents(char[] pathname, int mode)
 	{
@@ -334,19 +292,14 @@ public class FileUtils
 	/**
 	 * Opens a directory for reading. The names of the files in the
 	 * directory can then be retrieved using g_dir_read_name().
-	 * path:
-	 *  the path to the directory you are interested in. On Unix
+	 * Params:
+	 * path =  the path to the directory you are interested in. On Unix
 	 *  in the on-disk encoding. On Windows in UTF-8
-	 * flags:
-	 *  Currently must be set to 0. Reserved for future use.
-	 * error:
-	 *  return location for a GError, or NULL.
+	 * flags =  Currently must be set to 0. Reserved for future use.
+	 * error =  return location for a GError, or NULL.
 	 *  If non-NULL, an error will be set if and only if
 	 *  g_dir_open() fails.
-	 * Returns:
-	 *  a newly allocated GDir on success, NULL on failure.
-	 *  If non-NULL, you must free the result with g_dir_close()
-	 *  when you are finished with it.
+	 * Returns: a newly allocated GDir on success, NULL on failure. If non-NULL, you must free the result with g_dir_close() when you are finished with it.
 	 */
 	public static GDir* dirOpen(char[] path, uint flags, GError** error)
 	{
@@ -358,12 +311,9 @@ public class FileUtils
 	 * Retrieves the name of the next entry in the directory. The '.' and
 	 * '..' entries are omitted. On Windows, the returned name is in
 	 * UTF-8. On Unix, it is in the on-disk encoding.
-	 * dir:
-	 *  a GDir* created by g_dir_open()
-	 * Returns:
-	 *  The entry's name or NULL if there are no
-	 *  more entries. The return value is owned by GLib and
-	 *  must not be modified or freed.
+	 * Params:
+	 * dir =  a GDir* created by g_dir_open()
+	 * Returns: The entry's name or NULL if there are no  more entries. The return value is owned by GLib and must not be modified or freed.
 	 */
 	public static char[] dirReadName(GDir* dir)
 	{
@@ -374,8 +324,8 @@ public class FileUtils
 	/**
 	 * Resets the given directory. The next call to g_dir_read_name()
 	 * will return the first entry again.
-	 * dir:
-	 *  a GDir* created by g_dir_open()
+	 * Params:
+	 * dir =  a GDir* created by g_dir_open()
 	 */
 	public static void dirRewind(GDir* dir)
 	{
@@ -385,8 +335,8 @@ public class FileUtils
 	
 	/**
 	 * Closes the directory and deallocates all related resources.
-	 * dir:
-	 *  a GDir* created by g_dir_open()
+	 * Params:
+	 * dir =  a GDir* created by g_dir_open()
 	 */
 	public static void dirClose(GDir* dir)
 	{
@@ -405,16 +355,12 @@ public class FileUtils
 	 * of the GMappedFile. Therefore, mapping should only be used if the file
 	 * will not be modified, or if all modifications of the file are done
 	 * atomically (e.g. using g_file_set_contents()).
-	 * filename:
-	 *  The path of the file to load, in the GLib filename encoding
-	 * writable:
-	 *  wether the mapping should be writable
-	 * error:
-	 *  return location for a GError, or NULL
-	 * Returns:
-	 *  a newly allocated GMappedFile which must be freed
-	 *  with g_mapped_file_free(), or NULL if the mapping failed.
 	 * Since 2.8
+	 * Params:
+	 * filename =  The path of the file to load, in the GLib filename encoding
+	 * writable =  whether the mapping should be writable
+	 * error =  return location for a GError, or NULL
+	 * Returns: a newly allocated GMappedFile which must be freed with g_mapped_file_free(), or NULL if the mapping failed.
 	 */
 	public static GMappedFile* mappedFileNew(char[] filename, int writable, GError** error)
 	{
@@ -424,9 +370,9 @@ public class FileUtils
 	
 	/**
 	 * Unmaps the buffer of file and frees it.
-	 * file:
-	 *  a GMappedFile
 	 * Since 2.8
+	 * Params:
+	 * file =  a GMappedFile
 	 */
 	public static void mappedFileFree(GMappedFile* file)
 	{
@@ -436,11 +382,10 @@ public class FileUtils
 	
 	/**
 	 * Returns the length of the contents of a GMappedFile.
-	 * file:
-	 *  a GMappedFile
-	 * Returns:
-	 *  the length of the contents of file.
 	 * Since 2.8
+	 * Params:
+	 * file =  a GMappedFile
+	 * Returns: the length of the contents of file.
 	 */
 	public static uint mappedFileGetLength(GMappedFile* file)
 	{
@@ -452,11 +397,10 @@ public class FileUtils
 	 * Returns the contents of a GMappedFile.
 	 * Note that the contents may not be zero-terminated,
 	 * even if the GMappedFile is backed by a text file.
-	 * file:
-	 *  a GMappedFile
-	 * Returns:
-	 *  the contents of file.
 	 * Since 2.8
+	 * Params:
+	 * file =  a GMappedFile
+	 * Returns: the contents of file.
 	 */
 	public static char[] mappedFileGetContents(GMappedFile* file)
 	{
@@ -472,16 +416,12 @@ public class FileUtils
 	 * file descriptors. The actual Windows API for opening files is
 	 * something different.
 	 * See the C library manual for more details about open().
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * flags:
-	 *  as in open()
-	 * mode:
-	 *  as in open()
-	 * Returns:
-	 *  a new file descriptor, or -1 if an error occurred. The
-	 * return value can be used exactly like the return value from open().
 	 * Since 2.6
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * flags =  as in open()
+	 * mode =  as in open()
+	 * Returns: a new file descriptor, or -1 if an error occurred. Thereturn value can be used exactly like the return value from open().
 	 */
 	public static int open(char[] filename, int flags, int mode)
 	{
@@ -496,13 +436,11 @@ public class FileUtils
 	 * on your system. Note in particular that on Win9x it is not possible
 	 * to rename a file if a file with the new name already exists. Also
 	 * it is not possible in general on Windows to rename an open file.
-	 * oldfilename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * newfilename:
-	 *  a pathname in the GLib file name encoding
-	 * Returns:
-	 *  0 if the renaming succeeded, -1 if an error occurred
 	 * Since 2.6
+	 * Params:
+	 * oldfilename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * newfilename =  a pathname in the GLib file name encoding
+	 * Returns: 0 if the renaming succeeded, -1 if an error occurred
 	 */
 	public static int rename(char[] oldfilename, char[] newfilename)
 	{
@@ -513,15 +451,13 @@ public class FileUtils
 	/**
 	 * A wrapper for the POSIX mkdir() function. The mkdir() function
 	 * attempts to create a directory with the given name and permissions.
+	 * The mode argument is ignored on Windows.
 	 * See the C library manual for more details about mkdir().
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * mode:
-	 *  permissions to use for the newly created directory
-	 * Returns:
-	 *  0 if the directory was successfully created, -1 if an error
-	 *  occurred
 	 * Since 2.6
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * mode =  permissions to use for the newly created directory
+	 * Returns: 0 if the directory was successfully created, -1 if an error  occurred
 	 */
 	public static int mkdir(char[] filename, int mode)
 	{
@@ -531,17 +467,17 @@ public class FileUtils
 	
 	/**
 	 * A wrapper for the POSIX stat() function. The stat() function
-	 * returns information about a file.
+	 * returns information about a file. On Windows the stat() function in
+	 * the C library checks only the READONLY attribute and does not look
+	 * at the ACL at all. Thus the protection bits in the st_mode field
+	 * are a fabrication of little use.
 	 * See the C library manual for more details about stat().
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * buf:
-	 *  a pointer to a stat struct, which
-	 *  will be filled with the file information
-	 * Returns:
-	 *  0 if the information was successfully retrieved, -1 if an error
-	 *  occurred
 	 * Since 2.6
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * buf =  a pointer to a stat struct, which
+	 *  will be filled with the file information
+	 * Returns: 0 if the information was successfully retrieved, -1 if an error  occurred
 	 */
 	public static int stat(char[] filename, void* buf)
 	{
@@ -556,15 +492,12 @@ public class FileUtils
 	 * refers to. If the system does not support symbolic links g_lstat()
 	 * is identical to g_stat().
 	 * See the C library manual for more details about lstat().
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * buf:
-	 *  a pointer to a stat struct, which
-	 *  will be filled with the file information
-	 * Returns:
-	 *  0 if the information was successfully retrieved, -1 if an error
-	 *  occurred
 	 * Since 2.6
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * buf =  a pointer to a stat struct, which
+	 *  will be filled with the file information
+	 * Returns: 0 if the information was successfully retrieved, -1 if an error  occurred
 	 */
 	public static int lstat(char[] filename, void* buf)
 	{
@@ -580,12 +513,10 @@ public class FileUtils
 	 * See your C library manual for more details about unlink(). Note
 	 * that on Windows, it is in general not possible to delete files that
 	 * are open to some process, or mapped into memory.
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * Returns:
-	 *  0 if the name was successfully deleted, -1 if an error
-	 *  occurred
 	 * Since 2.6
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * Returns: 0 if the name was successfully deleted, -1 if an error  occurred
 	 */
 	public static int unlink(char[] filename)
 	{
@@ -608,12 +539,10 @@ public class FileUtils
 	 * errno value. rmdir() is tried regardless of what caused remove() to
 	 * fail. Any errno value set by remove() will be overwritten by that
 	 * set by rmdir().
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * Returns:
-	 *  0 if the file was successfully removed, -1 if an error
-	 *  occurred
 	 * Since 2.6
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * Returns: 0 if the file was successfully removed, -1 if an error  occurred
 	 */
 	public static int remove(char[] filename)
 	{
@@ -626,12 +555,10 @@ public class FileUtils
 	 * deletes a directory from the filesystem.
 	 * See your C library manual for more details about how rmdir() works
 	 * on your system.
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * Returns:
-	 *  0 if the directory was successfully removed, -1 if an error
-	 *  occurred
 	 * Since 2.6
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * Returns: 0 if the directory was successfully removed, -1 if an error  occurred
 	 */
 	public static int rmdir(char[] filename)
 	{
@@ -643,15 +570,12 @@ public class FileUtils
 	 * A wrapper for the POSIX fopen() function. The fopen() function opens
 	 * a file and associates a new stream with it.
 	 * See the C library manual for more details about fopen().
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * mode:
-	 *  a string describing the mode in which the file should be
-	 *  opened
-	 * Returns:
-	 *  A FILE pointer if the file was successfully
-	 *  opened, or NULL if an error occurred
 	 * Since 2.6
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * mode =  a string describing the mode in which the file should be
+	 *  opened
+	 * Returns: A FILE pointer if the file was successfully opened, or NULL if an error occurred
 	 */
 	public static FILE* fopen(char[] filename, char[] mode)
 	{
@@ -663,17 +587,13 @@ public class FileUtils
 	 * A wrapper for the POSIX freopen() function. The freopen() function
 	 * opens a file and associates it with an existing stream.
 	 * See the C library manual for more details about freopen().
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * mode:
-	 *  a string describing the mode in which the file should be
-	 *  opened
-	 * stream:
-	 *  an existing stream which will be reused, or NULL
-	 * Returns:
-	 *  A FILE pointer if the file was successfully
-	 *  opened, or NULL if an error occurred.
 	 * Since 2.6
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * mode =  a string describing the mode in which the file should be
+	 *  opened
+	 * stream =  an existing stream which will be reused, or NULL
+	 * Returns: A FILE pointer if the file was successfully opened, or NULL if an error occurred.
 	 */
 	public static FILE* freopen(char[] filename, char[] mode, FILE* stream)
 	{
@@ -690,13 +610,11 @@ public class FileUtils
 	 * that needs to manage file permissions on Windows exactly should
 	 * use the Win32 API.
 	 * See the C library manual for more details about chmod().
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * mode:
-	 *  as in chmod()
-	 * Returns:
-	 *  zero if the operation succeeded, -1 on error.
 	 * Since 2.8
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * mode =  as in chmod()
+	 * Returns: zero if the operation succeeded, -1 on error.
 	 */
 	public static int chmod(char[] filename, int mode)
 	{
@@ -712,15 +630,11 @@ public class FileUtils
 	 * does not look at the ACL at all. Software that needs to handle file
 	 * permissions on Windows more exactly should use the Win32 API.
 	 * See the C library manual for more details about access().
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * mode:
-	 *  as in access()
-	 * Returns:
-	 *  zero if the pathname refers to an existing file system
-	 * object that has all the tested permissions, or -1 otherwise or on
-	 * error.
 	 * Since 2.8
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * mode =  as in access()
+	 * Returns: zero if the pathname refers to an existing file systemobject that has all the tested permissions, or -1 otherwise or onerror.
 	 */
 	public static int access(char[] filename, int mode)
 	{
@@ -731,19 +645,16 @@ public class FileUtils
 	/**
 	 * A wrapper for the POSIX creat() function. The creat() function is
 	 * used to convert a pathname into a file descriptor, creating a file
-	 * if necessar. Note that on POSIX systems file descriptors are
+	 * if necessary. Note that on POSIX systems file descriptors are
 	 * implemented by the operating system. On Windows, it's the C library
 	 * that implements creat() and file descriptors. The actual Windows
 	 * API for opening files is something different.
 	 * See the C library manual for more details about creat().
-	 * filename:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * mode:
-	 *  as in creat()
-	 * Returns:
-	 *  a new file descriptor, or -1 if an error occurred. The
-	 * return value can be used exactly like the return value from creat().
 	 * Since 2.8
+	 * Params:
+	 * filename =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * mode =  as in creat()
+	 * Returns: a new file descriptor, or -1 if an error occurred. Thereturn value can be used exactly like the return value from creat().
 	 */
 	public static int creat(char[] filename, int mode)
 	{
@@ -755,11 +666,10 @@ public class FileUtils
 	 * A wrapper for the POSIX chdir() function. The function changes the
 	 * current directory of the process to path.
 	 * See your C library manual for more details about chdir().
-	 * path:
-	 *  a pathname in the GLib file name encoding (UTF-8 on Windows)
-	 * Returns:
-	 *  0 on success, -1 if an error occurred.
 	 * Since 2.8
+	 * Params:
+	 * path =  a pathname in the GLib file name encoding (UTF-8 on Windows)
+	 * Returns: 0 on success, -1 if an error occurred.
 	 */
 	public static int chdir(char[] path)
 	{

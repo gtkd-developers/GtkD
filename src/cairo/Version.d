@@ -15,7 +15,7 @@
  * along with gtkD; if not, write to the Free Software
  * Foundation, Inc., 59 Temple Place, Suite 330, Boston, MA  02111-1307  USA
  */
-
+ 
 // generated automatically - do not change
 // find conversion definition on APILookup.txt
 // implement new conversion functionalities on the wrap.utils pakage
@@ -23,17 +23,17 @@
 /*
  * Conversion parameters:
  * inFile  = cairo-Version-Information.html
- * outPack = cairoLib
+ * outPack = cairo
  * outFile = Version
- * strct   =
+ * strct   = 
  * realStrct=
  * ctorStrct=
  * clss    = Version
- * interf  =
+ * interf  = 
  * class Code: No
  * interface Code: No
  * template for:
- * extend  =
+ * extend  = 
  * implements:
  * prefixes:
  * omit structs:
@@ -131,45 +131,39 @@ private import glib.Str;
  */
 public class Version
 {
-
+	
 	/**
 	 */
-
-
-
-
-
-
-
+	
+	
+	
+	
+	
+	
+	
 	/**
 	 * Returns the version of the cairo library encoded in a single
 	 * integer as per CAIRO_VERSION_ENCODE. The encoding ensures that
 	 * later versions compare greater than earlier versions.
 	 * A run-time comparison to check that cairo's version is greater than
-	 * or equal to version X.Y.Z could be performed as follows:
- * if (cairo_version() >= CAIRO_VERSION_ENCODE(X,Y,Z)) {...}
- * See also cairo_version_string() as well as the compile-time
- * equivalents CAIRO_VERSION and CAIRO_VERSION_STRING.
- * Returns:
- *  the encoded version.
- */
-public static int cairoVersion()
-{
-	// int cairo_version (void);
-	return cairo_version();
-}
-
-/**
- * Returns the version of the cairo library as a human-readable string
- * of the form "X.Y.Z".
- * See also cairo_version() as well as the compile-time equivalents
- * CAIRO_VERSION_STRING and CAIRO_VERSION.
- * Returns:
- *  a string containing the version.
- */
-public static char[] cairoVersionString()
-{
-	// const char* cairo_version_string (void);
-	return Str.toString(cairo_version_string() );
-}
+	 * Returns: the encoded version.
+	 */
+	public static int cairoVersion()
+	{
+		// int cairo_version (void);
+		return cairo_version();
+	}
+	
+	/**
+	 * Returns the version of the cairo library as a human-readable string
+	 * of the form "X.Y.Z".
+	 * See also cairo_version() as well as the compile-time equivalents
+	 * CAIRO_VERSION_STRING and CAIRO_VERSION.
+	 * Returns: a string containing the version.
+	 */
+	public static char[] cairoVersionString()
+	{
+		// const char* cairo_version_string (void);
+		return Str.toString(cairo_version_string() );
+	}
 }

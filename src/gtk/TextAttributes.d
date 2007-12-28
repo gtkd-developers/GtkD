@@ -151,13 +151,13 @@ public class TextAttributes
 		}
 		onListeners ~= dlg;
 	}
-	extern(C) static void callBack(GtkTextTag* texttagStruct, GObject* arg1, GdkEvent* event, GtkTextIter* arg2, TextAttributes textAttributes)
+	extern(C) static void callBack(GtkTextTag* tagStruct, GObject* object, GdkEvent* event, GtkTextIter* iter, TextAttributes textAttributes)
 	{
 		bool consumed = false;
 		
 		foreach ( gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg ; textAttributes.onListeners )
 		{
-			dlg(arg1, event, arg2, textAttributes);
+			dlg(object, event, iter, textAttributes);
 		}
 		
 		return consumed;
@@ -175,8 +175,6 @@ public class TextAttributes
 	/**
 	 * Creates a GtkTextAttributes, which describes
 	 * a set of properties on some text.
-	 * Returns:
-	 *  a new GtkTextAttributes
 	 */
 	public this ()
 	{
@@ -186,10 +184,7 @@ public class TextAttributes
 	
 	/**
 	 * Copies src and returns a new GtkTextAttributes.
-	 * src:
-	 *  a GtkTextAttributes to be copied
-	 * Returns:
-	 *  a copy of src
+	 * Returns: a copy of src
 	 */
 	public TextAttributes copy()
 	{
@@ -200,10 +195,8 @@ public class TextAttributes
 	/**
 	 * Copies the values from src to dest so that dest has the same values
 	 * as src. Frees existing values in dest.
-	 * src:
-	 *  a GtkTextAttributes
-	 * dest:
-	 *  another GtkTextAttributes
+	 * Params:
+	 * dest =  another GtkTextAttributes
 	 */
 	public void copyValues(TextAttributes dest)
 	{
@@ -214,8 +207,6 @@ public class TextAttributes
 	/**
 	 * Decrements the reference count on values, freeing the structure
 	 * if the reference count reaches 0.
-	 * values:
-	 *  a GtkTextAttributes
 	 */
 	public void unref()
 	{
@@ -225,21 +216,14 @@ public class TextAttributes
 	
 	/**
 	 * Increments the reference count on values.
-	 * values:
-	 *  a GtkTextAttributes
-	 * Returns:
-	 *  the GtkTextAttributes that were passed in
-	 * Property Details
-	 * The "background" property
-	 *  "background" gchararray : Write
-	 * Background color as a string.
-	 * Default value: NULL
+	 * Returns: the GtkTextAttributes that were passed in
 	 */
 	public TextAttributes doref()
 	{
 		// GtkTextAttributes* gtk_text_attributes_ref (GtkTextAttributes *values);
 		return new TextAttributes( gtk_text_attributes_ref(gtkTextAttributes) );
 	}
+	
 	
 	
 	

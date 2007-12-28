@@ -164,12 +164,9 @@ public class Selection
 	/**
 	 * Adds the specified accessible child of the object to the
 	 * object's selection.
-	 * selection:
-	 *  a GObject instance that implements AtkSelectionIface
-	 * i:
-	 *  a gint specifying the child index.
-	 * Returns:
-	 *  TRUE if success, FALSE otherwise.
+	 * Params:
+	 * i =  a gint specifying the child index.
+	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	public int addSelection(int i)
 	{
@@ -180,10 +177,7 @@ public class Selection
 	/**
 	 * Clears the selection in the object so that no children in the object
 	 * are selected.
-	 * selection:
-	 *  a GObject instance that implements AtkSelectionIface
-	 * Returns:
-	 *  TRUE if success, FALSE otherwise.
+	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	public int clearSelection()
 	{
@@ -198,14 +192,10 @@ public class Selection
 	 * indication of whether AtkSelectionIface is implemented, they should
 	 * use type checking/interface checking macros or the
 	 * atk_get_accessible_value() convenience method.
-	 * selection:
-	 *  a GObject instance that implements AtkSelectionIface
-	 * i:
-	 *  a gint specifying the index in the selection set. (e.g. the
+	 * Params:
+	 * i =  a gint specifying the index in the selection set. (e.g. the
 	 * ith selection as opposed to the ith child).
-	 * Returns:
-	 *  an AtkObject representing the selected accessible , or NULL
-	 * if selection does not implement this interface.
+	 * Returns: an AtkObject representing the selected accessible , or NULLif selection does not implement this interface.
 	 */
 	public AtkObject* refSelection(int i)
 	{
@@ -219,11 +209,7 @@ public class Selection
 	 * indication of whether AtkSelectionIface is implemented, they should
 	 * use type checking/interface checking macros or the
 	 * atk_get_accessible_value() convenience method.
-	 * selection:
-	 *  a GObject instance that implements AtkSelectionIface
-	 * Returns:
-	 *  a gint representing the number of items selected, or 0
-	 * if selection does not implement this interface.
+	 * Returns: a gint representing the number of items selected, or 0if selection does not implement this interface.
 	 */
 	public int getSelectionCount()
 	{
@@ -237,13 +223,9 @@ public class Selection
 	 * indication of whether AtkSelectionIface is implemented, they should
 	 * use type checking/interface checking macros or the
 	 * atk_get_accessible_value() convenience method.
-	 * selection:
-	 *  a GObject instance that implements AtkSelectionIface
-	 * i:
-	 *  a gint specifying the child index.
-	 * Returns:
-	 *  a gboolean representing the specified child is selected, or 0
-	 * if selection does not implement this interface.
+	 * Params:
+	 * i =  a gint specifying the child index.
+	 * Returns: a gboolean representing the specified child is selected, or 0if selection does not implement this interface.
 	 */
 	public int isChildSelected(int i)
 	{
@@ -253,13 +235,10 @@ public class Selection
 	
 	/**
 	 * Removes the specified child of the object from the object's selection.
-	 * selection:
-	 *  a GObject instance that implements AtkSelectionIface
-	 * i:
-	 *  a gint specifying the index in the selection set. (e.g. the
+	 * Params:
+	 * i =  a gint specifying the index in the selection set. (e.g. the
 	 * ith selection as opposed to the ith child).
-	 * Returns:
-	 *  TRUE if success, FALSE otherwise.
+	 * Returns: TRUE if success, FALSE otherwise.
 	 */
 	public int removeSelection(int i)
 	{
@@ -270,22 +249,7 @@ public class Selection
 	/**
 	 * Causes every child of the object to be selected if the object
 	 * supports multiple selections.
-	 * selection:
-	 *  a GObject instance that implements AtkSelectionIface
-	 * Returns:
-	 *  TRUE if success, FALSE otherwise.
-	 * Signal Details
-	 * The "selection-changed" signal
-	 * void user_function (AtkSelection *atkselection,
-	 *  gpointer user_data) : Run Last
-	 * The "selection-changed" signal is emitted by an object which implements
-	 * AtkSelection interface when the selection changes.
-	 * atkselection:
-	 * the object which received the signal.
-	 * user_data:
-	 * user data set when the signal handler was connected.
-	 * See Also
-	 * AtkText
+	 * Returns: TRUE if success, FALSE otherwise.Signal DetailsThe "selection-changed" signalvoid user_function (AtkSelection *atkselection, gpointer user_data) : Run LastThe "selection-changed" signal is emitted by an object which implements AtkSelection interface when the selection changes.
 	 */
 	public int selectAllSelection()
 	{

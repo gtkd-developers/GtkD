@@ -151,12 +151,10 @@ public class ParamSpec
 	
 	
 	
+	
 	/**
 	 * Increments the reference count of pspec.
-	 * pspec:
-	 *  a valid GParamSpec
-	 * Returns:
-	 * the GParamSpec that was passed into this function
+	 * Returns:the GParamSpec that was passed into this function
 	 */
 	public ParamSpec doref()
 	{
@@ -166,8 +164,6 @@ public class ParamSpec
 	
 	/**
 	 * Decrements the reference count of a pspec.
-	 * pspec:
-	 * a valid GParamSpec
 	 */
 	public void unref()
 	{
@@ -183,8 +179,6 @@ public class ParamSpec
 	 * in sequence on it, taking over the initial reference count (thus
 	 * ending up with a pspec that has a reference count of 1 still, but is
 	 * not flagged "floating" anymore).
-	 * pspec:
-	 * a valid GParamSpec
 	 */
 	public void sink()
 	{
@@ -194,11 +188,8 @@ public class ParamSpec
 	
 	/**
 	 * Convenience function to ref and sink a GParamSpec.
-	 * pspec:
-	 * a valid GParamSpec
-	 * Returns:
-	 * the GParamSpec that was passed into this function
 	 * Since 2.10
+	 * Returns:the GParamSpec that was passed into this function
 	 */
 	public ParamSpec refSink()
 	{
@@ -208,10 +199,8 @@ public class ParamSpec
 	
 	/**
 	 * Sets value to its default value as specified in pspec.
-	 * pspec:
-	 * a valid GParamSpec
-	 * value:
-	 * a GValue of correct type for pspec
+	 * Params:
+	 * value = a GValue of correct type for pspec
 	 */
 	public void gParamValueSetDefault(Value value)
 	{
@@ -221,12 +210,9 @@ public class ParamSpec
 	
 	/**
 	 * Checks whether value contains the default value as specified in pspec.
-	 * pspec:
-	 *  a valid GParamSpec
-	 * value:
-	 *  a GValue of correct type for pspec
-	 * Returns:
-	 * whether value contains the canonical default for this pspec
+	 * Params:
+	 * value =  a GValue of correct type for pspec
+	 * Returns:whether value contains the canonical default for this pspec
 	 */
 	public int gParamValueDefaults(Value value)
 	{
@@ -241,12 +227,9 @@ public class ParamSpec
 	 * greater than +42. If value contains an integer outside of this range,
 	 * it is modified accordingly, so the resulting value will fit into the
 	 * range -42 .. +42.
-	 * pspec:
-	 *  a valid GParamSpec
-	 * value:
-	 *  a GValue of correct type for pspec
-	 * Returns:
-	 * whether modifying value was necessary to ensure validity
+	 * Params:
+	 * value =  a GValue of correct type for pspec
+	 * Returns:whether modifying value was necessary to ensure validity
 	 */
 	public int gParamValueValidate(Value value)
 	{
@@ -261,17 +244,11 @@ public class ParamSpec
 	 * the transformed dest_value complied to pspec without modifications.
 	 * See also g_value_type_transformable(), g_value_transform() and
 	 * g_param_value_validate().
-	 * pspec:
-	 *  a valid GParamSpec
-	 * src_value:
-	 *  souce GValue
-	 * dest_value:
-	 *  destination GValue of correct type for pspec
-	 * strict_validation:
-	 * TRUE requires dest_value to conform to pspec without modifications
-	 * Returns:
-	 *  TRUE if transformation and validation were successful,
-	 *  FALSE otherwise and dest_value is left untouched.
+	 * Params:
+	 * srcValue =  souce GValue
+	 * destValue =  destination GValue of correct type for pspec
+	 * strictValidation = TRUE requires dest_value to conform to pspec without modifications
+	 * Returns: TRUE if transformation and validation were successful, FALSE otherwise and dest_value is left untouched.
 	 */
 	public int gParamValueConvert(Value srcValue, Value destValue, int strictValidation)
 	{
@@ -283,14 +260,10 @@ public class ParamSpec
 	 * Compares value1 with value2 according to pspec, and return -1, 0 or +1,
 	 * if value1 is found to be less than, equal to or greater than value2,
 	 * respectively.
-	 * pspec:
-	 *  a valid GParamSpec
-	 * value1:
-	 *  a GValue of correct type for pspec
-	 * value2:
-	 *  a GValue of correct type for pspec
-	 * Returns:
-	 * -1, 0 or +1, for a less than, equal to or greater than result
+	 * Params:
+	 * value1 =  a GValue of correct type for pspec
+	 * value2 =  a GValue of correct type for pspec
+	 * Returns:-1, 0 or +1, for a less than, equal to or greater than result
 	 */
 	public int gParamValuesCmp(Value value1, Value value2)
 	{
@@ -300,10 +273,7 @@ public class ParamSpec
 	
 	/**
 	 * Returns the name of a GParamSpec.
-	 * pspec:
-	 * a valid GParamSpec
-	 * Returns:
-	 * the name of pspec.
+	 * Returns:the name of pspec.
 	 */
 	public char[] getName()
 	{
@@ -313,10 +283,7 @@ public class ParamSpec
 	
 	/**
 	 * Returns the nickname of a GParamSpec.
-	 * pspec:
-	 * a valid GParamSpec
-	 * Returns:
-	 * the nickname of pspec.
+	 * Returns:the nickname of pspec.
 	 */
 	public char[] getNick()
 	{
@@ -326,10 +293,7 @@ public class ParamSpec
 	
 	/**
 	 * Returns the short description of a GParamSpec.
-	 * pspec:
-	 * a valid GParamSpec
-	 * Returns:
-	 * the short description of pspec.
+	 * Returns:the short description of pspec.
 	 */
 	public char[] getBlurb()
 	{
@@ -339,12 +303,9 @@ public class ParamSpec
 	
 	/**
 	 * Gets back user data pointers stored via g_param_spec_set_qdata().
-	 * pspec:
-	 * a valid GParamSpec
-	 * quark:
-	 * a GQuark, naming the user data pointer
-	 * Returns:
-	 * the user data pointer set, or NULL
+	 * Params:
+	 * quark = a GQuark, naming the user data pointer
+	 * Returns:the user data pointer set, or NULL
 	 */
 	public void* getQdata(GQuark quark)
 	{
@@ -359,12 +320,9 @@ public class ParamSpec
 	 * Setting a previously set user data pointer, overrides (frees)
 	 * the old pointer set, using NULL as pointer essentially
 	 * removes the data stored.
-	 * pspec:
-	 * the GParamSpec to set store a user data pointer
-	 * quark:
-	 * a GQuark, naming the user data pointer
-	 * data:
-	 * an opaque user data pointer
+	 * Params:
+	 * quark = a GQuark, naming the user data pointer
+	 * data = an opaque user data pointer
 	 */
 	public void setQdata(GQuark quark, void* data)
 	{
@@ -378,14 +336,10 @@ public class ParamSpec
 	 * specified which is called with data as argument when the pspec is
 	 * finalized, or the data is being overwritten by a call to
 	 * g_param_spec_set_qdata() with the same quark.
-	 * pspec:
-	 *  the GParamSpec to set store a user data pointer
-	 * quark:
-	 *  a GQuark, naming the user data pointer
-	 * data:
-	 *  an opaque user data pointer
-	 * destroy:
-	 * function to invoke with data as argument, when data needs to
+	 * Params:
+	 * quark =  a GQuark, naming the user data pointer
+	 * data =  an opaque user data pointer
+	 * destroy = function to invoke with data as argument, when data needs to
 	 *  be freed
 	 */
 	public void setQdataFull(GQuark quark, void* data, GDestroyNotify destroy)
@@ -400,12 +354,9 @@ public class ParamSpec
 	 * (if any was set).
 	 * Usually, calling this function is only required to update
 	 * user data pointers with a destroy notifier.
-	 * pspec:
-	 * the GParamSpec to get a stored user data pointer from
-	 * quark:
-	 * a GQuark, naming the user data pointer
-	 * Returns:
-	 * the user data pointer set, or NULL
+	 * Params:
+	 * quark = a GQuark, naming the user data pointer
+	 * Returns:the user data pointer set, or NULL
 	 */
 	public void* stealQdata(GQuark quark)
 	{
@@ -419,14 +370,10 @@ public class ParamSpec
 	 * providing a new implementation of a property in a derived
 	 * type while preserving all the properties from the parent
 	 * type. Redirection is established by creating a property
-	 * of type GParamSpecOverride. See g_object_override_property()
+	 * of type GParamSpecOverride. See g_object_class_override_property()
 	 * for an example of the use of this capability.
-	 * pspec:
-	 * a GParamSpec
-	 * Returns:
-	 * paramspec to which requests on this paramspec should
-	 *  be redirected, or NULL if none.
 	 * Since 2.4
+	 * Returns:paramspec to which requests on this paramspec should be redirected, or NULL if none.
 	 */
 	public ParamSpec getRedirectTarget()
 	{
@@ -443,18 +390,13 @@ public class ParamSpec
 	 * When creating and looking up a GParamSpec, either separator can be used,
 	 * but they cannot be mixed. Using '-' is considerably more efficient and in
 	 * fact required when using property names as detail strings for signals.
-	 * param_type:
-	 * the GType for the property; must be derived from G_TYPE_PARAM
-	 * name:
-	 * the canonical name of the property
-	 * nick:
-	 * the nickname of the property
-	 * blurb:
-	 * a short description of the property
-	 * flags:
-	 * a combination of GParamFlags
-	 * Returns:
-	 * a newly allocated GParamSpec instance
+	 * Params:
+	 * paramType = the GType for the property; must be derived from G_TYPE_PARAM
+	 * name = the canonical name of the property
+	 * nick = the nickname of the property
+	 * blurb = a short description of the property
+	 * flags = a combination of GParamFlags
+	 * Returns:a newly allocated GParamSpec instance
 	 */
 	public static void* internal(GType paramType, char[] name, char[] nick, char[] blurb, GParamFlags flags)
 	{
@@ -468,12 +410,10 @@ public class ParamSpec
 	 * G_TYPE_PARAM. The type system uses the information contained in the
 	 * GParamSpecTypeInfo structure pointed to by info to manage the GParamSpec
 	 * type and its instances.
-	 * name:
-	 * 0-terminated string used as the name of the new GParamSpec type.
-	 * pspec_info:
-	 * The GParamSpecTypeInfo for this GParamSpec type.
-	 * Returns:
-	 * The new type identifier.
+	 * Params:
+	 * name = 0-terminated string used as the name of the new GParamSpec type.
+	 * pspecInfo = The GParamSpecTypeInfo for this GParamSpec type.
+	 * Returns:The new type identifier.
 	 */
 	public static GType gParamTypeRegisterStatic(char[] name, GParamSpecTypeInfo* pspecInfo)
 	{
@@ -488,10 +428,9 @@ public class ParamSpec
 	 * allow to specify the owner as a colon-separated prefix of the property name,
 	 * like "GtkContainer:border-width". This feature is deprecated, so you should
 	 * always set type_prefixing to FALSE.
-	 * type_prefixing:
-	 * Whether the pool will support type-prefixed property names.
-	 * Returns:
-	 * a newly allocated GParamSpecPool.
+	 * Params:
+	 * typePrefixing = Whether the pool will support type-prefixed property names.
+	 * Returns:a newly allocated GParamSpecPool.
 	 */
 	public static GParamSpecPool* poolNew(int typePrefixing)
 	{
@@ -501,12 +440,10 @@ public class ParamSpec
 	
 	/**
 	 * Inserts a GParamSpec in the pool.
-	 * pool:
-	 * a GParamSpecPool.
-	 * pspec:
-	 * the GParamSpec to insert
-	 * owner_type:
-	 * a GType identifying the owner of pspec
+	 * Params:
+	 * pool = a GParamSpecPool.
+	 * pspec = the GParamSpec to insert
+	 * ownerType = a GType identifying the owner of pspec
 	 */
 	public static void poolInsert(GParamSpecPool* pool, ParamSpec pspec, GType ownerType)
 	{
@@ -516,10 +453,9 @@ public class ParamSpec
 	
 	/**
 	 * Removes a GParamSpec from the pool.
-	 * pool:
-	 * a GParamSpecPool
-	 * pspec:
-	 * the GParamSpec to remove
+	 * Params:
+	 * pool = a GParamSpecPool
+	 * pspec = the GParamSpec to remove
 	 */
 	public static void poolRemove(GParamSpecPool* pool, ParamSpec pspec)
 	{
@@ -529,17 +465,13 @@ public class ParamSpec
 	
 	/**
 	 * Looks up a GParamSpec in the pool.
-	 * pool:
-	 * a GParamSpecPool
-	 * param_name:
-	 * the name to look for
-	 * owner_type:
-	 * the owner to look for
-	 * walk_ancestors:
-	 * If TRUE, also try to find a GParamSpec with param_name
+	 * Params:
+	 * pool = a GParamSpecPool
+	 * paramName = the name to look for
+	 * ownerType = the owner to look for
+	 * walkAncestors = If TRUE, also try to find a GParamSpec with param_name
 	 *  owned by an ancestor of owner_type.
-	 * Returns:
-	 * The found GParamSpec, or NULL if no matching GParamSpec was found.
+	 * Returns:The found GParamSpec, or NULL if no matching GParamSpec was found.
 	 */
 	public static ParamSpec poolLookup(GParamSpecPool* pool, char[] paramName, GType ownerType, int walkAncestors)
 	{
@@ -549,15 +481,11 @@ public class ParamSpec
 	
 	/**
 	 * Gets an array of all GParamSpecs owned by owner_type in the pool.
-	 * pool:
-	 * a GParamSpecPool
-	 * owner_type:
-	 * the owner to look for
-	 * n_pspecs_p:
-	 * return location for the length of the returned array
-	 * Returns:
-	 * a newly allocated array containing pointers to all
-	 *  GParamSpecs owned by owner_type in the pool
+	 * Params:
+	 * pool = a GParamSpecPool
+	 * ownerType = the owner to look for
+	 * nPspecsP = return location for the length of the returned array
+	 * Returns:a newly allocated array containing pointers to all  GParamSpecs owned by owner_type in the pool
 	 */
 	public static GParamSpec** poolList(GParamSpecPool* pool, GType ownerType, uint* nPspecsP)
 	{
@@ -567,16 +495,10 @@ public class ParamSpec
 	
 	/**
 	 * Gets an GList of all GParamSpecs owned by owner_type in the pool.
-	 * pool:
-	 * a GParamSpecPool
-	 * owner_type:
-	 * the owner to look for
-	 * Returns:
-	 * a GList of all GParamSpecs owned by owner_type in
-	 *  the poolGParamSpecs.
-	 * See Also
-	 * g_object_class_install_property(), g_object_set(), g_object_get(),
-	 * g_object_set_property(), g_object_get_property(), g_value_register_transform_func()
+	 * Params:
+	 * pool = a GParamSpecPool
+	 * ownerType = the owner to look for
+	 * Returns:a GList of all GParamSpecs owned by owner_type in  the poolGParamSpecs.
 	 */
 	public static ListG poolListOwned(GParamSpecPool* pool, GType ownerType)
 	{

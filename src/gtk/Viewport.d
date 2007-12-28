@@ -68,11 +68,11 @@ private import gtk.Adjustment;
 
 
 
+private import gtk.Bin;
 
 /**
  * Description
  */
-private import gtk.Bin;
 public class Viewport : Bin
 {
 	
@@ -161,12 +161,9 @@ public class Viewport : Bin
 	
 	/**
 	 * Creates a new GtkViewport with the given adjustments.
-	 * hadjustment:
-	 *  horizontal adjustment.
-	 * vadjustment:
-	 *  vertical adjustment.
-	 * Returns:
-	 *  a new GtkViewport.
+	 * Params:
+	 * hadjustment =  horizontal adjustment.
+	 * vadjustment =  vertical adjustment.
 	 */
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
@@ -176,10 +173,7 @@ public class Viewport : Bin
 	
 	/**
 	 * Returns the horizontal adjustment of the viewport.
-	 * viewport:
-	 *  a GtkViewport.
-	 * Returns:
-	 *  the horizontal adjustment of viewport.
+	 * Returns: the horizontal adjustment of viewport.
 	 */
 	public Adjustment getHadjustment()
 	{
@@ -189,10 +183,7 @@ public class Viewport : Bin
 	
 	/**
 	 * Returns the vertical adjustment of the viewport.
-	 * viewport:
-	 *  a GtkViewport.
-	 * Returns:
-	 *  the vertical adjustment of viewport.
+	 * Returns: the vertical adjustment of viewport.
 	 */
 	public Adjustment getVadjustment()
 	{
@@ -202,10 +193,8 @@ public class Viewport : Bin
 	
 	/**
 	 * Sets the horizontal adjustment of the viewport.
-	 * viewport:
-	 *  a GtkViewport.
-	 * adjustment:
-	 *  a GtkAdjustment.
+	 * Params:
+	 * adjustment =  a GtkAdjustment.
 	 */
 	public void setHadjustment(Adjustment adjustment)
 	{
@@ -215,10 +204,8 @@ public class Viewport : Bin
 	
 	/**
 	 * Sets the vertical adjustment of the viewport.
-	 * viewport:
-	 *  a GtkViewport.
-	 * adjustment:
-	 *  a GtkAdjustment.
+	 * Params:
+	 * adjustment =  a GtkAdjustment.
 	 */
 	public void setVadjustment(Adjustment adjustment)
 	{
@@ -228,10 +215,8 @@ public class Viewport : Bin
 	
 	/**
 	 * Sets the shadow type of the viewport.
-	 * viewport:
-	 *  a GtkViewport.
-	 * type:
-	 *  the new shadow type.
+	 * Params:
+	 * type =  the new shadow type.
 	 */
 	public void setShadowType(GtkShadowType type)
 	{
@@ -242,14 +227,7 @@ public class Viewport : Bin
 	/**
 	 * Gets the shadow type of the GtkViewport. See
 	 * gtk_viewport_set_shadow_type().
-	 * viewport:
-	 *  a GtkViewport
-	 * Returns:
-	 *  the shadow type
-	 * Property Details
-	 * The "hadjustment" property
-	 *  "hadjustment" GtkAdjustment : Read / Write / Construct
-	 * The GtkAdjustment that determines the values of the horizontal position for this viewport.
+	 * Returns: the shadow type
 	 */
 	public GtkShadowType getShadowType()
 	{

@@ -67,6 +67,7 @@ private import glib.Str;
 
 
 
+private import gtk.HBox;
 
 /**
  * Description
@@ -77,7 +78,7 @@ private import glib.Str;
  * in an FTP client, for example).
  * It may also have a resize grip (a triangular area in the lower right corner)
  * which can be clicked on to resize the window containing the statusbar.
- * Status bars in Gtk+ maintain a stack of messages. The message at
+ * Status bars in GTK+ maintain a stack of messages. The message at
  * the top of the each bar's stack is the one that will currently be displayed.
  * Any messages added to a statusbar's stack must specify a context
  * id that is used to uniquely identify the source of a message.
@@ -94,7 +95,6 @@ private import glib.Str;
  * A message can be removed from anywhere in the stack if its message_id was
  * recorded at the time it was added. This is done using gtk_statusbar_remove().
  */
-private import gtk.HBox;
 public class Statusbar : HBox
 {
 	
@@ -211,8 +211,6 @@ public class Statusbar : HBox
 	
 	/**
 	 * Creates a new GtkStatusbar ready for messages.
-	 * Returns:
-	 *  the new GtkStatusbar
 	 */
 	public this ()
 	{
@@ -224,13 +222,10 @@ public class Statusbar : HBox
 	 * Returns a new context identifier, given a description
 	 * of the actual context. Note that the description is
 	 * not shown in the UI.
-	 * statusbar:
-	 *  a GtkStatusbar
-	 * context_description:
-	 *  textual description of what context
+	 * Params:
+	 * contextDescription =  textual description of what context
 	 *  the new message is being used in
-	 * Returns:
-	 *  an integer id
+	 * Returns: an integer id
 	 */
 	public uint getContextId(char[] contextDescription)
 	{
@@ -240,16 +235,11 @@ public class Statusbar : HBox
 	
 	/**
 	 * Pushes a new message onto a statusbar's stack.
-	 * statusbar:
-	 *  a GtkStatusbar
-	 * context_id:
-	 *  the message's context id, as returned by
+	 * Params:
+	 * contextId =  the message's context id, as returned by
 	 *  gtk_statusbar_get_context_id()
-	 * text:
-	 *  the message to add to the statusbar
-	 * Returns:
-	 *  a message id that can be used with
-	 *  gtk_statusbar_remove().
+	 * text =  the message to add to the statusbar
+	 * Returns: a message id that can be used with  gtk_statusbar_remove().
 	 */
 	public uint push(uint contextId, char[] text)
 	{
@@ -263,10 +253,8 @@ public class Statusbar : HBox
 	 * Note that this may not change the displayed message, if
 	 * the message at the top of the stack has a different
 	 * context id.
-	 * statusbar:
-	 *  a GtkStatusBar
-	 * context_id:
-	 *  a context identifier
+	 * Params:
+	 * contextId =  a context identifier
 	 */
 	public void pop(uint contextId)
 	{
@@ -277,12 +265,9 @@ public class Statusbar : HBox
 	/**
 	 * Forces the removal of a message from a statusbar's stack.
 	 * The exact context_id and message_id must be specified.
-	 * statusbar:
-	 *  a GtkStatusBar
-	 * context_id:
-	 *  a context identifier
-	 * message_id:
-	 *  a message identifier, as returned by gtk_statusbar_push()
+	 * Params:
+	 * contextId =  a context identifier
+	 * messageId =  a message identifier, as returned by gtk_statusbar_push()
 	 */
 	public void remove(uint contextId, uint messageId)
 	{
@@ -293,10 +278,8 @@ public class Statusbar : HBox
 	/**
 	 * Sets whether the statusbar has a resize grip.
 	 * TRUE by default.
-	 * statusbar:
-	 *  a GtkStatusBar
-	 * setting:
-	 *  TRUE to have a resize grip
+	 * Params:
+	 * setting =  TRUE to have a resize grip
 	 */
 	public void setHasResizeGrip(int setting)
 	{
@@ -306,36 +289,7 @@ public class Statusbar : HBox
 	
 	/**
 	 * Returns whether the statusbar has a resize grip.
-	 * statusbar:
-	 *  a GtkStatusBar
-	 * Returns:
-	 *  TRUE if the statusbar has a resize grip.
-	 * Property Details
-	 * The "has-resize-grip" property
-	 *  "has-resize-grip" gboolean : Read / Write
-	 * Whether the statusbar has a grip for resizing the toplevel window.
-	 * Default value: TRUE
-	 * Since 2.4
-	 * Style Property Details
-	 * The "shadow-type" style property
-	 *  "shadow-type" GtkShadowType : Read
-	 * Style of bevel around the statusbar text.
-	 * Default value: GTK_SHADOW_IN
-	 * Signal Details
-	 * The "text-popped" signal
-	 * void user_function (GtkStatusbar *statusbar,
-	 *  guint context_id,
-	 *  gchar *text,
-	 *  gpointer user_data) : Run Last
-	 * Is emitted whenever a new message is popped off a statusbar's stack.
-	 * statusbar:
-	 *  the object which received the signal.
-	 * context_id:
-	 *  the context id of the relevant message/statusbar.
-	 * text:
-	 *  the message that was just popped.
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * Returns: TRUE if the statusbar has a resize grip.
 	 */
 	public int getHasResizeGrip()
 	{

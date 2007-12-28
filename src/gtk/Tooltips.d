@@ -73,6 +73,7 @@ private import gtk.Window;
 
 
 
+private import gtk.ObjectGtk;
 
 /**
  * Description
@@ -88,7 +89,7 @@ private import gtk.Window;
  * widget inside a GtkEventBox and add a tooltip to that instead.
  * The default appearance of all tooltips in a program is determined by the current GTK+ theme that the user has selected.
  * Information about the tooltip (if any) associated with an arbitrary widget can be retrieved using gtk_tooltips_data_get().
- * Example3.Adding tooltips to buttons.
+ * Example54.Adding tooltips to buttons.
  *  GtkWidget *load_button, *save_button, *hbox;
  *  GtkTooltips *button_bar_tips;
  *  button_bar_tips = gtk_tooltips_new ();
@@ -115,7 +116,6 @@ private import gtk.Window;
  * 				 old one. Otherwise, you will be prompted for
  * 				 a filename.");
  */
-private import gtk.ObjectGtk;
 public class Tooltips : ObjectGtk
 {
 	
@@ -170,9 +170,9 @@ public class Tooltips : ObjectGtk
 	
 	
 	/**
+	 * Warning
+	 * gtk_tooltips_new has been deprecated since version 2.12 and should not be used in newly-written code.
 	 * Creates an empty group of tooltips. This function initialises a GtkTooltips structure. Without at least one such structure, you can not add tips to your application.
-	 * Returns:
-	 * a new GtkTooltips group for you to use.
 	 */
 	public this ()
 	{
@@ -181,9 +181,9 @@ public class Tooltips : ObjectGtk
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tooltips_enable has been deprecated since version 2.12 and should not be used in newly-written code.
 	 * Allows the user to see your tooltips as they navigate your application.
-	 * tooltips:
-	 * a GtkTooltips.
 	 */
 	public void enable()
 	{
@@ -192,9 +192,9 @@ public class Tooltips : ObjectGtk
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tooltips_disable has been deprecated since version 2.12 and should not be used in newly-written code.
 	 * Causes all tooltips in tooltips to become inactive. Any widgets that have tips associated with that group will no longer display their tips until they are enabled again with gtk_tooltips_enable().
-	 * tooltips:
-	 * a GtkTooltips.
 	 */
 	public void disable()
 	{
@@ -204,12 +204,10 @@ public class Tooltips : ObjectGtk
 	
 	/**
 	 * Warning
-	 * gtk_tooltips_set_delay is deprecated and should not be used in newly-written code.
+	 * gtk_tooltips_set_delay has been deprecated since version 2.12 and should not be used in newly-written code.
 	 * Sets the time between the user moving the mouse over a widget and the widget's tooltip appearing.
-	 * tooltips:
-	 * a GtkTooltips.
-	 * delay:
-	 * an integer value representing milliseconds.
+	 * Params:
+	 * delay = an integer value representing milliseconds.
 	 */
 	public void setDelay(uint delay)
 	{
@@ -218,15 +216,13 @@ public class Tooltips : ObjectGtk
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tooltips_set_tip has been deprecated since version 2.12 and should not be used in newly-written code.
 	 * Adds a tooltip containing the message tip_text to the specified GtkWidget.
-	 * tooltips:
-	 * a GtkTooltips.
-	 * widget:
-	 * the GtkWidget you wish to associate the tip with.
-	 * tip_text:
-	 * a string containing the tip itself.
-	 * tip_private:
-	 * a string of any further information that may be useful if the user gets stuck.
+	 * Params:
+	 * widget = the GtkWidget you wish to associate the tip with.
+	 * tipText = a string containing the tip itself.
+	 * tipPrivate = a string of any further information that may be useful if the user gets stuck.
 	 */
 	public void setTip(Widget widget, char[] tipText, char[] tipPrivate)
 	{
@@ -235,11 +231,12 @@ public class Tooltips : ObjectGtk
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tooltips_data_get has been deprecated since version 2.12 and should not be used in newly-written code.
 	 * Retrieves any GtkTooltipsData previously associated with the given widget.
-	 * widget:
-	 * a GtkWidget.
-	 * Returns:
-	 * a GtkTooltipsData struct, or NULL if the widget has no tooltip.
+	 * Params:
+	 * widget = a GtkWidget.
+	 * Returns:a GtkTooltipsData struct, or NULL if the widget has no tooltip.
 	 */
 	public static GtkTooltipsData* dataGet(Widget widget)
 	{
@@ -248,11 +245,11 @@ public class Tooltips : ObjectGtk
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tooltips_force_window has been deprecated since version 2.12 and should not be used in newly-written code.
 	 * Ensures that the window used for displaying the given tooltips is created.
 	 * Applications should never have to call this function, since GTK+ takes
 	 * care of this.
-	 * tooltips:
-	 * a GtkToolTips
 	 */
 	public void forceWindow()
 	{
@@ -261,26 +258,20 @@ public class Tooltips : ObjectGtk
 	}
 	
 	/**
+	 * Warning
+	 * gtk_tooltips_get_info_from_tip_window has been deprecated since version 2.12 and should not be used in newly-written code.
 	 * Determines the tooltips and the widget they belong to from the window in
 	 * which they are displayed.
 	 * This function is mostly intended for use by accessibility technologies;
 	 * applications should have little use for it.
-	 * tip_window:
-	 *  a GtkWindow
-	 * tooltips:
-	 *  the return location for the tooltips which are displayed
-	 *  in tip_window, or NULL
-	 * current_widget:
-	 *  the return location for the widget whose tooltips
-	 *  are displayed, or NULL
-	 * Returns:
-	 *  TRUE if tip_window is displaying tooltips, otherwise FALSE.
 	 * Since 2.4
-	 * See Also
-	 * GtkToolbar
-	 * Create groups of widgets with their own tooltips.
-	 * GtkTipsQuery
-	 * Query tooltips to create context-sensitive help.
+	 * Params:
+	 * tipWindow =  a GtkWindow
+	 * tooltips =  the return location for the tooltips which are displayed
+	 *  in tip_window, or NULL
+	 * currentWidget =  the return location for the widget whose tooltips
+	 *  are displayed, or NULL
+	 * Returns: TRUE if tip_window is displaying tooltips, otherwise FALSE.
 	 */
 	public static int getInfoFromTipWindow(Window tipWindow, GtkTooltips** tooltips, GtkWidget** currentWidget)
 	{

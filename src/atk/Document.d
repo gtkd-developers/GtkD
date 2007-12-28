@@ -219,10 +219,7 @@ public class Document
 	
 	/**
 	 * Gets a string indicating the document type.
-	 * document:
-	 *  a GObject instance that implements AtkDocumentIface
-	 * Returns:
-	 *  a string indicating the document type
+	 * Returns: a string indicating the document type
 	 */
 	public char[] getDocumentType()
 	{
@@ -234,10 +231,7 @@ public class Document
 	 * Gets a gpointer that points to an instance of the DOM. It is
 	 * up to the caller to check atk_document_get_type to determine
 	 * how to cast this pointer.
-	 * document:
-	 *  a GObject instance that implements AtkDocumentIface
-	 * Returns:
-	 *  a gpointer that points to an instance of the DOM.
+	 * Returns: a gpointer that points to an instance of the DOM.
 	 */
 	public void* getDocument()
 	{
@@ -246,17 +240,10 @@ public class Document
 	}
 	
 	/**
-	 * Returns:
-	 * document:
-	 *  a GObject instance that implements AtkDocumentIface
-	 * attribute_name:
-	 *  a character string representing the name of the attribute
+	 * Params:
+	 * attributeName =  a character string representing the name of the attribute
 	 *  whose value is being queried.
-	 * Returns:
-	 *  a string value associated with the named attribute for this
-	 *  document, or NULL if a value for attribute_name has not been specified
-	 *  for this document.
-	 * Since ATK 1.12
+	 * Returns:Returns: a string value associated with the named attribute for this document, or NULL if a value for attribute_name has not been specified for this document.Since ATK 1.12
 	 */
 	public char[] getAttributeValue(char[] attributeName)
 	{
@@ -265,19 +252,11 @@ public class Document
 	}
 	
 	/**
-	 * Returns:
-	 * document:
-	 *  a GObject instance that implements AtkDocumentIface
-	 * attribute_name:
-	 *  a character string representing the name of the attribute
+	 * Params:
+	 * attributeName =  a character string representing the name of the attribute
 	 *  whose value is being set.
-	 * attribute_value:
-	 *  a string value to be associated with attribute_name.
-	 * Returns:
-	 *  TRUE if value is successfully associated with attribute_name
-	 *  for this document, FALSE otherwise (e.g. if the document does not
-	 *  allow the attribute to be modified).
-	 * Since ATK 1.12
+	 * attributeValue =  a string value to be associated with attribute_name.
+	 * Returns:Returns: TRUE if value is successfully associated with attribute_name for this document, FALSE otherwise (e.g. if the document does not allow the attribute to be modified).Since ATK 1.12
 	 */
 	public int setAttributeValue(char[] attributeName, char[] attributeValue)
 	{
@@ -288,14 +267,7 @@ public class Document
 	/**
 	 * Gets an AtkAttributeSet which describes document-wide
 	 *  attributes as name-value pairs.
-	 * Returns:
-	 * document:
-	 *  a GObject instance that implements AtkDocumentIface
-	 * Returns:
-	 *  An AtkAttributeSet containing the explicitly
-	 *  set name-value-pair attributes associated with this document
-	 *  as a whole.
-	 * Since ATK 1.12
+	 * Returns:Returns: An AtkAttributeSet containing the explicitly set name-value-pair attributes associated with this document as a whole.Since ATK 1.12
 	 */
 	public AtkAttributeSet* getAttributes()
 	{
@@ -309,27 +281,7 @@ public class Document
 	 *  text substrings or images within this document may have
 	 *  a different locale, see atk_text_get_attributes and
 	 *  atk_image_get_image_locale.
-	 * document:
-	 *  a GObject instance that implements AtkDocumentIface
-	 * Returns:
-	 *  a UTF-8 string indicating the POSIX-style LC_MESSAGES
-	 *  locale of the document content as a whole, or NULL if
-	 *  the document content does not specify a locale.
-	 * Signal Details
-	 * The "load-complete" signal
-	 * void user_function (AtkDocument *atkdocument,
-	 *  gpointer user_data) : Run Last
-	 * The 'load-complete' signal is emitted when a pending load of a static
-	 * document has completed. This signal is to be expected by ATK clients
-	 * if and when AtkDocument implementors expose ATK_STATE_BUSY. If the state
-	 * of an AtkObject which implements AtkDocument does not include ATK_STATE_BUSY,
-	 * it should be safe for clients to assume that the AtkDocument's static contents
-	 * are fully loaded into the container. (Dynamic document contents should
-	 * be exposed via other signals.)
-	 * atkdocument:
-	 * the object which received the signal.
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * Returns: a UTF-8 string indicating the POSIX-style LC_MESSAGES locale of the document content as a whole, or NULL if the document content does not specify a locale.Signal DetailsThe "load-complete" signalvoid user_function (AtkDocument *atkdocument, gpointer user_data) : Run LastThe 'load-complete' signal is emitted when a pending load of a staticdocument has completed. This signal is to be expected by ATK clients if and when AtkDocument implementors expose ATK_STATE_BUSY. If the stateof an AtkObject which implements AtkDocument does not include ATK_STATE_BUSY,it should be safe for clients to assume that the AtkDocument's static contentsare fully loaded into the container. (Dynamic document contents shouldbe exposed via other signals.)
 	 */
 	public char[] getLocale()
 	{

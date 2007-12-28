@@ -240,7 +240,13 @@ private import glib.Str;
  * Error domains and codes are conventionally named as follows:
  * The error domain is called
  * <NAMESPACE>_<MODULE>_ERROR, for example
- * G_EXEC_ERROR or G_THREAD_ERROR.
+ * G_SPAWN_ERROR or G_THREAD_ERROR:
+ * #define G_SPAWN_ERROR g_spawn_error_quark ()
+ * GQuark
+ * g_spawn_error_quark (void)
+ * {
+	 *  return g_quark_from_static_string ("g-spawn-error-quark");
+ * }
  * The error codes are in an enumeration called
  * <Namespace><Module>Error; for example,
  * GThreadError or GSpawnError.
@@ -249,7 +255,7 @@ private import glib.Str;
  * doesn't make sense to distinguish with specific codes, it should be called
  * <NAMESPACE>_<MODULE>_ERROR_FAILED, for
  * example G_SPAWN_ERROR_FAILED or G_THREAD_ERROR_FAILED.
- * Summary of rules for use of GError:
+ * Summary of rules for use of ""
  *  Do not report programming errors via GError.
  *  The last argument of a function that returns an error should be a
  *  location where a GError can be placed (i.e. "GError** error"). If
@@ -342,16 +348,11 @@ public class ErrorG
 	/**
 	 * Creates a new GError with the given domain and code,
 	 * and a message formatted with format.
-	 * domain:
-	 *  error domain
-	 * code:
-	 *  error code
-	 * format:
-	 *  printf()-style format for error message
-	 * ...:
-	 *  parameters for message format
-	 * Returns:
-	 *  a new GError
+	 * Params:
+	 * domain =  error domain
+	 * code =  error code
+	 * format =  printf()-style format for error message
+	 * ... =  parameters for message format
 	 */
 	public this (GQuark domain, int code, char[] format, ... )
 	{
@@ -364,14 +365,10 @@ public class ErrorG
 	 * a printf()-style format string. Use this
 	 * function if message contains text you don't have control over,
 	 * that could include printf() escape sequences.
-	 * domain:
-	 *  error domain
-	 * code:
-	 *  error code
-	 * message:
-	 *  error message
-	 * Returns:
-	 *  a new GError
+	 * Params:
+	 * domain =  error domain
+	 * code =  error code
+	 * message =  error message
 	 */
 	public this (GQuark domain, int code, char[] message)
 	{
@@ -381,8 +378,6 @@ public class ErrorG
 	
 	/**
 	 * Frees a GError and associated resources.
-	 * error:
-	 *  a GError
 	 */
 	public void free()
 	{
@@ -392,10 +387,7 @@ public class ErrorG
 	
 	/**
 	 * Makes a copy of error.
-	 * error:
-	 *  a GError
-	 * Returns:
-	 *  a new GError
+	 * Returns: a new GError
 	 */
 	public GError* copy()
 	{
@@ -406,14 +398,10 @@ public class ErrorG
 	/**
 	 * Returns TRUE if error matches domain and code, FALSE
 	 * otherwise.
-	 * error:
-	 *  a GError
-	 * domain:
-	 *  an error domain
-	 * code:
-	 *  an error code
-	 * Returns:
-	 *  whether error has domain and code
+	 * Params:
+	 * domain =  an error domain
+	 * code =  an error code
+	 * Returns: whether error has domain and code
 	 */
 	public int matches(GQuark domain, int code)
 	{
@@ -424,16 +412,12 @@ public class ErrorG
 	/**
 	 * Does nothing if err is NULL; if err is non-NULL, then *err must
 	 * be NULL. A new GError is created and assigned to *err.
-	 * err:
-	 *  a return location for a GError, or NULL
-	 * domain:
-	 *  error domain
-	 * code:
-	 *  error code
-	 * format:
-	 *  printf()-style format
-	 * ...:
-	 *  args for format
+	 * Params:
+	 * err =  a return location for a GError, or NULL
+	 * domain =  error domain
+	 * code =  error code
+	 * format =  printf()-style format
+	 * ... =  args for format
 	 */
 	public static void gSetError(GError** err, GQuark domain, int code, char[] format, ... )
 	{
@@ -444,10 +428,9 @@ public class ErrorG
 	/**
 	 * If dest is NULL, free src; otherwise,
 	 * moves src into *dest. *dest must be NULL.
-	 * dest:
-	 *  error return location
-	 * src:
-	 *  error to move into the return location
+	 * Params:
+	 * dest =  error return location
+	 * src =  error to move into the return location
 	 */
 	public static void gPropagateError(GError** dest, GError* src)
 	{
@@ -458,8 +441,8 @@ public class ErrorG
 	/**
 	 * If err is NULL, does nothing. If err is non-NULL,
 	 * calls g_error_free() on *err and sets *err to NULL.
-	 * err:
-	 *  a GError return location
+	 * Params:
+	 * err =  a GError return location
 	 */
 	public static void gClearError(GError** err)
 	{

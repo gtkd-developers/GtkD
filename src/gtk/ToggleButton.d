@@ -69,6 +69,7 @@ private import glib.Str;
 
 
 
+private import gtk.Button;
 
 /**
  * Description
@@ -83,7 +84,7 @@ private import glib.Str;
  * gtk_toggle_button_set_active(), and retrieved using
  * gtk_toggle_button_get_active().
  * To simply switch the state of a toggle button, use gtk_toggle_button_toggled.
- * Example2.Creating two GtkToggleButton widgets.
+ * Example11.Creating two GtkToggleButton widgets.
  * void make_toggles (void) {
 	 *  GtkWidget *dialog, *toggle1, *toggle2;
 	 *  dialog = gtk_dialog_new ();
@@ -103,7 +104,6 @@ private import glib.Str;
 	 *  gtk_widget_show_all (dialog);
  * }
  */
-private import gtk.Button;
 public class ToggleButton : Button
 {
 	
@@ -154,13 +154,11 @@ public class ToggleButton : Button
 	
 	/**
 	 * Creates a new toggle button with a text label.
-	 * If mnemonic is true the label
-	 * will be created using gtk_label_new_with_mnemonic(), so underscores
-	 * in label indicate the mnemonic for the button.
-	 * label:
-	 * a string containing the message to be placed in the toggle button.
-	 * Returns:
-	 * a new toggle button.
+	 * Params:
+	 *  label = a string containing the message to be placed in the toggle button.
+	 *  mnemonic =  if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the button.
 	 */
 	public this (char[] label, bool mnemonic=true)
 	{
@@ -216,8 +214,6 @@ public class ToggleButton : Button
 	
 	/**
 	 * Creates a new toggle button. A widget should be packed into the button, as in gtk_button_new().
-	 * Returns:
-	 * a new toggle button.
 	 */
 	public this ()
 	{
@@ -234,10 +230,8 @@ public class ToggleButton : Button
 	 * This function only affects instances of classes like GtkCheckButton
 	 * and GtkRadioButton that derive from GtkToggleButton,
 	 * not instances of GtkToggleButton itself.
-	 * toggle_button:
-	 *  a GtkToggleButton
-	 * draw_indicator:
-	 *  if TRUE, draw the button as a separate indicator
+	 * Params:
+	 * drawIndicator =  if TRUE, draw the button as a separate indicator
 	 * and label; if FALSE, draw the button like a normal button
 	 */
 	public void setMode(int drawIndicator)
@@ -249,11 +243,7 @@ public class ToggleButton : Button
 	/**
 	 * Retrieves whether the button is displayed as a separate indicator
 	 * and label. See gtk_toggle_button_set_mode().
-	 * toggle_button:
-	 *  a GtkToggleButton
-	 * Returns:
-	 *  TRUE if the togglebutton is drawn as a separate indicator
-	 *  and label.
+	 * Returns: TRUE if the togglebutton is drawn as a separate indicator and label.
 	 */
 	public int getMode()
 	{
@@ -266,8 +256,6 @@ public class ToggleButton : Button
 	 * Emits the toggled
 	 * signal on the GtkToggleButton. There is no good reason for an
 	 * application ever to call this function.
-	 * toggle_button:
-	 * a GtkToggleButton.
 	 */
 	public void toggled()
 	{
@@ -278,10 +266,7 @@ public class ToggleButton : Button
 	/**
 	 * Queries a GtkToggleButton and returns its current state. Returns TRUE if
 	 * the toggle button is pressed in and FALSE if it is raised.
-	 * toggle_button:
-	 * a GtkToggleButton.
-	 * Returns:
-	 * a gboolean value.
+	 * Returns:a gboolean value.
 	 */
 	public int getActive()
 	{
@@ -293,10 +278,8 @@ public class ToggleButton : Button
 	 * Sets the status of the toggle button. Set to TRUE if you want the
 	 * GtkToggleButton to be 'pressed in', and FALSE to raise it.
 	 * This action causes the toggled signal to be emitted.
-	 * toggle_button:
-	 * a GtkToggleButton.
-	 * is_active:
-	 * TRUE or FALSE.
+	 * Params:
+	 * isActive = TRUE or FALSE.
 	 */
 	public void setActive(int isActive)
 	{
@@ -306,10 +289,7 @@ public class ToggleButton : Button
 	
 	/**
 	 * Gets the value set by gtk_toggle_button_set_inconsistent().
-	 * toggle_button:
-	 *  a GtkToggleButton
-	 * Returns:
-	 *  TRUE if the button is displayed as inconsistent, FALSE otherwise
+	 * Returns: TRUE if the button is displayed as inconsistent, FALSE otherwise
 	 */
 	public int getInconsistent()
 	{
@@ -326,15 +306,8 @@ public class ToggleButton : Button
 	 * state again if the user toggles the toggle button. This has to be
 	 * done manually, gtk_toggle_button_set_inconsistent() only affects
 	 * visual appearance, it doesn't affect the semantics of the button.
-	 * toggle_button:
-	 *  a GtkToggleButton
-	 * setting:
-	 *  TRUE if state is inconsistent
-	 * Property Details
-	 * The "active" property
-	 *  "active" gboolean : Read / Write
-	 * If the toggle button should be pressed in or not.
-	 * Default value: FALSE
+	 * Params:
+	 * setting =  TRUE if state is inconsistent
 	 */
 	public void setInconsistent(int setting)
 	{

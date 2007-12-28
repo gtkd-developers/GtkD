@@ -224,28 +224,22 @@ public class OptionGroup
 	
 	
 	
+	
 	/**
 	 * Creates a new GOptionGroup.
-	 * name:
-	 *  the name for the option group, this is used to provide
+	 * Since 2.6
+	 * Params:
+	 * name =  the name for the option group, this is used to provide
 	 *  help for the options in this group with --help-name
-	 * description:
-	 *  a description for this group to be shown in
+	 * description =  a description for this group to be shown in
 	 *  --help. This string is translated using the translation
 	 *  domain or translation function of the group
-	 * help_description:
-	 *  a description for the --help-name option.
+	 * helpDescription =  a description for the --help-name option.
 	 *  This string is translated using the translation domain or translation function
 	 *  of the group
-	 * user_data:
-	 *  user data that will be passed to the pre- and post-parse hooks,
+	 * userData =  user data that will be passed to the pre- and post-parse hooks,
 	 *  the error hook and to callbacks of G_OPTION_ARG_CALLBACK options, or NULL
-	 * destroy:
-	 *  a function that will be called to free user_data, or NULL
-	 * Returns:
-	 *  a newly created option group. It should be added
-	 *  to a GOptionContext or freed with g_option_group_free().
-	 * Since 2.6
+	 * destroy =  a function that will be called to free user_data, or NULL
 	 */
 	public this (char[] name, char[] description, char[] helpDescription, void* userData, GDestroyNotify destroy)
 	{
@@ -256,8 +250,6 @@ public class OptionGroup
 	/**
 	 * Frees a GOptionGroup. Note that you must not
 	 * free groups which have been added to a GOptionContext.
-	 * group:
-	 *  a GOptionGroup
 	 * Since 2.6
 	 */
 	public void free()
@@ -268,11 +260,9 @@ public class OptionGroup
 	
 	/**
 	 * Adds the options specified in entries to group.
-	 * group:
-	 *  a GOptionGroup
-	 * entries:
-	 *  a NULL-terminated array of GOptionEntrys
 	 * Since 2.6
+	 * Params:
+	 * entries =  a NULL-terminated array of GOptionEntrys
 	 */
 	public void addEntries(GOptionEntry* entries)
 	{
@@ -288,13 +278,10 @@ public class OptionGroup
 	 * Note that the user data to be passed to pre_parse_func and
 	 * post_parse_func can be specified when constructing the group
 	 * with g_option_group_new().
-	 * group:
-	 *  a GOptionGroup
-	 * pre_parse_func:
-	 *  a function to call before parsing, or NULL
-	 * post_parse_func:
-	 *  a function to call after parsing, or NULL
 	 * Since 2.6
+	 * Params:
+	 * preParseFunc =  a function to call before parsing, or NULL
+	 * postParseFunc =  a function to call after parsing, or NULL
 	 */
 	public void setParseHooks(GOptionParseFunc preParseFunc, GOptionParseFunc postParseFunc)
 	{
@@ -309,11 +296,9 @@ public class OptionGroup
 	 * Note that the user data to be passed to pre_parse_func and
 	 * post_parse_func can be specified when constructing the group
 	 * with g_option_group_new().
-	 * group:
-	 *  a GOptionGroup
-	 * error_func:
-	 *  a function to call when an error occurs
 	 * Since 2.6
+	 * Params:
+	 * errorFunc =  a function to call when an error occurs
 	 */
 	public void setErrorHook(GOptionErrorFunc errorFunc)
 	{
@@ -328,15 +313,11 @@ public class OptionGroup
 	 * is NULL, strings are not translated.
 	 * If you are using gettext(), you only need to set the translation
 	 * domain, see g_option_group_set_translation_domain().
-	 * group:
-	 *  a GOptionGroup
-	 * func:
-	 *  the GTranslateFunc, or NULL
-	 * data:
-	 *  user data to pass to func, or NULL
-	 * destroy_notify:
-	 *  a function which gets called to free data, or NULL
 	 * Since 2.6
+	 * Params:
+	 * func =  the GTranslateFunc, or NULL
+	 * data =  user data to pass to func, or NULL
+	 * destroyNotify =  a function which gets called to free data, or NULL
 	 */
 	public void setTranslateFunc(GTranslateFunc func, void* data, GDestroyNotify destroyNotify)
 	{
@@ -347,11 +328,9 @@ public class OptionGroup
 	/**
 	 * A convenience function to use gettext() for translating
 	 * user-visible strings.
-	 * group:
-	 *  a GOptionGroup
-	 * domain:
-	 *  the domain to use
 	 * Since 2.6
+	 * Params:
+	 * domain =  the domain to use
 	 */
 	public void setTranslationDomain(char[] domain)
 	{

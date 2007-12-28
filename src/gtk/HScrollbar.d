@@ -68,6 +68,7 @@ private import gtk.Adjustment;
 
 
 
+private import gtk.Scrollbar;
 
 /**
  * Description
@@ -77,7 +78,6 @@ private import gtk.Adjustment;
  * adjustment of the scrollbar or it may be left NULL in which case one
  * will be created for you. See GtkAdjustment for details.
  */
-private import gtk.Scrollbar;
 public class HScrollbar : Scrollbar
 {
 	
@@ -132,12 +132,8 @@ public class HScrollbar : Scrollbar
 	
 	/**
 	 * Creates a new horizontal scrollbar.
-	 * adjustment:
-	 * the GtkAdjustment to use, or NULL to create a new adjustment.
-	 * Returns:
-	 * the new GtkHScrollbar.
-	 * See Also
-	 * GtkScrollbar, GtkScrolledWindow
+	 * Params:
+	 * adjustment = the GtkAdjustment to use, or NULL to create a new adjustment.
 	 */
 	public this (Adjustment adjustment)
 	{

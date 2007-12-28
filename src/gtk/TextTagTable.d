@@ -73,6 +73,7 @@ private import gtk.TextTag;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -80,7 +81,6 @@ private import gtk.TextTag;
  * conceptual overview which gives an overview of all the objects and data
  * types related to the text widget and how they work together.
  */
-private import gobject.ObjectG;
 public class TextTagTable : ObjectG
 {
 	
@@ -227,8 +227,7 @@ public class TextTagTable : ObjectG
 	/**
 	 * Creates a new GtkTextTagTable. The table contains no tags by
 	 * default.
-	 * Returns:
-	 *  a new GtkTextTagTable
+	 * Returns: a new GtkTextTagTable
 	 */
 	public static TextTagTable tableNew()
 	{
@@ -241,10 +240,9 @@ public class TextTagTable : ObjectG
 	 * in the table.
 	 * tag must not be in a tag table already, and may not have
 	 * the same name as an already-added tag.
-	 * table:
-	 *  a GtkTextTagTable
-	 * tag:
-	 *  a GtkTextTag
+	 * Params:
+	 * table =  a GtkTextTagTable
+	 * tag =  a GtkTextTag
 	 */
 	public void tableAdd(TextTag tag)
 	{
@@ -256,10 +254,9 @@ public class TextTagTable : ObjectG
 	 * Remove a tag from the table. This will remove the table's
 	 * reference to the tag, so be careful - the tag will end
 	 * up destroyed if you don't have a reference to it.
-	 * table:
-	 *  a GtkTextTagTable
-	 * tag:
-	 *  a GtkTextTag
+	 * Params:
+	 * table =  a GtkTextTagTable
+	 * tag =  a GtkTextTag
 	 */
 	public void tableRemove(TextTag tag)
 	{
@@ -269,12 +266,10 @@ public class TextTagTable : ObjectG
 	
 	/**
 	 * Look up a named tag.
-	 * table:
-	 *  a GtkTextTagTable
-	 * name:
-	 *  name of a tag
-	 * Returns:
-	 *  The tag, or NULL if none by that name is in the table.
+	 * Params:
+	 * table =  a GtkTextTagTable
+	 * name =  name of a tag
+	 * Returns: The tag, or NULL if none by that name is in the table.
 	 */
 	public TextTag tableLookup(char[] name)
 	{
@@ -286,12 +281,10 @@ public class TextTagTable : ObjectG
 	 * Calls func on each tag in table, with user data data.
 	 * Note that the table may not be modified while iterating
 	 * over it (you can't add/remove tags).
-	 * table:
-	 *  a GtkTextTagTable
-	 * func:
-	 *  a function to call on each tag
-	 * data:
-	 *  user data
+	 * Params:
+	 * table =  a GtkTextTagTable
+	 * func =  a function to call on each tag
+	 * data =  user data
 	 */
 	public void tableForeach(GtkTextTagTableForeach func, void* data)
 	{
@@ -301,20 +294,9 @@ public class TextTagTable : ObjectG
 	
 	/**
 	 * Returns the size of the table (number of tags)
-	 * table:
-	 *  a GtkTextTagTable
-	 * Returns:
-	 *  number of tags in table
-	 * Signal Details
-	 * The "tag-added" signal
-	 * void user_function (GtkTextTagTable *texttagtable,
-	 *  GtkTextTag *arg1,
-	 *  gpointer user_data) : Run Last
-	 * texttagtable:
-	 * the object which received the signal.
-	 * arg1:
-	 * user_data:
-	 * user data set when the signal handler was connected.
+	 * Params:
+	 * table =  a GtkTextTagTable
+	 * Returns: number of tags in tableSignal DetailsThe "tag-added" signalvoid user_function (GtkTextTagTable *texttagtable, GtkTextTag *arg1, gpointer user_data) : Run Last
 	 */
 	public int tableGetSize()
 	{

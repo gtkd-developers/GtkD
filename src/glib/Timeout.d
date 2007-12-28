@@ -197,10 +197,9 @@ public class Timeout
 	 * The source will not initially be associated with any GMainContext
 	 * and must be added to one with g_source_attach() before it will be
 	 * executed.
-	 * interval:
-	 *  the timeout interval in milliseconds.
-	 * Returns:
-	 *  the newly-created timeout source
+	 * Params:
+	 * interval =  the timeout interval in milliseconds.
+	 * Returns: the newly-created timeout source
 	 */
 	public static Source sourceNew(uint interval)
 	{
@@ -215,11 +214,10 @@ public class Timeout
 	 * executed.
 	 * The scheduling granularity/accuracy of this timeout source will be
 	 * in seconds.
-	 * interval:
-	 *  the timeout interval in seconds
-	 * Returns:
-	 *  the newly-created timeout source
 	 * Since 2.14
+	 * Params:
+	 * interval =  the timeout interval in seconds
+	 * Returns: the newly-created timeout source
 	 */
 	public static Source sourceNewSeconds(uint interval)
 	{
@@ -242,15 +240,12 @@ public class Timeout
 	 * about the exact time of the first call of the timer, use the
 	 * g_timeout_add_seconds() function; this function allows for more
 	 * optimizations and more efficient system power usage.
-	 * interval:
-	 *  the time between calls to the function, in milliseconds
+	 * Params:
+	 * interval =  the time between calls to the function, in milliseconds
 	 *  (1/1000ths of a second)
-	 * function:
-	 *  function to call
-	 * data:
-	 *  data to pass to function
-	 * Returns:
-	 *  the ID (greater than 0) of the event source.
+	 * funct =  function to call
+	 * data =  data to pass to function
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint add(uint interval, GSourceFunc funct, void* data)
 	{
@@ -270,20 +265,15 @@ public class Timeout
 	 * After each call to the timeout function, the time of the next
 	 * timeout is recalculated based on the current time and the given interval
 	 * (it does not try to 'catch up' time lost in delays).
-	 * priority:
-	 *  the priority of the idle source. Typically this will be in the
-	 *  range between G_PRIORITY_DEFAULT_IDLE and G_PRIORITY_HIGH_IDLE.
-	 * interval:
-	 *  the time between calls to the function, in milliseconds
+	 * Params:
+	 * priority =  the priority of the timeout source. Typically this will be in
+	 *  the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
+	 * interval =  the time between calls to the function, in milliseconds
 	 *  (1/1000ths of a second)
-	 * function:
-	 *  function to call
-	 * data:
-	 *  data to pass to function
-	 * notify:
-	 *  function to call when the idle is removed, or NULL
-	 * Returns:
-	 *  the ID (greater than 0) of the event source.
+	 * funct =  function to call
+	 * data =  data to pass to function
+	 * notify =  function to call when the timeout is removed, or NULL
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
 	public static uint addFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
@@ -292,10 +282,30 @@ public class Timeout
 	}
 	
 	/**
-	 * Sets a function to be called at regular intervals, with the default
-	 * priority, G_PRIORITY_DEFAULT. The function is called repeatedly
-	 * until it returns FALSE, at which point the timeout is automatically
-	 * destroyed and the function will not be called again.
+	 * Sets a function to be called at regular intervals with the default
+	 * priority, G_PRIORITY_DEFAULT. The function is called repeatedly until
+	 * it returns FALSE, at which point the timeout is automatically destroyed
+	 * and the function will not be called again.
+	 * See g_timeout_add_seconds_full() for the differences between
+	 * g_timeout_add() and g_timeout_add_seconds().
+	 * Since 2.14
+	 * Params:
+	 * interval =  the time between calls to the function, in seconds
+	 * funct =  function to call
+	 * data =  data to pass to function
+	 * Returns: the ID (greater than 0) of the event source.
+	 */
+	public static uint addSeconds(uint interval, GSourceFunc funct, void* data)
+	{
+		// guint g_timeout_add_seconds (guint interval,  GSourceFunc function,  gpointer data);
+		return g_timeout_add_seconds(interval, funct, data);
+	}
+	
+	/**
+	 * Sets a function to be called at regular intervals, with priority.
+	 * The function is called repeatedly until it returns FALSE, at which
+	 * point the timeout is automatically destroyed and the function will
+	 * not be called again.
 	 * Unlike g_timeout_add(), this function operates at whole second granularity.
 	 * The initial starting point of the timer is determined by the implementation
 	 * and the implementation is expected to group multiple timers together so that
@@ -311,22 +321,22 @@ public class Timeout
 	 * instead.
 	 * The grouping of timers to fire at the same time results in a more power
 	 * and CPU efficient behavior so if your timer is in multiples of seconds
-	 * and you don't require the first timer exactly 1 second from now, the
-	 * use of g_timeout_add_second() is prefered over g_timeout_add().
-	 * interval:
-	 *  the time between calls to the function, in seconds
-	 * function:
-	 *  function to call
-	 * data:
-	 *  data to pass to function
-	 * Returns:
-	 *  the ID (greater than 0) of the event source.
+	 * and you don't require the first timer exactly one second from now, the
+	 * use of g_timeout_add_seconds() is preferred over g_timeout_add().
 	 * Since 2.14
+	 * Params:
+	 * priority =  the priority of the timeout source. Typically this will be in
+	 *  the range between G_PRIORITY_DEFAULT and G_PRIORITY_HIGH.
+	 * interval =  the time between calls to the function, in seconds
+	 * funct =  function to call
+	 * data =  data to pass to function
+	 * notify =  function to call when the timeout is removed, or NULL
+	 * Returns: the ID (greater than 0) of the event source.
 	 */
-	public static uint addSeconds(uint interval, GSourceFunc funct, void* data)
+	public static uint addSecondsFull(int priority, uint interval, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
-		// guint g_timeout_add_seconds (guint interval,  GSourceFunc function,  gpointer data);
-		return g_timeout_add_seconds(interval, funct, data);
+		// guint g_timeout_add_seconds_full (gint priority,  guint interval,  GSourceFunc function,  gpointer data,  GDestroyNotify notify);
+		return g_timeout_add_seconds_full(priority, interval, funct, data, notify);
 	}
 	
 	

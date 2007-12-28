@@ -184,13 +184,7 @@ public class GtkD
 	 * program environment. This is the same as calling the C library function
 	 * setlocale (LC_ALL, "") but also takes care of the
 	 * locale specific setup of the windowing system used by GDK.
-	 * Returns:
-	 *  a string corresponding to the locale set, typically in the
-	 * form lang_COUNTRY, where lang is an ISO-639 language code, and
-	 * COUNTRY is an ISO-3166 country code. On Unix, this form matches the
-	 * result of the setlocale(); it is also used on other machines, such as
-	 * Windows, where the C library returns a different result. The string is
-	 * owned by GTK+ and should not be modified or freed.
+	 * Returns: a string corresponding to the locale set, typically in theform lang_COUNTRY, where lang is an ISO-639 language code, andCOUNTRY is an ISO-3166 country code. On Unix, this form matches theresult of the setlocale(); it is also used on other machines, such as Windows, where the C library returns a different result. The string is owned by GTK+ and should not be modified or freed.
 	 */
 	public static char[] setLocale()
 	{
@@ -221,9 +215,7 @@ public class GtkD
 	 * right-to-left or left-to-right text direction.
 	 * This function is equivalent to pango_language_get_default(). See
 	 * that function for details.
-	 * Returns:
-	 *  the default language as a PangoLanguage, must not be
-	 * freed
+	 * Returns: the default language as a PangoLanguage, must not befreed
 	 */
 	public static PangoLanguage* getDefaultLanguage()
 	{
@@ -239,12 +231,10 @@ public class GtkD
 	 * argc and argv are updated accordingly.
 	 * You shouldn't call this function explicitely if you are using
 	 * gtk_init(), or gtk_init_check().
-	 * argc:
-	 *  a pointer to the number of command line arguments.
-	 * argv:
-	 *  a pointer to the array of command line arguments.
-	 * Returns:
-	 *  TRUE if initialization succeeded, otherwise FALSE.
+	 * Params:
+	 * argc =  a pointer to the number of command line arguments.
+	 * argv =  a pointer to the array of command line arguments.
+	 * Returns: TRUE if initialization succeeded, otherwise FALSE.
 	 */
 	public static int parseArgs(int* argc, char*** argv)
 	{
@@ -268,11 +258,10 @@ public class GtkD
 	 * the GUI for some reason. If you want your program to fall back to a
 	 * textual interface you want to call gtk_init_check() instead.
 	 * Note
-	 * argc:
-	 *  Address of the argc parameter of your
+	 * Params:
+	 * argc =  Address of the argc parameter of your
 	 *  main() function. Changed if any arguments were handled.
-	 * argv:
-	 *  Address of the argv parameter of main().
+	 * argv =  Address of the argv parameter of main().
 	 *  Any parameters understood by gtk_init() are stripped before return.
 	 */
 	public static void init(int* argc, char*** argv)
@@ -287,15 +276,12 @@ public class GtkD
 	 * initialized. Instead it returns FALSE on failure.
 	 * This way the application can fall back to some other means of communication
 	 * with the user - for example a curses or command line interface.
-	 * argc:
-	 *  Address of the argc parameter of your
+	 * Params:
+	 * argc =  Address of the argc parameter of your
 	 *  main() function. Changed if any arguments were handled.
-	 * argv:
-	 *  Address of the argv parameter of main().
+	 * argv =  Address of the argv parameter of main().
 	 *  Any parameters understood by gtk_init() are stripped before return.
-	 * Returns:
-	 *  TRUE if the GUI has been successfully initialized,
-	 *  FALSE otherwise.
+	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 */
 	public static int initCheck(int* argc, char*** argv)
 	{
@@ -309,27 +295,20 @@ public class GtkD
 	 * and it automatically generates nicely formatted
 	 * --help output. Note that your program will
 	 * be terminated after writing out the help output.
-	 * argc:
-	 *  a pointer to the number of command line arguments.
-	 * argv:
-	 *  a pointer to the array of command line arguments.
-	 * parameter_string:
-	 *  a string which is displayed in
+	 * Since 2.6
+	 * Params:
+	 * argc =  a pointer to the number of command line arguments.
+	 * argv =  a pointer to the array of command line arguments.
+	 * parameterString =  a string which is displayed in
 	 *  the first line of --help output, after
 	 *  programname [OPTION...]
-	 * entries:
-	 *  a NULL-terminated array of GOptionEntrys
+	 * entries =  a NULL-terminated array of GOptionEntrys
 	 *  describing the options of your program
-	 * translation_domain:
-	 *  a translation domain to use for translating
+	 * translationDomain =  a translation domain to use for translating
 	 *  the --help output for the options in entries
 	 *  with gettext(), or NULL
-	 * error:
-	 *  a return location for errors
-	 * Returns:
-	 *  TRUE if the GUI has been successfully initialized,
-	 *  FALSE otherwise.
-	 * Since 2.6
+	 * error =  a return location for errors
+	 * Returns: TRUE if the GUI has been successfully initialized,  FALSE otherwise.
 	 */
 	public static int initWithArgs(int* argc, char*** argv, char[] parameterString, GOptionEntry* entries, char[] translationDomain, GError** error)
 	{
@@ -342,13 +321,11 @@ public class GtkD
 	 * by GTK+ and GDK. You should add this group to your GOptionContext
 	 * with g_option_context_add_group(), if you are using
 	 * g_option_context_parse() to parse your commandline arguments.
-	 * open_default_display:
-	 *  whether to open the default display
-	 *  when parsing the commandline arguments
-	 * Returns:
-	 * a GOptionGroup for the commandline arguments recognized
-	 *  by GTK+
 	 * Since 2.6
+	 * Params:
+	 * openDefaultDisplay =  whether to open the default display
+	 *  when parsing the commandline arguments
+	 * Returns: a GOptionGroup for the commandline arguments recognized by GTK+
 	 */
 	public static GOptionGroup* getOptionGroup(int openDefaultDisplay)
 	{
@@ -362,8 +339,8 @@ public class GtkD
 	 * Terminates the program and returns the given exit code to the caller.
 	 * This function will shut down the GUI and free all resources allocated
 	 * for GTK+.
-	 * error_code:
-	 * Return value to pass to the caller. This is dependent on the
+	 * Params:
+	 * errorCode = Return value to pass to the caller. This is dependent on the
 	 * target system but at least on Unix systems 0 means success.
 	 */
 	public static void exit(int errorCode)
@@ -382,8 +359,7 @@ public class GtkD
 	 * 	 gtk_main_iteration ();
 	 * ...
 	 * 	/+* computation continued +/
-	 * Returns:
-	 * TRUE if any events are pending, FALSE otherwise.
+	 * Returns:TRUE if any events are pending, FALSE otherwise.
 	 */
 	public static int eventsPending()
 	{
@@ -405,8 +381,7 @@ public class GtkD
 	/**
 	 * Asks for the current nesting level of the main loop. This can be useful
 	 * when calling gtk_quit_add().
-	 * Returns:
-	 * the nesting level of the current invocation of the main loop.
+	 * Returns:the nesting level of the current invocation of the main loop.
 	 */
 	public static uint mainLevel()
 	{
@@ -429,8 +404,7 @@ public class GtkD
 	 * processed GTK+ will block until the next event is noticed. If you don't
 	 * want to block look at gtk_main_iteration_do() or check if any events are
 	 * pending with gtk_events_pending() first.
-	 * Returns:
-	 * TRUE if gtk_main_quit() has been called for the innermost mainloop.
+	 * Returns:TRUE if gtk_main_quit() has been called for the innermost mainloop.
 	 */
 	public static int mainIteration()
 	{
@@ -441,10 +415,9 @@ public class GtkD
 	/**
 	 * Runs a single iteration of the mainloop. If no events are available either
 	 * return or block dependent on the value of blocking.
-	 * blocking:
-	 * TRUE if you want GTK+ to block if no events are pending.
-	 * Returns:
-	 * TRUE if gtk_main_quit() has been called for the innermost mainloop.
+	 * Params:
+	 * blocking = TRUE if you want GTK+ to block if no events are pending.
+	 * Returns:TRUE if gtk_main_quit() has been called for the innermost mainloop.
 	 */
 	public static int mainIterationDo(int blocking)
 	{
@@ -457,33 +430,8 @@ public class GtkD
 	 * between GDK and GTK+. You will not usually need to call this function directly.
 	 * While you should not call this function directly, you might want to know
 	 * how exactly events are handled. So here is what this function does with
-	 * the event:
-	 *  Compress enter/leave notify events. If the event passed build an
-	 *  enter/leave pair together with the next event (peeked from GDK)
-	 *  both events are thrown away. This is to avoid a backlog of (de-)highlighting
-	 *  widgets crossed by the pointer.
-	 *  Find the widget which got the event. If the widget can't be determined
-	 *  the event is thrown away unless it belongs to a INCR transaction. In that
-	 *  case it is passed to gtk_selection_incr_event().
-	 *  Then the event is passed on a stack so you can query the currently handled
-	 *  event with gtk_get_current_event().
-	 *  The event is sent to a widget. If a grab is active all events for
-	 *  widgets that are not in the contained in the grab widget are sent to the
-	 *  latter with a few exceptions:
-	 *  Deletion and destruction events are still sent to the event widget for
-	 *  obvious reasons.
-	 *  Events which directly relate to the visual representation of the event
-	 *  widget.
-	 *  Leave events are delivered to the event widget if there was an enter
-	 *  event delivered to it before without the paired leave event.
-	 *  Drag events are not redirected because it is unclear what the semantics
-	 *  of that would be.
-	 *  Another point of interest might be that all key events are first passed
-	 *  through the key snooper functions if there are any. Read the description
-	 *  of gtk_key_snooper_install() if you need this feature.
-	 *  After finishing the delivery the event is popped from the event stack.
-	 * event:
-	 * An event to process (normally) passed by GDK.
+	 * Params:
+	 * event = An event to process (normally) passed by GDK.
 	 */
 	public static void mainDoEvent(Event event)
 	{
@@ -499,8 +447,8 @@ public class GtkD
 	 * Makes widget the current grabbed widget. This means that interaction with
 	 * other widgets in the same application is blocked and mouse as well as
 	 * keyboard events are delivered to this widget.
-	 * widget:
-	 * The widget that grabs keyboard and pointer events.
+	 * Params:
+	 * widget = The widget that grabs keyboard and pointer events.
 	 */
 	public static void grabAdd(Widget widget)
 	{
@@ -510,8 +458,7 @@ public class GtkD
 	
 	/**
 	 * Queries the current grab of the default window group.
-	 * Returns:
-	 * The widget which currently has the grab or NULL if no grab is active.
+	 * Returns:The widget which currently has the grab or NULL if no grab is active.
 	 */
 	public static Widget grabGetCurrent()
 	{
@@ -522,8 +469,8 @@ public class GtkD
 	/**
 	 * Removes the grab from the given widget. You have to pair calls to gtk_grab_add()
 	 * and gtk_grab_remove().
-	 * widget:
-	 * The widget which gives up the grab.
+	 * Params:
+	 * widget = The widget which gives up the grab.
 	 */
 	public static void grabRemove(Widget widget)
 	{
@@ -533,10 +480,9 @@ public class GtkD
 	
 	/**
 	 * Registers a function to be called when the mainloop is started.
-	 * function:
-	 * Function to invoke when gtk_main() is called next.
-	 * data:
-	 * Data to pass to that function.
+	 * Params:
+	 * funct = Function to invoke when gtk_main() is called next.
+	 * data = Data to pass to that function.
 	 */
 	public static void initAdd(GtkFunction funct, void* data)
 	{
@@ -547,10 +493,9 @@ public class GtkD
 	/**
 	 * Trigger destruction of object in case the mainloop at level main_level
 	 * is quit.
-	 * main_level:
-	 * Level of the mainloop which shall trigger the destruction.
-	 * object:
-	 * Object to be destroyed.
+	 * Params:
+	 * mainLevel = Level of the mainloop which shall trigger the destruction.
+	 * object = Object to be destroyed.
 	 */
 	public static void quitAddDestroy(uint mainLevel, ObjectGtk object)
 	{
@@ -560,18 +505,14 @@ public class GtkD
 	
 	/**
 	 * Registers a function to be called when an instance of the mainloop is left.
-	 * main_level:
-	 * Level at which termination the function shall be called. You
+	 * Params:
+	 * mainLevel = Level at which termination the function shall be called. You
 	 *  can pass 0 here to have the function run at the termination of the current
 	 *  mainloop.
-	 * function:
-	 * The function to call. This should return 0 to be removed from the
+	 * funct = The function to call. This should return 0 to be removed from the
 	 *  list of quit handlers. Otherwise the function might be called again.
-	 * data:
-	 * Pointer to pass when calling function.
-	 * Returns:
-	 * A handle for this quit handler (you need this for gtk_quit_remove())
-	 *  or 0 if you passed a NULL pointer in function.
+	 * data = Pointer to pass when calling function.
+	 * Returns:A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
 	 */
 	public static uint quitAdd(uint mainLevel, GtkFunction funct, void* data)
 	{
@@ -587,23 +528,17 @@ public class GtkD
 	 * while the latter can be used to free the information stored in data (while
 	 * you can do this in function as well)... So this function will mostly be
 	 * used by GTK+ wrappers for languages other than C.
-	 * main_level:
-	 * Level at which termination the function shall be called. You
+	 * Params:
+	 * mainLevel = Level at which termination the function shall be called. You
 	 *  can pass 0 here to have the function run at the termination of the current
 	 *  mainloop.
-	 * function:
-	 * The function to call. This should return 0 to be removed from the
+	 * funct = The function to call. This should return 0 to be removed from the
 	 *  list of quit handlers. Otherwise the function might be called again.
-	 * marshal:
-	 * The marshaller to be used. If this is non-NULL, function is
+	 * marshal = The marshaller to be used. If this is non-NULL, function is
 	 *  ignored.
-	 * data:
-	 * Pointer to pass when calling function.
-	 * destroy:
-	 * Function to call to destruct data. Gets data as argument.
-	 * Returns:
-	 * A handle for this quit handler (you need this for gtk_quit_remove())
-	 *  or 0 if you passed a NULL pointer in function.
+	 * data = Pointer to pass when calling function.
+	 * destroy = Function to call to destruct data. Gets data as argument.
+	 * Returns:A handle for this quit handler (you need this for gtk_quit_remove()) or 0 if you passed a NULL pointer in function.
 	 */
 	public static uint quitAddFull(uint mainLevel, GtkFunction funct, GtkCallbackMarshal marshal, void* data, GtkDestroyNotify destroy)
 	{
@@ -613,8 +548,8 @@ public class GtkD
 	
 	/**
 	 * Removes a quit handler by its identifier.
-	 * quit_handler_id:
-	 * Identifier for the handler returned when installing it.
+	 * Params:
+	 * quitHandlerId = Identifier for the handler returned when installing it.
 	 */
 	public static void quitRemove(uint quitHandlerId)
 	{
@@ -624,8 +559,8 @@ public class GtkD
 	
 	/**
 	 * Removes a quit handler identified by its data field.
-	 * data:
-	 * The pointer passed as data to gtk_quit_add() or gtk_quit_add_full().
+	 * Params:
+	 * data = The pointer passed as data to gtk_quit_add() or gtk_quit_add_full().
 	 */
 	public static void quitRemoveByData(void* data)
 	{
@@ -646,21 +581,15 @@ public class GtkD
 	 * gtk_input_add_full has been deprecated since version 2.4 and should not be used in newly-written code. Use g_io_add_watch_full() instead.
 	 * Registers a function to be called when a condition becomes true
 	 * on a file descriptor.
-	 * source:
-	 * a file descriptor.
-	 * condition:
-	 * the condition.
-	 * function:
-	 * The function to call.
-	 * marshal:
-	 * The marshaller to use instead of the function (if non-NULL).
-	 * data:
-	 * callback data passed to function.
-	 * destroy:
-	 * callback function to call with data when the input
+	 * Params:
+	 * source = a file descriptor.
+	 * condition = the condition.
+	 * funct = The function to call.
+	 * marshal = The marshaller to use instead of the function (if non-NULL).
+	 * data = callback data passed to function.
+	 * destroy = callback function to call with data when the input
 	 *  handler is removed, or NULL.
-	 * Returns:
-	 * A unique id for the event source; to be used with gtk_input_remove().
+	 * Returns:A unique id for the event source; to be used with gtk_input_remove().
 	 */
 	public static uint inputAddFull(int source, GdkInputCondition condition, GdkInputFunction funct, GtkCallbackMarshal marshal, void* data, GtkDestroyNotify destroy)
 	{
@@ -672,8 +601,8 @@ public class GtkD
 	 * Warning
 	 * gtk_input_remove has been deprecated since version 2.4 and should not be used in newly-written code. Use g_source_remove() instead.
 	 * Removes the function with the given id.
-	 * input_handler_id:
-	 * Identifies the function to remove.
+	 * Params:
+	 * inputHandlerId = Identifies the function to remove.
 	 */
 	public static void inputRemove(uint inputHandlerId)
 	{
@@ -690,12 +619,10 @@ public class GtkD
 	/**
 	 * Installs a key snooper function, which will get called on all key events
 	 * before delivering them normally.
-	 * snooper:
-	 * a GtkKeySnoopFunc.
-	 * func_data:
-	 * data to pass to snooper.
-	 * Returns:
-	 * a unique id for this key snooper for use with gtk_key_snooper_remove().
+	 * Params:
+	 * snooper = a GtkKeySnoopFunc.
+	 * funcData = data to pass to snooper.
+	 * Returns:a unique id for this key snooper for use with gtk_key_snooper_remove().
 	 */
 	public static uint keySnooperInstall(GtkKeySnoopFunc snooper, void* funcData)
 	{
@@ -706,8 +633,8 @@ public class GtkD
 	
 	/**
 	 * Removes the key snooper function with the given id.
-	 * snooper_handler_id:
-	 * Identifies the key snooper to remove.
+	 * Params:
+	 * snooperHandlerId = Identifies the key snooper to remove.
 	 */
 	public static void keySnooperRemove(uint snooperHandlerId)
 	{
@@ -721,8 +648,7 @@ public class GtkD
 	 * event will be the GdkEventButton that triggered the "clicked"
 	 * signal. The returned event must be freed with gdk_event_free().
 	 * If there is no current event, the function returns NULL.
-	 * Returns:
-	 *  a copy of the current event, or NULL if no current event.
+	 * Returns: a copy of the current event, or NULL if no current event.
 	 */
 	public static Event getCurrentEvent()
 	{
@@ -733,8 +659,7 @@ public class GtkD
 	/**
 	 * If there is a current event and it has a timestamp, return that
 	 * timestamp, otherwise return GDK_CURRENT_TIME.
-	 * Returns:
-	 *  the timestamp from the current event, or GDK_CURRENT_TIME.
+	 * Returns: the timestamp from the current event, or GDK_CURRENT_TIME.
 	 */
 	public static uint getCurrentEventTime()
 	{
@@ -746,10 +671,9 @@ public class GtkD
 	 * If there is a current event and it has a state field, place
 	 * that state field in state and return TRUE, otherwise return
 	 * FALSE.
-	 * state:
-	 *  a location to store the state of the current event
-	 * Returns:
-	 *  TRUE if there was a current event and it had a state field
+	 * Params:
+	 * state =  a location to store the state of the current event
+	 * Returns: TRUE if there was a current event and it had a state field
 	 */
 	public static int getCurrentEventState(GdkModifierType* state)
 	{
@@ -761,10 +685,9 @@ public class GtkD
 	 * If event is NULL or the event was not associated with any widget,
 	 * returns NULL, otherwise returns the widget that received the event
 	 * originally.
-	 * event:
-	 *  a GdkEvent
-	 * Returns:
-	 *  the widget that originally received event, or NULL
+	 * Params:
+	 * event =  a GdkEvent
+	 * Returns: the widget that originally received event, or NULL
 	 */
 	public static Widget getEventWidget(Event event)
 	{
@@ -788,13 +711,9 @@ public class GtkD
 	 * the mailing list for better ways to achieve your goals. For
 	 * example, use gdk_window_invalidate_rect() or
 	 * gtk_widget_queue_draw() instead of making up expose events.
-	 * widget:
-	 *  a GtkWidget
-	 * event:
-	 *  an event
-	 * See Also
-	 * See the GLib manual, especially GMainLoop and signal-related
-	 * functions such as g_signal_connect().
+	 * Params:
+	 * widget =  a GtkWidget
+	 * event =  an event
 	 */
 	public static void propagateEvent(Widget widget, Event event)
 	{

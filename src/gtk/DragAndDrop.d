@@ -161,20 +161,16 @@ public class DragAndDrop
 	
 	/**
 	 * Sets a widget as a potential drop destination.
-	 * widget:
-	 * a GtkWidget
-	 * flags:
-	 * the flags that specify what actions GTK+ should take
+	 * Params:
+	 * widget = a GtkWidget
+	 * flags = the flags that specify what actions GTK+ should take
 	 *  on behalf of a widget for drops onto that widget. The targets
 	 *  and actions fields only are used if GTK_DEST_DEFAULT_MOTION
 	 *  or GTK_DEST_DEFAULT_DROP are given.
-	 * targets:
-	 * a pointer to an array of GtkTargetEntrys indicating
+	 * targets = a pointer to an array of GtkTargetEntrys indicating
 	 *  the drop types that this widget will accept.
-	 * n_targets:
-	 * the number of entries in targets.
-	 * actions:
-	 * a bitmask of possible actions for a drop onto this
+	 * nTargets = the number of entries in targets.
+	 * actions = a bitmask of possible actions for a drop onto this
 	 *  widget.
 	 */
 	public static void destSet(Widget widget, GtkDestDefaults flags, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
@@ -185,15 +181,12 @@ public class DragAndDrop
 	
 	/**
 	 * Sets this widget as a proxy for drops to another window.
-	 * widget:
-	 * a GtkWidget
-	 * proxy_window:
-	 * the window to which to forward drag events
-	 * protocol:
-	 * the drag protocol which the proxy_window accepts
+	 * Params:
+	 * widget = a GtkWidget
+	 * proxyWindow = the window to which to forward drag events
+	 * protocol = the drag protocol which the proxy_window accepts
 	 *  (You can use gdk_drag_get_protocol() to determine this)
-	 * use_coordinates:
-	 * If TRUE, send the same coordinates to the
+	 * useCoordinates = If TRUE, send the same coordinates to the
 	 *  destination, because it is an embedded
 	 *  subwindow.
 	 */
@@ -207,8 +200,8 @@ public class DragAndDrop
 	 * Clears information about a drop destination set with
 	 * gtk_drag_dest_set(). The widget will no longer receive
 	 * notification of drags.
-	 * widget:
-	 * a GtkWidget
+	 * Params:
+	 * widget = a GtkWidget
 	 */
 	public static void destUnset(Widget widget)
 	{
@@ -224,15 +217,12 @@ public class DragAndDrop
 	 * have different valid targets for different parts of the widget; in
 	 * that case, they will have to implement a drag_motion handler that
 	 * passes the correct target list to this function.
-	 * widget:
-	 *  drag destination widget
-	 * context:
-	 *  drag context
-	 * target_list:
-	 *  list of droppable targets, or NULL to use
+	 * Params:
+	 * widget =  drag destination widget
+	 * context =  drag context
+	 * targetList =  list of droppable targets, or NULL to use
 	 *  gtk_drag_dest_get_target_list (widget).
-	 * Returns:
-	 *  first target that the source offers and the dest can accept, or GDK_NONE
+	 * Returns: first target that the source offers and the dest can accept, or GDK_NONE
 	 */
 	public static GdkAtom destFindTarget(Widget widget, DragContext context, GtkTargetList* targetList)
 	{
@@ -243,10 +233,9 @@ public class DragAndDrop
 	/**
 	 * Returns the list of targets this widget can accept from
 	 * drag-and-drop.
-	 * widget:
-	 *  a GtkWidget
-	 * Returns:
-	 *  the GtkTargetList, or NULL if none
+	 * Params:
+	 * widget =  a GtkWidget
+	 * Returns: the GtkTargetList, or NULL if none
 	 */
 	public static GtkTargetList* destGetTargetList(Widget widget)
 	{
@@ -258,10 +247,9 @@ public class DragAndDrop
 	 * Sets the target types that this widget can accept from drag-and-drop.
 	 * The widget must first be made into a drag destination with
 	 * gtk_drag_dest_set().
-	 * widget:
-	 *  a GtkWidget that's a drag destination
-	 * target_list:
-	 *  list of droppable targets, or NULL for none
+	 * Params:
+	 * widget =  a GtkWidget that's a drag destination
+	 * targetList =  list of droppable targets, or NULL for none
 	 */
 	public static void destSetTargetList(Widget widget, GtkTargetList* targetList)
 	{
@@ -275,9 +263,9 @@ public class DragAndDrop
 	 * are added with info = 0. If you need another value,
 	 * use gtk_target_list_add_text_targets() and
 	 * gtk_drag_dest_set_target_list().
-	 * widget:
-	 *  a GtkWidget that's a drag destination
 	 * Since 2.6
+	 * Params:
+	 * widget =  a GtkWidget that's a drag destination
 	 */
 	public static void destAddTextTargets(Widget widget)
 	{
@@ -291,9 +279,9 @@ public class DragAndDrop
 	 * are added with info = 0. If you need another value,
 	 * use gtk_target_list_add_image_targets() and
 	 * gtk_drag_dest_set_target_list().
-	 * widget:
-	 *  a GtkWidget that's a drag destination
 	 * Since 2.6
+	 * Params:
+	 * widget =  a GtkWidget that's a drag destination
 	 */
 	public static void destAddImageTargets(Widget widget)
 	{
@@ -307,9 +295,9 @@ public class DragAndDrop
 	 * are added with info = 0. If you need another value,
 	 * use gtk_target_list_add_uri_targets() and
 	 * gtk_drag_dest_set_target_list().
-	 * widget:
-	 *  a GtkWidget that's a drag destination
 	 * Since 2.6
+	 * Params:
+	 * widget =  a GtkWidget that's a drag destination
 	 */
 	public static void destAddUriTargets(Widget widget)
 	{
@@ -323,11 +311,10 @@ public class DragAndDrop
 	 * flag.
 	 * This may be used when a widget wants to do generic
 	 * actions regardless of the targets that the source offers.
-	 * widget:
-	 *  a GtkWidget that's a drag destination
-	 * track_motion:
-	 *  whether to accept all targets
 	 * Since 2.10
+	 * Params:
+	 * widget =  a GtkWidget that's a drag destination
+	 * trackMotion =  whether to accept all targets
 	 */
 	public static void destSetTrackMotion(Widget widget, int trackMotion)
 	{
@@ -338,11 +325,10 @@ public class DragAndDrop
 	/**
 	 * Returns whether the widget has been configured to always
 	 * emit ::drag-motion signals.
-	 * widget:
-	 *  a GtkWidget that's a drag destination
-	 * Returns:
-	 *  TRUE if the widget always emits ::drag-motion events
 	 * Since 2.10
+	 * Params:
+	 * widget =  a GtkWidget that's a drag destination
+	 * Returns: TRUE if the widget always emits ::drag-motion events
 	 */
 	public static int destGetTrackMotion(Widget widget)
 	{
@@ -353,15 +339,11 @@ public class DragAndDrop
 	/**
 	 * Informs the drag source that the drop is finished, and
 	 * that the data of the drag will no longer be required.
-	 * context:
-	 * the drag context.
-	 * success:
-	 * a flag indicating whether the drop was successful
-	 * del:
-	 * a flag indicating whether the source should delete the
+	 * Params:
+	 * success = a flag indicating whether the drop was successful
+	 * del = a flag indicating whether the source should delete the
 	 *  original data. (This should be TRUE for a move)
-	 * time_:
-	 * the timestamp from the "drag_data_drop" signal.
+	 * time = the timestamp from the "drag_data_drop" signal.
 	 */
 	public void finish(int success, int del, uint time)
 	{
@@ -378,15 +360,12 @@ public class DragAndDrop
 	 * is called implicitely because the GTK_DEST_DEFAULT_DROP was set,
 	 * then the widget will not receive notification of failed
 	 * drops.
-	 * widget:
-	 * the widget that will receive the "drag_data_received"
+	 * Params:
+	 * widget = the widget that will receive the "drag_data_received"
 	 *  signal.
-	 * context:
-	 * the drag context
-	 * target:
-	 * the target (form of the data) to retrieve.
-	 * time_:
-	 * a timestamp for retrieving the data. This will
+	 * context = the drag context
+	 * target = the target (form of the data) to retrieve.
+	 * time = a timestamp for retrieving the data. This will
 	 *  generally be the time received in a "drag_data_motion"
 	 *  or "drag_data_drop" signal.
 	 */
@@ -398,11 +377,7 @@ public class DragAndDrop
 	
 	/**
 	 * Determines the source widget for a drag.
-	 * context:
-	 * a (destination side) drag context.
-	 * Returns:
-	 * if the drag is occurring within a single application,
-	 *  a pointer to the source widget. Otherwise, NULL.
+	 * Returns:if the drag is occurring within a single application, a pointer to the source widget. Otherwise, NULL.
 	 */
 	public Widget getSourceWidget()
 	{
@@ -415,8 +390,8 @@ public class DragAndDrop
 	 * handlers to "expose_event" and "draw", so the highlight
 	 * will continue to be displayed until gtk_drag_unhighlight()
 	 * is called.
-	 * widget:
-	 * a widget to highlight
+	 * Params:
+	 * widget = a widget to highlight
 	 */
 	public static void highlight(Widget widget)
 	{
@@ -427,8 +402,8 @@ public class DragAndDrop
 	/**
 	 * Removes a highlight set by gtk_drag_highlight() from
 	 * a widget.
-	 * widget:
-	 * a widget to remove the highlight from.
+	 * Params:
+	 * widget = a widget to remove the highlight from.
 	 */
 	public static void unhighlight(Widget widget)
 	{
@@ -441,19 +416,14 @@ public class DragAndDrop
 	 * only needs to be used when the application is
 	 * starting drags itself, and is not needed when
 	 * gtk_drag_source_set() is used.
-	 * widget:
-	 *  the source widget.
-	 * targets:
-	 *  The targets (data formats) in which the
+	 * Params:
+	 * widget =  the source widget.
+	 * targets =  The targets (data formats) in which the
 	 *  source can provide the data.
-	 * actions:
-	 *  A bitmask of the allowed drag actions for this drag.
-	 * button:
-	 *  The button the user clicked to start the drag.
-	 * event:
-	 *  The event that triggered the start of the drag.
-	 * Returns:
-	 *  the context for this drag.
+	 * actions =  A bitmask of the allowed drag actions for this drag.
+	 * button =  The button the user clicked to start the drag.
+	 * event =  The event that triggered the start of the drag.
+	 * Returns: the context for this drag.
 	 */
 	public static DragContext begin(Widget widget, GtkTargetList* targets, GdkDragAction actions, int button, Event event)
 	{
@@ -466,15 +436,10 @@ public class DragAndDrop
 	 * will not destroy the icon, so if you don't want
 	 * it to persist, you should connect to the "drag_end"
 	 * signal and destroy it yourself.
-	 * context:
-	 *  the context for a drag. (This must be called
-	 *  with a context for the source side of a drag)
-	 * widget:
-	 *  a toplevel window to use as an icon.
-	 * hot_x:
-	 *  the X offset within widget of the hotspot.
-	 * hot_y:
-	 *  the Y offset within widget of the hotspot.
+	 * Params:
+	 * widget =  a toplevel window to use as an icon.
+	 * hotX =  the X offset within widget of the hotspot.
+	 * hotY =  the Y offset within widget of the hotspot.
 	 */
 	public void setIconWidget(Widget widget, int hotX, int hotY)
 	{
@@ -487,19 +452,12 @@ public class DragAndDrop
 	 * references for the arguments, and will release them when
 	 * they are no longer needed. In general, gtk_drag_set_icon_pixbuf()
 	 * will be more convenient to use.
-	 * context:
-	 *  the context for a drag. (This must be called
-	 *  with a context for the source side of a drag)
-	 * colormap:
-	 *  the colormap of the icon
-	 * pixmap:
-	 *  the image data for the icon
-	 * mask:
-	 *  the transparency mask for the icon
-	 * hot_x:
-	 *  the X offset within pixmap of the hotspot.
-	 * hot_y:
-	 *  the Y offset within pixmap of the hotspot.
+	 * Params:
+	 * colormap =  the colormap of the icon
+	 * pixmap =  the image data for the icon
+	 * mask =  the transparency mask for the icon
+	 * hotX =  the X offset within pixmap of the hotspot.
+	 * hotY =  the Y offset within pixmap of the hotspot.
 	 */
 	public void setIconPixmap(Colormap colormap, Pixmap pixmap, Bitmap mask, int hotX, int hotY)
 	{
@@ -509,15 +467,10 @@ public class DragAndDrop
 	
 	/**
 	 * Sets pixbuf as the icon for a given drag.
-	 * context:
-	 *  the context for a drag. (This must be called
-	 *  with a context for the source side of a drag)
-	 * pixbuf:
-	 *  the GdkPixbuf to use as the drag icon.
-	 * hot_x:
-	 *  the X offset within widget of the hotspot.
-	 * hot_y:
-	 *  the Y offset within widget of the hotspot.
+	 * Params:
+	 * pixbuf =  the GdkPixbuf to use as the drag icon.
+	 * hotX =  the X offset within widget of the hotspot.
+	 * hotY =  the Y offset within widget of the hotspot.
 	 */
 	public void setIconPixbuf(Pixbuf pixbuf, int hotX, int hotY)
 	{
@@ -527,15 +480,10 @@ public class DragAndDrop
 	
 	/**
 	 * Sets the icon for a given drag from a stock ID.
-	 * context:
-	 *  the context for a drag. (This must be called
-	 *  with a context for the source side of a drag)
-	 * stock_id:
-	 *  the ID of the stock icon to use for the drag.
-	 * hot_x:
-	 *  the X offset within the icon of the hotspot.
-	 * hot_y:
-	 *  the Y offset within the icon of the hotspot.
+	 * Params:
+	 * stockId =  the ID of the stock icon to use for the drag.
+	 * hotX =  the X offset within the icon of the hotspot.
+	 * hotY =  the Y offset within the icon of the hotspot.
 	 */
 	public void setIconStock(char[] stockId, int hotX, int hotY)
 	{
@@ -549,16 +497,11 @@ public class DragAndDrop
 	 * size of the icon depends on the icon theme (the icon is
 	 * loaded at the symbolic size GTK_ICON_SIZE_DND), thus
 	 * hot_x and hot_y have to be used with care.
-	 * context:
-	 *  the context for a drag. (This must be called
-	 *  with a context for the source side of a drag)
-	 * icon_name:
-	 *  name of icon to use
-	 * hot_x:
-	 *  the X offset of the hotspot within the icon
-	 * hot_y:
-	 *  the Y offset of the hotspot within the icon
 	 * Since 2.8
+	 * Params:
+	 * iconName =  name of icon to use
+	 * hotX =  the X offset of the hotspot within the icon
+	 * hotY =  the Y offset of the hotspot within the icon
 	 */
 	public void setIconName(char[] iconName, int hotX, int hotY)
 	{
@@ -569,9 +512,6 @@ public class DragAndDrop
 	/**
 	 * Sets the icon for a particular drag to the default
 	 * icon.
-	 * context:
-	 *  the context for a drag. (This must be called
-	 *  with a context for the source side of a drag)
 	 */
 	public void setIconDefault()
 	{
@@ -586,16 +526,12 @@ public class DragAndDrop
 	 * arguments, and will release them when they are no longer needed.
 	 * This function is obsolete. The default icon should now be changed
 	 * via the stock system by changing the stock pixbuf for GTK_STOCK_DND.
-	 * colormap:
-	 *  the colormap of the icon
-	 * pixmap:
-	 *  the image data for the icon
-	 * mask:
-	 *  the transparency mask for an image.
-	 * hot_x:
-	 *  The X offset within widget of the hotspot.
-	 * hot_y:
-	 *  The Y offset within widget of the hotspot.
+	 * Params:
+	 * colormap =  the colormap of the icon
+	 * pixmap =  the image data for the icon
+	 * mask =  the transparency mask for an image.
+	 * hotX =  The X offset within widget of the hotspot.
+	 * hotY =  The Y offset within widget of the hotspot.
 	 */
 	public static void setDefaultIcon(Colormap colormap, Pixmap pixmap, Bitmap mask, int hotX, int hotY)
 	{
@@ -607,18 +543,13 @@ public class DragAndDrop
 	 * Checks to see if a mouse drag starting at (start_x, start_y) and ending
 	 * at (current_x, current_y) has passed the GTK+ drag threshold, and thus
 	 * should trigger the beginning of a drag-and-drop operation.
-	 * widget:
-	 *  a GtkWidget
-	 * start_x:
-	 *  X coordinate of start of drag
-	 * start_y:
-	 *  Y coordinate of start of drag
-	 * current_x:
-	 *  current X coordinate
-	 * current_y:
-	 *  current Y coordinate
-	 * Returns:
-	 *  TRUE if the drag threshold has been passed.
+	 * Params:
+	 * widget =  a GtkWidget
+	 * startX =  X coordinate of start of drag
+	 * startY =  Y coordinate of start of drag
+	 * currentX =  current X coordinate
+	 * currentY =  current Y coordinate
+	 * Returns: TRUE if the drag threshold has been passed.
 	 */
 	public static int checkThreshold(Widget widget, int startX, int startY, int currentX, int currentY)
 	{
@@ -630,16 +561,12 @@ public class DragAndDrop
 	 * Sets up a widget so that GTK+ will start a drag
 	 * operation when the user clicks and drags on the
 	 * widget. The widget must have a window.
-	 * widget:
-	 * a GtkWidget
-	 * start_button_mask:
-	 * the bitmask of buttons that can start the drag
-	 * targets:
-	 * the table of targets that the drag will support
-	 * n_targets:
-	 * the number of items in targets
-	 * actions:
-	 * the bitmask of possible actions for a drag from this
+	 * Params:
+	 * widget = a GtkWidget
+	 * startButtonMask = the bitmask of buttons that can start the drag
+	 * targets = the table of targets that the drag will support
+	 * nTargets = the number of items in targets
+	 * actions = the bitmask of possible actions for a drag from this
 	 *  widget.
 	 */
 	public static void sourceSet(Widget widget, GdkModifierType startButtonMask, GtkTargetEntry* targets, int nTargets, GdkDragAction actions)
@@ -653,14 +580,11 @@ public class DragAndDrop
 	 * from a pixmap/mask. GTK+ retains references for the arguments, and
 	 * will release them when they are no longer needed.
 	 * Use gtk_drag_source_set_icon_pixbuf() instead.
-	 * widget:
-	 *  a GtkWidget
-	 * colormap:
-	 *  the colormap of the icon
-	 * pixmap:
-	 *  the image data for the icon
-	 * mask:
-	 *  the transparency mask for an image.
+	 * Params:
+	 * widget =  a GtkWidget
+	 * colormap =  the colormap of the icon
+	 * pixmap =  the image data for the icon
+	 * mask =  the transparency mask for an image.
 	 */
 	public static void sourceSetIcon(Widget widget, Colormap colormap, Pixmap pixmap, Bitmap mask)
 	{
@@ -672,10 +596,9 @@ public class DragAndDrop
 	 * Sets the icon that will be used for drags from a particular widget
 	 * from a GdkPixbuf. GTK+ retains a reference for pixbuf and will
 	 * release it when it is no longer needed.
-	 * widget:
-	 *  a GtkWidget
-	 * pixbuf:
-	 *  the GdkPixbuf for the drag icon
+	 * Params:
+	 * widget =  a GtkWidget
+	 * pixbuf =  the GdkPixbuf for the drag icon
 	 */
 	public static void sourceSetIconPixbuf(Widget widget, Pixbuf pixbuf)
 	{
@@ -686,10 +609,9 @@ public class DragAndDrop
 	/**
 	 * Sets the icon that will be used for drags from a particular source
 	 * to a stock icon.
-	 * widget:
-	 *  a GtkWidget
-	 * stock_id:
-	 *  the ID of the stock icon to use
+	 * Params:
+	 * widget =  a GtkWidget
+	 * stockId =  the ID of the stock icon to use
 	 */
 	public static void sourceSetIconStock(Widget widget, char[] stockId)
 	{
@@ -700,11 +622,10 @@ public class DragAndDrop
 	/**
 	 * Sets the icon that will be used for drags from a particular source
 	 * to a themed icon. See the docs for GtkIconTheme for more details.
-	 * widget:
-	 *  a GtkWidget
-	 * icon_name:
-	 *  name of icon to use
 	 * Since 2.8
+	 * Params:
+	 * widget =  a GtkWidget
+	 * iconName =  name of icon to use
 	 */
 	public static void sourceSetIconName(Widget widget, char[] iconName)
 	{
@@ -714,8 +635,8 @@ public class DragAndDrop
 	
 	/**
 	 * Undoes the effects of gtk_drag_source_set().
-	 * widget:
-	 * a GtkWidget
+	 * Params:
+	 * widget = a GtkWidget
 	 */
 	public static void sourceUnset(Widget widget)
 	{
@@ -727,11 +648,10 @@ public class DragAndDrop
 	 * Changes the target types that this widget offers for drag-and-drop.
 	 * The widget must first be made into a drag source with
 	 * gtk_drag_source_set().
-	 * widget:
-	 *  a GtkWidget that's a drag source
-	 * target_list:
-	 *  list of draggable targets, or NULL for none
 	 * Since 2.4
+	 * Params:
+	 * widget =  a GtkWidget that's a drag source
+	 * targetList =  list of draggable targets, or NULL for none
 	 */
 	public static void sourceSetTargetList(Widget widget, GtkTargetList* targetList)
 	{
@@ -742,11 +662,10 @@ public class DragAndDrop
 	/**
 	 * Gets the list of targets this widget can provide for
 	 * drag-and-drop.
-	 * widget:
-	 *  a GtkWidget
-	 * Returns:
-	 *  the GtkTargetList, or NULL if none
 	 * Since 2.4
+	 * Params:
+	 * widget =  a GtkWidget
+	 * Returns: the GtkTargetList, or NULL if none
 	 */
 	public static GtkTargetList* sourceGetTargetList(Widget widget)
 	{
@@ -760,9 +679,9 @@ public class DragAndDrop
 	 * are added with info = 0. If you need another value,
 	 * use gtk_target_list_add_text_targets() and
 	 * gtk_drag_source_set_target_list().
-	 * widget:
-	 *  a GtkWidget that's is a drag source
 	 * Since 2.6
+	 * Params:
+	 * widget =  a GtkWidget that's is a drag source
 	 */
 	public static void sourceAddTextTargets(Widget widget)
 	{
@@ -776,9 +695,9 @@ public class DragAndDrop
 	 * are added with info = 0. If you need another value,
 	 * use gtk_target_list_add_image_targets() and
 	 * gtk_drag_source_set_target_list().
-	 * widget:
-	 *  a GtkWidget that's is a drag source
 	 * Since 2.6
+	 * Params:
+	 * widget =  a GtkWidget that's is a drag source
 	 */
 	public static void sourceAddImageTargets(Widget widget)
 	{
@@ -792,9 +711,9 @@ public class DragAndDrop
 	 * are added with info = 0. If you need another value,
 	 * use gtk_target_list_add_uri_targets() and
 	 * gtk_drag_source_set_target_list().
-	 * widget:
-	 *  a GtkWidget that's is a drag source
 	 * Since 2.6
+	 * Params:
+	 * widget =  a GtkWidget that's is a drag source
 	 */
 	public static void sourceAddUriTargets(Widget widget)
 	{

@@ -70,6 +70,7 @@ private import gdk.Color;
 
 
 
+private import gtk.VBox;
 
 /**
  * Description
@@ -79,7 +80,6 @@ private import gdk.Color;
  * value, red, green, blue, and opacity. It is found on the standard
  * color selection dialog box GtkColorSelectionDialog.
  */
-private import gtk.VBox;
 public class ColorSelection : VBox
 {
 	
@@ -168,8 +168,6 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Creates a new GtkColorSelection.
-	 * Returns:
-	 *  a new GtkColorSelection
 	 */
 	public this ()
 	{
@@ -181,18 +179,8 @@ public class ColorSelection : VBox
 	 * Warning
 	 * gtk_color_selection_set_update_policy is deprecated and should not be used in newly-written code.
 	 * Sets the policy controlling when the color_changed signals are emitted.
-	 * The available policies are:
-	 * GTK_UPDATE_CONTINUOUS - signals are sent continuously as the color
-	 * selection changes.
-	 * GTK_UPDATE_DISCONTINUOUS - signals are sent only when the mouse
-	 * button is released.
-	 * GTK_UPDATE_DELAYED - signals are sent when the mouse button is
-	 * released or when the mouse has been motionless for a period of
-	 * time.
-	 * colorsel:
-	 * a GtkColorSelection.
-	 * policy:
-	 * a GtkUpdateType value indicating the desired policy.
+	 * Params:
+	 * policy = a GtkUpdateType value indicating the desired policy.
 	 */
 	public void setUpdatePolicy(GtkUpdateType policy)
 	{
@@ -202,10 +190,8 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Sets the colorsel to use or not use opacity.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * has_opacity:
-	 *  TRUE if colorsel can set the opacity, FALSE otherwise.
+	 * Params:
+	 * hasOpacity =  TRUE if colorsel can set the opacity, FALSE otherwise.
 	 */
 	public void setHasOpacityControl(int hasOpacity)
 	{
@@ -215,10 +201,7 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Determines whether the colorsel has an opacity control.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * Returns:
-	 *  TRUE if the colorsel has an opacity control. FALSE if it does't.
+	 * Returns: TRUE if the colorsel has an opacity control. FALSE if it does't.
 	 */
 	public int getHasOpacityControl()
 	{
@@ -228,10 +211,8 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Shows and hides the palette based upon the value of has_palette.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * has_palette:
-	 *  TRUE if palette is to be visible, FALSE otherwise.
+	 * Params:
+	 * hasPalette =  TRUE if palette is to be visible, FALSE otherwise.
 	 */
 	public void setHasPalette(int hasPalette)
 	{
@@ -241,10 +222,7 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Determines whether the color selector has a color palette.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * Returns:
-	 *  TRUE if the selector has a palette. FALSE if it hasn't.
+	 * Returns: TRUE if the selector has a palette. FALSE if it hasn't.
 	 */
 	public int getHasPalette()
 	{
@@ -254,10 +232,7 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Returns the current alpha value.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * Returns:
-	 *  an integer between 0 and 65535.
+	 * Returns: an integer between 0 and 65535.
 	 */
 	public ushort getCurrentAlpha()
 	{
@@ -268,10 +243,8 @@ public class ColorSelection : VBox
 	/**
 	 * Sets the current opacity to be alpha. The first time this is called, it will
 	 * also set the original opacity to be alpha too.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * alpha:
-	 *  an integer between 0 and 65535.
+	 * Params:
+	 * alpha =  an integer between 0 and 65535.
 	 */
 	public void setCurrentAlpha(ushort alpha)
 	{
@@ -281,10 +254,8 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Sets color to be the current color in the GtkColorSelection widget.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * color:
-	 *  a GdkColor to fill in with the current color.
+	 * Params:
+	 * color =  a GdkColor to fill in with the current color.
 	 */
 	public void getCurrentColor(Color color)
 	{
@@ -295,10 +266,8 @@ public class ColorSelection : VBox
 	/**
 	 * Sets the current color to be color. The first time this is called, it will
 	 * also set the original color to be color too.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * color:
-	 *  A GdkColor to set the current color with.
+	 * Params:
+	 * color =  A GdkColor to set the current color with.
 	 */
 	public void setCurrentColor(Color color)
 	{
@@ -308,10 +277,7 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Returns the previous alpha value.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * Returns:
-	 *  an integer between 0 and 65535.
+	 * Returns: an integer between 0 and 65535.
 	 */
 	public ushort getPreviousAlpha()
 	{
@@ -322,10 +288,8 @@ public class ColorSelection : VBox
 	/**
 	 * Sets the 'previous' alpha to be alpha. This function should be called with
 	 * some hesitations, as it might seem confusing to have that alpha change.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * alpha:
-	 *  an integer between 0 and 65535.
+	 * Params:
+	 * alpha =  an integer between 0 and 65535.
 	 */
 	public void setPreviousAlpha(ushort alpha)
 	{
@@ -335,10 +299,8 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Fills color in with the original color value.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * color:
-	 *  a GdkColor to fill in with the original color value.
+	 * Params:
+	 * color =  a GdkColor to fill in with the original color value.
 	 */
 	public void getPreviousColor(Color color)
 	{
@@ -351,10 +313,8 @@ public class ColorSelection : VBox
 	 * some hesitations, as it might seem confusing to have that color change.
 	 * Calling gtk_color_selection_set_current_color() will also set this color the first
 	 * time it is called.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * color:
-	 *  a GdkColor to set the previous color with.
+	 * Params:
+	 * color =  a GdkColor to set the previous color with.
 	 */
 	public void setPreviousColor(Color color)
 	{
@@ -364,11 +324,7 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Gets the current state of the colorsel.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * Returns:
-	 *  TRUE if the user is currently dragging a color around, and FALSE
-	 * if the selection has stopped.
+	 * Returns: TRUE if the user is currently dragging a color around, and FALSEif the selection has stopped.
 	 */
 	public int isAdjusting()
 	{
@@ -379,14 +335,11 @@ public class ColorSelection : VBox
 	/**
 	 * Parses a color palette string; the string is a colon-separated
 	 * list of color names readable by gdk_color_parse().
-	 * str:
-	 *  a string encoding a color palette.
-	 * colors:
-	 *  return location for allocated array of GdkColor.
-	 * n_colors:
-	 *  return location for length of array.
-	 * Returns:
-	 *  TRUE if a palette was successfully parsed.
+	 * Params:
+	 * str =  a string encoding a color palette.
+	 * colors =  return location for allocated array of GdkColor.
+	 * nColors =  return location for length of array.
+	 * Returns: TRUE if a palette was successfully parsed.
 	 */
 	public static int paletteFromString(char[] str, GdkColor** colors, int* nColors)
 	{
@@ -396,12 +349,10 @@ public class ColorSelection : VBox
 	
 	/**
 	 * Encodes a palette as a string, useful for persistent storage.
-	 * colors:
-	 *  an array of colors.
-	 * n_colors:
-	 *  length of the array.
-	 * Returns:
-	 *  allocated string encoding the palette.
+	 * Params:
+	 * colors =  an array of colors.
+	 * nColors =  length of the array.
+	 * Returns: allocated string encoding the palette.
 	 */
 	public static char[] paletteToString(Color colors, int nColors)
 	{
@@ -418,10 +369,9 @@ public class ColorSelection : VBox
 	 * modify the palette in a color selection. This function should save
 	 * the new palette contents, and update the GtkSettings property
 	 * "gtk-color-palette" so all GtkColorSelection widgets will be modified.
-	 * func:
-	 *  a function to call when the custom palette needs saving.
-	 * Returns:
-	 *  the previous change palette hook (that was replaced).
+	 * Params:
+	 * func =  a function to call when the custom palette needs saving.
+	 * Returns: the previous change palette hook (that was replaced).
 	 */
 	public static GtkColorSelectionChangePaletteFunc setChangePaletteHook(GtkColorSelectionChangePaletteFunc func)
 	{
@@ -435,11 +385,10 @@ public class ColorSelection : VBox
 	 * modify the palette in a color selection. This function should save
 	 * the new palette contents, and update the GtkSettings property
 	 * "gtk-color-palette" so all GtkColorSelection widgets will be modified.
-	 * func:
-	 *  a function to call when the custom palette needs saving.
-	 * Returns:
-	 *  the previous change palette hook (that was replaced).
 	 * Since 2.2
+	 * Params:
+	 * func =  a function to call when the custom palette needs saving.
+	 * Returns: the previous change palette hook (that was replaced).
 	 */
 	public static GtkColorSelectionChangePaletteWithScreenFunc setChangePaletteWithScreenHook(GtkColorSelectionChangePaletteWithScreenFunc func)
 	{
@@ -453,10 +402,8 @@ public class ColorSelection : VBox
 	 * gtk_color_selection_set_color is deprecated and should not be used in newly-written code. Use gtk_color_selection_set_current_color() instead.
 	 * Sets the current color to be color. The first time this is called, it will
 	 * also set the original color to be color too.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * color:
-	 *  an array of 4 doubles specifying the red, green, blue and opacity
+	 * Params:
+	 * color =  an array of 4 doubles specifying the red, green, blue and opacity
 	 *  to set the current color to.
 	 */
 	public void setColor(double* color)
@@ -470,16 +417,8 @@ public class ColorSelection : VBox
 	 * gtk_color_selection_get_color is deprecated and should not be used in newly-written code.
 	 * Sets color to be the current color in the GtkColorSelection widget.
 	 * This function is deprecated, use gtk_color_selection_get_current_color() instead.
-	 * colorsel:
-	 *  a GtkColorSelection.
-	 * color:
-	 *  an array of 4 gdouble to fill in with the current color.
-	 * Property Details
-	 * The "current-alpha" property
-	 *  "current-alpha" guint : Read / Write
-	 * The current opacity value (0 fully transparent, 65535 fully opaque).
-	 * Allowed values: <= 65535
-	 * Default value: 65535
+	 * Params:
+	 * color =  an array of 4 gdouble to fill in with the current color.
 	 */
 	public void getColor(double* color)
 	{

@@ -160,8 +160,8 @@ public class Type
 	
 	/**
 	 * Similar to g_type_init(), but additionally sets debug flags.
-	 * debug_flags:
-	 * Bitwise combination of GTypeDebugFlags values for debugging purposes.
+	 * Params:
+	 * debugFlags = Bitwise combination of GTypeDebugFlags values for debugging purposes.
 	 */
 	public static void initWithDebugFlags(GTypeDebugFlags debugFlags)
 	{
@@ -170,12 +170,14 @@ public class Type
 	}
 	
 	/**
-	 * Returns the unique name that is assigned to a type ID (this is the preferred method
-	 * to find out whether a specific type has been registered for the passed in ID yet).
-	 * type:
-	 * 		Type to return name for.
-	 * Returns:
-	 * 	Static type name or NULL.
+	 *  Returns the unique name that is assigned to a type ID.
+	 *  Note that this function (like all other GType API) cannot cope with invalid
+	 *  type IDs. G_TYPE_INVALID may be passed to this function, as may be any other
+	 *  validly registered type ID, but randomized type IDs should not be passed in and
+	 *  will most likely lead to a crash.
+	 * Params:
+	 * type = 		Type to return name for.
+	 * Returns:	Static type name or NULL.
 	 */
 	public static char[] name(GType type)
 	{
@@ -185,10 +187,9 @@ public class Type
 	
 	/**
 	 * Return the corresponding quark of the type IDs name.
-	 * type:
-	 *  Type to return quark of type name for.
-	 * Returns:
-	 * The type names quark or 0.
+	 * Params:
+	 * type =  Type to return quark of type name for.
+	 * Returns:The type names quark or 0.
 	 */
 	public static GQuark qname(GType type)
 	{
@@ -199,10 +200,9 @@ public class Type
 	/**
 	 * Lookup the type ID from a given type name, returning 0 if no type has been registered under this name
 	 * (this is the preferred method to find out by name whether a specific type has been registered yet).
-	 * name:
-	 *  Type name to lookup.
-	 * Returns:
-	 * Corresponding type ID or 0.
+	 * Params:
+	 * name =  Type name to lookup.
+	 * Returns:Corresponding type ID or 0.
 	 */
 	public static GType fromName(char[] name)
 	{
@@ -213,10 +213,9 @@ public class Type
 	/**
 	 * Return the direct parent type of the passed in type.
 	 * If the passed in type has no parent, i.e. is a fundamental type, 0 is returned.
-	 * type:
-	 *  The derived type.
-	 * Returns:
-	 * The parent type.
+	 * Params:
+	 * type =  The derived type.
+	 * Returns:The parent type.
 	 */
 	public static GType parent(GType type)
 	{
@@ -227,10 +226,9 @@ public class Type
 	/**
 	 * Returns the length of the ancestry of the passed in type. This includes the
 	 * type itself, so that e.g. a fundamental type has depth 1.
-	 * type:
-	 *  A GType value.
-	 * Returns:
-	 * The depth of type.
+	 * Params:
+	 * type =  A GType value.
+	 * Returns:The depth of type.
 	 */
 	public static uint depth(GType type)
 	{
@@ -245,12 +243,10 @@ public class Type
 	 * root_type which is also a base class of leaf_type. Given a root type and a
 	 * leaf type, this function can be used to determine the types and order in which
 	 * the leaf type is descended from the root type.
-	 * leaf_type:
-	 * 	Descendant of root_type and the type to be returned.
-	 * root_type:
-	 * 	Immediate parent of the returned type.
-	 * Returns:
-	 * 	Immediate child of root_type and anchestor of leaf_type.
+	 * Params:
+	 * leafType = 	Descendant of root_type and the type to be returned.
+	 * rootType = 	Immediate parent of the returned type.
+	 * Returns:	Immediate child of root_type and anchestor of leaf_type.
 	 */
 	public static GType nextBase(GType leafType, GType rootType)
 	{
@@ -261,12 +257,10 @@ public class Type
 	/**
 	 * If is_a_type is a derivable type, check whether type is a descendant of is_a_type.
 	 * If is_a_type is an interface, check whether type conforms to it.
-	 * type:
-	 *  Type to check anchestry for.
-	 * is_a_type:
-	 * Possible anchestor of type or interface type could conform to.
-	 * Returns:
-	 *  TRUE if type is_a is_a_type holds true.
+	 * Params:
+	 * type =  Type to check anchestry for.
+	 * isAType = Possible anchestor of type or interface type could conform to.
+	 * Returns: TRUE if type is_a is_a_type holds true.
 	 */
 	public static int isA(GType type, GType isAType)
 	{
@@ -278,10 +272,9 @@ public class Type
 	 * Increments the reference count of the class structure belonging to
 	 * type. This function will demand-create the class if it doesn't
 	 * exist already.
-	 * type:
-	 * 	 Type ID of a classed type.
-	 * Returns:
-	 * The GTypeClass structure for the given type ID.
+	 * Params:
+	 * type = 	 Type ID of a classed type.
+	 * Returns:The GTypeClass structure for the given type ID.
 	 */
 	public static void* classRef(GType type)
 	{
@@ -294,11 +287,9 @@ public class Type
 	 * the classes reference count isn't incremented. As a consequence, this function
 	 * may return NULL if the class of the type passed in does not currently
 	 * exist (hasn't been referenced before).
-	 * type:
-	 * 		Type ID of a classed type.
-	 * Returns:
-	 * 	The GTypeClass structure for the given type ID or NULL
-	 * 		if the class does not currently exist.
+	 * Params:
+	 * type = 		Type ID of a classed type.
+	 * Returns:	The GTypeClass structure for the given type ID or NULL		if the class does not currently exist.
 	 */
 	public static void* classPeek(GType type)
 	{
@@ -309,12 +300,10 @@ public class Type
 	/**
 	 * A more efficient version of g_type_class_peek() which works only for
 	 * static types.
-	 * type:
-	 * Type ID of a classed type.
-	 * Returns:
-	 * The GTypeClass structure for the given type ID or NULL
-	 *  if the class does not currently exist or is dynamically loaded.
 	 * Since 2.4
+	 * Params:
+	 * type = Type ID of a classed type.
+	 * Returns:The GTypeClass structure for the given type ID or NULL if the class does not currently exist or is dynamically loaded.
 	 */
 	public static void* classPeekStatic(GType type)
 	{
@@ -327,8 +316,8 @@ public class Type
 	 * Once the last reference count of a class has been released, classes
 	 * may be finalized by the type system, so further dereferencing of a
 	 * class pointer after g_type_class_unref() are invalid.
-	 * g_class:
-	 * 	The GTypeClass structure to unreference.
+	 * Params:
+	 * gClass = 	The GTypeClass structure to unreference.
 	 */
 	public static void classUnref(void* gClass)
 	{
@@ -342,12 +331,9 @@ public class Type
 	 * Since derived classes hold
 	 * a reference count on their parent classes as long as they are instantiated,
 	 * the returned class will always exist. This function is essentially
-	 * equivalent to:
-	 * g_type_class_peek (g_type_parent (G_TYPE_FROM_CLASS (g_class)));
-	 * g_class:
-	 * The GTypeClass structure to retrieve the parent class for.
-	 * Returns:
-	 * The parent class of g_class.
+	 * Params:
+	 * gClass = The GTypeClass structure to retrieve the parent class for.
+	 * Returns:The parent class of g_class.
 	 */
 	public static void* classPeekParent(void* gClass)
 	{
@@ -384,11 +370,10 @@ public class Type
 		 *  MyObjectPrivate *priv = MY_OBJECT_GET_PRIVATE (my_object);
 		 *  return priv->some_field;
 	 * }
-	 * g_class:
-	 * class structure for an instantiatable type
-	 * private_size:
-	 * size of private structure.
 	 * Since 2.4
+	 * Params:
+	 * gClass = class structure for an instantiatable type
+	 * privateSize = size of private structure.
 	 */
 	public static void classAddPrivate(void* gClass, uint privateSize)
 	{
@@ -399,13 +384,10 @@ public class Type
 	/**
 	 * Returns the GTypeInterface structure of an interface to which the passed in
 	 * class conforms.
-	 * instance_class:
-	 * A GTypeClass structure.
-	 * iface_type:
-	 *  An interface ID which this class conforms to.
-	 * Returns:
-	 *  The GTypeInterface structure of iface_type if implemented
-	 *  by instance_class, NULL otherwise
+	 * Params:
+	 * instanceClass = A GTypeClass structure.
+	 * ifaceType =  An interface ID which this class conforms to.
+	 * Returns: The GTypeInterface structure of iface_type if implemented  by instance_class, NULL otherwise
 	 */
 	public static void* interfacePeek(void* instanceClass, GType ifaceType)
 	{
@@ -418,12 +400,9 @@ public class Type
 	 * of the instance type to which g_iface belongs. This is useful when
 	 * deriving the implementation of an interface from the parent type and
 	 * then possibly overriding some methods.
-	 * g_iface:
-	 * A GTypeInterface structure.
-	 * Returns:
-	 * The corresponding GTypeInterface structure of the parent type
-	 *  of the instance type to which g_iface belongs, or NULL if the parent type
-	 *  doesn't conform to the interface.
+	 * Params:
+	 * gIface = A GTypeInterface structure.
+	 * Returns:The corresponding GTypeInterface structure of the parent type of the instance type to which g_iface belongs, or NULL if the parent type doesn't conform to the interface.
 	 */
 	public static void* interfacePeekParent(void* gIface)
 	{
@@ -442,13 +421,10 @@ public class Type
 	 * Calling g_type_default_interface_ref() is useful when you
 	 * want to make sure that signals and properties for an interface
 	 * have been installed.
-	 * g_type:
-	 * an interface type
-	 * Returns:
-	 * the default vtable for the interface; call
-	 *  g_type_default_interface_unref() when you are done using
-	 *  the interface.
 	 * Since 2.4
+	 * Params:
+	 * gType = an interface type
+	 * Returns:the default vtable for the interface; call  g_type_default_interface_unref() when you are done using the interface.
 	 */
 	public static void* defaultInterfaceRef(GType gType)
 	{
@@ -459,12 +435,10 @@ public class Type
 	/**
 	 * If the interface type g_type is currently in use, returns
 	 * its default interface vtable.
-	 * g_type:
-	 * an interface type
-	 * Returns:
-	 * the default vtable for the interface, or NULL
-	 *  if the type is not currently in use.
 	 * Since 2.4
+	 * Params:
+	 * gType = an interface type
+	 * Returns:the default vtable for the interface, or NULL if the type is not currently in use.
 	 */
 	public static void* defaultInterfacePeek(GType gType)
 	{
@@ -479,10 +453,10 @@ public class Type
 	 * been released, the finalize function for the interface's default
 	 * vtable (the class_finalize member of
 	 * GTypeInfo) will be called.
-	 * g_iface:
-	 * the default vtable structure for a interface, as
-	 *  returned by g_type_default_interface_ref()
 	 * Since 2.4
+	 * Params:
+	 * gIface = the default vtable structure for a interface, as
+	 *  returned by g_type_default_interface_ref()
 	 */
 	public static void defaultInterfaceUnref(void* gIface)
 	{
@@ -493,12 +467,10 @@ public class Type
 	/**
 	 * Return a newly allocated and 0-terminated array of type IDs, listing the
 	 * child types of type. The return value has to be g_free()ed after use.
-	 * type:
-	 *  The parent type.
-	 * n_children:
-	 * Optional guint pointer to contain the number of child types.
-	 * Returns:
-	 *  Newly allocated and 0-terminated array of child types.
+	 * Params:
+	 * type =  The parent type.
+	 * nChildren = Optional guint pointer to contain the number of child types.
+	 * Returns: Newly allocated and 0-terminated array of child types.
 	 */
 	public static GType* children(GType type, uint* nChildren)
 	{
@@ -510,12 +482,10 @@ public class Type
 	 * Return a newly allocated and 0-terminated array of type IDs, listing the
 	 * interface types that type conforms to. The return value has to be
 	 * g_free()ed after use.
-	 * type:
-	 *  The type to list interface types for.
-	 * n_interfaces:
-	 * Optional guint pointer to contain the number of interface types.
-	 * Returns:
-	 *  Newly allocated and 0-terminated array of interface types.
+	 * Params:
+	 * type =  The type to list interface types for.
+	 * nInterfaces = Optional guint pointer to contain the number of interface types.
+	 * Returns: Newly allocated and 0-terminated array of interface types.
 	 */
 	public static GType* interfaces(GType type, uint* nInterfaces)
 	{
@@ -525,14 +495,11 @@ public class Type
 	
 	/**
 	 * Returns the prerequisites of an interfaces type.
-	 * interface_type:
-	 * an interface type
-	 * n_prerequisites:
-	 * location to return the number of prerequisites, or NULL
-	 * Returns:
-	 * a newly-allocated zero-terminated array of GType containing
-	 *  the prerequisites of interface_type
 	 * Since 2.2
+	 * Params:
+	 * interfaceType = an interface type
+	 * nPrerequisites = location to return the number of prerequisites, or NULL
+	 * Returns:a newly-allocated zero-terminated array of GType containing  the prerequisites of interface_type
 	 */
 	public static GType* interfacePrerequisites(GType interfaceType, uint* nPrerequisites)
 	{
@@ -542,12 +509,10 @@ public class Type
 	
 	/**
 	 * Attaches arbitrary data to a type.
-	 * type:
-	 * a GType
-	 * quark:
-	 * a GQuark id to identify the data
-	 * data:
-	 * the data
+	 * Params:
+	 * type = a GType
+	 * quark = a GQuark id to identify the data
+	 * data = the data
 	 */
 	public static void setQdata(GType type, GQuark quark, void* data)
 	{
@@ -558,12 +523,10 @@ public class Type
 	/**
 	 * Obtains data which has previously been attached to type
 	 * with g_type_set_qdata().
-	 * type:
-	 * a GType
-	 * quark:
-	 * a GQuark id to identify the data
-	 * Returns:
-	 * the data, or NULL if no data was found
+	 * Params:
+	 * type = a GType
+	 * quark = a GQuark id to identify the data
+	 * Returns:the data, or NULL if no data was found
 	 */
 	public static void* getQdata(GType type, GQuark quark)
 	{
@@ -577,10 +540,9 @@ public class Type
 	 * information. If an invalid GType is passed in, the type member of the
 	 * GTypeQuery is 0. All members filled into the GTypeQuery structure should
 	 * be considered constant and have to be left untouched.
-	 * type:
-	 * the GType value of a static, classed type.
-	 * query:
-	 * A user provided structure that is filled in with constant values
+	 * Params:
+	 * type = the GType value of a static, classed type.
+	 * query = A user provided structure that is filled in with constant values
 	 *  upon success.
 	 */
 	public static void query(GType type, GTypeQuery* query)
@@ -606,16 +568,12 @@ public class Type
 	 * GTypeInfo structure pointed to by info to manage the type and its
 	 * instances (if not abstract). The value of flags determines the nature
 	 * (e.g. abstract or not) of the type.
-	 * parent_type:
-	 * 	Type from which this type will be derived.
-	 * type_name:
-	 * 	0-terminated string used as the name of the new type.
-	 * info:
-	 * 		The GTypeInfo structure for this type.
-	 * flags:
-	 * 		Bitwise combination of GTypeFlags values.
-	 * Returns:
-	 * 	The new type identifier.
+	 * Params:
+	 * parentType = 	Type from which this type will be derived.
+	 * typeName = 	0-terminated string used as the name of the new type.
+	 * info = 		The GTypeInfo structure for this type.
+	 * flags = 		Bitwise combination of GTypeFlags values.
+	 * Returns:	The new type identifier.
 	 */
 	public static GType registerStatic(GType parentType, char[] typeName, GTypeInfo* info, GTypeFlags flags)
 	{
@@ -627,24 +585,17 @@ public class Type
 	 * Registers type_name as the name of a new static type derived from
 	 * parent_type. The value of flags determines the nature (e.g.
 	 * abstract or not) of the type. It works by filling a GTypeInfo
-	 * struct and calling g_type_info_register_static().
-	 * parent_type:
-	 * 	Type from which this type will be derived.
-	 * type_name:
-	 * 	0-terminated string used as the name of the new type.
-	 * class_size:
-	 *  Size of the class structure (see GTypeInfo)
-	 * class_init:
-	 * 	Location of the class initialization function (see GTypeInfo)
-	 * instance_size:
-	 * Size of the instance structure (see GTypeInfo)
-	 * instance_init:
-	 * Location of the instance initialization function (see GTypeInfo)
-	 * flags:
-	 * 	Bitwise combination of GTypeFlags values.
-	 * Returns:
-	 * 	The new type identifier.
+	 * struct and calling g_type_register_static().
 	 * Since 2.12
+	 * Params:
+	 * parentType = 	Type from which this type will be derived.
+	 * typeName = 	0-terminated string used as the name of the new type.
+	 * classSize =  Size of the class structure (see GTypeInfo)
+	 * classInit = 	Location of the class initialization function (see GTypeInfo)
+	 * instanceSize = Size of the instance structure (see GTypeInfo)
+	 * instanceInit = Location of the instance initialization function (see GTypeInfo)
+	 * flags = 	Bitwise combination of GTypeFlags values.
+	 * Returns:	The new type identifier.
 	 */
 	public static GType registerStaticSimple(GType parentType, char[] typeName, uint classSize, GClassInitFunc classInit, uint instanceSize, GInstanceInitFunc instanceInit, GTypeFlags flags)
 	{
@@ -658,16 +609,12 @@ public class Type
 	 * GTypePlugin structure pointed to by plugin to manage the type and its
 	 * instances (if not abstract). The value of flags determines the nature
 	 * (e.g. abstract or not) of the type.
-	 * parent_type:
-	 * 	Type from which this type will be derived.
-	 * type_name:
-	 * 	0-terminated string used as the name of the new type.
-	 * plugin:
-	 * 	The GTypePlugin structure to retrieve the GTypeInfo from.
-	 * flags:
-	 * 		Bitwise combination of GTypeFlags values.
-	 * Returns:
-	 * 	The new type identifier or G_TYPE_INVALID if registration failed.
+	 * Params:
+	 * parentType = 	Type from which this type will be derived.
+	 * typeName = 	0-terminated string used as the name of the new type.
+	 * plugin = 	The GTypePlugin structure to retrieve the GTypeInfo from.
+	 * flags = 		Bitwise combination of GTypeFlags values.
+	 * Returns:	The new type identifier or G_TYPE_INVALID if registration failed.
 	 */
 	public static GType registerDynamic(GType parentType, char[] typeName, TypePlugin plugin, GTypeFlags flags)
 	{
@@ -682,18 +629,13 @@ public class Type
 	 * GTypeFundamentalInfo structure pointed to by finfo to manage the
 	 * type and its instances. The value of flags determines additional
 	 * characteristics of the fundamental type.
-	 * type_id:
-	 * 	A predefined GTypeFundamentals value.
-	 * type_name:
-	 * 	0-terminated string used as the name of the new type.
-	 * info:
-	 * 		The GTypeInfo structure for this type.
-	 * finfo:
-	 * 		The GTypeFundamentalInfo structure for this type.
-	 * flags:
-	 * 		Bitwise combination of GTypeFlags values.
-	 * Returns:
-	 * 	The predefined type identifier.
+	 * Params:
+	 * typeId = 	A predefined GTypeFundamentals value.
+	 * typeName = 	0-terminated string used as the name of the new type.
+	 * info = 		The GTypeInfo structure for this type.
+	 * finfo = 		The GTypeFundamentalInfo structure for this type.
+	 * flags = 		Bitwise combination of GTypeFlags values.
+	 * Returns:	The predefined type identifier.
 	 */
 	public static GType registerFundamental(GType typeId, char[] typeName, GTypeInfo* info, GTypeFundamentalInfo* finfo, GTypeFlags flags)
 	{
@@ -705,12 +647,10 @@ public class Type
 	 * Adds the static interface_type to instantiable_type. The information
 	 * contained in the GTypeInterfaceInfo structure pointed to by info
 	 * is used to manage the relationship.
-	 * instance_type:
-	 * 	 GType value of an instantiable type.
-	 * interface_type:
-	 * GType value of an interface type.
-	 * info:
-	 * 		 The GInterfaceInfo structure for this
+	 * Params:
+	 * instanceType = 	 GType value of an instantiable type.
+	 * interfaceType = GType value of an interface type.
+	 * info = 		 The GInterfaceInfo structure for this
 	 * 		 (instance_type, interface_type) combination.
 	 */
 	public static void addInterfaceStatic(GType instanceType, GType interfaceType, GInterfaceInfo* info)
@@ -723,12 +663,10 @@ public class Type
 	 * Adds the dynamic interface_type to instantiable_type. The information
 	 * contained in the GTypePlugin structure pointed to by plugin
 	 * is used to manage the relationship.
-	 * instance_type:
-	 * the GType value of an instantiable type.
-	 * interface_type:
-	 * the GType value of an interface type.
-	 * plugin:
-	 * the GTypePlugin structure to retrieve the GInterfaceInfo from.
+	 * Params:
+	 * instanceType = the GType value of an instantiable type.
+	 * interfaceType = the GType value of an interface type.
+	 * plugin = the GTypePlugin structure to retrieve the GInterfaceInfo from.
 	 */
 	public static void addInterfaceDynamic(GType instanceType, GType interfaceType, TypePlugin plugin)
 	{
@@ -742,10 +680,9 @@ public class Type
 	 * prerequisite_type. Prerequisites can be thought of as an alternative to
 	 * interface derivation (which GType doesn't support). An interface can have
 	 * at most one instantiatable prerequisite type.
-	 * interface_type:
-	 * GType value of an interface type.
-	 * prerequisite_type:
-	 * GType value of an interface or instantiatable type.
+	 * Params:
+	 * interfaceType = GType value of an interface type.
+	 * prerequisiteType = GType value of an interface or instantiatable type.
 	 */
 	public static void interfaceAddPrerequisite(GType interfaceType, GType prerequisiteType)
 	{
@@ -756,11 +693,9 @@ public class Type
 	/**
 	 * Returns the GTypePlugin structure for type or
 	 * NULL if type does not have a GTypePlugin structure.
-	 * type:
-	 * 		The GType to retrieve the plugin for.
-	 * Returns:
-	 * 	The corresponding plugin if type is a dynamic type,
-	 * 		NULL otherwise.
+	 * Params:
+	 * type = 		The GType to retrieve the plugin for.
+	 * Returns:	The corresponding plugin if type is a dynamic type,		NULL otherwise.
 	 */
 	public static TypePlugin getPlugin(GType type)
 	{
@@ -773,13 +708,10 @@ public class Type
 	 * interface_type which has been added to instance_type, or
 	 * NULL if interface_type has not been added to instance_type or does
 	 * not have a GTypePlugin structure. See g_type_add_interface_dynamic().
-	 * instance_type:
-	 * the GType value of an instantiatable type.
-	 * interface_type:
-	 * the GType value of an interface type.
-	 * Returns:
-	 * the GTypePlugin for the dynamic interface interface_type
-	 *  of instance_type.
+	 * Params:
+	 * instanceType = the GType value of an instantiatable type.
+	 * interfaceType = the GType value of an interface type.
+	 * Returns:the GTypePlugin for the dynamic interface interface_type of instance_type.
 	 */
 	public static TypePlugin interfaceGetPlugin(GType instanceType, GType interfaceType)
 	{
@@ -792,9 +724,7 @@ public class Type
 	 * register a new fundamental type with g_type_register_fundamental().
 	 * The returned type ID represents the highest currently registered
 	 * fundamental type identifier.
-	 * Returns:
-	 * The nextmost fundamental type ID to be registered,
-	 *  or 0 if the type system ran out of fundamental type IDs.
+	 * Returns:The nextmost fundamental type ID to be registered, or 0 if the type system ran out of fundamental type IDs.
 	 */
 	public static GType fundamentalNext()
 	{
@@ -805,10 +735,9 @@ public class Type
 	/**
 	 * Internal function, used to extract the fundamental type ID portion.
 	 * use G_TYPE_FUNDAMENTAL() instead.
-	 * type_id:
-	 * valid type ID
-	 * Returns:
-	 * fundamental type ID
+	 * Params:
+	 * typeId = valid type ID
+	 * Returns:fundamental type ID
 	 */
 	public static GType fundamental(GType typeId)
 	{
@@ -829,11 +758,9 @@ public class Type
 	 * Note: Do not use this function, unless you're
 	 * implementing a fundamental type. Also language bindings should not
 	 * use this function but g_object_new() instead.
-	 * type:
-	 * 	 An instantiatable type to create an instance for.
-	 * Returns:
-	 * An allocated and initialized instance, subject to further
-	 * 	 treatment by the fundamental type implementation.
+	 * Params:
+	 * type = 	 An instantiatable type to create an instance for.
+	 * Returns:An allocated and initialized instance, subject to further	 treatment by the fundamental type implementation.
 	 */
 	public static GTypeInstance* createInstance(GType type)
 	{
@@ -846,8 +773,8 @@ public class Type
 	 * if there is one.
 	 * Like g_type_create_instance(), this function is reserved for implementors of
 	 * fundamental types.
-	 * instance:
-	 * an instance of a type.
+	 * Params:
+	 * instanc = an instance of a type.
 	 */
 	public static void freeInstance(GTypeInstance* instanc)
 	{
@@ -862,10 +789,9 @@ public class Type
 	 * returns TRUE. The functions have to check the class id passed in to figure
 	 * whether they actually want to cache the class of this type, since all classes
 	 * are routed through the same GTypeClassCacheFunc chain.
-	 * cache_data:
-	 * data to be passed to cache_func
-	 * cache_func:
-	 * a GTypeClassCacheFunc
+	 * Params:
+	 * cacheData = data to be passed to cache_func
+	 * cacheFunc = a GTypeClassCacheFunc
 	 */
 	public static void addClassCacheFunc(void* cacheData, GTypeClassCacheFunc cacheFunc)
 	{
@@ -877,10 +803,9 @@ public class Type
 	 * Removes a previously installed GTypeClassCacheFunc. The cache maintained
 	 * by cache_func has to be empty when calling g_type_remove_class_cache_func()
 	 * to avoid leaks.
-	 * cache_data:
-	 * data that was given when adding cache_func
-	 * cache_func:
-	 * a GTypeClassCacheFunc
+	 * Params:
+	 * cacheData = data that was given when adding cache_func
+	 * cacheFunc = a GTypeClassCacheFunc
 	 */
 	public static void removeClassCacheFunc(void* cacheData, GTypeClassCacheFunc cacheFunc)
 	{
@@ -893,8 +818,8 @@ public class Type
 	 * implementations. It unreferences a class without consulting the chain
 	 * of GTypeClassCacheFuncs, avoiding the recursion which would occur
 	 * otherwise.
-	 * g_class:
-	 * The GTypeClass structure to unreference.
+	 * Params:
+	 * gClass = The GTypeClass structure to unreference.
 	 */
 	public static void classUnrefUncached(void* gClass)
 	{
@@ -911,12 +836,11 @@ public class Type
 	 * the implementation of GObject uses this facility to check
 	 * that an object implements all of the properties that are
 	 * defined on its interfaces.
-	 * check_data:
-	 * data to pass to check_func
-	 * check_func:
-	 * function to be called after each interface
-	 *  is initialized.
 	 * Since 2.4
+	 * Params:
+	 * checkData = data to pass to check_func
+	 * checkFunc = function to be called after each interface
+	 *  is initialized.
 	 */
 	public static void addInterfaceCheck(void* checkData, GTypeInterfaceCheckFunc checkFunc)
 	{
@@ -927,11 +851,10 @@ public class Type
 	/**
 	 * Removes an interface check function added with
 	 * g_type_add_interface_check().
-	 * check_data:
-	 * callback data passed to g_type_add_interface_check()
-	 * check_func:
-	 * callback function passed to g_type_add_interface_check()
 	 * Since 2.4
+	 * Params:
+	 * checkData = callback data passed to g_type_add_interface_check()
+	 * checkFunc = callback function passed to g_type_add_interface_check()
 	 */
 	public static void removeInterfaceCheck(void* checkData, GTypeInterfaceCheckFunc checkFunc)
 	{
@@ -945,11 +868,9 @@ public class Type
 	 * Note that this function should only be used from source code
 	 * that implements or has internal knowledge of the implementation of
 	 * type.
-	 * type:
-	 *  A GType value.
-	 * Returns:
-	 * Location of the GTypeValueTable associated with type or
-	 *  NULL if there is no GTypeValueTable associated with type.
+	 * Params:
+	 * type =  A GType value.
+	 * Returns:Location of the GTypeValueTable associated with type or NULL if there is no GTypeValueTable associated with type.
 	 */
 	public static GTypeValueTable* valueTablePeek(GType type)
 	{

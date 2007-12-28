@@ -88,6 +88,7 @@ private import glib.Str;
 
 
 
+private import gtk.ObjectGtk;
 
 /**
  * Description
@@ -98,7 +99,6 @@ private import glib.Str;
  * for an overview of all the objects and data types related to the tree widget and how
  * they work together.
  */
-private import gtk.ObjectGtk;
 public class TreeViewColumn : ObjectGtk
 {
 	
@@ -149,10 +149,11 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Creates a new Tree view column
-	 * @param header th column header text
-	 * @param renderer the rederer for the column cells
-	 * @param type the type of data to be displayed (shouldn't this be on the renderer?)
-	 * @param column the column number
+	 * Params:
+	 *  header = th column header text
+	 *  renderer = the rederer for the column cells
+	 *  type = the type of data to be displayed (shouldn't this be on the renderer?)
+	 *  column = the column number
 	 */
 	this(char [] header, CellRenderer renderer, char [] type, int column)
 	{
@@ -208,8 +209,6 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Creates a new GtkTreeViewColumn.
-	 * Returns:
-	 *  A newly created GtkTreeViewColumn.
 	 */
 	public this ()
 	{
@@ -222,12 +221,9 @@ public class TreeViewColumn : ObjectGtk
 	 * Packs the cell into the beginning of the column. If expand is FALSE, then
 	 * the cell is allocated no more space than it needs. Any unused space is divided
 	 * evenly between cells for which expand is TRUE.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * cell:
-	 *  The GtkCellRenderer.
-	 * expand:
-	 *  TRUE if cell is to be given extra space allocated to tree_column.
+	 * Params:
+	 * cell =  The GtkCellRenderer.
+	 * expand =  TRUE if cell is to be given extra space allocated to tree_column.
 	 */
 	public void packStart(CellRenderer cell, int expand)
 	{
@@ -239,12 +235,9 @@ public class TreeViewColumn : ObjectGtk
 	 * Adds the cell to end of the column. If expand is FALSE, then the cell
 	 * is allocated no more space than it needs. Any unused space is divided
 	 * evenly between cells for which expand is TRUE.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * cell:
-	 *  The GtkCellRenderer.
-	 * expand:
-	 *  TRUE if cell is to be given extra space allocated to tree_column.
+	 * Params:
+	 * cell =  The GtkCellRenderer.
+	 * expand =  TRUE if cell is to be given extra space allocated to tree_column.
 	 */
 	public void packEnd(CellRenderer cell, int expand)
 	{
@@ -254,8 +247,6 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Unsets all the mappings on all renderers on the tree_column.
-	 * tree_column:
-	 *  A GtkTreeViewColumn
 	 */
 	public void clear()
 	{
@@ -266,10 +257,7 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Returns a newly-allocated GList of all the cell renderers in the column,
 	 * in no particular order. The list must be freed with g_list_free().
-	 * tree_column:
-	 *  A GtkTreeViewColumn
-	 * Returns:
-	 *  A list of GtkCellRenderers
+	 * Returns: A list of GtkCellRenderers
 	 */
 	public ListG getCellRenderers()
 	{
@@ -284,14 +272,10 @@ public class TreeViewColumn : ObjectGtk
 	 * if column 2 of the model contains strings, you could have the
 	 * "text" attribute of a GtkCellRendererText get its values from
 	 * column 2.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * cell_renderer:
-	 *  the GtkCellRenderer to set attributes on
-	 * attribute:
-	 *  An attribute on the renderer
-	 * column:
-	 *  The column position on the model to get the attribute from.
+	 * Params:
+	 * cellRenderer =  the GtkCellRenderer to set attributes on
+	 * attribute =  An attribute on the renderer
+	 * column =  The column position on the model to get the attribute from.
 	 */
 	public void addAttribute(CellRenderer cellRenderer, char[] attribute, int column)
 	{
@@ -304,12 +288,9 @@ public class TreeViewColumn : ObjectGtk
 	 * The attributes should be in attribute/column order, as in
 	 * gtk_tree_view_column_add_attribute(). All existing attributes
 	 * are removed, and replaced with the new attributes.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * cell_renderer:
-	 *  the GtkCellRenderer we're setting the attributes of
-	 * ...:
-	 *  A NULL-terminated list of attributes.
+	 * Params:
+	 * cellRenderer =  the GtkCellRenderer we're setting the attributes of
+	 * ... =  A NULL-terminated list of attributes.
 	 */
 	public void setAttributes(CellRenderer cellRenderer, ... )
 	{
@@ -323,16 +304,11 @@ public class TreeViewColumn : ObjectGtk
 	 * setting the column value, and should set the value of tree_column's
 	 * cell renderer as appropriate. func may be NULL to remove an
 	 * older one.
-	 * tree_column:
-	 *  A GtkTreeViewColumn
-	 * cell_renderer:
-	 *  A GtkCellRenderer
-	 * func:
-	 *  The GtkTreeViewColumnFunc to use.
-	 * func_data:
-	 *  The user data for func.
-	 * destroy:
-	 *  The destroy notification for func_data
+	 * Params:
+	 * cellRenderer =  A GtkCellRenderer
+	 * func =  The GtkTreeViewColumnFunc to use.
+	 * funcData =  The user data for func.
+	 * destroy =  The destroy notification for func_data
 	 */
 	public void setCellDataFunc(CellRenderer cellRenderer, GtkTreeCellDataFunc func, void* funcData, GtkDestroyNotify destroy)
 	{
@@ -343,10 +319,8 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Clears all existing attributes previously set with
 	 * gtk_tree_view_column_set_attributes().
-	 * tree_column:
-	 *  a GtkTreeViewColumn
-	 * cell_renderer:
-	 *  a GtkCellRenderer to clear the attribute mapping on.
+	 * Params:
+	 * cellRenderer =  a GtkCellRenderer to clear the attribute mapping on.
 	 */
 	public void clearAttributes(CellRenderer cellRenderer)
 	{
@@ -357,10 +331,8 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Sets the spacing field of tree_column, which is the number of pixels to
 	 * place between cell renderers packed into it.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * spacing:
-	 *  distance between cell renderers in pixels.
+	 * Params:
+	 * spacing =  distance between cell renderers in pixels.
 	 */
 	public void setSpacing(int spacing)
 	{
@@ -370,10 +342,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Returns the spacing of tree_column.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * Returns:
-	 *  the spacing of tree_column.
+	 * Returns: the spacing of tree_column.
 	 */
 	public int getSpacing()
 	{
@@ -383,10 +352,8 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Sets the visibility of tree_column.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * visible:
-	 *  TRUE if the tree_column is visible.
+	 * Params:
+	 * visible =  TRUE if the tree_column is visible.
 	 */
 	public void setVisible(int visible)
 	{
@@ -396,11 +363,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Returns TRUE if tree_column is visible.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * Returns:
-	 *  whether the column is visible or not. If it is visible, then
-	 * the tree will show the column.
+	 * Returns: whether the column is visible or not. If it is visible, thenthe tree will show the column.
 	 */
 	public int getVisible()
 	{
@@ -413,10 +376,8 @@ public class TreeViewColumn : ObjectGtk
 	 * grabbing the outer edge of the column button. If resizable is TRUE and
 	 * sizing mode of the column is GTK_TREE_VIEW_COLUMN_AUTOSIZE, then the sizing
 	 * mode is changed to GTK_TREE_VIEW_COLUMN_GROW_ONLY.
-	 * tree_column:
-	 *  A GtkTreeViewColumn
-	 * resizable:
-	 *  TRUE, if the column can be resized
+	 * Params:
+	 * resizable =  TRUE, if the column can be resized
 	 */
 	public void setResizable(int resizable)
 	{
@@ -426,10 +387,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Returns TRUE if the tree_column can be resized by the end user.
-	 * tree_column:
-	 *  A GtkTreeViewColumn
-	 * Returns:
-	 *  TRUE, if the tree_column can be resized.
+	 * Returns: TRUE, if the tree_column can be resized.
 	 */
 	public int getResizable()
 	{
@@ -439,10 +397,8 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Sets the growth behavior of tree_column to type.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * type:
-	 *  The GtkTreeViewColumnSizing.
+	 * Params:
+	 * type =  The GtkTreeViewColumnSizing.
 	 */
 	public void setSizing(GtkTreeViewColumnSizing type)
 	{
@@ -452,10 +408,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Returns the current type of tree_column.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * Returns:
-	 *  The type of tree_column.
+	 * Returns: The type of tree_column.
 	 */
 	public GtkTreeViewColumnSizing getSizing()
 	{
@@ -465,10 +418,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Returns the current size of tree_column in pixels.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * Returns:
-	 *  The current width of tree_column.
+	 * Returns: The current width of tree_column.
 	 */
 	public int getWidth()
 	{
@@ -479,10 +429,7 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Gets the fixed width of the column. This value is only meaning may not be
 	 * the actual width of the column on the screen, just what is requested.
-	 * tree_column:
-	 *  a GtkTreeViewColumn
-	 * Returns:
-	 *  the fixed width of the column
+	 * Returns: the fixed width of the column
 	 */
 	public int getFixedWidth()
 	{
@@ -496,10 +443,8 @@ public class TreeViewColumn : ObjectGtk
 	 * the min/max width for the column. Please note that the min/max width of the
 	 * column doesn't actually affect the "fixed_width" property of the widget, just
 	 * the actual size when displayed.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * fixed_width:
-	 *  The size to set tree_column to. Must be greater than 0.
+	 * Params:
+	 * fixedWidth =  The size to set tree_column to. Must be greater than 0.
 	 */
 	public void setFixedWidth(int fixedWidth)
 	{
@@ -510,10 +455,8 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Sets the minimum width of the tree_column. If min_width is -1, then the
 	 * minimum width is unset.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * min_width:
-	 *  The minimum width of the column in pixels, or -1.
+	 * Params:
+	 * minWidth =  The minimum width of the column in pixels, or -1.
 	 */
 	public void setMinWidth(int minWidth)
 	{
@@ -524,10 +467,7 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Returns the minimum width in pixels of the tree_column, or -1 if no minimum
 	 * width is set.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * Returns:
-	 *  The minimum width of the tree_column.
+	 * Returns: The minimum width of the tree_column.
 	 */
 	public int getMinWidth()
 	{
@@ -540,10 +480,8 @@ public class TreeViewColumn : ObjectGtk
 	 * maximum width is unset. Note, the column can actually be wider than max
 	 * width if it's the last column in a view. In this case, the column expands to
 	 * fill any extra space.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * max_width:
-	 *  The maximum width of the column in pixels, or -1.
+	 * Params:
+	 * maxWidth =  The maximum width of the column in pixels, or -1.
 	 */
 	public void setMaxWidth(int maxWidth)
 	{
@@ -554,10 +492,7 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Returns the maximum width in pixels of the tree_column, or -1 if no maximum
 	 * width is set.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * Returns:
-	 *  The maximum width of the tree_column.
+	 * Returns: The maximum width of the tree_column.
 	 */
 	public int getMaxWidth()
 	{
@@ -568,8 +503,6 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Emits the "clicked" signal on the column. This function will only work if
 	 * tree_column is clickable.
-	 * tree_column:
-	 *  a GtkTreeViewColumn
 	 */
 	public void clicked()
 	{
@@ -580,10 +513,8 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Sets the title of the tree_column. If a custom widget has been set, then
 	 * this value is ignored.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * title:
-	 *  The title of the tree_column.
+	 * Params:
+	 * title =  The title of the tree_column.
 	 */
 	public void setTitle(char[] title)
 	{
@@ -593,11 +524,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Returns the title of the widget.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * Returns:
-	 *  the title of the column. This string should not be
-	 * modified or freed.
+	 * Returns: the title of the column. This string should not bemodified or freed.
 	 */
 	public char[] getTitle()
 	{
@@ -610,11 +537,9 @@ public class TreeViewColumn : ObjectGtk
 	 * amongst all columns that have the expand set to TRUE. If no column has this
 	 * option set, then the last column gets all extra space. By default, every
 	 * column is created with this FALSE.
-	 * tree_column:
-	 *  A GtkTreeViewColumn
-	 * expand:
-	 *  TRUE if the column should take available extra space, FALSE if not
 	 * Since 2.4
+	 * Params:
+	 * expand =  TRUE if the column should take available extra space, FALSE if not
 	 */
 	public void setExpand(int expand)
 	{
@@ -624,11 +549,8 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Return TRUE if the column expands to take any available space.
-	 * tree_column:
-	 *  a GtkTreeViewColumn
-	 * Returns:
-	 *  TRUE, if the column expands
 	 * Since 2.4
+	 * Returns: TRUE, if the column expands
 	 */
 	public int getExpand()
 	{
@@ -639,10 +561,8 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Sets the header to be active if active is TRUE. When the header is active,
 	 * then it can take keyboard focus, and can be clicked.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * clickable:
-	 *  TRUE if the header is active.
+	 * Params:
+	 * clickable =  TRUE if the header is active.
 	 */
 	public void setClickable(int clickable)
 	{
@@ -652,10 +572,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Returns TRUE if the user can click on the header for the column.
-	 * tree_column:
-	 *  a GtkTreeViewColumn
-	 * Returns:
-	 *  TRUE if user can click the column header.
+	 * Returns: TRUE if user can click the column header.
 	 */
 	public int getClickable()
 	{
@@ -666,10 +583,8 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Sets the widget in the header to be widget. If widget is NULL, then the
 	 * header button is set with a GtkLabel set to the title of tree_column.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * widget:
-	 *  A child GtkWidget, or NULL.
+	 * Params:
+	 * widget =  A child GtkWidget, or NULL.
 	 */
 	public void setWidget(Widget widget)
 	{
@@ -680,10 +595,7 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Returns the GtkWidget in the button on the column header. If a custom
 	 * widget has not been set then NULL is returned.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * Returns:
-	 *  The GtkWidget in the column header, or NULL
+	 * Returns: The GtkWidget in the column header, or NULL
 	 */
 	public Widget getWidget()
 	{
@@ -695,10 +607,8 @@ public class TreeViewColumn : ObjectGtk
 	 * Sets the alignment of the title or custom widget inside the column header.
 	 * The alignment determines its location inside the button -- 0.0 for left, 0.5
 	 * for center, 1.0 for right.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * xalign:
-	 *  The alignment, which is between [0.0 and 1.0] inclusive.
+	 * Params:
+	 * xalign =  The alignment, which is between [0.0 and 1.0] inclusive.
 	 */
 	public void setAlignment(float xalign)
 	{
@@ -709,10 +619,7 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Returns the current x alignment of tree_column. This value can range
 	 * between 0.0 and 1.0.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * Returns:
-	 *  The current alignent of tree_column.
+	 * Returns: The current alignent of tree_column.
 	 */
 	public float getAlignment()
 	{
@@ -723,10 +630,8 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * If reorderable is TRUE, then the column can be reordered by the end user
 	 * dragging the header.
-	 * tree_column:
-	 *  A GtkTreeViewColumn
-	 * reorderable:
-	 *  TRUE, if the column can be reordered.
+	 * Params:
+	 * reorderable =  TRUE, if the column can be reordered.
 	 */
 	public void setReorderable(int reorderable)
 	{
@@ -736,10 +641,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Returns TRUE if the tree_column can be reordered by the user.
-	 * tree_column:
-	 *  A GtkTreeViewColumn
-	 * Returns:
-	 *  TRUE if the tree_column can be reordered by the user.
+	 * Returns: TRUE if the tree_column can be reordered by the user.
 	 */
 	public int getReorderable()
 	{
@@ -750,10 +652,8 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Sets the logical sort_column_id that this column sorts on when this column
 	 * is selected for sorting. Doing so makes the column header clickable.
-	 * tree_column:
-	 *  a GtkTreeViewColumn
-	 * sort_column_id:
-	 *  The sort_column_id of the model to sort on.
+	 * Params:
+	 * sortColumnId =  The sort_column_id of the model to sort on.
 	 */
 	public void setSortColumnId(int sortColumnId)
 	{
@@ -765,11 +665,7 @@ public class TreeViewColumn : ObjectGtk
 	 * Gets the logical sort_column_id that the model sorts on when this
 	 * column is selected for sorting.
 	 * See gtk_tree_view_column_set_sort_column_id().
-	 * tree_column:
-	 *  a GtkTreeViewColumn
-	 * Returns:
-	 *  the current sort_column_id for this column, or -1 if
-	 *  this column can't be used for sorting.
+	 * Returns: the current sort_column_id for this column, or -1 if this column can't be used for sorting.
 	 */
 	public int getSortColumnId()
 	{
@@ -782,10 +678,8 @@ public class TreeViewColumn : ObjectGtk
 	 * the header button indicating the column is sorted. Call
 	 * gtk_tree_view_column_set_sort_order() to change the direction of
 	 * the arrow.
-	 * tree_column:
-	 *  a GtkTreeViewColumn
-	 * setting:
-	 *  TRUE to display an indicator that the column is sorted
+	 * Params:
+	 * setting =  TRUE to display an indicator that the column is sorted
 	 */
 	public void setSortIndicator(int setting)
 	{
@@ -795,10 +689,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Gets the value set by gtk_tree_view_column_set_sort_indicator().
-	 * tree_column:
-	 *  a GtkTreeViewColumn
-	 * Returns:
-	 *  whether the sort indicator arrow is displayed
+	 * Returns: whether the sort indicator arrow is displayed
 	 */
 	public int getSortIndicator()
 	{
@@ -816,10 +707,8 @@ public class TreeViewColumn : ObjectGtk
 	 * The sort indicator changes direction to indicate normal sort or reverse sort.
 	 * Note that you must have the sort indicator enabled to see anything when
 	 * calling this function; see gtk_tree_view_column_set_sort_indicator().
-	 * tree_column:
-	 *  a GtkTreeViewColumn
-	 * order:
-	 *  sort order that the sort indicator should indicate
+	 * Params:
+	 * order =  sort order that the sort indicator should indicate
 	 */
 	public void setSortOrder(GtkSortType order)
 	{
@@ -829,10 +718,7 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 * Gets the value set by gtk_tree_view_column_set_sort_order().
-	 * tree_column:
-	 *  a GtkTreeViewColumn
-	 * Returns:
-	 *  the sort order the sort indicator is indicating
+	 * Returns: the sort order the sort indicator is indicating
 	 */
 	public GtkSortType getSortOrder()
 	{
@@ -845,16 +731,11 @@ public class TreeViewColumn : ObjectGtk
 	 * every attribute mapping in tree_column, it will get a value from the set
 	 * column on the iter, and use that value to set the attribute on the cell
 	 * renderer. This is used primarily by the GtkTreeView.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * tree_model:
-	 *  The GtkTreeModel to to get the cell renderers attributes from.
-	 * iter:
-	 *  The GtkTreeIter to to get the cell renderer's attributes from.
-	 * is_expander:
-	 *  TRUE, if the row has children
-	 * is_expanded:
-	 *  TRUE, if the row has visible children
+	 * Params:
+	 * treeModel =  The GtkTreeModel to to get the cell renderers attributes from.
+	 * iter =  The GtkTreeIter to to get the cell renderer's attributes from.
+	 * isExpander =  TRUE, if the row has children
+	 * isExpanded =  TRUE, if the row has visible children
 	 */
 	public void cellSetCellData(TreeModel treeModel, TreeIter iter, int isExpander, int isExpanded)
 	{
@@ -865,18 +746,12 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Obtains the width and height needed to render the column. This is used
 	 * primarily by the GtkTreeView.
-	 * tree_column:
-	 *  A GtkTreeViewColumn.
-	 * cell_area:
-	 *  The area a cell in the column will be allocated, or NULL
-	 * x_offset:
-	 *  location to return x offset of a cell relative to cell_area, or NULL
-	 * y_offset:
-	 *  location to return y offset of a cell relative to cell_area, or NULL
-	 * width:
-	 *  location to return width needed to render a cell, or NULL
-	 * height:
-	 *  location to return height needed to render a cell, or NULL
+	 * Params:
+	 * cellArea =  The area a cell in the column will be allocated, or NULL
+	 * xOffset =  location to return x offset of a cell relative to cell_area, or NULL
+	 * yOffset =  location to return y offset of a cell relative to cell_area, or NULL
+	 * width =  location to return width needed to render a cell, or NULL
+	 * height =  location to return height needed to render a cell, or NULL
 	 */
 	public void cellGetSize(Rectangle cellArea, int* xOffset, int* yOffset, int* width, int* height)
 	{
@@ -888,17 +763,12 @@ public class TreeViewColumn : ObjectGtk
 	 * Obtains the horizontal position and size of a cell in a column. If the
 	 * cell is not found in the column, start_pos and width are not changed and
 	 * FALSE is returned.
-	 * tree_column:
-	 *  a GtkTreeViewColumn
-	 * cell_renderer:
-	 *  a GtkCellRenderer
-	 * start_pos:
-	 *  return location for the horizontal position of cell within
+	 * Params:
+	 * cellRenderer =  a GtkCellRenderer
+	 * startPos =  return location for the horizontal position of cell within
 	 *  tree_column, may be NULL
-	 * width:
-	 *  return location for the width of cell, may be NULL
-	 * Returns:
-	 *  TRUE if cell belongs to tree_column.
+	 * width =  return location for the width of cell, may be NULL
+	 * Returns: TRUE if cell belongs to tree_column.
 	 */
 	public int cellGetPosition(CellRenderer cellRenderer, int* startPos, int* width)
 	{
@@ -910,10 +780,7 @@ public class TreeViewColumn : ObjectGtk
 	 * Returns TRUE if any of the cells packed into the tree_column are visible.
 	 * For this to be meaningful, you must first initialize the cells with
 	 * gtk_tree_view_column_cell_set_cell_data()
-	 * tree_column:
-	 *  A GtkTreeViewColumn
-	 * Returns:
-	 *  TRUE, if any of the cells packed into the tree_column are currently visible
+	 * Returns: TRUE, if any of the cells packed into the tree_column are currently visible
 	 */
 	public int cellIsVisible()
 	{
@@ -924,11 +791,9 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Sets the current keyboard focus to be at cell, if the column contains
 	 * 2 or more editable and activatable cells.
-	 * tree_column:
-	 *  A GtkTreeViewColumn
-	 * cell:
-	 *  A GtkCellRenderer
 	 * Since 2.2
+	 * Params:
+	 * cell =  A GtkCellRenderer
 	 */
 	public void focusCell(CellRenderer cell)
 	{
@@ -939,20 +804,25 @@ public class TreeViewColumn : ObjectGtk
 	/**
 	 * Flags the column, and the cell renderers added to this column, to have
 	 * their sizes renegotiated.
-	 * tree_column:
-	 *  A GtkTreeViewColumn
 	 * Since 2.8
-	 * Property Details
-	 * The "alignment" property
-	 *  "alignment" gfloat : Read / Write
-	 * X Alignment of the column header text or widget.
-	 * Allowed values: [0,1]
-	 * Default value: 0
 	 */
 	public void queueResize()
 	{
 		// void gtk_tree_view_column_queue_resize (GtkTreeViewColumn *tree_column);
 		gtk_tree_view_column_queue_resize(gtkTreeViewColumn);
+	}
+	
+	/**
+	 * Returns the GtkTreeView wherein tree_column has been inserted. If
+	 * column is currently not inserted in any tree view, NULL is
+	 * returned.
+	 * Since 2.12
+	 * Returns: The tree view wherein column has been inserted if any, NULL otherwise.
+	 */
+	public Widget getTreeView()
+	{
+		// GtkWidget* gtk_tree_view_column_get_tree_view (GtkTreeViewColumn *tree_column);
+		return new Widget( gtk_tree_view_column_get_tree_view(gtkTreeViewColumn) );
 	}
 	
 	

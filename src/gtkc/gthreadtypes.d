@@ -178,7 +178,7 @@ public struct GThread{}
  * The GMutex struct is an opaque data structure to represent a mutex
  * (mutual exclusion). It can be used to protect data against shared
  * access. Take for example the following function:
- * Example3.A function which will not work in a threaded environment
+ * Example2.A function which will not work in a threaded environment
  */
 public struct GMutex{}
 
@@ -188,7 +188,7 @@ public struct GMutex{}
  * advantage. It doesn't need to be created at run-time like a GMutex,
  * but can be defined at compile-time. Here is a shorter, easier and
  * safer version of our give_me_next_number() example:
- * Example6.Using GStaticMutex to simplify thread-safe programming
+ * Example5.Using GStaticMutex to simplify thread-safe programming
  */
 public struct GStaticMutex{}
 
@@ -204,8 +204,10 @@ public struct GStaticMutex{}
  * g_static_rec_mutex_lock_full().
  * Even though GStaticRecMutex is not opaque, it should only be used with
  * the following functions.
- * All of the g_static_rec_mutex_* functions can
- * be used even if g_thread_init() has not been called.
+ * All of the g_static_rec_mutex_* functions can be
+ * used even if g_thread_init() has not been called. Then they do
+ * nothing, apart from g_static_rec_mutex_trylock,
+ * which does nothing but returning TRUE.
  */
 public struct GStaticRecMutex{}
 
@@ -217,7 +219,7 @@ public struct GStaticRecMutex{}
  * desirable that several readers can read at once, whereas of course
  * only one writer may write at a time. Take a look at the following
  * example:
- * Example8.An array with access functions
+ * Example7.An array with access functions
  */
 public struct GStaticRWLock{}
 
@@ -228,7 +230,7 @@ public struct GStaticRWLock{}
  * condition to be false. If other threads change the state of this
  * condition they signal the GCond, and that causes the waiting threads
  * to be woken up.
- * Example9.Using GCond to block a thread until a condition is satisfied
+ * Example8.Using GCond to block a thread until a condition is satisfied
  * GCond* data_cond = NULL; /+* Must be initialized somewhere +/
  * GMutex* data_mutex = NULL; /+* Must be initialized somewhere +/
  * gpointer current_data = NULL;
@@ -246,7 +248,7 @@ public struct GCond{}
  * Suppose we don't want current_number to be shared
  * between the threads, but instead to be private to each thread. This can be
  * done as follows:
- * Example10.Using GPrivate for per-thread data
+ * Example9.Using GPrivate for per-thread data
  */
 public struct GPrivate{}
 
@@ -256,8 +258,8 @@ public struct GPrivate{}
  * significant advantage. It doesn't need to be created at run-time like
  * a GPrivate, but can be defined at compile-time. This is similar to
  * the difference between GMutex and GStaticMutex. Now look at our
- * give_me_next_number() example with GStaticPrivate:
- * Example11.Using GStaticPrivate for per-thread data
+ * give_me_next_number() example with ""
+ * Example10.Using GStaticPrivate for per-thread data
  */
 public struct GStaticPrivate{}
 
@@ -289,7 +291,7 @@ public struct GOnce
  * names of existing variables as the parameter - e.g. the name of the
  * variable you intent to protect with the lock. Look at our
  * give_me_next_number() example using the G_LOCK_* macros:
- * Example7.Using the G_LOCK_* convenience macros
+ * Example6.Using the G_LOCK_* convenience macros
  * G_LOCK_DEFINE (current_number);
  * int give_me_next_number ()
  *  {
@@ -376,11 +378,6 @@ public struct GOnce
  * arg:
  *  data to be passed to func
  * Since 2.4
- * See Also
- * GThreadPool
- * Thread pools.
- * GAsyncQueue
- * Send asynchronous messages between threads.
  */
 // TODO
 // #define g_once(once, func, arg)

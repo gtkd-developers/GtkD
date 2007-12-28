@@ -74,6 +74,7 @@ private import glib.ListSG;
 
 
 
+private import gtk.CheckButton;
 
 /**
  * Description
@@ -98,7 +99,7 @@ private import glib.ListSG;
  * To remove a GtkRadioButton from one group and make it part of a new one, use gtk_radio_button_set_group().
  * The group list does not need to be freed, as each GtkRadioButton will remove
  * itself and its list item when it is destroyed.
- * Example1.How to create a group of two radio buttons.
+ * Example10.How to create a group of two radio buttons.
  * void create_radio_buttons (void) {
 	 *  GtkWidget *window, *radio1, *radio2, *box, *entry;
 	 *  window = gtk_window_new (GTK_WINDOW_TOPLEVEL);
@@ -122,7 +123,6 @@ private import glib.ListSG;
  * Inside the "toggled" handler, gtk_toggle_button_get_active() can be used
  * to determine if the button has been selected or deselected.
  */
-private import gtk.CheckButton;
 public class RadioButton : CheckButton
 {
 	
@@ -173,15 +173,13 @@ public class RadioButton : CheckButton
 	
 	/**
 	 * Creates a new GtkRadioButton with a text label.
-	 * If mnemonic if true the label will be created using
-	 * gtk_label_new_with_mnemonic(), so underscores in label indicate the
-	 * mnemonic for the button.
-	 * an existing radio button group, or NULL if you are creating a new
-	 * group.
-	 * label:
-	 * the text label to display next to the radio button.
-	 * Returns:
-	 * a new radio button.
+	 * Params:
+	 *  group = an existing radio button group, or NULL if you are creating a new
+	 *  group.
+	 *  label = the text label to display next to the radio button.
+	 *  mnemonic = if true the label will be created using
+	 *  gtk_label_new_with_mnemonic(), so underscores in label indicate the
+	 *  mnemonic for the button.
 	 */
 	public this (ListSG group, char[] label, bool mnemonic=true)
 	{
@@ -206,15 +204,12 @@ public class RadioButton : CheckButton
 	/**
 	 * Creates a new GtkRadioButton with a text label, adding it to the same group
 	 * as group.
-	 * It mnemonic it true the label
-	 * will be created using gtk_label_new_with_mnemonic(), so underscores
-	 * in label indicate the mnemonic for the button.
-	 * group:
-	 * an existing GtkRadioButton.
-	 * label:
-	 * a text string to display next to the radio button.
-	 * Returns:
-	 * a new radio button.
+	 * Params:
+	 *  group = an existing GtkRadioButton.
+	 *  label = a text string to display next to the radio button.
+	 *  mnemonic = if true the label
+	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
+	 *  in label indicate the mnemonic for the button.
 	 */
 	public this (RadioButton radioButton, char[] label, bool mnemonic=true)
 	{
@@ -277,10 +272,8 @@ public class RadioButton : CheckButton
 	/**
 	 * Creates a new GtkRadioButton. To be of any practical value, a widget should
 	 * then be packed into the radio button.
-	 * group:
-	 * an existing radio button group, or NULL if you are creating a new group.
-	 * Returns:
-	 * a new radio button.
+	 * Params:
+	 * group = an existing radio button group, or NULL if you are creating a new group.
 	 */
 	public this (ListSG group)
 	{
@@ -291,14 +284,10 @@ public class RadioButton : CheckButton
 	/**
 	 * Creates a new GtkRadioButton, adding it to the same group as group. As
 	 * with gtk_radio_button_new(), a widget should be packed into the radio button.
-	 * group:
-	 * an existing GtkRadioButton.
-	 * Returns:
-	 * a new radio button.
 	 */
 	public this ()
 	{
-		// GtkWidget* gtk_radio_button_new_from_widget (GtkRadioButton *group);
+		// GtkWidget* gtk_radio_button_new_from_widget (GtkRadioButton *radio_group_member);
 		this(cast(GtkRadioButton*)gtk_radio_button_new_from_widget(gtkRadioButton) );
 	}
 	
@@ -312,10 +301,8 @@ public class RadioButton : CheckButton
 	 * the layout of your interface in any way, so if you are changing the group,
 	 * it is likely you will need to re-arrange the user interface to reflect these
 	 * changes.
-	 * radio_button:
-	 * a GtkRadioButton.
-	 * group:
-	 * an existing radio button group, such as one returned from
+	 * Params:
+	 * group = an existing radio button group, such as one returned from
 	 * gtk_radio_button_get_group().
 	 */
 	public void setGroup(ListSG group)
@@ -326,34 +313,7 @@ public class RadioButton : CheckButton
 	
 	/**
 	 * Retrieves the group assigned to a radio button.
-	 * radio_button:
-	 * a GtkRadioButton.
-	 * Returns:
-	 * a linked list containing all the radio buttons in the same group
-	 * as radio_button.
-	 * Property Details
-	 * The "group" property
-	 *  "group" GtkRadioButton : Write
-	 * Sets a new group for a radio button.
-	 * Signal Details
-	 * The "group-changed" signal
-	 * void user_function (GtkRadioButton *style,
-	 *  gpointer user_data) : Run First
-	 * Emitted when the group of radio buttons that a radio button belongs
-	 * to changes. This is emitted when a radio button switches from
-	 * being alone to being part of a group of 2 or more buttons, or
-	 * vice-versa, and when a buttton is moved from one group of 2 or
-	 * more buttons to a different one, but not when the composition
-	 * of the group that a button belongs to changes.
-	 * style:
-	 *  the object which received the signal
-	 * user_data:
-	 * user data set when the signal handler was connected.
-	 * Since 2.4
-	 * See Also
-	 * GtkOptionMenu
-	 * Another way of offering the user a single choice from
-	 * many.
+	 * Returns:a linked list containing all the radio buttons in the same groupas radio_button.
 	 */
 	public ListSG getGroup()
 	{

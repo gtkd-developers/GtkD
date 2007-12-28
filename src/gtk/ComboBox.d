@@ -85,6 +85,7 @@ private import gtk.CellLayoutT;
 
 
 
+private import gtk.Bin;
 
 /**
  * Description
@@ -109,7 +110,6 @@ private import gtk.CellLayoutT;
  * gtk_combo_box_prepend_text(), gtk_combo_box_remove_text() and
  * gtk_combo_box_get_active_text().
  */
-private import gtk.Bin;
 public class ComboBox : Bin, CellLayoutIF
 {
 	
@@ -174,9 +174,9 @@ public class ComboBox : Bin, CellLayoutIF
 	 * following convenience functions: gtk_combo_box_append_text(),
 	 * gtk_combo_box_insert_text(), gtk_combo_box_prepend_text() and
 	 * gtk_combo_box_remove_text().
+	 * Since 2.4
 	 * Returns:
 	 *  A new GtkComboBox.
-	 * Since 2.4
 	 */
 	public this (bool text=true)
 	{
@@ -192,6 +192,7 @@ public class ComboBox : Bin, CellLayoutIF
 		}
 	}
 	
+	/** */
 	public void setActiveText(char[] text, bool insert=false)
 	{
 		int currActive = getActive();
@@ -218,7 +219,7 @@ public class ComboBox : Bin, CellLayoutIF
 		}
 	}
 	
-	
+	/** */
 	int getIndex(char[] text)
 	{
 		TreeIter iter = new TreeIter();
@@ -246,6 +247,7 @@ public class ComboBox : Bin, CellLayoutIF
 		return end ? -1 : index;
 	}
 	
+	/** */
 	void prependOrReplaceText(char[] text)
 	{
 		int index = getIndex(text);
@@ -313,13 +315,41 @@ public class ComboBox : Bin, CellLayoutIF
 		}
 		onMoveActiveListeners ~= dlg;
 	}
-	extern(C) static void callBackMoveActive(GtkComboBox* comboboxStruct, GtkScrollType arg1, ComboBox comboBox)
+	extern(C) static void callBackMoveActive(GtkComboBox* widgetStruct, GtkScrollType scrollType, ComboBox comboBox)
 	{
 		bool consumed = false;
 		
 		foreach ( void delegate(GtkScrollType, ComboBox) dlg ; comboBox.onMoveActiveListeners )
 		{
-			dlg(arg1, comboBox);
+			dlg(scrollType, comboBox);
+		}
+		
+		return consumed;
+	}
+	
+	gboolean delegate(ComboBox)[] onPopdownListeners;
+	void addOnPopdown(gboolean delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("popdown" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"popdown",
+			cast(GCallback)&callBackPopdown,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["popdown"] = 1;
+		}
+		onPopdownListeners ~= dlg;
+	}
+	extern(C) static void callBackPopdown(GtkComboBox* buttonStruct, ComboBox comboBox)
+	{
+		bool consumed = false;
+		
+		foreach ( gboolean delegate(ComboBox) dlg ; comboBox.onPopdownListeners )
+		{
+			dlg(comboBox);
 		}
 		
 		return consumed;
@@ -341,7 +371,7 @@ public class ComboBox : Bin, CellLayoutIF
 		}
 		onPopupListeners ~= dlg;
 	}
-	extern(C) static void callBackPopup(GtkComboBox* comboboxStruct, ComboBox comboBox)
+	extern(C) static void callBackPopup(GtkComboBox* widgetStruct, ComboBox comboBox)
 	{
 		bool consumed = false;
 		
@@ -358,11 +388,9 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	/**
 	 * Creates a new GtkComboBox with the model initialized to model.
-	 * model:
-	 *  A GtkTreeModel.
-	 * Returns:
-	 *  A new GtkComboBox.
 	 * Since 2.4
+	 * Params:
+	 * model =  A GtkTreeModel.
 	 */
 	public this (TreeModel model)
 	{
@@ -371,14 +399,11 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	
 	/**
-	 * Returns the wrap width which is used to determine the number
-	 * of columns for the popup menu. If the wrap width is larger than
-	 * 1, the combo box is in table mode.
-	 * combo_box:
-	 *  A GtkComboBox.
-	 * Returns:
-	 *  the wrap width.
+	 * Returns the wrap width which is used to determine the number of columns
+	 * for the popup menu. If the wrap width is larger than 1, the combo box
+	 * is in table mode.
 	 * Since 2.6
+	 * Returns: the wrap width.
 	 */
 	public int getWrapWidth()
 	{
@@ -390,11 +415,9 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Sets the wrap width of combo_box to be width. The wrap width is basically
 	 * the preferred number of columns when you want the popup to be layed out
 	 * in a table.
-	 * combo_box:
-	 *  A GtkComboBox.
-	 * width:
-	 *  Preferred number of columns.
 	 * Since 2.4
+	 * Params:
+	 * width =  Preferred number of columns
 	 */
 	public void setWrapWidth(int width)
 	{
@@ -404,11 +427,8 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	/**
 	 * Returns the column with row span information for combo_box.
-	 * combo_box:
-	 *  A GtkComboBox.
-	 * Returns:
-	 *  the row span column.
 	 * Since 2.6
+	 * Returns: the row span column.
 	 */
 	public int getRowSpanColumn()
 	{
@@ -420,11 +440,9 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Sets the column with row span information for combo_box to be row_span.
 	 * The row span column contains integers which indicate how many rows
 	 * an item should span.
-	 * combo_box:
-	 *  A GtkComboBox.
-	 * row_span:
-	 *  A column in the model passed during construction.
 	 * Since 2.4
+	 * Params:
+	 * rowSpan =  A column in the model passed during construction.
 	 */
 	public void setRowSpanColumn(int rowSpan)
 	{
@@ -434,11 +452,8 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	/**
 	 * Returns the column with column span information for combo_box.
-	 * combo_box:
-	 *  A GtkComboBox.
-	 * Returns:
-	 *  the column span column.
 	 * Since 2.6
+	 * Returns: the column span column.
 	 */
 	public int getColumnSpanColumn()
 	{
@@ -450,11 +465,9 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Sets the column with column span information for combo_box to be
 	 * column_span. The column span column contains integers which indicate
 	 * how many columns an item should span.
-	 * combo_box:
-	 *  A GtkComboBox.
-	 * column_span:
-	 *  A column in the model passed during construction.
 	 * Since 2.4
+	 * Params:
+	 * columnSpan =  A column in the model passed during construction
 	 */
 	public void setColumnSpanColumn(int columnSpan)
 	{
@@ -468,12 +481,8 @@ public class ComboBox : Bin, CellLayoutIF
 	 * is not an immediate child of the root of the tree, this function returns
 	 * gtk_tree_path_get_indices (path)[0], where
 	 * path is the GtkTreePath of the active item.
-	 * combo_box:
-	 *  A GtkComboBox.
-	 * Returns:
-	 *  An integer which is the index of the currently active item, or
-	 * -1 if there's no active item.
 	 * Since 2.4
+	 * Returns: An integer which is the index of the currently active item,  or -1 if there's no active item.
 	 */
 	public int getActive()
 	{
@@ -483,12 +492,10 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	/**
 	 * Sets the active item of combo_box to be the item at index.
-	 * combo_box:
-	 *  A GtkComboBox.
-	 * index_:
-	 *  An index in the model passed during construction, or -1 to have
-	 * no active item.
 	 * Since 2.4
+	 * Params:
+	 * index =  An index in the model passed during construction, or -1 to have
+	 * no active item
 	 */
 	public void setActive(int index)
 	{
@@ -498,13 +505,10 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	/**
 	 * Sets iter to point to the current active item, if it exists.
-	 * combo_box:
-	 *  A GtkComboBox
-	 * iter:
-	 *  The uninitialized GtkTreeIter.
-	 * Returns:
-	 *  TRUE, if iter was set
 	 * Since 2.4
+	 * Params:
+	 * iter =  The uninitialized GtkTreeIter
+	 * Returns: TRUE, if iter was set
 	 */
 	public int getActiveIter(TreeIter iter)
 	{
@@ -515,11 +519,9 @@ public class ComboBox : Bin, CellLayoutIF
 	/**
 	 * Sets the current active item to be the one referenced by iter.
 	 * iter must correspond to a path of depth one.
-	 * combo_box:
-	 *  A GtkComboBox
-	 * iter:
-	 *  The GtkTreeIter.
 	 * Since 2.4
+	 * Params:
+	 * iter =  The GtkTreeIter
 	 */
 	public void setActiveIter(TreeIter iter)
 	{
@@ -529,11 +531,8 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	/**
 	 * Returns the GtkTreeModel which is acting as data source for combo_box.
-	 * combo_box:
-	 *  A GtkComboBox.
-	 * Returns:
-	 *  A GtkTreeModel which was passed during construction.
 	 * Since 2.4
+	 * Returns: A GtkTreeModel which was passed during construction.
 	 */
 	public TreeModel getModel()
 	{
@@ -545,13 +544,11 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Sets the model used by combo_box to be model. Will unset a previously set
 	 * model (if applicable). If model is NULL, then it will unset the model.
 	 * Note that this function does not clear the cell renderers, you have to
-	 * call gtk_combo_box_cell_layout_clear() yourself if you need to set up
-	 * different cell renderers for the new model.
-	 * combo_box:
-	 *  A GtkComboBox.
-	 * model:
-	 *  A GtkTreeModel.
+	 * call gtk_cell_layout_clear() yourself if you need to set up different
+	 * cell renderers for the new model.
 	 * Since 2.4
+	 * Params:
+	 * model =  A GtkTreeModel
 	 */
 	public void setModel(TreeModel model)
 	{
@@ -564,11 +561,9 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Appends string to the list of strings stored in combo_box. Note that
 	 * you can only use this function with combo boxes constructed with
 	 * gtk_combo_box_new_text().
-	 * combo_box:
-	 *  A GtkComboBox constructed using gtk_combo_box_new_text().
-	 * text:
-	 *  A string.
 	 * Since 2.4
+	 * Params:
+	 * text =  A string
 	 */
 	public void appendText(char[] text)
 	{
@@ -580,13 +575,10 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Inserts string at position in the list of strings stored in combo_box.
 	 * Note that you can only use this function with combo boxes constructed
 	 * with gtk_combo_box_new_text().
-	 * combo_box:
-	 *  A GtkComboBox constructed using gtk_combo_box_new_text().
-	 * position:
-	 *  An index to insert text.
-	 * text:
-	 *  A string.
 	 * Since 2.4
+	 * Params:
+	 * position =  An index to insert text
+	 * text =  A string
 	 */
 	public void insertText(int position, char[] text)
 	{
@@ -598,11 +590,9 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Prepends string to the list of strings stored in combo_box. Note that
 	 * you can only use this function with combo boxes constructed with
 	 * gtk_combo_box_new_text().
-	 * combo_box:
-	 *  A GtkComboBox constructed with gtk_combo_box_new_text().
-	 * text:
-	 *  A string.
 	 * Since 2.4
+	 * Params:
+	 * text =  A string
 	 */
 	public void prependText(char[] text)
 	{
@@ -613,11 +603,9 @@ public class ComboBox : Bin, CellLayoutIF
 	/**
 	 * Removes the string at position from combo_box. Note that you can only use
 	 * this function with combo boxes constructed with gtk_combo_box_new_text().
-	 * combo_box:
-	 *  A GtkComboBox constructed with gtk_combo_box_new_text().
-	 * position:
-	 *  Index of the item to remove.
 	 * Since 2.4
+	 * Params:
+	 * position =  Index of the item to remove
 	 */
 	public void removeText(int position)
 	{
@@ -630,11 +618,8 @@ public class ComboBox : Bin, CellLayoutIF
 	 * is selected. Note that you can only use this function with combo
 	 * boxes constructed with gtk_combo_box_new_text() and with
 	 * GtkComboBoxEntrys.
-	 * combo_box:
-	 *  A GtkComboBox constructed with gtk_combo_box_new_text().
-	 * Returns:
-	 *  a newly allocated string containing the currently active text.
 	 * Since 2.6
+	 * Returns: a newly allocated string containing the currently active text.
 	 */
 	public char[] getActiveText()
 	{
@@ -646,8 +631,6 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Pops up the menu or dropdown list of combo_box.
 	 * This function is mostly intended for use by accessibility technologies;
 	 * applications should have little use for it.
-	 * combo_box:
-	 *  a GtkComboBox
 	 * Since 2.4
 	 */
 	public void popup()
@@ -660,8 +643,6 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Hides the menu or dropdown list of combo_box.
 	 * This function is mostly intended for use by accessibility technologies;
 	 * applications should have little use for it.
-	 * combo_box:
-	 *  a GtkComboBox
 	 * Since 2.4
 	 */
 	public void popdown()
@@ -674,11 +655,8 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Gets the accessible object corresponding to the combo box's popup.
 	 * This function is mostly intended for use by accessibility technologies;
 	 * applications should have little use for it.
-	 * combo_box:
-	 *  a GtkComboBox
-	 * Returns:
-	 *  the accessible object corresponding to the combo box's popup.
 	 * Since 2.6
+	 * Returns: the accessible object corresponding to the combo box's popup.
 	 */
 	public ObjectAtk getPopupAccessible()
 	{
@@ -688,11 +666,8 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	/**
 	 * Returns the current row separator function.
-	 * combo_box:
-	 *  a GtkComboBox
-	 * Returns:
-	 *  the current row separator function.
 	 * Since 2.6
+	 * Returns: the current row separator function.
 	 */
 	public GtkTreeViewRowSeparatorFunc getRowSeparatorFunc()
 	{
@@ -704,15 +679,11 @@ public class ComboBox : Bin, CellLayoutIF
 	 * Sets the row separator function, which is used to determine
 	 * whether a row should be drawn as a separator. If the row separator
 	 * function is NULL, no separators are drawn. This is the default value.
-	 * combo_box:
-	 *  a GtkComboBox
-	 * func:
-	 *  a GtkTreeViewRowSeparatorFunc
-	 * data:
-	 *  user data to pass to func, or NULL
-	 * destroy:
-	 *  destroy notifier for data, or NULL
 	 * Since 2.6
+	 * Params:
+	 * func =  a GtkTreeViewRowSeparatorFunc
+	 * data =  user data to pass to func, or NULL
+	 * destroy =  destroy notifier for data, or NULL
 	 */
 	public void setRowSeparatorFunc(GtkTreeViewRowSeparatorFunc func, void* data, GtkDestroyNotify destroy)
 	{
@@ -723,11 +694,9 @@ public class ComboBox : Bin, CellLayoutIF
 	/**
 	 * Sets whether the popup menu should have a tearoff
 	 * menu item.
-	 * combo_box:
-	 *  a GtkComboBox
-	 * add_tearoffs:
-	 *  TRUE to add tearoff menu items
 	 * Since 2.6
+	 * Params:
+	 * addTearoffs =  TRUE to add tearoff menu items
 	 */
 	public void setAddTearoffs(int addTearoffs)
 	{
@@ -737,10 +706,7 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	/**
 	 * Gets the current value of the :add-tearoffs property.
-	 * combo_box:
-	 *  a GtkComboBox
-	 * Returns:
-	 *  the current value of the :add-tearoffs property.
+	 * Returns: the current value of the :add-tearoffs property.
 	 */
 	public int getAddTearoffs()
 	{
@@ -750,11 +716,9 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	/**
 	 * Sets the menu's title in tearoff mode.
-	 * combo_box:
-	 *  a GtkComboBox
-	 * title:
-	 *  a title for the menu in tearoff mode.
 	 * Since 2.10
+	 * Params:
+	 * title =  a title for the menu in tearoff mode
 	 */
 	public void setTitle(char[] title)
 	{
@@ -765,12 +729,8 @@ public class ComboBox : Bin, CellLayoutIF
 	/**
 	 * Gets the current title of the menu in tearoff mode. See
 	 * gtk_combo_box_set_add_tearoffs().
-	 * combo_box:
-	 *  a GtkComboBox
-	 * Returns:
-	 *  the menu's title in tearoff mode. This is an internal copy of the
-	 * string which must not be freed.
 	 * Since 2.10
+	 * Returns: the menu's title in tearoff mode. This is an internal copy of thestring which must not be freed.
 	 */
 	public char[] getTitle()
 	{
@@ -783,12 +743,10 @@ public class ComboBox : Bin, CellLayoutIF
 	 * the mouse. Making mouse clicks not grab focus is useful in places
 	 * like toolbars where you don't want the keyboard focus removed from
 	 * the main area of the application.
-	 * combo:
-	 *  a GtkComboBox
-	 * focus_on_click:
-	 *  whether the combo box grabs focus when clicked
-	 *  with the mouse
 	 * Since 2.6
+	 * Params:
+	 * focusOnClick =  whether the combo box grabs focus when clicked
+	 *  with the mouse
 	 */
 	public void setFocusOnClick(int focusOnClick)
 	{
@@ -799,28 +757,16 @@ public class ComboBox : Bin, CellLayoutIF
 	/**
 	 * Returns whether the combo box grabs focus when it is clicked
 	 * with the mouse. See gtk_combo_box_set_focus_on_click().
-	 * combo:
-	 *  a GtkComboBox
-	 * Returns:
-	 *  TRUE if the combo box grabs focus when it is
-	 *  clicked with the mouse.
 	 * Since 2.6
-	 * Property Details
-	 * The "active" property
-	 *  "active" gint : Read / Write
-	 * The item which is currently active. If the model is a non-flat treemodel,
-	 * and the active item is not an immediate child of the root of the tree,
-	 * this property has the value gtk_tree_path_get_indices (path)[0],
-	 * where path is the GtkTreePath of the active item.
-	 * Allowed values: >= -1
-	 * Default value: -1
-	 * Since 2.4
+	 * Returns: TRUE if the combo box grabs focus when it is  clicked with the mouse.
 	 */
 	public int getFocusOnClick()
 	{
 		// gboolean gtk_combo_box_get_focus_on_click (GtkComboBox *combo);
 		return gtk_combo_box_get_focus_on_click(gtkComboBox);
 	}
+	
+	
 	
 	
 	

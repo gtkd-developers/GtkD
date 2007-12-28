@@ -186,7 +186,7 @@ public class Types
 	 * Warning
 	 * gtk_type_init is deprecated and should not be used in newly-written code.
 	 * Initializes the data structures associated with GTK+ types.
-	 * debug_flags:
+	 * Params:
 	 */
 	public static void init(GTypeDebugFlags debugFlags)
 	{
@@ -198,11 +198,9 @@ public class Types
 	 * Warning
 	 * gtk_type_unique is deprecated and should not be used in newly-written code.
 	 * Creates a new, unique type.
-	 * parent_type:
-	 * if zero, a fundamental type is created.
-	 * gtkinfo:
-	 * Returns:
-	 * the new GtkType.
+	 * Params:
+	 * parentType = if zero, a fundamental type is created.
+	 * Returns:the new GtkType.
 	 */
 	public static GtkType unique(GtkType parentType, GtkTypeInfo* gtkinfo)
 	{
@@ -216,10 +214,9 @@ public class Types
 	/**
 	 * Returns a pointer pointing to the class of type or NULL if there was
 	 * any trouble identifying type. Initializes the class if necessary.
-	 * type:
-	 * a GtkType.
-	 * Returns:
-	 * pointer to the class.
+	 * Params:
+	 * type = a GtkType.
+	 * Returns:pointer to the class.
 	 */
 	public static void* clss(GtkType type)
 	{
@@ -234,10 +231,9 @@ public class Types
 	 * Returns NULL if you give it an invalid type. It allocates the object
 	 * out of the type's memory chunk if there is a memory chunk. The object
 	 * has all the proper initializers called.
-	 * type:
-	 * a GtkType.
-	 * Returns:
-	 * pointer to a GtkTypeObject.
+	 * Params:
+	 * type = a GtkType.
+	 * Returns:pointer to a GtkTypeObject.
 	 */
 	public static void* newTypes(GtkType type)
 	{
@@ -250,10 +246,9 @@ public class Types
 	 * Warning
 	 * gtk_type_enum_get_values is deprecated and should not be used in newly-written code.
 	 * If enum_type has values, then return a pointer to all of them.
-	 * enum_type:
-	 * a GtkType.
-	 * Returns:
-	 * GtkEnumValue*
+	 * Params:
+	 * enumType = a GtkType.
+	 * Returns:GtkEnumValue*
 	 */
 	public static GtkEnumValue* enumGetValues(GtkType enumType)
 	{
@@ -265,10 +260,9 @@ public class Types
 	 * Warning
 	 * gtk_type_flags_get_values is deprecated and should not be used in newly-written code.
 	 * If flags_type has values, then return a pointer to all of them.
-	 * flags_type:
-	 * a GtkType.
-	 * Returns:
-	 * GtkFlagValue*
+	 * Params:
+	 * flagsType = a GtkType.
+	 * Returns:GtkFlagValue*
 	 */
 	public static GtkFlagValue* flagsGetValues(GtkType flagsType)
 	{
@@ -280,12 +274,10 @@ public class Types
 	 * Warning
 	 * gtk_type_enum_find_value is deprecated and should not be used in newly-written code.
 	 * Returns a pointer to one of enum_type's GtkEnumValues's whose name (or nickname) matches value_name.
-	 * enum_type:
-	 * a GtkType.
-	 * value_name:
-	 * the name to look for.
-	 * Returns:
-	 * GtkEnumValue*
+	 * Params:
+	 * enumType = a GtkType.
+	 * valueName = the name to look for.
+	 * Returns:GtkEnumValue*
 	 */
 	public static GtkEnumValue* enumFindValue(GtkType enumType, char[] valueName)
 	{
@@ -297,12 +289,10 @@ public class Types
 	 * Warning
 	 * gtk_type_flags_find_value is deprecated and should not be used in newly-written code.
 	 * Returns a pointer to one of flag_type's GtkFlagValue's whose name (or nickname) matches value_name.
-	 * flags_type:
-	 * a GtkType.
-	 * value_name:
-	 * the name to look for.
-	 * Returns:
-	 * GtkFlagValue*
+	 * Params:
+	 * flagsType = a GtkType.
+	 * valueName = the name to look for.
+	 * Returns:GtkFlagValue*
 	 */
 	public static GtkFlagValue* flagsFindValue(GtkType flagsType, char[] valueName)
 	{

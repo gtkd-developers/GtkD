@@ -69,6 +69,7 @@ private import atk.StateSet;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -88,7 +89,6 @@ private import atk.StateSet;
  * the case of custom widgets, if the inherited AtkObject implementation
  * is insufficient, via instances of a new AtkObject subclass.
  */
-private import gobject.ObjectG;
 public class ObjectAtk : ObjectG
 {
 	
@@ -318,10 +318,9 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Registers the role specified by name.
-	 * name:
-	 *  a character string describing the new role.
-	 * Returns:
-	 *  an AtkRole for the new role.
+	 * Params:
+	 * name =  a character string describing the new role.
+	 * Returns: an AtkRole for the new role.
 	 */
 	public static AtkRole atkRoleRegister(char[] name)
 	{
@@ -337,11 +336,10 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets a reference to an object's AtkObject implementation, if
 	 * the object implements AtkObjectIface
-	 * implementor:
-	 *  The GObject instance which should implement AtkImplementorIface
+	 * Params:
+	 * implementor =  The GObject instance which should implement AtkImplementorIface
 	 * if a non-null return value is required.
-	 * Returns:
-	 *  a reference to an object's AtkObject implementation
+	 * Returns: a reference to an object's AtkObject implementation
 	 */
 	public static AtkObject* atkImplementorRefAccessible(AtkImplementor* implementor)
 	{
@@ -351,10 +349,7 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Gets the accessible name of the accessible.
-	 * accessible:
-	 *  an AtkObject
-	 * Returns:
-	 *  a character string representing the accessible name of the object.
+	 * Returns: a character string representing the accessible name of the object.
 	 */
 	public char[] getName()
 	{
@@ -364,11 +359,7 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Gets the accessible description of the accessible.
-	 * accessible:
-	 *  an AtkObject
-	 * Returns:
-	 *  a character string representing the accessible description
-	 * of the accessible.
+	 * Returns: a character string representing the accessible descriptionof the accessible.
 	 */
 	public char[] getDescription()
 	{
@@ -378,10 +369,7 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Gets the accessible parent of the accessible.
-	 * accessible:
-	 *  an AtkObject
-	 * Returns:
-	 *  a AtkObject representing the accessible parent of the accessible
+	 * Returns: a AtkObject representing the accessible parent of the accessible
 	 */
 	public AtkObject* getParent()
 	{
@@ -391,11 +379,7 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Gets the number of accessible children of the accessible.
-	 * accessible:
-	 *  an AtkObject
-	 * Returns:
-	 *  an integer representing the number of accessible children
-	 * of the accessible.
+	 * Returns: an integer representing the number of accessible childrenof the accessible.
 	 */
 	public int getNAccessibleChildren()
 	{
@@ -407,13 +391,9 @@ public class ObjectAtk : ObjectG
 	 * Gets a reference to the specified accessible child of the object.
 	 * The accessible children are 0-based so the first accessible child is
 	 * at index 0, the second at index 1 and so on.
-	 * accessible:
-	 *  an AtkObject
-	 * i:
-	 *  a gint representing the position of the child, starting from 0
-	 * Returns:
-	 *  an AtkObject representing the specified accessible child
-	 * of the accessible.
+	 * Params:
+	 * i =  a gint representing the position of the child, starting from 0
+	 * Returns: an AtkObject representing the specified accessible childof the accessible.
 	 */
 	public AtkObject* refAccessibleChild(int i)
 	{
@@ -423,10 +403,7 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Gets the AtkRelationSet associated with the object.
-	 * accessible:
-	 *  an AtkObject
-	 * Returns:
-	 *  an AtkRelationSet representing the relation set of the object.
+	 * Returns: an AtkRelationSet representing the relation set of the object.
 	 */
 	public AtkRelationSet* refRelationSet()
 	{
@@ -438,11 +415,7 @@ public class ObjectAtk : ObjectG
 	 * Warning
 	 * atk_object_get_layer is deprecated and should not be used in newly-written code. Use atk_component_get_layer instead.
 	 * Gets the layer of the accessible.
-	 * Returns:
-	 * accessible:
-	 *  an AtkObject
-	 * Returns:
-	 *  an AtkLayer which is the layer of the accessible
+	 * Returns:Returns: an AtkLayer which is the layer of the accessible
 	 */
 	public AtkLayer getLayer()
 	{
@@ -455,13 +428,7 @@ public class ObjectAtk : ObjectG
 	 * atk_object_get_mdi_zorder is deprecated and should not be used in newly-written code. Use atk_component_get_mdi_zorder instead.
 	 * Gets the zorder of the accessible. The value G_MININT will be returned
 	 * if the layer of the accessible is not ATK_LAYER_MDI.
-	 * Returns:
-	 * accessible:
-	 *  an AtkObject
-	 * Returns:
-	 *  a gint which is the zorder of the accessible, i.e. the depth at
-	 * which the component is shown in relation to other components in the same
-	 * container.
+	 * Returns:Returns: a gint which is the zorder of the accessible, i.e. the depth at which the component is shown in relation to other components in the same container.
 	 */
 	public int getMdiZorder()
 	{
@@ -471,10 +438,7 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Gets the role of the accessible.
-	 * accessible:
-	 *  an AtkObject
-	 * Returns:
-	 *  an AtkRole which is the role of the accessible
+	 * Returns: an AtkRole which is the role of the accessible
 	 */
 	public AtkRole getRole()
 	{
@@ -485,11 +449,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets a reference to the state set of the accessible; the caller must
 	 * unreference it when it is no longer needed.
-	 * accessible:
-	 *  an AtkObject
-	 * Returns:
-	 *  a reference to an AtkStateSet which is the state
-	 * set of the accessible
+	 * Returns: a reference to an AtkStateSet which is the stateset of the accessible
 	 */
 	public StateSet refStateSet()
 	{
@@ -500,10 +460,7 @@ public class ObjectAtk : ObjectG
 	/**
 	 * Gets the 0-based index of this accessible in its parent; returns -1 if the
 	 * accessible does not have an accessible parent.
-	 * accessible:
-	 *  an AtkObject
-	 * Returns:
-	 *  an integer which is the index of the accessible in its parent
+	 * Returns: an integer which is the index of the accessible in its parent
 	 */
 	public int getIndexInParent()
 	{
@@ -513,10 +470,8 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Sets the accessible name of the accessible.
-	 * accessible:
-	 *  an AtkObject
-	 * name:
-	 *  a character string to be set as the accessible name
+	 * Params:
+	 * name =  a character string to be set as the accessible name
 	 */
 	public void setName(char[] name)
 	{
@@ -526,10 +481,8 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Sets the accessible description of the accessible.
-	 * accessible:
-	 *  an AtkObject
-	 * description:
-	 *  a character string to be set as the accessible description
+	 * Params:
+	 * description =  a character string to be set as the accessible description
 	 */
 	public void setDescription(char[] description)
 	{
@@ -539,10 +492,8 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Sets the accessible parent of the accessible.
-	 * accessible:
-	 *  an AtkObject
-	 * parent:
-	 *  an AtkObject to be set as the accessible parent
+	 * Params:
+	 * parent =  an AtkObject to be set as the accessible parent
 	 */
 	public void setParent(AtkObject* parent)
 	{
@@ -552,10 +503,8 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Sets the role of the accessible.
-	 * accessible:
-	 *  an AtkObject
-	 * role:
-	 *  an AtkRole to be set as the role
+	 * Params:
+	 * role =  an AtkRole to be set as the role
 	 */
 	public void setRole(AtkRole role)
 	{
@@ -565,13 +514,9 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Specifies a function to be called when a property changes value.
-	 * accessible:
-	 *  an AtkObject
-	 * handler:
-	 *  a function to be called when a property changes its value
-	 * Returns:
-	 *  a guint which is the handler id used in
-	 * atk_object_remove_property_change_handler()
+	 * Params:
+	 * handler =  a function to be called when a property changes its value
+	 * Returns: a guint which is the handler id used in atk_object_remove_property_change_handler()
 	 */
 	public uint connectPropertyChangeHandler(AtkPropertyChangeHandler* handler)
 	{
@@ -581,10 +526,8 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Removes a property change handler.
-	 * accessible:
-	 *  an AtkObject
-	 * handler_id:
-	 *  a guint which identifies the handler to be removed.
+	 * Params:
+	 * handlerId =  a guint which identifies the handler to be removed.
 	 */
 	public void removePropertyChangeHandler(uint handlerId)
 	{
@@ -594,12 +537,9 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Emits a state-change signal for the specified state.
-	 * accessible:
-	 *  an AtkObject
-	 * state:
-	 *  an AtkState whose state is changed
-	 * value:
-	 *  a gboolean which indicates whether the state is being set on or off
+	 * Params:
+	 * state =  an AtkState whose state is changed
+	 * value =  a gboolean which indicates whether the state is being set on or off
 	 */
 	public void notifyStateChange(AtkState state, int value)
 	{
@@ -612,10 +552,8 @@ public class ObjectAtk : ObjectG
 	 * It does initialization required for the new object. It is intended
 	 * that this function should called only in the ..._new() functions used
 	 * to create an instance of a subclass of AtkObject
-	 * accessible:
-	 *  a AtkObject
-	 * data:
-	 *  a gpointer which identifies the object for which the AtkObject was created.
+	 * Params:
+	 * data =  a gpointer which identifies the object for which the AtkObject was created.
 	 */
 	public void initialize(void* data)
 	{
@@ -625,14 +563,10 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Adds a relationship of the specified type with the specified target.
-	 * object:
-	 *  The AtkObject to which an AtkRelation is to be added.
-	 * relationship:
-	 *  The AtkRelationType of the relation
-	 * target:
-	 *  The AtkObject which is to be the target of the relation.
-	 * Returns:
-	 * TRUE if the relationship is added.
+	 * Params:
+	 * relationship =  The AtkRelationType of the relation
+	 * target =  The AtkObject which is to be the target of the relation.
+	 * Returns:TRUE if the relationship is added.
 	 */
 	public int addRelationship(AtkRelationType relationship, AtkObject* target)
 	{
@@ -642,14 +576,10 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Removes a relationship of the specified type with the specified target.
-	 * object:
-	 *  The AtkObject from which an AtkRelation is to be removed.
-	 * relationship:
-	 *  The AtkRelationType of the relation
-	 * target:
-	 *  The AtkObject which is the target of the relation to be removed.
-	 * Returns:
-	 * TRUE if the relationship is removed.
+	 * Params:
+	 * relationship =  The AtkRelationType of the relation
+	 * target =  The AtkObject which is the target of the relation to be removed.
+	 * Returns:TRUE if the relationship is removed.
 	 */
 	public int removeRelationship(AtkRelationType relationship, AtkObject* target)
 	{
@@ -662,13 +592,7 @@ public class ObjectAtk : ObjectG
 	 * name-value pairs. As such these attributes may be considered weakly-typed properties or annotations,
 	 * as distinct from strongly-typed object data available via other get/set methods.
 	 * Not all objects have explicit "name-value pair" AtkAttributeSet properties.
-	 * Returns:
-	 * accessible:
-	 *  An AtkObject.
-	 * Returns:
-	 *  an AtkAttributeSet consisting of all explicit properties/annotations applied to
-	 * the object, or an empty set if the object has no name-value pair attributes assigned to it.
-	 * Since ATK 1.12
+	 * Returns:Returns: an AtkAttributeSet consisting of all explicit properties/annotations applied to the object, or an empty set if the object has no name-value pair attributes assigned to it.Since ATK 1.12
 	 */
 	public AtkAttributeSet* getAttributes()
 	{
@@ -678,10 +602,9 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Gets the description string describing the AtkRole role.
-	 * role:
-	 *  The AtkRole whose name is required
-	 * Returns:
-	 *  the string describing the AtkRole
+	 * Params:
+	 * role =  The AtkRole whose name is required
+	 * Returns: the string describing the AtkRole
 	 */
 	public static char[] atkRoleGetName(AtkRole role)
 	{
@@ -691,10 +614,9 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Gets the localized description string describing the AtkRole role.
-	 * role:
-	 *  The AtkRole whose localized name is required
-	 * Returns:
-	 *  the localized string describing the AtkRole
+	 * Params:
+	 * role =  The AtkRole whose localized name is required
+	 * Returns: the localized string describing the AtkRole
 	 */
 	public static char[] atkRoleGetLocalizedName(AtkRole role)
 	{
@@ -704,18 +626,9 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 * Get the AtkRole type corresponding to a rolew name.
-	 * name:
-	 *  a string which is the (non-localized) name of an ATK role.
-	 * Returns:
-	 *  the AtkRole enumerated type corresponding to the specified
-	 * name,
-	 *  or ATK_ROLE_INVALID if no matching role is found.
-	 * Property Details
-	 * The "accessible-component-layer" property
-	 *  "accessible-component-layer" gint : Read
-	 * The accessible layer of this object.
-	 * Allowed values: >= 0
-	 * Default value: 0
+	 * Params:
+	 * name =  a string which is the (non-localized) name of an ATK role.
+	 * Returns: the AtkRole enumerated type corresponding to the specifiedname, or ATK_ROLE_INVALID if no matching role is found.
 	 */
 	public static AtkRole atkRoleForName(char[] name)
 	{

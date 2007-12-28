@@ -75,6 +75,7 @@ private import gtk.FileChooser;;
 
 
 
+private import gtk.VBox;
 
 /**
  * Description
@@ -87,7 +88,6 @@ private import gtk.FileChooser;;
  *  own. Instead, you should use the functions that work on a
  *  GtkFileChooser.
  */
-private import gtk.VBox;
 public class FileChooserWidget : VBox
 {
 	
@@ -138,6 +138,7 @@ public class FileChooserWidget : VBox
 	
 	private FileChooser fileChooser;
 	
+	/** */
 	public FileChooser getFileChooser()
 	{
 		if ( fileChooser is null )
@@ -155,11 +156,9 @@ public class FileChooserWidget : VBox
 	 * Creates a new GtkFileChooserWidget. This is a file chooser widget that can
 	 * be embedded in custom windows, and it is the same widget that is used by
 	 * GtkFileChooserDialog.
-	 * action:
-	 *  Open or save mode for the widget
-	 * Returns:
-	 *  a new GtkFileChooserWidget
 	 * Since 2.4
+	 * Params:
+	 * action =  Open or save mode for the widget
 	 */
 	public this (GtkFileChooserAction action)
 	{
@@ -173,15 +172,10 @@ public class FileChooserWidget : VBox
 	 * non-local files. This is a file chooser widget that can be embedded in
 	 * custom windows and it is the same widget that is used by
 	 * GtkFileChooserDialog.
-	 * action:
-	 *  Open or save mode for the widget
-	 * backend:
-	 *  The name of the specific filesystem backend to use.
-	 * Returns:
-	 *  a new GtkFileChooserWidget
 	 * Since 2.4
-	 * See Also
-	 *  GtkFileChooser, GtkFileChooserDialog
+	 * Params:
+	 * action =  Open or save mode for the widget
+	 * backend =  The name of the specific filesystem backend to use.
 	 */
 	public this (GtkFileChooserAction action, char[] backend)
 	{
