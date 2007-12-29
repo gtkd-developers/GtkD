@@ -54,8 +54,21 @@ You may now run any of these demos directly from their parent folder:
     $ cd cairo
     $ ./cairo_clock
 
-6) Build your own programs using the provided dsss.conf files from any of the
-demo folders.
+6) [OPTIONAL]. Build the documentation. Go to the root folder of the project
+and run:
+
+    $ ./makedocs.sh
+
+All docs will get put in the "docs" subfolder. Alternatively, you may build
+the documentation directly with DSSS:
+
+    $ dsss build --doc
+
+Docs will be put in the "dsss_docs" subfolder of each folder in "src".
+
+7) Build your own programs using the provided dsss.conf files from any of the
+demo folders. Pay special attention to the buildflags used to build the 
+demos. "-L-ldl" and "-no-export-dynamic" are necessary.
 
 Have fun!
 

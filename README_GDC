@@ -1,0 +1,8 @@
+Notes on building gtkD and gtkD-based apps with GDC.
+=======================================================================
+
+Support for building gtkD using GDC is limited at the moment. Supported
+versions are GDC 0.22 and 0.23. Versions 0.24 and 0.25 are NOT supported
+and will not work. If you're using DSSS to build your own programs with
+gtkD, please append "-no-export-dynamic" to your buildflags.
+
