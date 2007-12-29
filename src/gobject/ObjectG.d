@@ -177,7 +177,7 @@ public class ObjectG
 	public: void setDataFull(char[] key, gpointer data)
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
-		version(Tango) gc.addRoot(data);
+		version(Tango) GC.addRoot(data);
 		else std.gc.addRoot(data);
 		g_object_set_data_full(gObject, Str.toStringz(key), data, cast(GDestroyNotify)&destroyNotify);
 	}
@@ -189,7 +189,7 @@ public class ObjectG
 			//writefln("objectg.destroy entry");
 			//writefln("objectg.destroy");
 			//writefln("removing gc.root to %s",data);
-			version(Tango) gc.removeRoot(data);
+			version(Tango) GC.removeRoot(data);
 			else std.gc.removeRoot(data);
 			//writefln("objectg.destroy exit");
 		}

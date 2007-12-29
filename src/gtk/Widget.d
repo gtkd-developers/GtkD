@@ -319,7 +319,7 @@ public class Widget : ObjectGtk
 		gdk_window_set_cursor(cast(GdkWindow*)(*pt), null);
 	}
 	
-	version(Tango)import tango.text.convert.Integer;
+	version(Tango)static import tango.text.convert.Integer;
 	
 	/**
 	 * Modifies the font for this widget.
@@ -335,7 +335,7 @@ public class Widget : ObjectGtk
 			modifyFont(
 			new PgFontDescription(
 			PgFontDescription.fromString(
-			family ~ " " ~ itoa(s,size)
+			family ~ " " ~ tango.text.convert.Integer.itoa(s,size)
 			)
 			)
 			);
