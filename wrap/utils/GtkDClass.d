@@ -2120,8 +2120,18 @@ public class GtkDClass
 					{
 						if ( !isInterface )
 						{
-							externalDeclarations ~= fun.getExternal(convParms, wrapper.getAliases());
-						}
+                                                        char[] externalDeclaration = fun.getExternal(convParms, wrapper.getAliases());
+
+                                                        /* Don't add repeated declarations. */
+                                                        bool addme = true;
+                                                        
+                                                        foreach(ref char[] declaration; externalDeclarations)
+                                                        {
+                                                                if(externalDeclaration == declaration) addme = false;
+                                                        }
+
+                                                        if(addme) externalDeclarations ~= externalDeclaration;
+                                                }
 						// body
 						if ( !convParms.omitCode(fun.name) )
 						{
