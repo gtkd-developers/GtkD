@@ -2157,7 +2157,8 @@ public class GtkDClass
 								}
 								member ~= "}";
 							}
-							checkIfDupFunction(fun);
+                                                        /* Duplicated functions are omitted. */
+							if(checkIfDupFunction(fun)) member.length = 0;
 							checkIfGtkStructs(fun);
 						}
 					}
@@ -2168,16 +2169,18 @@ public class GtkDClass
 		return member;
 	}
 
-	private void checkIfDupFunction(Funct fun)
+	private bool checkIfDupFunction(Funct fun)
 	{
 		char[] signature = fun.convName~'('~fun.getWrapParametersType()~')';
 		if ( signature in functionSignatures )
 		{
 			writefln("######################## duplicated function %s", signature);
+                        return true;
 		}
 		else
 		{
 			functionSignatures[signature] = 1;
+                        return false;
 		}
 	}
 
