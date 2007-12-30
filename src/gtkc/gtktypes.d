@@ -40,7 +40,7 @@ alias void GtkContainerClass;
 
 /* GtkDragResult is now an enum. */
 //alias int GtkDragResult;
-alias int GtkTooltip;
+//alias int GtkTooltip;
 
 
 /**
@@ -1402,6 +1402,13 @@ public enum GtkCellRendererMode
 }
 alias GtkCellRendererMode CellRendererMode;
 
+public enum GtkCellRendererAccelMode
+{
+	MODE_GTK,
+	MODE_OTHER
+}
+alias GtkCellRendererAccelMode CellRendererAccelMode;
+
 public enum GtkPackDirection
 {
 	LTR,
@@ -1410,28 +1417,6 @@ public enum GtkPackDirection
 	BTT
 }
 alias GtkPackDirection PackDirection;
-
-/**
- * An enumeration representing directional movements within a menu.
- * GTK_MENU_DIR_PARENT
- * To the parent menu shell.
- * GTK_MENU_DIR_CHILD
- * To the submenu, if any, associated with the item.
- * GTK_MENU_DIR_NEXT
- * To the next menu item.
- * GTK_MENU_DIR_PREV
- * To the previous menu item.
- * Property Details
- * The "take-focus" property
- */
-public enum GtkMenuDirectionType
-{
-	PARENT,
-	CHILD,
-	NEXT,
-	PREV
-}
-alias GtkMenuDirectionType MenuDirectionType;
 
 /**
  * Warning
@@ -1589,6 +1574,28 @@ public enum GtkSizeGroupMode
 	BOTH
 }
 alias GtkSizeGroupMode SizeGroupMode;
+
+/**
+ * An enumeration representing directional movements within a menu.
+ * GTK_MENU_DIR_PARENT
+ * To the parent menu shell.
+ * GTK_MENU_DIR_CHILD
+ * To the submenu, if any, associated with the item.
+ * GTK_MENU_DIR_NEXT
+ * To the next menu item.
+ * GTK_MENU_DIR_PREV
+ * To the previous menu item.
+ * Property Details
+ * The "take-focus" property
+ */
+public enum GtkMenuDirectionType
+{
+	PARENT,
+	CHILD,
+	NEXT,
+	PREV
+}
+alias GtkMenuDirectionType MenuDirectionType;
 
 /**
  * Tells about the state of the object.
@@ -2264,6 +2271,12 @@ public struct GtkStatusbar{}
 
 /**
  * Main Gtk struct.
+ */
+public struct GtkStatusIcon{}
+
+
+/**
+ * Main Gtk struct.
  * This should not be accessed directly. Use the accessor functions below.
  */
 public struct GtkButton{}
@@ -2289,6 +2302,26 @@ public struct GtkRadioButton{}
  * The GtkToggleButton struct contains private data only, and should be manipulated using the functions below.
  */
 public struct GtkToggleButton{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkLinkButton struct contains private data only, and should be
+ * manipulated using the functions below.
+ */
+public struct GtkLinkButton{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkScaleButton{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkVolumeButton{}
 
 
 /**
@@ -2966,6 +2999,12 @@ public struct GtkCellEditableIface{}
 /**
  * Main Gtk struct.
  */
+public struct GtkCellRendererAccel{}
+
+
+/**
+ * Main Gtk struct.
+ */
 public struct GtkCellRendererCombo{}
 
 
@@ -2979,6 +3018,12 @@ public struct GtkCellRendererPixbuf{}
  * Main Gtk struct.
  */
 public struct GtkCellRendererProgress{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkCellRendererSpin{}
 
 
 /**
@@ -3036,17 +3081,6 @@ public struct GtkMenuBar{}
  * Main Gtk struct.
  */
 public struct GtkMenuItem{}
-
-
-/**
- * Main Gtk struct.
- * The GtkMenuShell struct contains the following fields.
- * (These fields should be considered read-only. They should never be set by
- * an application.)
- * GList *children;
- * The list of GtkMenuItem objects contained by this GtkMenuShell.
- */
-public struct GtkMenuShell{}
 
 
 /**
@@ -3320,63 +3354,6 @@ public struct GtkColorSelection{}
  * Connect a handler for the clicked event.
  */
 public struct GtkColorSelectionDialog{}
-
-
-/**
- * Main Gtk struct.
- * Warning
- * GtkFileSelection is deprecated and should not be used in newly-written code.
- * The GtkFileSelection struct contains the following GtkWidget fields:
- * GtkWidget*dir_list;
- * GtkWidget*file_list;
- * GtkWidget*selection_entry;
- * GtkWidget*selection_text;
- * GtkWidget*main_vbox;
- * GtkWidget*ok_button;
- * GtkWidget*cancel_button;
- * the two main buttons that signals should be connected
- */
-public struct GtkFileSelection{}
-// GtkWidget *dirList;
-// GtkFileSelection.html
-// GtkWidget *fileList;
-// GtkFileSelection.html
-// GtkWidget *selectionEntry;
-// GtkFileSelection.html
-// GtkWidget *selectionText;
-// GtkFileSelection.html
-// GtkWidget *mainVbox;
-// GtkFileSelection.html
-// GtkWidget *okButton;
-// GtkFileSelection.html
-// GtkWidget *cancelButton;
-// GtkFileSelection.html
-// GtkWidget *helpButton;
-// GtkFileSelection.html
-// GtkWidget *historyPulldown;
-// GtkFileSelection.html
-// GtkWidget *historyMenu;
-// GtkFileSelection.html
-// GList *historyList;
-// GtkFileSelection.html
-// GtkWidget *fileopDialog;
-// GtkFileSelection.html
-// GtkWidget *fileopEntry;
-// GtkFileSelection.html
-// char *fileopFile;
-// GtkFileSelection.html
-// void* cmplState;
-// GtkFileSelection.html
-// GtkWidget *fileopCDir;
-// GtkFileSelection.html
-// GtkWidget *fileopDelFile;
-// GtkFileSelection.html
-// GtkWidget *fileopRenFile;
-// GtkFileSelection.html
-// GtkWidget *buttonArea;
-// GtkFileSelection.html
-// GtkWidget *actionArea;
-// GtkFileSelection.html
 
 
 /**
@@ -3804,28 +3781,8 @@ public struct GtkSizeGroup{}
 
 /**
  * Main Gtk struct.
- * Warning
- * GtkTooltips is deprecated and should not be used in newly-written code.
- * Holds information about a group of tooltips. Fields should be changed using the functions provided, rather than directly accessing the struct's members.
  */
-public struct GtkTooltips{}
-
-
-/**
- * Warning
- * GtkTooltipsData has been deprecated since version 2.12 and should not be used in newly-written code.
- * tooltips is the GtkTooltips group that this tooltip belongs to. widget is the GtkWidget that this tooltip data is associated with. tip_text is a string containing the tooltip message itself.
- * tip_private is a string that is not shown as the default tooltip. Instead, this message may be more informative and go towards forming a context-sensitive help system for your application. (FIXME: how to actually "switch on" private tips?)
- */
-public struct GtkTooltipsData{}
-// GtkTooltips *tooltips;
-// GtkTooltips.html
-// GtkWidget *widget;
-// GtkTooltips.html
-// char *tipText;
-// GtkTooltips.html
-// char *tipPrivate;
-// GtkTooltips.html
+public struct GtkTooltip{}
 
 
 /**
@@ -3917,6 +3874,17 @@ public struct GtkContainer{}
  * should be accessed using the functions below.
  */
 public struct GtkItem{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkMenuShell struct contains the following fields.
+ * (These fields should be considered read-only. They should never be set by
+ * an application.)
+ * GList *children;
+ * The list of GtkMenuItem objects contained by this GtkMenuShell.
+ */
+public struct GtkMenuShell{}
 
 
 /**
@@ -4226,6 +4194,63 @@ public struct GtkVRuler{}
 /**
  * Main Gtk struct.
  * Warning
+ * GtkFileSelection is deprecated and should not be used in newly-written code.
+ * The GtkFileSelection struct contains the following GtkWidget fields:
+ * GtkWidget*dir_list;
+ * GtkWidget*file_list;
+ * GtkWidget*selection_entry;
+ * GtkWidget*selection_text;
+ * GtkWidget*main_vbox;
+ * GtkWidget*ok_button;
+ * GtkWidget*cancel_button;
+ * the two main buttons that signals should be connected
+ */
+public struct GtkFileSelection{}
+// GtkWidget *dirList;
+// GtkFileSelection.html
+// GtkWidget *fileList;
+// GtkFileSelection.html
+// GtkWidget *selectionEntry;
+// GtkFileSelection.html
+// GtkWidget *selectionText;
+// GtkFileSelection.html
+// GtkWidget *mainVbox;
+// GtkFileSelection.html
+// GtkWidget *okButton;
+// GtkFileSelection.html
+// GtkWidget *cancelButton;
+// GtkFileSelection.html
+// GtkWidget *helpButton;
+// GtkFileSelection.html
+// GtkWidget *historyPulldown;
+// GtkFileSelection.html
+// GtkWidget *historyMenu;
+// GtkFileSelection.html
+// GList *historyList;
+// GtkFileSelection.html
+// GtkWidget *fileopDialog;
+// GtkFileSelection.html
+// GtkWidget *fileopEntry;
+// GtkFileSelection.html
+// char *fileopFile;
+// GtkFileSelection.html
+// void* cmplState;
+// GtkFileSelection.html
+// GtkWidget *fileopCDir;
+// GtkFileSelection.html
+// GtkWidget *fileopDelFile;
+// GtkFileSelection.html
+// GtkWidget *fileopRenFile;
+// GtkFileSelection.html
+// GtkWidget *buttonArea;
+// GtkFileSelection.html
+// GtkWidget *actionArea;
+// GtkFileSelection.html
+
+
+/**
+ * Main Gtk struct.
+ * Warning
  * GtkItemFactory is deprecated and should not be used in newly-written code.
  */
 public struct GtkItemFactory{}
@@ -4299,6 +4324,32 @@ public struct GtkItemFactoryItem{}
 // GtkItemFactory.html
 // GSList *widgets;
 // GtkItemFactory.html
+
+
+/**
+ * Main Gtk struct.
+ * Warning
+ * GtkTooltips is deprecated and should not be used in newly-written code.
+ * Holds information about a group of tooltips. Fields should be changed using the functions provided, rather than directly accessing the struct's members.
+ */
+public struct GtkTooltips{}
+
+
+/**
+ * Warning
+ * GtkTooltipsData has been deprecated since version 2.12 and should not be used in newly-written code.
+ * tooltips is the GtkTooltips group that this tooltip belongs to. widget is the GtkWidget that this tooltip data is associated with. tip_text is a string containing the tooltip message itself.
+ * tip_private is a string that is not shown as the default tooltip. Instead, this message may be more informative and go towards forming a context-sensitive help system for your application. (FIXME: how to actually "switch on" private tips?)
+ */
+public struct GtkTooltipsData{}
+// GtkTooltips *tooltips;
+// GtkTooltips.html
+// GtkWidget *widget;
+// GtkTooltips.html
+// char *tipText;
+// GtkTooltips.html
+// char *tipPrivate;
+// GtkTooltips.html
 
 
 /**
@@ -5812,6 +5863,19 @@ public typedef extern(C) void  function (GtkAboutDialog*, char[], void*) GtkAbou
  */
 // gint (*GtkAssistantPageFunc) (gint current_page,  gpointer data);
 public typedef extern(C) int  function (int, void*) GtkAssistantPageFunc;
+
+/*
+ * The type of a function which is called when the GtkLinkButton is
+ * clicked.
+ * button:
+ * the GtkLinkButton which was clicked
+ * link_:
+ * user_data:
+ * user data that was passed when the function was registered
+ *  with gtk_link_button_set_uri_hook()
+ */
+// void (*GtkLinkButtonUriFunc) (GtkLinkButton *button,  const gchar *link_,  gpointer user_data);
+public typedef extern(C) void  function (GtkLinkButton*, char[], void*) GtkLinkButtonUriFunc;
 
 /*
  * A function which decides whether the row indicated by iter matches a given

@@ -823,6 +823,33 @@ extern(C)
 	void function(GtkStatusbar* statusbar, gboolean setting)gtk_statusbar_set_has_resize_grip;
 	gboolean function(GtkStatusbar* statusbar)gtk_statusbar_get_has_resize_grip;
 	
+	// gtk.StatusIcon
+	
+	GtkStatusIcon* function()gtk_status_icon_new;
+	GtkStatusIcon* function(GdkPixbuf* pixbuf)gtk_status_icon_new_from_pixbuf;
+	GtkStatusIcon* function(gchar* filename)gtk_status_icon_new_from_file;
+	GtkStatusIcon* function(gchar* stockId)gtk_status_icon_new_from_stock;
+	GtkStatusIcon* function(gchar* iconName)gtk_status_icon_new_from_icon_name;
+	void function(GtkStatusIcon* statusIcon, GdkPixbuf* pixbuf)gtk_status_icon_set_from_pixbuf;
+	void function(GtkStatusIcon* statusIcon, gchar* filename)gtk_status_icon_set_from_file;
+	void function(GtkStatusIcon* statusIcon, gchar* stockId)gtk_status_icon_set_from_stock;
+	void function(GtkStatusIcon* statusIcon, gchar* iconName)gtk_status_icon_set_from_icon_name;
+	GtkImageType function(GtkStatusIcon* statusIcon)gtk_status_icon_get_storage_type;
+	GdkPixbuf* function(GtkStatusIcon* statusIcon)gtk_status_icon_get_pixbuf;
+	gchar* function(GtkStatusIcon* statusIcon)gtk_status_icon_get_stock;
+	gchar* function(GtkStatusIcon* statusIcon)gtk_status_icon_get_icon_name;
+	gint function(GtkStatusIcon* statusIcon)gtk_status_icon_get_size;
+	void function(GtkStatusIcon* statusIcon, GdkScreen* screen)gtk_status_icon_set_screen;
+	GdkScreen* function(GtkStatusIcon* statusIcon)gtk_status_icon_get_screen;
+	void function(GtkStatusIcon* statusIcon, gchar* tooltipText)gtk_status_icon_set_tooltip;
+	void function(GtkStatusIcon* statusIcon, gboolean visible)gtk_status_icon_set_visible;
+	gboolean function(GtkStatusIcon* statusIcon)gtk_status_icon_get_visible;
+	void function(GtkStatusIcon* statusIcon, gboolean blinking)gtk_status_icon_set_blinking;
+	gboolean function(GtkStatusIcon* statusIcon)gtk_status_icon_get_blinking;
+	gboolean function(GtkStatusIcon* statusIcon)gtk_status_icon_is_embedded;
+	void function(GtkMenu* menu, gint* x, gint* y, gboolean* pushIn, gpointer userData)gtk_status_icon_position_menu;
+	gboolean function(GtkStatusIcon* statusIcon, GdkScreen** screen, GdkRectangle* area, GtkOrientation* orientation)gtk_status_icon_get_geometry;
+	
 	// gtk.Button
 	
 	GtkWidget* function()gtk_button_new;
@@ -880,6 +907,27 @@ extern(C)
 	void function(GtkToggleButton* toggleButton, gboolean isActive)gtk_toggle_button_set_active;
 	gboolean function(GtkToggleButton* toggleButton)gtk_toggle_button_get_inconsistent;
 	void function(GtkToggleButton* toggleButton, gboolean setting)gtk_toggle_button_set_inconsistent;
+	
+	// gtk.LinkButton
+	
+	GtkWidget* function(gchar* uri)gtk_link_button_new;
+	GtkWidget* function(gchar* uri, gchar* label)gtk_link_button_new_with_label;
+	gchar* function(GtkLinkButton* linkButton)gtk_link_button_get_uri;
+	void function(GtkLinkButton* linkButton, gchar* uri)gtk_link_button_set_uri;
+	GtkLinkButtonUriFunc function(GtkLinkButtonUriFunc func, gpointer data, GDestroyNotify destroy)gtk_link_button_set_uri_hook;
+	
+	// gtk.ScaleButton
+	
+	GtkWidget* function(GtkIconSize size, gdouble min, gdouble max, gdouble step, gchar** icons)gtk_scale_button_new;
+	void function(GtkScaleButton* button, GtkAdjustment* adjustment)gtk_scale_button_set_adjustment;
+	void function(GtkScaleButton* button, gchar** icons)gtk_scale_button_set_icons;
+	void function(GtkScaleButton* button, gdouble value)gtk_scale_button_set_value;
+	GtkAdjustment* function(GtkScaleButton* button)gtk_scale_button_get_adjustment;
+	gdouble function(GtkScaleButton* button)gtk_scale_button_get_value;
+	
+	// gtk.VolumeButton
+	
+	GtkWidget* function()gtk_volume_button_new;
 	
 	// gtk.Entry
 	
@@ -1664,6 +1712,10 @@ extern(C)
 	void function(GtkCellEditable* cellEditable)gtk_cell_editable_editing_done;
 	void function(GtkCellEditable* cellEditable)gtk_cell_editable_remove_widget;
 	
+	// gtk.CellRendererAccel
+	
+	GtkCellRenderer* function()gtk_cell_renderer_accel_new;
+	
 	// gtk.CellRendererCombo
 	
 	GtkCellRenderer* function()gtk_cell_renderer_combo_new;
@@ -1675,6 +1727,10 @@ extern(C)
 	// gtk.CellRendererProgress
 	
 	GtkCellRenderer* function()gtk_cell_renderer_progress_new;
+	
+	// gtk.CellRendererSpin
+	
+	GtkCellRenderer* function()gtk_cell_renderer_spin_new;
 	
 	// gtk.CellRendererText
 	
@@ -1832,20 +1888,6 @@ extern(C)
 	void function(GtkMenuItem* menuItem, gint allocation)gtk_menu_item_toggle_size_allocate;
 	gboolean function(GtkMenuItem* menuItem)gtk_menu_item_get_right_justified;
 	GtkWidget* function(GtkMenuItem* menuItem)gtk_menu_item_get_submenu;
-	
-	// gtk.MenuShell
-	
-	void function(GtkMenuShell* menuShell, GtkWidget* child)gtk_menu_shell_append;
-	void function(GtkMenuShell* menuShell, GtkWidget* child)gtk_menu_shell_prepend;
-	void function(GtkMenuShell* menuShell, GtkWidget* child, gint position)gtk_menu_shell_insert;
-	void function(GtkMenuShell* menuShell)gtk_menu_shell_deactivate;
-	void function(GtkMenuShell* menuShell, GtkWidget* menuItem)gtk_menu_shell_select_item;
-	void function(GtkMenuShell* menuShell, gboolean searchSensitive)gtk_menu_shell_select_first;
-	void function(GtkMenuShell* menuShell)gtk_menu_shell_deselect;
-	void function(GtkMenuShell* menuShell, GtkWidget* menuItem, gboolean forceDeactivate)gtk_menu_shell_activate_item;
-	void function(GtkMenuShell* menuShell)gtk_menu_shell_cancel;
-	void function(GtkMenuShell* menuShell, gboolean takeFocus)gtk_menu_shell_set_take_focus;
-	gboolean function(GtkMenuShell* menuShell)gtk_menu_shell_get_take_focus;
 	
 	// gtk.ImageMenuItem
 	
@@ -2129,18 +2171,6 @@ extern(C)
 	// gtk.ColorSelectionDialog
 	
 	GtkWidget* function(gchar* title)gtk_color_selection_dialog_new;
-	
-	// gtk.FileSelection
-	
-	GtkWidget* function(gchar* title)gtk_file_selection_new;
-	void function(GtkFileSelection* filesel, gchar* filename)gtk_file_selection_set_filename;
-	gchar* function(GtkFileSelection* filesel)gtk_file_selection_get_filename;
-	void function(GtkFileSelection* filesel, gchar* pattern)gtk_file_selection_complete;
-	void function(GtkFileSelection* filesel)gtk_file_selection_show_fileop_buttons;
-	void function(GtkFileSelection* filesel)gtk_file_selection_hide_fileop_buttons;
-	gchar** function(GtkFileSelection* filesel)gtk_file_selection_get_selections;
-	void function(GtkFileSelection* filesel, gboolean selectMultiple)gtk_file_selection_set_select_multiple;
-	gboolean function(GtkFileSelection* filesel)gtk_file_selection_get_select_multiple;
 	
 	// gtk.FileChooser
 	
@@ -2537,16 +2567,15 @@ extern(C)
 	void function(GtkSizeGroup* sizeGroup, GtkWidget* widget)gtk_size_group_remove_widget;
 	GSList* function(GtkSizeGroup* sizeGroup)gtk_size_group_get_widgets;
 	
-	// gtk.Tooltips
+	// gtk.Tooltip
 	
-	GtkTooltips* function()gtk_tooltips_new;
-	void function(GtkTooltips* tooltips)gtk_tooltips_enable;
-	void function(GtkTooltips* tooltips)gtk_tooltips_disable;
-	void function(GtkTooltips* tooltips, guint delay)gtk_tooltips_set_delay;
-	void function(GtkTooltips* tooltips, GtkWidget* widget, gchar* tipText, gchar* tipPrivate)gtk_tooltips_set_tip;
-	GtkTooltipsData* function(GtkWidget* widget)gtk_tooltips_data_get;
-	void function(GtkTooltips* tooltips)gtk_tooltips_force_window;
-	gboolean function(GtkWindow* tipWindow, GtkTooltips** tooltips, GtkWidget** currentWidget)gtk_tooltips_get_info_from_tip_window;
+	void function(GtkTooltip* tooltip, gchar* markup)gtk_tooltip_set_markup;
+	void function(GtkTooltip* tooltip, gchar* text)gtk_tooltip_set_text;
+	void function(GtkTooltip* tooltip, GdkPixbuf* pixbuf)gtk_tooltip_set_icon;
+	void function(GtkTooltip* tooltip, gchar* stockId, GtkIconSize size)gtk_tooltip_set_icon_from_stock;
+	void function(GtkTooltip* tooltip, GtkWidget* customWidget)gtk_tooltip_set_custom;
+	void function(GdkDisplay* display)gtk_tooltip_trigger_tooltip_query;
+	void function(GtkTooltip* tooltip, GdkRectangle* rect)gtk_tooltip_set_tip_area;
 	
 	// gtk.Viewport
 	
@@ -2632,6 +2661,20 @@ extern(C)
 	void function(GtkItem* item)gtk_item_select;
 	void function(GtkItem* item)gtk_item_deselect;
 	void function(GtkItem* item)gtk_item_toggle;
+	
+	// gtk.MenuShell
+	
+	void function(GtkMenuShell* menuShell, GtkWidget* child)gtk_menu_shell_append;
+	void function(GtkMenuShell* menuShell, GtkWidget* child)gtk_menu_shell_prepend;
+	void function(GtkMenuShell* menuShell, GtkWidget* child, gint position)gtk_menu_shell_insert;
+	void function(GtkMenuShell* menuShell)gtk_menu_shell_deactivate;
+	void function(GtkMenuShell* menuShell, GtkWidget* menuItem)gtk_menu_shell_select_item;
+	void function(GtkMenuShell* menuShell, gboolean searchSensitive)gtk_menu_shell_select_first;
+	void function(GtkMenuShell* menuShell)gtk_menu_shell_deselect;
+	void function(GtkMenuShell* menuShell, GtkWidget* menuItem, gboolean forceDeactivate)gtk_menu_shell_activate_item;
+	void function(GtkMenuShell* menuShell)gtk_menu_shell_cancel;
+	void function(GtkMenuShell* menuShell, gboolean takeFocus)gtk_menu_shell_set_take_focus;
+	gboolean function(GtkMenuShell* menuShell)gtk_menu_shell_get_take_focus;
 	
 	// gtk.Misc
 	
@@ -2922,6 +2965,18 @@ extern(C)
 	
 	GtkWidget* function()gtk_vruler_new;
 	
+	// gtk.FileSelection
+	
+	GtkWidget* function(gchar* title)gtk_file_selection_new;
+	void function(GtkFileSelection* filesel, gchar* filename)gtk_file_selection_set_filename;
+	gchar* function(GtkFileSelection* filesel)gtk_file_selection_get_filename;
+	void function(GtkFileSelection* filesel, gchar* pattern)gtk_file_selection_complete;
+	void function(GtkFileSelection* filesel)gtk_file_selection_show_fileop_buttons;
+	void function(GtkFileSelection* filesel)gtk_file_selection_hide_fileop_buttons;
+	gchar** function(GtkFileSelection* filesel)gtk_file_selection_get_selections;
+	void function(GtkFileSelection* filesel, gboolean selectMultiple)gtk_file_selection_set_select_multiple;
+	gboolean function(GtkFileSelection* filesel)gtk_file_selection_get_select_multiple;
+	
 	// gtk.ItemFactory
 	
 	GtkItemFactory* function(GType containerType, gchar* path, GtkAccelGroup* accelGroup)gtk_item_factory_new;
@@ -2946,6 +3001,17 @@ extern(C)
 	GtkItemFactory* function(gchar* path)gtk_item_factory_from_path;
 	void function(gchar* ifactoryPath, gchar* path)gtk_item_factories_path_delete;
 	void function(GtkItemFactory* ifactory, GtkTranslateFunc func, gpointer data, GtkDestroyNotify notify)gtk_item_factory_set_translate_func;
+	
+	// gtk.Tooltips
+	
+	GtkTooltips* function()gtk_tooltips_new;
+	void function(GtkTooltips* tooltips)gtk_tooltips_enable;
+	void function(GtkTooltips* tooltips)gtk_tooltips_disable;
+	void function(GtkTooltips* tooltips, guint delay)gtk_tooltips_set_delay;
+	void function(GtkTooltips* tooltips, GtkWidget* widget, gchar* tipText, gchar* tipPrivate)gtk_tooltips_set_tip;
+	GtkTooltipsData* function(GtkWidget* widget)gtk_tooltips_data_get;
+	void function(GtkTooltips* tooltips)gtk_tooltips_force_window;
+	gboolean function(GtkWindow* tipWindow, GtkTooltips** tooltips, GtkWidget** currentWidget)gtk_tooltips_get_info_from_tip_window;
 	
 	// gtk.Progress
 	
@@ -3639,6 +3705,30 @@ Symbol[] gtkLinks =
 	{ "gtk_statusbar_remove",  cast(void**)& gtk_statusbar_remove},
 	{ "gtk_statusbar_set_has_resize_grip",  cast(void**)& gtk_statusbar_set_has_resize_grip},
 	{ "gtk_statusbar_get_has_resize_grip",  cast(void**)& gtk_statusbar_get_has_resize_grip},
+	{ "gtk_status_icon_new",  cast(void**)& gtk_status_icon_new},
+	{ "gtk_status_icon_new_from_pixbuf",  cast(void**)& gtk_status_icon_new_from_pixbuf},
+	{ "gtk_status_icon_new_from_file",  cast(void**)& gtk_status_icon_new_from_file},
+	{ "gtk_status_icon_new_from_stock",  cast(void**)& gtk_status_icon_new_from_stock},
+	{ "gtk_status_icon_new_from_icon_name",  cast(void**)& gtk_status_icon_new_from_icon_name},
+	{ "gtk_status_icon_set_from_pixbuf",  cast(void**)& gtk_status_icon_set_from_pixbuf},
+	{ "gtk_status_icon_set_from_file",  cast(void**)& gtk_status_icon_set_from_file},
+	{ "gtk_status_icon_set_from_stock",  cast(void**)& gtk_status_icon_set_from_stock},
+	{ "gtk_status_icon_set_from_icon_name",  cast(void**)& gtk_status_icon_set_from_icon_name},
+	{ "gtk_status_icon_get_storage_type",  cast(void**)& gtk_status_icon_get_storage_type},
+	{ "gtk_status_icon_get_pixbuf",  cast(void**)& gtk_status_icon_get_pixbuf},
+	{ "gtk_status_icon_get_stock",  cast(void**)& gtk_status_icon_get_stock},
+	{ "gtk_status_icon_get_icon_name",  cast(void**)& gtk_status_icon_get_icon_name},
+	{ "gtk_status_icon_get_size",  cast(void**)& gtk_status_icon_get_size},
+	{ "gtk_status_icon_set_screen",  cast(void**)& gtk_status_icon_set_screen},
+	{ "gtk_status_icon_get_screen",  cast(void**)& gtk_status_icon_get_screen},
+	{ "gtk_status_icon_set_tooltip",  cast(void**)& gtk_status_icon_set_tooltip},
+	{ "gtk_status_icon_set_visible",  cast(void**)& gtk_status_icon_set_visible},
+	{ "gtk_status_icon_get_visible",  cast(void**)& gtk_status_icon_get_visible},
+	{ "gtk_status_icon_set_blinking",  cast(void**)& gtk_status_icon_set_blinking},
+	{ "gtk_status_icon_get_blinking",  cast(void**)& gtk_status_icon_get_blinking},
+	{ "gtk_status_icon_is_embedded",  cast(void**)& gtk_status_icon_is_embedded},
+	{ "gtk_status_icon_position_menu",  cast(void**)& gtk_status_icon_position_menu},
+	{ "gtk_status_icon_get_geometry",  cast(void**)& gtk_status_icon_get_geometry},
 	{ "gtk_button_new",  cast(void**)& gtk_button_new},
 	{ "gtk_button_new_with_label",  cast(void**)& gtk_button_new_with_label},
 	{ "gtk_button_new_with_mnemonic",  cast(void**)& gtk_button_new_with_mnemonic},
@@ -3685,6 +3775,18 @@ Symbol[] gtkLinks =
 	{ "gtk_toggle_button_set_active",  cast(void**)& gtk_toggle_button_set_active},
 	{ "gtk_toggle_button_get_inconsistent",  cast(void**)& gtk_toggle_button_get_inconsistent},
 	{ "gtk_toggle_button_set_inconsistent",  cast(void**)& gtk_toggle_button_set_inconsistent},
+	{ "gtk_link_button_new",  cast(void**)& gtk_link_button_new},
+	{ "gtk_link_button_new_with_label",  cast(void**)& gtk_link_button_new_with_label},
+	{ "gtk_link_button_get_uri",  cast(void**)& gtk_link_button_get_uri},
+	{ "gtk_link_button_set_uri",  cast(void**)& gtk_link_button_set_uri},
+	{ "gtk_link_button_set_uri_hook",  cast(void**)& gtk_link_button_set_uri_hook},
+	{ "gtk_scale_button_new",  cast(void**)& gtk_scale_button_new},
+	{ "gtk_scale_button_set_adjustment",  cast(void**)& gtk_scale_button_set_adjustment},
+	{ "gtk_scale_button_set_icons",  cast(void**)& gtk_scale_button_set_icons},
+	{ "gtk_scale_button_set_value",  cast(void**)& gtk_scale_button_set_value},
+	{ "gtk_scale_button_get_adjustment",  cast(void**)& gtk_scale_button_get_adjustment},
+	{ "gtk_scale_button_get_value",  cast(void**)& gtk_scale_button_get_value},
+	{ "gtk_volume_button_new",  cast(void**)& gtk_volume_button_new},
 	{ "gtk_entry_new",  cast(void**)& gtk_entry_new},
 	{ "gtk_entry_new_with_max_length",  cast(void**)& gtk_entry_new_with_max_length},
 	{ "gtk_entry_set_text",  cast(void**)& gtk_entry_set_text},
@@ -4372,9 +4474,11 @@ Symbol[] gtkLinks =
 	{ "gtk_cell_editable_start_editing",  cast(void**)& gtk_cell_editable_start_editing},
 	{ "gtk_cell_editable_editing_done",  cast(void**)& gtk_cell_editable_editing_done},
 	{ "gtk_cell_editable_remove_widget",  cast(void**)& gtk_cell_editable_remove_widget},
+	{ "gtk_cell_renderer_accel_new",  cast(void**)& gtk_cell_renderer_accel_new},
 	{ "gtk_cell_renderer_combo_new",  cast(void**)& gtk_cell_renderer_combo_new},
 	{ "gtk_cell_renderer_pixbuf_new",  cast(void**)& gtk_cell_renderer_pixbuf_new},
 	{ "gtk_cell_renderer_progress_new",  cast(void**)& gtk_cell_renderer_progress_new},
+	{ "gtk_cell_renderer_spin_new",  cast(void**)& gtk_cell_renderer_spin_new},
 	{ "gtk_cell_renderer_text_new",  cast(void**)& gtk_cell_renderer_text_new},
 	{ "gtk_cell_renderer_text_set_fixed_height_from_font",  cast(void**)& gtk_cell_renderer_text_set_fixed_height_from_font},
 	{ "gtk_cell_renderer_toggle_new",  cast(void**)& gtk_cell_renderer_toggle_new},
@@ -4502,17 +4606,6 @@ Symbol[] gtkLinks =
 	{ "gtk_menu_item_toggle_size_allocate",  cast(void**)& gtk_menu_item_toggle_size_allocate},
 	{ "gtk_menu_item_get_right_justified",  cast(void**)& gtk_menu_item_get_right_justified},
 	{ "gtk_menu_item_get_submenu",  cast(void**)& gtk_menu_item_get_submenu},
-	{ "gtk_menu_shell_append",  cast(void**)& gtk_menu_shell_append},
-	{ "gtk_menu_shell_prepend",  cast(void**)& gtk_menu_shell_prepend},
-	{ "gtk_menu_shell_insert",  cast(void**)& gtk_menu_shell_insert},
-	{ "gtk_menu_shell_deactivate",  cast(void**)& gtk_menu_shell_deactivate},
-	{ "gtk_menu_shell_select_item",  cast(void**)& gtk_menu_shell_select_item},
-	{ "gtk_menu_shell_select_first",  cast(void**)& gtk_menu_shell_select_first},
-	{ "gtk_menu_shell_deselect",  cast(void**)& gtk_menu_shell_deselect},
-	{ "gtk_menu_shell_activate_item",  cast(void**)& gtk_menu_shell_activate_item},
-	{ "gtk_menu_shell_cancel",  cast(void**)& gtk_menu_shell_cancel},
-	{ "gtk_menu_shell_set_take_focus",  cast(void**)& gtk_menu_shell_set_take_focus},
-	{ "gtk_menu_shell_get_take_focus",  cast(void**)& gtk_menu_shell_get_take_focus},
 	{ "gtk_image_menu_item_set_image",  cast(void**)& gtk_image_menu_item_set_image},
 	{ "gtk_image_menu_item_get_image",  cast(void**)& gtk_image_menu_item_get_image},
 	{ "gtk_image_menu_item_new",  cast(void**)& gtk_image_menu_item_new},
@@ -4736,15 +4829,6 @@ Symbol[] gtkLinks =
 	{ "gtk_color_selection_set_color",  cast(void**)& gtk_color_selection_set_color},
 	{ "gtk_color_selection_get_color",  cast(void**)& gtk_color_selection_get_color},
 	{ "gtk_color_selection_dialog_new",  cast(void**)& gtk_color_selection_dialog_new},
-	{ "gtk_file_selection_new",  cast(void**)& gtk_file_selection_new},
-	{ "gtk_file_selection_set_filename",  cast(void**)& gtk_file_selection_set_filename},
-	{ "gtk_file_selection_get_filename",  cast(void**)& gtk_file_selection_get_filename},
-	{ "gtk_file_selection_complete",  cast(void**)& gtk_file_selection_complete},
-	{ "gtk_file_selection_show_fileop_buttons",  cast(void**)& gtk_file_selection_show_fileop_buttons},
-	{ "gtk_file_selection_hide_fileop_buttons",  cast(void**)& gtk_file_selection_hide_fileop_buttons},
-	{ "gtk_file_selection_get_selections",  cast(void**)& gtk_file_selection_get_selections},
-	{ "gtk_file_selection_set_select_multiple",  cast(void**)& gtk_file_selection_set_select_multiple},
-	{ "gtk_file_selection_get_select_multiple",  cast(void**)& gtk_file_selection_get_select_multiple},
 	{ "gtk_file_chooser_set_action",  cast(void**)& gtk_file_chooser_set_action},
 	{ "gtk_file_chooser_get_action",  cast(void**)& gtk_file_chooser_get_action},
 	{ "gtk_file_chooser_set_local_only",  cast(void**)& gtk_file_chooser_set_local_only},
@@ -5029,14 +5113,13 @@ Symbol[] gtkLinks =
 	{ "gtk_size_group_add_widget",  cast(void**)& gtk_size_group_add_widget},
 	{ "gtk_size_group_remove_widget",  cast(void**)& gtk_size_group_remove_widget},
 	{ "gtk_size_group_get_widgets",  cast(void**)& gtk_size_group_get_widgets},
-	{ "gtk_tooltips_new",  cast(void**)& gtk_tooltips_new},
-	{ "gtk_tooltips_enable",  cast(void**)& gtk_tooltips_enable},
-	{ "gtk_tooltips_disable",  cast(void**)& gtk_tooltips_disable},
-	{ "gtk_tooltips_set_delay",  cast(void**)& gtk_tooltips_set_delay},
-	{ "gtk_tooltips_set_tip",  cast(void**)& gtk_tooltips_set_tip},
-	{ "gtk_tooltips_data_get",  cast(void**)& gtk_tooltips_data_get},
-	{ "gtk_tooltips_force_window",  cast(void**)& gtk_tooltips_force_window},
-	{ "gtk_tooltips_get_info_from_tip_window",  cast(void**)& gtk_tooltips_get_info_from_tip_window},
+	{ "gtk_tooltip_set_markup",  cast(void**)& gtk_tooltip_set_markup},
+	{ "gtk_tooltip_set_text",  cast(void**)& gtk_tooltip_set_text},
+	{ "gtk_tooltip_set_icon",  cast(void**)& gtk_tooltip_set_icon},
+	{ "gtk_tooltip_set_icon_from_stock",  cast(void**)& gtk_tooltip_set_icon_from_stock},
+	{ "gtk_tooltip_set_custom",  cast(void**)& gtk_tooltip_set_custom},
+	{ "gtk_tooltip_trigger_tooltip_query",  cast(void**)& gtk_tooltip_trigger_tooltip_query},
+	{ "gtk_tooltip_set_tip_area",  cast(void**)& gtk_tooltip_set_tip_area},
 	{ "gtk_viewport_new",  cast(void**)& gtk_viewport_new},
 	{ "gtk_viewport_get_hadjustment",  cast(void**)& gtk_viewport_get_hadjustment},
 	{ "gtk_viewport_get_vadjustment",  cast(void**)& gtk_viewport_get_vadjustment},
@@ -5101,6 +5184,17 @@ Symbol[] gtkLinks =
 	{ "gtk_item_select",  cast(void**)& gtk_item_select},
 	{ "gtk_item_deselect",  cast(void**)& gtk_item_deselect},
 	{ "gtk_item_toggle",  cast(void**)& gtk_item_toggle},
+	{ "gtk_menu_shell_append",  cast(void**)& gtk_menu_shell_append},
+	{ "gtk_menu_shell_prepend",  cast(void**)& gtk_menu_shell_prepend},
+	{ "gtk_menu_shell_insert",  cast(void**)& gtk_menu_shell_insert},
+	{ "gtk_menu_shell_deactivate",  cast(void**)& gtk_menu_shell_deactivate},
+	{ "gtk_menu_shell_select_item",  cast(void**)& gtk_menu_shell_select_item},
+	{ "gtk_menu_shell_select_first",  cast(void**)& gtk_menu_shell_select_first},
+	{ "gtk_menu_shell_deselect",  cast(void**)& gtk_menu_shell_deselect},
+	{ "gtk_menu_shell_activate_item",  cast(void**)& gtk_menu_shell_activate_item},
+	{ "gtk_menu_shell_cancel",  cast(void**)& gtk_menu_shell_cancel},
+	{ "gtk_menu_shell_set_take_focus",  cast(void**)& gtk_menu_shell_set_take_focus},
+	{ "gtk_menu_shell_get_take_focus",  cast(void**)& gtk_menu_shell_get_take_focus},
 	{ "gtk_misc_set_alignment",  cast(void**)& gtk_misc_set_alignment},
 	{ "gtk_misc_set_padding",  cast(void**)& gtk_misc_set_padding},
 	{ "gtk_misc_get_alignment",  cast(void**)& gtk_misc_get_alignment},
@@ -5342,6 +5436,15 @@ Symbol[] gtkLinks =
 	{ "gtk_ruler_get_range",  cast(void**)& gtk_ruler_get_range},
 	{ "gtk_hruler_new",  cast(void**)& gtk_hruler_new},
 	{ "gtk_vruler_new",  cast(void**)& gtk_vruler_new},
+	{ "gtk_file_selection_new",  cast(void**)& gtk_file_selection_new},
+	{ "gtk_file_selection_set_filename",  cast(void**)& gtk_file_selection_set_filename},
+	{ "gtk_file_selection_get_filename",  cast(void**)& gtk_file_selection_get_filename},
+	{ "gtk_file_selection_complete",  cast(void**)& gtk_file_selection_complete},
+	{ "gtk_file_selection_show_fileop_buttons",  cast(void**)& gtk_file_selection_show_fileop_buttons},
+	{ "gtk_file_selection_hide_fileop_buttons",  cast(void**)& gtk_file_selection_hide_fileop_buttons},
+	{ "gtk_file_selection_get_selections",  cast(void**)& gtk_file_selection_get_selections},
+	{ "gtk_file_selection_set_select_multiple",  cast(void**)& gtk_file_selection_set_select_multiple},
+	{ "gtk_file_selection_get_select_multiple",  cast(void**)& gtk_file_selection_get_select_multiple},
 	{ "gtk_item_factory_new",  cast(void**)& gtk_item_factory_new},
 	{ "gtk_item_factory_construct",  cast(void**)& gtk_item_factory_construct},
 	{ "gtk_item_factory_add_foreign",  cast(void**)& gtk_item_factory_add_foreign},
@@ -5364,6 +5467,14 @@ Symbol[] gtkLinks =
 	{ "gtk_item_factory_from_path",  cast(void**)& gtk_item_factory_from_path},
 	{ "gtk_item_factories_path_delete",  cast(void**)& gtk_item_factories_path_delete},
 	{ "gtk_item_factory_set_translate_func",  cast(void**)& gtk_item_factory_set_translate_func},
+	{ "gtk_tooltips_new",  cast(void**)& gtk_tooltips_new},
+	{ "gtk_tooltips_enable",  cast(void**)& gtk_tooltips_enable},
+	{ "gtk_tooltips_disable",  cast(void**)& gtk_tooltips_disable},
+	{ "gtk_tooltips_set_delay",  cast(void**)& gtk_tooltips_set_delay},
+	{ "gtk_tooltips_set_tip",  cast(void**)& gtk_tooltips_set_tip},
+	{ "gtk_tooltips_data_get",  cast(void**)& gtk_tooltips_data_get},
+	{ "gtk_tooltips_force_window",  cast(void**)& gtk_tooltips_force_window},
+	{ "gtk_tooltips_get_info_from_tip_window",  cast(void**)& gtk_tooltips_get_info_from_tip_window},
 	{ "gtk_progress_set_show_text",  cast(void**)& gtk_progress_set_show_text},
 	{ "gtk_progress_set_text_alignment",  cast(void**)& gtk_progress_set_text_alignment},
 	{ "gtk_progress_set_format_string",  cast(void**)& gtk_progress_set_format_string},

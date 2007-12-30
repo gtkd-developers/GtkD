@@ -48,7 +48,7 @@ alias void GtkContainerClass;
 
 /* GtkDragResult is now an enum. */
 //alias int GtkDragResult;
-alias int GtkTooltip;
+//alias int GtkTooltip;
 
 addTypedefs: end
 
@@ -1306,6 +1306,69 @@ prefix: gtk_statusbar_
 prefix: gtk_
 outFile: Statusbar
 
+file: GtkStatusIcon.html
+struct: GtkStatusIcon
+class: StatusIcon
+prefix: gtk_status_icon_
+prefix: gtk_
+import: glib.Str
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+import: gdk.Screen
+structWrap: GdkScreen* Screen
+import: gdk.Rectangle
+structWrap: GdkRectangle* Rectangle
+
+nocode: gtk_status_icon_new_from_stock
+nocode: gtk_status_icon_new_from_file
+nocode: gtk_status_icon_new_from_icon_name
+#new_from_icon_name conflicts with new_from_file.
+
+code: start
+	/**
+	 * Creates a status icon displaying a stock icon. Sample stock icon
+	 * names are StockID.OPEN, StockID.QUIT. You can register your
+	 * own stock icon names, see gtk_icon_factory_add_default() and
+	 * gtk_icon_factory_add().
+	 * Since 2.10
+	 * Params:
+	 *  stock_id = a stock icon id
+	 * Returns:
+	 *  a new GtkStatusIcon
+	 */
+	public this (StockID stockID)
+	{
+		// GtkStatusIcon* gtk_status_icon_new_from_stock (const gchar *stock_id);
+		this(cast(GtkStatusIcon*)gtk_status_icon_new_from_stock(StockDesc[stockID].ptr) );
+	}
+
+	/**
+	 * Creates a status icon displaying an icon from the current icon theme.
+	 * If the current icon theme is changed, the icon will be updated
+	 * appropriately.
+	 * Since 2.10
+	 * Params:
+	 *  iconName =  an icon name
+	 *  loadFromFile = treat iconName as a filename and load that image
+	 *  with gtk_status_icon_new_from_file.
+	 */
+	public this (char[] iconName, bool loadFromFile = false)
+	{
+		//TODO: look at a better way to do this.
+		if(loadFromFile)
+		{
+			// GtkStatusIcon* gtk_status_icon_new_from_file (const gchar *filename);
+			this(cast(GtkStatusIcon*)gtk_status_icon_new_from_file(Str.toStringz(iconName)) );
+		}
+		else
+		{
+			// GtkStatusIcon* gtk_status_icon_new_from_icon_name (const gchar *icon_name);
+			this(cast(GtkStatusIcon*)gtk_status_icon_new_from_icon_name(Str.toStringz(iconName)) );
+		}
+	}
+code: end
+outFile: StatusIcon
+
 ###########################################################
 ### Buttons and Toggles ###################################
 ###########################################################
@@ -1596,6 +1659,38 @@ code: start
 code: end
 
 outFile: ToggleButton
+
+file: GtkLinkButton.html
+struct: GtkLinkButton
+class: LinkButton
+prefix: gtk_link_button_
+prefix: gtk_
+import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+outFile: LinkButton
+
+file: GtkScaleButton.html
+struct: GtkScaleButton
+class: ScaleButton
+prefix: gtk_scale_button_
+prefix: gtk_
+import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
+outFile: ScaleButton
+
+file: GtkVolumeButton.html
+struct: GtkVolumeButton
+class: VolumeButton
+prefix: gtk_volume_button_
+prefix: gtk_
+import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+outFile: VolumeButton
 
 ###########################################################
 ### numeric/text Data Entry ###############################
@@ -2973,6 +3068,17 @@ import: gdk.Event
 structWrap: GdkEvent* Event
 outFile: CellEditable
 
+file: GtkCellRendererAccel.html
+struct: GtkCellRenderer
+realStruct: GtkCellRendererAccel
+class: CellRendererAccel
+prefix: gtk_cell_renderer_accel_
+prefix: gtk_
+import: glib.Str
+import: gtk.CellRenderer
+structWrap: GtkCellRenderer* CellRenderer
+outFile: CellRendererAccel
+
 file: GtkCellRendererCombo.html
 struct: GtkCellRenderer
 realStruct: GtkCellRendererCombo
@@ -3002,6 +3108,16 @@ prefix: gtk_
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererProgress
+
+file: GtkCellRendererSpin.html
+struct: GtkCellRenderer
+realStruct: GtkCellRendererSpin
+class: CellRendererSpin
+prefix: gtk_cell_renderer_spin_
+prefix: gtk_
+import: gtk.CellRenderer
+structWrap: GtkCellRenderer* CellRenderer
+outFile: CellRendererSpin
 
 file: GtkCellRendererText.html
 struct: GtkCellRenderer
@@ -3744,15 +3860,6 @@ code: start
 code: end
 outFile: MenuItem
 
-file: GtkMenuShell.html
-struct: GtkMenuShell
-class: MenuShell
-prefix: gtk_menu_shell_
-prefix: gtk_
-import: gtk.Widget
-structWrap: GtkWidget* Widget
-outFile: MenuShell
-
 file: GtkImageMenuItem.html
 struct: GtkImageMenuItem
 class: ImageMenuItem
@@ -4012,6 +4119,7 @@ structWrap: GtkWidget* Widget
 code: start
 	/**
 	 * Sets this widget tooltip
+	 * Deprecated: Since 2.12 use setTooltipText() or setTooltipMarkup()
 	 * Params:
 	 *  tipText = the tooltip
 	 *  tipPrivate = a private text
@@ -4144,6 +4252,7 @@ code: start
 	
 	/**
 	 * Sets the toolTip for the arrow
+	 * Deprecated: Since 2.12 use Widget.setArrowTooltipText() or Widget.setArrowTooltipMarkup()
 	 * Params:
 	 *    	tipText = 	
 	 *    	tipPrivate = 	
@@ -4294,14 +4403,6 @@ prefix: gtk_color_selection_dialog_
 prefix: gtk_
 import: glib.Str
 outFile: ColorSelectionDialog
-
-file: GtkFileSelection.html
-struct: GtkFileSelection
-class: FileSelection
-prefix: gtk_file_selection_
-prefix: gtk_
-import: glib.Str
-outFile: FileSelection
 
 file: GtkFileChooser.html
 struct: GtkFileChooser
@@ -5129,19 +5230,21 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 outFile: SizeGroup
 
-file: GtkTooltips.html
-struct: GtkTooltips
-class: Tooltips
-prefix: gtk_tooltips_
+file: GtkTooltip.html
+struct: GtkTooltip
+class: Tooltip
+prefix: gtk_tooltip_
 prefix: gtk_
 import: glib.Str
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+import: gdk.Display
+structWrap: GdkDisplay* Display
+import: gdk.Rectangle
+structWrap: GdkRectangle* Rectangle
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-#import: gtk.TooltipsData
-#structWrap: GtkTooltipsData* TooltipsData
-import: gtk.Window
-structWrap: GtkWindow* Window
-outFile: Tooltips
+outFile: Tooltip
 
 file: GtkViewport.html
 struct: GtkViewport
@@ -5318,6 +5421,15 @@ class: Item
 prefix: gtk_item_
 prefix: gtk_
 outFile: Item
+
+file: GtkMenuShell.html
+struct: GtkMenuShell
+class: MenuShell
+prefix: gtk_menu_shell_
+prefix: gtk_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+outFile: MenuShell
 
 file: GtkMisc.html
 struct: GtkMisc
@@ -5598,6 +5710,7 @@ code: start
 	
 	/**
 	 * Sets this widget tooltip
+	 * Deprecated: Since 2.12 use setTooltipText() or setTooltipMarkup()
 	 * Params:
 	 *  tipText = the tooltip
 	 *  tipPrivate = a private text
@@ -5708,6 +5821,14 @@ outFile: VRuler
 #prefix: gtk_
 #outFile: 
 
+file: GtkFileSelection.html
+struct: GtkFileSelection
+class: FileSelection
+prefix: gtk_file_selection_
+prefix: gtk_
+import: glib.Str
+outFile: FileSelection
+
 file: GtkItemFactory.html
 struct: GtkItemFactory
 class: ItemFactory
@@ -5773,6 +5894,20 @@ outFile: ItemFactory
 #prefix: 
 #prefix: gtk_
 #outFile: 
+
+file: GtkTooltips.html
+struct: GtkTooltips
+class: Tooltips
+prefix: gtk_tooltips_
+prefix: gtk_
+import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+#import: gtk.TooltipsData
+#structWrap: GtkTooltipsData* TooltipsData
+import: gtk.Window
+structWrap: GtkWindow* Window
+outFile: Tooltips
 
 #file: gtkTipsQuery.html
 #struct: 
