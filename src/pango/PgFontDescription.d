@@ -83,14 +83,6 @@
 
 module pango.PgFontDescription;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -149,33 +141,20 @@ public class PgFontDescription
 	 */
 	public this (PangoFontDescription* pangoFontDescription)
 	{
-		version(noAssert)
+		if(pangoFontDescription is null)
 		{
-			if ( pangoFontDescription is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct pangoFontDescription is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct pangoFontDescription is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(pangoFontDescription !is null, "struct pangoFontDescription is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoFontDescription passed to constructor.");
+			else return;
 		}
 		this.pangoFontDescription = pangoFontDescription;
 	}
 	
 	/**
 	 * Creates a nwe font description and set the family nd the size
-	 * param: family Family
-	 * param: size Size
+	 * Params:
+	 *  family = Family
+	 *  size = Size
 	 */
 	public this(char[] family, int size)
 	{

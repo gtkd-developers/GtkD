@@ -51,14 +51,6 @@
 
 module atk.StreamableContent;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -109,25 +101,11 @@ public class StreamableContent
 	 */
 	public this (AtkStreamableContent* atkStreamableContent)
 	{
-		version(noAssert)
+		if(atkStreamableContent is null)
 		{
-			if ( atkStreamableContent is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct atkStreamableContent is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct atkStreamableContent is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(atkStreamableContent !is null, "struct atkStreamableContent is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null atkStreamableContent passed to constructor.");
+			else return;
 		}
 		this.atkStreamableContent = atkStreamableContent;
 	}

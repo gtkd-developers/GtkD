@@ -59,14 +59,6 @@
 
 module cairo.Context;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.cairotypes;
 
 private import gtkc.cairo;
@@ -120,25 +112,11 @@ public class Context
 	 */
 	public this (cairo_t* cairo)
 	{
-		version(noAssert)
+		if(cairo is null)
 		{
-			if ( cairo is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct cairo is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct cairo is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(cairo !is null, "struct cairo is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null cairo passed to constructor.");
+			else return;
 		}
 		this.cairo = cairo;
 	}

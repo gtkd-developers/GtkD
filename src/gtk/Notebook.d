@@ -53,14 +53,6 @@
 
 module gtk.Notebook;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -130,25 +122,11 @@ public class Notebook : Container
 	 */
 	public this (GtkNotebook* gtkNotebook)
 	{
-		version(noAssert)
+		if(gtkNotebook is null)
 		{
-			if ( gtkNotebook is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkNotebook is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkNotebook is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkNotebook !is null, "struct gtkNotebook is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkNotebook passed to constructor.");
+			else return;
 		}
 		super(cast(GtkContainer*)gtkNotebook);
 		this.gtkNotebook = gtkNotebook;

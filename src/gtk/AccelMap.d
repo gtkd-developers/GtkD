@@ -52,14 +52,6 @@
 
 module gtk.AccelMap;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -99,25 +91,11 @@ public class AccelMap : ObjectG
 	 */
 	public this (GtkAccelMap* gtkAccelMap)
 	{
-		version(noAssert)
+		if(gtkAccelMap is null)
 		{
-			if ( gtkAccelMap is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkAccelMap is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkAccelMap is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkAccelMap !is null, "struct gtkAccelMap is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkAccelMap passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkAccelMap);
 		this.gtkAccelMap = gtkAccelMap;

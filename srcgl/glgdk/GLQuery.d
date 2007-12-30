@@ -51,14 +51,6 @@
 
 module glgdk.GLQuery;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;

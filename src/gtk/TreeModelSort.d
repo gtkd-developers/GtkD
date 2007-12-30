@@ -56,14 +56,6 @@
 
 module gtk.TreeModelSort;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -182,25 +174,11 @@ public class TreeModelSort : ObjectG
 	 */
 	public this (GtkTreeModelSort* gtkTreeModelSort)
 	{
-		version(noAssert)
+		if(gtkTreeModelSort is null)
 		{
-			if ( gtkTreeModelSort is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkTreeModelSort is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkTreeModelSort is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkTreeModelSort !is null, "struct gtkTreeModelSort is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTreeModelSort passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkTreeModelSort);
 		this.gtkTreeModelSort = gtkTreeModelSort;

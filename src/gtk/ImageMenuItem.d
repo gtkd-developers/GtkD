@@ -56,14 +56,6 @@
 
 module gtk.ImageMenuItem;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -107,25 +99,11 @@ public class ImageMenuItem : MenuItem
 	 */
 	public this (GtkImageMenuItem* gtkImageMenuItem)
 	{
-		version(noAssert)
+		if(gtkImageMenuItem is null)
 		{
-			if ( gtkImageMenuItem is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkImageMenuItem is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkImageMenuItem is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkImageMenuItem !is null, "struct gtkImageMenuItem is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkImageMenuItem passed to constructor.");
+			else return;
 		}
 		super(cast(GtkMenuItem*)gtkImageMenuItem);
 		this.gtkImageMenuItem = gtkImageMenuItem;

@@ -49,14 +49,6 @@
 
 module gtk.HBox;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -98,25 +90,11 @@ public class HBox : Box
 	 */
 	public this (GtkHBox* gtkHBox)
 	{
-		version(noAssert)
+		if(gtkHBox is null)
 		{
-			if ( gtkHBox is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkHBox is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkHBox is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkHBox !is null, "struct gtkHBox is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkHBox passed to constructor.");
+			else return;
 		}
 		super(cast(GtkBox*)gtkHBox);
 		this.gtkHBox = gtkHBox;

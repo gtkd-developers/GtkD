@@ -51,14 +51,6 @@
 
 module gtk.CellRendererCombo;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -109,25 +101,11 @@ public class CellRendererCombo : CellRendererText
 	 */
 	public this (GtkCellRendererCombo* gtkCellRendererCombo)
 	{
-		version(noAssert)
+		if(gtkCellRendererCombo is null)
 		{
-			if ( gtkCellRendererCombo is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkCellRendererCombo is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkCellRendererCombo is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkCellRendererCombo !is null, "struct gtkCellRendererCombo is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkCellRendererCombo passed to constructor.");
+			else return;
 		}
 		super(cast(GtkCellRendererText*)gtkCellRendererCombo);
 		this.gtkCellRendererCombo = gtkCellRendererCombo;

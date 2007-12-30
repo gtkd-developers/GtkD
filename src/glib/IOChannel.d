@@ -56,14 +56,6 @@
 
 module glib.IOChannel;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -135,25 +127,11 @@ public class IOChannel
 	 */
 	public this (GIOChannel* gIOChannel)
 	{
-		version(noAssert)
+		if(gIOChannel is null)
 		{
-			if ( gIOChannel is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gIOChannel is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gIOChannel is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gIOChannel !is null, "struct gIOChannel is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gIOChannel passed to constructor.");
+			else return;
 		}
 		this.gIOChannel = gIOChannel;
 	}

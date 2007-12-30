@@ -54,14 +54,6 @@
 
 module gtk.Tooltips;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -140,25 +132,11 @@ public class Tooltips : ObjectGtk
 	 */
 	public this (GtkTooltips* gtkTooltips)
 	{
-		version(noAssert)
+		if(gtkTooltips is null)
 		{
-			if ( gtkTooltips is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkTooltips is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkTooltips is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkTooltips !is null, "struct gtkTooltips is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTooltips passed to constructor.");
+			else return;
 		}
 		super(cast(GtkObject*)gtkTooltips);
 		this.gtkTooltips = gtkTooltips;

@@ -668,7 +668,7 @@ extern(C)
 	void function(GdkWindow* window, gint mask, GdkExtensionMode mode)gdk_input_set_extension_events;
 	
 	// gdk.X11
-        /+ Manual edit. The following don't compile.	
+/+ Manually disabled. Won't compile, yet.
 	GdkVisual* function(VisualID xvisualid)gdkx_visual_get;
 	GdkColormap* function(Colormap xcolormap)gdkx_colormap_get;
 	GdkPixmap* function(GdkNativeWindow anid)gdk_pixmap_foreign_new;
@@ -1284,7 +1284,7 @@ Symbol[] gdkLinks =
 	{ "gdk_device_free_history",  cast(void**)& gdk_device_free_history},
 	{ "gdk_device_get_axis",  cast(void**)& gdk_device_get_axis},
 	{ "gdk_input_set_extension_events",  cast(void**)& gdk_input_set_extension_events},
-        /+
+        /+ Manually disabled. Won't compile, yet.
 	{ "gdkx_visual_get",  cast(void**)& gdkx_visual_get},
 	{ "gdkx_colormap_get",  cast(void**)& gdkx_colormap_get},
 	{ "gdk_pixmap_foreign_new",  cast(void**)& gdk_pixmap_foreign_new},

@@ -49,14 +49,6 @@
 
 module gtk.Ruler;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -108,25 +100,11 @@ public class Ruler : Widget
 	 */
 	public this (GtkRuler* gtkRuler)
 	{
-		version(noAssert)
+		if(gtkRuler is null)
 		{
-			if ( gtkRuler is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkRuler is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkRuler is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkRuler !is null, "struct gtkRuler is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkRuler passed to constructor.");
+			else return;
 		}
 		super(cast(GtkWidget*)gtkRuler);
 		this.gtkRuler = gtkRuler;

@@ -54,14 +54,6 @@
 
 module gtk.AccelLabel;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -138,25 +130,11 @@ public class AccelLabel : Label
 	 */
 	public this (GtkAccelLabel* gtkAccelLabel)
 	{
-		version(noAssert)
+		if(gtkAccelLabel is null)
 		{
-			if ( gtkAccelLabel is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkAccelLabel is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkAccelLabel is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkAccelLabel !is null, "struct gtkAccelLabel is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkAccelLabel passed to constructor.");
+			else return;
 		}
 		super(cast(GtkLabel*)gtkAccelLabel);
 		this.gtkAccelLabel = gtkAccelLabel;

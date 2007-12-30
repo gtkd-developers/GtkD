@@ -48,14 +48,6 @@
 
 module gthread.RWLock;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
@@ -123,25 +115,11 @@ public class RWLock
 	 */
 	public this (GStaticRWLock* gStaticRWLock)
 	{
-		version(noAssert)
+		if(gStaticRWLock is null)
 		{
-			if ( gStaticRWLock is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gStaticRWLock is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gStaticRWLock is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gStaticRWLock !is null, "struct gStaticRWLock is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gStaticRWLock passed to constructor.");
+			else return;
 		}
 		this.gStaticRWLock = gStaticRWLock;
 	}

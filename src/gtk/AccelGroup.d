@@ -58,14 +58,6 @@
 
 module gtk.AccelGroup;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -122,25 +114,11 @@ public class AccelGroup : ObjectG
 	 */
 	public this (GtkAccelGroup* gtkAccelGroup)
 	{
-		version(noAssert)
+		if(gtkAccelGroup is null)
 		{
-			if ( gtkAccelGroup is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkAccelGroup is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkAccelGroup is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkAccelGroup !is null, "struct gtkAccelGroup is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkAccelGroup passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkAccelGroup);
 		this.gtkAccelGroup = gtkAccelGroup;

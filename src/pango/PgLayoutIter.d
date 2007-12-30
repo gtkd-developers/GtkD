@@ -77,14 +77,6 @@
 
 module pango.PgLayoutIter;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -142,25 +134,11 @@ public class PgLayoutIter
 	 */
 	public this (PangoLayoutIter* pangoLayoutIter)
 	{
-		version(noAssert)
+		if(pangoLayoutIter is null)
 		{
-			if ( pangoLayoutIter is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct pangoLayoutIter is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct pangoLayoutIter is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(pangoLayoutIter !is null, "struct pangoLayoutIter is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoLayoutIter passed to constructor.");
+			else return;
 		}
 		this.pangoLayoutIter = pangoLayoutIter;
 	}

@@ -48,14 +48,6 @@
 
 module glib.TrashStack;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -98,25 +90,11 @@ public class TrashStack
 	 */
 	public this (GTrashStack* gTrashStack)
 	{
-		version(noAssert)
+		if(gTrashStack is null)
 		{
-			if ( gTrashStack is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gTrashStack is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gTrashStack is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gTrashStack !is null, "struct gTrashStack is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gTrashStack passed to constructor.");
+			else return;
 		}
 		this.gTrashStack = gTrashStack;
 	}

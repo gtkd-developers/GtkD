@@ -54,14 +54,6 @@
 
 module gtk.EntryCompletion;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -124,25 +116,11 @@ public class EntryCompletion : ObjectG
 	 */
 	public this (GtkEntryCompletion* gtkEntryCompletion)
 	{
-		version(noAssert)
+		if(gtkEntryCompletion is null)
 		{
-			if ( gtkEntryCompletion is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkEntryCompletion is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkEntryCompletion is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkEntryCompletion !is null, "struct gtkEntryCompletion is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkEntryCompletion passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkEntryCompletion);
 		this.gtkEntryCompletion = gtkEntryCompletion;

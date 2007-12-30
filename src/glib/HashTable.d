@@ -50,14 +50,6 @@
 
 module glib.HashTable;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -116,25 +108,11 @@ public class HashTable
 	 */
 	public this (GHashTable* gHashTable)
 	{
-		version(noAssert)
+		if(gHashTable is null)
 		{
-			if ( gHashTable is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gHashTable is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gHashTable is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gHashTable !is null, "struct gHashTable is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gHashTable passed to constructor.");
+			else return;
 		}
 		this.gHashTable = gHashTable;
 	}

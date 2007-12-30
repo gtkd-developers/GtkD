@@ -50,14 +50,6 @@
 
 module cairo.Surface;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.cairotypes;
 
 private import gtkc.cairo;
@@ -95,25 +87,11 @@ public class Surface
 	 */
 	public this (cairo_surface_t* cairo_surface)
 	{
-		version(noAssert)
+		if(cairo_surface is null)
 		{
-			if ( cairo_surface is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct cairo_surface is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct cairo_surface is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(cairo_surface !is null, "struct cairo_surface is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null cairo_surface passed to constructor.");
+			else return;
 		}
 		this.cairo_surface = cairo_surface;
 	}

@@ -51,14 +51,6 @@
 
 module gtk.MenuShell;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -103,25 +95,11 @@ public class MenuShell : Container
 	 */
 	public this (GtkMenuShell* gtkMenuShell)
 	{
-		version(noAssert)
+		if(gtkMenuShell is null)
 		{
-			if ( gtkMenuShell is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkMenuShell is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkMenuShell is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkMenuShell !is null, "struct gtkMenuShell is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkMenuShell passed to constructor.");
+			else return;
 		}
 		super(cast(GtkContainer*)gtkMenuShell);
 		this.gtkMenuShell = gtkMenuShell;

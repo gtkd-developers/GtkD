@@ -58,14 +58,6 @@
 
 module gtk.Settings;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -108,25 +100,11 @@ public class Settings : ObjectG
 	 */
 	public this (GtkSettings* gtkSettings)
 	{
-		version(noAssert)
+		if(gtkSettings is null)
 		{
-			if ( gtkSettings is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkSettings is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkSettings is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkSettings !is null, "struct gtkSettings is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkSettings passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkSettings);
 		this.gtkSettings = gtkSettings;

@@ -83,14 +83,6 @@
 
 module pango.PgContext;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -150,25 +142,11 @@ public class PgContext : ObjectG
 	 */
 	public this (PangoContext* pangoContext)
 	{
-		version(noAssert)
+		if(pangoContext is null)
 		{
-			if ( pangoContext is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct pangoContext is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct pangoContext is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(pangoContext !is null, "struct pangoContext is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoContext passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)pangoContext);
 		this.pangoContext = pangoContext;

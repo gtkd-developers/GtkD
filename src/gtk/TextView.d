@@ -71,14 +71,6 @@
 
 module gtk.TextView;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -130,25 +122,11 @@ public class TextView : Container
 	 */
 	public this (GtkTextView* gtkTextView)
 	{
-		version(noAssert)
+		if(gtkTextView is null)
 		{
-			if ( gtkTextView is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkTextView is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkTextView is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkTextView !is null, "struct gtkTextView is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTextView passed to constructor.");
+			else return;
 		}
 		super(cast(GtkContainer*)gtkTextView);
 		this.gtkTextView = gtkTextView;

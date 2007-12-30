@@ -59,14 +59,6 @@
 
 module gdk.Event;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -114,25 +106,11 @@ public class Event
 	 */
 	public this (GdkEvent* gdkEvent)
 	{
-		version(noAssert)
+		if(gdkEvent is null)
 		{
-			if ( gdkEvent is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkEvent is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkEvent is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkEvent !is null, "struct gdkEvent is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkEvent passed to constructor.");
+			else return;
 		}
 		this.gdkEvent = gdkEvent;
 	}

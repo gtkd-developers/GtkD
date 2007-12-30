@@ -49,14 +49,6 @@
 
 module glib.Timer;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -96,25 +88,11 @@ public class Timer
 	 */
 	public this (GTimer* gTimer)
 	{
-		version(noAssert)
+		if(gTimer is null)
 		{
-			if ( gTimer is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gTimer is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gTimer is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gTimer !is null, "struct gTimer is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gTimer passed to constructor.");
+			else return;
 		}
 		this.gTimer = gTimer;
 	}

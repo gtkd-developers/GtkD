@@ -98,14 +98,6 @@
 
 module gdk.X11;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -145,10 +137,10 @@ public class X11
 	
 	
 	
-        /+ Manual edit. Won't compile.
 	
 	
 	
+/+ Manually disabled. Won't compile, yet.
 	
 	
 	
@@ -321,7 +313,7 @@ public class X11
 	
 	
 	
-	+/
++/	
 	
 	
 	
@@ -336,9 +328,9 @@ public class X11
 		// XID gdk_x11_drawable_get_xid (GdkDrawable *drawable);
 		return gdk_x11_drawable_get_xid((drawable is null) ? null : drawable.getDrawableStruct());
 	}
-
-        /+
 	
+/+
+
 	/**
 	 * Warning
 	 * gdk_x11_font_get_name is deprecated and should not be used in newly-written code.
@@ -413,7 +405,7 @@ public class X11
 	
 	
 	
-	+/
++/	
 	
 	
 	

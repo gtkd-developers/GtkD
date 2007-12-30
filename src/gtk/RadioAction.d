@@ -52,14 +52,6 @@
 
 module gtk.RadioAction;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -102,25 +94,11 @@ public class RadioAction : ToggleAction
 	 */
 	public this (GtkRadioAction* gtkRadioAction)
 	{
-		version(noAssert)
+		if(gtkRadioAction is null)
 		{
-			if ( gtkRadioAction is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkRadioAction is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkRadioAction is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkRadioAction !is null, "struct gtkRadioAction is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkRadioAction passed to constructor.");
+			else return;
 		}
 		super(cast(GtkToggleAction*)gtkRadioAction);
 		this.gtkRadioAction = gtkRadioAction;

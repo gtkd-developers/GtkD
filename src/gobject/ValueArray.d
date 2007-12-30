@@ -52,14 +52,6 @@
 
 module gobject.ValueArray;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
@@ -101,25 +93,11 @@ public class ValueArray
 	 */
 	public this (GValueArray* gValueArray)
 	{
-		version(noAssert)
+		if(gValueArray is null)
 		{
-			if ( gValueArray is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gValueArray is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gValueArray is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gValueArray !is null, "struct gValueArray is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gValueArray passed to constructor.");
+			else return;
 		}
 		this.gValueArray = gValueArray;
 	}

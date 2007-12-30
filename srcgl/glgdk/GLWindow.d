@@ -50,14 +50,6 @@
 
 module glgdk.GLWindow;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
@@ -96,25 +88,11 @@ public class GLWindow : Drawable
 	 */
 	public this (GdkGLWindow* gdkGLWindow)
 	{
-		version(noAssert)
+		if(gdkGLWindow is null)
 		{
-			if ( gdkGLWindow is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkGLWindow is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkGLWindow is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkGLWindow !is null, "struct gdkGLWindow is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkGLWindow passed to constructor.");
+			else return;
 		}
 		super(cast(GdkDrawable*)gdkGLWindow);
 		this.gdkGLWindow = gdkGLWindow;

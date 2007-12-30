@@ -50,14 +50,6 @@
 
 module gobject.TypePlugin;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
@@ -132,25 +124,11 @@ public class TypePlugin
 	 */
 	public this (GTypePlugin* gTypePlugin)
 	{
-		version(noAssert)
+		if(gTypePlugin is null)
 		{
-			if ( gTypePlugin is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gTypePlugin is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gTypePlugin is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gTypePlugin !is null, "struct gTypePlugin is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gTypePlugin passed to constructor.");
+			else return;
 		}
 		this.gTypePlugin = gTypePlugin;
 	}

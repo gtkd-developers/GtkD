@@ -51,14 +51,6 @@
 
 module gtk.Fixed;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -124,25 +116,11 @@ public class Fixed : Container
 	 */
 	public this (GtkFixed* gtkFixed)
 	{
-		version(noAssert)
+		if(gtkFixed is null)
 		{
-			if ( gtkFixed is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkFixed is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkFixed is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkFixed !is null, "struct gtkFixed is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkFixed passed to constructor.");
+			else return;
 		}
 		super(cast(GtkContainer*)gtkFixed);
 		this.gtkFixed = gtkFixed;

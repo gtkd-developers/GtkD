@@ -56,14 +56,6 @@
 
 module gtk.RadioMenuItem;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -120,25 +112,11 @@ public class RadioMenuItem : CheckMenuItem
 	 */
 	public this (GtkRadioMenuItem* gtkRadioMenuItem)
 	{
-		version(noAssert)
+		if(gtkRadioMenuItem is null)
 		{
-			if ( gtkRadioMenuItem is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkRadioMenuItem is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkRadioMenuItem is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkRadioMenuItem !is null, "struct gtkRadioMenuItem is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkRadioMenuItem passed to constructor.");
+			else return;
 		}
 		super(cast(GtkCheckMenuItem*)gtkRadioMenuItem);
 		this.gtkRadioMenuItem = gtkRadioMenuItem;

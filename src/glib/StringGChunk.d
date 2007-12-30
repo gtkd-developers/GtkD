@@ -49,14 +49,6 @@
 
 module glib.StringGChunk;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -109,25 +101,11 @@ public class StringGChunk
 	 */
 	public this (GStringChunk* gStringChunk)
 	{
-		version(noAssert)
+		if(gStringChunk is null)
 		{
-			if ( gStringChunk is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gStringChunk is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gStringChunk is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gStringChunk !is null, "struct gStringChunk is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gStringChunk passed to constructor.");
+			else return;
 		}
 		this.gStringChunk = gStringChunk;
 	}

@@ -593,7 +593,6 @@ extern(C)
 	void function(GtkWindow* window, gboolean setting)gtk_window_set_accept_focus;
 	void function(GtkWindow* window, gboolean setting)gtk_window_set_focus_on_map;
 	void function(GtkWindow* window, gchar* startupId)gtk_window_set_startup_id;
-	/* void function(GtkWindow* window, gchar* role)gtk_window_set_role; */ //Duplicated in the docs.
 	gboolean function(GtkWindow* window)gtk_window_get_decorated;
 	gboolean function(GtkWindow* window)gtk_window_get_deletable;
 	GList* function()gtk_window_get_default_icon_list;
@@ -3438,7 +3437,6 @@ Symbol[] gtkLinks =
 	{ "gtk_window_set_accept_focus",  cast(void**)& gtk_window_set_accept_focus},
 	{ "gtk_window_set_focus_on_map",  cast(void**)& gtk_window_set_focus_on_map},
 	{ "gtk_window_set_startup_id",  cast(void**)& gtk_window_set_startup_id},
-	/* { "gtk_window_set_role",  cast(void**)& gtk_window_set_role}, */ //Duplicated in the docs
 	{ "gtk_window_get_decorated",  cast(void**)& gtk_window_get_decorated},
 	{ "gtk_window_get_deletable",  cast(void**)& gtk_window_get_deletable},
 	{ "gtk_window_get_default_icon_list",  cast(void**)& gtk_window_get_default_icon_list},

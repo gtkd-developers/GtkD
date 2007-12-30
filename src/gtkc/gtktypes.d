@@ -38,6 +38,7 @@ alias void GtkContainerClass;
 //alias GtkSignalRunType.G_SIGNAL_ACTION G_SIGNAL_ACTION;
 //alias GtkSignalRunType.G_SIGNAL_NO_HOOKS G_SIGNAL_NO_HOOKS;
 
+/* GtkDragResult is now an enum. */
 //alias int GtkDragResult;
 alias int GtkTooltip;
 

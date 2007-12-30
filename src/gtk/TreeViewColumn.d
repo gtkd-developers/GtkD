@@ -64,14 +64,6 @@
 
 module gtk.TreeViewColumn;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -123,25 +115,11 @@ public class TreeViewColumn : ObjectGtk
 	 */
 	public this (GtkTreeViewColumn* gtkTreeViewColumn)
 	{
-		version(noAssert)
+		if(gtkTreeViewColumn is null)
 		{
-			if ( gtkTreeViewColumn is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkTreeViewColumn is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkTreeViewColumn is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkTreeViewColumn !is null, "struct gtkTreeViewColumn is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTreeViewColumn passed to constructor.");
+			else return;
 		}
 		super(cast(GtkObject*)gtkTreeViewColumn);
 		this.gtkTreeViewColumn = gtkTreeViewColumn;

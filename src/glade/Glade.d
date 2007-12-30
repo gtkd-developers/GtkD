@@ -67,14 +67,6 @@
 
 module glade.Glade;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gladetypes;
 
 private import gtkc.glade;
@@ -125,25 +117,11 @@ public class Glade : ObjectG
 	 */
 	public this (GladeXML* gladeXML)
 	{
-		version(noAssert)
+		if(gladeXML is null)
 		{
-			if ( gladeXML is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gladeXML is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gladeXML is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gladeXML !is null, "struct gladeXML is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gladeXML passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gladeXML);
 		this.gladeXML = gladeXML;

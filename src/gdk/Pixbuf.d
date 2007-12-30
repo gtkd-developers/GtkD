@@ -65,14 +65,6 @@
 
 module gdk.Pixbuf;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -119,25 +111,11 @@ public class Pixbuf
 	 */
 	public this (GdkPixbuf* gdkPixbuf)
 	{
-		version(noAssert)
+		if(gdkPixbuf is null)
 		{
-			if ( gdkPixbuf is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkPixbuf is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkPixbuf is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkPixbuf !is null, "struct gdkPixbuf is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkPixbuf passed to constructor.");
+			else return;
 		}
 		this.gdkPixbuf = gdkPixbuf;
 	}

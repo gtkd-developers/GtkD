@@ -48,14 +48,6 @@
 
 module gthread.Mutex;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
@@ -123,25 +115,11 @@ public class Mutex
 	 */
 	public this (GMutex* gMutex)
 	{
-		version(noAssert)
+		if(gMutex is null)
 		{
-			if ( gMutex is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gMutex is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gMutex is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gMutex !is null, "struct gMutex is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gMutex passed to constructor.");
+			else return;
 		}
 		this.gMutex = gMutex;
 	}

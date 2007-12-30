@@ -50,14 +50,6 @@
 
 module gtk.AspectFrame;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -103,25 +95,11 @@ public class AspectFrame : Frame
 	 */
 	public this (GtkAspectFrame* gtkAspectFrame)
 	{
-		version(noAssert)
+		if(gtkAspectFrame is null)
 		{
-			if ( gtkAspectFrame is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkAspectFrame is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkAspectFrame is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkAspectFrame !is null, "struct gtkAspectFrame is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkAspectFrame passed to constructor.");
+			else return;
 		}
 		super(cast(GtkFrame*)gtkAspectFrame);
 		this.gtkAspectFrame = gtkAspectFrame;

@@ -51,14 +51,6 @@
 
 module glib.PtrArray;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -121,25 +113,11 @@ public class PtrArray
 	 */
 	public this (GPtrArray* gPtrArray)
 	{
-		version(noAssert)
+		if(gPtrArray is null)
 		{
-			if ( gPtrArray is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gPtrArray is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gPtrArray is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gPtrArray !is null, "struct gPtrArray is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gPtrArray passed to constructor.");
+			else return;
 		}
 		this.gPtrArray = gPtrArray;
 	}

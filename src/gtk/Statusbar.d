@@ -50,14 +50,6 @@
 
 module gtk.Statusbar;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -119,25 +111,11 @@ public class Statusbar : HBox
 	 */
 	public this (GtkStatusbar* gtkStatusbar)
 	{
-		version(noAssert)
+		if(gtkStatusbar is null)
 		{
-			if ( gtkStatusbar is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkStatusbar is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkStatusbar is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkStatusbar !is null, "struct gtkStatusbar is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkStatusbar passed to constructor.");
+			else return;
 		}
 		super(cast(GtkHBox*)gtkStatusbar);
 		this.gtkStatusbar = gtkStatusbar;

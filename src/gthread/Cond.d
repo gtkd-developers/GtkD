@@ -52,14 +52,6 @@
 
 module gthread.Cond;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
@@ -129,25 +121,11 @@ public class Cond
 	 */
 	public this (GCond* gCond)
 	{
-		version(noAssert)
+		if(gCond is null)
 		{
-			if ( gCond is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gCond is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gCond is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gCond !is null, "struct gCond is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gCond passed to constructor.");
+			else return;
 		}
 		this.gCond = gCond;
 	}

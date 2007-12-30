@@ -51,14 +51,6 @@
 
 module glib.StringCompletion;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -113,25 +105,11 @@ public class StringCompletion
 	 */
 	public this (GCompletion* gCompletion)
 	{
-		version(noAssert)
+		if(gCompletion is null)
 		{
-			if ( gCompletion is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gCompletion is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gCompletion is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gCompletion !is null, "struct gCompletion is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gCompletion passed to constructor.");
+			else return;
 		}
 		this.gCompletion = gCompletion;
 	}

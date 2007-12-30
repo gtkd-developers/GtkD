@@ -51,14 +51,6 @@
 
 module gtk.SizeGroup;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -141,25 +133,11 @@ public class SizeGroup : ObjectG
 	 */
 	public this (GtkSizeGroup* gtkSizeGroup)
 	{
-		version(noAssert)
+		if(gtkSizeGroup is null)
 		{
-			if ( gtkSizeGroup is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkSizeGroup is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkSizeGroup is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkSizeGroup !is null, "struct gtkSizeGroup is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkSizeGroup passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkSizeGroup);
 		this.gtkSizeGroup = gtkSizeGroup;

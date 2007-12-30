@@ -81,14 +81,6 @@
 
 module gtk.TextBuffer;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -150,25 +142,11 @@ public class TextBuffer : ObjectG
 	 */
 	public this (GtkTextBuffer* gtkTextBuffer)
 	{
-		version(noAssert)
+		if(gtkTextBuffer is null)
 		{
-			if ( gtkTextBuffer is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkTextBuffer is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkTextBuffer is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkTextBuffer !is null, "struct gtkTextBuffer is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTextBuffer passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkTextBuffer);
 		this.gtkTextBuffer = gtkTextBuffer;

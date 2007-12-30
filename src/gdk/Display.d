@@ -59,14 +59,6 @@
 
 module gdk.Display;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -120,25 +112,11 @@ public class Display : ObjectG
 	 */
 	public this (GdkDisplay* gdkDisplay)
 	{
-		version(noAssert)
+		if(gdkDisplay is null)
 		{
-			if ( gdkDisplay is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkDisplay is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkDisplay is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkDisplay !is null, "struct gdkDisplay is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkDisplay passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gdkDisplay);
 		this.gdkDisplay = gdkDisplay;

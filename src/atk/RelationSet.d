@@ -50,14 +50,6 @@
 
 module atk.RelationSet;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -102,25 +94,11 @@ public class RelationSet : ObjectG
 	 */
 	public this (AtkRelationSet* atkRelationSet)
 	{
-		version(noAssert)
+		if(atkRelationSet is null)
 		{
-			if ( atkRelationSet is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct atkRelationSet is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct atkRelationSet is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(atkRelationSet !is null, "struct atkRelationSet is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null atkRelationSet passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)atkRelationSet);
 		this.atkRelationSet = atkRelationSet;

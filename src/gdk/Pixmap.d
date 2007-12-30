@@ -58,14 +58,6 @@
 
 module gdk.Pixmap;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -114,25 +106,11 @@ public class Pixmap : Drawable
 	 */
 	public this (GdkPixmap* gdkPixmap)
 	{
-		version(noAssert)
+		if(gdkPixmap is null)
 		{
-			if ( gdkPixmap is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkPixmap is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkPixmap is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkPixmap !is null, "struct gdkPixmap is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkPixmap passed to constructor.");
+			else return;
 		}
 		super(cast(GdkDrawable*)gdkPixmap);
 		this.gdkPixmap = gdkPixmap;

@@ -50,14 +50,6 @@
 
 module glib.ByteArray;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -116,25 +108,11 @@ public class ByteArray
 	 */
 	public this (GByteArray* gByteArray)
 	{
-		version(noAssert)
+		if(gByteArray is null)
 		{
-			if ( gByteArray is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gByteArray is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gByteArray is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gByteArray !is null, "struct gByteArray is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gByteArray passed to constructor.");
+			else return;
 		}
 		this.gByteArray = gByteArray;
 	}

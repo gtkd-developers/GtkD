@@ -78,14 +78,6 @@
 
 module pango.PgFontMap;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -144,25 +136,11 @@ public class PgFontMap
 	 */
 	public this (PangoFontMap* pangoFontMap)
 	{
-		version(noAssert)
+		if(pangoFontMap is null)
 		{
-			if ( pangoFontMap is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct pangoFontMap is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct pangoFontMap is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(pangoFontMap !is null, "struct pangoFontMap is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoFontMap passed to constructor.");
+			else return;
 		}
 		this.pangoFontMap = pangoFontMap;
 	}

@@ -60,14 +60,6 @@
 
 module gtk.TreeStore;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -132,25 +124,11 @@ public class TreeStore : TreeModel
 	 */
 	public this (GtkTreeStore* gtkTreeStore)
 	{
-		version(noAssert)
+		if(gtkTreeStore is null)
 		{
-			if ( gtkTreeStore is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkTreeStore is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkTreeStore is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkTreeStore !is null, "struct gtkTreeStore is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTreeStore passed to constructor.");
+			else return;
 		}
 		super(cast(GtkTreeModel*)gtkTreeStore);
 		this.gtkTreeStore = gtkTreeStore;

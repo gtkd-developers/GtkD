@@ -51,14 +51,6 @@
 
 module gtk.Invisible;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -101,25 +93,11 @@ public class Invisible : Widget
 	 */
 	public this (GtkInvisible* gtkInvisible)
 	{
-		version(noAssert)
+		if(gtkInvisible is null)
 		{
-			if ( gtkInvisible is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkInvisible is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkInvisible is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkInvisible !is null, "struct gtkInvisible is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkInvisible passed to constructor.");
+			else return;
 		}
 		super(cast(GtkWidget*)gtkInvisible);
 		this.gtkInvisible = gtkInvisible;

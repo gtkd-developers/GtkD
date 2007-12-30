@@ -53,14 +53,6 @@
 
 module gdkpixbuf.PixbufAnimation;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
@@ -108,25 +100,11 @@ public class PixbufAnimation : ObjectG
 	 */
 	public this (GdkPixbufAnimation* gdkPixbufAnimation)
 	{
-		version(noAssert)
+		if(gdkPixbufAnimation is null)
 		{
-			if ( gdkPixbufAnimation is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkPixbufAnimation is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkPixbufAnimation is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkPixbufAnimation !is null, "struct gdkPixbufAnimation is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkPixbufAnimation passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gdkPixbufAnimation);
 		this.gdkPixbufAnimation = gdkPixbufAnimation;

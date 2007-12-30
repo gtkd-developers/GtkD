@@ -101,14 +101,6 @@
 
 module gtk.Widget;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -194,25 +186,11 @@ public class Widget : ObjectGtk
 	 */
 	public this (GtkWidget* gtkWidget)
 	{
-		version(noAssert)
+		if(gtkWidget is null)
 		{
-			if ( gtkWidget is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkWidget is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkWidget is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkWidget !is null, "struct gtkWidget is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkWidget passed to constructor.");
+			else return;
 		}
 		super(cast(GtkObject*)gtkWidget);
 		this.gtkWidget = gtkWidget;

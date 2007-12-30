@@ -49,14 +49,6 @@
 
 module glib.RandG;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -121,25 +113,11 @@ public class RandG
 	 */
 	public this (GRand* gRand)
 	{
-		version(noAssert)
+		if(gRand is null)
 		{
-			if ( gRand is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gRand is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gRand is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gRand !is null, "struct gRand is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gRand passed to constructor.");
+			else return;
 		}
 		this.gRand = gRand;
 	}

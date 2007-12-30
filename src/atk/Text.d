@@ -49,14 +49,6 @@
 
 module atk.Text;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -110,25 +102,11 @@ public class Text
 	 */
 	public this (AtkText* atkText)
 	{
-		version(noAssert)
+		if(atkText is null)
 		{
-			if ( atkText is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct atkText is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct atkText is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(atkText !is null, "struct atkText is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null atkText passed to constructor.");
+			else return;
 		}
 		this.atkText = atkText;
 	}

@@ -49,14 +49,6 @@
 
 module gtk.HSeparator;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -102,25 +94,11 @@ public class HSeparator : Separator
 	 */
 	public this (GtkHSeparator* gtkHSeparator)
 	{
-		version(noAssert)
+		if(gtkHSeparator is null)
 		{
-			if ( gtkHSeparator is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkHSeparator is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkHSeparator is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkHSeparator !is null, "struct gtkHSeparator is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkHSeparator passed to constructor.");
+			else return;
 		}
 		super(cast(GtkSeparator*)gtkHSeparator);
 		this.gtkHSeparator = gtkHSeparator;

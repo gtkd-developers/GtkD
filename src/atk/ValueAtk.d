@@ -50,14 +50,6 @@
 
 module atk.ValueAtk;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -102,25 +94,11 @@ public class ValueAtk
 	 */
 	public this (AtkValue* atkValue)
 	{
-		version(noAssert)
+		if(atkValue is null)
 		{
-			if ( atkValue is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct atkValue is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct atkValue is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(atkValue !is null, "struct atkValue is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null atkValue passed to constructor.");
+			else return;
 		}
 		this.atkValue = atkValue;
 	}

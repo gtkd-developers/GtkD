@@ -51,14 +51,6 @@
 
 module gtk.CellRendererPixbuf;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -111,25 +103,11 @@ public class CellRendererPixbuf : CellRenderer
 	 */
 	public this (GtkCellRendererPixbuf* gtkCellRendererPixbuf)
 	{
-		version(noAssert)
+		if(gtkCellRendererPixbuf is null)
 		{
-			if ( gtkCellRendererPixbuf is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkCellRendererPixbuf is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkCellRendererPixbuf is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkCellRendererPixbuf !is null, "struct gtkCellRendererPixbuf is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkCellRendererPixbuf passed to constructor.");
+			else return;
 		}
 		super(cast(GtkCellRenderer*)gtkCellRendererPixbuf);
 		this.gtkCellRendererPixbuf = gtkCellRendererPixbuf;

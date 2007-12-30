@@ -82,14 +82,6 @@
 
 module pango.PgGlyphString;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -148,25 +140,11 @@ public class PgGlyphString
 	 */
 	public this (PangoGlyphString* pangoGlyphString)
 	{
-		version(noAssert)
+		if(pangoGlyphString is null)
 		{
-			if ( pangoGlyphString is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct pangoGlyphString is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct pangoGlyphString is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(pangoGlyphString !is null, "struct pangoGlyphString is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoGlyphString passed to constructor.");
+			else return;
 		}
 		this.pangoGlyphString = pangoGlyphString;
 	}

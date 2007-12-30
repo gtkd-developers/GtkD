@@ -77,14 +77,6 @@
 
 module pango.PgItem;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -140,25 +132,11 @@ public class PgItem
 	 */
 	public this (PangoItem* pangoItem)
 	{
-		version(noAssert)
+		if(pangoItem is null)
 		{
-			if ( pangoItem is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct pangoItem is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct pangoItem is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(pangoItem !is null, "struct pangoItem is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoItem passed to constructor.");
+			else return;
 		}
 		this.pangoItem = pangoItem;
 	}

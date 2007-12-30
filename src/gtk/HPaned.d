@@ -51,14 +51,6 @@
 
 module gtk.HPaned;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -101,25 +93,11 @@ public class HPaned : Paned
 	 */
 	public this (GtkHPaned* gtkHPaned)
 	{
-		version(noAssert)
+		if(gtkHPaned is null)
 		{
-			if ( gtkHPaned is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkHPaned is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkHPaned is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkHPaned !is null, "struct gtkHPaned is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkHPaned passed to constructor.");
+			else return;
 		}
 		super(cast(GtkPaned*)gtkHPaned);
 		this.gtkHPaned = gtkHPaned;

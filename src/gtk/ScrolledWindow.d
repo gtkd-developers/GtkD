@@ -54,14 +54,6 @@
 
 module gtk.ScrolledWindow;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -133,25 +125,11 @@ public class ScrolledWindow : Bin
 	 */
 	public this (GtkScrolledWindow* gtkScrolledWindow)
 	{
-		version(noAssert)
+		if(gtkScrolledWindow is null)
 		{
-			if ( gtkScrolledWindow is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkScrolledWindow is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkScrolledWindow is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkScrolledWindow !is null, "struct gtkScrolledWindow is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkScrolledWindow passed to constructor.");
+			else return;
 		}
 		super(cast(GtkBin*)gtkScrolledWindow);
 		this.gtkScrolledWindow = gtkScrolledWindow;

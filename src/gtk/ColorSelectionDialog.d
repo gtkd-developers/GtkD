@@ -50,14 +50,6 @@
 
 module gtk.ColorSelectionDialog;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -104,25 +96,11 @@ public class ColorSelectionDialog : Dialog
 	 */
 	public this (GtkColorSelectionDialog* gtkColorSelectionDialog)
 	{
-		version(noAssert)
+		if(gtkColorSelectionDialog is null)
 		{
-			if ( gtkColorSelectionDialog is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkColorSelectionDialog is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkColorSelectionDialog is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkColorSelectionDialog !is null, "struct gtkColorSelectionDialog is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkColorSelectionDialog passed to constructor.");
+			else return;
 		}
 		super(cast(GtkDialog*)gtkColorSelectionDialog);
 		this.gtkColorSelectionDialog = gtkColorSelectionDialog;

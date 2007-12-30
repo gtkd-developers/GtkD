@@ -57,14 +57,6 @@
 
 module gtk.ItemFactory;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -107,25 +99,11 @@ public class ItemFactory : ObjectGtk
 	 */
 	public this (GtkItemFactory* gtkItemFactory)
 	{
-		version(noAssert)
+		if(gtkItemFactory is null)
 		{
-			if ( gtkItemFactory is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkItemFactory is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkItemFactory is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkItemFactory !is null, "struct gtkItemFactory is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkItemFactory passed to constructor.");
+			else return;
 		}
 		super(cast(GtkObject*)gtkItemFactory);
 		this.gtkItemFactory = gtkItemFactory;

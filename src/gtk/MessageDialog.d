@@ -54,14 +54,6 @@
 
 module gtk.MessageDialog;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -130,25 +122,11 @@ public class MessageDialog : Dialog
 	 */
 	public this (GtkMessageDialog* gtkMessageDialog)
 	{
-		version(noAssert)
+		if(gtkMessageDialog is null)
 		{
-			if ( gtkMessageDialog is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkMessageDialog is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkMessageDialog is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkMessageDialog !is null, "struct gtkMessageDialog is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkMessageDialog passed to constructor.");
+			else return;
 		}
 		super(cast(GtkDialog*)gtkMessageDialog);
 		this.gtkMessageDialog = gtkMessageDialog;

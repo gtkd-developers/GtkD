@@ -48,14 +48,6 @@
 
 module cairo.FontOption;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.cairotypes;
 
 private import gtkc.cairo;
@@ -92,25 +84,11 @@ public class FontOption
 	 */
 	public this (cairo_font_options_t* cairo_font_options)
 	{
-		version(noAssert)
+		if(cairo_font_options is null)
 		{
-			if ( cairo_font_options is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct cairo_font_options is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct cairo_font_options is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(cairo_font_options !is null, "struct cairo_font_options is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null cairo_font_options passed to constructor.");
+			else return;
 		}
 		this.cairo_font_options = cairo_font_options;
 	}

@@ -83,14 +83,6 @@
 
 module pango.PgLayout;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -152,25 +144,11 @@ public class PgLayout : ObjectG
 	 */
 	public this (PangoLayout* pangoLayout)
 	{
-		version(noAssert)
+		if(pangoLayout is null)
 		{
-			if ( pangoLayout is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct pangoLayout is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct pangoLayout is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(pangoLayout !is null, "struct pangoLayout is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoLayout passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)pangoLayout);
 		this.pangoLayout = pangoLayout;
@@ -178,10 +156,8 @@ public class PgLayout : ObjectG
 	
 	/**
 	 * Sets the text of the layout.
-	 * layout:
-	 *  a PangoLayout
-	 * text:
-	 *  a UTF-8 string
+	 * Params:
+	 *  text = a UTF-8 string
 	 */
 	public void setText(char[] text)
 	{

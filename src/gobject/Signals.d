@@ -56,14 +56,6 @@
 
 module gobject.Signals;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
@@ -124,6 +116,7 @@ private import glib.Quark;
 public class Signals
 {
 	
+	/** */
 	public static uint connectData(void* instanc, char[] detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
 		// gulong g_signal_connect_data (gpointer instance,  const gchar *detailed_signal,  GCallback c_handler,  gpointer data,  GClosureNotify destroy_data,  GConnectFlags connect_flags);

@@ -62,14 +62,6 @@
 
 module gtk.ComboBox;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -134,25 +126,11 @@ public class ComboBox : Bin, CellLayoutIF
 	 */
 	public this (GtkComboBox* gtkComboBox)
 	{
-		version(noAssert)
+		if(gtkComboBox is null)
 		{
-			if ( gtkComboBox is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkComboBox is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkComboBox is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkComboBox !is null, "struct gtkComboBox is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkComboBox passed to constructor.");
+			else return;
 		}
 		super(cast(GtkBin*)gtkComboBox);
 		this.gtkComboBox = gtkComboBox;

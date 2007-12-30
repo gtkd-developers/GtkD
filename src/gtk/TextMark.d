@@ -52,14 +52,6 @@
 
 module gtk.TextMark;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -119,25 +111,11 @@ public class TextMark : ObjectG
 	 */
 	public this (GtkTextMark* gtkTextMark)
 	{
-		version(noAssert)
+		if(gtkTextMark is null)
 		{
-			if ( gtkTextMark is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkTextMark is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkTextMark is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkTextMark !is null, "struct gtkTextMark is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTextMark passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkTextMark);
 		this.gtkTextMark = gtkTextMark;

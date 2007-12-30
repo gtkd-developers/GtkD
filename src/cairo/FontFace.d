@@ -48,14 +48,6 @@
 
 module cairo.FontFace;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.cairotypes;
 
 private import gtkc.cairo;
@@ -92,25 +84,11 @@ public class FontFace
 	 */
 	public this (cairo_font_face_t* cairo_font_face)
 	{
-		version(noAssert)
+		if(cairo_font_face is null)
 		{
-			if ( cairo_font_face is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct cairo_font_face is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct cairo_font_face is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(cairo_font_face !is null, "struct cairo_font_face is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null cairo_font_face passed to constructor.");
+			else return;
 		}
 		this.cairo_font_face = cairo_font_face;
 	}

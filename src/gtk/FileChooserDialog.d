@@ -59,14 +59,6 @@
 
 module gtk.FileChooserDialog;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -194,25 +186,11 @@ public class FileChooserDialog : Dialog
 	 */
 	public this (GtkFileChooserDialog* gtkFileChooserDialog)
 	{
-		version(noAssert)
+		if(gtkFileChooserDialog is null)
 		{
-			if ( gtkFileChooserDialog is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkFileChooserDialog is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkFileChooserDialog is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkFileChooserDialog !is null, "struct gtkFileChooserDialog is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkFileChooserDialog passed to constructor.");
+			else return;
 		}
 		super(cast(GtkDialog*)gtkFileChooserDialog);
 		this.gtkFileChooserDialog = gtkFileChooserDialog;

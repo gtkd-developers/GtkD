@@ -54,14 +54,6 @@
 
 module gtk.RadioToolButton;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -112,25 +104,11 @@ public class RadioToolButton : ToggleToolButton
 	 */
 	public this (GtkRadioToolButton* gtkRadioToolButton)
 	{
-		version(noAssert)
+		if(gtkRadioToolButton is null)
 		{
-			if ( gtkRadioToolButton is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkRadioToolButton is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkRadioToolButton is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkRadioToolButton !is null, "struct gtkRadioToolButton is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkRadioToolButton passed to constructor.");
+			else return;
 		}
 		super(cast(GtkToggleToolButton*)gtkRadioToolButton);
 		this.gtkRadioToolButton = gtkRadioToolButton;

@@ -49,14 +49,6 @@
 
 module atk.EditableText;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -99,25 +91,11 @@ public class EditableText
 	 */
 	public this (AtkEditableText* atkEditableText)
 	{
-		version(noAssert)
+		if(atkEditableText is null)
 		{
-			if ( atkEditableText is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct atkEditableText is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct atkEditableText is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(atkEditableText !is null, "struct atkEditableText is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null atkEditableText passed to constructor.");
+			else return;
 		}
 		this.atkEditableText = atkEditableText;
 	}

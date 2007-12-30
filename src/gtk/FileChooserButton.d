@@ -56,14 +56,6 @@
 
 module gtk.FileChooserButton;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -128,25 +120,11 @@ public class FileChooserButton : HBox
 	 */
 	public this (GtkFileChooserButton* gtkFileChooserButton)
 	{
-		version(noAssert)
+		if(gtkFileChooserButton is null)
 		{
-			if ( gtkFileChooserButton is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkFileChooserButton is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkFileChooserButton is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkFileChooserButton !is null, "struct gtkFileChooserButton is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkFileChooserButton passed to constructor.");
+			else return;
 		}
 		super(cast(GtkHBox*)gtkFileChooserButton);
 		this.gtkFileChooserButton = gtkFileChooserButton;

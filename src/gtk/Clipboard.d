@@ -58,14 +58,6 @@
 
 module gtk.Clipboard;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -161,25 +153,11 @@ public class Clipboard : ObjectG
 	 */
 	public this (GtkClipboard* gtkClipboard)
 	{
-		version(noAssert)
+		if(gtkClipboard is null)
 		{
-			if ( gtkClipboard is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkClipboard is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkClipboard is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkClipboard !is null, "struct gtkClipboard is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkClipboard passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkClipboard);
 		this.gtkClipboard = gtkClipboard;

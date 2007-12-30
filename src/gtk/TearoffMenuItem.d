@@ -49,14 +49,6 @@
 
 module gtk.TearoffMenuItem;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -104,25 +96,11 @@ public class TearoffMenuItem : MenuItem
 	 */
 	public this (GtkTearoffMenuItem* gtkTearoffMenuItem)
 	{
-		version(noAssert)
+		if(gtkTearoffMenuItem is null)
 		{
-			if ( gtkTearoffMenuItem is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkTearoffMenuItem is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkTearoffMenuItem is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkTearoffMenuItem !is null, "struct gtkTearoffMenuItem is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTearoffMenuItem passed to constructor.");
+			else return;
 		}
 		super(cast(GtkMenuItem*)gtkTearoffMenuItem);
 		this.gtkTearoffMenuItem = gtkTearoffMenuItem;

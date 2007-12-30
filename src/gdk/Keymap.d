@@ -53,14 +53,6 @@
 
 module gdk.Keymap;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -152,25 +144,11 @@ public class Keymap : ObjectG
 	 */
 	public this (GdkKeymap* gdkKeymap)
 	{
-		version(noAssert)
+		if(gdkKeymap is null)
 		{
-			if ( gdkKeymap is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkKeymap is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkKeymap is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkKeymap !is null, "struct gdkKeymap is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkKeymap passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gdkKeymap);
 		this.gdkKeymap = gdkKeymap;

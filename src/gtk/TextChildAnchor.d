@@ -49,14 +49,6 @@
 
 module gtk.TextChildAnchor;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -97,25 +89,11 @@ public class TextChildAnchor
 	 */
 	public this (GtkTextChildAnchor* gtkTextChildAnchor)
 	{
-		version(noAssert)
+		if(gtkTextChildAnchor is null)
 		{
-			if ( gtkTextChildAnchor is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkTextChildAnchor is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkTextChildAnchor is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkTextChildAnchor !is null, "struct gtkTextChildAnchor is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTextChildAnchor passed to constructor.");
+			else return;
 		}
 		this.gtkTextChildAnchor = gtkTextChildAnchor;
 	}

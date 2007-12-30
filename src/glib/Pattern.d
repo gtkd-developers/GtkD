@@ -51,14 +51,6 @@
 
 module glib.Pattern;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -109,25 +101,11 @@ public class Pattern
 	 */
 	public this (GPatternSpec* gPatternSpec)
 	{
-		version(noAssert)
+		if(gPatternSpec is null)
 		{
-			if ( gPatternSpec is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gPatternSpec is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gPatternSpec is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gPatternSpec !is null, "struct gPatternSpec is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gPatternSpec passed to constructor.");
+			else return;
 		}
 		this.gPatternSpec = gPatternSpec;
 	}

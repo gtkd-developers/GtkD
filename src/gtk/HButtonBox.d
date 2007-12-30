@@ -49,14 +49,6 @@
 
 module gtk.HButtonBox;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -109,25 +101,11 @@ public class HButtonBox : ButtonBox
 	 */
 	public this (GtkHButtonBox* gtkHButtonBox)
 	{
-		version(noAssert)
+		if(gtkHButtonBox is null)
 		{
-			if ( gtkHButtonBox is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkHButtonBox is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkHButtonBox is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkHButtonBox !is null, "struct gtkHButtonBox is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkHButtonBox passed to constructor.");
+			else return;
 		}
 		super(cast(GtkButtonBox*)gtkHButtonBox);
 		this.gtkHButtonBox = gtkHButtonBox;

@@ -50,14 +50,6 @@
 
 module gtk.Types;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -97,25 +89,11 @@ public class Types
 	 */
 	public this (GtkType* gtkType)
 	{
-		version(noAssert)
+		if(gtkType is null)
 		{
-			if ( gtkType is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkType is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkType is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkType !is null, "struct gtkType is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkType passed to constructor.");
+			else return;
 		}
 		this.gtkType = gtkType;
 	}

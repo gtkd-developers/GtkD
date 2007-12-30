@@ -48,14 +48,6 @@
 
 module atk.Registry;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -98,25 +90,11 @@ public class Registry : ObjectG
 	 */
 	public this (AtkRegistry* atkRegistry)
 	{
-		version(noAssert)
+		if(atkRegistry is null)
 		{
-			if ( atkRegistry is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct atkRegistry is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct atkRegistry is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(atkRegistry !is null, "struct atkRegistry is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null atkRegistry passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)atkRegistry);
 		this.atkRegistry = atkRegistry;

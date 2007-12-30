@@ -53,14 +53,6 @@
 
 module gdk.Color;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -124,25 +116,11 @@ public class Color
 	 */
 	public this (GdkColor* gdkColor)
 	{
-		version(noAssert)
+		if(gdkColor is null)
 		{
-			if ( gdkColor is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkColor is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkColor is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkColor !is null, "struct gdkColor is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkColor passed to constructor.");
+			else return;
 		}
 		this.gdkColor = gdkColor;
 	}

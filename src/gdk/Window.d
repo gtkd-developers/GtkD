@@ -66,14 +66,6 @@
 
 module gdk.Window;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -251,25 +243,11 @@ public class Window : Drawable
 	 */
 	public this (GdkWindow* gdkWindow)
 	{
-		version(noAssert)
+		if(gdkWindow is null)
 		{
-			if ( gdkWindow is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkWindow is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkWindow is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkWindow !is null, "struct gdkWindow is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkWindow passed to constructor.");
+			else return;
 		}
 		super(cast(GdkDrawable*)gdkWindow);
 		this.gdkWindow = gdkWindow;

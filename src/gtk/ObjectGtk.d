@@ -50,14 +50,6 @@
 
 module gtk.ObjectGtk;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -143,25 +135,11 @@ public class ObjectGtk : ObjectG
 	 */
 	public this (GtkObject* gtkObject)
 	{
-		version(noAssert)
+		if(gtkObject is null)
 		{
-			if ( gtkObject is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkObject is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkObject is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkObject !is null, "struct gtkObject is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkObject passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkObject);
 		this.gtkObject = gtkObject;

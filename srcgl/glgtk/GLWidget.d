@@ -58,14 +58,6 @@
 
 module glgtk.GLWidget;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;
@@ -97,8 +89,9 @@ public class GLWidget
 	
 	/**
 	 * Gets the GL Frawable for (from???) the widget
-	 * @param widget
-	 * @return a new GLDrawable
+	 * Params:
+	 *  widget =
+	 * Returns: a new GLDrawable
 	 */
 	static GLDrawable getGLDrawable(Widget widget)
 	{

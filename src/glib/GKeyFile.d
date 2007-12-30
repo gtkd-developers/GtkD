@@ -50,14 +50,6 @@
 
 module glib.GKeyFile;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -149,25 +141,11 @@ public class KeyFile
 	 */
 	public this (GKeyFile* gKeyFile)
 	{
-		version(noAssert)
+		if(gKeyFile is null)
 		{
-			if ( gKeyFile is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gKeyFile is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gKeyFile is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gKeyFile !is null, "struct gKeyFile is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gKeyFile passed to constructor.");
+			else return;
 		}
 		this.gKeyFile = gKeyFile;
 	}

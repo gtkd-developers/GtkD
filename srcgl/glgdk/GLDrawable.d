@@ -50,14 +50,6 @@
 
 module glgdk.GLDrawable;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
@@ -95,25 +87,11 @@ public class GLDrawable
 	 */
 	public this (GdkGLDrawable* gdkGLDrawable)
 	{
-		version(noAssert)
+		if(gdkGLDrawable is null)
 		{
-			if ( gdkGLDrawable is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkGLDrawable is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkGLDrawable is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkGLDrawable !is null, "struct gdkGLDrawable is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkGLDrawable passed to constructor.");
+			else return;
 		}
 		this.gdkGLDrawable = gdkGLDrawable;
 	}

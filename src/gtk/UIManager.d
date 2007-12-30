@@ -62,14 +62,6 @@
 
 module gtk.UIManager;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -287,25 +279,11 @@ public class UIManager : ObjectG
 	 */
 	public this (GtkUIManager* gtkUIManager)
 	{
-		version(noAssert)
+		if(gtkUIManager is null)
 		{
-			if ( gtkUIManager is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkUIManager is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkUIManager is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkUIManager !is null, "struct gtkUIManager is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkUIManager passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkUIManager);
 		this.gtkUIManager = gtkUIManager;

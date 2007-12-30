@@ -59,14 +59,6 @@
 
 module gobject.Value;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
@@ -119,34 +111,22 @@ public class Value
 	 */
 	public this (GValue* gValue)
 	{
-		version(noAssert)
+		if(gValue is null)
 		{
-			if ( gValue is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gValue is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gValue is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gValue !is null, "struct gValue is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gValue passed to constructor.");
+			else return;
 		}
 		this.gValue = gValue;
 	}
 	
+	/** */
 	public this()
 	{
 		this(new GValue);
 	}
 	
+	/** */
 	this(Pixbuf pixbuf)
 	{
 		GValue* v = new GValue;
@@ -156,6 +136,7 @@ public class Value
 		this(v);
 	}
 	
+	/** */
 	this(char[] value)
 	{
 		this();
@@ -163,6 +144,7 @@ public class Value
 		setString(value);
 	}
 	
+	/** */
 	this(int value)
 	{
 		this();
@@ -172,12 +154,11 @@ public class Value
 	
 	/**
 	 * Initializes value with the default value of type.
-	 * value:
-	 * A zero-filled (uninitialized) GValue structure.
-	 * g_type:
-	 * Type the GValue should hold values of.
+	 * Params:
+	 *  value = A zero-filled (uninitialized) GValue structure.
+	 *  g_type = Type the GValue should hold values of.
 	 * Returns:
-	 * the GValue structure that has been passed in
+	 *  the GValue structure that has been passed in
 	 */
 	public Value init(GType gType)
 	{
@@ -189,10 +170,10 @@ public class Value
 	/**
 	 * Clears the current value in value and resets it to the default value
 	 * (as if the value had just been initialized).
-	 * value:
-	 * An initialized GValue structure.
+	 * Params:
+	 *  value = An initialized GValue structure.
 	 * Returns:
-	 * the GValue structure that has been passed in
+	 *  the GValue structure that has been passed in
 	 */
 	public Value reset()
 	{

@@ -52,14 +52,6 @@
 
 module gtk.ColorSelection;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -104,25 +96,11 @@ public class ColorSelection : VBox
 	 */
 	public this (GtkColorSelection* gtkColorSelection)
 	{
-		version(noAssert)
+		if(gtkColorSelection is null)
 		{
-			if ( gtkColorSelection is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkColorSelection is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkColorSelection is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkColorSelection !is null, "struct gtkColorSelection is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkColorSelection passed to constructor.");
+			else return;
 		}
 		super(cast(GtkVBox*)gtkColorSelection);
 		this.gtkColorSelection = gtkColorSelection;

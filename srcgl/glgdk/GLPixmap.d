@@ -50,14 +50,6 @@
 
 module glgdk.GLPixmap;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
@@ -96,25 +88,11 @@ public class GLPixmap : Drawable
 	 */
 	public this (GdkGLPixmap* gdkGLPixmap)
 	{
-		version(noAssert)
+		if(gdkGLPixmap is null)
 		{
-			if ( gdkGLPixmap is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkGLPixmap is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkGLPixmap is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkGLPixmap !is null, "struct gdkGLPixmap is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkGLPixmap passed to constructor.");
+			else return;
 		}
 		super(cast(GdkDrawable*)gdkGLPixmap);
 		this.gdkGLPixmap = gdkGLPixmap;

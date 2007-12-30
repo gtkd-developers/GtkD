@@ -57,14 +57,6 @@
 
 module gobject.ObjectG;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
@@ -171,8 +163,9 @@ public class ObjectG
 	
 	/**
 	 * Sets a pointer on this object's has table
-	 * @param key the data identifier
-	 * @param data a pointer
+	 * Params:
+	 *  key = the data identifier
+	 *  data = a pointer
 	 */
 	public: void setDataFull(char[] key, gpointer data)
 	{
@@ -320,8 +313,9 @@ public class ObjectG
 	//
 	//	/**
 	//	 * Sets a pointer on this object's has table
-	//	 * @param key the data identifier
-	//	 * @param data a pointer
+	//	 * Params:
+	//	 *  key = the data identifier
+	//	 *  data = a pointer
 	//	 */
 	//	private void setDestroyNotify(char[] key, gpointer data)
 	//	{
@@ -346,22 +340,27 @@ public class ObjectG
 			//			//printf("objectg.destroy exit\n");
 		//		}
 	//	}
+	
+	/** */
 	public void setProperty(char[] propertyName, int value)
 	{
 		setProperty(propertyName, new Value(value));
 	}
 	
+	/** */
 	public void setProperty(char[] propertyName, char[] value)
 	{
 		setProperty(propertyName, new Value(value));
 	}
 	
+	/** */
 	public void setProperty(char[] propertyName, long value)
 	{
 		//We use g_object_set instead of g_object_set_property, because Value doesn't like longs and ulongs for some reason.
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
 	
+	/** */
 	public void setProperty(char[] propertyName, ulong value)
 	{
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);

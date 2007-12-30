@@ -53,14 +53,6 @@
 
 module gtk.TreeDragSource;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -112,25 +104,11 @@ public class TreeDragSource
 	 */
 	public this (GtkTreeDragSource* gtkTreeDragSource)
 	{
-		version(noAssert)
+		if(gtkTreeDragSource is null)
 		{
-			if ( gtkTreeDragSource is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkTreeDragSource is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkTreeDragSource is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkTreeDragSource !is null, "struct gtkTreeDragSource is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTreeDragSource passed to constructor.");
+			else return;
 		}
 		this.gtkTreeDragSource = gtkTreeDragSource;
 	}

@@ -57,14 +57,6 @@
 
 module gdk.Colormap;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -129,25 +121,11 @@ public class Colormap
 	 */
 	public this (GdkColormap* gdkColormap)
 	{
-		version(noAssert)
+		if(gdkColormap is null)
 		{
-			if ( gdkColormap is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkColormap is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkColormap is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkColormap !is null, "struct gdkColormap is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkColormap passed to constructor.");
+			else return;
 		}
 		this.gdkColormap = gdkColormap;
 	}

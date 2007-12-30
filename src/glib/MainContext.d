@@ -60,14 +60,6 @@
 
 module glib.MainContext;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -172,25 +164,11 @@ public class MainContext
 	 */
 	public this (GMainContext* gMainContext)
 	{
-		version(noAssert)
+		if(gMainContext is null)
 		{
-			if ( gMainContext is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gMainContext is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gMainContext is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gMainContext !is null, "struct gMainContext is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gMainContext passed to constructor.");
+			else return;
 		}
 		this.gMainContext = gMainContext;
 	}

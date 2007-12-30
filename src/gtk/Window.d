@@ -63,14 +63,6 @@
 
 module gtk.Window;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -116,25 +108,11 @@ public class Window : Bin
 	 */
 	public this (GtkWindow* gtkWindow)
 	{
-		version(noAssert)
+		if(gtkWindow is null)
 		{
-			if ( gtkWindow is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkWindow is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkWindow is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkWindow !is null, "struct gtkWindow is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkWindow passed to constructor.");
+			else return;
 		}
 		super(cast(GtkBin*)gtkWindow);
 		this.gtkWindow = gtkWindow;
@@ -1255,29 +1233,7 @@ public class Window : Bin
 		gtk_window_set_startup_id(gtkWindow, Str.toStringz(startupId));
 	}
 	
-	/**
-	 * This function is only useful on X11, not with other GTK+ targets.
-	 * In combination with the window title, the window role allows a
-	 * window manager to identify "the
-	 * same" window when an application is restarted. So for example you
-	 * might set the "toolbox" role on your app's toolbox window, so that
-	 * when the user restarts their session, the window manager can put
-	 * the toolbox back in the same place.
-	 * If a window already has a unique title, you don't need to set the
-	 * role, since the WM can use the title to identify the window when
-	 * restoring the session.
-	 * Params:
-	 * role =  unique identifier for the window to be used when restoring a session
-	 */
-        
-        /+ Manual edit. Duplicated symbol.
-	public void setRole(char[] role)
-	{
-		// void gtk_window_set_role (GtkWindow *window,  const gchar *role);
-		gtk_window_set_role(gtkWindow, Str.toStringz(role));
-	}
-	+/
-
+	
 	/**
 	 * Returns whether the window has been set to have decorations
 	 * such as a title bar via gtk_window_set_decorated().

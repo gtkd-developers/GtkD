@@ -51,14 +51,6 @@
 
 module gtk.HScrollbar;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -102,25 +94,11 @@ public class HScrollbar : Scrollbar
 	 */
 	public this (GtkHScrollbar* gtkHScrollbar)
 	{
-		version(noAssert)
+		if(gtkHScrollbar is null)
 		{
-			if ( gtkHScrollbar is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkHScrollbar is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkHScrollbar is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkHScrollbar !is null, "struct gtkHScrollbar is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkHScrollbar passed to constructor.");
+			else return;
 		}
 		super(cast(GtkScrollbar*)gtkHScrollbar);
 		this.gtkHScrollbar = gtkHScrollbar;

@@ -54,14 +54,6 @@
 
 module gtk.ButtonBox;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -118,25 +110,11 @@ public class ButtonBox : Box
 	 */
 	public this (GtkButtonBox* gtkButtonBox)
 	{
-		version(noAssert)
+		if(gtkButtonBox is null)
 		{
-			if ( gtkButtonBox is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkButtonBox is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkButtonBox is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkButtonBox !is null, "struct gtkButtonBox is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkButtonBox passed to constructor.");
+			else return;
 		}
 		super(cast(GtkBox*)gtkButtonBox);
 		this.gtkButtonBox = gtkButtonBox;

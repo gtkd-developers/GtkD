@@ -50,14 +50,6 @@
 
 module glgdk.GLContext;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
@@ -96,25 +88,11 @@ public class GLContext : ObjectG
 	 */
 	public this (GdkGLContext* gdkGLContext)
 	{
-		version(noAssert)
+		if(gdkGLContext is null)
 		{
-			if ( gdkGLContext is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkGLContext is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkGLContext is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkGLContext !is null, "struct gdkGLContext is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkGLContext passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gdkGLContext);
 		this.gdkGLContext = gdkGLContext;

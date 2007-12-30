@@ -49,14 +49,6 @@
 
 module gtk.Scale;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -103,25 +95,11 @@ public class Scale : Range
 	 */
 	public this (GtkScale* gtkScale)
 	{
-		version(noAssert)
+		if(gtkScale is null)
 		{
-			if ( gtkScale is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkScale is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkScale is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkScale !is null, "struct gtkScale is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkScale passed to constructor.");
+			else return;
 		}
 		super(cast(GtkRange*)gtkScale);
 		this.gtkScale = gtkScale;

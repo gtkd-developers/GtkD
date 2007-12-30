@@ -53,14 +53,6 @@
 
 module gtk.SpinButton;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -145,25 +137,11 @@ public class SpinButton : Entry
 	 */
 	public this (GtkSpinButton* gtkSpinButton)
 	{
-		version(noAssert)
+		if(gtkSpinButton is null)
 		{
-			if ( gtkSpinButton is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkSpinButton is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkSpinButton is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkSpinButton !is null, "struct gtkSpinButton is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkSpinButton passed to constructor.");
+			else return;
 		}
 		super(cast(GtkEntry*)gtkSpinButton);
 		this.gtkSpinButton = gtkSpinButton;

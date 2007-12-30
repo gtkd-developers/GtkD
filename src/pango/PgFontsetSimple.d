@@ -78,14 +78,6 @@
 
 module pango.PgFontsetSimple;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.pangotypes;
 
 private import gtkc.pango;
@@ -144,25 +136,11 @@ public class PgFontsetSimple
 	 */
 	public this (PangoFontsetSimple* pangoFontsetSimple)
 	{
-		version(noAssert)
+		if(pangoFontsetSimple is null)
 		{
-			if ( pangoFontsetSimple is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct pangoFontsetSimple is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct pangoFontsetSimple is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(pangoFontsetSimple !is null, "struct pangoFontsetSimple is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoFontsetSimple passed to constructor.");
+			else return;
 		}
 		this.pangoFontsetSimple = pangoFontsetSimple;
 	}

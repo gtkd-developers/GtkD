@@ -50,14 +50,6 @@
 
 module glib.Cache;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -104,25 +96,11 @@ public class Cache
 	 */
 	public this (GCache* gCache)
 	{
-		version(noAssert)
+		if(gCache is null)
 		{
-			if ( gCache is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gCache is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gCache is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gCache !is null, "struct gCache is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gCache passed to constructor.");
+			else return;
 		}
 		this.gCache = gCache;
 	}

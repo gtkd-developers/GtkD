@@ -48,14 +48,6 @@
 
 module atk.Hypertext;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -97,25 +89,11 @@ public class Hypertext
 	 */
 	public this (AtkHypertext* atkHypertext)
 	{
-		version(noAssert)
+		if(atkHypertext is null)
 		{
-			if ( atkHypertext is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct atkHypertext is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct atkHypertext is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(atkHypertext !is null, "struct atkHypertext is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null atkHypertext passed to constructor.");
+			else return;
 		}
 		this.atkHypertext = atkHypertext;
 	}

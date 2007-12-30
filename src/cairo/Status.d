@@ -49,14 +49,6 @@
 
 module cairo.Status;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.cairotypes;
 
 private import gtkc.cairo;
@@ -94,25 +86,11 @@ public class Status
 	 */
 	public this (cairo_status_t* cairo_status)
 	{
-		version(noAssert)
+		if(cairo_status is null)
 		{
-			if ( cairo_status is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct cairo_status is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct cairo_status is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(cairo_status !is null, "struct cairo_status is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null cairo_status passed to constructor.");
+			else return;
 		}
 		this.cairo_status = cairo_status;
 	}

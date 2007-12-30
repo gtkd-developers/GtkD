@@ -50,14 +50,6 @@
 
 module gtk.TextAttributes;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -104,25 +96,11 @@ public class TextAttributes
 	 */
 	public this (GtkTextAttributes* gtkTextAttributes)
 	{
-		version(noAssert)
+		if(gtkTextAttributes is null)
 		{
-			if ( gtkTextAttributes is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkTextAttributes is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkTextAttributes is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkTextAttributes !is null, "struct gtkTextAttributes is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkTextAttributes passed to constructor.");
+			else return;
 		}
 		this.gtkTextAttributes = gtkTextAttributes;
 	}

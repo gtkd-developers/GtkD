@@ -50,14 +50,6 @@
 
 module gthread.Private;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
@@ -126,25 +118,11 @@ public class Private
 	 */
 	public this (GPrivate* gPrivate)
 	{
-		version(noAssert)
+		if(gPrivate is null)
 		{
-			if ( gPrivate is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gPrivate is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gPrivate is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gPrivate !is null, "struct gPrivate is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gPrivate passed to constructor.");
+			else return;
 		}
 		this.gPrivate = gPrivate;
 	}

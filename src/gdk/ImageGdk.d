@@ -54,14 +54,6 @@
 
 module gdk.ImageGdk;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -113,25 +105,11 @@ public class ImageGdk
 	 */
 	public this (GdkImage* gdkImage)
 	{
-		version(noAssert)
+		if(gdkImage is null)
 		{
-			if ( gdkImage is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkImage is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkImage is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkImage !is null, "struct gdkImage is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkImage passed to constructor.");
+			else return;
 		}
 		this.gdkImage = gdkImage;
 	}

@@ -49,14 +49,6 @@
 
 module gtk.GammaCurve;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -110,25 +102,11 @@ public class GammaCurve : VBox
 	 */
 	public this (GtkGammaCurve* gtkGammaCurve)
 	{
-		version(noAssert)
+		if(gtkGammaCurve is null)
 		{
-			if ( gtkGammaCurve is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkGammaCurve is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkGammaCurve is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkGammaCurve !is null, "struct gtkGammaCurve is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkGammaCurve passed to constructor.");
+			else return;
 		}
 		super(cast(GtkVBox*)gtkGammaCurve);
 		this.gtkGammaCurve = gtkGammaCurve;

@@ -50,14 +50,6 @@
 
 module atk.GObjectAccessible;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -100,25 +92,11 @@ public class GObjectAccessible : ObjectAtk
 	 */
 	public this (AtkGObjectAccessible* atkGObjectAccessible)
 	{
-		version(noAssert)
+		if(atkGObjectAccessible is null)
 		{
-			if ( atkGObjectAccessible is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct atkGObjectAccessible is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct atkGObjectAccessible is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(atkGObjectAccessible !is null, "struct atkGObjectAccessible is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null atkGObjectAccessible passed to constructor.");
+			else return;
 		}
 		super(cast(AtkObject*)atkGObjectAccessible);
 		this.atkGObjectAccessible = atkGObjectAccessible;

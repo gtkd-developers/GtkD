@@ -56,14 +56,6 @@
 
 module gobject.CClosure;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
@@ -135,25 +127,11 @@ public class CClosure
 	 */
 	public this (GCClosure* gCClosure)
 	{
-		version(noAssert)
+		if(gCClosure is null)
 		{
-			if ( gCClosure is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gCClosure is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gCClosure is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gCClosure !is null, "struct gCClosure is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gCClosure passed to constructor.");
+			else return;
 		}
 		this.gCClosure = gCClosure;
 	}

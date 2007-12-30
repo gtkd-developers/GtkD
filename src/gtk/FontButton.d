@@ -50,14 +50,6 @@
 
 module gtk.FontButton;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -98,25 +90,11 @@ public class FontButton : Button
 	 */
 	public this (GtkFontButton* gtkFontButton)
 	{
-		version(noAssert)
+		if(gtkFontButton is null)
 		{
-			if ( gtkFontButton is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkFontButton is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkFontButton is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkFontButton !is null, "struct gtkFontButton is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkFontButton passed to constructor.");
+			else return;
 		}
 		super(cast(GtkButton*)gtkFontButton);
 		this.gtkFontButton = gtkFontButton;

@@ -51,14 +51,6 @@
 
 module gtk.Adjustment;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -108,25 +100,11 @@ public class Adjustment : ObjectGtk
 	 */
 	public this (GtkAdjustment* gtkAdjustment)
 	{
-		version(noAssert)
+		if(gtkAdjustment is null)
 		{
-			if ( gtkAdjustment is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkAdjustment is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkAdjustment is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkAdjustment !is null, "struct gtkAdjustment is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkAdjustment passed to constructor.");
+			else return;
 		}
 		super(cast(GtkObject*)gtkAdjustment);
 		this.gtkAdjustment = gtkAdjustment;

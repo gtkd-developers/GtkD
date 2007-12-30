@@ -53,14 +53,6 @@
 
 module gtk.Layout;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -110,25 +102,11 @@ public class Layout : Container
 	 */
 	public this (GtkLayout* gtkLayout)
 	{
-		version(noAssert)
+		if(gtkLayout is null)
 		{
-			if ( gtkLayout is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkLayout is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkLayout is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkLayout !is null, "struct gtkLayout is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkLayout passed to constructor.");
+			else return;
 		}
 		super(cast(GtkContainer*)gtkLayout);
 		this.gtkLayout = gtkLayout;

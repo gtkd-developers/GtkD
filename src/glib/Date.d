@@ -50,14 +50,6 @@
 
 module glib.Date;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -133,25 +125,11 @@ public class Date
 	 */
 	public this (GDate* gDate)
 	{
-		version(noAssert)
+		if(gDate is null)
 		{
-			if ( gDate is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gDate is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gDate is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gDate !is null, "struct gDate is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gDate passed to constructor.");
+			else return;
 		}
 		this.gDate = gDate;
 	}

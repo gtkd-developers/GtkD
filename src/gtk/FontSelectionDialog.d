@@ -52,14 +52,6 @@
 
 module gtk.FontSelectionDialog;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -110,25 +102,11 @@ public class FontSelectionDialog : Dialog
 	 */
 	public this (GtkFontSelectionDialog* gtkFontSelectionDialog)
 	{
-		version(noAssert)
+		if(gtkFontSelectionDialog is null)
 		{
-			if ( gtkFontSelectionDialog is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkFontSelectionDialog is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkFontSelectionDialog is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkFontSelectionDialog !is null, "struct gtkFontSelectionDialog is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkFontSelectionDialog passed to constructor.");
+			else return;
 		}
 		super(cast(GtkDialog*)gtkFontSelectionDialog);
 		this.gtkFontSelectionDialog = gtkFontSelectionDialog;

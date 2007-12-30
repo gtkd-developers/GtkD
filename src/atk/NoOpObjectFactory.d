@@ -50,14 +50,6 @@
 
 module atk.NoOpObjectFactory;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.atktypes;
 
 private import gtkc.atk;
@@ -99,25 +91,11 @@ public class NoOpObjectFactory : ObjectFactory
 	 */
 	public this (AtkNoOpObjectFactory* atkNoOpObjectFactory)
 	{
-		version(noAssert)
+		if(atkNoOpObjectFactory is null)
 		{
-			if ( atkNoOpObjectFactory is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct atkNoOpObjectFactory is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct atkNoOpObjectFactory is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(atkNoOpObjectFactory !is null, "struct atkNoOpObjectFactory is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null atkNoOpObjectFactory passed to constructor.");
+			else return;
 		}
 		super(cast(AtkObjectFactory*)atkNoOpObjectFactory);
 		this.atkNoOpObjectFactory = atkNoOpObjectFactory;

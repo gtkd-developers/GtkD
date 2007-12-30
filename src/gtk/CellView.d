@@ -62,14 +62,6 @@
 
 module gtk.CellView;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -117,25 +109,11 @@ public class CellView : Widget
 	 */
 	public this (GtkCellView* gtkCellView)
 	{
-		version(noAssert)
+		if(gtkCellView is null)
 		{
-			if ( gtkCellView is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkCellView is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkCellView is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkCellView !is null, "struct gtkCellView is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkCellView passed to constructor.");
+			else return;
 		}
 		super(cast(GtkWidget*)gtkCellView);
 		this.gtkCellView = gtkCellView;

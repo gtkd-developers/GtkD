@@ -49,14 +49,6 @@
 
 module glib.MemoryChunk;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -165,25 +157,11 @@ public class MemoryChunk
 	 */
 	public this (GMemChunk* gMemChunk)
 	{
-		version(noAssert)
+		if(gMemChunk is null)
 		{
-			if ( gMemChunk is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gMemChunk is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gMemChunk is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gMemChunk !is null, "struct gMemChunk is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gMemChunk passed to constructor.");
+			else return;
 		}
 		this.gMemChunk = gMemChunk;
 	}

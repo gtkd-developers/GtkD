@@ -49,14 +49,6 @@
 
 module gtk.DrawingArea;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -145,25 +137,11 @@ public class DrawingArea : Widget
 	 */
 	public this (GtkDrawingArea* gtkDrawingArea)
 	{
-		version(noAssert)
+		if(gtkDrawingArea is null)
 		{
-			if ( gtkDrawingArea is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkDrawingArea is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkDrawingArea is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkDrawingArea !is null, "struct gtkDrawingArea is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkDrawingArea passed to constructor.");
+			else return;
 		}
 		super(cast(GtkWidget*)gtkDrawingArea);
 		this.gtkDrawingArea = gtkDrawingArea;

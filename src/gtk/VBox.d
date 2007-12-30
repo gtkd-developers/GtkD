@@ -49,14 +49,6 @@
 
 module gtk.VBox;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -98,25 +90,11 @@ public class VBox : Box
 	 */
 	public this (GtkVBox* gtkVBox)
 	{
-		version(noAssert)
+		if(gtkVBox is null)
 		{
-			if ( gtkVBox is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkVBox is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkVBox is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkVBox !is null, "struct gtkVBox is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkVBox passed to constructor.");
+			else return;
 		}
 		super(cast(GtkBox*)gtkVBox);
 		this.gtkVBox = gtkVBox;

@@ -54,14 +54,6 @@
 
 module gtk.CheckButton;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -104,25 +96,11 @@ public class CheckButton : ToggleButton
 	 */
 	public this (GtkCheckButton* gtkCheckButton)
 	{
-		version(noAssert)
+		if(gtkCheckButton is null)
 		{
-			if ( gtkCheckButton is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkCheckButton is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkCheckButton is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkCheckButton !is null, "struct gtkCheckButton is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkCheckButton passed to constructor.");
+			else return;
 		}
 		super(cast(GtkToggleButton*)gtkCheckButton);
 		this.gtkCheckButton = gtkCheckButton;

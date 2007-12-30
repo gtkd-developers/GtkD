@@ -51,14 +51,6 @@
 
 module glib.Node;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -116,25 +108,11 @@ public class Node
 	 */
 	public this (GNode* gNode)
 	{
-		version(noAssert)
+		if(gNode is null)
 		{
-			if ( gNode is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gNode is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gNode is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gNode !is null, "struct gNode is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gNode passed to constructor.");
+			else return;
 		}
 		this.gNode = gNode;
 	}

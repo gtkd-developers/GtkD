@@ -58,14 +58,6 @@
 
 module glib.Source;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.glibtypes;
 
 private import gtkc.glib;
@@ -169,25 +161,11 @@ public class Source
 	 */
 	public this (GSource* gSource)
 	{
-		version(noAssert)
+		if(gSource is null)
 		{
-			if ( gSource is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gSource is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gSource is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gSource !is null, "struct gSource is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gSource passed to constructor.");
+			else return;
 		}
 		this.gSource = gSource;
 	}

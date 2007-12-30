@@ -54,14 +54,6 @@
 
 module gdk.Font;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gdktypes;
 
 private import gtkc.gdk;
@@ -233,25 +225,11 @@ public class Font
 	 */
 	public this (GdkFont* gdkFont)
 	{
-		version(noAssert)
+		if(gdkFont is null)
 		{
-			if ( gdkFont is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gdkFont is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gdkFont is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gdkFont !is null, "struct gdkFont is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gdkFont passed to constructor.");
+			else return;
 		}
 		this.gdkFont = gdkFont;
 	}

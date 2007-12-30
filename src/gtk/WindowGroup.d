@@ -51,14 +51,6 @@
 
 module gtk.WindowGroup;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
 private import gtkc.gtktypes;
 
 private import gtkc.gtk;
@@ -97,25 +89,11 @@ public class WindowGroup : ObjectG
 	 */
 	public this (GtkWindowGroup* gtkWindowGroup)
 	{
-		version(noAssert)
+		if(gtkWindowGroup is null)
 		{
-			if ( gtkWindowGroup is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkWindowGroup is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkWindowGroup is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkWindowGroup !is null, "struct gtkWindowGroup is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkWindowGroup passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkWindowGroup);
 		this.gtkWindowGroup = gtkWindowGroup;
