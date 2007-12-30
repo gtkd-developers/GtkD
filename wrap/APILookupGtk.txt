@@ -3396,28 +3396,20 @@ code: start
 	/** */
 	public void setActiveText(char[] text, bool insert=false)
 	{
-		int currActive = getActive();
-		int active = 0;
-		setActive(active);
-		bool found = false;
-		while ( !found && active==getActive)
-		{
-			found = text==getActiveText();
-			++active;
-		}
-		if ( !found )
-		{
-			if ( insert )
-			{
-				appendText(text);
-				setActive(active);
-			}
-			else
-			{
-				//setActive(currActive);
-				setActive(-1);
-			}
-		}
+            int active = 0;
+            setActive(0);
+            while ( getActive >= 0 ) // returns -1 if end of list if reached
+            {
+                if( text == getActiveText() ) return;
+                ++active;
+                setActive(active);
+            }
+            // was not found, the combo has now nothing selected
+            if ( insert )
+            {
+                appendText(text);
+                setActive(active);
+            }
 	}
 
 	/** */

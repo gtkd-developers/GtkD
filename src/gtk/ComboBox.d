@@ -173,27 +173,19 @@ public class ComboBox : Bin, CellLayoutIF
 	/** */
 	public void setActiveText(char[] text, bool insert=false)
 	{
-		int currActive = getActive();
 		int active = 0;
-		setActive(active);
-		bool found = false;
-		while ( !found && active==getActive)
+		setActive(0);
+		while ( getActive >= 0 ) // returns -1 if end of list if reached
 		{
-			found = text==getActiveText();
+			if( text == getActiveText() ) return;
 			++active;
+			setActive(active);
 		}
-		if ( !found )
+		// was not found, the combo has now nothing selected
+		if ( insert )
 		{
-			if ( insert )
-			{
-				appendText(text);
-				setActive(active);
-			}
-			else
-			{
-				//setActive(currActive);
-				setActive(-1);
-			}
+			appendText(text);
+			setActive(active);
 		}
 	}
 	
