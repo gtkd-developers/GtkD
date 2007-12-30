@@ -234,7 +234,8 @@ public class GtkDClass
 		}
 		gtkDText ~= ";\n\n";
 
-		gtkDText ~= getNoAssertVersion();
+		/* Deprecated */ /*
+		gtkDText ~= getNoAssertVersion(); */
 
 		// moved to class level
 		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
@@ -339,7 +340,7 @@ public class GtkDClass
 		append(gtkDText, classHead, tabs);
 
 	}
-
+	/* Deprecated */ /*
 	private char[] getNoAssertVersion()
 	{
 		return 
@@ -353,7 +354,7 @@ public class GtkDClass
 			"\n"
 			"\n"
 			;
-	}
+	}*/
 
 	private void readGtkDClass(ConvParms* convParms)
 	{
@@ -605,8 +606,17 @@ public class GtkDClass
 							text ~= " */";
 							text ~= "public this ("~gtkStruct~"* "~var~")"~iFaceChar;
 							text ~= "{";
-							char[] tabs = "\t\t";
-							text ~= getAssertStructNotNull(var);
+							char[] tabs = "\t\t"; //What is this for?
+                            /* Deprecated */ /*
+							text ~= getAssertStructNotNull(var); */
+                            char[][] checkIfNull = [
+                            	"if("~var~" is null)",
+                                "{",
+                                "	this = null;",
+								"	version(Exceptions) throw new Exception(\"Null "~var~" passed to constructor.\");",
+								"	else return;",
+								"}" ];
+							text ~= checkIfNull;
 							if ( parentName.length > 0 )
 							{
 								text ~= "super("~castToParent(var)~");";
@@ -626,7 +636,8 @@ public class GtkDClass
 		return text;
 
 	}
-
+        
+        /* Deprecated */ /*
 	char[][] assertStructNotNull = [
 	]; 
 	
@@ -657,6 +668,8 @@ public class GtkDClass
 			;
 		return lines;
 	}
+        */
+
 
 	/**
 	 * Adds the class code from the conversion parameters.
