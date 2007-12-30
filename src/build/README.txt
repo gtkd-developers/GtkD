@@ -1,5 +1,5 @@
 type:
 
-build @duit.brf
+build @gtkD.brf
 
-to build the duit library
+to build the gtkD library
