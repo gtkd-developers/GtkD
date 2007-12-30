@@ -604,15 +604,21 @@ public struct Funct
 		
 		if ( ctor )
 		{
-			gtkCall ~= ") ";
+			gtkCall ~= ")";
 		}
 		else if ( type != typeWrap )
 		{
-			gtkCall ~= ") ";
+			gtkCall ~= ")";
 		}
 
-		
-		gtkCall ~= ");";
+		if( (type != typeWrap) && (typeWrap == "char[]") )
+		{
+			gtkCall ~= ").dup;";
+		}
+		else
+		{
+			gtkCall ~= ");";
+		}
 
 		bd ~= gtkCall;
 		//bd ~= "}";
