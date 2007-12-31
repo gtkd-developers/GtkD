@@ -520,6 +520,143 @@ public struct Funct
 	 */
 	char[][] bod(ConvParms* convParms, char[][char[]] aliases)
 	{
+		char[][] bd; /* Return variable. */
+		char[] gtkCall;
+
+		/* 1st: construct the actual GTK+ call. */
+		gtkCall ~= name ~ "("; //gtk_function(
+
+		for(int i = 0; (i < parmsType.length) && (i < parms.length); ++i)
+		{
+			debug(parm) writefln("\t(%s -> %s) %s",parmsType[i], parmsWrap[i], parms[i]);
+
+			if ( i == 0 )
+			{
+				if ( parmsType[0] == strctPointer )
+				{
+					if ( convParms.templ.length == 0 )
+					{
+						gtkCall ~= GtkDClass.toVar(convParms.strct.dup);
+					}
+					else
+					{
+						gtkCall ~= "get"~convParms.clss~"Struct()";
+					}
+				}
+				else if ( parms[0].length > 0 )
+				{
+					gtkCall ~= parameterToGtk(0, convParms, aliases);
+				}
+			}
+			else
+			{
+				if ( parms[i].length > 0 )
+				{
+					gtkCall ~= ", ";
+					gtkCall ~= parameterToGtk(i, convParms, aliases);
+				}
+			}
+		}
+
+		gtkCall ~= ")"; //gtk_function(arg1...argN)
+
+		/* 2nd: construct the rest of the body according to the type
+		 * of the function. */
+		if (type == "void")
+		{
+			/* If it's a void, we just need to make the call and be done
+			 * with it. */
+			gtkCall ~= ";";
+			bd ~= gtkCall;
+			return bd;
+		}
+		else
+		{
+			/* If the call constructs an object, call the GTK+ constructor
+			 * and pass the object to the wrapper's constructor. */
+			if(ctor)
+			{
+				/*char[] prepend = "this(cast(";
+				if(convParms.realStrct.length > 0)
+					prepend ~= convParms.realStrct ~ "*)";
+				else
+					prepend ~= convParms.strct ~ "*)";
+				gtkCall = prepend ~ gtkCall*/
+				char[] strct = (convParms.realStrct.length > 0) ? convParms.realStrct : convParms.strct;
+				/* Do we need a cast? */
+				bd ~= "auto p = " ~ gtkCall ~ ";"; //GtkStruct* p = gtk_function(arg1...argN);
+				
+				char[][] check = [	"if(p is null)",
+								  	"{",
+								  	"	this = null;",
+									"	version(Exceptions) throw new Exception(\"Construction failure.\");",
+									"	else return;",
+									"}"	];
+				bd ~= check;
+				/* What's with all the casting? */
+				/* A; Casting is needed because some GTK+
+				 *    functions can return void pointers. */
+				bd ~= "this(cast(" ~ strct ~ "*) p);";
+				//bd ~= "this(p);";
+				
+				/* The body is constructed, return. */
+				return bd;
+			}
+			else
+			{
+				/* Non-void call. */
+				if(type == typeWrap)
+				{
+					/* We return an object of the same type as the GTK+ function. */
+					//return gtk_function(arg1...argN);
+					bd ~= "return " ~ gtkCall ~ ";";
+
+					return bd;
+				}
+				else
+				{
+					/* We return an object of a different type, we need to wrap it
+					 * accordingly. */
+					if(typeWrap == "char[]")
+					{
+						/* Returned strings get special care. */
+						//return Str.toString(gtk_function(arg1...argN)).dup;
+						bd ~= "return Str.toString(" ~ gtkCall ~ ").dup;";
+
+						return bd;
+					}
+					else
+					{
+						/* All other objects are wrapped in their container. */
+						/* Why do we need a cast? */
+						//GtkType p = gtk_function(arg1...argN);
+						bd ~= "auto p = " ~ gtkCall ~ ";";
+
+						char[][] check = [	"if(p is null)",
+								  			"{",
+										  	"	version(Exceptions) throw new Exception(\"Null GObject from GTK+.\");",
+											"	else return null;",
+											"}"	];
+						bd ~= check;
+						/* What's with all the casting? */
+						/* A; Casting is needed because some GTK+
+						 *    functions can return void pointers. */
+						bd ~= "return new " ~ typeWrap ~ "(cast(" ~ type ~ ") p);";
+
+						return bd;
+					}
+				}
+			}
+		}
+
+		/* We should never reach here. */
+		assert(0, "A strange function body was requested.");
+	}
+
+	/* Deprecated */
+	/* Remove me for 1.0 */
+	char[][] bod_old(ConvParms* convParms, char[][char[]] aliases)
+	{
 		char[][] bd;
 		
 		//bd ~= "{";
