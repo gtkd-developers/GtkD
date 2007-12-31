@@ -2494,6 +2494,228 @@ extern(C)
 	void function(GtkScrolledWindow* scrolledWindow, GtkPolicyType* hscrollbarPolicy, GtkPolicyType* vscrollbarPolicy)gtk_scrolled_window_get_policy;
 	GtkShadowType function(GtkScrolledWindow* scrolledWindow)gtk_scrolled_window_get_shadow_type;
 	
+	// gtk.PrintOperation
+	
+	GtkPrintOperation* function()gtk_print_operation_new;
+	void function(GtkPrintOperation* op, gboolean allowAsync)gtk_print_operation_set_allow_async;
+	void function(GtkPrintOperation* op, GError** error)gtk_print_operation_get_error;
+	void function(GtkPrintOperation* op, GtkPageSetup* defaultPageSetup)gtk_print_operation_set_default_page_setup;
+	GtkPageSetup* function(GtkPrintOperation* op)gtk_print_operation_get_default_page_setup;
+	void function(GtkPrintOperation* op, GtkPrintSettings* printSettings)gtk_print_operation_set_print_settings;
+	GtkPrintSettings* function(GtkPrintOperation* op)gtk_print_operation_get_print_settings;
+	void function(GtkPrintOperation* op, gchar* jobName)gtk_print_operation_set_job_name;
+	void function(GtkPrintOperation* op, gint nPages)gtk_print_operation_set_n_pages;
+	void function(GtkPrintOperation* op, gint currentPage)gtk_print_operation_set_current_page;
+	void function(GtkPrintOperation* op, gboolean fullPage)gtk_print_operation_set_use_full_page;
+	void function(GtkPrintOperation* op, GtkUnit unit)gtk_print_operation_set_unit;
+	void function(GtkPrintOperation* op, gchar* filename)gtk_print_operation_set_export_filename;
+	void function(GtkPrintOperation* op, gboolean showProgress)gtk_print_operation_set_show_progress;
+	void function(GtkPrintOperation* op, gboolean trackStatus)gtk_print_operation_set_track_print_status;
+	void function(GtkPrintOperation* op, gchar* label)gtk_print_operation_set_custom_tab_label;
+	GtkPrintOperationResult function(GtkPrintOperation* op, GtkPrintOperationAction action, GtkWindow* parent, GError** error)gtk_print_operation_run;
+	void function(GtkPrintOperation* op)gtk_print_operation_cancel;
+	GtkPrintStatus function(GtkPrintOperation* op)gtk_print_operation_get_status;
+	gchar* function(GtkPrintOperation* op)gtk_print_operation_get_status_string;
+	gboolean function(GtkPrintOperation* op)gtk_print_operation_is_finished;
+	GtkPageSetup* function(GtkWindow* parent, GtkPageSetup* pageSetup, GtkPrintSettings* settings)gtk_print_run_page_setup_dialog;
+	void function(GtkWindow* parent, GtkPageSetup* pageSetup, GtkPrintSettings* settings, GtkPageSetupDoneFunc doneCb, gpointer data)gtk_print_run_page_setup_dialog_async;
+	
+	// gtk.PrintOperationPreviewT
+	
+	
+	// gtk.PrintOperationPreviewT
+	
+	void function(GtkPrintOperationPreview* preview)gtk_print_operation_preview_end_preview;
+	gboolean function(GtkPrintOperationPreview* preview, gint pageNr)gtk_print_operation_preview_is_selected;
+	void function(GtkPrintOperationPreview* preview, gint pageNr)gtk_print_operation_preview_render_page;
+	
+	// gtk.PrintContext
+	
+	cairo_t* function(GtkPrintContext* context)gtk_print_context_get_cairo_context;
+	void function(GtkPrintContext* context, cairo_t* cr, double dpiX, double dpiY)gtk_print_context_set_cairo_context;
+	GtkPageSetup* function(GtkPrintContext* context)gtk_print_context_get_page_setup;
+	gdouble function(GtkPrintContext* context)gtk_print_context_get_width;
+	gdouble function(GtkPrintContext* context)gtk_print_context_get_height;
+	gdouble function(GtkPrintContext* context)gtk_print_context_get_dpi_x;
+	gdouble function(GtkPrintContext* context)gtk_print_context_get_dpi_y;
+	PangoFontMap* function(GtkPrintContext* context)gtk_print_context_get_pango_fontmap;
+	PangoContext* function(GtkPrintContext* context)gtk_print_context_create_pango_context;
+	PangoLayout* function(GtkPrintContext* context)gtk_print_context_create_pango_layout;
+	
+	// gtk.PrintSettings
+	
+	GtkPrintSettings* function()gtk_print_settings_new;
+	GtkPrintSettings* function(GtkPrintSettings* other)gtk_print_settings_copy;
+	gboolean function(GtkPrintSettings* settings, gchar* key)gtk_print_settings_has_key;
+	gchar* function(GtkPrintSettings* settings, gchar* key)gtk_print_settings_get;
+	void function(GtkPrintSettings* settings, gchar* key, gchar* value)gtk_print_settings_set;
+	void function(GtkPrintSettings* settings, gchar* key)gtk_print_settings_unset;
+	void function(GtkPrintSettings* settings, GtkPrintSettingsFunc func, gpointer userData)gtk_print_settings_foreach;
+	gboolean function(GtkPrintSettings* settings, gchar* key)gtk_print_settings_get_bool;
+	void function(GtkPrintSettings* settings, gchar* key, gboolean value)gtk_print_settings_set_bool;
+	gdouble function(GtkPrintSettings* settings, gchar* key)gtk_print_settings_get_double;
+	gdouble function(GtkPrintSettings* settings, gchar* key, gdouble def)gtk_print_settings_get_double_with_default;
+	void function(GtkPrintSettings* settings, gchar* key, gdouble value)gtk_print_settings_set_double;
+	gdouble function(GtkPrintSettings* settings, gchar* key, GtkUnit unit)gtk_print_settings_get_length;
+	void function(GtkPrintSettings* settings, gchar* key, gdouble value, GtkUnit unit)gtk_print_settings_set_length;
+	gint function(GtkPrintSettings* settings, gchar* key)gtk_print_settings_get_int;
+	gint function(GtkPrintSettings* settings, gchar* key, gint def)gtk_print_settings_get_int_with_default;
+	void function(GtkPrintSettings* settings, gchar* key, gint value)gtk_print_settings_set_int;
+	gchar* function(GtkPrintSettings* settings)gtk_print_settings_get_printer;
+	void function(GtkPrintSettings* settings, gchar* printer)gtk_print_settings_set_printer;
+	GtkPageOrientation function(GtkPrintSettings* settings)gtk_print_settings_get_orientation;
+	void function(GtkPrintSettings* settings, GtkPageOrientation orientation)gtk_print_settings_set_orientation;
+	GtkPaperSize* function(GtkPrintSettings* settings)gtk_print_settings_get_paper_size;
+	void function(GtkPrintSettings* settings, GtkPaperSize* paperSize)gtk_print_settings_set_paper_size;
+	gdouble function(GtkPrintSettings* settings, GtkUnit unit)gtk_print_settings_get_paper_width;
+	void function(GtkPrintSettings* settings, gdouble width, GtkUnit unit)gtk_print_settings_set_paper_width;
+	gdouble function(GtkPrintSettings* settings, GtkUnit unit)gtk_print_settings_get_paper_height;
+	void function(GtkPrintSettings* settings, gdouble height, GtkUnit unit)gtk_print_settings_set_paper_height;
+	gboolean function(GtkPrintSettings* settings)gtk_print_settings_get_use_color;
+	void function(GtkPrintSettings* settings, gboolean useColor)gtk_print_settings_set_use_color;
+	gboolean function(GtkPrintSettings* settings)gtk_print_settings_get_collate;
+	void function(GtkPrintSettings* settings, gboolean collate)gtk_print_settings_set_collate;
+	gboolean function(GtkPrintSettings* settings)gtk_print_settings_get_reverse;
+	void function(GtkPrintSettings* settings, gboolean reverse)gtk_print_settings_set_reverse;
+	GtkPrintDuplex function(GtkPrintSettings* settings)gtk_print_settings_get_duplex;
+	void function(GtkPrintSettings* settings, GtkPrintDuplex duplex)gtk_print_settings_set_duplex;
+	GtkPrintQuality function(GtkPrintSettings* settings)gtk_print_settings_get_quality;
+	void function(GtkPrintSettings* settings, GtkPrintQuality quality)gtk_print_settings_set_quality;
+	gint function(GtkPrintSettings* settings)gtk_print_settings_get_n_copies;
+	void function(GtkPrintSettings* settings, gint numCopies)gtk_print_settings_set_n_copies;
+	gint function(GtkPrintSettings* settings)gtk_print_settings_get_number_up;
+	void function(GtkPrintSettings* settings, gint numberUp)gtk_print_settings_set_number_up;
+	gint function(GtkPrintSettings* settings)gtk_print_settings_get_resolution;
+	void function(GtkPrintSettings* settings, gint resolution)gtk_print_settings_set_resolution;
+	gdouble function(GtkPrintSettings* settings)gtk_print_settings_get_scale;
+	void function(GtkPrintSettings* settings, gdouble scale)gtk_print_settings_set_scale;
+	GtkPrintPages function(GtkPrintSettings* settings)gtk_print_settings_get_print_pages;
+	void function(GtkPrintSettings* settings, GtkPrintPages pages)gtk_print_settings_set_print_pages;
+	GtkPageRange* function(GtkPrintSettings* settings, gint* numRanges)gtk_print_settings_get_page_ranges;
+	void function(GtkPrintSettings* settings, GtkPageRange* pageRanges, gint numRanges)gtk_print_settings_set_page_ranges;
+	GtkPageSet function(GtkPrintSettings* settings)gtk_print_settings_get_page_set;
+	void function(GtkPrintSettings* settings, GtkPageSet pageSet)gtk_print_settings_set_page_set;
+	gchar* function(GtkPrintSettings* settings)gtk_print_settings_get_default_source;
+	void function(GtkPrintSettings* settings, gchar* defaultSource)gtk_print_settings_set_default_source;
+	gchar* function(GtkPrintSettings* settings)gtk_print_settings_get_media_type;
+	void function(GtkPrintSettings* settings, gchar* mediaType)gtk_print_settings_set_media_type;
+	gchar* function(GtkPrintSettings* settings)gtk_print_settings_get_dither;
+	void function(GtkPrintSettings* settings, gchar* dither)gtk_print_settings_set_dither;
+	gchar* function(GtkPrintSettings* settings)gtk_print_settings_get_finishings;
+	void function(GtkPrintSettings* settings, gchar* finishings)gtk_print_settings_set_finishings;
+	gchar* function(GtkPrintSettings* settings)gtk_print_settings_get_output_bin;
+	void function(GtkPrintSettings* settings, gchar* outputBin)gtk_print_settings_set_output_bin;
+	GtkPrintSettings* function(gchar* fileName, GError** error)gtk_print_settings_new_from_file;
+	GtkPrintSettings* function(GKeyFile* keyFile, gchar* groupName, GError** error)gtk_print_settings_new_from_key_file;
+	gboolean function(GtkPrintSettings* settings, gchar* fileName, GError** error)gtk_print_settings_to_file;
+	void function(GtkPrintSettings* settings, GKeyFile* keyFile, gchar* groupName)gtk_print_settings_to_key_file;
+	
+	// gtk.PageSetup
+	
+	GtkPageSetup* function()gtk_page_setup_new;
+	GtkPageSetup* function(GtkPageSetup* other)gtk_page_setup_copy;
+	GtkPageOrientation function(GtkPageSetup* setup)gtk_page_setup_get_orientation;
+	void function(GtkPageSetup* setup, GtkPageOrientation orientation)gtk_page_setup_set_orientation;
+	GtkPaperSize* function(GtkPageSetup* setup)gtk_page_setup_get_paper_size;
+	void function(GtkPageSetup* setup, GtkPaperSize* size)gtk_page_setup_set_paper_size;
+	gdouble function(GtkPageSetup* setup, GtkUnit unit)gtk_page_setup_get_top_margin;
+	void function(GtkPageSetup* setup, gdouble margin, GtkUnit unit)gtk_page_setup_set_top_margin;
+	gdouble function(GtkPageSetup* setup, GtkUnit unit)gtk_page_setup_get_bottom_margin;
+	void function(GtkPageSetup* setup, gdouble margin, GtkUnit unit)gtk_page_setup_set_bottom_margin;
+	gdouble function(GtkPageSetup* setup, GtkUnit unit)gtk_page_setup_get_left_margin;
+	void function(GtkPageSetup* setup, gdouble margin, GtkUnit unit)gtk_page_setup_set_left_margin;
+	gdouble function(GtkPageSetup* setup, GtkUnit unit)gtk_page_setup_get_right_margin;
+	void function(GtkPageSetup* setup, gdouble margin, GtkUnit unit)gtk_page_setup_set_right_margin;
+	void function(GtkPageSetup* setup, GtkPaperSize* size)gtk_page_setup_set_paper_size_and_default_margins;
+	gdouble function(GtkPageSetup* setup, GtkUnit unit)gtk_page_setup_get_paper_width;
+	gdouble function(GtkPageSetup* setup, GtkUnit unit)gtk_page_setup_get_paper_height;
+	gdouble function(GtkPageSetup* setup, GtkUnit unit)gtk_page_setup_get_page_width;
+	gdouble function(GtkPageSetup* setup, GtkUnit unit)gtk_page_setup_get_page_height;
+	GtkPageSetup* function(gchar* fileName, GError** error)gtk_page_setup_new_from_file;
+	GtkPageSetup* function(GKeyFile* keyFile, gchar* groupName, GError** error)gtk_page_setup_new_from_key_file;
+	gboolean function(GtkPageSetup* setup, char* fileName, GError** error)gtk_page_setup_to_file;
+	void function(GtkPageSetup* setup, GKeyFile* keyFile, gchar* groupName)gtk_page_setup_to_key_file;
+	
+	// gtk.PaperSize
+	
+	GtkPaperSize* function(gchar* name)gtk_paper_size_new;
+	GtkPaperSize* function(gchar* ppdName, gchar* ppdDisplayName, gdouble width, gdouble height)gtk_paper_size_new_from_ppd;
+	GtkPaperSize* function(gchar* name, gchar* displayName, gdouble width, gdouble height, GtkUnit unit)gtk_paper_size_new_custom;
+	GtkPaperSize* function(GtkPaperSize* other)gtk_paper_size_copy;
+	void function(GtkPaperSize* size)gtk_paper_size_free;
+	gboolean function(GtkPaperSize* size1, GtkPaperSize* size2)gtk_paper_size_is_equal;
+	GList* function(gboolean includeCustom)gtk_paper_size_get_paper_sizes;
+	gchar* function(GtkPaperSize* size)gtk_paper_size_get_name;
+	gchar* function(GtkPaperSize* size)gtk_paper_size_get_display_name;
+	gchar* function(GtkPaperSize* size)gtk_paper_size_get_ppd_name;
+	gdouble function(GtkPaperSize* size, GtkUnit unit)gtk_paper_size_get_width;
+	gdouble function(GtkPaperSize* size, GtkUnit unit)gtk_paper_size_get_height;
+	gboolean function(GtkPaperSize* size)gtk_paper_size_is_custom;
+	void function(GtkPaperSize* size, gdouble width, gdouble height, GtkUnit unit)gtk_paper_size_set_size;
+	gdouble function(GtkPaperSize* size, GtkUnit unit)gtk_paper_size_get_default_top_margin;
+	gdouble function(GtkPaperSize* size, GtkUnit unit)gtk_paper_size_get_default_bottom_margin;
+	gdouble function(GtkPaperSize* size, GtkUnit unit)gtk_paper_size_get_default_left_margin;
+	gdouble function(GtkPaperSize* size, GtkUnit unit)gtk_paper_size_get_default_right_margin;
+	gchar* function()gtk_paper_size_get_default;
+	GtkPaperSize* function(GKeyFile* keyFile, gchar* groupName, GError** error)gtk_paper_size_new_from_key_file;
+	void function(GtkPaperSize* size, GKeyFile* keyFile, gchar* groupName)gtk_paper_size_to_key_file;
+	
+	// gtk.Printer
+	
+	GtkPrinter* function(gchar* name, GtkPrintBackend* backend, gboolean virtual)gtk_printer_new;
+	GtkPrintBackend* function(GtkPrinter* printer)gtk_printer_get_backend;
+	gchar* function(GtkPrinter* printer)gtk_printer_get_name;
+	gchar* function(GtkPrinter* printer)gtk_printer_get_state_message;
+	gchar* function(GtkPrinter* printer)gtk_printer_get_description;
+	gchar* function(GtkPrinter* printer)gtk_printer_get_location;
+	gchar* function(GtkPrinter* printer)gtk_printer_get_icon_name;
+	gint function(GtkPrinter* printer)gtk_printer_get_job_count;
+	gboolean function(GtkPrinter* printer)gtk_printer_is_active;
+	gboolean function(GtkPrinter* printer)gtk_printer_is_virtual;
+	gboolean function(GtkPrinter* printer)gtk_printer_is_default;
+	gboolean function(GtkPrinter* printer)gtk_printer_accepts_ps;
+	gboolean function(GtkPrinter* printer)gtk_printer_accepts_pdf;
+	GList* function(GtkPrinter* printer)gtk_printer_list_papers;
+	gint function(GtkPrinter* a, GtkPrinter* b)gtk_printer_compare;
+	gboolean function(GtkPrinter* printer)gtk_printer_has_details;
+	void function(GtkPrinter* printer)gtk_printer_request_details;
+	GtkPrintCapabilities function(GtkPrinter* printer)gtk_printer_get_capabilities;
+	void function(GtkPrinterFunc func, gpointer data, GDestroyNotify destroy, gboolean wait)gtk_enumerate_printers;
+	
+	// gtk.PrintJob
+	
+	GtkPrintJob* function(gchar* title, GtkPrinter* printer, GtkPrintSettings* settings, GtkPageSetup* pageSetup)gtk_print_job_new;
+	GtkPrintSettings* function(GtkPrintJob* job)gtk_print_job_get_settings;
+	GtkPrinter* function(GtkPrintJob* job)gtk_print_job_get_printer;
+	gchar* function(GtkPrintJob* job)gtk_print_job_get_title;
+	GtkPrintStatus function(GtkPrintJob* job)gtk_print_job_get_status;
+	gboolean function(GtkPrintJob* job, gchar* filename, GError** error)gtk_print_job_set_source_file;
+	cairo_surface_t* function(GtkPrintJob* job, GError** error)gtk_print_job_get_surface;
+	void function(GtkPrintJob* job, GtkPrintJobCompleteFunc callback, gpointer userData, GDestroyNotify dnotify)gtk_print_job_send;
+	void function(GtkPrintJob* job, gboolean trackStatus)gtk_print_job_set_track_print_status;
+	gboolean function(GtkPrintJob* job)gtk_print_job_get_track_print_status;
+	
+	// gtk.PrintUnixDialog
+	
+	GtkWidget* function(gchar* title, GtkWindow* parent)gtk_print_unix_dialog_new;
+	void function(GtkPrintUnixDialog* dialog, GtkPageSetup* pageSetup)gtk_print_unix_dialog_set_page_setup;
+	GtkPageSetup* function(GtkPrintUnixDialog* dialog)gtk_print_unix_dialog_get_page_setup;
+	void function(GtkPrintUnixDialog* dialog, gint currentPage)gtk_print_unix_dialog_set_current_page;
+	gint function(GtkPrintUnixDialog* dialog)gtk_print_unix_dialog_get_current_page;
+	void function(GtkPrintUnixDialog* dialog, GtkPrintSettings* settings)gtk_print_unix_dialog_set_settings;
+	GtkPrintSettings* function(GtkPrintUnixDialog* dialog)gtk_print_unix_dialog_get_settings;
+	GtkPrinter* function(GtkPrintUnixDialog* dialog)gtk_print_unix_dialog_get_selected_printer;
+	void function(GtkPrintUnixDialog* dialog, GtkWidget* child, GtkWidget* tabLabel)gtk_print_unix_dialog_add_custom_tab;
+	void function(GtkPrintUnixDialog* dialog, GtkPrintCapabilities capabilities)gtk_print_unix_dialog_set_manual_capabilities;
+	
+	// gtk.PageSetupUnixDialog
+	
+	GtkWidget* function(gchar* title, GtkWindow* parent)gtk_page_setup_unix_dialog_new;
+	void function(GtkPageSetupUnixDialog* dialog, GtkPageSetup* pageSetup)gtk_page_setup_unix_dialog_set_page_setup;
+	GtkPageSetup* function(GtkPageSetupUnixDialog* dialog)gtk_page_setup_unix_dialog_get_page_setup;
+	void function(GtkPageSetupUnixDialog* dialog, GtkPrintSettings* printSettings)gtk_page_setup_unix_dialog_set_print_settings;
+	GtkPrintSettings* function(GtkPageSetupUnixDialog* dialog)gtk_page_setup_unix_dialog_get_print_settings;
+	
 	// gtk.Adjustment
 	
 	GtkObject* function(gdouble value, gdouble lower, gdouble upper, gdouble stepIncrement, gdouble pageIncrement, gdouble pageSize)gtk_adjustment_new;
@@ -5067,6 +5289,195 @@ Symbol[] gtkLinks =
 	{ "gtk_scrolled_window_get_placement",  cast(void**)& gtk_scrolled_window_get_placement},
 	{ "gtk_scrolled_window_get_policy",  cast(void**)& gtk_scrolled_window_get_policy},
 	{ "gtk_scrolled_window_get_shadow_type",  cast(void**)& gtk_scrolled_window_get_shadow_type},
+	{ "gtk_print_operation_new",  cast(void**)& gtk_print_operation_new},
+	{ "gtk_print_operation_set_allow_async",  cast(void**)& gtk_print_operation_set_allow_async},
+	{ "gtk_print_operation_get_error",  cast(void**)& gtk_print_operation_get_error},
+	{ "gtk_print_operation_set_default_page_setup",  cast(void**)& gtk_print_operation_set_default_page_setup},
+	{ "gtk_print_operation_get_default_page_setup",  cast(void**)& gtk_print_operation_get_default_page_setup},
+	{ "gtk_print_operation_set_print_settings",  cast(void**)& gtk_print_operation_set_print_settings},
+	{ "gtk_print_operation_get_print_settings",  cast(void**)& gtk_print_operation_get_print_settings},
+	{ "gtk_print_operation_set_job_name",  cast(void**)& gtk_print_operation_set_job_name},
+	{ "gtk_print_operation_set_n_pages",  cast(void**)& gtk_print_operation_set_n_pages},
+	{ "gtk_print_operation_set_current_page",  cast(void**)& gtk_print_operation_set_current_page},
+	{ "gtk_print_operation_set_use_full_page",  cast(void**)& gtk_print_operation_set_use_full_page},
+	{ "gtk_print_operation_set_unit",  cast(void**)& gtk_print_operation_set_unit},
+	{ "gtk_print_operation_set_export_filename",  cast(void**)& gtk_print_operation_set_export_filename},
+	{ "gtk_print_operation_set_show_progress",  cast(void**)& gtk_print_operation_set_show_progress},
+	{ "gtk_print_operation_set_track_print_status",  cast(void**)& gtk_print_operation_set_track_print_status},
+	{ "gtk_print_operation_set_custom_tab_label",  cast(void**)& gtk_print_operation_set_custom_tab_label},
+	{ "gtk_print_operation_run",  cast(void**)& gtk_print_operation_run},
+	{ "gtk_print_operation_cancel",  cast(void**)& gtk_print_operation_cancel},
+	{ "gtk_print_operation_get_status",  cast(void**)& gtk_print_operation_get_status},
+	{ "gtk_print_operation_get_status_string",  cast(void**)& gtk_print_operation_get_status_string},
+	{ "gtk_print_operation_is_finished",  cast(void**)& gtk_print_operation_is_finished},
+	{ "gtk_print_run_page_setup_dialog",  cast(void**)& gtk_print_run_page_setup_dialog},
+	{ "gtk_print_run_page_setup_dialog_async",  cast(void**)& gtk_print_run_page_setup_dialog_async},
+	{ "gtk_print_operation_preview_end_preview",  cast(void**)& gtk_print_operation_preview_end_preview},
+	{ "gtk_print_operation_preview_is_selected",  cast(void**)& gtk_print_operation_preview_is_selected},
+	{ "gtk_print_operation_preview_render_page",  cast(void**)& gtk_print_operation_preview_render_page},
+	{ "gtk_print_context_get_cairo_context",  cast(void**)& gtk_print_context_get_cairo_context},
+	{ "gtk_print_context_set_cairo_context",  cast(void**)& gtk_print_context_set_cairo_context},
+	{ "gtk_print_context_get_page_setup",  cast(void**)& gtk_print_context_get_page_setup},
+	{ "gtk_print_context_get_width",  cast(void**)& gtk_print_context_get_width},
+	{ "gtk_print_context_get_height",  cast(void**)& gtk_print_context_get_height},
+	{ "gtk_print_context_get_dpi_x",  cast(void**)& gtk_print_context_get_dpi_x},
+	{ "gtk_print_context_get_dpi_y",  cast(void**)& gtk_print_context_get_dpi_y},
+	{ "gtk_print_context_get_pango_fontmap",  cast(void**)& gtk_print_context_get_pango_fontmap},
+	{ "gtk_print_context_create_pango_context",  cast(void**)& gtk_print_context_create_pango_context},
+	{ "gtk_print_context_create_pango_layout",  cast(void**)& gtk_print_context_create_pango_layout},
+	{ "gtk_print_settings_new",  cast(void**)& gtk_print_settings_new},
+	{ "gtk_print_settings_copy",  cast(void**)& gtk_print_settings_copy},
+	{ "gtk_print_settings_has_key",  cast(void**)& gtk_print_settings_has_key},
+	{ "gtk_print_settings_get",  cast(void**)& gtk_print_settings_get},
+	{ "gtk_print_settings_set",  cast(void**)& gtk_print_settings_set},
+	{ "gtk_print_settings_unset",  cast(void**)& gtk_print_settings_unset},
+	{ "gtk_print_settings_foreach",  cast(void**)& gtk_print_settings_foreach},
+	{ "gtk_print_settings_get_bool",  cast(void**)& gtk_print_settings_get_bool},
+	{ "gtk_print_settings_set_bool",  cast(void**)& gtk_print_settings_set_bool},
+	{ "gtk_print_settings_get_double",  cast(void**)& gtk_print_settings_get_double},
+	{ "gtk_print_settings_get_double_with_default",  cast(void**)& gtk_print_settings_get_double_with_default},
+	{ "gtk_print_settings_set_double",  cast(void**)& gtk_print_settings_set_double},
+	{ "gtk_print_settings_get_length",  cast(void**)& gtk_print_settings_get_length},
+	{ "gtk_print_settings_set_length",  cast(void**)& gtk_print_settings_set_length},
+	{ "gtk_print_settings_get_int",  cast(void**)& gtk_print_settings_get_int},
+	{ "gtk_print_settings_get_int_with_default",  cast(void**)& gtk_print_settings_get_int_with_default},
+	{ "gtk_print_settings_set_int",  cast(void**)& gtk_print_settings_set_int},
+	{ "gtk_print_settings_get_printer",  cast(void**)& gtk_print_settings_get_printer},
+	{ "gtk_print_settings_set_printer",  cast(void**)& gtk_print_settings_set_printer},
+	{ "gtk_print_settings_get_orientation",  cast(void**)& gtk_print_settings_get_orientation},
+	{ "gtk_print_settings_set_orientation",  cast(void**)& gtk_print_settings_set_orientation},
+	{ "gtk_print_settings_get_paper_size",  cast(void**)& gtk_print_settings_get_paper_size},
+	{ "gtk_print_settings_set_paper_size",  cast(void**)& gtk_print_settings_set_paper_size},
+	{ "gtk_print_settings_get_paper_width",  cast(void**)& gtk_print_settings_get_paper_width},
+	{ "gtk_print_settings_set_paper_width",  cast(void**)& gtk_print_settings_set_paper_width},
+	{ "gtk_print_settings_get_paper_height",  cast(void**)& gtk_print_settings_get_paper_height},
+	{ "gtk_print_settings_set_paper_height",  cast(void**)& gtk_print_settings_set_paper_height},
+	{ "gtk_print_settings_get_use_color",  cast(void**)& gtk_print_settings_get_use_color},
+	{ "gtk_print_settings_set_use_color",  cast(void**)& gtk_print_settings_set_use_color},
+	{ "gtk_print_settings_get_collate",  cast(void**)& gtk_print_settings_get_collate},
+	{ "gtk_print_settings_set_collate",  cast(void**)& gtk_print_settings_set_collate},
+	{ "gtk_print_settings_get_reverse",  cast(void**)& gtk_print_settings_get_reverse},
+	{ "gtk_print_settings_set_reverse",  cast(void**)& gtk_print_settings_set_reverse},
+	{ "gtk_print_settings_get_duplex",  cast(void**)& gtk_print_settings_get_duplex},
+	{ "gtk_print_settings_set_duplex",  cast(void**)& gtk_print_settings_set_duplex},
+	{ "gtk_print_settings_get_quality",  cast(void**)& gtk_print_settings_get_quality},
+	{ "gtk_print_settings_set_quality",  cast(void**)& gtk_print_settings_set_quality},
+	{ "gtk_print_settings_get_n_copies",  cast(void**)& gtk_print_settings_get_n_copies},
+	{ "gtk_print_settings_set_n_copies",  cast(void**)& gtk_print_settings_set_n_copies},
+	{ "gtk_print_settings_get_number_up",  cast(void**)& gtk_print_settings_get_number_up},
+	{ "gtk_print_settings_set_number_up",  cast(void**)& gtk_print_settings_set_number_up},
+	{ "gtk_print_settings_get_resolution",  cast(void**)& gtk_print_settings_get_resolution},
+	{ "gtk_print_settings_set_resolution",  cast(void**)& gtk_print_settings_set_resolution},
+	{ "gtk_print_settings_get_scale",  cast(void**)& gtk_print_settings_get_scale},
+	{ "gtk_print_settings_set_scale",  cast(void**)& gtk_print_settings_set_scale},
+	{ "gtk_print_settings_get_print_pages",  cast(void**)& gtk_print_settings_get_print_pages},
+	{ "gtk_print_settings_set_print_pages",  cast(void**)& gtk_print_settings_set_print_pages},
+	{ "gtk_print_settings_get_page_ranges",  cast(void**)& gtk_print_settings_get_page_ranges},
+	{ "gtk_print_settings_set_page_ranges",  cast(void**)& gtk_print_settings_set_page_ranges},
+	{ "gtk_print_settings_get_page_set",  cast(void**)& gtk_print_settings_get_page_set},
+	{ "gtk_print_settings_set_page_set",  cast(void**)& gtk_print_settings_set_page_set},
+	{ "gtk_print_settings_get_default_source",  cast(void**)& gtk_print_settings_get_default_source},
+	{ "gtk_print_settings_set_default_source",  cast(void**)& gtk_print_settings_set_default_source},
+	{ "gtk_print_settings_get_media_type",  cast(void**)& gtk_print_settings_get_media_type},
+	{ "gtk_print_settings_set_media_type",  cast(void**)& gtk_print_settings_set_media_type},
+	{ "gtk_print_settings_get_dither",  cast(void**)& gtk_print_settings_get_dither},
+	{ "gtk_print_settings_set_dither",  cast(void**)& gtk_print_settings_set_dither},
+	{ "gtk_print_settings_get_finishings",  cast(void**)& gtk_print_settings_get_finishings},
+	{ "gtk_print_settings_set_finishings",  cast(void**)& gtk_print_settings_set_finishings},
+	{ "gtk_print_settings_get_output_bin",  cast(void**)& gtk_print_settings_get_output_bin},
+	{ "gtk_print_settings_set_output_bin",  cast(void**)& gtk_print_settings_set_output_bin},
+	{ "gtk_print_settings_new_from_file",  cast(void**)& gtk_print_settings_new_from_file},
+	{ "gtk_print_settings_new_from_key_file",  cast(void**)& gtk_print_settings_new_from_key_file},
+	{ "gtk_print_settings_to_file",  cast(void**)& gtk_print_settings_to_file},
+	{ "gtk_print_settings_to_key_file",  cast(void**)& gtk_print_settings_to_key_file},
+	{ "gtk_page_setup_new",  cast(void**)& gtk_page_setup_new},
+	{ "gtk_page_setup_copy",  cast(void**)& gtk_page_setup_copy},
+	{ "gtk_page_setup_get_orientation",  cast(void**)& gtk_page_setup_get_orientation},
+	{ "gtk_page_setup_set_orientation",  cast(void**)& gtk_page_setup_set_orientation},
+	{ "gtk_page_setup_get_paper_size",  cast(void**)& gtk_page_setup_get_paper_size},
+	{ "gtk_page_setup_set_paper_size",  cast(void**)& gtk_page_setup_set_paper_size},
+	{ "gtk_page_setup_get_top_margin",  cast(void**)& gtk_page_setup_get_top_margin},
+	{ "gtk_page_setup_set_top_margin",  cast(void**)& gtk_page_setup_set_top_margin},
+	{ "gtk_page_setup_get_bottom_margin",  cast(void**)& gtk_page_setup_get_bottom_margin},
+	{ "gtk_page_setup_set_bottom_margin",  cast(void**)& gtk_page_setup_set_bottom_margin},
+	{ "gtk_page_setup_get_left_margin",  cast(void**)& gtk_page_setup_get_left_margin},
+	{ "gtk_page_setup_set_left_margin",  cast(void**)& gtk_page_setup_set_left_margin},
+	{ "gtk_page_setup_get_right_margin",  cast(void**)& gtk_page_setup_get_right_margin},
+	{ "gtk_page_setup_set_right_margin",  cast(void**)& gtk_page_setup_set_right_margin},
+	{ "gtk_page_setup_set_paper_size_and_default_margins",  cast(void**)& gtk_page_setup_set_paper_size_and_default_margins},
+	{ "gtk_page_setup_get_paper_width",  cast(void**)& gtk_page_setup_get_paper_width},
+	{ "gtk_page_setup_get_paper_height",  cast(void**)& gtk_page_setup_get_paper_height},
+	{ "gtk_page_setup_get_page_width",  cast(void**)& gtk_page_setup_get_page_width},
+	{ "gtk_page_setup_get_page_height",  cast(void**)& gtk_page_setup_get_page_height},
+	{ "gtk_page_setup_new_from_file",  cast(void**)& gtk_page_setup_new_from_file},
+	{ "gtk_page_setup_new_from_key_file",  cast(void**)& gtk_page_setup_new_from_key_file},
+	{ "gtk_page_setup_to_file",  cast(void**)& gtk_page_setup_to_file},
+	{ "gtk_page_setup_to_key_file",  cast(void**)& gtk_page_setup_to_key_file},
+	{ "gtk_paper_size_new",  cast(void**)& gtk_paper_size_new},
+	{ "gtk_paper_size_new_from_ppd",  cast(void**)& gtk_paper_size_new_from_ppd},
+	{ "gtk_paper_size_new_custom",  cast(void**)& gtk_paper_size_new_custom},
+	{ "gtk_paper_size_copy",  cast(void**)& gtk_paper_size_copy},
+	{ "gtk_paper_size_free",  cast(void**)& gtk_paper_size_free},
+	{ "gtk_paper_size_is_equal",  cast(void**)& gtk_paper_size_is_equal},
+	{ "gtk_paper_size_get_paper_sizes",  cast(void**)& gtk_paper_size_get_paper_sizes},
+	{ "gtk_paper_size_get_name",  cast(void**)& gtk_paper_size_get_name},
+	{ "gtk_paper_size_get_display_name",  cast(void**)& gtk_paper_size_get_display_name},
+	{ "gtk_paper_size_get_ppd_name",  cast(void**)& gtk_paper_size_get_ppd_name},
+	{ "gtk_paper_size_get_width",  cast(void**)& gtk_paper_size_get_width},
+	{ "gtk_paper_size_get_height",  cast(void**)& gtk_paper_size_get_height},
+	{ "gtk_paper_size_is_custom",  cast(void**)& gtk_paper_size_is_custom},
+	{ "gtk_paper_size_set_size",  cast(void**)& gtk_paper_size_set_size},
+	{ "gtk_paper_size_get_default_top_margin",  cast(void**)& gtk_paper_size_get_default_top_margin},
+	{ "gtk_paper_size_get_default_bottom_margin",  cast(void**)& gtk_paper_size_get_default_bottom_margin},
+	{ "gtk_paper_size_get_default_left_margin",  cast(void**)& gtk_paper_size_get_default_left_margin},
+	{ "gtk_paper_size_get_default_right_margin",  cast(void**)& gtk_paper_size_get_default_right_margin},
+	{ "gtk_paper_size_get_default",  cast(void**)& gtk_paper_size_get_default},
+	{ "gtk_paper_size_new_from_key_file",  cast(void**)& gtk_paper_size_new_from_key_file},
+	{ "gtk_paper_size_to_key_file",  cast(void**)& gtk_paper_size_to_key_file},
+	{ "gtk_printer_new",  cast(void**)& gtk_printer_new},
+	{ "gtk_printer_get_backend",  cast(void**)& gtk_printer_get_backend},
+	{ "gtk_printer_get_name",  cast(void**)& gtk_printer_get_name},
+	{ "gtk_printer_get_state_message",  cast(void**)& gtk_printer_get_state_message},
+	{ "gtk_printer_get_description",  cast(void**)& gtk_printer_get_description},
+	{ "gtk_printer_get_location",  cast(void**)& gtk_printer_get_location},
+	{ "gtk_printer_get_icon_name",  cast(void**)& gtk_printer_get_icon_name},
+	{ "gtk_printer_get_job_count",  cast(void**)& gtk_printer_get_job_count},
+	{ "gtk_printer_is_active",  cast(void**)& gtk_printer_is_active},
+	{ "gtk_printer_is_virtual",  cast(void**)& gtk_printer_is_virtual},
+	{ "gtk_printer_is_default",  cast(void**)& gtk_printer_is_default},
+	{ "gtk_printer_accepts_ps",  cast(void**)& gtk_printer_accepts_ps},
+	{ "gtk_printer_accepts_pdf",  cast(void**)& gtk_printer_accepts_pdf},
+	{ "gtk_printer_list_papers",  cast(void**)& gtk_printer_list_papers},
+	{ "gtk_printer_compare",  cast(void**)& gtk_printer_compare},
+	{ "gtk_printer_has_details",  cast(void**)& gtk_printer_has_details},
+	{ "gtk_printer_request_details",  cast(void**)& gtk_printer_request_details},
+	{ "gtk_printer_get_capabilities",  cast(void**)& gtk_printer_get_capabilities},
+	{ "gtk_enumerate_printers",  cast(void**)& gtk_enumerate_printers},
+	{ "gtk_print_job_new",  cast(void**)& gtk_print_job_new},
+	{ "gtk_print_job_get_settings",  cast(void**)& gtk_print_job_get_settings},
+	{ "gtk_print_job_get_printer",  cast(void**)& gtk_print_job_get_printer},
+	{ "gtk_print_job_get_title",  cast(void**)& gtk_print_job_get_title},
+	{ "gtk_print_job_get_status",  cast(void**)& gtk_print_job_get_status},
+	{ "gtk_print_job_set_source_file",  cast(void**)& gtk_print_job_set_source_file},
+	{ "gtk_print_job_get_surface",  cast(void**)& gtk_print_job_get_surface},
+	{ "gtk_print_job_send",  cast(void**)& gtk_print_job_send},
+	{ "gtk_print_job_set_track_print_status",  cast(void**)& gtk_print_job_set_track_print_status},
+	{ "gtk_print_job_get_track_print_status",  cast(void**)& gtk_print_job_get_track_print_status},
+	{ "gtk_print_unix_dialog_new",  cast(void**)& gtk_print_unix_dialog_new},
+	{ "gtk_print_unix_dialog_set_page_setup",  cast(void**)& gtk_print_unix_dialog_set_page_setup},
+	{ "gtk_print_unix_dialog_get_page_setup",  cast(void**)& gtk_print_unix_dialog_get_page_setup},
+	{ "gtk_print_unix_dialog_set_current_page",  cast(void**)& gtk_print_unix_dialog_set_current_page},
+	{ "gtk_print_unix_dialog_get_current_page",  cast(void**)& gtk_print_unix_dialog_get_current_page},
+	{ "gtk_print_unix_dialog_set_settings",  cast(void**)& gtk_print_unix_dialog_set_settings},
+	{ "gtk_print_unix_dialog_get_settings",  cast(void**)& gtk_print_unix_dialog_get_settings},
+	{ "gtk_print_unix_dialog_get_selected_printer",  cast(void**)& gtk_print_unix_dialog_get_selected_printer},
+	{ "gtk_print_unix_dialog_add_custom_tab",  cast(void**)& gtk_print_unix_dialog_add_custom_tab},
+	{ "gtk_print_unix_dialog_set_manual_capabilities",  cast(void**)& gtk_print_unix_dialog_set_manual_capabilities},
+	{ "gtk_page_setup_unix_dialog_new",  cast(void**)& gtk_page_setup_unix_dialog_new},
+	{ "gtk_page_setup_unix_dialog_set_page_setup",  cast(void**)& gtk_page_setup_unix_dialog_set_page_setup},
+	{ "gtk_page_setup_unix_dialog_get_page_setup",  cast(void**)& gtk_page_setup_unix_dialog_get_page_setup},
+	{ "gtk_page_setup_unix_dialog_set_print_settings",  cast(void**)& gtk_page_setup_unix_dialog_set_print_settings},
+	{ "gtk_page_setup_unix_dialog_get_print_settings",  cast(void**)& gtk_page_setup_unix_dialog_get_print_settings},
 	{ "gtk_adjustment_new",  cast(void**)& gtk_adjustment_new},
 	{ "gtk_adjustment_get_value",  cast(void**)& gtk_adjustment_get_value},
 	{ "gtk_adjustment_set_value",  cast(void**)& gtk_adjustment_set_value},

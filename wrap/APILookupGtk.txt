@@ -30,6 +30,7 @@
 
 
 addTypedefs: start
+public import gtkc.cairotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 public import gtkc.pangotypes;
@@ -5136,6 +5137,208 @@ code: start
 	}
 code: end
 outFile: ScrolledWindow
+
+###########################################################
+### Printing ##############################################
+###########################################################
+
+file: gtk-High-level-Printing-API.html
+struct: GtkPrintOperation
+class: PrintOperation
+implements: PrintOperationPreviewIF
+prefix: gtk_print_operation_
+#prefix: gtk_
+noprefix: gtk_print_operation_preview_
+import: glib.Str
+import: gtk.Window
+structWrap: GtkWindow* Window
+import: gtk.PageSetup
+structWrap: GtkPageSetup* PageSetup
+import: gtk.PrintSettings
+structWrap: GtkPrintSettings* PrintSettings
+import: gtk.PrintOperationPreviewT
+import: gtk.PrintOperationPreviewIF
+#import: glib.ErrorG
+#structWrap: GError** ErrorG*
+
+code: start
+	// add the PrintOperationPreview capabilities
+	mixin PrintOperationPreviewT!(GtkPrintOperation);
+code: end
+outFile: PrintOperation
+
+struct: GtkPrintOperationPreview
+class: PrintOperationPreviewT
+template: TStruct
+strictPrefix: Y
+nosignal: begin-print
+nosignal: create-custom-widget
+nosignal: custom-widget-apply
+nosignal: done
+nosignal: draw-page
+nosignal: end-print
+nosignal: paginate
+nosignal: preview
+nosignal: request-page-setup 
+nosignal: status-changed
+prefix: gtk_print_operation_preview_
+#prefix: gtk_
+interface: PrintOperationPreviewIF
+outFile: PrintOperationPreviewT
+
+file: GtkPrintContext.html
+struct: GtkPrintContext
+class: PrintContext
+prefix: gtk_print_context_
+prefix: gtk_
+import: cairo.Context
+structWrap: cairo_t* Context
+import: pango.PgContext
+structWrap: PangoContext* PgContext
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: gtk.PageSetup
+structWrap: GtkPageSetup* PageSetup
+outFile: PrintContext
+
+file: GtkPrintSettings.html
+struct: GtkPrintSettings
+class: PrintSettings
+prefix: gtk_print_settings_
+prefix: gtk_
+import: glib.Str
+import: gtk.PaperSize
+structWrap: GtkPaperSize* PaperSize
+#import: glib.ErrorG
+#structWrap: GError** ErrorG*
+import: glib.GKeyFile
+structWrap: GKeyFile* KeyFile
+outFile: PrintSettings
+
+file: GtkPageSetup.html
+struct: GtkPageSetup
+class: PageSetup
+prefix: gtk_page_setup_
+prefix: gtk_
+import: glib.Str
+import: gtk.PaperSize
+structWrap: GtkPaperSize* PaperSize
+#import: glib.ErrorG
+#structWrap: GError** ErrorG*
+import: glib.GKeyFile
+structWrap: GKeyFile* KeyFile
+outFile: PageSetup
+
+file: gtk-GtkPaperSize.html
+struct: GtkPaperSize
+class: PaperSize
+prefix: gtk_paper_size_
+prefix: gtk_
+import: glib.Str
+#import: glib.ErrorG
+#structWrap: GError** ErrorG*
+import: glib.GKeyFile
+structWrap: GKeyFile* KeyFile
+import: glib.ListG
+structWrap: GList* ListG
+outFile: PaperSize
+
+file: GtkPrinter.html
+struct: GtkPrinter
+class: Printer
+prefix: gtk_printer_
+prefix: gtk_
+import: glib.Str
+import: glib.ListG
+structWrap: GList* ListG
+outFile: Printer
+
+file: GtkPrintJob.html
+struct: GtkPrintJob
+class: PrintJob
+prefix: gtk_print_job_
+prefix: gtk_
+import: glib.Str
+import: cairo.Surface
+structWrap: cairo_surface_t* Surface
+import: gtk.Printer
+structWrap: GtkPrinter* Printer
+import: gtk.PageSetup
+structWrap: GtkPageSetup* PageSetup
+import: gtk.PrintSettings
+structWrap: GtkPrintSettings* PrintSettings
+#import: glib.ErrorG
+#structWrap: GError** ErrorG*
+outFile: PrintJob
+
+file: GtkPrintUnixDialog.html
+struct: GtkPrintUnixDialog
+class: PrintUnixDialog
+prefix: gtk_print_unix_dialog_
+prefix: gtk_
+import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gtk.Window
+structWrap: GtkWindow* Window
+import: gtk.Printer
+structWrap: GtkPrinter* Printer
+import: gtk.PageSetup
+structWrap: GtkPageSetup* PageSetup
+import: gtk.PrintSettings
+structWrap: GtkPrintSettings* PrintSettings
+
+nocode: gtk_print_unix_dialog_set_settings
+nocode: gtk_print_unix_dialog_get_settings
+#Conflicts with Widget.getSettings
+code: start
+	/**
+	 * Sets the GtkPrintSettings for the GtkPrintUnixDialog. Typically,
+	 * this is used to restore saved print settings from a previous print
+	 * operation before the print dialog is shown.
+	 * Since 2.10
+	 * Params:
+	 * settings =  a GtkPrintSettings, or NULL
+	 */
+	public void setPrintSettings(PrintSettings settings)
+	{
+		// void gtk_print_unix_dialog_set_settings (GtkPrintUnixDialog *dialog,  GtkPrintSettings *settings);
+		gtk_print_unix_dialog_set_settings(gtkPrintUnixDialog, (settings is null) ? null : settings.getPrintSettingsStruct());
+	}
+
+	/**
+	 * Gets a new GtkPrintSettings object that represents the
+	 * current values in the print dialog. Note that this creates a
+	 * new object, and you need to unref it
+	 * if don't want to keep it.
+	 * Since 2.10
+	 * Returns: a new GtkPrintSettings object with the values from dialog
+	 */
+	public PrintSettings getPrintSettings()
+	{
+		// GtkPrintSettings* gtk_print_unix_dialog_get_settings (GtkPrintUnixDialog *dialog);
+		return new PrintSettings( gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog) );
+	}
+code: end
+outFile: PrintUnixDialog
+
+file: GtkPageSetupUnixDialog.html
+struct: GtkPageSetupUnixDialog
+class: PageSetupUnixDialog
+prefix: gtk_page_setup_unix_dialog_
+prefix: gtk_
+import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gtk.Window
+structWrap: GtkWindow* Window
+import: gtk.PageSetup
+structWrap: GtkPageSetup* PageSetup
+import: gtk.PrintSettings
+structWrap: GtkPrintSettings* PrintSettings
+outFile: PageSetupUnixDialog
 
 ###########################################################
 ### Miscellaneous #########################################

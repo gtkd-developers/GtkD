@@ -22,6 +22,7 @@
 
 module gtkc.gtktypes;
 
+public import gtkc.cairotypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 public import gtkc.pangotypes;
@@ -1539,6 +1540,152 @@ public enum GtkFileFilterFlags
 	MIME_TYPE = 1 << 3
 }
 alias GtkFileFilterFlags FileFilterFlags;
+
+/**
+ * The status gives a rough indication of the completion
+ * of a running print operation.
+ * GTK_PRINT_STATUS_INITIAL
+ * The printing has not started yet; this
+ */
+public enum GtkPrintStatus
+{
+	INITIAL,
+	PREPARING,
+	GENERATING_DATA,
+	SENDING_DATA,
+	PENDING,
+	PENDING_ISSUE,
+	PRINTING,
+	FINISHED,
+	FINISHED_ABORTED
+}
+alias GtkPrintStatus PrintStatus;
+
+/**
+ * The action parameter to gtk_print_operation_run()
+ * determines what action the print operation should perform.
+ * GTK_PRINT_OPERATION_ACTION_PRINT_DIALOG
+ * Show the print dialog.
+ * GTK_PRINT_OPERATION_ACTION_PRINT
+ * Start to print without showing
+ */
+public enum GtkPrintOperationAction
+{
+	PRINT_DIALOG,
+	PRINT,
+	PREVIEW,
+	EXPORT
+}
+alias GtkPrintOperationAction PrintOperationAction;
+
+/**
+ * A value of this type is returned by gtk_print_operation_run().
+ * GTK_PRINT_OPERATION_RESULT_ERROR
+ * An error has occured.
+ * GTK_PRINT_OPERATION_RESULT_APPLY
+ * The print settings should be stored.
+ * GTK_PRINT_OPERATION_RESULT_CANCEL
+ * The print operation has been canceled,
+ */
+public enum GtkPrintOperationResult
+{
+	ERROR,
+	APPLY,
+	CANCEL,
+	IN_PROGRESS
+}
+alias GtkPrintOperationResult PrintOperationResult;
+
+public enum GtkPrintError
+{
+	GENERAL,
+	INTERNAL_ERROR,
+	NOMEM,
+	INVALID_FILE
+}
+alias GtkPrintError PrintError;
+
+public enum GtkPageOrientation
+{
+	PORTRAIT,
+	LANDSCAPE,
+	REVERSE_PORTRAIT,
+	REVERSE_LANDSCAPE
+}
+alias GtkPageOrientation PageOrientation;
+
+public enum GtkPrintDuplex
+{
+	SIMPLEX,
+	HORIZONTAL,
+	VERTICAL
+}
+alias GtkPrintDuplex PrintDuplex;
+
+public enum GtkPrintQuality
+{
+	LOW,
+	NORMAL,
+	HIGH,
+	DRAFT
+}
+alias GtkPrintQuality PrintQuality;
+
+public enum GtkPrintPages
+{
+	ALL,
+	CURRENT,
+	RANGES
+}
+alias GtkPrintPages PrintPages;
+
+public enum GtkPageSet
+{
+	ALL,
+	EVEN,
+	ODD
+}
+alias GtkPageSet PageSet;
+
+public enum GtkUnit
+{
+	PIXEL,
+	POINTS,
+	INCH,
+	MM
+}
+alias GtkUnit Unit;
+
+/**
+ * An enum for specifying which features the print dialog should offer.
+ * If neither GTK_PRINT_CAPABILITY_GENERATE_PDF nor GTK_PRINT_CAPABILITY_GENERATE_PS is
+ * specified, GTK+ assumes that all formats are supported.
+ * GTK_PRINT_CAPABILITY_PAGE_SET
+ * GTK_PRINT_CAPABILITY_COPIES
+ * GTK_PRINT_CAPABILITY_COLLATE
+ * GTK_PRINT_CAPABILITY_REVERSE
+ * GTK_PRINT_CAPABILITY_SCALE
+ * GTK_PRINT_CAPABILITY_GENERATE_PDF
+ * The program will send the document to the printer in PDF format
+ * GTK_PRINT_CAPABILITY_GENERATE_PS
+ * The program will send the document to the printer in Postscript format
+ * GTK_PRINT_CAPABILITY_PREVIEW
+ * GTK_PRINT_CAPABILITY_NUMBER_UP
+ * Print dialog will offer printing multiple pages per sheet. Since 2.12
+ */
+public enum GtkPrintCapabilities
+{
+	CAPABILITY_PAGE_SET = 1 << 0,
+	CAPABILITY_COPIES = 1 << 1,
+	CAPABILITY_COLLATE = 1 << 2,
+	CAPABILITY_REVERSE = 1 << 3,
+	CAPABILITY_SCALE = 1 << 4,
+	CAPABILITY_GENERATE_PDF = 1 << 5,
+	CAPABILITY_GENERATE_PS = 1 << 6,
+	CAPABILITY_PREVIEW = 1 << 7,
+	CAPABILITY_NUMBER_UP = 1 << 8
+}
+alias GtkPrintCapabilities PrintCapabilities;
 
 /**
  * These options can be used to influence the display and behaviour of a GtkCalendar.
@@ -3670,6 +3817,75 @@ public struct GtkScrolledWindow{}
 // GtkScrolledWindow.html
 // GtkWidget *vscrollbar;
 // GtkScrolledWindow.html
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkPrintOperation{}
+
+
+public struct GtkPrintOperationPreview{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkPrintContext{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkPrintSettings{}
+
+
+public struct GtkPageRange
+{
+	int start;
+	int end;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkPageSetup{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkPaperSize{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkPrinter{}
+
+
+public struct GtkPrintBackend{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkPrintJob struct contains only private members
+ * and should not be directly accessed.
+ */
+public struct GtkPrintJob{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkPrintUnixDialog{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkPageSetupUnixDialog{}
 
 
 /**
@@ -6310,6 +6526,55 @@ public typedef extern(C) int  function (GtkFileFilterInfo*, void*) GtkFileFilter
  */
 // GtkNotebook* (*GtkNotebookWindowCreationFunc) (GtkNotebook *source,  GtkWidget *page,  gint x,  gint y,  gpointer data);
 public typedef extern(C) GtkNotebook*  function (GtkNotebook*, GtkWidget*, int, int, void*) GtkNotebookWindowCreationFunc;
+
+/*
+ * The type of function that is passed to gtk_print_run_page_setup_dialog_async().
+ * This function will be called when the page setup dialog is dismissed, and
+ * also serves as destroy notify for data.
+ * page_setup:
+ * the GtkPageSetup that has been
+ * data:
+ * user data that has been passed to
+ *  gtk_print_run_page_setup_dialog_async().
+ */
+// void (*GtkPageSetupDoneFunc) (GtkPageSetup *page_setup,  gpointer data);
+public typedef extern(C) void  function (GtkPageSetup*, void*) GtkPageSetupDoneFunc;
+
+/*
+ * key:
+ * value:
+ * user_data:
+ */
+// void (*GtkPrintSettingsFunc) (const gchar *key,  const gchar *value,  gpointer user_data);
+public typedef extern(C) void  function (char[], char[], void*) GtkPrintSettingsFunc;
+
+/*
+ * The type of function passed to gtk_enumerate_printers().
+ * Note that you need to ref printer, if you want to keep
+ * a reference to it after the function has returned.
+ * printer:
+ * a GtkPrinter
+ * data:
+ * user data passed to gtk_enumerate_printers()
+ * Returns:
+ * TRUE to stop the enumeration, FALSE to continue
+ */
+// gboolean (*GtkPrinterFunc) (GtkPrinter *printer,  gpointer data);
+public typedef extern(C) int  function (GtkPrinter*, void*) GtkPrinterFunc;
+
+/*
+ * The type of callback that is passed to gtk_print_job_send().
+ * It is called when the print job has been completely sent.
+ * print_job:
+ * the GtkPrintJob
+ * user_data:
+ * user data that has been passed to gtk_print_job_send()
+ * error:
+ * a GError that contains error information if the sending
+ *  of the print job failed, otherwise NULL
+ */
+// void (*GtkPrintJobCompleteFunc) (GtkPrintJob *print_job,  gpointer user_data,  GError *error);
+public typedef extern(C) void  function (GtkPrintJob*, void*, GError*) GtkPrintJobCompleteFunc;
 
 /*
  * The type of the callback functions used for e.g. iterating over
