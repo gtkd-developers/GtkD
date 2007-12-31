@@ -1116,7 +1116,11 @@ public class GtkDClass
 
 		while ( currLine < inLines.length )
 		{
-			text ~= getMember(convParms.prefixes);
+			char[][] member = getMember(convParms.prefixes);
+
+			//Don't add empty members.
+			if(member.length > 1)
+				text ~= member;
 		}
 
 		return text;
