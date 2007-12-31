@@ -525,7 +525,7 @@ public class GtkWrapper : WrapperIF
         char[] keys = " file text struct realStruct ctorStruct class template interface extend implements prefix strictPrefix"
                       " openFile mergeFile closeFile outFile"
                       " copy import import(tango) structWrap alias moduleAlias"
-                      " noprefix nostruct nocode"
+                      " noprefix nostruct nocode nosignal"
                       " code interfaceCode"
                       " srcout"
                       ;
@@ -553,6 +553,7 @@ public class GtkWrapper : WrapperIF
                 case "strictPrefix": convParms.strictPrefix = defReader.getValueBit(); break;
                 case "noprefix": convParms.noPrefixes ~= defReader.getValue(); break;
                 case "nocode": convParms.noCode ~= defReader.getValue(); break;
+                case "nosignal": convParms.noSignals ~= defReader.getValue(); break;
                 case "nostruct": convParms.noStructs ~= defReader.getValue(); break;
                 case "import": convParms.imprts ~= defReader.getValue(); break;
                 case "import(tango)": /*ignore for now*/defReader.getValue(); break;

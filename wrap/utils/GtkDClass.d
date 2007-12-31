@@ -919,43 +919,47 @@ public class GtkDClass
 
 			++i;
 			char[] funct = getSignalFunctionDeclaration(i, lines);
-			char[][] comments;
-			if ( wrapper.includeComments )
+
+			if(!convParms.omitSignal(signalName))
 			{
-				comments ~= "/**";
-				while ( i<lines.length && lines[i] != "<hr>" )
+				char[][] comments;
+				if ( wrapper.includeComments )
 				{
-					debug(getSignal) writefln("\t\t%s", lines[i]);
-					comments ~= " * "~lines[i];
-					++i;
+					comments ~= "/**";
+					while ( i<lines.length && lines[i] != "<hr>" )
+					{
+						debug(getSignal) writefln("\t\t%s", lines[i]);
+						comments ~= " * "~lines[i];
+						++i;
+					}
+					comments ~= "*/";
 				}
-				comments ~= "*/";
-			}
 
-			Funct fun;
-			fun.init(funct, convParms);
+				Funct fun;
+				fun.init(funct, convParms);
 
-			char[] gtkDSignal = signalNameToGtkD(signalName);
-			char[] delegateDeclaration = fun.getDelegateDeclaration(convParms, 1);
+				char[] gtkDSignal = signalNameToGtkD(signalName);
+				char[] delegateDeclaration = fun.getDelegateDeclaration(convParms, 1);
 
-			// Removed function "addSignalImports" and replaced it 
-			// with simple "if" block to make sure class local imports
-			// don't get added - JJR
+				// Removed function "addSignalImports" and replaced it 
+				// with simple "if" block to make sure class local imports
+				// don't get added - JJR
 			
-			if ( needSignalImports )
-			{
-				if ( !isInterface )
+				if ( needSignalImports )
 				{
-					text ~= "int[char[]] connectedSignals;";
+					if ( !isInterface )
+					{
+						text ~= "int[char[]] connectedSignals;";
+					}
+					text ~= "";
+
+					needSignalImports = false;
 				}
-				text ~= "";
 
-				needSignalImports = false;
+				text ~= delegateDeclaration ~ "[] on" ~ gtkDSignal~"Listeners;" ;
+				addAddListener(text, signalName, gtkDSignal, delegateDeclaration);
+				addExternCallback(text, fun, gtkDSignal, delegateDeclaration);
 			}
-
-			text ~= delegateDeclaration ~ "[] on" ~ gtkDSignal~"Listeners;" ;
-			addAddListener(text, signalName, gtkDSignal, delegateDeclaration);
-			addExternCallback(text, fun, gtkDSignal, delegateDeclaration);
 		}
 		return text;
 	}

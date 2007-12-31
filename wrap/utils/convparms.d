@@ -19,6 +19,7 @@
 module utils.convparms;
 
 //debug = omitCode;
+//debug = omitSignal;
 
 public struct ConvParms
 {
@@ -45,6 +46,7 @@ public struct ConvParms
 	public char[][] noStructs;
 	public char[][] noPrefixes;
 	public char[][] noCode;		/// insert the external declaration but not the wrapping code
+	public char[][] noSignals;		/// Don't generate Signals
 	public char[][char[]] aliases;
 	public char[][char[]] mAliases;
 	public char[] classCode;		/// any valid D code to be copied to the final GtkD class
@@ -74,6 +76,7 @@ public struct ConvParms
 		noPrefixes.length = 0;
 		noCode.length = 0;
 		noStructs.length = 0;
+		noSignals.length = 0;
 		aliases = clear();
 		mAliases = clear();
 		classCode.length = 0;
@@ -133,6 +136,12 @@ public struct ConvParms
 		foreach ( char[] ncode ; noCode )
 		{
 			text ~= "\n * \t- "~ncode;
+		}
+
+		text ~= "\n * omit signals:";
+		foreach ( char[] nsignal ; noSignals )
+		{
+			text ~= "\n * \t- "~nsignal;
 		}
 		
 		text ~= "\n * imports:";
@@ -211,4 +220,17 @@ public struct ConvParms
 		return omit;
 	}
 	
+	public bool omitSignal(char[] signalName)
+	{
+		bool omit = false;
+		int i=0;
+		while ( !omit && i<noSignals.length )
+		{
+			omit = signalName == noSignals[i];
+			debug(omitSignal)writefln("\t (%s) %s ?= %s", omit, signalName, noSignals[i]);
+			++i;
+		}
+		debug(omitSignal)writefln("\t (%s) %s %s", i, (omit?"omited >>>>>>>":"included <<<<<"), signalName);
+		return omit;
+	}
 }
