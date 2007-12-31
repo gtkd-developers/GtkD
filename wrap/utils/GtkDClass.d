@@ -56,20 +56,13 @@ private import utils.WrapperIF;
 private import utils.convparms;
 private import utils.funct;
 
+private import std.ctype;
+private import std.path;
+private import std.stdio;
+private import std.string;
+
 public class GtkDClass
 {
-
-	private import std.ctype;
-	private import std.path;
-	private import std.stdio;
-	private import std.string;
-
-	//Moved up... for dsss:
-	//private import utils.HtmlStrip;
-	//private import utils.WrapperIF;
-	//private import utils.convparms;
-	//private import utils.funct;
-
 	private WrapperIF wrapper;
 	private char[] inAPI;
 	private char[][] inLines;
@@ -237,12 +230,22 @@ public class GtkDClass
 		/* Deprecated */ /*
 		gtkDText ~= getNoAssertVersion(); */
 
-		// moved to class level
-                /* Type information should be publicly imported by all modules. */
-		gtkDText ~= "public import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
+		/* Type information should be publicly imported by all modules. */
+		gtkDText ~= "public  import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
 		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack ~ ";\n\n";
-
-		// moved bac to class level
+		
+		// move signal imports out of classes - JJR
+		if (needSignalImports)
+		{
+			int i = moveToBlockStart("Signal Details", inLines);
+			// if "Signal Details" exists in API Lines
+			// than we know that we need signal imports.
+			if (i < inLines.length)
+			{
+				gtkDText ~= "private import gobject.Signals;\n";
+				gtkDText ~= "public  import gtkc.gdktypes;\n";
+			}	
+		}	
 		
 		// the use of phobs is limited, maybe we can get by with this...
 		
@@ -299,7 +302,7 @@ public class GtkDClass
 		if ( countTango > 0 )
 		{
 			gtkDText ~= importTango;
-			gtkDText ~= importElse~"}\n\n";
+			gtkDText ~= importElse~"}\n";
 		}
 
 		properties.length = 0;
@@ -887,7 +890,9 @@ public class GtkDClass
 		debug(getSignal) writefln("\tgetSignals");
 
 		int i = moveToBlockStart("Signal Details", inLines);
+		
 		i += 2;
+		
 		debug(getSignal)if(i<inLines.length)writefln("\t %s", inLines[i]);
 
 		while ( i<inLines.length && startsWith(inLines[i], "The \"") )
@@ -933,7 +938,21 @@ public class GtkDClass
 			char[] gtkDSignal = signalNameToGtkD(signalName);
 			char[] delegateDeclaration = fun.getDelegateDeclaration(convParms, 1);
 
-			addSignalImports(text);
+			// Removed function "addSignalImports" and replaced it 
+			// with simple "if" block to make sure class local imports
+			// don't get added - JJR
+			
+			if ( needSignalImports )
+			{
+				if ( !isInterface )
+				{
+					text ~= "int[char[]] connectedSignals;";
+				}
+				text ~= "";
+
+				needSignalImports = false;
+			}
+
 			text ~= delegateDeclaration ~ "[] on" ~ gtkDSignal~"Listeners;" ;
 			addAddListener(text, signalName, gtkDSignal, delegateDeclaration);
 			addExternCallback(text, fun, gtkDSignal, delegateDeclaration);
@@ -1059,31 +1078,6 @@ public class GtkDClass
 		return signalGtkD;
 	}
 
-	/**
-	 * adding:
-	 * "private import gobject.Signals;"
-	 * "private import gdk.gdktypes;"
-	 * Params:
-	 *    	text =
-	 */
-	void addSignalImports(inout char[][] text)
-	{
-		if ( needSignalImports )
-		{
-			text ~= "";
-			text ~= "// imports for the signal processing";
-			text ~= "private import gobject.Signals;";
-			text ~= "private import gtkc.gdktypes;";
-			if ( !isInterface )
-			{
-				text ~= "int[char[]] connectedSignals;";
-			}
-			text ~= "";
-
-			needSignalImports = false;
-
-		}
-	}
 
 	private char[] getSignalFunctionDeclaration(inout int line, char[][] lines)
 	{
