@@ -238,7 +238,8 @@ public class GtkDClass
 		gtkDText ~= getNoAssertVersion(); */
 
 		// moved to class level
-		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
+                /* Type information should be publicly imported by all modules. */
+		gtkDText ~= "public import " ~convParms.bindDir~ "." ~convParms.outPack~ "types;\n\n";
 		gtkDText ~= "private import " ~convParms.bindDir~ "." ~convParms.outPack ~ ";\n\n";
 
 		// moved bac to class level
