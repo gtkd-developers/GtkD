@@ -27,8 +27,8 @@
     either a CellRendererText or CellRendererToggle is used to show and edit
     the value.
 
-    This is done by connecting the visibility of a CellRenderer to a 
-    ListStore column. 
+    This is done by connecting the visibility of a CellRenderer to a
+    ListStore column.
 
 *****************************************************************************/
 module DemoMultiCellRenderer;
@@ -45,8 +45,6 @@ import gtk.CellRendererText;
 import gtk.CellRendererToggle;
 import gtk.ListStore;
 import gtkc.gtktypes;
-
-import tango.io.Stdout;
 
 enum {
     COLUMN_NAME,

@@ -20,7 +20,6 @@ module gtk.SpawnTests;
 
 private import glib.Spawn;
 private import gtk.GtkD;
-private import std.stdio;
 
 private import gtk.TextView;
 private import gtk.TextBuffer;
@@ -34,11 +33,21 @@ private import gtk.MainWindow;
 private import gtk.Button;
 private import gtk.Image;
 
-private import std.string;
-
+version(Tango){
+    import tango.text.Util;
+    import tango.io.Stdout;
+    void writefln( char[] frm, ... ){
+        char[] frm2 = substitute( frm, "%s", "{}" );
+        Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
+    }
+}
+else{
+    import std.string;
+    import std.stdio;
+}
 class SpawnWindow : MainWindow
 {
-	
+
 	TextView viewInput;
 	TextView viewOutput;
 	TextView viewError;
@@ -70,13 +79,18 @@ class SpawnWindow : MainWindow
 		setBorderWidth(7);
 		add(main);
 	}
-	
+
 	private void execInput(Button button)
 	{
-		char[][] args = std.string.split(viewInput.getBuffer().getText());
+        version(Tango){
+          char[][] args = split( viewInput.getBuffer().getText(), " " );
+        }
+        else{
+		  char[][] args = std.string.split(viewInput.getBuffer().getText());
+        }
 		exec(args);
 	}
-	
+
 	private bool exec(char[][] args)
 	{
 		foreach ( int i, char[] arg ; args)
@@ -98,34 +112,34 @@ class SpawnWindow : MainWindow
 		return exec(spawn);
 	}
 
-        /*	
+        /*
 	void childEnded(int process, int status)
 	{
 		writefln("process %s ended with status %s", process, status);
 	}*/
         bool childEnded(Spawn spawn)
         {
-                
+
                 writefln("process %s ended with status %s", viewInput.getBuffer().getText(),spawn.getExitStatus());
                 return true; //gotta check this.
         }
-	
+
 	private bool exec(Spawn spawn)
 	{
-		
+
 		viewOutput.getBuffer().setText("");
 		viewError.getBuffer().setText("");
-		
+
 		//int result = spawn.execAsyncWithPipes();
-	
+
 		//int outCount;
 		//int errCount;
-		
+
 		//TextBuffer bufferOutput = viewOutput.getBuffer();
 		TextBuffer bufferError = viewError.getBuffer();
 		//TextIter iterOut = new TextIter();
 		TextIter iterError = new TextIter();
-	
+
                 /* Apparently the following code is obsolete
                  * and should not compile. Delegates and commandLineSync should
                  * be used instead.
@@ -137,7 +151,7 @@ class SpawnWindow : MainWindow
                         viewOutput.getBuffer().insert(iterOut, spawn.getOutputString()~"\n");
 
 		}
-		
+
 		while ( !spawn.endOfError() )
 		{
 			bufferError.getEndIter(iterError);
@@ -151,7 +165,7 @@ class SpawnWindow : MainWindow
 		viewError.getBuffer().insert(iterError, spawn.getLastError()~"\n");
 
 		writefln("exit loop");
-		
+
 		spawn.close();
 		return true;
 	}
@@ -171,7 +185,7 @@ class SpawnWindow : MainWindow
             viewError.getBuffer().insert(iter, line~"\n");
             return true;
         }
-	
+
 	public void setInput(char[][] args)
 	{
 		TextBuffer inBuffer = viewInput.getBuffer();
@@ -183,13 +197,13 @@ class SpawnWindow : MainWindow
 		}
 		inBuffer.setText(t);
 	}
-	
+
 	public void setInput(char[] arg)
 	{
 		viewInput.getBuffer().setText(arg);
 	}
 
-	
+
 }
 
 void main(char[][] args)
@@ -205,6 +219,6 @@ void main(char[][] args)
 	{
 		sw.setInput("/bin/ls");
 	}
-	
+
 	GtkD.main();
 }

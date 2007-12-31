@@ -26,8 +26,6 @@ private import gtk.Dialog;
 private import gtk.VBox;
 private import gtk.HButtonBox;
 
-private import std.stdio;
-
 private import gtkc.gtktypes;
 
 class HelloWorld : MainWindow
@@ -37,17 +35,17 @@ class HelloWorld : MainWindow
 		super("GtkD");
 		setBorderWidth(10);
 		add(new Label("Hello World"));
-		
+
 		showAll();
 	}
-	
+
 }
 
 private import gtkc.Loader;
 
 void main(char[][] args)
 {
-	
+
 	Gtk.init(args);
 	new HelloWorld();
 	Gtk.main();

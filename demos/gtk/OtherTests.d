@@ -25,7 +25,6 @@ private import gtk.Label;
 private import gtk.Button;
 private import gtk.VBox;
 private import gtk.GtkD;
-private import std.stdio;
 private import gtk.Image;
 
 private import gtkc.gdktypes;
@@ -33,6 +32,18 @@ private import gobject.Signals;
 private import gtk.Timeout;
 
 private import gdk.Event;
+
+version(Tango){
+    import tango.text.Util;
+    import tango.io.Stdout;
+    void writefln( char[] frm, ... ){
+        char[] frm2 = substitute( frm, "%s", "{}" );
+        Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
+    }
+}
+else{
+    import std.stdio;
+}
 
 public class OtherTests : Window
 {
@@ -52,10 +63,10 @@ public class OtherTests : Window
 		button.addOnClicked(delegate void(Button b){
 			writefln("\nliterally clicked");
 		});
-		
+
 		button.addOnPressed(&mousePressed);
 		//addOnButtonPress(&mousePressed);
-		
+
 		box.add(button);
 		byeLabel = new Label("Bye-bye World");
 		box.add(byeLabel);
@@ -63,19 +74,19 @@ public class OtherTests : Window
 		setBorderWidth(10);
 		move(0,400);
 		showAll();
-		
+
 		addOnDelete(&onDeleteEvent);
-		
+
 		timeout = new Timeout(1000, &changeLabel);
 	}
-	
+
 	void mousePressed(Button widget)
 	{
 		writefln("mousePressed");
 		return false;
 	}
-	
-	bit changeLabel()
+
+	bool changeLabel()
 	{
 		switch ( byeLabel.getText() )
 		{
@@ -86,17 +97,17 @@ public class OtherTests : Window
 		}
 		return true;
 	}
-	
+
 	void onClicked(Button button)
 	{
 		writefln("\nOn click from Hello World %s", button);
 	}
-	
+
 	void popupAbout(Button button)
 	{
 		with (new AboutDialog())
 		{
-			
+
 			char** names = (new char*[2]).ptr;
 			int i = 0;
 			names[i++] = cast(char*)"Antonio Monteiro (binding/wrapping/proxying/decorating for D)";
@@ -109,7 +120,7 @@ public class OtherTests : Window
 			showAll();
 		}
 	}
-	
+
 	gboolean onDeleteEvent(Event event, Widget widget)
 	{
 		destroy();
@@ -117,12 +128,12 @@ public class OtherTests : Window
 		GtkD.exit(0);
 		return 0;
 	}
-	
+
 	char[] toString()
 	{
 		return "I Am HelloWorld";
 	}
-	
+
 }
 
 void main(char[][] args)
