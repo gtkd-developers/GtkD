@@ -8,14 +8,26 @@ import gtk.Widget;
 import gtk.Button;
 import gtkc.gtktypes;
 
-import std.stdio;
-import std.c.process;
+version(Tango){
+    import tango.stdc.stdlib : exit;
+    import tango.io.Stdout;
+    import tango.text.Util;
+
+    void writefln( char[] frm, ... ){
+        char[] frm2 = substitute( frm, "%s", "{}" );
+        Stdout( Stdout.layout.convert( _arguments, _argptr, frm2 )).newline;
+    }
+}
+else{
+    import std.stdio;
+    import std.c.process;
+}
 
 //import gobject.ObjectG;
 //import gobject.Type;
 /**
  * Usage ./gladeText /path/to/your/glade/file.glade
- * 
+ *
  */
 
 int main(char[][] args)
@@ -23,7 +35,7 @@ int main(char[][] args)
 	char[] gladefile;
 
 	GtkD.init(args);
- 
+
         if(args.length > 1)
         {
 		writefln("Loading %s", args[1]);
@@ -42,10 +54,10 @@ int main(char[][] args)
 	    	writefln("Oops, could not create Glade object, check your glade file ;)");
 		exit(1);
 	}
-    
+
 	Window w = cast(Window)g.getWidget("window1");
- 
-	if (w !is null) 
+
+	if (w !is null)
 	{
 		w.setTitle("This is a glade window");
 		w.addOnHide( delegate void(Widget aux){ exit(0); } );
@@ -59,11 +71,11 @@ int main(char[][] args)
 	else
 	{
 		writefln("No window?");
-		exit(1);	
+		exit(1);
 	}
-        w.showAll();	
+        w.showAll();
 
 	GtkD.main();
 	return 0;
-	
+
 }
