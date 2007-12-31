@@ -19,7 +19,7 @@ module gtkc.paths;
 enum LIBRARY
 {
 	ATK,
-	CAIROLIB,
+	CAIRO,
 	GDK,
 	GDKPIXBUF,
 	GLIB,
@@ -45,7 +45,7 @@ version (Windows)
 const char[][LIBRARY.max+1] importLibs =
 	[
 	LIBRARY.ATK:		"libatk-1.0-0.dll",
-	LIBRARY.CAIROLIB:	"libcairo-2.dll",
+	LIBRARY.CAIRO:		"libcairo-2.dll",
 	LIBRARY.GDK: 		"libgdk-win32-2.0-0.dll",
 	LIBRARY.GDKPIXBUF:	"libgdk_pixbuf-2.0-0.dll",
 	LIBRARY.GLIB: 		"libglib-2.0-0.dll",
@@ -71,7 +71,7 @@ version(linux)
 const char[][LIBRARY.max+1] importLibs =
 	[
 	LIBRARY.ATK:		"libatk-1.0.so",
-	LIBRARY.CAIROLIB:	"libcairo.so.2",
+	LIBRARY.CAIRO:		"libcairo.so.2",
 	LIBRARY.GDK:		"libgdk-x11-2.0.so",
 	LIBRARY.GDKPIXBUF:	"libgdk_pixbuf-2.0.so",
 	LIBRARY.GLIB:		"libglib-2.0.so",
