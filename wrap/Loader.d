@@ -1,19 +1,19 @@
 /*
- * MODULE: loader.d 
- * 
+ * MODULE: loader.d
+ *
  * Dynamic Library Loader for DUI
  *
  * Added 2004-12-11 -- John Reimer
  * Updated 2005-02-21: class and symbol names change; versioning modification.
  * Updated 2005-05-04: repairs to support linux
  *
- * Design/implementation of loader module inspired by Kris Bell's ICU.d dynamic 
+ * Design/implementation of loader module inspired by Kris Bell's ICU.d dynamic
  * loader -- mango.icu
  *
  * Thanks Kris! see www.dsource.org/projects/mango for more details.
  *
  */
- 
+
 module gtkc.Loader;
 
 //debug = loadLib;
@@ -21,9 +21,9 @@ module gtkc.Loader;
 
 alias void* HANDLE;
 
-version (Windows) 
+version (Windows)
 {
-	extern(Windows) 
+	extern(Windows)
 	{
 		HANDLE LoadLibraryA( char* );
 		void* GetProcAddress( void*, char* );
@@ -36,7 +36,7 @@ version (linux)
 {
 	extern(C)
 	{
-		
+
 		void* dlopen(char*, int);
 		char* dlerror();
 		void* dlsym(void*,char*);
@@ -44,7 +44,7 @@ version (linux)
 	}
 //	// getSymbol - cross-platform access point
 	alias dlsym getSymbol;
-}	
+}
 
 version (Darwin)
 {
@@ -52,9 +52,9 @@ version (Darwin)
 }
 
 
-/* 
+/*
  *  ProcLink is used to record the library, function, and function name
- *  that will be loaded by dynamic loader. 
+ *  that will be loaded by dynamic loader.
  */
 
 public struct Symbol
@@ -64,9 +64,18 @@ public struct Symbol
 }
 
 private import gtkc.paths;
+version(Tango)
+{
+    private import tango.stdc.stdio;
+    private import tango.io.Stdout;
+}
+else
+{
+    private import std.stdio;
+}
 
 /*
- * Linker : simple class to handle the loading 
+ * Linker : simple class to handle the loading
  * of the library and exported functions
  */
 
@@ -75,24 +84,15 @@ private import gtkc.paths;
 public class Linker
 {
 
-	version(Tango)
-	{
-		private import tango.stdc.stdio;
-		private import tango.io.Stdout;
-	}
-	else
-	{
-		private import std.stdio;
-	}
-	
+
 	const int RTLD_LAZY = 0x00001;		// Lazy function call binding
 	const int RTLD_NOW  = 0x00002;		// Immediate function call binding
 	const int RTLD_NOLOAD = 0x00004;    // No object load
-	const int RTLD_DEEPBIND = 0x00008;  // 
+	const int RTLD_DEEPBIND = 0x00008;  //
 	const int RTLD_GLOBAL = 0x00100;     // Make object available to whole program
 
 	static char[][][char[]] loadFailures;
-	
+
 	/**
 	 * Gets all the failed loads for a specific library.
 	 * This is filled in only if the default onFailure method is used durin load
@@ -110,7 +110,7 @@ public class Linker
 			return null;
 		}
 	}
-	
+
 	/**
 	 * Gets all libraries loaded.
 	 * This is filled in only if the default onFailure method is used durin load
@@ -120,7 +120,7 @@ public class Linker
 	{
 		return loadFailures.keys;
 	}
-	
+
 	/**
 	 * Checks if any symbol failed to load
 	 * Returns: true is ALL symbols loaded
@@ -129,7 +129,7 @@ public class Linker
 	{
 		return loadFailures.keys.length == 0;
 	}
-	
+
 	public static void dumpFailedLoads()
 	{
 		foreach ( char[] lib ; Linker.getLoadLibraries() )
@@ -141,17 +141,17 @@ public class Linker
 			}
 		}
 	}
-	
+
 	private HANDLE  handle;
 	private HANDLE alternateHandle;
-	
+
 	private char[]  libraryName;
 	private char[]  alternateLibraryName;
 
 	// private bool continueOnFail = false;
-	
+
 	alias void function( char[] libraryName, char[] symbolName, char[] message=null) failureFN;
-	
+
 	private failureFN onLoadFailure;
 
 	// -----------------------------------------------------
@@ -160,7 +160,7 @@ public class Linker
 	{
 		this(libraryName, alternateLibraryName, &(Linker.defaultFail));
 	}
-	
+
 	// ---------------------------------------
 
 	this (char[] libraryName, char[] alternateLibraryName, failureFN fn )
@@ -176,15 +176,15 @@ public class Linker
 			{
 				alternateHandle = LoadLibraryA( (this.alternateLibraryName ~ "\0").ptr );
 			}
-		} 
+		}
 		version(linux)
 		{
 			handle = dlopen( (this.libraryName ~ "\0").ptr, RTLD_NOW);
-			if (handle is null) 
+			if (handle is null)
 			{
-				// non-dev libraries tend to be called xxxx.so.0 
-				handle = dlopen( (this.libraryName ~ ".0\0").ptr, RTLD_NOW); 
-			} 
+				// non-dev libraries tend to be called xxxx.so.0
+				handle = dlopen( (this.libraryName ~ ".0\0").ptr, RTLD_NOW);
+			}
 			if ( alternateLibraryName !is null )
 			{
 				alternateHandle = dlopen( (this.alternateLibraryName ~ "\0").ptr, RTLD_NOW);
@@ -195,9 +195,9 @@ public class Linker
 		version(Darwin)
 		{
 		}
-		else 
+		else
 		{}
-			
+
 		if (handle is null)
 		{
 			throw new Exception("Library load failed: " ~ libraryName);
@@ -211,10 +211,10 @@ public class Linker
 	}
 
 	// ----------------------------------------
-	
+
 	~this()
 	{
-		version(Windows) 
+		version(Windows)
 		{
 			// FreeLibrary(handle);
 		}
@@ -234,19 +234,19 @@ public class Linker
 	 * Logs the symbols that failed to load
 	 */
 	static void defaultFail( char[] libraryName, char[] symbolName, char[] message=null )
-	{	
+	{
 		//writefln("failed to load (%s): %s",libraryName , message );
-		
+
 		if ( !(libraryName in loadFailures) )
 		{
 			char[][] cc;
 			loadFailures[libraryName] = cc;
 		}
-		
+
 		loadFailures[libraryName] ~= symbolName.dup;	// need dup?
-		
+
 		//throw new Exception("Function failed to load from library: " ~ libraryName);
-	}	
+	}
 
 	/**
 	 * Loads all the simbols for this library
@@ -254,7 +254,7 @@ public class Linker
 	 */
 	void link( inout Symbol[] symbols )
 	{
-		foreach( Symbol link; symbols ) 
+		foreach( Symbol link; symbols )
 		{
 			*link.pointer = getSymbol(handle, (link.name~"\0").ptr);
 			version(Tango)debug(loadSymbol) Stdout("Loaded...")(libraryName)(" ")(link.name).newline;
