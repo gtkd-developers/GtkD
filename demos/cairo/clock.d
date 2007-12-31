@@ -30,8 +30,8 @@ version(Tango) import tango.math.Math;
 else private import std.math;
 version(Tango)
 {
-	import tango.util.time.Date;
-	import tangoClock = tango.util.time.Clock;
+	import tango.time.Time;
+	import tangoClock = tango.time.WallClock;
 }
 else private import std.date;
 
@@ -145,11 +145,11 @@ class Clock : public DrawingArea
 
 		version(Tango)
 		{
-			auto date = tangoClock.Clock.toDate;
+			auto date = tangoClock.WallClock.toDate.time.span;
 
-			double minutes = date.min * PI / 30;
-			double hours = date.hour * PI / 6;
-			double seconds = date.sec * PI / 30;
+			double minutes = date.minutes * PI / 30;
+			double hours = date.hours * PI / 6;
+			double seconds = date.seconds * PI / 30;
 		}
 		else
 		{
