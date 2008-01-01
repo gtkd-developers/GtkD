@@ -4248,7 +4248,13 @@ code: start
 	public Menu getMenu()
 	{
 		// GtkWidget* gtk_menu_tool_button_get_menu (GtkMenuToolButton *button);
-		return new Menu( cast(GtkMenu*)gtk_menu_tool_button_get_menu(gtkMenuToolButton) );
+		auto p =  gtk_menu_tool_button_get_menu(gtkMenuToolButton);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Menu(cast(GtkMenu*)p);
 	}
 	
 	/**
@@ -5319,7 +5325,13 @@ code: start
 	public PrintSettings getPrintSettings()
 	{
 		// GtkPrintSettings* gtk_print_unix_dialog_get_settings (GtkPrintUnixDialog *dialog);
-		return new PrintSettings( gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog) );
+		auto p = gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PrintSettings(p);
 	}
 code: end
 outFile: PrintUnixDialog
@@ -5476,32 +5488,6 @@ prefix: gtk_bin_
 prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-nocode: gtk_bin_get_child
-
-code: start
-	/**
-	 * Gets the child of the GtkBin, or NULL if the bin contains
-	 * no child widget. The returned widget does not have a reference
-	 * added, so you do not need to unref it.
-	 * Returns:
-	 *  pointer to child of the GtkBin
-	 */
-	public Widget getChild()
-	{
-		// GtkWidget* gtk_bin_get_child (GtkBin *bin);
-		GtkWidget * gtkWidget = gtk_bin_get_child(gtkBin);
-		if ( gtkWidget )
-		{
-			return new Widget(gtkWidget);
-		}
-		else
-		{
-			return null;
-		}
-	}
-code: end
-
 outFile: Bin
 
 file: GtkBox.html
