@@ -929,8 +929,25 @@ public class GtkDClass
 					while ( i<lines.length && lines[i] != "<hr>" )
 					{
 						debug(getSignal) writefln("\t\t%s", lines[i]);
-						comments ~= " * "~lines[i];
-						++i;
+
+						if(lines[i].length == 0)
+						{
+							//Skip empty lines.
+							++i;
+						}
+						else if(find(lines[i], ":") == lines[i].length-1)
+						{
+							//Skip the parameters.
+							++i;
+
+							while(i<lines.length && stilInParam(lines[i]))
+								++i;
+						}
+						else
+						{
+							comments ~= " * "~lines[i];
+							++i;
+						}
 					}
 					comments ~= "*/";
 				}
@@ -957,6 +974,7 @@ public class GtkDClass
 				}
 
 				text ~= delegateDeclaration ~ "[] on" ~ gtkDSignal~"Listeners;" ;
+				text ~= comments;
 				addAddListener(text, signalName, gtkDSignal, delegateDeclaration);
 				addExternCallback(text, fun, gtkDSignal, delegateDeclaration);
 			}
@@ -1088,7 +1106,7 @@ public class GtkDClass
 		debug(signalFunction)writefln("getSignalFunctionDeclaration");
 		char[] funct;
 		while ( line<lines.length
-				&& std.string.find(lines[line], ":")<0
+				&& std.string.find(lines[line], ")")<0
 			)
 		{
 			funct ~= lines[line]~ " ";
@@ -1098,7 +1116,7 @@ public class GtkDClass
 										);
 			++line;
 		}
-		if ( line<lines.length && std.string.find(lines[line], ":")>0 )
+		if ( line<lines.length && std.string.find(lines[line], ")")>0 )
 		{
 			funct ~= lines[line++];
 		}
@@ -2012,15 +2030,6 @@ public class GtkDClass
 					// comment
 					void addComments()
 					{
-						bool stilInParam(char[] comments)
-						{
-							return !(find(comments, ":")  == comments.length-1 ||
-							         find(comments, "Returns:") == 0 ||
-							         find(comments, "Since 2.") == 0 ||
-							         find(comments, "See Also") == 0 ||
-							         find(comments, "Property Details") == 0);
-						}
-
 						char[][] phraseParams(char[][] comments)
 						{
 							char[][] description;
@@ -2210,6 +2219,22 @@ public class GtkDClass
 		}
 	}
 
+	/*
+	 * Checks if the current line is still part of the param description.
+	 * it does this by checking for things not normaly in the param description
+	 * Params:
+	 *  comments = Line to check.
+	 * Returns: true if we are still in the description of the param.
+	 */
+	bool stilInParam(char[] comments)
+	{
+		return !(find(comments, ":")  == comments.length-1 ||
+		         find(comments, "Returns:") == 0 ||
+		         find(comments, "Since 2.") == 0 ||
+		         find(comments, "See Also") == 0 ||
+		         find(comments, "Property Details") == 0 ||
+		         comments == "<hr>");
+	}
 
 	/**
 	 * Prints out the potential Gtk struct to be wrapped
