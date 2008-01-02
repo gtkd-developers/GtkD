@@ -2131,6 +2131,13 @@ extern(C)
 	gint function(GtkRadioAction* action)gtk_radio_action_get_current_value;
 	void function(GtkRadioAction* action, gint currentValue)gtk_radio_action_set_current_value;
 	
+	// gtk.RecentAction
+	
+	GtkAction* function(gchar* name, gchar* label, gchar* tooltip, gchar* stockId)gtk_recent_action_new;
+	GtkAction* function(gchar* name, gchar* label, gchar* tooltip, gchar* stockId, GtkRecentManager* manager)gtk_recent_action_new_for_manager;
+	gboolean function(GtkRecentAction* action)gtk_recent_action_get_show_numbers;
+	void function(GtkRecentAction* action, gboolean showNumbers)gtk_recent_action_set_show_numbers;
+	
 	// gtk.ColorButton
 	
 	GtkWidget* function()gtk_color_button_new;
@@ -3186,6 +3193,120 @@ extern(C)
 	// gtk.VRuler
 	
 	GtkWidget* function()gtk_vruler_new;
+	
+	// gtk.RecentManager
+	
+	GtkRecentManager* function()gtk_recent_manager_new;
+	GtkRecentManager* function()gtk_recent_manager_get_default;
+	GtkRecentManager* function(GdkScreen* screen)gtk_recent_manager_get_for_screen;
+	void function(GtkRecentManager* manager, GdkScreen* screen)gtk_recent_manager_set_screen;
+	gboolean function(GtkRecentManager* manager, gchar* uri)gtk_recent_manager_add_item;
+	gboolean function(GtkRecentManager* manager, gchar* uri, GtkRecentData* recentData)gtk_recent_manager_add_full;
+	gboolean function(GtkRecentManager* manager, gchar* uri, GError** error)gtk_recent_manager_remove_item;
+	GtkRecentInfo* function(GtkRecentManager* manager, gchar* uri, GError** error)gtk_recent_manager_lookup_item;
+	gboolean function(GtkRecentManager* manager, gchar* uri)gtk_recent_manager_has_item;
+	gboolean function(GtkRecentManager* manager, gchar* uri, gchar* newUri, GError** error)gtk_recent_manager_move_item;
+	gint function(GtkRecentManager* manager)gtk_recent_manager_get_limit;
+	void function(GtkRecentManager* manager, gint limit)gtk_recent_manager_set_limit;
+	GList* function(GtkRecentManager* manager)gtk_recent_manager_get_items;
+	gint function(GtkRecentManager* manager, GError** error)gtk_recent_manager_purge_items;
+	
+	// gtk.RecentInfo
+	
+	GtkRecentInfo* function(GtkRecentInfo* info)gtk_recent_info_ref;
+	void function(GtkRecentInfo* info)gtk_recent_info_unref;
+	gchar* function(GtkRecentInfo* info)gtk_recent_info_get_uri;
+	gchar* function(GtkRecentInfo* info)gtk_recent_info_get_display_name;
+	gchar* function(GtkRecentInfo* info)gtk_recent_info_get_description;
+	gchar* function(GtkRecentInfo* info)gtk_recent_info_get_mime_type;
+	time_t function(GtkRecentInfo* info)gtk_recent_info_get_added;
+	time_t function(GtkRecentInfo* info)gtk_recent_info_get_modified;
+	time_t function(GtkRecentInfo* info)gtk_recent_info_get_visited;
+	gboolean function(GtkRecentInfo* info)gtk_recent_info_get_private_hint;
+	gboolean function(GtkRecentInfo* info, gchar* appName, gchar** appExec, guint* count, time_t* time)gtk_recent_info_get_application_info;
+	gchar** function(GtkRecentInfo* info, gsize* length)gtk_recent_info_get_applications;
+	gchar* function(GtkRecentInfo* info)gtk_recent_info_last_application;
+	gchar** function(GtkRecentInfo* info, gsize* length)gtk_recent_info_get_groups;
+	gboolean function(GtkRecentInfo* info, gchar* groupName)gtk_recent_info_has_group;
+	gboolean function(GtkRecentInfo* info, gchar* appName)gtk_recent_info_has_application;
+	GdkPixbuf* function(GtkRecentInfo* info, gint size)gtk_recent_info_get_icon;
+	gchar* function(GtkRecentInfo* info)gtk_recent_info_get_short_name;
+	gchar* function(GtkRecentInfo* info)gtk_recent_info_get_uri_display;
+	gint function(GtkRecentInfo* info)gtk_recent_info_get_age;
+	gboolean function(GtkRecentInfo* info)gtk_recent_info_is_local;
+	gboolean function(GtkRecentInfo* info)gtk_recent_info_exists;
+	gboolean function(GtkRecentInfo* infoA, GtkRecentInfo* infoB)gtk_recent_info_match;
+	
+	// gtk.RecentChooserT
+	
+	
+	// gtk.RecentChooserT
+	
+	void function(GtkRecentChooser* chooser, gboolean showPrivate)gtk_recent_chooser_set_show_private;
+	gboolean function(GtkRecentChooser* chooser)gtk_recent_chooser_get_show_private;
+	void function(GtkRecentChooser* chooser, gboolean showNotFound)gtk_recent_chooser_set_show_not_found;
+	gboolean function(GtkRecentChooser* chooser)gtk_recent_chooser_get_show_not_found;
+	void function(GtkRecentChooser* chooser, gboolean showIcons)gtk_recent_chooser_set_show_icons;
+	gboolean function(GtkRecentChooser* chooser)gtk_recent_chooser_get_show_icons;
+	void function(GtkRecentChooser* chooser, gboolean selectMultiple)gtk_recent_chooser_set_select_multiple;
+	gboolean function(GtkRecentChooser* chooser)gtk_recent_chooser_get_select_multiple;
+	void function(GtkRecentChooser* chooser, gboolean localOnly)gtk_recent_chooser_set_local_only;
+	gboolean function(GtkRecentChooser* chooser)gtk_recent_chooser_get_local_only;
+	void function(GtkRecentChooser* chooser, gint limit)gtk_recent_chooser_set_limit;
+	gint function(GtkRecentChooser* chooser)gtk_recent_chooser_get_limit;
+	void function(GtkRecentChooser* chooser, gboolean showTips)gtk_recent_chooser_set_show_tips;
+	gboolean function(GtkRecentChooser* chooser)gtk_recent_chooser_get_show_tips;
+	void function(GtkRecentChooser* chooser, gboolean showNumbers)gtk_recent_chooser_set_show_numbers;
+	gboolean function(GtkRecentChooser* chooser)gtk_recent_chooser_get_show_numbers;
+	void function(GtkRecentChooser* chooser, GtkRecentSortType sortType)gtk_recent_chooser_set_sort_type;
+	GtkRecentSortType function(GtkRecentChooser* chooser)gtk_recent_chooser_get_sort_type;
+	void function(GtkRecentChooser* chooser, GtkRecentSortFunc sortFunc, gpointer sortData, GDestroyNotify dataDestroy)gtk_recent_chooser_set_sort_func;
+	gboolean function(GtkRecentChooser* chooser, gchar* uri, GError** error)gtk_recent_chooser_set_current_uri;
+	gchar* function(GtkRecentChooser* chooser)gtk_recent_chooser_get_current_uri;
+	GtkRecentInfo* function(GtkRecentChooser* chooser)gtk_recent_chooser_get_current_item;
+	gboolean function(GtkRecentChooser* chooser, gchar* uri, GError** error)gtk_recent_chooser_select_uri;
+	void function(GtkRecentChooser* chooser, gchar* uri)gtk_recent_chooser_unselect_uri;
+	void function(GtkRecentChooser* chooser)gtk_recent_chooser_select_all;
+	void function(GtkRecentChooser* chooser)gtk_recent_chooser_unselect_all;
+	GList* function(GtkRecentChooser* chooser)gtk_recent_chooser_get_items;
+	gchar** function(GtkRecentChooser* chooser, gsize* length)gtk_recent_chooser_get_uris;
+	void function(GtkRecentChooser* chooser, GtkRecentFilter* filter)gtk_recent_chooser_add_filter;
+	void function(GtkRecentChooser* chooser, GtkRecentFilter* filter)gtk_recent_chooser_remove_filter;
+	GSList* function(GtkRecentChooser* chooser)gtk_recent_chooser_list_filters;
+	void function(GtkRecentChooser* chooser, GtkRecentFilter* filter)gtk_recent_chooser_set_filter;
+	GtkRecentFilter* function(GtkRecentChooser* chooser)gtk_recent_chooser_get_filter;
+	
+	// gtk.RecentChooserDialog
+	
+	GtkWidget* function(gchar* title, GtkWindow* parent, gchar* firstButtonText, ... )gtk_recent_chooser_dialog_new;
+	GtkWidget* function(gchar* title, GtkWindow* parent, GtkRecentManager* manager, gchar* firstButtonText, ... )gtk_recent_chooser_dialog_new_for_manager;
+	
+	// gtk.RecentChooserMenu
+	
+	GtkWidget* function()gtk_recent_chooser_menu_new;
+	GtkWidget* function(GtkRecentManager* manager)gtk_recent_chooser_menu_new_for_manager;
+	gboolean function(GtkRecentChooserMenu* menu)gtk_recent_chooser_menu_get_show_numbers;
+	void function(GtkRecentChooserMenu* menu, gboolean showNumbers)gtk_recent_chooser_menu_set_show_numbers;
+	
+	// gtk.RecentChooserWidget
+	
+	GtkWidget* function()gtk_recent_chooser_widget_new;
+	GtkWidget* function(GtkRecentManager* manager)gtk_recent_chooser_widget_new_for_manager;
+	
+	// gtk.RecentFilter
+	
+	GtkRecentFilter* function()gtk_recent_filter_new;
+	gchar* function(GtkRecentFilter* filter)gtk_recent_filter_get_name;
+	void function(GtkRecentFilter* filter, gchar* name)gtk_recent_filter_set_name;
+	void function(GtkRecentFilter* filter, gchar* mimeType)gtk_recent_filter_add_mime_type;
+	void function(GtkRecentFilter* filter, gchar* pattern)gtk_recent_filter_add_pattern;
+	void function(GtkRecentFilter* filter)gtk_recent_filter_add_pixbuf_formats;
+	void function(GtkRecentFilter* filter, gchar* application)gtk_recent_filter_add_application;
+	void function(GtkRecentFilter* filter, gchar* group)gtk_recent_filter_add_group;
+	void function(GtkRecentFilter* filter, gint days)gtk_recent_filter_add_age;
+	void function(GtkRecentFilter* filter, GtkRecentFilterFlags needed, GtkRecentFilterFunc func, gpointer data, GDestroyNotify dataDestroy)gtk_recent_filter_add_custom;
+	GtkRecentFilterFlags function(GtkRecentFilter* filter)gtk_recent_filter_get_needed;
+	gboolean function(GtkRecentFilter* filter, GtkRecentFilterInfo* filterInfo)gtk_recent_filter_filter;
 	
 	// gtk.FileSelection
 	
@@ -5019,6 +5140,10 @@ Symbol[] gtkLinks =
 	{ "gtk_radio_action_set_group",  cast(void**)& gtk_radio_action_set_group},
 	{ "gtk_radio_action_get_current_value",  cast(void**)& gtk_radio_action_get_current_value},
 	{ "gtk_radio_action_set_current_value",  cast(void**)& gtk_radio_action_set_current_value},
+	{ "gtk_recent_action_new",  cast(void**)& gtk_recent_action_new},
+	{ "gtk_recent_action_new_for_manager",  cast(void**)& gtk_recent_action_new_for_manager},
+	{ "gtk_recent_action_get_show_numbers",  cast(void**)& gtk_recent_action_get_show_numbers},
+	{ "gtk_recent_action_set_show_numbers",  cast(void**)& gtk_recent_action_set_show_numbers},
 	{ "gtk_color_button_new",  cast(void**)& gtk_color_button_new},
 	{ "gtk_color_button_new_with_color",  cast(void**)& gtk_color_button_new_with_color},
 	{ "gtk_color_button_set_color",  cast(void**)& gtk_color_button_set_color},
@@ -5847,6 +5972,96 @@ Symbol[] gtkLinks =
 	{ "gtk_ruler_get_range",  cast(void**)& gtk_ruler_get_range},
 	{ "gtk_hruler_new",  cast(void**)& gtk_hruler_new},
 	{ "gtk_vruler_new",  cast(void**)& gtk_vruler_new},
+	{ "gtk_recent_manager_new",  cast(void**)& gtk_recent_manager_new},
+	{ "gtk_recent_manager_get_default",  cast(void**)& gtk_recent_manager_get_default},
+	{ "gtk_recent_manager_get_for_screen",  cast(void**)& gtk_recent_manager_get_for_screen},
+	{ "gtk_recent_manager_set_screen",  cast(void**)& gtk_recent_manager_set_screen},
+	{ "gtk_recent_manager_add_item",  cast(void**)& gtk_recent_manager_add_item},
+	{ "gtk_recent_manager_add_full",  cast(void**)& gtk_recent_manager_add_full},
+	{ "gtk_recent_manager_remove_item",  cast(void**)& gtk_recent_manager_remove_item},
+	{ "gtk_recent_manager_lookup_item",  cast(void**)& gtk_recent_manager_lookup_item},
+	{ "gtk_recent_manager_has_item",  cast(void**)& gtk_recent_manager_has_item},
+	{ "gtk_recent_manager_move_item",  cast(void**)& gtk_recent_manager_move_item},
+	{ "gtk_recent_manager_get_limit",  cast(void**)& gtk_recent_manager_get_limit},
+	{ "gtk_recent_manager_set_limit",  cast(void**)& gtk_recent_manager_set_limit},
+	{ "gtk_recent_manager_get_items",  cast(void**)& gtk_recent_manager_get_items},
+	{ "gtk_recent_manager_purge_items",  cast(void**)& gtk_recent_manager_purge_items},
+	{ "gtk_recent_info_ref",  cast(void**)& gtk_recent_info_ref},
+	{ "gtk_recent_info_unref",  cast(void**)& gtk_recent_info_unref},
+	{ "gtk_recent_info_get_uri",  cast(void**)& gtk_recent_info_get_uri},
+	{ "gtk_recent_info_get_display_name",  cast(void**)& gtk_recent_info_get_display_name},
+	{ "gtk_recent_info_get_description",  cast(void**)& gtk_recent_info_get_description},
+	{ "gtk_recent_info_get_mime_type",  cast(void**)& gtk_recent_info_get_mime_type},
+	{ "gtk_recent_info_get_added",  cast(void**)& gtk_recent_info_get_added},
+	{ "gtk_recent_info_get_modified",  cast(void**)& gtk_recent_info_get_modified},
+	{ "gtk_recent_info_get_visited",  cast(void**)& gtk_recent_info_get_visited},
+	{ "gtk_recent_info_get_private_hint",  cast(void**)& gtk_recent_info_get_private_hint},
+	{ "gtk_recent_info_get_application_info",  cast(void**)& gtk_recent_info_get_application_info},
+	{ "gtk_recent_info_get_applications",  cast(void**)& gtk_recent_info_get_applications},
+	{ "gtk_recent_info_last_application",  cast(void**)& gtk_recent_info_last_application},
+	{ "gtk_recent_info_get_groups",  cast(void**)& gtk_recent_info_get_groups},
+	{ "gtk_recent_info_has_group",  cast(void**)& gtk_recent_info_has_group},
+	{ "gtk_recent_info_has_application",  cast(void**)& gtk_recent_info_has_application},
+	{ "gtk_recent_info_get_icon",  cast(void**)& gtk_recent_info_get_icon},
+	{ "gtk_recent_info_get_short_name",  cast(void**)& gtk_recent_info_get_short_name},
+	{ "gtk_recent_info_get_uri_display",  cast(void**)& gtk_recent_info_get_uri_display},
+	{ "gtk_recent_info_get_age",  cast(void**)& gtk_recent_info_get_age},
+	{ "gtk_recent_info_is_local",  cast(void**)& gtk_recent_info_is_local},
+	{ "gtk_recent_info_exists",  cast(void**)& gtk_recent_info_exists},
+	{ "gtk_recent_info_match",  cast(void**)& gtk_recent_info_match},
+	{ "gtk_recent_chooser_set_show_private",  cast(void**)& gtk_recent_chooser_set_show_private},
+	{ "gtk_recent_chooser_get_show_private",  cast(void**)& gtk_recent_chooser_get_show_private},
+	{ "gtk_recent_chooser_set_show_not_found",  cast(void**)& gtk_recent_chooser_set_show_not_found},
+	{ "gtk_recent_chooser_get_show_not_found",  cast(void**)& gtk_recent_chooser_get_show_not_found},
+	{ "gtk_recent_chooser_set_show_icons",  cast(void**)& gtk_recent_chooser_set_show_icons},
+	{ "gtk_recent_chooser_get_show_icons",  cast(void**)& gtk_recent_chooser_get_show_icons},
+	{ "gtk_recent_chooser_set_select_multiple",  cast(void**)& gtk_recent_chooser_set_select_multiple},
+	{ "gtk_recent_chooser_get_select_multiple",  cast(void**)& gtk_recent_chooser_get_select_multiple},
+	{ "gtk_recent_chooser_set_local_only",  cast(void**)& gtk_recent_chooser_set_local_only},
+	{ "gtk_recent_chooser_get_local_only",  cast(void**)& gtk_recent_chooser_get_local_only},
+	{ "gtk_recent_chooser_set_limit",  cast(void**)& gtk_recent_chooser_set_limit},
+	{ "gtk_recent_chooser_get_limit",  cast(void**)& gtk_recent_chooser_get_limit},
+	{ "gtk_recent_chooser_set_show_tips",  cast(void**)& gtk_recent_chooser_set_show_tips},
+	{ "gtk_recent_chooser_get_show_tips",  cast(void**)& gtk_recent_chooser_get_show_tips},
+	{ "gtk_recent_chooser_set_show_numbers",  cast(void**)& gtk_recent_chooser_set_show_numbers},
+	{ "gtk_recent_chooser_get_show_numbers",  cast(void**)& gtk_recent_chooser_get_show_numbers},
+	{ "gtk_recent_chooser_set_sort_type",  cast(void**)& gtk_recent_chooser_set_sort_type},
+	{ "gtk_recent_chooser_get_sort_type",  cast(void**)& gtk_recent_chooser_get_sort_type},
+	{ "gtk_recent_chooser_set_sort_func",  cast(void**)& gtk_recent_chooser_set_sort_func},
+	{ "gtk_recent_chooser_set_current_uri",  cast(void**)& gtk_recent_chooser_set_current_uri},
+	{ "gtk_recent_chooser_get_current_uri",  cast(void**)& gtk_recent_chooser_get_current_uri},
+	{ "gtk_recent_chooser_get_current_item",  cast(void**)& gtk_recent_chooser_get_current_item},
+	{ "gtk_recent_chooser_select_uri",  cast(void**)& gtk_recent_chooser_select_uri},
+	{ "gtk_recent_chooser_unselect_uri",  cast(void**)& gtk_recent_chooser_unselect_uri},
+	{ "gtk_recent_chooser_select_all",  cast(void**)& gtk_recent_chooser_select_all},
+	{ "gtk_recent_chooser_unselect_all",  cast(void**)& gtk_recent_chooser_unselect_all},
+	{ "gtk_recent_chooser_get_items",  cast(void**)& gtk_recent_chooser_get_items},
+	{ "gtk_recent_chooser_get_uris",  cast(void**)& gtk_recent_chooser_get_uris},
+	{ "gtk_recent_chooser_add_filter",  cast(void**)& gtk_recent_chooser_add_filter},
+	{ "gtk_recent_chooser_remove_filter",  cast(void**)& gtk_recent_chooser_remove_filter},
+	{ "gtk_recent_chooser_list_filters",  cast(void**)& gtk_recent_chooser_list_filters},
+	{ "gtk_recent_chooser_set_filter",  cast(void**)& gtk_recent_chooser_set_filter},
+	{ "gtk_recent_chooser_get_filter",  cast(void**)& gtk_recent_chooser_get_filter},
+	{ "gtk_recent_chooser_dialog_new",  cast(void**)& gtk_recent_chooser_dialog_new},
+	{ "gtk_recent_chooser_dialog_new_for_manager",  cast(void**)& gtk_recent_chooser_dialog_new_for_manager},
+	{ "gtk_recent_chooser_menu_new",  cast(void**)& gtk_recent_chooser_menu_new},
+	{ "gtk_recent_chooser_menu_new_for_manager",  cast(void**)& gtk_recent_chooser_menu_new_for_manager},
+	{ "gtk_recent_chooser_menu_get_show_numbers",  cast(void**)& gtk_recent_chooser_menu_get_show_numbers},
+	{ "gtk_recent_chooser_menu_set_show_numbers",  cast(void**)& gtk_recent_chooser_menu_set_show_numbers},
+	{ "gtk_recent_chooser_widget_new",  cast(void**)& gtk_recent_chooser_widget_new},
+	{ "gtk_recent_chooser_widget_new_for_manager",  cast(void**)& gtk_recent_chooser_widget_new_for_manager},
+	{ "gtk_recent_filter_new",  cast(void**)& gtk_recent_filter_new},
+	{ "gtk_recent_filter_get_name",  cast(void**)& gtk_recent_filter_get_name},
+	{ "gtk_recent_filter_set_name",  cast(void**)& gtk_recent_filter_set_name},
+	{ "gtk_recent_filter_add_mime_type",  cast(void**)& gtk_recent_filter_add_mime_type},
+	{ "gtk_recent_filter_add_pattern",  cast(void**)& gtk_recent_filter_add_pattern},
+	{ "gtk_recent_filter_add_pixbuf_formats",  cast(void**)& gtk_recent_filter_add_pixbuf_formats},
+	{ "gtk_recent_filter_add_application",  cast(void**)& gtk_recent_filter_add_application},
+	{ "gtk_recent_filter_add_group",  cast(void**)& gtk_recent_filter_add_group},
+	{ "gtk_recent_filter_add_age",  cast(void**)& gtk_recent_filter_add_age},
+	{ "gtk_recent_filter_add_custom",  cast(void**)& gtk_recent_filter_add_custom},
+	{ "gtk_recent_filter_get_needed",  cast(void**)& gtk_recent_filter_get_needed},
+	{ "gtk_recent_filter_filter",  cast(void**)& gtk_recent_filter_filter},
 	{ "gtk_file_selection_new",  cast(void**)& gtk_file_selection_new},
 	{ "gtk_file_selection_set_filename",  cast(void**)& gtk_file_selection_set_filename},
 	{ "gtk_file_selection_get_filename",  cast(void**)& gtk_file_selection_get_filename},

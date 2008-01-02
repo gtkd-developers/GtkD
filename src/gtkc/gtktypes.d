@@ -42,7 +42,7 @@ alias void GtkContainerClass;
 /* GtkDragResult is now an enum. */
 //alias int GtkDragResult;
 //alias int GtkTooltip;
-
+alias uint time_t;
 
 /**
  * typedef GType			GtkType;
@@ -1853,6 +1853,70 @@ public enum GtkTextDirection
 }
 alias GtkTextDirection TextDirection;
 
+/**
+ * Error codes for GtkRecentManager operations
+ * GTK_RECENT_MANAGER_ERROR_NOT_FOUND
+ */
+public enum GtkRecentManagerError
+{
+	NOT_FOUND,
+	INVALID_URI,
+	INVALID_ENCODING,
+	NOT_REGISTERED,
+	READ,
+	WRITE,
+	UNKNOWN
+}
+alias GtkRecentManagerError RecentManagerError;
+
+/**
+ * These identify the various errors that can occur while calling
+ * GtkRecentChooser functions.
+ * GTK_RECENT_CHOOSER_ERROR_NOT_FOUND
+ * Indicates that a file does not exist
+ * GTK_RECENT_CHOOSER_ERROR_INVALID_URI
+ * Indicates a malformed URI
+ */
+public enum GtkRecentChooserError
+{
+	NOT_FOUND,
+	INVALID_URI
+}
+alias GtkRecentChooserError RecentChooserError;
+
+/**
+ * Used to specify the sorting method to be applyed to the recently
+ * used resource list.
+ * GTK_RECENT_SORT_NONE
+ */
+public enum GtkRecentSortType
+{
+	NONE = 0,
+	MRU,
+	LRU,
+	CUSTOM
+}
+alias GtkRecentSortType RecentSortType;
+
+/**
+ * These flags indicate what parts of a GtkRecentFilterInfo struct
+ * are filled or need to be filled.
+ * GTK_RECENT_FILTER_URI
+ * the URI of the file being tested
+ * GTK_RECENT_FILTER_DISPLAY_NAME
+ * the string that will be used to
+ */
+public enum GtkRecentFilterFlags
+{
+	URI = 1 << 0,
+	DISPLAY_NAME = 1 << 1,
+	MIME_TYPE = 1 << 2,
+	APPLICATION = 1 << 3,
+	GROUP = 1 << 4,
+	AGE = 1 << 5
+}
+alias GtkRecentFilterFlags RecentFilterFlags;
+
 
 struct GtkTextIter {
 	/* GtkTextIter is an opaque datatype; ignore all these fields.
@@ -3465,6 +3529,12 @@ public struct GtkRadioAction{}
 
 /**
  * Main Gtk struct.
+ */
+public struct GtkRecentAction{}
+
+
+/**
+ * Main Gtk struct.
  * The GtkColorButton struct has only private fields and
  * should not be used directly.
  */
@@ -4405,6 +4475,161 @@ public struct GtkHRuler{}
  * using the functions below.
  */
 public struct GtkVRuler{}
+
+
+/**
+ * Main Gtk struct.
+ * Acts as a database of information about the list of recently
+ * used files. Normally, you retrieve the recent manager for a
+ * particular screen using gtk_recent_manager_get_for_screen()
+ * and it will contain information about current recent manager
+ * for that screen.
+ */
+public struct GtkRecentManager{}
+
+
+/**
+ * Contains informations found when looking up an entry of the
+ * recently used files list.
+ */
+public struct GtkRecentInfo{}
+
+
+/**
+ * Meta-data to be passed to gtk_recent_manager_add_full() when
+ * registering a recently used resource.
+ * gchar*display_name;
+ */
+public struct GtkRecentData
+{
+	char *displayName;
+	char *description;
+	char *mimeType;
+	char *appName;
+	char *appExec;
+	char **groups;
+	int isPrivate;
+}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkRecentChooser{}
+
+
+public struct GtkRecentChooserIface{}
+// GTypeInterface baseIface;
+// GtkRecentChooser.html
+// /+*
+// GtkRecentChooser.html
+// * Methods
+// GtkRecentChooser.html
+// +/
+// GtkRecentChooser.html
+// int (* setCurrentUri) (GtkRecentChooser *chooser,
+// GtkRecentChooser.html
+// char *uri,
+// GtkRecentChooser.html
+// GError **error);
+// GtkRecentChooser.html
+// char * (* getCurrentUri) (GtkRecentChooser *chooser);
+// GtkRecentChooser.html
+// int (* selectUri) (GtkRecentChooser *chooser,
+// GtkRecentChooser.html
+// char *uri,
+// GtkRecentChooser.html
+// GError **error);
+// GtkRecentChooser.html
+// void (* unselectUri) (GtkRecentChooser *chooser,
+// GtkRecentChooser.html
+// char *uri);
+// GtkRecentChooser.html
+// void (* selectAll) (GtkRecentChooser *chooser);
+// GtkRecentChooser.html
+// void (* unselectAll) (GtkRecentChooser *chooser);
+// GtkRecentChooser.html
+// GList * (* getItems) (GtkRecentChooser *chooser);
+// GtkRecentChooser.html
+// GtkRecentManager *(* getRecentManager) (GtkRecentChooser *chooser);
+// GtkRecentChooser.html
+// void (* addFilter) (GtkRecentChooser *chooser,
+// GtkRecentChooser.html
+// GtkRecentFilter *filter);
+// GtkRecentChooser.html
+// void (* removeFilter) (GtkRecentChooser *chooser,
+// GtkRecentChooser.html
+// GtkRecentFilter *filter);
+// GtkRecentChooser.html
+// GSList * (* listFilters) (GtkRecentChooser *chooser);
+// GtkRecentChooser.html
+// void (* setSortFunc) (GtkRecentChooser *chooser,
+// GtkRecentChooser.html
+// GtkRecentSortFunc sortFunc,
+// GtkRecentChooser.html
+// void* data,
+// GtkRecentChooser.html
+// GDestroyNotify destroy);
+// GtkRecentChooser.html
+// /+*
+// GtkRecentChooser.html
+// * Signals
+// GtkRecentChooser.html
+// +/
+// GtkRecentChooser.html
+// void (* itemActivated) (GtkRecentChooser *chooser);
+// GtkRecentChooser.html
+// void (* selectionChanged) (GtkRecentChooser *chooser);
+// GtkRecentChooser.html
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkRecentChooserDialog{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkRecentChooserMenu{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkRecentChooserWidget{}
+
+
+/**
+ * Main Gtk struct.
+ * The GtkRecentFilter struct contains
+ * only private fields and should not be directly accessed.
+ */
+public struct GtkRecentFilter{}
+
+
+/**
+ * A GtkRecentFilterInfo struct is used
+ * to pass information about the tested file to gtk_recent_filter_filter().
+ * GtkRecentFilterFlagscontains;
+ * Flags indicating which of the following fields need
+ */
+public struct GtkRecentFilterInfo{}
+// GtkRecentFilterFlags contains;
+// GtkRecentFilter.html
+// char *uri;
+// GtkRecentFilter.html
+// char *displayName;
+// GtkRecentFilter.html
+// char *mimeType;
+// GtkRecentFilter.html
+// char **applications;
+// GtkRecentFilter.html
+// char **groups;
+// GtkRecentFilter.html
+// int age;
+// GtkRecentFilter.html
 
 
 /**
@@ -6586,6 +6811,29 @@ public typedef extern(C) void  function (GtkPrintJob*, void*, GError*) GtkPrintJ
  */
 // void (*GtkCallback) (GtkWidget *widget,  gpointer data);
 public typedef extern(C) void  function (GtkWidget*, void*) GtkCallback;
+
+/*
+ * a:
+ * b:
+ * user_data:
+ * Returns:
+ */
+// gint (*GtkRecentSortFunc) (GtkRecentInfo *a,  GtkRecentInfo *b,  gpointer user_data);
+public typedef extern(C) int  function (GtkRecentInfo*, GtkRecentInfo*, void*) GtkRecentSortFunc;
+
+/*
+ * The type of function that is used with custom filters,
+ * see gtk_recent_filter_add_custom().
+ * filter_info:
+ * a GtkRecentFilterInfo that is filled according
+ *  to the needed flags passed to gtk_recent_filter_add_custom()
+ * user_data:
+ * user data passed to gtk_recent_filter_add_custom()
+ * Returns:
+ * TRUE if the file should be displayed
+ */
+// gboolean (*GtkRecentFilterFunc) (const GtkRecentFilterInfo *filter_info,  gpointer user_data);
+public typedef extern(C) int  function (GtkRecentFilterInfo*, void*) GtkRecentFilterFunc;
 
 /*
  * Warning
