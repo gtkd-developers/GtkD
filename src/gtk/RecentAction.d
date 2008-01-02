@@ -25,12 +25,12 @@
  * inFile  = GtkRecentAction.html
  * outPack = gtk
  * outFile = RecentAction
- * strct   = GtkRecentAction
- * realStrct=
+ * strct   = GtkAction
+ * realStrct=GtkRecentAction
  * ctorStrct=
  * clss    = RecentAction
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -41,13 +41,13 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_recent_action_new
+ * 	- gtk_recent_action_new_for_manager
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.Action
  * 	- gtk.RecentManager
  * structWrap:
- * 	- GtkAction* -> Action
  * 	- GtkRecentManager* -> RecentManager
  * module aliases:
  * local aliases:
@@ -61,7 +61,6 @@ private import gtkc.gtk;
 
 
 private import glib.Str;
-private import gtk.Action;
 private import gtk.RecentManager;
 
 
@@ -113,9 +112,6 @@ public class RecentAction : Action
 	}
 	
 	/**
-	 */
-	
-	/**
 	 * Creates a new GtkRecentAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
@@ -124,20 +120,20 @@ public class RecentAction : Action
 	 * name =  a unique name for the action
 	 * label =  the label displayed in menu items and on buttons, or NULL
 	 * tooltip =  a tooltip for the action, or NULL
-	 * stockId =  the stock icon to display in widgets representing the
+	 * stockID =  the stock icon to display in widgets representing the
 	 *  action, or NULL
-	 * Returns: the newly created GtkRecentAction.
 	 */
-	public static Action newRecentAction(char[] name, char[] label, char[] tooltip, char[] stockId)
+	public this (char[] name, char[] label, char[] tooltip, StockID stockID)
 	{
 		// GtkAction* gtk_recent_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
-		auto p = gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
+		auto p = gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]));
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
 		}
-		return new Action(cast(GtkAction*) p);
+		this(cast(GtkRecentAction*) p);
 	}
 	
 	/**
@@ -149,33 +145,38 @@ public class RecentAction : Action
 	 * name =  a unique name for the action
 	 * label =  the label displayed in menu items and on buttons, or NULL
 	 * tooltip =  a tooltip for the action, or NULL
-	 * stockId =  the stock icon to display in widgets representing the
+	 * stockID =  the stock icon to display in widgets representing the
 	 *  action, or NULL
 	 * manager =  a GtkRecentManager, or NULL for using the default
 	 *  GtkRecentManager
-	 * Returns: the newly created GtkRecentAction
 	 */
-	public static Action newForManager(char[] name, char[] label, char[] tooltip, char[] stockId, RecentManager manager)
+	public this (char[] name, char[] label, char[] tooltip, StockID stockID, RecentManager manager)
 	{
 		// GtkAction* gtk_recent_action_new_for_manager (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id,  GtkRecentManager *manager);
-		auto p = gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), (manager is null) ? null : manager.getRecentManagerStruct());
+		auto p = gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]), (manager is null) ? null : manager.getRecentManagerStruct());
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
 		}
-		return new Action(cast(GtkAction*) p);
+		this(cast(GtkRecentAction*) p);
 	}
+	
+	/**
+	 */
 	
 	/**
 	 * Returns the value set by gtk_recent_chooser_menu_set_show_numbers().
 	 * Since 2.12
+	 * Params:
+	 * action =  a GtkRecentAction
 	 * Returns: TRUE if numbers should be shown.
 	 */
-	public int getShowNumbers()
+	public static int getShowNumbers(GtkRecentAction* action)
 	{
 		// gboolean gtk_recent_action_get_show_numbers (GtkRecentAction *action);
-		return gtk_recent_action_get_show_numbers(gtkRecentAction);
+		return gtk_recent_action_get_show_numbers(action);
 	}
 	
 	/**
@@ -185,11 +186,12 @@ public class RecentAction : Action
 	 * label. Only the first ten items get a number to avoid clashes.
 	 * Since 2.12
 	 * Params:
+	 * action =  a GtkRecentAction
 	 * showNumbers =  TRUE if the shown items should be numbered
 	 */
-	public void setShowNumbers(int showNumbers)
+	public static void setShowNumbers(GtkRecentAction* action, int showNumbers)
 	{
 		// void gtk_recent_action_set_show_numbers (GtkRecentAction *action,  gboolean show_numbers);
-		gtk_recent_action_set_show_numbers(gtkRecentAction, showNumbers);
+		gtk_recent_action_set_show_numbers(action, showNumbers);
 	}
 }

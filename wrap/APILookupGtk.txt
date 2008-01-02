@@ -1314,6 +1314,8 @@ import: gdk.Screen
 structWrap: GdkScreen* Screen
 import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
+import: gtk.Menu
+structWrap: GtkMenu* Menu
 
 nocode: gtk_status_icon_new_from_stock
 nocode: gtk_status_icon_new_from_file
@@ -4362,15 +4364,71 @@ structWrap: GSList* ListSG
 outFile: RadioAction
 
 file: GtkRecentAction.html
-struct: GtkRecentAction
+struct: GtkAction
+realStruct: GtkRecentAction
 class: RecentAction
 prefix: gtk_recent_action_
 prefix: gtk_
 import: glib.Str
-import: gtk.Action
-structWrap: GtkAction* Action
 import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
+
+nocode: gtk_recent_action_new
+nocode: gtk_recent_action_new_for_manager
+
+code: start
+	/**
+	 * Creates a new GtkRecentAction object. To add the action to
+	 * a GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * Since 2.12
+	 * Params:
+	 * name =  a unique name for the action
+	 * label =  the label displayed in menu items and on buttons, or NULL
+	 * tooltip =  a tooltip for the action, or NULL
+	 * stockID =  the stock icon to display in widgets representing the
+	 *  action, or NULL
+	 */
+	public this (char[] name, char[] label, char[] tooltip, StockID stockID)
+	{
+		// GtkAction* gtk_recent_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
+		auto p = gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRecentAction*) p);
+	}
+	
+	/**
+	 * Creates a new GtkRecentAction object. To add the action to
+	 * a GtkActionGroup and set the accelerator for the action,
+	 * call gtk_action_group_add_action_with_accel().
+	 * Since 2.12
+	 * Params:
+	 * name =  a unique name for the action
+	 * label =  the label displayed in menu items and on buttons, or NULL
+	 * tooltip =  a tooltip for the action, or NULL
+	 * stockID =  the stock icon to display in widgets representing the
+	 *  action, or NULL
+	 * manager =  a GtkRecentManager, or NULL for using the default
+	 *  GtkRecentManager
+	 */
+	public this (char[] name, char[] label, char[] tooltip, StockID stockID, RecentManager manager)
+	{
+		// GtkAction* gtk_recent_action_new_for_manager (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id,  GtkRecentManager *manager);
+		auto p = gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]), (manager is null) ? null : manager.getRecentManagerStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRecentAction*) p);
+	}
+code: end
 outFile: RecentAction
 
 ###########################################################
@@ -5210,6 +5268,7 @@ prefix: gtk_
 import: glib.Str
 import: gtk.PaperSize
 structWrap: GtkPaperSize* PaperSize
+structWrap: GtkPrintSettings* PrintSettings
 #import: glib.ErrorG
 #structWrap: GError** ErrorG*
 import: glib.GKeyFile
@@ -5224,6 +5283,7 @@ prefix: gtk_
 import: glib.Str
 import: gtk.PaperSize
 structWrap: GtkPaperSize* PaperSize
+structWrap: GtkPageSetup* PageSetup
 #import: glib.ErrorG
 #structWrap: GError** ErrorG*
 import: glib.GKeyFile
@@ -5236,6 +5296,7 @@ class: PaperSize
 prefix: gtk_paper_size_
 prefix: gtk_
 import: glib.Str
+structWrap: GtkPaperSize* PaperSize
 #import: glib.ErrorG
 #structWrap: GError** ErrorG*
 import: glib.GKeyFile
@@ -5993,6 +6054,7 @@ import: gdk.Screen
 structWrap: GdkScreen* Screen
 import: gtk.RecentInfo
 structWrap: GtkRecentInfo* RecentInfo
+structWrap: GtkRecentManager* RecentManager
 #import: glib.ErrorG
 #structWrap: GError** ErrorG*
 outFile: RecentManager
@@ -6004,6 +6066,7 @@ nosignal: changed
 prefix: gtk_recent_info_
 #prefix: gtk_
 import: glib.Str
+structWrap: GtkRecentInfo* RecentInfo
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 outFile: RecentInfo

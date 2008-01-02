@@ -49,6 +49,7 @@
  * structWrap:
  * 	- GKeyFile* -> KeyFile
  * 	- GList* -> ListG
+ * 	- GtkPaperSize* -> PaperSize
  * module aliases:
  * local aliases:
  */
@@ -114,15 +115,6 @@ public class PaperSize
 	
 	/**
 	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Creates a new GtkPaperSize object by parsing a
@@ -202,10 +194,16 @@ public class PaperSize
 	 * Since 2.10
 	 * Returns: a copy of other
 	 */
-	public GtkPaperSize* copy()
+	public PaperSize copy()
 	{
 		// GtkPaperSize* gtk_paper_size_copy (GtkPaperSize *other);
-		return gtk_paper_size_copy(gtkPaperSize);
+		auto p = gtk_paper_size_copy(gtkPaperSize);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PaperSize(cast(GtkPaperSize*) p);
 	}
 	
 	/**
@@ -225,10 +223,10 @@ public class PaperSize
 	 * size2 =  another GtkPaperSize object
 	 * Returns: TRUE, if size1 and size2 represent the same paper size
 	 */
-	public int isEqual(GtkPaperSize* size2)
+	public int isEqual(PaperSize size2)
 	{
 		// gboolean gtk_paper_size_is_equal (GtkPaperSize *size1,  GtkPaperSize *size2);
-		return gtk_paper_size_is_equal(gtkPaperSize, size2);
+		return gtk_paper_size_is_equal(gtkPaperSize, (size2 is null) ? null : size2.getPaperSizeStruct());
 	}
 	
 	/**

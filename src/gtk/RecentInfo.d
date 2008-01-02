@@ -47,6 +47,7 @@
  * 	- gdk.Pixbuf
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
+ * 	- GtkRecentInfo* -> RecentInfo
  * module aliases:
  * local aliases:
  */
@@ -145,10 +146,16 @@ public class RecentInfo
 	 * Since 2.10
 	 * Returns: the recent info object with its reference count increased by one.
 	 */
-	public GtkRecentInfo* doref()
+	public RecentInfo doref()
 	{
 		// GtkRecentInfo* gtk_recent_info_ref (GtkRecentInfo *info);
-		return gtk_recent_info_ref(gtkRecentInfo);
+		auto p = gtk_recent_info_ref(gtkRecentInfo);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RecentInfo(cast(GtkRecentInfo*) p);
 	}
 	
 	/**
@@ -432,9 +439,9 @@ public class RecentInfo
 	 * infoB =  a GtkRecentInfo
 	 * Returns: TRUE if both GtkRecentInfo structures point to se same resource, FALSE otherwise.
 	 */
-	public int match(GtkRecentInfo* infoB)
+	public int match(RecentInfo infoB)
 	{
 		// gboolean gtk_recent_info_match (GtkRecentInfo *info_a,  GtkRecentInfo *info_b);
-		return gtk_recent_info_match(gtkRecentInfo, infoB);
+		return gtk_recent_info_match(gtkRecentInfo, (infoB is null) ? null : infoB.getRecentInfoStruct());
 	}
 }

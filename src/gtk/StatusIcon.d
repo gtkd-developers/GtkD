@@ -44,30 +44,36 @@
  * 	- gtk_status_icon_new_from_stock
  * 	- gtk_status_icon_new_from_file
  * 	- gtk_status_icon_new_from_icon_name
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Pixbuf
  * 	- gdk.Screen
  * 	- gdk.Rectangle
+ * 	- gtk.Menu
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkScreen* -> Screen
+ * 	- GtkMenu* -> Menu
  * module aliases:
  * local aliases:
  */
 
 module gtk.StatusIcon;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Pixbuf;
 private import gdk.Screen;
 private import gdk.Rectangle;
+private import gtk.Menu;
 
 
 
@@ -171,13 +177,14 @@ public class StatusIcon : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(StatusIcon)[] onActivateListeners;
+	/**
+	 * Gets emitted when the user activates the status icon.
+	 * If and how status icons can activated is platform-dependent.
+	 * Since 2.10
+	 */
 	void addOnActivate(void delegate(StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate" in connectedSignals) )
@@ -206,6 +213,14 @@ public class StatusIcon : ObjectG
 	}
 	
 	void delegate(guint, guint, StatusIcon)[] onPopupMenuListeners;
+	/**
+	 * Gets emitted when the user brings up the context menu
+	 * of the status icon. Whether status icons can have context
+	 * menus and how these are activated is platform-dependent.
+	 * The button and activate_timeout parameters should be
+	 * passed as the last to arguments to gtk_menu_popup().
+	 * Since 2.10
+	 */
 	void addOnPopupMenu(void delegate(guint, guint, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popup-menu" in connectedSignals) )
@@ -234,6 +249,11 @@ public class StatusIcon : ObjectG
 	}
 	
 	gboolean delegate(gint, StatusIcon)[] onSizeChangedListeners;
+	/**
+	 * Gets emitted when the size available for the image
+	 * changes, e.g. because the notification area got resized.
+	 * Since 2.10
+	 */
 	void addOnSizeChanged(gboolean delegate(gint, StatusIcon) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-changed" in connectedSignals) )
@@ -262,7 +282,6 @@ public class StatusIcon : ObjectG
 	}
 	
 	
-	
 	/**
 	 * Creates an empty status icon object.
 	 * Since 2.10
@@ -270,7 +289,14 @@ public class StatusIcon : ObjectG
 	public this ()
 	{
 		// GtkStatusIcon* gtk_status_icon_new (void);
-		this(cast(GtkStatusIcon*)gtk_status_icon_new() );
+		auto p = gtk_status_icon_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkStatusIcon*) p);
 	}
 	
 	/**
@@ -284,11 +310,15 @@ public class StatusIcon : ObjectG
 	public this (Pixbuf pixbuf)
 	{
 		// GtkStatusIcon* gtk_status_icon_new_from_pixbuf (GdkPixbuf *pixbuf);
-		this(cast(GtkStatusIcon*)gtk_status_icon_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct()) );
+		auto p = gtk_status_icon_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkStatusIcon*) p);
 	}
-	
-	
-	
 	
 	/**
 	 * Makes status_icon display pixbuf.
@@ -368,7 +398,13 @@ public class StatusIcon : ObjectG
 	public Pixbuf getPixbuf()
 	{
 		// GdkPixbuf* gtk_status_icon_get_pixbuf (GtkStatusIcon *status_icon);
-		return new Pixbuf( gtk_status_icon_get_pixbuf(gtkStatusIcon) );
+		auto p = gtk_status_icon_get_pixbuf(gtkStatusIcon);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -383,7 +419,7 @@ public class StatusIcon : ObjectG
 	public char[] getStock()
 	{
 		// const gchar* gtk_status_icon_get_stock (GtkStatusIcon *status_icon);
-		return Str.toString(gtk_status_icon_get_stock(gtkStatusIcon) );
+		return Str.toString(gtk_status_icon_get_stock(gtkStatusIcon)).dup;
 	}
 	
 	/**
@@ -398,7 +434,7 @@ public class StatusIcon : ObjectG
 	public char[] getIconName()
 	{
 		// const gchar* gtk_status_icon_get_icon_name (GtkStatusIcon *status_icon);
-		return Str.toString(gtk_status_icon_get_icon_name(gtkStatusIcon) );
+		return Str.toString(gtk_status_icon_get_icon_name(gtkStatusIcon)).dup;
 	}
 	
 	/**
@@ -440,7 +476,13 @@ public class StatusIcon : ObjectG
 	public Screen getScreen()
 	{
 		// GdkScreen* gtk_status_icon_get_screen (GtkStatusIcon *status_icon);
-		return new Screen( gtk_status_icon_get_screen(gtkStatusIcon) );
+		auto p = gtk_status_icon_get_screen(gtkStatusIcon);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -532,10 +574,10 @@ public class StatusIcon : ObjectG
 	 *  aligned with the menu popup position (only useful for GtkOptionMenu).
 	 * userData =  the status icon to position the menu on
 	 */
-	public static void positionMenu(GtkMenu* menu, int* x, int* y, int* pushIn, void* userData)
+	public static void positionMenu(Menu menu, int* x, int* y, int* pushIn, void* userData)
 	{
 		// void gtk_status_icon_position_menu (GtkMenu *menu,  gint *x,  gint *y,  gboolean *push_in,  gpointer user_data);
-		gtk_status_icon_position_menu(menu, x, y, pushIn, userData);
+		gtk_status_icon_position_menu((menu is null) ? null : menu.getMenuStruct(), x, y, pushIn, userData);
 	}
 	
 	/**
@@ -566,16 +608,4 @@ public class StatusIcon : ObjectG
 		// gboolean gtk_status_icon_get_geometry (GtkStatusIcon *status_icon,  GdkScreen **screen,  GdkRectangle *area,  GtkOrientation *orientation);
 		return gtk_status_icon_get_geometry(gtkStatusIcon, screen, (area is null) ? null : area.getRectangleStruct(), orientation);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

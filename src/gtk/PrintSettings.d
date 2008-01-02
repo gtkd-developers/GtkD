@@ -49,6 +49,7 @@
  * structWrap:
  * 	- GKeyFile* -> KeyFile
  * 	- GtkPaperSize* -> PaperSize
+ * 	- GtkPrintSettings* -> PrintSettings
  * module aliases:
  * local aliases:
  */
@@ -118,8 +119,6 @@ public class PrintSettings : ObjectG
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Creates a new GtkPrintSettings object.
 	 * Since 2.10
@@ -142,10 +141,16 @@ public class PrintSettings : ObjectG
 	 * Since 2.10
 	 * Returns: a newly allocated copy of other
 	 */
-	public GtkPrintSettings* copy()
+	public PrintSettings copy()
 	{
 		// GtkPrintSettings* gtk_print_settings_copy (GtkPrintSettings *other);
-		return gtk_print_settings_copy(gtkPrintSettings);
+		auto p = gtk_print_settings_copy(gtkPrintSettings);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PrintSettings(cast(GtkPrintSettings*) p);
 	}
 	
 	/**
@@ -355,7 +360,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_int(gtkPrintSettings, Str.toStringz(key), value);
 	}
 	
-	
 	/**
 	 * Convenience function to obtain the value of
 	 * GTK_PRINT_SETTINGS_PRINTER.
@@ -381,8 +385,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_printer(gtkPrintSettings, Str.toStringz(printer));
 	}
 	
-	
-	
 	/**
 	 * Get the value of GTK_PRINT_SETTINGS_ORIENTATION,
 	 * converted to a GtkPageOrientation.
@@ -406,7 +408,6 @@ public class PrintSettings : ObjectG
 		// void gtk_print_settings_set_orientation (GtkPrintSettings *settings,  GtkPageOrientation orientation);
 		gtk_print_settings_set_orientation(gtkPrintSettings, orientation);
 	}
-	
 	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_PAPER_FORMAT,
@@ -440,7 +441,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_paper_size(gtkPrintSettings, (paperSize is null) ? null : paperSize.getPaperSizeStruct());
 	}
 	
-	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_PAPER_WIDTH,
 	 * converted to unit.
@@ -467,7 +467,6 @@ public class PrintSettings : ObjectG
 		// void gtk_print_settings_set_paper_width (GtkPrintSettings *settings,  gdouble width,  GtkUnit unit);
 		gtk_print_settings_set_paper_width(gtkPrintSettings, width, unit);
 	}
-	
 	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_PAPER_HEIGHT,
@@ -496,7 +495,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_paper_height(gtkPrintSettings, height, unit);
 	}
 	
-	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_USE_COLOR.
 	 * Since 2.10
@@ -519,7 +517,6 @@ public class PrintSettings : ObjectG
 		// void gtk_print_settings_set_use_color (GtkPrintSettings *settings,  gboolean use_color);
 		gtk_print_settings_set_use_color(gtkPrintSettings, useColor);
 	}
-	
 	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_COLLATE.
@@ -544,7 +541,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_collate(gtkPrintSettings, collate);
 	}
 	
-	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_REVERSE.
 	 * Since 2.10
@@ -567,8 +563,6 @@ public class PrintSettings : ObjectG
 		// void gtk_print_settings_set_reverse (GtkPrintSettings *settings,  gboolean reverse);
 		gtk_print_settings_set_reverse(gtkPrintSettings, reverse);
 	}
-	
-	
 	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_DUPLEX.
@@ -593,8 +587,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_duplex(gtkPrintSettings, duplex);
 	}
 	
-	
-	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_QUALITY.
 	 * Since 2.10
@@ -617,7 +609,6 @@ public class PrintSettings : ObjectG
 		// void gtk_print_settings_set_quality (GtkPrintSettings *settings,  GtkPrintQuality quality);
 		gtk_print_settings_set_quality(gtkPrintSettings, quality);
 	}
-	
 	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_N_COPIES.
@@ -642,7 +633,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_n_copies(gtkPrintSettings, numCopies);
 	}
 	
-	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_NUMBER_UP.
 	 * Since 2.10
@@ -665,7 +655,6 @@ public class PrintSettings : ObjectG
 		// void gtk_print_settings_set_number_up (GtkPrintSettings *settings,  gint number_up);
 		gtk_print_settings_set_number_up(gtkPrintSettings, numberUp);
 	}
-	
 	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_RESOLUTION.
@@ -690,7 +679,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_resolution(gtkPrintSettings, resolution);
 	}
 	
-	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_SCALE.
 	 * Since 2.10
@@ -714,8 +702,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_scale(gtkPrintSettings, scale);
 	}
 	
-	
-	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_PRINT_PAGES.
 	 * Since 2.10
@@ -738,8 +724,6 @@ public class PrintSettings : ObjectG
 		// void gtk_print_settings_set_print_pages (GtkPrintSettings *settings,  GtkPrintPages pages);
 		gtk_print_settings_set_print_pages(gtkPrintSettings, pages);
 	}
-	
-	
 	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_PAGE_RANGES.
@@ -767,8 +751,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_page_ranges(gtkPrintSettings, pageRanges, numRanges);
 	}
 	
-	
-	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_PAGE_SET.
 	 * Since 2.10
@@ -792,7 +774,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_page_set(gtkPrintSettings, pageSet);
 	}
 	
-	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_DEFAULT_SOURCE.
 	 * Since 2.10
@@ -815,7 +796,6 @@ public class PrintSettings : ObjectG
 		// void gtk_print_settings_set_default_source  (GtkPrintSettings *settings,  const gchar *default_source);
 		gtk_print_settings_set_default_source(gtkPrintSettings, Str.toStringz(defaultSource));
 	}
-	
 	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_MEDIA_TYPE.
@@ -842,7 +822,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_media_type(gtkPrintSettings, Str.toStringz(mediaType));
 	}
 	
-	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_DITHER.
 	 * Since 2.10
@@ -865,7 +844,6 @@ public class PrintSettings : ObjectG
 		// void gtk_print_settings_set_dither (GtkPrintSettings *settings,  const gchar *dither);
 		gtk_print_settings_set_dither(gtkPrintSettings, Str.toStringz(dither));
 	}
-	
 	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_FINISHINGS.
@@ -890,7 +868,6 @@ public class PrintSettings : ObjectG
 		gtk_print_settings_set_finishings(gtkPrintSettings, Str.toStringz(finishings));
 	}
 	
-	
 	/**
 	 * Gets the value of GTK_PRINT_SETTINGS_OUTPUT_BIN.
 	 * Since 2.10
@@ -913,10 +890,6 @@ public class PrintSettings : ObjectG
 		// void gtk_print_settings_set_output_bin (GtkPrintSettings *settings,  const gchar *output_bin);
 		gtk_print_settings_set_output_bin(gtkPrintSettings, Str.toStringz(outputBin));
 	}
-	
-	
-	
-	
 	
 	/**
 	 * Reads the print settings from filename. Returns a new GtkPrintSettings

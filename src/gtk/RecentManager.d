@@ -49,6 +49,7 @@
  * structWrap:
  * 	- GdkScreen* -> Screen
  * 	- GtkRecentInfo* -> RecentInfo
+ * 	- GtkRecentManager* -> RecentManager
  * module aliases:
  * local aliases:
  */
@@ -209,10 +210,16 @@ public class RecentManager : ObjectG
 	 * Since 2.10
 	 * Returns: A unique GtkRecentManager. Do not ref or unref it.
 	 */
-	public static GtkRecentManager* getDefault()
+	public static RecentManager getDefault()
 	{
 		// GtkRecentManager* gtk_recent_manager_get_default (void);
-		return gtk_recent_manager_get_default();
+		auto p = gtk_recent_manager_get_default();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RecentManager(cast(GtkRecentManager*) p);
 	}
 	
 	/**
@@ -233,10 +240,16 @@ public class RecentManager : ObjectG
 	 * screen =  a GdkScreen
 	 * Returns: A unique GtkRecentManager associated with the given screen. This recent manager is associated to the with the screen and can be used as long as the screen is open. Do not ref or unref it.
 	 */
-	public static GtkRecentManager* getForScreen(Screen screen)
+	public static RecentManager getForScreen(Screen screen)
 	{
 		// GtkRecentManager* gtk_recent_manager_get_for_screen (GdkScreen *screen);
-		return gtk_recent_manager_get_for_screen((screen is null) ? null : screen.getScreenStruct());
+		auto p = gtk_recent_manager_get_for_screen((screen is null) ? null : screen.getScreenStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RecentManager(cast(GtkRecentManager*) p);
 	}
 	
 	/**
