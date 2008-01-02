@@ -50,7 +50,7 @@ alias void GtkContainerClass;
 /* GtkDragResult is now an enum. */
 //alias int GtkDragResult;
 //alias int GtkTooltip;
-
+alias uint time_t;
 addTypedefs: end
 
 addAliases: start
@@ -4379,6 +4379,18 @@ import: glib.ListSG
 structWrap: GSList* ListSG
 outFile: RadioAction
 
+file: GtkRecentAction.html
+struct: GtkRecentAction
+class: RecentAction
+prefix: gtk_recent_action_
+prefix: gtk_
+import: glib.Str
+import: gtk.Action
+structWrap: GtkAction* Action
+import: gtk.RecentManager
+structWrap: GtkRecentManager* RecentManager
+outFile: RecentAction
+
 ###########################################################
 ###  Selectors (File/Font/Color/Input Devices) ############
 ###########################################################
@@ -5984,6 +5996,251 @@ class: VRuler
 prefix: gtk_vruler_
 prefix: gtk_
 outFile: VRuler
+
+###########################################################
+### Recently Used Documents ###############################
+###########################################################
+
+file: GtkRecentManager.html
+struct: GtkRecentManager
+class: RecentManager
+prefix: gtk_recent_manager_
+#prefix: gtk_
+noprefix: gtk_recent_info_
+import: glib.Str
+import: gdk.Screen
+structWrap: GdkScreen* Screen
+import: gtk.RecentInfo
+structWrap: GtkRecentInfo* RecentInfo
+#import: glib.ErrorG
+#structWrap: GError** ErrorG*
+outFile: RecentManager
+
+struct: GtkRecentInfo
+class: RecentInfo
+strictPrefix: Y
+nosignal: changed
+prefix: gtk_recent_info_
+#prefix: gtk_
+import: glib.Str
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+outFile: RecentInfo
+
+file: GtkRecentChooser.html
+struct: GtkRecentChooser
+class: RecentChooserT
+template: TStruct
+#Implement these manualy.
+nosignal: item-activated
+nosignal: selection-changed
+prefix: gtk_recent_chooser_
+prefix: gtk_
+import: glib.Str
+import: gtk.RecentInfo
+structWrap: GtkRecentInfo* RecentInfo
+import: gtk.RecentFilter
+structWrap: GtkRecentFilter* RecentFilter
+import: glib.ListG
+structWrap: GList* ListG
+#import: glib.ErrorG
+#structWrap: GError** ErrorG*
+
+interfaceCode: start
+	void delegate(RecentChooserIF)[] onItemActivatedListeners();
+	/**
+	 * This signal is emitted when the user "activates" a recent item
+	 * in the recent chooser. This can happen by double-clicking on an item
+	 * in the recently used resources list, or by pressing
+	 * Enter.
+	 * Since 2.10
+	 */
+	void addOnItemActivated(void delegate(RecentChooserIF), ConnectFlags);
+
+	void delegate(RecentChooserIF)[] onSelectionChangedListeners();
+	/**
+	 * This signal is emitted when there is a change in the set of
+	 * selected recently used resources. This can happen when a user
+	 * modifies the selection with the mouse or the keyboard, or when
+	 * explicitely calling functions to change the selection.
+	 * Since 2.10
+	 * See Also
+	 * GtkRecentManager, GtkRecentChooserDialog, GtkRecentChooserWidget,
+	 * GtkRecentChooserMenu
+	 */
+	void addOnSelectionChanged(void delegate(RecentChooserIF), ConnectFlags);
+interfaceCode: end
+
+code: start
+	/** */
+	int[char[]] connectedSignals;
+	
+	void delegate(RecentChooserIF)[] onItemActivatedListenersArray;
+	void delegate(RecentChooserIF)[] onItemActivatedListeners()
+	{
+		return onItemActivatedListenersArray;
+	}
+	/**
+	 * This signal is emitted when the user "activates" a recent item
+	 * in the recent chooser. This can happen by double-clicking on an item
+	 * in the recently used resources list, or by pressing
+	 * Enter.
+	 * Since 2.10
+	 */
+	void addOnItemActivated(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("item-activated" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"item-activated",
+			cast(GCallback)&callBackItemActivated,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["item-activated"] = 1;
+		}
+		onItemActivatedListenersArray ~= dlg;
+	}
+	extern(C) static void callBackItemActivated(GtkRecentChooser* chooserStruct, RecentChooserIF recentChooser)
+	{
+		bool consumed = false;
+		
+		foreach ( void delegate(RecentChooserIF) dlg ; recentChooser.onItemActivatedListeners )
+		{
+			dlg(recentChooser);
+		}
+		
+		return consumed;
+	}
+	
+	void delegate(RecentChooserIF)[] onSelectionChangedListenersArray;
+	void delegate(RecentChooserIF)[] onSelectionChangedListeners()
+	{
+		return onSelectionChangedListenersArray;
+	}
+	/**
+	 * This signal is emitted when there is a change in the set of
+	 * selected recently used resources. This can happen when a user
+	 * modifies the selection with the mouse or the keyboard, or when
+	 * explicitely calling functions to change the selection.
+	 * Since 2.10
+	 * See Also
+	 * GtkRecentManager, GtkRecentChooserDialog, GtkRecentChooserWidget,
+	 * GtkRecentChooserMenu
+	 */
+	void addOnSelectionChanged(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	{
+		if ( !("selection-changed" in connectedSignals) )
+		{
+			Signals.connectData(
+			getStruct(),
+			"selection-changed",
+			cast(GCallback)&callBackSelectionChanged,
+			cast(void*)this,
+			null,
+			connectFlags);
+			connectedSignals["selection-changed"] = 1;
+		}
+		onSelectionChangedListenersArray ~= dlg;
+	}
+	extern(C) static void callBackSelectionChanged(GtkRecentChooser* chooserStruct, RecentChooserIF recentChooser)
+	{
+		bool consumed = false;
+		
+		foreach ( void delegate(RecentChooserIF) dlg ; recentChooser.onSelectionChangedListeners )
+		{
+			dlg(recentChooser);
+		}
+		
+		return consumed;
+	}
+code: end
+
+interface: RecentChooserIF
+outFile: RecentChooserT
+
+file: GtkRecentChooserDialog.html
+struct: GtkRecentChooserDialog
+class: RecentChooserDialog
+implements: RecentChooserIF
+prefix: gtk_recent_chooser_dialog_
+prefix: gtk_
+import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gtk.Window
+structWrap: GtkWindow* Window
+import: gtk.RecentManager
+structWrap: GtkRecentManager* RecentManager
+import: gtk.RecentInfo
+import: gtk.RecentFilter
+import: glib.ListG
+import: gobject.Signals
+import: gtk.RecentChooserIF
+import: gtk.RecentChooserT
+
+code: start
+	// add the RecentChooser capabilities
+	mixin RecentChooserT!(GtkRecentChooserDialog);
+code: end
+outFile: RecentChooserDialog
+
+file: GtkRecentChooserMenu.html
+struct: GtkRecentChooserMenu
+class: RecentChooserMenu
+implements: RecentChooserIF
+prefix: gtk_recent_chooser_menu_
+prefix: gtk_
+import: glib.Str
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gtk.RecentManager
+structWrap: GtkRecentManager* RecentManager
+import: gtk.RecentInfo
+import: gtk.RecentFilter
+import: glib.ListG
+import: gobject.Signals
+import: gtk.RecentChooserIF
+import: gtk.RecentChooserT
+
+code: start
+	// add the RecentChooser capabilities
+	mixin RecentChooserT!(GtkRecentChooserMenu);
+code: end
+outFile: RecentChooserMenu
+
+file: GtkRecentChooserWidget.html
+struct: GtkRecentChooserWidget
+class: RecentChooserWidget
+implements: RecentChooserIF
+prefix: gtk_recent_chooser_widget_
+prefix: gtk_
+import: gtk.Widget
+structWrap: GtkWidget* Widget
+import: gtk.RecentManager
+structWrap: GtkRecentManager* RecentManager
+import: glib.Str
+import: gtk.RecentInfo
+import: gtk.RecentFilter
+import: glib.ListG
+import: gobject.Signals
+import: gtk.RecentChooserIF
+import: gtk.RecentChooserT
+
+code: start
+	// add the RecentChooser capabilities
+	mixin RecentChooserT!(GtkRecentChooserWidget);
+code: end
+outFile: RecentChooserWidget
+
+file: GtkRecentFilter.html
+struct: GtkRecentFilter
+class: RecentFilter
+prefix: gtk_recent_filter_
+prefix: gtk_
+import: glib.Str
+outFile: RecentFilter
 
 ###########################################################
 ### Deprecated ############################################

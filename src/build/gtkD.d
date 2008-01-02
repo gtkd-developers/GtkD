@@ -10,8 +10,8 @@ version( build )
 {
 	pragma (nolink);
 
-	version (Windows)     pragma (target, "Duit.lib"  );
-	version (linux)   pragma (target, "libDuit.a" );
+	version (Windows)     pragma (target, "GtkD.lib"  );
+	version (linux)   pragma (target, "libgtkd.a" );
 }
 
 
@@ -285,6 +285,7 @@ private import gtk.ActionGroup;
 private import gtk.Action;
 private import gtk.ToggleAction;
 private import gtk.RadioAction;
+private import gtk.RecentAction;
 private import gtk.ColorButton;
 private import gtk.ColorSelection;
 private import gtk.ColorSelectionDialog;
@@ -316,6 +317,17 @@ private import gtk.VSeparator;
 private import gtk.HScrollbar;
 private import gtk.VScrollbar;
 private import gtk.ScrolledWindow;
+private import gtk.PrintOperation;
+private import gtk.PrintOperationPreviewIF;
+private import gtk.PrintOperationPreviewT;
+private import gtk.PrintContext;
+private import gtk.PrintSettings;
+private import gtk.PageSetup;
+private import gtk.PaperSize;
+private import gtk.Printer;
+private import gtk.PrintJob;
+private import gtk.PrintUnixDialog;
+private import gtk.PageSetupUnixDialog;
 private import gtk.Adjustment;
 private import gtk.Arrow;
 private import gtk.Calendar;
@@ -350,6 +362,14 @@ private import gtk.GammaCurve;
 private import gtk.Ruler;
 private import gtk.HRuler;
 private import gtk.VRuler;
+private import gtk.RecentManager;
+private import gtk.RecentInfo;
+private import gtk.RecentChooserIF;
+private import gtk.RecentChooserT;
+private import gtk.RecentChooserDialog;
+private import gtk.RecentChooserMenu;
+private import gtk.RecentChooserWidget;
+private import gtk.RecentFilter;
 private import gtk.FileSelection;
 private import gtk.ItemFactory;
 private import gtk.Tooltips;
