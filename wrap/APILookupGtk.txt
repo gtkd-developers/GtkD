@@ -464,7 +464,6 @@ import: gdk.Bitmap
 structWrap: GdkBitmap* Bitmap
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-import: glib.Str
 outFile: DragAndDrop
 
 file: GtkIconTheme.html
@@ -554,7 +553,6 @@ structWrap: GdkColor* Color
 #structWrap: GtkStateType* StateType
 #import: gtk.PathPriorityType
 #structWrap: GtkPathPriorityType* PathPriorityType
-import: gtk.RcStyle
 structWrap: GtkRcStyle* RcStyle
 outFile: RcStyle
 
@@ -593,7 +591,6 @@ structWrap: GtkObject* ObjectGtk
 #structWrap: GdkEventKey* EventKey
 import: glib.ListSG
 structWrap: GSList* ListSG
-import: glib.Str;
 #import: g.Scanner
 #structWrap: GScanner* Scanner
 outFile: BindingSet
@@ -665,7 +662,6 @@ structWrap: GdkDisplay* Display
 #structWrap: GtkSelectionData* SelectionData
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-import: glib.Str
 outFile: Selections
 
 file: gtk-Feature-Test-Macros.html
@@ -687,7 +683,6 @@ import: gtk.ObjectGtk
 structWrap: GtkObject* ObjectGtk
 #import: gtk.Arg
 #structWrap: GtkArg* Arg
-import: glib.Str
 outFile: Signals
 
 file: gtk-Types.html
@@ -1383,7 +1378,6 @@ import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Image
-import: gtk.Button
 
 nocode: gtk_button_new_with_mnemonic
 nocode: gtk_button_new_with_label
@@ -1505,7 +1499,6 @@ struct: GtkCheckButton
 class: CheckButton
 import: glib.Str
 import: gtk.Button
-import: glib.Str
 prefix: gtk_check_button_
 prefix: gtk_
 
@@ -1786,7 +1779,6 @@ prefix: gtk_
 import: glib.Str
 import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
-import: gtk.TextIter
 structWrap: GtkTextIter* TextIter
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
@@ -1827,7 +1819,6 @@ class: TextBuffer
 prefix: gtk_text_buffer_
 prefix: gtk_
 import: glib.Str
-import: gtk.TextBuffer
 structWrap: GtkTextBuffer* TextBuffer
 #import: gtk.TextMark
 #structWrap: GtkTextMark* TextMark
@@ -2163,7 +2154,6 @@ class: TextTagTable
 prefix: gtk_text_tag_
 prefix: gtk_
 import: glib.Str
-import: gtk.TextTagTable
 structWrap: GtkTextTagTable* TextTagTable
 import: gtk.TextTag
 structWrap: GtkTextTag* TextTag
@@ -2365,7 +2355,6 @@ strictPrefix: Y
 prefix: gtk_tree_iter_
 #prefix: gtk_
 import: glib.Str
-import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gtk.TreeModel
 import: gtk.TreePath
@@ -2554,9 +2543,7 @@ strictPrefix: Y
 prefix: gtk_tree_path_
 #prefix: gtk_
 import: glib.Str
-import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
-import: glib.Str
 
 nocode: gtk_tree_path_new
 nocode: gtk_tree_path_new_first
@@ -2594,8 +2581,6 @@ import: gtk.TreePath
 structWrap: GtkTreePath* TreePath
 import: gobject.ObjectG
 structWrap: GObject* ObjectG
-#import: gtk.TreeRowReference
-#structWrap: GtkTreeRowReference* TreeRowReference
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 outFile: TreeRowReference
@@ -3038,7 +3023,6 @@ prefix: gtk_
 import: glib.Str
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
-import: glib.Str
 interface: CellLayoutIF
 outFile: CellLayoutT
 
@@ -3170,7 +3154,6 @@ import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gobject.Value
 structWrap: GValue* Value
-import: glib.Str
 
 nocode: gtk_list_store_set
 
@@ -3270,7 +3253,6 @@ structWrap: GValue* Value
 import: gtk.TreeNode
 import: gdk.Pixbuf;
 import: gobject.Value;
-import: glib.Str
 import: gtk.TreeModel
 
 nocode: gtk_tree_store_set
@@ -4479,7 +4461,6 @@ import: glib.ListSG;
 import: gtk.Widget;
 import: gtk.FileFilter;
 import: gtk.FileChooser;
-import: glib.Str
 nocode: gtk_file_chooser_dialog_new
 nocode: gtk_file_chooser_dialog_new_with_backend
 
@@ -6286,7 +6267,6 @@ import: gtk.AccelGroup
 structWrap: GtkAccelGroup* AccelGroup
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-import: gtk.ItemFactory
 structWrap: GtkItemFactory* ItemFactory
 #import: gtk.ItemFactoryEntry
 #structWrap: GtkItemFactoryEntry* ItemFactoryEntry
