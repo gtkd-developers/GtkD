@@ -267,11 +267,10 @@ static char gray50_bits[] = [0x02, 0x01];
 
 		pixbuf = new Pixbuf("images/gtk-logo-rgb.gif", null);
 		
-		if (pixbuf.getPixbufStruct()  is null)
+		if (pixbuf is null)
 		{
 			version(Tango) Stdout("Failed to load image file gtk-logo-rgb.gif\n").newline;
 			else printf("Failed to load image file gtk-logo-rgb.gif\n");
-			pixbuf = null;
 		}
 		else
 		{
