@@ -6187,7 +6187,6 @@ code: start
 		{
 			selectionChangedData = new UserData;
 		}
-
 		selectionChangedData.recentChooser = this;
 		selectionChangedData.listeners = onSelectionChangedListeners;
 
@@ -6300,6 +6299,46 @@ prefix: gtk_recent_filter_
 prefix: gtk_
 import: glib.Str
 outFile: RecentFilter
+
+###########################################################
+### Interface builder #####################################
+###########################################################
+
+file: gtk-gtkbuildable.html
+struct: GtkBuildable
+class: BuildableT
+template: TStruct
+prefix: gtk_buildable_
+prefix: gtk_
+import: glib.Str
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+import: gobject.Value
+structWrap: GValue* Value
+import: gtk.Builder
+structWrap: GtkBuilder* Builder
+#import: glib.MarkupParser
+#structWrap: GMarkupParser* MarkupParser
+interface: BuildableIF
+outFile: BuildableT
+
+file: GtkBuilder.html
+struct: GtkBuilder
+class: Builder
+prefix: gtk_builder_
+prefix: gtk_
+import: glib.Str
+import: gobject.ObjectG
+structWrap: GObject* ObjectG
+import: gobject.ParamSpec
+structWrap: GParamSpec* ParamSpec
+import: gobject.Value
+structWrap: GValue* Value
+import: glib.ListSG
+structWrap: GSList* ListSG
+#import: glib.ErrorG
+#structWrap: GError** ErrorG*
+outFile: Builder
 
 ###########################################################
 ### Deprecated ############################################

@@ -3308,6 +3308,37 @@ extern(C)
 	GtkRecentFilterFlags function(GtkRecentFilter* filter)gtk_recent_filter_get_needed;
 	gboolean function(GtkRecentFilter* filter, GtkRecentFilterInfo* filterInfo)gtk_recent_filter_filter;
 	
+	// gtk.BuildableT
+	
+	
+	// gtk.BuildableT
+	
+	void function(GtkBuildable* buildable, gchar* name)gtk_buildable_set_name;
+	gchar* function(GtkBuildable* buildable)gtk_buildable_get_name;
+	void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* type)gtk_buildable_add_child;
+	void function(GtkBuildable* buildable, GtkBuilder* builder, gchar* name, GValue* value)gtk_buildable_set_buildable_property;
+	GObject* function(GtkBuildable* buildable, GtkBuilder* builder, gchar* name)gtk_buildable_construct_child;
+	gboolean function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* tagname, GMarkupParser* parser, gpointer* data)gtk_buildable_custom_tag_start;
+	void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* tagname, gpointer* data)gtk_buildable_custom_tag_end;
+	void function(GtkBuildable* buildable, GtkBuilder* builder, GObject* child, gchar* tagname, gpointer data)gtk_buildable_custom_finished;
+	void function(GtkBuildable* buildable, GtkBuilder* builder)gtk_buildable_parser_finished;
+	GObject* function(GtkBuildable* buildable, GtkBuilder* builder, gchar* childname)gtk_buildable_get_internal_child;
+	
+	// gtk.Builder
+	
+	GtkBuilder* function()gtk_builder_new;
+	guint function(GtkBuilder* builder, gchar* filename, GError** error)gtk_builder_add_from_file;
+	guint function(GtkBuilder* builder, gchar* buffer, gsize length, GError** error)gtk_builder_add_from_string;
+	GObject* function(GtkBuilder* builder, gchar* name)gtk_builder_get_object;
+	GSList* function(GtkBuilder* builder)gtk_builder_get_objects;
+	void function(GtkBuilder* builder, gpointer userData)gtk_builder_connect_signals;
+	void function(GtkBuilder* builder, GtkBuilderConnectFunc func, gpointer userData)gtk_builder_connect_signals_full;
+	void function(GtkBuilder* builder, gchar* domain)gtk_builder_set_translation_domain;
+	gchar* function(GtkBuilder* builder)gtk_builder_get_translation_domain;
+	GType function(GtkBuilder* builder, char* typeName)gtk_builder_get_type_from_name;
+	gboolean function(GtkBuilder* builder, GParamSpec* pspec, gchar* string, GValue* value, GError** error)gtk_builder_value_from_string;
+	gboolean function(GtkBuilder* builder, GType type, gchar* string, GValue* value, GError** error)gtk_builder_value_from_string_type;
+	
 	// gtk.FileSelection
 	
 	GtkWidget* function(gchar* title)gtk_file_selection_new;
@@ -6062,6 +6093,28 @@ Symbol[] gtkLinks =
 	{ "gtk_recent_filter_add_custom",  cast(void**)& gtk_recent_filter_add_custom},
 	{ "gtk_recent_filter_get_needed",  cast(void**)& gtk_recent_filter_get_needed},
 	{ "gtk_recent_filter_filter",  cast(void**)& gtk_recent_filter_filter},
+	{ "gtk_buildable_set_name",  cast(void**)& gtk_buildable_set_name},
+	{ "gtk_buildable_get_name",  cast(void**)& gtk_buildable_get_name},
+	{ "gtk_buildable_add_child",  cast(void**)& gtk_buildable_add_child},
+	{ "gtk_buildable_set_buildable_property",  cast(void**)& gtk_buildable_set_buildable_property},
+	{ "gtk_buildable_construct_child",  cast(void**)& gtk_buildable_construct_child},
+	{ "gtk_buildable_custom_tag_start",  cast(void**)& gtk_buildable_custom_tag_start},
+	{ "gtk_buildable_custom_tag_end",  cast(void**)& gtk_buildable_custom_tag_end},
+	{ "gtk_buildable_custom_finished",  cast(void**)& gtk_buildable_custom_finished},
+	{ "gtk_buildable_parser_finished",  cast(void**)& gtk_buildable_parser_finished},
+	{ "gtk_buildable_get_internal_child",  cast(void**)& gtk_buildable_get_internal_child},
+	{ "gtk_builder_new",  cast(void**)& gtk_builder_new},
+	{ "gtk_builder_add_from_file",  cast(void**)& gtk_builder_add_from_file},
+	{ "gtk_builder_add_from_string",  cast(void**)& gtk_builder_add_from_string},
+	{ "gtk_builder_get_object",  cast(void**)& gtk_builder_get_object},
+	{ "gtk_builder_get_objects",  cast(void**)& gtk_builder_get_objects},
+	{ "gtk_builder_connect_signals",  cast(void**)& gtk_builder_connect_signals},
+	{ "gtk_builder_connect_signals_full",  cast(void**)& gtk_builder_connect_signals_full},
+	{ "gtk_builder_set_translation_domain",  cast(void**)& gtk_builder_set_translation_domain},
+	{ "gtk_builder_get_translation_domain",  cast(void**)& gtk_builder_get_translation_domain},
+	{ "gtk_builder_get_type_from_name",  cast(void**)& gtk_builder_get_type_from_name},
+	{ "gtk_builder_value_from_string",  cast(void**)& gtk_builder_value_from_string},
+	{ "gtk_builder_value_from_string_type",  cast(void**)& gtk_builder_value_from_string_type},
 	{ "gtk_file_selection_new",  cast(void**)& gtk_file_selection_new},
 	{ "gtk_file_selection_set_filename",  cast(void**)& gtk_file_selection_set_filename},
 	{ "gtk_file_selection_get_filename",  cast(void**)& gtk_file_selection_get_filename},

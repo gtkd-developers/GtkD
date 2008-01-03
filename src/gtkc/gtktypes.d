@@ -1917,6 +1917,18 @@ public enum GtkRecentFilterFlags
 }
 alias GtkRecentFilterFlags RecentFilterFlags;
 
+public enum GtkBuilderError
+{
+	INVALID_TYPE_FUNCTION,
+	UNHANDLED_TAG,
+	MISSING_ATTRIBUTE,
+	INVALID_ATTRIBUTE,
+	INVALID_TAG,
+	MISSING_PROPERTY_VALUE,
+	INVALID_VALUE
+}
+alias GtkBuilderError BuilderError;
+
 
 struct GtkTextIter {
 	/* GtkTextIter is an opaque datatype; ignore all these fields.
@@ -4634,6 +4646,104 @@ public struct GtkRecentFilterInfo{}
 
 /**
  * Main Gtk struct.
+ */
+public struct GtkBuildable{}
+
+
+/**
+ * The GtkBuildableIface interface contains method that are
+ * necessary to allow GtkBuilder to construct an object from
+ * a GtkBuilder UI definition.
+ * GTypeInterfaceg_iface;
+ * the parent class
+ * set_name()
+ * Stores the name attribute given in the GtkBuilder UI definition.
+ */
+public struct GtkBuildableIface{}
+// GTypeInterface gIface;
+// gtk-gtkbuildable.html
+// /+* virtual table +/
+// gtk-gtkbuildable.html
+// void (* setName) (GtkBuildable *buildable,
+// gtk-gtkbuildable.html
+// char *name);
+// gtk-gtkbuildable.html
+// char * (* getName) (GtkBuildable *buildable);
+// gtk-gtkbuildable.html
+// void (* addChild) (GtkBuildable *buildable,
+// gtk-gtkbuildable.html
+// GtkBuilder *builder,
+// gtk-gtkbuildable.html
+// GObject *child,
+// gtk-gtkbuildable.html
+// char *type);
+// gtk-gtkbuildable.html
+// void (* setBuildableProperty) (GtkBuildable *buildable,
+// gtk-gtkbuildable.html
+// GtkBuilder *builder,
+// gtk-gtkbuildable.html
+// char *name,
+// gtk-gtkbuildable.html
+// GValue *value);
+// gtk-gtkbuildable.html
+// GObject * (* constructChild) (GtkBuildable *buildable,
+// gtk-gtkbuildable.html
+// GtkBuilder *builder,
+// gtk-gtkbuildable.html
+// char *name);
+// gtk-gtkbuildable.html
+// int (* customTagStart) (GtkBuildable *buildable,
+// gtk-gtkbuildable.html
+// GtkBuilder *builder,
+// gtk-gtkbuildable.html
+// GObject *child,
+// gtk-gtkbuildable.html
+// char *tagname,
+// gtk-gtkbuildable.html
+// GMarkupParser *parser,
+// gtk-gtkbuildable.html
+// void* *data);
+// gtk-gtkbuildable.html
+// void (* customTagEnd) (GtkBuildable *buildable,
+// gtk-gtkbuildable.html
+// GtkBuilder *builder,
+// gtk-gtkbuildable.html
+// GObject *child,
+// gtk-gtkbuildable.html
+// char *tagname,
+// gtk-gtkbuildable.html
+// void* *data);
+// gtk-gtkbuildable.html
+// void (* customFinished) (GtkBuildable *buildable,
+// gtk-gtkbuildable.html
+// GtkBuilder *builder,
+// gtk-gtkbuildable.html
+// GObject *child,
+// gtk-gtkbuildable.html
+// char *tagname,
+// gtk-gtkbuildable.html
+// void* data);
+// gtk-gtkbuildable.html
+// void (* parserFinished) (GtkBuildable *buildable,
+// gtk-gtkbuildable.html
+// GtkBuilder *builder);
+// gtk-gtkbuildable.html
+// GObject * (* getInternalChild) (GtkBuildable *buildable,
+// gtk-gtkbuildable.html
+// GtkBuilder *builder,
+// gtk-gtkbuildable.html
+// char *childname);
+// gtk-gtkbuildable.html
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GtkBuilder{}
+
+
+/**
+ * Main Gtk struct.
  * Warning
  * GtkFileSelection is deprecated and should not be used in newly-written code.
  * The GtkFileSelection struct contains the following GtkWidget fields:
@@ -6044,6 +6154,13 @@ public struct GtkProgress{}
 // #define gtk_widget_set_visual(widget,visual) ((void) 0)
 
 /*
+ * object:
+ * type:
+ */
+// TODO
+// #define GTK_BUILDER_WARN_INVALID_CHILD_TYPE(object, type)
+
+/*
  * Each GTK+ module must have a function gtk_module_init() with this prototype.
  * This function is called after loading the module with the argc and argv
  * cleaned from any arguments that GTK+ handles itself.
@@ -6834,6 +6951,31 @@ public typedef extern(C) int  function (GtkRecentInfo*, GtkRecentInfo*, void*) G
  */
 // gboolean (*GtkRecentFilterFunc) (const GtkRecentFilterInfo *filter_info,  gpointer user_data);
 public typedef extern(C) int  function (GtkRecentFilterInfo*, void*) GtkRecentFilterFunc;
+
+/*
+ * This is the signature of a function used to connect signals. It is used
+ * by the gtk_builder_connect_signals() and gtk_builder_connect_signals_full()
+ * methods. It is mainly intended for interpreted language bindings, but
+ * could be useful where the programmer wants more control over the signal
+ * connection process.
+ * builder:
+ *  a GtkBuilder
+ * object:
+ *  object to connect a signal to
+ * signal_name:
+ *  name of the signal
+ * handler_name:
+ *  name of the handler
+ * connect_object:
+ *  a GObject, if non-NULL, use g_signal_connect_object()
+ * flags:
+ *  GConnectFlags to use
+ * user_data:
+ *  user data
+ * Since 2.12
+ */
+// void (*GtkBuilderConnectFunc) (GtkBuilder *builder,  GObject *object,  const gchar *signal_name,  const gchar *handler_name,  GObject *connect_object,  GConnectFlags flags,  gpointer user_data);
+public typedef extern(C) void  function (GtkBuilder*, GObject*, char[], char[], GObject*, GConnectFlags, void*) GtkBuilderConnectFunc;
 
 /*
  * Warning
