@@ -6137,8 +6137,9 @@ code: start
 		onItemActivatedListeners ~= dlg;
 
 		if(itemActivatedData is null)
+		{
 			itemActivatedData = new UserData;
-
+		}
 		itemActivatedData.recentChooser = this;
 		itemActivatedData.listeners = onItemActivatedListeners;
 
@@ -6183,7 +6184,9 @@ code: start
 		onSelectionChangedListeners ~= dlg;
 
 		if(selectionChangedData is null)
+		{
 			selectionChangedData = new UserData;
+		}
 
 		selectionChangedData.recentChooser = this;
 		selectionChangedData.listeners = onSelectionChangedListeners;

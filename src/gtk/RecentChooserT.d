@@ -119,8 +119,9 @@ public template RecentChooserT(TStruct)
 		onItemActivatedListeners ~= dlg;
 		
 		if(itemActivatedData is null)
-		itemActivatedData = new UserData;
-		
+		{
+			itemActivatedData = new UserData;
+		}
 		itemActivatedData.recentChooser = this;
 		itemActivatedData.listeners = onItemActivatedListeners;
 		
@@ -165,7 +166,9 @@ public template RecentChooserT(TStruct)
 		onSelectionChangedListeners ~= dlg;
 		
 		if(selectionChangedData is null)
-		selectionChangedData = new UserData;
+		{
+			selectionChangedData = new UserData;
+		}
 		
 		selectionChangedData.recentChooser = this;
 		selectionChangedData.listeners = onSelectionChangedListeners;
