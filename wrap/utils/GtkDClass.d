@@ -179,6 +179,9 @@ public class GtkDClass
 		return cleanSignature;
 	}
 
+	/** Construct the wrapped class according to all the collected
+	 *  information.
+	 */
 	public void openGtkDClass(char[] inAPI, ConvParms* convParms)
 	{
 		//writefln("collectStructs %s", std.string.strip(inLines[currLine]));
@@ -865,6 +868,7 @@ public class GtkDClass
 		return impls;
 	}
 
+	/* TODO */
 	private char[][] getProperties()
 	{
 		char[][] text;
@@ -872,6 +876,7 @@ public class GtkDClass
 		return text;
 	}
 
+	/* TODO */
 	private char[][] getStyleProperties()
 	{
 		char[][] text;
@@ -1144,6 +1149,12 @@ public class GtkDClass
 		return text;
 	}
 
+	/** Searches for new members in the documentation. Starts from
+	 *  the last kown position.
+	 *  Params:
+	 *   prefixes = a list of valid prefixes for new members 
+	 *              (gtk_xxx_).
+	 */
 	private char[][] getMember(char[][] prefixes)
 	{
 		char[][] lines = convParms.text.dup;
@@ -1921,6 +1932,13 @@ public class GtkDClass
 		return funct;
 	}
 
+	/** Builds the declaration of a new method for a class, according to
+	 *  the information retrieved from the documentation.
+	 *  Params:
+	 *   lines = the lines containing the definition of the original GTK+
+	 *			 function, extracted from the documentation.
+	 *	 prefixes = a list of prefixes to look for in 'lines' (gtk_xxx).
+	 */
 	private char[][] getFunction(char[][] lines, char[][] prefixes)
 	{
 		char[][] member;
@@ -2145,18 +2163,18 @@ public class GtkDClass
 					{
 						if ( !isInterface )
 						{
-                                                        char[] externalDeclaration = fun.getExternal(convParms, wrapper.getAliases());
+							char[] externalDeclaration = fun.getExternal(convParms, wrapper.getAliases());
+							
+							/* Don't add repeated declarations. */
+							bool addme = true;
+                                        
+							foreach(ref char[] declaration; externalDeclarations)
+							{
+								if(externalDeclaration == declaration){ addme = false; break; }
+							}
 
-                                                        /* Don't add repeated declarations. */
-                                                        bool addme = true;
-                                                        
-                                                        foreach(ref char[] declaration; externalDeclarations)
-                                                        {
-                                                                if(externalDeclaration == declaration) addme = false;
-                                                        }
-
-                                                        if(addme) externalDeclarations ~= externalDeclaration;
-                                                }
+							if(addme) externalDeclarations ~= externalDeclaration;
+						}
 						// body
 						if ( !convParms.omitCode(fun.name) )
 						{
@@ -2192,7 +2210,7 @@ public class GtkDClass
 								}
 								member ~= "}";
 							}
-                                                        /* Duplicated functions are omitted. */
+							/* Duplicated functions are omitted. */
 							if(checkIfDupFunction(fun)) member.length = 0;
 							checkIfGtkStructs(fun);
 						}
