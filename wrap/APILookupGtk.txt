@@ -6238,6 +6238,9 @@ import: gobject.Signals
 import: gtk.RecentChooserIF
 import: gtk.RecentChooserT
 
+nocode: gtk_recent_chooser_dialog_new
+nocode: gtk_recent_chooser_dialog_new_for_manager
+
 code: start
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserDialog);

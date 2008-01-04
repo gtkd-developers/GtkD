@@ -42,6 +42,8 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- gtk_recent_chooser_dialog_new
+ * 	- gtk_recent_chooser_dialog_new_for_manager
  * omit signals:
  * imports:
  * 	- glib.Str
@@ -186,54 +188,4 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 	
 	/**
 	 */
-	
-	/**
-	 * Creates a new GtkRecentChooserDialog. This function is analogous to
-	 * gtk_dialog_new_with_buttons().
-	 * Since 2.10
-	 * Params:
-	 * title =  Title of the dialog, or NULL
-	 * parent =  Transient parent of the dialog, or NULL,
-	 * firstButtonText =  stock ID or text to go in the first button, or NULL
-	 * ... =  response ID for the first button, then additional (button, id)
-	 *  pairs, ending with NULL
-	 */
-	public this (char[] title, Window parent, char[] firstButtonText, ... )
-	{
-		// GtkWidget* gtk_recent_chooser_dialog_new (const gchar *title,  GtkWindow *parent,  const gchar *first_button_text,  ...);
-		auto p = gtk_recent_chooser_dialog_new(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), Str.toStringz(firstButtonText));
-		if(p is null)
-		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
-		}
-		this(cast(GtkRecentChooserDialog*) p);
-	}
-	
-	/**
-	 * Creates a new GtkRecentChooserDialog with a specified recent manager.
-	 * This is useful if you have implemented your own recent manager, or if you
-	 * have a customized instance of a GtkRecentManager object.
-	 * Since 2.10
-	 * Params:
-	 * title =  Title of the dialog, or NULL
-	 * parent =  Transient parent of the dialog, or NULL,
-	 * manager =  a GtkRecentManager
-	 * firstButtonText =  stock ID or text to go in the first button, or NULL
-	 * ... =  response ID for the first button, then additional (button, id)
-	 *  pairs, ending with NULL
-	 */
-	public this (char[] title, Window parent, RecentManager manager, char[] firstButtonText, ... )
-	{
-		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager,  const gchar *first_button_text,  ...);
-		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), Str.toStringz(firstButtonText));
-		if(p is null)
-		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
-		}
-		this(cast(GtkRecentChooserDialog*) p);
-	}
 }
