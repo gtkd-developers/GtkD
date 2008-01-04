@@ -6241,6 +6241,58 @@ import: gtk.RecentChooserT
 code: start
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserDialog);
+
+	/**
+	 * Creates a new GtkRecentChooserDialog with a specified recent manager.
+	 * This is useful if you have implemented your own recent manager, or if you
+	 * have a customized instance of a GtkRecentManager object.
+	 * Since 2.10
+	 * Params:
+	 *  title =  Title of the dialog, or null
+	 *  parent =  Transient parent of the dialog, or null,
+	 *  manager =  a GtkRecentManager, or null
+	 *  buttonsText = text to go in the buttons
+	 *  responses = response ID's for the buttons
+	 */
+	public this (char[] title, Window parent, RecentManager manager,  char[][] buttonsText=null, ResponseType[] responses=null )
+	{
+		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager, const gchar *first_button_text,  ...);
+		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRecentChooserDialog*) p);
+		addButtons(buttonsText, responses);
+	}
+
+	/**
+	 * Creates a new GtkRecentChooserDialog with a specified recent manager.
+	 * This is useful if you have implemented your own recent manager, or if you
+	 * have a customized instance of a GtkRecentManager object.
+	 * Since 2.10
+	 * Params:
+	 *  title =  Title of the dialog, or null
+	 *  parent =  Transient parent of the dialog, or null,
+	 *  manager =  a GtkRecentManager, or null
+	 *  stockIDs = stockIDs of the buttons
+	 *  responses = response ID's for the buttons
+	 */
+	public this (char[] title, Window parent, RecentManager manager,  StockID[] stockIDs, ResponseType[] responses=null )
+	{
+		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager, const gchar *first_button_text,  ...);
+		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRecentChooserDialog*) p);
+		addButtons(stockIDs, responses);
+	}
 code: end
 outFile: RecentChooserDialog
 
