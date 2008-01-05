@@ -36,6 +36,7 @@ public struct ConvParms
 	public char[] ctorStrct;	/// the ToolItem derivates all retrun GtkToolItem
 	public char[] clss;
 	public char[] interf;
+	public bool isInterface;  ///Are we generating an interface.
 	public char[][] templ;
 	public char[] extend;
 	public char[][] impl;
@@ -66,6 +67,7 @@ public struct ConvParms
 		ctorStrct.length = 0;
 		clss.length = 0;
 		interf.length = 0;
+		isInterface = false;
 		extend.length = 0;
 		prefixes.length = 0;
 		templ.length = 0;

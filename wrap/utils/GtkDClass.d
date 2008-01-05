@@ -73,7 +73,6 @@ public class GtkDClass
 
 	ConvParms* convParms;
 
-	bool isInterface;
 	char[] iFaceChar = "";
 
 	private char[] parentName;				/// gtk parent struct
@@ -186,8 +185,7 @@ public class GtkDClass
 	{
 		//writefln("collectStructs %s", std.string.strip(inLines[currLine]));
 		this.inAPI = inAPI;
-		isInterface = convParms.interf.length > 0;
-		if ( isInterface ) iFaceChar = ";";
+		if ( convParms.isInterface ) iFaceChar = ";";
 		else iFaceChar = "";
 		HtmlStrip stripper = new HtmlStrip();
 		inLines = std.string.splitlines(stripper.strip(inAPI));
@@ -466,7 +464,7 @@ public class GtkDClass
 	private char[] getClassHeader(ConvParms* convParms, char[] parentName)
 	{
 		char[] h;
-		if ( convParms.interf.length > 0 )
+		if ( convParms.isInterface )
 		{
 			h = "public interface "~convParms.interf;
 		}
@@ -561,7 +559,7 @@ public class GtkDClass
 								: convParms.strct;
 			char[] var = toVar(gtkStruct.dup);
 			text ~= "";
-			if ( !isInterface )
+			if ( !convParms.isInterface )
 			{
 				text ~= "/** the main Gtk struct */";
 				text ~= "protected "~gtkStruct~"* "~var~";";
@@ -575,7 +573,7 @@ public class GtkDClass
 				if ( convParms.templ.length > 0 )
 				{
 					text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()"~iFaceChar;
-					if ( !isInterface )
+					if ( !convParms.isInterface )
 					{
 						text ~= "{";
 						text ~= "return cast("~gtkStruct~"*)getStruct();";
@@ -586,7 +584,7 @@ public class GtkDClass
 				else
 				{
 					text ~= "public "~gtkStruct~"* get"~convParms.clss~"Struct()"~iFaceChar;
-					if ( !isInterface )
+					if ( !convParms.isInterface )
 					{
 						text ~= "{";
 						text ~= "return " ~ var ~ ';';
@@ -596,7 +594,7 @@ public class GtkDClass
 					text ~= "";
 					text ~= "/** the main Gtk struct as a void* */";
 					text ~= "protected void* getStruct()"~iFaceChar;
-					if ( !isInterface )
+					if ( !convParms.isInterface )
 					{
 						text ~= "{";
 						text ~= "return cast(void*)" ~ var ~ ';';
@@ -606,7 +604,7 @@ public class GtkDClass
 					if ( "GObject" != convParms.strct )
 					{
 						// GObject has a specific constructor for the struct
-						if ( !isInterface )
+						if ( !convParms.isInterface )
 						{
 							text ~= "/**";
 							text ~= " * Sets our main struct and passes it to the parent class";
@@ -689,7 +687,7 @@ public class GtkDClass
 	{
 		char[] code;
 
-		if ( isInterface ) code = convParms.interfaceCode;
+		if ( convParms.isInterface ) code = convParms.interfaceCode;
 		else code = convParms.classCode;
 
 		if ( code.length > 0 )
@@ -969,7 +967,7 @@ public class GtkDClass
 			
 				if ( needSignalImports )
 				{
-					if ( !isInterface )
+					if ( !convParms.isInterface )
 					{
 						text ~= "int[char[]] connectedSignals;";
 					}
@@ -978,19 +976,43 @@ public class GtkDClass
 					needSignalImports = false;
 				}
 
-				text ~= delegateDeclaration ~ "[] on" ~ gtkDSignal~"Listeners;" ;
-				text ~= comments;
-				addAddListener(text, signalName, gtkDSignal, delegateDeclaration);
-				addExternCallback(text, fun, gtkDSignal, delegateDeclaration);
+				if(convParms.isInterface)
+				{
+					text ~= delegateDeclaration ~ "[] on" ~ gtkDSignal~"Listeners();" ;
+					text ~= comments;
+				}
+				else if(!convParms.isInterface && convParms.templ.length > 0)
+				{
+					text ~= delegateDeclaration ~ "[] _on" ~ gtkDSignal~"Listeners;";
+					text ~= delegateDeclaration ~ "[] on" ~ gtkDSignal~"Listeners()";
+					text ~= "{";
+					text ~= "	return  _on" ~ gtkDSignal~"Listeners;";
+					text ~= "}";
+					text ~= comments;
+				}
+				else
+				{
+					text ~= delegateDeclaration ~ "[] on" ~ gtkDSignal~"Listeners;" ;
+					text ~= comments;
+				}
+
+					addAddListener(text, signalName, gtkDSignal, delegateDeclaration);
+					addExternCallback(text, fun, gtkDSignal, delegateDeclaration);
 			}
 		}
 		return text;
 	}
 
-
+	/*
+	 * Params:
+	 * text = the char[][] to append the function to.
+	 * funct = the signal function
+	 * gtkDSignal = the GtkD name for the signal
+	 * dlg = the delegale for this signal
+	 */
 	void addExternCallback(inout char[][] text, Funct fun, char[] gtkDSignal, char[] dlg)
 	{
-		if ( !isInterface )
+		if ( !convParms.isInterface )
 		{
 			text ~= "extern(C) static void callBack"~gtkDSignal~"("
 					~fun.getCallbackParameters(0, convParms, wrapper.getAliases())
@@ -1018,7 +1040,7 @@ public class GtkDClass
 	void addAddListener(inout char[][] text, char[] signalName, char[] gtkDSignalName, char[] dlg)
 	{
 		text ~= "void addOn"~gtkDSignalName~"("~dlg~" dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)"~iFaceChar;
-		if ( !isInterface )
+		if ( !convParms.isInterface )
 		{
 			text ~= "{";
 			text ~= "if ( !(\""~signalName~"\" in connectedSignals) )";
@@ -1038,25 +1060,36 @@ public class GtkDClass
 			text ~= "			getStruct(), ";
 			text ~= "			\""~signalName~"\", ";
 			text ~= "			cast(GCallback)&callBack"~gtkDSignalName~", ";
-			text ~= "			cast(void*)this, ";
+
+			if(convParms.templ.length > 0)
+				text ~= "			cast(void*)cast("~ convParms.interf ~")this, ";
+			else
+				text ~= "			cast(void*)this, ";
+
 			text ~= "			null, ";
-			//text ~= "			ConnectFlags.AFTER);";
 			text ~= "			connectFlags);";
-			//text ~= "			cast(ConnectFlags)0);";
-			//text ~= "			0);";
 			text ~= "	connectedSignals[\""~signalName~"\"] = 1;";
 			text ~= "}";
-			text ~= "on"~gtkDSignalName~"Listeners ~= dlg;";
+
+			if(convParms.templ.length > 0)
+				text ~= "_on"~gtkDSignalName~"Listeners ~= dlg;";
+			else
+				text ~= "on"~gtkDSignalName~"Listeners ~= dlg;";
+
 			text ~= "}";
 		}
 	}
-
 
 	public static char[] getClassVar(ConvParms* convParms)
 	{
 		char[] cv;
 
-		if ( convParms.clss.length > 0 )
+		if ( convParms.interf.length > 0)
+		{
+			cv = convParms.interf.dup;
+			cv[0] = std.ctype.tolower(cv[0]);
+		}
+		else if ( convParms.clss.length > 0 )
 		{
 			cv = convParms.clss.dup;
 			cv[0] = std.ctype.tolower(cv[0]);
@@ -1191,7 +1224,7 @@ public class GtkDClass
 		else if ( startsWith(lines[1], "typedef enum") )
 		{
 			if ( !convParms.strictPrefix
-				&& !isInterface
+				&& !convParms.isInterface
 				)
 			{
 				collectEnums(lines, convParms);
@@ -1202,7 +1235,7 @@ public class GtkDClass
 				)
 		{
 			if ( !convParms.strictPrefix
-				&& !isInterface
+				&& !convParms.isInterface
 				)
 			{
 				collectStructs(lines, convParms);
@@ -1211,7 +1244,7 @@ public class GtkDClass
 		else if ( startsWith(lines[0], "union") )
 		{
 			if ( !convParms.strictPrefix
-				&& !isInterface
+				&& !convParms.isInterface
 				)
 			{
 				collectUnions(lines, convParms);
@@ -1220,7 +1253,7 @@ public class GtkDClass
 		else if ( startsWith(lines[1], "typedef") )
 		{
 			if ( !convParms.strictPrefix
-				&& !isInterface
+				&& !convParms.isInterface
 				)
 			{
 				collectAliases(lines, convParms);
@@ -1228,7 +1261,7 @@ public class GtkDClass
 		}
 		else if ( startsWith(lines[0], "GTK_STOCK_") )
 		{
-			if ( !isInterface )
+			if ( !convParms.isInterface )
 			{
 				collectStockItems(lines, convParms);
 			}
@@ -1237,7 +1270,7 @@ public class GtkDClass
 				&& convParms.outFile == "Type"
 				)
 		{
-			if ( !isInterface )
+			if ( !convParms.isInterface )
 			{
 				collectGTypes(lines, convParms);
 			}
@@ -2021,7 +2054,7 @@ public class GtkDClass
 				debug(functName) writefln("funct name = %s", fun.name);
 				if ( fun.name.length==0 || fun.name[0] == '(' )
 				{
-					if ( !isInterface )
+					if ( !convParms.isInterface )
 					{
 						if ( !convParms.strictPrefix )
 						{
@@ -2161,7 +2194,7 @@ public class GtkDClass
 					}
 					else
 					{
-						if ( !isInterface )
+						if ( !convParms.isInterface )
 						{
 							char[] externalDeclaration = fun.getExternal(convParms, wrapper.getAliases());
 							
@@ -2183,7 +2216,7 @@ public class GtkDClass
 							debug(declaration) writefln("Declaration\n\t%s\n\t%s",rawDeclaration, gtkDDeclaration);
 							addComments();
 							member ~= gtkDDeclaration~iFaceChar;
-							if ( !isInterface )
+							if ( !convParms.isInterface )
 							{
 								member ~= "{";
 								member ~= "// "~funct;

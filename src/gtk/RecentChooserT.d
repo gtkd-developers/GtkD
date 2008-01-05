@@ -29,9 +29,9 @@
  * realStrct=
  * ctorStrct=
  * clss    = RecentChooserT
- * interf  = 
- * class Code: Yes
- * interface Code: Yes
+ * interf  = RecentChooserIF
+ * class Code: No
+ * interface Code: No
  * template for:
  * 	- TStruct
  * extend  = 
@@ -43,8 +43,6 @@
  * omit prefixes:
  * omit code:
  * omit signals:
- * 	- item-activated
- * 	- selection-changed
  * imports:
  * 	- glib.Str
  * 	- gtk.RecentInfo
@@ -96,17 +94,15 @@ public template RecentChooserT(TStruct)
 	}
 	
 	
-	/** */
+	/**
+	 */
 	int[char[]] connectedSignals;
 	
-	public struct UserData
+	void delegate(RecentChooserIF)[] _onItemActivatedListeners;
+	void delegate(RecentChooserIF)[] onItemActivatedListeners()
 	{
-		RecentChooserIF recentChooser;
-		void delegate(RecentChooserIF)[] listeners;
+		return  _onItemActivatedListeners;
 	}
-	
-	UserData* itemActivatedData;
-	void delegate(RecentChooserIF)[] onItemActivatedListeners;
 	/**
 	 * This signal is emitted when the user "activates" a recent item
 	 * in the recent chooser. This can happen by double-clicking on an item
@@ -116,41 +112,36 @@ public template RecentChooserT(TStruct)
 	 */
 	void addOnItemActivated(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onItemActivatedListeners ~= dlg;
-		
-		if(itemActivatedData is null)
-		{
-			itemActivatedData = new UserData;
-		}
-		itemActivatedData.recentChooser = this;
-		itemActivatedData.listeners = onItemActivatedListeners;
-		
 		if ( !("item-activated" in connectedSignals) )
 		{
 			Signals.connectData(
 			getStruct(),
 			"item-activated",
 			cast(GCallback)&callBackItemActivated,
-			cast(void*)itemActivatedData,
+			cast(void*)cast(RecentChooserIF)this,
 			null,
 			connectFlags);
 			connectedSignals["item-activated"] = 1;
 		}
+		_onItemActivatedListeners ~= dlg;
 	}
-	extern(C) static void callBackItemActivated(GtkRecentChooser* chooserStruct, UserData* data)
+	extern(C) static void callBackItemActivated(GtkRecentChooser* chooserStruct, RecentChooserIF recentChooserIF)
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(RecentChooserIF) dlg ; data.listeners )
+		foreach ( void delegate(RecentChooserIF) dlg ; recentChooserIF.onItemActivatedListeners )
 		{
-			dlg(data.recentChooser);
+			dlg(recentChooserIF);
 		}
 		
 		return consumed;
 	}
 	
-	UserData* selectionChangedData;
-	void delegate(RecentChooserIF)[] onSelectionChangedListeners;
+	void delegate(RecentChooserIF)[] _onSelectionChangedListeners;
+	void delegate(RecentChooserIF)[] onSelectionChangedListeners()
+	{
+		return  _onSelectionChangedListeners;
+	}
 	/**
 	 * This signal is emitted when there is a change in the set of
 	 * selected recently used resources. This can happen when a user
@@ -163,42 +154,31 @@ public template RecentChooserT(TStruct)
 	 */
 	void addOnSelectionChanged(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		onSelectionChangedListeners ~= dlg;
-		
-		if(selectionChangedData is null)
-		{
-			selectionChangedData = new UserData;
-		}
-		
-		selectionChangedData.recentChooser = this;
-		selectionChangedData.listeners = onSelectionChangedListeners;
-		
 		if ( !("selection-changed" in connectedSignals) )
 		{
 			Signals.connectData(
 			getStruct(),
 			"selection-changed",
 			cast(GCallback)&callBackSelectionChanged,
-			cast(void*)selectionChangedData,
+			cast(void*)cast(RecentChooserIF)this,
 			null,
 			connectFlags);
 			connectedSignals["selection-changed"] = 1;
 		}
+		_onSelectionChangedListeners ~= dlg;
 	}
-	extern(C) static void callBackSelectionChanged(GtkRecentChooser* chooserStruct, UserData* data)
+	extern(C) static void callBackSelectionChanged(GtkRecentChooser* chooserStruct, RecentChooserIF recentChooserIF)
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(RecentChooserIF) dlg ; data.listeners )
+		foreach ( void delegate(RecentChooserIF) dlg ; recentChooserIF.onSelectionChangedListeners )
 		{
-			dlg(data.recentChooser);
+			dlg(recentChooserIF);
 		}
 		
 		return consumed;
 	}
 	
-	/**
-	 */
 	
 	/**
 	 * Whether to show recently used resources marked registered as private.

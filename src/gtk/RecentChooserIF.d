@@ -30,8 +30,8 @@
  * ctorStrct=
  * clss    = RecentChooserT
  * interf  = RecentChooserIF
- * class Code: Yes
- * interface Code: Yes
+ * class Code: No
+ * interface Code: No
  * template for:
  * extend  = 
  * implements:
@@ -42,8 +42,6 @@
  * omit prefixes:
  * omit code:
  * omit signals:
- * 	- item-activated
- * 	- selection-changed
  * imports:
  * 	- glib.Str
  * 	- gtk.RecentInfo
@@ -93,14 +91,18 @@ public interface RecentChooserIF
 	
 	
 	/**
+	 */
+	
+	void delegate(RecentChooserIF)[] onItemActivatedListeners();
+	/**
 	 * This signal is emitted when the user "activates" a recent item
 	 * in the recent chooser. This can happen by double-clicking on an item
 	 * in the recently used resources list, or by pressing
 	 * Enter.
 	 * Since 2.10
 	 */
-	void addOnItemActivated(void delegate(RecentChooserIF), ConnectFlags);
-	
+	void addOnItemActivated(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
+	void delegate(RecentChooserIF)[] onSelectionChangedListeners();
 	/**
 	 * This signal is emitted when there is a change in the set of
 	 * selected recently used resources. This can happen when a user
@@ -111,10 +113,7 @@ public interface RecentChooserIF
 	 * GtkRecentManager, GtkRecentChooserDialog, GtkRecentChooserWidget,
 	 * GtkRecentChooserMenu
 	 */
-	void addOnSelectionChanged(void delegate(RecentChooserIF), ConnectFlags);
-	
-	/**
-	 */
+	void addOnSelectionChanged(void delegate(RecentChooserIF) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0);
 	
 	/**
 	 * Whether to show recently used resources marked registered as private.

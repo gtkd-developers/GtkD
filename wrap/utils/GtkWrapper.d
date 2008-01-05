@@ -588,6 +588,7 @@ public class GtkWrapper : WrapperIF
                     char[][] saveTempl = convParms.templ.dup;
                     convParms.templ.length = 0;
                     convParms.outFile = convParms.interf;
+                    convParms.isInterface = true;
                     buildText ~= "\nprivate import "
                             ~convParms.outPack~"."
                             ~defReader.getValue()~";";
@@ -595,7 +596,7 @@ public class GtkWrapper : WrapperIF
                     convParms.clss = saveClass;
                     convParms.templ = saveTempl;
                     // mark not interface (anymore)
-                    convParms.interf = "";
+                    convParms.isInterface = false;
                     // as outFile is always the last definition
                     // there is no need to restore it
                     break;
@@ -666,7 +667,7 @@ public class GtkWrapper : WrapperIF
 			bound at %s", outPack, convParms.clss,
 			convParms.outFile,convParms.bindDir);
         GtkDClass gtkDClass = new GtkDClass(this);
-	convParms.bindDir = bindingsDir;
+		convParms.bindDir = bindingsDir;
         gtkDClass.openGtkDClass(text, convParms);
 
         return gtkDClass;
@@ -687,7 +688,7 @@ public class GtkWrapper : WrapperIF
             std.file.write(gtkDClass.getOutFile(outputRoot,srcDir),gtkDText);
         }
 		writefln("gtk Wrapped %s", gtkDClass.getOutFile(outputRoot, srcDir));
-        if ( convParms.interf.length == 0 )
+        if ( !convParms.isInterface )
         {
             convParms.clearAll();
         }

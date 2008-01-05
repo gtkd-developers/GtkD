@@ -260,7 +260,10 @@ public struct Funct
 			if ( i>firstParameter ) parameters ~= ", ";
 			if ( i == parms.length-1 )
 			{
-				parameters ~= convParms.clss~" "~GtkDClass.getClassVar(convParms);
+				if(convParms.templ.length > 0)
+					parameters ~= convParms.interf~" "~GtkDClass.getClassVar(convParms);
+				else
+					parameters ~= convParms.clss~" "~GtkDClass.getClassVar(convParms);
 			}
 			else if ( i>=firstParameter
 				&& (parmsType[i]!="void" || parms[i].length>0)
@@ -345,7 +348,16 @@ public struct Funct
 				}
 				if ( count == parmsWrap.length-1 )
 				{
-					decl ~= convParms.clss;
+					//If we are generating an interface or template
+					//use the interface name in the delegate.
+					if(convParms.isInterface || convParms.templ.length > 0)
+					{
+						decl ~= convParms.interf;
+					}
+					else
+					{
+						decl ~= convParms.clss;
+					}
 				}
 				else
 				{
