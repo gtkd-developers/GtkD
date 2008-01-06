@@ -56,7 +56,7 @@ public alias dchar unichar;
 public alias wchar unichar2;
 //public alias dchar gunichar;
 //public alias wchar gunichar2;
-public alias int time_t;
+public alias uint time_t;
 public alias uint XID;
 
 addTypedefs: end
