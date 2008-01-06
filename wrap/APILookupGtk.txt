@@ -2104,8 +2104,6 @@ import: gtk.TextTag
 structWrap: GtkTextTag* TextTag
 import: gtk.TextAttributes
 structWrap: GtkTextAttributes* TextAttributes
-import: gtk.TextChildAnchor
-structWrap: GtkTextChildAnchor* TextChildAnchor
 
 code: start
 	/** */
