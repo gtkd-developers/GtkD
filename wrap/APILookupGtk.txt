@@ -538,8 +538,8 @@ struct: GtkRcStyle
 class: RcStyle
 prefix: gtk_rc_
 prefix: gtk_
-#import: g.Scanner
-#structWrap: GScanner* Scanner
+import: glib.ScannerG
+structWrap: GScanner* ScannerG
 import: glib.Str
 import: gtk.Style
 structWrap: GtkStyle* Style
@@ -2098,8 +2098,8 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: glib.ListSG
 structWrap: GSList* ListSG
-#import: gtk.TextChildAnchor
-#structWrap: GtkTextChildAnchor* TextChildAnchor
+import: gtk.TextChildAnchor
+structWrap: GtkTextChildAnchor* TextChildAnchor
 import: gtk.TextTag
 structWrap: GtkTextTag* TextTag
 import: gtk.TextAttributes
@@ -2134,10 +2134,10 @@ prefix: gtk_text_buffer_
 prefix: gtk_
 import: glib.Str
 structWrap: GtkTextBuffer* TextBuffer
-#import: gtk.TextMark
-#structWrap: GtkTextMark* TextMark
-#import: gtk.TextIter
-#structWrap: GtkTextIter* TextIter
+import: gtk.TextMark
+structWrap: GtkTextMark* TextMark
+import: gtk.TextIter
+structWrap: GtkTextIter* TextIter
 import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
 import: gtk.Widget
@@ -3094,6 +3094,8 @@ import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
 import: gdk.Window
 structWrap: GdkWindow* Window
+import: gtk.Tooltip
+structWrap: GtkTooltip* Tooltip
 #import: gtk.TargetEntry
 #structWrap: GtkTargetEntry* TargetEntry
 #import: gtk.TreeViewDropPosition
@@ -3332,6 +3334,8 @@ structWrap: GtkTreePath* TreePath
 #structWrap: GtkCellRenderer** CellRenderer*
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
+import: gtk.Tooltip
+structWrap: GtkTooltip* Tooltip
 import: glib.ListG
 structWrap: GList* ListG
 #import: gtk.TargetEntry
@@ -3403,6 +3407,8 @@ prefix: gtk_
 import: glib.Str
 import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
+import: glib.ListG
+structWrap: GList* ListG
 interface: CellLayoutIF
 outFile: CellLayoutT
 
@@ -3853,9 +3859,6 @@ import: gtk.TreeModel
 structWrap: GtkTreeModel* TreeModel
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
-import: gtk.CellRenderer
-import: gtk.CellLayoutIF
-import: gtk.CellLayoutT
 
 #imports for Buildable Interface.
 #import: glib.Str
@@ -3865,6 +3868,13 @@ import: gtk.Builder
 #import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
+
+#imports for CellLauout Interface.
+#import: glib.Str
+import: gtk.CellRenderer
+import: glib.ListG
+import: gtk.CellLayoutIF
+import: gtk.CellLayoutT
 
 nocode: gtk_combo_box_new
 nocode:gtk_combo_box_new_text
@@ -3999,10 +4009,8 @@ prefix: gtk_combo_box_entry_
 #noprefix: gtk_combo_box_remove_text
 import: gtk.TreeModel
 structWrap: GtkTreeModel* TreeModel
-import: glib.Str
-import: gtk.CellRenderer
-import: gtk.CellLayoutIF
-import: gtk.CellLayoutT
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
 
 #imports for Buildable Interface.
 #import: glib.Str
@@ -4012,6 +4020,13 @@ import: gtk.Builder
 #import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
+
+#imports for CellLauout Interface.
+import: glib.Str
+import: gtk.CellRenderer
+import: glib.ListG
+import: gtk.CellLayoutIF
+import: gtk.CellLayoutT
 
 nocode: gtk_combo_box_entry_new
 nocode: gtk_combo_box_entry_new_text
