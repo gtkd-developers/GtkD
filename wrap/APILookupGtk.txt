@@ -6075,9 +6075,6 @@ file: GtkRecentChooser.html
 struct: GtkRecentChooser
 class: RecentChooserT
 template: TStruct
-#Implement these manualy.
-nosignal: item-activated
-nosignal: selection-changed
 prefix: gtk_recent_chooser_
 prefix: gtk_
 import: glib.Str
