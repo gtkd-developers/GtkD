@@ -669,11 +669,10 @@ outFile: Util
 file: glib-Lexical-Scanner.html
 struct: GScanner
 class: ScannerG
+prefix: g_scanner_
+structWrap: GScanner* ScannerG
 import: glib.HashTable
 structWrap: GHashTable* HashTable
-prefix: g_scanner
-#import: glib.Scanner
-structWrap: GScanner* ScannerG
 #import: glib.ScannerConfig
 #structWrap: GScannerConfig* ScannerConfig
 import: glib.Str
