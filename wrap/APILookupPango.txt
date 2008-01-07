@@ -487,9 +487,11 @@ file: pango-Text-Attributes.html
 struct: PangoAttribute
 class: PgAttribute
 prefix: pango_attr_
+noprefix: pango_color_
 noprefix: pango_language_
-#import: g.SList*
-#structWrap: GSList** SList*
+noprefix: pango_attr_list_
+noprefix: pango_attr_iterator_
+
 import: glib.ListSG
 import: glib.Str
 structWrap: GSList* ListSG
@@ -532,9 +534,15 @@ outFile: PgAttribute
 struct: PangoAttrList
 class: PgAttributeList
 prefix: pango_attr_List_
-noprefix: pango_attr_list_
 strictPrefix: Yes
 outFile: PgAttributeList
+
+struct: PangoColor
+class: PgColor
+prefix: pango_color_
+strictPrefix: Yes
+import: glib.Str
+outFile: PgColor
 
 struct: PangoLanguage
 class: PgLanguage
@@ -576,6 +584,16 @@ structWrap: PangoScriptIter* PgScriptIter
 import: glib.Str
 
 outFile: PgLanguage
+
+struct: PangoAttrIterator
+class: PgAttributeIterator
+prefix: pango_attr_iterator_
+strictPrefix: Yes
+import: pango.PgAttribute
+structWrap: PangoAttribute* PgAttribute
+import: glib.ListSG
+structWrap: GSList* ListSG
+outFile: PgAttributeIterator
 
 file: pango-Tab-Stops.html
 struct: PangoTabArray

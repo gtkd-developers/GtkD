@@ -130,6 +130,8 @@ import: gtk.ObjectGtk
 structWrap: GtkObject* ObjectGtk
 #import: gdk.ModifierType
 #structWrap: GdkModifierType* ModifierType
+import:  pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
 import: glib.Str
 import: gtkc.gtk
 import: gthread.Thread
@@ -409,8 +411,8 @@ prefix: gtk_
 import: glib.Str
 #import: gtk.AccelKey
 #structWrap: GtkAccelKey* AccelKey
-#import: g.Scanner
-#structWrap: GScanner* Scanner
+import: glib.ScannerG
+structWrap: GScanner* ScannerG
 import: gtk.AccelMap
 structWrap: GtkAccelMap* AccelMap
 outFile: AccelMap
@@ -427,6 +429,8 @@ import: gdk.Display
 structWrap: GdkDisplay* Display
 #import: gtk.TargetEntry
 #structWrap: GtkTargetEntry* TargetEntry
+import: gtk.TextBuffer
+structWrap: GtkTextBuffer* TextBuffer
 import: gobject.ObjectG
 structWrap: GObject* ObjectG
 import: gdk.Pixbuf
@@ -516,8 +520,7 @@ class: IconSource
 prefix: gtk_icon_
 prefix: gtk_
 import: glib.Str
-#import: gtk.IconSource
-#structWrap: GtkIconSource* IconSource
+structWrap: GtkIconSource* IconSource
 #import: gtk.IconFactory
 #structWrap: GtkIconFactory* IconFactory
 #import: gtk.IconSet
@@ -565,8 +568,8 @@ import: gtk.Settings
 structWrap: GtkSettings* Settings
 import: gdk.Screen
 structWrap: GdkScreen* Screen
-#import: g.ParamSpec
-#structWrap: GParamSpec* ParamSpec
+import: gobject.ParamSpec
+structWrap: GParamSpec* ParamSpec
 import: glib.StringG
 structWrap: GString* StringG
 import: gobject.Value
@@ -590,8 +593,8 @@ structWrap: GtkObject* ObjectGtk
 #structWrap: GdkEventKey* EventKey
 import: glib.ListSG
 structWrap: GSList* ListSG
-#import: g.Scanner
-#structWrap: GScanner* Scanner
+import: glib.ScannerG
+structWrap: GScanner* ScannerG
 outFile: BindingSet
 
 file: gtk-Standard-Enumerations.html
@@ -622,6 +625,8 @@ prefix: gtk_
 import: glib.Str
 import: gtk.Style
 structWrap: GtkStyle* Style
+import: gdk.Color
+structWrap: GdkColor* Color
 import: gdk.Window
 structWrap: GdkWindow* Window
 import: gdk.Rectangle
@@ -642,6 +647,8 @@ import: gdk.Drawable
 structWrap: GdkDrawable* Drawable
 #import: gtk.Border
 #structWrap: GtkBorder* Border
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
 outFile: Style
 
 file: gtk-Selections.html
@@ -788,6 +795,8 @@ prefix: gtk_
 import: glib.Str
 import: gtk.Window
 structWrap: GtkWindow* Window
+import: gtk.Widget
+structWrap: GtkWidget* Widget
 
 nocode: gtk_message_dialog_new
 nocode: gtk_message_dialog_new_with_markup
@@ -1043,6 +1052,8 @@ structWrap: GtkWidget* Widget
 #structWrap: GdkGeometry* Geometry
 import: gtk.Window
 structWrap: GtkWindow* Window
+import: gtk.WindowGroup
+structWrap: GtkWindowGroup* WindowGroup
 import: gdk.Screen
 structWrap: GdkScreen* Screen
 import: glib.ListG
@@ -1232,6 +1243,10 @@ import: gobject.Closure
 structWrap: GClosure* Closure
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+import: pango.PgAttributeList
+structWrap: PangoAttrList* PgAttributeList
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
 
 #imports for Buildable Interface.
 #import: glib.Str
@@ -1937,8 +1952,12 @@ implements: BuildableIF
 prefix: gtk_entry_
 prefix: gtk_
 import: glib.Str
+import: gtk.Adjustment
+structWrap: GtkAdjustment* Adjustment
 import: gtk.EntryCompletion
 structWrap: GtkEntryCompletion* EntryCompletion
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
 
 #imports for Buildable Interface.
 #import: glib.Str
@@ -2103,6 +2122,8 @@ import: gtk.TextTag
 structWrap: GtkTextTag* TextTag
 import: gtk.TextAttributes
 structWrap: GtkTextAttributes* TextAttributes
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
 
 code: start
 	/** */
@@ -2583,6 +2604,8 @@ class: TextChildAnchor
 import: glib.Str
 prefix: gtk_text_child_anchor_
 strictPrefix: Y
+import: glib.ListG
+structWrap: GList* ListG
 outFile: TextChildAnchor
 
 ###########################################################
@@ -2680,6 +2703,7 @@ prefix: gtk_tree_iter_
 import: glib.Str
 structWrap: GtkTreeIter* TreeIter
 import: gtk.TreeModel
+structWrap: GtkTreeModel* TreeModel
 import: gtk.TreePath
 import: gtk.TreeIterError
 import: gobject.Value;
@@ -2906,6 +2930,7 @@ import: gobject.ObjectG
 structWrap: GObject* ObjectG
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
+structWrap: GtkTreeRowReference* TreeRowReference
 outFile: TreeRowReference
 
 file:
@@ -3100,6 +3125,9 @@ structWrap: GtkTooltip* Tooltip
 import: gdk.Pixmap
 structWrap: GdkPixmap* Pixmap
 import: gtk.TreeIter
+structWrap: GtkTreeIter* TreeIter
+import: gtk.Entry
+structWrap: GtkEntry* Entry
 
 #imports for Buildable Interface.
 #import: glib.Str
@@ -3333,6 +3361,8 @@ import: gtk.CellRenderer
 structWrap: GtkCellRenderer* CellRenderer
 import: gtk.Tooltip
 structWrap: GtkTooltip* Tooltip
+import: gtk.TreeIter
+structWrap: GtkTreeIter* TreeIter
 import: glib.ListG
 structWrap: GList* ListG
 #import: gtk.TargetEntry
@@ -3437,8 +3467,8 @@ structWrap: GdkEvent* Event
 outFile: CellEditable
 
 file: GtkCellRendererAccel.html
-struct: GtkCellRenderer
-realStruct: GtkCellRendererAccel
+struct: GtkCellRendererAccel
+ctorStruct: GtkCellRenderer
 class: CellRendererAccel
 prefix: gtk_cell_renderer_accel_
 prefix: gtk_
@@ -3448,8 +3478,8 @@ structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererAccel
 
 file: GtkCellRendererCombo.html
-struct: GtkCellRenderer
-realStruct: GtkCellRendererCombo
+struct: GtkCellRendererCombo
+ctorStruct: GtkCellRenderer
 class: CellRendererCombo
 prefix: gtk_cell_renderer_combo_
 prefix: gtk_
@@ -3458,8 +3488,8 @@ structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererCombo
 
 file: GtkCellRendererPixbuf.html
-struct: GtkCellRenderer
-realStruct: GtkCellRendererPixbuf
+struct: GtkCellRendererPixbuf
+ctorStruct: GtkCellRenderer
 class: CellRendererPixbuf
 prefix: gtk_cell_renderer_pixbuf_
 prefix: gtk_
@@ -3468,8 +3498,8 @@ structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererPixbuf
 
 file: GtkCellRendererProgress.html
-struct: GtkCellRenderer
-realStruct: GtkCellRendererProgress
+struct:GtkCellRendererProgress
+ctorStruct: GtkCellRenderer
 class: CellRendererProgress
 prefix: gtk_cell_renderer_progress_
 prefix: gtk_
@@ -3478,8 +3508,8 @@ structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererProgress
 
 file: GtkCellRendererSpin.html
-struct: GtkCellRenderer
-realStruct: GtkCellRendererSpin
+struct: GtkCellRendererSpin
+ctorStruct: GtkCellRenderer
 class: CellRendererSpin
 prefix: gtk_cell_renderer_spin_
 prefix: gtk_
@@ -3488,8 +3518,8 @@ structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererSpin
 
 file: GtkCellRendererText.html
-struct: GtkCellRenderer
-realStruct: GtkCellRendererText
+struct: GtkCellRendererText
+ctorStruct: GtkCellRenderer
 class: CellRendererText
 prefix: gtk_cell_renderer_text_
 prefix: gtk_
@@ -3499,8 +3529,8 @@ structWrap: GtkCellRenderer* CellRenderer
 outFile: CellRendererText
 
 file: GtkCellRendererToggle.html
-struct: GtkCellRenderer
-realStruct: GtkCellRendererToggle
+struct: GtkCellRendererToggle
+ctorStruct: GtkCellRenderer
 class: CellRendererToggle
 prefix: gtk_cell_renderer_toggle_
 prefix: gtk_
@@ -4580,6 +4610,7 @@ import: glib.Str
 import: gtk.Widget
 import: gtk.Button
 import: gtk.ToolItem
+#structWrap: GtkToolItem* ToolItem
 structWrap: GtkWidget* Widget
 
 #imports for Buildable Interface.
@@ -5087,8 +5118,8 @@ code: end
 outFile: RadioAction
 
 file: GtkRecentAction.html
-struct: GtkAction
-realStruct: GtkRecentAction
+struct: GtkRecentAction
+ctorStruct: GtkAction
 class: RecentAction
 implements: BuildableIF
 prefix: gtk_recent_action_
@@ -6463,6 +6494,7 @@ class: Printer
 prefix: gtk_printer_
 prefix: gtk_
 import: glib.Str
+structWrap: GtkPrinter* Printer
 import: glib.ListG
 structWrap: GList* ListG
 outFile: Printer
@@ -6752,6 +6784,8 @@ prefix: gtk_size_group_
 prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+import: glib.ListSG
+structWrap: GSList* ListSG
 
 #imports for Buildable Interface.
 import: glib.Str
@@ -6961,8 +6995,8 @@ import: gobject.Value
 structWrap: GValue* Value
 #import: gdk.EventExpose
 #structWrap: GdkEventExpose* EventExpose
-#import: gobject.ParamSpec
-#structWrap: GParamSpec* ParamSpec
+import: gobject.ParamSpec
+structWrap: GParamSpec* ParamSpec
 #import: g.ObjectClass
 #structWrap: GObjectClass* ObjectClass
 
@@ -7145,6 +7179,8 @@ class: Scale
 implements: BuildableIF
 prefix: gtk_scale_
 prefix: gtk_
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
 
 #imports for Buildable Interface.
 import: glib.Str
@@ -7216,6 +7252,9 @@ prefix: gtk_widget_
 prefix: gtk_
 # This function is exactly the same as calling g_object_ref(), and exists mostly for historical reasons.
 noprefix: gtk_widget_ref
+structWrap: GtkWidget* Widget
+import: gtk.Action
+structWrap: GtkAction* Action 
 import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
 #import: gtk.Requisition
@@ -7633,6 +7672,8 @@ structWrap: GtkRecentInfo* RecentInfo
 structWrap: GtkRecentManager* RecentManager
 #import: glib.ErrorG
 #structWrap: GError** ErrorG*
+import: glib.ListG
+structWrap: GList* ListG
 outFile: RecentManager
 
 struct: GtkRecentInfo
@@ -7660,6 +7701,8 @@ import: gtk.RecentFilter
 structWrap: GtkRecentFilter* RecentFilter
 import: glib.ListG
 structWrap: GList* ListG
+import: glib.ListSG
+structWrap: GSList* ListSG
 #import: glib.ErrorG
 #structWrap: GError** ErrorG*
 interface: RecentChooserIF
@@ -7679,12 +7722,6 @@ import: gtk.Window
 structWrap: GtkWindow* Window
 import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
-import: gtk.RecentInfo
-import: gtk.RecentFilter
-import: glib.ListG
-import: gobject.Signals
-import: gtk.RecentChooserIF
-import: gtk.RecentChooserT
 
 #imports for Buildable Interface.
 #import: glib.Str
@@ -7694,6 +7731,16 @@ import: gtk.Builder
 #import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
+
+#imports for RecentChooser interface
+#import: glib.Str
+import: gtk.RecentInfo
+import: gtk.RecentFilter
+import: glib.ListG
+import: glib.ListSG
+import: gobject.Signals
+import: gtk.RecentChooserIF
+import: gtk.RecentChooserT
 
 nocode: gtk_recent_chooser_dialog_new
 nocode: gtk_recent_chooser_dialog_new_for_manager
@@ -7771,12 +7818,6 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
-import: gtk.RecentInfo
-import: gtk.RecentFilter
-import: glib.ListG
-import: gobject.Signals
-import: gtk.RecentChooserIF
-import: gtk.RecentChooserT
 
 #imports for Buildable Interface.
 import: glib.Str
@@ -7786,6 +7827,16 @@ import: gtk.Builder
 #import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
+
+#imports for RecentChooser interface
+#import: glib.Str
+import: gtk.RecentInfo
+import: gtk.RecentFilter
+import: glib.ListG
+import: glib.ListSG
+import: gobject.Signals
+import: gtk.RecentChooserIF
+import: gtk.RecentChooserT
 
 code: start
 	// add the Buildable capabilities
@@ -7807,22 +7858,25 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
-import: glib.Str
-import: gtk.RecentInfo
-import: gtk.RecentFilter
-import: glib.ListG
-import: gobject.Signals
-import: gtk.RecentChooserIF
-import: gtk.RecentChooserT
 
 #imports for Buildable Interface.
-#import: glib.Str
+import: glib.Str
 import: gobject.ObjectG
 import: gobject.Value
 import: gtk.Builder
 #import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
+
+#imports for RecentChooser interface
+#import: glib.Str
+import: gtk.RecentInfo
+import: gtk.RecentFilter
+import: glib.ListG
+import: glib.ListSG
+import: gobject.Signals
+import: gtk.RecentChooserIF
+import: gtk.RecentChooserT
 
 code: start
 	// add the Buildable capabilities
