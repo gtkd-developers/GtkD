@@ -4610,7 +4610,6 @@ import: glib.Str
 import: gtk.Widget
 import: gtk.Button
 import: gtk.ToolItem
-#structWrap: GtkToolItem* ToolItem
 structWrap: GtkWidget* Widget
 
 #imports for Buildable Interface.
@@ -4623,6 +4622,7 @@ import: gtk.BuildableIF
 import: gtk.BuildableT
 
 nocode: gtk_toolbar_get_style
+nocode: gtk_toolbar_insert
 
 code: start
 	// add the Buildable capabilities
@@ -4642,7 +4642,14 @@ code: start
 		return gtk_toolbar_get_style(gtkToolbar);
 	}
 
-	/** */
+	/**
+	 * Insert a GtkToolItem into the toolbar at position pos.
+	 * If pos is 0 the item is prepended to the start of the toolbar. If pos is negative, the item is appended to the end of the toolbar.
+	 * Since 2.4 
+	 * Params:
+	 * toolItem  = a GtkToolItem
+	 * pos = the position of the new item
+	 */
 	public void insert (ToolItem toolItem, int pos=-1)
 	{
 		gtk_toolbar_insert(gtkToolbar, toolItem.getToolItemStruct(), pos);
