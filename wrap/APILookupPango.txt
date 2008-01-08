@@ -487,108 +487,57 @@ file: pango-Text-Attributes.html
 struct: PangoAttribute
 class: PgAttribute
 prefix: pango_attr_
+prefix: pango_
 noprefix: pango_color_
 noprefix: pango_language_
 noprefix: pango_attr_list_
 noprefix: pango_attr_iterator_
 
-import: glib.ListSG
 import: glib.Str
-structWrap: GSList* ListSG
-
-import: pango.PgContext
-structWrap: PangoContext* PgContext
-import: pango.PgItem
-structWrap: PangoItem* PgItem
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-import: pango.PgFontMetrics
-structWrap: PangoFontMetrics* PgFontMetrics
-import: pango.PgFontFamily
-structWrap: PangoFontFamily* PgFontFamily
-import: pango.PgFontFace
-structWrap: PangoFontFace* PgFontFace
-import: pango.PgFontMap
-structWrap: PangoFontMap* PgFontMap
-import: pango.PgFontsetSimple
-structWrap: PangoFontsetSimple* PgFontsetSimple
-#import: pango.PgAttribute
-#structWrap: PangoAttribute* PgAttribute
-import: pango.PgAttributeList
-structWrap: PangoAttributeList* PgAttributeList
+structWrap: PangoAttribute* PgAttribute
+#import: glib.ErrorG
+#structWrap: GError** ErrorG*
+#import: pango.PgAttributeList
+#structWrap: PangoAttrList** PgAttributeList
 import: pango.PgLanguage
 structWrap: PangoLanguage* PgLanguage
-import: pango.PgTabArray
-structWrap: PangoTabArray* PgTabArray
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgLayoutIter
-structWrap: PangoLayoutIter* PgLayoutIter
-import: pango.PgScriptIter
-structWrap: PangoScriptIter* PgScriptIter
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
 
 outFile: PgAttribute
-
-struct: PangoAttrList
-class: PgAttributeList
-prefix: pango_attr_List_
-strictPrefix: Yes
-outFile: PgAttributeList
 
 struct: PangoColor
 class: PgColor
 prefix: pango_color_
 strictPrefix: Yes
 import: glib.Str
+structWrap: PangoColor* PgColor
 outFile: PgColor
 
 struct: PangoLanguage
 class: PgLanguage
 prefix: pango_language_
 strictPrefix: Yes
+import: glib.Str
+structWrap: PangoLanguage* PgLanguage
+outFile: PgLanguage
 
-import: pango.PgContext
-structWrap: PangoContext* PgContext
-import: pango.PgItem
-structWrap: PangoItem* PgItem
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-import: pango.PgFontMetrics
-structWrap: PangoFontMetrics* PgFontMetrics
-import: pango.PgFontFamily
-structWrap: PangoFontFamily* PgFontFamily
-import: pango.PgFontFace
-structWrap: PangoFontFace* PgFontFace
-import: pango.PgFontMap
-structWrap: PangoFontMap* PgFontMap
-import: pango.PgFontsetSimple
-structWrap: PangoFontsetSimple* PgFontsetSimple
+struct: PangoAttrList
+class: PgAttributeList
+prefix: pango_attr_list_
+strictPrefix: Yes
+structWrap: PangoAttrList* PgAttributeList
 import: pango.PgAttribute
 structWrap: PangoAttribute* PgAttribute
-import: pango.PgAttributeList
-structWrap: PangoAttributeList* PgAttributeList
-#import: pango.PgLanguage
-#structWrap: PangoLanguage* PgLanguage
-import: pango.PgTabArray
-structWrap: PangoTabArray* PgTabArray
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgLayoutIter
-structWrap: PangoLayoutIter* PgLayoutIter
-import: pango.PgScriptIter
-structWrap: PangoScriptIter* PgScriptIter
-import: glib.Str
-
-outFile: PgLanguage
+import: pango.PgAttributeIterator
+structWrap: PangoAttrIterator* PgAttributeIterator
+outFile: PgAttributeList
 
 struct: PangoAttrIterator
 class: PgAttributeIterator
 prefix: pango_attr_iterator_
 strictPrefix: Yes
+structWrap: PangoAttrIterator* PgAttributeIterator
 import: pango.PgAttribute
 structWrap: PangoAttribute* PgAttribute
 import: glib.ListSG
