@@ -517,23 +517,49 @@ outFile: StockItem
 file: gtk-Themeable-Stock-Images.html
 struct: GtkIconSource
 class: IconSource
-prefix: gtk_icon_
-prefix: gtk_
+prefix: gtk_icon_source_
+#prefix: gtk_
+noprefix: gtk_icon_factory_
+noprefix: gtk_icon_set_
+noprefix: gtk_icon_size_
+
 import: glib.Str
 structWrap: GtkIconSource* IconSource
-#import: gtk.IconFactory
-#structWrap: GtkIconFactory* IconFactory
-#import: gtk.IconSet
-#structWrap: GtkIconSet* IconSet
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+outFile: IconSource
+
+struct: GtkIconFactory
+class: IconFactory
+prefix: gtk_icon_factory_
+strictPrefix: Y
+import: glib.Str
+structWrap: GtkIconFactory* IconFactory
+import: gtk.IconSet
+structWrap: GtkIconSet* IconSet
+outFile: IconFactory
+
+struct: GtkIconSet
+class: IconSet
+prefix: gtk_icon_set_
+strictPrefix: Y
+import: glib.Str
+structWrap: GtkIconSet* IconSet
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Style
 structWrap: GtkStyle* Style
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+outFile: IconSet
+
+class: IconSize
+prefix: gtk_icon_size_
+strictPrefix: Y
+import: glib.Str
 import: gtk.Settings
 structWrap: GtkSettings* Settings
-outFile: IconSource
+outFile: IconSize
 
 file: gtk-Resource-Files.html
 struct: GtkRcStyle
