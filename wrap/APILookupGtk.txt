@@ -657,8 +657,8 @@ import: gdk.Window
 structWrap: GdkWindow* Window
 import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
-#import: gtk.IconSet
-#structWrap: GtkIconSet* IconSet
+import: gtk.IconSet
+structWrap: GtkIconSet* IconSet
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.IconSource
@@ -1310,8 +1310,8 @@ structWrap: GdkPixbuf* Pixbuf
 #structWrap: GdkPixmap** Pixmap*
 #import: gdk.PixbufAnimation
 #structWrap: GdkPixbufAnimation* PixbufAnimation
-#import: gtk.IconSet
-#structWrap: GtkIconSet* IconSet
+import: gtk.IconSet
+structWrap: GtkIconSet* IconSet
 import: gdk.ImageGdk
 structWrap: GdkImage* ImageGdk
 import: gdk.Bitmap
