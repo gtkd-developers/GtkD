@@ -170,7 +170,7 @@ class TestDrawingArea : VBox
 			debug(Tango) Stdout("TestDrawing.this() 2").newline;
 
 			primitiveType = "Filled Arc";
-			font = new PgFontDescription(PgFontDescription.fromString("Courier 48"));
+			font = PgFontDescription.fromString("Courier 48");
 			image = new Image("../../images/gtkDlogo_a_small.png");
 			scaledPixbuf = image.getPixbuf();
 			paintColor = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
