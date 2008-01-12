@@ -7474,20 +7474,16 @@ code: start
 		{
 			char[10] s;
 			modifyFont(
-				new PgFontDescription(
-						PgFontDescription.fromString(
-							family ~ " " ~ tango.text.convert.Integer.itoa(s,size)
-						)
+				PgFontDescription.fromString(
+					family ~ " " ~ tango.text.convert.Integer.itoa(s,size)
 				)
 			);
 		}
 		else
 		{
 			modifyFont(
-				new PgFontDescription(
-						PgFontDescription.fromString(
-							family ~ " " ~ std.string.toString(size)
-						)
+				PgFontDescription.fromString(
+					family ~ " " ~ std.string.toString(size)
 				)
 			);
 		}
