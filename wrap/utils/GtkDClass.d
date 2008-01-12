@@ -2286,7 +2286,7 @@ public class GtkDClass
 	{
 		return !(find(comments, ":")  == comments.length-1 ||
 		         find(comments, "Returns:") == 0 ||
-		         find(comments, "Since 2.") == 0 ||
+		         ( find(comments, "Since 2.") == 0 || find(comments, "Since 1.") == 0) ||
 		         find(comments, "See Also") == 0 ||
 		         find(comments, "Property Details") == 0 ||
 		         comments == "<hr>");
