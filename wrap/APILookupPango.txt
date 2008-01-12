@@ -229,14 +229,12 @@ noprefix: pango_font_map_
 noprefix: pango_fontset_
 noprefix: pango_fontset_simple_
 
-#import: pango.PgEngineShape
-#structWrap: PangoEngineShape* PgEngineShape
-# PangoEngineShape not wraped corectly
+import: pango.PgEngineShape
+structWrap: PangoEngineShape* PgEngineShape
 import: pango.PgFontDescription
 structWrap: PangoFontDescription* PgFontDescription
-#import: pango.PgCoverage
-#structWrap: PangoCoverage* PgCoverage
-# PangoCoverage not wraped corectly
+import: pango.PgCoverage
+structWrap: PangoCoverage* PgCoverage
 import: pango.PgFontMetrics
 structWrap: PangoFontMetrics* PgFontMetrics
 import: pango.PgFontMap
@@ -668,22 +666,27 @@ outFile: PgScriptIter
 #outFile: PangoOtRuleset
 
 file: pango-Coverage-Maps.html
+struct: PangoCoverage
 class: PgCoverage
 prefix: pango_coverage_
+structWrap: PangoCoverage* PgCoverage
 outFile: PgCoverage
 
 file: pango-Engines.html
+struct: PangoEngine
 class: PgEngine
 prefix: script_engine_
 import: glib.Str
 outFile: PgEngine
 
 file: PangoEngineLang.html
+struct: PangoEngineLang
 class: PgEngineLang
 prefix: script_engine_lang_
 outFile: PgEngineLang
 
 file: PangoEngineShape.html
+struct: PangoEngineShape
 class: PgEngineShape
 prefix: script_engine_shape_
 outFile: PgEngineShape
