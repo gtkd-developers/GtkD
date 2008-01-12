@@ -826,19 +826,24 @@ public class GtkDClass
 		else if ( startsWith(gName, "Gst") )	prefix = "Gst";
 		else if ( startsWith(gName, "Atk") )	prefix = "Atk";
 		else if ( startsWith(gName, "G") )	prefix = "G";
+		else if ( startsWith(gName, "Pango") )	prefix = "Pg";
 
 		conv = gName[prefix.length..gName.length];
 		if ( conv == "Object" )
 		{
 			conv ~= prefix;
 		}
+		if ( prefix == "Pg" )
+		{
+			conv = "Pg" ~ gName[5..gName.length];
+		}
 		debug(getParent)writefln("convertClassName %s >>> %s", gName, conv);
 		prefix = std.string.tolower(prefix);
+
 		if( prefix == "gst") prefix = "gstreamer";
-		if ( prefix == "g")
-		{
-			prefix = "gobject";
-		}
+		if( prefix == "g")   prefix = "gobject";
+		if( prefix == "pg" ) prefix = "pango";
+
 		return conv;
 	}
 
