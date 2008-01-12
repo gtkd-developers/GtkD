@@ -89,6 +89,7 @@ struct: GdkGLConfig
 class: GLConfig
 prefix: gdk_gl_config_
 import: glib.Str
+import: std.stdio
 import: gdk.Screen
 structWrap: GdkScreen* Screen
 
@@ -113,7 +114,7 @@ code: start
 		if ( gdkGLConfig is null )
 		{
 			printf ("*** No appropriate OpenGL-capable visual found.\n");
-			throw new Error("GL configure failed");
+			throw new Exception("GL configure failed");
 		}
 		this(gdkGLConfig);
 	}
