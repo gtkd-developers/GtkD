@@ -173,47 +173,37 @@ outFile: PgItem
 
 
 file: pango-Glyph-Storage.html
+
+struct: PangoMatrix
+class: PgMatrix
+prefix: pango_
+prefix: pango_matrix_
+noprefix: pango_glyph_string_
+noprefix: pango_glyph_item_
+structWrap: PangoMatrix* PgMatrix
+outFile: PgMatrix
+
 struct: PangoGlyphString
 class: PgGlyphString
 prefix: pango_glyph_string_
+strictPrefix: Yes
+import: glib.Str
+structWrap: PangoGlyphString* PgGlyphString
+import: pango.PgFont
+structWrap: PangoFont* PgFont
+outFile: PgGlyphString
 
+struct: PangoGlyphItem
+class: PgGlyphItem
+prefix: pango_glyph_item_
+strictPrefix: Yes
+import: glib.Str
+structWrap: PangoGlyphItem* PgGlyphItem
+import: pango.PgAttributeList
+structWrap: PangoAttrList* PgAttributeList
 import: glib.ListSG
 structWrap: GSList* ListSG
-import: pango.PgContext
-structWrap: PangoContext* PgContext
-import: pango.PgItem
-structWrap: PangoItem* PgItem
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-import: pango.PgFontMetrics
-structWrap: PangoFontMetrics* PgFontMetrics
-import: pango.PgFontFamily
-structWrap: PangoFontFamily* PgFontFamily
-import: pango.PgFontFace
-structWrap: PangoFontFace* PgFontFace
-import: pango.PgFontMap
-structWrap: PangoFontMap* PgFontMap
-import: pango.PgFontsetSimple
-structWrap: PangoFontsetSimple* PgFontsetSimple
-import: pango.PgAttribute
-structWrap: PangoAttribute* PgAttribute
-import: pango.PgAttributeList
-structWrap: PangoAttributeList* PgAttributeList
-import: pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-import: pango.PgTabArray
-structWrap: PangoTabArray* PgTabArray
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgLayoutIter
-structWrap: PangoLayoutIter* PgLayoutIter
-import: pango.PgScriptIter
-structWrap: PangoScriptIter* PgScriptIter
-import: glib.Str
-
-outFile: PgGlyphString
+outFile: PgGlyphItem
 
 file: pango-Fonts.html
 
