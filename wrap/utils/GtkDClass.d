@@ -2721,6 +2721,10 @@ public class GtkDClass
 		{
 			converted = gToken.dup;
 		}
+		else if ( startsWith(gToken,"f_") && (endsWith(gToken,"_out") || endsWith(gToken,"_in") || endsWith(gToken,"inout") ) )
+		{
+			converted = gToken.dup;
+		}
 		else if ( caseConvert )
 		{
 			removePrefix(gToken, convParms);
