@@ -442,6 +442,10 @@ import: glib.Str
 structWrap: PangoScriptIter* PgScriptIter
 outFile: PgScriptIter
 
+file: pango-Vertical-Text.html
+class: PgVertical
+prefix: pango_
+outFile: PgVertical
 
 ###########################################################
 ### Rendering with Pango ################################
@@ -489,8 +493,26 @@ outFile: PgScriptIter
 
  
 ###########################################################
-### Low Level Functionality ################################
+### Low Level Functionality ###############################
 ###########################################################
+
+file: PangoRenderer.html
+struct: PangoRenderer
+class: PgRenderer
+prefix: pango_renderer_
+import: pango.PgColor
+structWrap: PangoColor* PgColor
+import: pango.PgFont
+structWrap: PangoFont* PgFont
+import: pango.PgGlyphString
+structWrap: PangoGlyphString* PgGlyphString
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
+import: pango.PgLayoutLine
+structWrap: PangoLayoutLine* PgLayoutLine
+import: pango.PgMatrix
+structWrap: PangoMatrix* PgMatrix
+outFile: PgRenderer
 
 #file: PangoFcFontMap.html
 #class: PangoFcFontMap
@@ -556,10 +578,23 @@ outFile: PgEngineShape
 #prefix: pango_
 #outFile: PgModules
 
-file: pango-Vertical-Text.html
-class: PgVertical
-prefix: pango_gravity_get_
-outFile: PgVertical
+file: pango-Miscellaneous-Utilities.html
+class: PgMiscellaneous
+prefix: pango_
+import: std.c.stdio
+import: glib.Str
+import: glib.StringG
+#structWrap: GString* StringG
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+outFile: PgMiscellaneous
 
-
+file: pango-Version-Checking.html
+class: PgVersion
+prefix: pango_version_
+prefix: pango_
+import: glib.Str
+import: pango.PgMatrix
+structWrap: PangoMatrix* PgMatrix
+outFile: PgVersion
 
