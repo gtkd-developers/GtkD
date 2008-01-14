@@ -88,46 +88,54 @@ file: pango-Text-Processing.html
 struct: PangoContext
 class: PgContext
 prefix: pango_context_
+prefix: pango_
 noprefix: pango_item_
-import: glib.ListSG
-structWrap: GSList* ListSG
-import: glib.ListG
-structWrap: GList* ListG
-
-#import: pango.PgContext
-#structWrap: PangoContext* PgContext
-import: pango.PgItem
-structWrap: PangoItem* PgItem
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-import: pango.PgFontMetrics
-structWrap: PangoFontMetrics* PgFontMetrics
-import: pango.PgFontFamily
-structWrap: PangoFontFamily* PgFontFamily
-import: pango.PgFontFace
-structWrap: PangoFontFace* PgFontFace
-import: pango.PgFontMap
-structWrap: PangoFontMap* PgFontMap
-import: pango.PgFontsetSimple
-structWrap: PangoFontsetSimple* PgFontsetSimple
-import: pango.PgAttribute
-structWrap: PangoAttribute* PgAttribute
-import: pango.PgAttributeList
-structWrap: PangoAttributeList* PgAttributeList
-import: pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-import: pango.PgTabArray
-structWrap: PangoTabArray* PgTabArray
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgLayoutIter
-structWrap: PangoLayoutIter* PgLayoutIter
-import: pango.PgScriptIter
-structWrap: PangoScriptIter* PgScriptIter
 import: glib.Str
 
+structWrap: PangoContext* PgContext
+import: glib.ListG
+structWrap: GList* ListG
+import: pango.PgFont
+structWrap: PangoFont* PgFont
+import: pango.PgFontMap
+structWrap: PangoFontMap* PgFontMap
+import: pango.PgFontset
+structWrap: PangoFontset* PgFontset
+import: pango.PgFontMetrics
+structWrap: PangoFontMetrics* PgFontMetrics
+import: pango.PgFontDescription
+structWrap: PangoFontDescription* PgFontDescription
+import: pango.PgLanguage
+structWrap: PangoLanguage* PgLanguage
+import: pango.PgMatrix
+structWrap: PangoMatrix* PgMatrix
+import: pango.PgAttributeList
+structWrap: PangoAttrList* PgAttributeList
+import: pango.PgAttributeIterator
+structWrap: PangoAttrIterator* PgAttributeIterator
+import: pango.PgGlyphString
+structWrap: PangoGlyphString* PgGlyphString
+
+nocode: pango_break
+
+code: start
+	/**
+	 * Determines possible line, word, and character breaks
+	 * for a string of Unicode text with a single analysis. For most
+	 * purposes you may want to use pango_get_log_attrs().
+	 * Params:
+	 * text =  the text to process
+	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
+	 * analysis =  PangoAnalysis structure from pango_itemize()
+	 * attrs =  an array to store character information in
+	 * attrsLen =  size of the array passed as attrs
+	 */
+	public static void pangoBreak(char[] text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
+	{
+		// void pango_break (const gchar *text,  int length,  PangoAnalysis *analysis,  PangoLogAttr *attrs,  int attrs_len);
+		pango_break(Str.toStringz(text), length, analysis, attrs, attrsLen);
+	}
+code: end
 outFile: PgContext
 
 
@@ -135,40 +143,7 @@ struct: PangoItem
 class: PgItem
 prefix: pango_item_
 strictPrefix: Yes
-
-import: pango.PgContext
-structWrap: PangoContext* PgContext
-#import: pango.PgItem
-#structWrap: PangoItem* PgItem
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgFontDescription
-structWrap: PangoFontDescription* PgFontDescription
-import: pango.PgFontMetrics
-structWrap: PangoFontMetrics* PgFontMetrics
-import: pango.PgFontFamily
-structWrap: PangoFontFamily* PgFontFamily
-import: pango.PgFontFace
-structWrap: PangoFontFace* PgFontFace
-import: pango.PgFontMap
-structWrap: PangoFontMap* PgFontMap
-import: pango.PgFontsetSimple
-structWrap: PangoFontsetSimple* PgFontsetSimple
-import: pango.PgAttribute
-structWrap: PangoAttribute* PgAttribute
-import: pango.PgAttributeList
-structWrap: PangoAttributeList* PgAttributeList
-import: pango.PgLanguage
-structWrap: PangoLanguage* PgLanguage
-import: pango.PgTabArray
-structWrap: PangoTabArray* PgTabArray
-import: pango.PgLayout
-structWrap: PangoLayout* PgLayout
-import: pango.PgLayoutIter
-structWrap: PangoLayoutIter* PgLayoutIter
-import: pango.PgScriptIter
-structWrap: PangoScriptIter* PgScriptIter
-
+structWrap: PangoItem* PgItem
 outFile: PgItem
 
 
