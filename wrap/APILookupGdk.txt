@@ -905,6 +905,7 @@ file: gdk-X-Window-System-Interaction.html
 #we're just putting these methods to be static.
 class: X11
 prefix: gdk_x11_
+import: glib.Str
 import: gdk.Drawable
 structWrap: GdkDrawable* Drawable
 import: gdk.Display
@@ -914,50 +915,51 @@ structWrap: GdkWindow* Window
 #more types should added here like atom, visual, image, etc...
 #for now we just disable all the stuff with X types in them
 #only thing left is XID which is just an uint.
-nocode: gdkx_visual_get
-nocode: gdkx_colormap_get
-nocode: gdk_pixmap_foreign_new
-nocode: gdk_pixmap_foreign_new_for_display
-nocode: gdk_pixmap_foreign_new_for_screen
-nocode: gdk_window_foreign_new_for_display
-nocode: gdk_xid_table_lookup_for_display
-nocode: gdk_window_lookup_for_display
-nocode: gdk_pixmap_lookup_for_display
-nocode: gdk_x11_lookup_xdisplay
-nocode: gdk_net_wm_supports
-nocode: gdk_x11_screen_supports_net_wm_hint
-nocode: gdk_x11_screen_get_window_manager_name
-nocode: gdk_x11_screen_lookup_visual
-nocode: gdk_x11_display_get_user_time
-nocode: gdk_x11_colormap_foreign_new
-nocode: gdk_x11_colormap_get_xcolormap
-nocode: gdk_x11_colormap_get_xdisplay
-nocode: gdk_x11_cursor_get_xcursor
-nocode: gdk_x11_cursor_get_xdisplay
-nocode: gdk_x11_display_get_xdisplay
-nocode: gdk_x11_display_grab
-nocode: gdk_x11_display_ungrab
-nocode: gdk_x11_display_set_cursor_theme
-nocode: gdk_x11_register_standard_event_type
-nocode: gdk_x11_drawable_get_xdisplay
-nocode: gdk_x11_font_get_xdisplay
-nocode: gdk_x11_gc_get_xdisplay
-nocode: gdk_x11_gc_get_xgc
-nocode: gdk_x11_get_default_root_xwindow
-nocode: gdk_x11_get_default_xdisplay
-nocode: gdk_x11_image_get_xdisplay
-nocode: gdk_x11_image_get_ximage
-nocode: gdk_x11_screen_get_screen_number
-nocode: gdk_x11_screen_get_xscreen
-nocode: gdk_x11_visual_get_xvisual
-nocode: gdk_x11_atom_to_xatom
-nocode: gdk_x11_atom_to_xatom_for_display
-nocode: gdk_x11_xatom_to_atom
-nocode: gdk_x11_xatom_to_atom_for_display
-nocode: gdk_x11_get_xatom_by_name
-nocode: gdk_x11_get_xatom_by_name_for_display
-nocode: gdk_x11_get_xatom_name
-nocode: gdk_x11_get_xatom_name_for_display
+#using noprefix to exclude these functions so no external decleration gets generated
+noprefix: gdkx_visual_get
+noprefix: gdkx_colormap_get
+noprefix: gdk_pixmap_foreign_new
+noprefix: gdk_pixmap_foreign_new_for_display
+noprefix: gdk_pixmap_foreign_new_for_screen
+noprefix: gdk_window_foreign_new_for_display
+noprefix: gdk_xid_table_lookup_for_display
+noprefix: gdk_window_lookup_for_display
+noprefix: gdk_pixmap_lookup_for_display
+noprefix: gdk_x11_lookup_xdisplay
+noprefix: gdk_net_wm_supports
+noprefix: gdk_x11_screen_supports_net_wm_hint
+noprefix: gdk_x11_screen_get_window_manager_name
+noprefix: gdk_x11_screen_lookup_visual
+noprefix: gdk_x11_display_get_user_time
+noprefix: gdk_x11_colormap_foreign_new
+noprefix: gdk_x11_colormap_get_xcolormap
+noprefix: gdk_x11_colormap_get_xdisplay
+noprefix: gdk_x11_cursor_get_xcursor
+noprefix: gdk_x11_cursor_get_xdisplay
+noprefix: gdk_x11_display_get_xdisplay
+noprefix: gdk_x11_display_grab
+noprefix: gdk_x11_display_ungrab
+noprefix: gdk_x11_display_set_cursor_theme
+noprefix: gdk_x11_register_standard_event_type
+noprefix: gdk_x11_drawable_get_xdisplay
+noprefix: gdk_x11_font_get_xdisplay
+noprefix: gdk_x11_gc_get_xdisplay
+noprefix: gdk_x11_gc_get_xgc
+noprefix: gdk_x11_get_default_root_xwindow
+noprefix: gdk_x11_get_default_xdisplay
+noprefix: gdk_x11_image_get_xdisplay
+noprefix: gdk_x11_image_get_ximage
+noprefix: gdk_x11_screen_get_screen_number
+noprefix: gdk_x11_screen_get_xscreen
+noprefix: gdk_x11_visual_get_xvisual
+noprefix: gdk_x11_atom_to_xatom
+noprefix: gdk_x11_atom_to_xatom_for_display
+noprefix: gdk_x11_xatom_to_atom
+noprefix: gdk_x11_xatom_to_atom_for_display
+noprefix: gdk_x11_get_xatom_by_name
+noprefix: gdk_x11_get_xatom_by_name_for_display
+noprefix: gdk_x11_get_xatom_name
+noprefix: gdk_x11_get_xatom_name_for_display
 outFile: X11
 
 
