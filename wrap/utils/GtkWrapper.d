@@ -807,6 +807,7 @@ public class GtkWrapper : WrapperIF
                         "\n"
                         "\nversion(Tango) private import tango.stdc.stdio;"
                         "\nelse private import std.stdio;"
+                        "\n"
                         "\nprivate import "~bindingsDir~"." ~loaderTableName~"types;";
         if ( loaderTableName == "glib" )
         {
@@ -842,13 +843,23 @@ public class GtkWrapper : WrapperIF
             }
 
             externalText ~= "\n "~loaderTableName~"_Linker.link("~loaderTableName~"Links);"
-                        "\n debug writefln(\"* Finished static this(): "~loaderTableName~"\");"
+                        "\n"
+                        "\n debug"
+                        "\n {"
+                        "\n \tversion(Tango) Stdout(\"* Finished static this(): "~loaderTableName~"\").newline;"
+                        "\n \telse writefln(\"* Finished static this(): "~loaderTableName~"\");"
+                        "\n }"
                         "\n}"
                         "\n"
                         "\nstatic ~this()"
                         "\n{"
                         "\n delete "~loaderTableName~"_Linker;"
-                        "\n debug writefln(\"* Finished static ~this(): "~loaderTableName~"\");"
+                        "\n"
+                        "\n debug"
+                        "\n {"
+                        "\n \tversion(Tango) Stdout(\"* Finished static ~this(): "~loaderTableName~"\").newline;"
+                        "\n \telse writefln(\"* Finished static ~this(): "~loaderTableName~"\");"
+                        "\n }"
                         "\n}"
                         "\n";
             }
