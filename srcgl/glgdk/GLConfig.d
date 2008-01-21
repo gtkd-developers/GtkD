@@ -113,14 +113,14 @@ public class GLConfig : ObjectG
 		gdkGLConfig = cast(GdkGLConfig*)gdk_gl_config_new_by_mode(mode);
 		if ( gdkGLConfig is null )
 		{
-			printf ("*** Cannot find the double-buffered visual.\n");
-			printf ("*** Trying single-buffered visual.\n");
+			//printf ("*** Cannot find the double-buffered visual.\n");
+			//printf ("*** Trying single-buffered visual.\n");
 			gdkGLConfig = cast(GdkGLConfig*)gdk_gl_config_new_by_mode(fallback);
 		}
 		if ( gdkGLConfig is null )
 		{
-			printf ("*** No appropriate OpenGL-capable visual found.\n");
-			throw new Error("GL configure failed");
+			//printf ("*** No appropriate OpenGL-capable visual found.\n");
+			throw new Exception("GL configure failed");
 		}
 		this(gdkGLConfig);
 	}

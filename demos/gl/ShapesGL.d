@@ -37,7 +37,7 @@ version (Tango)
     private import tango.io.Stdout;
     private import tango.math.Math;
     //private import tango.stdc.math;//std.math;
-    private import tango.stdc.stdio;//std.stdio;
+    //private import tango.stdc.stdio;//std.stdio;
 }
 else
 {
@@ -748,8 +748,15 @@ static float dy = 0.0;
 	void activateItemCallback(MenuItem menuItem)
 	{
 		char[] action = menuItem.getActionName();
-		//Stdout("activateItemCallback action = %s ")( action).newline;
-                printf("activateItemCallback action = %.*s \n", action);
+		version(Tango)
+		{
+			Stdout("activateItemCallback action = %s ")( action).newline;
+		}
+		else //version(Phobos)
+		{
+    	printf("activateItemCallback action = %.*s \n", action);
+    }
+		
 		switch(action)
 		{
 			case "shapes.Cube":shape_current = Shapes.cube; break;
