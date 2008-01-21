@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module atk.State;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -69,8 +70,6 @@ public class State
 	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Register a new object state.
@@ -93,7 +92,7 @@ public class State
 	public static char[] typeGetName(AtkStateType type)
 	{
 		// const gchar* atk_state_type_get_name (AtkStateType type);
-		return Str.toString(atk_state_type_get_name(type) );
+		return Str.toString(atk_state_type_get_name(type)).dup;
 	}
 	
 	/**

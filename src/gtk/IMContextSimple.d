@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.IMContext
  * structWrap:
@@ -51,7 +52,7 @@
 
 module gtk.IMContextSimple;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -102,7 +103,6 @@ public class IMContextSimple : IMContext
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkIMContextSimple.
 	 * Returns: a new GtkIMContextSimple.
@@ -110,7 +110,13 @@ public class IMContextSimple : IMContext
 	public static IMContext newIMContextSimple()
 	{
 		// GtkIMContext* gtk_im_context_simple_new (void);
-		return new IMContext( gtk_im_context_simple_new() );
+		auto p = gtk_im_context_simple_new();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IMContext(cast(GtkIMContext*) p);
 	}
 	
 	/**
@@ -133,5 +139,4 @@ public class IMContextSimple : IMContext
 		// void gtk_im_context_simple_add_table (GtkIMContextSimple *context_simple,  guint16 *data,  gint max_seq_len,  gint n_seqs);
 		gtk_im_context_simple_add_table(gtkIMContextSimple, data, maxSeqLen, nSeqs);
 	}
-	
 }

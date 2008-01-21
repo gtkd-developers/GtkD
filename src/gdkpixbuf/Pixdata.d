@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Pixbuf
  * 	- glib.StringG
@@ -53,7 +54,7 @@
 
 module gdkpixbuf.Pixdata;
 
-private import gtkc.gdkpixbuftypes;
+public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
 
@@ -110,11 +111,6 @@ public class Pixdata
 	/**
 	 */
 	
-	
-	
-	
-	
-	
 	/**
 	 * Converts a GdkPixbuf to a GdkPixdata. If use_rle is TRUE, the
 	 * pixel data is run-length encoded into newly-allocated memory and a
@@ -143,7 +139,13 @@ public class Pixdata
 	public Pixbuf gdkPixbufFromPixdata(int copyPixels, GError** error)
 	{
 		// GdkPixbuf* gdk_pixbuf_from_pixdata (const GdkPixdata *pixdata,  gboolean copy_pixels,  GError **error);
-		return new Pixbuf( gdk_pixbuf_from_pixdata(gdkPixdata, copyPixels, error) );
+		auto p = gdk_pixbuf_from_pixdata(gdkPixdata, copyPixels, error);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -195,6 +197,12 @@ public class Pixdata
 	public StringG toCsource(char[] name, GdkPixdataDumpType dumpType)
 	{
 		// GString* gdk_pixdata_to_csource (GdkPixdata *pixdata,  const gchar *name,  GdkPixdataDumpType dump_type);
-		return new StringG( gdk_pixdata_to_csource(gdkPixdata, Str.toStringz(name), dumpType) );
+		auto p = gdk_pixdata_to_csource(gdkPixdata, Str.toStringz(name), dumpType);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new StringG(cast(GString*) p);
 	}
 }

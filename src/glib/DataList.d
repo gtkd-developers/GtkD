@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Quark
  * 	- glib.Dataset
@@ -51,7 +52,7 @@
 
 module glib.DataList;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -118,7 +119,6 @@ public class DataList
 	/**
 	 */
 	
-	
 	/**
 	 * Resets the datalist to NULL.
 	 * It does not free any memory or call any destroy functions.
@@ -130,7 +130,6 @@ public class DataList
 		// void g_datalist_init (GData **datalist);
 		g_datalist_init(datalist);
 	}
-	
 	
 	/**
 	 * Sets the data corresponding to the given GQuark id, and the function to
@@ -166,7 +165,6 @@ public class DataList
 		return g_datalist_id_get_data(datalist, keyId);
 	}
 	
-	
 	/**
 	 * Removes an element, without calling its destroy notification function.
 	 * Params:
@@ -179,11 +177,6 @@ public class DataList
 		// gpointer g_datalist_id_remove_no_notify (GData **datalist,  GQuark key_id);
 		return g_datalist_id_remove_no_notify(datalist, keyId);
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Calls the given function for each data element of the datalist.
@@ -267,5 +260,4 @@ public class DataList
 		// guint g_datalist_get_flags (GData **datalist);
 		return g_datalist_get_flags(datalist);
 	}
-	
 }

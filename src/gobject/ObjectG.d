@@ -41,6 +41,7 @@
  * omit prefixes:
  * omit code:
  * 	- g_object_set_data_full
+ * omit signals:
  * imports:
  * 	- gobject.ParamSpec
  * 	- gobject.Value
@@ -57,10 +58,12 @@
 
 module gobject.ObjectG;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gobject.ParamSpec;
 private import gobject.Value;
@@ -73,7 +76,6 @@ version(Tango) {
 } else {
 	private import std.gc;
 }
-
 
 
 
@@ -369,13 +371,25 @@ public class ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ParamSpec, ObjectG)[] onNotifyListeners;
+	/**
+	 * The notify signal is emitted on an object when one of its properties
+	 * has been changed. Note that getting this signal doesn't guarantee that the
+	 * value of the property has actually changed, it may also be emitted when
+	 * the setter for the property is called to reinstate the previous value.
+	 * This signal is typically used to obtain change notification for a
+	 * single property, by specifying the property name as a detail in the
+	 * g_signal_connect (text_view->buffer, "notify::paste-target-list",
+	 *  G_CALLBACK (gtk_text_view_target_list_notify),
+	 *  text_view)
+	 * It is important to note that you must use
+	 * canonical parameter names as
+	 * detail strings for the notify signal.
+	 * See Also
+	 * GParamSpecObject, g_param_spec_object()
+	 */
 	void addOnNotify(void delegate(ParamSpec, ObjectG) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("notify" in connectedSignals) )
@@ -404,22 +418,6 @@ public class ObjectG
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Installs a new property. This is usually done in the class initializer.
 	 * Params:
@@ -443,7 +441,13 @@ public class ObjectG
 	public static ParamSpec classFindProperty(GObjectClass* oclass, char[] propertyName)
 	{
 		// GParamSpec* g_object_class_find_property (GObjectClass *oclass,  const gchar *property_name);
-		return new ParamSpec( g_object_class_find_property(oclass, Str.toStringz(propertyName)) );
+		auto p = g_object_class_find_property(oclass, Str.toStringz(propertyName));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -531,7 +535,13 @@ public class ObjectG
 	public static ParamSpec interfaceFindProperty(void* gIface, char[] propertyName)
 	{
 		// GParamSpec* g_object_interface_find_property (gpointer g_iface,  const gchar *property_name);
-		return new ParamSpec( g_object_interface_find_property(gIface, Str.toStringz(propertyName)) );
+		auto p = g_object_interface_find_property(gIface, Str.toStringz(propertyName));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -565,7 +575,14 @@ public class ObjectG
 	public this (GType objectType, char[] firstPropertyName, ... )
 	{
 		// gpointer g_object_new (GType object_type,  const gchar *first_property_name,  ...);
-		this(cast(GObject*)g_object_new(objectType, Str.toStringz(firstPropertyName)) );
+		auto p = g_object_new(objectType, Str.toStringz(firstPropertyName));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GObject*) p);
 	}
 	
 	/**
@@ -580,9 +597,15 @@ public class ObjectG
 	public this (GType objectType, uint nParameters, GParameter* parameters)
 	{
 		// gpointer g_object_newv (GType object_type,  guint n_parameters,  GParameter *parameters);
-		this(cast(GObject*)g_object_newv(objectType, nParameters, parameters) );
+		auto p = g_object_newv(objectType, nParameters, parameters);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GObject*) p);
 	}
-	
 	
 	/**
 	 * Increases the reference count of object.
@@ -629,9 +652,6 @@ public class ObjectG
 		return g_object_ref_sink(object);
 	}
 	
-	
-	
-	
 	/**
 	 * Checks wether object has a floating
 	 * reference.
@@ -659,7 +679,6 @@ public class ObjectG
 		// void g_object_force_floating (GObject *object);
 		g_object_force_floating(gObject);
 	}
-	
 	
 	/**
 	 * Adds a weak reference callback to an object. Weak references are used for
@@ -715,7 +734,6 @@ public class ObjectG
 		// void g_object_remove_weak_pointer (GObject *object,  gpointer *weak_pointer_location);
 		g_object_remove_weak_pointer(gObject, weakPointerLocation);
 	}
-	
 	
 	/**
 	 * Increases the reference count of the object by one and sets a
@@ -937,7 +955,6 @@ public class ObjectG
 		g_object_set_data(gObject, Str.toStringz(key), data);
 	}
 	
-	
 	/**
 	 * Remove a specified datum from the object's data associations,
 	 * without invoking the association's destroy handler.
@@ -1057,7 +1074,14 @@ public class ObjectG
 	public this (GType objectType, char[] firstPropertyName, void* varArgs)
 	{
 		// GObject* g_object_new_valist (GType object_type,  const gchar *first_property_name,  va_list var_args);
-		this(cast(GObject*)g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs) );
+		auto p = g_object_new_valist(objectType, Str.toStringz(firstPropertyName), varArgs);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GObject*) p);
 	}
 	
 	/**
@@ -1120,5 +1144,4 @@ public class ObjectG
 		// void g_object_run_dispose (GObject *object);
 		g_object_run_dispose(gObject);
 	}
-	
 }

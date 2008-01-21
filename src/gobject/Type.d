@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.Quark
@@ -53,7 +54,7 @@
 
 module gobject.Type;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
@@ -103,41 +104,6 @@ public class Type
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Prior to any use of the type system, g_type_init() has to be called to initialize
 	 * the type system and assorted other code portions (such as the various fundamental
@@ -148,7 +114,6 @@ public class Type
 		// void g_type_init (void);
 		g_type_init();
 	}
-	
 	
 	/**
 	 * Similar to g_type_init(), but additionally sets debug flags.
@@ -174,7 +139,7 @@ public class Type
 	public static char[] name(GType type)
 	{
 		// const gchar* g_type_name (GType type);
-		return Str.toString(g_type_name(type) );
+		return Str.toString(g_type_name(type)).dup;
 	}
 	
 	/**
@@ -543,17 +508,6 @@ public class Type
 		g_type_query(type, query);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Registers type_name as the name of a new static type derived from
 	 * parent_type. The type system uses the information contained in the
@@ -692,7 +646,13 @@ public class Type
 	public static TypePlugin getPlugin(GType type)
 	{
 		// GTypePlugin* g_type_get_plugin (GType type);
-		return new TypePlugin( g_type_get_plugin(type) );
+		auto p = g_type_get_plugin(type);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TypePlugin(cast(GTypePlugin*) p);
 	}
 	
 	/**
@@ -708,7 +668,13 @@ public class Type
 	public static TypePlugin interfaceGetPlugin(GType instanceType, GType interfaceType)
 	{
 		// GTypePlugin* g_type_interface_get_plugin (GType instance_type,  GType interface_type);
-		return new TypePlugin( g_type_interface_get_plugin(instanceType, interfaceType) );
+		auto p = g_type_interface_get_plugin(instanceType, interfaceType);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TypePlugin(cast(GTypePlugin*) p);
 	}
 	
 	/**
@@ -854,7 +820,6 @@ public class Type
 		g_type_remove_interface_check(checkData, checkFunc);
 	}
 	
-	
 	/**
 	 * Returns the location of the GTypeValueTable associated with type.
 	 * Note that this function should only be used from source code
@@ -869,37 +834,4 @@ public class Type
 		// GTypeValueTable* g_type_value_table_peek (GType type);
 		return g_type_value_table_peek(type);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

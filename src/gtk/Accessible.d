@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -49,7 +50,7 @@
 
 module gtk.Accessible;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -98,7 +99,6 @@ public class Accessible : ObjectAtk
 	
 	/**
 	 */
-	
 	
 	/**
 	 * This function specifies the callback function to be called when the widget

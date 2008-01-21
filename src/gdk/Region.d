@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Region
  * 	- gdk.Rectangle
@@ -52,7 +53,7 @@
 
 module gdk.Region;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -114,18 +115,20 @@ public class Region
 	/**
 	 */
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new empty GdkRegion.
 	 */
 	public this ()
 	{
 		// GdkRegion* gdk_region_new (void);
-		this(cast(GdkRegion*)gdk_region_new() );
+		auto p = gdk_region_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -141,9 +144,14 @@ public class Region
 	public static Region polygon(GdkPoint* points, int npoints, GdkFillRule fillRule)
 	{
 		// GdkRegion* gdk_region_polygon (GdkPoint *points,  gint npoints,  GdkFillRule fill_rule);
-		return new Region( gdk_region_polygon(points, npoints, fillRule) );
+		auto p = gdk_region_polygon(points, npoints, fillRule);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Region(cast(GdkRegion*) p);
 	}
-	
 	
 	/**
 	 * Copies region, creating an identical new region.
@@ -152,7 +160,13 @@ public class Region
 	public Region copy()
 	{
 		// GdkRegion* gdk_region_copy (GdkRegion *region);
-		return new Region( gdk_region_copy(gdkRegion) );
+		auto p = gdk_region_copy(gdkRegion);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -164,7 +178,13 @@ public class Region
 	public static Region rectangle(Rectangle rectangle)
 	{
 		// GdkRegion* gdk_region_rectangle (GdkRectangle *rectangle);
-		return new Region( gdk_region_rectangle((rectangle is null) ? null : rectangle.getRectangleStruct()) );
+		auto p = gdk_region_rectangle((rectangle is null) ? null : rectangle.getRectangleStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -246,7 +266,6 @@ public class Region
 		// GdkOverlapType gdk_region_rect_in (GdkRegion *region,  GdkRectangle *rectangle);
 		return gdk_region_rect_in(gdkRegion, (rectangle is null) ? null : rectangle.getRectangleStruct());
 	}
-	
 	
 	/**
 	 * Moves a region the specified distance.
@@ -336,8 +355,6 @@ public class Region
 		// void gdk_region_xor (GdkRegion *source1,  GdkRegion *source2);
 		gdk_region_xor(gdkRegion, (source2 is null) ? null : source2.getRegionStruct());
 	}
-	
-	
 	
 	/**
 	 * Calls a function on each span in the intersection of region and spans.

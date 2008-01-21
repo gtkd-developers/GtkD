@@ -42,6 +42,7 @@
  * omit prefixes:
  * 	- gtk_text_attributes_
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.ObjectG
@@ -57,10 +58,12 @@
 
 module gtk.TextTag;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gobject.ObjectG;
@@ -119,13 +122,13 @@ public class TextTag : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(ObjectG, Event, TextIter, TextTag)[] onListeners;
+	/**
+	 * The ::event signal is emitted when an event occurs on a region of the
+	 * buffer marked with this tag.
+	 */
 	void addOn(gboolean delegate(ObjectG, Event, TextIter, TextTag) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("event" in connectedSignals) )
@@ -154,9 +157,6 @@ public class TextTag : ObjectG
 	}
 	
 	
-	
-	
-	
 	/**
 	 * Creates a GtkTextTag. Configure the tag using object arguments,
 	 * i.e. using g_object_set().
@@ -166,7 +166,14 @@ public class TextTag : ObjectG
 	public this (char[] name)
 	{
 		// GtkTextTag* gtk_text_tag_new (const gchar *name);
-		this(cast(GtkTextTag*)gtk_text_tag_new(Str.toStringz(name)) );
+		auto p = gtk_text_tag_new(Str.toStringz(name));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTextTag*) p);
 	}
 	
 	/**
@@ -213,74 +220,4 @@ public class TextTag : ObjectG
 		// gboolean gtk_text_tag_event (GtkTextTag *tag,  GObject *event_object,  GdkEvent *event,  const GtkTextIter *iter);
 		return gtk_text_tag_event(gtkTextTag, (eventObject is null) ? null : eventObject.getObjectGStruct(), (event is null) ? null : event.getEventStruct(), (iter is null) ? null : iter.getTextIterStruct());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module gtk.Version;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -70,11 +71,6 @@ public class Version
 	
 	/**
 	 */
-	
-	
-	
-	
-	
 	
 	/**
 	 * Checks that the GTK+ library in use is compatible with the
@@ -106,12 +102,6 @@ public class Version
 	public static char[] checkVersion(uint requiredMajor, uint requiredMinor, uint requiredMicro)
 	{
 		// const gchar* gtk_check_version (guint required_major,  guint required_minor,  guint required_micro);
-		return Str.toString(gtk_check_version(requiredMajor, requiredMinor, requiredMicro) );
+		return Str.toString(gtk_check_version(requiredMajor, requiredMinor, requiredMicro)).dup;
 	}
-	
-	
-	
-	
-	
-	
 }

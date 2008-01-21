@@ -169,6 +169,14 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkPrintContext*, PrintOperation)[] onBeginPrintListeners;
+	/**
+	 * Emitted after the user has finished changing print settings
+	 * in the dialog, before the actual rendering starts.
+	 * A typical use for ::begin-print is to use the parameters from the
+	 * GtkPrintContext and paginate the document accordingly, and then
+	 * set the number of pages with gtk_print_operation_set_n_pages().
+	 * Since 2.10
+	 */
 	void addOnBeginPrint(void delegate(GtkPrintContext*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("begin-print" in connectedSignals) )
@@ -197,6 +205,18 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	
 	GObject* delegate(PrintOperation)[] onCreateCustomWidgetListeners;
+	/**
+	 * Emitted when displaying the print dialog. If you return a
+	 * widget in a handler for this signal it will be added to a custom
+	 * tab in the print dialog. You typically return a container widget
+	 * with multiple widgets in it.
+	 * The print dialog owns the returned widget, and its lifetime
+	 * isn't controlled by the app. However, the widget is guaranteed
+	 * to stay around until the "custom-widget-apply"
+	 * signal is emitted on the operation. Then you can read out any
+	 * information you need from the widgets.
+	 * Since 2.10
+	 */
 	void addOnCreateCustomWidget(GObject* delegate(PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("create-custom-widget" in connectedSignals) )
@@ -225,6 +245,14 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	
 	void delegate(GtkWidget*, PrintOperation)[] onCustomWidgetApplyListeners;
+	/**
+	 * Emitted right before "begin-print" if you added
+	 * a custom widget in the "";create-custom-widget handler.
+	 * When you get this signal you should read the information from the
+	 * custom widgets, as the widgets are not guaraneed to be around at a
+	 * later time.
+	 * Since 2.10
+	 */
 	void addOnCustomWidgetApply(void delegate(GtkWidget*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("custom-widget-apply" in connectedSignals) )
@@ -253,6 +281,17 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	
 	void delegate(GtkPrintOperationResult, PrintOperation)[] onDoneListeners;
+	/**
+	 * Emitted when the print operation run has finished doing
+	 * everything required for printing. result gives you information
+	 * about what happened during the run. If result is
+	 * GTK_PRINT_OPERATION_RESULT_ERROR then you can call
+	 * gtk_print_operation_get_error() for more information.
+	 * If you enabled print status tracking then
+	 * gtk_print_operation_is_finished() may still return FALSE
+	 * after "done" was emitted.
+	 * Since 2.10
+	 */
 	void addOnDone(void delegate(GtkPrintOperationResult, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("done" in connectedSignals) )
@@ -281,6 +320,54 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	
 	void delegate(GtkPrintContext*, gint, PrintOperation)[] onDrawPageListeners;
+	/**
+	 * Emitted for every page that is printed. The signal handler
+	 * must render the page_nr's page onto the cairo context obtained
+	 * from context using gtk_print_context_get_cairo_context().
+	 * static void
+	 * draw_page (GtkPrintOperation *operation,
+	 *  GtkPrintContext *context,
+	 *  gint page_nr,
+	 *  gpointer user_data)
+	 * {
+		 *  cairo_t *cr;
+		 *  PangoLayout *layout;
+		 *  gdouble width, text_height;
+		 *  gint layout_height;
+		 *  PangoFontDescription *desc;
+		 *
+		 *  cr = gtk_print_context_get_cairo_context (context);
+		 *  width = gtk_print_context_get_width (context);
+		 *
+		 *  cairo_rectangle (cr, 0, 0, width, HEADER_HEIGHT);
+		 *
+		 *  cairo_set_source_rgb (cr, 0.8, 0.8, 0.8);
+		 *  cairo_fill (cr);
+		 *
+		 *  layout = gtk_print_context_create_pango_layout (context);
+		 *
+		 *  desc = pango_font_description_from_string ("sans 14");
+		 *  pango_layout_set_font_description (layout, desc);
+		 *  pango_font_description_free (desc);
+		 *
+		 *  pango_layout_set_text (layout, "some text", -1);
+		 *  pango_layout_set_width (layout, width * PANGO_SCALE);
+		 *  pango_layout_set_alignment (layout, PANGO_ALIGN_CENTER);
+		 *
+		 *  pango_layout_get_size (layout, NULL, layout_height);
+		 *  text_height = (gdouble)layout_height / PANGO_SCALE;
+		 *
+		 *  cairo_move_to (cr, width / 2, (HEADER_HEIGHT - text_height) / 2);
+		 *  pango_cairo_show_layout (cr, layout);
+		 *
+		 *  g_object_unref (layout);
+	 * }
+	 * Use gtk_print_operation_set_use_full_page() and
+	 * gtk_print_operation_set_unit() before starting the print operation
+	 * to set up the transformation of the cairo context according to your
+	 * needs.
+	 * Since 2.10
+	 */
 	void addOnDrawPage(void delegate(GtkPrintContext*, gint, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("draw-page" in connectedSignals) )
@@ -309,6 +396,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	
 	void delegate(GtkPrintContext*, PrintOperation)[] onEndPrintListeners;
+	/**
+	 * Emitted after all pages have been rendered.
+	 * A handler for this signal can clean up any resources that have
+	 * been allocated in the "begin-print" handler.
+	 * Since 2.10
+	 */
 	void addOnEndPrint(void delegate(GtkPrintContext*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("end-print" in connectedSignals) )
@@ -337,6 +430,20 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	
 	gboolean delegate(GtkPrintContext*, PrintOperation)[] onPaginateListeners;
+	/**
+	 * Emitted after the "begin-print" signal, but before
+	 * the actual rendering starts. It keeps getting emitted until it
+	 * returns FALSE.
+	 * The ::paginate signal is intended to be used for paginating the document
+	 * in small chunks, to avoid blocking the user interface for a long
+	 * time. The signal handler should update the number of pages using
+	 * gtk_print_operation_set_n_pages(), and return TRUE if the document
+	 * has been completely paginated.
+	 * If you don't need to do pagination in chunks, you can simply do
+	 * it all in the ::begin-print handler, and set the number of pages
+	 * from there.
+	 * Since 2.10
+	 */
 	void addOnPaginate(gboolean delegate(GtkPrintContext*, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("paginate" in connectedSignals) )
@@ -365,6 +472,22 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	
 	gboolean delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation)[] onPreviewListeners;
+	/**
+	 * Gets emitted when a preview is requested from the native dialog.
+	 * The default handler for this signal uses an external viewer
+	 * application to preview.
+	 * To implement a custom print preview, an application must return
+	 * TRUE from its handler for this signal. In order to use the
+	 * provided context for the preview implementation, it must be
+	 * given a suitable cairo context with gtk_print_context_set_cairo_context().
+	 * The custom preview implementation can use
+	 * gtk_print_operation_preview_is_selected() and
+	 * gtk_print_operation_preview_render_page() to find pages which
+	 * are selected for print and render them. The preview must be
+	 * finished by calling gtk_print_operation_preview_end_preview()
+	 * (typically in response to the user clicking a close button).
+	 * Since 2.10
+	 */
 	void addOnPreview(gboolean delegate(GtkPrintOperationPreview*, GtkPrintContext*, Window, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("preview" in connectedSignals) )
@@ -393,6 +516,12 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	
 	void delegate(GtkPrintContext*, gint, PageSetup, PrintOperation)[] onRequestPageSetupListeners;
+	/**
+	 * Emitted once for every page that is printed, to give
+	 * the application a chance to modify the page setup. Any changes
+	 * done to setup will be in force only for printing this page.
+	 * Since 2.10
+	 */
 	void addOnRequestPageSetup(void delegate(GtkPrintContext*, gint, PageSetup, PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("request-page-setup" in connectedSignals) )
@@ -421,6 +550,15 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 	}
 	
 	void delegate(PrintOperation)[] onStatusChangedListeners;
+	/**
+	 * Emitted at between the various phases of the print operation.
+	 * See GtkPrintStatus for the phases that are being discriminated.
+	 * Use gtk_print_operation_get_status() to find out the current
+	 * status.
+	 * Since 2.10
+	 * See Also
+	 * GtkPrintContext, GtkPrintUnixDialog
+	 */
 	void addOnStatusChanged(void delegate(PrintOperation) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("status-changed" in connectedSignals) )
@@ -447,12 +585,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		
 		return consumed;
 	}
-	
-	
-	
-	
-	
-	
 	
 	
 	/**
@@ -849,7 +981,6 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		return new PageSetup(cast(GtkPageSetup*) p);
 	}
 	
-	
 	/**
 	 * Runs a page setup dialog, letting the user modify the values from page_setup.
 	 * In contrast to gtk_print_run_page_setup_dialog(), this function returns after
@@ -868,30 +999,4 @@ public class PrintOperation : ObjectG, PrintOperationPreviewIF
 		// void gtk_print_run_page_setup_dialog_async  (GtkWindow *parent,  GtkPageSetup *page_setup,  GtkPrintSettings *settings,  GtkPageSetupDoneFunc done_cb,  gpointer data);
 		gtk_print_run_page_setup_dialog_async((parent is null) ? null : parent.getWindowStruct(), (pageSetup is null) ? null : pageSetup.getPageSetupStruct(), (settings is null) ? null : settings.getPrintSettingsStruct(), doneCb, data);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

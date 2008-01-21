@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * 	- glib.Date
@@ -52,7 +53,7 @@
 
 module glib.AsyncQueue;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -138,14 +139,20 @@ public class AsyncQueue
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new asynchronous queue with the initial reference count of 1.
 	 */
 	public this ()
 	{
 		// GAsyncQueue* g_async_queue_new (void);
-		this(cast(GAsyncQueue*)g_async_queue_new() );
+		auto p = g_async_queue_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GAsyncQueue*) p);
 	}
 	
 	/**
@@ -156,7 +163,13 @@ public class AsyncQueue
 	public AsyncQueue doref()
 	{
 		// GAsyncQueue* g_async_queue_ref (GAsyncQueue *queue);
-		return new AsyncQueue( g_async_queue_ref(gAsyncQueue) );
+		auto p = g_async_queue_ref(gAsyncQueue);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new AsyncQueue(cast(GAsyncQueue*) p);
 	}
 	
 	/**

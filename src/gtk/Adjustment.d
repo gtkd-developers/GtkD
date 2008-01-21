@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.ObjectGtk
  * structWrap:
@@ -51,10 +52,12 @@
 
 module gtk.Adjustment;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gtk.ObjectGtk;
 
@@ -112,13 +115,13 @@ public class Adjustment : ObjectGtk
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Adjustment)[] onChangedListeners;
+	/**
+	 * Emitted when one or more of the GtkAdjustment fields have been changed,
+	 * other than the value field.
+	 */
 	void addOnChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
@@ -147,6 +150,9 @@ public class Adjustment : ObjectGtk
 	}
 	
 	void delegate(Adjustment)[] onValueChangedListeners;
+	/**
+	 * Emitted when the GtkAdjustment value field has been changed.
+	 */
 	void addOnValueChanged(void delegate(Adjustment) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("value-changed" in connectedSignals) )
@@ -175,7 +181,6 @@ public class Adjustment : ObjectGtk
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkAdjustment.
 	 * Params:
@@ -189,7 +194,14 @@ public class Adjustment : ObjectGtk
 	public this (double value, double lower, double upper, double stepIncrement, double pageIncrement, double pageSize)
 	{
 		// GtkObject* gtk_adjustment_new (gdouble value,  gdouble lower,  gdouble upper,  gdouble step_increment,  gdouble page_increment,  gdouble page_size);
-		this(cast(GtkAdjustment*)gtk_adjustment_new(value, lower, upper, stepIncrement, pageIncrement, pageSize) );
+		auto p = gtk_adjustment_new(value, lower, upper, stepIncrement, pageIncrement, pageSize);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -257,10 +269,4 @@ public class Adjustment : ObjectGtk
 		// void gtk_adjustment_value_changed (GtkAdjustment *adjustment);
 		gtk_adjustment_value_changed(gtkAdjustment);
 	}
-	
-	
-	
-	
-	
-	
 }

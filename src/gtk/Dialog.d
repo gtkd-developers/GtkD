@@ -35,17 +35,24 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_dialog_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Window
  * 	- gtk.Widget
  * 	- gdk.Screen
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkScreen* -> Screen
  * 	- GtkWidget* -> Widget
@@ -56,15 +63,22 @@
 
 module gtk.Dialog;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Window;
 private import gtk.Widget;
 private import gdk.Screen;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -161,7 +175,7 @@ private import gtk.Window;
  *  </action-widgets>
  * </object>
  */
-public class Dialog : Window
+public class Dialog : Window, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -195,6 +209,9 @@ public class Dialog : Window
 		this.gtkDialog = gtkDialog;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkDialog);
+	
 	/** */
 	public Widget addButton(StockID stockID, int responseId)
 	{
@@ -222,13 +239,11 @@ public class Dialog : Window
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Dialog)[] onCloseListeners;
+	/**
+	 */
 	void addOnClose(void delegate(Dialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("close" in connectedSignals) )
@@ -257,6 +272,20 @@ public class Dialog : Window
 	}
 	
 	void delegate(gint, Dialog)[] onResponseListeners;
+	/**
+	 * Emitted when an action widget is clicked, the dialog receives a delete event, or
+	 * the application programmer calls gtk_dialog_response(). On a delete event, the
+	 * response ID is GTK_RESPONSE_NONE. Otherwise, it depends on which action widget
+	 * was clicked.
+	 * See Also
+	 * GtkVBox
+	 * Pack widgets vertically.
+	 * GtkWindow
+	 * Alter the properties of your dialog box.
+	 * GtkButton
+	 * Add them to the action_area to get a
+	 * response from the user.
+	 */
 	void addOnResponse(void delegate(gint, Dialog) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("response" in connectedSignals) )
@@ -285,9 +314,6 @@ public class Dialog : Window
 	}
 	
 	
-	
-	
-	
 	/**
 	 * Creates a new dialog box. Widgets should not be packed into this GtkWindow
 	 * directly, but into the vbox and action_area, as described above.
@@ -295,7 +321,14 @@ public class Dialog : Window
 	public this ()
 	{
 		// GtkWidget* gtk_dialog_new (void);
-		this(cast(GtkDialog*)gtk_dialog_new() );
+		auto p = gtk_dialog_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkDialog*) p);
 	}
 	
 	/**
@@ -327,7 +360,14 @@ public class Dialog : Window
 	public this (char[] title, Window parent, GtkDialogFlags flags, char[] firstButtonText, ... )
 	{
 		// GtkWidget* gtk_dialog_new_with_buttons (const gchar *title,  GtkWindow *parent,  GtkDialogFlags flags,  const gchar *first_button_text,  ...);
-		this(cast(GtkDialog*)gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(firstButtonText)) );
+		auto p = gtk_dialog_new_with_buttons(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), flags, Str.toStringz(firstButtonText));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkDialog*) p);
 	}
 	
 	/**
@@ -385,7 +425,13 @@ public class Dialog : Window
 	public Widget addButton(char[] buttonText, int responseId)
 	{
 		// GtkWidget* gtk_dialog_add_button (GtkDialog *dialog,  const gchar *button_text,  gint response_id);
-		return new Widget( gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId) );
+		auto p = gtk_dialog_add_button(gtkDialog, Str.toStringz(buttonText), responseId);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -543,7 +589,4 @@ public class Dialog : Window
 		// void gtk_dialog_set_alternative_button_order_from_array  (GtkDialog *dialog,  gint n_params,  gint *new_order);
 		gtk_dialog_set_alternative_button_order_from_array(gtkDialog, nParams, newOrder);
 	}
-	
-	
-	
 }

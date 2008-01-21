@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module glib.Internationalization;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -80,9 +81,6 @@ public class Internationalization
 	/**
 	 */
 	
-	
-	
-	
 	/**
 	 * An auxiliary function for gettext() support (see Q_()).
 	 * Since 2.4
@@ -94,7 +92,7 @@ public class Internationalization
 	public static char[] stripContext(char[] msgid, char[] msgval)
 	{
 		// const gchar* g_strip_context (const gchar *msgid,  const gchar *msgval);
-		return Str.toString(g_strip_context(Str.toStringz(msgid), Str.toStringz(msgval)) );
+		return Str.toString(g_strip_context(Str.toStringz(msgid), Str.toStringz(msgval))).dup;
 	}
 	
 	/**

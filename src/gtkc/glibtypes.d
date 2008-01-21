@@ -51,7 +51,7 @@ public alias dchar unichar;
 public alias wchar unichar2;
 //public alias dchar gunichar;
 //public alias wchar gunichar2;
-public alias int time_t;
+public alias uint time_t;
 public alias uint XID;
 
 
@@ -1547,7 +1547,7 @@ public struct GScanner{}
 // glib-Lexical-Scanner.html
 // uint maxParseErrors;
 // glib-Lexical-Scanner.html
-// /+* _Error() increments this field +/
+// /+* error() increments this field +/
 // glib-Lexical-Scanner.html
 // uint parseErrors;
 // glib-Lexical-Scanner.html
@@ -1563,7 +1563,7 @@ public struct GScanner{}
 // glib-Lexical-Scanner.html
 // GScannerConfig *config;
 // glib-Lexical-Scanner.html
-// /+* fields filled inn after _GetNextToken() +/
+// /+* fields filled inn after getNextToken() +/
 // glib-Lexical-Scanner.html
 // GTokenType token;
 // glib-Lexical-Scanner.html
@@ -1573,7 +1573,7 @@ public struct GScanner{}
 // glib-Lexical-Scanner.html
 // uint position;
 // glib-Lexical-Scanner.html
-// /+* fields filled inn after _PeekNextToken() +/
+// /+* fields filled inn after peekNextToken() +/
 // glib-Lexical-Scanner.html
 // GTokenType nextToken;
 // glib-Lexical-Scanner.html

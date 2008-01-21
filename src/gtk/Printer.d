@@ -47,6 +47,7 @@
  * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GtkPrinter* -> Printer
  * module aliases:
  * local aliases:
  */
@@ -117,6 +118,12 @@ public class Printer : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(gboolean, Printer)[] onDetailsAcquiredListeners;
+	/**
+	 * Gets emitted in response to a request for detailed information
+	 * about a printer from the print backend. The success parameter
+	 * indicates if the information was actually obtained.
+	 * Since 2.10
+	 */
 	void addOnDetailsAcquired(void delegate(gboolean, Printer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("details-acquired" in connectedSignals) )
@@ -143,8 +150,6 @@ public class Printer : ObjectG
 		
 		return consumed;
 	}
-	
-	
 	
 	
 	/**
@@ -333,10 +338,10 @@ public class Printer : ObjectG
 	 * b =  another GtkPrinter
 	 * Returns: 0 if the printer match, a negative value if a < b,  or a positive value if a > b
 	 */
-	public int compare(GtkPrinter* b)
+	public int compare(Printer b)
 	{
 		// gint gtk_printer_compare (GtkPrinter *a,  GtkPrinter *b);
-		return gtk_printer_compare(gtkPrinter, b);
+		return gtk_printer_compare(gtkPrinter, (b is null) ? null : b.getPrinterStruct());
 	}
 	
 	/**
@@ -378,7 +383,6 @@ public class Printer : ObjectG
 		return gtk_printer_get_capabilities(gtkPrinter);
 	}
 	
-	
 	/**
 	 * Calls a function for all GtkPrinters.
 	 * If func returns TRUE, the enumeration is stopped.
@@ -395,12 +399,4 @@ public class Printer : ObjectG
 		// void gtk_enumerate_printers (GtkPrinterFunc func,  gpointer data,  GDestroyNotify destroy,  gboolean wait);
 		gtk_enumerate_printers(func, data, destroy, wait);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

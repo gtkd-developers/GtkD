@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glgdk.GLDrawable
  * structWrap:
@@ -50,7 +51,7 @@
 
 module glgdk.GLContext;
 
-private import gtkglc.glgdktypes;
+public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 
@@ -101,7 +102,6 @@ public class GLContext : ObjectG
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new OpenGL rendering context.
 	 * Params:
@@ -116,7 +116,14 @@ public class GLContext : ObjectG
 	public this (GLDrawable gldrawable, GdkGLContext* shareList, int direct, int renderType)
 	{
 		// GdkGLContext* gdk_gl_context_new (GdkGLDrawable *gldrawable,  GdkGLContext *share_list,  gboolean direct,  int render_type);
-		this(cast(GdkGLContext*)gdk_gl_context_new((gldrawable is null) ? null : gldrawable.getGLDrawableStruct(), shareList, direct, renderType) );
+		auto p = gdk_gl_context_new((gldrawable is null) ? null : gldrawable.getGLDrawableStruct(), shareList, direct, renderType);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkGLContext*) p);
 	}
 	
 	/**
@@ -151,7 +158,13 @@ public class GLContext : ObjectG
 	public GLDrawable getGLDrawable()
 	{
 		// GdkGLDrawable* gdk_gl_context_get_gl_drawable  (GdkGLContext *glcontext);
-		return new GLDrawable( gdk_gl_context_get_gl_drawable(gdkGLContext) );
+		auto p = gdk_gl_context_get_gl_drawable(gdkGLContext);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLDrawable(cast(GdkGLDrawable*) p);
 	}
 	
 	/**

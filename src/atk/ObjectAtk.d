@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- atk.StateSet
@@ -51,10 +52,12 @@
 
 module atk.ObjectAtk;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import atk.StateSet;
@@ -117,13 +120,15 @@ public class ObjectAtk : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gpointer, ObjectAtk)[] onActiveDescendantChangedListeners;
+	/**
+	 * The "active-descendant-changed" signal is emitted by an object which has
+	 * the state ATK_STATE_MANAGES_DESCENDANTS when the focus object in the
+	 * object changes. For instance, a table will emit the signal when the cell
+	 * in the table which has focus changes.
+	 */
 	void addOnActiveDescendantChanged(void delegate(gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("active-descendant-changed" in connectedSignals) )
@@ -152,6 +157,10 @@ public class ObjectAtk : ObjectG
 	}
 	
 	void delegate(guint, gpointer, ObjectAtk)[] onChildrenChangedListeners;
+	/**
+	 * The signal "children-changed" is emitted when a child is added or
+	 * removed form an object. It supports two details: "add" and "remove"
+	 */
 	void addOnChildrenChanged(void delegate(guint, gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("children-changed" in connectedSignals) )
@@ -180,6 +189,9 @@ public class ObjectAtk : ObjectG
 	}
 	
 	void delegate(gboolean, ObjectAtk)[] onFocusListeners;
+	/**
+	 * The signal "focus-event" is emitted when an object gains or loses focus.
+	 */
 	void addOnFocus(void delegate(gboolean, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-event" in connectedSignals) )
@@ -208,6 +220,11 @@ public class ObjectAtk : ObjectG
 	}
 	
 	void delegate(gpointer, ObjectAtk)[] onPropertyChangeListeners;
+	/**
+	 * The signal "property-change" is emitted when an object's property
+	 * value changes. The detail identifies the name of the property whose
+	 * value has changed.
+	 */
 	void addOnPropertyChange(void delegate(gpointer, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("property-change" in connectedSignals) )
@@ -236,6 +253,10 @@ public class ObjectAtk : ObjectG
 	}
 	
 	void delegate(char[], gboolean, ObjectAtk)[] onStateChangeListeners;
+	/**
+	 * The "state-change" signal is emitted when an object's state changes.
+	 * The detail value identifies the state type which has changed.
+	 */
 	void addOnStateChange(void delegate(char[], gboolean, ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("state-change" in connectedSignals) )
@@ -264,6 +285,13 @@ public class ObjectAtk : ObjectG
 	}
 	
 	void delegate(ObjectAtk)[] onVisibleDataChangedListeners;
+	/**
+	 * The "visible-data-changed" signal is emitted when the visual appearance of
+	 * the object changed.
+	 * See Also
+	 * See also: AtkObjectFactory, AtkRegistry.
+	 * ( GTK+ users see also GtkAccessible).
+	 */
 	void addOnVisibleDataChanged(void delegate(ObjectAtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("visible-data-changed" in connectedSignals) )
@@ -292,8 +320,6 @@ public class ObjectAtk : ObjectG
 	}
 	
 	
-	
-	
 	/**
 	 * Registers the role specified by name.
 	 * Params:
@@ -305,11 +331,6 @@ public class ObjectAtk : ObjectG
 		// AtkRole atk_role_register (const gchar *name);
 		return atk_role_register(Str.toStringz(name));
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Gets a reference to an object's AtkObject implementation, if
@@ -332,7 +353,7 @@ public class ObjectAtk : ObjectG
 	public char[] getName()
 	{
 		// const gchar* atk_object_get_name (AtkObject *accessible);
-		return Str.toString(atk_object_get_name(atkObject) );
+		return Str.toString(atk_object_get_name(atkObject)).dup;
 	}
 	
 	/**
@@ -342,7 +363,7 @@ public class ObjectAtk : ObjectG
 	public char[] getDescription()
 	{
 		// const gchar* atk_object_get_description (AtkObject *accessible);
-		return Str.toString(atk_object_get_description(atkObject) );
+		return Str.toString(atk_object_get_description(atkObject)).dup;
 	}
 	
 	/**
@@ -432,7 +453,13 @@ public class ObjectAtk : ObjectG
 	public StateSet refStateSet()
 	{
 		// AtkStateSet* atk_object_ref_state_set (AtkObject *accessible);
-		return new StateSet( atk_object_ref_state_set(atkObject) );
+		auto p = atk_object_ref_state_set(atkObject);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new StateSet(cast(AtkStateSet*) p);
 	}
 	
 	/**
@@ -587,7 +614,7 @@ public class ObjectAtk : ObjectG
 	public static char[] atkRoleGetName(AtkRole role)
 	{
 		// const gchar* atk_role_get_name (AtkRole role);
-		return Str.toString(atk_role_get_name(role) );
+		return Str.toString(atk_role_get_name(role)).dup;
 	}
 	
 	/**
@@ -599,7 +626,7 @@ public class ObjectAtk : ObjectG
 	public static char[] atkRoleGetLocalizedName(AtkRole role)
 	{
 		// const gchar* atk_role_get_localized_name (AtkRole role);
-		return Str.toString(atk_role_get_localized_name(role) );
+		return Str.toString(atk_role_get_localized_name(role)).dup;
 	}
 	
 	/**
@@ -613,23 +640,4 @@ public class ObjectAtk : ObjectG
 		// AtkRole atk_role_for_name (const gchar *name);
 		return atk_role_for_name(Str.toStringz(name));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

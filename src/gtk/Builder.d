@@ -204,6 +204,28 @@ private import gobject.ObjectG;
  * in a UI definition by specifying the "type" attribute on a <child>
  * The possible values for the "type" attribute are described in
  * the sections describing the widget-specific portions of UI definitions.
+ * Example50.A GtkBuilder UI Definition
+ * <interface>
+ *  <object class="GtkDialog" id="dialog1">
+ *  <child internal-child="vbox">
+ *  <object class="GtkVBox" id="vbox1">
+ *  <property name="border-width">10</property>
+ *  <child internal-child="action_area">
+ *  <object class="GtkHButtonBox" id="hbuttonbox1">
+ *  <property name="border-width">20</property>
+ *  <child>
+ *  <object class="GtkButton" id="ok_button">
+ *  <property name="label">gtk-ok</property>
+ *  <property name="use-stock">TRUE</property>
+ *  <signal name="clicked" handler="ok_button_clicked"/>
+ *  </object>
+ *  </child>
+ *  </object>
+ *  </child>
+ *  </object>
+ *  </child>
+ *  </object>
+ * </interface>
  * Beyond this general structure, several object classes define
  * their own XML DTD fragments for filling in the ANY placeholders
  * in the DTD above. Note that a custom element in a <child>

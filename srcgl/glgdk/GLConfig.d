@@ -40,8 +40,10 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- std.stdio
  * 	- gdk.Screen
  * structWrap:
  * 	- GdkScreen* -> Screen
@@ -51,7 +53,7 @@
 
 module glgdk.GLConfig;
 
-private import gtkglc.glgdktypes;
+public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 
@@ -59,6 +61,12 @@ private import gtkglc.glgdk;
 private import glib.Str;
 private import gdk.Screen;
 
+
+version(Tango) {
+	private import tango.stdc.stdio;
+} else {
+	private import std.stdio;
+}
 
 
 private import gobject.ObjectG;
@@ -113,13 +121,13 @@ public class GLConfig : ObjectG
 		gdkGLConfig = cast(GdkGLConfig*)gdk_gl_config_new_by_mode(mode);
 		if ( gdkGLConfig is null )
 		{
-			//printf ("*** Cannot find the double-buffered visual.\n");
-			//printf ("*** Trying single-buffered visual.\n");
+			printf ("*** Cannot find the double-buffered visual.\n");
+			printf ("*** Trying single-buffered visual.\n");
 			gdkGLConfig = cast(GdkGLConfig*)gdk_gl_config_new_by_mode(fallback);
 		}
 		if ( gdkGLConfig is null )
 		{
-			//printf ("*** No appropriate OpenGL-capable visual found.\n");
+			printf ("*** No appropriate OpenGL-capable visual found.\n");
 			throw new Exception("GL configure failed");
 		}
 		this(gdkGLConfig);
@@ -128,8 +136,6 @@ public class GLConfig : ObjectG
 	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Returns an OpenGL frame buffer configuration that match the specified
@@ -148,7 +154,14 @@ public class GLConfig : ObjectG
 	public this (int* attribList)
 	{
 		// GdkGLConfig* gdk_gl_config_new (const int *attrib_list);
-		this(cast(GdkGLConfig*)gdk_gl_config_new(attribList) );
+		auto p = gdk_gl_config_new(attribList);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkGLConfig*) p);
 	}
 	
 	/**
@@ -162,7 +175,14 @@ public class GLConfig : ObjectG
 	public this (Screen screen, int* attribList)
 	{
 		// GdkGLConfig* gdk_gl_config_new_for_screen (GdkScreen *screen,  const int *attrib_list);
-		this(cast(GdkGLConfig*)gdk_gl_config_new_for_screen((screen is null) ? null : screen.getScreenStruct(), attribList) );
+		auto p = gdk_gl_config_new_for_screen((screen is null) ? null : screen.getScreenStruct(), attribList);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkGLConfig*) p);
 	}
 	
 	/**
@@ -174,7 +194,14 @@ public class GLConfig : ObjectG
 	public this (GdkGLConfigMode mode)
 	{
 		// GdkGLConfig* gdk_gl_config_new_by_mode (GdkGLConfigMode mode);
-		this(cast(GdkGLConfig*)gdk_gl_config_new_by_mode(mode) );
+		auto p = gdk_gl_config_new_by_mode(mode);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkGLConfig*) p);
 	}
 	
 	/**
@@ -187,7 +214,14 @@ public class GLConfig : ObjectG
 	public this (Screen screen, GdkGLConfigMode mode)
 	{
 		// GdkGLConfig* gdk_gl_config_new_by_mode_for_screen  (GdkScreen *screen,  GdkGLConfigMode mode);
-		this(cast(GdkGLConfig*)gdk_gl_config_new_by_mode_for_screen((screen is null) ? null : screen.getScreenStruct(), mode) );
+		auto p = gdk_gl_config_new_by_mode_for_screen((screen is null) ? null : screen.getScreenStruct(), mode);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkGLConfig*) p);
 	}
 	
 	/**
@@ -197,7 +231,13 @@ public class GLConfig : ObjectG
 	public Screen getScreen()
 	{
 		// GdkScreen* gdk_gl_config_get_screen (GdkGLConfig *glconfig);
-		return new Screen( gdk_gl_config_get_screen(gdkGLConfig) );
+		auto p = gdk_gl_config_get_screen(gdkGLConfig);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 	
 	/**

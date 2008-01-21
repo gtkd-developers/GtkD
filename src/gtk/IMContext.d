@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Window
@@ -54,10 +55,12 @@
 
 module gtk.IMContext;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Window;
@@ -106,13 +109,11 @@ public class IMContext : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], IMContext)[] onCommitListeners;
+	/**
+	 */
 	void addOnCommit(void delegate(char[], IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("commit" in connectedSignals) )
@@ -141,6 +142,8 @@ public class IMContext : ObjectG
 	}
 	
 	gboolean delegate(gint, gint, IMContext)[] onDeleteSurroundingListeners;
+	/**
+	 */
 	void addOnDeleteSurrounding(gboolean delegate(gint, gint, IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-surrounding" in connectedSignals) )
@@ -169,6 +172,8 @@ public class IMContext : ObjectG
 	}
 	
 	void delegate(IMContext)[] onPreeditChangedListeners;
+	/**
+	 */
 	void addOnPreeditChanged(void delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("preedit-changed" in connectedSignals) )
@@ -197,6 +202,8 @@ public class IMContext : ObjectG
 	}
 	
 	void delegate(IMContext)[] onPreeditEndListeners;
+	/**
+	 */
 	void addOnPreeditEnd(void delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("preedit-end" in connectedSignals) )
@@ -225,6 +232,8 @@ public class IMContext : ObjectG
 	}
 	
 	void delegate(IMContext)[] onPreeditStartListeners;
+	/**
+	 */
 	void addOnPreeditStart(void delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("preedit-start" in connectedSignals) )
@@ -253,6 +262,8 @@ public class IMContext : ObjectG
 	}
 	
 	gboolean delegate(IMContext)[] onRetrieveSurroundingListeners;
+	/**
+	 */
 	void addOnRetrieveSurrounding(gboolean delegate(IMContext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("retrieve-surrounding" in connectedSignals) )
@@ -279,7 +290,6 @@ public class IMContext : ObjectG
 		
 		return consumed;
 	}
-	
 	
 	
 	/**
@@ -464,9 +474,4 @@ public class IMContext : ObjectG
 		// gboolean gtk_im_context_delete_surrounding (GtkIMContext *context,  gint offset,  gint n_chars);
 		return gtk_im_context_delete_surrounding(gtkIMContext, offset, nChars);
 	}
-	
-	
-	
-	
-	
 }

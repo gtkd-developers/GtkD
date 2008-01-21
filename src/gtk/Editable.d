@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -50,10 +51,12 @@
 
 module gtk.Editable;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 
@@ -125,13 +128,13 @@ public class Editable
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Editable)[] onChangedListeners;
+	/**
+	 * Indicates that the user has changed the contents
+	 * of the widget.
+	 */
 	void addOnChanged(void delegate(Editable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
@@ -160,6 +163,17 @@ public class Editable
 	}
 	
 	void delegate(gint, gint, Editable)[] onDeleteTextListeners;
+	/**
+	 * This signal is emitted when text is deleted from
+	 * the widget by the user. The default handler for
+	 * this signal will normally be responsible for inserting
+	 * the text, so by connecting to this signal and then
+	 * stopping the signal with gtk_signal_emit_stop(), it
+	 * is possible to modify the inserted text, or prevent
+	 * it from being inserted entirely. The start_pos
+	 * and end_pos parameters are interpreted as for
+	 * gtk_editable_delete_text()
+	 */
 	void addOnDeleteText(void delegate(gint, gint, Editable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-text" in connectedSignals) )
@@ -188,6 +202,15 @@ public class Editable
 	}
 	
 	void delegate(char[], gint, gint*, Editable)[] onInsertTextListeners;
+	/**
+	 * This signal is emitted when text is inserted into
+	 * the widget by the user. The default handler for
+	 * this signal will normally be responsible for inserting
+	 * the text, so by connecting to this signal and then
+	 * stopping the signal with gtk_signal_emit_stop(), it
+	 * is possible to modify the inserted text, or prevent
+	 * it from being inserted entirely.
+	 */
 	void addOnInsertText(void delegate(char[], gint, gint*, Editable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-text" in connectedSignals) )
@@ -214,7 +237,6 @@ public class Editable
 		
 		return consumed;
 	}
-	
 	
 	
 	/**
@@ -295,7 +317,7 @@ public class Editable
 	public char[] getChars(int startPos, int endPos)
 	{
 		// gchar* gtk_editable_get_chars (GtkEditable *editable,  gint start_pos,  gint end_pos);
-		return Str.toString(gtk_editable_get_chars(gtkEditable, startPos, endPos) );
+		return Str.toString(gtk_editable_get_chars(gtkEditable, startPos, endPos)).dup;
 	}
 	
 	/**
@@ -390,6 +412,4 @@ public class Editable
 		// gboolean gtk_editable_get_editable (GtkEditable *editable);
 		return gtk_editable_get_editable(gtkEditable);
 	}
-	
-	
 }

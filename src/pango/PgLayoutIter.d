@@ -40,63 +40,20 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
- * 	- pango.PgContext
- * 	- pango.PgItem
- * 	- pango.PgLayout
- * 	- pango.PgFontDescription
- * 	- pango.PgFontMetrics
- * 	- pango.PgFontFamily
- * 	- pango.PgFontFace
- * 	- pango.PgFontMap
- * 	- pango.PgFontsetSimple
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
- * 	- pango.PgLanguage
- * 	- pango.PgTabArray
- * 	- pango.PgLayout
- * 	- pango.PgScriptIter
  * structWrap:
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
- * 	- PangoContext* -> PgContext
- * 	- PangoFontDescription* -> PgFontDescription
- * 	- PangoFontFace* -> PgFontFace
- * 	- PangoFontFamily* -> PgFontFamily
- * 	- PangoFontMap* -> PgFontMap
- * 	- PangoFontMetrics* -> PgFontMetrics
- * 	- PangoFontsetSimple* -> PgFontsetSimple
- * 	- PangoItem* -> PgItem
- * 	- PangoLanguage* -> PgLanguage
- * 	- PangoLayout* -> PgLayout
- * 	- PangoScriptIter* -> PgScriptIter
- * 	- PangoTabArray* -> PgTabArray
  * module aliases:
  * local aliases:
  */
 
 module pango.PgLayoutIter;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
 
-private import pango.PgContext;
-private import pango.PgItem;
-private import pango.PgLayout;
-private import pango.PgFontDescription;
-private import pango.PgFontMetrics;
-private import pango.PgFontFamily;
-private import pango.PgFontFace;
-private import pango.PgFontMap;
-private import pango.PgFontsetSimple;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
-private import pango.PgLanguage;
-private import pango.PgTabArray;
-private import pango.PgLayout;
-private import pango.PgScriptIter;
 
 
 
@@ -145,65 +102,6 @@ public class PgLayoutIter
 	
 	/**
 	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Frees an iterator that's no longer in use.
@@ -315,7 +213,8 @@ public class PgLayoutIter
 	 * This is a faster alternative to pango_layout_iter_get_run(),
 	 * but the user is not expected
 	 * to modify the contents of the run (glyphs, glyph widths, etc.).
-	 * Returns: the current run, that should not be modified.Since 1.16
+	 * Since 1.16
+	 * Returns: the current run, that should not be modified.
 	 */
 	public PangoLayoutRun* getRunReadonly()
 	{
@@ -340,7 +239,8 @@ public class PgLayoutIter
 	 * This is a faster alternative to pango_layout_iter_get_line(),
 	 * but the user is not expected
 	 * to modify the contents of the line (glyphs, glyph widths, etc.).
-	 * Returns: the current line, that should not be modified.Since 1.16
+	 * Since 1.16
+	 * Returns: the current line, that should not be modified.
 	 */
 	public PangoLayoutLine* getLineReadonly()
 	{
@@ -436,13 +336,4 @@ public class PgLayoutIter
 		// void pango_layout_iter_get_layout_extents  (PangoLayoutIter *iter,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
 		pango_layout_iter_get_layout_extents(pangoLayoutIter, inkRect, logicalRect);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

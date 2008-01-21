@@ -35,12 +35,14 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_tree_view_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.TreeModel
@@ -52,8 +54,15 @@
  * 	- gtk.TreePath
  * 	- gdk.Rectangle
  * 	- gdk.Window
+ * 	- gtk.Tooltip
  * 	- gdk.Pixmap
  * 	- gtk.TreeIter
+ * 	- gtk.Entry
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixmap* -> Pixmap
@@ -61,6 +70,9 @@
  * 	- GdkWindow* -> Window
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkCellRenderer* -> CellRenderer
+ * 	- GtkEntry* -> Entry
+ * 	- GtkTooltip* -> Tooltip
+ * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreeModel* -> TreeModel
  * 	- GtkTreePath* -> TreePath
  * 	- GtkTreeSelection* -> TreeSelection
@@ -71,10 +83,12 @@
 
 module gtk.TreeView;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.TreeModel;
@@ -86,8 +100,15 @@ private import glib.ListG;
 private import gtk.TreePath;
 private import gdk.Rectangle;
 private import gdk.Window;
+private import gtk.Tooltip;
 private import gdk.Pixmap;
 private import gtk.TreeIter;
+private import gtk.Entry;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -133,7 +154,7 @@ private import gtk.Container;
  *  </child>
  * </object>
  */
-public class TreeView : Container
+public class TreeView : Container, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -166,6 +187,9 @@ public class TreeView : Container
 		super(cast(GtkContainer*)gtkTreeView);
 		this.gtkTreeView = gtkTreeView;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkTreeView);
 	
 	/**
 	 * Expands the row of the iter.
@@ -288,13 +312,12 @@ public class TreeView : Container
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeView)[] onColumnsChangedListeners;
+	/**
+	 * The number of columns of the treeview has changed.
+	 */
 	void addOnColumnsChanged(void delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("columns-changed" in connectedSignals) )
@@ -323,6 +346,9 @@ public class TreeView : Container
 	}
 	
 	void delegate(TreeView)[] onCursorChangedListeners;
+	/**
+	 * The position of the cursor (focused cell) has changed.
+	 */
 	void addOnCursorChanged(void delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cursor-changed" in connectedSignals) )
@@ -351,6 +377,8 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(gboolean, gboolean, gboolean, TreeView)[] onExpandCollapseCursorRowListeners;
+	/**
+	 */
 	void addOnExpandCollapseCursorRow(gboolean delegate(gboolean, gboolean, gboolean, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("expand-collapse-cursor-row" in connectedSignals) )
@@ -379,6 +407,8 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(GtkMovementStep, gint, TreeView)[] onMoveCursorListeners;
+	/**
+	 */
 	void addOnMoveCursor(gboolean delegate(GtkMovementStep, gint, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
@@ -407,6 +437,15 @@ public class TreeView : Container
 	}
 	
 	void delegate(TreePath, TreeViewColumn, TreeView)[] onRowActivatedListeners;
+	/**
+	 * The "row-activated" signal is emitted when the method
+	 * gtk_tree_view_row_activated() is called or the user double clicks
+	 * a treeview row. It is also emitted when a non-editable row is
+	 * selected and one of the keys: Space, Shift+Space, Return or
+	 * Enter is pressed.
+	 * For selection handling refer to the tree
+	 * widget conceptual overview as well as GtkTreeSelection.
+	 */
 	void addOnRowActivated(void delegate(TreePath, TreeViewColumn, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-activated" in connectedSignals) )
@@ -434,8 +473,11 @@ public class TreeView : Container
 		return consumed;
 	}
 	
-	void delegate(GtkTreeIter*, TreePath, TreeView)[] onRowCollapsedListeners;
-	void addOnRowCollapsed(void delegate(GtkTreeIter*, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void delegate(TreeIter, TreePath, TreeView)[] onRowCollapsedListeners;
+	/**
+	 * The given row has been collapsed (child nodes are hidden).
+	 */
+	void addOnRowCollapsed(void delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-collapsed" in connectedSignals) )
 		{
@@ -454,16 +496,19 @@ public class TreeView : Container
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onRowCollapsedListeners )
+		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onRowCollapsedListeners )
 		{
-			dlg(iter, new TreePath(path), treeView);
+			dlg(new TreeIter(iter), new TreePath(path), treeView);
 		}
 		
 		return consumed;
 	}
 	
-	void delegate(GtkTreeIter*, TreePath, TreeView)[] onRowExpandedListeners;
-	void addOnRowExpanded(void delegate(GtkTreeIter*, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void delegate(TreeIter, TreePath, TreeView)[] onRowExpandedListeners;
+	/**
+	 * The given row has been expanded (child nodes are shown).
+	 */
+	void addOnRowExpanded(void delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-expanded" in connectedSignals) )
 		{
@@ -482,15 +527,17 @@ public class TreeView : Container
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onRowExpandedListeners )
+		foreach ( void delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onRowExpandedListeners )
 		{
-			dlg(iter, new TreePath(path), treeView);
+			dlg(new TreeIter(iter), new TreePath(path), treeView);
 		}
 		
 		return consumed;
 	}
 	
 	gboolean delegate(TreeView)[] onSelectAllListeners;
+	/**
+	 */
 	void addOnSelectAll(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-all" in connectedSignals) )
@@ -519,6 +566,8 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(TreeView)[] onSelectCursorParentListeners;
+	/**
+	 */
 	void addOnSelectCursorParent(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-cursor-parent" in connectedSignals) )
@@ -547,6 +596,8 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(gboolean, TreeView)[] onSelectCursorRowListeners;
+	/**
+	 */
 	void addOnSelectCursorRow(gboolean delegate(gboolean, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-cursor-row" in connectedSignals) )
@@ -575,6 +626,8 @@ public class TreeView : Container
 	}
 	
 	void delegate(Adjustment, Adjustment, TreeView)[] onSetScrollAdjustmentsListeners;
+	/**
+	 */
 	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
@@ -603,6 +656,8 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(TreeView)[] onStartInteractiveSearchListeners;
+	/**
+	 */
 	void addOnStartInteractiveSearch(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("start-interactive-search" in connectedSignals) )
@@ -630,8 +685,12 @@ public class TreeView : Container
 		return consumed;
 	}
 	
-	gboolean delegate(GtkTreeIter*, TreePath, TreeView)[] onTestCollapseRowListeners;
-	void addOnTestCollapseRow(gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gboolean delegate(TreeIter, TreePath, TreeView)[] onTestCollapseRowListeners;
+	/**
+	 * The given row is about to be collapsed (hide its children nodes). Use this
+	 * signal if you need to control the collapsibility of individual rows.
+	 */
+	void addOnTestCollapseRow(gboolean delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("test-collapse-row" in connectedSignals) )
 		{
@@ -650,16 +709,20 @@ public class TreeView : Container
 	{
 		bool consumed = false;
 		
-		foreach ( gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onTestCollapseRowListeners )
+		foreach ( gboolean delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onTestCollapseRowListeners )
 		{
-			dlg(iter, new TreePath(path), treeView);
+			dlg(new TreeIter(iter), new TreePath(path), treeView);
 		}
 		
 		return consumed;
 	}
 	
-	gboolean delegate(GtkTreeIter*, TreePath, TreeView)[] onTestExpandRowListeners;
-	void addOnTestExpandRow(gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	gboolean delegate(TreeIter, TreePath, TreeView)[] onTestExpandRowListeners;
+	/**
+	 * The given row is about to be expanded (show its children nodes). Use this
+	 * signal if you need to control the expandability of individual rows.
+	 */
+	void addOnTestExpandRow(gboolean delegate(TreeIter, TreePath, TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("test-expand-row" in connectedSignals) )
 		{
@@ -678,15 +741,17 @@ public class TreeView : Container
 	{
 		bool consumed = false;
 		
-		foreach ( gboolean delegate(GtkTreeIter*, TreePath, TreeView) dlg ; treeView.onTestExpandRowListeners )
+		foreach ( gboolean delegate(TreeIter, TreePath, TreeView) dlg ; treeView.onTestExpandRowListeners )
 		{
-			dlg(iter, new TreePath(path), treeView);
+			dlg(new TreeIter(iter), new TreePath(path), treeView);
 		}
 		
 		return consumed;
 	}
 	
 	gboolean delegate(TreeView)[] onToggleCursorRowListeners;
+	/**
+	 */
 	void addOnToggleCursorRow(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-cursor-row" in connectedSignals) )
@@ -715,6 +780,10 @@ public class TreeView : Container
 	}
 	
 	gboolean delegate(TreeView)[] onUnselectAllListeners;
+	/**
+	 * See Also
+	 * GtkTreeViewColumn, GtkTreeSelection, GtkTreeDnd, GtkTreeMode, GtkTreeSortable, GtkTreeModelSort, GtkListStore, GtkTreeStore, GtkCellRenderer, GtkCellEditable, GtkCellRendererPixbuf, GtkCellRendererText, GtkCellRendererToggle
+	 */
 	void addOnUnselectAll(gboolean delegate(TreeView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unselect-all" in connectedSignals) )
@@ -743,19 +812,20 @@ public class TreeView : Container
 	}
 	
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GtkTreeView widget.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_tree_view_new (void);
-		this(cast(GtkTreeView*)gtk_tree_view_new() );
+		auto p = gtk_tree_view_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTreeView*) p);
 	}
 	
 	/**
@@ -823,7 +893,14 @@ public class TreeView : Container
 	public this (TreeModel model)
 	{
 		// GtkWidget* gtk_tree_view_new_with_model (GtkTreeModel *model);
-		this(cast(GtkTreeView*)gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelStruct()) );
+		auto p = gtk_tree_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTreeView*) p);
 	}
 	
 	/**
@@ -834,7 +911,13 @@ public class TreeView : Container
 	public TreeModel getModel()
 	{
 		// GtkTreeModel* gtk_tree_view_get_model (GtkTreeView *tree_view);
-		return new TreeModel( gtk_tree_view_get_model(gtkTreeView) );
+		auto p = gtk_tree_view_get_model(gtkTreeView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -857,7 +940,13 @@ public class TreeView : Container
 	public TreeSelection getSelection()
 	{
 		// GtkTreeSelection* gtk_tree_view_get_selection (GtkTreeView *tree_view);
-		return new TreeSelection( gtk_tree_view_get_selection(gtkTreeView) );
+		auto p = gtk_tree_view_get_selection(gtkTreeView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeSelection(cast(GtkTreeSelection*) p);
 	}
 	
 	/**
@@ -867,7 +956,13 @@ public class TreeView : Container
 	public Adjustment getHadjustment()
 	{
 		// GtkAdjustment* gtk_tree_view_get_hadjustment (GtkTreeView *tree_view);
-		return new Adjustment( gtk_tree_view_get_hadjustment(gtkTreeView) );
+		auto p = gtk_tree_view_get_hadjustment(gtkTreeView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -888,7 +983,13 @@ public class TreeView : Container
 	public Adjustment getVadjustment()
 	{
 		// GtkAdjustment* gtk_tree_view_get_vadjustment (GtkTreeView *tree_view);
-		return new Adjustment( gtk_tree_view_get_vadjustment(gtkTreeView) );
+		auto p = gtk_tree_view_get_vadjustment(gtkTreeView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -1079,7 +1180,13 @@ public class TreeView : Container
 	public TreeViewColumn getColumn(int n)
 	{
 		// GtkTreeViewColumn* gtk_tree_view_get_column (GtkTreeView *tree_view,  gint n);
-		return new TreeViewColumn( gtk_tree_view_get_column(gtkTreeView, n) );
+		auto p = gtk_tree_view_get_column(gtkTreeView, n);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeViewColumn(cast(GtkTreeViewColumn*) p);
 	}
 	
 	/**
@@ -1090,7 +1197,13 @@ public class TreeView : Container
 	public ListG getColumns()
 	{
 		// GList* gtk_tree_view_get_columns (GtkTreeView *tree_view);
-		return new ListG( gtk_tree_view_get_columns(gtkTreeView) );
+		auto p = gtk_tree_view_get_columns(gtkTreeView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -1129,7 +1242,13 @@ public class TreeView : Container
 	public TreeViewColumn getExpanderColumn()
 	{
 		// GtkTreeViewColumn* gtk_tree_view_get_expander_column (GtkTreeView *tree_view);
-		return new TreeViewColumn( gtk_tree_view_get_expander_column(gtkTreeView) );
+		auto p = gtk_tree_view_get_expander_column(gtkTreeView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeViewColumn(cast(GtkTreeViewColumn*) p);
 	}
 	
 	/**
@@ -1494,7 +1613,13 @@ public class TreeView : Container
 	public Window getBinWindow()
 	{
 		// GdkWindow* gtk_tree_view_get_bin_window (GtkTreeView *tree_view);
-		return new Window( gtk_tree_view_get_bin_window(gtkTreeView) );
+		auto p = gtk_tree_view_get_bin_window(gtkTreeView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1730,7 +1855,13 @@ public class TreeView : Container
 	public Pixmap createRowDragIcon(TreePath path)
 	{
 		// GdkPixmap* gtk_tree_view_create_row_drag_icon (GtkTreeView *tree_view,  GtkTreePath *path);
-		return new Pixmap( gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct()) );
+		auto p = gtk_tree_view_create_row_drag_icon(gtkTreeView, (path is null) ? null : path.getTreePathStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixmap(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -1816,10 +1947,16 @@ public class TreeView : Container
 	 * Since 2.10
 	 * Returns: the entry currently in use as search entry.
 	 */
-	public GtkEntry* getSearchEntry()
+	public Entry getSearchEntry()
 	{
 		// GtkEntry* gtk_tree_view_get_search_entry (GtkTreeView *tree_view);
-		return gtk_tree_view_get_search_entry(gtkTreeView);
+		auto p = gtk_tree_view_get_search_entry(gtkTreeView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Entry(cast(GtkEntry*) p);
 	}
 	
 	/**
@@ -1832,12 +1969,11 @@ public class TreeView : Container
 	 * Params:
 	 * entry =  the entry the interactive search code of tree_view should use or NULL
 	 */
-	public void setSearchEntry(GtkEntry* entry)
+	public void setSearchEntry(Entry entry)
 	{
 		// void gtk_tree_view_set_search_entry (GtkTreeView *tree_view,  GtkEntry *entry);
-		gtk_tree_view_set_search_entry(gtkTreeView, entry);
+		gtk_tree_view_set_search_entry(gtkTreeView, (entry is null) ? null : entry.getEntryStruct());
 	}
-	
 	
 	/**
 	 * Returns the positioning function currently in use.
@@ -1943,7 +2079,6 @@ public class TreeView : Container
 		gtk_tree_view_set_hover_expand(gtkTreeView, expand);
 	}
 	
-	
 	/**
 	 * This function should almost never be used. It is meant for private use by
 	 * ATK for determining the number of visible children that are removed when the
@@ -1958,7 +2093,6 @@ public class TreeView : Container
 		// void gtk_tree_view_set_destroy_count_func  (GtkTreeView *tree_view,  GtkTreeDestroyCountFunc func,  gpointer data,  GtkDestroyNotify destroy);
 		gtk_tree_view_set_destroy_count_func(gtkTreeView, func, data, destroy);
 	}
-	
 	
 	/**
 	 * Returns the current row separator function.
@@ -2050,7 +2184,6 @@ public class TreeView : Container
 		gtk_tree_view_set_enable_tree_lines(gtkTreeView, enabled);
 	}
 	
-	
 	/**
 	 * Returns which grid lines are enabled in tree_view.
 	 * Since 2.10
@@ -2083,10 +2216,10 @@ public class TreeView : Container
 	 * tooltip =  a GtkTooltip
 	 * path =  a GtkTreePath
 	 */
-	public void setTooltipRow(GtkTooltip* tooltip, TreePath path)
+	public void setTooltipRow(Tooltip tooltip, TreePath path)
 	{
 		// void gtk_tree_view_set_tooltip_row (GtkTreeView *tree_view,  GtkTooltip *tooltip,  GtkTreePath *path);
-		gtk_tree_view_set_tooltip_row(gtkTreeView, tooltip, (path is null) ? null : path.getTreePathStruct());
+		gtk_tree_view_set_tooltip_row(gtkTreeView, (tooltip is null) ? null : tooltip.getTooltipStruct(), (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -2105,10 +2238,10 @@ public class TreeView : Container
 	 * column =  a GtkTreeViewColumn or NULL
 	 * cell =  a GtkCellRenderer or NULL
 	 */
-	public void setTooltipCell(GtkTooltip* tooltip, TreePath path, TreeViewColumn column, CellRenderer cell)
+	public void setTooltipCell(Tooltip tooltip, TreePath path, TreeViewColumn column, CellRenderer cell)
 	{
 		// void gtk_tree_view_set_tooltip_cell (GtkTreeView *tree_view,  GtkTooltip *tooltip,  GtkTreePath *path,  GtkTreeViewColumn *column,  GtkCellRenderer *cell);
-		gtk_tree_view_set_tooltip_cell(gtkTreeView, tooltip, (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), (cell is null) ? null : cell.getCellRendererStruct());
+		gtk_tree_view_set_tooltip_cell(gtkTreeView, (tooltip is null) ? null : tooltip.getTooltipStruct(), (path is null) ? null : path.getTreePathStruct(), (column is null) ? null : column.getTreeViewColumnStruct(), (cell is null) ? null : cell.getCellRendererStruct());
 	}
 	
 	/**
@@ -2132,10 +2265,10 @@ public class TreeView : Container
 	 * iter =  a pointer to receive a GtkTreeIter or NULL
 	 * Returns: whether or not the given tooltip context points to a row.
 	 */
-	public int getTooltipContext(int* x, int* y, int keyboardTip, GtkTreeModel** model, GtkTreePath** path, GtkTreeIter* iter)
+	public int getTooltipContext(int* x, int* y, int keyboardTip, GtkTreeModel** model, GtkTreePath** path, TreeIter iter)
 	{
 		// gboolean gtk_tree_view_get_tooltip_context (GtkTreeView *tree_view,  gint *x,  gint *y,  gboolean keyboard_tip,  GtkTreeModel **model,  GtkTreePath **path,  GtkTreeIter *iter);
-		return gtk_tree_view_get_tooltip_context(gtkTreeView, x, y, keyboardTip, model, path, iter);
+		return gtk_tree_view_get_tooltip_context(gtkTreeView, x, y, keyboardTip, model, path, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -2166,48 +2299,4 @@ public class TreeView : Container
 		// void gtk_tree_view_set_tooltip_column (GtkTreeView *tree_view,  gint column);
 		gtk_tree_view_set_tooltip_column(gtkTreeView, column);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

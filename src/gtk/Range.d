@@ -30,19 +30,27 @@
  * ctorStrct=
  * clss    = Range
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_range_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Adjustment
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
@@ -51,12 +59,20 @@
 
 module gtk.Range;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gtk.Adjustment;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -71,7 +87,7 @@ private import gtk.Widget;
  * of the "steppers". It also provides properties and methods for setting a
  * "fill level" on range widgets. See gtk_range_set_fill_level().
  */
-public class Range : Widget
+public class Range : Widget, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -105,15 +121,16 @@ public class Range : Widget
 		this.gtkRange = gtkRange;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkRange);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gdouble, Range)[] onAdjustBoundsListeners;
+	/**
+	 */
 	void addOnAdjustBounds(void delegate(gdouble, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("adjust-bounds" in connectedSignals) )
@@ -142,6 +159,22 @@ public class Range : Widget
 	}
 	
 	gboolean delegate(GtkScrollType, gdouble, Range)[] onChangeValueListeners;
+	/**
+	 * The ::change-value signal is emitted when a scroll action is
+	 * performed on a range. It allows an application to determine the
+	 * type of scroll event that occurred and the resultant new value.
+	 * The application can handle the event itself and return TRUE to
+	 * prevent further processing. Or, by returning FALSE, it can pass
+	 * the event to other handlers until the default GTK+ handler is
+	 * reached.
+	 * The value parameter is unrounded. An application that overrides
+	 * the ::change-value signal is responsible for clamping the value to
+	 * the desired number of decimal digits; the default GTK+ handler
+	 * clamps the value based on range->round_digits.
+	 * It is not possible to use delayed update policies in an overridden
+	 * ::change-value handler.
+	 * Since 2.6
+	 */
 	void addOnChangeValue(gboolean delegate(GtkScrollType, gdouble, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("change-value" in connectedSignals) )
@@ -170,6 +203,9 @@ public class Range : Widget
 	}
 	
 	void delegate(GtkScrollType, Range)[] onMoveSliderListeners;
+	/**
+	 * Virtual function that moves the slider. Used for keybindings.
+	 */
 	void addOnMoveSlider(void delegate(GtkScrollType, Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-slider" in connectedSignals) )
@@ -198,6 +234,9 @@ public class Range : Widget
 	}
 	
 	void delegate(Range)[] onValueChangedListeners;
+	/**
+	 * Emitted when the range value changes.
+	 */
 	void addOnValueChanged(void delegate(Range) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("value-changed" in connectedSignals) )
@@ -224,7 +263,6 @@ public class Range : Widget
 		
 		return consumed;
 	}
-	
 	
 	
 	/**
@@ -323,7 +361,13 @@ public class Range : Widget
 	public Adjustment getAdjustment()
 	{
 		// GtkAdjustment* gtk_range_get_adjustment (GtkRange *range);
-		return new Adjustment( gtk_range_get_adjustment(gtkRange) );
+		auto p = gtk_range_get_adjustment(gtkRange);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -448,7 +492,6 @@ public class Range : Widget
 		gtk_range_set_value(gtkRange, value);
 	}
 	
-	
 	/**
 	 * Sets the sensitivity policy for the stepper that points to the
 	 * 'lower' end of the GtkRange's adjustment.
@@ -498,22 +541,4 @@ public class Range : Widget
 		// GtkSensitivityType gtk_range_get_upper_stepper_sensitivity  (GtkRange *range);
 		return gtk_range_get_upper_stepper_sensitivity(gtkRange);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

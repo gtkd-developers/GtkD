@@ -30,19 +30,26 @@
  * ctorStrct=
  * clss    = Statusbar
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_statusbar_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -50,12 +57,19 @@
 
 module gtk.Statusbar;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -87,7 +101,7 @@ private import gtk.HBox;
  * A message can be removed from anywhere in the stack if its message_id was
  * recorded at the time it was added. This is done using gtk_statusbar_remove().
  */
-public class Statusbar : HBox
+public class Statusbar : HBox, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -121,15 +135,17 @@ public class Statusbar : HBox
 		this.gtkStatusbar = gtkStatusbar;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkStatusbar);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(guint, char[], Statusbar)[] onTextPoppedListeners;
+	/**
+	 * Is emitted whenever a new message is popped off a statusbar's stack.
+	 */
 	void addOnTextPopped(void delegate(guint, char[], Statusbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-popped" in connectedSignals) )
@@ -158,6 +174,9 @@ public class Statusbar : HBox
 	}
 	
 	void delegate(guint, char[], Statusbar)[] onTextPushedListeners;
+	/**
+	 * Is emitted whenever a new message gets pushed onto a statusbar's stack.
+	 */
 	void addOnTextPushed(void delegate(guint, char[], Statusbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-pushed" in connectedSignals) )
@@ -186,14 +205,20 @@ public class Statusbar : HBox
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkStatusbar ready for messages.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_statusbar_new (void);
-		this(cast(GtkStatusbar*)gtk_statusbar_new() );
+		auto p = gtk_statusbar_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkStatusbar*) p);
 	}
 	
 	/**
@@ -274,5 +299,4 @@ public class Statusbar : HBox
 		// gboolean gtk_statusbar_get_has_resize_grip (GtkStatusbar *statusbar);
 		return gtk_statusbar_get_has_resize_grip(gtkStatusbar);
 	}
-	
 }

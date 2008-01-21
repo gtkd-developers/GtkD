@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.Type
@@ -50,7 +51,7 @@
 
 module gobject.TypePlugin;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
@@ -135,12 +136,6 @@ public class TypePlugin
 	
 	/**
 	 */
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Calls the use_plugin function from the GTypePluginClass of plugin.

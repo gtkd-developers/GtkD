@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * 	- gdk.Visual
@@ -54,7 +55,7 @@
 
 module gdk.Visual;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -136,9 +137,6 @@ public class Visual
 	/**
 	 */
 	
-	
-	
-	
 	/**
 	 * This function returns the available bit depths for the default
 	 * screen. It's equivalent to listing the visuals
@@ -183,7 +181,13 @@ public class Visual
 	public static ListG gdkListVisuals()
 	{
 		// GList* gdk_list_visuals (void);
-		return new ListG( gdk_list_visuals() );
+		auto p = gdk_list_visuals();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -217,7 +221,13 @@ public class Visual
 	public static Visual getSystem()
 	{
 		// GdkVisual* gdk_visual_get_system (void);
-		return new Visual( gdk_visual_get_system() );
+		auto p = gdk_visual_get_system();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -228,7 +238,13 @@ public class Visual
 	public static Visual getBest()
 	{
 		// GdkVisual* gdk_visual_get_best (void);
-		return new Visual( gdk_visual_get_best() );
+		auto p = gdk_visual_get_best();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -243,7 +259,13 @@ public class Visual
 	public static Visual getBestWithDepth(int depth)
 	{
 		// GdkVisual* gdk_visual_get_best_with_depth (gint depth);
-		return new Visual( gdk_visual_get_best_with_depth(depth) );
+		auto p = gdk_visual_get_best_with_depth(depth);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -258,7 +280,13 @@ public class Visual
 	public static Visual getBestWithType(GdkVisualType visualType)
 	{
 		// GdkVisual* gdk_visual_get_best_with_type (GdkVisualType visual_type);
-		return new Visual( gdk_visual_get_best_with_type(visualType) );
+		auto p = gdk_visual_get_best_with_type(visualType);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -271,10 +299,14 @@ public class Visual
 	public static Visual getBestWithBoth(int depth, GdkVisualType visualType)
 	{
 		// GdkVisual* gdk_visual_get_best_with_both (gint depth,  GdkVisualType visual_type);
-		return new Visual( gdk_visual_get_best_with_both(depth, visualType) );
+		auto p = gdk_visual_get_best_with_both(depth, visualType);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
-	
-	
 	
 	/**
 	 * Gets the screen to which this visual belongs
@@ -284,6 +316,12 @@ public class Visual
 	public Screen getScreen()
 	{
 		// GdkScreen* gdk_visual_get_screen (GdkVisual *visual);
-		return new Screen( gdk_visual_get_screen(gdkVisual) );
+		auto p = gdk_visual_get_screen(gdkVisual);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 }

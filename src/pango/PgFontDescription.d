@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = pango-Fonts.html
+ * inFile  = 
  * outPack = pango
  * outFile = PgFontDescription
  * strct   = PangoFontDescription
@@ -39,70 +39,23 @@
  * 	- pango_font_description_
  * omit structs:
  * omit prefixes:
- * 	- pango_font_metrics_
- * 	- pango_font_family_
- * 	- pango_font_face_
- * 	- pango_font_map_
- * 	- pango_fontset_simple_
  * omit code:
+ * omit signals:
  * imports:
- * 	- pango.PgContext
- * 	- pango.PgItem
- * 	- pango.PgLayout
- * 	- pango.PgFontMetrics
- * 	- pango.PgFontFamily
- * 	- pango.PgFontFace
- * 	- pango.PgFontMap
- * 	- pango.PgFontsetSimple
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
- * 	- pango.PgLanguage
- * 	- pango.PgTabArray
- * 	- pango.PgLayout
- * 	- pango.PgLayoutIter
- * 	- pango.PgScriptIter
  * 	- glib.Str
  * structWrap:
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
- * 	- PangoContext* -> PgContext
- * 	- PangoFontFace* -> PgFontFace
- * 	- PangoFontFamily* -> PgFontFamily
- * 	- PangoFontMap* -> PgFontMap
- * 	- PangoFontMetrics* -> PgFontMetrics
- * 	- PangoFontsetSimple* -> PgFontsetSimple
- * 	- PangoItem* -> PgItem
- * 	- PangoLanguage* -> PgLanguage
- * 	- PangoLayout* -> PgLayout
- * 	- PangoLayoutIter* -> PgLayoutIter
- * 	- PangoScriptIter* -> PgScriptIter
- * 	- PangoTabArray* -> PgTabArray
+ * 	- PangoFontDescription* -> PgFontDescription
  * module aliases:
  * local aliases:
  */
 
 module pango.PgFontDescription;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
 
-private import pango.PgContext;
-private import pango.PgItem;
-private import pango.PgLayout;
-private import pango.PgFontMetrics;
-private import pango.PgFontFamily;
-private import pango.PgFontFace;
-private import pango.PgFontMap;
-private import pango.PgFontsetSimple;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
-private import pango.PgLanguage;
-private import pango.PgTabArray;
-private import pango.PgLayout;
-private import pango.PgLayoutIter;
-private import pango.PgScriptIter;
 private import glib.Str;
 
 
@@ -166,35 +119,36 @@ public class PgFontDescription
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new font description structure with all fields unset.
 	 */
 	public this ()
 	{
 		// PangoFontDescription* pango_font_description_new (void);
-		this(cast(PangoFontDescription*)pango_font_description_new() );
+		auto p = pango_font_description_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(PangoFontDescription*) p);
 	}
 	
 	/**
 	 * Make a copy of a PangoFontDescription.
 	 * Returns: the newly allocated PangoFontDescription, which should be freed with pango_font_description_free().
 	 */
-	public PangoFontDescription* copy()
+	public PgFontDescription copy()
 	{
 		// PangoFontDescription* pango_font_description_copy (const PangoFontDescription *desc);
-		return pango_font_description_copy(pangoFontDescription);
+		auto p = pango_font_description_copy(pangoFontDescription);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -204,10 +158,16 @@ public class PgFontDescription
 	 * when the copy is only needed temporarily.
 	 * Returns: the newly allocated PangoFontDescription, which should be freed with pango_font_description_free().
 	 */
-	public PangoFontDescription* copyStatic()
+	public PgFontDescription copyStatic()
 	{
 		// PangoFontDescription* pango_font_description_copy_static  (const PangoFontDescription *desc);
-		return pango_font_description_copy_static(pangoFontDescription);
+		auto p = pango_font_description_copy_static(pangoFontDescription);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -232,10 +192,10 @@ public class PgFontDescription
 	 * desc2 =  another PangoFontDescription
 	 * Returns: TRUE if the two font descriptions are identical,	 FALSE otherwise.
 	 */
-	public int equal(PangoFontDescription* desc2)
+	public int equal(PgFontDescription desc2)
 	{
 		// gboolean pango_font_description_equal (const PangoFontDescription *desc1,  const PangoFontDescription *desc2);
-		return pango_font_description_equal(pangoFontDescription, desc2);
+		return pango_font_description_equal(pangoFontDescription, (desc2 is null) ? null : desc2.getPgFontDescriptionStruct());
 	}
 	
 	/**
@@ -245,18 +205,6 @@ public class PgFontDescription
 	{
 		// void pango_font_description_free (PangoFontDescription *desc);
 		pango_font_description_free(pangoFontDescription);
-	}
-	
-	/**
-	 * Frees a list of font descriptions from pango_font_map_list_fonts()
-	 * Params:
-	 * descs =  a pointer to an array of PangoFontDescription, or NULL
-	 * nDescs =  number of font descriptions in descs
-	 */
-	public static void pangoFontDescriptionsFree(PangoFontDescription** descs, int nDescs)
-	{
-		// void pango_font_descriptions_free (PangoFontDescription **descs,  int n_descs);
-		pango_font_descriptions_free(descs, nDescs);
 	}
 	
 	/**
@@ -298,7 +246,7 @@ public class PgFontDescription
 	public char[] getFamily()
 	{
 		// const char* pango_font_description_get_family (const PangoFontDescription *desc);
-		return Str.toString(pango_font_description_get_family(pangoFontDescription) );
+		return Str.toString(pango_font_description_get_family(pangoFontDescription)).dup;
 	}
 	
 	/**
@@ -434,11 +382,11 @@ public class PgFontDescription
 	 * Sets the size field of a font description, in device units. This is mutually
 	 * exclusive with pango_font_description_set_size() which sets the font size
 	 * in points.
+	 * Since 1.8
 	 * Params:
 	 * size =  the new size, in Pango units. There are PANGO_SCALE Pango units in one
 	 *  device unit. For an output backend where a device unit is a pixel, a size
 	 *  value of 10 * PANGO_SCALE gives a 10 pixel font.
-	 * Since 1.8
 	 */
 	public void setAbsoluteSize(double size)
 	{
@@ -449,7 +397,8 @@ public class PgFontDescription
 	/**
 	 * Determines whether the size of the font is in points (not absolute) or device units (absolute).
 	 * See pango_font_description_set_size() and pango_font_description_set_absolute_size().
-	 * Returns: whether the size for the font description is in points or device units. Use pango_font_description_get_set_fields() to find out if the size field of the font description was explicitly set or not.Since 1.8
+	 * Since 1.8
+	 * Returns: whether the size for the font description is in points or device units. Use pango_font_description_get_set_fields() to find out if the size field of the font description was explicitly set or not.
 	 */
 	public int getSizeIsAbsolute()
 	{
@@ -464,9 +413,9 @@ public class PgFontDescription
 	 * the font description.
 	 * This function is seldom useful to the user. Gravity should normally
 	 * be set on a PangoContext.
+	 * Since 1.16
 	 * Params:
 	 * gravity =  the gravity for the font description.
-	 * Since 1.16
 	 */
 	public void setGravity(PangoGravity gravity)
 	{
@@ -477,7 +426,8 @@ public class PgFontDescription
 	/**
 	 * Gets the gravity field of a font description. See
 	 * pango_font_description_set_gravity().
-	 * Returns: the gravity field for the font description. Use pango_font_description_get_set_fields() to find out if the field was explicitly set or not.Since 1.16
+	 * Since 1.16
+	 * Returns: the gravity field for the font description. Use pango_font_description_get_set_fields() to find out if the field was explicitly set or not.
 	 */
 	public PangoGravity getGravity()
 	{
@@ -519,10 +469,10 @@ public class PgFontDescription
 	 *  corresponding values from desc_to_merge, even if they
 	 *  are already exist.
 	 */
-	public void merge(PangoFontDescription* descToMerge, int replaceExisting)
+	public void merge(PgFontDescription descToMerge, int replaceExisting)
 	{
 		// void pango_font_description_merge (PangoFontDescription *desc,  const PangoFontDescription *desc_to_merge,  gboolean replace_existing);
-		pango_font_description_merge(pangoFontDescription, descToMerge, replaceExisting);
+		pango_font_description_merge(pangoFontDescription, (descToMerge is null) ? null : descToMerge.getPgFontDescriptionStruct(), replaceExisting);
 	}
 	
 	/**
@@ -537,10 +487,10 @@ public class PgFontDescription
 	 *  corresponding values from desc_to_merge, even if they
 	 *  are already exist.
 	 */
-	public void mergeStatic(PangoFontDescription* descToMerge, int replaceExisting)
+	public void mergeStatic(PgFontDescription descToMerge, int replaceExisting)
 	{
 		// void pango_font_description_merge_static (PangoFontDescription *desc,  const PangoFontDescription *desc_to_merge,  gboolean replace_existing);
-		pango_font_description_merge_static(pangoFontDescription, descToMerge, replaceExisting);
+		pango_font_description_merge_static(pangoFontDescription, (descToMerge is null) ? null : descToMerge.getPgFontDescriptionStruct(), replaceExisting);
 	}
 	
 	/**
@@ -553,10 +503,10 @@ public class PgFontDescription
 	 * newMatch =  a PangoFontDescription
 	 * Returns: TRUE if new_match is a better match
 	 */
-	public int betterMatch(PangoFontDescription* oldMatch, PangoFontDescription* newMatch)
+	public int betterMatch(PgFontDescription oldMatch, PgFontDescription newMatch)
 	{
 		// gboolean pango_font_description_better_match (const PangoFontDescription *desc,  const PangoFontDescription *old_match,  const PangoFontDescription *new_match);
-		return pango_font_description_better_match(pangoFontDescription, oldMatch, newMatch);
+		return pango_font_description_better_match(pangoFontDescription, (oldMatch is null) ? null : oldMatch.getPgFontDescriptionStruct(), (newMatch is null) ? null : newMatch.getPgFontDescriptionStruct());
 	}
 	
 	/**
@@ -576,10 +526,16 @@ public class PgFontDescription
 	 * str =  string representation of a font description.
 	 * Returns: a new PangoFontDescription.
 	 */
-	public static PangoFontDescription* fromString(char[] str)
+	public static PgFontDescription fromString(char[] str)
 	{
 		// PangoFontDescription* pango_font_description_from_string  (const char *str);
-		return pango_font_description_from_string(Str.toStringz(str));
+		auto p = pango_font_description_from_string(Str.toStringz(str));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -593,7 +549,7 @@ public class PgFontDescription
 	public char[] toString()
 	{
 		// char* pango_font_description_to_string (const PangoFontDescription *desc);
-		return Str.toString(pango_font_description_to_string(pangoFontDescription) );
+		return Str.toString(pango_font_description_to_string(pangoFontDescription)).dup;
 	}
 	
 	/**
@@ -606,207 +562,6 @@ public class PgFontDescription
 	public char[] toFilename()
 	{
 		// char* pango_font_description_to_filename (const PangoFontDescription *desc);
-		return Str.toString(pango_font_description_to_filename(pangoFontDescription) );
+		return Str.toString(pango_font_description_to_filename(pangoFontDescription)).dup;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * Finds the best matching shaper for a font for a particular
-	 * language tag and character point.
-	 * Params:
-	 * font =  a PangoFont
-	 * language =  the language tag
-	 * ch =  a Unicode character.
-	 * Returns: the best matching shaper.
-	 */
-	public static PangoEngineShape* pangoFontFindShaper(PangoFont* font, PgLanguage language, uint ch)
-	{
-		// PangoEngineShape* pango_font_find_shaper (PangoFont *font,  PangoLanguage *language,  guint32 ch);
-		return pango_font_find_shaper(font, (language is null) ? null : language.getPgLanguageStruct(), ch);
-	}
-	
-	/**
-	 * Returns a description of the font, with font size set in points.
-	 * Use pango_font_describe_with_absolute_size() if you want the font
-	 * size in device units.
-	 * Params:
-	 * font =  a PangoFont
-	 * Returns: a newly-allocated PangoFontDescription object.
-	 */
-	public static PangoFontDescription* pangoFontDescribe(PangoFont* font)
-	{
-		// PangoFontDescription* pango_font_describe (PangoFont *font);
-		return pango_font_describe(font);
-	}
-	
-	/**
-	 * Returns a description of the font, with absolute font size set
-	 * (in device units). Use pango_font_describe() if you want the font
-	 * size in points.
-	 * Params:
-	 * font =  a PangoFont
-	 * Returns: a newly-allocated PangoFontDescription object.Since 1.14
-	 */
-	public static PangoFontDescription* pangoFontDescribeWithAbsoluteSize(PangoFont* font)
-	{
-		// PangoFontDescription* pango_font_describe_with_absolute_size  (PangoFont *font);
-		return pango_font_describe_with_absolute_size(font);
-	}
-	
-	/**
-	 * Computes the coverage map for a given font and language tag.
-	 * Params:
-	 * font =  a PangoFont
-	 * language =  the language tag
-	 * Returns: a newly-allocated PangoCoverage object.
-	 */
-	public static PangoCoverage* pangoFontGetCoverage(PangoFont* font, PgLanguage language)
-	{
-		// PangoCoverage* pango_font_get_coverage (PangoFont *font,  PangoLanguage *language);
-		return pango_font_get_coverage(font, (language is null) ? null : language.getPgLanguageStruct());
-	}
-	
-	/**
-	 * Gets the logical and ink extents of a glyph within a font. The
-	 * coordinate system for each rectangle has its origin at the
-	 * base line and horizontal origin of the character with increasing
-	 * coordinates extending to the right and down. The macros PANGO_ASCENT(),
-	 * PANGO_DESCENT(), PANGO_LBEARING(), and PANGO_RBEARING() can be used to convert
-	 * from the extents rectangle to more traditional font metrics. The units
-	 * of the rectangles are in 1/PANGO_SCALE of a device unit.
-	 * Params:
-	 * font =  a PangoFont
-	 * glyph =  the glyph index
-	 * inkRect =  rectangle used to store the extents of the glyph as drawn
-	 *  or NULL to indicate that the result is not needed.
-	 * logicalRect =  rectangle used to store the logical extents of the glyph
-	 *  or NULL to indicate that the result is not needed.
-	 */
-	public static void pangoFontGetGlyphExtents(PangoFont* font, PangoGlyph glyph, PangoRectangle* inkRect, PangoRectangle* logicalRect)
-	{
-		// void pango_font_get_glyph_extents (PangoFont *font,  PangoGlyph glyph,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
-		pango_font_get_glyph_extents(font, glyph, inkRect, logicalRect);
-	}
-	
-	/**
-	 * Gets overall metric information for a font. Since the metrics may be
-	 * substantially different for different scripts, a language tag can
-	 * be provided to indicate that the metrics should be retrieved that
-	 * correspond to the script(s) used by that language.
-	 * Params:
-	 * font =  a PangoFont
-	 * language =  language tag used to determine which script to get the metrics
-	 *  for, or NULL to indicate to get the metrics for the entire
-	 *  font.
-	 * Returns: a PangoFontMetrics object. The caller must call pango_font_metrics_unref() when finished using the object.
-	 */
-	public static PgFontMetrics pangoFontGetMetrics(PangoFont* font, PgLanguage language)
-	{
-		// PangoFontMetrics* pango_font_get_metrics (PangoFont *font,  PangoLanguage *language);
-		return new PgFontMetrics( pango_font_get_metrics(font, (language is null) ? null : language.getPgLanguageStruct()) );
-	}
-	
-	/**
-	 * Gets the font map for which the font was created.
-	 * Params:
-	 * font =  a PangoFont
-	 * Returns: the PangoFontMap for the fontSince 1.10
-	 */
-	public static PgFontMap pangoFontGetFontMap(PangoFont* font)
-	{
-		// PangoFontMap* pango_font_get_font_map (PangoFont *font);
-		return new PgFontMap( pango_font_get_font_map(font) );
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	/**
-	 * Returns the font in the fontset that contains the best glyph for the
-	 * Unicode character wc.
-	 * Params:
-	 * fontset =  a PangoFontset
-	 * wc =  a Unicode character
-	 * Returns: a PangoFont. The caller must call g_object_unref when finished with the font.
-	 */
-	public static PangoFont* pangoFontsetGetFont(PangoFontset* fontset, uint wc)
-	{
-		// PangoFont* pango_fontset_get_font (PangoFontset *fontset,  guint wc);
-		return pango_fontset_get_font(fontset, wc);
-	}
-	
-	/**
-	 * Get overall metric information for the fonts in the fontset.
-	 * Params:
-	 * fontset =  a PangoFontset
-	 * Returns: a PangoFontMetrics object. The caller must call pango_font_metrics_unref() when finished using the object.
-	 */
-	public static PgFontMetrics pangoFontsetGetMetrics(PangoFontset* fontset)
-	{
-		// PangoFontMetrics* pango_fontset_get_metrics (PangoFontset *fontset);
-		return new PgFontMetrics( pango_fontset_get_metrics(fontset) );
-	}
-	
-	
-	/**
-	 * Iterates through all the fonts in a fontset, calling func for
-	 * each one. If func returns TRUE, that stops the iteration.
-	 * Params:
-	 * fontset =  a PangoFontset
-	 * func =  Callback function
-	 * data =  data to pass to the callback function
-	 * Since 1.4
-	 */
-	public static void pangoFontsetForeach(PangoFontset* fontset, PangoFontsetForeachFunc func, void* data)
-	{
-		// void pango_fontset_foreach (PangoFontset *fontset,  PangoFontsetForeachFunc func,  gpointer data);
-		pango_fontset_foreach(fontset, func, data);
-	}
-	
-	
-	
-	
-	
 }

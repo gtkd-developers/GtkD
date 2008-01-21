@@ -40,63 +40,21 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
- * 	- pango.PgContext
- * 	- pango.PgLayout
- * 	- pango.PgFontDescription
- * 	- pango.PgFontMetrics
- * 	- pango.PgFontFamily
- * 	- pango.PgFontFace
- * 	- pango.PgFontMap
- * 	- pango.PgFontsetSimple
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
- * 	- pango.PgLanguage
- * 	- pango.PgTabArray
- * 	- pango.PgLayout
- * 	- pango.PgLayoutIter
- * 	- pango.PgScriptIter
  * structWrap:
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
- * 	- PangoContext* -> PgContext
- * 	- PangoFontDescription* -> PgFontDescription
- * 	- PangoFontFace* -> PgFontFace
- * 	- PangoFontFamily* -> PgFontFamily
- * 	- PangoFontMap* -> PgFontMap
- * 	- PangoFontMetrics* -> PgFontMetrics
- * 	- PangoFontsetSimple* -> PgFontsetSimple
- * 	- PangoLanguage* -> PgLanguage
- * 	- PangoLayout* -> PgLayout
- * 	- PangoLayoutIter* -> PgLayoutIter
- * 	- PangoScriptIter* -> PgScriptIter
- * 	- PangoTabArray* -> PgTabArray
+ * 	- PangoItem* -> PgItem
  * module aliases:
  * local aliases:
  */
 
 module pango.PgItem;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
 
-private import pango.PgContext;
-private import pango.PgLayout;
-private import pango.PgFontDescription;
-private import pango.PgFontMetrics;
-private import pango.PgFontFamily;
-private import pango.PgFontFace;
-private import pango.PgFontMap;
-private import pango.PgFontsetSimple;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
-private import pango.PgLanguage;
-private import pango.PgTabArray;
-private import pango.PgLayout;
-private import pango.PgLayoutIter;
-private import pango.PgScriptIter;
 
 
 
@@ -144,14 +102,6 @@ public class PgItem
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Free a PangoItem and all associated memory.
 	 */
@@ -165,10 +115,16 @@ public class PgItem
 	 * Copy an existing PangoItem structure.
 	 * Returns: the newly allocated PangoItem, which should be freed with pango_item_free().
 	 */
-	public PangoItem* copy()
+	public PgItem copy()
 	{
 		// PangoItem* pango_item_copy (PangoItem *item);
-		return pango_item_copy(pangoItem);
+		auto p = pango_item_copy(pangoItem);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgItem(cast(PangoItem*) p);
 	}
 	
 	/**
@@ -177,7 +133,14 @@ public class PgItem
 	public this ()
 	{
 		// PangoItem* pango_item_new (void);
-		this(cast(PangoItem*)pango_item_new() );
+		auto p = pango_item_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(PangoItem*) p);
 	}
 	
 	/**
@@ -196,40 +159,15 @@ public class PgItem
 	 * splitOffset =  number of chars between start of orig and split_index
 	 * Returns: new item representing text before split_index, which should be freed with pango_item_free().
 	 */
-	public PangoItem* split(int splitIndex, int splitOffset)
+	public PgItem split(int splitIndex, int splitOffset)
 	{
 		// PangoItem* pango_item_split (PangoItem *orig,  int split_index,  int split_offset);
-		return pango_item_split(pangoItem, splitIndex, splitOffset);
+		auto p = pango_item_split(pangoItem, splitIndex, splitOffset);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgItem(cast(PangoItem*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

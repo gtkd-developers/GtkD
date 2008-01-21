@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glgdk.GLContext
  * structWrap:
@@ -50,7 +51,7 @@
 
 module glgdk.GLDrawable;
 
-private import gtkglc.glgdktypes;
+public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 
@@ -98,7 +99,6 @@ public class GLDrawable
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Attach an OpenGL rendering context to a gldrawable.

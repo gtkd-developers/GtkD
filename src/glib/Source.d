@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.MainLoop
  * 	- glib.Dataset
@@ -58,7 +59,7 @@
 
 module glib.Source;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -173,73 +174,6 @@ public class Source
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GSource structure. The size is specified to
 	 * allow creating structures derived from GSource that contain
@@ -256,7 +190,14 @@ public class Source
 	public this (GSourceFuncs* sourceFuncs, uint structSize)
 	{
 		// GSource* g_source_new (GSourceFuncs *source_funcs,  guint struct_size);
-		this(cast(GSource*)g_source_new(sourceFuncs, structSize) );
+		auto p = g_source_new(sourceFuncs, structSize);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GSource*) p);
 	}
 	
 	/**
@@ -266,7 +207,13 @@ public class Source
 	public Source doref()
 	{
 		// GSource* g_source_ref (GSource *source);
-		return new Source( g_source_ref(gSource) );
+		auto p = g_source_ref(gSource);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Source(cast(GSource*) p);
 	}
 	
 	/**
@@ -440,7 +387,13 @@ public class Source
 	public MainContext getContext()
 	{
 		// GMainContext* g_source_get_context (GSource *source);
-		return new MainContext( g_source_get_context(gSource) );
+		auto p = g_source_get_context(gSource);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new MainContext(cast(GMainContext*) p);
 	}
 	
 	/**
@@ -461,7 +414,6 @@ public class Source
 		// void g_source_set_callback (GSource *source,  GSourceFunc func,  gpointer data,  GDestroyNotify notify);
 		g_source_set_callback(gSource, func, data, notify);
 	}
-	
 	
 	/**
 	 * Sets the callback function storing the data as a refcounted callback

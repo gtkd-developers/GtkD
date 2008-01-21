@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_cell_view_
  * 	- gtk_
@@ -43,6 +44,7 @@
  * omit code:
  * 	- gtk_cell_view_new_with_text
  * 	- gtk_cell_view_new_with_markup
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Pixbuf
@@ -50,6 +52,11 @@
  * 	- gtk.TreePath
  * 	- gdk.Color
  * 	- glib.ListG
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkColor* -> Color
@@ -62,7 +69,7 @@
 
 module gtk.CellView;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -73,6 +80,11 @@ private import gtk.TreeModel;
 private import gtk.TreePath;
 private import gdk.Color;
 private import glib.ListG;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -85,7 +97,7 @@ private import gtk.Widget;
  * some of the more complex features of GtkTreeView, like cell editing
  * and drag and drop.
  */
-public class CellView : Widget
+public class CellView : Widget, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -119,6 +131,9 @@ public class CellView : Widget
 		this.gtkCellView = gtkCellView;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkCellView);
+	
 	/**
 	 * Creates a new GtkCellView widget, adds a GtkCellRendererText
 	 * to it, and makes its show text.
@@ -147,7 +162,6 @@ public class CellView : Widget
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkCellView widget.
 	 * Since 2.6
@@ -155,10 +169,15 @@ public class CellView : Widget
 	public this ()
 	{
 		// GtkWidget* gtk_cell_view_new (void);
-		this(cast(GtkCellView*)gtk_cell_view_new() );
+		auto p = gtk_cell_view_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCellView*) p);
 	}
-	
-	
 	
 	/**
 	 * Creates a new GtkCellView widget, adds a GtkCellRendererPixbuf
@@ -170,7 +189,14 @@ public class CellView : Widget
 	public this (Pixbuf pixbuf)
 	{
 		// GtkWidget* gtk_cell_view_new_with_pixbuf (GdkPixbuf *pixbuf);
-		this(cast(GtkCellView*)gtk_cell_view_new_with_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct()) );
+		auto p = gtk_cell_view_new_with_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCellView*) p);
 	}
 	
 	/**
@@ -214,7 +240,13 @@ public class CellView : Widget
 	public TreePath getDisplayedRow()
 	{
 		// GtkTreePath* gtk_cell_view_get_displayed_row (GtkCellView *cell_view);
-		return new TreePath( gtk_cell_view_get_displayed_row(gtkCellView) );
+		auto p = gtk_cell_view_get_displayed_row(gtkCellView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -252,9 +284,12 @@ public class CellView : Widget
 	public ListG getCellRenderers()
 	{
 		// GList* gtk_cell_view_get_cell_renderers (GtkCellView *cell_view);
-		return new ListG( gtk_cell_view_get_cell_renderers(gtkCellView) );
+		auto p = gtk_cell_view_get_cell_renderers(gtkCellView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
-	
-	
-	
 }

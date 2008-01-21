@@ -35,6 +35,7 @@
  * template for:
  * extend  = GtkTreeModel
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_list_store_
  * 	- gtk_
@@ -42,12 +43,16 @@
  * omit prefixes:
  * omit code:
  * 	- gtk_list_store_set
+ * omit signals:
  * imports:
  * 	- gtk.TreeModel
  * 	- glib.Str
  * 	- gtk.TreeIter
  * 	- gobject.Value
- * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -57,7 +62,7 @@
 
 module gtk.ListStore;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -66,7 +71,10 @@ private import gtk.TreeModel;
 private import glib.Str;
 private import gtk.TreeIter;
 private import gobject.Value;
-private import glib.Str;
+private import gobject.ObjectG;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -190,7 +198,7 @@ private import gtk.TreeModel;
  *  </data>
  * </object>
  */
-public class ListStore : TreeModel
+public class ListStore : TreeModel, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -223,6 +231,9 @@ public class ListStore : TreeModel
 		super(cast(GtkTreeModel*)gtkListStore);
 		this.gtkListStore = gtkListStore;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkListStore);
 	
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
@@ -302,7 +313,6 @@ public class ListStore : TreeModel
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new list store as with n_columns columns each of the types passed
 	 * in. Note that only types derived from standard GObject fundamental types
@@ -317,7 +327,14 @@ public class ListStore : TreeModel
 	public this (int nColumns, ... )
 	{
 		// GtkListStore* gtk_list_store_new (gint n_columns,  ...);
-		this(cast(GtkListStore*)gtk_list_store_new(nColumns) );
+		auto p = gtk_list_store_new(nColumns);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkListStore*) p);
 	}
 	
 	/**
@@ -329,7 +346,14 @@ public class ListStore : TreeModel
 	public this (int nColumns, GType* types)
 	{
 		// GtkListStore* gtk_list_store_newv (gint n_columns,  GType *types);
-		this(cast(GtkListStore*)gtk_list_store_newv(nColumns, types) );
+		auto p = gtk_list_store_newv(nColumns, types);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkListStore*) p);
 	}
 	
 	/**
@@ -346,7 +370,6 @@ public class ListStore : TreeModel
 		// void gtk_list_store_set_column_types (GtkListStore *list_store,  gint n_columns,  GType *types);
 		gtk_list_store_set_column_types(gtkListStore, nColumns, types);
 	}
-	
 	
 	/**
 	 * See gtk_list_store_set(); this version takes a va_list for use by language

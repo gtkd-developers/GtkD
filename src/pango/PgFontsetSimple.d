@@ -33,75 +33,39 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = PangoFontset
  * implements:
  * prefixes:
  * 	- pango_fontset_simple_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
- * 	- pango.PgContext
- * 	- pango.PgItem
- * 	- pango.PgLayout
- * 	- pango.PgFontDescription
- * 	- pango.PgFontMetrics
- * 	- pango.PgFontFamily
- * 	- pango.PgFontFace
- * 	- pango.PgFontMap
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
  * 	- pango.PgLanguage
- * 	- pango.PgTabArray
- * 	- pango.PgLayout
- * 	- pango.PgLayoutIter
- * 	- pango.PgScriptIter
- * 	- glib.Str
+ * 	- pango.PgFont
+ * 	- pango.PgFontset
  * structWrap:
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
- * 	- PangoContext* -> PgContext
- * 	- PangoFontDescription* -> PgFontDescription
- * 	- PangoFontFace* -> PgFontFace
- * 	- PangoFontFamily* -> PgFontFamily
- * 	- PangoFontMap* -> PgFontMap
- * 	- PangoFontMetrics* -> PgFontMetrics
- * 	- PangoItem* -> PgItem
+ * 	- PangoFont* -> PgFont
  * 	- PangoLanguage* -> PgLanguage
- * 	- PangoLayout* -> PgLayout
- * 	- PangoLayoutIter* -> PgLayoutIter
- * 	- PangoScriptIter* -> PgScriptIter
- * 	- PangoTabArray* -> PgTabArray
  * module aliases:
  * local aliases:
  */
 
 module pango.PgFontsetSimple;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
 
-private import pango.PgContext;
-private import pango.PgItem;
-private import pango.PgLayout;
-private import pango.PgFontDescription;
-private import pango.PgFontMetrics;
-private import pango.PgFontFamily;
-private import pango.PgFontFace;
-private import pango.PgFontMap;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
 private import pango.PgLanguage;
-private import pango.PgTabArray;
-private import pango.PgLayout;
-private import pango.PgLayoutIter;
-private import pango.PgScriptIter;
-private import glib.Str;
+private import pango.PgFont;
+private import pango.PgFontset;
 
 
 
+private import pango.PgFontset;
 
 /**
  * Description
@@ -112,7 +76,7 @@ private import glib.Str;
  * Pango provides routines to list available fonts, and
  * to load a font of a given description.
  */
-public class PgFontsetSimple
+public class PgFontsetSimple : PgFontset
 {
 	
 	/** the main Gtk struct */
@@ -142,114 +106,12 @@ public class PgFontsetSimple
 			version(Exceptions) throw new Exception("Null pangoFontsetSimple passed to constructor.");
 			else return;
 		}
+		super(cast(PangoFontset*)pangoFontsetSimple);
 		this.pangoFontsetSimple = pangoFontsetSimple;
 	}
 	
 	/**
 	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Creates a new PangoFontsetSimple for the given language.
@@ -259,7 +121,14 @@ public class PgFontsetSimple
 	public this (PgLanguage language)
 	{
 		// PangoFontsetSimple* pango_fontset_simple_new (PangoLanguage *language);
-		this(cast(PangoFontsetSimple*)pango_fontset_simple_new((language is null) ? null : language.getPgLanguageStruct()) );
+		auto p = pango_fontset_simple_new((language is null) ? null : language.getPgLanguageStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(PangoFontsetSimple*) p);
 	}
 	
 	/**
@@ -267,10 +136,10 @@ public class PgFontsetSimple
 	 * Params:
 	 * font =  a PangoFont.
 	 */
-	public void append(PangoFont* font)
+	public void append(PgFont font)
 	{
 		// void pango_fontset_simple_append (PangoFontsetSimple *fontset,  PangoFont *font);
-		pango_fontset_simple_append(pangoFontsetSimple, font);
+		pango_fontset_simple_append(pangoFontsetSimple, (font is null) ? null : font.getPgFontStruct());
 	}
 	
 	/**

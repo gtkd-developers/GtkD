@@ -30,17 +30,19 @@
  * ctorStrct=
  * clss    = UIManager
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_ui_manager_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.ActionGroup
@@ -49,6 +51,11 @@
  * 	- gtk.Widget
  * 	- glib.ListSG
  * 	- gtk.Action
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GSList* -> ListSG
@@ -62,10 +69,12 @@
 
 module gtk.UIManager;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.ActionGroup;
@@ -74,6 +83,11 @@ private import gtk.AccelGroup;
 private import gtk.Widget;
 private import glib.ListSG;
 private import gtk.Action;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -255,7 +269,7 @@ private import gobject.ObjectG;
  *  </child>
  * </object>
  */
-public class UIManager : ObjectG
+public class UIManager : ObjectG, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -289,15 +303,19 @@ public class UIManager : ObjectG
 		this.gtkUIManager = gtkUIManager;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkUIManager);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(UIManager)[] onActionsChangedListeners;
+	/**
+	 * The "actions-changed" signal is emitted whenever the set of actions
+	 * changes.
+	 * Since 2.4
+	 */
 	void addOnActionsChanged(void delegate(UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("actions-changed" in connectedSignals) )
@@ -326,6 +344,12 @@ public class UIManager : ObjectG
 	}
 	
 	void delegate(Widget, UIManager)[] onAddWidgetListeners;
+	/**
+	 * The add_widget signal is emitted for each generated menubar and toolbar.
+	 * It is not emitted for generated popup menus, which can be obtained by
+	 * gtk_ui_manager_get_widget().
+	 * Since 2.4
+	 */
 	void addOnAddWidget(void delegate(Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("add-widget" in connectedSignals) )
@@ -354,6 +378,14 @@ public class UIManager : ObjectG
 	}
 	
 	void delegate(Action, Widget, UIManager)[] onConnectProxyListeners;
+	/**
+	 * The connect_proxy signal is emitted after connecting a proxy to
+	 * an action in the group.
+	 * This is intended for simple customizations for which a custom action
+	 * class would be too clumsy, e.g. showing tooltips for menuitems in the
+	 * statusbar.
+	 * Since 2.4
+	 */
 	void addOnConnectProxy(void delegate(Action, Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("connect-proxy" in connectedSignals) )
@@ -382,6 +414,11 @@ public class UIManager : ObjectG
 	}
 	
 	void delegate(Action, Widget, UIManager)[] onDisconnectProxyListeners;
+	/**
+	 * The disconnect_proxy signal is emitted after disconnecting a proxy
+	 * from an action in the group.
+	 * Since 2.4
+	 */
 	void addOnDisconnectProxy(void delegate(Action, Widget, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("disconnect-proxy" in connectedSignals) )
@@ -410,6 +447,13 @@ public class UIManager : ObjectG
 	}
 	
 	void delegate(Action, UIManager)[] onPostActivateListeners;
+	/**
+	 * The post_activate signal is emitted just after the action
+	 * is activated.
+	 * This is intended for applications to get notification
+	 * just after any action is activated.
+	 * Since 2.4
+	 */
 	void addOnPostActivate(void delegate(Action, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("post-activate" in connectedSignals) )
@@ -438,6 +482,15 @@ public class UIManager : ObjectG
 	}
 	
 	void delegate(Action, UIManager)[] onPreActivateListeners;
+	/**
+	 * The pre_activate signal is emitted just before the action
+	 * is activated.
+	 * This is intended for applications to get notification
+	 * just before any action is activated.
+	 * Since 2.4
+	 * See Also
+	 * GtkBuilder
+	 */
 	void addOnPreActivate(void delegate(Action, UIManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("pre-activate" in connectedSignals) )
@@ -466,7 +519,6 @@ public class UIManager : ObjectG
 	}
 	
 	
-	
 	/**
 	 * Creates a new ui manager object.
 	 * Since 2.4
@@ -474,7 +526,14 @@ public class UIManager : ObjectG
 	public this ()
 	{
 		// GtkUIManager* gtk_ui_manager_new (void);
-		this(cast(GtkUIManager*)gtk_ui_manager_new() );
+		auto p = gtk_ui_manager_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkUIManager*) p);
 	}
 	
 	/**
@@ -540,7 +599,13 @@ public class UIManager : ObjectG
 	public ListG getActionGroups()
 	{
 		// GList* gtk_ui_manager_get_action_groups (GtkUIManager *self);
-		return new ListG( gtk_ui_manager_get_action_groups(gtkUIManager) );
+		auto p = gtk_ui_manager_get_action_groups(gtkUIManager);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -551,7 +616,13 @@ public class UIManager : ObjectG
 	public AccelGroup getAccelGroup()
 	{
 		// GtkAccelGroup* gtk_ui_manager_get_accel_group (GtkUIManager *self);
-		return new AccelGroup( gtk_ui_manager_get_accel_group(gtkUIManager) );
+		auto p = gtk_ui_manager_get_accel_group(gtkUIManager);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new AccelGroup(cast(GtkAccelGroup*) p);
 	}
 	
 	/**
@@ -574,7 +645,13 @@ public class UIManager : ObjectG
 	public Widget getWidget(char[] path)
 	{
 		// GtkWidget* gtk_ui_manager_get_widget (GtkUIManager *self,  const gchar *path);
-		return new Widget( gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path)) );
+		auto p = gtk_ui_manager_get_widget(gtkUIManager, Str.toStringz(path));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -589,7 +666,13 @@ public class UIManager : ObjectG
 	public ListSG getToplevels(GtkUIManagerItemType types)
 	{
 		// GSList* gtk_ui_manager_get_toplevels (GtkUIManager *self,  GtkUIManagerItemType types);
-		return new ListSG( gtk_ui_manager_get_toplevels(gtkUIManager, types) );
+		auto p = gtk_ui_manager_get_toplevels(gtkUIManager, types);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -603,7 +686,13 @@ public class UIManager : ObjectG
 	public Action getAction(char[] path)
 	{
 		// GtkAction* gtk_ui_manager_get_action (GtkUIManager *self,  const gchar *path);
-		return new Action( gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path)) );
+		auto p = gtk_ui_manager_get_action(gtkUIManager, Str.toStringz(path));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Action(cast(GtkAction*) p);
 	}
 	
 	/**
@@ -650,7 +739,6 @@ public class UIManager : ObjectG
 		return gtk_ui_manager_new_merge_id(gtkUIManager);
 	}
 	
-	
 	/**
 	 * Adds a UI element to the current contents of self.
 	 * If type is GTK_UI_MANAGER_AUTO, GTK+ inserts a menuitem, toolitem or
@@ -695,7 +783,7 @@ public class UIManager : ObjectG
 	public char[] getUi()
 	{
 		// gchar* gtk_ui_manager_get_ui (GtkUIManager *self);
-		return Str.toString(gtk_ui_manager_get_ui(gtkUIManager) );
+		return Str.toString(gtk_ui_manager_get_ui(gtkUIManager)).dup;
 	}
 	
 	/**
@@ -710,10 +798,4 @@ public class UIManager : ObjectG
 		// void gtk_ui_manager_ensure_update (GtkUIManager *self);
 		gtk_ui_manager_ensure_update(gtkUIManager);
 	}
-	
-	
-	
-	
-	
-	
 }

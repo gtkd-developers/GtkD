@@ -30,27 +30,39 @@
  * ctorStrct=
  * clss    = IconView
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_icon_view_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.TreeModel
  * 	- gtk.TreePath
  * 	- gtk.CellRenderer
+ * 	- gtk.Tooltip
+ * 	- gtk.TreeIter
  * 	- glib.ListG
  * 	- gdk.Pixmap
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixmap* -> Pixmap
  * 	- GtkCellRenderer* -> CellRenderer
+ * 	- GtkTooltip* -> Tooltip
+ * 	- GtkTreeIter* -> TreeIter
  * 	- GtkTreeModel* -> TreeModel
  * 	- GtkTreePath* -> TreePath
  * module aliases:
@@ -59,16 +71,26 @@
 
 module gtk.IconView;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gtk.TreeModel;
 private import gtk.TreePath;
 private import gtk.CellRenderer;
+private import gtk.Tooltip;
+private import gtk.TreeIter;
 private import glib.ListG;
 private import gdk.Pixmap;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -83,7 +105,7 @@ private import gtk.Container;
  * In addition to selection with the arrow keys, GtkIconView supports
  * rubberband selection, which is controlled by dragging the pointer.
  */
-public class IconView : Container
+public class IconView : Container, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -117,15 +139,16 @@ public class IconView : Container
 		this.gtkIconView = gtkIconView;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkIconView);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(IconView)[] onActivateCursorItemListeners;
+	/**
+	 */
 	void addOnActivateCursorItem(gboolean delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate-cursor-item" in connectedSignals) )
@@ -154,6 +177,8 @@ public class IconView : Container
 	}
 	
 	void delegate(TreePath, IconView)[] onItemActivatedListeners;
+	/**
+	 */
 	void addOnItemActivated(void delegate(TreePath, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("item-activated" in connectedSignals) )
@@ -182,6 +207,8 @@ public class IconView : Container
 	}
 	
 	gboolean delegate(GtkMovementStep, gint, IconView)[] onMoveCursorListeners;
+	/**
+	 */
 	void addOnMoveCursor(gboolean delegate(GtkMovementStep, gint, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
@@ -210,6 +237,8 @@ public class IconView : Container
 	}
 	
 	void delegate(IconView)[] onSelectAllListeners;
+	/**
+	 */
 	void addOnSelectAll(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-all" in connectedSignals) )
@@ -238,6 +267,8 @@ public class IconView : Container
 	}
 	
 	void delegate(IconView)[] onSelectCursorItemListeners;
+	/**
+	 */
 	void addOnSelectCursorItem(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-cursor-item" in connectedSignals) )
@@ -266,6 +297,8 @@ public class IconView : Container
 	}
 	
 	void delegate(IconView)[] onSelectionChangedListeners;
+	/**
+	 */
 	void addOnSelectionChanged(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-changed" in connectedSignals) )
@@ -294,6 +327,8 @@ public class IconView : Container
 	}
 	
 	void delegate(GtkAdjustment*, GtkAdjustment*, IconView)[] onSetScrollAdjustmentsListeners;
+	/**
+	 */
 	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
@@ -322,6 +357,8 @@ public class IconView : Container
 	}
 	
 	void delegate(IconView)[] onToggleCursorItemListeners;
+	/**
+	 */
 	void addOnToggleCursorItem(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-cursor-item" in connectedSignals) )
@@ -350,6 +387,8 @@ public class IconView : Container
 	}
 	
 	void delegate(IconView)[] onUnselectAllListeners;
+	/**
+	 */
 	void addOnUnselectAll(void delegate(IconView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unselect-all" in connectedSignals) )
@@ -378,8 +417,6 @@ public class IconView : Container
 	}
 	
 	
-	
-	
 	/**
 	 * Creates a new GtkIconView widget
 	 * Since 2.6
@@ -387,7 +424,14 @@ public class IconView : Container
 	public this ()
 	{
 		// GtkWidget* gtk_icon_view_new (void);
-		this(cast(GtkIconView*)gtk_icon_view_new() );
+		auto p = gtk_icon_view_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkIconView*) p);
 	}
 	
 	/**
@@ -399,7 +443,14 @@ public class IconView : Container
 	public this (TreeModel model)
 	{
 		// GtkWidget* gtk_icon_view_new_with_model (GtkTreeModel *model);
-		this(cast(GtkIconView*)gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelStruct()) );
+		auto p = gtk_icon_view_new_with_model((model is null) ? null : model.getTreeModelStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkIconView*) p);
 	}
 	
 	/**
@@ -426,7 +477,13 @@ public class IconView : Container
 	public TreeModel getModel()
 	{
 		// GtkTreeModel* gtk_icon_view_get_model (GtkIconView *icon_view);
-		return new TreeModel( gtk_icon_view_get_model(gtkIconView) );
+		auto p = gtk_icon_view_get_model(gtkIconView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -518,7 +575,13 @@ public class IconView : Container
 	public TreePath getPathAtPos(int x, int y)
 	{
 		// GtkTreePath* gtk_icon_view_get_path_at_pos (GtkIconView *icon_view,  gint x,  gint y);
-		return new TreePath( gtk_icon_view_get_path_at_pos(gtkIconView, x, y) );
+		auto p = gtk_icon_view_get_path_at_pos(gtkIconView, x, y);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -857,7 +920,13 @@ public class IconView : Container
 	public ListG getSelectedItems()
 	{
 		// GList* gtk_icon_view_get_selected_items (GtkIconView *icon_view);
-		return new ListG( gtk_icon_view_get_selected_items(gtkIconView) );
+		auto p = gtk_icon_view_get_selected_items(gtkIconView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -943,10 +1012,10 @@ public class IconView : Container
 	 * tooltip =  a GtkTooltip
 	 * path =  a GtkTreePath
 	 */
-	public void setTooltipItem(GtkTooltip* tooltip, TreePath path)
+	public void setTooltipItem(Tooltip tooltip, TreePath path)
 	{
 		// void gtk_icon_view_set_tooltip_item (GtkIconView *icon_view,  GtkTooltip *tooltip,  GtkTreePath *path);
-		gtk_icon_view_set_tooltip_item(gtkIconView, tooltip, (path is null) ? null : path.getTreePathStruct());
+		gtk_icon_view_set_tooltip_item(gtkIconView, (tooltip is null) ? null : tooltip.getTooltipStruct(), (path is null) ? null : path.getTreePathStruct());
 	}
 	
 	/**
@@ -958,10 +1027,10 @@ public class IconView : Container
 	 * path =  a GtkTreePath
 	 * cell =  a GtkCellRenderer or NULL
 	 */
-	public void setTooltipCell(GtkTooltip* tooltip, TreePath path, CellRenderer cell)
+	public void setTooltipCell(Tooltip tooltip, TreePath path, CellRenderer cell)
 	{
 		// void gtk_icon_view_set_tooltip_cell (GtkIconView *icon_view,  GtkTooltip *tooltip,  GtkTreePath *path,  GtkCellRenderer *cell);
-		gtk_icon_view_set_tooltip_cell(gtkIconView, tooltip, (path is null) ? null : path.getTreePathStruct(), (cell is null) ? null : cell.getCellRendererStruct());
+		gtk_icon_view_set_tooltip_cell(gtkIconView, (tooltip is null) ? null : tooltip.getTooltipStruct(), (path is null) ? null : path.getTreePathStruct(), (cell is null) ? null : cell.getCellRendererStruct());
 	}
 	
 	/**
@@ -985,10 +1054,10 @@ public class IconView : Container
 	 * iter =  a pointer to receive a GtkTreeIter or NULL
 	 * Returns: whether or not the given tooltip context points to a item
 	 */
-	public int getTooltipContext(int* x, int* y, int keyboardTip, GtkTreeModel** model, GtkTreePath** path, GtkTreeIter* iter)
+	public int getTooltipContext(int* x, int* y, int keyboardTip, GtkTreeModel** model, GtkTreePath** path, TreeIter iter)
 	{
 		// gboolean gtk_icon_view_get_tooltip_context (GtkIconView *icon_view,  gint *x,  gint *y,  gboolean keyboard_tip,  GtkTreeModel **model,  GtkTreePath **path,  GtkTreeIter *iter);
-		return gtk_icon_view_get_tooltip_context(gtkIconView, x, y, keyboardTip, model, path, iter);
+		return gtk_icon_view_get_tooltip_context(gtkIconView, x, y, keyboardTip, model, path, (iter is null) ? null : iter.getTreeIterStruct());
 	}
 	
 	/**
@@ -1019,7 +1088,6 @@ public class IconView : Container
 		// gint gtk_icon_view_get_tooltip_column (GtkIconView *icon_view);
 		return gtk_icon_view_get_tooltip_column(gtkIconView);
 	}
-	
 	
 	/**
 	 * Turns icon_view into a drag source for automatic DND.
@@ -1157,28 +1225,12 @@ public class IconView : Container
 	public Pixmap createDragIcon(TreePath path)
 	{
 		// GdkPixmap* gtk_icon_view_create_drag_icon (GtkIconView *icon_view,  GtkTreePath *path);
-		return new Pixmap( gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct()) );
+		auto p = gtk_icon_view_create_drag_icon(gtkIconView, (path is null) ? null : path.getTreePathStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixmap(cast(GdkPixmap*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

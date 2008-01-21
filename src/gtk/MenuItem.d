@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_menu_item_
  * 	- gtk_
@@ -44,10 +45,16 @@
  * 	- gtk_menu_item_activate
  * 	- gtk_menu_item_new_with_label
  * 	- gtk_menu_item_new_with_mnemonic
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.AccelGroup
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -56,14 +63,21 @@
 
 module gtk.MenuItem;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.AccelGroup;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -77,7 +91,7 @@ private import gtk.Item;
  * As it derives from GtkBin it can hold any valid child widget, altough
  * only a few are really useful.
  */
-public class MenuItem : Item
+public class MenuItem : Item, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -114,6 +128,9 @@ public class MenuItem : Item
 	
 	/** store the action code passed in by the applcation */
 	private char[] actionLabel;
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkMenuItem);
 	
 	/** Gets the application set action code */
 	public char[] getActionName()
@@ -207,13 +224,12 @@ public class MenuItem : Item
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(MenuItem)[] onActivateListeners;
+	/**
+	 * Emitted when the item is activated.
+	 */
 	void addOnActivate(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate" in connectedSignals) )
@@ -242,6 +258,10 @@ public class MenuItem : Item
 	}
 	
 	void delegate(MenuItem)[] onActivateItemListeners;
+	/**
+	 * Emitted when the item is activated, but also if the menu item has a
+	 * submenu. For normal applications, the relevant signal is "activate".
+	 */
 	void addOnActivateItem(void delegate(MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate-item" in connectedSignals) )
@@ -270,6 +290,8 @@ public class MenuItem : Item
 	}
 	
 	void delegate(gint, MenuItem)[] onToggleSizeAllocateListeners;
+	/**
+	 */
 	void addOnToggleSizeAllocate(void delegate(gint, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-size-allocate" in connectedSignals) )
@@ -298,6 +320,15 @@ public class MenuItem : Item
 	}
 	
 	void delegate(gpointer, MenuItem)[] onToggleSizeRequestListeners;
+	/**
+	 * See Also
+	 * GtkBin
+	 * for how to handle the child.
+	 * GtkItem
+	 * is the abstract class for all sorts of items.
+	 * GtkMenuShell
+	 * is always the parent of GtkMenuItem.
+	 */
 	void addOnToggleSizeRequest(void delegate(gpointer, MenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-size-request" in connectedSignals) )
@@ -326,17 +357,21 @@ public class MenuItem : Item
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkMenuItem.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_menu_item_new (void);
-		this(cast(GtkMenuItem*)gtk_menu_item_new() );
+		auto p = gtk_menu_item_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkMenuItem*) p);
 	}
-	
-	
 	
 	/**
 	 * Sets whether the menu item appears justified at the right
@@ -422,7 +457,6 @@ public class MenuItem : Item
 		gtk_menu_item_deselect(gtkMenuItem);
 	}
 	
-	
 	/**
 	 * Emits the "toggle_size_request" signal on the given item.
 	 * Params:
@@ -445,7 +479,6 @@ public class MenuItem : Item
 		gtk_menu_item_toggle_size_allocate(gtkMenuItem, allocation);
 	}
 	
-	
 	/**
 	 * Gets whether the menu item appears justified at the right
 	 * side of the menu bar.
@@ -465,12 +498,12 @@ public class MenuItem : Item
 	public Widget getSubmenu()
 	{
 		// GtkWidget* gtk_menu_item_get_submenu (GtkMenuItem *menu_item);
-		return new Widget( gtk_menu_item_get_submenu(gtkMenuItem) );
+		auto p = gtk_menu_item_get_submenu(gtkMenuItem);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
-	
-	
-	
-	
-	
-	
 }

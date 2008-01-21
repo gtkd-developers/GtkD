@@ -30,21 +30,28 @@
  * ctorStrct=
  * clss    = AboutDialog
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_about_dialog_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Pixbuf
  * 	- gtk.Window
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkWindow* -> Window
@@ -54,7 +61,7 @@
 
 module gtk.AboutDialog;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -62,6 +69,11 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gdk.Pixbuf;
 private import gtk.Window;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -100,7 +112,7 @@ private import gtk.Dialog;
  * was called "name". This was changed to avoid the conflict with the
  * "name" property.
  */
-public class AboutDialog : Dialog
+public class AboutDialog : Dialog, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -134,9 +146,11 @@ public class AboutDialog : Dialog
 		this.gtkAboutDialog = gtkAboutDialog;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkAboutDialog);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkAboutDialog.
@@ -145,7 +159,14 @@ public class AboutDialog : Dialog
 	public this ()
 	{
 		// GtkWidget* gtk_about_dialog_new (void);
-		this(cast(GtkAboutDialog*)gtk_about_dialog_new() );
+		auto p = gtk_about_dialog_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkAboutDialog*) p);
 	}
 	
 	/**
@@ -159,7 +180,7 @@ public class AboutDialog : Dialog
 	public char[] getName()
 	{
 		// const gchar* gtk_about_dialog_get_name (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_name(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_name(gtkAboutDialog)).dup;
 	}
 	
 	/**
@@ -186,7 +207,7 @@ public class AboutDialog : Dialog
 	public char[] getProgramName()
 	{
 		// const gchar* gtk_about_dialog_get_program_name (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_program_name(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_program_name(gtkAboutDialog)).dup;
 	}
 	
 	/**
@@ -210,7 +231,7 @@ public class AboutDialog : Dialog
 	public char[] getVersion()
 	{
 		// const gchar* gtk_about_dialog_get_version (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_version(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_version(gtkAboutDialog)).dup;
 	}
 	
 	/**
@@ -233,7 +254,7 @@ public class AboutDialog : Dialog
 	public char[] getCopyright()
 	{
 		// const gchar* gtk_about_dialog_get_copyright (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_copyright(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_copyright(gtkAboutDialog)).dup;
 	}
 	
 	/**
@@ -257,7 +278,7 @@ public class AboutDialog : Dialog
 	public char[] getComments()
 	{
 		// const gchar* gtk_about_dialog_get_comments (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_comments(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_comments(gtkAboutDialog)).dup;
 	}
 	
 	/**
@@ -282,7 +303,7 @@ public class AboutDialog : Dialog
 	public char[] getLicense()
 	{
 		// const gchar* gtk_about_dialog_get_license (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_license(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_license(gtkAboutDialog)).dup;
 	}
 	
 	/**
@@ -332,7 +353,7 @@ public class AboutDialog : Dialog
 	public char[] getWebsite()
 	{
 		// const gchar* gtk_about_dialog_get_website (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_website(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_website(gtkAboutDialog)).dup;
 	}
 	
 	/**
@@ -355,7 +376,7 @@ public class AboutDialog : Dialog
 	public char[] getWebsiteLabel()
 	{
 		// const gchar* gtk_about_dialog_get_website_label (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_website_label(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_website_label(gtkAboutDialog)).dup;
 	}
 	
 	/**
@@ -455,7 +476,7 @@ public class AboutDialog : Dialog
 	public char[] getTranslatorCredits()
 	{
 		// const gchar* gtk_about_dialog_get_translator_credits  (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_translator_credits(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_translator_credits(gtkAboutDialog)).dup;
 	}
 	
 	/**
@@ -482,7 +503,13 @@ public class AboutDialog : Dialog
 	public Pixbuf getLogo()
 	{
 		// GdkPixbuf* gtk_about_dialog_get_logo (GtkAboutDialog *about);
-		return new Pixbuf( gtk_about_dialog_get_logo(gtkAboutDialog) );
+		auto p = gtk_about_dialog_get_logo(gtkAboutDialog);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -508,7 +535,7 @@ public class AboutDialog : Dialog
 	public char[] getLogoIconName()
 	{
 		// const gchar* gtk_about_dialog_get_logo_icon_name (GtkAboutDialog *about);
-		return Str.toString(gtk_about_dialog_get_logo_icon_name(gtkAboutDialog) );
+		return Str.toString(gtk_about_dialog_get_logo_icon_name(gtkAboutDialog)).dup;
 	}
 	
 	/**
@@ -525,7 +552,6 @@ public class AboutDialog : Dialog
 		// void gtk_about_dialog_set_logo_icon_name (GtkAboutDialog *about,  const gchar *icon_name);
 		gtk_about_dialog_set_logo_icon_name(gtkAboutDialog, Str.toStringz(iconName));
 	}
-	
 	
 	/**
 	 * Installs a global function to be called whenever the user activates an
@@ -574,17 +600,4 @@ public class AboutDialog : Dialog
 		// void gtk_show_about_dialog (GtkWindow *parent,  const gchar *first_property_name,  ...);
 		gtk_show_about_dialog((parent is null) ? null : parent.getWindowStruct(), Str.toStringz(firstPropertyName));
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

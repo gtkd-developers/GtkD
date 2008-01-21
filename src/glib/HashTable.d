@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Dataset
  * structWrap:
@@ -50,7 +51,7 @@
 
 module glib.HashTable;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -120,7 +121,6 @@ public class HashTable
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GHashTable with a reference count of 1.
 	 * Params:
@@ -139,7 +139,14 @@ public class HashTable
 	public this (GHashFunc hashFunc, GEqualFunc keyEqualFunc)
 	{
 		// GHashTable* g_hash_table_new (GHashFunc hash_func,  GEqualFunc key_equal_func);
-		this(cast(GHashTable*)g_hash_table_new(hashFunc, keyEqualFunc) );
+		auto p = g_hash_table_new(hashFunc, keyEqualFunc);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GHashTable*) p);
 	}
 	
 	/**
@@ -159,10 +166,15 @@ public class HashTable
 	public this (GHashFunc hashFunc, GEqualFunc keyEqualFunc, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
 		// GHashTable* g_hash_table_new_full (GHashFunc hash_func,  GEqualFunc key_equal_func,  GDestroyNotify key_destroy_func,  GDestroyNotify value_destroy_func);
-		this(cast(GHashTable*)g_hash_table_new_full(hashFunc, keyEqualFunc, keyDestroyFunc, valueDestroyFunc) );
+		auto p = g_hash_table_new_full(hashFunc, keyEqualFunc, keyDestroyFunc, valueDestroyFunc);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GHashTable*) p);
 	}
-	
-	
 	
 	/**
 	 * Inserts a new key and value into a GHashTable.
@@ -284,7 +296,6 @@ public class HashTable
 		return g_hash_table_find(gHashTable, predicate, userData);
 	}
 	
-	
 	/**
 	 * Removes a key and its associated value from a GHashTable.
 	 * If the GHashTable was created using g_hash_table_new_full(), the
@@ -395,9 +406,6 @@ public class HashTable
 		return g_hash_table_get_values(gHashTable);
 	}
 	
-	
-	
-	
 	/**
 	 * Destroys all keys and values in the GHashTable and decrements its
 	 * reference count by 1. If keys and/or values are dynamically allocated,
@@ -421,7 +429,13 @@ public class HashTable
 	public HashTable doref()
 	{
 		// GHashTable* g_hash_table_ref (GHashTable *hash_table);
-		return new HashTable( g_hash_table_ref(gHashTable) );
+		auto p = g_hash_table_ref(gHashTable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new HashTable(cast(GHashTable*) p);
 	}
 	
 	/**

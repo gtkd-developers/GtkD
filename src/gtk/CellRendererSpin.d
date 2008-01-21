@@ -25,9 +25,9 @@
  * inFile  = GtkCellRendererSpin.html
  * outPack = gtk
  * outFile = CellRendererSpin
- * strct   = GtkCellRenderer
- * realStrct=GtkCellRendererSpin
- * ctorStrct=
+ * strct   = GtkCellRendererSpin
+ * realStrct=
+ * ctorStrct=GtkCellRenderer
  * clss    = CellRendererSpin
  * interf  = 
  * class Code: No
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.CellRenderer
  * structWrap:
@@ -51,7 +52,7 @@
 
 module gtk.CellRendererSpin;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -113,7 +114,6 @@ public class CellRendererSpin : CellRendererText
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkCellRendererSpin.
 	 * Since 2.10
@@ -121,8 +121,13 @@ public class CellRendererSpin : CellRendererText
 	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_spin_new (void);
-		this(cast(GtkCellRendererSpin*)gtk_cell_renderer_spin_new() );
+		auto p = gtk_cell_renderer_spin_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCellRendererSpin*) p);
 	}
-	
-	
 }

@@ -35,15 +35,22 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_bin_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
- * 	- gtk_bin_get_child
+ * omit signals:
  * imports:
  * 	- gtk.Widget
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -52,12 +59,18 @@
 
 module gtk.Bin;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import gtk.Widget;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -71,7 +84,7 @@ private import gtk.Container;
  * Many GTK+ widgets are subclasses of GtkBin, including GtkWindow, GtkButton,
  * GtkFrame, GtkHandleBox, and GtkScrolledWindow.
  */
-public class Bin : Container
+public class Bin : Container, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -105,29 +118,27 @@ public class Bin : Container
 		this.gtkBin = gtkBin;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkBin);
+	
+	/**
+	 */
+	
 	/**
 	 * Gets the child of the GtkBin, or NULL if the bin contains
 	 * no child widget. The returned widget does not have a reference
 	 * added, so you do not need to unref it.
-	 * Returns:
-	 *  pointer to child of the GtkBin
+	 * Returns: pointer to child of the GtkBin
 	 */
 	public Widget getChild()
 	{
 		// GtkWidget* gtk_bin_get_child (GtkBin *bin);
-		GtkWidget * gtkWidget = gtk_bin_get_child(gtkBin);
-		if ( gtkWidget )
+		auto p = gtk_bin_get_child(gtkBin);
+		if(p is null)
 		{
-			return new Widget(gtkWidget);
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
 		}
-		else
-		{
-			return null;
-		}
+		return new Widget(cast(GtkWidget*) p);
 	}
-	
-	/**
-	 */
-	
-	
 }

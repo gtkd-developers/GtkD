@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_tree_view_column_
  * 	- gtk_
@@ -42,6 +43,7 @@
  * omit prefixes:
  * omit code:
  * 	- gtk_tree_view_column_new_with_attributes
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.CellRenderer
@@ -50,7 +52,11 @@
  * 	- gtk.TreeModel
  * 	- gtk.TreeIter
  * 	- gdk.Rectangle
- * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkRectangle* -> Rectangle
@@ -64,10 +70,12 @@
 
 module gtk.TreeViewColumn;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.CellRenderer;
@@ -76,7 +84,11 @@ private import gtk.Widget;
 private import gtk.TreeModel;
 private import gtk.TreeIter;
 private import gdk.Rectangle;
-private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -91,7 +103,7 @@ private import gtk.ObjectGtk;
  * for an overview of all the objects and data types related to the tree widget and how
  * they work together.
  */
-public class TreeViewColumn : ObjectGtk
+public class TreeViewColumn : ObjectGtk, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -125,6 +137,9 @@ public class TreeViewColumn : ObjectGtk
 		this.gtkTreeViewColumn = gtkTreeViewColumn;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkTreeViewColumn);
+	
 	/**
 	 * Creates a new Tree view column
 	 * Params:
@@ -147,13 +162,13 @@ public class TreeViewColumn : ObjectGtk
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeViewColumn)[] onClickedListeners;
+	/**
+	 * See Also
+	 * GtkTreeView, GtkTreeSelection, GtkTreeDnd, GtkTreeMode, GtkTreeSortable, GtkTreeModelSort, GtkListStore, GtkTreeStore, GtkCellRenderer, GtkCellEditable, GtkCellRendererPixbuf, GtkCellRendererText, GtkCellRendererToggle
+	 */
 	void addOnClicked(void delegate(TreeViewColumn) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("clicked" in connectedSignals) )
@@ -182,18 +197,21 @@ public class TreeViewColumn : ObjectGtk
 	}
 	
 	
-	
-	
-	
 	/**
 	 * Creates a new GtkTreeViewColumn.
 	 */
 	public this ()
 	{
 		// GtkTreeViewColumn* gtk_tree_view_column_new (void);
-		this(cast(GtkTreeViewColumn*)gtk_tree_view_column_new() );
+		auto p = gtk_tree_view_column_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTreeViewColumn*) p);
 	}
-	
 	
 	/**
 	 * Packs the cell into the beginning of the column. If expand is FALSE, then
@@ -240,7 +258,13 @@ public class TreeViewColumn : ObjectGtk
 	public ListG getCellRenderers()
 	{
 		// GList* gtk_tree_view_column_get_cell_renderers  (GtkTreeViewColumn *tree_column);
-		return new ListG( gtk_tree_view_column_get_cell_renderers(gtkTreeViewColumn) );
+		auto p = gtk_tree_view_column_get_cell_renderers(gtkTreeViewColumn);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -507,7 +531,7 @@ public class TreeViewColumn : ObjectGtk
 	public char[] getTitle()
 	{
 		// const gchar* gtk_tree_view_column_get_title (GtkTreeViewColumn *tree_column);
-		return Str.toString(gtk_tree_view_column_get_title(gtkTreeViewColumn) );
+		return Str.toString(gtk_tree_view_column_get_title(gtkTreeViewColumn)).dup;
 	}
 	
 	/**
@@ -578,7 +602,13 @@ public class TreeViewColumn : ObjectGtk
 	public Widget getWidget()
 	{
 		// GtkWidget* gtk_tree_view_column_get_widget (GtkTreeViewColumn *tree_column);
-		return new Widget( gtk_tree_view_column_get_widget(gtkTreeViewColumn) );
+		auto p = gtk_tree_view_column_get_widget(gtkTreeViewColumn);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -800,21 +830,12 @@ public class TreeViewColumn : ObjectGtk
 	public Widget getTreeView()
 	{
 		// GtkWidget* gtk_tree_view_column_get_tree_view (GtkTreeViewColumn *tree_column);
-		return new Widget( gtk_tree_view_column_get_tree_view(gtkTreeViewColumn) );
+		auto p = gtk_tree_view_column_get_tree_view(gtkTreeViewColumn);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

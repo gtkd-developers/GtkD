@@ -39,6 +39,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -47,18 +48,12 @@
 
 module glgtk.GLCapability;
 
-private import gtkglc.glgtktypes;
+public  import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;
 
-version(Tango)
-{
-	import tango.core.Memory;
-}
-else
-{
-	private import std.gc;
-}
+
+
 
 
 
@@ -71,11 +66,13 @@ else
 // May as well be explicit about it:
 
 
-//public import std.stdio;
 public import glgtk.GLWidget;
 private import glgdk.GLDrawable;
 public import gdk.Event;
 public import gtkglc.gl;
+
+version(Tango) private import tango.core.Memory;
+else private import std.gc;
 
 
 template GLCapability()
@@ -244,8 +241,6 @@ template GLCapability()
 		return consumeEvent;
 	}
 	
-	
-	
 	int configureFrame(GdkEventConfigure* event, Widget widget)
 	{
 		if ( event != null )
@@ -253,16 +248,8 @@ template GLCapability()
 			width = event.width;
 			height = event.height;
 		}
-		
-		version(Tango)
-		{
-			tango.core.Memory.GC.disable();
-		}
-		else
-		{
-			std.gc.disable();
-		}
-		
+		version(Tango) tango.core.Memory.GC.disable();
+		else std.gc.disable();
 		//writefln("configureFrame 1");
 		//printf("GLCapabilityT.configureFrame \n" );
 		GLContext context = GLWidget.getGLContext(widget);
@@ -299,15 +286,8 @@ template GLCapability()
 		//writefln("configureFrame 9");
 		/*** OpenGL END ***/
 		
-		version(Tango)
-		{
-			tango.core.Memory.GC.enable();
-		}
-		else
-		{
-			std.gc.enable();
-		}
-		
+		version(Tango) tango.core.Memory.GC.enable();
+		else std.gc.enable();
 		return consumeEvent;
 	}
 	

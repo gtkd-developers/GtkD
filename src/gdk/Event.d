@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Event
@@ -59,7 +60,7 @@
 
 module gdk.Event;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -132,11 +133,6 @@ public class Event
 	/**
 	 */
 	
-	
-	
-	
-	
-	
 	/**
 	 * Checks if any events are ready to be processed for any display.
 	 * Returns: TRUE if any events are pending.
@@ -155,7 +151,13 @@ public class Event
 	public static Event peek()
 	{
 		// GdkEvent* gdk_event_peek (void);
-		return new Event( gdk_event_peek() );
+		auto p = gdk_event_peek();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Event(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -167,7 +169,13 @@ public class Event
 	public static Event get()
 	{
 		// GdkEvent* gdk_event_get (void);
-		return new Event( gdk_event_get() );
+		auto p = gdk_event_get();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Event(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -181,7 +189,13 @@ public class Event
 	public static Event getGraphicsExpose(Window window)
 	{
 		// GdkEvent* gdk_event_get_graphics_expose (GdkWindow *window);
-		return new Event( gdk_event_get_graphics_expose((window is null) ? null : window.getWindowStruct()) );
+		auto p = gdk_event_get_graphics_expose((window is null) ? null : window.getWindowStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Event(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -204,7 +218,14 @@ public class Event
 	public this (GdkEventType type)
 	{
 		// GdkEvent* gdk_event_new (GdkEventType type);
-		this(cast(GdkEvent*)gdk_event_new(type) );
+		auto p = gdk_event_new(type);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -215,7 +236,13 @@ public class Event
 	public Event copy()
 	{
 		// GdkEvent* gdk_event_copy (GdkEvent *event);
-		return new Event( gdk_event_copy(gdkEvent) );
+		auto p = gdk_event_copy(gdkEvent);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Event(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -329,7 +356,6 @@ public class Event
 		// void gdk_event_handler_set (GdkEventFunc func,  gpointer data,  GDestroyNotify notify);
 		gdk_event_handler_set(func, data, notify);
 	}
-	
 	
 	/**
 	 * Sends an X ClientMessage event to a given window (which must be
@@ -448,7 +474,13 @@ public class Event
 	public Screen getScreen()
 	{
 		// GdkScreen* gdk_event_get_screen (GdkEvent *event);
-		return new Screen( gdk_event_get_screen(gdkEvent) );
+		auto p = gdk_event_get_screen(gdkEvent);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 	
 	/**

@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.Str
@@ -50,7 +51,7 @@
 
 module glib.Quark;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -115,7 +116,6 @@ public class Quark
 	/**
 	 */
 	
-	
 	/**
 	 * Gets the GQuark identifying the given string.
 	 * If the string does not currently have an associated GQuark, a new
@@ -161,7 +161,7 @@ public class Quark
 	public static char[] toString(GQuark quark)
 	{
 		// const gchar* g_quark_to_string (GQuark quark);
-		return Str.toString(g_quark_to_string(quark) );
+		return Str.toString(g_quark_to_string(quark)).dup;
 	}
 	
 	/**
@@ -190,7 +190,7 @@ public class Quark
 	public static char[] gInternString(char[] string)
 	{
 		// const gchar* g_intern_string (const gchar *string);
-		return Str.toString(g_intern_string(Str.toStringz(string)) );
+		return Str.toString(g_intern_string(Str.toStringz(string))).dup;
 	}
 	
 	/**
@@ -206,6 +206,6 @@ public class Quark
 	public static char[] gInternStaticString(char[] string)
 	{
 		// const gchar* g_intern_static_string (const gchar *string);
-		return Str.toString(g_intern_static_string(Str.toStringz(string)) );
+		return Str.toString(g_intern_static_string(Str.toStringz(string))).dup;
 	}
 }

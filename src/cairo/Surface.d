@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -50,7 +51,7 @@
 
 module cairo.Surface;
 
-private import gtkc.cairotypes;
+public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
 
@@ -105,8 +106,6 @@ public class Surface
 	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Create a new surface that is as compatible as possible with an
@@ -191,7 +190,8 @@ public class Surface
 	}
 	
 	/**
-	 * Returns: The content type of surface which indicates whetherthe surface contains color and/or alpha information. Seecairo_content_t.Since 1.2
+	 * Since 1.2
+	 * Returns: The content type of surface which indicates whetherthe surface contains color and/or alpha information. Seecairo_content_t.
 	 */
 	public cairo_content_t getContent()
 	{
@@ -300,10 +300,10 @@ public class Surface
 	/**
 	 * This function returns the previous device offset set by
 	 * cairo_surface_set_device_offset().
+	 * Since 1.2
 	 * Params:
 	 * xOffset =  the offset in the X direction, in device units
 	 * yOffset =  the offset in the Y direction, in device units
-	 * Since 1.2
 	 */
 	public void getDeviceOffset(double* xOffset, double* yOffset)
 	{
@@ -329,10 +329,10 @@ public class Surface
 	 * completing a page (with cairo_show_page() or cairo_copy_page()) so
 	 * there is currently no way to have more than one fallback resolution
 	 * in effect on a single page.
+	 * Since 1.2
 	 * Params:
 	 * xPixelsPerInch =  horizontal setting for pixels per inch
 	 * yPixelsPerInch =  vertical setting for pixels per inch
-	 * Since 1.2
 	 */
 	public void setFallbackResolution(double xPixelsPerInch, double yPixelsPerInch)
 	{
@@ -351,20 +351,19 @@ public class Surface
 		return cairo_surface_status(cairo_surface);
 	}
 	
-	
 	/**
 	 * This function returns the type of the backend used to create
 	 * a surface. See cairo_surface_type_t for available types.
+	 * Since 1.2
 	 * Params:
 	 * surface =  a cairo_surface_t
-	 * Returns: The type of surface.Since 1.2
+	 * Returns: The type of surface.
 	 */
 	public cairo_surface_type_t getType()
 	{
 		// cairo_surface_type_t cairo_surface_get_type (cairo_surface_t *surface);
 		return cairo_surface_get_type(cairo_surface);
 	}
-	
 	
 	/**
 	 * Creates an image surface of the specified format and
@@ -412,7 +411,8 @@ public class Surface
 	/**
 	 * Get a pointer to the data of the image surface, for direct
 	 * inspection or modification.
-	 * Returns: a pointer to the image data of this surface or NULLif surface is not an image surface.Since 1.2
+	 * Since 1.2
+	 * Returns: a pointer to the image data of this surface or NULLif surface is not an image surface.
 	 */
 	public ubyte* imageSurfaceGetData()
 	{
@@ -422,7 +422,8 @@ public class Surface
 	
 	/**
 	 * Get the format of the surface.
-	 * Returns: the format of the surfaceSince 1.2
+	 * Since 1.2
+	 * Returns: the format of the surface
 	 */
 	public cairo_format_t imageSurfaceGetFormat()
 	{
@@ -452,7 +453,8 @@ public class Surface
 	
 	/**
 	 * Get the stride of the image surface in bytes
-	 * Returns: the stride of the image surface in bytes (or 0 ifsurface is not an image surface). The stride is the distance inbytes from the beginning of one row of the image data to thebeginning of the next row.Since 1.2
+	 * Since 1.2
+	 * Returns: the stride of the image surface in bytes (or 0 ifsurface is not an image surface). The stride is the distance inbytes from the beginning of one row of the image data to thebeginning of the next row.
 	 */
 	public int imageSurfaceGetStride()
 	{

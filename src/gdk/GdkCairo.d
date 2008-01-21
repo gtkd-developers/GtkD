@@ -46,6 +46,7 @@
  * 	- gdk_cairo_set_source_pixmap
  * 	- gdk_cairo_rectangle
  * 	- gdk_cairo_region
+ * omit signals:
  * imports:
  * 	- cairo.Context
  * structWrap:
@@ -62,7 +63,7 @@
 
 module gdk.GdkCairo;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -82,10 +83,4 @@ private import cairo.Context;
 
 /**
  */
-
-
-
-
-
-
 

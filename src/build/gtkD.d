@@ -8,10 +8,10 @@ module build;
 
 version( build )
 {
-	pragma (nolink);
+ pragma (nolink);
 
-	version (Windows)     pragma (target, "GtkD.lib"  );
-	version (linux)   pragma (target, "libgtkd.a" );
+ version (Windows)     pragma (target, "GtkD.lib"  );
+ version (linux)   pragma (target, "libgtkd.a" );
 }
 
 
@@ -93,35 +93,47 @@ private import gobject.Closure;
 private import gobject.CClosure;
 private import gobject.ValueArray;
 
-private import cairoLib.Pattern;
-private import cairoLib.FontFace;
-private import cairoLib.ScaledFont;
-private import cairoLib.FontOption;
-private import cairoLib.Matrix;
-private import cairoLib.Status;
-private import cairoLib.Version;
-private import cairoLib.Types;
+private import cairo.Pattern;
+private import cairo.FontFace;
+private import cairo.ScaledFont;
+private import cairo.FontOption;
+private import cairo.Matrix;
+private import cairo.Status;
+private import cairo.Version;
+private import cairo.Types;
 
 private import pango.PgContext;
 private import pango.PgItem;
+private import pango.PgMatrix;
 private import pango.PgGlyphString;
+private import pango.PgGlyphItem;
+private import pango.PgFont;
 private import pango.PgFontDescription;
 private import pango.PgFontMetrics;
 private import pango.PgFontFamily;
 private import pango.PgFontFace;
 private import pango.PgFontMap;
+private import pango.PgFontset;
 private import pango.PgFontsetSimple;
 private import pango.PgAttribute;
-private import pango.PgAttributeList;
+private import pango.PgColor;
 private import pango.PgLanguage;
+private import pango.PgAttributeList;
+private import pango.PgAttributeIterator;
 private import pango.PgTabArray;
 private import pango.PgLayout;
 private import pango.PgLayoutIter;
+private import pango.PgLayoutLine;
+private import pango.PgScript;
 private import pango.PgScriptIter;
+private import pango.PgVertical;
+private import pango.PgRenderer;
 private import pango.PgCoverage;
 private import pango.PgEngine;
 private import pango.PgEngineLang;
 private import pango.PgEngineShape;
+private import pango.PgMiscellaneous;
+private import pango.PgVersion;
 
 private import atk.Action;
 private import atk.Component;
@@ -177,6 +189,8 @@ private import gdk.DragContext;
 private import gdk.Threads;
 private import gdk.Input;
 private import gdk.Device;
+private import gdk.X11;
+private import gdk.GdkCairo;
 
 private import gtk.GtkD;
 private import gtk.Timeout;
@@ -189,6 +203,9 @@ private import gtk.IconTheme;
 private import gtk.IconInfo;
 private import gtk.StockItem;
 private import gtk.IconSource;
+private import gtk.IconFactory;
+private import gtk.IconSet;
+private import gtk.IconSize;
 private import gtk.RcStyle;
 private import gtk.Settings;
 private import gtk.BindingSet;
@@ -378,6 +395,7 @@ private import gtk.ItemFactory;
 private import gtk.Tooltips;
 private import gtk.Progress;
 
+
 private import glgdk.GLdInit;
 private import glgdk.GLQuery;
 private import glgdk.GLConfig;
@@ -395,16 +413,17 @@ private import glgtk.GLWidget;
 private import glgtk.GLtVersion;
 private import glgtk.GLCapability;
 
-private import lib.paths.d;
-private import lib.Loader.d;
-private import lib.glib;
-private import lib.gthread;
-private import lib.gobject;
-private import lib.cairoLib;
-private import lib.pango;
-private import lib.atk;
-private import lib.gdkpixbuf;
-private import lib.gdk;
-private import lib.gtk;
-private import lib.glgdk;
-private import lib.glgtk;
+private import gtkc.paths.d;
+private import gtkc.Loader.d;
+private import gtkc.glib;
+private import gtkc.gthread;
+private import gtkc.gobject;
+private import gtkc.cairo;
+private import gtkc.pango;
+private import gtkc.atk;
+private import gtkc.gdkpixbuf;
+private import gtkc.gdk;
+private import gtkc.gtk;
+private import gtkc.glade;
+private import gtkglc.glgdk;
+private import gtkglc.glgtk;

@@ -35,16 +35,23 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_tool_button_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.ToolItem
  * 	- gtk.Widget
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -53,14 +60,21 @@
 
 module gtk.ToolButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.ToolItem;
 private import gtk.Widget;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -84,7 +98,7 @@ private import gtk.ToolItem;
  * non-NULL, the icon is determined by the stock item. Otherwise,
  * the button does not have a label.
  */
-public class ToolButton : ToolItem
+public class ToolButton : ToolItem, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -121,6 +135,9 @@ public class ToolButton : ToolItem
 	/** An arbitrary string to be used by the application */
 	private char[] action;
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkToolButton);
+	
 	/** */
 	public void setActionName(char[] action)
 	{
@@ -141,13 +158,29 @@ public class ToolButton : ToolItem
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ToolButton)[] onClickedListeners;
+	/**
+	 * This signal is emitted when the tool button is clicked with the mouse
+	 * or activated with the keyboard.
+	 * See Also
+	 * GtkToolbar
+	 * The toolbar widget
+	 * GtkMenuToolButton
+	 * A subclass of GtkToolButton that displays on
+	 *  the toolbar a button with an additional dropdown
+	 *  menu
+	 * GtkToggleToolButton
+	 * A subclass of GtkToolButton that displays toggle
+	 *  buttons on the toolbar
+	 * GtkRadioToolButton
+	 * A subclass of GtkToolButton that displays radio
+	 *  buttons on the toolbar
+	 * GtkSeparatorToolItem
+	 * A subclass of GtkToolItem that separates groups of
+	 *  items on a toolbar
+	 */
 	void addOnClicked(void delegate(ToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("clicked" in connectedSignals) )
@@ -176,7 +209,6 @@ public class ToolButton : ToolItem
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkToolButton using icon_widget as icon and label as
 	 * label.
@@ -188,7 +220,14 @@ public class ToolButton : ToolItem
 	public this (Widget iconWidget, char[] label)
 	{
 		// GtkToolItem* gtk_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
-		this(cast(GtkToolButton*)gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label)) );
+		auto p = gtk_tool_button_new((iconWidget is null) ? null : iconWidget.getWidgetStruct(), Str.toStringz(label));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkToolButton*) p);
 	}
 	
 	/**
@@ -203,7 +242,14 @@ public class ToolButton : ToolItem
 	public this (char[] stockId)
 	{
 		// GtkToolItem* gtk_tool_button_new_from_stock (const gchar *stock_id);
-		this(cast(GtkToolButton*)gtk_tool_button_new_from_stock(Str.toStringz(stockId)) );
+		auto p = gtk_tool_button_new_from_stock(Str.toStringz(stockId));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkToolButton*) p);
 	}
 	
 	/**
@@ -232,7 +278,7 @@ public class ToolButton : ToolItem
 	public char[] getLabel()
 	{
 		// const gchar* gtk_tool_button_get_label (GtkToolButton *button);
-		return Str.toString(gtk_tool_button_get_label(gtkToolButton) );
+		return Str.toString(gtk_tool_button_get_label(gtkToolButton)).dup;
 	}
 	
 	/**
@@ -288,7 +334,7 @@ public class ToolButton : ToolItem
 	public char[] getStockId()
 	{
 		// const gchar* gtk_tool_button_get_stock_id (GtkToolButton *button);
-		return Str.toString(gtk_tool_button_get_stock_id(gtkToolButton) );
+		return Str.toString(gtk_tool_button_get_stock_id(gtkToolButton)).dup;
 	}
 	
 	/**
@@ -316,7 +362,7 @@ public class ToolButton : ToolItem
 	public char[] getIconName()
 	{
 		// const gchar* gtk_tool_button_get_icon_name (GtkToolButton *button);
-		return Str.toString(gtk_tool_button_get_icon_name(gtkToolButton) );
+		return Str.toString(gtk_tool_button_get_icon_name(gtkToolButton)).dup;
 	}
 	
 	/**
@@ -342,7 +388,13 @@ public class ToolButton : ToolItem
 	public Widget getIconWidget()
 	{
 		// GtkWidget* gtk_tool_button_get_icon_widget (GtkToolButton *button);
-		return new Widget( gtk_tool_button_get_icon_widget(gtkToolButton) );
+		auto p = gtk_tool_button_get_icon_widget(gtkToolButton);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -370,11 +422,12 @@ public class ToolButton : ToolItem
 	public Widget getLabelWidget()
 	{
 		// GtkWidget* gtk_tool_button_get_label_widget (GtkToolButton *button);
-		return new Widget( gtk_tool_button_get_label_widget(gtkToolButton) );
+		auto p = gtk_tool_button_get_label_widget(gtkToolButton);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
-	
-	
-	
-	
-	
 }

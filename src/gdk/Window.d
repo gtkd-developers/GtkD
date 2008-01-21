@@ -41,6 +41,7 @@
  * omit prefixes:
  * 	- gdk_window_invalidate_maybe_recurse
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Window
@@ -66,7 +67,7 @@
 
 module gdk.Window;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -256,16 +257,6 @@ public class Window : Drawable
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GdkWindow using the attributes from
 	 * attributes. See GdkWindowAttr and GdkWindowAttributesType for
@@ -278,7 +269,14 @@ public class Window : Drawable
 	public this (GdkWindowAttr* attributes, int attributesMask)
 	{
 		// GdkWindow* gdk_window_new (GdkWindow *parent,  GdkWindowAttr *attributes,  gint attributes_mask);
-		this(cast(GdkWindow*)gdk_window_new(gdkWindow, attributes, attributesMask) );
+		auto p = gdk_window_new(gdkWindow, attributes, attributesMask);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -293,8 +291,6 @@ public class Window : Drawable
 		// void gdk_window_destroy (GdkWindow *window);
 		gdk_window_destroy(gdkWindow);
 	}
-	
-	
 	
 	/**
 	 * Gets the type of the window. See GdkWindowType.
@@ -322,7 +318,13 @@ public class Window : Drawable
 	public static Window atPointer(int* winX, int* winY)
 	{
 		// GdkWindow* gdk_window_at_pointer (gint *win_x,  gint *win_y);
-		return new Window( gdk_window_at_pointer(winX, winY) );
+		auto p = gdk_window_at_pointer(winX, winY);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -760,7 +762,6 @@ public class Window : Drawable
 		gdk_window_clear_area_e(gdkWindow, x, y, width, height);
 	}
 	
-	
 	/**
 	 * Raises window to the top of the Z-order (stacking order), so that
 	 * other windows with the same parent window appear below window.
@@ -993,7 +994,6 @@ public class Window : Drawable
 		gdk_window_invalidate_region(gdkWindow, (region is null) ? null : region.getRegionStruct(), invalidateChildren);
 	}
 	
-	
 	/**
 	 * Transfers ownership of the update area from window to the caller
 	 * of the function. That is, after calling this function, window will
@@ -1006,7 +1006,13 @@ public class Window : Drawable
 	public Region getUpdateArea()
 	{
 		// GdkRegion* gdk_window_get_update_area (GdkWindow *window);
-		return new Region( gdk_window_get_update_area(gdkWindow) );
+		auto p = gdk_window_get_update_area(gdkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -1242,9 +1248,6 @@ public class Window : Drawable
 		// void gdk_window_remove_filter (GdkWindow *window,  GdkFilterFunc function,  gpointer data);
 		gdk_window_remove_filter(gdkWindow, funct, data);
 	}
-	
-	
-	
 	
 	/**
 	 * Applies a shape mask to window. Pixels in window corresponding to
@@ -1499,7 +1502,6 @@ public class Window : Drawable
 		gdk_window_set_back_pixmap(gdkWindow, (pixmap is null) ? null : pixmap.getPixmapStruct(), parentRelative);
 	}
 	
-	
 	/**
 	 * Sets the mouse pointer for a GdkWindow. Use gdk_cursor_new() or
 	 * gdk_cursor_new_from_pixmap() to create the cursor.
@@ -1515,7 +1517,6 @@ public class Window : Drawable
 		// void gdk_window_set_cursor (GdkWindow *window,  GdkCursor *cursor);
 		gdk_window_set_cursor(gdkWindow, (cursor is null) ? null : cursor.getCursorStruct());
 	}
-	
 	
 	/**
 	 * Retrieves the user data for window, which is normally the widget
@@ -1742,10 +1743,6 @@ public class Window : Drawable
 		gdk_window_get_frame_extents(gdkWindow, (rect is null) ? null : rect.getRectangleStruct());
 	}
 	
-	
-	
-	
-	
 	/**
 	 * Obtains the position of a window in root window coordinates.
 	 * (Compare with gdk_window_get_position() and
@@ -1798,9 +1795,14 @@ public class Window : Drawable
 	public Window getPointer(int* x, int* y, GdkModifierType* mask)
 	{
 		// GdkWindow* gdk_window_get_pointer (GdkWindow *window,  gint *x,  gint *y,  GdkModifierType *mask);
-		return new Window( gdk_window_get_pointer(gdkWindow, x, y, mask) );
+		auto p = gdk_window_get_pointer(gdkWindow, x, y, mask);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
-	
 	
 	/**
 	 * Obtains the parent of window, as known to GDK. Does not query the
@@ -1814,7 +1816,13 @@ public class Window : Drawable
 	public Window getParent()
 	{
 		// GdkWindow* gdk_window_get_parent (GdkWindow *window);
-		return new Window( gdk_window_get_parent(gdkWindow) );
+		auto p = gdk_window_get_parent(gdkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1824,7 +1832,13 @@ public class Window : Drawable
 	public Window getToplevel()
 	{
 		// GdkWindow* gdk_window_get_toplevel (GdkWindow *window);
-		return new Window( gdk_window_get_toplevel(gdkWindow) );
+		auto p = gdk_window_get_toplevel(gdkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1839,7 +1853,13 @@ public class Window : Drawable
 	public ListG getChildren()
 	{
 		// GList* gdk_window_get_children (GdkWindow *window);
-		return new ListG( gdk_window_get_children(gdkWindow) );
+		auto p = gdk_window_get_children(gdkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -1850,7 +1870,13 @@ public class Window : Drawable
 	public ListG peekChildren()
 	{
 		// GList* gdk_window_peek_children (GdkWindow *window);
-		return new ListG( gdk_window_peek_children(gdkWindow) );
+		auto p = gdk_window_peek_children(gdkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -1985,7 +2011,13 @@ public class Window : Drawable
 	public Window getGroup()
 	{
 		// GdkWindow* gdk_window_get_group (GdkWindow *window);
-		return new Window( gdk_window_get_group(gdkWindow) );
+		auto p = gdk_window_get_group(gdkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -2022,7 +2054,6 @@ public class Window : Drawable
 		return gdk_window_get_decorations(gdkWindow, decorations);
 	}
 	
-	
 	/**
 	 * Sets hints about the window management functions to make available
 	 * via buttons on the window frame.
@@ -2044,7 +2075,6 @@ public class Window : Drawable
 		gdk_window_set_functions(gdkWindow, functions);
 	}
 	
-	
 	/**
 	 * Obtains a list of all toplevel windows known to GDK on the default
 	 * screen (see gdk_screen_get_toplevel_windows()).
@@ -2057,7 +2087,13 @@ public class Window : Drawable
 	public static ListG getToplevels()
 	{
 		// GList* gdk_window_get_toplevels (void);
-		return new ListG( gdk_window_get_toplevels() );
+		auto p = gdk_window_get_toplevels();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -2068,9 +2104,14 @@ public class Window : Drawable
 	public static Window gdkGetDefaultRootWindow()
 	{
 		// GdkWindow* gdk_get_default_root_window (void);
-		return new Window( gdk_get_default_root_window() );
+		auto p = gdk_get_default_root_window();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
-	
 	
 	/**
 	 * This function allows for hooking into the operation

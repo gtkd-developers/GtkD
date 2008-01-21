@@ -458,21 +458,6 @@ public enum PangoScript
 	NKO /+* Nkoo +/
 }
 /**
- * Used to indicate how well a font can represent a particular Unicode
- * character point for a particular script.
- * PANGO_COVERAGE_NONE
- * The character is not representable with the font.
- * PANGO_COVERAGE_FALLBACK
- * The character is represented in a way that may be
- */
-public enum PangoCoverageLevel
-{
-	NONE,
-	FALLBACK,
-	APPROXIMATE,
-	EXACT
-}
-/**
  * The PangoGravity type represents the orientation of glyphs in a segment
  * of text. This is useful when rendering vertical text layouts. In
  * those situations, the layout is rotated using a non-identity PangoMatrix,
@@ -504,6 +489,33 @@ public enum PangoGravityHint
 	NATURAL,
 	STRONG,
 	LINE
+}
+/**
+ * PangoRenderPart defines different items to render for such
+ * purposes as setting colors.
+ * PANGO_RENDER_PART_FOREGROUND
+ */
+public enum PangoRenderPart
+{
+	FOREGROUND,
+	BACKGROUND,
+	UNDERLINE,
+	STRIKETHROUGH
+}
+/**
+ * Used to indicate how well a font can represent a particular Unicode
+ * character point for a particular script.
+ * PANGO_COVERAGE_NONE
+ * The character is not representable with the font.
+ * PANGO_COVERAGE_FALLBACK
+ * The character is represented in a way that may be
+ */
+public enum PangoCoverageLevel
+{
+	NONE,
+	FALLBACK,
+	APPROXIMATE,
+	EXACT
 }
 
 /**
@@ -683,6 +695,7 @@ public struct PangoRectangle{}
 
 
 /**
+ * Main Gtk struct.
  * A structure specifying a transformation between user-space
  * coordinates and device coordinates. The transformation
  * is given by
@@ -759,7 +772,6 @@ public struct PangoGlyphVisAttr
 
 
 /**
- * Main Gtk struct.
  * The PangoGlyphString structure is used to store strings
  * of glyphs with geometry and visual attribute information.
  * The storage for the glyph information is owned
@@ -809,7 +821,6 @@ public struct PangoGlyphItem{}
 
 
 /**
- * Main Gtk struct.
  * The PangoFontDescription structure represents the description
  * of an ideal font. These structures are used both to list
  * what fonts are available on the system and also for specifying
@@ -849,6 +860,7 @@ public struct PangoFontMetrics{}
 
 
 /**
+ * Main Gtk struct.
  * The PangoFont structure is used to represent
  * a font in a rendering-system-independent matter.
  * To create an implementation of a PangoFont,
@@ -1284,7 +1296,6 @@ public struct PangoLayoutLine{}
 
 
 /**
- * Main Gtk struct.
  * A PangoScriptIter is used to iterate through a string
  * and identify ranges in different scripts.
  */
@@ -1292,6 +1303,130 @@ public struct PangoScriptIter{}
 
 
 /**
+ * Main Gtk struct.
+ * PangoRenderer is a base class for objects that are used to
+ * render Pango objects such as PangoGlyphString and
+ * PangoLayout.
+ * PangoMatrix*matrix;
+ */
+public struct PangoRenderer{}
+// PangoMatrix *matrix; /+* May be NULL +/
+// PangoRenderer.html
+
+
+/**
+ * Class structure for PangoRenderer.
+ * draw_glyphs()
+ */
+public struct PangoRendererClass{}
+// /+* All of the following have defaulx implementations
+// PangoRenderer.html
+// * and take as coordinates user coordinates inn Pango units
+// PangoRenderer.html
+// +/
+// PangoRenderer.html
+// void (*drawGlyphs) (PangoRenderer *renderer,
+// PangoRenderer.html
+// PangoFont *font,
+// PangoRenderer.html
+// PangoGlyphString *glyphs,
+// PangoRenderer.html
+// int x,
+// PangoRenderer.html
+// int y);
+// PangoRenderer.html
+// void (*drawRectangle) (PangoRenderer *renderer,
+// PangoRenderer.html
+// PangoRenderPart part,
+// PangoRenderer.html
+// int x,
+// PangoRenderer.html
+// int y,
+// PangoRenderer.html
+// int width,
+// PangoRenderer.html
+// int height);
+// PangoRenderer.html
+// void (*drawErrorUnderline) (PangoRenderer *renderer,
+// PangoRenderer.html
+// int x,
+// PangoRenderer.html
+// int y,
+// PangoRenderer.html
+// int width,
+// PangoRenderer.html
+// int height);
+// PangoRenderer.html
+// /+* Nothing is drawn for shaped glyphs unless this is implemented +/
+// PangoRenderer.html
+// void (*drawShape) (PangoRenderer *renderer,
+// PangoRenderer.html
+// PangoAttrShape *attr,
+// PangoRenderer.html
+// int x,
+// PangoRenderer.html
+// int y);
+// PangoRenderer.html
+// /+* These two must be implemented and take coordinates inn
+// PangoRenderer.html
+// * device space as doubles.
+// PangoRenderer.html
+// +/
+// PangoRenderer.html
+// void (*drawTrapezoid) (PangoRenderer *renderer,
+// PangoRenderer.html
+// PangoRenderPart part,
+// PangoRenderer.html
+// double y1_,
+// PangoRenderer.html
+// double x11,
+// PangoRenderer.html
+// double x21,
+// PangoRenderer.html
+// double y2,
+// PangoRenderer.html
+// double x12,
+// PangoRenderer.html
+// double x22);
+// PangoRenderer.html
+// void (*drawGlyph) (PangoRenderer *renderer,
+// PangoRenderer.html
+// PangoFont *font,
+// PangoRenderer.html
+// PangoGlyph glyph,
+// PangoRenderer.html
+// double x,
+// PangoRenderer.html
+// double y);
+// PangoRenderer.html
+// /+* Notification of change inn rendering attributes
+// PangoRenderer.html
+// +/
+// PangoRenderer.html
+// void (*partChanged) (PangoRenderer *renderer,
+// PangoRenderer.html
+// PangoRenderPart part);
+// PangoRenderer.html
+// /+* Paired around drawing operations
+// PangoRenderer.html
+// +/
+// PangoRenderer.html
+// void (*begin) (PangoRenderer *renderer);
+// PangoRenderer.html
+// void (*end) (PangoRenderer *renderer);
+// PangoRenderer.html
+// /+* Hooks into the details of layout rendering
+// PangoRenderer.html
+// +/
+// PangoRenderer.html
+// void (*prepareRun) (PangoRenderer *renderer,
+// PangoRenderer.html
+// PangoLayoutRun *run);
+// PangoRenderer.html
+
+
+/**
+ * Main Gtk struct.
  * The PangoCoverage structure represents a map from Unicode characters
  * to PangoCoverageLevel. It is an opaque structure with no public fields.
  */
@@ -1340,6 +1475,7 @@ public struct PangoEngineScriptInfo{}
 
 
 /**
+ * Main Gtk struct.
  * PangoEngine is the base class for all types of language and
  * script specific engines. It has no functionality by itself.
  */
@@ -1353,6 +1489,7 @@ public struct PangoEngineClass{}
 
 
 /**
+ * Main Gtk struct.
  * The PangoEngineLang class is implemented by engines that
  * customize the rendering-system independent part of the
  * Pango pipeline for a particular script or language. For
@@ -1383,6 +1520,7 @@ public struct PangoEngineLangClass{}
 
 
 /**
+ * Main Gtk struct.
  * The PangoEngineShape class is implemented by engines that
  * customize the rendering-system dependent part of the
  * Pango pipeline for a particular script or language.
@@ -1612,6 +1750,15 @@ public struct PangoEngineShapeClass{}
 // #define PANGO_FONT_MAP_GET_CLASS(obj) (G_TYPE_INSTANCE_GET_CLASS ((obj), PANGO_TYPE_FONT_MAP, PangoFontMapClass))
 
 /*
+ * Whether a PangoGravity represents vertical writing directions.
+ * gravity:
+ *  the PangoGravity to check
+ * Since 1.16
+ */
+// TODO
+// #define PANGO_GRAVITY_IS_VERTICAL(gravity)
+
+/*
  * Outputs the necessary code for GObject type registration for a
  * PangoEngineLang class defined in a module. Two static symbols
  * are defined.
@@ -1658,13 +1805,31 @@ public struct PangoEngineShapeClass{}
 // #define PANGO_ENGINE_SHAPE_DEFINE_TYPE(name, prefix, class_init, instance_init)
 
 /*
- * Whether a PangoGravity represents vertical writing directions.
- * gravity:
- *  the PangoGravity to check
- * Since 1.16
+ * This macro encodes the given Pango version into an integer. The numbers
+ * returned by PANGO_VERSION and pango_version() are encoded using this macro.
+ * Two encoded version numbers can be compared as integers.
+ * major:
+ * the major component of the version number
+ * minor:
+ * the minor component of the version number
+ * micro:
+ * the micro component of the version number
  */
 // TODO
-// #define PANGO_GRAVITY_IS_VERTICAL(gravity)
+// #define PANGO_VERSION_ENCODE(major, minor, micro)
+
+/*
+ * Checks that the version of Pango available at compile-time is not older than
+ * the provided version number.
+ * major:
+ * the major component of the version number
+ * minor:
+ * the minor component of the version number
+ * micro:
+ * the micro component of the version number
+ */
+// TODO
+// #define PANGO_VERSION_CHECK(major,minor,micro)
 
 /*
  * A callback function used by pango_fontset_foreach() when enumerating

@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Dataset
  * structWrap:
@@ -50,7 +51,7 @@
 
 module gthread.StaticPrivate;
 
-private import gtkc.gthreadtypes;
+public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
 
@@ -130,77 +131,6 @@ public class StaticPrivate
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Initializes private_key. Alternatively you can initialize it with
 	 * G_STATIC_PRIVATE_INIT.
@@ -256,10 +186,4 @@ public class StaticPrivate
 		// void g_static_private_free (GStaticPrivate *private_key);
 		g_static_private_free(gStaticPrivate);
 	}
-	
-	
-	
-	
-	
-	
 }

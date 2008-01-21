@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Drawable
  * 	- gdk.GC
@@ -58,7 +59,7 @@
 
 module gdk.RGB;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -317,7 +318,6 @@ public class RGB
 		gdk_draw_rgb_32_image_dithalign((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride, xdith, ydith);
 	}
 	
-	
 	/**
 	 * Creates a new GdkRgbCmap structure. The cmap maps color indexes to
 	 * RGB colors. If n_colors is less than 256, then images containing
@@ -344,7 +344,6 @@ public class RGB
 		// void gdk_rgb_cmap_free (GdkRgbCmap *cmap);
 		gdk_rgb_cmap_free(cmap);
 	}
-	
 	
 	/**
 	 * Warning
@@ -457,7 +456,13 @@ public class RGB
 	public static Visual rgbGetVisual()
 	{
 		// GdkVisual* gdk_rgb_get_visual (void);
-		return new Visual( gdk_rgb_get_visual() );
+		auto p = gdk_rgb_get_visual();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -471,9 +476,14 @@ public class RGB
 	public static Colormap rgbGetColormap()
 	{
 		// GdkColormap* gdk_rgb_get_colormap (void);
-		return new Colormap( gdk_rgb_get_colormap() );
+		auto p = gdk_rgb_get_colormap();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
-	
 	
 	/**
 	 * Determines whether the preferred visual is ditherable. This function may be

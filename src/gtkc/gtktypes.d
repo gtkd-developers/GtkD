@@ -42,7 +42,6 @@ alias void GtkContainerClass;
 /* GtkDragResult is now an enum. */
 //alias int GtkDragResult;
 //alias int GtkTooltip;
-alias uint time_t;
 
 /**
  * typedef GType			GtkType;

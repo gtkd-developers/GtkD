@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module glib.MemoryChunk;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -169,9 +170,6 @@ public class MemoryChunk
 	/**
 	 */
 	
-	
-	
-	
 	/**
 	 * Warning
 	 * g_mem_chunk_new has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice allocator
@@ -193,7 +191,14 @@ public class MemoryChunk
 	public this (char[] name, int atomSize, uint areaSize, int type)
 	{
 		// GMemChunk* g_mem_chunk_new (const gchar *name,  gint atom_size,  gulong area_size,  gint type);
-		this(cast(GMemChunk*)g_mem_chunk_new(Str.toStringz(name), atomSize, areaSize, type) );
+		auto p = g_mem_chunk_new(Str.toStringz(name), atomSize, areaSize, type);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GMemChunk*) p);
 	}
 	
 	/**
@@ -246,10 +251,6 @@ public class MemoryChunk
 		// void g_mem_chunk_destroy (GMemChunk *mem_chunk);
 		g_mem_chunk_destroy(gMemChunk);
 	}
-	
-	
-	
-	
 	
 	/**
 	 * Warning

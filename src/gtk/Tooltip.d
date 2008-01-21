@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Pixbuf
@@ -58,7 +59,7 @@
 
 module gtk.Tooltip;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -145,7 +146,6 @@ public class Tooltip : ObjectG
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Sets the text of the tooltip to be markup, which is marked up

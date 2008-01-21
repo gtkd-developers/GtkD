@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module cairo.FontFace;
 
-private import gtkc.cairotypes;
+public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
 
@@ -95,7 +96,6 @@ public class FontFace
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Increases the reference count on font_face by one. This prevents
@@ -164,11 +164,11 @@ public class FontFace
 		return cairo_font_face_set_user_data(cairo_font_face, key, userData, destroy);
 	}
 	
-	
 	/**
 	 * This function returns the type of the backend used to create
 	 * a font face. See cairo_font_type_t for available types.
-	 * Returns: The type of font_face.Since 1.2
+	 * Since 1.2
+	 * Returns: The type of font_face.
 	 */
 	public cairo_font_type_t getType()
 	{

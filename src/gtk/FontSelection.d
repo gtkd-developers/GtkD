@@ -30,20 +30,27 @@
  * ctorStrct=
  * clss    = FontSelection
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_font_selection_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Font
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkFont* -> Font
  * module aliases:
@@ -52,13 +59,18 @@
 
 module gtk.FontSelection;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gdk.Font;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -76,7 +88,7 @@ private import gtk.VBox;
  * To change the text which is shown in the preview area, use
  * gtk_font_selection_set_preview_text().
  */
-public class FontSelection : VBox
+public class FontSelection : VBox, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -110,9 +122,11 @@ public class FontSelection : VBox
 		this.gtkFontSelection = gtkFontSelection;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkFontSelection);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkFontSelection.
@@ -120,7 +134,14 @@ public class FontSelection : VBox
 	public this ()
 	{
 		// GtkWidget* gtk_font_selection_new (void);
-		this(cast(GtkFontSelection*)gtk_font_selection_new() );
+		auto p = gtk_font_selection_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFontSelection*) p);
 	}
 	
 	/**
@@ -132,7 +153,13 @@ public class FontSelection : VBox
 	public Font getFont()
 	{
 		// GdkFont* gtk_font_selection_get_font (GtkFontSelection *fontsel);
-		return new Font( gtk_font_selection_get_font(gtkFontSelection) );
+		auto p = gtk_font_selection_get_font(gtkFontSelection);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -147,7 +174,7 @@ public class FontSelection : VBox
 	public char[] getFontName()
 	{
 		// gchar* gtk_font_selection_get_font_name (GtkFontSelection *fontsel);
-		return Str.toString(gtk_font_selection_get_font_name(gtkFontSelection) );
+		return Str.toString(gtk_font_selection_get_font_name(gtkFontSelection)).dup;
 	}
 	
 	/**
@@ -172,7 +199,7 @@ public class FontSelection : VBox
 	public char[] getPreviewText()
 	{
 		// const gchar* gtk_font_selection_get_preview_text (GtkFontSelection *fontsel);
-		return Str.toString(gtk_font_selection_get_preview_text(gtkFontSelection) );
+		return Str.toString(gtk_font_selection_get_preview_text(gtkFontSelection)).dup;
 	}
 	
 	/**
@@ -185,6 +212,4 @@ public class FontSelection : VBox
 		// void gtk_font_selection_set_preview_text (GtkFontSelection *fontsel,  const gchar *text);
 		gtk_font_selection_set_preview_text(gtkFontSelection, Str.toStringz(text));
 	}
-	
-	
 }

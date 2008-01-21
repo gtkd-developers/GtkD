@@ -30,19 +30,27 @@
  * ctorStrct=
  * clss    = ColorSelectionDialog
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_color_selection_dialog_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -50,12 +58,18 @@
 
 module gtk.ColorSelectionDialog;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -72,7 +86,7 @@ private import gtk.Dialog;
  * name "color_selection". It also exposes the buttons with the names
  * "ok_button", "cancel_button" and "help_button".
  */
-public class ColorSelectionDialog : Dialog
+public class ColorSelectionDialog : Dialog, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -106,9 +120,11 @@ public class ColorSelectionDialog : Dialog
 		this.gtkColorSelectionDialog = gtkColorSelectionDialog;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkColorSelectionDialog);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkColorSelectionDialog.
@@ -118,6 +134,13 @@ public class ColorSelectionDialog : Dialog
 	public this (char[] title)
 	{
 		// GtkWidget* gtk_color_selection_dialog_new (const gchar *title);
-		this(cast(GtkColorSelectionDialog*)gtk_color_selection_dialog_new(Str.toStringz(title)) );
+		auto p = gtk_color_selection_dialog_new(Str.toStringz(title));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkColorSelectionDialog*) p);
 	}
 }

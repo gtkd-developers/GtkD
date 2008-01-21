@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Drawable
  * 	- gdk.Screen
@@ -66,7 +67,7 @@
 
 module gdk.GC;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -140,10 +141,6 @@ public class GC : ObjectG
 	/**
 	 */
 	
-	
-	
-	
-	
 	/**
 	 * Create a new graphics context with default values.
 	 * Params:
@@ -153,7 +150,14 @@ public class GC : ObjectG
 	public this (Drawable drawable)
 	{
 		// GdkGC* gdk_gc_new (GdkDrawable *drawable);
-		this(cast(GdkGC*)gdk_gc_new((drawable is null) ? null : drawable.getDrawableStruct()) );
+		auto p = gdk_gc_new((drawable is null) ? null : drawable.getDrawableStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkGC*) p);
 	}
 	
 	/**
@@ -168,7 +172,14 @@ public class GC : ObjectG
 	public this (Drawable drawable, GdkGCValues* values, GdkGCValuesMask valuesMask)
 	{
 		// GdkGC* gdk_gc_new_with_values (GdkDrawable *drawable,  GdkGCValues *values,  GdkGCValuesMask values_mask);
-		this(cast(GdkGC*)gdk_gc_new_with_values((drawable is null) ? null : drawable.getDrawableStruct(), values, valuesMask) );
+		auto p = gdk_gc_new_with_values((drawable is null) ? null : drawable.getDrawableStruct(), values, valuesMask);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkGC*) p);
 	}
 	
 	/**
@@ -179,7 +190,13 @@ public class GC : ObjectG
 	public Screen getScreen()
 	{
 		// GdkScreen* gdk_gc_get_screen (GdkGC *gc);
-		return new Screen( gdk_gc_get_screen(gdkGC) );
+		auto p = gdk_gc_get_screen(gdkGC);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -191,7 +208,13 @@ public class GC : ObjectG
 	public GC doref()
 	{
 		// GdkGC* gdk_gc_ref (GdkGC *gc);
-		return new GC( gdk_gc_ref(gdkGC) );
+		auto p = gdk_gc_ref(gdkGC);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GC(cast(GdkGC*) p);
 	}
 	
 	/**
@@ -204,7 +227,6 @@ public class GC : ObjectG
 		// void gdk_gc_unref (GdkGC *gc);
 		gdk_gc_unref(gdkGC);
 	}
-	
 	
 	/**
 	 * Sets attributes of a graphics context in bulk. For each flag set in
@@ -336,7 +358,6 @@ public class GC : ObjectG
 		gdk_gc_set_fill(gdkGC, fill);
 	}
 	
-	
 	/**
 	 * Set a tile pixmap for a graphics context.
 	 * This will only be used if the fill mode
@@ -443,7 +464,6 @@ public class GC : ObjectG
 		gdk_gc_set_subwindow(gdkGC, mode);
 	}
 	
-	
 	/**
 	 * Sets whether copying non-visible portions of a drawable
 	 * using this graphics context generate exposure events
@@ -473,9 +493,6 @@ public class GC : ObjectG
 		// void gdk_gc_set_line_attributes (GdkGC *gc,  gint line_width,  GdkLineStyle line_style,  GdkCapStyle cap_style,  GdkJoinStyle join_style);
 		gdk_gc_set_line_attributes(gdkGC, lineWidth, lineStyle, capStyle, joinStyle);
 	}
-	
-	
-	
 	
 	/**
 	 * Sets the way dashed-lines are drawn. Lines will be
@@ -533,7 +550,13 @@ public class GC : ObjectG
 	public Colormap getColormap()
 	{
 		// GdkColormap* gdk_gc_get_colormap (GdkGC *gc);
-		return new Colormap( gdk_gc_get_colormap(gdkGC) );
+		auto p = gdk_gc_get_colormap(gdkGC);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**

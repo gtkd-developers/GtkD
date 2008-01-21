@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Widget
  * 	- glgdk.GLDrawable
@@ -58,7 +59,7 @@
 
 module glgtk.GLWidget;
 
-private import gtkglc.glgtktypes;
+public  import gtkglc.glgtktypes;
 
 private import gtkglc.glgtk;
 
@@ -142,7 +143,13 @@ public class GLWidget
 	public static GLConfig getGLConfig(Widget widget)
 	{
 		// GdkGLConfig* gtk_widget_get_gl_config (GtkWidget *widget);
-		return new GLConfig( gtk_widget_get_gl_config((widget is null) ? null : widget.getWidgetStruct()) );
+		auto p = gtk_widget_get_gl_config((widget is null) ? null : widget.getWidgetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLConfig(cast(GdkGLConfig*) p);
 	}
 	
 	/**
@@ -162,7 +169,13 @@ public class GLWidget
 	public static GLContext createGLContext(Widget widget, GLContext shareList, int direct, int renderType)
 	{
 		// GdkGLContext* gtk_widget_create_gl_context (GtkWidget *widget,  GdkGLContext *share_list,  gboolean direct,  int render_type);
-		return new GLContext( gtk_widget_create_gl_context((widget is null) ? null : widget.getWidgetStruct(), (shareList is null) ? null : shareList.getGLContextStruct(), direct, renderType) );
+		auto p = gtk_widget_create_gl_context((widget is null) ? null : widget.getWidgetStruct(), (shareList is null) ? null : shareList.getGLContextStruct(), direct, renderType);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLContext(cast(GdkGLContext*) p);
 	}
 	
 	/**
@@ -178,7 +191,13 @@ public class GLWidget
 	public static GLContext getGLContext(Widget widget)
 	{
 		// GdkGLContext* gtk_widget_get_gl_context (GtkWidget *widget);
-		return new GLContext( gtk_widget_get_gl_context((widget is null) ? null : widget.getWidgetStruct()) );
+		auto p = gtk_widget_get_gl_context((widget is null) ? null : widget.getWidgetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLContext(cast(GdkGLContext*) p);
 	}
 	
 	/**
@@ -190,7 +209,12 @@ public class GLWidget
 	public static GLWindow getGLWindow(Widget widget)
 	{
 		// GdkGLWindow* gtk_widget_get_gl_window (GtkWidget *widget);
-		return new GLWindow( gtk_widget_get_gl_window((widget is null) ? null : widget.getWidgetStruct()) );
+		auto p = gtk_widget_get_gl_window((widget is null) ? null : widget.getWidgetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLWindow(cast(GdkGLWindow*) p);
 	}
-	
 }

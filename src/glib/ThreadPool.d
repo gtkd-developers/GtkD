@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.ListG
@@ -52,7 +53,7 @@
 
 module glib.ThreadPool;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -127,7 +128,6 @@ public class ThreadPool
 	/**
 	 */
 	
-	
 	/**
 	 * This function creates a new thread pool.
 	 * Whenever you call g_thread_pool_push(), either a new thread is
@@ -160,7 +160,14 @@ public class ThreadPool
 	public this (GFunc func, void* userData, int maxThreads, int exclusive, GError** error)
 	{
 		// GThreadPool* g_thread_pool_new (GFunc func,  gpointer user_data,  gint max_threads,  gboolean exclusive,  GError **error);
-		this(cast(GThreadPool*)g_thread_pool_new(func, userData, maxThreads, exclusive, error) );
+		auto p = g_thread_pool_new(func, userData, maxThreads, exclusive, error);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GThreadPool*) p);
 	}
 	
 	/**

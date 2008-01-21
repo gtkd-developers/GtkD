@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module gthread.Mutex;
 
-private import gtkc.gthreadtypes;
+public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
 
@@ -127,26 +128,6 @@ public class Mutex
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GMutex.
 	 * Note
@@ -155,7 +136,14 @@ public class Mutex
 	public this ()
 	{
 		// GMutex* g_mutex_new ();
-		this(cast(GMutex*)g_mutex_new() );
+		auto p = g_mutex_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GMutex*) p);
 	}
 	
 	/**
@@ -215,60 +203,4 @@ public class Mutex
 		// void g_mutex_free (GMutex *mutex);
 		g_mutex_free(gMutex);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

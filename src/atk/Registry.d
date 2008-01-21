@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module atk.Registry;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -102,7 +103,6 @@ public class Registry : ObjectG
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Params:

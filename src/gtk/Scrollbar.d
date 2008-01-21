@@ -30,18 +30,26 @@
  * ctorStrct=
  * clss    = Scrollbar
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_scrollbar_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,17 @@
 
 module gtk.Scrollbar;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -72,7 +86,7 @@ private import gtk.Range;
  * used when the user asks to step down (using the small stepper arrows)
  * or page down (using for example the PageDown key).
  */
-public class Scrollbar : Range
+public class Scrollbar : Range, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -106,12 +120,9 @@ public class Scrollbar : Range
 		this.gtkScrollbar = gtkScrollbar;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkScrollbar);
+	
 	/**
 	 */
-	
-	
-	
-	
-	
-	
 }

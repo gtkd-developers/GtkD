@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.HashTable
  * structWrap:
@@ -50,7 +51,7 @@
 
 module glib.Cache;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -108,7 +109,6 @@ public class Cache
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GCache.
 	 * Params:
@@ -131,7 +131,14 @@ public class Cache
 	public this (GCacheNewFunc valueNewFunc, GCacheDestroyFunc valueDestroyFunc, GCacheDupFunc keyDupFunc, GCacheDestroyFunc keyDestroyFunc, GHashFunc hashKeyFunc, GHashFunc hashValueFunc, GEqualFunc keyEqualFunc)
 	{
 		// GCache* g_cache_new (GCacheNewFunc value_new_func,  GCacheDestroyFunc value_destroy_func,  GCacheDupFunc key_dup_func,  GCacheDestroyFunc key_destroy_func,  GHashFunc hash_key_func,  GHashFunc hash_value_func,  GEqualFunc key_equal_func);
-		this(cast(GCache*)g_cache_new(valueNewFunc, valueDestroyFunc, keyDupFunc, keyDestroyFunc, hashKeyFunc, hashValueFunc, keyEqualFunc) );
+		auto p = g_cache_new(valueNewFunc, valueDestroyFunc, keyDupFunc, keyDestroyFunc, hashKeyFunc, hashValueFunc, keyEqualFunc);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GCache*) p);
 	}
 	
 	/**
@@ -209,7 +216,4 @@ public class Cache
 		// void g_cache_value_foreach (GCache *cache,  GHFunc func,  gpointer user_data);
 		g_cache_value_foreach(gCache, func, userData);
 	}
-	
-	
-	
 }

@@ -25,7 +25,7 @@
  * inFile  = pango-Engines.html
  * outPack = pango
  * outFile = PgEngine
- * strct   = 
+ * strct   = PangoEngine
  * realStrct=
  * ctorStrct=
  * clss    = PgEngine
@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module pango.PgEngine;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
@@ -58,6 +59,7 @@ private import glib.Str;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -75,16 +77,42 @@ private import glib.Str;
  * creating engines from the module at run time, while the first
  * function is used when building a catalog of all available modules.
  */
-public class PgEngine
+public class PgEngine : ObjectG
 {
+	
+	/** the main Gtk struct */
+	protected PangoEngine* pangoEngine;
+	
+	
+	public PangoEngine* getPgEngineStruct()
+	{
+		return pangoEngine;
+	}
+	
+	
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)pangoEngine;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (PangoEngine* pangoEngine)
+	{
+		if(pangoEngine is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoEngine passed to constructor.");
+			else return;
+		}
+		super(cast(GObject*)pangoEngine);
+		this.pangoEngine = pangoEngine;
+	}
 	
 	/**
 	 */
-	
-	
-	
-	
-	
 	
 	/**
 	 * Function to be provided by a module to list the engines that the

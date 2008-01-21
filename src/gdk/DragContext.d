@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.DragContext
  * 	- gdk.Window
@@ -58,7 +59,7 @@
 
 module gdk.DragContext;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -161,7 +162,13 @@ public class DragContext
 	public static DragContext gdkDragContextNew()
 	{
 		// GdkDragContext* gdk_drag_context_new (void);
-		return new DragContext( gdk_drag_context_new() );
+		auto p = gdk_drag_context_new();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new DragContext(cast(GdkDragContext*) p);
 	}
 	
 	/**
@@ -238,7 +245,13 @@ public class DragContext
 	public static DragContext gdkDragBegin(Window window, ListG targets)
 	{
 		// GdkDragContext* gdk_drag_begin (GdkWindow *window,  GList *targets);
-		return new DragContext( gdk_drag_begin((window is null) ? null : window.getWindowStruct(), (targets is null) ? null : targets.getListGStruct()) );
+		auto p = gdk_drag_begin((window is null) ? null : window.getWindowStruct(), (targets is null) ? null : targets.getListGStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new DragContext(cast(GdkDragContext*) p);
 	}
 	
 	/**
@@ -303,7 +316,6 @@ public class DragContext
 		return gdk_drag_get_protocol_for_display((display is null) ? null : display.getDisplayStruct(), xid, protocol);
 	}
 	
-	
 	/**
 	 * Warning
 	 * gdk_drag_context_unref is deprecated and should not be used in newly-written code.
@@ -314,8 +326,6 @@ public class DragContext
 		// void gdk_drag_context_unref (GdkDragContext *context);
 		gdk_drag_context_unref(gdkDragContext);
 	}
-	
-	
 	
 	/**
 	 * Selects one of the actions offered by the drag source.

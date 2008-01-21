@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * 	- GList* -> ListG
@@ -49,7 +50,7 @@
 
 module glib.ListG;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -133,7 +134,6 @@ public class ListG
 	/**
 	 */
 	
-	
 	/**
 	 * Adds a new element on to the end of the list.
 	 * Note
@@ -159,7 +159,13 @@ public class ListG
 	public ListG append(void* data)
 	{
 		// GList* g_list_append (GList *list,  gpointer data);
-		return new ListG( g_list_append(gList, data) );
+		auto p = g_list_append(gList, data);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -178,7 +184,13 @@ public class ListG
 	public ListG prepend(void* data)
 	{
 		// GList* g_list_prepend (GList *list,  gpointer data);
-		return new ListG( g_list_prepend(gList, data) );
+		auto p = g_list_prepend(gList, data);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -193,7 +205,13 @@ public class ListG
 	public ListG insert(void* data, int position)
 	{
 		// GList* g_list_insert (GList *list,  gpointer data,  gint position);
-		return new ListG( g_list_insert(gList, data, position) );
+		auto p = g_list_insert(gList, data, position);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -207,7 +225,13 @@ public class ListG
 	public ListG insertBefore(ListG sibling, void* data)
 	{
 		// GList* g_list_insert_before (GList *list,  GList *sibling,  gpointer data);
-		return new ListG( g_list_insert_before(gList, (sibling is null) ? null : sibling.getListGStruct(), data) );
+		auto p = g_list_insert_before(gList, (sibling is null) ? null : sibling.getListGStruct(), data);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -223,7 +247,13 @@ public class ListG
 	public ListG insertSorted(void* data, GCompareFunc func)
 	{
 		// GList* g_list_insert_sorted (GList *list,  gpointer data,  GCompareFunc func);
-		return new ListG( g_list_insert_sorted(gList, data, func) );
+		auto p = g_list_insert_sorted(gList, data, func);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -237,7 +267,13 @@ public class ListG
 	public ListG remove(void* data)
 	{
 		// GList* g_list_remove (GList *list,  gconstpointer data);
-		return new ListG( g_list_remove(gList, data) );
+		auto p = g_list_remove(gList, data);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -251,7 +287,13 @@ public class ListG
 	public ListG removeLink(ListG llink)
 	{
 		// GList* g_list_remove_link (GList *list,  GList *llink);
-		return new ListG( g_list_remove_link(gList, (llink is null) ? null : llink.getListGStruct()) );
+		auto p = g_list_remove_link(gList, (llink is null) ? null : llink.getListGStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -263,7 +305,13 @@ public class ListG
 	public ListG deleteLink(ListG link)
 	{
 		// GList* g_list_delete_link (GList *list,  GList *link_);
-		return new ListG( g_list_delete_link(gList, (link is null) ? null : link.getListGStruct()) );
+		auto p = g_list_delete_link(gList, (link is null) ? null : link.getListGStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -277,7 +325,13 @@ public class ListG
 	public ListG removeAll(void* data)
 	{
 		// GList* g_list_remove_all (GList *list,  gconstpointer data);
-		return new ListG( g_list_remove_all(gList, data) );
+		auto p = g_list_remove_all(gList, data);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -302,7 +356,13 @@ public class ListG
 	public static ListG alloc()
 	{
 		// GList* g_list_alloc (void);
-		return new ListG( g_list_alloc() );
+		auto p = g_list_alloc();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -314,7 +374,6 @@ public class ListG
 		// void g_list_free_1 (GList *list);
 		g_list_free_1(gList);
 	}
-	
 	
 	/**
 	 * Gets the number of elements in a GList.
@@ -335,7 +394,13 @@ public class ListG
 	public ListG copy()
 	{
 		// GList* g_list_copy (GList *list);
-		return new ListG( g_list_copy(gList) );
+		auto p = g_list_copy(gList);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -346,7 +411,13 @@ public class ListG
 	public ListG reverse()
 	{
 		// GList* g_list_reverse (GList *list);
-		return new ListG( g_list_reverse(gList) );
+		auto p = g_list_reverse(gList);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -362,9 +433,14 @@ public class ListG
 	public ListG sort(GCompareFunc compareFunc)
 	{
 		// GList* g_list_sort (GList *list,  GCompareFunc compare_func);
-		return new ListG( g_list_sort(gList, compareFunc) );
+		auto p = g_list_sort(gList, compareFunc);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
-	
 	
 	/**
 	 * Inserts a new element into the list, using the given comparison function
@@ -381,7 +457,13 @@ public class ListG
 	public ListG insertSortedWithData(void* data, GCompareDataFunc func, void* userData)
 	{
 		// GList* g_list_insert_sorted_with_data (GList *list,  gpointer data,  GCompareDataFunc func,  gpointer user_data);
-		return new ListG( g_list_insert_sorted_with_data(gList, data, func, userData) );
+		auto p = g_list_insert_sorted_with_data(gList, data, func, userData);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -394,9 +476,14 @@ public class ListG
 	public ListG sortWithData(GCompareDataFunc compareFunc, void* userData)
 	{
 		// GList* g_list_sort_with_data (GList *list,  GCompareDataFunc compare_func,  gpointer user_data);
-		return new ListG( g_list_sort_with_data(gList, compareFunc, userData) );
+		auto p = g_list_sort_with_data(gList, compareFunc, userData);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
-	
 	
 	/**
 	 * Adds the second GList onto the end of the first GList.
@@ -409,7 +496,13 @@ public class ListG
 	public ListG concat(ListG list2)
 	{
 		// GList* g_list_concat (GList *list1,  GList *list2);
-		return new ListG( g_list_concat(gList, (list2 is null) ? null : list2.getListGStruct()) );
+		auto p = g_list_concat(gList, (list2 is null) ? null : list2.getListGStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -424,7 +517,6 @@ public class ListG
 		g_list_foreach(gList, func, userData);
 	}
 	
-	
 	/**
 	 * Gets the first element in a GList.
 	 * Returns:the first element in a GList, or NULL if the GList has no elements.
@@ -432,7 +524,13 @@ public class ListG
 	public ListG first()
 	{
 		// GList* g_list_first (GList *list);
-		return new ListG( g_list_first(gList) );
+		auto p = g_list_first(gList);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -442,10 +540,14 @@ public class ListG
 	public ListG last()
 	{
 		// GList* g_list_last (GList *list);
-		return new ListG( g_list_last(gList) );
+		auto p = g_list_last(gList);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
-	
-	
 	
 	/**
 	 * Gets the element at the given position in a GList.
@@ -456,7 +558,13 @@ public class ListG
 	public ListG nth(uint n)
 	{
 		// GList* g_list_nth (GList *list,  guint n);
-		return new ListG( g_list_nth(gList, n) );
+		auto p = g_list_nth(gList, n);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -480,7 +588,13 @@ public class ListG
 	public ListG nthPrev(uint n)
 	{
 		// GList* g_list_nth_prev (GList *list,  guint n);
-		return new ListG( g_list_nth_prev(gList, n) );
+		auto p = g_list_nth_prev(gList, n);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -492,7 +606,13 @@ public class ListG
 	public ListG find(void* data)
 	{
 		// GList* g_list_find (GList *list,  gconstpointer data);
-		return new ListG( g_list_find(gList, data) );
+		auto p = g_list_find(gList, data);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -511,7 +631,13 @@ public class ListG
 	public ListG findCustom(void* data, GCompareFunc func)
 	{
 		// GList* g_list_find_custom (GList *list,  gconstpointer data,  GCompareFunc func);
-		return new ListG( g_list_find_custom(gList, data, func) );
+		auto p = g_list_find_custom(gList, data, func);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**

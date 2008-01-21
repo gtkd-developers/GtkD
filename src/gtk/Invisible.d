@@ -30,19 +30,27 @@
  * ctorStrct=
  * clss    = Invisible
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_invisible_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Screen
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkScreen* -> Screen
  * module aliases:
@@ -51,12 +59,18 @@
 
 module gtk.Invisible;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import gdk.Screen;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -69,7 +83,7 @@ private import gtk.Widget;
  * It is used for reliable pointer grabs and selection handling in the code
  * for drag-and-drop.
  */
-public class Invisible : Widget
+public class Invisible : Widget, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -103,9 +117,11 @@ public class Invisible : Widget
 		this.gtkInvisible = gtkInvisible;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkInvisible);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkInvisible.
@@ -113,7 +129,14 @@ public class Invisible : Widget
 	public this ()
 	{
 		// GtkWidget* gtk_invisible_new (void);
-		this(cast(GtkInvisible*)gtk_invisible_new() );
+		auto p = gtk_invisible_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkInvisible*) p);
 	}
 	
 	/**
@@ -126,7 +149,14 @@ public class Invisible : Widget
 	public this (Screen screen)
 	{
 		// GtkWidget* gtk_invisible_new_for_screen (GdkScreen *screen);
-		this(cast(GtkInvisible*)gtk_invisible_new_for_screen((screen is null) ? null : screen.getScreenStruct()) );
+		auto p = gtk_invisible_new_for_screen((screen is null) ? null : screen.getScreenStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkInvisible*) p);
 	}
 	
 	/**
@@ -149,6 +179,12 @@ public class Invisible : Widget
 	public Screen getScreen()
 	{
 		// GdkScreen* gtk_invisible_get_screen (GtkInvisible *invisible);
-		return new Screen( gtk_invisible_get_screen(gtkInvisible) );
+		auto p = gtk_invisible_get_screen(gtkInvisible);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 }

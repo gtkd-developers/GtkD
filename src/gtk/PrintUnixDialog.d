@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_print_unix_dialog_
  * 	- gtk_
@@ -51,6 +52,11 @@
  * 	- gtk.Printer
  * 	- gtk.PageSetup
  * 	- gtk.PrintSettings
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkPageSetup* -> PageSetup
  * 	- GtkPrintSettings* -> PrintSettings
@@ -74,6 +80,11 @@ private import gtk.Window;
 private import gtk.Printer;
 private import gtk.PageSetup;
 private import gtk.PrintSettings;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -122,7 +133,7 @@ private import gtk.Dialog;
  *  </child>
  * </object>
  */
-public class PrintUnixDialog : Dialog
+public class PrintUnixDialog : Dialog, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -156,6 +167,9 @@ public class PrintUnixDialog : Dialog
 		this.gtkPrintUnixDialog = gtkPrintUnixDialog;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkPrintUnixDialog);
+	
 	/**
 	 * Sets the GtkPrintSettings for the GtkPrintUnixDialog. Typically,
 	 * this is used to restore saved print settings from a previous print
@@ -181,12 +195,17 @@ public class PrintUnixDialog : Dialog
 	public PrintSettings getPrintSettings()
 	{
 		// GtkPrintSettings* gtk_print_unix_dialog_get_settings (GtkPrintUnixDialog *dialog);
-		return new PrintSettings( gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog) );
+		auto p = gtk_print_unix_dialog_get_settings(gtkPrintUnixDialog);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PrintSettings(p);
 	}
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkPrintUnixDialog.
@@ -261,8 +280,6 @@ public class PrintUnixDialog : Dialog
 		return gtk_print_unix_dialog_get_current_page(gtkPrintUnixDialog);
 	}
 	
-	
-	
 	/**
 	 * Gets the currently selected printer.
 	 * Since 2.10
@@ -293,7 +310,6 @@ public class PrintUnixDialog : Dialog
 		gtk_print_unix_dialog_add_custom_tab(gtkPrintUnixDialog, (child is null) ? null : child.getWidgetStruct(), (tabLabel is null) ? null : tabLabel.getWidgetStruct());
 	}
 	
-	
 	/**
 	 * This lets you specify the printing capabilities your application
 	 * supports. For instance, if you can handle scaling the output then
@@ -309,7 +325,4 @@ public class PrintUnixDialog : Dialog
 		// void gtk_print_unix_dialog_set_manual_capabilities  (GtkPrintUnixDialog *dialog,  GtkPrintCapabilities capabilities);
 		gtk_print_unix_dialog_set_manual_capabilities(gtkPrintUnixDialog, capabilities);
 	}
-	
-	
-	
 }

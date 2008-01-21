@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module glib.Allocator;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -102,7 +103,6 @@ public class Allocator
 	/**
 	 */
 	
-	
 	/**
 	 * Warning
 	 * g_allocator_new has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice allocator
@@ -119,7 +119,14 @@ public class Allocator
 	public this (char[] name, uint nPreallocs)
 	{
 		// GAllocator* g_allocator_new (const gchar *name,  guint n_preallocs);
-		this(cast(GAllocator*)g_allocator_new(Str.toStringz(name), nPreallocs) );
+		auto p = g_allocator_new(Str.toStringz(name), nPreallocs);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GAllocator*) p);
 	}
 	
 	/**

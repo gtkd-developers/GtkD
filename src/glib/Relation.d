@@ -41,6 +41,7 @@
  * omit prefixes:
  * 	- g_tuples_
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.HashTable
  * 	- glib.Tuples
@@ -53,7 +54,7 @@
 
 module glib.Relation;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -126,7 +127,6 @@ public class Relation
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GRelation with the given number of fields.
 	 * Note that currently the number of fields must be 2.
@@ -136,7 +136,14 @@ public class Relation
 	public this (int fields)
 	{
 		// GRelation* g_relation_new (gint fields);
-		this(cast(GRelation*)g_relation_new(fields) );
+		auto p = g_relation_new(fields);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GRelation*) p);
 	}
 	
 	/**
@@ -206,7 +213,13 @@ public class Relation
 	public Tuples select(void* key, int field)
 	{
 		// GTuples* g_relation_select (GRelation *relation,  gconstpointer key,  gint field);
-		return new Tuples( g_relation_select(gRelation, key, field) );
+		auto p = g_relation_select(gRelation, key, field);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Tuples(cast(GTuples*) p);
 	}
 	
 	/**
@@ -243,7 +256,4 @@ public class Relation
 		// void g_relation_print (GRelation *relation);
 		g_relation_print(gRelation);
 	}
-	
-	
-	
 }

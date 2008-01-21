@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -50,10 +51,12 @@
 
 module gtk.ObjectGtk;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 
@@ -153,13 +156,16 @@ public class ObjectGtk : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ObjectGtk)[] onDestroyListeners;
+	/**
+	 * Signals that all holders of a reference to the GtkObject should release
+	 * the reference that they hold. May result in finalization of the object
+	 * if all references are released.
+	 * See Also
+	 * GObject
+	 */
 	void addOnDestroy(void delegate(ObjectGtk) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("destroy" in connectedSignals) )
@@ -188,13 +194,6 @@ public class ObjectGtk : ObjectG
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Warning
 	 * gtk_object_new is deprecated and should not be used in newly-written code. Use g_object_new() instead.
@@ -212,7 +211,14 @@ public class ObjectGtk : ObjectG
 	public this (GtkType type, char[] firstPropertyName, ... )
 	{
 		// GtkObject* gtk_object_new (GtkType type,  const gchar *first_property_name,  ...);
-		this(cast(GtkObject*)gtk_object_new(type, Str.toStringz(firstPropertyName)) );
+		auto p = gtk_object_new(type, Str.toStringz(firstPropertyName));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkObject*) p);
 	}
 	
 	/**
@@ -546,6 +552,4 @@ public class ObjectGtk : ObjectG
 		// void gtk_object_remove_no_notify_by_id (GtkObject *object,  GQuark key_id);
 		gtk_object_remove_no_notify_by_id(gtkObject, keyId);
 	}
-	
-	
 }

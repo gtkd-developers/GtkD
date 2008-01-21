@@ -30,19 +30,26 @@
  * ctorStrct=
  * clss    = FontButton
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_font_button_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -50,12 +57,19 @@
 
 module gtk.FontButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -66,7 +80,7 @@ private import gtk.Button;
  * The GtkFontButton is a button which displays the currently selected font an allows to open a font selection
  * dialog to change the font. It is suitable widget for selecting a font in a preference dialog.
  */
-public class FontButton : Button
+public class FontButton : Button, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -100,15 +114,25 @@ public class FontButton : Button
 		this.gtkFontButton = gtkFontButton;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkFontButton);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(FontButton)[] onFontSetListeners;
+	/**
+	 * The ::font-set signal is emitted when the user selects a font.
+	 * When handling this signal, use gtk_font_button_get_font_name()
+	 * to find out which font was just selected.
+	 * Note that this signal is only emitted when the user
+	 * changes the font. If you need to react to programmatic font changes
+	 * as well, use the notify::font-name signal.
+	 * Since 2.4
+	 * See Also
+	 * GtkFontSelectionDialog, GtkColorButton.
+	 */
 	void addOnFontSet(void delegate(FontButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("font-set" in connectedSignals) )
@@ -137,7 +161,6 @@ public class FontButton : Button
 	}
 	
 	
-	
 	/**
 	 * Creates a new font picker widget.
 	 * Since 2.4
@@ -145,7 +168,14 @@ public class FontButton : Button
 	public this ()
 	{
 		// GtkWidget* gtk_font_button_new (void);
-		this(cast(GtkFontButton*)gtk_font_button_new() );
+		auto p = gtk_font_button_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFontButton*) p);
 	}
 	
 	/**
@@ -157,7 +187,14 @@ public class FontButton : Button
 	public this (char[] fontname)
 	{
 		// GtkWidget* gtk_font_button_new_with_font (const gchar *fontname);
-		this(cast(GtkFontButton*)gtk_font_button_new_with_font(Str.toStringz(fontname)) );
+		auto p = gtk_font_button_new_with_font(Str.toStringz(fontname));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFontButton*) p);
 	}
 	
 	/**
@@ -181,7 +218,7 @@ public class FontButton : Button
 	public char[] getFontName()
 	{
 		// const gchar* gtk_font_button_get_font_name (GtkFontButton *font_button);
-		return Str.toString(gtk_font_button_get_font_name(gtkFontButton) );
+		return Str.toString(gtk_font_button_get_font_name(gtkFontButton)).dup;
 	}
 	
 	/**
@@ -296,11 +333,6 @@ public class FontButton : Button
 	public char[] getTitle()
 	{
 		// const gchar* gtk_font_button_get_title (GtkFontButton *font_button);
-		return Str.toString(gtk_font_button_get_title(gtkFontButton) );
+		return Str.toString(gtk_font_button_get_title(gtkFontButton)).dup;
 	}
-	
-	
-	
-	
-	
 }

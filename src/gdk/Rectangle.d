@@ -41,6 +41,7 @@
  * omit prefixes:
  * 	- gdk_region_
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Rectangle
  * structWrap:
@@ -51,7 +52,7 @@
 
 module gdk.Rectangle;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -112,8 +113,6 @@ public class Rectangle
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Calculates the intersection of two rectangles. It is allowed for
 	 * dest to be the same as either src1 or src2. If the rectangles
@@ -146,28 +145,4 @@ public class Rectangle
 		// void gdk_rectangle_union (GdkRectangle *src1,  GdkRectangle *src2,  GdkRectangle *dest);
 		gdk_rectangle_union(gdkRectangle, (src2 is null) ? null : src2.getRectangleStruct(), (dest is null) ? null : dest.getRectangleStruct());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

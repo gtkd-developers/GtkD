@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Dataset
  * 	- glib.OptionContext
@@ -53,7 +54,7 @@
 
 module glib.OptionGroup;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -175,34 +176,6 @@ public class OptionGroup
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GOptionGroup.
 	 * Since 2.6
@@ -222,7 +195,14 @@ public class OptionGroup
 	public this (char[] name, char[] description, char[] helpDescription, void* userData, GDestroyNotify destroy)
 	{
 		// GOptionGroup* g_option_group_new (const gchar *name,  const gchar *description,  const gchar *help_description,  gpointer user_data,  GDestroyNotify destroy);
-		this(cast(GOptionGroup*)g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy) );
+		auto p = g_option_group_new(Str.toStringz(name), Str.toStringz(description), Str.toStringz(helpDescription), userData, destroy);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GOptionGroup*) p);
 	}
 	
 	/**
@@ -248,7 +228,6 @@ public class OptionGroup
 		g_option_group_add_entries(gOptionGroup, entries);
 	}
 	
-	
 	/**
 	 * Associates two functions with group which will be called
 	 * from g_option_context_parse() before the first option is parsed
@@ -266,7 +245,6 @@ public class OptionGroup
 		// void g_option_group_set_parse_hooks (GOptionGroup *group,  GOptionParseFunc pre_parse_func,  GOptionParseFunc post_parse_func);
 		g_option_group_set_parse_hooks(gOptionGroup, preParseFunc, postParseFunc);
 	}
-	
 	
 	/**
 	 * Associates a function with group which will be called

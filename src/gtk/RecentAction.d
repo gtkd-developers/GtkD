@@ -25,9 +25,9 @@
  * inFile  = GtkRecentAction.html
  * outPack = gtk
  * outFile = RecentAction
- * strct   = GtkAction
- * realStrct=GtkRecentAction
- * ctorStrct=
+ * strct   = GtkRecentAction
+ * realStrct=
+ * ctorStrct=GtkAction
  * clss    = RecentAction
  * interf  = 
  * class Code: Yes
@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_recent_action_
  * 	- gtk_
@@ -47,6 +48,11 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.RecentManager
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkRecentManager* -> RecentManager
  * module aliases:
@@ -62,6 +68,11 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.RecentManager;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -77,7 +88,7 @@ private import gtk.Action;
  * the recently used files in the popup menu, use a GtkRecentAction as the
  * action for a <toolitem> element.
  */
-public class RecentAction : Action
+public class RecentAction : Action, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -111,7 +122,8 @@ public class RecentAction : Action
 		this.gtkRecentAction = gtkRecentAction;
 	}
 	
-	/**
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkRecentAction);	/**
 	 * Creates a new GtkRecentAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().
@@ -169,14 +181,12 @@ public class RecentAction : Action
 	/**
 	 * Returns the value set by gtk_recent_chooser_menu_set_show_numbers().
 	 * Since 2.12
-	 * Params:
-	 * action =  a GtkRecentAction
 	 * Returns: TRUE if numbers should be shown.
 	 */
-	public static int getShowNumbers(GtkRecentAction* action)
+	public int getShowNumbers()
 	{
 		// gboolean gtk_recent_action_get_show_numbers (GtkRecentAction *action);
-		return gtk_recent_action_get_show_numbers(action);
+		return gtk_recent_action_get_show_numbers(gtkRecentAction);
 	}
 	
 	/**
@@ -186,12 +196,11 @@ public class RecentAction : Action
 	 * label. Only the first ten items get a number to avoid clashes.
 	 * Since 2.12
 	 * Params:
-	 * action =  a GtkRecentAction
 	 * showNumbers =  TRUE if the shown items should be numbered
 	 */
-	public static void setShowNumbers(GtkRecentAction* action, int showNumbers)
+	public void setShowNumbers(int showNumbers)
 	{
 		// void gtk_recent_action_set_show_numbers (GtkRecentAction *action,  gboolean show_numbers);
-		gtk_recent_action_set_show_numbers(action, showNumbers);
+		gtk_recent_action_set_show_numbers(gtkRecentAction, showNumbers);
 	}
 }

@@ -39,6 +39,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Widget
  * 	- gtk.Window
@@ -51,7 +52,7 @@
 
 module gtk.MainWindow;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 

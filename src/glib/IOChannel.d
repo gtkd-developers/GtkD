@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.StringG
@@ -56,7 +57,7 @@
 
 module glib.IOChannel;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -139,7 +140,6 @@ public class IOChannel
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GIOChannel given a file descriptor.
 	 * On UNIX systems this works for plain files, pipes, and sockets.
@@ -164,7 +164,13 @@ public class IOChannel
 	public static IOChannel unixNew(int fd)
 	{
 		// GIOChannel* g_io_channel_unix_new (int fd);
-		return new IOChannel( g_io_channel_unix_new(fd) );
+		auto p = g_io_channel_unix_new(fd);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IOChannel(cast(GIOChannel*) p);
 	}
 	
 	/**
@@ -205,7 +211,13 @@ public class IOChannel
 	public static IOChannel win32_NewFd(int fd)
 	{
 		// GIOChannel* g_io_channel_win32_new_fd (gint fd);
-		return new IOChannel( g_io_channel_win32_new_fd(fd) );
+		auto p = g_io_channel_win32_new_fd(fd);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IOChannel(cast(GIOChannel*) p);
 	}
 	
 	/**
@@ -222,7 +234,13 @@ public class IOChannel
 	public static IOChannel win32_NewSocket(int socket)
 	{
 		// GIOChannel* g_io_channel_win32_new_socket (gint socket);
-		return new IOChannel( g_io_channel_win32_new_socket(socket) );
+		auto p = g_io_channel_win32_new_socket(socket);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IOChannel(cast(GIOChannel*) p);
 	}
 	
 	/**
@@ -236,7 +254,13 @@ public class IOChannel
 	public static IOChannel win32_NewMessages(uint hwnd)
 	{
 		// GIOChannel* g_io_channel_win32_new_messages (guint hwnd);
-		return new IOChannel( g_io_channel_win32_new_messages(hwnd) );
+		auto p = g_io_channel_win32_new_messages(hwnd);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IOChannel(cast(GIOChannel*) p);
 	}
 	
 	/**
@@ -266,7 +290,14 @@ public class IOChannel
 	public this (char[] filename, char[] mode, GError** error)
 	{
 		// GIOChannel* g_io_channel_new_file (const gchar *filename,  const gchar *mode,  GError **error);
-		this(cast(GIOChannel*)g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), error) );
+		auto p = g_io_channel_new_file(Str.toStringz(filename), Str.toStringz(mode), error);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GIOChannel*) p);
 	}
 	
 	/**
@@ -431,7 +462,6 @@ public class IOChannel
 		return g_io_channel_seek_position(gIOChannel, offset, type, error);
 	}
 	
-	
 	/**
 	 * Close an IO channel. Any pending data to be written will be
 	 * flushed if flush is TRUE. The channel will not be freed until the
@@ -446,9 +476,6 @@ public class IOChannel
 		// GIOStatus g_io_channel_shutdown (GIOChannel *channel,  gboolean flush,  GError **err);
 		return g_io_channel_shutdown(gIOChannel, flush, err);
 	}
-	
-	
-	
 	
 	/**
 	 * Converts an errno error number to a GIOChannelError.
@@ -469,7 +496,13 @@ public class IOChannel
 	public IOChannel doref()
 	{
 		// GIOChannel* g_io_channel_ref (GIOChannel *channel);
-		return new IOChannel( g_io_channel_ref(gIOChannel) );
+		auto p = g_io_channel_ref(gIOChannel);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IOChannel(cast(GIOChannel*) p);
 	}
 	
 	/**
@@ -497,7 +530,13 @@ public class IOChannel
 	public Source gIoCreateWatch(GIOCondition condition)
 	{
 		// GSource* g_io_create_watch (GIOChannel *channel,  GIOCondition condition);
-		return new Source( g_io_create_watch(gIOChannel, condition) );
+		auto p = g_io_create_watch(gIOChannel, condition);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Source(cast(GSource*) p);
 	}
 	
 	/**
@@ -533,9 +572,6 @@ public class IOChannel
 		// guint g_io_add_watch_full (GIOChannel *channel,  gint priority,  GIOCondition condition,  GIOFunc func,  gpointer user_data,  GDestroyNotify notify);
 		return g_io_add_watch_full(gIOChannel, priority, condition, func, userData, notify);
 	}
-	
-	
-	
 	
 	/**
 	 * Gets the buffer size.
@@ -601,7 +637,6 @@ public class IOChannel
 		return g_io_channel_set_flags(gIOChannel, flags, error);
 	}
 	
-	
 	/**
 	 * This returns the string that GIOChannel uses to determine
 	 * where in the file a line break occurs. A value of NULL
@@ -613,7 +648,7 @@ public class IOChannel
 	public char[] getLineTerm(int* length)
 	{
 		// const gchar* g_io_channel_get_line_term (GIOChannel *channel,  gint *length);
-		return Str.toString(g_io_channel_get_line_term(gIOChannel, length) );
+		return Str.toString(g_io_channel_get_line_term(gIOChannel, length)).dup;
 	}
 	
 	/**
@@ -679,7 +714,7 @@ public class IOChannel
 	public char[] getEncoding()
 	{
 		// const gchar* g_io_channel_get_encoding (GIOChannel *channel);
-		return Str.toString(g_io_channel_get_encoding(gIOChannel) );
+		return Str.toString(g_io_channel_get_encoding(gIOChannel)).dup;
 	}
 	
 	/**
@@ -742,7 +777,6 @@ public class IOChannel
 		// GIOError g_io_channel_read (GIOChannel *channel,  gchar *buf,  gsize count,  gsize *bytes_read);
 		return g_io_channel_read(gIOChannel, Str.toStringz(buf), count, bytesRead);
 	}
-	
 	
 	/**
 	 * Warning

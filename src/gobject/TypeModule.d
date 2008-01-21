@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.Enums
@@ -53,7 +54,7 @@
 
 module gobject.TypeModule;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
@@ -130,8 +131,6 @@ public class TypeModule : ObjectG
 	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Increases the use count of a GTypeModule by one. If the
@@ -243,6 +242,4 @@ public class TypeModule : ObjectG
 		// GType g_type_module_register_flags (GTypeModule *module,  const gchar *name,  const GFlagsValue *const_static_values);
 		return g_type_module_register_flags(gTypeModule, Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
 	}
-	
-	
 }

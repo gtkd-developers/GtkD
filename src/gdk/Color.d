@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Color
@@ -53,7 +54,7 @@
 
 module gdk.Color;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -246,21 +247,6 @@ public class Color
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Makes a copy of a color structure. The result
 	 * must be freed using gdk_color_free().
@@ -269,7 +255,13 @@ public class Color
 	public Color copy()
 	{
 		// GdkColor* gdk_color_copy (const GdkColor *color);
-		return new Color( gdk_color_copy(gdkColor) );
+		auto p = gdk_color_copy(gdkColor);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Color(cast(GdkColor*) p);
 	}
 	
 	/**
@@ -281,8 +273,6 @@ public class Color
 		// void gdk_color_free (GdkColor *color);
 		gdk_color_free(gdkColor);
 	}
-	
-	
 	
 	/**
 	 * Warning
@@ -410,6 +400,6 @@ public class Color
 	public char[] toString()
 	{
 		// gchar* gdk_color_to_string (const GdkColor *color);
-		return Str.toString(gdk_color_to_string(gdkColor) );
+		return Str.toString(gdk_color_to_string(gdkColor)).dup;
 	}
 }

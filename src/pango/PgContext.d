@@ -30,82 +30,69 @@
  * ctorStrct=
  * clss    = PgContext
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
  * 	- pango_context_
+ * 	- pango_
  * omit structs:
  * omit prefixes:
  * 	- pango_item_
  * omit code:
+ * 	- pango_break
+ * omit signals:
  * imports:
- * 	- glib.ListSG
- * 	- glib.ListG
- * 	- pango.PgItem
- * 	- pango.PgLayout
- * 	- pango.PgFontDescription
- * 	- pango.PgFontMetrics
- * 	- pango.PgFontFamily
- * 	- pango.PgFontFace
- * 	- pango.PgFontMap
- * 	- pango.PgFontsetSimple
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
- * 	- pango.PgLanguage
- * 	- pango.PgTabArray
- * 	- pango.PgLayout
- * 	- pango.PgLayoutIter
- * 	- pango.PgScriptIter
  * 	- glib.Str
+ * 	- glib.ListG
+ * 	- pango.PgFont
+ * 	- pango.PgFontMap
+ * 	- pango.PgFontset
+ * 	- pango.PgFontMetrics
+ * 	- pango.PgFontDescription
+ * 	- pango.PgLanguage
+ * 	- pango.PgMatrix
+ * 	- pango.PgAttributeList
+ * 	- pango.PgAttributeIterator
+ * 	- pango.PgGlyphString
  * structWrap:
  * 	- GList* -> ListG
- * 	- GSList* -> ListSG
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
+ * 	- PangoAttrIterator* -> PgAttributeIterator
+ * 	- PangoAttrList* -> PgAttributeList
+ * 	- PangoContext* -> PgContext
+ * 	- PangoFont* -> PgFont
  * 	- PangoFontDescription* -> PgFontDescription
- * 	- PangoFontFace* -> PgFontFace
- * 	- PangoFontFamily* -> PgFontFamily
  * 	- PangoFontMap* -> PgFontMap
  * 	- PangoFontMetrics* -> PgFontMetrics
- * 	- PangoFontsetSimple* -> PgFontsetSimple
- * 	- PangoItem* -> PgItem
+ * 	- PangoFontset* -> PgFontset
+ * 	- PangoGlyphString* -> PgGlyphString
  * 	- PangoLanguage* -> PgLanguage
- * 	- PangoLayout* -> PgLayout
- * 	- PangoLayoutIter* -> PgLayoutIter
- * 	- PangoScriptIter* -> PgScriptIter
- * 	- PangoTabArray* -> PgTabArray
+ * 	- PangoMatrix* -> PgMatrix
  * module aliases:
  * local aliases:
  */
 
 module pango.PgContext;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
 
-private import glib.ListSG;
-private import glib.ListG;
-private import pango.PgItem;
-private import pango.PgLayout;
-private import pango.PgFontDescription;
-private import pango.PgFontMetrics;
-private import pango.PgFontFamily;
-private import pango.PgFontFace;
-private import pango.PgFontMap;
-private import pango.PgFontsetSimple;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
-private import pango.PgLanguage;
-private import pango.PgTabArray;
-private import pango.PgLayout;
-private import pango.PgLayoutIter;
-private import pango.PgScriptIter;
 private import glib.Str;
+private import glib.ListG;
+private import pango.PgFont;
+private import pango.PgFontMap;
+private import pango.PgFontset;
+private import pango.PgFontMetrics;
+private import pango.PgFontDescription;
+private import pango.PgLanguage;
+private import pango.PgMatrix;
+private import pango.PgAttributeList;
+private import pango.PgAttributeIterator;
+private import pango.PgGlyphString;
 
 
 
@@ -153,13 +140,24 @@ public class PgContext : ObjectG
 	}
 	
 	/**
+	 * Determines possible line, word, and character breaks
+	 * for a string of Unicode text with a single analysis. For most
+	 * purposes you may want to use pango_get_log_attrs().
+	 * Params:
+	 * text =  the text to process
+	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
+	 * analysis =  PangoAnalysis structure from pango_itemize()
+	 * attrs =  an array to store character information in
+	 * attrsLen =  size of the array passed as attrs
 	 */
+	public static void pangoBreak(char[] text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
+	{
+		// void pango_break (const gchar *text,  int length,  PangoAnalysis *analysis,  PangoLogAttr *attrs,  int attrs_len);
+		pango_break(Str.toStringz(text), length, analysis, attrs, attrsLen);
+	}
 	
-	
-	
-	
-	
-	
+	/**
+	 */
 	
 	/**
 	 * Breaks a piece of text into segments with consistent
@@ -181,16 +179,23 @@ public class PgContext : ObjectG
 	 * cachedIter =  Cached attribute iterator, or NULL
 	 * Returns: a GList of PangoItem structures.
 	 */
-	public ListG pangoItemize(char[] text, int startIndex, int length, PangoAttrList* attrs, PangoAttrIterator* cachedIter)
+	public ListG itemize(char[] text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
 	{
 		// GList* pango_itemize (PangoContext *context,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
-		return new ListG( pango_itemize(pangoContext, Str.toStringz(text), startIndex, length, attrs, cachedIter) );
+		auto p = pango_itemize(pangoContext, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
 	 * Like pango_itemize(), but the base direction to use when
 	 * computing bidirectional levels (see pango_context_set_base_dir()),
 	 * is specified explicitly rather than gotten from the PangoContext.
+	 * Since 1.4
 	 * Params:
 	 * baseDir =  base direction to use for bidirectional processing
 	 * text =  the text to itemize.
@@ -200,17 +205,19 @@ public class PgContext : ObjectG
 	 *  This must be >= 0.
 	 * attrs =  the set of attributes that apply to text.
 	 * cachedIter =  Cached attribute iterator, or NULL
-	 * Returns: a GList of PangoItem structures. The items should befreed using pango_item_free() probably in combination with g_list_foreach(),and the list itself using g_list_free().Since 1.4
+	 * Returns: a GList of PangoItem structures. The items should befreed using pango_item_free() probably in combination with g_list_foreach(),and the list itself using g_list_free().
 	 */
-	public ListG pangoItemizeWithBaseDir(PangoDirection baseDir, char[] text, int startIndex, int length, PangoAttrList* attrs, PangoAttrIterator* cachedIter)
+	public ListG itemizeWithBaseDir(PangoDirection baseDir, char[] text, int startIndex, int length, PgAttributeList attrs, PgAttributeIterator cachedIter)
 	{
 		// GList* pango_itemize_with_base_dir (PangoContext *context,  PangoDirection base_dir,  const char *text,  int start_index,  int length,  PangoAttrList *attrs,  PangoAttrIterator *cached_iter);
-		return new ListG( pango_itemize_with_base_dir(pangoContext, baseDir, Str.toStringz(text), startIndex, length, attrs, cachedIter) );
+		auto p = pango_itemize_with_base_dir(pangoContext, baseDir, Str.toStringz(text), startIndex, length, (attrs is null) ? null : attrs.getPgAttributeListStruct(), (cachedIter is null) ? null : cachedIter.getPgAttributeIteratorStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
-	
-	
-	
-	
 	
 	/**
 	 * From a list of items in logical order and the associated
@@ -220,10 +227,16 @@ public class PgContext : ObjectG
 	 * logicalItems =  a GList of PangoItem in logical order.
 	 * Returns:a GList of PangoItem structures in visual order.(Please open a bug if you use this function. It is not a particularly convenient interface, and the code is duplicated elsewhere in Pango for that reason.)
 	 */
-	public static ListG pangoReorderItems(ListG logicalItems)
+	public static ListG reorderItems(ListG logicalItems)
 	{
 		// GList* pango_reorder_items (GList *logical_items);
-		return new ListG( pango_reorder_items((logicalItems is null) ? null : logicalItems.getListGStruct()) );
+		auto p = pango_reorder_items((logicalItems is null) ? null : logicalItems.getListGStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -242,7 +255,14 @@ public class PgContext : ObjectG
 	public this ()
 	{
 		// PangoContext* pango_context_new (void);
-		this(cast(PangoContext*)pango_context_new() );
+		auto p = pango_context_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -260,12 +280,19 @@ public class PgContext : ObjectG
 	
 	/**
 	 * Gets the PangoFontmap used to look up fonts for this context.
-	 * Returns: the font map for the PangoContext. This value is owned by Pango and should not be unreferenced.Since 1.6
+	 * Since 1.6
+	 * Returns: the font map for the PangoContext. This value is owned by Pango and should not be unreferenced.
 	 */
 	public PgFontMap getFontMap()
 	{
 		// PangoFontMap* pango_context_get_font_map (PangoContext *context);
-		return new PgFontMap( pango_context_get_font_map(pangoContext) );
+		auto p = pango_context_get_font_map(pangoContext);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFontMap(cast(PangoFontMap*) p);
 	}
 	
 	/**
@@ -275,7 +302,13 @@ public class PgContext : ObjectG
 	public PgFontDescription getFontDescription()
 	{
 		// PangoFontDescription* pango_context_get_font_description  (PangoContext *context);
-		return new PgFontDescription( pango_context_get_font_description(pangoContext) );
+		auto p = pango_context_get_font_description(pangoContext);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
@@ -296,7 +329,13 @@ public class PgContext : ObjectG
 	public PgLanguage getLanguage()
 	{
 		// PangoLanguage* pango_context_get_language (PangoContext *context);
-		return new PgLanguage( pango_context_get_language(pangoContext) );
+		auto p = pango_context_get_language(pangoContext);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgLanguage(cast(PangoLanguage*) p);
 	}
 	
 	/**
@@ -343,7 +382,8 @@ public class PgContext : ObjectG
 	/**
 	 * Retrieves the base gravity for the context. See
 	 * pango_context_set_base_gravity().
-	 * Returns: the base gravity for the context.Since 1.16
+	 * Since 1.16
+	 * Returns: the base gravity for the context.
 	 */
 	public PangoGravity getBaseGravity()
 	{
@@ -354,9 +394,9 @@ public class PgContext : ObjectG
 	/**
 	 * Sets the base gravity for the context.
 	 * The base gravity is used in laying vertical text out.
+	 * Since 1.16
 	 * Params:
 	 * gravity =  the new base gravity
-	 * Since 1.16
 	 */
 	public void setBaseGravity(PangoGravity gravity)
 	{
@@ -369,7 +409,8 @@ public class PgContext : ObjectG
 	 * pango_context_get_base_gravity(), except for when the base gravity
 	 * is PANGO_GRAVITY_AUTO for which pango_gravity_get_for_matrix() is used
 	 * to return the gravity from the current context matrix.
-	 * Returns: the resolved gravity for the context.Since 1.16
+	 * Since 1.16
+	 * Returns: the resolved gravity for the context.
 	 */
 	public PangoGravity getGravity()
 	{
@@ -380,7 +421,8 @@ public class PgContext : ObjectG
 	/**
 	 * Retrieves the gravity hint for the context. See
 	 * pango_context_set_gravity_hint() for details.
-	 * Returns: the gravity hint for the context.Since 1.16
+	 * Since 1.16
+	 * Returns: the gravity hint for the context.
 	 */
 	public PangoGravityHint getGravityHint()
 	{
@@ -393,9 +435,9 @@ public class PgContext : ObjectG
 	 * The gravity hint is used in laying vertical text out, and is only relevant
 	 * if gravity of the context as returned by pango_context_get_gravity()
 	 * is set PANGO_GRAVITY_EAST or PANGO_GRAVITY_WEST.
+	 * Since 1.16
 	 * Params:
 	 * hint =  the new gravity hint
-	 * Since 1.16
 	 */
 	public void setGravityHint(PangoGravityHint hint)
 	{
@@ -406,12 +448,19 @@ public class PgContext : ObjectG
 	/**
 	 * Gets the transformation matrix that will be applied when
 	 * rendering with this context. See pango_context_set_matrix().
-	 * Returns: the matrix, or NULL if no matrix has been set (which is the same as the identity matrix). The returned matrix is owned by Pango and must not be modified or freed.Since 1.6
+	 * Since 1.6
+	 * Returns: the matrix, or NULL if no matrix has been set (which is the same as the identity matrix). The returned matrix is owned by Pango and must not be modified or freed.
 	 */
-	public PangoMatrix* getMatrix()
+	public PgMatrix getMatrix()
 	{
 		// const PangoMatrix* pango_context_get_matrix (PangoContext *context);
-		return pango_context_get_matrix(pangoContext);
+		auto p = pango_context_get_matrix(pangoContext);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgMatrix(cast(PangoMatrix*) p);
 	}
 	
 	/**
@@ -421,15 +470,15 @@ public class PgContext : ObjectG
 	 * coordinates after the application of the matrix. So, they don't scale
 	 * with the matrix, though they may change slightly for different
 	 * matrices, depending on how the text is fit to the pixel grid.
+	 * Since 1.6
 	 * Params:
 	 * matrix =  a PangoMatrix, or NULL to unset any existing matrix.
 	 *  (No matrix set is the same as setting the identity matrix.)
-	 * Since 1.6
 	 */
-	public void setMatrix(PangoMatrix* matrix)
+	public void setMatrix(PgMatrix matrix)
 	{
 		// void pango_context_set_matrix (PangoContext *context,  const PangoMatrix *matrix);
-		pango_context_set_matrix(pangoContext, matrix);
+		pango_context_set_matrix(pangoContext, (matrix is null) ? null : matrix.getPgMatrixStruct());
 	}
 	
 	/**
@@ -439,10 +488,16 @@ public class PgContext : ObjectG
 	 * desc =  a PangoFontDescription describing the font to load
 	 * Returns:the font loaded, or NULL if no font matched.
 	 */
-	public PangoFont* loadFont(PgFontDescription desc)
+	public PgFont loadFont(PgFontDescription desc)
 	{
 		// PangoFont* pango_context_load_font (PangoContext *context,  const PangoFontDescription *desc);
-		return pango_context_load_font(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct());
+		auto p = pango_context_load_font(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFont(cast(PangoFont*) p);
 	}
 	
 	/**
@@ -453,10 +508,16 @@ public class PgContext : ObjectG
 	 * language =  a PangoLanguage the fonts will be used for
 	 * Returns:the fontset, or NULL if no font matched.
 	 */
-	public PangoFontset* loadFontset(PgFontDescription desc, PgLanguage language)
+	public PgFontset loadFontset(PgFontDescription desc, PgLanguage language)
 	{
 		// PangoFontset* pango_context_load_fontset (PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
-		return pango_context_load_fontset(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		auto p = pango_context_load_fontset(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFontset(cast(PangoFontset*) p);
 	}
 	
 	/**
@@ -484,7 +545,13 @@ public class PgContext : ObjectG
 	public PgFontMetrics getMetrics(PgFontDescription desc, PgLanguage language)
 	{
 		// PangoFontMetrics* pango_context_get_metrics (PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
-		return new PgFontMetrics( pango_context_get_metrics(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct()) );
+		auto p = pango_context_get_metrics(pangoContext, (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFontMetrics(cast(PangoFontMetrics*) p);
 	}
 	
 	/**
@@ -513,7 +580,7 @@ public class PgContext : ObjectG
 	 * mirroredCh =  location to store the mirrored character
 	 * Returns: TRUE if ch has a mirrored character and mirrored_ch isfilled in, FALSE otherwise
 	 */
-	public static int pangoGetMirrorChar(gunichar ch, gunichar* mirroredCh)
+	public static int getMirrorChar(gunichar ch, gunichar* mirroredCh)
 	{
 		// gboolean pango_get_mirror_char (gunichar ch,  gunichar *mirrored_ch);
 		return pango_get_mirror_char(ch, mirroredCh);
@@ -527,7 +594,7 @@ public class PgContext : ObjectG
 	 * ch =  a Unicode character
 	 * Returns: the direction of the character, as used in theUnicode bidirectional algorithm.
 	 */
-	public static PangoDirection pangoUnicharDirection(gunichar ch)
+	public static PangoDirection unicharDirection(gunichar ch)
 	{
 		// PangoDirection pango_unichar_direction (gunichar ch);
 		return pango_unichar_direction(ch);
@@ -536,12 +603,13 @@ public class PgContext : ObjectG
 	/**
 	 * Searches a string the first character that has a strong
 	 * direction, according to the Unicode bidirectional algorithm.
+	 * Since 1.4
 	 * Params:
 	 * text =  the text to process
 	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
-	 * Returns: The direction corresponding to the first strong character.If no such character is found, then PANGO_DIRECTION_NEUTRAL is returned.Since 1.4
+	 * Returns: The direction corresponding to the first strong character.If no such character is found, then PANGO_DIRECTION_NEUTRAL is returned.
 	 */
-	public static PangoDirection pangoFindBaseDir(char[] text, int length)
+	public static PangoDirection findBaseDir(char[] text, int length)
 	{
 		// PangoDirection pango_find_base_dir (const gchar *text,  gint length);
 		return pango_find_base_dir(Str.toStringz(text), length);
@@ -553,31 +621,15 @@ public class PgContext : ObjectG
 	 * Note that pango_matrix_rotate() takes angle in degrees, not radians.
 	 * So, to call pango_matrix_rotate() with the output of this function
 	 * you should multiply it by (180. / G_PI).
+	 * Since 1.16
 	 * Params:
 	 * gravity =  gravity to query
-	 * Returns: the rotation value corresponding to gravity.Since 1.16
+	 * Returns: the rotation value corresponding to gravity.
 	 */
-	public static double pangoGravityToRotation(PangoGravity gravity)
+	public static double gravityToRotation(PangoGravity gravity)
 	{
 		// double pango_gravity_to_rotation (PangoGravity gravity);
 		return pango_gravity_to_rotation(gravity);
-	}
-	
-	/**
-	 * Determines possible line, word, and character breaks
-	 * for a string of Unicode text with a single analysis. For most
-	 * purposes you may want to use pango_get_log_attrs().
-	 * Params:
-	 * text =  the text to process
-	 * length =  length of text in bytes (may be -1 if text is nul-terminated)
-	 * analysis =  PangoAnalysis structure from pango_itemize()
-	 * attrs =  an array to store character information in
-	 * attrsLen =  size of the array passed as attrs
-	 */
-	public static void pangoBreak(char[] text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
-	{
-		// void pango_break (const gchar *text,  int length,  PangoAnalysis *analysis,  PangoLogAttr *attrs,  int attrs_len);
-		pango_break(Str.toStringz(text), length, analysis, attrs, attrsLen);
 	}
 	
 	/**
@@ -596,7 +648,7 @@ public class PgContext : ObjectG
 	 * logAttrs =  array with one PangoLogAttr per character in text, plus one extra, to be filled in
 	 * attrsLen =  length of log_attrs array
 	 */
-	public static void pangoGetLogAttrs(char[] text, int length, int level, PgLanguage language, PangoLogAttr* logAttrs, int attrsLen)
+	public static void getLogAttrs(char[] text, int length, int level, PgLanguage language, PangoLogAttr* logAttrs, int attrsLen)
 	{
 		// void pango_get_log_attrs (const char *text,  int length,  int level,  PangoLanguage *language,  PangoLogAttr *log_attrs,  int attrs_len);
 		pango_get_log_attrs(Str.toStringz(text), length, level, (language is null) ? null : language.getPgLanguageStruct(), logAttrs, attrsLen);
@@ -618,7 +670,7 @@ public class PgContext : ObjectG
 	 * paragraphDelimiterIndex =  return location for index of delimiter
 	 * nextParagraphStart =  return location for start of next paragraph
 	 */
-	public static void pangoFindParagraphBoundary(char[] text, int length, int* paragraphDelimiterIndex, int* nextParagraphStart)
+	public static void findParagraphBoundary(char[] text, int length, int* paragraphDelimiterIndex, int* nextParagraphStart)
 	{
 		// void pango_find_paragraph_boundary (const gchar *text,  gint length,  gint *paragraph_delimiter_index,  gint *next_paragraph_start);
 		pango_find_paragraph_boundary(Str.toStringz(text), length, paragraphDelimiterIndex, nextParagraphStart);
@@ -639,12 +691,11 @@ public class PgContext : ObjectG
 	 * attrs =  logical attributes to fill in
 	 * attrsLen =  size of the array passed as attrs
 	 */
-	public static void pangoDefaultBreak(char[] text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
+	public static void defaultBreak(char[] text, int length, PangoAnalysis* analysis, PangoLogAttr* attrs, int attrsLen)
 	{
 		// void pango_default_break (const gchar *text,  int length,  PangoAnalysis *analysis,  PangoLogAttr *attrs,  int attrs_len);
 		pango_default_break(Str.toStringz(text), length, analysis, attrs, attrsLen);
 	}
-	
 	
 	/**
 	 * Given a segment of text and the corresponding
@@ -657,9 +708,9 @@ public class PgContext : ObjectG
 	 * analysis =  PangoAnalysis structure from pango_itemize()
 	 * glyphs =  glyph string in which to store results
 	 */
-	public static void pangoShape(char[] text, int length, PangoAnalysis* analysis, PangoGlyphString* glyphs)
+	public static void shape(char[] text, int length, PangoAnalysis* analysis, PgGlyphString glyphs)
 	{
 		// void pango_shape (const gchar *text,  gint length,  const PangoAnalysis *analysis,  PangoGlyphString *glyphs);
-		pango_shape(Str.toStringz(text), length, analysis, glyphs);
+		pango_shape(Str.toStringz(text), length, analysis, (glyphs is null) ? null : glyphs.getPgGlyphStringStruct());
 	}
 }

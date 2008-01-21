@@ -35,16 +35,24 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_menu_bar_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Widget
  * 	- gtk.Menu;
  * 	- gtk.MenuItem;
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkMenu* -> Menu
  * 	- GtkMenuItem* -> MenuItem
@@ -55,7 +63,7 @@
 
 module gtk.MenuBar;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -63,6 +71,12 @@ private import gtkc.gtk;
 private import gtk.Widget;
 private import gtk.Menu;;
 private import gtk.MenuItem;;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -72,7 +86,7 @@ private import gtk.MenuShell;
  * Description
  * The GtkMenuBar is a subclass of GtkMenuShell which contains one to many GtkMenuItem. The result is a standard menu bar which can hold many menu items. GtkMenuBar allows for a shadow type to be set for aesthetic purposes. The shadow types are defined in the gtk_menu_bar_set_shadow_type function.
  */
-public class MenuBar : MenuShell
+public class MenuBar : MenuShell, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -106,6 +120,9 @@ public class MenuBar : MenuShell
 		this.gtkMenuBar = gtkMenuBar;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkMenuBar);
+	
 	/** */
 	Menu append(char[] label, bool rightJustify=false)
 	{
@@ -126,19 +143,21 @@ public class MenuBar : MenuShell
 	/**
 	 */
 	
-	
 	/**
 	 * Creates the new GtkMenuBar
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_menu_bar_new (void);
-		this(cast(GtkMenuBar*)gtk_menu_bar_new() );
+		auto p = gtk_menu_bar_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkMenuBar*) p);
 	}
-	
-	
-	
-	
 	
 	/**
 	 * Sets how items should be packed inside a menubar.
@@ -187,6 +206,4 @@ public class MenuBar : MenuShell
 		// GtkPackDirection gtk_menu_bar_get_child_pack_direction  (GtkMenuBar *menubar);
 		return gtk_menu_bar_get_child_pack_direction(gtkMenuBar);
 	}
-	
-	
 }

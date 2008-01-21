@@ -35,12 +35,14 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_file_chooser_button_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
@@ -48,6 +50,11 @@
  * 	- gtk.Widget;
  * 	- gtk.FileFilter;
  * 	- gtk.FileChooser;
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -56,10 +63,12 @@
 
 module gtk.FileChooserButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
@@ -67,6 +76,11 @@ private import glib.ListSG;;
 private import gtk.Widget;;
 private import gtk.FileFilter;;
 private import gtk.FileChooser;;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -96,7 +110,7 @@ private import gtk.HBox;
  * gtk_file_chooser_button_set_width_chars(), or pack the button in
  * such a way that other interface elements give space to the widget.
  */
-public class FileChooserButton : HBox
+public class FileChooserButton : HBox, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -132,6 +146,9 @@ public class FileChooserButton : HBox
 	
 	private FileChooser fileChooser;
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkFileChooserButton);
+	
 	/** */
 	public FileChooser getFileChooser()
 	{
@@ -144,13 +161,13 @@ public class FileChooserButton : HBox
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(FileChooserButton)[] onFileSetListeners;
+	/**
+	 * See Also
+	 * GtkFileChooserDialog
+	 */
 	void addOnFileSet(void delegate(FileChooserButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("file-set" in connectedSignals) )
@@ -179,7 +196,6 @@ public class FileChooserButton : HBox
 	}
 	
 	
-	
 	/**
 	 * Creates a new file-selecting button widget.
 	 * Since 2.6
@@ -190,7 +206,14 @@ public class FileChooserButton : HBox
 	public this (char[] title, GtkFileChooserAction action)
 	{
 		// GtkWidget* gtk_file_chooser_button_new (const gchar *title,  GtkFileChooserAction action);
-		this(cast(GtkFileChooserButton*)gtk_file_chooser_button_new(Str.toStringz(title), action) );
+		auto p = gtk_file_chooser_button_new(Str.toStringz(title), action);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFileChooserButton*) p);
 	}
 	
 	/**
@@ -204,7 +227,14 @@ public class FileChooserButton : HBox
 	public this (char[] title, GtkFileChooserAction action, char[] backend)
 	{
 		// GtkWidget* gtk_file_chooser_button_new_with_backend  (const gchar *title,  GtkFileChooserAction action,  const gchar *backend);
-		this(cast(GtkFileChooserButton*)gtk_file_chooser_button_new_with_backend(Str.toStringz(title), action, Str.toStringz(backend)) );
+		auto p = gtk_file_chooser_button_new_with_backend(Str.toStringz(title), action, Str.toStringz(backend));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFileChooserButton*) p);
 	}
 	
 	/**
@@ -223,7 +253,14 @@ public class FileChooserButton : HBox
 	public this (Widget dialog)
 	{
 		// GtkWidget* gtk_file_chooser_button_new_with_dialog  (GtkWidget *dialog);
-		this(cast(GtkFileChooserButton*)gtk_file_chooser_button_new_with_dialog((dialog is null) ? null : dialog.getWidgetStruct()) );
+		auto p = gtk_file_chooser_button_new_with_dialog((dialog is null) ? null : dialog.getWidgetStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFileChooserButton*) p);
 	}
 	
 	/**
@@ -235,7 +272,7 @@ public class FileChooserButton : HBox
 	public char[] getTitle()
 	{
 		// const gchar* gtk_file_chooser_button_get_title (GtkFileChooserButton *button);
-		return Str.toString(gtk_file_chooser_button_get_title(gtkFileChooserButton) );
+		return Str.toString(gtk_file_chooser_button_get_title(gtkFileChooserButton)).dup;
 	}
 	
 	/**
@@ -299,7 +336,4 @@ public class FileChooserButton : HBox
 		// void gtk_file_chooser_button_set_focus_on_click  (GtkFileChooserButton *button,  gboolean focus_on_click);
 		gtk_file_chooser_button_set_focus_on_click(gtkFileChooserButton, focusOnClick);
 	}
-	
-	
-	
 }

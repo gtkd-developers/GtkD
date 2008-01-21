@@ -35,14 +35,22 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_alignment_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Widget
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -50,12 +58,18 @@
 
 module gtk.Alignment;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import gtk.Widget;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -74,7 +88,7 @@ private import gtk.Bin;
  * Of course, if the scale settings are both set to 1, the alignment settings
  * have no effect.
  */
-public class Alignment : Bin
+public class Alignment : Bin, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -107,6 +121,9 @@ public class Alignment : Bin
 		super(cast(GtkBin*)gtkAlignment);
 		this.gtkAlignment = gtkAlignment;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkAlignment);
 	
 	/** */
 	public static Alignment center(Widget widget)
@@ -183,7 +200,6 @@ public class Alignment : Bin
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkAlignment.
 	 * Params:
@@ -202,7 +218,14 @@ public class Alignment : Bin
 	public this (float xalign, float yalign, float xscale, float yscale)
 	{
 		// GtkWidget* gtk_alignment_new (gfloat xalign,  gfloat yalign,  gfloat xscale,  gfloat yscale);
-		this(cast(GtkAlignment*)gtk_alignment_new(xalign, yalign, xscale, yscale) );
+		auto p = gtk_alignment_new(xalign, yalign, xscale, yscale);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkAlignment*) p);
 	}
 	
 	/**
@@ -259,11 +282,4 @@ public class Alignment : Bin
 		// void gtk_alignment_set_padding (GtkAlignment *alignment,  guint padding_top,  guint padding_bottom,  guint padding_left,  guint padding_right);
 		gtk_alignment_set_padding(gtkAlignment, paddingTop, paddingBottom, paddingLeft, paddingRight);
 	}
-	
-	
-	
-	
-	
-	
-	
 }

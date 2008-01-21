@@ -41,6 +41,7 @@
  * omit prefixes:
  * 	- gdk_color_
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Visual
  * 	- gdk.Colormap
@@ -57,7 +58,7 @@
 
 module gdk.Colormap;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -133,8 +134,6 @@ public class Colormap
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Creates a new colormap for the given visual.
 	 * Params:
@@ -146,7 +145,14 @@ public class Colormap
 	public this (Visual visual, int allocate)
 	{
 		// GdkColormap* gdk_colormap_new (GdkVisual *visual,  gboolean allocate);
-		this(cast(GdkColormap*)gdk_colormap_new((visual is null) ? null : visual.getVisualStruct(), allocate) );
+		auto p = gdk_colormap_new((visual is null) ? null : visual.getVisualStruct(), allocate);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -158,7 +164,13 @@ public class Colormap
 	public Colormap doref()
 	{
 		// GdkColormap* gdk_colormap_ref (GdkColormap *cmap);
-		return new Colormap( gdk_colormap_ref(gdkColormap) );
+		auto p = gdk_colormap_ref(gdkColormap);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -180,7 +192,13 @@ public class Colormap
 	public static Colormap getSystem()
 	{
 		// GdkColormap* gdk_colormap_get_system (void);
-		return new Colormap( gdk_colormap_get_system() );
+		auto p = gdk_colormap_get_system();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -293,7 +311,13 @@ public class Colormap
 	public Visual getVisual()
 	{
 		// GdkVisual* gdk_colormap_get_visual (GdkColormap *colormap);
-		return new Visual( gdk_colormap_get_visual(gdkColormap) );
+		auto p = gdk_colormap_get_visual(gdkColormap);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -304,7 +328,13 @@ public class Colormap
 	public Screen getScreen()
 	{
 		// GdkScreen* gdk_colormap_get_screen (GdkColormap *cmap);
-		return new Screen( gdk_colormap_get_screen(gdkColormap) );
+		auto p = gdk_colormap_get_screen(gdkColormap);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -322,8 +352,6 @@ public class Colormap
 		// void gdk_colors_store (GdkColormap *colormap,  GdkColor *colors,  gint ncolors);
 		gdk_colors_store(gdkColormap, (colors is null) ? null : colors.getColorStruct(), ncolors);
 	}
-	
-	
 	
 	/**
 	 * Warning
@@ -363,12 +391,4 @@ public class Colormap
 		// void gdk_colors_free (GdkColormap *colormap,  gulong *pixels,  gint npixels,  gulong planes);
 		gdk_colors_free(gdkColormap, pixels, npixels, planes);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

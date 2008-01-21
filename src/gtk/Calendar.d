@@ -30,18 +30,26 @@
  * ctorStrct=
  * clss    = Calendar
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_calendar_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,19 @@
 
 module gtk.Calendar;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -74,7 +90,7 @@ private import gtk.Widget;
  * The selected date can be retrieved from a GtkCalendar using
  * gtk_calendar_get_date().
  */
-public class Calendar : Widget
+public class Calendar : Widget, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -108,15 +124,17 @@ public class Calendar : Widget
 		this.gtkCalendar = gtkCalendar;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkCalendar);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Calendar)[] onDaySelectedListeners;
+	/**
+	 * Emitted when the user selects a day.
+	 */
 	void addOnDaySelected(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("day-selected" in connectedSignals) )
@@ -145,6 +163,8 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onDaySelectedDoubleClickListeners;
+	/**
+	 */
 	void addOnDaySelectedDoubleClick(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("day-selected-double-click" in connectedSignals) )
@@ -173,6 +193,10 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onMonthChangedListeners;
+	/**
+	 * Emitted when the user clicks a button to change the selected month on a
+	 * calendar.
+	 */
 	void addOnMonthChanged(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("month-changed" in connectedSignals) )
@@ -201,6 +225,8 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onNextMonthListeners;
+	/**
+	 */
 	void addOnNextMonth(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("next-month" in connectedSignals) )
@@ -229,6 +255,8 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onNextYearListeners;
+	/**
+	 */
 	void addOnNextYear(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("next-year" in connectedSignals) )
@@ -257,6 +285,8 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onPrevMonthListeners;
+	/**
+	 */
 	void addOnPrevMonth(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("prev-month" in connectedSignals) )
@@ -285,6 +315,8 @@ public class Calendar : Widget
 	}
 	
 	void delegate(Calendar)[] onPrevYearListeners;
+	/**
+	 */
 	void addOnPrevYear(void delegate(Calendar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("prev-year" in connectedSignals) )
@@ -313,15 +345,20 @@ public class Calendar : Widget
 	}
 	
 	
-	
-	
 	/**
 	 * Creates a new calendar, with the current date being selected.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_calendar_new (void);
-		this(cast(GtkCalendar*)gtk_calendar_new() );
+		auto p = gtk_calendar_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCalendar*) p);
 	}
 	
 	/**
@@ -455,16 +492,4 @@ public class Calendar : Widget
 		// void gtk_calendar_thaw (GtkCalendar *calendar);
 		gtk_calendar_thaw(gtkCalendar);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.Closure
@@ -58,10 +59,12 @@
 
 module gtk.AccelGroup;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gobject.Closure;
@@ -126,13 +129,13 @@ public class AccelGroup : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(ObjectG, guint, GdkModifierType, AccelGroup)[] onAccelActivateListeners;
+	/**
+	 * The accel-activate signal is an implementation detail of
+	 * GtkAccelGroup and not meant to be used by applications.
+	 */
 	void addOnAccelActivate(gboolean delegate(ObjectG, guint, GdkModifierType, AccelGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accel-activate" in connectedSignals) )
@@ -161,6 +164,16 @@ public class AccelGroup : ObjectG
 	}
 	
 	void delegate(guint, GdkModifierType, Closure, AccelGroup)[] onAccelChangedListeners;
+	/**
+	 * The accel-changed signal is emitted when a GtkAccelGroupEntry
+	 * is added to or removed from the accel group.
+	 * Widgets like GtkAccelLabel which display an associated
+	 * accelerator should connect to this signal, and rebuild
+	 * their visual representation if the accel_closure is theirs.
+	 * See Also
+	 * gtk_window_add_accel_group(), gtk_accel_map_change_entry(),
+	 * gtk_item_factory_new(), gtk_label_new_with_mnemonic()
+	 */
 	void addOnAccelChanged(void delegate(guint, GdkModifierType, Closure, AccelGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accel-changed" in connectedSignals) )
@@ -189,17 +202,21 @@ public class AccelGroup : ObjectG
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkAccelGroup.
 	 */
 	public this ()
 	{
 		// GtkAccelGroup* gtk_accel_group_new (void);
-		this(cast(GtkAccelGroup*)gtk_accel_group_new() );
+		auto p = gtk_accel_group_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkAccelGroup*) p);
 	}
-	
-	
 	
 	/**
 	 * Installs an accelerator in this group. When accel_group is being activated
@@ -238,8 +255,6 @@ public class AccelGroup : ObjectG
 		// void gtk_accel_group_connect_by_path (GtkAccelGroup *accel_group,  const gchar *accel_path,  GClosure *closure);
 		gtk_accel_group_connect_by_path(gtkAccelGroup, Str.toStringz(accelPath), (closure is null) ? null : closure.getClosureStruct());
 	}
-	
-	
 	
 	/**
 	 * Removes an accelerator previously installed through
@@ -327,7 +342,13 @@ public class AccelGroup : ObjectG
 	public static AccelGroup fromAccelClosure(Closure closure)
 	{
 		// GtkAccelGroup* gtk_accel_group_from_accel_closure (GClosure *closure);
-		return new AccelGroup( gtk_accel_group_from_accel_closure((closure is null) ? null : closure.getClosureStruct()) );
+		auto p = gtk_accel_group_from_accel_closure((closure is null) ? null : closure.getClosureStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new AccelGroup(cast(GtkAccelGroup*) p);
 	}
 	
 	/**
@@ -358,7 +379,13 @@ public class AccelGroup : ObjectG
 	public static ListSG accelGroupsFromObject(ObjectG object)
 	{
 		// GSList* gtk_accel_groups_from_object (GObject *object);
-		return new ListSG( gtk_accel_groups_from_object((object is null) ? null : object.getObjectGStruct()) );
+		auto p = gtk_accel_groups_from_object((object is null) ? null : object.getObjectGStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -374,7 +401,6 @@ public class AccelGroup : ObjectG
 		// GtkAccelKey* gtk_accel_group_find (GtkAccelGroup *accel_group,  GtkAccelGroupFindFunc find_func,  gpointer data);
 		return gtk_accel_group_find(gtkAccelGroup, findFunc, data);
 	}
-	
 	
 	/**
 	 * Determines whether a given keyval and modifier mask constitute
@@ -427,7 +453,7 @@ public class AccelGroup : ObjectG
 	public static char[] acceleratorName(uint acceleratorKey, GdkModifierType acceleratorMods)
 	{
 		// gchar* gtk_accelerator_name (guint accelerator_key,  GdkModifierType accelerator_mods);
-		return Str.toString(gtk_accelerator_name(acceleratorKey, acceleratorMods) );
+		return Str.toString(gtk_accelerator_name(acceleratorKey, acceleratorMods)).dup;
 	}
 	
 	/**
@@ -442,7 +468,7 @@ public class AccelGroup : ObjectG
 	public static char[] acceleratorGetLabel(uint acceleratorKey, GdkModifierType acceleratorMods)
 	{
 		// gchar* gtk_accelerator_get_label (guint accelerator_key,  GdkModifierType accelerator_mods);
-		return Str.toString(gtk_accelerator_get_label(acceleratorKey, acceleratorMods) );
+		return Str.toString(gtk_accelerator_get_label(acceleratorKey, acceleratorMods)).dup;
 	}
 	
 	/**
@@ -474,5 +500,4 @@ public class AccelGroup : ObjectG
 		// guint gtk_accelerator_get_default_mod_mask  (void);
 		return gtk_accelerator_get_default_mod_mask();
 	}
-	
 }

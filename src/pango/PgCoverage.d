@@ -25,7 +25,7 @@
  * inFile  = pango-Coverage-Maps.html
  * outPack = pango
  * outFile = PgCoverage
- * strct   = 
+ * strct   = PangoCoverage
  * realStrct=
  * ctorStrct=
  * clss    = PgCoverage
@@ -40,15 +40,17 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
+ * 	- PangoCoverage* -> PgCoverage
  * module aliases:
  * local aliases:
  */
 
 module pango.PgCoverage;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
@@ -67,70 +69,108 @@ private import gtkc.pango;
 public class PgCoverage
 {
 	
+	/** the main Gtk struct */
+	protected PangoCoverage* pangoCoverage;
+	
+	
+	public PangoCoverage* getPgCoverageStruct()
+	{
+		return pangoCoverage;
+	}
+	
+	
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)pangoCoverage;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (PangoCoverage* pangoCoverage)
+	{
+		if(pangoCoverage is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoCoverage passed to constructor.");
+			else return;
+		}
+		this.pangoCoverage = pangoCoverage;
+	}
+	
 	/**
 	 */
-	
-	
-	
 	
 	/**
 	 * Create a new PangoCoverage
-	 * Returns: the newly allocated PangoCoverage, initialized to PANGO_COVERAGE_NONE with a reference count of one, which should be freed with pango_coverage_unref().
 	 */
-	public static PangoCoverage* newPgCoverage()
+	public this ()
 	{
 		// PangoCoverage* pango_coverage_new (void);
-		return pango_coverage_new();
+		auto p = pango_coverage_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(PangoCoverage*) p);
 	}
 	
 	/**
 	 * Increase the reference count on the PangoCoverage by one
-	 * Params:
-	 * coverage =  a PangoCoverage
 	 * Returns: coverage
 	 */
-	public static PangoCoverage* doref(PangoCoverage* coverage)
+	public PgCoverage doref()
 	{
 		// PangoCoverage* pango_coverage_ref (PangoCoverage *coverage);
-		return pango_coverage_ref(coverage);
+		auto p = pango_coverage_ref(pangoCoverage);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgCoverage(cast(PangoCoverage*) p);
 	}
 	
 	/**
 	 * Increase the reference count on the PangoCoverage by one.
 	 * if the result is zero, free the coverage and all associated memory.
-	 * Params:
-	 * coverage =  a PangoCoverage
 	 */
-	public static void unref(PangoCoverage* coverage)
+	public void unref()
 	{
 		// void pango_coverage_unref (PangoCoverage *coverage);
-		pango_coverage_unref(coverage);
+		pango_coverage_unref(pangoCoverage);
 	}
 	
 	/**
 	 * Copy an existing PangoCoverage. (This function may now be unnecessary
 	 * since we refcount the structure. File a bug if you use it.)
-	 * Params:
-	 * coverage =  a PangoCoverage
 	 * Returns: the newly allocated PangoCoverage, with a reference count of one, which should be freed with pango_coverage_unref().
 	 */
-	public static PangoCoverage* copy(PangoCoverage* coverage)
+	public PgCoverage copy()
 	{
 		// PangoCoverage* pango_coverage_copy (PangoCoverage *coverage);
-		return pango_coverage_copy(coverage);
+		auto p = pango_coverage_copy(pangoCoverage);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgCoverage(cast(PangoCoverage*) p);
 	}
 	
 	/**
 	 * Determine whether a particular index is covered by coverage
 	 * Params:
-	 * coverage =  a PangoCoverage
 	 * index =  the index to check
 	 * Returns: the coverage level of coverage for character index_.
 	 */
-	public static PangoCoverageLevel get(PangoCoverage* coverage, int index)
+	public PangoCoverageLevel get(int index)
 	{
 		// PangoCoverageLevel pango_coverage_get (PangoCoverage *coverage,  int index_);
-		return pango_coverage_get(coverage, index);
+		return pango_coverage_get(pangoCoverage, index);
 	}
 	
 	/**
@@ -138,39 +178,36 @@ public class PgCoverage
 	 * value of the current coverage for the index and the coverage for
 	 * the corresponding index in other.
 	 * Params:
-	 * coverage =  a PangoCoverage
 	 * other =  another PangoCoverage
 	 */
-	public static void max(PangoCoverage* coverage, PangoCoverage* other)
+	public void max(PgCoverage other)
 	{
 		// void pango_coverage_max (PangoCoverage *coverage,  PangoCoverage *other);
-		pango_coverage_max(coverage, other);
+		pango_coverage_max(pangoCoverage, (other is null) ? null : other.getPgCoverageStruct());
 	}
 	
 	/**
 	 * Modify a particular index within coverage
 	 * Params:
-	 * coverage =  a PangoCoverage
 	 * index =  the index to modify
 	 * level =  the new level for index_
 	 */
-	public static void set(PangoCoverage* coverage, int index, PangoCoverageLevel level)
+	public void set(int index, PangoCoverageLevel level)
 	{
 		// void pango_coverage_set (PangoCoverage *coverage,  int index_,  PangoCoverageLevel level);
-		pango_coverage_set(coverage, index, level);
+		pango_coverage_set(pangoCoverage, index, level);
 	}
 	
 	/**
 	 * Convert a PangoCoverage structure into a flat binary format
 	 * Params:
-	 * coverage =  a PangoCoverage
 	 * bytes =  location to store result (must be freed with g_free())
 	 * nBytes =  location to store size of result
 	 */
-	public static void toBytes(PangoCoverage* coverage, char** bytes, int* nBytes)
+	public void toBytes(char** bytes, int* nBytes)
 	{
 		// void pango_coverage_to_bytes (PangoCoverage *coverage,  guchar **bytes,  int *n_bytes);
-		pango_coverage_to_bytes(coverage, bytes, nBytes);
+		pango_coverage_to_bytes(pangoCoverage, bytes, nBytes);
 	}
 	
 	/**
@@ -181,9 +218,15 @@ public class PgCoverage
 	 * nBytes =  the size of bytes in bytes
 	 * Returns: a newly allocated PangoCoverage, or NULL if the data was invalid.
 	 */
-	public static PangoCoverage* fromBytes(char* bytes, int nBytes)
+	public static PgCoverage fromBytes(char* bytes, int nBytes)
 	{
 		// PangoCoverage* pango_coverage_from_bytes (guchar *bytes,  int n_bytes);
-		return pango_coverage_from_bytes(bytes, nBytes);
+		auto p = pango_coverage_from_bytes(bytes, nBytes);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgCoverage(cast(PangoCoverage*) p);
 	}
 }

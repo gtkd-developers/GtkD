@@ -40,65 +40,37 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
- * 	- pango.PgContext
- * 	- pango.PgItem
- * 	- pango.PgLayout
- * 	- pango.PgFontDescription
- * 	- pango.PgFontMetrics
- * 	- pango.PgFontFamily
- * 	- pango.PgFontFace
- * 	- pango.PgFontsetSimple
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
- * 	- pango.PgLanguage
- * 	- pango.PgTabArray
- * 	- pango.PgLayout
- * 	- pango.PgLayoutIter
- * 	- pango.PgScriptIter
  * 	- glib.Str
+ * 	- pango.PgFont
+ * 	- pango.PgFontset
+ * 	- pango.PgContext
+ * 	- pango.PgFontDescription
+ * 	- pango.PgLanguage
  * structWrap:
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
  * 	- PangoContext* -> PgContext
+ * 	- PangoFont* -> PgFont
  * 	- PangoFontDescription* -> PgFontDescription
- * 	- PangoFontFace* -> PgFontFace
- * 	- PangoFontFamily* -> PgFontFamily
- * 	- PangoFontMetrics* -> PgFontMetrics
- * 	- PangoFontsetSimple* -> PgFontsetSimple
- * 	- PangoItem* -> PgItem
+ * 	- PangoFontset* -> PgFontset
  * 	- PangoLanguage* -> PgLanguage
- * 	- PangoLayout* -> PgLayout
- * 	- PangoLayoutIter* -> PgLayoutIter
- * 	- PangoScriptIter* -> PgScriptIter
- * 	- PangoTabArray* -> PgTabArray
  * module aliases:
  * local aliases:
  */
 
 module pango.PgFontMap;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
 
-private import pango.PgContext;
-private import pango.PgItem;
-private import pango.PgLayout;
-private import pango.PgFontDescription;
-private import pango.PgFontMetrics;
-private import pango.PgFontFamily;
-private import pango.PgFontFace;
-private import pango.PgFontsetSimple;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
-private import pango.PgLanguage;
-private import pango.PgTabArray;
-private import pango.PgLayout;
-private import pango.PgLayoutIter;
-private import pango.PgScriptIter;
 private import glib.Str;
+private import pango.PgFont;
+private import pango.PgFontset;
+private import pango.PgContext;
+private import pango.PgFontDescription;
+private import pango.PgLanguage;
 
 
 
@@ -148,96 +120,6 @@ public class PgFontMap
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Load the font in the fontmap that is the closest match for desc.
 	 * Params:
@@ -245,10 +127,16 @@ public class PgFontMap
 	 * desc =  a PangoFontDescription describing the font to load
 	 * Returns:the font loaded, or NULL if no font matched.
 	 */
-	public PangoFont* loadFont(PgContext context, PgFontDescription desc)
+	public PgFont loadFont(PgContext context, PgFontDescription desc)
 	{
 		// PangoFont* pango_font_map_load_font (PangoFontMap *fontmap,  PangoContext *context,  const PangoFontDescription *desc);
-		return pango_font_map_load_font(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct());
+		auto p = pango_font_map_load_font(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFont(cast(PangoFont*) p);
 	}
 	
 	/**
@@ -260,10 +148,16 @@ public class PgFontMap
 	 * language =  a PangoLanguage the fonts will be used for
 	 * Returns:the fontset, or NULL if no font matched.
 	 */
-	public PangoFontset* loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)
+	public PgFontset loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)
 	{
 		// PangoFontset* pango_font_map_load_fontset (PangoFontMap *fontmap,  PangoContext *context,  const PangoFontDescription *desc,  PangoLanguage *language);
-		return pango_font_map_load_fontset(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		auto p = pango_font_map_load_fontset(pangoFontMap, (context is null) ? null : context.getPgContextStruct(), (desc is null) ? null : desc.getPgFontDescriptionStruct(), (language is null) ? null : language.getPgLanguageStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFontset(cast(PangoFontset*) p);
 	}
 	
 	/**
@@ -283,23 +177,12 @@ public class PgFontMap
 	 * Returns the render ID for shape engines for this fontmap.
 	 * See the render_type field of
 	 * PangoEngineInfo.
-	 * Returns: the ID string for shape engines for this fontmap. Owned by Pango, should not be modified or freed.Since 1.4
+	 * Since 1.4
+	 * Returns: the ID string for shape engines for this fontmap. Owned by Pango, should not be modified or freed.
 	 */
 	public char[] getShapeEngineType()
 	{
 		// const char* pango_font_map_get_shape_engine_type  (PangoFontMap *fontmap);
-		return Str.toString(pango_font_map_get_shape_engine_type(pangoFontMap) );
+		return Str.toString(pango_font_map_get_shape_engine_type(pangoFontMap)).dup;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_button_
  * 	- gtk_
@@ -44,11 +45,16 @@
  * 	- gtk_button_new_with_mnemonic
  * 	- gtk_button_new_with_label
  * 	- gtk_button_new_from_stock
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.Image
- * 	- gtk.Button
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -57,15 +63,21 @@
 
 module gtk.Button;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.Image;
-private import gtk.Button;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -80,7 +92,7 @@ private import gtk.Bin;
  * hold most any other standard GtkWidget. The most commonly used child is
  * the GtkLabel.
  */
-public class Button : Bin
+public class Button : Bin, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -118,6 +130,9 @@ public class Button : Bin
 	
 	/** An arbitrary string to be used by the application */
 	private char[] action;
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkButton);
 	
 	/** */
 	public static void setIconSize(IconSize iconSize)
@@ -221,13 +236,15 @@ public class Button : Bin
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Button)[] onActivateListeners;
+	/**
+	 * The ::activate signal on GtkButton is an action signal and
+	 * emitting it causes the button to animate press then release.
+	 * Applications should never connect to this signal, but use the
+	 * "clicked" signal.
+	 */
 	void addOnActivate(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate" in connectedSignals) )
@@ -256,6 +273,9 @@ public class Button : Bin
 	}
 	
 	void delegate(Button)[] onClickedListeners;
+	/**
+	 * Emitted when the button has been activated (pressed and released).
+	 */
 	void addOnClicked(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("clicked" in connectedSignals) )
@@ -284,6 +304,10 @@ public class Button : Bin
 	}
 	
 	void delegate(Button)[] onEnterListeners;
+	/**
+	 * Emitted when the pointer enters the button.
+	 * Deprecated: Use the "enter-notify-event" signal.
+	 */
 	void addOnEnter(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("enter" in connectedSignals) )
@@ -312,6 +336,10 @@ public class Button : Bin
 	}
 	
 	void delegate(Button)[] onLeaveListeners;
+	/**
+	 * Emitted when the pointer leaves the button.
+	 * Deprecated: Use the "leave-notify-event" signal.
+	 */
 	void addOnLeave(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("leave" in connectedSignals) )
@@ -340,6 +368,10 @@ public class Button : Bin
 	}
 	
 	void delegate(Button)[] onPressedListeners;
+	/**
+	 * Emitted when the button is pressed.
+	 * Deprecated: Use the "button-press-event" signal.
+	 */
 	void addOnPressed(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("pressed" in connectedSignals) )
@@ -368,6 +400,10 @@ public class Button : Bin
 	}
 	
 	void delegate(Button)[] onReleasedListeners;
+	/**
+	 * Emitted when the button is released.
+	 * Deprecated: Use the "button-release-event" signal.
+	 */
 	void addOnReleased(void delegate(Button) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("released" in connectedSignals) )
@@ -396,7 +432,6 @@ public class Button : Bin
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkButton widget. To add a child widget to the button,
 	 * use gtk_container_add().
@@ -404,11 +439,15 @@ public class Button : Bin
 	public this ()
 	{
 		// GtkWidget* gtk_button_new (void);
-		this(cast(GtkButton*)gtk_button_new() );
+		auto p = gtk_button_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkButton*) p);
 	}
-	
-	
-	
 	
 	/**
 	 * Emits a "pressed" signal to the given GtkButton.
@@ -489,7 +528,7 @@ public class Button : Bin
 	public char[] getLabel()
 	{
 		// const gchar* gtk_button_get_label (GtkButton *button);
-		return Str.toString(gtk_button_get_label(gtkButton) );
+		return Str.toString(gtk_button_get_label(gtkButton)).dup;
 	}
 	
 	/**
@@ -632,7 +671,13 @@ public class Button : Bin
 	public Widget getImage()
 	{
 		// GtkWidget* gtk_button_get_image (GtkButton *button);
-		return new Widget( gtk_button_get_image(gtkButton) );
+		auto p = gtk_button_get_image(gtkButton);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -659,23 +704,4 @@ public class Button : Bin
 		// GtkPositionType gtk_button_get_image_position (GtkButton *button);
 		return gtk_button_get_image_position(gtkButton);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

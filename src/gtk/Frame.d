@@ -35,15 +35,22 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_frame_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -52,13 +59,18 @@
 
 module gtk.Frame;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gtk.Widget;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -87,7 +99,7 @@ private import gtk.Bin;
  *  </child>
  * </object>
  */
-public class Frame : Bin
+public class Frame : Bin, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -121,6 +133,9 @@ public class Frame : Bin
 		this.gtkFrame = gtkFrame;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkFrame);
+	
 	/**
 	 * Creates frame with label and set it's child widget
 	 */
@@ -133,7 +148,6 @@ public class Frame : Bin
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkFrame, with optional label label.
 	 * If label is NULL, the label is omitted.
@@ -143,7 +157,14 @@ public class Frame : Bin
 	public this (char[] label)
 	{
 		// GtkWidget* gtk_frame_new (const gchar *label);
-		this(cast(GtkFrame*)gtk_frame_new(Str.toStringz(label)) );
+		auto p = gtk_frame_new(Str.toStringz(label));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFrame*) p);
 	}
 	
 	/**
@@ -210,7 +231,7 @@ public class Frame : Bin
 	public char[] getLabel()
 	{
 		// const gchar* gtk_frame_get_label (GtkFrame *frame);
-		return Str.toString(gtk_frame_get_label(gtkFrame) );
+		return Str.toString(gtk_frame_get_label(gtkFrame)).dup;
 	}
 	
 	/**
@@ -234,7 +255,13 @@ public class Frame : Bin
 	public Widget getLabelWidget()
 	{
 		// GtkWidget* gtk_frame_get_label_widget (GtkFrame *frame);
-		return new Widget( gtk_frame_get_label_widget(gtkFrame) );
+		auto p = gtk_frame_get_label_widget(gtkFrame);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -247,9 +274,4 @@ public class Frame : Bin
 		// GtkShadowType gtk_frame_get_shadow_type (GtkFrame *frame);
 		return gtk_frame_get_shadow_type(gtkFrame);
 	}
-	
-	
-	
-	
-	
 }

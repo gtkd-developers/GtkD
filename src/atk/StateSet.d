@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module atk.StateSet;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -106,7 +107,14 @@ public class StateSet
 	public this ()
 	{
 		// AtkStateSet* atk_state_set_new (void);
-		this(cast(AtkStateSet*)atk_state_set_new() );
+		auto p = atk_state_set_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(AtkStateSet*) p);
 	}
 	
 	/**

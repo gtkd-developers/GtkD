@@ -25,7 +25,7 @@
  * inFile  = PangoEngineLang.html
  * outPack = pango
  * outFile = PgEngineLang
- * strct   = 
+ * strct   = PangoEngineLang
  * realStrct=
  * ctorStrct=
  * clss    = PgEngineLang
@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module pango.PgEngineLang;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
@@ -56,6 +57,7 @@ private import gtkc.pango;
 
 
 
+private import pango.PgEngine;
 
 /**
  * Description
@@ -63,13 +65,40 @@ private import gtkc.pango;
  * engines that determine line, word, and character breaks for character strings.
  * These engines are used in pango_break().
  */
-public class PgEngineLang
+public class PgEngineLang : PgEngine
 {
+	
+	/** the main Gtk struct */
+	protected PangoEngineLang* pangoEngineLang;
+	
+	
+	public PangoEngineLang* getPgEngineLangStruct()
+	{
+		return pangoEngineLang;
+	}
+	
+	
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)pangoEngineLang;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (PangoEngineLang* pangoEngineLang)
+	{
+		if(pangoEngineLang is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoEngineLang passed to constructor.");
+			else return;
+		}
+		super(cast(PangoEngine*)pangoEngineLang);
+		this.pangoEngineLang = pangoEngineLang;
+	}
 	
 	/**
 	 */
-	
-	
-	
-	
 }

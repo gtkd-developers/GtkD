@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Bitmap
@@ -53,7 +54,7 @@
 
 module gdk.Bitmap;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -110,8 +111,6 @@ public class Bitmap
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Creates a new bitmap from data in XBM format.
 	 * Params:
@@ -126,16 +125,12 @@ public class Bitmap
 	public static Bitmap createFromData(Drawable drawable, char[] data, int width, int height)
 	{
 		// GdkBitmap* gdk_bitmap_create_from_data (GdkDrawable *drawable,  const gchar *data,  gint width,  gint height);
-		return new Bitmap( gdk_bitmap_create_from_data((drawable is null) ? null : drawable.getDrawableStruct(), Str.toStringz(data), width, height) );
+		auto p = gdk_bitmap_create_from_data((drawable is null) ? null : drawable.getDrawableStruct(), Str.toStringz(data), width, height);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Bitmap(cast(GdkBitmap*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

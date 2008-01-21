@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -51,7 +52,7 @@
 
 module glib.Pattern;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -113,7 +114,6 @@ public class Pattern
 	/**
 	 */
 	
-	
 	/**
 	 * Compiles a pattern to a GPatternSpec.
 	 * Params:
@@ -122,7 +122,14 @@ public class Pattern
 	public this (char[] pattern)
 	{
 		// GPatternSpec* g_pattern_spec_new (const gchar *pattern);
-		this(cast(GPatternSpec*)g_pattern_spec_new(Str.toStringz(pattern)) );
+		auto p = g_pattern_spec_new(Str.toStringz(pattern));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GPatternSpec*) p);
 	}
 	
 	/**

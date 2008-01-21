@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Keymap
@@ -53,10 +54,12 @@
 
 module gdk.Keymap;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Keymap;
@@ -156,13 +159,14 @@ public class Keymap : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Keymap)[] onDirectionChangedListeners;
+	/**
+	 * The ::direction_changed signal gets emitted when the direction of
+	 * the keymap changes.
+	 * Since 2.0
+	 */
 	void addOnDirectionChanged(void delegate(Keymap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("direction-changed" in connectedSignals) )
@@ -191,6 +195,11 @@ public class Keymap : ObjectG
 	}
 	
 	void delegate(Keymap)[] onKeysChangedListeners;
+	/**
+	 * The ::keys_changed signal is emitted when the mapping represented by
+	 * keymap changes.
+	 * Since 2.2
+	 */
 	void addOnKeysChanged(void delegate(Keymap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("keys-changed" in connectedSignals) )
@@ -219,8 +228,6 @@ public class Keymap : ObjectG
 	}
 	
 	
-	
-	
 	/**
 	 * Returns the GdkKeymap attached to the default display.
 	 * Returns: the GdkKeymap attached to the default display.
@@ -228,7 +235,13 @@ public class Keymap : ObjectG
 	public static Keymap getDefault()
 	{
 		// GdkKeymap* gdk_keymap_get_default (void);
-		return new Keymap( gdk_keymap_get_default() );
+		auto p = gdk_keymap_get_default();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Keymap(cast(GdkKeymap*) p);
 	}
 	
 	/**
@@ -241,7 +254,13 @@ public class Keymap : ObjectG
 	public static Keymap getForDisplay(Display display)
 	{
 		// GdkKeymap* gdk_keymap_get_for_display (GdkDisplay *display);
-		return new Keymap( gdk_keymap_get_for_display((display is null) ? null : display.getDisplayStruct()) );
+		auto p = gdk_keymap_get_for_display((display is null) ? null : display.getDisplayStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Keymap(cast(GdkKeymap*) p);
 	}
 	
 	/**
@@ -382,7 +401,7 @@ public class Keymap : ObjectG
 	public static char[] gdkKeyvalName(uint keyval)
 	{
 		// gchar* gdk_keyval_name (guint keyval);
-		return Str.toString(gdk_keyval_name(keyval) );
+		return Str.toString(gdk_keyval_name(keyval)).dup;
 	}
 	
 	/**
@@ -484,5 +503,4 @@ public class Keymap : ObjectG
 		// guint gdk_unicode_to_keyval (guint32 wc);
 		return gdk_unicode_to_keyval(wc);
 	}
-	
 }

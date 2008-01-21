@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module glgdk.GLDraw;
 
-private import gtkglc.glgdktypes;
+public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 

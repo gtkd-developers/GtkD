@@ -30,18 +30,26 @@
  * ctorStrct=
  * clss    = VRuler
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_vruler_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,17 @@
 
 module gtk.VRuler;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -76,7 +90,7 @@ private import gtk.Ruler;
  * and GTK_CENTIMETERS. GTK_PIXELS is the default.
  * rulers.
  */
-public class VRuler : Ruler
+public class VRuler : Ruler, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -110,9 +124,11 @@ public class VRuler : Ruler
 		this.gtkVRuler = gtkVRuler;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkVRuler);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new vertical ruler
@@ -120,6 +136,13 @@ public class VRuler : Ruler
 	public this ()
 	{
 		// GtkWidget* gtk_vruler_new (void);
-		this(cast(GtkVRuler*)gtk_vruler_new() );
+		auto p = gtk_vruler_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkVRuler*) p);
 	}
 }

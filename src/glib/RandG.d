@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * 	- GRand* -> RandG
@@ -49,7 +50,7 @@
 
 module glib.RandG;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -125,7 +126,6 @@ public class RandG
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new random number generator initialized with seed.
 	 * Params:
@@ -135,7 +135,13 @@ public class RandG
 	public static RandG randNewWithSeed(uint seed)
 	{
 		// GRand* g_rand_new_with_seed (guint32 seed);
-		return new RandG( g_rand_new_with_seed(seed) );
+		auto p = g_rand_new_with_seed(seed);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RandG(cast(GRand*) p);
 	}
 	
 	/**
@@ -149,7 +155,13 @@ public class RandG
 	public static RandG randNewWithSeedArray(uint* seed, uint seedLength)
 	{
 		// GRand* g_rand_new_with_seed_array (const guint32 *seed,  guint seed_length);
-		return new RandG( g_rand_new_with_seed_array(seed, seedLength) );
+		auto p = g_rand_new_with_seed_array(seed, seedLength);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RandG(cast(GRand*) p);
 	}
 	
 	/**
@@ -161,7 +173,13 @@ public class RandG
 	public static RandG randNew()
 	{
 		// GRand* g_rand_new (void);
-		return new RandG( g_rand_new() );
+		auto p = g_rand_new();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RandG(cast(GRand*) p);
 	}
 	
 	/**
@@ -176,7 +194,13 @@ public class RandG
 	public RandG randCopy()
 	{
 		// GRand* g_rand_copy (GRand *rand_);
-		return new RandG( g_rand_copy(gRand) );
+		auto p = g_rand_copy(gRand);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RandG(cast(GRand*) p);
 	}
 	
 	/**
@@ -219,7 +243,6 @@ public class RandG
 		// void g_rand_set_seed_array (GRand *rand_,  const guint32 *seed,  guint seed_length);
 		g_rand_set_seed_array(gRand, seed, seedLength);
 	}
-	
 	
 	/**
 	 * Returns the next random guint32 from rand_ equally distributed over
@@ -288,7 +311,6 @@ public class RandG
 		// void g_random_set_seed (guint32 seed);
 		g_random_set_seed(seed);
 	}
-	
 	
 	/**
 	 * Return a random guint32 equally distributed over the range

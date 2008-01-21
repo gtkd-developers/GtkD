@@ -30,19 +30,27 @@
  * ctorStrct=
  * clss    = HScrollbar
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_hscrollbar_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Adjustment
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
@@ -51,12 +59,18 @@
 
 module gtk.HScrollbar;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import gtk.Adjustment;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -70,7 +84,7 @@ private import gtk.Scrollbar;
  * adjustment of the scrollbar or it may be left NULL in which case one
  * will be created for you. See GtkAdjustment for details.
  */
-public class HScrollbar : Scrollbar
+public class HScrollbar : Scrollbar, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -104,9 +118,11 @@ public class HScrollbar : Scrollbar
 		this.gtkHScrollbar = gtkHScrollbar;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkHScrollbar);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new horizontal scrollbar.
@@ -116,6 +132,13 @@ public class HScrollbar : Scrollbar
 	public this (Adjustment adjustment)
 	{
 		// GtkWidget* gtk_hscrollbar_new (GtkAdjustment *adjustment);
-		this(cast(GtkHScrollbar*)gtk_hscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct()) );
+		auto p = gtk_hscrollbar_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkHScrollbar*) p);
 	}
 }

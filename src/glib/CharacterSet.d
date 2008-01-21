@@ -44,6 +44,7 @@
  * 	- g_iconv
  * 	- g_iconv_close
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.Str
@@ -54,7 +55,7 @@
 
 module glib.CharacterSet;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -188,7 +189,7 @@ public class CharacterSet
 	public static char[] convert(char[] str, int len, char[] toCodeset, char[] fromCodeset, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_convert (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), bytesRead, bytesWritten, error) );
+		return Str.toString(g_convert(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), bytesRead, bytesWritten, error)).dup;
 	}
 	
 	/**
@@ -226,14 +227,8 @@ public class CharacterSet
 	public static char[] convertWithFallback(char[] str, int len, char[] toCodeset, char[] fromCodeset, char[] fallback, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_convert_with_fallback (const gchar *str,  gssize len,  const gchar *to_codeset,  const gchar *from_codeset,  gchar *fallback,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), bytesRead, bytesWritten, error) );
+		return Str.toString(g_convert_with_fallback(Str.toStringz(str), len, Str.toStringz(toCodeset), Str.toStringz(fromCodeset), Str.toStringz(fallback), bytesRead, bytesWritten, error)).dup;
 	}
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Converts a string which is in the encoding used for strings by
@@ -262,7 +257,7 @@ public class CharacterSet
 	public static char[] localeToUtf8(char[] opsysstring, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_locale_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_locale_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error) );
+		return Str.toString(g_locale_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error)).dup;
 	}
 	
 	/**
@@ -291,7 +286,7 @@ public class CharacterSet
 	public static char[] filenameToUtf8(char[] opsysstring, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_filename_to_utf8 (const gchar *opsysstring,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_filename_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error) );
+		return Str.toString(g_filename_to_utf8(Str.toStringz(opsysstring), len, bytesRead, bytesWritten, error)).dup;
 	}
 	
 	/**
@@ -320,7 +315,7 @@ public class CharacterSet
 	public static char[] filenameFromUtf8(char[] utf8string, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_filename_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_filename_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error) );
+		return Str.toString(g_filename_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error)).dup;
 	}
 	
 	/**
@@ -338,7 +333,7 @@ public class CharacterSet
 	public static char[] filenameFromUri(char[] uri, char** hostname, GError** error)
 	{
 		// gchar* g_filename_from_uri (const gchar *uri,  gchar **hostname,  GError **error);
-		return Str.toString(g_filename_from_uri(Str.toStringz(uri), hostname, error) );
+		return Str.toString(g_filename_from_uri(Str.toStringz(uri), hostname, error)).dup;
 	}
 	
 	/**
@@ -356,7 +351,7 @@ public class CharacterSet
 	public static char[] filenameToUri(char[] filename, char[] hostname, GError** error)
 	{
 		// gchar* g_filename_to_uri (const gchar *filename,  const gchar *hostname,  GError **error);
-		return Str.toString(g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), error) );
+		return Str.toString(g_filename_to_uri(Str.toStringz(filename), Str.toStringz(hostname), error)).dup;
 	}
 	
 	/**
@@ -414,7 +409,7 @@ public class CharacterSet
 	public static char[] filenameDisplayName(char[] filename)
 	{
 		// gchar* g_filename_display_name (const gchar *filename);
-		return Str.toString(g_filename_display_name(Str.toStringz(filename)) );
+		return Str.toString(g_filename_display_name(Str.toStringz(filename))).dup;
 	}
 	
 	/**
@@ -439,7 +434,7 @@ public class CharacterSet
 	public static char[] filenameDisplayBasename(char[] filename)
 	{
 		// gchar* g_filename_display_basename (const gchar *filename);
-		return Str.toString(g_filename_display_basename(Str.toStringz(filename)) );
+		return Str.toString(g_filename_display_basename(Str.toStringz(filename))).dup;
 	}
 	
 	/**
@@ -482,9 +477,8 @@ public class CharacterSet
 	public static char[] localeFromUtf8(char[] utf8string, int len, uint* bytesRead, uint* bytesWritten, GError** error)
 	{
 		// gchar* g_locale_from_utf8 (const gchar *utf8string,  gssize len,  gsize *bytes_read,  gsize *bytes_written,  GError **error);
-		return Str.toString(g_locale_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error) );
+		return Str.toString(g_locale_from_utf8(Str.toStringz(utf8string), len, bytesRead, bytesWritten, error)).dup;
 	}
-	
 	
 	/**
 	 * Obtains the character set for the current
@@ -505,5 +499,4 @@ public class CharacterSet
 		// gboolean g_get_charset (G_CONST_RETURN char **charset);
 		return g_get_charset(charset);
 	}
-	
 }

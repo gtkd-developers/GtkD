@@ -136,7 +136,7 @@ public class Linker
 		{
 			foreach ( char[] symbol ; Linker.getLoadFailures(lib) )
 			{
-				version(Tango) Stdout("failed ({}) {}", lib, symbol).newline;
+				version(Tango) Stdout.formatln("failed ({}) {}", lib, symbol);
 				else writefln("failed (%s) %s", lib, symbol);
 			}
 		}
@@ -204,11 +204,10 @@ public class Linker
 		}
 		else
 		{
-  /+
-			version(Tango) Stdout("Loaded lib = {}", libraryName).newline;
+			version(Tango) Stdout.formatln("Loaded lib = {}", libraryName);
 			else writefln("Loaded lib = %s", libraryName);
-    +/
 		}
+
 	}
 
 	// ----------------------------------------
@@ -250,15 +249,15 @@ public class Linker
 	}
 
 	/**
-	 * Loads all the simbols for this library
-	 * symbols: All the simbol names to be loaded
+	 * Loads all the symbols for this library
+	 * symbols: All the symbol names to be loaded
 	 */
 	void link( inout Symbol[] symbols )
 	{
 		foreach( Symbol link; symbols )
 		{
 			*link.pointer = getSymbol(handle, (link.name~"\0").ptr);
-			version(Tango)debug(loadSymbol) Stdout("Loaded...")(libraryName)(" ")(link.name).newline;
+			version(Tango)debug(loadSymbol) Stdout.formatln("Loaded... {} {}", libraryName, link.name);
 			else debug(loadSymbol) writefln("Loaded...", libraryName, " ", link.name);
 			if (*link.pointer is null)
 			{
@@ -266,7 +265,7 @@ public class Linker
 				if ( alternateHandle !is null )
 				{
 					*link.pointer = getSymbol(alternateHandle, (link.name~"\0").ptr);
-					version(Tango) Stdout("Loader.Linker.link trying alternate lib <<<<<<<<< {}", link.name).newline;
+					version(Tango) Stdout.formatln("Loader.Linker.link trying alternate lib <<<<<<<<< {}", link.name);
 					else writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
 				}
 				if (*link.pointer is null)

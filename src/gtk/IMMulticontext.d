@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.IMContext
  * 	- gtk.MenuShell
@@ -53,7 +54,7 @@
 
 module gtk.IMMulticontext;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -105,7 +106,6 @@ public class IMMulticontext : IMContext
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkIMMulticontext.
 	 * Returns: a new GtkIMMulticontext.
@@ -113,7 +113,13 @@ public class IMMulticontext : IMContext
 	public static IMContext newIMMulticontext()
 	{
 		// GtkIMContext* gtk_im_multicontext_new (void);
-		return new IMContext( gtk_im_multicontext_new() );
+		auto p = gtk_im_multicontext_new();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IMContext(cast(GtkIMContext*) p);
 	}
 	
 	/**

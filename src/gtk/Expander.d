@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_expander_
  * 	- gtk_
@@ -43,9 +44,15 @@
  * omit code:
  * 	- gtk_expander_new
  * 	- gtk_expander_new_with_mnemonic
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -54,13 +61,20 @@
 
 module gtk.Expander;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -118,7 +132,7 @@ private import gtk.Bin;
  *  </child>
  * </object>
  */
-public class Expander : Bin
+public class Expander : Bin, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -152,7 +166,8 @@ public class Expander : Bin
 		this.gtkExpander = gtkExpander;
 	}
 	
-	/**
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkExpander);	/**
 	 * Creates a new expander using label as the text of the label.
 	 * Since 2.4
 	 * Params:
@@ -179,13 +194,11 @@ public class Expander : Bin
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Expander)[] onActivateListeners;
+	/**
+	 */
 	void addOnActivate(void delegate(Expander) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate" in connectedSignals) )
@@ -212,9 +225,6 @@ public class Expander : Bin
 		
 		return consumed;
 	}
-	
-	
-	
 	
 	
 	/**
@@ -293,7 +303,7 @@ public class Expander : Bin
 	public char[] getLabel()
 	{
 		// const gchar* gtk_expander_get_label (GtkExpander *expander);
-		return Str.toString(gtk_expander_get_label(gtkExpander) );
+		return Str.toString(gtk_expander_get_label(gtkExpander)).dup;
 	}
 	
 	/**
@@ -369,12 +379,12 @@ public class Expander : Bin
 	public Widget getLabelWidget()
 	{
 		// GtkWidget* gtk_expander_get_label_widget (GtkExpander *expander);
-		return new Widget( gtk_expander_get_label_widget(gtkExpander) );
+		auto p = gtk_expander_get_label_widget(gtkExpander);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
-	
-	
-	
-	
-	
-	
 }

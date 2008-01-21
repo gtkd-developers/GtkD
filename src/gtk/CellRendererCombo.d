@@ -25,9 +25,9 @@
  * inFile  = GtkCellRendererCombo.html
  * outPack = gtk
  * outFile = CellRendererCombo
- * strct   = GtkCellRenderer
- * realStrct=GtkCellRendererCombo
- * ctorStrct=
+ * strct   = GtkCellRendererCombo
+ * realStrct=
+ * ctorStrct=GtkCellRenderer
  * clss    = CellRendererCombo
  * interf  = 
  * class Code: No
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.CellRenderer
  * structWrap:
@@ -51,7 +52,7 @@
 
 module gtk.CellRendererCombo;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -114,7 +115,6 @@ public class CellRendererCombo : CellRendererText
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkCellRendererCombo.
 	 * Adjust how text is drawn using object properties.
@@ -128,8 +128,13 @@ public class CellRendererCombo : CellRendererText
 	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_combo_new (void);
-		this(cast(GtkCellRendererCombo*)gtk_cell_renderer_combo_new() );
+		auto p = gtk_cell_renderer_combo_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCellRendererCombo*) p);
 	}
-	
-	
 }

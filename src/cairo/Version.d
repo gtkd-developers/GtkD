@@ -39,6 +39,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -48,7 +49,7 @@
 
 module cairo.Version;
 
-private import gtkc.cairotypes;
+public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
 
@@ -127,12 +128,6 @@ public class Version
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Returns the version of the cairo library encoded in a single
 	 * integer as per CAIRO_VERSION_ENCODE. The encoding ensures that
@@ -156,6 +151,6 @@ public class Version
 	public static char[] cairoVersionString()
 	{
 		// const char* cairo_version_string (void);
-		return Str.toString(cairo_version_string() );
+		return Str.toString(cairo_version_string()).dup;
 	}
 }

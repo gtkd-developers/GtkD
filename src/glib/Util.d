@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * 	- glib.Str
@@ -51,7 +52,7 @@
 
 module glib.Util;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -86,7 +87,7 @@ public class Util
 	public static char[] getApplicationName()
 	{
 		// const gchar* g_get_application_name (void);
-		return Str.toString(g_get_application_name() );
+		return Str.toString(g_get_application_name()).dup;
 	}
 	
 	/**
@@ -119,7 +120,7 @@ public class Util
 	public static char[] getPrgname()
 	{
 		// gchar* g_get_prgname (void);
-		return Str.toString(g_get_prgname() );
+		return Str.toString(g_get_prgname()).dup;
 	}
 	
 	/**
@@ -149,7 +150,7 @@ public class Util
 	public static char[] getenv(char[] variable)
 	{
 		// const gchar* g_getenv (const gchar *variable);
-		return Str.toString(g_getenv(Str.toStringz(variable)) );
+		return Str.toString(g_getenv(Str.toStringz(variable))).dup;
 	}
 	
 	/**
@@ -209,7 +210,7 @@ public class Util
 	public static char[] getUserName()
 	{
 		// const gchar* g_get_user_name (void);
-		return Str.toString(g_get_user_name() );
+		return Str.toString(g_get_user_name()).dup;
 	}
 	
 	/**
@@ -223,7 +224,7 @@ public class Util
 	public static char[] getRealName()
 	{
 		// const gchar* g_get_real_name (void);
-		return Str.toString(g_get_real_name() );
+		return Str.toString(g_get_real_name()).dup;
 	}
 	
 	/**
@@ -238,7 +239,7 @@ public class Util
 	public static char[] getUserCacheDir()
 	{
 		// const gchar* g_get_user_cache_dir (void);
-		return Str.toString(g_get_user_cache_dir() );
+		return Str.toString(g_get_user_cache_dir()).dup;
 	}
 	
 	/**
@@ -253,7 +254,7 @@ public class Util
 	public static char[] getUserDataDir()
 	{
 		// const gchar* g_get_user_data_dir (void);
-		return Str.toString(g_get_user_data_dir() );
+		return Str.toString(g_get_user_data_dir()).dup;
 	}
 	
 	/**
@@ -268,9 +269,8 @@ public class Util
 	public static char[] getUserConfigDir()
 	{
 		// const gchar* g_get_user_config_dir (void);
-		return Str.toString(g_get_user_config_dir() );
+		return Str.toString(g_get_user_config_dir()).dup;
 	}
-	
 	
 	/**
 	 * Returns the full path of a special directory using its logical id.
@@ -286,7 +286,7 @@ public class Util
 	public static char[] getUserSpecialDir(GUserDirectory directory)
 	{
 		// const gchar* g_get_user_special_dir (GUserDirectory directory);
-		return Str.toString(g_get_user_special_dir(directory) );
+		return Str.toString(g_get_user_special_dir(directory)).dup;
 	}
 	
 	/**
@@ -354,7 +354,7 @@ public class Util
 	public static char[] getHostName()
 	{
 		// const gchar* g_get_host_name (void);
-		return Str.toString(g_get_host_name() );
+		return Str.toString(g_get_host_name()).dup;
 	}
 	
 	/**
@@ -378,7 +378,7 @@ public class Util
 	public static char[] getHomeDir()
 	{
 		// const gchar* g_get_home_dir (void);
-		return Str.toString(g_get_home_dir() );
+		return Str.toString(g_get_home_dir()).dup;
 	}
 	
 	/**
@@ -393,7 +393,7 @@ public class Util
 	public static char[] getTmpDir()
 	{
 		// const gchar* g_get_tmp_dir (void);
-		return Str.toString(g_get_tmp_dir() );
+		return Str.toString(g_get_tmp_dir()).dup;
 	}
 	
 	/**
@@ -405,7 +405,7 @@ public class Util
 	public static char[] getCurrentDir()
 	{
 		// gchar* g_get_current_dir (void);
-		return Str.toString(g_get_current_dir() );
+		return Str.toString(g_get_current_dir()).dup;
 	}
 	
 	/**
@@ -422,9 +422,8 @@ public class Util
 	public static char[] basename(char[] fileName)
 	{
 		// const gchar* g_basename (const gchar *file_name);
-		return Str.toString(g_basename(Str.toStringz(fileName)) );
+		return Str.toString(g_basename(Str.toStringz(fileName))).dup;
 	}
-	
 	
 	/**
 	 * Returns TRUE if the given file_name is an absolute file name,
@@ -451,7 +450,7 @@ public class Util
 	public static char[] pathSkipRoot(char[] fileName)
 	{
 		// const gchar* g_path_skip_root (const gchar *file_name);
-		return Str.toString(g_path_skip_root(Str.toStringz(fileName)) );
+		return Str.toString(g_path_skip_root(Str.toStringz(fileName))).dup;
 	}
 	
 	/**
@@ -467,7 +466,7 @@ public class Util
 	public static char[] pathGetBasename(char[] fileName)
 	{
 		// gchar* g_path_get_basename (const gchar *file_name);
-		return Str.toString(g_path_get_basename(Str.toStringz(fileName)) );
+		return Str.toString(g_path_get_basename(Str.toStringz(fileName))).dup;
 	}
 	
 	/**
@@ -481,7 +480,7 @@ public class Util
 	public static char[] pathGetDirname(char[] fileName)
 	{
 		// gchar* g_path_get_dirname (const gchar *file_name);
-		return Str.toString(g_path_get_dirname(Str.toStringz(fileName)) );
+		return Str.toString(g_path_get_dirname(Str.toStringz(fileName))).dup;
 	}
 	
 	/**
@@ -506,7 +505,7 @@ public class Util
 	public static char[] buildFilename(char[] firstElement, ... )
 	{
 		// gchar* g_build_filename (const gchar *first_element,  ...);
-		return Str.toString(g_build_filename(Str.toStringz(firstElement)) );
+		return Str.toString(g_build_filename(Str.toStringz(firstElement))).dup;
 	}
 	
 	/**
@@ -521,7 +520,7 @@ public class Util
 	public static char[] buildFilenamev(char** args)
 	{
 		// gchar* g_build_filenamev (gchar **args);
-		return Str.toString(g_build_filenamev(args) );
+		return Str.toString(g_build_filenamev(args)).dup;
 	}
 	
 	/**
@@ -556,7 +555,7 @@ public class Util
 	public static char[] buildPath(char[] separator, char[] firstElement, ... )
 	{
 		// gchar* g_build_path (const gchar *separator,  const gchar *first_element,  ...);
-		return Str.toString(g_build_path(Str.toStringz(separator), Str.toStringz(firstElement)) );
+		return Str.toString(g_build_path(Str.toStringz(separator), Str.toStringz(firstElement))).dup;
 	}
 	
 	/**
@@ -572,7 +571,7 @@ public class Util
 	public static char[] buildPathv(char[] separator, char** args)
 	{
 		// gchar* g_build_pathv (const gchar *separator,  gchar **args);
-		return Str.toString(g_build_pathv(Str.toStringz(separator), args) );
+		return Str.toString(g_build_pathv(Str.toStringz(separator), args)).dup;
 	}
 	
 	/**
@@ -598,7 +597,7 @@ public class Util
 	public static char[] findProgramInPath(char[] program)
 	{
 		// gchar* g_find_program_in_path (const gchar *program);
-		return Str.toString(g_find_program_in_path(Str.toStringz(program)) );
+		return Str.toString(g_find_program_in_path(Str.toStringz(program))).dup;
 	}
 	
 	/**
@@ -714,9 +713,6 @@ public class Util
 		// guint g_parse_debug_string (const gchar *string,  const GDebugKey *keys,  guint nkeys);
 		return g_parse_debug_string(Str.toStringz(string), keys, nkeys);
 	}
-	
-	
-	
 	
 	/**
 	 * This is just like the standard C qsort() function, but

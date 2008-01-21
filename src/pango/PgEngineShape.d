@@ -25,7 +25,7 @@
  * inFile  = PangoEngineShape.html
  * outPack = pango
  * outFile = PgEngineShape
- * strct   = 
+ * strct   = PangoEngineShape
  * realStrct=
  * ctorStrct=
  * clss    = PgEngineShape
@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module pango.PgEngineShape;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
@@ -56,6 +57,7 @@ private import gtkc.pango;
 
 
 
+private import pango.PgEngine;
 
 /**
  * Description
@@ -63,13 +65,40 @@ private import gtkc.pango;
  * engines that convert character strings into glyph strings.
  * These engines are used in pango_shape().
  */
-public class PgEngineShape
+public class PgEngineShape : PgEngine
 {
+	
+	/** the main Gtk struct */
+	protected PangoEngineShape* pangoEngineShape;
+	
+	
+	public PangoEngineShape* getPgEngineShapeStruct()
+	{
+		return pangoEngineShape;
+	}
+	
+	
+	/** the main Gtk struct as a void* */
+	protected void* getStruct()
+	{
+		return cast(void*)pangoEngineShape;
+	}
+	
+	/**
+	 * Sets our main struct and passes it to the parent class
+	 */
+	public this (PangoEngineShape* pangoEngineShape)
+	{
+		if(pangoEngineShape is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Null pangoEngineShape passed to constructor.");
+			else return;
+		}
+		super(cast(PangoEngine*)pangoEngineShape);
+		this.pangoEngineShape = pangoEngineShape;
+	}
 	
 	/**
 	 */
-	
-	
-	
-	
 }

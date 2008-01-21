@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.PtrArray
  * structWrap:
@@ -50,7 +51,7 @@
 
 module atk.RelationSet;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -106,7 +107,6 @@ public class RelationSet : ObjectG
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new empty relation set.

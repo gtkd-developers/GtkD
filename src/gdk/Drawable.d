@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Drawable
@@ -103,7 +104,7 @@
 
 module gdk.Drawable;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -230,7 +231,6 @@ public class Drawable : ObjectG
 	/**
 	 */
 	
-	
 	/**
 	 * Warning
 	 * gdk_drawable_ref is deprecated and should not be used in newly-written code.
@@ -241,7 +241,13 @@ public class Drawable : ObjectG
 	public Drawable doref()
 	{
 		// GdkDrawable* gdk_drawable_ref (GdkDrawable *drawable);
-		return new Drawable( gdk_drawable_ref(gdkDrawable) );
+		auto p = gdk_drawable_ref(gdkDrawable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Drawable(cast(GdkDrawable*) p);
 	}
 	
 	/**
@@ -294,7 +300,13 @@ public class Drawable : ObjectG
 	public Display getDisplay()
 	{
 		// GdkDisplay* gdk_drawable_get_display (GdkDrawable *drawable);
-		return new Display( gdk_drawable_get_display(gdkDrawable) );
+		auto p = gdk_drawable_get_display(gdkDrawable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -305,7 +317,13 @@ public class Drawable : ObjectG
 	public Screen getScreen()
 	{
 		// GdkScreen* gdk_drawable_get_screen (GdkDrawable *drawable);
-		return new Screen( gdk_drawable_get_screen(gdkDrawable) );
+		auto p = gdk_drawable_get_screen(gdkDrawable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -315,7 +333,13 @@ public class Drawable : ObjectG
 	public Visual getVisual()
 	{
 		// GdkVisual* gdk_drawable_get_visual (GdkDrawable *drawable);
-		return new Visual( gdk_drawable_get_visual(gdkDrawable) );
+		auto p = gdk_drawable_get_visual(gdkDrawable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -344,7 +368,13 @@ public class Drawable : ObjectG
 	public Colormap getColormap()
 	{
 		// GdkColormap* gdk_drawable_get_colormap (GdkDrawable *drawable);
-		return new Colormap( gdk_drawable_get_colormap(gdkDrawable) );
+		auto p = gdk_drawable_get_colormap(gdkDrawable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -387,7 +417,13 @@ public class Drawable : ObjectG
 	public Region getClipRegion()
 	{
 		// GdkRegion* gdk_drawable_get_clip_region (GdkDrawable *drawable);
-		return new Region( gdk_drawable_get_clip_region(gdkDrawable) );
+		auto p = gdk_drawable_get_clip_region(gdkDrawable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -400,7 +436,13 @@ public class Drawable : ObjectG
 	public Region getVisibleRegion()
 	{
 		// GdkRegion* gdk_drawable_get_visible_region (GdkDrawable *drawable);
-		return new Region( gdk_drawable_get_visible_region(gdkDrawable) );
+		auto p = gdk_drawable_get_visible_region(gdkDrawable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -513,7 +555,6 @@ public class Drawable : ObjectG
 		gdk_draw_segments(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), segs, nsegs);
 	}
 	
-	
 	/**
 	 * Draws a rectangular outline or filled rectangle, using the foreground color
 	 * and other attributes of the GdkGC.
@@ -595,7 +636,6 @@ public class Drawable : ObjectG
 		// void gdk_draw_trapezoids (GdkDrawable *drawable,  GdkGC *gc,  GdkTrapezoid *trapezoids,  gint n_trapezoids);
 		gdk_draw_trapezoids(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), trapezoids, nTrapezoids);
 	}
-	
 	
 	/**
 	 * This is a low-level function; 99% of text rendering should be done
@@ -780,7 +820,6 @@ public class Drawable : ObjectG
 		gdk_draw_text_wc(gdkDrawable, (font is null) ? null : font.getFontStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, text, textLength);
 	}
 	
-	
 	/**
 	 * Copies the width x height region of src at coordinates (xsrc,
 	 * ysrc) to coordinates (xdest, ydest) in drawable.
@@ -868,7 +907,13 @@ public class Drawable : ObjectG
 	public ImageGdk getImage(int x, int y, int width, int height)
 	{
 		// GdkImage* gdk_drawable_get_image (GdkDrawable *drawable,  gint x,  gint y,  gint width,  gint height);
-		return new ImageGdk( gdk_drawable_get_image(gdkDrawable, x, y, width, height) );
+		auto p = gdk_drawable_get_image(gdkDrawable, x, y, width, height);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ImageGdk(cast(GdkImage*) p);
 	}
 	
 	/**
@@ -889,6 +934,12 @@ public class Drawable : ObjectG
 	public ImageGdk copyToImage(ImageGdk image, int srcX, int srcY, int destX, int destY, int width, int height)
 	{
 		// GdkImage* gdk_drawable_copy_to_image (GdkDrawable *drawable,  GdkImage *image,  gint src_x,  gint src_y,  gint dest_x,  gint dest_y,  gint width,  gint height);
-		return new ImageGdk( gdk_drawable_copy_to_image(gdkDrawable, (image is null) ? null : image.getImageGdkStruct(), srcX, srcY, destX, destY, width, height) );
+		auto p = gdk_drawable_copy_to_image(gdkDrawable, (image is null) ? null : image.getImageGdkStruct(), srcX, srcY, destX, destY, width, height);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ImageGdk(cast(GdkImage*) p);
 	}
 }

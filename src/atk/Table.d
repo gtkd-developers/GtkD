@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,10 +50,12 @@
 
 module atk.Table;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 
@@ -112,13 +115,13 @@ public class Table
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gint, gint, Table)[] onColumnDeletedListeners;
+	/**
+	 * The "column-deleted" signal is emitted by an object which implements the
+	 * AtkTable interface when a column is deleted.
+	 */
 	void addOnColumnDeleted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("column-deleted" in connectedSignals) )
@@ -147,6 +150,10 @@ public class Table
 	}
 	
 	void delegate(gint, gint, Table)[] onColumnInsertedListeners;
+	/**
+	 * The "column-inserted" signal is emitted by an object which implements the
+	 * AtkTable interface when a column is inserted.
+	 */
 	void addOnColumnInserted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("column-inserted" in connectedSignals) )
@@ -175,6 +182,10 @@ public class Table
 	}
 	
 	void delegate(Table)[] onColumnReorderedListeners;
+	/**
+	 * The "column-reordered" signal is emitted by an object which implements the
+	 * AtkTable interface when the columns are reordered.
+	 */
 	void addOnColumnReordered(void delegate(Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("column-reordered" in connectedSignals) )
@@ -203,6 +214,10 @@ public class Table
 	}
 	
 	void delegate(Table)[] onModelChangedListeners;
+	/**
+	 * The "model-changed" signal is emitted by an object which implements the
+	 * AtkTable interface when the model displayed by the table changes.
+	 */
 	void addOnModelChanged(void delegate(Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("model-changed" in connectedSignals) )
@@ -231,6 +246,10 @@ public class Table
 	}
 	
 	void delegate(gint, gint, Table)[] onRowDeletedListeners;
+	/**
+	 * The "row-deleted" signal is emitted by an object which implements the
+	 * AtkTable interface when a column is inserted.
+	 */
 	void addOnRowDeleted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-deleted" in connectedSignals) )
@@ -259,6 +278,10 @@ public class Table
 	}
 	
 	void delegate(gint, gint, Table)[] onRowInsertedListeners;
+	/**
+	 * The "row-inserted" signal is emitted by an object which implements the
+	 * AtkTable interface when a column is inserted.
+	 */
 	void addOnRowInserted(void delegate(gint, gint, Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-inserted" in connectedSignals) )
@@ -287,6 +310,12 @@ public class Table
 	}
 	
 	void delegate(Table)[] onRowReorderedListeners;
+	/**
+	 * The "row-reordered" signal is emitted by an object which implements the
+	 * AtkTable interface when the columns are reordered.
+	 * See Also
+	 * AtkObject, ATK_STATE_TRANSIENT
+	 */
 	void addOnRowReordered(void delegate(Table) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-reordered" in connectedSignals) )
@@ -313,7 +342,6 @@ public class Table
 		
 		return consumed;
 	}
-	
 	
 	
 	/**
@@ -433,7 +461,7 @@ public class Table
 	public char[] getColumnDescription(int column)
 	{
 		// const gchar* atk_table_get_column_description (AtkTable *table,  gint column);
-		return Str.toString(atk_table_get_column_description(atkTable, column) );
+		return Str.toString(atk_table_get_column_description(atkTable, column)).dup;
 	}
 	
 	/**
@@ -445,7 +473,7 @@ public class Table
 	public char[] getRowDescription(int row)
 	{
 		// const gchar* atk_table_get_row_description (AtkTable *table,  gint row);
-		return Str.toString(atk_table_get_row_description(atkTable, row) );
+		return Str.toString(atk_table_get_row_description(atkTable, row)).dup;
 	}
 	
 	/**
@@ -668,10 +696,4 @@ public class Table
 		// gboolean atk_table_remove_row_selection (AtkTable *table,  gint row);
 		return atk_table_remove_row_selection(atkTable, row);
 	}
-	
-	
-	
-	
-	
-	
 }

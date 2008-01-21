@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module cairo.Status;
 
-private import gtkc.cairotypes;
+public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
 
@@ -98,7 +99,6 @@ public class Status
 	/**
 	 */
 	
-	
 	/**
 	 * Provides a human-readable description of a cairo_status_t.
 	 * Params:
@@ -108,7 +108,7 @@ public class Status
 	public static char[] oString(cairo_status_t status)
 	{
 		// const char* cairo_status_to_string (cairo_status_t status);
-		return Str.toString(cairo_status_to_string(status) );
+		return Str.toString(cairo_status_to_string(status)).dup;
 	}
 	
 	/**

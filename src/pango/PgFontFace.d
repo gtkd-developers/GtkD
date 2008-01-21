@@ -40,65 +40,25 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
- * 	- pango.PgContext
- * 	- pango.PgItem
- * 	- pango.PgLayout
- * 	- pango.PgFontDescription
- * 	- pango.PgFontMetrics
- * 	- pango.PgFontFamily
- * 	- pango.PgFontMap
- * 	- pango.PgFontsetSimple
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
- * 	- pango.PgLanguage
- * 	- pango.PgTabArray
- * 	- pango.PgLayout
- * 	- pango.PgLayoutIter
- * 	- pango.PgScriptIter
  * 	- glib.Str
+ * 	- pango.PgFontDescription
  * structWrap:
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
- * 	- PangoContext* -> PgContext
  * 	- PangoFontDescription* -> PgFontDescription
- * 	- PangoFontFamily* -> PgFontFamily
- * 	- PangoFontMap* -> PgFontMap
- * 	- PangoFontMetrics* -> PgFontMetrics
- * 	- PangoFontsetSimple* -> PgFontsetSimple
- * 	- PangoItem* -> PgItem
- * 	- PangoLanguage* -> PgLanguage
- * 	- PangoLayout* -> PgLayout
- * 	- PangoLayoutIter* -> PgLayoutIter
- * 	- PangoScriptIter* -> PgScriptIter
- * 	- PangoTabArray* -> PgTabArray
  * module aliases:
  * local aliases:
  */
 
 module pango.PgFontFace;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
 
-private import pango.PgContext;
-private import pango.PgItem;
-private import pango.PgLayout;
-private import pango.PgFontDescription;
-private import pango.PgFontMetrics;
-private import pango.PgFontFamily;
-private import pango.PgFontMap;
-private import pango.PgFontsetSimple;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
-private import pango.PgLanguage;
-private import pango.PgTabArray;
-private import pango.PgLayout;
-private import pango.PgLayoutIter;
-private import pango.PgScriptIter;
 private import glib.Str;
+private import pango.PgFontDescription;
 
 
 
@@ -148,84 +108,6 @@ public class PgFontFace
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Gets a name representing the style of this face among the
 	 * different faces in the PangoFontFamily for the face. This
@@ -236,7 +118,7 @@ public class PgFontFace
 	public char[] getFaceName()
 	{
 		// const char* pango_font_face_get_face_name (PangoFontFace *face);
-		return Str.toString(pango_font_face_get_face_name(pangoFontFace) );
+		return Str.toString(pango_font_face_get_face_name(pangoFontFace)).dup;
 	}
 	
 	/**
@@ -244,11 +126,11 @@ public class PgFontFace
 	 * fonts. For scalable fonts, stores NULL at the location pointed to by
 	 * sizes and 0 at the location pointed to by n_sizes. The sizes returned
 	 * are in Pango units and are sorted in ascending order.
+	 * Since 1.4
 	 * Params:
 	 * sizes =  location to store a pointer to an array of int. This array
 	 *  should be freed with g_free().
 	 * nSizes =  location to store the number of elements in sizes
-	 * Since 1.4
 	 */
 	public void listSizes(int** sizes, int* nSizes)
 	{
@@ -265,42 +147,25 @@ public class PgFontFace
 	public PgFontDescription describe()
 	{
 		// PangoFontDescription* pango_font_face_describe (PangoFontFace *face);
-		return new PgFontDescription( pango_font_face_describe(pangoFontFace) );
+		auto p = pango_font_face_describe(pangoFontFace);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFontDescription(cast(PangoFontDescription*) p);
 	}
 	
 	/**
 	 * Returns whether a PangoFontFace is synthesized by the underlying
 	 * font rendering engine from another face, perhaps by shearing, emboldening,
 	 * or lightening it.
-	 * Returns: whether face is synthesized.Since 1.18
+	 * Since 1.18
+	 * Returns: whether face is synthesized.
 	 */
 	public int isSynthesized()
 	{
 		// gboolean pango_font_face_is_synthesized (PangoFontFace *face);
 		return pango_font_face_is_synthesized(pangoFontFace);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

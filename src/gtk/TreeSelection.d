@@ -43,6 +43,7 @@
  * omit code:
  * 	- gtk_tree_selection_get_selected
  * 	- gtk_tree_selection_get_selected_rows
+ * omit signals:
  * imports:
  * 	- gtk.TreeView
  * 	- gtk.TreeIter
@@ -61,10 +62,12 @@
 
 module gtk.TreeSelection;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gtk.TreeView;
 private import gtk.TreeIter;
@@ -185,13 +188,17 @@ public class TreeSelection : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeSelection)[] onChangedListeners;
+	/**
+	 * Emitted whenever the selection has (possibly) changed. Please note that
+	 * this signal is mostly a hint. It may only be emitted once when a range
+	 * of rows are selected, and it may occasionally be emitted when nothing
+	 * has happened.
+	 * See Also
+	 * GtkTreeView, GtkTreeViewColumn, GtkTreeDnd, GtkTreeMode, GtkTreeSortable, GtkTreeModelSort, GtkListStore, GtkTreeStore, GtkCellRenderer, GtkCellEditable, GtkCellRendererPixbuf, GtkCellRendererText, GtkCellRendererToggle
+	 */
 	void addOnChanged(void delegate(TreeSelection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
@@ -218,9 +225,6 @@ public class TreeSelection : ObjectG
 		
 		return consumed;
 	}
-	
-	
-	
 	
 	
 	/**
@@ -280,9 +284,14 @@ public class TreeSelection : ObjectG
 	public TreeView getTreeView()
 	{
 		// GtkTreeView* gtk_tree_selection_get_tree_view (GtkTreeSelection *selection);
-		return new TreeView( gtk_tree_selection_get_tree_view(gtkTreeSelection) );
+		auto p = gtk_tree_selection_get_tree_view(gtkTreeSelection);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeView(cast(GtkTreeView*) p);
 	}
-	
 	
 	/**
 	 * Calls a function for each selected node. Note that you cannot modify
@@ -297,7 +306,6 @@ public class TreeSelection : ObjectG
 		// void gtk_tree_selection_selected_foreach (GtkTreeSelection *selection,  GtkTreeSelectionForeachFunc func,  gpointer data);
 		gtk_tree_selection_selected_foreach(gtkTreeSelection, func, data);
 	}
-	
 	
 	/**
 	 * Returns the number of rows that have been selected in tree.

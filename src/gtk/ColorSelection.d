@@ -30,20 +30,27 @@
  * ctorStrct=
  * clss    = ColorSelection
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_color_selection_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Color
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkColor* -> Color
  * module aliases:
@@ -52,13 +59,20 @@
 
 module gtk.ColorSelection;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Color;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -72,7 +86,7 @@ private import gtk.VBox;
  * value, red, green, blue, and opacity. It is found on the standard
  * color selection dialog box GtkColorSelectionDialog.
  */
-public class ColorSelection : VBox
+public class ColorSelection : VBox, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -106,15 +120,18 @@ public class ColorSelection : VBox
 		this.gtkColorSelection = gtkColorSelection;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkColorSelection);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ColorSelection)[] onColorChangedListeners;
+	/**
+	 * This signal is emitted when the color changes in the GtkColorSelection
+	 * according to its update policy.
+	 */
 	void addOnColorChanged(void delegate(ColorSelection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("color-changed" in connectedSignals) )
@@ -143,14 +160,20 @@ public class ColorSelection : VBox
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkColorSelection.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_color_selection_new (void);
-		this(cast(GtkColorSelection*)gtk_color_selection_new() );
+		auto p = gtk_color_selection_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkColorSelection*) p);
 	}
 	
 	/**
@@ -335,7 +358,7 @@ public class ColorSelection : VBox
 	public static char[] paletteToString(Color colors, int nColors)
 	{
 		// gchar* gtk_color_selection_palette_to_string  (const GdkColor *colors,  gint n_colors);
-		return Str.toString(gtk_color_selection_palette_to_string((colors is null) ? null : colors.getColorStruct(), nColors) );
+		return Str.toString(gtk_color_selection_palette_to_string((colors is null) ? null : colors.getColorStruct(), nColors)).dup;
 	}
 	
 	/**
@@ -357,7 +380,6 @@ public class ColorSelection : VBox
 		return gtk_color_selection_set_change_palette_hook(func);
 	}
 	
-	
 	/**
 	 * Installs a global function to be called whenever the user tries to
 	 * modify the palette in a color selection. This function should save
@@ -373,7 +395,6 @@ public class ColorSelection : VBox
 		// GtkColorSelectionChangePaletteWithScreenFunc gtk_color_selection_set_change_palette_with_screen_hook  (GtkColorSelectionChangePaletteWithScreenFunc func);
 		return gtk_color_selection_set_change_palette_with_screen_hook(func);
 	}
-	
 	
 	/**
 	 * Warning
@@ -403,7 +424,4 @@ public class ColorSelection : VBox
 		// void gtk_color_selection_get_color (GtkColorSelection *colorsel,  gdouble *color);
 		gtk_color_selection_get_color(gtkColorSelection, color);
 	}
-	
-	
-	
 }

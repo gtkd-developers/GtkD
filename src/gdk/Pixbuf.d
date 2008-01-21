@@ -44,6 +44,7 @@
  * 	- gdk_pixbuf_unref
  * omit code:
  * 	- gdk_pixbuf_get_from_drawable
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.Str
@@ -65,7 +66,7 @@
 
 module gdk.Pixbuf;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -533,7 +534,6 @@ public class Pixbuf
 		gdk_pixbuf_render_pixmap_and_mask_for_colormap(gdkPixbuf, (colormap is null) ? null : colormap.getColormapStruct(), pixmapReturn, maskReturn, alphaThreshold);
 	}
 	
-	
 	/**
 	 * Same as gdk_pixbuf_get_from_drawable() but gets the pixbuf from
 	 * an image.
@@ -552,7 +552,13 @@ public class Pixbuf
 	public Pixbuf getFromImage(ImageGdk src, Colormap cmap, int srcX, int srcY, int destX, int destY, int width, int height)
 	{
 		// GdkPixbuf* gdk_pixbuf_get_from_image (GdkPixbuf *dest,  GdkImage *src,  GdkColormap *cmap,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height);
-		return new Pixbuf( gdk_pixbuf_get_from_image(gdkPixbuf, (src is null) ? null : src.getImageGdkStruct(), (cmap is null) ? null : cmap.getColormapStruct(), srcX, srcY, destX, destY, width, height) );
+		auto p = gdk_pixbuf_get_from_image(gdkPixbuf, (src is null) ? null : src.getImageGdkStruct(), (cmap is null) ? null : cmap.getColormapStruct(), srcX, srcY, destX, destY, width, height);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -592,7 +598,14 @@ public class Pixbuf
 	public this (char* data, GdkColorspace colorspace, int hasAlpha, int bitsPerSample, int width, int height, int rowstride, GdkPixbufDestroyNotify destroyFn, void* destroyFnData)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_data (const guchar *data,  GdkColorspace colorspace,  gboolean has_alpha,  int bits_per_sample,  int width,  int height,  int rowstride,  GdkPixbufDestroyNotify destroy_fn,  gpointer destroy_fn_data);
-		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_data(data, colorspace, hasAlpha, bitsPerSample, width, height, rowstride, destroyFn, destroyFnData) );
+		auto p = gdk_pixbuf_new_from_data(data, colorspace, hasAlpha, bitsPerSample, width, height, rowstride, destroyFn, destroyFnData);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -604,7 +617,14 @@ public class Pixbuf
 	public this (char** data)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_xpm_data (const char **data);
-		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_xpm_data(data) );
+		auto p = gdk_pixbuf_new_from_xpm_data(data);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -626,7 +646,14 @@ public class Pixbuf
 	public this (int dataLength, byte* data, int copyPixels, GError** error)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_inline (gint data_length,  const guint8 *data,  gboolean copy_pixels,  GError **error);
-		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_inline(dataLength, data, copyPixels, error) );
+		auto p = gdk_pixbuf_new_from_inline(dataLength, data, copyPixels, error);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -645,7 +672,14 @@ public class Pixbuf
 	public this (int srcX, int srcY, int width, int height)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_subpixbuf (GdkPixbuf *src_pixbuf,  int src_x,  int src_y,  int width,  int height);
-		this(cast(GdkPixbuf*)gdk_pixbuf_new_subpixbuf(gdkPixbuf, srcX, srcY, width, height) );
+		auto p = gdk_pixbuf_new_subpixbuf(gdkPixbuf, srcX, srcY, width, height);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -656,13 +690,14 @@ public class Pixbuf
 	public Pixbuf copy()
 	{
 		// GdkPixbuf* gdk_pixbuf_copy (const GdkPixbuf *pixbuf);
-		return new Pixbuf( gdk_pixbuf_copy(gdkPixbuf) );
+		auto p = gdk_pixbuf_copy(gdkPixbuf);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Queries the color space of a pixbuf.
@@ -762,18 +797,8 @@ public class Pixbuf
 	public char[] getOption(char[] key)
 	{
 		// const gchar* gdk_pixbuf_get_option (GdkPixbuf *pixbuf,  const gchar *key);
-		return Str.toString(gdk_pixbuf_get_option(gdkPixbuf, Str.toStringz(key)) );
+		return Str.toString(gdk_pixbuf_get_option(gdkPixbuf, Str.toStringz(key))).dup;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Creates a new pixbuf by loading an image from a file. The file format is
@@ -786,7 +811,14 @@ public class Pixbuf
 	public this (char[] filename, GError** error)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file (const char *filename,  GError **error);
-		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_file(Str.toStringz(filename), error) );
+		auto p = gdk_pixbuf_new_from_file(Str.toStringz(filename), error);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -805,7 +837,14 @@ public class Pixbuf
 	public this (char[] filename, int width, int height, GError** error)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file_at_size (const char *filename,  int width,  int height,  GError **error);
-		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, error) );
+		auto p = gdk_pixbuf_new_from_file_at_size(Str.toStringz(filename), width, height, error);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -831,9 +870,15 @@ public class Pixbuf
 	public this (char[] filename, int width, int height, int preserveAspectRatio, GError** error)
 	{
 		// GdkPixbuf* gdk_pixbuf_new_from_file_at_scale (const char *filename,  int width,  int height,  gboolean preserve_aspect_ratio,  GError **error);
-		this(cast(GdkPixbuf*)gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, error) );
+		auto p = gdk_pixbuf_new_from_file_at_scale(Str.toStringz(filename), width, height, preserveAspectRatio, error);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkPixbuf*) p);
 	}
-	
 	
 	/**
 	 * Saves pixbuf to a file in type, which is currently "jpeg", "png", "tiff", "ico" or "bmp".
@@ -869,7 +914,6 @@ public class Pixbuf
 		// gboolean gdk_pixbuf_save (GdkPixbuf *pixbuf,  const char *filename,  const char *type,  GError **error,  ...);
 		return gdk_pixbuf_save(gdkPixbuf, Str.toStringz(filename), Str.toStringz(type), error);
 	}
-	
 	
 	/**
 	 * Saves pixbuf in format type by feeding the produced data to a
@@ -959,7 +1003,6 @@ public class Pixbuf
 		return gdk_pixbuf_save_to_bufferv(gdkPixbuf, buffer, bufferSize, Str.toStringz(type), optionKeys, optionValues, error);
 	}
 	
-	
 	/**
 	 * Create a new GdkPixbuf containing a copy of src scaled to
 	 * dest_width x dest_height. Leaves src unaffected. interp_type
@@ -980,7 +1023,13 @@ public class Pixbuf
 	public Pixbuf scaleSimple(int destWidth, int destHeight, GdkInterpType interpType)
 	{
 		// GdkPixbuf* gdk_pixbuf_scale_simple (const GdkPixbuf *src,  int dest_width,  int dest_height,  GdkInterpType interp_type);
-		return new Pixbuf( gdk_pixbuf_scale_simple(gdkPixbuf, destWidth, destHeight, interpType) );
+		auto p = gdk_pixbuf_scale_simple(gdkPixbuf, destWidth, destHeight, interpType);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1030,7 +1079,13 @@ public class Pixbuf
 	public Pixbuf compositeColorSimple(int destWidth, int destHeight, GdkInterpType interpType, int overallAlpha, int checkSize, uint color1, uint color2)
 	{
 		// GdkPixbuf* gdk_pixbuf_composite_color_simple (const GdkPixbuf *src,  int dest_width,  int dest_height,  GdkInterpType interp_type,  int overall_alpha,  int check_size,  guint32 color1,  guint32 color2);
-		return new Pixbuf( gdk_pixbuf_composite_color_simple(gdkPixbuf, destWidth, destHeight, interpType, overallAlpha, checkSize, color1, color2) );
+		auto p = gdk_pixbuf_composite_color_simple(gdkPixbuf, destWidth, destHeight, interpType, overallAlpha, checkSize, color1, color2);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1096,7 +1151,6 @@ public class Pixbuf
 		gdk_pixbuf_composite_color(gdkPixbuf, (dest is null) ? null : dest.getPixbufStruct(), destX, destY, destWidth, destHeight, offsetX, offsetY, scaleX, scaleY, interpType, overallAlpha, checkX, checkY, checkSize, color1, color2);
 	}
 	
-	
 	/**
 	 * Rotates a pixbuf by a multiple of 90 degrees, and returns the
 	 * result in a new pixbuf.
@@ -1108,7 +1162,13 @@ public class Pixbuf
 	public Pixbuf rotateSimple(GdkPixbufRotation angle)
 	{
 		// GdkPixbuf* gdk_pixbuf_rotate_simple (const GdkPixbuf *src,  GdkPixbufRotation angle);
-		return new Pixbuf( gdk_pixbuf_rotate_simple(gdkPixbuf, angle) );
+		auto p = gdk_pixbuf_rotate_simple(gdkPixbuf, angle);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1122,7 +1182,13 @@ public class Pixbuf
 	public Pixbuf flip(int horizontal)
 	{
 		// GdkPixbuf* gdk_pixbuf_flip (const GdkPixbuf *src,  gboolean horizontal);
-		return new Pixbuf( gdk_pixbuf_flip(gdkPixbuf, horizontal) );
+		auto p = gdk_pixbuf_flip(gdkPixbuf, horizontal);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1144,7 +1210,13 @@ public class Pixbuf
 	public Pixbuf addAlpha(int substituteColor, char r, char g, char b)
 	{
 		// GdkPixbuf* gdk_pixbuf_add_alpha (const GdkPixbuf *pixbuf,  gboolean substitute_color,  guchar r,  guchar g,  guchar b);
-		return new Pixbuf( gdk_pixbuf_add_alpha(gdkPixbuf, substituteColor, r, g, b) );
+		auto p = gdk_pixbuf_add_alpha(gdkPixbuf, substituteColor, r, g, b);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1203,7 +1275,13 @@ public class Pixbuf
 	public Pixbuf applyEmbeddedOrientation()
 	{
 		// GdkPixbuf* gdk_pixbuf_apply_embedded_orientation  (GdkPixbuf *src);
-		return new Pixbuf( gdk_pixbuf_apply_embedded_orientation(gdkPixbuf) );
+		auto p = gdk_pixbuf_apply_embedded_orientation(gdkPixbuf);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

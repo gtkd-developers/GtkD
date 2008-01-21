@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.TextAttributes
  * structWrap:
@@ -50,10 +51,12 @@
 
 module gtk.TextAttributes;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gtk.TextAttributes;
 
@@ -107,13 +110,13 @@ public class TextAttributes
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes)[] onListeners;
+	/**
+	 * The ::event signal is emitted when an event occurs on a region of the
+	 * buffer marked with this tag.
+	 */
 	void addOn(gboolean delegate(GObject*, GdkEvent*, GtkTextIter*, TextAttributes) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("event" in connectedSignals) )
@@ -142,14 +145,6 @@ public class TextAttributes
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a GtkTextAttributes, which describes
 	 * a set of properties on some text.
@@ -157,7 +152,14 @@ public class TextAttributes
 	public this ()
 	{
 		// GtkTextAttributes* gtk_text_attributes_new (void);
-		this(cast(GtkTextAttributes*)gtk_text_attributes_new() );
+		auto p = gtk_text_attributes_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTextAttributes*) p);
 	}
 	
 	/**
@@ -167,7 +169,13 @@ public class TextAttributes
 	public TextAttributes copy()
 	{
 		// GtkTextAttributes* gtk_text_attributes_copy (GtkTextAttributes *src);
-		return new TextAttributes( gtk_text_attributes_copy(gtkTextAttributes) );
+		auto p = gtk_text_attributes_copy(gtkTextAttributes);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextAttributes(cast(GtkTextAttributes*) p);
 	}
 	
 	/**
@@ -199,70 +207,12 @@ public class TextAttributes
 	public TextAttributes doref()
 	{
 		// GtkTextAttributes* gtk_text_attributes_ref (GtkTextAttributes *values);
-		return new TextAttributes( gtk_text_attributes_ref(gtkTextAttributes) );
+		auto p = gtk_text_attributes_ref(gtkTextAttributes);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextAttributes(cast(GtkTextAttributes*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

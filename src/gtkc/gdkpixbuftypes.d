@@ -26,9 +26,10 @@ module gtkc.gdkpixbuftypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 public import gtkc.gdktypes;
-public alias void* AtkFocusHandler;
-public struct AtkStateSet;
-public struct AtkRectangle;
+//public alias void* AtkFocusHandler;
+//public struct AtkStateSet;
+//public struct AtkRectangle;
+public import gtkc.atktypes;
 
 /**
  * An enumeration containing three sets of flags for a GdkPixdata struct:

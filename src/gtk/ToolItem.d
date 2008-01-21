@@ -35,16 +35,23 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_tool_item_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Tooltips
  * 	- gtk.Widget
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkTooltips* -> Tooltips
  * 	- GtkWidget* -> Widget
@@ -54,14 +61,21 @@
 
 module gtk.ToolItem;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Tooltips;
 private import gtk.Widget;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -77,7 +91,7 @@ private import gtk.Bin;
  * GtkToggleToolButton and GtkRadioToolButton classes.
  * See the GtkToolbar class for a description of the toolbar widget.
  */
-public class ToolItem : Bin
+public class ToolItem : Bin, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -111,8 +125,12 @@ public class ToolItem : Bin
 		this.gtkToolItem = gtkToolItem;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkToolItem);
+	
 	/**
 	 * Sets this widget tooltip
+	 * Deprecated: Since 2.12 use setTooltipText() or setTooltipMarkup()
 	 * Params:
 	 *  tipText = the tooltip
 	 *  tipPrivate = a private text
@@ -125,13 +143,27 @@ public class ToolItem : Bin
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(ToolItem)[] onCreateMenuProxyListeners;
+	/**
+	 * This signal is emitted when the toolbar needs information from tool_item
+	 * about whether the item should appear in the toolbar overflow menu. In
+	 * response the tool item should either
+	 * call gtk_tool_item_set_proxy_menu_item() with a NULL
+	 * pointer and return TRUE to indicate that the item should not appear
+	 * in the overflow menu
+	 *  call gtk_tool_item_set_proxy_menu_item() with a new menu
+	 * item and return TRUE, or
+	 *  return FALSE to indicate that the signal was not
+	 * handled by the item. This means that
+	 * the item will not appear in the overflow menu unless a later handler
+	 * installs a menu item.
+	 * The toolbar may cache the result of this signal. When the tool item changes
+	 * how it will respond to this signal it must call gtk_tool_item_rebuild_menu()
+	 * to invalidate the cache and ensure that the toolbar rebuilds its overflow
+	 * menu.
+	 */
 	void addOnCreateMenuProxy(gboolean delegate(ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("create-menu-proxy" in connectedSignals) )
@@ -160,6 +192,11 @@ public class ToolItem : Bin
 	}
 	
 	gboolean delegate(Tooltips, char[], char[], ToolItem)[] onSetTooltipListeners;
+	/**
+	 * This signal is emitted when the toolitem's tooltip changes.
+	 * Application developers can use gtk_tool_item_set_tooltip() to
+	 * set the item's tooltip.
+	 */
 	void addOnSetTooltip(gboolean delegate(Tooltips, char[], char[], ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-tooltip" in connectedSignals) )
@@ -188,6 +225,26 @@ public class ToolItem : Bin
 	}
 	
 	void delegate(ToolItem)[] onToolbarReconfiguredListeners;
+	/**
+	 * This signal is emitted when some property of the toolbar that the
+	 * item is a child of changes. For custom subclasses of GtkToolItem,
+	 * the default handler of this signal use the functions
+	 * gtk_toolbar_get_orientation()
+	 * gtk_toolbar_get_style()
+	 * gtk_toolbar_get_icon_size()
+	 * gtk_toolbar_get_relief_style()
+	 * to find out what the toolbar should look like and change
+	 * themselves accordingly.
+	 * See Also
+	 * GtkToolbar
+	 * The toolbar widget
+	 * GtkToolButton
+	 * A subclass of GtkToolItem that displays buttons on
+	 *  the toolbar
+	 * GtkSeparatorToolItem
+	 * A subclass of GtkToolItem that separates groups of
+	 *  items on a toolbar
+	 */
 	void addOnToolbarReconfigured(void delegate(ToolItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toolbar-reconfigured" in connectedSignals) )
@@ -216,7 +273,6 @@ public class ToolItem : Bin
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkToolItem
 	 * Since 2.4
@@ -224,7 +280,14 @@ public class ToolItem : Bin
 	public this ()
 	{
 		// GtkToolItem* gtk_tool_item_new (void);
-		this(cast(GtkToolItem*)gtk_tool_item_new() );
+		auto p = gtk_tool_item_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkToolItem*) p);
 	}
 	
 	/**
@@ -495,7 +558,13 @@ public class ToolItem : Bin
 	public Widget retrieveProxyMenuItem()
 	{
 		// GtkWidget* gtk_tool_item_retrieve_proxy_menu_item  (GtkToolItem *tool_item);
-		return new Widget( gtk_tool_item_retrieve_proxy_menu_item(gtkToolItem) );
+		auto p = gtk_tool_item_retrieve_proxy_menu_item(gtkToolItem);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -513,7 +582,13 @@ public class ToolItem : Bin
 	public Widget getProxyMenuItem(char[] menuItemId)
 	{
 		// GtkWidget* gtk_tool_item_get_proxy_menu_item (GtkToolItem *tool_item,  const gchar *menu_item_id);
-		return new Widget( gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId)) );
+		auto p = gtk_tool_item_get_proxy_menu_item(gtkToolItem, Str.toStringz(menuItemId));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -546,8 +621,4 @@ public class ToolItem : Bin
 		// void gtk_tool_item_rebuild_menu (GtkToolItem *tool_item);
 		gtk_tool_item_rebuild_menu(gtkToolItem);
 	}
-	
-	
-	
-	
 }

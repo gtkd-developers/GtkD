@@ -30,19 +30,27 @@
  * ctorStrct=
  * clss    = Box
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_box_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Widget
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -51,12 +59,18 @@
 
 module gtk.Box;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import gtk.Widget;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -102,7 +116,7 @@ private import gtk.Container;
  * "fill" and "padding" child properties.
  * Use gtk_box_query_child_packing() to query these fields.
  */
-public class Box : Container
+public class Box : Container, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -136,10 +150,11 @@ public class Box : Container
 		this.gtkBox = gtkBox;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkBox);
+	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Adds child to box, packed with reference to the start of box.
@@ -323,9 +338,4 @@ public class Box : Container
 		// void gtk_box_set_child_packing (GtkBox *box,  GtkWidget *child,  gboolean expand,  gboolean fill,  guint padding,  GtkPackType pack_type);
 		gtk_box_set_child_packing(gtkBox, (child is null) ? null : child.getWidgetStruct(), expand, fill, padding, packType);
 	}
-	
-	
-	
-	
-	
 }

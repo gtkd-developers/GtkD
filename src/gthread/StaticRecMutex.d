@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module gthread.StaticRecMutex;
 
-private import gtkc.gthreadtypes;
+public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
 
@@ -126,47 +127,6 @@ public class StaticRecMutex
 	
 	/**
 	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * A GStaticRecMutex must be initialized with this function before it
@@ -256,37 +216,4 @@ public class StaticRecMutex
 		// void g_static_rec_mutex_free (GStaticRecMutex *mutex);
 		g_static_rec_mutex_free(gStaticRecMutex);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

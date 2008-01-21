@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -50,7 +51,7 @@
 
 module gtk.FileFilter;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -114,10 +115,6 @@ public class FileFilter : ObjectGtk
 	/**
 	 */
 	
-	
-	
-	
-	
 	/**
 	 * Creates a new GtkFileFilter with no rules added to it.
 	 * Such a filter doesn't accept any files, so is not
@@ -129,7 +126,14 @@ public class FileFilter : ObjectGtk
 	public this ()
 	{
 		// GtkFileFilter* gtk_file_filter_new (void);
-		this(cast(GtkFileFilter*)gtk_file_filter_new() );
+		auto p = gtk_file_filter_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFileFilter*) p);
 	}
 	
 	/**
@@ -155,7 +159,7 @@ public class FileFilter : ObjectGtk
 	public char[] getName()
 	{
 		// const gchar* gtk_file_filter_get_name (GtkFileFilter *filter);
-		return Str.toString(gtk_file_filter_get_name(gtkFileFilter) );
+		return Str.toString(gtk_file_filter_get_name(gtkFileFilter)).dup;
 	}
 	
 	/**

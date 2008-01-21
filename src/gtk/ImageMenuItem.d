@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_image_menu_item_
  * 	- gtk_
@@ -43,10 +44,16 @@
  * omit code:
  * 	- gtk_image_menu_item_new_with_label
  * 	- gtk_image_menu_item_new_with_mnemonic
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.AccelGroup
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAccelGroup* -> AccelGroup
  * 	- GtkWidget* -> Widget
@@ -56,7 +63,7 @@
 
 module gtk.ImageMenuItem;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -64,6 +71,11 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.AccelGroup;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -75,7 +87,7 @@ private import gtk.MenuItem;
  * Note that the user can disable display of menu icons, so make sure to still
  * fill in the text label.
  */
-public class ImageMenuItem : MenuItem
+public class ImageMenuItem : MenuItem, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -109,6 +121,9 @@ public class ImageMenuItem : MenuItem
 		this.gtkImageMenuItem = gtkImageMenuItem;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkImageMenuItem);
+	
 	/**
 	 * Creates a new GtkImageMenuItem containing a label.
 	 * If mnemonic it true the label
@@ -136,7 +151,6 @@ public class ImageMenuItem : MenuItem
 	/**
 	 */
 	
-	
 	/**
 	 * Sets the image of image_menu_item to the given widget.
 	 * Note that it depends on the show-menu-images setting whether
@@ -158,7 +172,13 @@ public class ImageMenuItem : MenuItem
 	public Widget getImage()
 	{
 		// GtkWidget* gtk_image_menu_item_get_image (GtkImageMenuItem *image_menu_item);
-		return new Widget( gtk_image_menu_item_get_image(gtkImageMenuItem) );
+		auto p = gtk_image_menu_item_get_image(gtkImageMenuItem);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -167,7 +187,14 @@ public class ImageMenuItem : MenuItem
 	public this ()
 	{
 		// GtkWidget* gtk_image_menu_item_new (void);
-		this(cast(GtkImageMenuItem*)gtk_image_menu_item_new() );
+		auto p = gtk_image_menu_item_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkImageMenuItem*) p);
 	}
 	
 	/**
@@ -187,8 +214,13 @@ public class ImageMenuItem : MenuItem
 	public this (char[] stockId, AccelGroup accelGroup)
 	{
 		// GtkWidget* gtk_image_menu_item_new_from_stock (const gchar *stock_id,  GtkAccelGroup *accel_group);
-		this(cast(GtkImageMenuItem*)gtk_image_menu_item_new_from_stock(Str.toStringz(stockId), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct()) );
+		auto p = gtk_image_menu_item_new_from_stock(Str.toStringz(stockId), (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkImageMenuItem*) p);
 	}
-	
-	
 }

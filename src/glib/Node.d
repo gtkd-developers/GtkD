@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.BBTree
  * structWrap:
@@ -51,7 +52,7 @@
 
 module glib.Node;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -120,7 +121,6 @@ public class Node
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GNode containing the given data.
 	 * Used to create the first node in a tree.
@@ -130,7 +130,14 @@ public class Node
 	public this (void* data)
 	{
 		// GNode* g_node_new (gpointer data);
-		this(cast(GNode*)g_node_new(data) );
+		auto p = g_node_new(data);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GNode*) p);
 	}
 	
 	/**
@@ -141,9 +148,14 @@ public class Node
 	public Node copy()
 	{
 		// GNode* g_node_copy (GNode *node);
-		return new Node( g_node_copy(gNode) );
+		auto p = g_node_copy(gNode);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
-	
 	
 	/**
 	 * Recursively copies a GNode and its data.
@@ -157,7 +169,13 @@ public class Node
 	public Node copyDeep(GCopyFunc copyFunc, void* data)
 	{
 		// GNode* g_node_copy_deep (GNode *node,  GCopyFunc copy_func,  gpointer data);
-		return new Node( g_node_copy_deep(gNode, copyFunc, data) );
+		auto p = g_node_copy_deep(gNode, copyFunc, data);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
 	
 	/**
@@ -171,7 +189,13 @@ public class Node
 	public Node insert(int position, Node node)
 	{
 		// GNode* g_node_insert (GNode *parent,  gint position,  GNode *node);
-		return new Node( g_node_insert(gNode, position, (node is null) ? null : node.getNodeStruct()) );
+		auto p = g_node_insert(gNode, position, (node is null) ? null : node.getNodeStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
 	
 	/**
@@ -185,7 +209,13 @@ public class Node
 	public Node insertBefore(Node sibling, Node node)
 	{
 		// GNode* g_node_insert_before (GNode *parent,  GNode *sibling,  GNode *node);
-		return new Node( g_node_insert_before(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct()) );
+		auto p = g_node_insert_before(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
 	
 	/**
@@ -199,9 +229,14 @@ public class Node
 	public Node insertAfter(Node sibling, Node node)
 	{
 		// GNode* g_node_insert_after (GNode *parent,  GNode *sibling,  GNode *node);
-		return new Node( g_node_insert_after(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct()) );
+		auto p = g_node_insert_after(gNode, (sibling is null) ? null : sibling.getNodeStruct(), (node is null) ? null : node.getNodeStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
-	
 	
 	/**
 	 * Inserts a GNode as the first child of the given parent.
@@ -212,12 +247,14 @@ public class Node
 	public Node prepend(Node node)
 	{
 		// GNode* g_node_prepend (GNode *parent,  GNode *node);
-		return new Node( g_node_prepend(gNode, (node is null) ? null : node.getNodeStruct()) );
+		auto p = g_node_prepend(gNode, (node is null) ? null : node.getNodeStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
-	
-	
-	
-	
 	
 	/**
 	 * Reverses the order of the children of a GNode.
@@ -251,8 +288,6 @@ public class Node
 		g_node_traverse(gNode, order, flags, maxDepth, func, data);
 	}
 	
-	
-	
 	/**
 	 * Calls a function for each of the children of a GNode.
 	 * Note that it doesn't descend beneath the child nodes.
@@ -268,7 +303,6 @@ public class Node
 		g_node_children_foreach(gNode, flags, func, data);
 	}
 	
-	
 	/**
 	 * Gets the root of a tree.
 	 * Returns:the root of the tree.
@@ -276,7 +310,13 @@ public class Node
 	public Node getRoot()
 	{
 		// GNode* g_node_get_root (GNode *node);
-		return new Node( g_node_get_root(gNode) );
+		auto p = g_node_get_root(gNode);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
 	
 	/**
@@ -292,7 +332,13 @@ public class Node
 	public Node find(GTraverseType order, GTraverseFlags flags, void* data)
 	{
 		// GNode* g_node_find (GNode *root,  GTraverseType order,  GTraverseFlags flags,  gpointer data);
-		return new Node( g_node_find(gNode, order, flags, data) );
+		auto p = g_node_find(gNode, order, flags, data);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
 	
 	/**
@@ -306,7 +352,13 @@ public class Node
 	public Node findChild(GTraverseFlags flags, void* data)
 	{
 		// GNode* g_node_find_child (GNode *node,  GTraverseFlags flags,  gpointer data);
-		return new Node( g_node_find_child(gNode, flags, data) );
+		auto p = g_node_find_child(gNode, flags, data);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
 	
 	/**
@@ -335,7 +387,6 @@ public class Node
 		return g_node_child_position(gNode, (child is null) ? null : child.getNodeStruct());
 	}
 	
-	
 	/**
 	 * Gets the last child of a GNode.
 	 * Returns:the last child of node, or NULL if node has no children.
@@ -343,7 +394,13 @@ public class Node
 	public Node lastChild()
 	{
 		// GNode* g_node_last_child (GNode *node);
-		return new Node( g_node_last_child(gNode) );
+		auto p = g_node_last_child(gNode);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
 	
 	/**
@@ -356,7 +413,13 @@ public class Node
 	public Node nthChild(uint n)
 	{
 		// GNode* g_node_nth_child (GNode *node,  guint n);
-		return new Node( g_node_nth_child(gNode, n) );
+		auto p = g_node_nth_child(gNode, n);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
 	
 	/**
@@ -367,10 +430,14 @@ public class Node
 	public Node firstSibling()
 	{
 		// GNode* g_node_first_sibling (GNode *node);
-		return new Node( g_node_first_sibling(gNode) );
+		auto p = g_node_first_sibling(gNode);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
-	
-	
 	
 	/**
 	 * Gets the last sibling of a GNode.
@@ -380,10 +447,14 @@ public class Node
 	public Node lastSibling()
 	{
 		// GNode* g_node_last_sibling (GNode *node);
-		return new Node( g_node_last_sibling(gNode) );
+		auto p = g_node_last_sibling(gNode);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Node(cast(GNode*) p);
 	}
-	
-	
 	
 	/**
 	 * Gets the depth of a GNode.

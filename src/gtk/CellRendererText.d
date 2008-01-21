@@ -25,9 +25,9 @@
  * inFile  = GtkCellRendererText.html
  * outPack = gtk
  * outFile = CellRendererText
- * strct   = GtkCellRenderer
- * realStrct=GtkCellRendererText
- * ctorStrct=
+ * strct   = GtkCellRendererText
+ * realStrct=
+ * ctorStrct=GtkCellRenderer
  * clss    = CellRendererText
  * interf  = 
  * class Code: No
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.CellRenderer
@@ -52,10 +53,12 @@
 
 module gtk.CellRendererText;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.CellRenderer;
@@ -109,13 +112,14 @@ public class CellRendererText : CellRenderer
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], char[], CellRendererText)[] onEditedListeners;
+	/**
+	 * This signal is emitted after renderer has been edited.
+	 * It is the responsibility of the application to update the model
+	 * and store new_text at the position indicated by path.
+	 */
 	void addOnEdited(void delegate(char[], char[], CellRendererText) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("edited" in connectedSignals) )
@@ -144,7 +148,6 @@ public class CellRendererText : CellRenderer
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkCellRendererText. Adjust how text is drawn using
 	 * object properties. Object properties can be
@@ -157,7 +160,14 @@ public class CellRendererText : CellRenderer
 	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_text_new (void);
-		this(cast(GtkCellRendererText*)gtk_cell_renderer_text_new() );
+		auto p = gtk_cell_renderer_text_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCellRendererText*) p);
 	}
 	
 	/**
@@ -169,55 +179,11 @@ public class CellRendererText : CellRenderer
 	 * displayed). If number_of_rows is -1, then the fixed height is unset, and
 	 * the height is determined by the properties again.
 	 * Params:
-	 * renderer =  A GtkCellRendererText
 	 * numberOfRows =  Number of rows of text each cell renderer is allocated, or -1
 	 */
-	public static void setFixedHeightFromFont(GtkCellRendererText* renderer, int numberOfRows)
+	public void setFixedHeightFromFont(int numberOfRows)
 	{
 		// void gtk_cell_renderer_text_set_fixed_height_from_font  (GtkCellRendererText *renderer,  gint number_of_rows);
-		gtk_cell_renderer_text_set_fixed_height_from_font(renderer, numberOfRows);
+		gtk_cell_renderer_text_set_fixed_height_from_font(gtkCellRendererText, numberOfRows);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

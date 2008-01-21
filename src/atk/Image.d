@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module atk.Image;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -108,7 +109,6 @@ public class Image
 	/**
 	 */
 	
-	
 	/**
 	 * Gets the position of the image in the form of a point specifying the
 	 * images top-left corner.
@@ -131,7 +131,7 @@ public class Image
 	public char[] getImageDescription()
 	{
 		// const gchar* atk_image_get_image_description (AtkImage *image);
-		return Str.toString(atk_image_get_image_description(atkImage) );
+		return Str.toString(atk_image_get_image_description(atkImage)).dup;
 	}
 	
 	/**
@@ -167,6 +167,6 @@ public class Image
 	public char[] getImageLocale()
 	{
 		// const gchar* atk_image_get_image_locale (AtkImage *image);
-		return Str.toString(atk_image_get_image_locale(atkImage) );
+		return Str.toString(atk_image_get_image_locale(atkImage)).dup;
 	}
 }

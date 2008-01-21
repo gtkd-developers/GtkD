@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gobject.ObjectG
  * structWrap:
@@ -50,7 +51,7 @@
 
 module atk.GObjectAccessible;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -105,7 +106,6 @@ public class GObjectAccessible : ObjectAtk
 	/**
 	 */
 	
-	
 	/**
 	 * Gets the accessible object for the specified obj.
 	 * Params:
@@ -125,6 +125,12 @@ public class GObjectAccessible : ObjectAtk
 	public ObjectG _GetObject()
 	{
 		// GObject* atk_gobject_accessible_get_object (AtkGObjectAccessible *obj);
-		return new ObjectG( atk_gobject_accessible_get_object(atkGObjectAccessible) );
+		auto p = atk_gobject_accessible_get_object(atkGObjectAccessible);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectG(cast(GObject*) p);
 	}
 }

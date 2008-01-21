@@ -30,19 +30,26 @@
  * ctorStrct=
  * clss    = FileSelection
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_file_selection_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -50,12 +57,17 @@
 
 module gtk.FileSelection;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -106,7 +118,7 @@ private import gtk.Dialog;
 	 *  gtk_widget_show (file_selector);
  * }
  */
-public class FileSelection : Dialog
+public class FileSelection : Dialog, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -140,9 +152,11 @@ public class FileSelection : Dialog
 		this.gtkFileSelection = gtkFileSelection;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkFileSelection);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Warning
@@ -154,7 +168,14 @@ public class FileSelection : Dialog
 	public this (char[] title)
 	{
 		// GtkWidget* gtk_file_selection_new (const gchar *title);
-		this(cast(GtkFileSelection*)gtk_file_selection_new(Str.toStringz(title)) );
+		auto p = gtk_file_selection_new(Str.toStringz(title));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFileSelection*) p);
 	}
 	
 	/**
@@ -190,7 +211,7 @@ public class FileSelection : Dialog
 	public char[] getFilename()
 	{
 		// const gchar* gtk_file_selection_get_filename (GtkFileSelection *filesel);
-		return Str.toString(gtk_file_selection_get_filename(gtkFileSelection) );
+		return Str.toString(gtk_file_selection_get_filename(gtkFileSelection)).dup;
 	}
 	
 	/**
@@ -274,6 +295,4 @@ public class FileSelection : Dialog
 		// gboolean gtk_file_selection_get_select_multiple  (GtkFileSelection *filesel);
 		return gtk_file_selection_get_select_multiple(gtkFileSelection);
 	}
-	
-	
 }

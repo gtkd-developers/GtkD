@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_label_
  * 	- gtk_
@@ -43,9 +44,15 @@
  * omit code:
  * 	- gtk_label_new
  * 	- gtk_label_new_with_mnemonic
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -54,13 +61,20 @@
 
 module gtk.Label;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -138,7 +152,7 @@ private import gtk.Misc;
  * with one another. If you want to set how the label as a whole
  * aligns in its available space, see gtk_misc_set_alignment().
  */
-public class Label : Misc
+public class Label : Misc, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -171,6 +185,9 @@ public class Label : Misc
 		super(cast(GtkMisc*)gtkLabel);
 		this.gtkLabel = gtkLabel;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkLabel);
 	
 	/**
 	 * Creates a new GtkLabel, containing the text in str.
@@ -207,13 +224,11 @@ public class Label : Misc
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Label)[] onCopyClipboardListeners;
+	/**
+	 */
 	void addOnCopyClipboard(void delegate(Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("copy-clipboard" in connectedSignals) )
@@ -242,6 +257,8 @@ public class Label : Misc
 	}
 	
 	void delegate(GtkMovementStep, gint, gboolean, Label)[] onMoveCursorListeners;
+	/**
+	 */
 	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
@@ -270,6 +287,8 @@ public class Label : Misc
 	}
 	
 	void delegate(GtkMenu*, Label)[] onPopulatePopupListeners;
+	/**
+	 */
 	void addOnPopulatePopup(void delegate(GtkMenu*, Label) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("populate-popup" in connectedSignals) )
@@ -296,8 +315,6 @@ public class Label : Misc
 		
 		return consumed;
 	}
-	
-	
 	
 	
 	/**
@@ -488,7 +505,6 @@ public class Label : Misc
 		gtk_label_set_line_wrap_mode(gtkLabel, wrapMode);
 	}
 	
-	
 	/**
 	 * Obtains the coordinates where the label will draw the PangoLayout
 	 * representing the text in the label; useful to convert mouse events
@@ -539,9 +555,8 @@ public class Label : Misc
 	public char[] getText()
 	{
 		// const gchar* gtk_label_get_text (GtkLabel *label);
-		return Str.toString(gtk_label_get_text(gtkLabel) );
+		return Str.toString(gtk_label_get_text(gtkLabel)).dup;
 	}
-	
 	
 	/**
 	 * Selects a range of characters in the label, if the label is selectable.
@@ -677,7 +692,7 @@ public class Label : Misc
 	public char[] getLabel()
 	{
 		// const gchar* gtk_label_get_label (GtkLabel *label);
-		return Str.toString(gtk_label_get_label(gtkLabel) );
+		return Str.toString(gtk_label_get_label(gtkLabel)).dup;
 	}
 	
 	/**
@@ -724,7 +739,13 @@ public class Label : Misc
 	public Widget getMnemonicWidget()
 	{
 		// GtkWidget* gtk_label_get_mnemonic_widget (GtkLabel *label);
-		return new Widget( gtk_label_get_mnemonic_widget(gtkLabel) );
+		auto p = gtk_label_get_mnemonic_widget(gtkLabel);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -852,23 +873,4 @@ public class Label : Misc
 		// void gtk_label_set_angle (GtkLabel *label,  gdouble angle);
 		gtk_label_set_angle(gtkLabel, angle);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

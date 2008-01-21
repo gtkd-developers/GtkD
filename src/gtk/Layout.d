@@ -30,20 +30,28 @@
  * ctorStrct=
  * clss    = Layout
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_layout_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Adjustment
  * 	- gtk.Widget
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkWidget* -> Widget
@@ -53,13 +61,21 @@
 
 module gtk.Layout;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gtk.Adjustment;
 private import gtk.Widget;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -78,7 +94,7 @@ private import gtk.Container;
  * GTK_WIDGET (layout)->window, as you would for a drawing
  * area.
  */
-public class Layout : Container
+public class Layout : Container, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -112,15 +128,18 @@ public class Layout : Container
 		this.gtkLayout = gtkLayout;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkLayout);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Adjustment, Adjustment, Layout)[] onSetScrollAdjustmentsListeners;
+	/**
+	 * See Also
+	 * GtkDrawingArea, GtkScrolledWindow
+	 */
 	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, Layout) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
@@ -149,7 +168,6 @@ public class Layout : Container
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkLayout. Unless you have a specific adjustment
 	 * you'd like the layout to use for scrolling, pass NULL for
@@ -161,7 +179,14 @@ public class Layout : Container
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
 		// GtkWidget* gtk_layout_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
-		this(cast(GtkLayout*)gtk_layout_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct()) );
+		auto p = gtk_layout_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkLayout*) p);
 	}
 	
 	/**
@@ -250,7 +275,13 @@ public class Layout : Container
 	public Adjustment getHadjustment()
 	{
 		// GtkAdjustment* gtk_layout_get_hadjustment (GtkLayout *layout);
-		return new Adjustment( gtk_layout_get_hadjustment(gtkLayout) );
+		auto p = gtk_layout_get_hadjustment(gtkLayout);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -264,7 +295,13 @@ public class Layout : Container
 	public Adjustment getVadjustment()
 	{
 		// GtkAdjustment* gtk_layout_get_vadjustment (GtkLayout *layout);
-		return new Adjustment( gtk_layout_get_vadjustment(gtkLayout) );
+		auto p = gtk_layout_get_vadjustment(gtkLayout);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -290,8 +327,4 @@ public class Layout : Container
 		// void gtk_layout_set_vadjustment (GtkLayout *layout,  GtkAdjustment *adjustment);
 		gtk_layout_set_vadjustment(gtkLayout, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
-	
-	
-	
-	
 }

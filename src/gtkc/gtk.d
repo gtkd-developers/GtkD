@@ -254,26 +254,6 @@ extern(C)
 	
 	GtkIconSource* function(GtkIconSource* source)gtk_icon_source_copy;
 	void function(GtkIconSource* source)gtk_icon_source_free;
-	void function(GtkIconFactory* factory, gchar* stockId, GtkIconSet* iconSet)gtk_icon_factory_add;
-	void function(GtkIconFactory* factory)gtk_icon_factory_add_default;
-	GtkIconSet* function(GtkIconFactory* factory, gchar* stockId)gtk_icon_factory_lookup;
-	GtkIconSet* function(gchar* stockId)gtk_icon_factory_lookup_default;
-	GtkIconFactory* function()gtk_icon_factory_new;
-	void function(GtkIconFactory* factory)gtk_icon_factory_remove_default;
-	void function(GtkIconSet* iconSet, GtkIconSource* source)gtk_icon_set_add_source;
-	GtkIconSet* function(GtkIconSet* iconSet)gtk_icon_set_copy;
-	GtkIconSet* function()gtk_icon_set_new;
-	GtkIconSet* function(GdkPixbuf* pixbuf)gtk_icon_set_new_from_pixbuf;
-	GtkIconSet* function(GtkIconSet* iconSet)gtk_icon_set_ref;
-	GdkPixbuf* function(GtkIconSet* iconSet, GtkStyle* style, GtkTextDirection direction, GtkStateType state, GtkIconSize size, GtkWidget* widget, char* detail)gtk_icon_set_render_icon;
-	void function(GtkIconSet* iconSet)gtk_icon_set_unref;
-	gboolean function(GtkIconSize size, gint* width, gint* height)gtk_icon_size_lookup;
-	gboolean function(GtkSettings* settings, GtkIconSize size, gint* width, gint* height)gtk_icon_size_lookup_for_settings;
-	GtkIconSize function(gchar* name, gint width, gint height)gtk_icon_size_register;
-	void function(gchar* alia, GtkIconSize target)gtk_icon_size_register_alias;
-	GtkIconSize function(gchar* name)gtk_icon_size_from_name;
-	gchar* function(GtkIconSize size)gtk_icon_size_get_name;
-	void function(GtkIconSet* iconSet, GtkIconSize** sizes, gint* nSizes)gtk_icon_set_get_sizes;
 	GtkTextDirection function(GtkIconSource* source)gtk_icon_source_get_direction;
 	gboolean function(GtkIconSource* source)gtk_icon_source_get_direction_wildcarded;
 	gchar* function(GtkIconSource* source)gtk_icon_source_get_filename;
@@ -293,6 +273,35 @@ extern(C)
 	void function(GtkIconSource* source, gboolean setting)gtk_icon_source_set_size_wildcarded;
 	void function(GtkIconSource* source, GtkStateType state)gtk_icon_source_set_state;
 	void function(GtkIconSource* source, gboolean setting)gtk_icon_source_set_state_wildcarded;
+	
+	// gtk.IconFactory
+	
+	void function(GtkIconFactory* factory, gchar* stockId, GtkIconSet* iconSet)gtk_icon_factory_add;
+	void function(GtkIconFactory* factory)gtk_icon_factory_add_default;
+	GtkIconSet* function(GtkIconFactory* factory, gchar* stockId)gtk_icon_factory_lookup;
+	GtkIconSet* function(gchar* stockId)gtk_icon_factory_lookup_default;
+	GtkIconFactory* function()gtk_icon_factory_new;
+	void function(GtkIconFactory* factory)gtk_icon_factory_remove_default;
+	
+	// gtk.IconSet
+	
+	void function(GtkIconSet* iconSet, GtkIconSource* source)gtk_icon_set_add_source;
+	GtkIconSet* function(GtkIconSet* iconSet)gtk_icon_set_copy;
+	GtkIconSet* function()gtk_icon_set_new;
+	GtkIconSet* function(GdkPixbuf* pixbuf)gtk_icon_set_new_from_pixbuf;
+	GtkIconSet* function(GtkIconSet* iconSet)gtk_icon_set_ref;
+	GdkPixbuf* function(GtkIconSet* iconSet, GtkStyle* style, GtkTextDirection direction, GtkStateType state, GtkIconSize size, GtkWidget* widget, char* detail)gtk_icon_set_render_icon;
+	void function(GtkIconSet* iconSet)gtk_icon_set_unref;
+	void function(GtkIconSet* iconSet, GtkIconSize** sizes, gint* nSizes)gtk_icon_set_get_sizes;
+	
+	// gtk.IconSize
+	
+	gboolean function(GtkIconSize size, gint* width, gint* height)gtk_icon_size_lookup;
+	gboolean function(GtkSettings* settings, GtkIconSize size, gint* width, gint* height)gtk_icon_size_lookup_for_settings;
+	GtkIconSize function(gchar* name, gint width, gint height)gtk_icon_size_register;
+	void function(gchar* alia, GtkIconSize target)gtk_icon_size_register_alias;
+	GtkIconSize function(gchar* name)gtk_icon_size_from_name;
+	gchar* function(GtkIconSize size)gtk_icon_size_get_name;
 	
 	// gtk.RcStyle
 	
@@ -3583,26 +3592,6 @@ Symbol[] gtkLinks =
 	{ "gtk_stock_set_translate_func",  cast(void**)& gtk_stock_set_translate_func},
 	{ "gtk_icon_source_copy",  cast(void**)& gtk_icon_source_copy},
 	{ "gtk_icon_source_free",  cast(void**)& gtk_icon_source_free},
-	{ "gtk_icon_factory_add",  cast(void**)& gtk_icon_factory_add},
-	{ "gtk_icon_factory_add_default",  cast(void**)& gtk_icon_factory_add_default},
-	{ "gtk_icon_factory_lookup",  cast(void**)& gtk_icon_factory_lookup},
-	{ "gtk_icon_factory_lookup_default",  cast(void**)& gtk_icon_factory_lookup_default},
-	{ "gtk_icon_factory_new",  cast(void**)& gtk_icon_factory_new},
-	{ "gtk_icon_factory_remove_default",  cast(void**)& gtk_icon_factory_remove_default},
-	{ "gtk_icon_set_add_source",  cast(void**)& gtk_icon_set_add_source},
-	{ "gtk_icon_set_copy",  cast(void**)& gtk_icon_set_copy},
-	{ "gtk_icon_set_new",  cast(void**)& gtk_icon_set_new},
-	{ "gtk_icon_set_new_from_pixbuf",  cast(void**)& gtk_icon_set_new_from_pixbuf},
-	{ "gtk_icon_set_ref",  cast(void**)& gtk_icon_set_ref},
-	{ "gtk_icon_set_render_icon",  cast(void**)& gtk_icon_set_render_icon},
-	{ "gtk_icon_set_unref",  cast(void**)& gtk_icon_set_unref},
-	{ "gtk_icon_size_lookup",  cast(void**)& gtk_icon_size_lookup},
-	{ "gtk_icon_size_lookup_for_settings",  cast(void**)& gtk_icon_size_lookup_for_settings},
-	{ "gtk_icon_size_register",  cast(void**)& gtk_icon_size_register},
-	{ "gtk_icon_size_register_alias",  cast(void**)& gtk_icon_size_register_alias},
-	{ "gtk_icon_size_from_name",  cast(void**)& gtk_icon_size_from_name},
-	{ "gtk_icon_size_get_name",  cast(void**)& gtk_icon_size_get_name},
-	{ "gtk_icon_set_get_sizes",  cast(void**)& gtk_icon_set_get_sizes},
 	{ "gtk_icon_source_get_direction",  cast(void**)& gtk_icon_source_get_direction},
 	{ "gtk_icon_source_get_direction_wildcarded",  cast(void**)& gtk_icon_source_get_direction_wildcarded},
 	{ "gtk_icon_source_get_filename",  cast(void**)& gtk_icon_source_get_filename},
@@ -3622,6 +3611,26 @@ Symbol[] gtkLinks =
 	{ "gtk_icon_source_set_size_wildcarded",  cast(void**)& gtk_icon_source_set_size_wildcarded},
 	{ "gtk_icon_source_set_state",  cast(void**)& gtk_icon_source_set_state},
 	{ "gtk_icon_source_set_state_wildcarded",  cast(void**)& gtk_icon_source_set_state_wildcarded},
+	{ "gtk_icon_factory_add",  cast(void**)& gtk_icon_factory_add},
+	{ "gtk_icon_factory_add_default",  cast(void**)& gtk_icon_factory_add_default},
+	{ "gtk_icon_factory_lookup",  cast(void**)& gtk_icon_factory_lookup},
+	{ "gtk_icon_factory_lookup_default",  cast(void**)& gtk_icon_factory_lookup_default},
+	{ "gtk_icon_factory_new",  cast(void**)& gtk_icon_factory_new},
+	{ "gtk_icon_factory_remove_default",  cast(void**)& gtk_icon_factory_remove_default},
+	{ "gtk_icon_set_add_source",  cast(void**)& gtk_icon_set_add_source},
+	{ "gtk_icon_set_copy",  cast(void**)& gtk_icon_set_copy},
+	{ "gtk_icon_set_new",  cast(void**)& gtk_icon_set_new},
+	{ "gtk_icon_set_new_from_pixbuf",  cast(void**)& gtk_icon_set_new_from_pixbuf},
+	{ "gtk_icon_set_ref",  cast(void**)& gtk_icon_set_ref},
+	{ "gtk_icon_set_render_icon",  cast(void**)& gtk_icon_set_render_icon},
+	{ "gtk_icon_set_unref",  cast(void**)& gtk_icon_set_unref},
+	{ "gtk_icon_set_get_sizes",  cast(void**)& gtk_icon_set_get_sizes},
+	{ "gtk_icon_size_lookup",  cast(void**)& gtk_icon_size_lookup},
+	{ "gtk_icon_size_lookup_for_settings",  cast(void**)& gtk_icon_size_lookup_for_settings},
+	{ "gtk_icon_size_register",  cast(void**)& gtk_icon_size_register},
+	{ "gtk_icon_size_register_alias",  cast(void**)& gtk_icon_size_register_alias},
+	{ "gtk_icon_size_from_name",  cast(void**)& gtk_icon_size_from_name},
+	{ "gtk_icon_size_get_name",  cast(void**)& gtk_icon_size_get_name},
 	{ "gtk_rc_scanner_new",  cast(void**)& gtk_rc_scanner_new},
 	{ "gtk_rc_get_style",  cast(void**)& gtk_rc_get_style},
 	{ "gtk_rc_get_style_by_paths",  cast(void**)& gtk_rc_get_style_by_paths},

@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_image_
  * 	- gtk_
@@ -43,33 +44,47 @@
  * omit code:
  * 	- gtk_image_new_from_stock
  * 	- gtk_image_new_from_icon_name
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Pixbuf
+ * 	- gtk.IconSet
  * 	- gdk.ImageGdk
  * 	- gdk.Bitmap
  * 	- gdk.Pixmap
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkImage* -> ImageGdk
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixmap* -> Pixmap
+ * 	- GtkIconSet* -> IconSet
  * module aliases:
  * local aliases:
  */
 
 module gtk.Image;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gdk.Pixbuf;
+private import gtk.IconSet;
 private import gdk.ImageGdk;
 private import gdk.Bitmap;
 private import gdk.Pixmap;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -142,7 +157,7 @@ private import gtk.Misc;
  * can then be loaded into a GdkPixbuf using
  * gdk_pixbuf_new_from_inline().
  */
-public class Image : Misc
+public class Image : Misc, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -175,6 +190,9 @@ public class Image : Misc
 		super(cast(GtkMisc*)gtkImage);
 		this.gtkImage = gtkImage;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkImage);
 	
 	// this will be an enum
 	/**
@@ -217,8 +235,6 @@ public class Image : Misc
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Gets the icon set and size being displayed by the GtkImage.
 	 * The storage type of the image must be GTK_IMAGE_EMPTY or
@@ -260,7 +276,13 @@ public class Image : Misc
 	public Pixbuf getPixbuf()
 	{
 		// GdkPixbuf* gtk_image_get_pixbuf (GtkImage *image);
-		return new Pixbuf( gtk_image_get_pixbuf(gtkImage) );
+		auto p = gtk_image_get_pixbuf(gtkImage);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -358,7 +380,14 @@ public class Image : Misc
 	public this (char[] filename)
 	{
 		// GtkWidget* gtk_image_new_from_file (const gchar *filename);
-		this(cast(GtkImage*)gtk_image_new_from_file(Str.toStringz(filename)) );
+		auto p = gtk_image_new_from_file(Str.toStringz(filename));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkImage*) p);
 	}
 	
 	/**
@@ -376,10 +405,17 @@ public class Image : Misc
 	 * iconSet =  a GtkIconSet
 	 * size =  a stock icon size
 	 */
-	public this (GtkIconSet* iconSet, GtkIconSize size)
+	public this (IconSet iconSet, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_icon_set (GtkIconSet *icon_set,  GtkIconSize size);
-		this(cast(GtkImage*)gtk_image_new_from_icon_set(iconSet, size) );
+		auto p = gtk_image_new_from_icon_set((iconSet is null) ? null : iconSet.getIconSetStruct(), size);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkImage*) p);
 	}
 	
 	/**
@@ -395,7 +431,14 @@ public class Image : Misc
 	public this (ImageGdk image, Bitmap mask)
 	{
 		// GtkWidget* gtk_image_new_from_image (GdkImage *image,  GdkBitmap *mask);
-		this(cast(GtkImage*)gtk_image_new_from_image((image is null) ? null : image.getImageGdkStruct(), (mask is null) ? null : mask.getBitmapStruct()) );
+		auto p = gtk_image_new_from_image((image is null) ? null : image.getImageGdkStruct(), (mask is null) ? null : mask.getBitmapStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkImage*) p);
 	}
 	
 	/**
@@ -412,7 +455,14 @@ public class Image : Misc
 	public this (Pixbuf pixbuf)
 	{
 		// GtkWidget* gtk_image_new_from_pixbuf (GdkPixbuf *pixbuf);
-		this(cast(GtkImage*)gtk_image_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct()) );
+		auto p = gtk_image_new_from_pixbuf((pixbuf is null) ? null : pixbuf.getPixbufStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkImage*) p);
 	}
 	
 	/**
@@ -428,9 +478,15 @@ public class Image : Misc
 	public this (Pixmap pixmap, Bitmap mask)
 	{
 		// GtkWidget* gtk_image_new_from_pixmap (GdkPixmap *pixmap,  GdkBitmap *mask);
-		this(cast(GtkImage*)gtk_image_new_from_pixmap((pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct()) );
+		auto p = gtk_image_new_from_pixmap((pixmap is null) ? null : pixmap.getPixmapStruct(), (mask is null) ? null : mask.getBitmapStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkImage*) p);
 	}
-	
 	
 	/**
 	 * Creates a GtkImage displaying the given animation.
@@ -447,9 +503,15 @@ public class Image : Misc
 	public this (GdkPixbufAnimation* animation)
 	{
 		// GtkWidget* gtk_image_new_from_animation (GdkPixbufAnimation *animation);
-		this(cast(GtkImage*)gtk_image_new_from_animation(animation) );
+		auto p = gtk_image_new_from_animation(animation);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkImage*) p);
 	}
-	
 	
 	/**
 	 * See gtk_image_new_from_file() for details.
@@ -468,10 +530,10 @@ public class Image : Misc
 	 * iconSet =  a GtkIconSet
 	 * size =  a stock icon size
 	 */
-	public void setFromIconSet(GtkIconSet* iconSet, GtkIconSize size)
+	public void setFromIconSet(IconSet iconSet, GtkIconSize size)
 	{
 		// void gtk_image_set_from_icon_set (GtkImage *image,  GtkIconSet *icon_set,  GtkIconSize size);
-		gtk_image_set_from_icon_set(gtkImage, iconSet, size);
+		gtk_image_set_from_icon_set(gtkImage, (iconSet is null) ? null : iconSet.getIconSetStruct(), size);
 	}
 	
 	/**
@@ -562,7 +624,14 @@ public class Image : Misc
 	public this ()
 	{
 		// GtkWidget* gtk_image_new (void);
-		this(cast(GtkImage*)gtk_image_new() );
+		auto p = gtk_image_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkImage*) p);
 	}
 	
 	/**
@@ -617,15 +686,4 @@ public class Image : Misc
 		// gint gtk_image_get_pixel_size (GtkImage *image);
 		return gtk_image_get_pixel_size(gtkImage);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

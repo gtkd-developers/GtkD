@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_toggle_button_
  * 	- gtk_
@@ -43,8 +44,14 @@
  * omit code:
  * 	- gtk_toggle_button_new_with_label
  * 	- gtk_toggle_button_new_with_mnemonic
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -52,12 +59,19 @@
 
 module gtk.ToggleButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -96,7 +110,7 @@ private import gtk.Button;
 	 *  gtk_widget_show_all (dialog);
  * }
  */
-public class ToggleButton : Button
+public class ToggleButton : Button, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -130,6 +144,9 @@ public class ToggleButton : Button
 		this.gtkToggleButton = gtkToggleButton;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkToggleButton);
+	
 	/**
 	 * Creates a new toggle button with a text label.
 	 * Params:
@@ -154,13 +171,20 @@ public class ToggleButton : Button
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ToggleButton)[] onToggledListeners;
+	/**
+	 * Should be connected if you wish to perform an action whenever the
+	 * GtkToggleButton's state is changed.
+	 * See Also
+	 * GtkButton
+	 * a more general button.
+	 * GtkCheckButton
+	 * another way of presenting a toggle option.
+	 * GtkCheckMenuItem
+	 * a GtkToggleButton as a menu item.
+	 */
 	void addOnToggled(void delegate(ToggleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggled" in connectedSignals) )
@@ -189,17 +213,21 @@ public class ToggleButton : Button
 	}
 	
 	
-	
 	/**
 	 * Creates a new toggle button. A widget should be packed into the button, as in gtk_button_new().
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_toggle_button_new (void);
-		this(cast(GtkToggleButton*)gtk_toggle_button_new() );
+		auto p = gtk_toggle_button_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkToggleButton*) p);
 	}
-	
-	
 	
 	/**
 	 * Sets whether the button is displayed as a separate indicator and label.
@@ -228,7 +256,6 @@ public class ToggleButton : Button
 		// gboolean gtk_toggle_button_get_mode (GtkToggleButton *toggle_button);
 		return gtk_toggle_button_get_mode(gtkToggleButton);
 	}
-	
 	
 	/**
 	 * Emits the toggled
@@ -292,6 +319,4 @@ public class ToggleButton : Button
 		// void gtk_toggle_button_set_inconsistent (GtkToggleButton *toggle_button,  gboolean setting);
 		gtk_toggle_button_set_inconsistent(gtkToggleButton, setting);
 	}
-	
-	
 }

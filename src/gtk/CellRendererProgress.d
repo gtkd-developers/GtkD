@@ -25,9 +25,9 @@
  * inFile  = GtkCellRendererProgress.html
  * outPack = gtk
  * outFile = CellRendererProgress
- * strct   = GtkCellRenderer
- * realStrct=GtkCellRendererProgress
- * ctorStrct=
+ * strct   = GtkCellRendererProgress
+ * realStrct=
+ * ctorStrct=GtkCellRenderer
  * clss    = CellRendererProgress
  * interf  = 
  * class Code: No
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.CellRenderer
  * structWrap:
@@ -51,7 +52,7 @@
 
 module gtk.CellRendererProgress;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -105,7 +106,6 @@ public class CellRendererProgress : CellRenderer
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkCellRendererProgress.
 	 * Since 2.6
@@ -113,11 +113,13 @@ public class CellRendererProgress : CellRenderer
 	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_progress_new (void);
-		this(cast(GtkCellRendererProgress*)gtk_cell_renderer_progress_new() );
+		auto p = gtk_cell_renderer_progress_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCellRendererProgress*) p);
 	}
-	
-	
-	
-	
-	
 }

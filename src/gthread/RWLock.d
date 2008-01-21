@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module gthread.RWLock;
 
-private import gtkc.gthreadtypes;
+public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
 
@@ -126,56 +127,6 @@ public class RWLock
 	
 	/**
 	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * A GStaticRWLock must be initialized with this function before it can
@@ -293,27 +244,4 @@ public class RWLock
 		// void g_static_rw_lock_free (GStaticRWLock *lock);
 		g_static_rw_lock_free(gStaticRWLock);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

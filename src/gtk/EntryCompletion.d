@@ -30,21 +30,28 @@
  * ctorStrct=
  * clss    = EntryCompletion
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_entry_completion_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.TreeModel
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkTreeModel* -> TreeModel
  * 	- GtkWidget* -> Widget
@@ -54,14 +61,21 @@
 
 module gtk.EntryCompletion;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.TreeModel;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -92,7 +106,7 @@ private import gobject.ObjectG;
  * to differentiate them clearly from completion strings. When an action is
  * selected, the ::action-activated signal is emitted.
  */
-public class EntryCompletion : ObjectG
+public class EntryCompletion : ObjectG, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -126,15 +140,18 @@ public class EntryCompletion : ObjectG
 		this.gtkEntryCompletion = gtkEntryCompletion;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkEntryCompletion);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gint, EntryCompletion)[] onActionActivatedListeners;
+	/**
+	 * Gets emitted when an action is activated.
+	 * Since 2.4
+	 */
 	void addOnActionActivated(void delegate(gint, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("action-activated" in connectedSignals) )
@@ -163,6 +180,13 @@ public class EntryCompletion : ObjectG
 	}
 	
 	gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion)[] onCursorOnMatchListeners;
+	/**
+	 * Gets emitted when a match from the cursor is on a match
+	 * of the list.The default behaviour is to replace the contents
+	 * of the entry with the contents of the text column in the row
+	 * pointed to by iter.
+	 * Since 2.12
+	 */
 	void addOnCursorOnMatch(gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cursor-on-match" in connectedSignals) )
@@ -191,6 +215,16 @@ public class EntryCompletion : ObjectG
 	}
 	
 	gboolean delegate(char[], EntryCompletion)[] onInsertPrefixListeners;
+	/**
+	 * Gets emitted when the inline autocompletion is triggered.
+	 * The default behaviour is to make the entry display the
+	 * whole prefix and select the newly inserted part.
+	 * Applications may connect to this signal in order to insert only a
+	 * smaller part of the prefix into the entry - e.g. the entry used in
+	 * the GtkFileChooser inserts only the part of the prefix up to the
+	 * next '/'.
+	 * Since 2.6
+	 */
 	void addOnInsertPrefix(gboolean delegate(char[], EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-prefix" in connectedSignals) )
@@ -219,6 +253,13 @@ public class EntryCompletion : ObjectG
 	}
 	
 	gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion)[] onMatchSelectedListeners;
+	/**
+	 * Gets emitted when a match from the list is selected.
+	 * The default behaviour is to replace the contents of the
+	 * entry with the contents of the text column in the row
+	 * pointed to by iter.
+	 * Since 2.4
+	 */
 	void addOnMatchSelected(gboolean delegate(TreeModel, GtkTreeIter*, EntryCompletion) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("match-selected" in connectedSignals) )
@@ -247,8 +288,6 @@ public class EntryCompletion : ObjectG
 	}
 	
 	
-	
-	
 	/**
 	 * Creates a new GtkEntryCompletion object.
 	 * Since 2.4
@@ -256,7 +295,14 @@ public class EntryCompletion : ObjectG
 	public this ()
 	{
 		// GtkEntryCompletion* gtk_entry_completion_new (void);
-		this(cast(GtkEntryCompletion*)gtk_entry_completion_new() );
+		auto p = gtk_entry_completion_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkEntryCompletion*) p);
 	}
 	
 	/**
@@ -267,7 +313,13 @@ public class EntryCompletion : ObjectG
 	public Widget getEntry()
 	{
 		// GtkWidget* gtk_entry_completion_get_entry (GtkEntryCompletion *completion);
-		return new Widget( gtk_entry_completion_get_entry(gtkEntryCompletion) );
+		auto p = gtk_entry_completion_get_entry(gtkEntryCompletion);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -293,7 +345,13 @@ public class EntryCompletion : ObjectG
 	public TreeModel getModel()
 	{
 		// GtkTreeModel* gtk_entry_completion_get_model (GtkEntryCompletion *completion);
-		return new TreeModel( gtk_entry_completion_get_model(gtkEntryCompletion) );
+		auto p = gtk_entry_completion_get_model(gtkEntryCompletion);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -359,7 +417,7 @@ public class EntryCompletion : ObjectG
 	public char[] getCompletionPrefix()
 	{
 		// const gchar* gtk_entry_completion_get_completion_prefix  (GtkEntryCompletion *completion);
-		return Str.toString(gtk_entry_completion_get_completion_prefix(gtkEntryCompletion) );
+		return Str.toString(gtk_entry_completion_get_completion_prefix(gtkEntryCompletion)).dup;
 	}
 	
 	/**
@@ -566,14 +624,4 @@ public class EntryCompletion : ObjectG
 		// gboolean gtk_entry_completion_get_popup_single_match  (GtkEntryCompletion *completion);
 		return gtk_entry_completion_get_popup_single_match(gtkEntryCompletion);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

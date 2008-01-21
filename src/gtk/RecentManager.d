@@ -46,7 +46,9 @@
  * 	- glib.Str
  * 	- gdk.Screen
  * 	- gtk.RecentInfo
+ * 	- glib.ListG
  * structWrap:
+ * 	- GList* -> ListG
  * 	- GdkScreen* -> Screen
  * 	- GtkRecentInfo* -> RecentInfo
  * 	- GtkRecentManager* -> RecentManager
@@ -66,6 +68,7 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gdk.Screen;
 private import gtk.RecentInfo;
+private import glib.ListG;
 
 
 
@@ -418,10 +421,16 @@ public class RecentManager : ObjectG
 	 * Since 2.10
 	 * Returns: a list of newly allocated GtkRecentInfo objects. Use gtk_recent_info_unref() on each item inside the list, and then free the list itself using g_list_free().
 	 */
-	public GList* getItems()
+	public ListG getItems()
 	{
 		// GList* gtk_recent_manager_get_items (GtkRecentManager *manager);
-		return gtk_recent_manager_get_items(gtkRecentManager);
+		auto p = gtk_recent_manager_get_items(gtkRecentManager);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**

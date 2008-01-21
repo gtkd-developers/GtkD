@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module cairo.FontOption;
 
-private import gtkc.cairotypes;
+public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
 
@@ -95,7 +96,6 @@ public class FontOption
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Allocates a new font options object with all options initialized
@@ -202,7 +202,6 @@ public class FontOption
 		return cairo_font_options_get_antialias(cairo_font_options);
 	}
 	
-	
 	/**
 	 * Sets the subpixel order for the font options object. The subpixel
 	 * order specifies the order of color elements within each pixel on
@@ -229,7 +228,6 @@ public class FontOption
 		return cairo_font_options_get_subpixel_order(cairo_font_options);
 	}
 	
-	
 	/**
 	 * Sets the hint style for font outlines for the font options object.
 	 * This controls whether to fit font outlines to the pixel grid,
@@ -254,7 +252,6 @@ public class FontOption
 		// cairo_hint_style_t cairo_font_options_get_hint_style  (const cairo_font_options_t *options);
 		return cairo_font_options_get_hint_style(cairo_font_options);
 	}
-	
 	
 	/**
 	 * Sets the metrics hinting mode for the font options object. This

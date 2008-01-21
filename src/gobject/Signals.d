@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.Closure
@@ -56,7 +57,7 @@
 
 module gobject.Signals;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
@@ -126,16 +127,6 @@ public class Signals
 	
 	/**
 	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Creates a new signal. (This is usually done in the class initializer.)
@@ -270,7 +261,7 @@ public class Signals
 	public static char[] name(uint signalId)
 	{
 		// const gchar* g_signal_name (guint signal_id);
-		return Str.toString(g_signal_name(signalId) );
+		return Str.toString(g_signal_name(signalId)).dup;
 	}
 	
 	/**
@@ -360,9 +351,6 @@ public class Signals
 		g_signal_emit_valist(instanc, signalId, detail, varArgs);
 	}
 	
-	
-	
-	
 	/**
 	 *  This is similar to g_signal_connect_data(), but uses a closure which
 	 *  ensures that the gobject stays alive during the call to c_handler
@@ -392,7 +380,6 @@ public class Signals
 		// gulong g_signal_connect_object (gpointer instance,  const gchar *detailed_signal,  GCallback c_handler,  gpointer gobject,  GConnectFlags connect_flags);
 		return g_signal_connect_object(instanc, Str.toStringz(detailedSignal), cHandler, gobject, connectFlags);
 	}
-	
 	
 	/**
 	 * Connects a GCallback function to a signal for a particular object. Similar
@@ -617,9 +604,6 @@ public class Signals
 		return g_signal_handler_is_connected(instanc, handlerId);
 	}
 	
-	
-	
-	
 	/**
 	 * Returns whether there are any handlers connected to instance for the
 	 * given signal id and detail.
@@ -776,7 +760,13 @@ public class Signals
 	public static Closure typeCclosureNew(GType itype, uint structOffset)
 	{
 		// GClosure* g_signal_type_cclosure_new (GType itype,  guint struct_offset);
-		return new Closure( g_signal_type_cclosure_new(itype, structOffset) );
+		auto p = g_signal_type_cclosure_new(itype, structOffset);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Closure(cast(GClosure*) p);
 	}
 	
 	/**
@@ -800,5 +790,4 @@ public class Signals
 		// gboolean g_signal_accumulator_true_handled (GSignalInvocationHint *ihint,  GValue *return_accu,  const GValue *handler_return,  gpointer dummy);
 		return g_signal_accumulator_true_handled(ihint, (returnAccu is null) ? null : returnAccu.getValueStruct(), (handlerReturn is null) ? null : handlerReturn.getValueStruct(), dummy);
 	}
-	
 }

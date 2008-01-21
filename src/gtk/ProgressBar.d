@@ -30,20 +30,27 @@
  * ctorStrct=
  * clss    = ProgressBar
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_progress_bar_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Adjustment
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
@@ -52,13 +59,18 @@
 
 module gtk.ProgressBar;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gtk.Adjustment;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -97,7 +109,7 @@ private import gtk.Progress;
  * These have been grouped at the beginning of this section, followed by
  * a large chunk of deprecated 1.2 compatibility functions.
  */
-public class ProgressBar : Progress
+public class ProgressBar : Progress, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -131,9 +143,11 @@ public class ProgressBar : Progress
 		this.gtkProgressBar = gtkProgressBar;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkProgressBar);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkProgressBar.
@@ -141,7 +155,14 @@ public class ProgressBar : Progress
 	public this ()
 	{
 		// GtkWidget* gtk_progress_bar_new (void);
-		this(cast(GtkProgressBar*)gtk_progress_bar_new() );
+		auto p = gtk_progress_bar_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkProgressBar*) p);
 	}
 	
 	/**
@@ -218,7 +239,6 @@ public class ProgressBar : Progress
 		gtk_progress_bar_set_ellipsize(gtkProgressBar, mode);
 	}
 	
-	
 	/**
 	 * Retrieves the text displayed superimposed on the progress bar,
 	 * if any, otherwise NULL. The return value is a reference
@@ -229,7 +249,7 @@ public class ProgressBar : Progress
 	public char[] getText()
 	{
 		// const gchar* gtk_progress_bar_get_text (GtkProgressBar *pbar);
-		return Str.toString(gtk_progress_bar_get_text(gtkProgressBar) );
+		return Str.toString(gtk_progress_bar_get_text(gtkProgressBar)).dup;
 	}
 	
 	/**
@@ -284,7 +304,14 @@ public class ProgressBar : Progress
 	public this (Adjustment adjustment)
 	{
 		// GtkWidget* gtk_progress_bar_new_with_adjustment  (GtkAdjustment *adjustment);
-		this(cast(GtkProgressBar*)gtk_progress_bar_new_with_adjustment((adjustment is null) ? null : adjustment.getAdjustmentStruct()) );
+		auto p = gtk_progress_bar_new_with_adjustment((adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkProgressBar*) p);
 	}
 	
 	/**
@@ -300,7 +327,6 @@ public class ProgressBar : Progress
 		// void gtk_progress_bar_set_bar_style (GtkProgressBar *pbar,  GtkProgressBarStyle style);
 		gtk_progress_bar_set_bar_style(gtkProgressBar, style);
 	}
-	
 	
 	/**
 	 * Warning
@@ -359,14 +385,4 @@ public class ProgressBar : Progress
 		// void gtk_progress_bar_update (GtkProgressBar *pbar,  gdouble percentage);
 		gtk_progress_bar_update(gtkProgressBar, percentage);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -30,18 +30,26 @@
  * ctorStrct=
  * clss    = EventBox
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_event_box_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,17 @@
 
 module gtk.EventBox;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -65,7 +79,7 @@ private import gtk.Bin;
  * It is useful since it allows you to catch events for widgets which do not
  * have their own window.
  */
-public class EventBox : Bin
+public class EventBox : Bin, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -99,9 +113,11 @@ public class EventBox : Bin
 		this.gtkEventBox = gtkEventBox;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkEventBox);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkEventBox.
@@ -109,7 +125,14 @@ public class EventBox : Bin
 	public this ()
 	{
 		// GtkWidget* gtk_event_box_new (void);
-		this(cast(GtkEventBox*)gtk_event_box_new() );
+		auto p = gtk_event_box_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkEventBox*) p);
 	}
 	
 	/**
@@ -192,5 +215,4 @@ public class EventBox : Bin
 		// gboolean gtk_event_box_get_visible_window (GtkEventBox *event_box);
 		return gtk_event_box_get_visible_window(gtkEventBox);
 	}
-	
 }

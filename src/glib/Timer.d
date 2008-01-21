@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * 	- GTimer* -> Timer
@@ -49,7 +50,7 @@
 
 module glib.Timer;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -100,7 +101,6 @@ public class Timer
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new timer, and starts timing (i.e. g_timer_start() is implicitly
 	 * called for you).
@@ -109,7 +109,13 @@ public class Timer
 	public static Timer _New()
 	{
 		// GTimer* g_timer_new (void);
-		return new Timer( g_timer_new() );
+		auto p = g_timer_new();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Timer(cast(GTimer*) p);
 	}
 	
 	/**

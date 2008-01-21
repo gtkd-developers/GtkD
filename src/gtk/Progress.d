@@ -30,20 +30,27 @@
  * ctorStrct=
  * clss    = Progress
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_progress_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Adjustment
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
@@ -52,13 +59,18 @@
 
 module gtk.Progress;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gtk.Adjustment;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -70,7 +82,7 @@ private import gtk.Widget;
  * a GtkProgressBar which provides a visual representation of
  * the progress of a long running operation.
  */
-public class Progress : Widget
+public class Progress : Widget, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -104,9 +116,11 @@ public class Progress : Widget
 		this.gtkProgress = gtkProgress;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkProgress);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Warning
@@ -235,7 +249,7 @@ public class Progress : Widget
 	public char[] getCurrentText()
 	{
 		// gchar* gtk_progress_get_current_text (GtkProgress *progress);
-		return Str.toString(gtk_progress_get_current_text(gtkProgress) );
+		return Str.toString(gtk_progress_get_current_text(gtkProgress)).dup;
 	}
 	
 	/**
@@ -250,7 +264,7 @@ public class Progress : Widget
 	public char[] getTextFromValue(double value)
 	{
 		// gchar* gtk_progress_get_text_from_value (GtkProgress *progress,  gdouble value);
-		return Str.toString(gtk_progress_get_text_from_value(gtkProgress, value) );
+		return Str.toString(gtk_progress_get_text_from_value(gtkProgress, value)).dup;
 	}
 	
 	/**
@@ -294,7 +308,4 @@ public class Progress : Widget
 		// void gtk_progress_configure (GtkProgress *progress,  gdouble value,  gdouble hmin,  gdouble max);
 		gtk_progress_configure(gtkProgress, value, hmin, max);
 	}
-	
-	
-	
 }

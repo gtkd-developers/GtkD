@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,10 +50,12 @@
 
 module atk.Document;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 
@@ -103,13 +106,18 @@ public class Document
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Document)[] onLoadCompleteListeners;
+	/**
+	 * The 'load-complete' signal is emitted when a pending load of a static
+	 * document has completed. This signal is to be expected by ATK clients
+	 * if and when AtkDocument implementors expose ATK_STATE_BUSY. If the state
+	 * of an AtkObject which implements AtkDocument does not include ATK_STATE_BUSY,
+	 * it should be safe for clients to assume that the AtkDocument's static contents
+	 * are fully loaded into the container. (Dynamic document contents should
+	 * be exposed via other signals.)
+	 */
 	void addOnLoadComplete(void delegate(Document) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("load-complete" in connectedSignals) )
@@ -138,6 +146,13 @@ public class Document
 	}
 	
 	void delegate(Document)[] onLoadStoppedListeners;
+	/**
+	 * The 'load-stopped' signal is emitted when a pending load of document contents
+	 * is cancelled, paused, or otherwise interrupted by the user or application
+	 * logic. It should not however be
+	 * emitted while waiting for a resource (for instance while blocking on a file or
+	 * network read) unless a user-significant timeout has occurred.
+	 */
 	void addOnLoadStopped(void delegate(Document) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("load-stopped" in connectedSignals) )
@@ -166,6 +181,12 @@ public class Document
 	}
 	
 	void delegate(Document)[] onReloadListeners;
+	/**
+	 * The 'reload' signal is emitted when the contents of a document is refreshed
+	 * from its source. Once 'reload' has been emitted, a matching 'load-complete'
+	 * or 'load-stopped' signal should follow, which clients may await before
+	 * interrogating ATK for the latest document content.
+	 */
 	void addOnReload(void delegate(Document) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("reload" in connectedSignals) )
@@ -194,7 +215,6 @@ public class Document
 	}
 	
 	
-	
 	/**
 	 * Gets a string indicating the document type.
 	 * Returns: a string indicating the document type
@@ -202,7 +222,7 @@ public class Document
 	public char[] getDocumentType()
 	{
 		// const gchar* atk_document_get_document_type (AtkDocument *document);
-		return Str.toString(atk_document_get_document_type(atkDocument) );
+		return Str.toString(atk_document_get_document_type(atkDocument)).dup;
 	}
 	
 	/**
@@ -226,7 +246,7 @@ public class Document
 	public char[] getAttributeValue(char[] attributeName)
 	{
 		// const gchar* atk_document_get_attribute_value (AtkDocument *document,  const gchar *attribute_name);
-		return Str.toString(atk_document_get_attribute_value(atkDocument, Str.toStringz(attributeName)) );
+		return Str.toString(atk_document_get_attribute_value(atkDocument, Str.toStringz(attributeName))).dup;
 	}
 	
 	/**
@@ -264,8 +284,6 @@ public class Document
 	public char[] getLocale()
 	{
 		// const gchar* atk_document_get_locale (AtkDocument *document);
-		return Str.toString(atk_document_get_locale(atkDocument) );
+		return Str.toString(atk_document_get_locale(atkDocument)).dup;
 	}
-	
-	
 }

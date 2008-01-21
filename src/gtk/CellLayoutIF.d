@@ -41,11 +41,13 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.CellRenderer
- * 	- glib.Str
+ * 	- glib.ListG
  * structWrap:
+ * 	- GList* -> ListG
  * 	- GtkCellRenderer* -> CellRenderer
  * module aliases:
  * local aliases:
@@ -53,14 +55,14 @@
 
 module gtk.CellLayoutIF;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gtk.CellRenderer;
-private import glib.Str;
+private import glib.ListG;
 
 
 
@@ -111,9 +113,6 @@ public interface CellLayoutIF
 	/**
 	 */
 	
-	
-	
-	
 	/**
 	 * Packs the cell into the beginning of cell_layout. If expand is FALSE,
 	 * then the cell is allocated no more space than it needs. Any unused space
@@ -143,7 +142,7 @@ public interface CellLayoutIF
 	 * Since 2.12
 	 * Returns: a list of cell renderers. The list, but not the renderers has been newly allocated and should be freed with g_list_free() when no longer needed.
 	 */
-	public GList* getCells();
+	public ListG getCells();
 	
 	/**
 	 * Re-inserts cell at position. Note that cell has already to be packed

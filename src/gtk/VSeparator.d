@@ -30,18 +30,26 @@
  * ctorStrct=
  * clss    = VSeparator
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_vseparator_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,17 @@
 
 module gtk.VSeparator;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -65,7 +79,7 @@ private import gtk.Separator;
  * widgets within a window. It displays a vertical line with a shadow to
  * make it appear sunken into the interface.
  */
-public class VSeparator : Separator
+public class VSeparator : Separator, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -99,9 +113,11 @@ public class VSeparator : Separator
 		this.gtkVSeparator = gtkVSeparator;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkVSeparator);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkVSeparator.
@@ -109,6 +125,13 @@ public class VSeparator : Separator
 	public this ()
 	{
 		// GtkWidget* gtk_vseparator_new (void);
-		this(cast(GtkVSeparator*)gtk_vseparator_new() );
+		auto p = gtk_vseparator_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkVSeparator*) p);
 	}
 }

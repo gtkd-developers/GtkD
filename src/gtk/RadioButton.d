@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_radio_button_
  * 	- gtk_
@@ -45,9 +46,15 @@
  * 	- gtk_radio_button_new_with_mnemonic
  * 	- gtk_radio_button_new_with_label_from_widget
  * 	- gtk_radio_button_new_with_mnemonic_from_widget
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.ListSG
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GSList* -> ListSG
  * module aliases:
@@ -56,13 +63,20 @@
 
 module gtk.RadioButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ListSG;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -115,7 +129,7 @@ private import gtk.CheckButton;
  * Inside the "toggled" handler, gtk_toggle_button_get_active() can be used
  * to determine if the button has been selected or deselected.
  */
-public class RadioButton : CheckButton
+public class RadioButton : CheckButton, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -148,6 +162,9 @@ public class RadioButton : CheckButton
 		super(cast(GtkCheckButton*)gtkRadioButton);
 		this.gtkRadioButton = gtkRadioButton;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkRadioButton);
 	
 	/**
 	 * Creates a new GtkRadioButton with a text label.
@@ -211,13 +228,22 @@ public class RadioButton : CheckButton
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(RadioButton)[] onGroupChangedListeners;
+	/**
+	 * Emitted when the group of radio buttons that a radio button belongs
+	 * to changes. This is emitted when a radio button switches from
+	 * being alone to being part of a group of 2 or more buttons, or
+	 * vice-versa, and when a button is moved from one group of 2 or
+	 * more buttons to a different one, but not when the composition
+	 * of the group that a button belongs to changes.
+	 * Since 2.4
+	 * See Also
+	 * GtkOptionMenu
+	 * Another way of offering the user a single choice from
+	 * many.
+	 */
 	void addOnGroupChanged(void delegate(RadioButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("group-changed" in connectedSignals) )
@@ -246,7 +272,6 @@ public class RadioButton : CheckButton
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkRadioButton. To be of any practical value, a widget should
 	 * then be packed into the radio button.
@@ -256,7 +281,14 @@ public class RadioButton : CheckButton
 	public this (ListSG group)
 	{
 		// GtkWidget* gtk_radio_button_new (GSList *group);
-		this(cast(GtkRadioButton*)gtk_radio_button_new((group is null) ? null : group.getListSGStruct()) );
+		auto p = gtk_radio_button_new((group is null) ? null : group.getListSGStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRadioButton*) p);
 	}
 	
 	/**
@@ -266,13 +298,15 @@ public class RadioButton : CheckButton
 	public this ()
 	{
 		// GtkWidget* gtk_radio_button_new_from_widget (GtkRadioButton *radio_group_member);
-		this(cast(GtkRadioButton*)gtk_radio_button_new_from_widget(gtkRadioButton) );
+		auto p = gtk_radio_button_new_from_widget(gtkRadioButton);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRadioButton*) p);
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Sets a GtkRadioButton's group. It should be noted that this does not change
@@ -296,6 +330,12 @@ public class RadioButton : CheckButton
 	public ListSG getGroup()
 	{
 		// GSList* gtk_radio_button_get_group (GtkRadioButton *radio_button);
-		return new ListSG( gtk_radio_button_get_group(gtkRadioButton) );
+		auto p = gtk_radio_button_get_group(gtkRadioButton);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 }

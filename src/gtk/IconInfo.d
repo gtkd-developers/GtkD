@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.IconInfo
@@ -53,10 +54,12 @@
 
 module gtk.IconInfo;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.IconInfo;
@@ -164,13 +167,14 @@ public class IconInfo
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(IconInfo)[] onChangedListeners;
+	/**
+	 * Emitted when the current icon theme is switched or GTK+ detects
+	 * that a change has occurred in the contents of the current
+	 * icon theme.
+	 */
 	void addOnChanged(void delegate(IconInfo) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
@@ -199,30 +203,6 @@ public class IconInfo
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Make a copy of a GtkIconInfo.
 	 * Since 2.4
@@ -231,7 +211,13 @@ public class IconInfo
 	public IconInfo copy()
 	{
 		// GtkIconInfo* gtk_icon_info_copy (GtkIconInfo *icon_info);
-		return new IconInfo( gtk_icon_info_copy(gtkIconInfo) );
+		auto p = gtk_icon_info_copy(gtkIconInfo);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IconInfo(cast(GtkIconInfo*) p);
 	}
 	
 	/**
@@ -274,7 +260,7 @@ public class IconInfo
 	public char[] getFilename()
 	{
 		// const gchar* gtk_icon_info_get_filename (GtkIconInfo *icon_info);
-		return Str.toString(gtk_icon_info_get_filename(gtkIconInfo) );
+		return Str.toString(gtk_icon_info_get_filename(gtkIconInfo)).dup;
 	}
 	
 	/**
@@ -288,7 +274,13 @@ public class IconInfo
 	public Pixbuf getBuiltinPixbuf()
 	{
 		// GdkPixbuf* gtk_icon_info_get_builtin_pixbuf (GtkIconInfo *icon_info);
-		return new Pixbuf( gtk_icon_info_get_builtin_pixbuf(gtkIconInfo) );
+		auto p = gtk_icon_info_get_builtin_pixbuf(gtkIconInfo);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -308,7 +300,13 @@ public class IconInfo
 	public Pixbuf loadIcon(GError** error)
 	{
 		// GdkPixbuf* gtk_icon_info_load_icon (GtkIconInfo *icon_info,  GError **error);
-		return new Pixbuf( gtk_icon_info_load_icon(gtkIconInfo, error) );
+		auto p = gtk_icon_info_load_icon(gtkIconInfo, error);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -389,6 +387,6 @@ public class IconInfo
 	public char[] getDisplayName()
 	{
 		// const gchar* gtk_icon_info_get_display_name (GtkIconInfo *icon_info);
-		return Str.toString(gtk_icon_info_get_display_name(gtkIconInfo) );
+		return Str.toString(gtk_icon_info_get_display_name(gtkIconInfo)).dup;
 	}
 }

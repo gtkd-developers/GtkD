@@ -42,6 +42,7 @@
  * omit prefixes:
  * 	- gtk_icon_info_
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.IconTheme
@@ -61,10 +62,12 @@
 
 module gtk.IconTheme;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.IconTheme;
@@ -177,13 +180,14 @@ public class IconTheme : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(IconTheme)[] onChangedListeners;
+	/**
+	 * Emitted when the current icon theme is switched or GTK+ detects
+	 * that a change has occurred in the contents of the current
+	 * icon theme.
+	 */
 	void addOnChanged(void delegate(IconTheme) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
@@ -212,11 +216,6 @@ public class IconTheme : ObjectG
 	}
 	
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new icon theme object. Icon theme objects are used
 	 * to lookup up an icon by name in a particular icon theme.
@@ -228,7 +227,14 @@ public class IconTheme : ObjectG
 	public this ()
 	{
 		// GtkIconTheme* gtk_icon_theme_new (void);
-		this(cast(GtkIconTheme*)gtk_icon_theme_new() );
+		auto p = gtk_icon_theme_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkIconTheme*) p);
 	}
 	
 	/**
@@ -240,7 +246,13 @@ public class IconTheme : ObjectG
 	public static IconTheme getDefault()
 	{
 		// GtkIconTheme* gtk_icon_theme_get_default (void);
-		return new IconTheme( gtk_icon_theme_get_default() );
+		auto p = gtk_icon_theme_get_default();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IconTheme(cast(GtkIconTheme*) p);
 	}
 	
 	/**
@@ -260,7 +272,13 @@ public class IconTheme : ObjectG
 	public static IconTheme getForScreen(Screen screen)
 	{
 		// GtkIconTheme* gtk_icon_theme_get_for_screen (GdkScreen *screen);
-		return new IconTheme( gtk_icon_theme_get_for_screen((screen is null) ? null : screen.getScreenStruct()) );
+		auto p = gtk_icon_theme_get_for_screen((screen is null) ? null : screen.getScreenStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IconTheme(cast(GtkIconTheme*) p);
 	}
 	
 	/**
@@ -389,7 +407,13 @@ public class IconTheme : ObjectG
 	public IconInfo lookupIcon(char[] iconName, int size, GtkIconLookupFlags flags)
 	{
 		// GtkIconInfo* gtk_icon_theme_lookup_icon (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  GtkIconLookupFlags flags);
-		return new IconInfo( gtk_icon_theme_lookup_icon(gtkIconTheme, Str.toStringz(iconName), size, flags) );
+		auto p = gtk_icon_theme_lookup_icon(gtkIconTheme, Str.toStringz(iconName), size, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IconInfo(cast(GtkIconInfo*) p);
 	}
 	
 	/**
@@ -411,7 +435,13 @@ public class IconTheme : ObjectG
 	public IconInfo chooseIcon(char*[] iconNames, int size, GtkIconLookupFlags flags)
 	{
 		// GtkIconInfo* gtk_icon_theme_choose_icon (GtkIconTheme *icon_theme,  const gchar *icon_names[],  gint size,  GtkIconLookupFlags flags);
-		return new IconInfo( gtk_icon_theme_choose_icon(gtkIconTheme, iconNames, size, flags) );
+		auto p = gtk_icon_theme_choose_icon(gtkIconTheme, iconNames, size, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IconInfo(cast(GtkIconInfo*) p);
 	}
 	
 	/**
@@ -438,7 +468,13 @@ public class IconTheme : ObjectG
 	public Pixbuf loadIcon(char[] iconName, int size, GtkIconLookupFlags flags, GError** error)
 	{
 		// GdkPixbuf* gtk_icon_theme_load_icon (GtkIconTheme *icon_theme,  const gchar *icon_name,  gint size,  GtkIconLookupFlags flags,  GError **error);
-		return new Pixbuf( gtk_icon_theme_load_icon(gtkIconTheme, Str.toStringz(iconName), size, flags, error) );
+		auto p = gtk_icon_theme_load_icon(gtkIconTheme, Str.toStringz(iconName), size, flags, error);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -450,7 +486,13 @@ public class IconTheme : ObjectG
 	public ListG listContexts()
 	{
 		// GList* gtk_icon_theme_list_contexts (GtkIconTheme *icon_theme);
-		return new ListG( gtk_icon_theme_list_contexts(gtkIconTheme) );
+		auto p = gtk_icon_theme_list_contexts(gtkIconTheme);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -468,7 +510,13 @@ public class IconTheme : ObjectG
 	public ListG listIcons(char[] context)
 	{
 		// GList* gtk_icon_theme_list_icons (GtkIconTheme *icon_theme,  const gchar *context);
-		return new ListG( gtk_icon_theme_list_icons(gtkIconTheme, Str.toStringz(context)) );
+		auto p = gtk_icon_theme_list_icons(gtkIconTheme, Str.toStringz(context));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -497,7 +545,7 @@ public class IconTheme : ObjectG
 	public char[] getExampleIconName()
 	{
 		// char* gtk_icon_theme_get_example_icon_name  (GtkIconTheme *icon_theme);
-		return Str.toString(gtk_icon_theme_get_example_icon_name(gtkIconTheme) );
+		return Str.toString(gtk_icon_theme_get_example_icon_name(gtkIconTheme)).dup;
 	}
 	
 	/**
@@ -539,14 +587,4 @@ public class IconTheme : ObjectG
 		// void gtk_icon_theme_add_builtin_icon (const gchar *icon_name,  gint size,  GdkPixbuf *pixbuf);
 		gtk_icon_theme_add_builtin_icon(Str.toStringz(iconName), size, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

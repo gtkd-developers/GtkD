@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * 	- glib.Dataset
@@ -52,7 +53,7 @@
 
 module glib.BBTree;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -114,7 +115,6 @@ public class BBTree
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GTree.
 	 * Params:
@@ -127,7 +127,14 @@ public class BBTree
 	public this (GCompareFunc keyCompareFunc)
 	{
 		// GTree* g_tree_new (GCompareFunc key_compare_func);
-		this(cast(GTree*)g_tree_new(keyCompareFunc) );
+		auto p = g_tree_new(keyCompareFunc);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GTree*) p);
 	}
 	
 	/**
@@ -140,7 +147,14 @@ public class BBTree
 	public this (GCompareDataFunc keyCompareFunc, void* keyCompareData)
 	{
 		// GTree* g_tree_new_with_data (GCompareDataFunc key_compare_func,  gpointer key_compare_data);
-		this(cast(GTree*)g_tree_new_with_data(keyCompareFunc, keyCompareData) );
+		auto p = g_tree_new_with_data(keyCompareFunc, keyCompareData);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GTree*) p);
 	}
 	
 	/**
@@ -160,7 +174,14 @@ public class BBTree
 	public this (GCompareDataFunc keyCompareFunc, void* keyCompareData, GDestroyNotify keyDestroyFunc, GDestroyNotify valueDestroyFunc)
 	{
 		// GTree* g_tree_new_full (GCompareDataFunc key_compare_func,  gpointer key_compare_data,  GDestroyNotify key_destroy_func,  GDestroyNotify value_destroy_func);
-		this(cast(GTree*)g_tree_new_full(keyCompareFunc, keyCompareData, keyDestroyFunc, valueDestroyFunc) );
+		auto p = g_tree_new_full(keyCompareFunc, keyCompareData, keyDestroyFunc, valueDestroyFunc);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GTree*) p);
 	}
 	
 	/**
@@ -292,8 +313,6 @@ public class BBTree
 		// void g_tree_traverse (GTree *tree,  GTraverseFunc traverse_func,  GTraverseType traverse_type,  gpointer user_data);
 		g_tree_traverse(gTree, traverseFunc, traverseType, userData);
 	}
-	
-	
 	
 	/**
 	 * Searches a GTree using search_func.

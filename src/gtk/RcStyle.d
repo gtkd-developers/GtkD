@@ -41,14 +41,16 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.ScannerG
  * 	- glib.Str
  * 	- gtk.Style
  * 	- gtk.Widget
  * 	- gtk.Settings
  * 	- gdk.Color
- * 	- gtk.RcStyle
  * structWrap:
+ * 	- GScanner* -> ScannerG
  * 	- GdkColor* -> Color
  * 	- GtkRcStyle* -> RcStyle
  * 	- GtkSettings* -> Settings
@@ -60,17 +62,17 @@
 
 module gtk.RcStyle;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
+private import glib.ScannerG;
 private import glib.Str;
 private import gtk.Style;
 private import gtk.Widget;
 private import gtk.Settings;
 private import gdk.Color;
-private import gtk.RcStyle;
 
 
 
@@ -512,16 +514,19 @@ public class RcStyle : ObjectG
 	/**
 	 */
 	
-	
-	
-	
 	/**
 	 * Returns:
 	 */
-	public static GScanner* scannerNew()
+	public static ScannerG scannerNew()
 	{
 		// GScanner* gtk_rc_scanner_new (void);
-		return gtk_rc_scanner_new();
+		auto p = gtk_rc_scanner_new();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ScannerG(cast(GScanner*) p);
 	}
 	
 	/**
@@ -538,7 +543,13 @@ public class RcStyle : ObjectG
 	public static Style getStyle(Widget widget)
 	{
 		// GtkStyle* gtk_rc_get_style (GtkWidget *widget);
-		return new Style( gtk_rc_get_style((widget is null) ? null : widget.getWidgetStruct()) );
+		auto p = gtk_rc_get_style((widget is null) ? null : widget.getWidgetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -560,7 +571,13 @@ public class RcStyle : ObjectG
 	public static Style getStyleByPaths(Settings settings, char[] widgetPath, char[] classPath, GType type)
 	{
 		// GtkStyle* gtk_rc_get_style_by_paths (GtkSettings *settings,  const char *widget_path,  const char *class_path,  GType type);
-		return new Style( gtk_rc_get_style_by_paths((settings is null) ? null : settings.getSettingsStruct(), Str.toStringz(widgetPath), Str.toStringz(classPath), type) );
+		auto p = gtk_rc_get_style_by_paths((settings is null) ? null : settings.getSettingsStruct(), Str.toStringz(widgetPath), Str.toStringz(classPath), type);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -719,10 +736,10 @@ public class RcStyle : ObjectG
 	 * color =  a pointer to a GtkColor structure in which to store the result
 	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found
 	 */
-	public static uint parseColor(GScanner* scanner, Color color)
+	public static uint parseColor(ScannerG scanner, Color color)
 	{
 		// guint gtk_rc_parse_color (GScanner *scanner,  GdkColor *color);
-		return gtk_rc_parse_color(scanner, (color is null) ? null : color.getColorStruct());
+		return gtk_rc_parse_color((scanner is null) ? null : scanner.getScannerGStruct(), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -736,10 +753,10 @@ public class RcStyle : ObjectG
 	 * color =  a pointer to a GtkColor structure in which to store the result
 	 * Returns: G_TOKEN_NONE if parsing succeeded, otherwise the token that was expected but not found
 	 */
-	public static uint parseColorFull(GScanner* scanner, RcStyle style, Color color)
+	public static uint parseColorFull(ScannerG scanner, RcStyle style, Color color)
 	{
 		// guint gtk_rc_parse_color_full (GScanner *scanner,  GtkRcStyle *style,  GdkColor *color);
-		return gtk_rc_parse_color_full(scanner, (style is null) ? null : style.getRcStyleStruct(), (color is null) ? null : color.getColorStruct());
+		return gtk_rc_parse_color_full((scanner is null) ? null : scanner.getScannerGStruct(), (style is null) ? null : style.getRcStyleStruct(), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
@@ -751,10 +768,10 @@ public class RcStyle : ObjectG
 	 * store the result.
 	 * Returns:G_TOKEN_NONE if parsing succeeded, otherwise the tokenthat was expected but not found.
 	 */
-	public static uint parseState(GScanner* scanner, GtkStateType* state)
+	public static uint parseState(ScannerG scanner, GtkStateType* state)
 	{
 		// guint gtk_rc_parse_state (GScanner *scanner,  GtkStateType *state);
-		return gtk_rc_parse_state(scanner, state);
+		return gtk_rc_parse_state((scanner is null) ? null : scanner.getScannerGStruct(), state);
 	}
 	
 	/**
@@ -766,10 +783,10 @@ public class RcStyle : ObjectG
 	 * to store the result.
 	 * Returns:G_TOKEN_NONE if parsing succeeded, otherwise the tokenthat was expected but not found.
 	 */
-	public static uint parsePriority(GScanner* scanner, GtkPathPriorityType* priority)
+	public static uint parsePriority(ScannerG scanner, GtkPathPriorityType* priority)
 	{
 		// guint gtk_rc_parse_priority (GScanner *scanner,  GtkPathPriorityType *priority);
-		return gtk_rc_parse_priority(scanner, priority);
+		return gtk_rc_parse_priority((scanner is null) ? null : scanner.getScannerGStruct(), priority);
 	}
 	
 	/**
@@ -782,7 +799,7 @@ public class RcStyle : ObjectG
 	public static char[] findModuleInPath(char[] moduleFile)
 	{
 		// gchar* gtk_rc_find_module_in_path (const gchar *module_file);
-		return Str.toString(gtk_rc_find_module_in_path(Str.toStringz(moduleFile)) );
+		return Str.toString(gtk_rc_find_module_in_path(Str.toStringz(moduleFile))).dup;
 	}
 	
 	/**
@@ -796,10 +813,10 @@ public class RcStyle : ObjectG
 	 * pixmapFile =  name of the pixmap file to locate.
 	 * Returns: the filename.
 	 */
-	public static char[] findPixmapInPath(Settings settings, GScanner* scanner, char[] pixmapFile)
+	public static char[] findPixmapInPath(Settings settings, ScannerG scanner, char[] pixmapFile)
 	{
 		// gchar* gtk_rc_find_pixmap_in_path (GtkSettings *settings,  GScanner *scanner,  const gchar *pixmap_file);
-		return Str.toString(gtk_rc_find_pixmap_in_path((settings is null) ? null : settings.getSettingsStruct(), scanner, Str.toStringz(pixmapFile)) );
+		return Str.toString(gtk_rc_find_pixmap_in_path((settings is null) ? null : settings.getSettingsStruct(), (scanner is null) ? null : scanner.getScannerGStruct(), Str.toStringz(pixmapFile))).dup;
 	}
 	
 	/**
@@ -812,7 +829,7 @@ public class RcStyle : ObjectG
 	public static char[] getModuleDir()
 	{
 		// gchar* gtk_rc_get_module_dir (void);
-		return Str.toString(gtk_rc_get_module_dir() );
+		return Str.toString(gtk_rc_get_module_dir()).dup;
 	}
 	
 	/**
@@ -826,7 +843,7 @@ public class RcStyle : ObjectG
 	public static char[] getImModulePath()
 	{
 		// gchar* gtk_rc_get_im_module_path (void);
-		return Str.toString(gtk_rc_get_im_module_path() );
+		return Str.toString(gtk_rc_get_im_module_path()).dup;
 	}
 	
 	/**
@@ -838,7 +855,7 @@ public class RcStyle : ObjectG
 	public static char[] getImModuleFile()
 	{
 		// gchar* gtk_rc_get_im_module_file (void);
-		return Str.toString(gtk_rc_get_im_module_file() );
+		return Str.toString(gtk_rc_get_im_module_file()).dup;
 	}
 	
 	/**
@@ -850,7 +867,7 @@ public class RcStyle : ObjectG
 	public static char[] getThemeDir()
 	{
 		// gchar* gtk_rc_get_theme_dir (void);
-		return Str.toString(gtk_rc_get_theme_dir() );
+		return Str.toString(gtk_rc_get_theme_dir()).dup;
 	}
 	
 	/**
@@ -861,7 +878,13 @@ public class RcStyle : ObjectG
 	public static RcStyle styleNew()
 	{
 		// GtkRcStyle* gtk_rc_style_new (void);
-		return new RcStyle( gtk_rc_style_new() );
+		auto p = gtk_rc_style_new();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RcStyle(cast(GtkRcStyle*) p);
 	}
 	
 	/**
@@ -873,7 +896,13 @@ public class RcStyle : ObjectG
 	public RcStyle styleCopy()
 	{
 		// GtkRcStyle* gtk_rc_style_copy (GtkRcStyle *orig);
-		return new RcStyle( gtk_rc_style_copy(gtkRcStyle) );
+		auto p = gtk_rc_style_copy(gtkRcStyle);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RcStyle(cast(GtkRcStyle*) p);
 	}
 	
 	/**

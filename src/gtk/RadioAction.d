@@ -30,20 +30,27 @@
  * ctorStrct=
  * clss    = RadioAction
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_radio_action_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.ListSG
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GSList* -> ListSG
  * module aliases:
@@ -52,13 +59,20 @@
 
 module gtk.RadioAction;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ListSG;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -70,7 +84,7 @@ private import gtk.ToggleAction;
  * actions can be linked together so that only one may be active at any
  * one time.
  */
-public class RadioAction : ToggleAction
+public class RadioAction : ToggleAction, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -104,15 +118,20 @@ public class RadioAction : ToggleAction
 		this.gtkRadioAction = gtkRadioAction;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkRadioAction);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkRadioAction*, RadioAction)[] onChangedListeners;
+	/**
+	 * The ::changed signal is emitted on every member of a radio group when the
+	 * active member is changed. The signal gets emitted after the ::activate signals
+	 * for the previous and current active members.
+	 * Since 2.4
+	 */
 	void addOnChanged(void delegate(GtkRadioAction*, RadioAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
@@ -141,7 +160,6 @@ public class RadioAction : ToggleAction
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkRadioAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,
@@ -159,7 +177,14 @@ public class RadioAction : ToggleAction
 	public this (char[] name, char[] label, char[] tooltip, char[] stockId, int value)
 	{
 		// GtkRadioAction* gtk_radio_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id,  gint value);
-		this(cast(GtkRadioAction*)gtk_radio_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), value) );
+		auto p = gtk_radio_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId), value);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRadioAction*) p);
 	}
 	
 	/**
@@ -172,7 +197,13 @@ public class RadioAction : ToggleAction
 	public ListSG getGroup()
 	{
 		// GSList* gtk_radio_action_get_group (GtkRadioAction *action);
-		return new ListSG( gtk_radio_action_get_group(gtkRadioAction) );
+		auto p = gtk_radio_action_get_group(gtkRadioAction);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -211,6 +242,4 @@ public class RadioAction : ToggleAction
 		// void gtk_radio_action_set_current_value (GtkRadioAction *action,  gint current_value);
 		gtk_radio_action_set_current_value(gtkRadioAction, currentValue);
 	}
-	
-	
 }

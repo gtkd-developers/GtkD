@@ -164,7 +164,6 @@ public class PrintContext : ObjectG
 	/**
 	 */
 	
-	
 	/**
 	 * Obtains the cairo context that is associated with the
 	 * GtkPrintContext.

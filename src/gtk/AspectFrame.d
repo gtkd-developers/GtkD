@@ -30,19 +30,26 @@
  * ctorStrct=
  * clss    = AspectFrame
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_aspect_frame_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -50,12 +57,17 @@
 
 module gtk.AspectFrame;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -71,7 +83,7 @@ private import gtk.Frame;
  * a frame around the child. The frame will be
  * "shrink-wrapped" to the size of the child.
  */
-public class AspectFrame : Frame
+public class AspectFrame : Frame, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -105,9 +117,11 @@ public class AspectFrame : Frame
 		this.gtkAspectFrame = gtkAspectFrame;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkAspectFrame);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Create a new GtkAspectFrame.
@@ -126,7 +140,14 @@ public class AspectFrame : Frame
 	public this (char[] label, float xalign, float yalign, float ratio, int obeyChild)
 	{
 		// GtkWidget* gtk_aspect_frame_new (const gchar *label,  gfloat xalign,  gfloat yalign,  gfloat ratio,  gboolean obey_child);
-		this(cast(GtkAspectFrame*)gtk_aspect_frame_new(Str.toStringz(label), xalign, yalign, ratio, obeyChild) );
+		auto p = gtk_aspect_frame_new(Str.toStringz(label), xalign, yalign, ratio, obeyChild);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkAspectFrame*) p);
 	}
 	
 	/**
@@ -147,7 +168,4 @@ public class AspectFrame : Frame
 		// void gtk_aspect_frame_set (GtkAspectFrame *aspect_frame,  gfloat xalign,  gfloat yalign,  gfloat ratio,  gboolean obey_child);
 		gtk_aspect_frame_set(gtkAspectFrame, xalign, yalign, ratio, obeyChild);
 	}
-	
-	
-	
 }

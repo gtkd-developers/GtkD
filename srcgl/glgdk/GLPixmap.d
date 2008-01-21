@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glgdk.GLConfig
  * structWrap:
@@ -50,7 +51,7 @@
 
 module glgdk.GLPixmap;
 
-private import gtkglc.glgdktypes;
+public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 
@@ -101,7 +102,6 @@ public class GLPixmap : Drawable
 	/**
 	 */
 	
-	
 	/**
 	 * Creates an off-screen rendering area.
 	 * attrib_list is currently unused. This must be set to NULL or empty
@@ -114,7 +114,14 @@ public class GLPixmap : Drawable
 	public this (GdkGLConfig* glconfig, GdkPixmap* pixmap, int* attribList)
 	{
 		// GdkGLPixmap* gdk_gl_pixmap_new (GdkGLConfig *glconfig,  GdkPixmap *pixmap,  const int *attrib_list);
-		this(cast(GdkGLPixmap*)gdk_gl_pixmap_new(glconfig, pixmap, attribList) );
+		auto p = gdk_gl_pixmap_new(glconfig, pixmap, attribList);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkGLPixmap*) p);
 	}
 	
 	/**
@@ -191,5 +198,4 @@ public class GLPixmap : Drawable
 		// GdkGLPixmap* gdk_pixmap_get_gl_pixmap (GdkPixmap *pixmap);
 		return gdk_pixmap_get_gl_pixmap(pixmap);
 	}
-	
 }

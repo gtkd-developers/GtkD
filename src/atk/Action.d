@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module atk.Action;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -119,7 +120,6 @@ public class Action
 	/**
 	 */
 	
-	
 	/**
 	 * Perform the specified action on the object.
 	 * Params:
@@ -153,7 +153,7 @@ public class Action
 	public char[] getDescription(int i)
 	{
 		// const gchar* atk_action_get_description (AtkAction *action,  gint i);
-		return Str.toString(atk_action_get_description(atkAction, i) );
+		return Str.toString(atk_action_get_description(atkAction, i)).dup;
 	}
 	
 	/**
@@ -177,7 +177,7 @@ public class Action
 	public char[] getName(int i)
 	{
 		// const gchar* atk_action_get_name (AtkAction *action,  gint i);
-		return Str.toString(atk_action_get_name(atkAction, i) );
+		return Str.toString(atk_action_get_name(atkAction, i)).dup;
 	}
 	
 	/**
@@ -189,7 +189,7 @@ public class Action
 	public char[] getLocalizedName(int i)
 	{
 		// const gchar* atk_action_get_localized_name (AtkAction *action,  gint i);
-		return Str.toString(atk_action_get_localized_name(atkAction, i) );
+		return Str.toString(atk_action_get_localized_name(atkAction, i)).dup;
 	}
 	
 	/**
@@ -211,7 +211,7 @@ public class Action
 	public char[] getKeybinding(int i)
 	{
 		// const gchar* atk_action_get_keybinding (AtkAction *action,  gint i);
-		return Str.toString(atk_action_get_keybinding(atkAction, i) );
+		return Str.toString(atk_action_get_keybinding(atkAction, i)).dup;
 	}
 	
 	/**

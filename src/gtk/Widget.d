@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_widget_
  * 	- gtk_
@@ -42,9 +43,11 @@
  * omit prefixes:
  * 	- gtk_widget_ref
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- atk.ObjectAtk
+ * 	- gtk.Action
  * 	- gdk.Rectangle
  * 	- gtk.AccelGroup
  * 	- glib.ListG
@@ -71,6 +74,11 @@
  * 	- pango.PgFontDescription
  * 	- gdk.Drawable
  * 	- gtk.Tooltips
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- AtkObject* -> ObjectAtk
  * 	- GList* -> ListG
@@ -87,11 +95,13 @@
  * 	- GdkVisual* -> Visual
  * 	- GdkWindow* -> Window
  * 	- GtkAccelGroup* -> AccelGroup
+ * 	- GtkAction* -> Action
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkClipboard* -> Clipboard
  * 	- GtkRcStyle* -> RcStyle
  * 	- GtkSettings* -> Settings
  * 	- GtkStyle* -> Style
+ * 	- GtkWidget* -> Widget
  * 	- PangoContext* -> PgContext
  * 	- PangoFontDescription* -> PgFontDescription
  * 	- PangoLayout* -> PgLayout
@@ -101,13 +111,16 @@
 
 module gtk.Widget;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import atk.ObjectAtk;
+private import gtk.Action;
 private import gdk.Rectangle;
 private import gtk.AccelGroup;
 private import glib.ListG;
@@ -134,6 +147,11 @@ private import pango.PgContext;
 private import pango.PgFontDescription;
 private import gdk.Drawable;
 private import gtk.Tooltips;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -162,7 +180,7 @@ private import gtk.ObjectGtk;
  *  <accelerator key="q" modifiers="GDK_CONTROL_MASK" signal="clicked"/>
  * </object>
  */
-public class Widget : ObjectGtk
+public class Widget : ObjectGtk, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -195,6 +213,9 @@ public class Widget : ObjectGtk
 		super(cast(GtkObject*)gtkWidget);
 		this.gtkWidget = gtkWidget;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkWidget);
 	
 	/** */
 	public int getWidth()
@@ -311,20 +332,16 @@ public class Widget : ObjectGtk
 		{
 			char[10] s;
 			modifyFont(
-			new PgFontDescription(
 			PgFontDescription.fromString(
 			family ~ " " ~ tango.text.convert.Integer.itoa(s,size)
-			)
 			)
 			);
 		}
 		else
 		{
 			modifyFont(
-			new PgFontDescription(
 			PgFontDescription.fromString(
 			family ~ " " ~ std.string.toString(size)
-			)
 			)
 			);
 		}
@@ -333,6 +350,7 @@ public class Widget : ObjectGtk
 	
 	/**
 	 * Sets this widget tooltip
+	 * Deprecated: Since 2.12 use setTooltipText() or setTooltipMarkup()
 	 * Params:
 	 *  tipText = the tooltip
 	 *  tipPrivate = a private text
@@ -345,13 +363,11 @@ public class Widget : ObjectGtk
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Widget)[] onAccelClosuresChangedListeners;
+	/**
+	 */
 	void addOnAccelClosuresChanged(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accel-closures-changed" in connectedSignals) )
@@ -380,6 +396,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventButton*, Widget)[] onButtonPressListeners;
+	/**
+	 * The ::button-press-event signal will be emitted when a button
+	 * (typically from a mouse) is pressed.
+	 * To receive this signal, the GdkWindow associated to the
+	 * widget needs to enable the GDK_BUTTON_PRESS_MASK mask.
+	 * This signal will be sent to the grab widget if there is one.
+	 */
 	void addOnButtonPress(gboolean delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("button-press-event" in connectedSignals) )
@@ -409,6 +432,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventButton*, Widget)[] onButtonReleaseListeners;
+	/**
+	 * The ::button-release-event signal will be emitted when a button
+	 * (typically from a mouse) is released.
+	 * To receive this signal, the GdkWindow associated to the
+	 * widget needs to enable the GDK_BUTTON_RELEASE_MASK mask.
+	 * This signal will be sent to the grab widget if there is one.
+	 */
 	void addOnButtonRelease(gboolean delegate(GdkEventButton*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("button-release-event" in connectedSignals) )
@@ -438,6 +468,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(guint, Widget)[] onCanActivateAccelListeners;
+	/**
+	 * Determines whether an accelerator that activates the signal
+	 * identified by signal_id can currently be activated.
+	 * This signal is present to allow applications and derived
+	 * widgets to override the default GtkWidget handling
+	 * for determining whether an accelerator can be activated.
+	 */
 	void addOnCanActivateAccel(gboolean delegate(guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("can-activate-accel" in connectedSignals) )
@@ -466,6 +503,11 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GParamSpec*, Widget)[] onChildNotifyListeners;
+	/**
+	 * The ::child-notify signal is emitted for each
+	 * child property that has
+	 * changed on an object. The signal's detail holds the property name.
+	 */
 	void addOnChildNotify(void delegate(GParamSpec*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("child-notify" in connectedSignals) )
@@ -494,6 +536,11 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventClient*, Widget)[] onClientListeners;
+	/**
+	 * The ::client-event will be emitted when the widget's window
+	 * receives a message (via a ClientMessage event) from another
+	 * application.
+	 */
 	void addOnClient(gboolean delegate(GdkEventClient*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("client-event" in connectedSignals) )
@@ -522,6 +569,11 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onCompositedChangedListeners;
+	/**
+	 * The ::composited-changed signal is emitted when the composited
+	 * status of widgets screen changes.
+	 * See gdk_screen_is_composited().
+	 */
 	void addOnCompositedChanged(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("composited-changed" in connectedSignals) )
@@ -550,6 +602,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventConfigure*, Widget)[] onConfigureListeners;
+	/**
+	 * The ::configure-event signal will be emitted when the size, position or
+	 * stacking of the widget's window has changed.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
+	 * automatically for all new windows.
+	 */
 	void addOnConfigure(gboolean delegate(GdkEventConfigure*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("configure-event" in connectedSignals) )
@@ -578,6 +637,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onDeleteListeners;
+	/**
+	 * The ::delete-event signal is emitted if a user requests that
+	 * a toplevel window is closed. The default handler for this signal
+	 * destroys the window. Connecting gtk_widget_hide_on_delete() to
+	 * this signal will cause the window to be hidden instead, so that
+	 * it can later be shown again without reconstructing it.
+	 */
 	void addOnDelete(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-event" in connectedSignals) )
@@ -606,6 +672,15 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onDestroyListeners;
+	/**
+	 * The ::destroy-event signal is emitted when a GdkWindow is destroyed.
+	 * You rarely get this signal, because most widgets disconnect themselves
+	 * from their window before they destroy it, so no widget owns the
+	 * window at destroy time.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
+	 * automatically for all new windows.
+	 */
 	void addOnDestroy(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("destroy-event" in connectedSignals) )
@@ -634,6 +709,10 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkTextDirection, Widget)[] onDirectionChangedListeners;
+	/**
+	 * The ::direction-changed signal is emitted when the text direction
+	 * of a widget changes.
+	 */
 	void addOnDirectionChanged(void delegate(GtkTextDirection, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("direction-changed" in connectedSignals) )
@@ -662,6 +741,11 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, Widget)[] onDragBeginListeners;
+	/**
+	 * The ::drag-begin signal is emitted on the drag source when a drag is
+	 * started. A typical reason to connect to this signal is to set up a
+	 * custom drag icon with gtk_drag_source_set_icon().
+	 */
 	void addOnDragBegin(void delegate(GdkDragContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-begin" in connectedSignals) )
@@ -690,6 +774,12 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, Widget)[] onDragDataDeleteListeners;
+	/**
+	 * The ::drag-data-delete signal is emitted on the drag source when a drag
+	 * with the action GDK_ACTION_MOVE is successfully completed. The signal
+	 * handler is responsible for deleting the data that has been dropped. What
+	 * "delete" means depends on the context of the drag operation.
+	 */
 	void addOnDragDataDelete(void delegate(GdkDragContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-data-delete" in connectedSignals) )
@@ -718,6 +808,13 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, GtkSelectionData*, guint, guint, Widget)[] onDragDataGetListeners;
+	/**
+	 * The ::drag-data-get signal is emitted on the drag source when the drop
+	 * site requests the data which is dragged. It is the responsibility of
+	 * the signal handler to fill data with the data in the format which
+	 * is indicated by info. See gtk_selection_data_set() and
+	 * gtk_selection_data_set_text().
+	 */
 	void addOnDragDataGet(void delegate(GdkDragContext*, GtkSelectionData*, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-data-get" in connectedSignals) )
@@ -746,6 +843,56 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget)[] onDragDataReceivedListeners;
+	/**
+	 * The ::drag-data-received signal is emitted on the drop site when the
+	 * dragged data has been received. If the data was received in order to
+	 * determine whether the drop will be accepted, the handler is expected
+	 * to call gdk_drag_status() and not finish the drag.
+	 * If the data was received in response to a "drag-drop" signal
+	 * (and this is the last target to be received), the handler for this
+	 * signal is expected to process the received data and then call
+	 * gtk_drag_finish(), setting the success parameter depending on whether
+	 * the data was processed successfully.
+	 * The handler may inspect and modify drag_context->action before calling
+	 * gtk_drag_finish(), e.g. to implement GDK_ACTION_ASK as shown in the
+	 * void
+	 * drag_data_received (GtkWidget *widget,
+	 *  GdkDragContext *drag_context,
+	 *  gint x,
+	 *  gint y,
+	 *  GtkSelectionData *data,
+	 *  guint info,
+	 *  guint time)
+	 * {
+		 *  if ((data->length >= 0)  (data->format == 8))
+		 *  {
+			 *  if (drag_context->action == GDK_ACTION_ASK)
+			 *  {
+				 *  GtkWidget *dialog;
+				 *  gint response;
+				 *
+				 *  dialog = gtk_message_dialog_new (NULL,
+				 *  GTK_DIALOG_MODAL |
+				 *  GTK_DIALOG_DESTROY_WITH_PARENT,
+				 *  GTK_MESSAGE_INFO,
+				 *  GTK_BUTTONS_YES_NO,
+				 *  "Move the data ?\n");
+				 *  response = gtk_dialog_run (GTK_DIALOG (dialog));
+				 *  gtk_widget_destroy (dialog);
+				 *
+				 *  if (response == GTK_RESPONSE_YES)
+				 *  drag_context->action = GDK_ACTION_MOVE;
+				 *  else
+				 *  drag_context->action = GDK_ACTION_COPY;
+			 *  }
+			 *
+			 *  gtk_drag_finish (drag_context, TRUE, FALSE, time);
+			 *  return;
+		 *  }
+		 *
+		 *  gtk_drag_finish (drag_context, FALSE, FALSE, time);
+	 *  }
+	 */
 	void addOnDragDataReceived(void delegate(GdkDragContext*, gint, gint, GtkSelectionData*, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-data-received" in connectedSignals) )
@@ -774,6 +921,18 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkDragContext*, gint, gint, guint, Widget)[] onDragDropListeners;
+	/**
+	 * The ::drag-drop signal is emitted on the drop site when the user drops
+	 * the data onto the widget. The signal handler must determine whether
+	 * the cursor position is in a drop zone or not. If it is not in a drop
+	 * zone, it returns FALSE and no further processing is necessary.
+	 * Otherwise, the handler returns TRUE. In this case, the handler must
+	 * ensure that gtk_drag_finish() is called to let the source know that
+	 * the drop is done. The call to gtk_drag_finish() can be done either
+	 * directly or in a "drag-data-received" handler which gets
+	 * triggered by calling gtk_drag_get_data() to receive the data for one
+	 * or more of the supported targets.
+	 */
 	void addOnDragDrop(gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-drop" in connectedSignals) )
@@ -802,6 +961,11 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, Widget)[] onDragEndListeners;
+	/**
+	 * The ::drag-end signal is emitted on the drag source when a drag is
+	 * finished. A typical reason to connect to this signal is to undo
+	 * things done in "drag-begin".
+	 */
 	void addOnDragEnd(void delegate(GdkDragContext*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-end" in connectedSignals) )
@@ -830,6 +994,14 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkDragContext*, GtkDragResult, Widget)[] onDragFailedListeners;
+	/**
+	 * The ::drag-failed signal is emitted on the drag source when a drag has
+	 * failed. The signal handler may hook custom code to handle a failed DND
+	 * operation based on the type of error, it returns TRUE is the failure has
+	 * been already handled (not showing the default "drag operation failed"
+	 * animation), otherwise it returns FALSE.
+	 * Since 2.12
+	 */
 	void addOnDragFailed(gboolean delegate(GdkDragContext*, GtkDragResult, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-failed" in connectedSignals) )
@@ -858,6 +1030,12 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GdkDragContext*, guint, Widget)[] onDragLeaveListeners;
+	/**
+	 * The ::drag-leave signal is emitted on the drop site when the cursor
+	 * leaves the widget. A typical reason to connect to this signal is to
+	 * undo things done in "drag-motion", e.g. undo highlighting
+	 * with gtk_drag_unhighlight()
+	 */
 	void addOnDragLeave(void delegate(GdkDragContext*, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-leave" in connectedSignals) )
@@ -886,6 +1064,85 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkDragContext*, gint, gint, guint, Widget)[] onDragMotionListeners;
+	/**
+	 * The ::drag-motion signal is emitted on the drop site when the user
+	 * moves the cursor over the widget during a drag. The signal handler
+	 * must determine whether the cursor position is in a drop zone or not.
+	 * If it is not in a drop zone, it returns FALSE and no further processing
+	 * is necessary. Otherwise, the handler returns TRUE. In this case, the
+	 * handler is responsible for providing the necessary information for
+	 * displaying feedback to the user, by calling gdk_drag_status(). If the
+	 * decision whether the drop will be accepted or rejected can't be made
+	 * based solely on the cursor position and the type of the data, the handler
+	 * may inspect the dragged data by calling gtk_drag_get_data() and defer the
+	 * gdk_drag_status() call to the "drag-data-received" handler.
+	 * Note that there is no drag-enter signal. The drag receiver has to keep
+	 * track of whether he has received any drag-motion signals since the last
+	 * "drag-leave" and if not, treat the drag-motion signal as an
+	 * "enter" signal. Upon an "enter", the handler will typically highlight
+	 * the drop site with gtk_drag_highlight().
+	 *
+	 * static void
+	 * drag_motion (GtkWidget *widget,
+	 *  	 GdkDragContext *context,
+	 *  gint x,
+	 *  gint y,
+	 *  guint time)
+	 * {
+		 *  GdkAtom target;
+		 *
+		 *  PrivateData *private_data = GET_PRIVATE_DATA (widget);
+		 *
+		 *  if (!private_data->drag_highlight)
+		 *  {
+			 *  private_data->drag_highlight = 1;
+			 *  gtk_drag_highlight (widget);
+		 *  }
+		 *
+		 *  target = gtk_drag_dest_find_target (widget, context, NULL);
+		 *  if (target == GDK_NONE)
+		 *  gdk_drag_status (context, 0, time);
+		 *  else
+		 *  {
+			 *  private_data->pending_status = context->suggested_action;
+			 *  gtk_drag_get_data (widget, context, target, time);
+		 *  }
+		 *
+		 *  return TRUE;
+	 * }
+	 *
+	 * static void
+	 * drag_data_received (GtkWidget *widget,
+	 *  GdkDragContext *context,
+	 *  gint x,
+	 *  gint y,
+	 *  GtkSelectionData *selection_data,
+	 *  guint info,
+	 *  guint time)
+	 * {
+		 *  PrivateData *private_data = GET_PRIVATE_DATA (widget);
+		 *
+		 *  if (private_data->suggested_action)
+		 *  {
+			 *  private_data->suggested_action = 0;
+			 *
+			 *  /+* We are getting this data due to a request in drag_motion,
+			 *  * rather than due to a request in drag_drop, so we are just
+			 *  * supposed to call gdk_drag_status(), not actually paste in
+			 *  * the data.
+			 *  +/
+			 *  str = gtk_selection_data_get_text (selection_data);
+			 *  if (!data_is_acceptable (str))
+			 *  gdk_drag_status (context, 0, time);
+			 *  else
+			 *  gdk_drag_status (context, private_data->suggested_action, time);
+		 *  }
+		 *  else
+		 *  {
+			 *  /+* accept the drop +/
+		 *  }
+	 * }
+	 */
 	void addOnDragMotion(gboolean delegate(GdkDragContext*, gint, gint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("drag-motion" in connectedSignals) )
@@ -914,6 +1171,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventCrossing*, Widget)[] onEnterNotifyListeners;
+	/**
+	 * The ::enter-notify-event will be emitted when the pointer enters
+	 * the widget's window.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_ENTER_NOTIFY_MASK mask.
+	 * This signal will be sent to the grab widget if there is one.
+	 */
 	void addOnEnterNotify(gboolean delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("enter-notify-event" in connectedSignals) )
@@ -942,6 +1206,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onListeners;
+	/**
+	 * The GTK+ main loop will emit three signals for each GDK event delivered
+	 * to a widget: one generic ::event signal, another, more specific,
+	 * signal that matches the type of event delivered (e.g.
+	 * "key-press-event") and finally a generic
+	 * "event-after" signal.
+	 */
 	void addOn(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("event" in connectedSignals) )
@@ -970,6 +1241,11 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Event, Widget)[] onEventAfterListeners;
+	/**
+	 * After the emission of the "event" signal and (optionally)
+	 * the second more specific signal, ::event-after will be emitted
+	 * regardless of the previous two signals handlers return values.
+	 */
 	void addOnEventAfter(void delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("event-after" in connectedSignals) )
@@ -998,6 +1274,14 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventExpose*, Widget)[] onExposeListeners;
+	/**
+	 * The ::expose-event signal is emitted when an area of a previously
+	 * obscured GdkWindow is made visible and needs to be redrawn.
+	 * GTK_NO_WINDOW widgets will get a synthesized event from their parent
+	 * widget.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_EXPOSURE_MASK mask.
+	 */
 	void addOnExpose(gboolean delegate(GdkEventExpose*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("expose-event" in connectedSignals) )
@@ -1026,6 +1310,9 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GtkDirectionType, Widget)[] onFocusListeners;
+	/**
+	 * TRUE to stop other handlers from being invoked for the event. FALSE to propagate the event further.
+	 */
 	void addOnFocus(gboolean delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus" in connectedSignals) )
@@ -1054,6 +1341,12 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventFocus*, Widget)[] onFocusInListeners;
+	/**
+	 * The ::focus-in-event signal will be emitted when the keyboard focus
+	 * enters the widget's window.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_FOCUS_CHANGE_MASK mask.
+	 */
 	void addOnFocusIn(gboolean delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-in-event" in connectedSignals) )
@@ -1082,6 +1375,12 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventFocus*, Widget)[] onFocusOutListeners;
+	/**
+	 * The ::focus-out-event signal will be emitted when the keyboard focus
+	 * leaves the widget's window.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_FOCUS_CHANGE_MASK mask.
+	 */
 	void addOnFocusOut(gboolean delegate(GdkEventFocus*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-out-event" in connectedSignals) )
@@ -1110,6 +1409,14 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onGrabBrokenListeners;
+	/**
+	 * Emitted when a pointer or keyboard grab on a window belonging
+	 * to widget gets broken.
+	 * On X11, this happens when the grab window becomes unviewable
+	 * (i.e. it or one of its ancestors is unmapped), or if the same
+	 * application grabs the pointer or keyboard again.
+	 * Since 2.8
+	 */
 	void addOnGrabBroken(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("grab-broken-event" in connectedSignals) )
@@ -1138,6 +1445,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onGrabFocusListeners;
+	/**
+	 */
 	void addOnGrabFocus(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("grab-focus" in connectedSignals) )
@@ -1166,6 +1475,15 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(gboolean, Widget)[] onGrabNotifyListeners;
+	/**
+	 * The ::grab-notify signal is emitted when a widget becomes
+	 * shadowed by a GTK+ grab (not a pointer or keyboard grab) on
+	 * another widget, or when it becomes unshadowed due to a grab
+	 * being removed.
+	 * A widget is shadowed by a gtk_grab_add() when the topmost
+	 * grab widget in the grab stack of its window group is not
+	 * its ancestor.
+	 */
 	void addOnGrabNotify(void delegate(gboolean, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("grab-notify" in connectedSignals) )
@@ -1194,6 +1512,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onHideListeners;
+	/**
+	 */
 	void addOnHide(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("hide" in connectedSignals) )
@@ -1221,8 +1541,15 @@ public class Widget : ObjectGtk
 		return consumed;
 	}
 	
-	void delegate(GtkWidget*, Widget)[] onHierarchyChangedListeners;
-	void addOnHierarchyChanged(void delegate(GtkWidget*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void delegate(Widget, Widget)[] onHierarchyChangedListeners;
+	/**
+	 * The ::hierarchy-changed signal is emitted when the
+	 * anchored state of a widget changes. A widget is
+	 * anchored when its toplevel
+	 * ancestor is a GtkWindow. This signal is emitted when
+	 * a widget changes from un-anchored to anchored or vice-versa.
+	 */
+	void addOnHierarchyChanged(void delegate(Widget, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("hierarchy-changed" in connectedSignals) )
 		{
@@ -1241,15 +1568,21 @@ public class Widget : ObjectGtk
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(GtkWidget*, Widget) dlg ; widget.onHierarchyChangedListeners )
+		foreach ( void delegate(Widget, Widget) dlg ; widget.onHierarchyChangedListeners )
 		{
-			dlg(previousToplevel, widget);
+			dlg(new Widget(previousToplevel), widget);
 		}
 		
 		return consumed;
 	}
 	
 	gboolean delegate(GdkEventKey*, Widget)[] onKeyPressListeners;
+	/**
+	 * The ::key-press-event signal is emitted when a key is pressed.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_KEY_PRESS_MASK mask.
+	 * This signal will be sent to the grab widget if there is one.
+	 */
 	void addOnKeyPress(gboolean delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("key-press-event" in connectedSignals) )
@@ -1278,6 +1611,12 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventKey*, Widget)[] onKeyReleaseListeners;
+	/**
+	 * The ::key-release-event signal is emitted when a key is pressed.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_KEY_RELEASE_MASK mask.
+	 * This signal will be sent to the grab widget if there is one.
+	 */
 	void addOnKeyRelease(gboolean delegate(GdkEventKey*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("key-release-event" in connectedSignals) )
@@ -1306,6 +1645,11 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GtkDirectionType, Widget)[] onKeynavFailedListeners;
+	/**
+	 * Gets emitted if keyboard navigation fails.
+	 * See gtk_widget_keynav_failed() for details.
+	 * Since 2.12
+	 */
 	void addOnKeynavFailed(gboolean delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("keynav-failed" in connectedSignals) )
@@ -1334,6 +1678,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventCrossing*, Widget)[] onLeaveNotifyListeners;
+	/**
+	 * The ::leave-notify-event will be emitted when the pointer leaves
+	 * the widget's window.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_LEAVE_NOTIFY_MASK mask.
+	 * This signal will be sent to the grab widget if there is one.
+	 */
 	void addOnLeaveNotify(gboolean delegate(GdkEventCrossing*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("leave-notify-event" in connectedSignals) )
@@ -1362,6 +1713,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onMapListeners;
+	/**
+	 */
 	void addOnMap(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("map" in connectedSignals) )
@@ -1390,6 +1743,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onMapEventListeners;
+	/**
+	 * The ::map-event signal will be emitted when the widget's window is
+	 * mapped. A window is mapped when it becomes visible on the screen.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
+	 * automatically for all new windows.
+	 */
 	void addOnMapEvent(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("map-event" in connectedSignals) )
@@ -1418,6 +1778,8 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(gboolean, Widget)[] onMnemonicActivateListeners;
+	/**
+	 */
 	void addOnMnemonicActivate(gboolean delegate(gboolean, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("mnemonic-activate" in connectedSignals) )
@@ -1446,6 +1808,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventMotion*, Widget)[] onMotionNotifyListeners;
+	/**
+	 * The ::motion-notify-event signal is emitted when the pointer moves
+	 * over the widget's GdkWindow.
+	 * To receive this signal, the GdkWindow associated to the widget
+	 * needs to enable the GDK_POINTER_MOTION_MASK mask.
+	 * This signal will be sent to the grab widget if there is one.
+	 */
 	void addOnMotionNotify(gboolean delegate(GdkEventMotion*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("motion-notify-event" in connectedSignals) )
@@ -1475,6 +1844,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkDirectionType, Widget)[] onMoveFocusListeners;
+	/**
+	 */
 	void addOnMoveFocus(void delegate(GtkDirectionType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-focus" in connectedSignals) )
@@ -1503,6 +1874,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventNoExpose*, Widget)[] onNoExposeListeners;
+	/**
+	 * The ::no-expose-event will be emitted when the widget's window is
+	 * drawn as a copy of another GdkDrawable (with gdk_draw_drawable() or
+	 * gdk_window_copy_area()) which was completely unobscured. If the source
+	 * window was partially obscured GdkEventExpose events will be generated
+	 * for those areas.
+	 */
 	void addOnNoExpose(gboolean delegate(GdkEventNoExpose*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("no-expose-event" in connectedSignals) )
@@ -1531,6 +1909,10 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkObject*, Widget)[] onParentSetListeners;
+	/**
+	 * The ::parent-set signal is emitted when a new parent
+	 * has been set on a widget.
+	 */
 	void addOnParentSet(void delegate(GtkObject*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("parent-set" in connectedSignals) )
@@ -1559,6 +1941,14 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Widget)[] onPopupMenuListeners;
+	/**
+	 * This signal gets emitted whenever a widget should pop up a context
+	 * menu. This usually happens through the standard key binding mechanism;
+	 * by pressing a certain key while a widget is focused, the user can cause
+	 * the widget to pop up a menu. For example, the GtkEntry widget creates
+	 * a menu with clipboard commands. See the section called Implement GtkWidget::popup_menu
+	 * for an example of how to use this signal.
+	 */
 	void addOnPopupMenu(gboolean delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popup-menu" in connectedSignals) )
@@ -1587,6 +1977,12 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventProperty*, Widget)[] onPropertyNotifyListeners;
+	/**
+	 * The ::property-notify-event signal will be emitted when a property on
+	 * the widget's window has been changed or deleted.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_PROPERTY_CHANGE_MASK mask.
+	 */
 	void addOnPropertyNotify(gboolean delegate(GdkEventProperty*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("property-notify-event" in connectedSignals) )
@@ -1615,6 +2011,11 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventProximity*, Widget)[] onProximityInListeners;
+	/**
+	 * To receive this signal the GdkWindow associated to the widget needs
+	 * to enable the GDK_PROXIMITY_IN_MASK mask.
+	 * This signal will be sent to the grab widget if there is one.
+	 */
 	void addOnProximityIn(gboolean delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("proximity-in-event" in connectedSignals) )
@@ -1643,6 +2044,11 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventProximity*, Widget)[] onProximityOutListeners;
+	/**
+	 * To receive this signal the GdkWindow associated to the widget needs
+	 * to enable the GDK_PROXIMITY_OUT_MASK mask.
+	 * This signal will be sent to the grab widget if there is one.
+	 */
 	void addOnProximityOut(gboolean delegate(GdkEventProximity*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("proximity-out-event" in connectedSignals) )
@@ -1671,6 +2077,19 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget)[] onQueryTooltipListeners;
+	/**
+	 * Emitted when the "gtk-tooltip-timeout" has expired with
+	 * the cursor hovering "above" widget; or emitted when widget got
+	 * focus in keyboard mode.
+	 * Using the given coordinates, the signal handler should determine
+	 * whether a tooltip should be shown for widget. If this is the case
+	 * TRUE should be returned, FALSE otherwise. Note that if
+	 * keyboard_mode is TRUE, the values of x and y are undefined and
+	 * should not be used.
+	 * The signal handler is free to manipulate tooltip with the therefore
+	 * destined function calls.
+	 * Since 2.12
+	 */
 	void addOnQueryTooltip(gboolean delegate(gint, gint, gboolean, GtkTooltip*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("query-tooltip" in connectedSignals) )
@@ -1699,6 +2118,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onRealizeListeners;
+	/**
+	 */
 	void addOnRealize(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("realize" in connectedSignals) )
@@ -1727,6 +2148,10 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Screen, Widget)[] onScreenChangedListeners;
+	/**
+	 * The ::screen-changed signal gets emitted when the
+	 * screen of a widget has changed.
+	 */
 	void addOnScreenChanged(void delegate(Screen, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("screen-changed" in connectedSignals) )
@@ -1755,6 +2180,14 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventScroll*, Widget)[] onScrollListeners;
+	/**
+	 * The ::scroll-event signal is emitted when a button in the 4 to 7
+	 * range is pressed. Wheel mice are usually configured to generate
+	 * button press events for buttons 4 and 5 when the wheel is turned.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_BUTTON_PRESS_MASK mask.
+	 * This signal will be sent to the grab widget if there is one.
+	 */
 	void addOnScroll(gboolean delegate(GdkEventScroll*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("scroll-event" in connectedSignals) )
@@ -1783,6 +2216,10 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventSelection*, Widget)[] onSelectionClearListeners;
+	/**
+	 * The ::selection-clear-event signal will be emitted when the
+	 * the widget's window has lost ownership of a selection.
+	 */
 	void addOnSelectionClear(gboolean delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-clear-event" in connectedSignals) )
@@ -1811,6 +2248,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkSelectionData*, guint, guint, Widget)[] onSelectionGetListeners;
+	/**
+	 */
 	void addOnSelectionGet(void delegate(GtkSelectionData*, guint, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-get" in connectedSignals) )
@@ -1839,6 +2278,9 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventSelection*, Widget)[] onSelectionNotifyListeners;
+	/**
+	 * TRUE to stop other handlers from being invoked for the event. FALSE to propagate the event further.
+	 */
 	void addOnSelectionNotify(gboolean delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-notify-event" in connectedSignals) )
@@ -1867,6 +2309,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkSelectionData*, guint, Widget)[] onSelectionReceivedListeners;
+	/**
+	 */
 	void addOnSelectionReceived(void delegate(GtkSelectionData*, guint, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-received" in connectedSignals) )
@@ -1895,6 +2339,11 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventSelection*, Widget)[] onSelectionRequestListeners;
+	/**
+	 * The ::selection-request-event signal will be emitted when
+	 * another client requests ownership of the selection owned by
+	 * the widget's window.
+	 */
 	void addOnSelectionRequest(gboolean delegate(GdkEventSelection*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-request-event" in connectedSignals) )
@@ -1923,6 +2372,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onShowListeners;
+	/**
+	 */
 	void addOnShow(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("show" in connectedSignals) )
@@ -1951,6 +2402,8 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GtkWidgetHelpType, Widget)[] onShowHelpListeners;
+	/**
+	 */
 	void addOnShowHelp(gboolean delegate(GtkWidgetHelpType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("show-help" in connectedSignals) )
@@ -1979,6 +2432,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkAllocation*, Widget)[] onSizeAllocateListeners;
+	/**
+	 */
 	void addOnSizeAllocate(void delegate(GtkAllocation*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-allocate" in connectedSignals) )
@@ -2007,6 +2462,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkRequisition*, Widget)[] onSizeRequestListeners;
+	/**
+	 */
 	void addOnSizeRequest(void delegate(GtkRequisition*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-request" in connectedSignals) )
@@ -2035,6 +2492,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(GtkStateType, Widget)[] onStateChangedListeners;
+	/**
+	 */
 	void addOnStateChanged(void delegate(GtkStateType, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("state-changed" in connectedSignals) )
@@ -2063,6 +2522,11 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Style, Widget)[] onStyleSetListeners;
+	/**
+	 * The ::style-set signal is emitted when a new style has been set
+	 * on a widget. Note that style-modifying functions like
+	 * gtk_widget_modify_base() also cause this signal to be emitted.
+	 */
 	void addOnStyleSet(void delegate(Style, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("style-set" in connectedSignals) )
@@ -2091,6 +2555,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onUnmapListeners;
+	/**
+	 */
 	void addOnUnmap(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unmap" in connectedSignals) )
@@ -2119,6 +2585,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(Event, Widget)[] onUnmapEventListeners;
+	/**
+	 * The ::unmap-event signal will be emitted when the widget's window is
+	 * unmapped. A window is unmapped when it becomes invisible on the screen.
+	 * To receive this signal, the GdkWindow associated to the widget needs
+	 * to enable the GDK_STRUCTURE_MASK mask. GDK will enable this mask
+	 * automatically for all new windows.
+	 */
 	void addOnUnmapEvent(gboolean delegate(Event, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unmap-event" in connectedSignals) )
@@ -2147,6 +2620,8 @@ public class Widget : ObjectGtk
 	}
 	
 	void delegate(Widget)[] onUnrealizeListeners;
+	/**
+	 */
 	void addOnUnrealize(void delegate(Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unrealize" in connectedSignals) )
@@ -2175,6 +2650,12 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventVisibility*, Widget)[] onVisibilityNotifyListeners;
+	/**
+	 * The ::visibility-notify-event will be emitted when the widget's window
+	 * is obscured or unobscured.
+	 * To receive this signal the GdkWindow associated to the widget needs
+	 * to enable the GDK_VISIBILITY_NOTIFY_MASK mask.
+	 */
 	void addOnVisibilityNotify(gboolean delegate(GdkEventVisibility*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("visibility-notify-event" in connectedSignals) )
@@ -2203,6 +2684,13 @@ public class Widget : ObjectGtk
 	}
 	
 	gboolean delegate(GdkEventWindowState*, Widget)[] onWindowStateListeners;
+	/**
+	 * The ::window-state-event will be emitted when the state of the
+	 * toplevel window associated to the widget changes.
+	 * To receive this signal the GdkWindow associated to the widget
+	 * needs to enable the GDK_STRUCTURE_MASK mask. GDK will enable
+	 * this mask automatically for all new windows.
+	 */
 	void addOnWindowState(gboolean delegate(GdkEventWindowState*, Widget) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("window-state-event" in connectedSignals) )
@@ -2231,41 +2719,6 @@ public class Widget : ObjectGtk
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * This is a convenience function for creating a widget and setting
 	 * Params:
@@ -2277,9 +2730,15 @@ public class Widget : ObjectGtk
 	public this (GType type, char[] firstPropertyName, ... )
 	{
 		// GtkWidget* gtk_widget_new (GType type,  const gchar *first_property_name,  ...);
-		this(cast(GtkWidget*)gtk_widget_new(type, Str.toStringz(firstPropertyName)) );
+		auto p = gtk_widget_new(type, Str.toStringz(firstPropertyName));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkWidget*) p);
 	}
-	
 	
 	/**
 	 * Warning
@@ -2659,7 +3118,13 @@ public class Widget : ObjectGtk
 	public ListG listAccelClosures()
 	{
 		// GList* gtk_widget_list_accel_closures (GtkWidget *widget);
-		return new ListG( gtk_widget_list_accel_closures(gtkWidget) );
+		auto p = gtk_widget_list_accel_closures(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -2719,10 +3184,10 @@ public class Widget : ObjectGtk
 	 * Params:
 	 * newParent =  a GtkContainer to move the widget into
 	 */
-	public void reparent(GtkWidget* newParent)
+	public void reparent(Widget newParent)
 	{
 		// void gtk_widget_reparent (GtkWidget *widget,  GtkWidget *new_parent);
-		gtk_widget_reparent(gtkWidget, newParent);
+		gtk_widget_reparent(gtkWidget, (newParent is null) ? null : newParent.getWidgetStruct());
 	}
 	
 	/**
@@ -2804,7 +3269,7 @@ public class Widget : ObjectGtk
 	public char[] getName()
 	{
 		// const gchar* gtk_widget_get_name (GtkWidget *widget);
-		return Str.toString(gtk_widget_get_name(gtkWidget) );
+		return Str.toString(gtk_widget_get_name(gtkWidget)).dup;
 	}
 	
 	/**
@@ -2844,10 +3309,10 @@ public class Widget : ObjectGtk
 	 * Params:
 	 * parent =  parent container
 	 */
-	public void setParent(GtkWidget* parent)
+	public void setParent(Widget parent)
 	{
 		// void gtk_widget_set_parent (GtkWidget *widget,  GtkWidget *parent);
-		gtk_widget_set_parent(gtkWidget, parent);
+		gtk_widget_set_parent(gtkWidget, (parent is null) ? null : parent.getWidgetStruct());
 	}
 	
 	/**
@@ -2868,7 +3333,13 @@ public class Widget : ObjectGtk
 	public Window getParentWindow()
 	{
 		// GdkWindow* gtk_widget_get_parent_window (GtkWidget *widget);
-		return new Window( gtk_widget_get_parent_window(gtkWidget) );
+		auto p = gtk_widget_get_parent_window(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -3004,10 +3475,16 @@ public class Widget : ObjectGtk
 	 *  }
 	 * Returns: the topmost ancestor of widget, or widget itself  if there's no ancestor.
 	 */
-	public GtkWidget* getToplevel()
+	public Widget getToplevel()
 	{
 		// GtkWidget* gtk_widget_get_toplevel (GtkWidget *widget);
-		return gtk_widget_get_toplevel(gtkWidget);
+		auto p = gtk_widget_get_toplevel(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -3024,10 +3501,16 @@ public class Widget : ObjectGtk
 	 * widgetType =  ancestor type
 	 * Returns: the ancestor widget, or NULL if not found
 	 */
-	public GtkWidget* getAncestor(GType widgetType)
+	public Widget getAncestor(GType widgetType)
 	{
 		// GtkWidget* gtk_widget_get_ancestor (GtkWidget *widget,  GType widget_type);
-		return gtk_widget_get_ancestor(gtkWidget, widgetType);
+		auto p = gtk_widget_get_ancestor(gtkWidget, widgetType);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -3038,7 +3521,13 @@ public class Widget : ObjectGtk
 	public Colormap getColormap()
 	{
 		// GdkColormap* gtk_widget_get_colormap (GtkWidget *widget);
-		return new Colormap( gtk_widget_get_colormap(gtkWidget) );
+		auto p = gtk_widget_get_colormap(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -3062,7 +3551,13 @@ public class Widget : ObjectGtk
 	public Visual getVisual()
 	{
 		// GdkVisual* gtk_widget_get_visual (GtkWidget *widget);
-		return new Visual( gtk_widget_get_visual(gtkWidget) );
+		auto p = gtk_widget_get_visual(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -3100,10 +3595,10 @@ public class Widget : ObjectGtk
 	 * ancestor =  another GtkWidget
 	 * Returns: TRUE if ancestor contains widget as a child,  grandchild, great grandchild, etc.
 	 */
-	public int isAncestor(GtkWidget* ancestor)
+	public int isAncestor(Widget ancestor)
 	{
 		// gboolean gtk_widget_is_ancestor (GtkWidget *widget,  GtkWidget *ancestor);
-		return gtk_widget_is_ancestor(gtkWidget, ancestor);
+		return gtk_widget_is_ancestor(gtkWidget, (ancestor is null) ? null : ancestor.getWidgetStruct());
 	}
 	
 	/**
@@ -3119,10 +3614,10 @@ public class Widget : ObjectGtk
 	 * destY =  location to store Y position relative to dest_widget
 	 * Returns: FALSE if either widget was not realized, or there was no common ancestor. In this case, nothing is stored in *dest_x and *dest_y. Otherwise TRUE.
 	 */
-	public int translateCoordinates(GtkWidget* destWidget, int srcX, int srcY, int* destX, int* destY)
+	public int translateCoordinates(Widget destWidget, int srcX, int srcY, int* destX, int* destY)
 	{
 		// gboolean gtk_widget_translate_coordinates (GtkWidget *src_widget,  GtkWidget *dest_widget,  gint src_x,  gint src_y,  gint *dest_x,  gint *dest_y);
-		return gtk_widget_translate_coordinates(gtkWidget, destWidget, srcX, srcY, destX, destY);
+		return gtk_widget_translate_coordinates(gtkWidget, (destWidget is null) ? null : destWidget.getWidgetStruct(), srcX, srcY, destX, destY);
 	}
 	
 	/**
@@ -3156,7 +3651,6 @@ public class Widget : ObjectGtk
 		gtk_widget_set_style(gtkWidget, (style is null) ? null : style.getStyleStruct());
 	}
 	
-	
 	/**
 	 * Ensures that widget has a style (widget->style). Not a very useful
 	 * function; most of the time, if you want the style, the widget is
@@ -3176,9 +3670,14 @@ public class Widget : ObjectGtk
 	public Style getStyle()
 	{
 		// GtkStyle* gtk_widget_get_style (GtkWidget *widget);
-		return new Style( gtk_widget_get_style(gtkWidget) );
+		auto p = gtk_widget_get_style(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Style(cast(GtkStyle*) p);
 	}
-	
 	
 	/**
 	 * Reset the styles of widget and all descendents, so when
@@ -3235,7 +3734,13 @@ public class Widget : ObjectGtk
 	public static Style getDefaultStyle()
 	{
 		// GtkStyle* gtk_widget_get_default_style (void);
-		return new Style( gtk_widget_get_default_style() );
+		auto p = gtk_widget_get_default_style();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -3245,7 +3750,13 @@ public class Widget : ObjectGtk
 	public static Colormap getDefaultColormap()
 	{
 		// GdkColormap* gtk_widget_get_default_colormap (void);
-		return new Colormap( gtk_widget_get_default_colormap() );
+		auto p = gtk_widget_get_default_colormap();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -3256,7 +3767,13 @@ public class Widget : ObjectGtk
 	public static Visual getDefaultVisual()
 	{
 		// GdkVisual* gtk_widget_get_default_visual (void);
-		return new Visual( gtk_widget_get_default_visual() );
+		auto p = gtk_widget_get_default_visual();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -3279,7 +3796,6 @@ public class Widget : ObjectGtk
 		// void gtk_widget_set_direction (GtkWidget *widget,  GtkTextDirection dir);
 		gtk_widget_set_direction(gtkWidget, dir);
 	}
-	
 	
 	/**
 	 * Gets the reading direction for a particular widget. See
@@ -3393,7 +3909,7 @@ public class Widget : ObjectGtk
 	public char[] getCompositeName()
 	{
 		// gchar* gtk_widget_get_composite_name (GtkWidget *widget);
-		return Str.toString(gtk_widget_get_composite_name(gtkWidget) );
+		return Str.toString(gtk_widget_get_composite_name(gtkWidget)).dup;
 	}
 	
 	/**
@@ -3439,7 +3955,13 @@ public class Widget : ObjectGtk
 	public RcStyle getModifierStyle()
 	{
 		// GtkRcStyle* gtk_widget_get_modifier_style (GtkWidget *widget);
-		return new RcStyle( gtk_widget_get_modifier_style(gtkWidget) );
+		auto p = gtk_widget_get_modifier_style(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RcStyle(cast(GtkRcStyle*) p);
 	}
 	
 	/**
@@ -3566,7 +4088,13 @@ public class Widget : ObjectGtk
 	public PgContext createPangoContext()
 	{
 		// PangoContext* gtk_widget_create_pango_context (GtkWidget *widget);
-		return new PgContext( gtk_widget_create_pango_context(gtkWidget) );
+		auto p = gtk_widget_create_pango_context(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgContext(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -3585,7 +4113,13 @@ public class Widget : ObjectGtk
 	public PgContext getPangoContext()
 	{
 		// PangoContext* gtk_widget_get_pango_context (GtkWidget *widget);
-		return new PgContext( gtk_widget_get_pango_context(gtkWidget) );
+		auto p = gtk_widget_get_pango_context(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgContext(cast(PangoContext*) p);
 	}
 	
 	/**
@@ -3604,7 +4138,13 @@ public class Widget : ObjectGtk
 	public PgLayout createPangoLayout(char[] text)
 	{
 		// PangoLayout* gtk_widget_create_pango_layout (GtkWidget *widget,  const gchar *text);
-		return new PgLayout( gtk_widget_create_pango_layout(gtkWidget, Str.toStringz(text)) );
+		auto p = gtk_widget_create_pango_layout(gtkWidget, Str.toStringz(text));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -3629,7 +4169,13 @@ public class Widget : ObjectGtk
 	public Pixbuf renderIcon(char[] stockId, GtkIconSize size, char[] detail)
 	{
 		// GdkPixbuf* gtk_widget_render_icon (GtkWidget *widget,  const gchar *stock_id,  GtkIconSize size,  const gchar *detail);
-		return new Pixbuf( gtk_widget_render_icon(gtkWidget, Str.toStringz(stockId), size, Str.toStringz(detail)) );
+		auto p = gtk_widget_render_icon(gtkWidget, Str.toStringz(stockId), size, Str.toStringz(detail));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -3906,7 +4452,13 @@ public class Widget : ObjectGtk
 	public Region regionIntersect(Region region)
 	{
 		// GdkRegion* gtk_widget_region_intersect (GtkWidget *widget,  GdkRegion *region);
-		return new Region( gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct()) );
+		auto p = gtk_widget_region_intersect(gtkWidget, (region is null) ? null : region.getRegionStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Region(cast(GdkRegion*) p);
 	}
 	
 	/**
@@ -3986,7 +4538,13 @@ public class Widget : ObjectGtk
 	public ObjectAtk getAccessible()
 	{
 		// AtkObject* gtk_widget_get_accessible (GtkWidget *widget);
-		return new ObjectAtk( gtk_widget_get_accessible(gtkWidget) );
+		auto p = gtk_widget_get_accessible(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -4067,10 +4625,16 @@ public class Widget : ObjectGtk
 	 * Returns the parent container of widget.
 	 * Returns: the parent container of widget, or NULL
 	 */
-	public GtkWidget* getParent()
+	public Widget getParent()
 	{
 		// GtkWidget* gtk_widget_get_parent (GtkWidget *widget);
-		return gtk_widget_get_parent(gtkWidget);
+		auto p = gtk_widget_get_parent(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -4084,7 +4648,13 @@ public class Widget : ObjectGtk
 	public Settings getSettings()
 	{
 		// GtkSettings* gtk_widget_get_settings (GtkWidget *widget);
-		return new Settings( gtk_widget_get_settings(gtkWidget) );
+		auto p = gtk_widget_get_settings(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Settings(cast(GtkSettings*) p);
 	}
 	
 	/**
@@ -4104,7 +4674,13 @@ public class Widget : ObjectGtk
 	public Clipboard getClipboard(GdkAtom selection)
 	{
 		// GtkClipboard* gtk_widget_get_clipboard (GtkWidget *widget,  GdkAtom selection);
-		return new Clipboard( gtk_widget_get_clipboard(gtkWidget, selection) );
+		auto p = gtk_widget_get_clipboard(gtkWidget, selection);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Clipboard(cast(GtkClipboard*) p);
 	}
 	
 	/**
@@ -4120,7 +4696,13 @@ public class Widget : ObjectGtk
 	public Display getDisplay()
 	{
 		// GdkDisplay* gtk_widget_get_display (GtkWidget *widget);
-		return new Display( gtk_widget_get_display(gtkWidget) );
+		auto p = gtk_widget_get_display(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -4137,7 +4719,13 @@ public class Widget : ObjectGtk
 	public Window getRootWindow()
 	{
 		// GdkWindow* gtk_widget_get_root_window (GtkWidget *widget);
-		return new Window( gtk_widget_get_root_window(gtkWidget) );
+		auto p = gtk_widget_get_root_window(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -4154,7 +4742,13 @@ public class Widget : ObjectGtk
 	public Screen getScreen()
 	{
 		// GdkScreen* gtk_widget_get_screen (GtkWidget *widget);
-		return new Screen( gtk_widget_get_screen(gtkWidget) );
+		auto p = gtk_widget_get_screen(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -4189,8 +4783,6 @@ public class Widget : ObjectGtk
 		gtk_widget_get_size_request(gtkWidget, width, height);
 	}
 	
-	
-	
 	/**
 	 * Sets whether widget should be mapped along with its when its parent
 	 * is mapped and widget has been shown with gtk_widget_show().
@@ -4214,7 +4806,6 @@ public class Widget : ObjectGtk
 		// void gtk_widget_set_child_visible (GtkWidget *widget,  gboolean is_visible);
 		gtk_widget_set_child_visible(gtkWidget, isVisible);
 	}
-	
 	
 	/**
 	 * Sets the minimum size of a widget; that is, the widget's size
@@ -4250,7 +4841,6 @@ public class Widget : ObjectGtk
 		// void gtk_widget_set_size_request (GtkWidget *widget,  gint width,  gint height);
 		gtk_widget_set_size_request(gtkWidget, width, height);
 	}
-	
 	
 	/**
 	 * Reverts the effect of a previous call to gtk_widget_freeze_child_notify().
@@ -4308,7 +4898,13 @@ public class Widget : ObjectGtk
 	public ListG listMnemonicLabels()
 	{
 		// GList* gtk_widget_list_mnemonic_labels (GtkWidget *widget);
-		return new ListG( gtk_widget_list_mnemonic_labels(gtkWidget) );
+		auto p = gtk_widget_list_mnemonic_labels(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -4322,10 +4918,10 @@ public class Widget : ObjectGtk
 	 * Params:
 	 * label =  a GtkWidget that acts as a mnemonic label for widget
 	 */
-	public void addMnemonicLabel(GtkWidget* label)
+	public void addMnemonicLabel(Widget label)
 	{
 		// void gtk_widget_add_mnemonic_label (GtkWidget *widget,  GtkWidget *label);
-		gtk_widget_add_mnemonic_label(gtkWidget, label);
+		gtk_widget_add_mnemonic_label(gtkWidget, (label is null) ? null : label.getWidgetStruct());
 	}
 	
 	/**
@@ -4338,10 +4934,10 @@ public class Widget : ObjectGtk
 	 * label =  a GtkWidget that was previously set as a mnemnic label for
 	 *  widget with gtk_widget_add_mnemonic_label().
 	 */
-	public void removeMnemonicLabel(GtkWidget* label)
+	public void removeMnemonicLabel(Widget label)
 	{
 		// void gtk_widget_remove_mnemonic_label (GtkWidget *widget,  GtkWidget *label);
-		gtk_widget_remove_mnemonic_label(gtkWidget, label);
+		gtk_widget_remove_mnemonic_label(gtkWidget, (label is null) ? null : label.getWidgetStruct());
 	}
 	
 	/**
@@ -4350,10 +4946,16 @@ public class Widget : ObjectGtk
 	 * Since 2.10
 	 * Returns: the action that a widget is a proxy for, or NULL, if it is not attached to an action.
 	 */
-	public GtkAction* getAction()
+	public Action getAction()
 	{
 		// GtkAction* gtk_widget_get_action (GtkWidget *widget);
-		return gtk_widget_get_action(gtkWidget);
+		auto p = gtk_widget_get_action(gtkWidget);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Action(cast(GtkAction*) p);
 	}
 	
 	/**
@@ -4412,7 +5014,7 @@ public class Widget : ObjectGtk
 	public char[] getTooltipMarkup()
 	{
 		// gchar* gtk_widget_get_tooltip_markup (GtkWidget *widget);
-		return Str.toString(gtk_widget_get_tooltip_markup(gtkWidget) );
+		return Str.toString(gtk_widget_get_tooltip_markup(gtkWidget)).dup;
 	}
 	
 	/**
@@ -4440,7 +5042,7 @@ public class Widget : ObjectGtk
 	public char[] getTooltipText()
 	{
 		// gchar* gtk_widget_get_tooltip_text (GtkWidget *widget);
-		return Str.toString(gtk_widget_get_tooltip_text(gtkWidget) );
+		return Str.toString(gtk_widget_get_tooltip_text(gtkWidget)).dup;
 	}
 	
 	/**
@@ -4546,104 +5148,4 @@ public class Widget : ObjectGtk
 		// void gtk_requisition_free (GtkRequisition *requisition);
 		gtk_requisition_free(requisition);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

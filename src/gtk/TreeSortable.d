@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -49,10 +50,12 @@
 
 module gtk.TreeSortable;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 
 
@@ -99,13 +102,13 @@ public class TreeSortable
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreeSortable)[] onSortColumnChangedListeners;
+	/**
+	 * See Also
+	 * GtkTreeModel, GtkTreeView
+	 */
 	void addOnSortColumnChanged(void delegate(TreeSortable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("sort-column-changed" in connectedSignals) )
@@ -132,9 +135,6 @@ public class TreeSortable
 		
 		return consumed;
 	}
-	
-	
-	
 	
 	
 	/**

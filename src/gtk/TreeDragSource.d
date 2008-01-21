@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.TreePath
  * 	- gtk.TreeModel
@@ -53,7 +54,7 @@
 
 module gtk.TreeDragSource;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -116,8 +117,6 @@ public class TreeDragSource
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Asks the GtkTreeDragSource to delete the row at path, because
 	 * it was moved somewhere else via drag-and-drop. Returns FALSE
@@ -163,8 +162,6 @@ public class TreeDragSource
 		// gboolean gtk_tree_drag_source_row_draggable (GtkTreeDragSource *drag_source,  GtkTreePath *path);
 		return gtk_tree_drag_source_row_draggable(gtkTreeDragSource, (path is null) ? null : path.getTreePathStruct());
 	}
-	
-	
 	
 	/**
 	 * Asks the GtkTreeDragDest to insert a row before the path dest,

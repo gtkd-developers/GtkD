@@ -35,13 +35,21 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_drawing_area_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,17 @@
 
 module gtk.DrawingArea;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -113,7 +127,7 @@ private import gtk.Widget;
  * handler to decide whether to draw the focus indicator. See
  * gtk_paint_focus() for one way to draw focus.
  */
-public class DrawingArea : Widget
+public class DrawingArea : Widget, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -147,6 +161,9 @@ public class DrawingArea : Widget
 		this.gtkDrawingArea = gtkDrawingArea;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkDrawingArea);
+	
 	/**
 	 * Create a new DrawingArea and sets the SizeRequest
 	 * Params:
@@ -163,14 +180,20 @@ public class DrawingArea : Widget
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new drawing area.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_drawing_area_new (void);
-		this(cast(GtkDrawingArea*)gtk_drawing_area_new() );
+		auto p = gtk_drawing_area_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkDrawingArea*) p);
 	}
 	
 	/**

@@ -40,63 +40,21 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
- * 	- pango.PgContext
- * 	- pango.PgItem
- * 	- pango.PgLayout
- * 	- pango.PgFontDescription
- * 	- pango.PgFontFamily
- * 	- pango.PgFontFace
- * 	- pango.PgFontMap
- * 	- pango.PgFontsetSimple
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
- * 	- pango.PgLanguage
- * 	- pango.PgTabArray
- * 	- pango.PgLayout
- * 	- pango.PgLayoutIter
- * 	- pango.PgScriptIter
  * structWrap:
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
- * 	- PangoContext* -> PgContext
- * 	- PangoFontDescription* -> PgFontDescription
- * 	- PangoFontFace* -> PgFontFace
- * 	- PangoFontFamily* -> PgFontFamily
- * 	- PangoFontMap* -> PgFontMap
- * 	- PangoFontsetSimple* -> PgFontsetSimple
- * 	- PangoItem* -> PgItem
- * 	- PangoLanguage* -> PgLanguage
- * 	- PangoLayout* -> PgLayout
- * 	- PangoLayoutIter* -> PgLayoutIter
- * 	- PangoScriptIter* -> PgScriptIter
- * 	- PangoTabArray* -> PgTabArray
+ * 	- PangoFontMetrics* -> PgFontMetrics
  * module aliases:
  * local aliases:
  */
 
 module pango.PgFontMetrics;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
 
-private import pango.PgContext;
-private import pango.PgItem;
-private import pango.PgLayout;
-private import pango.PgFontDescription;
-private import pango.PgFontFamily;
-private import pango.PgFontFace;
-private import pango.PgFontMap;
-private import pango.PgFontsetSimple;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
-private import pango.PgLanguage;
-private import pango.PgTabArray;
-private import pango.PgLayout;
-private import pango.PgLayoutIter;
-private import pango.PgScriptIter;
 
 
 
@@ -146,60 +104,20 @@ public class PgFontMetrics
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Increase the reference count of a font metrics structure by one.
 	 * Returns: metrics
 	 */
-	public PangoFontMetrics* doref()
+	public PgFontMetrics doref()
 	{
 		// PangoFontMetrics* pango_font_metrics_ref (PangoFontMetrics *metrics);
-		return pango_font_metrics_ref(pangoFontMetrics);
+		auto p = pango_font_metrics_ref(pangoFontMetrics);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFontMetrics(cast(PangoFontMetrics*) p);
 	}
 	
 	/**
@@ -271,7 +189,8 @@ public class PgFontMetrics
 	
 	/**
 	 * Gets the suggested thickness to draw for the underline.
-	 * Returns: the suggested underline thickness, in Pango units.Since 1.6
+	 * Since 1.6
+	 * Returns: the suggested underline thickness, in Pango units.
 	 */
 	public int getUnderlineThickness()
 	{
@@ -285,7 +204,8 @@ public class PgFontMetrics
 	 * baseline of the top of the underline. Since most fonts have
 	 * underline positions beneath the baseline, this value is typically
 	 * negative.
-	 * Returns: the suggested underline position, in Pango units.Since 1.6
+	 * Since 1.6
+	 * Returns: the suggested underline position, in Pango units.
 	 */
 	public int getUnderlinePosition()
 	{
@@ -295,7 +215,8 @@ public class PgFontMetrics
 	
 	/**
 	 * Gets the suggested thickness to draw for the strikethrough.
-	 * Returns: the suggested strikethrough thickness, in Pango units.Since 1.6
+	 * Since 1.6
+	 * Returns: the suggested strikethrough thickness, in Pango units.
 	 */
 	public int getStrikethroughThickness()
 	{
@@ -307,61 +228,12 @@ public class PgFontMetrics
 	 * Gets the suggested position to draw the strikethrough.
 	 * The value returned is the distance above the
 	 * baseline of the top of the strikethrough.
-	 * Returns: the suggested strikethrough position, in Pango units.Since 1.6
+	 * Since 1.6
+	 * Returns: the suggested strikethrough position, in Pango units.
 	 */
 	public int getStrikethroughPosition()
 	{
 		// int pango_font_metrics_get_strikethrough_position  (PangoFontMetrics *metrics);
 		return pango_font_metrics_get_strikethrough_position(pangoFontMetrics);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

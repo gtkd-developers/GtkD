@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gobject.Value
  * structWrap:
@@ -50,7 +51,7 @@
 
 module atk.ValueAtk;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -105,7 +106,6 @@ public class ValueAtk
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Gets the value of this object.

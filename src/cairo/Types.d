@@ -40,6 +40,7 @@
  * omit prefixes:
  * 	- cairo_bool_t
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module cairo.Types;
 
-private import gtkc.cairotypes;
+public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
 
@@ -59,7 +60,4 @@ private import gtkc.cairo;
 
 /**
  */
-
-
-
 

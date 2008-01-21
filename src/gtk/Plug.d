@@ -30,19 +30,27 @@
  * ctorStrct=
  * clss    = Plug
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_plug_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Display
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkDisplay* -> Display
  * module aliases:
@@ -51,12 +59,20 @@
 
 module gtk.Plug;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gdk.Display;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -76,7 +92,7 @@ private import gtk.Window;
  * The GtkPlug and GtkSocket widgets are currently not available
  * on all platforms supported by GTK+.
  */
-public class Plug : Window
+public class Plug : Window, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -110,15 +126,21 @@ public class Plug : Window
 		this.gtkPlug = gtkPlug;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkPlug);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Plug)[] onEmbeddedListeners;
+	/**
+	 * Gets emitted when the plug becomes embedded in a socket
+	 * and when the embedding ends.
+	 * See Also
+	 * GtkSocket
+	 * the widget that a GtkPlug plugs into.
+	 */
 	void addOnEmbedded(void delegate(Plug) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("embedded" in connectedSignals) )
@@ -145,7 +167,6 @@ public class Plug : Window
 		
 		return consumed;
 	}
-	
 	
 	
 	/**
@@ -186,7 +207,14 @@ public class Plug : Window
 	public this (GdkNativeWindow socketId)
 	{
 		// GtkWidget* gtk_plug_new (GdkNativeWindow socket_id);
-		this(cast(GtkPlug*)gtk_plug_new(socketId) );
+		auto p = gtk_plug_new(socketId);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkPlug*) p);
 	}
 	
 	/**
@@ -199,7 +227,14 @@ public class Plug : Window
 	public this (Display display, GdkNativeWindow socketId)
 	{
 		// GtkWidget* gtk_plug_new_for_display (GdkDisplay *display,  GdkNativeWindow socket_id);
-		this(cast(GtkPlug*)gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId) );
+		auto p = gtk_plug_new_for_display((display is null) ? null : display.getDisplayStruct(), socketId);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkPlug*) p);
 	}
 	
 	/**

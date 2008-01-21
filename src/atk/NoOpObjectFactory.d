@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gobject.ObjectG
  * structWrap:
@@ -50,7 +51,7 @@
 
 module atk.NoOpObjectFactory;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -103,7 +104,6 @@ public class NoOpObjectFactory : ObjectFactory
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates an instance of an AtkObjectFactory which generates primitive

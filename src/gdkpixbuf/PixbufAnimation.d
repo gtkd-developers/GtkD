@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdkpixbuf.PixbufAnimation
  * 	- gdk.Pixbuf
@@ -53,7 +54,7 @@
 
 module gdkpixbuf.PixbufAnimation;
 
-private import gtkc.gdkpixbuftypes;
+public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
 
@@ -113,8 +114,6 @@ public class PixbufAnimation : ObjectG
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Creates a new animation by loading it from a file. The file format is
 	 * detected automatically. If the file's format does not support multi-frame
@@ -127,7 +126,14 @@ public class PixbufAnimation : ObjectG
 	public this (char[] filename, GError** error)
 	{
 		// GdkPixbufAnimation* gdk_pixbuf_animation_new_from_file (const char *filename,  GError **error);
-		this(cast(GdkPixbufAnimation*)gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), error) );
+		auto p = gdk_pixbuf_animation_new_from_file(Str.toStringz(filename), error);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkPixbufAnimation*) p);
 	}
 	
 	/**
@@ -139,7 +145,13 @@ public class PixbufAnimation : ObjectG
 	public PixbufAnimation doref()
 	{
 		// GdkPixbufAnimation* gdk_pixbuf_animation_ref (GdkPixbufAnimation *animation);
-		return new PixbufAnimation( gdk_pixbuf_animation_ref(gdkPixbufAnimation) );
+		auto p = gdk_pixbuf_animation_ref(gdkPixbufAnimation);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PixbufAnimation(cast(GdkPixbufAnimation*) p);
 	}
 	
 	/**
@@ -237,7 +249,13 @@ public class PixbufAnimation : ObjectG
 	public Pixbuf getStaticImage()
 	{
 		// GdkPixbuf* gdk_pixbuf_animation_get_static_image  (GdkPixbufAnimation *animation);
-		return new Pixbuf( gdk_pixbuf_animation_get_static_image(gdkPixbufAnimation) );
+		auto p = gdk_pixbuf_animation_get_static_image(gdkPixbufAnimation);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -318,9 +336,14 @@ public class PixbufAnimation : ObjectG
 	public static Pixbuf iterGetPixbuf(GdkPixbufAnimationIter* iter)
 	{
 		// GdkPixbuf* gdk_pixbuf_animation_iter_get_pixbuf  (GdkPixbufAnimationIter *iter);
-		return new Pixbuf( gdk_pixbuf_animation_iter_get_pixbuf(iter) );
+		auto p = gdk_pixbuf_animation_iter_get_pixbuf(iter);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
-	
 	
 	/**
 	 * Creates a new, empty animation.

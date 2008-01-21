@@ -45,9 +45,11 @@
  * 	- gtk_text_buffer_insert_with_tags
  * 	- gtk_text_buffer_insert_with_tags_by_name
  * 	- gtk_text_buffer_create_tag
+ * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.TextBuffer
+ * 	- gtk.TextMark
+ * 	- gtk.TextIter
  * 	- gdk.Rectangle
  * 	- gtk.Widget
  * 	- pango.PgTabArray
@@ -81,13 +83,16 @@
 
 module gtk.TextBuffer;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.TextBuffer;
+private import gtk.TextMark;
+private import gtk.TextIter;
 private import gdk.Rectangle;
 private import gtk.Widget;
 private import pango.PgTabArray;
@@ -107,7 +112,6 @@ version(Tango) {
 } else {
 	private import std.stdarg;
 }
-
 
 
 private import gobject.ObjectG;
@@ -415,13 +419,20 @@ public class TextBuffer : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TextTag, TextIter, TextIter, TextBuffer)[] onApplyTagListeners;
+	/**
+	 * The apply_tag signal is emitted to apply a tag to a
+	 * range of text in a GtkTextBuffer.
+	 * Applying actually occurs in the default handler.
+	 * Note that if your handler runs before the default handler it must not
+	 * invalidate the start and end iters (or has to revalidate them).
+	 * See also:
+	 * gtk_text_buffer_apply_tag(),
+	 * gtk_text_buffer_insert_with_tags(),
+	 * gtk_text_buffer_insert_range().
+	 */
 	void addOnApplyTag(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("apply-tag" in connectedSignals) )
@@ -450,6 +461,17 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextBuffer)[] onBeginUserActionListeners;
+	/**
+	 * The begin_user_action signal is emitted at the beginning of a single
+	 * user-visible operation on a GtkTextBuffer.
+	 * See also:
+	 * gtk_text_buffer_begin_user_action(),
+	 * gtk_text_buffer_insert_interactive(),
+	 * gtk_text_buffer_insert_range_interactive(),
+	 * gtk_text_buffer_delete_interactive(),
+	 * gtk_text_buffer_backspace(),
+	 * gtk_text_buffer_delete_selection().
+	 */
 	void addOnBeginUserAction(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("begin-user-action" in connectedSignals) )
@@ -478,6 +500,10 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextBuffer)[] onChangedListeners;
+	/**
+	 * The changed signal is emitted when the content of a GtkTextBuffer
+	 * has changed.
+	 */
 	void addOnChanged(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
@@ -506,6 +532,17 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextIter, TextIter, TextBuffer)[] onDeleteRangeListeners;
+	/**
+	 * The delete_range signal is emitted to delete a range
+	 * from a GtkTextBuffer.
+	 * Note that if your handler runs before the default handler it must not
+	 * invalidate the start and end iters (or has to revalidate them).
+	 * The default signal handler revalidates the start and end iters to
+	 * both point point to the location where text was deleted. Handlers
+	 * which run after the default handler (see g_signal_connect_after())
+	 * do not have access to the deleted text.
+	 * See also: gtk_text_buffer_delete().
+	 */
 	void addOnDeleteRange(void delegate(TextIter, TextIter, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-range" in connectedSignals) )
@@ -534,6 +571,18 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextBuffer)[] onEndUserActionListeners;
+	/**
+	 * The end_user_action signal is emitted at the end of a single
+	 * user-visible operation GtkTextBuffer.
+	 * See also:
+	 * gtk_text_buffer_end_user_action(),
+	 * gtk_text_buffer_insert_interactive(),
+	 * gtk_text_buffer_insert_range_interactive(),
+	 * gtk_text_buffer_delete_interactive(),
+	 * gtk_text_buffer_backspace(),
+	 * gtk_text_buffer_delete_selection(),
+	 * gtk_text_buffer_backspace().
+	 */
 	void addOnEndUserAction(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("end-user-action" in connectedSignals) )
@@ -562,6 +611,16 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextIter, TextChildAnchor, TextBuffer)[] onInsertChildAnchorListeners;
+	/**
+	 * The insert_child_anchor signal is emitted to insert a
+	 * GtkTextChildAnchor in a GtkTextBuffer.
+	 * Insertion actually occurs in the default handler.
+	 * Note that if your handler runs before the default handler it must
+	 * not invalidate the location iter (or has to revalidate it).
+	 * The default signal handler revalidates it to be placed after the
+	 * inserted anchor.
+	 * See also: gtk_text_buffer_insert_child_anchor().
+	 */
 	void addOnInsertChildAnchor(void delegate(TextIter, TextChildAnchor, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-child-anchor" in connectedSignals) )
@@ -590,6 +649,15 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextIter, Pixbuf, TextBuffer)[] onInsertPixbufListeners;
+	/**
+	 * The insert_pixbuf signal is emitted to insert a GdkPixbuf
+	 * in a GtkTextBuffer. Insertion actually occurs in the default handler.
+	 * Note that if your handler runs before the default handler it must not
+	 * invalidate the location iter (or has to revalidate it).
+	 * The default signal handler revalidates it to be placed after the
+	 * inserted pixbuf.
+	 * See also: gtk_text_buffer_insert_pixbuf().
+	 */
 	void addOnInsertPixbuf(void delegate(TextIter, Pixbuf, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-pixbuf" in connectedSignals) )
@@ -618,6 +686,17 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextIter, char[], gint, TextBuffer)[] onInsertTextListeners;
+	/**
+	 * The insert_text signal is emitted to insert text in a GtkTextBuffer.
+	 * Insertion actually occurs in the default handler.
+	 * Note that if your handler runs before the default handler it must not
+	 * invalidate the location iter (or has to revalidate it).
+	 * The default signal handler revalidates it to point to the end of the
+	 * inserted text.
+	 * See also:
+	 * gtk_text_buffer_insert(),
+	 * gtk_text_buffer_insert_range().
+	 */
 	void addOnInsertText(void delegate(TextIter, char[], gint, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-text" in connectedSignals) )
@@ -646,6 +725,10 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextMark, TextBuffer)[] onMarkDeletedListeners;
+	/**
+	 * The mark_deleted signal is emitted as notification
+	 * after a GtkTextMark is deleted.
+	 */
 	void addOnMarkDeleted(void delegate(TextMark, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("mark-deleted" in connectedSignals) )
@@ -674,6 +757,13 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextIter, TextMark, TextBuffer)[] onMarkSetListeners;
+	/**
+	 * The mark_set signal is emitted as notification
+	 * after a GtkTextMark is set.
+	 * See also:
+	 * gtk_text_buffer_create_mark(),
+	 * gtk_text_buffer_move_mark().
+	 */
 	void addOnMarkSet(void delegate(TextIter, TextMark, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("mark-set" in connectedSignals) )
@@ -702,6 +792,10 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextBuffer)[] onModifiedChangedListeners;
+	/**
+	 * The modified_changed signal is emitted when the modified bit of a
+	 * GtkTextBuffer flips.
+	 */
 	void addOnModifiedChanged(void delegate(TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("modified-changed" in connectedSignals) )
@@ -730,6 +824,17 @@ public class TextBuffer : ObjectG
 	}
 	
 	void delegate(TextTag, TextIter, TextIter, TextBuffer)[] onRemoveTagListeners;
+	/**
+	 * The remove_tag signal is emitted to remove all occurrences of tag from a
+	 * range of text in a GtkTextBuffer.
+	 * Removal actually occurs in the default handler.
+	 * Note that if your handler runs before the default handler it must not
+	 * invalidate the start and end iters (or has to revalidate them).
+	 * See also:
+	 * gtk_text_buffer_remove_tag().
+	 * See Also
+	 * GtkTextView, GtkTextIter, GtkTextMark
+	 */
 	void addOnRemoveTag(void delegate(TextTag, TextIter, TextIter, TextBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("remove-tag" in connectedSignals) )
@@ -758,7 +863,6 @@ public class TextBuffer : ObjectG
 	}
 	
 	
-	
 	/**
 	 * Creates a new text buffer.
 	 * Params:
@@ -767,7 +871,14 @@ public class TextBuffer : ObjectG
 	public this (TextTagTable table)
 	{
 		// GtkTextBuffer* gtk_text_buffer_new (GtkTextTagTable *table);
-		this(cast(GtkTextBuffer*)gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct()) );
+		auto p = gtk_text_buffer_new((table is null) ? null : table.getTextTagTableStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTextBuffer*) p);
 	}
 	
 	/**
@@ -801,7 +912,13 @@ public class TextBuffer : ObjectG
 	public TextTagTable getTagTable()
 	{
 		// GtkTextTagTable* gtk_text_buffer_get_tag_table (GtkTextBuffer *buffer);
-		return new TextTagTable( gtk_text_buffer_get_tag_table(gtkTextBuffer) );
+		auto p = gtk_text_buffer_get_tag_table(gtkTextBuffer);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextTagTable(cast(GtkTextTagTable*) p);
 	}
 	
 	/**
@@ -913,8 +1030,6 @@ public class TextBuffer : ObjectG
 		return gtk_text_buffer_insert_range_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), defaultEditable);
 	}
 	
-	
-	
 	/**
 	 * Deletes text between start and end. The order of start and end
 	 * is not actually relevant; gtk_text_buffer_delete() will reorder
@@ -974,7 +1089,6 @@ public class TextBuffer : ObjectG
 		return gtk_text_buffer_backspace(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), interactive, defaultEditable);
 	}
 	
-	
 	/**
 	 * Returns the text in the range [start,end). Excludes undisplayed
 	 * text (text marked with tags that set the invisibility attribute) if
@@ -992,7 +1106,7 @@ public class TextBuffer : ObjectG
 	public char[] getText(TextIter start, TextIter end, int includeHiddenChars)
 	{
 		// gchar* gtk_text_buffer_get_text (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
-		return Str.toString(gtk_text_buffer_get_text(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars) );
+		return Str.toString(gtk_text_buffer_get_text(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars)).dup;
 	}
 	
 	/**
@@ -1015,7 +1129,7 @@ public class TextBuffer : ObjectG
 	public char[] getSlice(TextIter start, TextIter end, int includeHiddenChars)
 	{
 		// gchar* gtk_text_buffer_get_slice (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  gboolean include_hidden_chars);
-		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars) );
+		return Str.toString(gtk_text_buffer_get_slice(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), includeHiddenChars)).dup;
 	}
 	
 	/**
@@ -1072,7 +1186,13 @@ public class TextBuffer : ObjectG
 	public TextChildAnchor createChildAnchor(TextIter iter)
 	{
 		// GtkTextChildAnchor* gtk_text_buffer_create_child_anchor (GtkTextBuffer *buffer,  GtkTextIter *iter);
-		return new TextChildAnchor( gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct()) );
+		auto p = gtk_text_buffer_create_child_anchor(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextChildAnchor(cast(GtkTextChildAnchor*) p);
 	}
 	
 	/**
@@ -1100,7 +1220,13 @@ public class TextBuffer : ObjectG
 	public TextMark createMark(char[] markName, TextIter where, int leftGravity)
 	{
 		// GtkTextMark* gtk_text_buffer_create_mark (GtkTextBuffer *buffer,  const gchar *mark_name,  const GtkTextIter *where,  gboolean left_gravity);
-		return new TextMark( gtk_text_buffer_create_mark(gtkTextBuffer, Str.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity) );
+		auto p = gtk_text_buffer_create_mark(gtkTextBuffer, Str.toStringz(markName), (where is null) ? null : where.getTextIterStruct(), leftGravity);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextMark(cast(GtkTextMark*) p);
 	}
 	
 	/**
@@ -1187,7 +1313,13 @@ public class TextBuffer : ObjectG
 	public TextMark getMark(char[] name)
 	{
 		// GtkTextMark* gtk_text_buffer_get_mark (GtkTextBuffer *buffer,  const gchar *name);
-		return new TextMark( gtk_text_buffer_get_mark(gtkTextBuffer, Str.toStringz(name)) );
+		auto p = gtk_text_buffer_get_mark(gtkTextBuffer, Str.toStringz(name));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextMark(cast(GtkTextMark*) p);
 	}
 	
 	/**
@@ -1200,7 +1332,13 @@ public class TextBuffer : ObjectG
 	public TextMark getInsert()
 	{
 		// GtkTextMark* gtk_text_buffer_get_insert (GtkTextBuffer *buffer);
-		return new TextMark( gtk_text_buffer_get_insert(gtkTextBuffer) );
+		auto p = gtk_text_buffer_get_insert(gtkTextBuffer);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextMark(cast(GtkTextMark*) p);
 	}
 	
 	/**
@@ -1219,7 +1357,13 @@ public class TextBuffer : ObjectG
 	public TextMark getSelectionBound()
 	{
 		// GtkTextMark* gtk_text_buffer_get_selection_bound (GtkTextBuffer *buffer);
-		return new TextMark( gtk_text_buffer_get_selection_bound(gtkTextBuffer) );
+		auto p = gtk_text_buffer_get_selection_bound(gtkTextBuffer);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextMark(cast(GtkTextMark*) p);
 	}
 	
 	/**
@@ -1342,7 +1486,6 @@ public class TextBuffer : ObjectG
 		// void gtk_text_buffer_remove_all_tags (GtkTextBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end);
 		gtk_text_buffer_remove_all_tags(gtkTextBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
-	
 	
 	/**
 	 * Obtains an iterator pointing to char_offset within the given
@@ -1632,8 +1775,6 @@ public class TextBuffer : ObjectG
 		gtk_text_buffer_remove_selection_clipboard(gtkTextBuffer, (clipboard is null) ? null : clipboard.getClipboardStruct());
 	}
 	
-	
-	
 	/**
 	 * This function deserializes rich text in format format and inserts
 	 * it at iter.
@@ -1833,7 +1974,6 @@ public class TextBuffer : ObjectG
 		return gtk_text_buffer_register_serialize_tagset(gtkTextBuffer, Str.toStringz(tagsetName));
 	}
 	
-	
 	/**
 	 * This function serializes the portion of text between start
 	 * and end in the rich text format represented by format.
@@ -1882,20 +2022,4 @@ public class TextBuffer : ObjectG
 		// void gtk_text_buffer_unregister_serialize_format  (GtkTextBuffer *buffer,  GdkAtom format);
 		gtk_text_buffer_unregister_serialize_format(gtkTextBuffer, format);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -46,6 +46,7 @@
  * 	- g_private_
  * 	- g_static_private_
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- gthread.Mutex
@@ -64,7 +65,7 @@
 
 module gthread.Thread;
 
-private import gtkc.gthreadtypes;
+public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
 
@@ -148,12 +149,6 @@ public class Thread
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * If you use GLib from more than one thread, you must initialize
 	 * the thread system by calling g_thread_init(). Most of the time you
@@ -191,9 +186,6 @@ public class Thread
 		return g_thread_supported();
 	}
 	
-	
-	
-	
 	/**
 	 * This function creates a new thread with the default priority.
 	 * If joinable is TRUE, you can wait for this threads termination
@@ -213,7 +205,13 @@ public class Thread
 	public static Thread create(GThreadFunc func, void* data, int joinable, GError** error)
 	{
 		// GThread* g_thread_create (GThreadFunc func,  gpointer data,  gboolean joinable,  GError **error);
-		return new Thread( g_thread_create(func, data, joinable, error) );
+		auto p = g_thread_create(func, data, joinable, error);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Thread(cast(GThread*) p);
 	}
 	
 	/**
@@ -257,7 +255,13 @@ public class Thread
 	public static Thread createFull(GThreadFunc func, void* data, uint stackSize, int joinable, int bound, GThreadPriority priority, GError** error)
 	{
 		// GThread* g_thread_create_full (GThreadFunc func,  gpointer data,  gulong stack_size,  gboolean joinable,  gboolean bound,  GThreadPriority priority,  GError **error);
-		return new Thread( g_thread_create_full(func, data, stackSize, joinable, bound, priority, error) );
+		auto p = g_thread_create_full(func, data, stackSize, joinable, bound, priority, error);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Thread(cast(GThread*) p);
 	}
 	
 	/**
@@ -267,7 +271,13 @@ public class Thread
 	public static Thread self()
 	{
 		// GThread* g_thread_self (void);
-		return new Thread( g_thread_self() );
+		auto p = g_thread_self();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Thread(cast(GThread*) p);
 	}
 	
 	/**
@@ -356,14 +366,6 @@ public class Thread
 		g_thread_foreach(threadFunc, userData);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Initializes mutex. Alternatively you can initialize it with
 	 * G_STATIC_MUTEX_INIT.
@@ -421,7 +423,13 @@ public class Thread
 	public static Mutex gStaticMutexGetMutex(GStaticMutex* mutex)
 	{
 		// GMutex* g_static_mutex_get_mutex (GStaticMutex *mutex);
-		return new Mutex( g_static_mutex_get_mutex(mutex) );
+		auto p = g_static_mutex_get_mutex(mutex);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Mutex(cast(GMutex*) p);
 	}
 	
 	/**
@@ -438,52 +446,6 @@ public class Thread
 		// void g_static_mutex_free (GStaticMutex *mutex);
 		g_static_mutex_free(mutex);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Function to be called when starting a critical initialization section.

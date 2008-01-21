@@ -30,19 +30,27 @@
  * ctorStrct=
  * clss    = VScale
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_vscale_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Adjustment
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
@@ -51,12 +59,18 @@
 
 module gtk.VScale;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import gtk.Adjustment;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -69,7 +83,7 @@ private import gtk.Scale;
  * The position to show the current value, and the number of decimal places
  * shown can be set using the parent GtkScale class's functions.
  */
-public class VScale : Scale
+public class VScale : Scale, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -103,9 +117,11 @@ public class VScale : Scale
 		this.gtkVScale = gtkVScale;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkVScale);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkVScale.
@@ -115,7 +131,14 @@ public class VScale : Scale
 	public this (Adjustment adjustment)
 	{
 		// GtkWidget* gtk_vscale_new (GtkAdjustment *adjustment);
-		this(cast(GtkVScale*)gtk_vscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct()) );
+		auto p = gtk_vscale_new((adjustment is null) ? null : adjustment.getAdjustmentStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkVScale*) p);
 	}
 	
 	/**
@@ -134,6 +157,13 @@ public class VScale : Scale
 	public this (double min, double max, double step)
 	{
 		// GtkWidget* gtk_vscale_new_with_range (gdouble min,  gdouble max,  gdouble step);
-		this(cast(GtkVScale*)gtk_vscale_new_with_range(min, max, step) );
+		auto p = gtk_vscale_new_with_range(min, max, step);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkVScale*) p);
 	}
 }

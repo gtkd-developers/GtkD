@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,10 +49,12 @@
 
 module atk.Component;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 
 
@@ -104,13 +107,13 @@ public class Component
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(AtkRectangle*, Component)[] onBoundsChangedListeners;
+	/**
+	 * The 'bounds-changed" signal is emitted when the bposition or size of the
+	 * a component changes.
+	 */
 	void addOnBoundsChanged(void delegate(AtkRectangle*, Component) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("bounds-changed" in connectedSignals) )
@@ -137,7 +140,6 @@ public class Component
 		
 		return consumed;
 	}
-	
 	
 	
 	/**

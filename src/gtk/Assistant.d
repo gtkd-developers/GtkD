@@ -30,21 +30,28 @@
  * ctorStrct=
  * clss    = Assistant
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_assistant_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Pixbuf
  * 	- gtk.Widget
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkWidget* -> Widget
@@ -54,14 +61,21 @@
 
 module gtk.Assistant;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Pixbuf;
 private import gtk.Widget;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -73,7 +87,7 @@ private import gtk.Window;
  * operation splitted in several steps, guiding the user through its pages
  * and controlling the page flow to collect the necessary data.
  */
-public class Assistant : Window
+public class Assistant : Window, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -107,15 +121,25 @@ public class Assistant : Window
 		this.gtkAssistant = gtkAssistant;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkAssistant);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Assistant)[] onApplyListeners;
+	/**
+	 * The ::apply signal is emitted when the apply button is clicked. The default
+	 * behavior of the GtkAssistant is to switch to the page after the current page,
+	 * unless the current page is the last one.
+	 * A handler for the ::apply signal should carry out the actions for which the
+	 * wizard has collected data. If the action takes a long time to complete, you
+	 * might consider to put a page of type GTK_ASSISTANT_PAGE_PROGRESS after the
+	 * confirmation page and handle this operation within the ::prepare signal of
+	 * the progress page.
+	 * Since 2.10
+	 */
 	void addOnApply(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("apply" in connectedSignals) )
@@ -144,6 +168,10 @@ public class Assistant : Window
 	}
 	
 	void delegate(Assistant)[] onCancelListeners;
+	/**
+	 * The ::cancel signal is emitted when then the cancel button is clicked.
+	 * Since 2.10
+	 */
 	void addOnCancel(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cancel" in connectedSignals) )
@@ -172,6 +200,12 @@ public class Assistant : Window
 	}
 	
 	void delegate(Assistant)[] onCloseListeners;
+	/**
+	 * The ::close signal is emitted either when the close button of
+	 * a summary page is clicked, or when the apply button in the last
+	 * page in the flow (of type GTK_ASSISTANT_PAGE_CONFIRM) is clicked.
+	 * Since 2.10
+	 */
 	void addOnClose(void delegate(Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("close" in connectedSignals) )
@@ -200,6 +234,12 @@ public class Assistant : Window
 	}
 	
 	void delegate(Widget, Assistant)[] onPrepareListeners;
+	/**
+	 * The ::prepared signal is emitted when a new page is set as the assistant's
+	 * current page, before making the new page visible. A handler for this signal
+	 * can do any preparation which are necessary before showing page.
+	 * Since 2.10
+	 */
 	void addOnPrepare(void delegate(Widget, Assistant) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("prepare" in connectedSignals) )
@@ -228,7 +268,6 @@ public class Assistant : Window
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkAssistant.
 	 * Since 2.10
@@ -236,7 +275,14 @@ public class Assistant : Window
 	public this ()
 	{
 		// GtkWidget* gtk_assistant_new (void);
-		this(cast(GtkAssistant*)gtk_assistant_new() );
+		auto p = gtk_assistant_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkAssistant*) p);
 	}
 	
 	/**
@@ -288,7 +334,13 @@ public class Assistant : Window
 	public Widget getNthPage(int pageNum)
 	{
 		// GtkWidget* gtk_assistant_get_nth_page (GtkAssistant *assistant,  gint page_num);
-		return new Widget( gtk_assistant_get_nth_page(gtkAssistant, pageNum) );
+		auto p = gtk_assistant_get_nth_page(gtkAssistant, pageNum);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -332,7 +384,6 @@ public class Assistant : Window
 		return gtk_assistant_insert_page(gtkAssistant, (page is null) ? null : page.getWidgetStruct(), position);
 	}
 	
-	
 	/**
 	 * Sets the page forwarding function to be page_func, this function will
 	 * be used to determine what will be the next page when the user presses
@@ -350,7 +401,6 @@ public class Assistant : Window
 		// void gtk_assistant_set_forward_page_func (GtkAssistant *assistant,  GtkAssistantPageFunc page_func,  gpointer data,  GDestroyNotify destroy);
 		gtk_assistant_set_forward_page_func(gtkAssistant, pageFunc, data, destroy);
 	}
-	
 	
 	/**
 	 * Sets the page type for page. The page type determines the page
@@ -403,7 +453,7 @@ public class Assistant : Window
 	public char[] getPageTitle(Widget page)
 	{
 		// const gchar* gtk_assistant_get_page_title (GtkAssistant *assistant,  GtkWidget *page);
-		return Str.toString(gtk_assistant_get_page_title(gtkAssistant, (page is null) ? null : page.getWidgetStruct()) );
+		return Str.toString(gtk_assistant_get_page_title(gtkAssistant, (page is null) ? null : page.getWidgetStruct())).dup;
 	}
 	
 	/**
@@ -430,7 +480,13 @@ public class Assistant : Window
 	public Pixbuf getPageHeaderImage(Widget page)
 	{
 		// GdkPixbuf* gtk_assistant_get_page_header_image (GtkAssistant *assistant,  GtkWidget *page);
-		return new Pixbuf( gtk_assistant_get_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct()) );
+		auto p = gtk_assistant_get_page_header_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -457,7 +513,13 @@ public class Assistant : Window
 	public Pixbuf getPageSideImage(Widget page)
 	{
 		// GdkPixbuf* gtk_assistant_get_page_side_image (GtkAssistant *assistant,  GtkWidget *page);
-		return new Pixbuf( gtk_assistant_get_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct()) );
+		auto p = gtk_assistant_get_page_side_image(gtkAssistant, (page is null) ? null : page.getWidgetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -534,12 +596,4 @@ public class Assistant : Window
 		// void gtk_assistant_update_buttons_state (GtkAssistant *assistant);
 		gtk_assistant_update_buttons_state(gtkAssistant);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

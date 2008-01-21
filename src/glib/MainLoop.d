@@ -45,6 +45,7 @@
  * 	- g_source_
  * omit code:
  * 	- g_main_loop_ref
+ * omit signals:
  * imports:
  * 	- glib.Dataset
  * 	- glib.MainContext
@@ -59,7 +60,7 @@
 
 module glib.MainLoop;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -185,7 +186,6 @@ public class MainLoop
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GMainLoop structure.
 	 * Params:
@@ -197,9 +197,15 @@ public class MainLoop
 	public this (MainContext context, int isRunning)
 	{
 		// GMainLoop* g_main_loop_new (GMainContext *context,  gboolean is_running);
-		this(cast(GMainLoop*)g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning) );
+		auto p = g_main_loop_new((context is null) ? null : context.getMainContextStruct(), isRunning);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GMainLoop*) p);
 	}
-	
 	
 	/**
 	 * Decreases the reference count on a GMainLoop object by one. If
@@ -250,44 +256,14 @@ public class MainLoop
 	public MainContext getContext()
 	{
 		// GMainContext* g_main_loop_get_context (GMainLoop *loop);
-		return new MainContext( g_main_loop_get_context(gMainLoop) );
+		auto p = g_main_loop_get_context(gMainLoop);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new MainContext(cast(GMainContext*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Returns the depth of the stack of calls to
@@ -313,15 +289,14 @@ public class MainLoop
 	public static Source gMainCurrentSource()
 	{
 		// GSource* g_main_current_source (void);
-		return new Source( g_main_current_source() );
+		auto p = g_main_current_source();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Source(cast(GSource*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Creates a new idle source.
@@ -335,7 +310,13 @@ public class MainLoop
 	public static Source gIdleSourceNew()
 	{
 		// GSource* g_idle_source_new (void);
-		return new Source( g_idle_source_new() );
+		auto p = g_idle_source_new();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Source(cast(GSource*) p);
 	}
 	
 	/**
@@ -384,36 +365,4 @@ public class MainLoop
 		// gboolean g_idle_remove_by_data (gpointer data);
 		return g_idle_remove_by_data(data);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

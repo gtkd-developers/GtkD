@@ -35,21 +35,28 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_window_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.AccelGroup
  * 	- gtk.Widget
  * 	- gtk.Window
+ * 	- gtk.WindowGroup
  * 	- gdk.Screen
  * 	- glib.ListG
  * 	- gdk.Pixbuf
- * 	- gtk.Window
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixbuf* -> Pixbuf
@@ -57,25 +64,33 @@
  * 	- GtkAccelGroup* -> AccelGroup
  * 	- GtkWidget* -> Widget
  * 	- GtkWindow* -> Window
+ * 	- GtkWindowGroup* -> WindowGroup
  * module aliases:
  * local aliases:
  */
 
 module gtk.Window;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.AccelGroup;
 private import gtk.Widget;
 private import gtk.Window;
+private import gtk.WindowGroup;
 private import gdk.Screen;
 private import glib.ListG;
 private import gdk.Pixbuf;
-private import gtk.Window;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -84,7 +99,7 @@ private import gtk.Bin;
 /**
  * Description
  */
-public class Window : Bin
+public class Window : Bin, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -118,6 +133,9 @@ public class Window : Bin
 		this.gtkWindow = gtkWindow;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkWindow);
+	
 	/**
 	 * Creates a top level window with a title
 	 * Params:
@@ -142,13 +160,11 @@ public class Window : Bin
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Window)[] onActivateDefaultListeners;
+	/**
+	 */
 	void addOnActivateDefault(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate-default" in connectedSignals) )
@@ -177,6 +193,8 @@ public class Window : Bin
 	}
 	
 	void delegate(Window)[] onActivateFocusListeners;
+	/**
+	 */
 	void addOnActivateFocus(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate-focus" in connectedSignals) )
@@ -205,6 +223,8 @@ public class Window : Bin
 	}
 	
 	gboolean delegate(GdkEvent*, Window)[] onFrameListeners;
+	/**
+	 */
 	void addOnFrame(gboolean delegate(GdkEvent*, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("frame-event" in connectedSignals) )
@@ -233,6 +253,8 @@ public class Window : Bin
 	}
 	
 	void delegate(Window)[] onKeysChangedListeners;
+	/**
+	 */
 	void addOnKeysChanged(void delegate(Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("keys-changed" in connectedSignals) )
@@ -261,6 +283,8 @@ public class Window : Bin
 	}
 	
 	void delegate(Widget, Window)[] onSetFocusListeners;
+	/**
+	 */
 	void addOnSetFocus(void delegate(Widget, Window) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-focus" in connectedSignals) )
@@ -289,7 +313,6 @@ public class Window : Bin
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkWindow, which is a toplevel window that can
 	 * contain other widgets. Nearly always, the type of the window should
@@ -307,7 +330,14 @@ public class Window : Bin
 	public this (GtkWindowType type)
 	{
 		// GtkWidget* gtk_window_new (GtkWindowType type);
-		this(cast(GtkWindow*)gtk_window_new(type) );
+		auto p = gtk_window_new(type);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkWindow*) p);
 	}
 	
 	/**
@@ -408,7 +438,6 @@ public class Window : Bin
 		// void gtk_window_remove_accel_group (GtkWindow *window,  GtkAccelGroup *accel_group);
 		gtk_window_remove_accel_group(gtkWindow, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 	}
-	
 	
 	/**
 	 * Activates the current focused widget within the window.
@@ -591,7 +620,13 @@ public class Window : Bin
 	public Screen getScreen()
 	{
 		// GdkScreen* gtk_window_get_screen (GtkWindow *window);
-		return new Screen( gtk_window_get_screen(gtkWindow) );
+		auto p = gtk_window_get_screen(gtkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -636,7 +671,13 @@ public class Window : Bin
 	public static ListG listToplevels()
 	{
 		// GList* gtk_window_list_toplevels (void);
-		return new ListG( gtk_window_list_toplevels() );
+		auto p = gtk_window_list_toplevels();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -719,7 +760,13 @@ public class Window : Bin
 	public Widget getFocus()
 	{
 		// GtkWidget* gtk_window_get_focus (GtkWindow *window);
-		return new Widget( gtk_window_get_focus(gtkWindow) );
+		auto p = gtk_window_get_focus(gtkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -1233,7 +1280,6 @@ public class Window : Bin
 		gtk_window_set_startup_id(gtkWindow, Str.toStringz(startupId));
 	}
 	
-	
 	/**
 	 * Returns whether the window has been set to have decorations
 	 * such as a title bar via gtk_window_set_decorated().
@@ -1267,7 +1313,13 @@ public class Window : Bin
 	public static ListG getDefaultIconList()
 	{
 		// GList* gtk_window_get_default_icon_list (void);
-		return new ListG( gtk_window_get_default_icon_list() );
+		auto p = gtk_window_get_default_icon_list();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -1337,7 +1389,13 @@ public class Window : Bin
 	public Pixbuf getIcon()
 	{
 		// GdkPixbuf* gtk_window_get_icon (GtkWindow *window);
-		return new Pixbuf( gtk_window_get_icon(gtkWindow) );
+		auto p = gtk_window_get_icon(gtkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -1349,7 +1407,13 @@ public class Window : Bin
 	public ListG getIconList()
 	{
 		// GList* gtk_window_get_icon_list (GtkWindow *window);
-		return new ListG( gtk_window_get_icon_list(gtkWindow) );
+		auto p = gtk_window_get_icon_list(gtkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -1361,7 +1425,7 @@ public class Window : Bin
 	public char[] getIconName()
 	{
 		// gchar* gtk_window_get_icon_name (GtkWindow *window);
-		return Str.toString(gtk_window_get_icon_name(gtkWindow) );
+		return Str.toString(gtk_window_get_icon_name(gtkWindow)).dup;
 	}
 	
 	/**
@@ -1435,7 +1499,7 @@ public class Window : Bin
 	public char[] getRole()
 	{
 		// const gchar* gtk_window_get_role (GtkWindow *window);
-		return Str.toString(gtk_window_get_role(gtkWindow) );
+		return Str.toString(gtk_window_get_role(gtkWindow)).dup;
 	}
 	
 	/**
@@ -1495,7 +1559,7 @@ public class Window : Bin
 	public char[] getTitle()
 	{
 		// const gchar* gtk_window_get_title (GtkWindow *window);
-		return Str.toString(gtk_window_get_title(gtkWindow) );
+		return Str.toString(gtk_window_get_title(gtkWindow)).dup;
 	}
 	
 	/**
@@ -1506,7 +1570,13 @@ public class Window : Bin
 	public Window getTransientFor()
 	{
 		// GtkWindow* gtk_window_get_transient_for (GtkWindow *window);
-		return new Window( gtk_window_get_transient_for(gtkWindow) );
+		auto p = gtk_window_get_transient_for(gtkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GtkWindow*) p);
 	}
 	
 	/**
@@ -1581,10 +1651,16 @@ public class Window : Bin
 	 * Since 2.10
 	 * Returns: the GtkWindowGroup for a window or the default group
 	 */
-	public GtkWindowGroup* getGroup()
+	public WindowGroup getGroup()
 	{
 		// GtkWindowGroup* gtk_window_get_group (GtkWindow *window);
-		return gtk_window_get_group(gtkWindow);
+		auto p = gtk_window_get_group(gtkWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new WindowGroup(cast(GtkWindowGroup*) p);
 	}
 	
 	/**
@@ -1889,35 +1965,4 @@ public class Window : Bin
 		// void gtk_window_set_opacity (GtkWindow *window,  gdouble opacity);
 		gtk_window_set_opacity(gtkWindow, opacity);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

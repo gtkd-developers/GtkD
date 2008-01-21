@@ -40,21 +40,27 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ListG
  * structWrap:
+ * 	- GList* -> ListG
  * module aliases:
  * local aliases:
  */
 
 module gtk.TextChildAnchor;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ListG;
 
 
 
@@ -100,13 +106,16 @@ public class TextChildAnchor
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TextChildAnchor)[] onBackspaceListeners;
+	/**
+	 * The ::backspace signal is a
+	 * keybinding signal
+	 * which gets emitted when the user asks for it.
+	 * The default bindings for this signal are
+	 * Backspace and Shift-Backspace.
+	 */
 	void addOnBackspace(void delegate(TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("backspace" in connectedSignals) )
@@ -135,6 +144,13 @@ public class TextChildAnchor
 	}
 	
 	void delegate(TextChildAnchor)[] onCopyClipboardListeners;
+	/**
+	 * The ::copy-clipboard signal is a
+	 * keybinding signal
+	 * which gets emitted to copy the selection to the clipboard.
+	 * The default bindings for this signal are
+	 * Ctrl-c and Ctrl-Insert.
+	 */
 	void addOnCopyClipboard(void delegate(TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("copy-clipboard" in connectedSignals) )
@@ -163,6 +179,13 @@ public class TextChildAnchor
 	}
 	
 	void delegate(TextChildAnchor)[] onCutClipboardListeners;
+	/**
+	 * The ::cut-clipboard signal is a
+	 * keybinding signal
+	 * which gets emitted to cut the selection to the clipboard.
+	 * The default bindings for this signal are
+	 * Ctrl-x and Shift-Delete.
+	 */
 	void addOnCutClipboard(void delegate(TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cut-clipboard" in connectedSignals) )
@@ -191,6 +214,18 @@ public class TextChildAnchor
 	}
 	
 	void delegate(GtkDeleteType, gint, TextChildAnchor)[] onDeleteFromCursorListeners;
+	/**
+	 * The ::delete-from-cursor signal is a
+	 * keybinding signal
+	 * which gets emitted when the user initiates a text deletion.
+	 * If the type is GTK_DELETE_CHARS, GTK+ deletes the selection
+	 * if there is one, otherwise it deletes the requested number
+	 * of characters.
+	 * The default bindings for this signal are
+	 * Delete for deleting a character, Ctrl-Delete for
+	 * deleting a word and Ctrl-Backspace for deleting a word
+	 * backwords.
+	 */
 	void addOnDeleteFromCursor(void delegate(GtkDeleteType, gint, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-from-cursor" in connectedSignals) )
@@ -219,6 +254,8 @@ public class TextChildAnchor
 	}
 	
 	void delegate(char[], TextChildAnchor)[] onInsertAtCursorListeners;
+	/**
+	 */
 	void addOnInsertAtCursor(void delegate(char[], TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-at-cursor" in connectedSignals) )
@@ -247,6 +284,25 @@ public class TextChildAnchor
 	}
 	
 	void delegate(GtkMovementStep, gint, gboolean, TextChildAnchor)[] onMoveCursorListeners;
+	/**
+	 * The ::move-cursor signal is a
+	 * keybinding signal
+	 * which gets emitted when the user initiates a cursor movement.
+	 * If the cursor is not visible in text_view, this signal causes
+	 * the viewport to be moved instead.
+	 * Applications should not connect to it, but may emit it with
+	 * g_signal_emit_by_name() if they need to control scrolling
+	 * programmatically.
+	 * The default bindings for this signal come in two variants,
+	 * the variant with the Shift modifier extends the selection,
+	 * the variant without the Shift modifer does not.
+	 * There are too many key combinations to list them all here.
+	 * Arrow keys move by individual characters/lines
+	 * Ctrl-arrow key combinations move by words/paragraphs
+	 * Home/End keys move to the ends of the buffer
+	 * PageUp/PageDown keys move vertically by pages
+	 * Ctrl-PageUp/PageDown keys move horizontally by pages
+	 */
 	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
@@ -275,6 +331,14 @@ public class TextChildAnchor
 	}
 	
 	void delegate(GtkScrollStep, gint, TextChildAnchor)[] onMoveViewportListeners;
+	/**
+	 * The ::move-viewport signal is a
+	 * keybinding signal
+	 * which can be bound to key combinations to allow the user
+	 * to move the viewport, i.e. change what part of the text view
+	 * is visible in a containing scrolled window.
+	 * There are no default bindings for this signal.
+	 */
 	void addOnMoveViewport(void delegate(GtkScrollStep, gint, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-viewport" in connectedSignals) )
@@ -303,6 +367,15 @@ public class TextChildAnchor
 	}
 	
 	void delegate(gint, gboolean, TextChildAnchor)[] onPageHorizontallyListeners;
+	/**
+	 * The ::page-horizontally signal is a
+	 * keybinding signal
+	 * which can be bound to key combinations to allow the user
+	 * to initiate horizontal cursor movement by pages.
+	 * This signal should not be used anymore, instead use the
+	 * "move-cursor" signal with the GTK_MOVEMENT_HORIZONTAL_PAGES
+	 * granularity.
+	 */
 	void addOnPageHorizontally(void delegate(gint, gboolean, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("page-horizontally" in connectedSignals) )
@@ -331,6 +404,14 @@ public class TextChildAnchor
 	}
 	
 	void delegate(TextChildAnchor)[] onPasteClipboardListeners;
+	/**
+	 * The ::paste-clipboard signal is a
+	 * keybinding signal
+	 * which gets emitted to paste the contents of the clipboard
+	 * into the text view.
+	 * The default bindings for this signal are
+	 * Ctrl-v and Shift-Insert.
+	 */
 	void addOnPasteClipboard(void delegate(TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("paste-clipboard" in connectedSignals) )
@@ -359,6 +440,8 @@ public class TextChildAnchor
 	}
 	
 	void delegate(GtkMenu*, TextChildAnchor)[] onPopulatePopupListeners;
+	/**
+	 */
 	void addOnPopulatePopup(void delegate(GtkMenu*, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("populate-popup" in connectedSignals) )
@@ -387,6 +470,14 @@ public class TextChildAnchor
 	}
 	
 	void delegate(gboolean, TextChildAnchor)[] onSelectAllListeners;
+	/**
+	 * The ::select-all signal is a
+	 * keybinding signal
+	 * which gets emitted to select or unselect the complete
+	 * contents of the text view.
+	 * The default bindings for this signal are Ctrl-a and Ctrl-/
+	 * for selecting and Shift-Ctrl-a and Ctrl-\ for unselecting.
+	 */
 	void addOnSelectAll(void delegate(gboolean, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-all" in connectedSignals) )
@@ -415,6 +506,8 @@ public class TextChildAnchor
 	}
 	
 	void delegate(TextChildAnchor)[] onSetAnchorListeners;
+	/**
+	 */
 	void addOnSetAnchor(void delegate(TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-anchor" in connectedSignals) )
@@ -443,6 +536,8 @@ public class TextChildAnchor
 	}
 	
 	void delegate(GtkAdjustment*, GtkAdjustment*, TextChildAnchor)[] onSetScrollAdjustmentsListeners;
+	/**
+	 */
 	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
@@ -471,6 +566,12 @@ public class TextChildAnchor
 	}
 	
 	void delegate(TextChildAnchor)[] onToggleCursorVisibleListeners;
+	/**
+	 * The ::toggle-cursor-visible signal is a
+	 * keybinding signal
+	 * which gets emitted to toggle the visibility of the cursor.
+	 * The default binding for this signal is F7.
+	 */
 	void addOnToggleCursorVisible(void delegate(TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-cursor-visible" in connectedSignals) )
@@ -499,6 +600,14 @@ public class TextChildAnchor
 	}
 	
 	void delegate(TextChildAnchor)[] onToggleOverwriteListeners;
+	/**
+	 * The ::toggle-overwrite signal is a
+	 * keybinding signal
+	 * which gets emitted to change the editability of the text view.
+	 * The default bindings for this signal is Insert.
+	 * See Also
+	 * GtkTextBuffer, GtkTextIter
+	 */
 	void addOnToggleOverwrite(void delegate(TextChildAnchor) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-overwrite" in connectedSignals) )
@@ -527,37 +636,6 @@ public class TextChildAnchor
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GtkTextChildAnchor. Usually you would then insert
 	 * it into a GtkTextBuffer with gtk_text_buffer_insert_child_anchor().
@@ -567,7 +645,14 @@ public class TextChildAnchor
 	public this ()
 	{
 		// GtkTextChildAnchor* gtk_text_child_anchor_new (void);
-		this(cast(GtkTextChildAnchor*)gtk_text_child_anchor_new() );
+		auto p = gtk_text_child_anchor_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTextChildAnchor*) p);
 	}
 	
 	/**
@@ -575,10 +660,16 @@ public class TextChildAnchor
 	 * The returned list should be freed with g_list_free().
 	 * Returns: list of widgets anchored at anchor
 	 */
-	public GList* getWidgets()
+	public ListG getWidgets()
 	{
 		// GList* gtk_text_child_anchor_get_widgets (GtkTextChildAnchor *anchor);
-		return gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
+		auto p = gtk_text_child_anchor_get_widgets(gtkTextChildAnchor);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -595,61 +686,4 @@ public class TextChildAnchor
 		// gboolean gtk_text_child_anchor_get_deleted (GtkTextChildAnchor *anchor);
 		return gtk_text_child_anchor_get_deleted(gtkTextChildAnchor);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

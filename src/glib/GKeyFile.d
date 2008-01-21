@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.Str
@@ -50,7 +51,7 @@
 
 module glib.GKeyFile;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -153,10 +154,6 @@ public class KeyFile
 	/**
 	 */
 	
-	
-	
-	
-	
 	/**
 	 * Creates a new empty GKeyFile object. Use
 	 * g_key_file_load_from_file(), g_key_file_load_from_data(),
@@ -167,7 +164,14 @@ public class KeyFile
 	public this ()
 	{
 		// GKeyFile* g_key_file_new (void);
-		this(cast(GKeyFile*)g_key_file_new() );
+		auto p = g_key_file_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GKeyFile*) p);
 	}
 	
 	/**
@@ -284,7 +288,7 @@ public class KeyFile
 	public char[] toData(uint* length, GError** error)
 	{
 		// gchar* g_key_file_to_data (GKeyFile *key_file,  gsize *length,  GError **error);
-		return Str.toString(g_key_file_to_data(gKeyFile, length, error) );
+		return Str.toString(g_key_file_to_data(gKeyFile, length, error)).dup;
 	}
 	
 	/**
@@ -295,7 +299,7 @@ public class KeyFile
 	public char[] getStartGroup()
 	{
 		// gchar* g_key_file_get_start_group (GKeyFile *key_file);
-		return Str.toString(g_key_file_get_start_group(gKeyFile) );
+		return Str.toString(g_key_file_get_start_group(gKeyFile)).dup;
 	}
 	
 	/**
@@ -377,7 +381,7 @@ public class KeyFile
 	public char[] getValue(char[] groupName, char[] key, GError** error)
 	{
 		// gchar* g_key_file_get_value (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return Str.toString(g_key_file_get_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error) );
+		return Str.toString(g_key_file_get_value(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error)).dup;
 	}
 	
 	/**
@@ -396,7 +400,7 @@ public class KeyFile
 	public char[] getString(char[] groupName, char[] key, GError** error)
 	{
 		// gchar* g_key_file_get_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return Str.toString(g_key_file_get_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error) );
+		return Str.toString(g_key_file_get_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error)).dup;
 	}
 	
 	/**
@@ -418,7 +422,7 @@ public class KeyFile
 	public char[] getLocaleString(char[] groupName, char[] key, char[] locale, GError** error)
 	{
 		// gchar* g_key_file_get_locale_string (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *locale,  GError **error);
-		return Str.toString(g_key_file_get_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), error) );
+		return Str.toString(g_key_file_get_locale_string(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(locale), error)).dup;
 	}
 	
 	/**
@@ -604,7 +608,7 @@ public class KeyFile
 	public char[] getComment(char[] groupName, char[] key, GError** error)
 	{
 		// gchar* g_key_file_get_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		return Str.toString(g_key_file_get_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error) );
+		return Str.toString(g_key_file_get_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error)).dup;
 	}
 	
 	/**
@@ -851,27 +855,4 @@ public class KeyFile
 		// void g_key_file_remove_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
 		g_key_file_remove_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

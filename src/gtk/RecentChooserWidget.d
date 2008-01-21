@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * 	- RecentChooserIF
  * prefixes:
  * 	- gtk_recent_chooser_widget_
@@ -47,9 +48,15 @@
  * 	- gtk.Widget
  * 	- gtk.RecentManager
  * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * 	- gtk.RecentInfo
  * 	- gtk.RecentFilter
  * 	- glib.ListG
+ * 	- glib.ListSG
  * 	- gobject.Signals
  * 	- gtk.RecentChooserIF
  * 	- gtk.RecentChooserT
@@ -70,9 +77,15 @@ private import gtkc.gtk;
 private import gtk.Widget;
 private import gtk.RecentManager;
 private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 private import gtk.RecentInfo;
 private import gtk.RecentFilter;
 private import glib.ListG;
+private import glib.ListSG;
 private import gobject.Signals;
 private import gtk.RecentChooserIF;
 private import gtk.RecentChooserT;
@@ -91,7 +104,7 @@ private import gtk.VBox;
  * Instead, you should use the functions that work on a GtkRecentChooser.
  * Recently used files are supported since GTK+ 2.10.
  */
-public class RecentChooserWidget : VBox, RecentChooserIF
+public class RecentChooserWidget : VBox, BuildableIF, RecentChooserIF
 {
 	
 	/** the main Gtk struct */
@@ -124,6 +137,9 @@ public class RecentChooserWidget : VBox, RecentChooserIF
 		super(cast(GtkVBox*)gtkRecentChooserWidget);
 		this.gtkRecentChooserWidget = gtkRecentChooserWidget;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkRecentChooserWidget);
 	
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserWidget);

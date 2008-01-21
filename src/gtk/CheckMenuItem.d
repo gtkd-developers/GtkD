@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_check_menu_item_
  * 	- gtk_
@@ -43,8 +44,14 @@
  * omit code:
  * 	- gtk_check_menu_item_new_with_label
  * 	- gtk_check_menu_item_new_with_mnemonic
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -52,12 +59,19 @@
 
 module gtk.CheckMenuItem;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -72,7 +86,7 @@ private import gtk.MenuItem;
  * at the left side of the GtkMenuItem. Activating the GtkMenuItem
  * toggles the value.
  */
-public class CheckMenuItem : MenuItem
+public class CheckMenuItem : MenuItem, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -106,6 +120,9 @@ public class CheckMenuItem : MenuItem
 		this.gtkCheckMenuItem = gtkCheckMenuItem;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkCheckMenuItem);
+	
 	/**
 	 * Creates a new GtkCheckMenuItem with a label.
 	 * Params:
@@ -130,13 +147,14 @@ public class CheckMenuItem : MenuItem
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(CheckMenuItem)[] onToggledListeners;
+	/**
+	 * This signal is emitted when the state of the check box is changed.
+	 * A signal handler can examine the active
+	 * field of the GtkCheckMenuItem struct to discover the new state.
+	 */
 	void addOnToggled(void delegate(CheckMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggled" in connectedSignals) )
@@ -165,18 +183,21 @@ public class CheckMenuItem : MenuItem
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkCheckMenuItem.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_check_menu_item_new (void);
-		this(cast(GtkCheckMenuItem*)gtk_check_menu_item_new() );
+		auto p = gtk_check_menu_item_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCheckMenuItem*) p);
 	}
-	
-	
-	
 	
 	/**
 	 * Returns whether the check menu item is active. See
@@ -274,6 +295,4 @@ public class CheckMenuItem : MenuItem
 		// gboolean gtk_check_menu_item_get_draw_as_radio  (GtkCheckMenuItem *check_menu_item);
 		return gtk_check_menu_item_get_draw_as_radio(gtkCheckMenuItem);
 	}
-	
-	
 }

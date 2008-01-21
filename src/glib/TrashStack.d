@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module glib.TrashStack;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -101,7 +102,6 @@ public class TrashStack
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Pushes a piece of memory onto a GTrashStack.

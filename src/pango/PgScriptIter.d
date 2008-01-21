@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = pango-Scripts.html
+ * inFile  = 
  * outPack = pango
  * outFile = PgScriptIter
  * strct   = PangoScriptIter
@@ -40,64 +40,22 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
- * 	- pango.PgContext
- * 	- pango.PgItem
- * 	- pango.PgLayout
- * 	- pango.PgFontDescription
- * 	- pango.PgFontMetrics
- * 	- pango.PgFontFamily
- * 	- pango.PgFontFace
- * 	- pango.PgFontMap
- * 	- pango.PgFontsetSimple
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
- * 	- pango.PgLanguage
- * 	- pango.PgTabArray
- * 	- pango.PgLayout
- * 	- pango.PgLayoutIter
  * 	- glib.Str
  * structWrap:
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
- * 	- PangoContext* -> PgContext
- * 	- PangoFontDescription* -> PgFontDescription
- * 	- PangoFontFace* -> PgFontFace
- * 	- PangoFontFamily* -> PgFontFamily
- * 	- PangoFontMap* -> PgFontMap
- * 	- PangoFontMetrics* -> PgFontMetrics
- * 	- PangoFontsetSimple* -> PgFontsetSimple
- * 	- PangoItem* -> PgItem
- * 	- PangoLanguage* -> PgLanguage
- * 	- PangoLayout* -> PgLayout
- * 	- PangoLayoutIter* -> PgLayoutIter
- * 	- PangoTabArray* -> PgTabArray
+ * 	- PangoScriptIter* -> PgScriptIter
  * module aliases:
  * local aliases:
  */
 
 module pango.PgScriptIter;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
 
-private import pango.PgContext;
-private import pango.PgItem;
-private import pango.PgLayout;
-private import pango.PgFontDescription;
-private import pango.PgFontMetrics;
-private import pango.PgFontFamily;
-private import pango.PgFontFace;
-private import pango.PgFontMap;
-private import pango.PgFontsetSimple;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
-private import pango.PgLanguage;
-private import pango.PgTabArray;
-private import pango.PgLayout;
-private import pango.PgLayoutIter;
 private import glib.Str;
 
 
@@ -145,65 +103,12 @@ public class PgScriptIter
 	/**
 	 */
 	
-	
-	
-	
-	/**
-	 * Looks up the PangoScript for a particular character (as defined by
-	 * Unicode Standard Annex 24). No check is made for ch being a
-	 * valid Unicode character; if you pass in invalid character, the
-	 * result is undefined.
-	 * As of Pango 1.18, this function simply returns the return value of
-	 * g_unichar_get_script().
-	 * Params:
-	 * ch =  a Unicode character
-	 * Returns: the PangoScript for the character.Since 1.4
-	 */
-	public static PangoScript pangoScriptForUnichar(gunichar ch)
-	{
-		// PangoScript pango_script_for_unichar (gunichar ch);
-		return pango_script_for_unichar(ch);
-	}
-	
-	/**
-	 * Given a script, finds a language tag that is reasonably
-	 * representative of that script. This will usually be the
-	 * Params:
-	 * script =  a PangoScript
-	 * Returns: a PangoLanguage that is representativeof the script, or NULL if no such language exists.Since 1.4
-	 */
-	public static PgLanguage pangoScriptGetSampleLanguage(PangoScript script)
-	{
-		// PangoLanguage* pango_script_get_sample_language (PangoScript script);
-		return new PgLanguage( pango_script_get_sample_language(script) );
-	}
-	
-	/**
-	 * Determines if script is one of the scripts used to
-	 * write language. The returned value is conservative;
-	 * if nothing is known about the language tag language,
-	 * TRUE will be returned, since, as far as Pango knows,
-	 * script might be used to write language.
-	 * This routine is used in Pango's itemization process when
-	 * determining if a supplied language tag is relevant to
-	 * a particular section of text. It probably is not useful for
-	 * applications in most circumstances.
-	 * Params:
-	 * language =  a PangoLanguage, or NULL
-	 * script =  a PangoScript
-	 * Returns: TRUE if script is one of the scripts usedto write language or if nothing is known about language(including the case that language is NULL),FALSE otherwise.Since 1.4
-	 */
-	public static int pangoLanguageIncludesScript(PgLanguage language, PangoScript script)
-	{
-		// gboolean pango_language_includes_script (PangoLanguage *language,  PangoScript script);
-		return pango_language_includes_script((language is null) ? null : language.getPgLanguageStruct(), script);
-	}
-	
 	/**
 	 * Create a new PangoScriptIter, used to break a string of
 	 * Unicode into runs by text. No copy is made of text, so
 	 * the caller needs to make sure it remains valid until
 	 * the iterator is freed with pango_script_iter_free().x
+	 * Since 1.4
 	 * Params:
 	 * text =  a UTF-8 string
 	 * length =  length of text, or -1 if text is nul-terminated.
@@ -211,18 +116,25 @@ public class PgScriptIter
 	public this (char[] text, int length)
 	{
 		// PangoScriptIter* pango_script_iter_new (const char *text,  int length);
-		this(cast(PangoScriptIter*)pango_script_iter_new(Str.toStringz(text), length) );
+		auto p = pango_script_iter_new(Str.toStringz(text), length);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(PangoScriptIter*) p);
 	}
 	
 	/**
 	 * Gets information about the range to which iter currently points.
 	 * The range is the set of locations p where *start <= p < *end.
 	 * (That is, it doesn't include the character stored at *end)
+	 * Since 1.4
 	 * Params:
 	 * start =  location to store start position of the range, or NULL
 	 * end =  location to store end position of the range, or NULL
 	 * script =  location to store script for range, or NULL
-	 * Since 1.4
 	 */
 	public void getRange(char** start, char** end, PangoScript* script)
 	{
@@ -234,7 +146,8 @@ public class PgScriptIter
 	 * Advances a PangoScriptIter to the next range. If iter
 	 * is already at the end, it is left unchanged and FALSE
 	 * is returned.
-	 * Returns: TRUE if iter was successfully advanced.Since 1.4
+	 * Since 1.4
+	 * Returns: TRUE if iter was successfully advanced.
 	 */
 	public int next()
 	{
@@ -244,6 +157,7 @@ public class PgScriptIter
 	
 	/**
 	 * Frees a PangoScriptIter created with pango_script_iter_new().
+	 * Since 1.4
 	 */
 	public void free()
 	{

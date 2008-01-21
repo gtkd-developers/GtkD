@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Window
  * 	- gdk.Display
@@ -52,7 +53,7 @@
 
 module gdk.Selection;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -101,25 +102,6 @@ public class Selection
 	
 	/**
 	 */
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Sets the owner of the given selection.
@@ -172,7 +154,13 @@ public class Selection
 	public static Window ownerGet(GdkAtom selection)
 	{
 		// GdkWindow* gdk_selection_owner_get (GdkAtom selection);
-		return new Window( gdk_selection_owner_get(selection) );
+		auto p = gdk_selection_owner_get(selection);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -189,7 +177,13 @@ public class Selection
 	public static Window ownerGetForDisplay(Display display, GdkAtom selection)
 	{
 		// GdkWindow* gdk_selection_owner_get_for_display (GdkDisplay *display,  GdkAtom selection);
-		return new Window( gdk_selection_owner_get_for_display((display is null) ? null : display.getDisplayStruct(), selection) );
+		auto p = gdk_selection_owner_get_for_display((display is null) ? null : display.getDisplayStruct(), selection);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**

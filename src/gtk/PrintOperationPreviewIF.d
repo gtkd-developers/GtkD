@@ -132,37 +132,6 @@ public interface PrintOperationPreviewIF
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Ends a preview.
 	 * This function must be called to finish a custom print preview.
@@ -191,26 +160,4 @@ public interface PrintOperationPreviewIF
 	 * pageNr =  the page to render
 	 */
 	public void renderPage(int pageNr);
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

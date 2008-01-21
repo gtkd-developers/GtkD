@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * 	- CellLayoutIF
  * prefixes:
  * 	- gtk_combo_box_entry_
@@ -43,13 +44,22 @@
  * omit code:
  * 	- gtk_combo_box_entry_new
  * 	- gtk_combo_box_entry_new_text
+ * omit signals:
  * imports:
  * 	- gtk.TreeModel
+ * 	- gtk.Adjustment
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * 	- glib.Str
  * 	- gtk.CellRenderer
+ * 	- glib.ListG
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
  * structWrap:
+ * 	- GtkAdjustment* -> Adjustment
  * 	- GtkTreeModel* -> TreeModel
  * module aliases:
  * local aliases:
@@ -57,14 +67,21 @@
 
 module gtk.ComboBoxEntry;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import gtk.TreeModel;
+private import gtk.Adjustment;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 private import glib.Str;
 private import gtk.CellRenderer;
+private import glib.ListG;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 
@@ -100,7 +117,7 @@ private import gtk.ComboBox;
  * GtkComboBoxEntry makes the entry available in UI definitions as an internal
  * child with name "entry".
  */
-public class ComboBoxEntry : ComboBox, CellLayoutIF
+public class ComboBoxEntry : ComboBox, BuildableIF, CellLayoutIF
 {
 	
 	/** the main Gtk struct */
@@ -134,7 +151,12 @@ public class ComboBoxEntry : ComboBox, CellLayoutIF
 		this.gtkComboBoxEntry = gtkComboBoxEntry;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkComboBoxEntry);
+	
+	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkComboBoxEntry);
+	
 	/**
 	 * Creates a new GtkComboBoxEntry which has a GtkEntry as child. After
 	 * construction, you should set a model using gtk_combo_box_set_model() and a
@@ -161,8 +183,6 @@ public class ComboBoxEntry : ComboBox, CellLayoutIF
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Creates a new GtkComboBoxEntry which has a GtkEntry as child and a list
 	 * of strings as popup. You can get the GtkEntry from a GtkComboBoxEntry
@@ -177,9 +197,15 @@ public class ComboBoxEntry : ComboBox, CellLayoutIF
 	public this (TreeModel model, int textColumn)
 	{
 		// GtkWidget* gtk_combo_box_entry_new_with_model (GtkTreeModel *model,  gint text_column);
-		this(cast(GtkComboBoxEntry*)gtk_combo_box_entry_new_with_model((model is null) ? null : model.getTreeModelStruct(), textColumn) );
+		auto p = gtk_combo_box_entry_new_with_model((model is null) ? null : model.getTreeModelStruct(), textColumn);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkComboBoxEntry*) p);
 	}
-	
 	
 	/**
 	 * Sets the model column which entry_box should use to get strings from

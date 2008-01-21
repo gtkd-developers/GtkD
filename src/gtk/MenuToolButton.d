@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_menu_tool_button_
  * 	- gtk_
@@ -44,12 +45,18 @@
  * 	- gtk_menu_tool_button_new
  * 	- gtk_menu_tool_button_new_from_stock
  * 	- gtk_menu_tool_button_get_menu
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.ToolItem
  * 	- gtk.Widget
  * 	- gtk.Tooltips
  * 	- gtk.Menu
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkToolItem* -> ToolItem
  * 	- GtkTooltips* -> Tooltips
@@ -60,16 +67,23 @@
 
 module gtk.MenuToolButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.ToolItem;
 private import gtk.Widget;
 private import gtk.Tooltips;
 private import gtk.Menu;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -84,7 +98,7 @@ private import gtk.ToolButton;
  *  GtkMenuToolButton. Use gtk_menu_tool_button_new_from_stock() to
  *  create a new GtkMenuToolButton containing a stock item.
  */
-public class MenuToolButton : ToolButton
+public class MenuToolButton : ToolButton, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -117,6 +131,9 @@ public class MenuToolButton : ToolButton
 		super(cast(GtkToolButton*)gtkMenuToolButton);
 		this.gtkMenuToolButton = gtkMenuToolButton;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkMenuToolButton);
 	
 	/**
 	 * Creates a new GtkMenuToolButton using icon_widget as icon and
@@ -163,11 +180,18 @@ public class MenuToolButton : ToolButton
 	public Menu getMenu()
 	{
 		// GtkWidget* gtk_menu_tool_button_get_menu (GtkMenuToolButton *button);
-		return new Menu( cast(GtkMenu*)gtk_menu_tool_button_get_menu(gtkMenuToolButton) );
+		auto p =  gtk_menu_tool_button_get_menu(gtkMenuToolButton);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Menu(cast(GtkMenu*)p);
 	}
 	
 	/**
 	 * Sets the toolTip for the arrow
+	 * Deprecated: Since 2.12 use Widget.setArrowTooltipText() or Widget.setArrowTooltipMarkup()
 	 * Params:
 	 *    	tipText =
 	 *    	tipPrivate =
@@ -185,13 +209,20 @@ public class MenuToolButton : ToolButton
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(MenuToolButton)[] onShowMenuListeners;
+	/**
+	 * See Also
+	 *
+	 * GtkToolbar, GtkToolButton
+	 * The toolbar widget
+	 * 	The parent class of GtkMenuToolButton. The properties
+	 * 	"label_widget", "label", "icon_widget", and "stock_id" on
+	 * 	GtkToolButton determine the label and icon used on
+	 * 	GtkMenuToolButtons.
+	 *
+	 */
 	void addOnShowMenu(void delegate(MenuToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("show-menu" in connectedSignals) )
@@ -220,9 +251,6 @@ public class MenuToolButton : ToolButton
 	}
 	
 	
-	
-	
-	
 	/**
 	 * Sets the GtkMenu that is popped up when the user clicks on the arrow.
 	 * If menu is NULL, the arrow button becomes insensitive.
@@ -235,7 +263,6 @@ public class MenuToolButton : ToolButton
 		// void gtk_menu_tool_button_set_menu (GtkMenuToolButton *button,  GtkWidget *menu);
 		gtk_menu_tool_button_set_menu(gtkMenuToolButton, (menu is null) ? null : menu.getWidgetStruct());
 	}
-	
 	
 	/**
 	 * Warning

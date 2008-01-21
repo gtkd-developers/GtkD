@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.ParamSpec
@@ -55,7 +56,7 @@
 
 module gobject.ParamSpec;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
@@ -114,22 +115,6 @@ public class ParamSpec
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Increments the reference count of pspec.
 	 * Returns:the GParamSpec that was passed into this function
@@ -137,7 +122,13 @@ public class ParamSpec
 	public ParamSpec doref()
 	{
 		// GParamSpec* g_param_spec_ref (GParamSpec *pspec);
-		return new ParamSpec( g_param_spec_ref(gParamSpec) );
+		auto p = g_param_spec_ref(gParamSpec);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -172,7 +163,13 @@ public class ParamSpec
 	public ParamSpec refSink()
 	{
 		// GParamSpec* g_param_spec_ref_sink (GParamSpec *pspec);
-		return new ParamSpec( g_param_spec_ref_sink(gParamSpec) );
+		auto p = g_param_spec_ref_sink(gParamSpec);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -256,7 +253,7 @@ public class ParamSpec
 	public char[] getName()
 	{
 		// const gchar* g_param_spec_get_name (GParamSpec *pspec);
-		return Str.toString(g_param_spec_get_name(gParamSpec) );
+		return Str.toString(g_param_spec_get_name(gParamSpec)).dup;
 	}
 	
 	/**
@@ -266,7 +263,7 @@ public class ParamSpec
 	public char[] getNick()
 	{
 		// const gchar* g_param_spec_get_nick (GParamSpec *pspec);
-		return Str.toString(g_param_spec_get_nick(gParamSpec) );
+		return Str.toString(g_param_spec_get_nick(gParamSpec)).dup;
 	}
 	
 	/**
@@ -276,7 +273,7 @@ public class ParamSpec
 	public char[] getBlurb()
 	{
 		// const gchar* g_param_spec_get_blurb (GParamSpec *pspec);
-		return Str.toString(g_param_spec_get_blurb(gParamSpec) );
+		return Str.toString(g_param_spec_get_blurb(gParamSpec)).dup;
 	}
 	
 	/**
@@ -356,7 +353,13 @@ public class ParamSpec
 	public ParamSpec getRedirectTarget()
 	{
 		// GParamSpec* g_param_spec_get_redirect_target (GParamSpec *pspec);
-		return new ParamSpec( g_param_spec_get_redirect_target(gParamSpec) );
+		auto p = g_param_spec_get_redirect_target(gParamSpec);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -382,7 +385,6 @@ public class ParamSpec
 		return g_param_spec_internal(paramType, Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
 	}
 	
-	
 	/**
 	 * Registers name as the name of a new static type derived from
 	 * G_TYPE_PARAM. The type system uses the information contained in the
@@ -398,7 +400,6 @@ public class ParamSpec
 		// GType g_param_type_register_static (const gchar *name,  const GParamSpecTypeInfo *pspec_info);
 		return g_param_type_register_static(Str.toStringz(name), pspecInfo);
 	}
-	
 	
 	/**
 	 * Creates a new GParamSpecPool.
@@ -454,7 +455,13 @@ public class ParamSpec
 	public static ParamSpec poolLookup(GParamSpecPool* pool, char[] paramName, GType ownerType, int walkAncestors)
 	{
 		// GParamSpec* g_param_spec_pool_lookup (GParamSpecPool *pool,  const gchar *param_name,  GType owner_type,  gboolean walk_ancestors);
-		return new ParamSpec( g_param_spec_pool_lookup(pool, Str.toStringz(paramName), ownerType, walkAncestors) );
+		auto p = g_param_spec_pool_lookup(pool, Str.toStringz(paramName), ownerType, walkAncestors);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -481,6 +488,12 @@ public class ParamSpec
 	public static ListG poolListOwned(GParamSpecPool* pool, GType ownerType)
 	{
 		// GList* g_param_spec_pool_list_owned (GParamSpecPool *pool,  GType owner_type);
-		return new ListG( g_param_spec_pool_list_owned(pool, ownerType) );
+		auto p = g_param_spec_pool_list_owned(pool, ownerType);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 }

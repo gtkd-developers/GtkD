@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,10 +50,12 @@
 
 module atk.Text;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 
@@ -113,13 +116,13 @@ public class Text
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Text)[] onTextAttributesChangedListeners;
+	/**
+	 * The "text-attributes-changed" signal is emitted when the text attributes of
+	 * the text of an object which implements AtkText changes.
+	 */
 	void addOnTextAttributesChanged(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-attributes-changed" in connectedSignals) )
@@ -148,6 +151,10 @@ public class Text
 	}
 	
 	void delegate(gint, Text)[] onTextCaretMovedListeners;
+	/**
+	 * The "text-caret-moved" signal is emitted when the caret position of
+	 * the text of an object which implements AtkText changes.
+	 */
 	void addOnTextCaretMoved(void delegate(gint, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-caret-moved" in connectedSignals) )
@@ -176,6 +183,12 @@ public class Text
 	}
 	
 	void delegate(gint, gint, Text)[] onTextChangedListeners;
+	/**
+	 * The "text-changed" signal is emitted when the text of the object which
+	 * implements the AtkText interface changes, This signal will have a detail
+	 * which is either "insert" or "delete" which identifies whether the text
+	 * change was an insertion or a deletion
+	 */
 	void addOnTextChanged(void delegate(gint, gint, Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-changed" in connectedSignals) )
@@ -204,6 +217,10 @@ public class Text
 	}
 	
 	void delegate(Text)[] onTextSelectionChangedListeners;
+	/**
+	 * The "text-selection-changed" signal is emitted when the selected text of
+	 * an object which implements AtkText changes.
+	 */
 	void addOnTextSelectionChanged(void delegate(Text) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("text-selection-changed" in connectedSignals) )
@@ -232,14 +249,6 @@ public class Text
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Gets the specified text.
 	 * Params:
@@ -250,7 +259,7 @@ public class Text
 	public char[] getText(int startOffset, int endOffset)
 	{
 		// gchar* atk_text_get_text (AtkText *text,  gint start_offset,  gint end_offset);
-		return Str.toString(atk_text_get_text(atkText, startOffset, endOffset) );
+		return Str.toString(atk_text_get_text(atkText, startOffset, endOffset)).dup;
 	}
 	
 	/**
@@ -303,7 +312,7 @@ public class Text
 	public char[] getTextAfterOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_text_after_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_text_after_offset(atkText, offset, boundaryType, startOffset, endOffset) );
+		return Str.toString(atk_text_get_text_after_offset(atkText, offset, boundaryType, startOffset, endOffset)).dup;
 	}
 	
 	/**
@@ -351,7 +360,7 @@ public class Text
 	public char[] getTextAtOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_text_at_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_text_at_offset(atkText, offset, boundaryType, startOffset, endOffset) );
+		return Str.toString(atk_text_get_text_at_offset(atkText, offset, boundaryType, startOffset, endOffset)).dup;
 	}
 	
 	/**
@@ -397,7 +406,7 @@ public class Text
 	public char[] getTextBeforeOffset(int offset, AtkTextBoundary boundaryType, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_text_before_offset (AtkText *text,  gint offset,  AtkTextBoundary boundary_type,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_text_before_offset(atkText, offset, boundaryType, startOffset, endOffset) );
+		return Str.toString(atk_text_get_text_before_offset(atkText, offset, boundaryType, startOffset, endOffset)).dup;
 	}
 	
 	/**
@@ -559,7 +568,7 @@ public class Text
 	public char[] getSelection(int selectionNum, int* startOffset, int* endOffset)
 	{
 		// gchar* atk_text_get_selection (AtkText *text,  gint selection_num,  gint *start_offset,  gint *end_offset);
-		return Str.toString(atk_text_get_selection(atkText, selectionNum, startOffset, endOffset) );
+		return Str.toString(atk_text_get_selection(atkText, selectionNum, startOffset, endOffset)).dup;
 	}
 	
 	/**
@@ -655,7 +664,7 @@ public class Text
 	public static char[] attributeGetName(AtkTextAttribute attr)
 	{
 		// const gchar* atk_text_attribute_get_name (AtkTextAttribute attr);
-		return Str.toString(atk_text_attribute_get_name(attr) );
+		return Str.toString(atk_text_attribute_get_name(attr)).dup;
 	}
 	
 	/**
@@ -680,9 +689,6 @@ public class Text
 	public static char[] attributeGetValue(AtkTextAttribute attr, int index)
 	{
 		// const gchar* atk_text_attribute_get_value (AtkTextAttribute attr,  gint index_);
-		return Str.toString(atk_text_attribute_get_value(attr, index) );
+		return Str.toString(atk_text_attribute_get_value(attr, index)).dup;
 	}
-	
-	
-	
 }

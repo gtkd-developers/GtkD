@@ -25,9 +25,9 @@
  * inFile  = GtkCellRendererPixbuf.html
  * outPack = gtk
  * outFile = CellRendererPixbuf
- * strct   = GtkCellRenderer
- * realStrct=GtkCellRendererPixbuf
- * ctorStrct=
+ * strct   = GtkCellRendererPixbuf
+ * realStrct=
+ * ctorStrct=GtkCellRenderer
  * clss    = CellRendererPixbuf
  * interf  = 
  * class Code: No
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.CellRenderer
  * structWrap:
@@ -51,7 +52,7 @@
 
 module gtk.CellRendererPixbuf;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -116,7 +117,6 @@ public class CellRendererPixbuf : CellRenderer
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkCellRendererPixbuf. Adjust rendering
 	 * parameters using object properties. Object properties can be set
@@ -129,13 +129,13 @@ public class CellRendererPixbuf : CellRenderer
 	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_pixbuf_new (void);
-		this(cast(GtkCellRendererPixbuf*)gtk_cell_renderer_pixbuf_new() );
+		auto p = gtk_cell_renderer_pixbuf_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCellRendererPixbuf*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
 }

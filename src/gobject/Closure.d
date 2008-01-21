@@ -41,6 +41,7 @@
  * omit prefixes:
  * 	- g_cclosure
  * omit code:
+ * omit signals:
  * imports:
  * 	- gobject.ObjectG
  * 	- gobject.Closure
@@ -57,7 +58,7 @@
 
 module gobject.Closure;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
@@ -141,20 +142,6 @@ public class Closure
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * A variant of g_closure_new_simple() which stores object in the data
 	 * field of the closure and calls g_object_watch_closure() on object and the
@@ -169,7 +156,14 @@ public class Closure
 	public this (uint sizeofClosure, ObjectG object)
 	{
 		// GClosure* g_closure_new_object (guint sizeof_closure,  GObject *object);
-		this(cast(GClosure*)g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct()) );
+		auto p = g_closure_new_object(sizeofClosure, (object is null) ? null : object.getObjectGStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GClosure*) p);
 	}
 	
 	/**
@@ -180,7 +174,13 @@ public class Closure
 	public Closure doref()
 	{
 		// GClosure* g_closure_ref (GClosure *closure);
-		return new Closure( g_closure_ref(gClosure) );
+		auto p = g_closure_ref(gClosure);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Closure(cast(GClosure*) p);
 	}
 	
 	/**
@@ -345,7 +345,14 @@ public class Closure
 	public this (uint sizeofClosure, void* data)
 	{
 		// GClosure* g_closure_new_simple (guint sizeof_closure,  gpointer data);
-		this(cast(GClosure*)g_closure_new_simple(sizeofClosure, data) );
+		auto p = g_closure_new_simple(sizeofClosure, data);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GClosure*) p);
 	}
 	
 	/**
@@ -418,27 +425,4 @@ public class Closure
 		// void g_source_set_closure (GSource *source,  GClosure *closure);
 		g_source_set_closure((source is null) ? null : source.getSourceStruct(), (closure is null) ? null : closure.getClosureStruct());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

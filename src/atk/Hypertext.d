@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,10 +49,12 @@
 
 module atk.Hypertext;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 
 
@@ -100,13 +103,15 @@ public class Hypertext
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gint, Hypertext)[] onLinkSelectedListeners;
+	/**
+	 * The "link-selected" signal is emitted by an AtkHyperText object when one of
+	 * the hyperlinks associated with the object is selected.
+	 * See Also
+	 * AtkHyperlink
+	 */
 	void addOnLinkSelected(void delegate(gint, Hypertext) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("link-selected" in connectedSignals) )
@@ -133,7 +138,6 @@ public class Hypertext
 		
 		return consumed;
 	}
-	
 	
 	
 	/**

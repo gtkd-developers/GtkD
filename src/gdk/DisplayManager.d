@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.DisplayManager
  * 	- gdk.Display
@@ -56,10 +57,12 @@
 
 module gdk.DisplayManager;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gdk.DisplayManager;
 private import gdk.Display;
@@ -112,13 +115,13 @@ public class DisplayManager : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Display, DisplayManager)[] onDisplayOpenedListeners;
+	/**
+	 * The ::display_opened signal is emitted when a display is opened.
+	 * Since 2.2
+	 */
 	void addOnDisplayOpened(void delegate(Display, DisplayManager) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("display-opened" in connectedSignals) )
@@ -147,7 +150,6 @@ public class DisplayManager : ObjectG
 	}
 	
 	
-	
 	/**
 	 * Returns the global GdkDisplayManager singleton; gdk_parse_pargs(),
 	 * gdk_init(), or gdk_init_check() must have been called first.
@@ -157,7 +159,13 @@ public class DisplayManager : ObjectG
 	public static DisplayManager get()
 	{
 		// GdkDisplayManager* gdk_display_manager_get (void);
-		return new DisplayManager( gdk_display_manager_get() );
+		auto p = gdk_display_manager_get();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new DisplayManager(cast(GdkDisplayManager*) p);
 	}
 	
 	/**
@@ -168,7 +176,13 @@ public class DisplayManager : ObjectG
 	public Display getDefaultDisplay()
 	{
 		// GdkDisplay* gdk_display_manager_get_default_display  (GdkDisplayManager *display_manager);
-		return new Display( gdk_display_manager_get_default_display(gdkDisplayManager) );
+		auto p = gdk_display_manager_get_default_display(gdkDisplayManager);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -191,7 +205,13 @@ public class DisplayManager : ObjectG
 	public ListSG listDisplays()
 	{
 		// GSList* gdk_display_manager_list_displays (GdkDisplayManager *display_manager);
-		return new ListSG( gdk_display_manager_list_displays(gdkDisplayManager) );
+		auto p = gdk_display_manager_list_displays(gdkDisplayManager);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -204,6 +224,12 @@ public class DisplayManager : ObjectG
 	public static Device gdkDisplayGetCorePointer(Display display)
 	{
 		// GdkDevice* gdk_display_get_core_pointer (GdkDisplay *display);
-		return new Device( gdk_display_get_core_pointer((display is null) ? null : display.getDisplayStruct()) );
+		auto p = gdk_display_get_core_pointer((display is null) ? null : display.getDisplayStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Device(cast(GdkDevice*) p);
 	}
 }

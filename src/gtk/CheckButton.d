@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_check_button_
  * 	- gtk_
@@ -43,10 +44,15 @@
  * omit code:
  * 	- gtk_check_button_new_with_label
  * 	- gtk_check_button_new_with_mnemonic
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Button
- * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -54,14 +60,18 @@
 
 module gtk.CheckButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gtk.Button;
-private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -72,7 +82,7 @@ private import gtk.ToggleButton;
  * A GtkCheckButton places a discrete GtkToggleButton next to a widget, (usually a GtkLabel). See the section on GtkToggleButton widgets for more information about toggle/check buttons.
  * The important signal ('toggled') is also inherited from GtkToggleButton.
  */
-public class CheckButton : ToggleButton
+public class CheckButton : ToggleButton, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -105,6 +115,9 @@ public class CheckButton : ToggleButton
 		super(cast(GtkToggleButton*)gtkCheckButton);
 		this.gtkCheckButton = gtkCheckButton;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkCheckButton);
 	
 	/**
 	 * Creates a new GtkCheckButton with a GtkLabel to the right of it.
@@ -141,16 +154,19 @@ public class CheckButton : ToggleButton
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkCheckButton.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_check_button_new (void);
-		this(cast(GtkCheckButton*)gtk_check_button_new() );
+		auto p = gtk_check_button_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCheckButton*) p);
 	}
-	
-	
-	
 }

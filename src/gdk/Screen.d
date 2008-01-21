@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtkc.cairotypes
  * 	- glib.Str
@@ -68,10 +69,12 @@
 
 module gdk.Screen;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gtkc.cairotypes;
 private import glib.Str;
@@ -136,13 +139,14 @@ public class Screen : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Screen)[] onCompositedChangedListeners;
+	/**
+	 * The ::composited_changed signal is emitted when the composited
+	 * status of the screen changes
+	 * Since 2.10
+	 */
 	void addOnCompositedChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("composited-changed" in connectedSignals) )
@@ -171,6 +175,11 @@ public class Screen : ObjectG
 	}
 	
 	void delegate(Screen)[] onSizeChangedListeners;
+	/**
+	 * The ::size_changed signal is emitted when the pixel width or
+	 * height of a screen changes.
+	 * Since 2.2
+	 */
 	void addOnSizeChanged(void delegate(Screen) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-changed" in connectedSignals) )
@@ -199,7 +208,6 @@ public class Screen : ObjectG
 	}
 	
 	
-	
 	/**
 	 * Gets the default screen for the default display. (See
 	 * gdk_display_get_default()).
@@ -209,7 +217,13 @@ public class Screen : ObjectG
 	public static Screen getDefault()
 	{
 		// GdkScreen* gdk_screen_get_default (void);
-		return new Screen( gdk_screen_get_default() );
+		auto p = gdk_screen_get_default();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -220,7 +234,13 @@ public class Screen : ObjectG
 	public Colormap getDefaultColormap()
 	{
 		// GdkColormap* gdk_screen_get_default_colormap (GdkScreen *screen);
-		return new Colormap( gdk_screen_get_default_colormap(gdkScreen) );
+		auto p = gdk_screen_get_default_colormap(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -243,7 +263,13 @@ public class Screen : ObjectG
 	public Colormap getSystemColormap()
 	{
 		// GdkColormap* gdk_screen_get_system_colormap (GdkScreen *screen);
-		return new Colormap( gdk_screen_get_system_colormap(gdkScreen) );
+		auto p = gdk_screen_get_system_colormap(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -256,7 +282,13 @@ public class Screen : ObjectG
 	public Visual getSystemVisual()
 	{
 		// GdkVisual* gdk_screen_get_system_visual (GdkScreen *screen);
-		return new Visual( gdk_screen_get_system_visual(gdkScreen) );
+		auto p = gdk_screen_get_system_visual(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -271,7 +303,13 @@ public class Screen : ObjectG
 	public Colormap getRgbColormap()
 	{
 		// GdkColormap* gdk_screen_get_rgb_colormap (GdkScreen *screen);
-		return new Colormap( gdk_screen_get_rgb_colormap(gdkScreen) );
+		auto p = gdk_screen_get_rgb_colormap(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -287,7 +325,13 @@ public class Screen : ObjectG
 	public Visual getRgbVisual()
 	{
 		// GdkVisual* gdk_screen_get_rgb_visual (GdkScreen *screen);
-		return new Visual( gdk_screen_get_rgb_visual(gdkScreen) );
+		auto p = gdk_screen_get_rgb_visual(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -308,7 +352,13 @@ public class Screen : ObjectG
 	public Colormap getRgbaColormap()
 	{
 		// GdkColormap* gdk_screen_get_rgba_colormap (GdkScreen *screen);
-		return new Colormap( gdk_screen_get_rgba_colormap(gdkScreen) );
+		auto p = gdk_screen_get_rgba_colormap(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -321,7 +371,13 @@ public class Screen : ObjectG
 	public Visual getRgbaVisual()
 	{
 		// GdkVisual* gdk_screen_get_rgba_visual (GdkScreen *screen);
-		return new Visual( gdk_screen_get_rgba_visual(gdkScreen) );
+		auto p = gdk_screen_get_rgba_visual(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**
@@ -347,7 +403,13 @@ public class Screen : ObjectG
 	public Window getRootWindow()
 	{
 		// GdkWindow* gdk_screen_get_root_window (GdkScreen *screen);
-		return new Window( gdk_screen_get_root_window(gdkScreen) );
+		auto p = gdk_screen_get_root_window(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -358,7 +420,13 @@ public class Screen : ObjectG
 	public Display getDisplay()
 	{
 		// GdkDisplay* gdk_screen_get_display (GdkScreen *screen);
-		return new Display( gdk_screen_get_display(gdkScreen) );
+		auto p = gdk_screen_get_display(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -431,7 +499,13 @@ public class Screen : ObjectG
 	public ListG listVisuals()
 	{
 		// GList* gdk_screen_list_visuals (GdkScreen *screen);
-		return new ListG( gdk_screen_list_visuals(gdkScreen) );
+		auto p = gdk_screen_list_visuals(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -446,7 +520,13 @@ public class Screen : ObjectG
 	public ListG getToplevelWindows()
 	{
 		// GList* gdk_screen_get_toplevel_windows (GdkScreen *screen);
-		return new ListG( gdk_screen_get_toplevel_windows(gdkScreen) );
+		auto p = gdk_screen_get_toplevel_windows(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -458,7 +538,7 @@ public class Screen : ObjectG
 	public char[] makeDisplayName()
 	{
 		// gchar* gdk_screen_make_display_name (GdkScreen *screen);
-		return Str.toString(gdk_screen_make_display_name(gdkScreen) );
+		return Str.toString(gdk_screen_make_display_name(gdkScreen)).dup;
 	}
 	
 	/**
@@ -626,7 +706,13 @@ public class Screen : ObjectG
 	public Window getActiveWindow()
 	{
 		// GdkWindow* gdk_screen_get_active_window (GdkScreen *screen);
-		return new Window( gdk_screen_get_active_window(gdkScreen) );
+		auto p = gdk_screen_get_active_window(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -647,7 +733,13 @@ public class Screen : ObjectG
 	public ListG getWindowStack()
 	{
 		// GList* gdk_screen_get_window_stack (GdkScreen *screen);
-		return new ListG( gdk_screen_get_window_stack(gdkScreen) );
+		auto p = gdk_screen_get_window_stack(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -725,6 +817,4 @@ public class Screen : ObjectG
 		// gboolean gdk_spawn_command_line_on_screen (GdkScreen *screen,  const gchar *command_line,  GError **error);
 		return gdk_spawn_command_line_on_screen(gdkScreen, Str.toStringz(commandLine), error);
 	}
-	
-	
 }

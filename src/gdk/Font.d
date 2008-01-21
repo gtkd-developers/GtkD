@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Font
@@ -54,7 +55,7 @@
 
 module gdk.Font;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -245,8 +246,6 @@ public class Font
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Warning
 	 * gdk_font_load is deprecated and should not be used in newly-written code.
@@ -260,7 +259,13 @@ public class Font
 	public static Font load(char[] fontName)
 	{
 		// GdkFont* gdk_font_load (const gchar *font_name);
-		return new Font( gdk_font_load(Str.toStringz(fontName)) );
+		auto p = gdk_font_load(Str.toStringz(fontName));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -278,7 +283,13 @@ public class Font
 	public static Font loadForDisplay(Display display, char[] fontName)
 	{
 		// GdkFont* gdk_font_load_for_display (GdkDisplay *display,  const gchar *font_name);
-		return new Font( gdk_font_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontName)) );
+		auto p = gdk_font_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontName));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -295,7 +306,13 @@ public class Font
 	public static Font fontsetLoad(char[] fontsetName)
 	{
 		// GdkFont* gdk_fontset_load (const gchar *fontset_name);
-		return new Font( gdk_fontset_load(Str.toStringz(fontsetName)) );
+		auto p = gdk_fontset_load(Str.toStringz(fontsetName));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -314,7 +331,13 @@ public class Font
 	public static Font fontsetLoadForDisplay(Display display, char[] fontsetName)
 	{
 		// GdkFont* gdk_fontset_load_for_display (GdkDisplay *display,  const gchar *fontset_name);
-		return new Font( gdk_fontset_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontsetName)) );
+		auto p = gdk_fontset_load_for_display((display is null) ? null : display.getDisplayStruct(), Str.toStringz(fontsetName));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -332,7 +355,13 @@ public class Font
 	public static Font fromDescription(PangoFontDescription* fontDesc)
 	{
 		// GdkFont* gdk_font_from_description (PangoFontDescription *font_desc);
-		return new Font( gdk_font_from_description(fontDesc) );
+		auto p = gdk_font_from_description(fontDesc);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -352,7 +381,13 @@ public class Font
 	public static Font fromDescriptionForDisplay(Display display, PangoFontDescription* fontDesc)
 	{
 		// GdkFont* gdk_font_from_description_for_display  (GdkDisplay *display,  PangoFontDescription *font_desc);
-		return new Font( gdk_font_from_description_for_display((display is null) ? null : display.getDisplayStruct(), fontDesc) );
+		auto p = gdk_font_from_description_for_display((display is null) ? null : display.getDisplayStruct(), fontDesc);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -365,7 +400,13 @@ public class Font
 	public Display getDisplay()
 	{
 		// GdkDisplay* gdk_font_get_display (GdkFont *font);
-		return new Display( gdk_font_get_display(gdkFont) );
+		auto p = gdk_font_get_display(gdkFont);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -377,7 +418,13 @@ public class Font
 	public Font doref()
 	{
 		// GdkFont* gdk_font_ref (GdkFont *font);
-		return new Font( gdk_font_ref(gdkFont) );
+		auto p = gdk_font_ref(gdkFont);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -660,7 +707,6 @@ public class Font
 		return gdk_char_height(gdkFont, character);
 	}
 	
-	
 	/**
 	 * Warning
 	 * gdk_wcstombs is deprecated and should not be used in newly-written code.
@@ -674,7 +720,7 @@ public class Font
 	public static char[] wcstombs(GdkWChar* src)
 	{
 		// gchar* gdk_wcstombs (const GdkWChar *src);
-		return Str.toString(gdk_wcstombs(src) );
+		return Str.toString(gdk_wcstombs(src)).dup;
 	}
 	
 	/**

@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * structWrap:
@@ -51,7 +52,7 @@
 
 module glib.PtrArray;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -125,14 +126,20 @@ public class PtrArray
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GPtrArray.
 	 */
 	public this ()
 	{
 		// GPtrArray* g_ptr_array_new (void);
-		this(cast(GPtrArray*)g_ptr_array_new() );
+		auto p = g_ptr_array_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GPtrArray*) p);
 	}
 	
 	/**
@@ -147,7 +154,13 @@ public class PtrArray
 	public static PtrArray sizedNew(uint reservedSize)
 	{
 		// GPtrArray* g_ptr_array_sized_new (guint reserved_size);
-		return new PtrArray( g_ptr_array_sized_new(reservedSize) );
+		auto p = g_ptr_array_sized_new(reservedSize);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PtrArray(cast(GPtrArray*) p);
 	}
 	
 	/**
@@ -282,7 +295,6 @@ public class PtrArray
 		// void g_ptr_array_set_size (GPtrArray *array,  gint length);
 		g_ptr_array_set_size(gPtrArray, length);
 	}
-	
 	
 	/**
 	 * Frees all of the memory allocated for the pointer array.

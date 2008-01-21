@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module glib.WindowsUtils;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -71,7 +72,6 @@ public class WindowsUtils
 	/**
 	 */
 	
-	
 	/**
 	 * Translate a Win32 error code (as returned by GetLastError()) into
 	 * the corresponding message. The message is either language neutral,
@@ -86,7 +86,7 @@ public class WindowsUtils
 	public static char[] errorMessage(int error)
 	{
 		// gchar* g_win32_error_message (gint error);
-		return Str.toString(g_win32_error_message(error) );
+		return Str.toString(g_win32_error_message(error)).dup;
 	}
 	
 	/**
@@ -102,7 +102,7 @@ public class WindowsUtils
 	public static char[] getlocale()
 	{
 		// gchar* g_win32_getlocale (void);
-		return Str.toString(g_win32_getlocale() );
+		return Str.toString(g_win32_getlocale()).dup;
 	}
 	
 	/**
@@ -143,7 +143,7 @@ public class WindowsUtils
 	public static char[] getPackageInstallationDirectory(char[] p, char[] dllName)
 	{
 		// gchar* g_win32_get_package_installation_directory  (const gchar *package,  const gchar *dll_name);
-		return Str.toString(g_win32_get_package_installation_directory(Str.toStringz(p), Str.toStringz(dllName)) );
+		return Str.toString(g_win32_get_package_installation_directory(Str.toStringz(p), Str.toStringz(dllName))).dup;
 	}
 	
 	/**
@@ -163,7 +163,7 @@ public class WindowsUtils
 	public static char[] getPackageInstallationSubdirectory(char[] p, char[] dllName, char[] subdir)
 	{
 		// gchar* g_win32_get_package_installation_subdirectory  (const gchar *package,  const gchar *dll_name,  const gchar *subdir);
-		return Str.toString(g_win32_get_package_installation_subdirectory(Str.toStringz(p), Str.toStringz(dllName), Str.toStringz(subdir)) );
+		return Str.toString(g_win32_get_package_installation_subdirectory(Str.toStringz(p), Str.toStringz(dllName), Str.toStringz(subdir))).dup;
 	}
 	
 	/**
@@ -210,9 +210,6 @@ public class WindowsUtils
 	public static char[] localeFilenameFromUtf8(char[] utf8filename)
 	{
 		// gchar* g_win32_locale_filename_from_utf8 (const gchar *utf8filename);
-		return Str.toString(g_win32_locale_filename_from_utf8(Str.toStringz(utf8filename)) );
+		return Str.toString(g_win32_locale_filename_from_utf8(Str.toStringz(utf8filename))).dup;
 	}
-	
-	
-	
 }

@@ -30,21 +30,28 @@
  * ctorStrct=
  * clss    = ScaleButton
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_scale_button_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.Adjustment
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkWidget* -> Widget
@@ -54,14 +61,21 @@
 
 module gtk.ScaleButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.Adjustment;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -74,7 +88,7 @@ private import gtk.Button;
  * applications, and GTK+ provides a GtkVolumeButton subclass that
  * is tailored for this use case.
  */
-public class ScaleButton : Button
+public class ScaleButton : Button, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -108,15 +122,21 @@ public class ScaleButton : Button
 		this.gtkScaleButton = gtkScaleButton;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkScaleButton);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ScaleButton)[] onPopdownListeners;
+	/**
+	 * The ::popdown signal is a
+	 * keybinding signal
+	 * which gets emitted to popdown the scale widget.
+	 * The default binding for this signal is Escape.
+	 * Since 2.12
+	 */
 	void addOnPopdown(void delegate(ScaleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popdown" in connectedSignals) )
@@ -145,6 +165,13 @@ public class ScaleButton : Button
 	}
 	
 	void delegate(ScaleButton)[] onPopupListeners;
+	/**
+	 * The ::popup signal is a
+	 * keybinding signal
+	 * which gets emitted to popup the scale widget.
+	 * The default bindings for this signal are Space, Enter and Return.
+	 * Since 2.12
+	 */
 	void addOnPopup(void delegate(ScaleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popup" in connectedSignals) )
@@ -173,6 +200,11 @@ public class ScaleButton : Button
 	}
 	
 	void delegate(gdouble, ScaleButton)[] onValueChangedListeners;
+	/**
+	 * The ::value-changed signal is emitted when the value field has
+	 * changed.
+	 * Since 2.12
+	 */
 	void addOnValueChanged(void delegate(gdouble, ScaleButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("value-changed" in connectedSignals) )
@@ -201,7 +233,6 @@ public class ScaleButton : Button
 	}
 	
 	
-	
 	/**
 	 * Creates a GtkScaleButton, with a range between min and max, with
 	 * a stepping of step.
@@ -218,7 +249,14 @@ public class ScaleButton : Button
 	public this (GtkIconSize size, double min, double max, double step, char** icons)
 	{
 		// GtkWidget* gtk_scale_button_new (GtkIconSize size,  gdouble min,  gdouble max,  gdouble step,  const gchar **icons);
-		this(cast(GtkScaleButton*)gtk_scale_button_new(size, min, max, step, icons) );
+		auto p = gtk_scale_button_new(size, min, max, step, icons);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkScaleButton*) p);
 	}
 	
 	/**
@@ -272,7 +310,13 @@ public class ScaleButton : Button
 	public Adjustment getAdjustment()
 	{
 		// GtkAdjustment* gtk_scale_button_get_adjustment (GtkScaleButton *button);
-		return new Adjustment( gtk_scale_button_get_adjustment(gtkScaleButton) );
+		auto p = gtk_scale_button_get_adjustment(gtkScaleButton);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -285,9 +329,4 @@ public class ScaleButton : Button
 		// gdouble gtk_scale_button_get_value (GtkScaleButton *button);
 		return gtk_scale_button_get_value(gtkScaleButton);
 	}
-	
-	
-	
-	
-	
 }

@@ -25,9 +25,9 @@
  * inFile  = GtkCellRendererToggle.html
  * outPack = gtk
  * outFile = CellRendererToggle
- * strct   = GtkCellRenderer
- * realStrct=GtkCellRendererToggle
- * ctorStrct=
+ * strct   = GtkCellRendererToggle
+ * realStrct=
+ * ctorStrct=GtkCellRenderer
  * clss    = CellRendererToggle
  * interf  = 
  * class Code: No
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.CellRenderer
@@ -52,10 +53,12 @@
 
 module gtk.CellRendererToggle;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.CellRenderer;
@@ -107,13 +110,12 @@ public class CellRendererToggle : CellRenderer
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], CellRendererToggle)[] onToggledListeners;
+	/**
+	 * The ::toggled signal is emitted when the cell is toggled.
+	 */
 	void addOnToggled(void delegate(char[], CellRendererToggle) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggled" in connectedSignals) )
@@ -142,7 +144,6 @@ public class CellRendererToggle : CellRenderer
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkCellRendererToggle. Adjust rendering
 	 * parameters using object properties. Object properties can be set
@@ -155,19 +156,24 @@ public class CellRendererToggle : CellRenderer
 	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_toggle_new (void);
-		this(cast(GtkCellRendererToggle*)gtk_cell_renderer_toggle_new() );
+		auto p = gtk_cell_renderer_toggle_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCellRendererToggle*) p);
 	}
 	
 	/**
 	 * Returns whether we're rendering radio toggles rather than checkboxes.
-	 * Params:
-	 * toggle =  a GtkCellRendererToggle
 	 * Returns: TRUE if we're rendering radio toggles rather than checkboxes
 	 */
-	public static int getRadio(GtkCellRendererToggle* toggle)
+	public int getRadio()
 	{
 		// gboolean gtk_cell_renderer_toggle_get_radio (GtkCellRendererToggle *toggle);
-		return gtk_cell_renderer_toggle_get_radio(toggle);
+		return gtk_cell_renderer_toggle_get_radio(gtkCellRendererToggle);
 	}
 	
 	/**
@@ -179,41 +185,33 @@ public class CellRendererToggle : CellRenderer
 	 * up a per-row setting using GtkTreeViewColumn to associate model
 	 * columns with cell renderer properties).
 	 * Params:
-	 * toggle =  a GtkCellRendererToggle
 	 * radio =  TRUE to make the toggle look like a radio button
 	 */
-	public static void setRadio(GtkCellRendererToggle* toggle, int radio)
+	public void setRadio(int radio)
 	{
 		// void gtk_cell_renderer_toggle_set_radio (GtkCellRendererToggle *toggle,  gboolean radio);
-		gtk_cell_renderer_toggle_set_radio(toggle, radio);
+		gtk_cell_renderer_toggle_set_radio(gtkCellRendererToggle, radio);
 	}
 	
 	/**
 	 * Returns whether the cell renderer is active. See
 	 * gtk_cell_renderer_toggle_set_active().
-	 * Params:
-	 * toggle =  a GtkCellRendererToggle
 	 * Returns: TRUE if the cell renderer is active.
 	 */
-	public static int getActive(GtkCellRendererToggle* toggle)
+	public int getActive()
 	{
 		// gboolean gtk_cell_renderer_toggle_get_active (GtkCellRendererToggle *toggle);
-		return gtk_cell_renderer_toggle_get_active(toggle);
+		return gtk_cell_renderer_toggle_get_active(gtkCellRendererToggle);
 	}
 	
 	/**
 	 * Activates or deactivates a cell renderer.
 	 * Params:
-	 * toggle =  a GtkCellRendererToggle.
 	 * setting =  the value to set.
 	 */
-	public static void setActive(GtkCellRendererToggle* toggle, int setting)
+	public void setActive(int setting)
 	{
 		// void gtk_cell_renderer_toggle_set_active (GtkCellRendererToggle *toggle,  gboolean setting);
-		gtk_cell_renderer_toggle_set_active(toggle, setting);
+		gtk_cell_renderer_toggle_set_active(gtkCellRendererToggle, setting);
 	}
-	
-	
-	
-	
 }

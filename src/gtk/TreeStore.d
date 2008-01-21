@@ -35,6 +35,7 @@
  * template for:
  * extend  = GtkTreeModel
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_tree_store_
  * 	- gtk_
@@ -42,15 +43,18 @@
  * omit prefixes:
  * omit code:
  * 	- gtk_tree_store_set
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.TreeIter
  * 	- gobject.Value
  * 	- gtk.TreeNode
  * 	- gdk.Pixbuf;
- * 	- gobject.Value;
- * 	- glib.Str
  * 	- gtk.TreeModel
+ * 	- gobject.ObjectG
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -60,7 +64,7 @@
 
 module gtk.TreeStore;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -70,9 +74,11 @@ private import gtk.TreeIter;
 private import gobject.Value;
 private import gtk.TreeNode;
 private import gdk.Pixbuf;;
-private import gobject.Value;;
-private import glib.Str;
 private import gtk.TreeModel;
+private import gobject.ObjectG;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -100,7 +106,7 @@ private import gtk.TreeModel;
  *  </columns>
  * </object>
  */
-public class TreeStore : TreeModel
+public class TreeStore : TreeModel, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -133,6 +139,9 @@ public class TreeStore : TreeModel
 		super(cast(GtkTreeModel*)gtkTreeStore);
 		this.gtkTreeStore = gtkTreeStore;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkTreeStore);
 	
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
@@ -300,7 +309,6 @@ public class TreeStore : TreeModel
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new tree store as with n_columns columns each of the types passed
 	 * in. Note that only types derived from standard GObject fundamental types
@@ -315,7 +323,14 @@ public class TreeStore : TreeModel
 	public this (int nColumns, ... )
 	{
 		// GtkTreeStore* gtk_tree_store_new (gint n_columns,  ...);
-		this(cast(GtkTreeStore*)gtk_tree_store_new(nColumns) );
+		auto p = gtk_tree_store_new(nColumns);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTreeStore*) p);
 	}
 	
 	/**
@@ -327,7 +342,14 @@ public class TreeStore : TreeModel
 	public this (int nColumns, GType* types)
 	{
 		// GtkTreeStore* gtk_tree_store_newv (gint n_columns,  GType *types);
-		this(cast(GtkTreeStore*)gtk_tree_store_newv(nColumns, types) );
+		auto p = gtk_tree_store_newv(nColumns, types);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTreeStore*) p);
 	}
 	
 	/**
@@ -359,7 +381,6 @@ public class TreeStore : TreeModel
 		// void gtk_tree_store_set_value (GtkTreeStore *tree_store,  GtkTreeIter *iter,  gint column,  GValue *value);
 		gtk_tree_store_set_value(gtkTreeStore, (iter is null) ? null : iter.getTreeIterStruct(), column, (value is null) ? null : value.getValueStruct());
 	}
-	
 	
 	/**
 	 * See gtk_tree_store_set(); this version takes a va_list for

@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Quark
  * structWrap:
@@ -49,7 +50,7 @@
 
 module glib.Dataset;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -90,7 +91,6 @@ public class Dataset
 	/**
 	 */
 	
-	
 	/**
 	 * Sets the data element associated with the given GQuark id, and also the
 	 * function to call when the data element is destroyed.
@@ -110,7 +110,6 @@ public class Dataset
 		g_dataset_id_set_data_full(datasetLocation, keyId, data, destroyFunc);
 	}
 	
-	
 	/**
 	 * Gets the data element corresponding to a GQuark.
 	 * Params:
@@ -124,7 +123,6 @@ public class Dataset
 		return g_dataset_id_get_data(datasetLocation, keyId);
 	}
 	
-	
 	/**
 	 * Removes an element, without calling its destroy notification function.
 	 * Params:
@@ -137,11 +135,6 @@ public class Dataset
 		// gpointer g_dataset_id_remove_no_notify (gconstpointer dataset_location,  GQuark key_id);
 		return g_dataset_id_remove_no_notify(datasetLocation, keyId);
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Calls the given function for each data element which is associated with the
@@ -159,7 +152,6 @@ public class Dataset
 		// void g_dataset_foreach (gconstpointer dataset_location,  GDataForeachFunc func,  gpointer user_data);
 		g_dataset_foreach(datasetLocation, func, userData);
 	}
-	
 	
 	/**
 	 * Destroys the dataset, freeing all memory allocated, and calling any

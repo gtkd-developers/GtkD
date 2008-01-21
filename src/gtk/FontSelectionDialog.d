@@ -30,20 +30,27 @@
  * ctorStrct=
  * clss    = FontSelectionDialog
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_font_selection_dialog_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Font
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkFont* -> Font
  * module aliases:
@@ -52,13 +59,18 @@
 
 module gtk.FontSelectionDialog;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gdk.Font;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -78,7 +90,7 @@ private import gtk.Dialog;
  * name "font_selection". It also exposes the buttons with the names
  * "ok_button", "cancel_button" and "apply_button".
  */
-public class FontSelectionDialog : Dialog
+public class FontSelectionDialog : Dialog, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -112,9 +124,11 @@ public class FontSelectionDialog : Dialog
 		this.gtkFontSelectionDialog = gtkFontSelectionDialog;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkFontSelectionDialog);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkFontSelectionDialog.
@@ -124,7 +138,14 @@ public class FontSelectionDialog : Dialog
 	public this (char[] title)
 	{
 		// GtkWidget* gtk_font_selection_dialog_new (const gchar *title);
-		this(cast(GtkFontSelectionDialog*)gtk_font_selection_dialog_new(Str.toStringz(title)) );
+		auto p = gtk_font_selection_dialog_new(Str.toStringz(title));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFontSelectionDialog*) p);
 	}
 	
 	/**
@@ -136,7 +157,13 @@ public class FontSelectionDialog : Dialog
 	public Font getFont()
 	{
 		// GdkFont* gtk_font_selection_dialog_get_font (GtkFontSelectionDialog *fsd);
-		return new Font( gtk_font_selection_dialog_get_font(gtkFontSelectionDialog) );
+		auto p = gtk_font_selection_dialog_get_font(gtkFontSelectionDialog);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -151,7 +178,7 @@ public class FontSelectionDialog : Dialog
 	public char[] getFontName()
 	{
 		// gchar* gtk_font_selection_dialog_get_font_name  (GtkFontSelectionDialog *fsd);
-		return Str.toString(gtk_font_selection_dialog_get_font_name(gtkFontSelectionDialog) );
+		return Str.toString(gtk_font_selection_dialog_get_font_name(gtkFontSelectionDialog)).dup;
 	}
 	
 	/**
@@ -173,7 +200,7 @@ public class FontSelectionDialog : Dialog
 	public char[] getPreviewText()
 	{
 		// const gchar* gtk_font_selection_dialog_get_preview_text  (GtkFontSelectionDialog *fsd);
-		return Str.toString(gtk_font_selection_dialog_get_preview_text(gtkFontSelectionDialog) );
+		return Str.toString(gtk_font_selection_dialog_get_preview_text(gtkFontSelectionDialog)).dup;
 	}
 	
 	/**

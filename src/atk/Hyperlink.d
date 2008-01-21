@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,10 +50,12 @@
 
 module atk.Hyperlink;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 
@@ -104,13 +107,12 @@ public class Hyperlink : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Hyperlink)[] onLinkActivatedListeners;
+	/**
+	 * The signal link-activated is emitted when a link is activated.
+	 */
 	void addOnLinkActivated(void delegate(Hyperlink) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("link-activated" in connectedSignals) )
@@ -139,8 +141,6 @@ public class Hyperlink : ObjectG
 	}
 	
 	
-	
-	
 	/**
 	 * Get a the URI associated with the anchor specified
 	 * by i of link_.
@@ -152,7 +152,7 @@ public class Hyperlink : ObjectG
 	public char[] _GetUri(int i)
 	{
 		// gchar* atk_hyperlink_get_uri (AtkHyperlink *link_,  gint i);
-		return Str.toString(atk_hyperlink_get_uri(atkHyperlink, i) );
+		return Str.toString(atk_hyperlink_get_uri(atkHyperlink, i)).dup;
 	}
 	
 	/**
@@ -236,7 +236,4 @@ public class Hyperlink : ObjectG
 		// gboolean atk_hyperlink_is_selected_link (AtkHyperlink *link_);
 		return atk_hyperlink_is_selected_link(atkHyperlink);
 	}
-	
-	
-	
 }

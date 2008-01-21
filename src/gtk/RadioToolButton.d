@@ -30,21 +30,28 @@
  * ctorStrct=GtkToolItem
  * clss    = RadioToolButton
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_radio_tool_button_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.ToolItem
  * 	- glib.ListSG
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GtkToolItem* -> ToolItem
@@ -54,7 +61,7 @@
 
 module gtk.RadioToolButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -62,6 +69,11 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.ToolItem;
 private import glib.ListSG;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -80,7 +92,7 @@ private import gtk.ToggleToolButton;
  * gtk_radio_tool_button_new_from_widget_with_stock() to create a new
  * GtkRAdioToolButton containing a stock item.
  */
-public class RadioToolButton : ToggleToolButton
+public class RadioToolButton : ToggleToolButton, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -114,9 +126,11 @@ public class RadioToolButton : ToggleToolButton
 		this.gtkRadioToolButton = gtkRadioToolButton;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkRadioToolButton);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkRadioToolButton, adding it to group.
@@ -127,7 +141,14 @@ public class RadioToolButton : ToggleToolButton
 	public this (ListSG group)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new (GSList *group);
-		this(cast(GtkRadioToolButton*)gtk_radio_tool_button_new((group is null) ? null : group.getListSGStruct()) );
+		auto p = gtk_radio_tool_button_new((group is null) ? null : group.getListSGStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRadioToolButton*) p);
 	}
 	
 	/**
@@ -142,7 +163,14 @@ public class RadioToolButton : ToggleToolButton
 	public this (ListSG group, char[] stockId)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new_from_stock  (GSList *group,  const gchar *stock_id);
-		this(cast(GtkRadioToolButton*)gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), Str.toStringz(stockId)) );
+		auto p = gtk_radio_tool_button_new_from_stock((group is null) ? null : group.getListSGStruct(), Str.toStringz(stockId));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRadioToolButton*) p);
 	}
 	
 	/**
@@ -152,7 +180,14 @@ public class RadioToolButton : ToggleToolButton
 	public this ()
 	{
 		// GtkToolItem* gtk_radio_tool_button_new_from_widget  (GtkRadioToolButton *group);
-		this(cast(GtkRadioToolButton*)gtk_radio_tool_button_new_from_widget(gtkRadioToolButton) );
+		auto p = gtk_radio_tool_button_new_from_widget(gtkRadioToolButton);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRadioToolButton*) p);
 	}
 	
 	/**
@@ -166,7 +201,14 @@ public class RadioToolButton : ToggleToolButton
 	public this (char[] stockId)
 	{
 		// GtkToolItem* gtk_radio_tool_button_new_with_stock_from_widget  (GtkRadioToolButton *group,  const gchar *stock_id);
-		this(cast(GtkRadioToolButton*)gtk_radio_tool_button_new_with_stock_from_widget(gtkRadioToolButton, Str.toStringz(stockId)) );
+		auto p = gtk_radio_tool_button_new_with_stock_from_widget(gtkRadioToolButton, Str.toStringz(stockId));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRadioToolButton*) p);
 	}
 	
 	/**
@@ -177,7 +219,13 @@ public class RadioToolButton : ToggleToolButton
 	public ListSG getGroup()
 	{
 		// GSList* gtk_radio_tool_button_get_group (GtkRadioToolButton *button);
-		return new ListSG( gtk_radio_tool_button_get_group(gtkRadioToolButton) );
+		auto p = gtk_radio_tool_button_get_group(gtkRadioToolButton);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**

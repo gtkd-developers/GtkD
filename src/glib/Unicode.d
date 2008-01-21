@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.Str
@@ -50,7 +51,7 @@
 
 module glib.Unicode;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -81,8 +82,6 @@ public class Unicode
 	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Checks whether ch is a valid Unicode character. Some possible
@@ -417,7 +416,6 @@ public class Unicode
 		return g_unichar_xdigit_value(c);
 	}
 	
-	
 	/**
 	 * Classifies a Unicode character by type.
 	 * Params:
@@ -429,7 +427,6 @@ public class Unicode
 		// GUnicodeType g_unichar_type (gunichar c);
 		return g_unichar_type(c);
 	}
-	
 	
 	/**
 	 * Determines the break type of c. c should be a Unicode character
@@ -510,7 +507,6 @@ public class Unicode
 		return g_unichar_get_mirror_char(ch, mirroredCh);
 	}
 	
-	
 	/**
 	 * Looks up the GUnicodeScript for a particular character (as defined
 	 * by Unicode Standard Annex 24). No check is made for ch being a
@@ -528,7 +524,6 @@ public class Unicode
 		// GUnicodeScript g_unichar_get_script (gunichar ch);
 		return g_unichar_get_script(ch);
 	}
-	
 	
 	/**
 	 * Converts a sequence of bytes encoded as UTF-8 to a Unicode character.
@@ -578,7 +573,7 @@ public class Unicode
 	public static char[] utf8_OffsetToPointer(char[] str, int offset)
 	{
 		// gchar* g_utf8_offset_to_pointer (const gchar *str,  glong offset);
-		return Str.toString(g_utf8_offset_to_pointer(Str.toStringz(str), offset) );
+		return Str.toString(g_utf8_offset_to_pointer(Str.toStringz(str), offset)).dup;
 	}
 	
 	/**
@@ -610,7 +605,7 @@ public class Unicode
 	public static char[] utf8_PrevChar(char[] p)
 	{
 		// gchar* g_utf8_prev_char (const gchar *p);
-		return Str.toString(g_utf8_prev_char(Str.toStringz(p)) );
+		return Str.toString(g_utf8_prev_char(Str.toStringz(p))).dup;
 	}
 	
 	/**
@@ -628,7 +623,7 @@ public class Unicode
 	public static char[] utf8_FindNextChar(char[] p, char[] end)
 	{
 		// gchar* g_utf8_find_next_char (const gchar *p,  const gchar *end);
-		return Str.toString(g_utf8_find_next_char(Str.toStringz(p), Str.toStringz(end)) );
+		return Str.toString(g_utf8_find_next_char(Str.toStringz(p), Str.toStringz(end))).dup;
 	}
 	
 	/**
@@ -646,7 +641,7 @@ public class Unicode
 	public static char[] utf8_FindPrevChar(char[] str, char[] p)
 	{
 		// gchar* g_utf8_find_prev_char (const gchar *str,  const gchar *p);
-		return Str.toString(g_utf8_find_prev_char(Str.toStringz(str), Str.toStringz(p)) );
+		return Str.toString(g_utf8_find_prev_char(Str.toStringz(str), Str.toStringz(p))).dup;
 	}
 	
 	/**
@@ -680,7 +675,7 @@ public class Unicode
 	public static char[] utf8_Strncpy(char[] dest, char[] src, uint n)
 	{
 		// gchar* g_utf8_strncpy (gchar *dest,  const gchar *src,  gsize n);
-		return Str.toString(g_utf8_strncpy(Str.toStringz(dest), Str.toStringz(src), n) );
+		return Str.toString(g_utf8_strncpy(Str.toStringz(dest), Str.toStringz(src), n)).dup;
 	}
 	
 	/**
@@ -696,7 +691,7 @@ public class Unicode
 	public static char[] utf8_Strchr(char[] p, int len, gunichar c)
 	{
 		// gchar* g_utf8_strchr (const gchar *p,  gssize len,  gunichar c);
-		return Str.toString(g_utf8_strchr(Str.toStringz(p), len, c) );
+		return Str.toString(g_utf8_strchr(Str.toStringz(p), len, c)).dup;
 	}
 	
 	/**
@@ -712,7 +707,7 @@ public class Unicode
 	public static char[] utf8_Strrchr(char[] p, int len, gunichar c)
 	{
 		// gchar* g_utf8_strrchr (const gchar *p,  gssize len,  gunichar c);
-		return Str.toString(g_utf8_strrchr(Str.toStringz(p), len, c) );
+		return Str.toString(g_utf8_strrchr(Str.toStringz(p), len, c)).dup;
 	}
 	
 	/**
@@ -732,7 +727,7 @@ public class Unicode
 	public static char[] utf8_Strreverse(char[] str, int len)
 	{
 		// gchar* g_utf8_strreverse (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_strreverse(Str.toStringz(str), len) );
+		return Str.toString(g_utf8_strreverse(Str.toStringz(str), len)).dup;
 	}
 	
 	/**
@@ -775,7 +770,7 @@ public class Unicode
 	public static char[] utf8_Strup(char[] str, int len)
 	{
 		// gchar* g_utf8_strup (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_strup(Str.toStringz(str), len) );
+		return Str.toString(g_utf8_strup(Str.toStringz(str), len)).dup;
 	}
 	
 	/**
@@ -791,7 +786,7 @@ public class Unicode
 	public static char[] utf8_Strdown(char[] str, int len)
 	{
 		// gchar* g_utf8_strdown (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_strdown(Str.toStringz(str), len) );
+		return Str.toString(g_utf8_strdown(Str.toStringz(str), len)).dup;
 	}
 	
 	/**
@@ -813,7 +808,7 @@ public class Unicode
 	public static char[] utf8_Casefold(char[] str, int len)
 	{
 		// gchar* g_utf8_casefold (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_casefold(Str.toStringz(str), len) );
+		return Str.toString(g_utf8_casefold(Str.toStringz(str), len)).dup;
 	}
 	
 	/**
@@ -850,9 +845,8 @@ public class Unicode
 	public static char[] utf8_Normalize(char[] str, int len, GNormalizeMode mode)
 	{
 		// gchar* g_utf8_normalize (const gchar *str,  gssize len,  GNormalizeMode mode);
-		return Str.toString(g_utf8_normalize(Str.toStringz(str), len, mode) );
+		return Str.toString(g_utf8_normalize(Str.toStringz(str), len, mode)).dup;
 	}
-	
 	
 	/**
 	 * Compares two strings for ordering using the linguistically
@@ -889,7 +883,7 @@ public class Unicode
 	public static char[] utf8_CollateKey(char[] str, int len)
 	{
 		// gchar* g_utf8_collate_key (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_collate_key(Str.toStringz(str), len) );
+		return Str.toString(g_utf8_collate_key(Str.toStringz(str), len)).dup;
 	}
 	
 	/**
@@ -912,7 +906,7 @@ public class Unicode
 	public static char[] utf8_CollateKeyForFilename(char[] str, int len)
 	{
 		// gchar* g_utf8_collate_key_for_filename (const gchar *str,  gssize len);
-		return Str.toString(g_utf8_collate_key_for_filename(Str.toStringz(str), len) );
+		return Str.toString(g_utf8_collate_key_for_filename(Str.toStringz(str), len)).dup;
 	}
 	
 	/**
@@ -1040,7 +1034,7 @@ public class Unicode
 	public static char[] utf16_ToUtf8(gunichar2* str, int len, int* itemsRead, int* itemsWritten, GError** error)
 	{
 		// gchar* g_utf16_to_utf8 (const gunichar2 *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
-		return Str.toString(g_utf16_to_utf8(str, len, itemsRead, itemsWritten, error) );
+		return Str.toString(g_utf16_to_utf8(str, len, itemsRead, itemsWritten, error)).dup;
 	}
 	
 	/**
@@ -1086,7 +1080,7 @@ public class Unicode
 	public static char[] ucs4_ToUtf8(gunichar* str, int len, int* itemsRead, int* itemsWritten, GError** error)
 	{
 		// gchar* g_ucs4_to_utf8 (const gunichar *str,  glong len,  glong *items_read,  glong *items_written,  GError **error);
-		return Str.toString(g_ucs4_to_utf8(str, len, itemsRead, itemsWritten, error) );
+		return Str.toString(g_ucs4_to_utf8(str, len, itemsRead, itemsWritten, error)).dup;
 	}
 	
 	/**

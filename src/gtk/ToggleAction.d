@@ -30,19 +30,26 @@
  * ctorStrct=
  * clss    = ToggleAction
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_toggle_action_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -50,12 +57,19 @@
 
 module gtk.ToggleAction;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -66,7 +80,7 @@ private import gtk.Action;
  * A GtkToggleAction corresponds roughly to a GtkCheckMenuItem. It has an
  * "active" state specifying whether the action has been checked or not.
  */
-public class ToggleAction : Action
+public class ToggleAction : Action, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -100,15 +114,16 @@ public class ToggleAction : Action
 		this.gtkToggleAction = gtkToggleAction;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkToggleAction);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ToggleAction)[] onToggledListeners;
+	/**
+	 */
 	void addOnToggled(void delegate(ToggleAction) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggled" in connectedSignals) )
@@ -137,7 +152,6 @@ public class ToggleAction : Action
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkToggleAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,
@@ -153,7 +167,14 @@ public class ToggleAction : Action
 	public this (char[] name, char[] label, char[] tooltip, char[] stockId)
 	{
 		// GtkToggleAction* gtk_toggle_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
-		this(cast(GtkToggleAction*)gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId)) );
+		auto p = gtk_toggle_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkToggleAction*) p);
 	}
 	
 	/**
@@ -212,5 +233,4 @@ public class ToggleAction : Action
 		// gboolean gtk_toggle_action_get_draw_as_radio (GtkToggleAction *action);
 		return gtk_toggle_action_get_draw_as_radio(gtkToggleAction);
 	}
-	
 }

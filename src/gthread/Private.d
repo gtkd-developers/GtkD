@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Dataset
  * structWrap:
@@ -50,7 +51,7 @@
 
 module gthread.Private;
 
-private import gtkc.gthreadtypes;
+public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
 
@@ -130,72 +131,6 @@ public class Private
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GPrivate. If destructor is non-NULL, it is a pointer
 	 * to a destructor function. Whenever a thread ends and the corresponding
@@ -216,7 +151,14 @@ public class Private
 	public this (GDestroyNotify destructor)
 	{
 		// GPrivate* g_private_new (GDestroyNotify destructor);
-		this(cast(GPrivate*)g_private_new(destructor) );
+		auto p = g_private_new(destructor);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GPrivate*) p);
 	}
 	
 	/**
@@ -250,16 +192,4 @@ public class Private
 		// void g_private_set (GPrivate *private_key,  gpointer data);
 		g_private_set(gPrivate, data);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

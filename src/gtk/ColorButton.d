@@ -30,20 +30,27 @@
  * ctorStrct=
  * clss    = ColorButton
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_color_button_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Color
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkColor* -> Color
  * module aliases:
@@ -52,13 +59,20 @@
 
 module gtk.ColorButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Color;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -70,7 +84,7 @@ private import gtk.Button;
  * an allows to open a color selection dialog to change the color. It is suitable
  * widget for selecting a color in a preference dialog.
  */
-public class ColorButton : Button
+public class ColorButton : Button, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -104,15 +118,25 @@ public class ColorButton : Button
 		this.gtkColorButton = gtkColorButton;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkColorButton);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ColorButton)[] onColorSetListeners;
+	/**
+	 * The ::color-set signal is emitted when the user selects a color.
+	 * When handling this signal, use gtk_color_button_get_color() and
+	 * gtk_color_button_get_alpha() to find out which color was just selected.
+	 * Note that this signal is only emitted when the user
+	 * changes the color. If you need to react to programmatic color changes
+	 * as well, use the notify::color signal.
+	 * Since 2.4
+	 * See Also
+	 * GtkColorSelectionDialog, GtkFontButton
+	 */
 	void addOnColorSet(void delegate(ColorButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("color-set" in connectedSignals) )
@@ -141,7 +165,6 @@ public class ColorButton : Button
 	}
 	
 	
-	
 	/**
 	 * Creates a new color button. This returns a widget in the form of
 	 * a small button containing a swatch representing the current selected
@@ -153,7 +176,14 @@ public class ColorButton : Button
 	public this ()
 	{
 		// GtkWidget* gtk_color_button_new (void);
-		this(cast(GtkColorButton*)gtk_color_button_new() );
+		auto p = gtk_color_button_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkColorButton*) p);
 	}
 	
 	/**
@@ -165,7 +195,14 @@ public class ColorButton : Button
 	public this (Color color)
 	{
 		// GtkWidget* gtk_color_button_new_with_color (const GdkColor *color);
-		this(cast(GtkColorButton*)gtk_color_button_new_with_color((color is null) ? null : color.getColorStruct()) );
+		auto p = gtk_color_button_new_with_color((color is null) ? null : color.getColorStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkColorButton*) p);
 	}
 	
 	/**
@@ -258,9 +295,6 @@ public class ColorButton : Button
 	public char[] getTitle()
 	{
 		// const gchar* gtk_color_button_get_title (GtkColorButton *color_button);
-		return Str.toString(gtk_color_button_get_title(gtkColorButton) );
+		return Str.toString(gtk_color_button_get_title(gtkColorButton)).dup;
 	}
-	
-	
-	
 }

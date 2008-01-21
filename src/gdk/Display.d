@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Display
@@ -59,10 +60,12 @@
 
 module gdk.Display;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Display;
@@ -124,13 +127,14 @@ public class Display : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gboolean, Display)[] onClosedListeners;
+	/**
+	 * The ::closed signal is emitted when the connection to the windowing
+	 * system for display is closed.
+	 * Since 2.2
+	 */
 	void addOnClosed(void delegate(gboolean, Display) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("closed" in connectedSignals) )
@@ -159,7 +163,6 @@ public class Display : ObjectG
 	}
 	
 	
-	
 	/**
 	 * Opens a display.
 	 * Since 2.2
@@ -170,7 +173,13 @@ public class Display : ObjectG
 	public static Display open(char[] displayName)
 	{
 		// GdkDisplay* gdk_display_open (const gchar *display_name);
-		return new Display( gdk_display_open(Str.toStringz(displayName)) );
+		auto p = gdk_display_open(Str.toStringz(displayName));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -181,7 +190,13 @@ public class Display : ObjectG
 	public static Display getDefault()
 	{
 		// GdkDisplay* gdk_display_get_default (void);
-		return new Display( gdk_display_get_default() );
+		auto p = gdk_display_get_default();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -192,7 +207,7 @@ public class Display : ObjectG
 	public char[] getName()
 	{
 		// const gchar* gdk_display_get_name (GdkDisplay *display);
-		return Str.toString(gdk_display_get_name(gdkDisplay) );
+		return Str.toString(gdk_display_get_name(gdkDisplay)).dup;
 	}
 	
 	/**
@@ -216,7 +231,13 @@ public class Display : ObjectG
 	public Screen getScreen(int screenNum)
 	{
 		// GdkScreen* gdk_display_get_screen (GdkDisplay *display,  gint screen_num);
-		return new Screen( gdk_display_get_screen(gdkDisplay, screenNum) );
+		auto p = gdk_display_get_screen(gdkDisplay, screenNum);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -227,7 +248,13 @@ public class Display : ObjectG
 	public Screen getDefaultScreen()
 	{
 		// GdkScreen* gdk_display_get_default_screen (GdkDisplay *display);
-		return new Screen( gdk_display_get_default_screen(gdkDisplay) );
+		auto p = gdk_display_get_default_screen(gdkDisplay);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Screen(cast(GdkScreen*) p);
 	}
 	
 	/**
@@ -329,7 +356,13 @@ public class Display : ObjectG
 	public ListG listDevices()
 	{
 		// GList* gdk_display_list_devices (GdkDisplay *display);
-		return new ListG( gdk_display_list_devices(gdkDisplay) );
+		auto p = gdk_display_list_devices(gdkDisplay);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -341,7 +374,13 @@ public class Display : ObjectG
 	public Event getEvent()
 	{
 		// GdkEvent* gdk_display_get_event (GdkDisplay *display);
-		return new Event( gdk_display_get_event(gdkDisplay) );
+		auto p = gdk_display_get_event(gdkDisplay);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Event(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -355,7 +394,13 @@ public class Display : ObjectG
 	public Event peekEvent()
 	{
 		// GdkEvent* gdk_display_peek_event (GdkDisplay *display);
-		return new Event( gdk_display_peek_event(gdkDisplay) );
+		auto p = gdk_display_peek_event(gdkDisplay);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Event(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -451,9 +496,14 @@ public class Display : ObjectG
 	public Window getWindowAtPointer(int* winX, int* winY)
 	{
 		// GdkWindow* gdk_display_get_window_at_pointer (GdkDisplay *display,  gint *win_x,  gint *win_y);
-		return new Window( gdk_display_get_window_at_pointer(gdkDisplay, winX, winY) );
+		auto p = gdk_display_get_window_at_pointer(gdkDisplay, winX, winY);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
-	
 	
 	/**
 	 * This function allows for hooking into the operation
@@ -557,7 +607,13 @@ public class Display : ObjectG
 	public Window getDefaultGroup()
 	{
 		// GdkWindow* gdk_display_get_default_group (GdkDisplay *display);
-		return new Window( gdk_display_get_default_group(gdkDisplay) );
+		auto p = gdk_display_get_default_group(gdkDisplay);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**

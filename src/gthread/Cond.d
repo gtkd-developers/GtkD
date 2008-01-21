@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Date
  * 	- gthread.Mutex
@@ -52,7 +53,7 @@
 
 module gthread.Cond;
 
-private import gtkc.gthreadtypes;
+public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
 
@@ -133,65 +134,6 @@ public class Cond
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GCond. This function will abort, if g_thread_init()
 	 * has not been called yet.
@@ -199,7 +141,14 @@ public class Cond
 	public this ()
 	{
 		// GCond* g_cond_new ();
-		this(cast(GCond*)g_cond_new() );
+		auto p = g_cond_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GCond*) p);
 	}
 	
 	/**
@@ -270,20 +219,4 @@ public class Cond
 		// void g_cond_free (GCond *cond);
 		g_cond_free(gCond);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

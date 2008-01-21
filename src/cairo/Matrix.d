@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -50,7 +51,7 @@
 
 module cairo.Matrix;
 
-private import gtkc.cairotypes;
+public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
 
@@ -109,7 +110,6 @@ public class Matrix
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Sets matrix to be the affine transformation given by

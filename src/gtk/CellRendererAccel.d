@@ -25,9 +25,9 @@
  * inFile  = GtkCellRendererAccel.html
  * outPack = gtk
  * outFile = CellRendererAccel
- * strct   = GtkCellRenderer
- * realStrct=GtkCellRendererAccel
- * ctorStrct=
+ * strct   = GtkCellRendererAccel
+ * realStrct=
+ * ctorStrct=GtkCellRenderer
  * clss    = CellRendererAccel
  * interf  = 
  * class Code: No
@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.CellRenderer
@@ -52,10 +53,12 @@
 
 module gtk.CellRendererAccel;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.CellRenderer;
@@ -107,13 +110,13 @@ public class CellRendererAccel : CellRendererText
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], CellRendererAccel)[] onAccelClearedListeners;
+	/**
+	 * Gets emitted when the user has removed the accelerator.
+	 * Since 2.10
+	 */
 	void addOnAccelCleared(void delegate(char[], CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accel-cleared" in connectedSignals) )
@@ -142,6 +145,10 @@ public class CellRendererAccel : CellRendererText
 	}
 	
 	void delegate(char[], guint, GdkModifierType, guint, CellRendererAccel)[] onAccelEditedListeners;
+	/**
+	 * Gets emitted when the user has selected a new accelerator.
+	 * Since 2.10
+	 */
 	void addOnAccelEdited(void delegate(char[], guint, GdkModifierType, guint, CellRendererAccel) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accel-edited" in connectedSignals) )
@@ -170,8 +177,6 @@ public class CellRendererAccel : CellRendererText
 	}
 	
 	
-	
-	
 	/**
 	 * Creates a new GtkCellRendererAccel.
 	 * Since 2.10
@@ -179,10 +184,13 @@ public class CellRendererAccel : CellRendererText
 	public this ()
 	{
 		// GtkCellRenderer* gtk_cell_renderer_accel_new (void);
-		this(cast(GtkCellRendererAccel*)gtk_cell_renderer_accel_new() );
+		auto p = gtk_cell_renderer_accel_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCellRendererAccel*) p);
 	}
-	
-	
-	
-	
 }

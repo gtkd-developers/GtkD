@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module glib.MessageLog;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -71,11 +72,6 @@ public class MessageLog
 	
 	/**
 	 */
-	
-	
-	
-	
-	
 	
 	/**
 	 * Logs an error or debugging message.
@@ -110,11 +106,6 @@ public class MessageLog
 		// void g_logv (const gchar *log_domain,  GLogLevelFlags log_level,  const gchar *format,  va_list args);
 		g_logv(Str.toStringz(logDomain), logLevel, Str.toStringz(format), args);
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Sets the log handler for a domain and a set of log levels.

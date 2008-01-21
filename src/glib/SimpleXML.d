@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.Dataset
@@ -52,7 +53,7 @@
 
 module glib.SimpleXML;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -127,11 +128,6 @@ public class SimpleXML
 	/**
 	 */
 	
-	
-	
-	
-	
-	
 	/**
 	 * Escapes text so that the markup parser will parse it verbatim.
 	 * Less than, greater than, ampersand, etc. are replaced with the
@@ -148,7 +144,7 @@ public class SimpleXML
 	public static char[] gMarkupEscapeText(char[] text, int length)
 	{
 		// gchar* g_markup_escape_text (const gchar *text,  gssize length);
-		return Str.toString(g_markup_escape_text(Str.toStringz(text), length) );
+		return Str.toString(g_markup_escape_text(Str.toStringz(text), length)).dup;
 	}
 	
 	/**
@@ -175,7 +171,7 @@ public class SimpleXML
 	public static char[] gMarkupPrintfEscaped(char[] format, ... )
 	{
 		// gchar* g_markup_printf_escaped (const char *format,  ...);
-		return Str.toString(g_markup_printf_escaped(Str.toStringz(format)) );
+		return Str.toString(g_markup_printf_escaped(Str.toStringz(format))).dup;
 	}
 	
 	/**
@@ -191,7 +187,7 @@ public class SimpleXML
 	public static char[] gMarkupVprintfEscaped(char[] format, void* args)
 	{
 		// gchar* g_markup_vprintf_escaped (const char *format,  va_list args);
-		return Str.toString(g_markup_vprintf_escaped(Str.toStringz(format), args) );
+		return Str.toString(g_markup_vprintf_escaped(Str.toStringz(format), args)).dup;
 	}
 	
 	/**
@@ -242,7 +238,7 @@ public class SimpleXML
 	public char[] getElement()
 	{
 		// const gchar* g_markup_parse_context_get_element (GMarkupParseContext *context);
-		return Str.toString(g_markup_parse_context_get_element(gMarkupParseContext) );
+		return Str.toString(g_markup_parse_context_get_element(gMarkupParseContext)).dup;
 	}
 	
 	/**
@@ -260,7 +256,14 @@ public class SimpleXML
 	public this (GMarkupParser* parser, GMarkupParseFlags flags, void* userData, GDestroyNotify userDataDnotify)
 	{
 		// GMarkupParseContext* g_markup_parse_context_new (const GMarkupParser *parser,  GMarkupParseFlags flags,  gpointer user_data,  GDestroyNotify user_data_dnotify);
-		this(cast(GMarkupParseContext*)g_markup_parse_context_new(parser, flags, userData, userDataDnotify) );
+		auto p = g_markup_parse_context_new(parser, flags, userData, userDataDnotify);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GMarkupParseContext*) p);
 	}
 	
 	/**

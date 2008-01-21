@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.MainLoop
  * 	- glib.Source
@@ -60,7 +61,7 @@
 
 module glib.MainContext;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -176,32 +177,20 @@ public class MainContext
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GMainContext strcuture
 	 */
 	public this ()
 	{
 		// GMainContext* g_main_context_new (void);
-		this(cast(GMainContext*)g_main_context_new() );
+		auto p = g_main_context_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GMainContext*) p);
 	}
 	
 	/**
@@ -211,7 +200,13 @@ public class MainContext
 	public MainContext doref()
 	{
 		// GMainContext* g_main_context_ref (GMainContext *context);
-		return new MainContext( g_main_context_ref(gMainContext) );
+		auto p = g_main_context_ref(gMainContext);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new MainContext(cast(GMainContext*) p);
 	}
 	
 	/**
@@ -233,7 +228,13 @@ public class MainContext
 	public static MainContext defaulx()
 	{
 		// GMainContext* g_main_context_default (void);
-		return new MainContext( g_main_context_default() );
+		auto p = g_main_context_default();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new MainContext(cast(GMainContext*) p);
 	}
 	
 	/**
@@ -255,7 +256,6 @@ public class MainContext
 		return g_main_context_iteration(gMainContext, mayBlock);
 	}
 	
-	
 	/**
 	 * Checks if any sources have pending events for the given context.
 	 * Returns: TRUE if events are pending.
@@ -266,7 +266,6 @@ public class MainContext
 		return g_main_context_pending(gMainContext);
 	}
 	
-	
 	/**
 	 * Finds a GSource given a pair of context and ID.
 	 * Params:
@@ -276,7 +275,13 @@ public class MainContext
 	public Source findSourceById(uint sourceId)
 	{
 		// GSource* g_main_context_find_source_by_id (GMainContext *context,  guint source_id);
-		return new Source( g_main_context_find_source_by_id(gMainContext, sourceId) );
+		auto p = g_main_context_find_source_by_id(gMainContext, sourceId);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Source(cast(GSource*) p);
 	}
 	
 	/**
@@ -290,7 +295,13 @@ public class MainContext
 	public Source findSourceByUserData(void* userData)
 	{
 		// GSource* g_main_context_find_source_by_user_data  (GMainContext *context,  gpointer user_data);
-		return new Source( g_main_context_find_source_by_user_data(gMainContext, userData) );
+		auto p = g_main_context_find_source_by_user_data(gMainContext, userData);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Source(cast(GSource*) p);
 	}
 	
 	/**
@@ -305,7 +316,13 @@ public class MainContext
 	public Source findSourceByFuncsUserData(GSourceFuncs* funcs, void* userData)
 	{
 		// GSource* g_main_context_find_source_by_funcs_user_data  (GMainContext *context,  GSourceFuncs *funcs,  gpointer user_data);
-		return new Source( g_main_context_find_source_by_funcs_user_data(gMainContext, funcs, userData) );
+		auto p = g_main_context_find_source_by_funcs_user_data(gMainContext, funcs, userData);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Source(cast(GSource*) p);
 	}
 	
 	/**
@@ -458,7 +475,6 @@ public class MainContext
 		return g_main_context_get_poll_func(gMainContext);
 	}
 	
-	
 	/**
 	 * Adds a file descriptor to the set of file descriptors polled for
 	 * this context. This will very seldomly be used directly. Instead
@@ -487,49 +503,4 @@ public class MainContext
 		// void g_main_context_remove_poll (GMainContext *context,  GPollFD *fd);
 		g_main_context_remove_poll(gMainContext, fd);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

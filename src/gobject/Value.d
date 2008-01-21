@@ -43,6 +43,7 @@
  * omit code:
  * 	- g_value_init
  * 	- g_value_reset
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.Value
@@ -59,7 +60,7 @@
 
 module gobject.Value;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
@@ -197,16 +198,6 @@ public class Value
 	 * All other characters are replaced by a '-' during construction.
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Copies the value of src_value into dest_value.
 	 * Params:
@@ -217,7 +208,6 @@ public class Value
 		// void g_value_copy (const GValue *src_value,  GValue *dest_value);
 		g_value_copy(gValue, (destValue is null) ? null : destValue.getValueStruct());
 	}
-	
 	
 	/**
 	 * Clears the current value in value and "unsets" the type,
@@ -312,7 +302,6 @@ public class Value
 		return g_value_transform(gValue, (destValue is null) ? null : destValue.getValueStruct());
 	}
 	
-	
 	/**
 	 * Registers a value transformation function for use in g_value_transform().
 	 * A previously registered transformation function for src_type and dest_type
@@ -339,13 +328,8 @@ public class Value
 	public char[] gStrdupValueContents()
 	{
 		// gchar* g_strdup_value_contents (const GValue *value);
-		return Str.toString(g_strdup_value_contents(gValue) );
+		return Str.toString(g_strdup_value_contents(gValue)).dup;
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Creates a new GParamSpecBoolean instance specifying a G_TYPE_BOOLEAN
@@ -362,7 +346,13 @@ public class Value
 	public static ParamSpec gParamSpecBoolean(char[] name, char[] nick, char[] blurb, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_boolean (const gchar *name,  const gchar *nick,  const gchar *blurb,  gboolean default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_boolean(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags) );
+		auto p = g_param_spec_boolean(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -386,11 +376,6 @@ public class Value
 		return g_value_get_boolean(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecChar instance specifying a G_TYPE_CHAR property.
 	 * Params:
@@ -406,7 +391,13 @@ public class Value
 	public static ParamSpec gParamSpecChar(char[] name, char[] nick, char[] blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_char (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint8 minimum,  gint8 maximum,  gint8 default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_char(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		auto p = g_param_spec_char(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -430,11 +421,6 @@ public class Value
 		return g_value_get_char(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecUChar instance specifying a G_TYPE_UCHAR property.
 	 * Params:
@@ -450,7 +436,13 @@ public class Value
 	public static ParamSpec gParamSpecUchar(char[] name, char[] nick, char[] blurb, byte minimum, byte maximum, byte defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_uchar (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint8 minimum,  guint8 maximum,  guint8 default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_uchar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		auto p = g_param_spec_uchar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -474,11 +466,6 @@ public class Value
 		return g_value_get_uchar(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecInt instance specifying a G_TYPE_INT property.
 	 * See g_param_spec_internal() for details on property names.
@@ -495,7 +482,13 @@ public class Value
 	public static ParamSpec gParamSpecInt(char[] name, char[] nick, char[] blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_int (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint minimum,  gint maximum,  gint default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_int(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		auto p = g_param_spec_int(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -519,11 +512,6 @@ public class Value
 		return g_value_get_int(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecUInt instance specifying a G_TYPE_UINT property.
 	 * See g_param_spec_internal() for details on property names.
@@ -540,7 +528,13 @@ public class Value
 	public static ParamSpec gParamSpecUint(char[] name, char[] nick, char[] blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_uint (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint minimum,  guint maximum,  guint default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_uint(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		auto p = g_param_spec_uint(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -564,11 +558,6 @@ public class Value
 		return g_value_get_uint(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecLong instance specifying a G_TYPE_LONG property.
 	 * See g_param_spec_internal() for details on property names.
@@ -585,7 +574,13 @@ public class Value
 	public static ParamSpec gParamSpecLong(char[] name, char[] nick, char[] blurb, int minimum, int maximum, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_long (const gchar *name,  const gchar *nick,  const gchar *blurb,  glong minimum,  glong maximum,  glong default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_long(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		auto p = g_param_spec_long(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -609,11 +604,6 @@ public class Value
 		return g_value_get_long(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecULong instance specifying a G_TYPE_ULONG property.
 	 * See g_param_spec_internal() for details on property names.
@@ -630,7 +620,13 @@ public class Value
 	public static ParamSpec gParamSpecUlong(char[] name, char[] nick, char[] blurb, uint minimum, uint maximum, uint defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_ulong (const gchar *name,  const gchar *nick,  const gchar *blurb,  gulong minimum,  gulong maximum,  gulong default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_ulong(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		auto p = g_param_spec_ulong(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -654,11 +650,6 @@ public class Value
 		return g_value_get_ulong(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecInt64 instance specifying a G_TYPE_INT64 property.
 	 * See g_param_spec_internal() for details on property names.
@@ -675,7 +666,13 @@ public class Value
 	public static ParamSpec gParamSpecInt64(char[] name, char[] nick, char[] blurb, long minimum, long maximum, long defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_int64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  gint64 minimum,  gint64 maximum,  gint64 default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_int64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		auto p = g_param_spec_int64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -699,11 +696,6 @@ public class Value
 		return g_value_get_int64(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecUInt64 instance specifying a G_TYPE_UINT64
 	 * property.
@@ -721,7 +713,13 @@ public class Value
 	public static ParamSpec gParamSpecUint64(char[] name, char[] nick, char[] blurb, ulong minimum, ulong maximum, ulong defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_uint64 (const gchar *name,  const gchar *nick,  const gchar *blurb,  guint64 minimum,  guint64 maximum,  guint64 default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_uint64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		auto p = g_param_spec_uint64(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -745,11 +743,6 @@ public class Value
 		return g_value_get_uint64(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecFloat instance specifying a G_TYPE_FLOAT property.
 	 * See g_param_spec_internal() for details on property names.
@@ -766,7 +759,13 @@ public class Value
 	public static ParamSpec gParamSpecFloat(char[] name, char[] nick, char[] blurb, float minimum, float maximum, float defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_float (const gchar *name,  const gchar *nick,  const gchar *blurb,  gfloat minimum,  gfloat maximum,  gfloat default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_float(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		auto p = g_param_spec_float(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -790,11 +789,6 @@ public class Value
 		return g_value_get_float(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecDouble instance specifying a G_TYPE_DOUBLE
 	 * property.
@@ -812,7 +806,13 @@ public class Value
 	public static ParamSpec gParamSpecDouble(char[] name, char[] nick, char[] blurb, double minimum, double maximum, double defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_double (const gchar *name,  const gchar *nick,  const gchar *blurb,  gdouble minimum,  gdouble maximum,  gdouble default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_double(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags) );
+		auto p = g_param_spec_double(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), minimum, maximum, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -836,11 +836,6 @@ public class Value
 		return g_value_get_double(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecEnum instance specifying a G_TYPE_ENUM
 	 * property.
@@ -857,7 +852,13 @@ public class Value
 	public static ParamSpec gParamSpecEnum(char[] name, char[] nick, char[] blurb, GType enumType, int defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_enum (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType enum_type,  gint default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_enum(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), enumType, defaultValue, flags) );
+		auto p = g_param_spec_enum(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), enumType, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -881,11 +882,6 @@ public class Value
 		return g_value_get_enum(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecEnum instance specifying a G_TYPE_FLAGS
 	 * property.
@@ -902,7 +898,13 @@ public class Value
 	public static ParamSpec gParamSpecFlags(char[] name, char[] nick, char[] blurb, GType flagsType, uint defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_flags (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType flags_type,  guint default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_flags(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flagsType, defaultValue, flags) );
+		auto p = g_param_spec_flags(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flagsType, defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -926,12 +928,6 @@ public class Value
 		return g_value_get_flags(gValue);
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecString instance.
 	 * See g_param_spec_internal() for details on property names.
@@ -946,7 +942,13 @@ public class Value
 	public static ParamSpec gParamSpecString(char[] name, char[] nick, char[] blurb, char[] defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_string (const gchar *name,  const gchar *nick,  const gchar *blurb,  const gchar *default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_string(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), Str.toStringz(defaultValue), flags) );
+		auto p = g_param_spec_string(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), Str.toStringz(defaultValue), flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -1005,7 +1007,7 @@ public class Value
 	public char[] getString()
 	{
 		// const gchar* g_value_get_string (const GValue *value);
-		return Str.toString(g_value_get_string(gValue) );
+		return Str.toString(g_value_get_string(gValue)).dup;
 	}
 	
 	/**
@@ -1015,13 +1017,8 @@ public class Value
 	public char[] dupString()
 	{
 		// gchar* g_value_dup_string (const GValue *value);
-		return Str.toString(g_value_dup_string(gValue) );
+		return Str.toString(g_value_dup_string(gValue)).dup;
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Creates a new GParamSpecParam instance specifying a G_TYPE_PARAM
@@ -1038,7 +1035,13 @@ public class Value
 	public static ParamSpec gParamSpecParam(char[] name, char[] nick, char[] blurb, GType paramType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_param (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType param_type,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_param(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), paramType, flags) );
+		auto p = g_param_spec_param(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), paramType, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -1086,7 +1089,13 @@ public class Value
 	public ParamSpec getParam()
 	{
 		// GParamSpec* g_value_get_param (const GValue *value);
-		return new ParamSpec( g_value_get_param(gValue) );
+		auto p = g_value_get_param(gValue);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -1096,13 +1105,14 @@ public class Value
 	public ParamSpec dupParam()
 	{
 		// GParamSpec* g_value_dup_param (const GValue *value);
-		return new ParamSpec( g_value_dup_param(gValue) );
+		auto p = g_value_dup_param(gValue);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Creates a new GParamSpecBoxed instance specifying a G_TYPE_BOXED
@@ -1119,7 +1129,13 @@ public class Value
 	public static ParamSpec gParamSpecBoxed(char[] name, char[] nick, char[] blurb, GType boxedType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_boxed (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType boxed_type,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_boxed(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), boxedType, flags) );
+		auto p = g_param_spec_boxed(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), boxedType, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -1195,11 +1211,6 @@ public class Value
 		return g_value_dup_boxed(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecPoiner instance specifying a pointer property.
 	 * See g_param_spec_internal() for details on property names.
@@ -1213,7 +1224,13 @@ public class Value
 	public static ParamSpec gParamSpecPointer(char[] name, char[] nick, char[] blurb, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_pointer (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_pointer(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags) );
+		auto p = g_param_spec_pointer(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -1237,11 +1254,6 @@ public class Value
 		return g_value_get_pointer(gValue);
 	}
 	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecBoxed instance specifying a G_TYPE_OBJECT
 	 * derived property.
@@ -1257,7 +1269,13 @@ public class Value
 	public static ParamSpec gParamSpecObject(char[] name, char[] nick, char[] blurb, GType objectType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_object (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType object_type,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags) );
+		auto p = g_param_spec_object(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), objectType, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -1330,10 +1348,6 @@ public class Value
 		return g_value_dup_object(gValue);
 	}
 	
-	
-	
-	
-	
 	/**
 	 * Creates a new GParamSpecUnichar instance specifying a G_TYPE_UINT
 	 * property. GValue structures for this property can be accessed with
@@ -1350,12 +1364,14 @@ public class Value
 	public static ParamSpec gParamSpecUnichar(char[] name, char[] nick, char[] blurb, gunichar defaultValue, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_unichar (const gchar *name,  const gchar *nick,  const gchar *blurb,  gunichar default_value,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_unichar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags) );
+		auto p = g_param_spec_unichar(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), defaultValue, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
-	
-	
-	
-	
 	
 	/**
 	 * Creates a new GParamSpecValueArray instance specifying a
@@ -1375,12 +1391,14 @@ public class Value
 	public static ParamSpec gParamSpecValueArray(char[] name, char[] nick, char[] blurb, ParamSpec elementSpec, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_value_array (const gchar *name,  const gchar *nick,  const gchar *blurb,  GParamSpec *element_spec,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_value_array(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (elementSpec is null) ? null : elementSpec.getParamSpecStruct(), flags) );
+		auto p = g_param_spec_value_array(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), (elementSpec is null) ? null : elementSpec.getParamSpecStruct(), flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
-	
-	
-	
-	
 	
 	/**
 	 * Creates a new property of type GParamSpecOverride. This is used
@@ -1395,13 +1413,14 @@ public class Value
 	public static ParamSpec gParamSpecOverride(char[] name, ParamSpec overridden)
 	{
 		// GParamSpec* g_param_spec_override (const gchar *name,  GParamSpec *overridden);
-		return new ParamSpec( g_param_spec_override(Str.toStringz(name), (overridden is null) ? null : overridden.getParamSpecStruct()) );
+		auto p = g_param_spec_override(Str.toStringz(name), (overridden is null) ? null : overridden.getParamSpecStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
-	
-	
-	
-	
-	
 	
 	/**
 	 * Creates a new GParamSpecGType instance specifying a
@@ -1420,7 +1439,13 @@ public class Value
 	public static ParamSpec gParamSpecGtype(char[] name, char[] nick, char[] blurb, GType isAType, GParamFlags flags)
 	{
 		// GParamSpec* g_param_spec_gtype (const gchar *name,  const gchar *nick,  const gchar *blurb,  GType is_a_type,  GParamFlags flags);
-		return new ParamSpec( g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isAType, flags) );
+		auto p = g_param_spec_gtype(Str.toStringz(name), Str.toStringz(nick), Str.toStringz(blurb), isAType, flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**

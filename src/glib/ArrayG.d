@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * 	- glib.Str
@@ -51,7 +52,7 @@
 
 module glib.ArrayG;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -125,7 +126,6 @@ public class ArrayG
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GArray.
 	 * Params:
@@ -138,7 +138,14 @@ public class ArrayG
 	public this (int zeroTerminated, int clear, uint elementSize)
 	{
 		// GArray* g_array_new (gboolean zero_terminated,  gboolean clear_,  guint element_size);
-		this(cast(GArray*)g_array_new(zeroTerminated, clear, elementSize) );
+		auto p = g_array_new(zeroTerminated, clear, elementSize);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GArray*) p);
 	}
 	
 	/**
@@ -156,9 +163,14 @@ public class ArrayG
 	public static ArrayG sizedNew(int zeroTerminated, int clear, uint elementSize, uint reservedSize)
 	{
 		// GArray* g_array_sized_new (gboolean zero_terminated,  gboolean clear_,  guint element_size,  guint reserved_size);
-		return new ArrayG( g_array_sized_new(zeroTerminated, clear, elementSize, reservedSize) );
+		auto p = g_array_sized_new(zeroTerminated, clear, elementSize, reservedSize);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ArrayG(cast(GArray*) p);
 	}
-	
 	
 	/**
 	 * Adds len elements onto the end of the array.
@@ -170,9 +182,14 @@ public class ArrayG
 	public ArrayG appendVals(void* data, uint len)
 	{
 		// GArray* g_array_append_vals (GArray *array,  gconstpointer data,  guint len);
-		return new ArrayG( g_array_append_vals(gArray, data, len) );
+		auto p = g_array_append_vals(gArray, data, len);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ArrayG(cast(GArray*) p);
 	}
-	
 	
 	/**
 	 * Adds len elements onto the start of the array.
@@ -186,9 +203,14 @@ public class ArrayG
 	public ArrayG prependVals(void* data, uint len)
 	{
 		// GArray* g_array_prepend_vals (GArray *array,  gconstpointer data,  guint len);
-		return new ArrayG( g_array_prepend_vals(gArray, data, len) );
+		auto p = g_array_prepend_vals(gArray, data, len);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ArrayG(cast(GArray*) p);
 	}
-	
 	
 	/**
 	 * Inserts len elements into a GArray at the given index.
@@ -201,7 +223,13 @@ public class ArrayG
 	public ArrayG insertVals(uint index, void* data, uint len)
 	{
 		// GArray* g_array_insert_vals (GArray *array,  guint index_,  gconstpointer data,  guint len);
-		return new ArrayG( g_array_insert_vals(gArray, index, data, len) );
+		auto p = g_array_insert_vals(gArray, index, data, len);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ArrayG(cast(GArray*) p);
 	}
 	
 	/**
@@ -214,7 +242,13 @@ public class ArrayG
 	public ArrayG removeIndex(uint index)
 	{
 		// GArray* g_array_remove_index (GArray *array,  guint index_);
-		return new ArrayG( g_array_remove_index(gArray, index) );
+		auto p = g_array_remove_index(gArray, index);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ArrayG(cast(GArray*) p);
 	}
 	
 	/**
@@ -229,7 +263,13 @@ public class ArrayG
 	public ArrayG removeIndexFast(uint index)
 	{
 		// GArray* g_array_remove_index_fast (GArray *array,  guint index_);
-		return new ArrayG( g_array_remove_index_fast(gArray, index) );
+		auto p = g_array_remove_index_fast(gArray, index);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ArrayG(cast(GArray*) p);
 	}
 	
 	/**
@@ -244,7 +284,13 @@ public class ArrayG
 	public ArrayG removeRange(uint index, uint length)
 	{
 		// GArray* g_array_remove_range (GArray *array,  guint index_,  guint length);
-		return new ArrayG( g_array_remove_range(gArray, index, length) );
+		auto p = g_array_remove_range(gArray, index, length);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ArrayG(cast(GArray*) p);
 	}
 	
 	/**
@@ -275,7 +321,6 @@ public class ArrayG
 		g_array_sort_with_data(gArray, compareFunc, userData);
 	}
 	
-	
 	/**
 	 * Sets the size of the array, expanding it if necessary.
 	 * If the array was created with clear_ set to TRUE, the new elements are set to 0.
@@ -286,7 +331,13 @@ public class ArrayG
 	public ArrayG setSize(uint length)
 	{
 		// GArray* g_array_set_size (GArray *array,  guint length);
-		return new ArrayG( g_array_set_size(gArray, length) );
+		auto p = g_array_set_size(gArray, length);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ArrayG(cast(GArray*) p);
 	}
 	
 	/**
@@ -304,6 +355,6 @@ public class ArrayG
 	public char[] free(int freeSegment)
 	{
 		// gchar* g_array_free (GArray *array,  gboolean free_segment);
-		return Str.toString(g_array_free(gArray, freeSegment) );
+		return Str.toString(g_array_free(gArray, freeSegment)).dup;
 	}
 }

@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.IOChannel
  * 	- glib.Str
@@ -51,7 +52,7 @@
 
 module atk.StreamableContent;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -113,7 +114,6 @@ public class StreamableContent
 	/**
 	 */
 	
-	
 	/**
 	 * Gets the number of mime types supported by this object.
 	 * Returns: a gint which is the number of mime types supported by the object.
@@ -134,7 +134,7 @@ public class StreamableContent
 	public char[] getMimeType(int i)
 	{
 		// const gchar* atk_streamable_content_get_mime_type  (AtkStreamableContent *streamable,  gint i);
-		return Str.toString(atk_streamable_content_get_mime_type(atkStreamableContent, i) );
+		return Str.toString(atk_streamable_content_get_mime_type(atkStreamableContent, i)).dup;
 	}
 	
 	/**
@@ -146,7 +146,13 @@ public class StreamableContent
 	public IOChannel getStream(char[] mimeType)
 	{
 		// GIOChannel* atk_streamable_content_get_stream (AtkStreamableContent *streamable,  const gchar *mime_type);
-		return new IOChannel( atk_streamable_content_get_stream(atkStreamableContent, Str.toStringz(mimeType)) );
+		auto p = atk_streamable_content_get_stream(atkStreamableContent, Str.toStringz(mimeType));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IOChannel(cast(GIOChannel*) p);
 	}
 	
 	/**
@@ -165,6 +171,6 @@ public class StreamableContent
 	public char[] getUri(char[] mimeType)
 	{
 		// gchar* atk_streamable_content_get_uri (AtkStreamableContent *streamable,  const gchar *mime_type);
-		return Str.toString(atk_streamable_content_get_uri(atkStreamableContent, Str.toStringz(mimeType)) );
+		return Str.toString(atk_streamable_content_get_uri(atkStreamableContent, Str.toStringz(mimeType))).dup;
 	}
 }

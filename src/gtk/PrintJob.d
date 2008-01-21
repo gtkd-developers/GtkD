@@ -127,6 +127,11 @@ public class PrintJob : ObjectG
 	int[char[]] connectedSignals;
 	
 	void delegate(PrintJob)[] onStatusChangedListeners;
+	/**
+	 * Gets emitted when the status of a job changes. The signal handler
+	 * can use gtk_print_job_get_status() to obtain the new status.
+	 * Since 2.10
+	 */
 	void addOnStatusChanged(void delegate(PrintJob) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("status-changed" in connectedSignals) )
@@ -153,8 +158,6 @@ public class PrintJob : ObjectG
 		
 		return consumed;
 	}
-	
-	
 	
 	
 	/**
@@ -315,8 +318,4 @@ public class PrintJob : ObjectG
 		// gboolean gtk_print_job_get_track_print_status  (GtkPrintJob *job);
 		return gtk_print_job_get_track_print_status(gtkPrintJob);
 	}
-	
-	
-	
-	
 }

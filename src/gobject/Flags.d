@@ -41,6 +41,7 @@
  * omit prefixes:
  * 	- g_enum_
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.Flags
@@ -52,7 +53,7 @@
 
 module gobject.Flags;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
@@ -112,23 +113,6 @@ public class Flags
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Returns the first GFlagsValue which is set in value.
 	 * Params:
@@ -139,7 +123,13 @@ public class Flags
 	public static Flags getFirstValue(GFlagsClass* flagsClass, uint value)
 	{
 		// GFlagsValue* g_flags_get_first_value (GFlagsClass *flags_class,  guint value);
-		return new Flags( g_flags_get_first_value(flagsClass, value) );
+		auto p = g_flags_get_first_value(flagsClass, value);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Flags(cast(GFlagsValue*) p);
 	}
 	
 	/**
@@ -152,7 +142,13 @@ public class Flags
 	public static Flags getValueByName(GFlagsClass* flagsClass, char[] name)
 	{
 		// GFlagsValue* g_flags_get_value_by_name (GFlagsClass *flags_class,  const gchar *name);
-		return new Flags( g_flags_get_value_by_name(flagsClass, Str.toStringz(name)) );
+		auto p = g_flags_get_value_by_name(flagsClass, Str.toStringz(name));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Flags(cast(GFlagsValue*) p);
 	}
 	
 	/**
@@ -165,9 +161,14 @@ public class Flags
 	public static Flags getValueByNick(GFlagsClass* flagsClass, char[] nick)
 	{
 		// GFlagsValue* g_flags_get_value_by_nick (GFlagsClass *flags_class,  const gchar *nick);
-		return new Flags( g_flags_get_value_by_nick(flagsClass, Str.toStringz(nick)) );
+		auto p = g_flags_get_value_by_nick(flagsClass, Str.toStringz(nick));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Flags(cast(GFlagsValue*) p);
 	}
-	
 	
 	/**
 	 * Registers a new static flags type with the name name.
@@ -183,7 +184,6 @@ public class Flags
 		// GType g_flags_register_static (const gchar *name,  const GFlagsValue *const_static_values);
 		return g_flags_register_static(Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getFlagsStruct());
 	}
-	
 	
 	/**
 	 * This function is meant to be called from the complete_type_info() function

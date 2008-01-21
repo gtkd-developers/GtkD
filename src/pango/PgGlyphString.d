@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = pango-Glyph-Storage.html
+ * inFile  = 
  * outPack = pango
  * outFile = PgGlyphString
  * strct   = PangoGlyphString
@@ -40,71 +40,26 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
- * 	- glib.ListSG
- * 	- pango.PgContext
- * 	- pango.PgItem
- * 	- pango.PgLayout
- * 	- pango.PgFontDescription
- * 	- pango.PgFontMetrics
- * 	- pango.PgFontFamily
- * 	- pango.PgFontFace
- * 	- pango.PgFontMap
- * 	- pango.PgFontsetSimple
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
- * 	- pango.PgLanguage
- * 	- pango.PgTabArray
- * 	- pango.PgLayout
- * 	- pango.PgLayoutIter
- * 	- pango.PgScriptIter
  * 	- glib.Str
+ * 	- pango.PgFont
  * structWrap:
- * 	- GSList* -> ListSG
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
- * 	- PangoContext* -> PgContext
- * 	- PangoFontDescription* -> PgFontDescription
- * 	- PangoFontFace* -> PgFontFace
- * 	- PangoFontFamily* -> PgFontFamily
- * 	- PangoFontMap* -> PgFontMap
- * 	- PangoFontMetrics* -> PgFontMetrics
- * 	- PangoFontsetSimple* -> PgFontsetSimple
- * 	- PangoItem* -> PgItem
- * 	- PangoLanguage* -> PgLanguage
- * 	- PangoLayout* -> PgLayout
- * 	- PangoLayoutIter* -> PgLayoutIter
- * 	- PangoScriptIter* -> PgScriptIter
- * 	- PangoTabArray* -> PgTabArray
+ * 	- PangoFont* -> PgFont
+ * 	- PangoGlyphString* -> PgGlyphString
  * module aliases:
  * local aliases:
  */
 
 module pango.PgGlyphString;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
 
-private import glib.ListSG;
-private import pango.PgContext;
-private import pango.PgItem;
-private import pango.PgLayout;
-private import pango.PgFontDescription;
-private import pango.PgFontMetrics;
-private import pango.PgFontFamily;
-private import pango.PgFontFace;
-private import pango.PgFontMap;
-private import pango.PgFontsetSimple;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
-private import pango.PgLanguage;
-private import pango.PgTabArray;
-private import pango.PgLayout;
-private import pango.PgLayoutIter;
-private import pango.PgScriptIter;
 private import glib.Str;
+private import pango.PgFont;
 
 
 
@@ -152,275 +107,36 @@ public class PgGlyphString
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	/**
-	 * Converts a number in Pango units to floating-point: divides
-	 * it by PANGO_SCALE.
-	 * Params:
-	 * i =  value in Pango units
-	 * Returns: the double value.Since 1.16
-	 */
-	public static double pangoUnitsToDouble(int i)
-	{
-		// double pango_units_to_double (int i);
-		return pango_units_to_double(i);
-	}
-	
-	/**
-	 * Converts a floating-point number to Pango units: multiplies
-	 * it by PANGO_SCALE and rounds to nearest integer.
-	 * Params:
-	 * d =  double floating-point value
-	 * Returns: the value in Pango units.Since 1.16
-	 */
-	public static int pangoUnitsFromDouble(double d)
-	{
-		// int pango_units_from_double (double d);
-		return pango_units_from_double(d);
-	}
-	
-	
-	
-	
-	
-	
-	/**
-	 * Converts extents from Pango units to device units, dividing by the
-	 * PANGO_SCALE factor and performing rounding.
-	 * The ink rectangle is converted by flooring the x/y coordinates and extending
-	 * width/height, such that the final rectangle completely includes the original
-	 * rectangle.
-	 * The logical rectangle is converted by rounding the coordinates
-	 * of the rectangle to the nearest device unit.
-	 * Note that in certain situations you may want pass a logical extents
-	 * rectangle to this function as ink_rect. The rule is: if you want the
-	 * resulting device-space rectangle to completely contain the original
-	 * rectangle, pass it in as ink_rect.
-	 * Params:
-	 * inkRect =  ink rectangle to convert, or NULL.
-	 * logicalRect =  logical rectangle to convert, or NULL.
-	 * Since 1.16
-	 */
-	public static void pangoExtentsToPixels(PangoRectangle* inkRect, PangoRectangle* logicalRect)
-	{
-		// void pango_extents_to_pixels (PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
-		pango_extents_to_pixels(inkRect, logicalRect);
-	}
-	
-	
-	
-	
-	/**
-	 * Copies a PangoMatrix.
-	 * Params:
-	 * matrix =  a PangoMatrix, can be NULL
-	 * Returns: the newly allocated PangoMatrix, which should be freed with pango_matrix_free(), or NULL if matrix was NULL.Since 1.6
-	 */
-	public static PangoMatrix* pangoMatrixCopy(PangoMatrix* matrix)
-	{
-		// PangoMatrix* pango_matrix_copy (const PangoMatrix *matrix);
-		return pango_matrix_copy(matrix);
-	}
-	
-	/**
-	 * Free a PangoMatrix created with pango_matrix_copy().
-	 * Does nothing if matrix is NULL.
-	 * Params:
-	 * matrix =  a PangoMatrix, or NULL
-	 * Since 1.6
-	 */
-	public static void pangoMatrixFree(PangoMatrix* matrix)
-	{
-		// void pango_matrix_free (PangoMatrix *matrix);
-		pango_matrix_free(matrix);
-	}
-	
-	/**
-	 * Changes the transformation represented by matrix to be the
-	 * transformation given by first translating by (tx, ty)
-	 * then applying the original transformation.
-	 * Params:
-	 * matrix =  a PangoMatrix
-	 * tx =  amount to translate in the X direction
-	 * ty =  amount to translate in the Y direction
-	 * Since 1.6
-	 */
-	public static void pangoMatrixTranslate(PangoMatrix* matrix, double tx, double ty)
-	{
-		// void pango_matrix_translate (PangoMatrix *matrix,  double tx,  double ty);
-		pango_matrix_translate(matrix, tx, ty);
-	}
-	
-	/**
-	 * Changes the transformation represented by matrix to be the
-	 * transformation given by first scaling by sx in the X direction
-	 * and sy in the Y direction then applying the original
-	 * transformation.
-	 * Params:
-	 * matrix =  a PangoMatrix
-	 * scaleX =  amount to scale by in X direction
-	 * scaleY =  amount to scale by in Y direction
-	 * Since 1.6
-	 */
-	public static void pangoMatrixScale(PangoMatrix* matrix, double scaleX, double scaleY)
-	{
-		// void pango_matrix_scale (PangoMatrix *matrix,  double scale_x,  double scale_y);
-		pango_matrix_scale(matrix, scaleX, scaleY);
-	}
-	
-	/**
-	 * Changes the transformation represented by matrix to be the
-	 * transformation given by first rotating by degrees degrees
-	 * counter-clockwise then applying the original transformation.
-	 * Params:
-	 * matrix =  a PangoMatrix
-	 * degrees =  degrees to rotate counter-clockwise
-	 * Since 1.6
-	 */
-	public static void pangoMatrixRotate(PangoMatrix* matrix, double degrees)
-	{
-		// void pango_matrix_rotate (PangoMatrix *matrix,  double degrees);
-		pango_matrix_rotate(matrix, degrees);
-	}
-	
-	/**
-	 * Changes the transformation represented by matrix to be the
-	 * transformation given by first applying transformation
-	 * given by new_matrix then applying the original transformation.
-	 * Params:
-	 * matrix =  a PangoMatrix
-	 * newMatrix =  a PangoMatrix
-	 * Since 1.6
-	 */
-	public static void pangoMatrixConcat(PangoMatrix* matrix, PangoMatrix* newMatrix)
-	{
-		// void pango_matrix_concat (PangoMatrix *matrix,  const PangoMatrix *new_matrix);
-		pango_matrix_concat(matrix, newMatrix);
-	}
-	
-	/**
-	 * Transforms the point (x, y) by matrix.
-	 * Params:
-	 * matrix =  a PangoMatrix, or NULL
-	 * x =  in/out X position
-	 * y =  in/out Y position
-	 * Since 1.16
-	 */
-	public static void pangoMatrixTransformPoint(PangoMatrix* matrix, double* x, double* y)
-	{
-		// void pango_matrix_transform_point (const PangoMatrix *matrix,  double *x,  double *y);
-		pango_matrix_transform_point(matrix, x, y);
-	}
-	
-	/**
-	 * Transforms the distance vector (dx,dy) by matrix. This is
-	 * similar to pango_matrix_transform_point() except that the translation
-	 * components of the transformation are ignored. The calculation of
-	 * Params:
-	 * matrix =  a PangoMatrix, or NULL
-	 * dx =  in/out X component of a distance vector
-	 * dy =  yn/out Y component of a distance vector
-	 * Since 1.16
-	 */
-	public static void pangoMatrixTransformDistance(PangoMatrix* matrix, double* dx, double* dy)
-	{
-		// void pango_matrix_transform_distance (const PangoMatrix *matrix,  double *dx,  double *dy);
-		pango_matrix_transform_distance(matrix, dx, dy);
-	}
-	
-	/**
-	 * First transforms rect using matrix, then calculates the bounding box
-	 * of the transformed rectangle. The rectangle should be in Pango units.
-	 * This function is useful for example when you want to draw a rotated
-	 * PangoLayout to an image buffer, and want to know how large the image
-	 * should be and how much you should shift the layout when rendering.
-	 * If you have a rectangle in device units (pixels), use
-	 * pango_matrix_transform_pixel_rectangle().
-	 * If you have the rectangle in Pango units and want to convert to
-	 * transformed pixel bounding box, it is more accurate to transform it first
-	 * (using this function) and pass the result to pango_extents_to_pixels(),
-	 * as ink_rect. However, there is a reason that you may want to convert
-	 * to pixels first and then transform, and that is when the transformed
-	 * coordinates may overflow in Pango units (large matrix translation for
-	 * example).
-	 * Params:
-	 * matrix =  a PangoMatrix, or NULL
-	 * rect =  in/out bounding box in Pango units, or NULL
-	 * Since 1.16
-	 */
-	public static void pangoMatrixTransformRectangle(PangoMatrix* matrix, PangoRectangle* rect)
-	{
-		// void pango_matrix_transform_rectangle (const PangoMatrix *matrix,  PangoRectangle *rect);
-		pango_matrix_transform_rectangle(matrix, rect);
-	}
-	
-	/**
-	 * First transforms the rect using matrix, then calculates the bounding box
-	 * of the transformed rectangle. The rectangle should be in device units
-	 * (pixels).
-	 * This function is useful for example when you want to draw a rotated
-	 * PangoLayout to an image buffer, and want to know how large the image
-	 * should be and how much you should shift the layout when rendering.
-	 * For better accuracy, you should use pango_matrix_transform_rectangle() on
-	 * original rectangle in Pango units and convert to pixels afterward
-	 * using pango_extents_to_pixels() as ink_rect.
-	 * Params:
-	 * matrix =  a PangoMatrix, or NULL
-	 * rect =  in/out bounding box in device units, or NULL
-	 * Since 1.16
-	 */
-	public static void pangoMatrixTransformPixelRectangle(PangoMatrix* matrix, PangoRectangle* rect)
-	{
-		// void pango_matrix_transform_pixel_rectangle  (const PangoMatrix *matrix,  PangoRectangle *rect);
-		pango_matrix_transform_pixel_rectangle(matrix, rect);
-	}
-	
-	/**
-	 * Returns the scale factor of a matrix on the height of the font.
-	 * That is, the scale factor in the direction perpendicular to the
-	 * vector that the X coordinate is mapped to.
-	 * Params:
-	 * matrix =  a PangoMatrix, may be NULL
-	 * Returns: the scale factor of matrix on the height of the font,or 1.0 if matrix is NULL.Since 1.12
-	 */
-	public static double pangoMatrixGetFontScaleFactor(PangoMatrix* matrix)
-	{
-		// double pango_matrix_get_font_scale_factor (const PangoMatrix *matrix);
-		return pango_matrix_get_font_scale_factor(matrix);
-	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Create a new PangoGlyphString.
 	 */
 	public this ()
 	{
 		// PangoGlyphString* pango_glyph_string_new (void);
-		this(cast(PangoGlyphString*)pango_glyph_string_new() );
+		auto p = pango_glyph_string_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(PangoGlyphString*) p);
 	}
 	
 	/**
 	 * Copy a glyph string and associated storage.
 	 * Returns: the newly allocated PangoGlyphString, which should be freed with pango_glyph_string_free().
 	 */
-	public PangoGlyphString* copy()
+	public PgGlyphString copy()
 	{
 		// PangoGlyphString* pango_glyph_string_copy (PangoGlyphString *string);
-		return pango_glyph_string_copy(pangoGlyphString);
+		auto p = pango_glyph_string_copy(pangoGlyphString);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgGlyphString(cast(PangoGlyphString*) p);
 	}
 	
 	/**
@@ -454,10 +170,10 @@ public class PgGlyphString
 	 * logicalRect =  rectangle used to store the logical extents of the glyph string
 	 *  or NULL to indicate that the result is not needed.
 	 */
-	public void extents(PangoFont* font, PangoRectangle* inkRect, PangoRectangle* logicalRect)
+	public void extents(PgFont font, PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
 		// void pango_glyph_string_extents (PangoGlyphString *glyphs,  PangoFont *font,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
-		pango_glyph_string_extents(pangoGlyphString, font, inkRect, logicalRect);
+		pango_glyph_string_extents(pangoGlyphString, (font is null) ? null : font.getPgFontStruct(), inkRect, logicalRect);
 	}
 	
 	/**
@@ -475,10 +191,10 @@ public class PgGlyphString
 	 * logicalRect =  rectangle used to store the logical extents of the glyph string range
 	 *  or NULL to indicate that the result is not needed.
 	 */
-	public void extentsRange(int start, int end, PangoFont* font, PangoRectangle* inkRect, PangoRectangle* logicalRect)
+	public void extentsRange(int start, int end, PgFont font, PangoRectangle* inkRect, PangoRectangle* logicalRect)
 	{
 		// void pango_glyph_string_extents_range (PangoGlyphString *glyphs,  int start,  int end,  PangoFont *font,  PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
-		pango_glyph_string_extents_range(pangoGlyphString, start, end, font, inkRect, logicalRect);
+		pango_glyph_string_extents_range(pangoGlyphString, start, end, (font is null) ? null : font.getPgFontStruct(), inkRect, logicalRect);
 	}
 	
 	/**
@@ -486,7 +202,8 @@ public class PgGlyphString
 	 * using pango_glyph_string_extents(). However, since this only computes the
 	 * width, it's much faster. This is in fact only a convenience function that
 	 * computes the sum of geometry.width for each glyph in the glyphs.
-	 * Returns: the logical width of the glyph string.Since 1.14
+	 * Since 1.14
+	 * Returns: the logical width of the glyph string.
 	 */
 	public int getWidth()
 	{
@@ -552,88 +269,5 @@ public class PgGlyphString
 	{
 		// void pango_glyph_string_get_logical_widths  (PangoGlyphString *glyphs,  const char *text,  int length,  int embedding_level,  int *logical_widths);
 		pango_glyph_string_get_logical_widths(pangoGlyphString, Str.toStringz(text), length, embeddingLevel, logicalWidths);
-	}
-	
-	/**
-	 * Modifies orig to cover only the text after split_index, and
-	 * returns a new item that covers the text before split_index that
-	 * used to be in orig. You can think of split_index as the length of
-	 * the returned item. split_index may not be 0, and it may not be
-	 * greater than or equal to the length of orig (that is, there must
-	 * be at least one byte assigned to each item, you can't create a
-	 * zero-length item).
-	 * This function is similar in function to pango_item_split() (and uses
-	 * it internally.)
-	 * Params:
-	 * orig =  a PangoItem
-	 * text =  text to which positions in orig apply
-	 * splitIndex =  byte index of position to split item, relative to the start of the item
-	 * Returns: the newly allocated item representing text before split_index, which should be freed with pango_glyph_item_free().Since 1.2
-	 */
-	public static PangoGlyphItem* pangoGlyphItemSplit(PangoGlyphItem* orig, char[] text, int splitIndex)
-	{
-		// PangoGlyphItem* pango_glyph_item_split (PangoGlyphItem *orig,  const char *text,  int split_index);
-		return pango_glyph_item_split(orig, Str.toStringz(text), splitIndex);
-	}
-	
-	/**
-	 * Splits a shaped item (PangoGlyphItem) into multiple items based
-	 * on an attribute list. The idea is that if you have attributes
-	 * that don't affect shaping, such as color or underline, to avoid
-	 * affecting shaping, you filter them out (pango_attr_list_filter()),
-	 * apply the shaping process and then reapply them to the result using
-	 * this function.
-	 * All attributes that start or end inside a cluster are applied
-	 * to that cluster; for instance, if half of a cluster is underlined
-	 * and the other-half strikethrough, then the cluster will end
-	 * up with both underline and strikethrough attributes. In these
-	 * cases, it may happen that item->extra_attrs for some of the
-	 * result items can have multiple attributes of the same type.
-	 * This function takes ownership of glyph_item; it will be reused
-	 * as one of the elements in the list.
-	 * Params:
-	 * glyphItem =  a shaped item
-	 * text =  text that list applies to
-	 * list =  a PangoAttrList
-	 * Returns: a list of glyph items resulting from splitting glyph_item. Free the elements using pango_glyph_item_free(), the list using g_slist_free().Since 1.2
-	 */
-	public static ListSG pangoGlyphItemApplyAttrs(PangoGlyphItem* glyphItem, char[] text, PangoAttrList* list)
-	{
-		// GSList* pango_glyph_item_apply_attrs (PangoGlyphItem *glyph_item,  const char *text,  PangoAttrList *list);
-		return new ListSG( pango_glyph_item_apply_attrs(glyphItem, Str.toStringz(text), list) );
-	}
-	
-	/**
-	 * Adds spacing between the graphemes of glyph_item to
-	 * give the effect of typographic letter spacing.
-	 * Params:
-	 * glyphItem =  a PangoGlyphItem
-	 * text =  text that glyph_item corresponds to
-	 *  (glyph_item->item->offset is an offset from the
-	 *  start of text)
-	 * logAttrs =  logical attributes for the item (the
-	 *  first logical attribute refers to the position
-	 *  before the first character in the item)
-	 * letterSpacing =  amount of letter spacing to add
-	 *  in Pango units. May be negative, though too large
-	 *  negative values will give ugly results.
-	 * Since 1.6
-	 */
-	public static void pangoGlyphItemLetterSpace(PangoGlyphItem* glyphItem, char[] text, PangoLogAttr* logAttrs, int letterSpacing)
-	{
-		// void pango_glyph_item_letter_space (PangoGlyphItem *glyph_item,  const char *text,  PangoLogAttr *log_attrs,  int letter_spacing);
-		pango_glyph_item_letter_space(glyphItem, Str.toStringz(text), logAttrs, letterSpacing);
-	}
-	
-	/**
-	 * Frees a PangoGlyphItem and memory to which it points.
-	 * Params:
-	 * glyphItem =  a PangoGlyphItem
-	 * Since 1.6
-	 */
-	public static void pangoGlyphItemFree(PangoGlyphItem* glyphItem)
-	{
-		// void pango_glyph_item_free (PangoGlyphItem *glyph_item);
-		pango_glyph_item_free(glyphItem);
 	}
 }

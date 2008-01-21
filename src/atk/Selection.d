@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,10 +49,12 @@
 
 module atk.Selection;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 
 
@@ -103,13 +106,15 @@ public class Selection
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Selection)[] onSelectionChangedListeners;
+	/**
+	 * The "selection-changed" signal is emitted by an object which implements
+	 * AtkSelection interface when the selection changes.
+	 * See Also
+	 * AtkText
+	 */
 	void addOnSelectionChanged(void delegate(Selection) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-changed" in connectedSignals) )
@@ -136,7 +141,6 @@ public class Selection
 		
 		return consumed;
 	}
-	
 	
 	
 	/**

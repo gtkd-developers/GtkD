@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -50,7 +51,7 @@
 
 module glib.Date;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -137,8 +138,6 @@ public class Date
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Equivalent to the UNIX gettimeofday() function, but portable.
 	 * Params:
@@ -204,18 +203,8 @@ public class Date
 	public static char[] gTimeValToIso8601(GTimeVal* time)
 	{
 		// gchar* g_time_val_to_iso8601 (GTimeVal *time_);
-		return Str.toString(g_time_val_to_iso8601(time) );
+		return Str.toString(g_time_val_to_iso8601(time)).dup;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Allocates a GDate and initializes it to a sane state. The new date will
@@ -225,7 +214,14 @@ public class Date
 	public this ()
 	{
 		// GDate* g_date_new (void);
-		this(cast(GDate*)g_date_new() );
+		auto p = g_date_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GDate*) p);
 	}
 	
 	/**
@@ -240,7 +236,14 @@ public class Date
 	public this (GDateDay day, GDateMonth month, GDateYear year)
 	{
 		// GDate* g_date_new_dmy (GDateDay day,  GDateMonth month,  GDateYear year);
-		this(cast(GDate*)g_date_new_dmy(day, month, year) );
+		auto p = g_date_new_dmy(day, month, year);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GDate*) p);
 	}
 	
 	/**
@@ -253,7 +256,14 @@ public class Date
 	public this (uint julianDay)
 	{
 		// GDate* g_date_new_julian (guint32 julian_day);
-		this(cast(GDate*)g_date_new_julian(julianDay) );
+		auto p = g_date_new_julian(julianDay);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GDate*) p);
 	}
 	
 	/**

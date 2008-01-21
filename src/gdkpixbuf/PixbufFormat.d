@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Pixbuf
  * 	- glib.ListSG
@@ -53,7 +54,7 @@
 
 module gdkpixbuf.PixbufFormat;
 
-private import gtkc.gdkpixbuftypes;
+public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
 
@@ -176,7 +177,13 @@ public class PixbufFormat
 	public static ListSG gdkPixbufGetFormats()
 	{
 		// GSList* gdk_pixbuf_get_formats (void);
-		return new ListSG( gdk_pixbuf_get_formats() );
+		auto p = gdk_pixbuf_get_formats();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -187,7 +194,7 @@ public class PixbufFormat
 	public char[] getName()
 	{
 		// gchar* gdk_pixbuf_format_get_name (GdkPixbufFormat *format);
-		return Str.toString(gdk_pixbuf_format_get_name(gdkPixbufFormat) );
+		return Str.toString(gdk_pixbuf_format_get_name(gdkPixbufFormat)).dup;
 	}
 	
 	/**
@@ -198,7 +205,7 @@ public class PixbufFormat
 	public char[] getDescription()
 	{
 		// gchar* gdk_pixbuf_format_get_description (GdkPixbufFormat *format);
-		return Str.toString(gdk_pixbuf_format_get_description(gdkPixbufFormat) );
+		return Str.toString(gdk_pixbuf_format_get_description(gdkPixbufFormat)).dup;
 	}
 	
 	/**
@@ -287,22 +294,8 @@ public class PixbufFormat
 	public char[] getLicense()
 	{
 		// gchar* gdk_pixbuf_format_get_license (GdkPixbufFormat *format);
-		return Str.toString(gdk_pixbuf_format_get_license(gdkPixbufFormat) );
+		return Str.toString(gdk_pixbuf_format_get_license(gdkPixbufFormat)).dup;
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Parses an image file far enough to determine its format and size.

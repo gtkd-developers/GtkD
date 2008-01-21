@@ -30,19 +30,27 @@
  * ctorStrct=
  * clss    = MenuShell
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_menu_shell_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Widget
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -51,12 +59,20 @@
 
 module gtk.MenuShell;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gtk.Widget;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -71,7 +87,7 @@ private import gtk.Container;
  * application functions. A GtkMenuItem can have a submenu associated with it,
  * allowing for nested hierarchical menus.
  */
-public class MenuShell : Container
+public class MenuShell : Container, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -105,15 +121,18 @@ public class MenuShell : Container
 		this.gtkMenuShell = gtkMenuShell;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkMenuShell);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(gboolean, MenuShell)[] onActivateCurrentListeners;
+	/**
+	 * An action signal that activates the current menu item within the menu
+	 * shell.
+	 */
 	void addOnActivateCurrent(void delegate(gboolean, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate-current" in connectedSignals) )
@@ -142,6 +161,10 @@ public class MenuShell : Container
 	}
 	
 	void delegate(MenuShell)[] onCancelListeners;
+	/**
+	 * An action signal which cancels the selection within the menu shell.
+	 * Causes the GtkMenuShell::selection-done signal to be emitted.
+	 */
 	void addOnCancel(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cancel" in connectedSignals) )
@@ -170,6 +193,8 @@ public class MenuShell : Container
 	}
 	
 	void delegate(GtkDirectionType, MenuShell)[] onCycleFocusListeners;
+	/**
+	 */
 	void addOnCycleFocus(void delegate(GtkDirectionType, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cycle-focus" in connectedSignals) )
@@ -198,6 +223,9 @@ public class MenuShell : Container
 	}
 	
 	void delegate(MenuShell)[] onDeactivateListeners;
+	/**
+	 * This signal is emitted when a menu shell is deactivated.
+	 */
 	void addOnDeactivate(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("deactivate" in connectedSignals) )
@@ -226,6 +254,10 @@ public class MenuShell : Container
 	}
 	
 	void delegate(GtkMenuDirectionType, MenuShell)[] onMoveCurrentListeners;
+	/**
+	 * An action signal which moves the current menu item in the direction
+	 * specified by direction.
+	 */
 	void addOnMoveCurrent(void delegate(GtkMenuDirectionType, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-current" in connectedSignals) )
@@ -254,6 +286,11 @@ public class MenuShell : Container
 	}
 	
 	gboolean delegate(gint, MenuShell)[] onMoveSelectedListeners;
+	/**
+	 * The ::move-selected signal is emitted to move the selection to
+	 * another item.
+	 * Since 2.12
+	 */
 	void addOnMoveSelected(gboolean delegate(gint, MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-selected" in connectedSignals) )
@@ -282,6 +319,10 @@ public class MenuShell : Container
 	}
 	
 	void delegate(MenuShell)[] onSelectionDoneListeners;
+	/**
+	 * This signal is emitted when a selection has been completed within a menu
+	 * shell.
+	 */
 	void addOnSelectionDone(void delegate(MenuShell) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("selection-done" in connectedSignals) )
@@ -308,7 +349,6 @@ public class MenuShell : Container
 		
 		return consumed;
 	}
-	
 	
 	
 	/**
@@ -450,11 +490,4 @@ public class MenuShell : Container
 		// gboolean gtk_menu_shell_get_take_focus (GtkMenuShell *menu_shell);
 		return gtk_menu_shell_get_take_focus(gtkMenuShell);
 	}
-	
-	
-	
-	
-	
-	
-	
 }

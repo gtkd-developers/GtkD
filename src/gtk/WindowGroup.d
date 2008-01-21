@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Window
  * structWrap:
@@ -51,7 +52,7 @@
 
 module gtk.WindowGroup;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -102,7 +103,6 @@ public class WindowGroup : ObjectG
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkWindowGroup object. Grabs added with
 	 * gtk_grab_add() only affect windows within the same GtkWindowGroup.
@@ -110,7 +110,14 @@ public class WindowGroup : ObjectG
 	public this ()
 	{
 		// GtkWindowGroup* gtk_window_group_new (void);
-		this(cast(GtkWindowGroup*)gtk_window_group_new() );
+		auto p = gtk_window_group_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkWindowGroup*) p);
 	}
 	
 	/**

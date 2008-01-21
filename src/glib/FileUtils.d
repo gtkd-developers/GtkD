@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- std.stdio
  * 	- glib.Str
@@ -50,7 +51,7 @@
 
 module glib.FileUtils;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -63,7 +64,6 @@ version(Tango) {
 } else {
 	private import std.stdio;
 }
-
 
 
 
@@ -93,9 +93,6 @@ public class FileUtils
 	
 	/**
 	 */
-	
-	
-	
 	
 	/**
 	 * Gets a GFileError constant based on the passed-in errno.
@@ -262,7 +259,7 @@ public class FileUtils
 	public static char[] fileReadLink(char[] filename, GError** error)
 	{
 		// gchar* g_file_read_link (const gchar *filename,  GError **error);
-		return Str.toString(g_file_read_link(Str.toStringz(filename), error) );
+		return Str.toString(g_file_read_link(Str.toStringz(filename), error)).dup;
 	}
 	
 	/**
@@ -279,7 +276,6 @@ public class FileUtils
 		// int g_mkdir_with_parents (const gchar *pathname,  int mode);
 		return g_mkdir_with_parents(Str.toStringz(pathname), mode);
 	}
-	
 	
 	/**
 	 * Opens a directory for reading. The names of the files in the
@@ -310,7 +306,7 @@ public class FileUtils
 	public static char[] dirReadName(GDir* dir)
 	{
 		// const gchar* g_dir_read_name (GDir *dir);
-		return Str.toString(g_dir_read_name(dir) );
+		return Str.toString(g_dir_read_name(dir)).dup;
 	}
 	
 	/**
@@ -335,7 +331,6 @@ public class FileUtils
 		// void g_dir_close (GDir *dir);
 		g_dir_close(dir);
 	}
-	
 	
 	/**
 	 * Maps a file into memory. On UNIX, this is using the mmap() function.
@@ -397,7 +392,7 @@ public class FileUtils
 	public static char[] mappedFileGetContents(GMappedFile* file)
 	{
 		// gchar* g_mapped_file_get_contents (GMappedFile *file);
-		return Str.toString(g_mapped_file_get_contents(file) );
+		return Str.toString(g_mapped_file_get_contents(file)).dup;
 	}
 	
 	/**

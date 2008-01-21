@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- std.stdio
  * 	- glib.StringG
@@ -52,7 +53,7 @@
 
 module glib.Str;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -67,7 +68,6 @@ version(Tango) {
 	private import std.stdio;
 	private import std.c.string;
 }
-
 
 
 
@@ -294,7 +294,7 @@ return result;
 public static char[] strdup(char[] str)
 {
 	// gchar* g_strdup (const gchar *str);
-	return Str.toString(g_strdup(Str.toStringz(str)) );
+	return Str.toString(g_strdup(Str.toStringz(str))).dup;
 }
 
 /**
@@ -314,7 +314,7 @@ public static char[] strdup(char[] str)
 public static char[] strndup(char[] str, uint n)
 {
 	// gchar* g_strndup (const gchar *str,  gsize n);
-	return Str.toString(g_strndup(Str.toStringz(str), n) );
+	return Str.toString(g_strndup(Str.toStringz(str), n)).dup;
 }
 
 /**
@@ -343,7 +343,7 @@ public static char** strdupv(char** strArray)
 public static char[] strnfill(uint length, char fillChar)
 {
 	// gchar* g_strnfill (gsize length,  gchar fill_char);
-	return Str.toString(g_strnfill(length, fillChar) );
+	return Str.toString(g_strnfill(length, fillChar)).dup;
 }
 
 /**
@@ -359,7 +359,7 @@ public static char[] strnfill(uint length, char fillChar)
 public static char[] stpcpy(char[] dest, char[] src)
 {
 	// gchar* g_stpcpy (gchar *dest,  const char *src);
-	return Str.toString(g_stpcpy(Str.toStringz(dest), Str.toStringz(src)) );
+	return Str.toString(g_stpcpy(Str.toStringz(dest), Str.toStringz(src))).dup;
 }
 
 /**
@@ -375,7 +375,7 @@ public static char[] stpcpy(char[] dest, char[] src)
 public static char[] strstrLen(char[] haystack, int haystackLen, char[] needle)
 {
 	// gchar* g_strstr_len (const gchar *haystack,  gssize haystack_len,  const gchar *needle);
-	return Str.toString(g_strstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle)) );
+	return Str.toString(g_strstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle))).dup;
 }
 
 /**
@@ -389,7 +389,7 @@ public static char[] strstrLen(char[] haystack, int haystackLen, char[] needle)
 public static char[] strrstr(char[] haystack, char[] needle)
 {
 	// gchar* g_strrstr (const gchar *haystack,  const gchar *needle);
-	return Str.toString(g_strrstr(Str.toStringz(haystack), Str.toStringz(needle)) );
+	return Str.toString(g_strrstr(Str.toStringz(haystack), Str.toStringz(needle))).dup;
 }
 
 /**
@@ -405,7 +405,7 @@ public static char[] strrstr(char[] haystack, char[] needle)
 public static char[] strrstrLen(char[] haystack, int haystackLen, char[] needle)
 {
 	// gchar* g_strrstr_len (const gchar *haystack,  gssize haystack_len,  const gchar *needle);
-	return Str.toString(g_strrstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle)) );
+	return Str.toString(g_strrstr_len(Str.toStringz(haystack), haystackLen, Str.toStringz(needle))).dup;
 }
 
 /**
@@ -487,7 +487,7 @@ public static uint strlcat(char[] dest, char[] src, uint destSize)
 public static char[] strdupPrintf(char[] format, ... )
 {
 	// gchar* g_strdup_printf (const gchar *format,  ...);
-	return Str.toString(g_strdup_printf(Str.toStringz(format)) );
+	return Str.toString(g_strdup_printf(Str.toStringz(format))).dup;
 }
 
 /**
@@ -506,7 +506,7 @@ public static char[] strdupPrintf(char[] format, ... )
 public static char[] strdupVprintf(char[] format, void* args)
 {
 	// gchar* g_strdup_vprintf (const gchar *format,  va_list args);
-	return Str.toString(g_strdup_vprintf(Str.toStringz(format), args) );
+	return Str.toString(g_strdup_vprintf(Str.toStringz(format), args)).dup;
 }
 
 /**
@@ -981,7 +981,7 @@ public static int asciiStrncasecmp(char[] s1, char[] s2, uint n)
 public static char[] asciiStrup(char[] str, int len)
 {
 	// gchar* g_ascii_strup (const gchar *str,  gssize len);
-	return Str.toString(g_ascii_strup(Str.toStringz(str), len) );
+	return Str.toString(g_ascii_strup(Str.toStringz(str), len)).dup;
 }
 
 /**
@@ -994,7 +994,7 @@ public static char[] asciiStrup(char[] str, int len)
 public static char[] asciiStrdown(char[] str, int len)
 {
 	// gchar* g_ascii_strdown (const gchar *str,  gssize len);
-	return Str.toString(g_ascii_strdown(Str.toStringz(str), len) );
+	return Str.toString(g_ascii_strdown(Str.toStringz(str), len)).dup;
 }
 
 /**
@@ -1044,7 +1044,13 @@ public static char asciiToupper(char c)
 public static StringG stringAsciiUp(StringG string)
 {
 	// GString* g_string_ascii_up (GString *string);
-	return new StringG( g_string_ascii_up((string is null) ? null : string.getStringGStruct()) );
+	auto p = g_string_ascii_up((string is null) ? null : string.getStringGStruct());
+	if(p is null)
+	{
+		version(Exceptions) throw new Exception("Null GObject from GTK+.");
+		else return null;
+	}
+	return new StringG(cast(GString*) p);
 }
 
 /**
@@ -1056,7 +1062,13 @@ public static StringG stringAsciiUp(StringG string)
 public static StringG stringAsciiDown(StringG string)
 {
 	// GString* g_string_ascii_down (GString *string);
-	return new StringG( g_string_ascii_down((string is null) ? null : string.getStringGStruct()) );
+	auto p = g_string_ascii_down((string is null) ? null : string.getStringGStruct());
+	if(p is null)
+	{
+		version(Exceptions) throw new Exception("Null GObject from GTK+.");
+		else return null;
+	}
+	return new StringG(cast(GString*) p);
 }
 
 /**
@@ -1071,7 +1083,7 @@ public static StringG stringAsciiDown(StringG string)
 public static char[] strup(char[] string)
 {
 	// gchar* g_strup (gchar *string);
-	return Str.toString(g_strup(Str.toStringz(string)) );
+	return Str.toString(g_strup(Str.toStringz(string))).dup;
 }
 
 /**
@@ -1087,7 +1099,7 @@ public static char[] strup(char[] string)
 public static char[] strdown(char[] string)
 {
 	// gchar* g_strdown (gchar *string);
-	return Str.toString(g_strdown(Str.toStringz(string)) );
+	return Str.toString(g_strdown(Str.toStringz(string))).dup;
 }
 
 /**
@@ -1149,7 +1161,7 @@ public static int strncasecmp(char[] s1, char[] s2, uint n)
 public static char[] strreverse(char[] string)
 {
 	// gchar* g_strreverse (gchar *string);
-	return Str.toString(g_strreverse(Str.toStringz(string)) );
+	return Str.toString(g_strreverse(Str.toStringz(string))).dup;
 }
 
 /**
@@ -1210,7 +1222,6 @@ public static ulong asciiStrtoull(char[] nptr, char** endptr, uint base)
 	return g_ascii_strtoull(Str.toStringz(nptr), endptr, base);
 }
 
-
 /**
  * Converts a string to a gdouble value.
  * This function behaves like the standard strtod() function
@@ -1258,7 +1269,7 @@ public static double asciiStrtod(char[] nptr, char** endptr)
 public static char[] asciiDtostr(char[] buffer, int bufLen, double d)
 {
 	// gchar* g_ascii_dtostr (gchar *buffer,  gint buf_len,  gdouble d);
-	return Str.toString(g_ascii_dtostr(Str.toStringz(buffer), bufLen, d) );
+	return Str.toString(g_ascii_dtostr(Str.toStringz(buffer), bufLen, d)).dup;
 }
 
 /**
@@ -1279,7 +1290,7 @@ public static char[] asciiDtostr(char[] buffer, int bufLen, double d)
 public static char[] asciiFormatd(char[] buffer, int bufLen, char[] format, double d)
 {
 	// gchar* g_ascii_formatd (gchar *buffer,  gint buf_len,  const gchar *format,  gdouble d);
-	return Str.toString(g_ascii_formatd(Str.toStringz(buffer), bufLen, Str.toStringz(format), d) );
+	return Str.toString(g_ascii_formatd(Str.toStringz(buffer), bufLen, Str.toStringz(format), d)).dup;
 }
 
 /**
@@ -1318,7 +1329,7 @@ public static double strtod(char[] nptr, char** endptr)
 public static char[] strchug(char[] string)
 {
 	// gchar* g_strchug (gchar *string);
-	return Str.toString(g_strchug(Str.toStringz(string)) );
+	return Str.toString(g_strchug(Str.toStringz(string))).dup;
 }
 
 /**
@@ -1333,9 +1344,8 @@ public static char[] strchug(char[] string)
 public static char[] strchomp(char[] string)
 {
 	// gchar* g_strchomp (gchar *string);
-	return Str.toString(g_strchomp(Str.toStringz(string)) );
+	return Str.toString(g_strchomp(Str.toStringz(string))).dup;
 }
-
 
 /**
  * Converts any delimiter characters in string to new_delimiter.
@@ -1353,9 +1363,8 @@ public static char[] strchomp(char[] string)
 public static char[] strdelimit(char[] string, char[] delimiters, char newDelimiter)
 {
 	// gchar* g_strdelimit (gchar *string,  const gchar *delimiters,  gchar new_delimiter);
-	return Str.toString(g_strdelimit(Str.toStringz(string), Str.toStringz(delimiters), newDelimiter) );
+	return Str.toString(g_strdelimit(Str.toStringz(string), Str.toStringz(delimiters), newDelimiter)).dup;
 }
-
 
 /**
  * Escapes the special characters '\b', '\f', '\n', '\r', '\t', '\' and
@@ -1373,7 +1382,7 @@ public static char[] strdelimit(char[] string, char[] delimiters, char newDelimi
 public static char[] strescape(char[] source, char[] exceptions)
 {
 	// gchar* g_strescape (const gchar *source,  const gchar *exceptions);
-	return Str.toString(g_strescape(Str.toStringz(source), Str.toStringz(exceptions)) );
+	return Str.toString(g_strescape(Str.toStringz(source), Str.toStringz(exceptions))).dup;
 }
 
 /**
@@ -1386,7 +1395,7 @@ public static char[] strescape(char[] source, char[] exceptions)
 public static char[] strcompress(char[] source)
 {
 	// gchar* g_strcompress (const gchar *source);
-	return Str.toString(g_strcompress(Str.toStringz(source)) );
+	return Str.toString(g_strcompress(Str.toStringz(source))).dup;
 }
 
 /**
@@ -1403,7 +1412,7 @@ public static char[] strcompress(char[] source)
 public static char[] strcanon(char[] string, char[] validChars, char substitutor)
 {
 	// gchar* g_strcanon (gchar *string,  const gchar *valid_chars,  gchar substitutor);
-	return Str.toString(g_strcanon(Str.toStringz(string), Str.toStringz(validChars), substitutor) );
+	return Str.toString(g_strcanon(Str.toStringz(string), Str.toStringz(validChars), substitutor)).dup;
 }
 
 /**
@@ -1491,7 +1500,7 @@ public static void strfreev(char** strArray)
 public static char[] strconcat(char[] string1, ... )
 {
 	// gchar* g_strconcat (const gchar *string1,  ...);
-	return Str.toString(g_strconcat(Str.toStringz(string1)) );
+	return Str.toString(g_strconcat(Str.toStringz(string1))).dup;
 }
 
 /**
@@ -1505,7 +1514,7 @@ public static char[] strconcat(char[] string1, ... )
 public static char[] strjoin(char[] separator, ... )
 {
 	// gchar* g_strjoin (const gchar *separator,  ...);
-	return Str.toString(g_strjoin(Str.toStringz(separator)) );
+	return Str.toString(g_strjoin(Str.toStringz(separator))).dup;
 }
 
 /**
@@ -1519,7 +1528,7 @@ public static char[] strjoin(char[] separator, ... )
 public static char[] strjoinv(char[] separator, char** strArray)
 {
 	// gchar* g_strjoinv (const gchar *separator,  gchar **str_array);
-	return Str.toString(g_strjoinv(Str.toStringz(separator), strArray) );
+	return Str.toString(g_strjoinv(Str.toStringz(separator), strArray)).dup;
 }
 
 /**
@@ -1549,7 +1558,7 @@ public static uint strvLength(char** strArray)
 public static char[] strerror(int errnum)
 {
 	// const gchar* g_strerror (gint errnum);
-	return Str.toString(g_strerror(errnum) );
+	return Str.toString(g_strerror(errnum)).dup;
 }
 
 /**
@@ -1565,6 +1574,6 @@ public static char[] strerror(int errnum)
 public static char[] strsignal(int signum)
 {
 	// const gchar* g_strsignal (gint signum);
-	return Str.toString(g_strsignal(signum) );
+	return Str.toString(g_strsignal(signum)).dup;
 }
 }

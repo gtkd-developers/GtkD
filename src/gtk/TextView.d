@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_text_view_
  * 	- gtk_
@@ -42,6 +43,7 @@
  * omit prefixes:
  * 	- gtk_text_child_anchor_
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.TextBuffer
@@ -54,6 +56,11 @@
  * 	- gdk.Window
  * 	- gtk.TextChildAnchor
  * 	- glib.ListG
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkRectangle* -> Rectangle
@@ -71,10 +78,12 @@
 
 module gtk.TextView;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.TextBuffer;
@@ -87,6 +96,11 @@ private import gtk.TextAttributes;
 private import gdk.Window;
 private import gtk.TextChildAnchor;
 private import glib.ListG;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -98,7 +112,7 @@ private import gtk.Container;
  * conceptual overview which gives an overview of all the objects and data
  * types related to the text widget and how they work together.
  */
-public class TextView : Container
+public class TextView : Container, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -131,6 +145,9 @@ public class TextView : Container
 		super(cast(GtkContainer*)gtkTextView);
 		this.gtkTextView = gtkTextView;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkTextView);
 	
 	/**
 	 * Get the text line at the pixel y
@@ -187,13 +204,16 @@ public class TextView : Container
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TextView)[] onBackspaceListeners;
+	/**
+	 * The ::backspace signal is a
+	 * keybinding signal
+	 * which gets emitted when the user asks for it.
+	 * The default bindings for this signal are
+	 * Backspace and Shift-Backspace.
+	 */
 	void addOnBackspace(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("backspace" in connectedSignals) )
@@ -222,6 +242,13 @@ public class TextView : Container
 	}
 	
 	void delegate(TextView)[] onCopyClipboardListeners;
+	/**
+	 * The ::copy-clipboard signal is a
+	 * keybinding signal
+	 * which gets emitted to copy the selection to the clipboard.
+	 * The default bindings for this signal are
+	 * Ctrl-c and Ctrl-Insert.
+	 */
 	void addOnCopyClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("copy-clipboard" in connectedSignals) )
@@ -250,6 +277,13 @@ public class TextView : Container
 	}
 	
 	void delegate(TextView)[] onCutClipboardListeners;
+	/**
+	 * The ::cut-clipboard signal is a
+	 * keybinding signal
+	 * which gets emitted to cut the selection to the clipboard.
+	 * The default bindings for this signal are
+	 * Ctrl-x and Shift-Delete.
+	 */
 	void addOnCutClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cut-clipboard" in connectedSignals) )
@@ -278,6 +312,18 @@ public class TextView : Container
 	}
 	
 	void delegate(GtkDeleteType, gint, TextView)[] onDeleteFromCursorListeners;
+	/**
+	 * The ::delete-from-cursor signal is a
+	 * keybinding signal
+	 * which gets emitted when the user initiates a text deletion.
+	 * If the type is GTK_DELETE_CHARS, GTK+ deletes the selection
+	 * if there is one, otherwise it deletes the requested number
+	 * of characters.
+	 * The default bindings for this signal are
+	 * Delete for deleting a character, Ctrl-Delete for
+	 * deleting a word and Ctrl-Backspace for deleting a word
+	 * backwords.
+	 */
 	void addOnDeleteFromCursor(void delegate(GtkDeleteType, gint, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-from-cursor" in connectedSignals) )
@@ -306,6 +352,8 @@ public class TextView : Container
 	}
 	
 	void delegate(char[], TextView)[] onInsertAtCursorListeners;
+	/**
+	 */
 	void addOnInsertAtCursor(void delegate(char[], TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-at-cursor" in connectedSignals) )
@@ -334,6 +382,25 @@ public class TextView : Container
 	}
 	
 	void delegate(GtkMovementStep, gint, gboolean, TextView)[] onMoveCursorListeners;
+	/**
+	 * The ::move-cursor signal is a
+	 * keybinding signal
+	 * which gets emitted when the user initiates a cursor movement.
+	 * If the cursor is not visible in text_view, this signal causes
+	 * the viewport to be moved instead.
+	 * Applications should not connect to it, but may emit it with
+	 * g_signal_emit_by_name() if they need to control scrolling
+	 * programmatically.
+	 * The default bindings for this signal come in two variants,
+	 * the variant with the Shift modifier extends the selection,
+	 * the variant without the Shift modifer does not.
+	 * There are too many key combinations to list them all here.
+	 * Arrow keys move by individual characters/lines
+	 * Ctrl-arrow key combinations move by words/paragraphs
+	 * Home/End keys move to the ends of the buffer
+	 * PageUp/PageDown keys move vertically by pages
+	 * Ctrl-PageUp/PageDown keys move horizontally by pages
+	 */
 	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
@@ -362,6 +429,14 @@ public class TextView : Container
 	}
 	
 	void delegate(GtkScrollStep, gint, TextView)[] onMoveViewportListeners;
+	/**
+	 * The ::move-viewport signal is a
+	 * keybinding signal
+	 * which can be bound to key combinations to allow the user
+	 * to move the viewport, i.e. change what part of the text view
+	 * is visible in a containing scrolled window.
+	 * There are no default bindings for this signal.
+	 */
 	void addOnMoveViewport(void delegate(GtkScrollStep, gint, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-viewport" in connectedSignals) )
@@ -390,6 +465,15 @@ public class TextView : Container
 	}
 	
 	void delegate(gint, gboolean, TextView)[] onPageHorizontallyListeners;
+	/**
+	 * The ::page-horizontally signal is a
+	 * keybinding signal
+	 * which can be bound to key combinations to allow the user
+	 * to initiate horizontal cursor movement by pages.
+	 * This signal should not be used anymore, instead use the
+	 * "move-cursor" signal with the GTK_MOVEMENT_HORIZONTAL_PAGES
+	 * granularity.
+	 */
 	void addOnPageHorizontally(void delegate(gint, gboolean, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("page-horizontally" in connectedSignals) )
@@ -418,6 +502,14 @@ public class TextView : Container
 	}
 	
 	void delegate(TextView)[] onPasteClipboardListeners;
+	/**
+	 * The ::paste-clipboard signal is a
+	 * keybinding signal
+	 * which gets emitted to paste the contents of the clipboard
+	 * into the text view.
+	 * The default bindings for this signal are
+	 * Ctrl-v and Shift-Insert.
+	 */
 	void addOnPasteClipboard(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("paste-clipboard" in connectedSignals) )
@@ -446,6 +538,8 @@ public class TextView : Container
 	}
 	
 	void delegate(GtkMenu*, TextView)[] onPopulatePopupListeners;
+	/**
+	 */
 	void addOnPopulatePopup(void delegate(GtkMenu*, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("populate-popup" in connectedSignals) )
@@ -474,6 +568,14 @@ public class TextView : Container
 	}
 	
 	void delegate(gboolean, TextView)[] onSelectAllListeners;
+	/**
+	 * The ::select-all signal is a
+	 * keybinding signal
+	 * which gets emitted to select or unselect the complete
+	 * contents of the text view.
+	 * The default bindings for this signal are Ctrl-a and Ctrl-/
+	 * for selecting and Shift-Ctrl-a and Ctrl-\ for unselecting.
+	 */
 	void addOnSelectAll(void delegate(gboolean, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-all" in connectedSignals) )
@@ -502,6 +604,8 @@ public class TextView : Container
 	}
 	
 	void delegate(TextView)[] onSetAnchorListeners;
+	/**
+	 */
 	void addOnSetAnchor(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-anchor" in connectedSignals) )
@@ -530,6 +634,8 @@ public class TextView : Container
 	}
 	
 	void delegate(GtkAdjustment*, GtkAdjustment*, TextView)[] onSetScrollAdjustmentsListeners;
+	/**
+	 */
 	void addOnSetScrollAdjustments(void delegate(GtkAdjustment*, GtkAdjustment*, TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
@@ -558,6 +664,12 @@ public class TextView : Container
 	}
 	
 	void delegate(TextView)[] onToggleCursorVisibleListeners;
+	/**
+	 * The ::toggle-cursor-visible signal is a
+	 * keybinding signal
+	 * which gets emitted to toggle the visibility of the cursor.
+	 * The default binding for this signal is F7.
+	 */
 	void addOnToggleCursorVisible(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-cursor-visible" in connectedSignals) )
@@ -586,6 +698,14 @@ public class TextView : Container
 	}
 	
 	void delegate(TextView)[] onToggleOverwriteListeners;
+	/**
+	 * The ::toggle-overwrite signal is a
+	 * keybinding signal
+	 * which gets emitted to change the editability of the text view.
+	 * The default bindings for this signal is Insert.
+	 * See Also
+	 * GtkTextBuffer, GtkTextIter
+	 */
 	void addOnToggleOverwrite(void delegate(TextView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-overwrite" in connectedSignals) )
@@ -614,8 +734,6 @@ public class TextView : Container
 	}
 	
 	
-	
-	
 	/**
 	 * Creates a new GtkTextView. If you don't call gtk_text_view_set_buffer()
 	 * before using the text view, an empty default buffer will be created
@@ -625,7 +743,14 @@ public class TextView : Container
 	public this ()
 	{
 		// GtkWidget* gtk_text_view_new (void);
-		this(cast(GtkTextView*)gtk_text_view_new() );
+		auto p = gtk_text_view_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTextView*) p);
 	}
 	
 	/**
@@ -641,7 +766,14 @@ public class TextView : Container
 	public this (TextBuffer buffer)
 	{
 		// GtkWidget* gtk_text_view_new_with_buffer (GtkTextBuffer *buffer);
-		this(cast(GtkTextView*)gtk_text_view_new_with_buffer((buffer is null) ? null : buffer.getTextBufferStruct()) );
+		auto p = gtk_text_view_new_with_buffer((buffer is null) ? null : buffer.getTextBufferStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTextView*) p);
 	}
 	
 	/**
@@ -668,7 +800,13 @@ public class TextView : Container
 	public TextBuffer getBuffer()
 	{
 		// GtkTextBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
-		return new TextBuffer( gtk_text_view_get_buffer(gtkTextView) );
+		auto p = gtk_text_view_get_buffer(gtkTextView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextBuffer(cast(GtkTextBuffer*) p);
 	}
 	
 	/**
@@ -911,7 +1049,13 @@ public class TextView : Container
 	public Window getWindow(GtkTextWindowType win)
 	{
 		// GdkWindow* gtk_text_view_get_window (GtkTextView *text_view,  GtkTextWindowType win);
-		return new Window( gtk_text_view_get_window(gtkTextView, win) );
+		auto p = gtk_text_view_get_window(gtkTextView, win);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -1084,10 +1228,6 @@ public class TextView : Container
 		// void gtk_text_view_add_child_at_anchor (GtkTextView *text_view,  GtkWidget *child,  GtkTextChildAnchor *anchor);
 		gtk_text_view_add_child_at_anchor(gtkTextView, (child is null) ? null : child.getWidgetStruct(), (anchor is null) ? null : anchor.getTextChildAnchorStruct());
 	}
-	
-	
-	
-	
 	
 	/**
 	 * Adds a child at fixed coordinates in one of the text widget's
@@ -1405,7 +1545,13 @@ public class TextView : Container
 	public PgTabArray getTabs()
 	{
 		// PangoTabArray* gtk_text_view_get_tabs (GtkTextView *text_view);
-		return new PgTabArray( gtk_text_view_get_tabs(gtkTextView) );
+		auto p = gtk_text_view_get_tabs(gtkTextView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgTabArray(cast(PangoTabArray*) p);
 	}
 	
 	/**
@@ -1450,34 +1596,12 @@ public class TextView : Container
 	public TextAttributes getDefaultAttributes()
 	{
 		// GtkTextAttributes* gtk_text_view_get_default_attributes  (GtkTextView *text_view);
-		return new TextAttributes( gtk_text_view_get_default_attributes(gtkTextView) );
+		auto p = gtk_text_view_get_default_attributes(gtkTextView);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextAttributes(cast(GtkTextAttributes*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

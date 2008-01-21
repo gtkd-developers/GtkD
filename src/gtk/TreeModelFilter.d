@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.TreeModel
  * 	- gtk.TreePath
@@ -55,7 +56,7 @@
 
 module gtk.TreeModelFilter;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -121,9 +122,6 @@ public class TreeModelFilter : ObjectG
 	/**
 	 */
 	
-	
-	
-	
 	/**
 	 * Creates a new GtkTreeModel, with child_model as the child_model
 	 * and root as the virtual root.
@@ -136,7 +134,13 @@ public class TreeModelFilter : ObjectG
 	public static TreeModel newTreeModelFilter(TreeModel childModel, TreePath root)
 	{
 		// GtkTreeModel* gtk_tree_model_filter_new (GtkTreeModel *child_model,  GtkTreePath *root);
-		return new TreeModel( gtk_tree_model_filter_new((childModel is null) ? null : childModel.getTreeModelStruct(), (root is null) ? null : root.getTreePathStruct()) );
+		auto p = gtk_tree_model_filter_new((childModel is null) ? null : childModel.getTreeModelStruct(), (root is null) ? null : root.getTreePathStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -204,7 +208,13 @@ public class TreeModelFilter : ObjectG
 	public TreeModel getModel()
 	{
 		// GtkTreeModel* gtk_tree_model_filter_get_model (GtkTreeModelFilter *filter);
-		return new TreeModel( gtk_tree_model_filter_get_model(gtkTreeModelFilter) );
+		auto p = gtk_tree_model_filter_get_model(gtkTreeModelFilter);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -252,7 +262,13 @@ public class TreeModelFilter : ObjectG
 	public TreePath convertChildPathToPath(TreePath childPath)
 	{
 		// GtkTreePath* gtk_tree_model_filter_convert_child_path_to_path  (GtkTreeModelFilter *filter,  GtkTreePath *child_path);
-		return new TreePath( gtk_tree_model_filter_convert_child_path_to_path(gtkTreeModelFilter, (childPath is null) ? null : childPath.getTreePathStruct()) );
+		auto p = gtk_tree_model_filter_convert_child_path_to_path(gtkTreeModelFilter, (childPath is null) ? null : childPath.getTreePathStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -269,7 +285,13 @@ public class TreeModelFilter : ObjectG
 	public TreePath convertPathToChildPath(TreePath filterPath)
 	{
 		// GtkTreePath* gtk_tree_model_filter_convert_path_to_child_path  (GtkTreeModelFilter *filter,  GtkTreePath *filter_path);
-		return new TreePath( gtk_tree_model_filter_convert_path_to_child_path(gtkTreeModelFilter, (filterPath is null) ? null : filterPath.getTreePathStruct()) );
+		auto p = gtk_tree_model_filter_convert_path_to_child_path(gtkTreeModelFilter, (filterPath is null) ? null : filterPath.getTreePathStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -299,5 +321,4 @@ public class TreeModelFilter : ObjectG
 		// void gtk_tree_model_filter_clear_cache (GtkTreeModelFilter *filter);
 		gtk_tree_model_filter_clear_cache(gtkTreeModelFilter);
 	}
-	
 }

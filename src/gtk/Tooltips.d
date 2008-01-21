@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
@@ -54,7 +55,7 @@
 
 module gtk.Tooltips;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -145,8 +146,6 @@ public class Tooltips : ObjectGtk
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Warning
 	 * gtk_tooltips_new has been deprecated since version 2.12 and should not be used in newly-written code.
@@ -155,7 +154,14 @@ public class Tooltips : ObjectGtk
 	public this ()
 	{
 		// GtkTooltips* gtk_tooltips_new (void);
-		this(cast(GtkTooltips*)gtk_tooltips_new() );
+		auto p = gtk_tooltips_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTooltips*) p);
 	}
 	
 	/**

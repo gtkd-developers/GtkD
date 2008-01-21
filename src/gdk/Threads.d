@@ -39,6 +39,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -47,7 +48,7 @@
 
 module gdk.Threads;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -58,8 +59,6 @@ private import gtkc.gdk;
 
 /**
  */
-
-
 
 /**
  * Initializes GDK so that it can be used from multiple threads
@@ -94,7 +93,6 @@ public static void gdkThreadsLeave()
 	// void gdk_threads_leave (void);
 	gdk_threads_leave();
 }
-
 
 /**
  * Allows the application to replace the standard method that

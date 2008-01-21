@@ -44,10 +44,12 @@
  * 	- gtk_timeout_
  * 	- gtk_idle_
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Event
  * 	- gtk.Widget
  * 	- gtk.ObjectGtk
+ * 	- pango.PgLanguage
  * 	- glib.Str
  * 	- gtkc.gtk
  * 	- gthread.Thread
@@ -56,6 +58,7 @@
  * 	- GdkEvent* -> Event
  * 	- GtkObject* -> ObjectGtk
  * 	- GtkWidget* -> Widget
+ * 	- PangoLanguage* -> PgLanguage
  * module aliases:
  * 	- GtkD -> Gtk
  * local aliases:
@@ -63,7 +66,7 @@
 
 module gtk.GtkD;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -71,6 +74,7 @@ private import gtkc.gtk;
 private import gdk.Event;
 private import gtk.Widget;
 private import gtk.ObjectGtk;
+private import pango.PgLanguage;
 private import glib.Str;
 private import gtkc.gtk;
 private import gthread.Thread;
@@ -181,7 +185,7 @@ public class GtkD
 	public static char[] setLocale()
 	{
 		// gchar* gtk_set_locale (void);
-		return Str.toString(gtk_set_locale() );
+		return Str.toString(gtk_set_locale()).dup;
 	}
 	
 	/**
@@ -209,10 +213,16 @@ public class GtkD
 	 * that function for details.
 	 * Returns: the default language as a PangoLanguage, must not befreed
 	 */
-	public static PangoLanguage* getDefaultLanguage()
+	public static PgLanguage getDefaultLanguage()
 	{
 		// PangoLanguage* gtk_get_default_language (void);
-		return gtk_get_default_language();
+		auto p = gtk_get_default_language();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgLanguage(cast(PangoLanguage*) p);
 	}
 	
 	/**
@@ -431,10 +441,6 @@ public class GtkD
 		gtk_main_do_event((event is null) ? null : event.getEventStruct());
 	}
 	
-	
-	
-	
-	
 	/**
 	 * Makes widget the current grabbed widget. This means that interaction with
 	 * other widgets in the same application is blocked and mouse as well as
@@ -455,7 +461,13 @@ public class GtkD
 	public static Widget grabGetCurrent()
 	{
 		// GtkWidget* gtk_grab_get_current (void);
-		return new Widget( gtk_grab_get_current() );
+		auto p = gtk_grab_get_current();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -560,14 +572,6 @@ public class GtkD
 		gtk_quit_remove_by_data(data);
 	}
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Warning
 	 * gtk_input_add_full has been deprecated since version 2.4 and should not be used in newly-written code. Use g_io_add_watch_full() instead.
@@ -602,12 +606,6 @@ public class GtkD
 		gtk_input_remove(inputHandlerId);
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Installs a key snooper function, which will get called on all key events
 	 * before delivering them normally.
@@ -621,7 +619,6 @@ public class GtkD
 		// guint gtk_key_snooper_install (GtkKeySnoopFunc snooper,  gpointer func_data);
 		return gtk_key_snooper_install(snooper, funcData);
 	}
-	
 	
 	/**
 	 * Removes the key snooper function with the given id.
@@ -645,7 +642,13 @@ public class GtkD
 	public static Event getCurrentEvent()
 	{
 		// GdkEvent* gtk_get_current_event (void);
-		return new Event( gtk_get_current_event() );
+		auto p = gtk_get_current_event();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Event(cast(GdkEvent*) p);
 	}
 	
 	/**
@@ -684,7 +687,13 @@ public class GtkD
 	public static Widget getEventWidget(Event event)
 	{
 		// GtkWidget* gtk_get_event_widget (GdkEvent *event);
-		return new Widget( gtk_get_event_widget((event is null) ? null : event.getEventStruct()) );
+		auto p = gtk_get_event_widget((event is null) ? null : event.getEventStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**

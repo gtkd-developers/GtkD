@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module glib.StringGChunk;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -113,7 +114,6 @@ public class StringGChunk
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GStringChunk.
 	 * Params:
@@ -125,7 +125,14 @@ public class StringGChunk
 	public this (uint size)
 	{
 		// GStringChunk* g_string_chunk_new (gsize size);
-		this(cast(GStringChunk*)g_string_chunk_new(size) );
+		auto p = g_string_chunk_new(size);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GStringChunk*) p);
 	}
 	
 	/**
@@ -146,7 +153,7 @@ public class StringGChunk
 	public char[] insert(char[] string)
 	{
 		// gchar* g_string_chunk_insert (GStringChunk *chunk,  const gchar *string);
-		return Str.toString(g_string_chunk_insert(gStringChunk, Str.toStringz(string)) );
+		return Str.toString(g_string_chunk_insert(gStringChunk, Str.toStringz(string))).dup;
 	}
 	
 	/**
@@ -168,7 +175,7 @@ public class StringGChunk
 	public char[] insertConst(char[] string)
 	{
 		// gchar* g_string_chunk_insert_const (GStringChunk *chunk,  const gchar *string);
-		return Str.toString(g_string_chunk_insert_const(gStringChunk, Str.toStringz(string)) );
+		return Str.toString(g_string_chunk_insert_const(gStringChunk, Str.toStringz(string))).dup;
 	}
 	
 	/**
@@ -189,7 +196,7 @@ public class StringGChunk
 	public char[] insertLen(char[] string, int len)
 	{
 		// gchar* g_string_chunk_insert_len (GStringChunk *chunk,  const gchar *string,  gssize len);
-		return Str.toString(g_string_chunk_insert_len(gStringChunk, Str.toStringz(string), len) );
+		return Str.toString(g_string_chunk_insert_len(gStringChunk, Str.toStringz(string), len)).dup;
 	}
 	
 	/**

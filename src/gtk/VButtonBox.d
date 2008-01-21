@@ -35,13 +35,21 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_vbutton_box_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,17 @@
 
 module gtk.VButtonBox;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -77,7 +91,7 @@ private import gtk.ButtonBox;
  * arrangement and layout of the buttons can be changed with
  * gtk_button_box_set_layout().
  */
-public class VButtonBox : ButtonBox
+public class VButtonBox : ButtonBox, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -111,6 +125,9 @@ public class VButtonBox : ButtonBox
 		this.gtkVButtonBox = gtkVButtonBox;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkVButtonBox);
+	
 	/**
 	 * Creates a new vertical button box and sets standart values for it's comon parameters
 	 * Returns: a new vertical button box
@@ -127,14 +144,20 @@ public class VButtonBox : ButtonBox
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new vertical button box.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_vbutton_box_new (void);
-		this(cast(GtkVButtonBox*)gtk_vbutton_box_new() );
+		auto p = gtk_vbutton_box_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkVButtonBox*) p);
 	}
 	
 	/**

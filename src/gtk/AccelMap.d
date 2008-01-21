@@ -41,10 +41,13 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- glib.ScannerG
  * 	- gtk.AccelMap
  * structWrap:
+ * 	- GScanner* -> ScannerG
  * 	- GtkAccelMap* -> AccelMap
  * module aliases:
  * local aliases:
@@ -52,12 +55,15 @@
 
 module gtk.AccelMap;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import glib.ScannerG;
 private import gtk.AccelMap;
 
 
@@ -103,13 +109,16 @@ public class AccelMap : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(char[], guint, GdkModifierType, AccelMap)[] onChangedListeners;
+	/**
+	 * Notifies of a change in the global accelerator map.
+	 * The path is also used as the detail for the signal,
+	 * so it is possible to connect to
+	 * changed::accel_path.
+	 * Since 2.4
+	 */
 	void addOnChanged(void delegate(char[], guint, GdkModifierType, AccelMap) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
@@ -136,8 +145,6 @@ public class AccelMap : ObjectG
 		
 		return consumed;
 	}
-	
-	
 	
 	
 	/**
@@ -272,10 +279,10 @@ public class AccelMap : ObjectG
 	 * Params:
 	 * scanner =  a GScanner which has already been provided with an input file
 	 */
-	public static void loadScanner(GScanner* scanner)
+	public static void loadScanner(ScannerG scanner)
 	{
 		// void gtk_accel_map_load_scanner (GScanner *scanner);
-		gtk_accel_map_load_scanner(scanner);
+		gtk_accel_map_load_scanner((scanner is null) ? null : scanner.getScannerGStruct());
 	}
 	
 	/**
@@ -321,7 +328,13 @@ public class AccelMap : ObjectG
 	public static AccelMap get()
 	{
 		// GtkAccelMap* gtk_accel_map_get (void);
-		return new AccelMap( gtk_accel_map_get() );
+		auto p = gtk_accel_map_get();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new AccelMap(cast(GtkAccelMap*) p);
 	}
 	
 	/**

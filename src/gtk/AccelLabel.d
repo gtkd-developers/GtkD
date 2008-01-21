@@ -30,31 +30,42 @@
  * ctorStrct=
  * clss    = AccelLabel
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_accel_label_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gobject.Closure
  * 	- gtk.Widget
+ * 	- pango.PgAttributeList
+ * 	- pango.PgLayout
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GClosure* -> Closure
  * 	- GtkWidget* -> Widget
+ * 	- PangoAttrList* -> PgAttributeList
+ * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
  */
 
 module gtk.AccelLabel;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -62,6 +73,13 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gobject.Closure;
 private import gtk.Widget;
+private import pango.PgAttributeList;
+private import pango.PgLayout;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -106,7 +124,7 @@ private import gtk.Label;
  *  gtk_widget_add_accelerator (save_item, "activate", accel_group,
  *  GDK_s, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
  */
-public class AccelLabel : Label
+public class AccelLabel : Label, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -140,9 +158,11 @@ public class AccelLabel : Label
 		this.gtkAccelLabel = gtkAccelLabel;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkAccelLabel);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkAccelLabel.
@@ -152,7 +172,14 @@ public class AccelLabel : Label
 	public this (char[] string)
 	{
 		// GtkWidget* gtk_accel_label_new (const gchar *string);
-		this(cast(GtkAccelLabel*)gtk_accel_label_new(Str.toStringz(string)) );
+		auto p = gtk_accel_label_new(Str.toStringz(string));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkAccelLabel*) p);
 	}
 	
 	/**
@@ -175,7 +202,13 @@ public class AccelLabel : Label
 	public Widget getAccelWidget()
 	{
 		// GtkWidget* gtk_accel_label_get_accel_widget (GtkAccelLabel *accel_label);
-		return new Widget( gtk_accel_label_get_accel_widget(gtkAccelLabel) );
+		auto p = gtk_accel_label_get_accel_widget(gtkAccelLabel);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -212,5 +245,4 @@ public class AccelLabel : Label
 		// gboolean gtk_accel_label_refetch (GtkAccelLabel *accel_label);
 		return gtk_accel_label_refetch(gtkAccelLabel);
 	}
-	
 }

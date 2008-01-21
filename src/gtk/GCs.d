@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.GC
  * 	- gdk.Colormap
@@ -53,7 +54,7 @@
 
 module gtk.GCs;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -95,7 +96,13 @@ public class GCs
 	public static GC get(int depth, Colormap colormap, GdkGCValues* values, GdkGCValuesMask valuesMask)
 	{
 		// GdkGC* gtk_gc_get (gint depth,  GdkColormap *colormap,  GdkGCValues *values,  GdkGCValuesMask values_mask);
-		return new GC( gtk_gc_get(depth, (colormap is null) ? null : colormap.getColormapStruct(), values, valuesMask) );
+		auto p = gtk_gc_get(depth, (colormap is null) ? null : colormap.getColormapStruct(), values, valuesMask);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GC(cast(GdkGC*) p);
 	}
 	
 	/**

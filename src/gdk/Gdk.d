@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Window
@@ -53,7 +54,7 @@
 
 module gdk.Gdk;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -139,7 +140,7 @@ public class Gdk
 	public static char[] getDisplayArgName()
 	{
 		// const gchar* gdk_get_display_arg_name (void);
-		return Str.toString(gdk_get_display_arg_name() );
+		return Str.toString(gdk_get_display_arg_name()).dup;
 	}
 	
 	/**
@@ -152,7 +153,7 @@ public class Gdk
 	public static char[] setLocale()
 	{
 		// gchar* gdk_set_locale (void);
-		return Str.toString(gdk_set_locale() );
+		return Str.toString(gdk_set_locale()).dup;
 	}
 	
 	/**
@@ -234,7 +235,7 @@ public class Gdk
 	public static char[] getProgramClass()
 	{
 		// const char* gdk_get_program_class (void);
-		return Str.toString(gdk_get_program_class() );
+		return Str.toString(gdk_get_program_class()).dup;
 	}
 	
 	/**
@@ -258,7 +259,7 @@ public class Gdk
 	public static char[] getDisplay()
 	{
 		// gchar* gdk_get_display (void);
-		return Str.toString(gdk_get_display() );
+		return Str.toString(gdk_get_display()).dup;
 	}
 	
 	/**
@@ -361,7 +362,6 @@ public class Gdk
 		// GdkGrabStatus gdk_pointer_grab (GdkWindow *window,  gboolean owner_events,  GdkEventMask event_mask,  GdkWindow *confine_to,  GdkCursor *cursor,  guint32 time_);
 		return gdk_pointer_grab((window is null) ? null : window.getWindowStruct(), ownerEvents, eventMask, (confineTo is null) ? null : confineTo.getWindowStruct(), (cursor is null) ? null : cursor.getCursorStruct(), time);
 	}
-	
 	
 	/**
 	 * Ungrabs the pointer on the default display, if it is grabbed by this
@@ -512,6 +512,4 @@ public class Gdk
 		// gint gdk_error_trap_pop (void);
 		return gdk_error_trap_pop();
 	}
-	
-	
 }

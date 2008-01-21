@@ -36,10 +36,11 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- pango_gravity_get_
+ * 	- pango_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module pango.PgVertical;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
@@ -82,19 +83,15 @@ public class PgVertical
 	/**
 	 */
 	
-	
-	
-	
-	
-	
 	/**
 	 * Finds the gravity that best matches the rotation component
 	 * in a PangoMatrix.
+	 * Since 1.16
 	 * Params:
 	 * matrix =  a PangoMatrix
-	 * Returns: the gravity of matrix, which will never bePANGO_GRAVITY_AUTO, or PANGO_GRAVITY_SOUTH if matrix is NULLSince 1.16
+	 * Returns: the gravity of matrix, which will never bePANGO_GRAVITY_AUTO, or PANGO_GRAVITY_SOUTH if matrix is NULL
 	 */
-	public static PangoGravity forMatrix(PangoMatrix* matrix)
+	public static PangoGravity gravityGetForMatrix(PangoMatrix* matrix)
 	{
 		// PangoGravity pango_gravity_get_for_matrix (const PangoMatrix *matrix);
 		return pango_gravity_get_for_matrix(matrix);
@@ -106,13 +103,14 @@ public class PgVertical
 	 * If base_gravity is PANGO_GRAVITY_AUTO, it is first replaced with the
 	 * preferred gravity of script. To get the preferred gravity of a script,
 	 * pass PANGO_GRAVITY_AUTO and PANGO_GRAVITY_HINT_STRONG in.
+	 * Since 1.16
 	 * Params:
 	 * script =  PangoScript to query
 	 * baseGravity =  base gravity of the paragraph
 	 * hint =  orientation hint
-	 * Returns: resolved gravity suitable to use for a run of textSince 1.16
+	 * Returns: resolved gravity suitable to use for a run of text
 	 */
-	public static PangoGravity forScript(PangoScript script, PangoGravity baseGravity, PangoGravityHint hint)
+	public static PangoGravity gravityGetForScript(PangoScript script, PangoGravity baseGravity, PangoGravityHint hint)
 	{
 		// PangoGravity pango_gravity_get_for_script (PangoScript script,  PangoGravity base_gravity,  PangoGravityHint hint);
 		return pango_gravity_get_for_script(script, baseGravity, hint);

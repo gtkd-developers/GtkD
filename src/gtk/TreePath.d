@@ -42,9 +42,8 @@
  * omit code:
  * 	- gtk_tree_path_new
  * 	- gtk_tree_path_new_first
+ * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gtk.TreePath
  * 	- glib.Str
  * structWrap:
  * 	- GtkTreePath* -> TreePath
@@ -54,13 +53,13 @@
 
 module gtk.TreePath;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
-private import glib.Str;
-private import gtk.TreePath;
 private import glib.Str;
 
 
@@ -250,13 +249,12 @@ public class TreePath
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TreePath, GtkTreeIter*, TreePath)[] onRowChangedListeners;
+	/**
+	 * This signal is emitted when a row in the model has changed.
+	 */
 	void addOnRowChanged(void delegate(TreePath, GtkTreeIter*, TreePath) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-changed" in connectedSignals) )
@@ -285,6 +283,17 @@ public class TreePath
 	}
 	
 	void delegate(TreePath, TreePath)[] onRowDeletedListeners;
+	/**
+	 * This signal is emitted when a row has been deleted.
+	 * Note that no iterator is passed to the signal handler,
+	 * since the row is already deleted.
+	 * Implementations of GtkTreeModel must emit row-deleted
+	 * before removing the node from its
+	 * internal data structures. This is because models and
+	 * views which access and monitor this model might have
+	 * references on the node which need to be released in the
+	 * row-deleted handler.
+	 */
 	void addOnRowDeleted(void delegate(TreePath, TreePath) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-deleted" in connectedSignals) )
@@ -313,6 +322,10 @@ public class TreePath
 	}
 	
 	void delegate(TreePath, GtkTreeIter*, TreePath)[] onRowHasChildToggledListeners;
+	/**
+	 * This signal is emitted when a row has gotten the first child row or lost
+	 * its last child row.
+	 */
 	void addOnRowHasChildToggled(void delegate(TreePath, GtkTreeIter*, TreePath) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-has-child-toggled" in connectedSignals) )
@@ -341,6 +354,12 @@ public class TreePath
 	}
 	
 	void delegate(TreePath, GtkTreeIter*, TreePath)[] onRowInsertedListeners;
+	/**
+	 * This signal is emitted when a new row has been inserted in the model.
+	 * Note that the row may still be empty at this point, since
+	 * it is a common pattern to first insert an empty row, and
+	 * then fill it with the desired values.
+	 */
 	void addOnRowInserted(void delegate(TreePath, GtkTreeIter*, TreePath) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("row-inserted" in connectedSignals) )
@@ -369,6 +388,17 @@ public class TreePath
 	}
 	
 	void delegate(TreePath, GtkTreeIter*, gpointer, TreePath)[] onRowsReorderedListeners;
+	/**
+	 * This signal is emitted when the children of a node in the GtkTreeModel
+	 * have been reordered.
+	 * Note that this signal is not emitted
+	 * when rows are reordered by DND, since this is implemented
+	 * by removing and then reinserting the row.
+	 * See Also
+	 * GtkTreeView, GtkTreeStore, GtkListStore, GtkTreeDnd, GtkTreeSortable
+	 * [4]
+	 * Here, iter is short for iterator
+	 */
 	void addOnRowsReordered(void delegate(TreePath, GtkTreeIter*, gpointer, TreePath) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("rows-reordered" in connectedSignals) )
@@ -397,14 +427,6 @@ public class TreePath
 	}
 	
 	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new GtkTreePath initialized to path. path is expected to be a
 	 * colon separated list of numbers. For example, the string "10:4:0" would
@@ -417,7 +439,14 @@ public class TreePath
 	public this (char[] path)
 	{
 		// GtkTreePath* gtk_tree_path_new_from_string (const gchar *path);
-		this(cast(GtkTreePath*)gtk_tree_path_new_from_string(Str.toStringz(path)) );
+		auto p = gtk_tree_path_new_from_string(Str.toStringz(path));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -430,7 +459,14 @@ public class TreePath
 	public this (int firstIndex, ... )
 	{
 		// GtkTreePath* gtk_tree_path_new_from_indices (gint first_index,  ...);
-		this(cast(GtkTreePath*)gtk_tree_path_new_from_indices(firstIndex) );
+		auto p = gtk_tree_path_new_from_indices(firstIndex);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -441,10 +477,8 @@ public class TreePath
 	public char[] toString()
 	{
 		// gchar* gtk_tree_path_to_string (GtkTreePath *path);
-		return Str.toString(gtk_tree_path_to_string(gtkTreePath) );
+		return Str.toString(gtk_tree_path_to_string(gtkTreePath)).dup;
 	}
-	
-	
 	
 	/**
 	 * Appends a new index to a path. As a result, the depth of the path is
@@ -507,7 +541,13 @@ public class TreePath
 	public TreePath copy()
 	{
 		// GtkTreePath* gtk_tree_path_copy (const GtkTreePath *path);
-		return new TreePath( gtk_tree_path_copy(gtkTreePath) );
+		auto p = gtk_tree_path_copy(gtkTreePath);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -587,46 +627,4 @@ public class TreePath
 		// gboolean gtk_tree_path_is_descendant (GtkTreePath *path,  GtkTreePath *ancestor);
 		return gtk_tree_path_is_descendant(gtkTreePath, (ancestor is null) ? null : ancestor.getTreePathStruct());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -30,23 +30,30 @@
  * ctorStrct=
  * clss    = Action
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_action_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- glib.ListSG
  * 	- gobject.Closure
  * 	- gtk.AccelGroup
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GClosure* -> Closure
  * 	- GSList* -> ListSG
@@ -58,16 +65,23 @@
 
 module gtk.Action;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
 private import glib.ListSG;
 private import gobject.Closure;
 private import gtk.AccelGroup;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -100,7 +114,7 @@ private import gobject.ObjectG;
  * the action's state changes. When the proxy is activated, it should
  * activate its action.
  */
-public class Action : ObjectG
+public class Action : ObjectG, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -134,15 +148,20 @@ public class Action : ObjectG
 		this.gtkAction = gtkAction;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkAction);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Action)[] onActivateListeners;
+	/**
+	 * The "activate" signal is emitted when the action is activated.
+	 * Since 2.4
+	 * See Also
+	 * GtkActionGroup, GtkUIManager
+	 */
 	void addOnActivate(void delegate(Action) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate" in connectedSignals) )
@@ -171,7 +190,6 @@ public class Action : ObjectG
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkAction object. To add the action to a
 	 * GtkActionGroup and set the accelerator for the action,
@@ -189,7 +207,14 @@ public class Action : ObjectG
 	public this (char[] name, char[] label, char[] tooltip, char[] stockId)
 	{
 		// GtkAction* gtk_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
-		this(cast(GtkAction*)gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId)) );
+		auto p = gtk_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(stockId));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkAction*) p);
 	}
 	
 	/**
@@ -200,7 +225,7 @@ public class Action : ObjectG
 	public char[] getName()
 	{
 		// const gchar* gtk_action_get_name (GtkAction *action);
-		return Str.toString(gtk_action_get_name(gtkAction) );
+		return Str.toString(gtk_action_get_name(gtkAction)).dup;
 	}
 	
 	/**
@@ -305,7 +330,13 @@ public class Action : ObjectG
 	public Widget createIcon(GtkIconSize iconSize)
 	{
 		// GtkWidget* gtk_action_create_icon (GtkAction *action,  GtkIconSize icon_size);
-		return new Widget( gtk_action_create_icon(gtkAction, iconSize) );
+		auto p = gtk_action_create_icon(gtkAction, iconSize);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -316,7 +347,13 @@ public class Action : ObjectG
 	public Widget createMenuItem()
 	{
 		// GtkWidget* gtk_action_create_menu_item (GtkAction *action);
-		return new Widget( gtk_action_create_menu_item(gtkAction) );
+		auto p = gtk_action_create_menu_item(gtkAction);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -327,7 +364,13 @@ public class Action : ObjectG
 	public Widget createToolItem()
 	{
 		// GtkWidget* gtk_action_create_tool_item (GtkAction *action);
-		return new Widget( gtk_action_create_tool_item(gtkAction) );
+		auto p = gtk_action_create_tool_item(gtkAction);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -340,7 +383,13 @@ public class Action : ObjectG
 	public Widget createMenu()
 	{
 		// GtkWidget* gtk_action_create_menu (GtkAction *action);
-		return new Widget( gtk_action_create_menu(gtkAction) );
+		auto p = gtk_action_create_menu(gtkAction);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -382,7 +431,13 @@ public class Action : ObjectG
 	public ListSG getProxies()
 	{
 		// GSList* gtk_action_get_proxies (GtkAction *action);
-		return new ListSG( gtk_action_get_proxies(gtkAction) );
+		auto p = gtk_action_get_proxies(gtkAction);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -449,7 +504,7 @@ public class Action : ObjectG
 	public char[] getAccelPath()
 	{
 		// const gchar* gtk_action_get_accel_path (GtkAction *action);
-		return Str.toString(gtk_action_get_accel_path(gtkAction) );
+		return Str.toString(gtk_action_get_accel_path(gtkAction)).dup;
 	}
 	
 	/**
@@ -474,7 +529,13 @@ public class Action : ObjectG
 	public Closure getAccelClosure()
 	{
 		// GClosure* gtk_action_get_accel_closure (GtkAction *action);
-		return new Closure( gtk_action_get_accel_closure(gtkAction) );
+		auto p = gtk_action_get_accel_closure(gtkAction);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Closure(cast(GClosure*) p);
 	}
 	
 	/**
@@ -489,17 +550,4 @@ public class Action : ObjectG
 		// void gtk_action_set_accel_group (GtkAction *action,  GtkAccelGroup *accel_group);
 		gtk_action_set_accel_group(gtkAction, (accelGroup is null) ? null : accelGroup.getAccelGroupStruct());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

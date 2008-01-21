@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Visual
  * 	- gdk.Drawable
@@ -54,7 +55,7 @@
 
 module gdk.ImageGdk;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -117,7 +118,6 @@ public class ImageGdk
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GdkImage.
 	 * Params:
@@ -132,9 +132,15 @@ public class ImageGdk
 	public this (GdkImageType type, Visual visual, int width, int height)
 	{
 		// GdkImage* gdk_image_new (GdkImageType type,  GdkVisual *visual,  gint width,  gint height);
-		this(cast(GdkImage*)gdk_image_new(type, (visual is null) ? null : visual.getVisualStruct(), width, height) );
+		auto p = gdk_image_new(type, (visual is null) ? null : visual.getVisualStruct(), width, height);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkImage*) p);
 	}
-	
 	
 	/**
 	 * Warning
@@ -153,7 +159,14 @@ public class ImageGdk
 	public this (Visual visual, void* data, int width, int height)
 	{
 		// GdkImage* gdk_image_new_bitmap (GdkVisual *visual,  gpointer data,  gint width,  gint height);
-		this(cast(GdkImage*)gdk_image_new_bitmap((visual is null) ? null : visual.getVisualStruct(), data, width, height) );
+		auto p = gdk_image_new_bitmap((visual is null) ? null : visual.getVisualStruct(), data, width, height);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkImage*) p);
 	}
 	
 	/**
@@ -200,7 +213,6 @@ public class ImageGdk
 		gdk_image_unref(gdkImage);
 	}
 	
-	
 	/**
 	 * Retrieves the colormap for a given image, if it exists. An image
 	 * will have a colormap if the drawable from which it was created has
@@ -211,7 +223,13 @@ public class ImageGdk
 	public Colormap getColormap()
 	{
 		// GdkColormap* gdk_image_get_colormap (GdkImage *image);
-		return new Colormap( gdk_image_get_colormap(gdkImage) );
+		auto p = gdk_image_get_colormap(gdkImage);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**

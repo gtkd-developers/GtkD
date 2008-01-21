@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module atk.EditableText;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -102,7 +103,6 @@ public class EditableText
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Sets the attributes for a specified range. See the ATK_ATTRIBUTE

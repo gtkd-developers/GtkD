@@ -41,6 +41,7 @@
  * omit prefixes:
  * 	- g_option_group_
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.OptionGroup
@@ -53,7 +54,7 @@
 
 module glib.OptionContext;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -175,10 +176,6 @@ public class OptionContext
 	/**
 	 */
 	
-	
-	
-	
-	
 	/**
 	 * Creates a new option context.
 	 * The parameter_string can serve multiple purposes. It can be used
@@ -206,7 +203,14 @@ public class OptionContext
 	public this (char[] parameterString)
 	{
 		// GOptionContext* g_option_context_new (const gchar *parameter_string);
-		this(cast(GOptionContext*)g_option_context_new(Str.toStringz(parameterString)) );
+		auto p = g_option_context_new(Str.toStringz(parameterString));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GOptionContext*) p);
 	}
 	
 	/**
@@ -234,7 +238,7 @@ public class OptionContext
 	public char[] getSummary()
 	{
 		// const gchar* g_option_context_get_summary (GOptionContext *context);
-		return Str.toString(g_option_context_get_summary(gOptionContext) );
+		return Str.toString(g_option_context_get_summary(gOptionContext)).dup;
 	}
 	
 	/**
@@ -262,9 +266,8 @@ public class OptionContext
 	public char[] getDescription()
 	{
 		// const gchar* g_option_context_get_description (GOptionContext *context);
-		return Str.toString(g_option_context_get_description(gOptionContext) );
+		return Str.toString(g_option_context_get_description(gOptionContext)).dup;
 	}
-	
 	
 	/**
 	 * Sets the function which is used to translate the contexts
@@ -420,12 +423,8 @@ public class OptionContext
 	public char[] getHelp(int mainHelp, OptionGroup group)
 	{
 		// gchar* g_option_context_get_help (GOptionContext *context,  gboolean main_help,  GOptionGroup *group);
-		return Str.toString(g_option_context_get_help(gOptionContext, mainHelp, (group is null) ? null : group.getOptionGroupStruct()) );
+		return Str.toString(g_option_context_get_help(gOptionContext, mainHelp, (group is null) ? null : group.getOptionGroupStruct())).dup;
 	}
-	
-	
-	
-	
 	
 	/**
 	 * A convenience function which creates a main group if it doesn't
@@ -442,7 +441,6 @@ public class OptionContext
 		// void g_option_context_add_main_entries (GOptionContext *context,  const GOptionEntry *entries,  const gchar *translation_domain);
 		g_option_context_add_main_entries(gOptionContext, entries, Str.toStringz(translationDomain));
 	}
-	
 	
 	/**
 	 * Adds a GOptionGroup to the context, so that parsing with context
@@ -483,15 +481,12 @@ public class OptionContext
 	public OptionGroup getMainGroup()
 	{
 		// GOptionGroup* g_option_context_get_main_group (GOptionContext *context);
-		return new OptionGroup( g_option_context_get_main_group(gOptionContext) );
+		auto p = g_option_context_get_main_group(gOptionContext);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new OptionGroup(cast(GOptionGroup*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

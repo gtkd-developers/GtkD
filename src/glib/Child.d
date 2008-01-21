@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.MainLoop
  * 	- glib.Dataset
@@ -52,7 +53,7 @@
 
 module glib.Child;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -134,65 +135,6 @@ public class Child
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new child_watch source.
 	 * The source will not initially be associated with any GMainContext
@@ -271,31 +213,4 @@ public class Child
 		// guint g_child_watch_add_full (gint priority,  GPid pid,  GChildWatchFunc function,  gpointer data,  GDestroyNotify notify);
 		return g_child_watch_add_full(priority, pid, funct, data, notify);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

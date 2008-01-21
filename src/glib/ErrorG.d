@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Quark
  * 	- glib.Str
@@ -50,7 +51,7 @@
 
 module glib.ErrorG;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -322,7 +323,6 @@ public class ErrorG
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GError with the given domain and code,
 	 * and a message formatted with format.
@@ -335,7 +335,14 @@ public class ErrorG
 	public this (GQuark domain, int code, char[] format, ... )
 	{
 		// GError* g_error_new (GQuark domain,  gint code,  const gchar *format,  ...);
-		this(cast(GError*)g_error_new(domain, code, Str.toStringz(format)) );
+		auto p = g_error_new(domain, code, Str.toStringz(format));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GError*) p);
 	}
 	
 	/**
@@ -351,7 +358,14 @@ public class ErrorG
 	public this (GQuark domain, int code, char[] message)
 	{
 		// GError* g_error_new_literal (GQuark domain,  gint code,  const gchar *message);
-		this(cast(GError*)g_error_new_literal(domain, code, Str.toStringz(message)) );
+		auto p = g_error_new_literal(domain, code, Str.toStringz(message));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GError*) p);
 	}
 	
 	/**

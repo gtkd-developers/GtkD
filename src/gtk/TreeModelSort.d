@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.TreeModel
@@ -56,7 +57,7 @@
 
 module gtk.TreeModelSort;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -187,7 +188,6 @@ public class TreeModelSort : ObjectG
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkTreeModel, with child_model as the child model.
 	 * Params:
@@ -197,7 +197,13 @@ public class TreeModelSort : ObjectG
 	public static TreeModel newWithModel(TreeModel childModel)
 	{
 		// GtkTreeModel* gtk_tree_model_sort_new_with_model (GtkTreeModel *child_model);
-		return new TreeModel( gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelStruct()) );
+		auto p = gtk_tree_model_sort_new_with_model((childModel is null) ? null : childModel.getTreeModelStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -207,7 +213,13 @@ public class TreeModelSort : ObjectG
 	public TreeModel getModel()
 	{
 		// GtkTreeModel* gtk_tree_model_sort_get_model (GtkTreeModelSort *tree_model);
-		return new TreeModel( gtk_tree_model_sort_get_model(gtkTreeModelSort) );
+		auto p = gtk_tree_model_sort_get_model(gtkTreeModelSort);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -222,7 +234,13 @@ public class TreeModelSort : ObjectG
 	public TreePath convertChildPathToPath(TreePath childPath)
 	{
 		// GtkTreePath* gtk_tree_model_sort_convert_child_path_to_path  (GtkTreeModelSort *tree_model_sort,  GtkTreePath *child_path);
-		return new TreePath( gtk_tree_model_sort_convert_child_path_to_path(gtkTreeModelSort, (childPath is null) ? null : childPath.getTreePathStruct()) );
+		auto p = gtk_tree_model_sort_convert_child_path_to_path(gtkTreeModelSort, (childPath is null) ? null : childPath.getTreePathStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**
@@ -251,7 +269,13 @@ public class TreeModelSort : ObjectG
 	public TreePath convertPathToChildPath(TreePath sortedPath)
 	{
 		// GtkTreePath* gtk_tree_model_sort_convert_path_to_child_path  (GtkTreeModelSort *tree_model_sort,  GtkTreePath *sorted_path);
-		return new TreePath( gtk_tree_model_sort_convert_path_to_child_path(gtkTreeModelSort, (sortedPath is null) ? null : sortedPath.getTreePathStruct()) );
+		auto p = gtk_tree_model_sort_convert_path_to_child_path(gtkTreeModelSort, (sortedPath is null) ? null : sortedPath.getTreePathStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreePath(cast(GtkTreePath*) p);
 	}
 	
 	/**

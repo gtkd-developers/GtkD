@@ -39,7 +39,6 @@
  * 	- gdk_x11_
  * omit structs:
  * omit prefixes:
- * omit code:
  * 	- gdkx_visual_get
  * 	- gdkx_colormap_get
  * 	- gdk_pixmap_foreign_new
@@ -84,7 +83,10 @@
  * 	- gdk_x11_get_xatom_by_name_for_display
  * 	- gdk_x11_get_xatom_name
  * 	- gdk_x11_get_xatom_name_for_display
+ * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
  * 	- gdk.Drawable
  * 	- gdk.Display
  * 	- gdk.Window
@@ -98,11 +100,12 @@
 
 module gdk.X11;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
 
+private import glib.Str;
 private import gdk.Drawable;
 private import gdk.Display;
 private import gdk.Window;
@@ -119,37 +122,6 @@ public class X11
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-/+ Manually disabled. Won't compile, yet.
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Wraps a native window for the default display in a GdkWindow.
 	 * This may fail if the window has been destroyed.
@@ -162,9 +134,14 @@ public class X11
 	public static Window gdkWindowForeignNew(GdkNativeWindow anid)
 	{
 		// GdkWindow* gdk_window_foreign_new (GdkNativeWindow anid);
-		return new Window( gdk_window_foreign_new(anid) );
+		auto p = gdk_window_foreign_new(anid);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
-	
 	
 	/**
 	 * Returns the Gdk object associated with the given X id.
@@ -178,7 +155,6 @@ public class X11
 		return gdk_xid_table_lookup(xid);
 	}
 	
-	
 	/**
 	 * Looks up the GdkWindow that wraps the given native window handle.
 	 * For example in the X backend, a native window handle is an Xlib
@@ -190,9 +166,14 @@ public class X11
 	public static Window gdkWindowLookup(GdkNativeWindow anid)
 	{
 		// GdkWindow* gdk_window_lookup (GdkNativeWindow anid);
-		return new Window( gdk_window_lookup(anid) );
+		auto p = gdk_window_lookup(anid);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
-	
 	
 	/**
 	 * Looks up the GdkPixmap that wraps the given native pixmap handle.
@@ -208,10 +189,6 @@ public class X11
 		return gdk_pixmap_lookup(anid);
 	}
 	
-	
-	
-	
-	
 	/**
 	 * Routine to get the current X server time stamp.
 	 * Params:
@@ -225,10 +202,6 @@ public class X11
 		// guint32 gdk_x11_get_server_time (GdkWindow *window);
 		return gdk_x11_get_server_time((window is null) ? null : window.getWindowStruct());
 	}
-	
-	
-	
-	
 	
 	/**
 	 * The application can use this call to update the _NET_WM_USER_TIME
@@ -269,12 +242,6 @@ public class X11
 		gdk_x11_window_move_to_current_desktop((window is null) ? null : window.getWindowStruct());
 	}
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Sends a startup notification message of type message_type to
 	 * display.
@@ -308,14 +275,8 @@ public class X11
 	public static char[] displayGetStartupNotificationId(Display display)
 	{
 		// const gchar* gdk_x11_display_get_startup_notification_id  (GdkDisplay *display);
-		return Str.toString(gdk_x11_display_get_startup_notification_id((display is null) ? null : display.getDisplayStruct()) );
+		return Str.toString(gdk_x11_display_get_startup_notification_id((display is null) ? null : display.getDisplayStruct())).dup;
 	}
-	
-	
-	
-+/	
-	
-	
 	
 	/**
 	 * Returns the X resource (window or pixmap) belonging to a GdkDrawable.
@@ -329,8 +290,6 @@ public class X11
 		return gdk_x11_drawable_get_xid((drawable is null) ? null : drawable.getDrawableStruct());
 	}
 	
-/+
-
 	/**
 	 * Warning
 	 * gdk_x11_font_get_name is deprecated and should not be used in newly-written code.
@@ -345,9 +304,8 @@ public class X11
 	public static char[] fontGetName(GdkFont* font)
 	{
 		// const char* gdk_x11_font_get_name (GdkFont *font);
-		return Str.toString(gdk_x11_font_get_name(font) );
+		return Str.toString(gdk_x11_font_get_name(font)).dup;
 	}
-	
 	
 	/**
 	 * Warning
@@ -363,9 +321,6 @@ public class X11
 		return gdk_x11_font_get_xfont(font);
 	}
 	
-	
-	
-	
 	/**
 	 * Gets the default GTK+ screen number.
 	 * Returns: returns the screen number specified by the --display command line option or the DISPLAY environment variable when gdk_init() calls XOpenDisplay().
@@ -375,7 +330,6 @@ public class X11
 		// gint gdk_x11_get_default_screen (void);
 		return gdk_x11_get_default_screen();
 	}
-	
 	
 	/**
 	 * Call gdk_x11_display_grab() on the default display.
@@ -388,10 +342,6 @@ public class X11
 		gdk_x11_grab_server();
 	}
 	
-	
-	
-	
-	
 	/**
 	 * Ungrab the default display after it has been grabbed with
 	 * gdk_x11_grab_server().
@@ -401,13 +351,4 @@ public class X11
 		// void gdk_x11_ungrab_server (void);
 		gdk_x11_ungrab_server();
 	}
-	
-	
-	
-	
-+/	
-	
-	
-	
-	
 }

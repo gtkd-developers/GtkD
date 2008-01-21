@@ -30,20 +30,30 @@
  * ctorStrct=
  * clss    = SizeGroup
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_size_group_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Widget
+ * 	- glib.ListSG
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
+ * 	- GSList* -> ListSG
  * 	- GtkWidget* -> Widget
  * module aliases:
  * local aliases:
@@ -51,12 +61,19 @@
 
 module gtk.SizeGroup;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import gtk.Widget;
+private import glib.ListSG;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -109,7 +126,7 @@ private import gobject.ObjectG;
  *  </widgets>
  * </object>
  */
-public class SizeGroup : ObjectG
+public class SizeGroup : ObjectG, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -143,10 +160,11 @@ public class SizeGroup : ObjectG
 		this.gtkSizeGroup = gtkSizeGroup;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkSizeGroup);
+	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Create a new GtkSizeGroup.
@@ -156,7 +174,14 @@ public class SizeGroup : ObjectG
 	public this (GtkSizeGroupMode mode)
 	{
 		// GtkSizeGroup* gtk_size_group_new (GtkSizeGroupMode mode);
-		this(cast(GtkSizeGroup*)gtk_size_group_new(mode) );
+		auto p = gtk_size_group_new(mode);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkSizeGroup*) p);
 	}
 	
 	/**
@@ -243,10 +268,15 @@ public class SizeGroup : ObjectG
 	 * Since 2.10
 	 * Returns: a GSList of widgets. The list is owned by GTK+  and should not be modified.
 	 */
-	public GSList* getWidgets()
+	public ListSG getWidgets()
 	{
 		// GSList* gtk_size_group_get_widgets (GtkSizeGroup *size_group);
-		return gtk_size_group_get_widgets(gtkSizeGroup);
+		auto p = gtk_size_group_get_widgets(gtkSizeGroup);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
-	
 }

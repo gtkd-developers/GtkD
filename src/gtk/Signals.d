@@ -41,10 +41,10 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.ObjectGtk
- * 	- glib.Str
  * structWrap:
  * 	- GtkObject* -> ObjectGtk
  * module aliases:
@@ -53,14 +53,13 @@
 
 module gtk.Signals;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gtk.ObjectGtk;
-private import glib.Str;
 
 
 
@@ -161,8 +160,6 @@ public class Signals
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Warning
 	 * gtk_signal_new is deprecated and should not be used in newly-written code. Use g_signal_new() instead.
@@ -218,8 +215,6 @@ public class Signals
 		// guint gtk_signal_newv (const gchar *name,  GtkSignalRunType signal_flags,  GtkType object_type,  guint function_offset,  GtkSignalMarshaller marshaller,  GtkType return_val,  guint n_args,  GtkType *args);
 		return gtk_signal_newv(Str.toStringz(name), signalFlags, objectType, functionOffset, marshaller, returnVal, nArgs, args);
 	}
-	
-	
 	
 	/**
 	 * Warning
@@ -291,7 +286,6 @@ public class Signals
 		gtk_signal_emitv_by_name((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), args);
 	}
 	
-	
 	/**
 	 * Warning
 	 * gtk_signal_emit_stop_by_name is deprecated and should not be used in newly-written code. Use g_signal_stop_emission_by_name() instead.
@@ -307,10 +301,6 @@ public class Signals
 		// void gtk_signal_emit_stop_by_name (GtkObject *object,  const gchar *name);
 		gtk_signal_emit_stop_by_name((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name));
 	}
-	
-	
-	
-	
 	
 	/**
 	 * Warning
@@ -391,16 +381,4 @@ public class Signals
 		// void gtk_signal_connect_object_while_alive  (GtkObject *object,  const gchar *name,  GtkSignalFunc func,  GtkObject *alive_object);
 		gtk_signal_connect_object_while_alive((object is null) ? null : object.getObjectGtkStruct(), Str.toStringz(name), func, (aliveObject is null) ? null : aliveObject.getObjectGtkStruct());
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

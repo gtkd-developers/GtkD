@@ -35,13 +35,21 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_hbutton_box_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,17 @@
 
 module gtk.HButtonBox;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -77,7 +91,7 @@ private import gtk.ButtonBox;
  * arrangement and layout of the buttons can be changed with
  * gtk_button_box_set_layout().
  */
-public class HButtonBox : ButtonBox
+public class HButtonBox : ButtonBox, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -111,6 +125,9 @@ public class HButtonBox : ButtonBox
 		this.gtkHButtonBox = gtkHButtonBox;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkHButtonBox);
+	
 	/**
 	 * Creates a new HButtonBox and sets comon parameters
 	 */
@@ -127,14 +144,20 @@ public class HButtonBox : ButtonBox
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new horizontal button box.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_hbutton_box_new (void);
-		this(cast(GtkHButtonBox*)gtk_hbutton_box_new() );
+		auto p = gtk_hbutton_box_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkHButtonBox*) p);
 	}
 	
 	/**

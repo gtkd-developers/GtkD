@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module gobject.Boxed;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
@@ -73,8 +74,6 @@ public class Boxed
 	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Provide a copy of a boxed structure src_boxed which is of type boxed_type.
@@ -129,10 +128,4 @@ public class Boxed
 		// GType g_pointer_type_register_static (const gchar *name);
 		return g_pointer_type_register_static(Str.toStringz(name));
 	}
-	
-	
-	
-	
-	
-	
 }

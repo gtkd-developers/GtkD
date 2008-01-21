@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.Str
@@ -50,7 +51,7 @@
 
 module glib.ShellUtils;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -69,8 +70,6 @@ public class ShellUtils
 	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Parses a command line into an argument vector, in much the same way
@@ -109,7 +108,7 @@ public class ShellUtils
 	public static char[] quote(char[] unquotedString)
 	{
 		// gchar* g_shell_quote (const gchar *unquoted_string);
-		return Str.toString(g_shell_quote(Str.toStringz(unquotedString)) );
+		return Str.toString(g_shell_quote(Str.toStringz(unquotedString))).dup;
 	}
 	
 	/**
@@ -141,6 +140,6 @@ public class ShellUtils
 	public static char[] unquote(char[] quotedString, GError** error)
 	{
 		// gchar* g_shell_unquote (const gchar *quoted_string,  GError **error);
-		return Str.toString(g_shell_unquote(Str.toStringz(quotedString), error) );
+		return Str.toString(g_shell_unquote(Str.toStringz(quotedString), error)).dup;
 	}
 }

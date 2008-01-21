@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * 	- RecentChooserIF
  * prefixes:
  * 	- gtk_recent_chooser_dialog_
@@ -50,9 +51,15 @@
  * 	- gtk.Widget
  * 	- gtk.Window
  * 	- gtk.RecentManager
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * 	- gtk.RecentInfo
  * 	- gtk.RecentFilter
  * 	- glib.ListG
+ * 	- glib.ListSG
  * 	- gobject.Signals
  * 	- gtk.RecentChooserIF
  * 	- gtk.RecentChooserT
@@ -75,9 +82,15 @@ private import glib.Str;
 private import gtk.Widget;
 private import gtk.Window;
 private import gtk.RecentManager;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 private import gtk.RecentInfo;
 private import gtk.RecentFilter;
 private import glib.ListG;
+private import glib.ListSG;
 private import gobject.Signals;
 private import gtk.RecentChooserIF;
 private import gtk.RecentChooserT;
@@ -95,9 +108,26 @@ private import gtk.Dialog;
  * those for GtkDialog.
  * Note that GtkRecentChooserDialog does not have any methods of its own.
  * Instead, you should use the functions that work on a GtkRecentChooser.
+ * Example49.Typical usage
+ *  In the simplest of cases, you can use the following code to use
+ *  a GtkRecentChooserDialog to select a recently used file:
+ * GtkWidget *dialog;
+ * dialog = gtk_recent_chooser_dialog_new ("Recent Documents",
+ * 					parent_window,
+ * 					GTK_STOCK_CANCEL, GTK_RESPONSE_CANCEL,
+ * 					GTK_STOCK_OPEN, GTK_RESPONSE_ACCEPT,
+ * 					NULL);
+ * if (gtk_dialog_run (GTK_DIALOG (dialog)) == GTK_RESPONSE_ACCEPT)
+ *  {
+	 *  GtkRecentInfo *info;
+	 *  info = gtk_recent_chooser_get_current_item (GTK_RECENT_CHOOSER (dialog));
+	 *  open_file (gtk_recent_info_get_uri (info));
+	 *  gtk_recent_info_unref (info);
+ *  }
+ * gtk_widget_destroy (dialog);
  * Recently used files are supported since GTK+ 2.10.
  */
-public class RecentChooserDialog : Dialog, RecentChooserIF
+public class RecentChooserDialog : Dialog, BuildableIF, RecentChooserIF
 {
 	
 	/** the main Gtk struct */
@@ -130,6 +160,9 @@ public class RecentChooserDialog : Dialog, RecentChooserIF
 		super(cast(GtkDialog*)gtkRecentChooserDialog);
 		this.gtkRecentChooserDialog = gtkRecentChooserDialog;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkRecentChooserDialog);
 	
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserDialog);

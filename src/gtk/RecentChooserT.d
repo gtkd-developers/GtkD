@@ -48,8 +48,10 @@
  * 	- gtk.RecentInfo
  * 	- gtk.RecentFilter
  * 	- glib.ListG
+ * 	- glib.ListSG
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GSList* -> ListSG
  * 	- GtkRecentFilter* -> RecentFilter
  * 	- GtkRecentInfo* -> RecentInfo
  * module aliases:
@@ -69,6 +71,7 @@ private import glib.Str;
 private import gtk.RecentInfo;
 private import gtk.RecentFilter;
 private import glib.ListG;
+private import glib.ListSG;
 
 
 
@@ -580,10 +583,16 @@ public template RecentChooserT(TStruct)
 	 * Since 2.10
 	 * Returns: A singly linked list of GtkRecentFilter objects. You should just free the returned list using g_slist_free().
 	 */
-	public GSList* listFilters()
+	public ListSG listFilters()
 	{
 		// GSList* gtk_recent_chooser_list_filters (GtkRecentChooser *chooser);
-		return gtk_recent_chooser_list_filters(getRecentChooserTStruct());
+		auto p = gtk_recent_chooser_list_filters(getRecentChooserTStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**

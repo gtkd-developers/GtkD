@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_toolbar_
  * 	- gtk_
@@ -42,11 +43,18 @@
  * omit prefixes:
  * omit code:
  * 	- gtk_toolbar_get_style
+ * 	- gtk_toolbar_insert
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.Button
  * 	- gtk.ToolItem
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -55,15 +63,22 @@
 
 module gtk.Toolbar;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.Button;
 private import gtk.ToolItem;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -84,7 +99,7 @@ private import gtk.Container;
  * Creating a context menu for the toolbar can be done by connecting to
  * the "popup-context-menu" signal.
  */
-public class Toolbar : Container
+public class Toolbar : Container, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -118,6 +133,9 @@ public class Toolbar : Container
 		this.gtkToolbar = gtkToolbar;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkToolbar);
+	
 	/**
 	 * Retrieves whether the toolbar has text, icons, or both . See
 	 * gtk_toolbar_set_style().
@@ -132,7 +150,14 @@ public class Toolbar : Container
 		return gtk_toolbar_get_style(gtkToolbar);
 	}
 	
-	/** */
+	/**
+	 * Insert a GtkToolItem into the toolbar at position pos.
+	 * If pos is 0 the item is prepended to the start of the toolbar. If pos is negative, the item is appended to the end of the toolbar.
+	 * Since 2.4
+	 * Params:
+	 * toolItem  = a GtkToolItem
+	 * pos = the position of the new item
+	 */
 	public void insert (ToolItem toolItem, int pos=-1)
 	{
 		gtk_toolbar_insert(gtkToolbar, toolItem.getToolItemStruct(), pos);
@@ -175,13 +200,13 @@ public class Toolbar : Container
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(gboolean, Toolbar)[] onFocusHomeOrEndListeners;
+	/**
+	 * A keybinding signal used internally by GTK+. This signal can't
+	 * be used in application code
+	 */
 	void addOnFocusHomeOrEnd(gboolean delegate(gboolean, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-home-or-end" in connectedSignals) )
@@ -210,6 +235,9 @@ public class Toolbar : Container
 	}
 	
 	void delegate(GtkOrientation, Toolbar)[] onOrientationChangedListeners;
+	/**
+	 * Emitted when the orientation of the toolbar changes.
+	 */
 	void addOnOrientationChanged(void delegate(GtkOrientation, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("orientation-changed" in connectedSignals) )
@@ -238,6 +266,15 @@ public class Toolbar : Container
 	}
 	
 	gboolean delegate(gint, gint, gint, Toolbar)[] onPopupContextMenuListeners;
+	/**
+	 * Emitted when the user right-clicks the toolbar or uses the
+	 * keybinding to display a popup menu.
+	 * Application developers should handle this signal if they want
+	 * to display a context menu on the toolbar. The context-menu should
+	 * appear at the coordinates given by x and y. The mouse button
+	 * number is given by the button parameter. If the menu was popped
+	 * up using the keybaord, button is -1.
+	 */
 	void addOnPopupContextMenu(gboolean delegate(gint, gint, gint, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popup-context-menu" in connectedSignals) )
@@ -266,6 +303,12 @@ public class Toolbar : Container
 	}
 	
 	void delegate(GtkToolbarStyle, Toolbar)[] onStyleChangedListeners;
+	/**
+	 * Emitted when the style of the toolbar changes.
+	 * See Also
+	 * GtkToolItem
+	 * Base class of widgets that can be added to a toolbar.
+	 */
 	void addOnStyleChanged(void delegate(GtkToolbarStyle, Toolbar) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("style-changed" in connectedSignals) )
@@ -294,32 +337,20 @@ public class Toolbar : Container
 	}
 	
 	
-	
-	
-	
-	
 	/**
 	 * Creates a new toolbar.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_toolbar_new (void);
-		this(cast(GtkToolbar*)gtk_toolbar_new() );
-	}
-	
-	/**
-	 * Insert a GtkToolItem into the toolbar at position pos. If pos is
-	 * 0 the item is prepended to the start of the toolbar. If pos is
-	 * negative, the item is appended to the end of the toolbar.
-	 * Since 2.4
-	 * Params:
-	 * item =  a GtkToolItem
-	 * pos =  the position of the new item
-	 */
-	public void insert(GtkToolItem* item, int pos)
-	{
-		// void gtk_toolbar_insert (GtkToolbar *toolbar,  GtkToolItem *item,  gint pos);
-		gtk_toolbar_insert(gtkToolbar, item, pos);
+		auto p = gtk_toolbar_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkToolbar*) p);
 	}
 	
 	/**
@@ -465,7 +496,6 @@ public class Toolbar : Container
 		return gtk_toolbar_get_orientation(gtkToolbar);
 	}
 	
-	
 	/**
 	 * Retrieves the icon size for the toolbar. See gtk_toolbar_set_icon_size().
 	 * Returns: the current icon size for the icons on the toolbar.
@@ -518,7 +548,13 @@ public class Toolbar : Container
 	public Widget appendItem(char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_append_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
-		return new Widget( gtk_toolbar_append_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
+		auto p = gtk_toolbar_append_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -539,7 +575,13 @@ public class Toolbar : Container
 	public Widget prependItem(char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_prepend_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
-		return new Widget( gtk_toolbar_prepend_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
+		auto p = gtk_toolbar_prepend_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -562,7 +604,13 @@ public class Toolbar : Container
 	public Widget insertItem(char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData, int position)
 	{
 		// GtkWidget* gtk_toolbar_insert_item (GtkToolbar *toolbar,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data,  gint position);
-		return new Widget( gtk_toolbar_insert_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position) );
+		auto p = gtk_toolbar_insert_item(gtkToolbar, Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -624,7 +672,13 @@ public class Toolbar : Container
 	public Widget appendElement(GtkToolbarChildType type, Widget widget, char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_append_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
-		return new Widget( gtk_toolbar_append_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
+		auto p = gtk_toolbar_append_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -651,7 +705,13 @@ public class Toolbar : Container
 	public Widget prependElement(GtkToolbarChildType type, Widget widget, char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData)
 	{
 		// GtkWidget* gtk_toolbar_prepend_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data);
-		return new Widget( gtk_toolbar_prepend_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData) );
+		auto p = gtk_toolbar_prepend_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -680,7 +740,13 @@ public class Toolbar : Container
 	public Widget insertElement(GtkToolbarChildType type, Widget widget, char[] text, char[] tooltipText, char[] tooltipPrivateText, Widget icon, GtkSignalFunc callback, void* userData, int position)
 	{
 		// GtkWidget* gtk_toolbar_insert_element (GtkToolbar *toolbar,  GtkToolbarChildType type,  GtkWidget *widget,  const char *text,  const char *tooltip_text,  const char *tooltip_private_text,  GtkWidget *icon,  GtkSignalFunc callback,  gpointer user_data,  gint position);
-		return new Widget( gtk_toolbar_insert_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position) );
+		auto p = gtk_toolbar_insert_element(gtkToolbar, type, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(text), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), (icon is null) ? null : icon.getWidgetStruct(), callback, userData, position);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -761,7 +827,13 @@ public class Toolbar : Container
 	public Widget insertStock(char[] stockId, char[] tooltipText, char[] tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
 	{
 		// GtkWidget* gtk_toolbar_insert_stock (GtkToolbar *toolbar,  const gchar *stock_id,  const char *tooltip_text,  const char *tooltip_private_text,  GtkSignalFunc callback,  gpointer user_data,  gint position);
-		return new Widget( gtk_toolbar_insert_stock(gtkToolbar, Str.toStringz(stockId), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), callback, userData, position) );
+		auto p = gtk_toolbar_insert_stock(gtkToolbar, Str.toStringz(stockId), Str.toStringz(tooltipText), Str.toStringz(tooltipPrivateText), callback, userData, position);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -803,18 +875,4 @@ public class Toolbar : Container
 		// void gtk_toolbar_unset_style (GtkToolbar *toolbar);
 		gtk_toolbar_unset_style(gtkToolbar);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -41,9 +41,9 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gtk.TextTagTable
  * 	- gtk.TextTag
  * structWrap:
  * 	- GtkTextTag* -> TextTag
@@ -54,13 +54,14 @@
 
 module gtk.TextTagTable;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gtk.TextTagTable;
 private import gtk.TextTag;
 
 
@@ -109,13 +110,11 @@ public class TextTagTable : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(TextTag, TextTagTable)[] onTagAddedListeners;
+	/**
+	 */
 	void addOnTagAdded(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("tag-added" in connectedSignals) )
@@ -144,6 +143,8 @@ public class TextTagTable : ObjectG
 	}
 	
 	void delegate(TextTag, gboolean, TextTagTable)[] onTagChangedListeners;
+	/**
+	 */
 	void addOnTagChanged(void delegate(TextTag, gboolean, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("tag-changed" in connectedSignals) )
@@ -172,6 +173,8 @@ public class TextTagTable : ObjectG
 	}
 	
 	void delegate(TextTag, TextTagTable)[] onTagRemovedListeners;
+	/**
+	 */
 	void addOnTagRemoved(void delegate(TextTag, TextTagTable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("tag-removed" in connectedSignals) )
@@ -200,8 +203,6 @@ public class TextTagTable : ObjectG
 	}
 	
 	
-	
-	
 	/**
 	 * Creates a new GtkTextTagTable. The table contains no tags by
 	 * default.
@@ -210,7 +211,13 @@ public class TextTagTable : ObjectG
 	public static TextTagTable tableNew()
 	{
 		// GtkTextTagTable* gtk_text_tag_table_new (void);
-		return new TextTagTable( gtk_text_tag_table_new() );
+		auto p = gtk_text_tag_table_new();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextTagTable(cast(GtkTextTagTable*) p);
 	}
 	
 	/**
@@ -252,7 +259,13 @@ public class TextTagTable : ObjectG
 	public TextTag tableLookup(char[] name)
 	{
 		// GtkTextTag* gtk_text_tag_table_lookup (GtkTextTagTable *table,  const gchar *name);
-		return new TextTag( gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name)) );
+		auto p = gtk_text_tag_table_lookup(gtkTextTagTable, Str.toStringz(name));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextTag(cast(GtkTextTag*) p);
 	}
 	
 	/**
@@ -281,6 +294,4 @@ public class TextTagTable : ObjectG
 		// gint gtk_text_tag_table_get_size (GtkTextTagTable *table);
 		return gtk_text_tag_table_get_size(gtkTextTagTable);
 	}
-	
-	
 }

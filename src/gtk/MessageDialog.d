@@ -43,10 +43,13 @@
  * omit code:
  * 	- gtk_message_dialog_new
  * 	- gtk_message_dialog_new_with_markup
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Window
+ * 	- gtk.Widget
  * structWrap:
+ * 	- GtkWidget* -> Widget
  * 	- GtkWindow* -> Window
  * module aliases:
  * local aliases:
@@ -54,13 +57,14 @@
 
 module gtk.MessageDialog;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gtk.Window;
+private import gtk.Widget;
 
 
 
@@ -228,11 +232,6 @@ public class MessageDialog : Dialog
 	/**
 	 */
 	
-	
-	
-	
-	
-	
 	/**
 	 * Sets the text of the message dialog to be str, which is marked
 	 * up with the Pango text markup
@@ -253,10 +252,10 @@ public class MessageDialog : Dialog
 	 * Params:
 	 * image =  the image
 	 */
-	public void setImage(GtkWidget* image)
+	public void setImage(Widget image)
 	{
 		// void gtk_message_dialog_set_image (GtkMessageDialog *dialog,  GtkWidget *image);
-		gtk_message_dialog_set_image(gtkMessageDialog, image);
+		gtk_message_dialog_set_image(gtkMessageDialog, (image is null) ? null : image.getWidgetStruct());
 	}
 	
 	/**
@@ -300,11 +299,4 @@ public class MessageDialog : Dialog
 		// void gtk_message_dialog_format_secondary_markup  (GtkMessageDialog *message_dialog,  const gchar *message_format,  ...);
 		gtk_message_dialog_format_secondary_markup(gtkMessageDialog, Str.toStringz(messageFormat));
 	}
-	
-	
-	
-	
-	
-	
-	
 }

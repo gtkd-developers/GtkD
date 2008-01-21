@@ -42,6 +42,7 @@
  * 	- g_closure_
  * 	- g_source_set_closure
  * omit code:
+ * omit signals:
  * imports:
  * 	- gobject.Closure
  * 	- gobject.ObjectG
@@ -56,7 +57,7 @@
 
 module gobject.CClosure;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
@@ -139,16 +140,6 @@ public class CClosure
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new closure which invokes callback_func with user_data as
 	 * the last parameter.
@@ -161,7 +152,13 @@ public class CClosure
 	public static Closure _New(GCallback callbackFunc, void* userData, GClosureNotify destroyData)
 	{
 		// GClosure* g_cclosure_new (GCallback callback_func,  gpointer user_data,  GClosureNotify destroy_data);
-		return new Closure( g_cclosure_new(callbackFunc, userData, destroyData) );
+		auto p = g_cclosure_new(callbackFunc, userData, destroyData);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Closure(cast(GClosure*) p);
 	}
 	
 	/**
@@ -176,7 +173,13 @@ public class CClosure
 	public static Closure _NewSwap(GCallback callbackFunc, void* userData, GClosureNotify destroyData)
 	{
 		// GClosure* g_cclosure_new_swap (GCallback callback_func,  gpointer user_data,  GClosureNotify destroy_data);
-		return new Closure( g_cclosure_new_swap(callbackFunc, userData, destroyData) );
+		auto p = g_cclosure_new_swap(callbackFunc, userData, destroyData);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Closure(cast(GClosure*) p);
 	}
 	
 	/**
@@ -192,7 +195,13 @@ public class CClosure
 	public static Closure _NewObject(GCallback callbackFunc, ObjectG object)
 	{
 		// GClosure* g_cclosure_new_object (GCallback callback_func,  GObject *object);
-		return new Closure( g_cclosure_new_object(callbackFunc, (object is null) ? null : object.getObjectGStruct()) );
+		auto p = g_cclosure_new_object(callbackFunc, (object is null) ? null : object.getObjectGStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Closure(cast(GClosure*) p);
 	}
 	
 	/**
@@ -208,25 +217,14 @@ public class CClosure
 	public static Closure _NewObjectSwap(GCallback callbackFunc, ObjectG object)
 	{
 		// GClosure* g_cclosure_new_object_swap (GCallback callback_func,  GObject *object);
-		return new Closure( g_cclosure_new_object_swap(callbackFunc, (object is null) ? null : object.getObjectGStruct()) );
+		auto p = g_cclosure_new_object_swap(callbackFunc, (object is null) ? null : object.getObjectGStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Closure(cast(GClosure*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * A marshaller for a GCClosure with a callback of type
@@ -589,5 +587,4 @@ public class CClosure
 		// void g_cclosure_marshal_BOOLEAN__FLAGS (GClosure *closure,  GValue *return_value,  guint n_param_values,  const GValue *param_values,  gpointer invocation_hint,  gpointer marshal_data);
 		g_cclosure_marshal_BOOLEAN__FLAGS((closure is null) ? null : closure.getClosureStruct(), (returnValue is null) ? null : returnValue.getValueStruct(), nParamValues, (paramValues is null) ? null : paramValues.getValueStruct(), invocationHint, marshalData);
 	}
-	
 }

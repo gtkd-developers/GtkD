@@ -30,21 +30,28 @@
  * ctorStrct=
  * clss    = ActionGroup
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_action_group_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Action
  * 	- glib.ListG
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GtkAction* -> Action
@@ -54,14 +61,21 @@
 
 module gtk.ActionGroup;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Action;
 private import glib.ListG;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -107,7 +121,7 @@ private import gobject.ObjectG;
  *  </child>
  * </object>
  */
-public class ActionGroup : ObjectG
+public class ActionGroup : ObjectG, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -141,15 +155,26 @@ public class ActionGroup : ObjectG
 		this.gtkActionGroup = gtkActionGroup;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkActionGroup);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Action, GtkWidget*, ActionGroup)[] onConnectProxyListeners;
+	/**
+	 * The connect_proxy signal is emitted after connecting a proxy to
+	 * an action in the group. Note that the proxy may have been connected
+	 * to a different action before.
+	 * This is intended for simple customizations for which a custom action
+	 * class would be too clumsy, e.g. showing tooltips for menuitems in the
+	 * statusbar.
+	 * GtkUIManager proxies the signal and provides global notification
+	 * just before any action is connected to a proxy, which is probably more
+	 * convenient to use.
+	 * Since 2.4
+	 */
 	void addOnConnectProxy(void delegate(Action, GtkWidget*, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("connect-proxy" in connectedSignals) )
@@ -178,6 +203,14 @@ public class ActionGroup : ObjectG
 	}
 	
 	void delegate(Action, GtkWidget*, ActionGroup)[] onDisconnectProxyListeners;
+	/**
+	 * The disconnect_proxy signal is emitted after disconnecting a proxy
+	 * from an action in the group.
+	 * GtkUIManager proxies the signal and provides global notification
+	 * just before any action is connected to a proxy, which is probably more
+	 * convenient to use.
+	 * Since 2.4
+	 */
 	void addOnDisconnectProxy(void delegate(Action, GtkWidget*, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("disconnect-proxy" in connectedSignals) )
@@ -206,6 +239,13 @@ public class ActionGroup : ObjectG
 	}
 	
 	void delegate(Action, ActionGroup)[] onPostActivateListeners;
+	/**
+	 * The post_activate signal is emitted just after the action in the
+	 * action_group is activated
+	 * This is intended for GtkUIManager to proxy the signal and provide global
+	 * notification just after any action is activated.
+	 * Since 2.4
+	 */
 	void addOnPostActivate(void delegate(Action, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("post-activate" in connectedSignals) )
@@ -234,6 +274,13 @@ public class ActionGroup : ObjectG
 	}
 	
 	void delegate(Action, ActionGroup)[] onPreActivateListeners;
+	/**
+	 * The pre_activate signal is emitted just before the action in the
+	 * action_group is activated
+	 * This is intended for GtkUIManager to proxy the signal and provide global
+	 * notification just before any action is activated.
+	 * Since 2.4
+	 */
 	void addOnPreActivate(void delegate(Action, ActionGroup) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("pre-activate" in connectedSignals) )
@@ -262,7 +309,6 @@ public class ActionGroup : ObjectG
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkActionGroup object. The name of the action group
 	 * is used when associating keybindings
@@ -274,7 +320,14 @@ public class ActionGroup : ObjectG
 	public this (char[] name)
 	{
 		// GtkActionGroup* gtk_action_group_new (const gchar *name);
-		this(cast(GtkActionGroup*)gtk_action_group_new(Str.toStringz(name)) );
+		auto p = gtk_action_group_new(Str.toStringz(name));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkActionGroup*) p);
 	}
 	
 	/**
@@ -285,7 +338,7 @@ public class ActionGroup : ObjectG
 	public char[] getName()
 	{
 		// const gchar* gtk_action_group_get_name (GtkActionGroup *action_group);
-		return Str.toString(gtk_action_group_get_name(gtkActionGroup) );
+		return Str.toString(gtk_action_group_get_name(gtkActionGroup)).dup;
 	}
 	
 	/**
@@ -350,7 +403,13 @@ public class ActionGroup : ObjectG
 	public Action getAction(char[] actionName)
 	{
 		// GtkAction* gtk_action_group_get_action (GtkActionGroup *action_group,  const gchar *action_name);
-		return new Action( gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName)) );
+		auto p = gtk_action_group_get_action(gtkActionGroup, Str.toStringz(actionName));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Action(cast(GtkAction*) p);
 	}
 	
 	/**
@@ -361,7 +420,13 @@ public class ActionGroup : ObjectG
 	public ListG listActions()
 	{
 		// GList* gtk_action_group_list_actions (GtkActionGroup *action_group);
-		return new ListG( gtk_action_group_list_actions(gtkActionGroup) );
+		auto p = gtk_action_group_list_actions(gtkActionGroup);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -412,7 +477,6 @@ public class ActionGroup : ObjectG
 		gtk_action_group_remove_action(gtkActionGroup, (action is null) ? null : action.getActionStruct());
 	}
 	
-	
 	/**
 	 * This is a convenience function to create a number of actions and add them
 	 * to the action group.
@@ -447,7 +511,6 @@ public class ActionGroup : ObjectG
 		gtk_action_group_add_actions_full(gtkActionGroup, entries, nEntries, userData, destroy);
 	}
 	
-	
 	/**
 	 * This is a convenience function to create a number of toggle actions and add them
 	 * to the action group.
@@ -481,7 +544,6 @@ public class ActionGroup : ObjectG
 		// void gtk_action_group_add_toggle_actions_full  (GtkActionGroup *action_group,  const GtkToggleActionEntry *entries,  guint n_entries,  gpointer user_data,  GDestroyNotify destroy);
 		gtk_action_group_add_toggle_actions_full(gtkActionGroup, entries, nEntries, userData, destroy);
 	}
-	
 	
 	/**
 	 * This is a convenience routine to create a group of radio actions and
@@ -568,11 +630,6 @@ public class ActionGroup : ObjectG
 	public char[] translateString(char[] string)
 	{
 		// const gchar* gtk_action_group_translate_string (GtkActionGroup *action_group,  const gchar *string);
-		return Str.toString(gtk_action_group_translate_string(gtkActionGroup, Str.toStringz(string)) );
+		return Str.toString(gtk_action_group_translate_string(gtkActionGroup, Str.toStringz(string))).dup;
 	}
-	
-	
-	
-	
-	
 }

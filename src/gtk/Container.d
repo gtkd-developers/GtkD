@@ -35,19 +35,28 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_container_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Adjustment
  * 	- glib.ListG
  * 	- gobject.Value
+ * 	- gobject.ParamSpec
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
+ * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkContainerClass* -> Container
@@ -58,15 +67,23 @@
 
 module gtk.Container;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Adjustment;
 private import glib.ListG;
 private import gobject.Value;
+private import gobject.ParamSpec;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -160,7 +177,7 @@ private import gtk.Widget;
  *  </child>
  * </object>
  */
-public class Container : Widget
+public class Container : Widget, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -194,6 +211,9 @@ public class Container : Widget
 		this.gtkContainer = gtkContainer;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkContainer);
+	
 	/**
 	 * Removes all widgets from the container
 	 */
@@ -212,13 +232,11 @@ public class Container : Widget
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Widget, Container)[] onAddListeners;
+	/**
+	 */
 	void addOnAdd(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("add" in connectedSignals) )
@@ -247,6 +265,8 @@ public class Container : Widget
 	}
 	
 	void delegate(Container)[] onCheckResizeListeners;
+	/**
+	 */
 	void addOnCheckResize(void delegate(Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("check-resize" in connectedSignals) )
@@ -275,6 +295,8 @@ public class Container : Widget
 	}
 	
 	void delegate(Widget, Container)[] onRemoveListeners;
+	/**
+	 */
 	void addOnRemove(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("remove" in connectedSignals) )
@@ -303,6 +325,8 @@ public class Container : Widget
 	}
 	
 	void delegate(Widget, Container)[] onSetFocusChildListeners;
+	/**
+	 */
 	void addOnSetFocusChild(void delegate(Widget, Container) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-focus-child" in connectedSignals) )
@@ -329,10 +353,6 @@ public class Container : Widget
 		
 		return consumed;
 	}
-	
-	
-	
-	
 	
 	
 	/**
@@ -446,7 +466,6 @@ public class Container : Widget
 		gtk_container_foreach_full(gtkContainer, callback, marshal, callbackData, notify);
 	}
 	
-	
 	/**
 	 * Returns the container's non-internal children. See
 	 * gtk_container_forall() for details on what constitutes an "internal" child.
@@ -455,7 +474,13 @@ public class Container : Widget
 	public ListG getChildren()
 	{
 		// GList* gtk_container_get_children (GtkContainer *container);
-		return new ListG( gtk_container_get_children(gtkContainer) );
+		auto p = gtk_container_get_children(gtkContainer);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -488,7 +513,13 @@ public class Container : Widget
 	public Adjustment getFocusVadjustment()
 	{
 		// GtkAdjustment* gtk_container_get_focus_vadjustment (GtkContainer *container);
-		return new Adjustment( gtk_container_get_focus_vadjustment(gtkContainer) );
+		auto p = gtk_container_get_focus_vadjustment(gtkContainer);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -518,7 +549,13 @@ public class Container : Widget
 	public Adjustment getFocusHadjustment()
 	{
 		// GtkAdjustment* gtk_container_get_focus_hadjustment (GtkContainer *container);
-		return new Adjustment( gtk_container_get_focus_hadjustment(gtkContainer) );
+		auto p = gtk_container_get_focus_hadjustment(gtkContainer);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -765,10 +802,16 @@ public class Container : Widget
 	 * propertyName =  the name of the child property to find
 	 * Returns: the GParamSpec of the child property or NULL if class has no child property with that name.
 	 */
-	public static GParamSpec* classFindChildProperty(GObjectClass* cclass, char[] propertyName)
+	public static ParamSpec classFindChildProperty(GObjectClass* cclass, char[] propertyName)
 	{
 		// GParamSpec* gtk_container_class_find_child_property  (GObjectClass *cclass,  const gchar *property_name);
-		return gtk_container_class_find_child_property(cclass, Str.toStringz(propertyName));
+		auto p = gtk_container_class_find_child_property(cclass, Str.toStringz(propertyName));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ParamSpec(cast(GParamSpec*) p);
 	}
 	
 	/**
@@ -778,10 +821,10 @@ public class Container : Widget
 	 * propertyId =  the id for the property
 	 * pspec =  the GParamSpec for the property
 	 */
-	public static void classInstallChildProperty(Container cclass, uint propertyId, GParamSpec* pspec)
+	public static void classInstallChildProperty(Container cclass, uint propertyId, ParamSpec pspec)
 	{
 		// void gtk_container_class_install_child_property  (GtkContainerClass *cclass,  guint property_id,  GParamSpec *pspec);
-		gtk_container_class_install_child_property((cclass is null) ? null : cclass.getContainerStruct(), propertyId, pspec);
+		gtk_container_class_install_child_property((cclass is null) ? null : cclass.getContainerStruct(), propertyId, (pspec is null) ? null : pspec.getParamSpecStruct());
 	}
 	
 	/**
@@ -796,9 +839,4 @@ public class Container : Widget
 		// GParamSpec** gtk_container_class_list_child_properties  (GObjectClass *cclass,  guint *n_properties);
 		return gtk_container_class_list_child_properties(cclass, nProperties);
 	}
-	
-	
-	
-	
-	
 }

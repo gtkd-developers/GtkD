@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glgdk.GLConfig
  * structWrap:
@@ -50,7 +51,7 @@
 
 module glgdk.GLWindow;
 
-private import gtkglc.glgdktypes;
+public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 
@@ -101,7 +102,6 @@ public class GLWindow : Drawable
 	/**
 	 */
 	
-	
 	/**
 	 * Creates an on-screen rendering area.
 	 * attrib_list is currently unused. This must be set to NULL or empty
@@ -114,7 +114,14 @@ public class GLWindow : Drawable
 	public this (GdkGLConfig* glconfig, GdkWindow* window, int* attribList)
 	{
 		// GdkGLWindow* gdk_gl_window_new (GdkGLConfig *glconfig,  GdkWindow *window,  const int *attrib_list);
-		this(cast(GdkGLWindow*)gdk_gl_window_new(glconfig, window, attribList) );
+		auto p = gdk_gl_window_new(glconfig, window, attribList);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkGLWindow*) p);
 	}
 	
 	/**
@@ -191,5 +198,4 @@ public class GLWindow : Drawable
 		// GdkGLWindow* gdk_window_get_gl_window (GdkWindow *window);
 		return gdk_window_get_gl_window(window);
 	}
-	
 }

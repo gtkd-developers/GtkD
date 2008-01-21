@@ -35,30 +35,50 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_entry_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- gtk.Adjustment
  * 	- gtk.EntryCompletion
+ * 	- pango.PgLayout
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
+ * 	- GtkAdjustment* -> Adjustment
  * 	- GtkEntryCompletion* -> EntryCompletion
+ * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
  */
 
 module gtk.Entry;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
+private import gtk.Adjustment;
 private import gtk.EntryCompletion;
+private import pango.PgLayout;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -72,7 +92,7 @@ private import gtk.Widget;
  * of the widget, the widget will scroll so that the cursor
  * position is visible.
  */
-public class Entry : Widget
+public class Entry : Widget, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -106,6 +126,9 @@ public class Entry : Widget
 		this.gtkEntry = gtkEntry;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkEntry);
+	
 	/** */
 	public this (char[] text)
 	{
@@ -122,13 +145,11 @@ public class Entry : Widget
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Entry)[] onActivateListeners;
+	/**
+	 */
 	void addOnActivate(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("activate" in connectedSignals) )
@@ -157,6 +178,8 @@ public class Entry : Widget
 	}
 	
 	void delegate(Entry)[] onBackspaceListeners;
+	/**
+	 */
 	void addOnBackspace(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("backspace" in connectedSignals) )
@@ -185,6 +208,8 @@ public class Entry : Widget
 	}
 	
 	void delegate(Entry)[] onCopyClipboardListeners;
+	/**
+	 */
 	void addOnCopyClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("copy-clipboard" in connectedSignals) )
@@ -213,6 +238,8 @@ public class Entry : Widget
 	}
 	
 	void delegate(Entry)[] onCutClipboardListeners;
+	/**
+	 */
 	void addOnCutClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cut-clipboard" in connectedSignals) )
@@ -241,6 +268,8 @@ public class Entry : Widget
 	}
 	
 	void delegate(GtkDeleteType, gint, Entry)[] onDeleteFromCursorListeners;
+	/**
+	 */
 	void addOnDeleteFromCursor(void delegate(GtkDeleteType, gint, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("delete-from-cursor" in connectedSignals) )
@@ -269,6 +298,8 @@ public class Entry : Widget
 	}
 	
 	void delegate(char[], Entry)[] onInsertAtCursorListeners;
+	/**
+	 */
 	void addOnInsertAtCursor(void delegate(char[], Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("insert-at-cursor" in connectedSignals) )
@@ -297,6 +328,8 @@ public class Entry : Widget
 	}
 	
 	void delegate(GtkMovementStep, gint, gboolean, Entry)[] onMoveCursorListeners;
+	/**
+	 */
 	void addOnMoveCursor(void delegate(GtkMovementStep, gint, gboolean, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-cursor" in connectedSignals) )
@@ -325,6 +358,8 @@ public class Entry : Widget
 	}
 	
 	void delegate(Entry)[] onPasteClipboardListeners;
+	/**
+	 */
 	void addOnPasteClipboard(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("paste-clipboard" in connectedSignals) )
@@ -353,6 +388,8 @@ public class Entry : Widget
 	}
 	
 	void delegate(GtkMenu*, Entry)[] onPopulatePopupListeners;
+	/**
+	 */
 	void addOnPopulatePopup(void delegate(GtkMenu*, Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("populate-popup" in connectedSignals) )
@@ -381,6 +418,11 @@ public class Entry : Widget
 	}
 	
 	void delegate(Entry)[] onToggleOverwriteListeners;
+	/**
+	 * See Also
+	 * GtkTextView
+	 * a widget for handling multi-line text entry.
+	 */
 	void addOnToggleOverwrite(void delegate(Entry) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-overwrite" in connectedSignals) )
@@ -409,14 +451,20 @@ public class Entry : Widget
 	}
 	
 	
-	
 	/**
 	 * Creates a new entry.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_entry_new (void);
-		this(cast(GtkEntry*)gtk_entry_new() );
+		auto p = gtk_entry_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkEntry*) p);
 	}
 	
 	/**
@@ -437,7 +485,14 @@ public class Entry : Widget
 	public this (int max)
 	{
 		// GtkWidget* gtk_entry_new_with_max_length (gint max);
-		this(cast(GtkEntry*)gtk_entry_new_with_max_length(max) );
+		auto p = gtk_entry_new_with_max_length(max);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkEntry*) p);
 	}
 	
 	/**
@@ -508,7 +563,7 @@ public class Entry : Widget
 	public char[] getText()
 	{
 		// const gchar* gtk_entry_get_text (GtkEntry *entry);
-		return Str.toString(gtk_entry_get_text(gtkEntry) );
+		return Str.toString(gtk_entry_get_text(gtkEntry)).dup;
 	}
 	
 	/**
@@ -745,10 +800,16 @@ public class Entry : Widget
 	 * indices in the layout to byte indices in the entry contents.
 	 * Returns: the PangoLayout for this entry
 	 */
-	public PangoLayout* getLayout()
+	public PgLayout getLayout()
 	{
 		// PangoLayout* gtk_entry_get_layout (GtkEntry *entry);
-		return gtk_entry_get_layout(gtkEntry);
+		auto p = gtk_entry_get_layout(gtkEntry);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -852,7 +913,13 @@ public class Entry : Widget
 	public EntryCompletion getCompletion()
 	{
 		// GtkEntryCompletion* gtk_entry_get_completion (GtkEntry *entry);
-		return new EntryCompletion( gtk_entry_get_completion(gtkEntry) );
+		auto p = gtk_entry_get_completion(gtkEntry);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new EntryCompletion(cast(GtkEntryCompletion*) p);
 	}
 	
 	/**
@@ -867,10 +934,10 @@ public class Entry : Widget
 	 * adjustment =  an adjustment which should be adjusted when the cursor
 	 *  is moved, or NULL
 	 */
-	public void setCursorHadjustment(GtkAdjustment* adjustment)
+	public void setCursorHadjustment(Adjustment adjustment)
 	{
 		// void gtk_entry_set_cursor_hadjustment (GtkEntry *entry,  GtkAdjustment *adjustment);
-		gtk_entry_set_cursor_hadjustment(gtkEntry, adjustment);
+		gtk_entry_set_cursor_hadjustment(gtkEntry, (adjustment is null) ? null : adjustment.getAdjustmentStruct());
 	}
 	
 	/**
@@ -879,32 +946,15 @@ public class Entry : Widget
 	 * Since 2.12
 	 * Returns: the horizontal cursor adjustment, or NULL  if none has been set.
 	 */
-	public GtkAdjustment* getCursorHadjustment()
+	public Adjustment getCursorHadjustment()
 	{
 		// GtkAdjustment* gtk_entry_get_cursor_hadjustment (GtkEntry *entry);
-		return gtk_entry_get_cursor_hadjustment(gtkEntry);
+		auto p = gtk_entry_get_cursor_hadjustment(gtkEntry);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

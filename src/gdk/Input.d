@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module gdk.Input;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -90,9 +91,6 @@ public class Input
 		// gint gdk_input_add_full (gint source,  GdkInputCondition condition,  GdkInputFunction function,  gpointer data,  GdkDestroyNotify destroy);
 		return gdk_input_add_full(source, condition, funct, data, destroy);
 	}
-	
-	
-	
 	
 	/**
 	 * Warning

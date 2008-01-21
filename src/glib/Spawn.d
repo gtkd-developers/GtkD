@@ -41,6 +41,7 @@
  * omit prefixes:
  * omit code:
  * 	- g_spawn_async_with_pipes
+ * omit signals:
  * imports:
  * 	- glib.ErrorG
  * 	- glib.MainLoop
@@ -58,7 +59,7 @@
 
 module glib.Spawn;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -81,7 +82,6 @@ version(Tango) {
 	private import std.string;
 	private import std.c.string;
 }
-
 
 
 
@@ -406,11 +406,6 @@ public class Spawn
 	
 	/**
 	 */
-	
-	
-	
-	
-	
 	
 	/**
 	 * See g_spawn_async_with_pipes() for a full description; this function

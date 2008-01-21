@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Pixmap
@@ -59,7 +60,7 @@
 
 module gdk.Cursor;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -126,8 +127,6 @@ public class Cursor
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Creates a new cursor from the set of builtin cursors for the default display.
 	 * See gdk_cursor_new_for_display().
@@ -139,7 +138,14 @@ public class Cursor
 	public this (GdkCursorType cursorType)
 	{
 		// GdkCursor* gdk_cursor_new (GdkCursorType cursor_type);
-		this(cast(GdkCursor*)gdk_cursor_new(cursorType) );
+		auto p = gdk_cursor_new(cursorType);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkCursor*) p);
 	}
 	
 	/**
@@ -186,7 +192,14 @@ public class Cursor
 	public this (Pixmap source, Pixmap mask, Color fg, Color bg, int x, int y)
 	{
 		// GdkCursor* gdk_cursor_new_from_pixmap (GdkPixmap *source,  GdkPixmap *mask,  const GdkColor *fg,  const GdkColor *bg,  gint x,  gint y);
-		this(cast(GdkCursor*)gdk_cursor_new_from_pixmap((source is null) ? null : source.getPixmapStruct(), (mask is null) ? null : mask.getPixmapStruct(), (fg is null) ? null : fg.getColorStruct(), (bg is null) ? null : bg.getColorStruct(), x, y) );
+		auto p = gdk_cursor_new_from_pixmap((source is null) ? null : source.getPixmapStruct(), (mask is null) ? null : mask.getPixmapStruct(), (fg is null) ? null : fg.getColorStruct(), (bg is null) ? null : bg.getColorStruct(), x, y);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkCursor*) p);
 	}
 	
 	/**
@@ -211,7 +224,14 @@ public class Cursor
 	public this (Display display, Pixbuf pixbuf, int x, int y)
 	{
 		// GdkCursor* gdk_cursor_new_from_pixbuf (GdkDisplay *display,  GdkPixbuf *pixbuf,  gint x,  gint y);
-		this(cast(GdkCursor*)gdk_cursor_new_from_pixbuf((display is null) ? null : display.getDisplayStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct(), x, y) );
+		auto p = gdk_cursor_new_from_pixbuf((display is null) ? null : display.getDisplayStruct(), (pixbuf is null) ? null : pixbuf.getPixbufStruct(), x, y);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkCursor*) p);
 	}
 	
 	/**
@@ -225,7 +245,14 @@ public class Cursor
 	public this (Display display, char[] name)
 	{
 		// GdkCursor* gdk_cursor_new_from_name (GdkDisplay *display,  const gchar *name);
-		this(cast(GdkCursor*)gdk_cursor_new_from_name((display is null) ? null : display.getDisplayStruct(), Str.toStringz(name)) );
+		auto p = gdk_cursor_new_from_name((display is null) ? null : display.getDisplayStruct(), Str.toStringz(name));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkCursor*) p);
 	}
 	
 	/**
@@ -238,7 +265,14 @@ public class Cursor
 	public this (Display display, GdkCursorType cursorType)
 	{
 		// GdkCursor* gdk_cursor_new_for_display (GdkDisplay *display,  GdkCursorType cursor_type);
-		this(cast(GdkCursor*)gdk_cursor_new_for_display((display is null) ? null : display.getDisplayStruct(), cursorType) );
+		auto p = gdk_cursor_new_for_display((display is null) ? null : display.getDisplayStruct(), cursorType);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkCursor*) p);
 	}
 	
 	/**
@@ -249,7 +283,13 @@ public class Cursor
 	public Display getDisplay()
 	{
 		// GdkDisplay* gdk_cursor_get_display (GdkCursor *cursor);
-		return new Display( gdk_cursor_get_display(gdkCursor) );
+		auto p = gdk_cursor_get_display(gdkCursor);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Display(cast(GdkDisplay*) p);
 	}
 	
 	/**
@@ -263,7 +303,13 @@ public class Cursor
 	public Pixbuf getImage()
 	{
 		// GdkPixbuf* gdk_cursor_get_image (GdkCursor *cursor);
-		return new Pixbuf( gdk_cursor_get_image(gdkCursor) );
+		auto p = gdk_cursor_get_image(gdkCursor);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -273,7 +319,13 @@ public class Cursor
 	public Cursor doref()
 	{
 		// GdkCursor* gdk_cursor_ref (GdkCursor *cursor);
-		return new Cursor( gdk_cursor_ref(gdkCursor) );
+		auto p = gdk_cursor_ref(gdkCursor);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Cursor(cast(GdkCursor*) p);
 	}
 	
 	/**
@@ -285,5 +337,4 @@ public class Cursor
 		// void gdk_cursor_unref (GdkCursor *cursor);
 		gdk_cursor_unref(gdkCursor);
 	}
-	
 }

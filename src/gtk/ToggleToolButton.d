@@ -30,20 +30,27 @@
  * ctorStrct=GtkToolItem
  * clss    = ToggleToolButton
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_toggle_tool_button_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.ToolItem
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkToolItem* -> ToolItem
  * module aliases:
@@ -52,13 +59,20 @@
 
 module gtk.ToggleToolButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.ToolItem;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -72,7 +86,7 @@ private import gtk.ToolButton;
  *  GtkToggleToolButton. Use gtk_toggle_tool_button_new_from_stock() to
  *  create a new GtkToggleToolButton containing a stock item.
  */
-public class ToggleToolButton : ToolButton
+public class ToggleToolButton : ToolButton, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -106,15 +120,29 @@ public class ToggleToolButton : ToolButton
 		this.gtkToggleToolButton = gtkToggleToolButton;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkToggleToolButton);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ToggleToolButton)[] onToggledListeners;
+	/**
+	 * Emitted whenever the toggle tool button changes state.
+	 * See Also
+	 *
+	 * GtkToolbar, GtkToolButton, GtkSeparatorToolItem
+	 * The toolbar widget
+	 * 	The parent class of GtkToggleToolButton. The properties
+	 * 	"label_widget", "label", "icon_widget", and "stock_id" on
+	 * 	GtkToolButton determine the label and icon used on
+	 * 	GtkToggleToolButtons.
+	 *
+	 * A subclass of GtkToolItem that separates groups of
+	 * 	items on a toolbar.
+	 *
+	 */
 	void addOnToggled(void delegate(ToggleToolButton) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggled" in connectedSignals) )
@@ -143,7 +171,6 @@ public class ToggleToolButton : ToolButton
 	}
 	
 	
-	
 	/**
 	 * Returns a new GtkToggleToolButton
 	 * Since 2.4
@@ -151,7 +178,14 @@ public class ToggleToolButton : ToolButton
 	public this ()
 	{
 		// GtkToolItem* gtk_toggle_tool_button_new (void);
-		this(cast(GtkToggleToolButton*)gtk_toggle_tool_button_new() );
+		auto p = gtk_toggle_tool_button_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkToggleToolButton*) p);
 	}
 	
 	/**
@@ -166,7 +200,14 @@ public class ToggleToolButton : ToolButton
 	public this (char[] stockId)
 	{
 		// GtkToolItem* gtk_toggle_tool_button_new_from_stock  (const gchar *stock_id);
-		this(cast(GtkToggleToolButton*)gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId)) );
+		auto p = gtk_toggle_tool_button_new_from_stock(Str.toStringz(stockId));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkToggleToolButton*) p);
 	}
 	
 	/**

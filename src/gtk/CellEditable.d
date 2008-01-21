@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gdk.Event
  * structWrap:
@@ -51,10 +52,12 @@
 
 module gtk.CellEditable;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gdk.Event;
 
@@ -101,13 +104,18 @@ public class CellEditable
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(CellEditable)[] onEditingDoneListeners;
+	/**
+	 * This signal is a sign for the cell renderer to update its
+	 * value from the cell_editable.
+	 * Implementations of GtkCellEditable are responsible for
+	 * emitting this signal when they are done editing, e.g.
+	 * GtkEntry is emitting it when the user presses Enter.
+	 * gtk_cell_editable_editing_done() is a convenience method
+	 * for emitting ::editing-done.
+	 */
 	void addOnEditingDone(void delegate(CellEditable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("editing-done" in connectedSignals) )
@@ -136,6 +144,17 @@ public class CellEditable
 	}
 	
 	void delegate(CellEditable)[] onRemoveWidgetListeners;
+	/**
+	 * This signal is meant to indicate that the cell is finished
+	 * editing, and the widget may now be destroyed.
+	 * Implementations of GtkCellEditable are responsible for
+	 * emitting this signal when they are done editing. It must
+	 * be emitted after the "editing-done" signal,
+	 * to give the cell renderer a chance to update the cell's value
+	 * before the widget is removed.
+	 * gtk_cell_editable_remove_widget() is a convenience method
+	 * for emitting ::remove-widget.
+	 */
 	void addOnRemoveWidget(void delegate(CellEditable) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("remove-widget" in connectedSignals) )
@@ -162,8 +181,6 @@ public class CellEditable
 		
 		return consumed;
 	}
-	
-	
 	
 	
 	/**
@@ -196,5 +213,4 @@ public class CellEditable
 		// void gtk_cell_editable_remove_widget (GtkCellEditable *cell_editable);
 		gtk_cell_editable_remove_widget(gtkCellEditable);
 	}
-	
 }

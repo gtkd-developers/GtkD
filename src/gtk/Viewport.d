@@ -30,19 +30,27 @@
  * ctorStrct=
  * clss    = Viewport
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_viewport_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Adjustment
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
@@ -51,12 +59,20 @@
 
 module gtk.Viewport;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gtk.Adjustment;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -65,7 +81,7 @@ private import gtk.Bin;
 /**
  * Description
  */
-public class Viewport : Bin
+public class Viewport : Bin, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -99,15 +115,16 @@ public class Viewport : Bin
 		this.gtkViewport = gtkViewport;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkViewport);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Adjustment, Adjustment, Viewport)[] onSetScrollAdjustmentsListeners;
+	/**
+	 */
 	void addOnSetScrollAdjustments(void delegate(Adjustment, Adjustment, Viewport) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("set-scroll-adjustments" in connectedSignals) )
@@ -136,7 +153,6 @@ public class Viewport : Bin
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkViewport with the given adjustments.
 	 * Params:
@@ -146,7 +162,14 @@ public class Viewport : Bin
 	public this (Adjustment hadjustment, Adjustment vadjustment)
 	{
 		// GtkWidget* gtk_viewport_new (GtkAdjustment *hadjustment,  GtkAdjustment *vadjustment);
-		this(cast(GtkViewport*)gtk_viewport_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct()) );
+		auto p = gtk_viewport_new((hadjustment is null) ? null : hadjustment.getAdjustmentStruct(), (vadjustment is null) ? null : vadjustment.getAdjustmentStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkViewport*) p);
 	}
 	
 	/**
@@ -156,7 +179,13 @@ public class Viewport : Bin
 	public Adjustment getHadjustment()
 	{
 		// GtkAdjustment* gtk_viewport_get_hadjustment (GtkViewport *viewport);
-		return new Adjustment( gtk_viewport_get_hadjustment(gtkViewport) );
+		auto p = gtk_viewport_get_hadjustment(gtkViewport);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -166,7 +195,13 @@ public class Viewport : Bin
 	public Adjustment getVadjustment()
 	{
 		// GtkAdjustment* gtk_viewport_get_vadjustment (GtkViewport *viewport);
-		return new Adjustment( gtk_viewport_get_vadjustment(gtkViewport) );
+		auto p = gtk_viewport_get_vadjustment(gtkViewport);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Adjustment(cast(GtkAdjustment*) p);
 	}
 	
 	/**
@@ -212,6 +247,4 @@ public class Viewport : Bin
 		// GtkShadowType gtk_viewport_get_shadow_type (GtkViewport *viewport);
 		return gtk_viewport_get_shadow_type(gtkViewport);
 	}
-	
-	
 }

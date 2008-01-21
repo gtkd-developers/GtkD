@@ -29,7 +29,7 @@
  * realStrct=
  * ctorStrct=
  * clss    = PrintOperationPreviewT
- * interf  = 
+ * interf  = PrintOperationPreviewIF
  * class Code: No
  * interface Code: No
  * template for:
@@ -136,37 +136,6 @@ public template PrintOperationPreviewT(TStruct)
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Ends a preview.
 	 * This function must be called to finish a custom print preview.
@@ -207,26 +176,4 @@ public template PrintOperationPreviewT(TStruct)
 		// void gtk_print_operation_preview_render_page  (GtkPrintOperationPreview *preview,  gint page_nr);
 		gtk_print_operation_preview_render_page(getPrintOperationPreviewTStruct(), pageNr);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

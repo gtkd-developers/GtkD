@@ -30,18 +30,26 @@
  * ctorStrct=
  * clss    = Arrow
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_arrow_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,17 @@
 
 module gtk.Arrow;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -72,7 +86,7 @@ private import gtk.Misc;
  * Arrows are created with a call to gtk_arrow_new(). The direction or
  * style of an arrow can be changed after creation by using gtk_arrow_set().
  */
-public class Arrow : Misc
+public class Arrow : Misc, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -106,9 +120,11 @@ public class Arrow : Misc
 		this.gtkArrow = gtkArrow;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkArrow);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new arrow widget.
@@ -119,7 +135,14 @@ public class Arrow : Misc
 	public this (GtkArrowType arrowType, GtkShadowType shadowType)
 	{
 		// GtkWidget* gtk_arrow_new (GtkArrowType arrow_type,  GtkShadowType shadow_type);
-		this(cast(GtkArrow*)gtk_arrow_new(arrowType, shadowType) );
+		auto p = gtk_arrow_new(arrowType, shadowType);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkArrow*) p);
 	}
 	
 	/**
@@ -134,5 +157,4 @@ public class Arrow : Misc
 		// void gtk_arrow_set (GtkArrow *arrow,  GtkArrowType arrow_type,  GtkShadowType shadow_type);
 		gtk_arrow_set(gtkArrow, arrowType, shadowType);
 	}
-	
 }

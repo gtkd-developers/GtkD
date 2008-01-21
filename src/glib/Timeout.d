@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.MainLoop
  * 	- glib.Dataset
@@ -54,7 +55,7 @@
 
 module glib.Timeout;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -137,53 +138,6 @@ public class Timeout
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Creates a new timeout source.
 	 * The source will not initially be associated with any GMainContext
@@ -196,7 +150,13 @@ public class Timeout
 	public static Source sourceNew(uint interval)
 	{
 		// GSource* g_timeout_source_new (guint interval);
-		return new Source( g_timeout_source_new(interval) );
+		auto p = g_timeout_source_new(interval);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Source(cast(GSource*) p);
 	}
 	
 	/**
@@ -214,7 +174,13 @@ public class Timeout
 	public static Source sourceNewSeconds(uint interval)
 	{
 		// GSource* g_timeout_source_new_seconds (guint interval);
-		return new Source( g_timeout_source_new_seconds(interval) );
+		auto p = g_timeout_source_new_seconds(interval);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Source(cast(GSource*) p);
 	}
 	
 	/**
@@ -330,40 +296,4 @@ public class Timeout
 		// guint g_timeout_add_seconds_full (gint priority,  guint interval,  GSourceFunc function,  gpointer data,  GDestroyNotify notify);
 		return g_timeout_add_seconds_full(priority, interval, funct, data, notify);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module cairo.ScaledFont;
 
-private import gtkc.cairotypes;
+public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
 
@@ -97,7 +98,6 @@ public class ScaledFont
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a cairo_scaled_font_t object from a font face and matrices that
@@ -156,7 +156,6 @@ public class ScaledFont
 		return cairo_scaled_font_status(cairo_scaled_font);
 	}
 	
-	
 	/**
 	 * Gets the metrics for a cairo_scaled_font_t.
 	 * Params:
@@ -167,7 +166,6 @@ public class ScaledFont
 		// void cairo_scaled_font_extents (cairo_scaled_font_t *scaled_font,  cairo_font_extents_t *extents);
 		cairo_scaled_font_extents(cairo_scaled_font, extents);
 	}
-	
 	
 	/**
 	 * Gets the extents for a string of text. The extents describe a
@@ -183,10 +181,10 @@ public class ScaledFont
 	 * characters. In particular, trailing whitespace characters are
 	 * likely to not affect the size of the rectangle, though they will
 	 * affect the x_advance and y_advance values.
+	 * Since 1.2
 	 * Params:
 	 * utf8 =  a string of text, encoded in UTF-8
 	 * extents =  a cairo_text_extents_t which to store the retrieved extents.
-	 * Since 1.2
 	 */
 	public void textExtents(char[] utf8, cairo_text_extents_t* extents)
 	{
@@ -217,7 +215,8 @@ public class ScaledFont
 	
 	/**
 	 * Gets the font face that this scaled font was created for.
-	 * Returns: The cairo_font_face_t with which scaled_font wascreated.Since 1.2
+	 * Since 1.2
+	 * Returns: The cairo_font_face_t with which scaled_font wascreated.
 	 */
 	public cairo_font_face_t* getFontFace()
 	{
@@ -228,9 +227,9 @@ public class ScaledFont
 	/**
 	 * Stores the font options with which scaled_font was created into
 	 * options.
+	 * Since 1.2
 	 * Params:
 	 * options =  return value for the font options
-	 * Since 1.2
 	 */
 	public void getFontOptions(cairo_font_options_t* options)
 	{
@@ -241,9 +240,9 @@ public class ScaledFont
 	/**
 	 * Stores the font matrix with which scaled_font was created into
 	 * matrix.
+	 * Since 1.2
 	 * Params:
 	 * fontMatrix =  return value for the matrix
-	 * Since 1.2
 	 */
 	public void getFontMatrix(cairo_matrix_t* fontMatrix)
 	{
@@ -253,9 +252,9 @@ public class ScaledFont
 	
 	/**
 	 * Stores the CTM with which scaled_font was created into ctm.
+	 * Since 1.2
 	 * Params:
 	 * ctm =  return value for the CTM
-	 * Since 1.2
 	 */
 	public void getCtm(cairo_matrix_t* ctm)
 	{
@@ -266,7 +265,8 @@ public class ScaledFont
 	/**
 	 * This function returns the type of the backend used to create
 	 * a scaled font. See cairo_font_type_t for available types.
-	 * Returns: The type of scaled_font.Since 1.2
+	 * Since 1.2
+	 * Returns: The type of scaled_font.
 	 */
 	public cairo_font_type_t getType()
 	{

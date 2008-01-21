@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.PtrArray
  * 	- glib.Str
@@ -51,7 +52,7 @@
 
 module atk.Relation;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -106,8 +107,6 @@ public class Relation : ObjectG
 	/**
 	 */
 	
-	
-	
 	/**
 	 * Associate name with a new AtkRelationType
 	 * Params:
@@ -129,7 +128,7 @@ public class Relation : ObjectG
 	public static char[] typeGetName(AtkRelationType type)
 	{
 		// const gchar* atk_relation_type_get_name (AtkRelationType type);
-		return Str.toString(atk_relation_type_get_name(type) );
+		return Str.toString(atk_relation_type_get_name(type)).dup;
 	}
 	
 	/**
@@ -156,7 +155,14 @@ public class Relation : ObjectG
 	public this (AtkObject** targets, int nTargets, AtkRelationType relationship)
 	{
 		// AtkRelation* atk_relation_new (AtkObject **targets,  gint n_targets,  AtkRelationType relationship);
-		this(cast(AtkRelation*)atk_relation_new(targets, nTargets, relationship) );
+		auto p = atk_relation_new(targets, nTargets, relationship);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(AtkRelation*) p);
 	}
 	
 	/**
@@ -176,7 +182,13 @@ public class Relation : ObjectG
 	public PtrArray getTarget()
 	{
 		// GPtrArray* atk_relation_get_target (AtkRelation *relation);
-		return new PtrArray( atk_relation_get_target(atkRelation) );
+		auto p = atk_relation_get_target(atkRelation);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PtrArray(cast(GPtrArray*) p);
 	}
 	
 	/**
@@ -191,5 +203,4 @@ public class Relation : ObjectG
 		// void atk_relation_add_target (AtkRelation *relation,  AtkObject *target);
 		atk_relation_add_target(atkRelation, target);
 	}
-	
 }

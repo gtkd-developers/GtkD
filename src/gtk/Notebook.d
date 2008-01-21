@@ -35,16 +35,23 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_notebook_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Label
  * 	- gtk.Widget
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -53,14 +60,21 @@
 
 module gtk.Notebook;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Label;
 private import gtk.Widget;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -98,7 +112,7 @@ private import gtk.Container;
  *  </child>
  * </object>
  */
-public class Notebook : Container
+public class Notebook : Container, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -140,6 +154,9 @@ public class Notebook : Container
 	}
 	alias GtkNotebookTab NotebookTab;
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkNotebook);
+	
 	/**
 	 * Append a page with a widget and a text for a label
 	 */
@@ -156,13 +173,11 @@ public class Notebook : Container
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(gint, Notebook)[] onChangeCurrentPageListeners;
+	/**
+	 */
 	void addOnChangeCurrentPage(gboolean delegate(gint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("change-current-page" in connectedSignals) )
@@ -191,6 +206,18 @@ public class Notebook : Container
 	}
 	
 	GtkNotebook* delegate(Widget, gint, gint, Notebook)[] onCreateWindowListeners;
+	/**
+	 * The ::create-window signal is emitted when a detachable
+	 * tab is dropped on the root window.
+	 * A handler for this signal can create a window containing
+	 * a notebook where the tab will be attached. It is also
+	 * responsible for moving/resizing the window and adding the
+	 * necessary properties to the notebook (e.g. the
+	 * "group-id" ).
+	 * The default handler uses the global window creation hook,
+	 * if one has been set with gtk_notebook_set_window_creation_hook().
+	 * Since 2.12
+	 */
 	void addOnCreateWindow(GtkNotebook* delegate(Widget, gint, gint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("create-window" in connectedSignals) )
@@ -219,6 +246,8 @@ public class Notebook : Container
 	}
 	
 	gboolean delegate(GtkNotebookTab, Notebook)[] onFocusTabListeners;
+	/**
+	 */
 	void addOnFocusTab(gboolean delegate(GtkNotebookTab, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("focus-tab" in connectedSignals) )
@@ -247,6 +276,8 @@ public class Notebook : Container
 	}
 	
 	void delegate(GtkDirectionType, Notebook)[] onMoveFocusOutListeners;
+	/**
+	 */
 	void addOnMoveFocusOut(void delegate(GtkDirectionType, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-focus-out" in connectedSignals) )
@@ -275,6 +306,11 @@ public class Notebook : Container
 	}
 	
 	void delegate(Widget, guint, Notebook)[] onPageAddedListeners;
+	/**
+	 * the ::page-added signal is emitted in the notebook
+	 * right after a page is added to the notebook.
+	 * Since 2.10
+	 */
 	void addOnPageAdded(void delegate(Widget, guint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("page-added" in connectedSignals) )
@@ -303,6 +339,11 @@ public class Notebook : Container
 	}
 	
 	void delegate(Widget, guint, Notebook)[] onPageRemovedListeners;
+	/**
+	 * the ::page-removed signal is emitted in the notebook
+	 * right after a page is removed from the notebook.
+	 * Since 2.10
+	 */
 	void addOnPageRemoved(void delegate(Widget, guint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("page-removed" in connectedSignals) )
@@ -331,6 +372,11 @@ public class Notebook : Container
 	}
 	
 	void delegate(Widget, guint, Notebook)[] onPageReorderedListeners;
+	/**
+	 * the ::page-reordered signal is emitted in the notebook
+	 * right after a page has been reordered.
+	 * Since 2.10
+	 */
 	void addOnPageReordered(void delegate(Widget, guint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("page-reordered" in connectedSignals) )
@@ -359,6 +405,8 @@ public class Notebook : Container
 	}
 	
 	gboolean delegate(GtkDirectionType, gboolean, Notebook)[] onReorderTabListeners;
+	/**
+	 */
 	void addOnReorderTab(gboolean delegate(GtkDirectionType, gboolean, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("reorder-tab" in connectedSignals) )
@@ -387,6 +435,8 @@ public class Notebook : Container
 	}
 	
 	gboolean delegate(gboolean, Notebook)[] onSelectPageListeners;
+	/**
+	 */
 	void addOnSelectPage(gboolean delegate(gboolean, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select-page" in connectedSignals) )
@@ -415,6 +465,12 @@ public class Notebook : Container
 	}
 	
 	void delegate(GtkNotebookPage*, guint, Notebook)[] onSwitchPageListeners;
+	/**
+	 * Emitted when the user or a function changes the current page.
+	 * See Also
+	 * GtkContainer
+	 * For functions that apply to every GtkContainer
+	 */
 	void addOnSwitchPage(void delegate(GtkNotebookPage*, guint, Notebook) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("switch-page" in connectedSignals) )
@@ -443,15 +499,20 @@ public class Notebook : Container
 	}
 	
 	
-	
-	
 	/**
 	 * Creates a new GtkNotebook widget with no pages.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_notebook_new (void);
-		this(cast(GtkNotebook*)gtk_notebook_new() );
+		auto p = gtk_notebook_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkNotebook*) p);
 	}
 	
 	/**
@@ -577,7 +638,6 @@ public class Notebook : Container
 		gtk_notebook_remove_page(gtkNotebook, pageNum);
 	}
 	
-	
 	/**
 	 * Finds the index of the page which contains the given child
 	 * widget.
@@ -590,7 +650,6 @@ public class Notebook : Container
 		// gint gtk_notebook_page_num (GtkNotebook *notebook,  GtkWidget *child);
 		return gtk_notebook_page_num(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
 	}
-	
 	
 	/**
 	 * Switches to the next page. Nothing happens if the current page is
@@ -729,7 +788,13 @@ public class Notebook : Container
 	public Widget getMenuLabel(Widget child)
 	{
 		// GtkWidget* gtk_notebook_get_menu_label (GtkNotebook *notebook,  GtkWidget *child);
-		return new Widget( gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
+		auto p = gtk_notebook_get_menu_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -742,7 +807,13 @@ public class Notebook : Container
 	public Widget getNthPage(int pageNum)
 	{
 		// GtkWidget* gtk_notebook_get_nth_page (GtkNotebook *notebook,  gint page_num);
-		return new Widget( gtk_notebook_get_nth_page(gtkNotebook, pageNum) );
+		auto p = gtk_notebook_get_nth_page(gtkNotebook, pageNum);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -767,7 +838,13 @@ public class Notebook : Container
 	public Widget getTabLabel(Widget child)
 	{
 		// GtkWidget* gtk_notebook_get_tab_label (GtkNotebook *notebook,  GtkWidget *child);
-		return new Widget( gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
+		auto p = gtk_notebook_get_tab_label(gtkNotebook, (child is null) ? null : child.getWidgetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -956,7 +1033,7 @@ public class Notebook : Container
 	public char[] getMenuLabelText(Widget child)
 	{
 		// const gchar* gtk_notebook_get_menu_label_text (GtkNotebook *notebook,  GtkWidget *child);
-		return Str.toString(gtk_notebook_get_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
+		return Str.toString(gtk_notebook_get_menu_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct())).dup;
 	}
 	
 	/**
@@ -1002,7 +1079,7 @@ public class Notebook : Container
 	public char[] getTabLabelText(Widget child)
 	{
 		// const gchar* gtk_notebook_get_tab_label_text (GtkNotebook *notebook,  GtkWidget *child);
-		return Str.toString(gtk_notebook_get_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct()) );
+		return Str.toString(gtk_notebook_get_tab_label_text(gtkNotebook, (child is null) ? null : child.getWidgetStruct())).dup;
 	}
 	
 	/**
@@ -1116,7 +1193,6 @@ public class Notebook : Container
 		return gtk_notebook_get_group(gtkNotebook);
 	}
 	
-	
 	/**
 	 * Installs a global function used to create a window
 	 * when a detached tab is dropped in an empty area.
@@ -1131,37 +1207,4 @@ public class Notebook : Container
 		// void gtk_notebook_set_window_creation_hook  (GtkNotebookWindowCreationFunc func,  gpointer data,  GDestroyNotify destroy);
 		gtk_notebook_set_window_creation_hook(func, data, destroy);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

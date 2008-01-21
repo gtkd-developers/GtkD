@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module gtk.Timeout;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -207,35 +208,6 @@ public class Timeout
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Warning
 	 * gtk_timeout_add_full has been deprecated since version 2.4 and should not be used in newly-written code. Use g_timeout_add_full() instead.
@@ -288,25 +260,4 @@ public class Timeout
 		// void gtk_timeout_remove (guint timeout_handler_id);
 		gtk_timeout_remove(timeoutHandlerId);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

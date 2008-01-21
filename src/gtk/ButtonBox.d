@@ -35,17 +35,25 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_button_box_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Widget
  * 	- gtk.Button
  * 	- gtk.HButtonBox
  * 	- gtk.VButtonBox
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -54,7 +62,7 @@
 
 module gtk.ButtonBox;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -63,6 +71,12 @@ private import gtk.Widget;
 private import gtk.Button;
 private import gtk.HButtonBox;
 private import gtk.VButtonBox;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -86,7 +100,7 @@ private import gtk.Box;
  * Therefore it ignores the homogeneous property which it inherited from GtkBox, and always
  * behaves as if homogeneous was TRUE.
  */
-public class ButtonBox : Box
+public class ButtonBox : Box, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -119,6 +133,9 @@ public class ButtonBox : Box
 		super(cast(GtkBox*)gtkButtonBox);
 		this.gtkButtonBox = gtkButtonBox;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkButtonBox);
 	
 	/** */
 	static ButtonBox createActionBox(
@@ -170,9 +187,6 @@ public class ButtonBox : Box
 	
 	/**
 	 */
-	
-	
-	
 	
 	/**
 	 * Retrieves the method being used to arrange the buttons in a button box.
@@ -227,7 +241,6 @@ public class ButtonBox : Box
 		// gboolean gtk_button_box_get_child_secondary (GtkButtonBox *widget,  GtkWidget *child);
 		return gtk_button_box_get_child_secondary(gtkButtonBox, (child is null) ? null : child.getWidgetStruct());
 	}
-	
 	
 	/**
 	 * Changes the way buttons are arranged in their container.
@@ -293,7 +306,4 @@ public class ButtonBox : Box
 		// void gtk_button_box_set_child_secondary (GtkButtonBox *widget,  GtkWidget *child,  gboolean is_secondary);
 		gtk_button_box_set_child_secondary(gtkButtonBox, (child is null) ? null : child.getWidgetStruct(), isSecondary);
 	}
-	
-	
-	
 }

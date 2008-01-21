@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module cairo.Pattern;
 
-private import gtkc.cairotypes;
+public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
 
@@ -95,7 +96,6 @@ public class Pattern
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Adds an opaque color stop to a gradient pattern. The offset
@@ -271,7 +271,6 @@ public class Pattern
 		return cairo_pattern_status(cairo_pattern);
 	}
 	
-	
 	/**
 	 * Sets the mode to be used for drawing outside the area of a pattern.
 	 * See cairo_extend_t for details on the semantics of each extend
@@ -296,7 +295,6 @@ public class Pattern
 		// cairo_extend_t cairo_pattern_get_extend (cairo_pattern_t *pattern);
 		return cairo_pattern_get_extend(cairo_pattern);
 	}
-	
 	
 	/**
 	 * Params:
@@ -348,13 +346,13 @@ public class Pattern
 		cairo_pattern_get_matrix(cairo_pattern, matrix);
 	}
 	
-	
 	/**
 	 * This function returns the type a pattern.
 	 * See cairo_pattern_type_t for available types.
+	 * Since 1.2
 	 * Params:
 	 * pattern =  a cairo_pattern_t
-	 * Returns: The type of pattern.Since 1.2
+	 * Returns: The type of pattern.
 	 */
 	public cairo_pattern_type_t getType()
 	{

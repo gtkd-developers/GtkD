@@ -30,20 +30,28 @@
  * ctorStrct=
  * clss    = LinkButton
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_link_button_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -52,13 +60,19 @@
 
 module gtk.LinkButton;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gtk.Widget;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -78,7 +92,7 @@ private import gtk.Button;
  * on it: see gtk_link_button_set_uri_hook().
  * GtkLinkButton was added in GTK+ 2.10.
  */
-public class LinkButton : Button
+public class LinkButton : Button, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -112,9 +126,11 @@ public class LinkButton : Button
 		this.gtkLinkButton = gtkLinkButton;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkLinkButton);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkLinkButton with the URI as its text.
@@ -125,7 +141,14 @@ public class LinkButton : Button
 	public this (char[] uri)
 	{
 		// GtkWidget* gtk_link_button_new (const gchar *uri);
-		this(cast(GtkLinkButton*)gtk_link_button_new(Str.toStringz(uri)) );
+		auto p = gtk_link_button_new(Str.toStringz(uri));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkLinkButton*) p);
 	}
 	
 	/**
@@ -138,7 +161,14 @@ public class LinkButton : Button
 	public this (char[] uri, char[] label)
 	{
 		// GtkWidget* gtk_link_button_new_with_label (const gchar *uri,  const gchar *label);
-		this(cast(GtkLinkButton*)gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label)) );
+		auto p = gtk_link_button_new_with_label(Str.toStringz(uri), Str.toStringz(label));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkLinkButton*) p);
 	}
 	
 	/**
@@ -149,7 +179,7 @@ public class LinkButton : Button
 	public char[] getUri()
 	{
 		// const gchar* gtk_link_button_get_uri (GtkLinkButton *link_button);
-		return Str.toString(gtk_link_button_get_uri(gtkLinkButton) );
+		return Str.toString(gtk_link_button_get_uri(gtkLinkButton)).dup;
 	}
 	
 	/**
@@ -163,7 +193,6 @@ public class LinkButton : Button
 		// void gtk_link_button_set_uri (GtkLinkButton *link_button,  const gchar *uri);
 		gtk_link_button_set_uri(gtkLinkButton, Str.toStringz(uri));
 	}
-	
 	
 	/**
 	 * Sets func as the function that should be invoked every time a user clicks

@@ -30,18 +30,26 @@
  * ctorStrct=
  * clss    = Item
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_item_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,19 @@
 
 module gtk.Item;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -64,7 +80,7 @@ private import gtk.Bin;
  * The GtkItem widget is an abstract base class for GtkMenuItem, GtkListItem
  * and GtkTreeItem.
  */
-public class Item : Bin
+public class Item : Bin, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -98,15 +114,17 @@ public class Item : Bin
 		this.gtkItem = gtkItem;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkItem);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Item)[] onDeselectListeners;
+	/**
+	 * Emitted when the item is deselected.
+	 */
 	void addOnDeselect(void delegate(Item) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("deselect" in connectedSignals) )
@@ -135,6 +153,9 @@ public class Item : Bin
 	}
 	
 	void delegate(Item)[] onSelectListeners;
+	/**
+	 * Emitted when the item is selected.
+	 */
 	void addOnSelect(void delegate(Item) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("select" in connectedSignals) )
@@ -163,6 +184,9 @@ public class Item : Bin
 	}
 	
 	void delegate(Item)[] onToggleListeners;
+	/**
+	 * Emitted when the item is toggled.
+	 */
 	void addOnToggle(void delegate(Item) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle" in connectedSignals) )
@@ -191,7 +215,6 @@ public class Item : Bin
 	}
 	
 	
-	
 	/**
 	 * Emits the "select" signal on the given item.
 	 */
@@ -218,6 +241,4 @@ public class Item : Bin
 		// void gtk_item_toggle (GtkItem *item);
 		gtk_item_toggle(gtkItem);
 	}
-	
-	
 }

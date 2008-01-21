@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * 	- glib.Str
@@ -51,7 +52,7 @@
 
 module glib.StringCompletion;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -117,7 +118,6 @@ public class StringCompletion
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GCompletion.
 	 * Params:
@@ -128,9 +128,15 @@ public class StringCompletion
 	public this (GCompletionFunc func)
 	{
 		// GCompletion* g_completion_new (GCompletionFunc func);
-		this(cast(GCompletion*)g_completion_new(func) );
+		auto p = g_completion_new(func);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GCompletion*) p);
 	}
-	
 	
 	/**
 	 * Adds items to the GCompletion.
@@ -176,7 +182,13 @@ public class StringCompletion
 	public ListG complete(char[] prefix, char** newPrefix)
 	{
 		// GList* g_completion_complete (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
-		return new ListG( g_completion_complete(gCompletion, Str.toStringz(prefix), newPrefix) );
+		auto p = g_completion_complete(gCompletion, Str.toStringz(prefix), newPrefix);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -198,7 +210,13 @@ public class StringCompletion
 	public ListG completeUtf8(char[] prefix, char** newPrefix)
 	{
 		// GList* g_completion_complete_utf8 (GCompletion *cmp,  const gchar *prefix,  gchar **new_prefix);
-		return new ListG( g_completion_complete_utf8(gCompletion, Str.toStringz(prefix), newPrefix) );
+		auto p = g_completion_complete_utf8(gCompletion, Str.toStringz(prefix), newPrefix);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -213,7 +231,6 @@ public class StringCompletion
 		// void g_completion_set_compare (GCompletion *cmp,  GCompletionStrncmpFunc strncmp_func);
 		g_completion_set_compare(gCompletion, strncmpFunc);
 	}
-	
 	
 	/**
 	 * Frees all memory used by the GCompletion.

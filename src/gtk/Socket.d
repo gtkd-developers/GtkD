@@ -30,18 +30,26 @@
  * ctorStrct=
  * clss    = Socket
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_socket_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,19 @@
 
 module gtk.Socket;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -114,7 +130,7 @@ private import gtk.Container;
  * The GtkPlug and GtkSocket widgets are currently not available
  * on all platforms supported by GTK+.
  */
-public class Socket : Container
+public class Socket : Container, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -148,15 +164,18 @@ public class Socket : Container
 		this.gtkSocket = gtkSocket;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkSocket);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Socket)[] onPlugAddedListeners;
+	/**
+	 * This signal is emitted when a client is successfully
+	 * added to the socket.
+	 */
 	void addOnPlugAdded(void delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("plug-added" in connectedSignals) )
@@ -185,6 +204,16 @@ public class Socket : Container
 	}
 	
 	gboolean delegate(Socket)[] onPlugRemovedListeners;
+	/**
+	 * This signal is emitted when a client is removed from the socket.
+	 * The default action is to destroy the GtkSocket widget, so if you
+	 * want to reuse it you must add a signal handler that returns TRUE.
+	 * See Also
+	 * GtkPlug
+	 * the widget that plugs into a GtkSocket.
+	 * XEmbed
+	 * the XEmbed Protocol Specification.
+	 */
 	void addOnPlugRemoved(gboolean delegate(Socket) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("plug-removed" in connectedSignals) )
@@ -213,14 +242,20 @@ public class Socket : Container
 	}
 	
 	
-	
 	/**
 	 * Create a new empty GtkSocket.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_socket_new (void);
-		this(cast(GtkSocket*)gtk_socket_new() );
+		auto p = gtk_socket_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkSocket*) p);
 	}
 	
 	/**
@@ -274,5 +309,4 @@ public class Socket : Container
 		// GdkNativeWindow gtk_socket_get_id (GtkSocket *socket_);
 		return gtk_socket_get_id(gtkSocket);
 	}
-	
 }

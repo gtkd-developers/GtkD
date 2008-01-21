@@ -41,6 +41,7 @@
  * omit prefixes:
  * 	- g_flags_
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -50,7 +51,7 @@
 
 module gobject.Enums;
 
-private import gtkc.gobjecttypes;
+public  import gtkc.gobjecttypes;
 
 private import gtkc.gobject;
 
@@ -109,20 +110,6 @@ public class Enums
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Returns the GEnumValue for a value.
 	 * Params:
@@ -162,9 +149,6 @@ public class Enums
 		return g_enum_get_value_by_nick(enumClass, Str.toStringz(nick));
 	}
 	
-	
-	
-	
 	/**
 	 * Registers a new static enumeration type with the name name.
 	 * It is normally more convenient to let glib-mkenums
@@ -180,7 +164,6 @@ public class Enums
 		return g_enum_register_static(Str.toStringz(name), _StaticValues);
 	}
 	
-	
 	/**
 	 * This function is meant to be called from the complete_type_info() function
 	 * Params:
@@ -192,5 +175,4 @@ public class Enums
 		// void g_enum_complete_type_info (GType g_enum_type,  GTypeInfo *info,  const GEnumValue *const_values);
 		g_enum_complete_type_info(type, info, _Values);
 	}
-	
 }

@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module atk.Util;
 
-private import gtkc.atktypes;
+public  import gtkc.atktypes;
 
 private import gtkc.atk;
 
@@ -70,8 +71,6 @@ public class Util
 	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Adds the specified function to the list of functions to be called
@@ -125,8 +124,6 @@ public class Util
 		atk_focus_tracker_notify(object);
 	}
 	
-	
-	
 	/**
 	 * Adds the specified function to the list of functions to be called
 	 * when an event of type event_type occurs.
@@ -151,9 +148,6 @@ public class Util
 		// void atk_remove_global_event_listener (guint listener_id);
 		atk_remove_global_event_listener(listenerId);
 	}
-	
-	
-	
 	
 	/**
 	 * Adds the specified function to the list of functions to be called
@@ -209,7 +203,7 @@ public class Util
 	public static char[] getToolkitName()
 	{
 		// const gchar* atk_get_toolkit_name (void);
-		return Str.toString(atk_get_toolkit_name() );
+		return Str.toString(atk_get_toolkit_name()).dup;
 	}
 	
 	/**
@@ -219,6 +213,6 @@ public class Util
 	public static char[] getToolkitVersion()
 	{
 		// const gchar* atk_get_toolkit_version (void);
-		return Str.toString(atk_get_toolkit_version() );
+		return Str.toString(atk_get_toolkit_version()).dup;
 	}
 }

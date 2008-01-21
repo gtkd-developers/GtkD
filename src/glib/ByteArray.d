@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * structWrap:
@@ -50,7 +51,7 @@
 
 module glib.ByteArray;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -120,14 +121,20 @@ public class ByteArray
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GByteArray.
 	 */
 	public this ()
 	{
 		// GByteArray* g_byte_array_new (void);
-		this(cast(GByteArray*)g_byte_array_new() );
+		auto p = g_byte_array_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GByteArray*) p);
 	}
 	
 	/**

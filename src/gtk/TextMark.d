@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.TextBuffer
@@ -52,7 +53,7 @@
 
 module gtk.TextMark;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -124,7 +125,6 @@ public class TextMark : ObjectG
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a text mark. Add it to a buffer using gtk_text_buffer_add_mark().
 	 * If name is NULL, the mark is anonymous; otherwise, the mark can be
@@ -143,7 +143,14 @@ public class TextMark : ObjectG
 	public this (char[] name, int leftGravity)
 	{
 		// GtkTextMark* gtk_text_mark_new (const gchar *name,  gboolean left_gravity);
-		this(cast(GtkTextMark*)gtk_text_mark_new(Str.toStringz(name), leftGravity) );
+		auto p = gtk_text_mark_new(Str.toStringz(name), leftGravity);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTextMark*) p);
 	}
 	
 	/**
@@ -191,7 +198,7 @@ public class TextMark : ObjectG
 	public char[] getName()
 	{
 		// const gchar* gtk_text_mark_get_name (GtkTextMark *mark);
-		return Str.toString(gtk_text_mark_get_name(gtkTextMark) );
+		return Str.toString(gtk_text_mark_get_name(gtkTextMark)).dup;
 	}
 	
 	/**
@@ -202,7 +209,13 @@ public class TextMark : ObjectG
 	public TextBuffer getBuffer()
 	{
 		// GtkTextBuffer* gtk_text_mark_get_buffer (GtkTextMark *mark);
-		return new TextBuffer( gtk_text_mark_get_buffer(gtkTextMark) );
+		auto p = gtk_text_mark_get_buffer(gtkTextMark);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextBuffer(cast(GtkTextBuffer*) p);
 	}
 	
 	/**
@@ -214,5 +227,4 @@ public class TextMark : ObjectG
 		// gboolean gtk_text_mark_get_left_gravity (GtkTextMark *mark);
 		return gtk_text_mark_get_left_gravity(gtkTextMark);
 	}
-	
 }

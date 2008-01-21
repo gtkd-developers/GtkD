@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module glib.MemorySlice;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -209,10 +210,4 @@ public class MemorySlice
 		// void g_slice_free_chain_with_offset (gsize block_size,  gpointer mem_chain,  gsize next_offset);
 		g_slice_free_chain_with_offset(blockSize, memChain, nextOffset);
 	}
-	
-	
-	
-	
-	
-	
 }

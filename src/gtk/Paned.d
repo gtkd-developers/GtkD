@@ -35,14 +35,22 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_paned_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Widget
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -51,12 +59,20 @@
 
 module gtk.Paned;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gtk.Widget;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -107,7 +123,7 @@ private import gtk.Container;
  * gtk_paned_pack2 (GTK_PANED (hpaned), frame2, FALSE, FALSE);
  * gtk_widget_set_size_request (frame2, 50, -1);
  */
-public class Paned : Container
+public class Paned : Container, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -141,6 +157,9 @@ public class Paned : Container
 		this.gtkPaned = gtkPaned;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkPaned);
+	
 	/** */
 	public void add(Widget child1, Widget child2)
 	{
@@ -150,13 +169,17 @@ public class Paned : Container
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	gboolean delegate(Paned)[] onAcceptPositionListeners;
+	/**
+	 * The ::accept-position signal is a
+	 * keybinding signal
+	 * which gets emitted to accept the current position of the handle when
+	 * moving it using key bindings.
+	 * The default binding for this signal is Return or Space.
+	 * Since 2.0
+	 */
 	void addOnAcceptPosition(gboolean delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("accept-position" in connectedSignals) )
@@ -185,6 +208,15 @@ public class Paned : Container
 	}
 	
 	gboolean delegate(Paned)[] onCancelPositionListeners;
+	/**
+	 * The ::cancel-position signal is a
+	 * keybinding signal
+	 * which gets emitted to cancel moving the position of the handle using key
+	 * bindings. The position of the handle will be reset to the value prior to
+	 * moving it.
+	 * The default binding for this signal is Escape.
+	 * Since 2.0
+	 */
 	void addOnCancelPosition(gboolean delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cancel-position" in connectedSignals) )
@@ -213,6 +245,13 @@ public class Paned : Container
 	}
 	
 	gboolean delegate(gboolean, Paned)[] onCycleChildFocusListeners;
+	/**
+	 * The ::cycle-child-focus signal is a
+	 * keybinding signal
+	 * which gets emitted to cycle the focus between the children of the paned.
+	 * The default binding is f6.
+	 * Since 2.0
+	 */
 	void addOnCycleChildFocus(gboolean delegate(gboolean, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cycle-child-focus" in connectedSignals) )
@@ -241,6 +280,14 @@ public class Paned : Container
 	}
 	
 	gboolean delegate(gboolean, Paned)[] onCycleHandleFocusListeners;
+	/**
+	 * The ::cycle-handle-focus signal is a
+	 * keybinding signal
+	 * which gets emitted to cycle whether the paned should grab focus to allow
+	 * the user to change position of the handle by using key bindings.
+	 * The default binding for this signal is f8.
+	 * Since 2.0
+	 */
 	void addOnCycleHandleFocus(gboolean delegate(gboolean, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("cycle-handle-focus" in connectedSignals) )
@@ -269,6 +316,13 @@ public class Paned : Container
 	}
 	
 	gboolean delegate(GtkScrollType, Paned)[] onMoveHandleListeners;
+	/**
+	 * The ::move-handle signal is a
+	 * keybinding signal
+	 * which gets emitted to move the handle when the user is using key bindings
+	 * to move it.
+	 * Since 2.0
+	 */
 	void addOnMoveHandle(gboolean delegate(GtkScrollType, Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-handle" in connectedSignals) )
@@ -297,6 +351,14 @@ public class Paned : Container
 	}
 	
 	gboolean delegate(Paned)[] onToggleHandleFocusListeners;
+	/**
+	 * The ::toggle-handle-focus is a
+	 * keybinding signal
+	 * which gets emitted to accept the current position of the handle and then
+	 * move focus to the next widget in the focus chain.
+	 * The default binding is Tab.
+	 * Since 2.0
+	 */
 	void addOnToggleHandleFocus(gboolean delegate(Paned) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("toggle-handle-focus" in connectedSignals) )
@@ -325,7 +387,6 @@ public class Paned : Container
 	}
 	
 	
-	
 	/**
 	 * Adds a child to the top or left pane with
 	 * default parameters. This is equivalent
@@ -351,7 +412,6 @@ public class Paned : Container
 		// void gtk_paned_add2 (GtkPaned *paned,  GtkWidget *child);
 		gtk_paned_add2(gtkPaned, (child is null) ? null : child.getWidgetStruct());
 	}
-	
 	
 	/**
 	 * Adds a child to the top or left pane.
@@ -387,7 +447,13 @@ public class Paned : Container
 	public Widget getChild1()
 	{
 		// GtkWidget* gtk_paned_get_child1 (GtkPaned *paned);
-		return new Widget( gtk_paned_get_child1(gtkPaned) );
+		auto p = gtk_paned_get_child1(gtkPaned);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -398,9 +464,14 @@ public class Paned : Container
 	public Widget getChild2()
 	{
 		// GtkWidget* gtk_paned_get_child2 (GtkPaned *paned);
-		return new Widget( gtk_paned_get_child2(gtkPaned) );
+		auto p = gtk_paned_get_child2(gtkPaned);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
-	
 	
 	/**
 	 * Sets the position of the divider between the two panes.
@@ -423,13 +494,4 @@ public class Paned : Container
 		// gint gtk_paned_get_position (GtkPaned *paned);
 		return gtk_paned_get_position(gtkPaned);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

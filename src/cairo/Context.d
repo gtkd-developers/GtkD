@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- cairo.Surface
  * 	- glib.Str
@@ -59,7 +60,7 @@
 
 module cairo.Context;
 
-private import gtkc.cairotypes;
+public  import gtkc.cairotypes;
 
 private import gtkc.cairo;
 
@@ -217,7 +218,6 @@ public class Context
 	 * Description
 	 */
 	
-	
 	/**
 	 * Creates a new cairo_t with all graphics state parameters set to
 	 * default values and with target as a target surface. The target
@@ -234,7 +234,13 @@ public class Context
 	public static Context create(Surface target)
 	{
 		// cairo_t* cairo_create (cairo_surface_t *target);
-		return new Context( cairo_create((target is null) ? null : target.getSurfaceStruct()) );
+		auto p = cairo_create((target is null) ? null : target.getSurfaceStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Context(cast(cairo_t*) p);
 	}
 	
 	/**
@@ -246,7 +252,13 @@ public class Context
 	public Context reference()
 	{
 		// cairo_t* cairo_reference (cairo_t *cr);
-		return new Context( cairo_reference(cairo) );
+		auto p = cairo_reference(cairo);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Context(cast(cairo_t*) p);
 	}
 	
 	/**
@@ -312,7 +324,13 @@ public class Context
 	public Surface getTarget()
 	{
 		// cairo_surface_t* cairo_get_target (cairo_t *cr);
-		return new Surface( cairo_get_target(cairo) );
+		auto p = cairo_get_target(cairo);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Surface(cast(cairo_surface_t*) p);
 	}
 	
 	/**
@@ -337,6 +355,7 @@ public class Context
 	 * the group by using cairo_push_group_with_content() instead.
 	 * As an example, here is how one might fill and stroke a path with
 	 * translucence, but without any portion of the fill being visible
+	 * Since 1.2
 	 */
 	public void pushGroup()
 	{
@@ -354,10 +373,10 @@ public class Context
 	 * control this content type is the only distinction between this
 	 * function and cairo_push_group() which you should see for a more
 	 * detailed description of group rendering.
+	 * Since 1.2
 	 * Params:
 	 * content =  a cairo_content_t indicating the type of group that
 	 *  will be created
-	 * Since 1.2
 	 */
 	public void pushGroupWithContent(cairo_content_t content)
 	{
@@ -374,7 +393,8 @@ public class Context
 	 * call to cairo_save() by the push_group function), so that any
 	 * changes to the graphics state will not be visible outside the
 	 * group.
-	 * Returns: a newly created (surface) pattern containing theresults of all drawing operations performed to the group. Thecaller owns the returned object and should callcairo_pattern_destroy() when finished with it.Since 1.2
+	 * Since 1.2
+	 * Returns: a newly created (surface) pattern containing theresults of all drawing operations performed to the group. Thecaller owns the returned object and should callcairo_pattern_destroy() when finished with it.
 	 */
 	public cairo_pattern_t* popGroup()
 	{
@@ -387,6 +407,7 @@ public class Context
 	 * cairo_push_group_with_content() and installs the resulting pattern
 	 * as the source pattern in the given cairo context.
 	 * The behavior of this function is equivalent to the sequence of
+	 * Since 1.2
 	 */
 	public void popGroupToSource()
 	{
@@ -401,12 +422,19 @@ public class Context
 	 * This function will return NULL if called "outside" of any group
 	 * rendering blocks, (that is, after the last balancing call to
 	 * cairo_pop_group() or cairo_pop_group_to_source()).
-	 * Returns: the target group surface, or NULL if none. Thisobject is owned by cairo. To keep a reference to it, you must callcairo_surface_reference().Since 1.2
+	 * Since 1.2
+	 * Returns: the target group surface, or NULL if none. Thisobject is owned by cairo. To keep a reference to it, you must callcairo_surface_reference().
 	 */
 	public Surface getGroupTarget()
 	{
 		// cairo_surface_t* cairo_get_group_target (cairo_t *cr);
-		return new Surface( cairo_get_group_target(cairo) );
+		auto p = cairo_get_group_target(cairo);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Surface(cast(cairo_surface_t*) p);
 	}
 	
 	/**
@@ -502,7 +530,6 @@ public class Context
 		return cairo_get_source(cairo);
 	}
 	
-	
 	/**
 	 * Set the antialiasing mode of the rasterizer used for drawing shapes.
 	 * This value is a hint, and a particular backend may or may not support
@@ -560,7 +587,6 @@ public class Context
 		cairo_set_dash(cairo, dashes, numDashes, offset);
 	}
 	
-	
 	/**
 	 * Set the current fill rule within the cairo context. The fill rule
 	 * is used to determine which regions are inside or outside a complex
@@ -585,7 +611,6 @@ public class Context
 		// cairo_fill_rule_t cairo_get_fill_rule (cairo_t *cr);
 		return cairo_get_fill_rule(cairo);
 	}
-	
 	
 	/**
 	 * Sets the current line cap style within the cairo context. See
@@ -613,7 +638,6 @@ public class Context
 		// cairo_line_cap_t cairo_get_line_cap (cairo_t *cr);
 		return cairo_get_line_cap(cairo);
 	}
-	
 	
 	/**
 	 * Sets the current line join style within the cairo context. See
@@ -696,7 +720,6 @@ public class Context
 		// double cairo_get_miter_limit (cairo_t *cr);
 		return cairo_get_miter_limit(cairo);
 	}
-	
 	
 	/**
 	 * Sets the compositing operator to be used for all drawing
@@ -998,9 +1021,6 @@ public class Context
 		cairo_show_page(cairo);
 	}
 	
-	
-	
-	
 	/**
 	 * Creates a copy of the current path and returns it to the user as a
 	 * cairo_path_t. See cairo_path_data_t for hints on how to iterate
@@ -1108,6 +1128,7 @@ public class Context
 	 * makes things easier as it is no longer necessary to manually
 	 * compute the arc's initial coordinates for a call to
 	 * cairo_move_to().
+	 * Since 1.2
 	 */
 	public void newSubPath()
 	{
@@ -1501,9 +1522,6 @@ public class Context
 		cairo_device_to_user_distance(cairo, dx, dy);
 	}
 	
-	
-	
-	
 	/**
 	 * Selects a family and style of font from a simplified description as
 	 * a family name, slant and weight. This function is meant to be used
@@ -1675,9 +1693,9 @@ public class Context
 	 * some translation, the current CTM of the cairo_t should be the
 	 * same as that of the cairo_scaled_font_t, which can be accessed
 	 * using cairo_scaled_font_get_ctm().
+	 * Since 1.2
 	 * Params:
 	 * scaledFont =  a cairo_scaled_font_t
-	 * Since 1.2
 	 */
 	public void setScaledFont(cairo_scaled_font_t* scaledFont)
 	{

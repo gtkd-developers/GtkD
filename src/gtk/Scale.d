@@ -30,30 +30,49 @@
  * ctorStrct=
  * clss    = Scale
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_scale_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- pango.PgLayout
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
+ * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
  */
 
 module gtk.Scale;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
+private import pango.PgLayout;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -71,7 +90,7 @@ private import gtk.Range;
  * subclasses GtkHScale and GtkVScale. To create a scale widget,
  * call gtk_hscale_new_with_range() or gtk_vscale_new_with_range().
  */
-public class Scale : Range
+public class Scale : Range, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -105,15 +124,28 @@ public class Scale : Range
 		this.gtkScale = gtkScale;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkScale);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	char[] delegate(gdouble, Scale)[] onFormatValueListeners;
+	/**
+	 * Signal which allows you to change how the scale value is displayed. Connect a
+	 * signal handler which returns an allocated string representing value.
+	 * That string will then be used to display the scale's value.
+	 * Here's an example signal handler which displays a value 1.0 as
+	 * with "-->1.0<--".
+	 * static gchar*
+	 * format_value_callback (GtkScale *scale,
+	 *  gdouble value)
+	 * {
+		 *  return g_strdup_printf ("-->%0.*g<--",
+		 *  gtk_scale_get_digits (scale), value);
+	 * }
+	 */
 	void addOnFormatValue(char[] delegate(gdouble, Scale) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("format-value" in connectedSignals) )
@@ -140,7 +172,6 @@ public class Scale : Range
 		
 		return consumed;
 	}
-	
 	
 	
 	/**
@@ -218,10 +249,16 @@ public class Scale : Range
 	 * Since 2.4
 	 * Returns: the PangoLayout for this scale, or NULL  if the "draw-value" property is FALSE.
 	 */
-	public PangoLayout* getLayout()
+	public PgLayout getLayout()
 	{
 		// PangoLayout* gtk_scale_get_layout (GtkScale *scale);
-		return gtk_scale_get_layout(gtkScale);
+		auto p = gtk_scale_get_layout(gtkScale);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**
@@ -241,7 +278,4 @@ public class Scale : Range
 		// void gtk_scale_get_layout_offsets (GtkScale *scale,  gint *x,  gint *y);
 		gtk_scale_get_layout_offsets(gtkScale, x, y);
 	}
-	
-	
-	
 }

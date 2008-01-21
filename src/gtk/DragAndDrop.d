@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
@@ -51,7 +52,6 @@
  * 	- gdk.Pixmap
  * 	- gdk.Bitmap
  * 	- gdk.Pixbuf
- * 	- glib.Str
  * structWrap:
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkColormap* -> Colormap
@@ -67,7 +67,7 @@
 
 module gtk.DragAndDrop;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -81,7 +81,6 @@ private import gdk.Colormap;
 private import gdk.Pixmap;
 private import gdk.Bitmap;
 private import gdk.Pixbuf;
-private import glib.Str;
 
 
 
@@ -134,8 +133,6 @@ public class DragAndDrop
 	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * Sets a widget as a potential drop destination.
@@ -360,7 +357,13 @@ public class DragAndDrop
 	public Widget getSourceWidget()
 	{
 		// GtkWidget* gtk_drag_get_source_widget (GdkDragContext *context);
-		return new Widget( gtk_drag_get_source_widget(gdkDragContext) );
+		auto p = gtk_drag_get_source_widget(gdkDragContext);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -406,7 +409,13 @@ public class DragAndDrop
 	public static DragContext begin(Widget widget, GtkTargetList* targets, GdkDragAction actions, int button, Event event)
 	{
 		// GdkDragContext* gtk_drag_begin (GtkWidget *widget,  GtkTargetList *targets,  GdkDragAction actions,  gint button,  GdkEvent *event);
-		return new DragContext( gtk_drag_begin((widget is null) ? null : widget.getWidgetStruct(), targets, actions, button, (event is null) ? null : event.getEventStruct()) );
+		auto p = gtk_drag_begin((widget is null) ? null : widget.getWidgetStruct(), targets, actions, button, (event is null) ? null : event.getEventStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new DragContext(cast(GdkDragContext*) p);
 	}
 	
 	/**

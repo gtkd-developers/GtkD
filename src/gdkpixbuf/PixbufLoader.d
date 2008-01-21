@@ -42,6 +42,7 @@
  * omit code:
  * 	- gdk_pixbuf_loader_new_with_type
  * 	- gdk_pixbuf_loader_new_with_mime_type
+ * omit signals:
  * imports:
  * 	- gdkpixbuf.PixbufFormat
  * 	- gdk.Pixbuf
@@ -57,10 +58,12 @@
 
 module gdkpixbuf.PixbufLoader;
 
-private import gtkc.gdkpixbuftypes;
+public  import gtkc.gdkpixbuftypes;
 
 private import gtkc.gdkpixbuf;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gdkpixbuf.PixbufFormat;
 private import gdk.Pixbuf;
@@ -175,13 +178,16 @@ public class PixbufLoader : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(PixbufLoader)[] onAreaPreparedListeners;
+	/**
+	 * This signal is emitted when the pixbuf loader has allocated the
+	 * pixbuf in the desired size. After this signal is emitted,
+	 * applications can call gdk_pixbuf_loader_get_pixbuf() to fetch
+	 * the partially-loaded pixbuf.
+	 *
+	 */
 	void addOnAreaPrepared(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("area-prepared" in connectedSignals) )
@@ -210,6 +216,14 @@ public class PixbufLoader : ObjectG
 	}
 	
 	void delegate(gint, gint, gint, gint, PixbufLoader)[] onAreaUpdatedListeners;
+	/**
+	 * This signal is emitted when a significant area of the image being
+	 * loaded has been updated. Normally it means that a complete
+	 * scanline has been read in, but it could be a different area as
+	 * well. Applications can use this signal to know when to repaint
+	 * areas of an image that is being loaded.
+	 *
+	 */
 	void addOnAreaUpdated(void delegate(gint, gint, gint, gint, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("area-updated" in connectedSignals) )
@@ -238,6 +252,13 @@ public class PixbufLoader : ObjectG
 	}
 	
 	void delegate(PixbufLoader)[] onClosedListeners;
+	/**
+	 * This signal is emitted when gdk_pixbuf_loader_close() is called.
+	 * It can be used by different parts of an application to receive
+	 * notification when an image loader is closed by the code that
+	 * drives it.
+	 *
+	 */
 	void addOnClosed(void delegate(PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("closed" in connectedSignals) )
@@ -266,6 +287,17 @@ public class PixbufLoader : ObjectG
 	}
 	
 	void delegate(gint, gint, PixbufLoader)[] onSizePreparedListeners;
+	/**
+	 * This signal is emitted when the pixbuf loader has been fed the
+	 * initial amount of data that is required to figure out the size
+	 * of the image that it will create. Applications can call
+	 * gdk_pixbuf_loader_set_size() in response to this signal to set
+	 * the desired size to which the image should be scaled.
+	 *
+	 * See Also
+	 *  gdk_pixbuf_new_from_file(), gdk_pixbuf_animation_new_from_file()
+	 *
+	 */
 	void addOnSizePrepared(void delegate(gint, gint, PixbufLoader) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("size-prepared" in connectedSignals) )
@@ -294,17 +326,21 @@ public class PixbufLoader : ObjectG
 	}
 	
 	
-	
 	/**
 	 * Creates a new pixbuf loader object.
 	 */
 	public this ()
 	{
 		// GdkPixbufLoader* gdk_pixbuf_loader_new (void);
-		this(cast(GdkPixbufLoader*)gdk_pixbuf_loader_new() );
+		auto p = gdk_pixbuf_loader_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkPixbufLoader*) p);
 	}
-	
-	
 	
 	/**
 	 * Obtains the available information about the format of the
@@ -315,7 +351,13 @@ public class PixbufLoader : ObjectG
 	public PixbufFormat getFormat()
 	{
 		// GdkPixbufFormat* gdk_pixbuf_loader_get_format (GdkPixbufLoader *loader);
-		return new PixbufFormat( gdk_pixbuf_loader_get_format(gdkPixbufLoader) );
+		auto p = gdk_pixbuf_loader_get_format(gdkPixbufLoader);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PixbufFormat(cast(GdkPixbufFormat*) p);
 	}
 	
 	/**
@@ -372,7 +414,13 @@ public class PixbufLoader : ObjectG
 	public Pixbuf getPixbuf()
 	{
 		// GdkPixbuf* gdk_pixbuf_loader_get_pixbuf (GdkPixbufLoader *loader);
-		return new Pixbuf( gdk_pixbuf_loader_get_pixbuf(gdkPixbufLoader) );
+		auto p = gdk_pixbuf_loader_get_pixbuf(gdkPixbufLoader);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -386,7 +434,13 @@ public class PixbufLoader : ObjectG
 	public PixbufAnimation getAnimation()
 	{
 		// GdkPixbufAnimation* gdk_pixbuf_loader_get_animation (GdkPixbufLoader *loader);
-		return new PixbufAnimation( gdk_pixbuf_loader_get_animation(gdkPixbufLoader) );
+		auto p = gdk_pixbuf_loader_get_animation(gdkPixbufLoader);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PixbufAnimation(cast(GdkPixbufAnimation*) p);
 	}
 	
 	/**
@@ -408,7 +462,4 @@ public class PixbufLoader : ObjectG
 		// gboolean gdk_pixbuf_loader_close (GdkPixbufLoader *loader,  GError **error);
 		return gdk_pixbuf_loader_close(gdkPixbufLoader, error);
 	}
-	
-	
-	
 }

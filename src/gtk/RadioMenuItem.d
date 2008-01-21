@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_radio_menu_item_
  * 	- gtk_
@@ -45,9 +46,15 @@
  * 	- gtk_radio_menu_item_new_with_mnemonic
  * 	- gtk_radio_menu_item_new_with_mnemonic_from_widget
  * 	- gtk_radio_menu_item_new_with_label_from_widget
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.ListSG
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GSList* -> ListSG
  * module aliases:
@@ -56,13 +63,20 @@
 
 module gtk.RadioMenuItem;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ListSG;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -88,7 +102,7 @@ private import gtk.CheckMenuItem;
 	 *  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
  * }
  */
-public class RadioMenuItem : CheckMenuItem
+public class RadioMenuItem : CheckMenuItem, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -121,6 +135,9 @@ public class RadioMenuItem : CheckMenuItem
 		super(cast(GtkCheckMenuItem*)gtkRadioMenuItem);
 		this.gtkRadioMenuItem = gtkRadioMenuItem;
 	}
+	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkRadioMenuItem);
 	
 	/**
 	 * Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.
@@ -189,13 +206,16 @@ public class RadioMenuItem : CheckMenuItem
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(RadioMenuItem)[] onGroupChangedListeners;
+	/**
+	 * See Also
+	 * GtkMenuItem
+	 * because a radio menu item is a menu item.
+	 * GtkCheckMenuItem
+	 * to know how to handle the check.
+	 */
 	void addOnGroupChanged(void delegate(RadioMenuItem) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("group-changed" in connectedSignals) )
@@ -224,7 +244,6 @@ public class RadioMenuItem : CheckMenuItem
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkRadioMenuItem.
 	 * Params:
@@ -233,10 +252,15 @@ public class RadioMenuItem : CheckMenuItem
 	public this (ListSG group)
 	{
 		// GtkWidget* gtk_radio_menu_item_new (GSList *group);
-		this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new((group is null) ? null : group.getListSGStruct()) );
+		auto p = gtk_radio_menu_item_new((group is null) ? null : group.getListSGStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRadioMenuItem*) p);
 	}
-	
-	
 	
 	/**
 	 * Creates a new GtkRadioMenuItem adding it to the same group as group.
@@ -245,11 +269,15 @@ public class RadioMenuItem : CheckMenuItem
 	public this ()
 	{
 		// GtkWidget* gtk_radio_menu_item_new_from_widget (GtkRadioMenuItem *group);
-		this(cast(GtkRadioMenuItem*)gtk_radio_menu_item_new_from_widget(gtkRadioMenuItem) );
+		auto p = gtk_radio_menu_item_new_from_widget(gtkRadioMenuItem);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkRadioMenuItem*) p);
 	}
-	
-	
-	
 	
 	/**
 	 * Sets the group of a radio menu item, or changes it.
@@ -270,6 +298,12 @@ public class RadioMenuItem : CheckMenuItem
 	public ListSG getGroup()
 	{
 		// GSList* gtk_radio_menu_item_get_group (GtkRadioMenuItem *radio_menu_item);
-		return new ListSG( gtk_radio_menu_item_get_group(gtkRadioMenuItem) );
+		auto p = gtk_radio_menu_item_get_group(gtkRadioMenuItem);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 }

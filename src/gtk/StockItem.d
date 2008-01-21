@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.StockItem
@@ -54,7 +55,7 @@
 
 module gtk.StockItem;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -120,7 +121,6 @@ public class StockItem
 	/**
 	 */
 	
-	
 	/**
 	 * Registers each of the stock items in items. If an item already
 	 * exists with the same stock ID as one of the items, the old item
@@ -158,7 +158,13 @@ public class StockItem
 	public StockItem itemCopy()
 	{
 		// GtkStockItem* gtk_stock_item_copy (const GtkStockItem *item);
-		return new StockItem( gtk_stock_item_copy(gtkStockItem) );
+		auto p = gtk_stock_item_copy(gtkStockItem);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new StockItem(cast(GtkStockItem*) p);
 	}
 	
 	/**
@@ -183,7 +189,13 @@ public class StockItem
 	public static ListSG listIds()
 	{
 		// GSList* gtk_stock_list_ids (void);
-		return new ListSG( gtk_stock_list_ids() );
+		auto p = gtk_stock_list_ids();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -218,103 +230,4 @@ public class StockItem
 		// void gtk_stock_set_translate_func (const gchar *domain,  GtkTranslateFunc func,  gpointer data,  GtkDestroyNotify notify);
 		gtk_stock_set_translate_func(Str.toStringz(domain), func, data, notify);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

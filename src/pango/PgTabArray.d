@@ -40,63 +40,21 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
- * 	- pango.PgContext
- * 	- pango.PgItem
- * 	- pango.PgLayout
- * 	- pango.PgFontDescription
- * 	- pango.PgFontMetrics
- * 	- pango.PgFontFamily
- * 	- pango.PgFontFace
- * 	- pango.PgFontMap
- * 	- pango.PgFontsetSimple
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
- * 	- pango.PgLanguage
- * 	- pango.PgLayout
- * 	- pango.PgLayoutIter
- * 	- pango.PgScriptIter
  * structWrap:
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
- * 	- PangoContext* -> PgContext
- * 	- PangoFontDescription* -> PgFontDescription
- * 	- PangoFontFace* -> PgFontFace
- * 	- PangoFontFamily* -> PgFontFamily
- * 	- PangoFontMap* -> PgFontMap
- * 	- PangoFontMetrics* -> PgFontMetrics
- * 	- PangoFontsetSimple* -> PgFontsetSimple
- * 	- PangoItem* -> PgItem
- * 	- PangoLanguage* -> PgLanguage
- * 	- PangoLayout* -> PgLayout
- * 	- PangoLayoutIter* -> PgLayoutIter
- * 	- PangoScriptIter* -> PgScriptIter
+ * 	- PangoTabArray* -> PgTabArray
  * module aliases:
  * local aliases:
  */
 
 module pango.PgTabArray;
 
-private import gtkc.pangotypes;
+public  import gtkc.pangotypes;
 
 private import gtkc.pango;
 
 
-private import pango.PgContext;
-private import pango.PgItem;
-private import pango.PgLayout;
-private import pango.PgFontDescription;
-private import pango.PgFontMetrics;
-private import pango.PgFontFamily;
-private import pango.PgFontFace;
-private import pango.PgFontMap;
-private import pango.PgFontsetSimple;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
-private import pango.PgLanguage;
-private import pango.PgLayout;
-private import pango.PgLayoutIter;
-private import pango.PgScriptIter;
 
 
 
@@ -142,10 +100,6 @@ public class PgTabArray
 	/**
 	 */
 	
-	
-	
-	
-	
 	/**
 	 * Creates an array of initial_size tab stops. Tab stops are specified in
 	 * pixel units if positions_in_pixels is TRUE, otherwise in Pango
@@ -157,7 +111,14 @@ public class PgTabArray
 	public this (int initialSize, int positionsInPixels)
 	{
 		// PangoTabArray* pango_tab_array_new (gint initial_size,  gboolean positions_in_pixels);
-		this(cast(PangoTabArray*)pango_tab_array_new(initialSize, positionsInPixels) );
+		auto p = pango_tab_array_new(initialSize, positionsInPixels);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(PangoTabArray*) p);
 	}
 	
 	/**
@@ -175,17 +136,30 @@ public class PgTabArray
 	public this (int size, int positionsInPixels, PangoTabAlign firstAlignment, int firstPosition, ... )
 	{
 		// PangoTabArray* pango_tab_array_new_with_positions (gint size,  gboolean positions_in_pixels,  PangoTabAlign first_alignment,  gint first_position,  ...);
-		this(cast(PangoTabArray*)pango_tab_array_new_with_positions(size, positionsInPixels, firstAlignment, firstPosition) );
+		auto p = pango_tab_array_new_with_positions(size, positionsInPixels, firstAlignment, firstPosition);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(PangoTabArray*) p);
 	}
 	
 	/**
 	 * Copies a PangoTabArray
 	 * Returns: the newly allocated PangoTabArray, which should be freed with pango_tab_array_free().
 	 */
-	public PangoTabArray* copy()
+	public PgTabArray copy()
 	{
 		// PangoTabArray* pango_tab_array_copy (PangoTabArray *src);
-		return pango_tab_array_copy(pangoTabArray);
+		auto p = pango_tab_array_copy(pangoTabArray);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgTabArray(cast(PangoTabArray*) p);
 	}
 	
 	/**

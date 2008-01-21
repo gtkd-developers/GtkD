@@ -30,18 +30,26 @@
  * ctorStrct=
  * clss    = Ruler
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_ruler_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,17 @@
 
 module gtk.Ruler;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -76,7 +90,7 @@ private import gtk.Widget;
  * ruler. See GtkHRuler to learn how to create a new horizontal ruler. See
  * GtkVRuler to learn how to create a new vertical ruler.
  */
-public class Ruler : Widget
+public class Ruler : Widget, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -110,10 +124,11 @@ public class Ruler : Widget
 		this.gtkRuler = gtkRuler;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkRuler);
+	
 	/**
 	 */
-	
-	
 	
 	/**
 	 * This calls the GTKMetricType to set the ruler to units defined. Available units
@@ -168,8 +183,4 @@ public class Ruler : Widget
 		// void gtk_ruler_get_range (GtkRuler *ruler,  gdouble *lower,  gdouble *upper,  gdouble *position,  gdouble *max_size);
 		gtk_ruler_get_range(gtkRuler, lower, upper, position, maxSize);
 	}
-	
-	
-	
-	
 }

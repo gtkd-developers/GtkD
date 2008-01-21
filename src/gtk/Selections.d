@@ -40,12 +40,12 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gdk.Display
  * 	- gdk.Pixbuf
- * 	- glib.Str
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- GdkPixbuf* -> Pixbuf
@@ -56,7 +56,7 @@
 
 module gtk.Selections;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -65,7 +65,6 @@ private import glib.Str;
 private import gtk.Widget;
 private import gdk.Display;
 private import gdk.Pixbuf;
-private import glib.Str;
 
 
 
@@ -90,9 +89,6 @@ public class Selections
 	
 	/**
 	 */
-	
-	
-	
 	
 	/**
 	 * Creates a new GtkTargetList from an array of GtkTargetEntry.
@@ -442,7 +438,13 @@ public class Selections
 	public static Pixbuf selectionDataGetPixbuf(GtkSelectionData* selectionData)
 	{
 		// GdkPixbuf* gtk_selection_data_get_pixbuf (GtkSelectionData *selection_data);
-		return new Pixbuf( gtk_selection_data_get_pixbuf(selectionData) );
+		auto p = gtk_selection_data_get_pixbuf(selectionData);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**

@@ -30,18 +30,26 @@
  * ctorStrct=
  * clss    = TearoffMenuItem
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_tearoff_menu_item_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,17 @@
 
 module gtk.TearoffMenuItem;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -72,7 +86,7 @@ private import gtk.MenuItem;
  * the tearoff menu can be reattached. Activating it will erase the tearoff
  * menu window.
  */
-public class TearoffMenuItem : MenuItem
+public class TearoffMenuItem : MenuItem, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -106,9 +120,11 @@ public class TearoffMenuItem : MenuItem
 		this.gtkTearoffMenuItem = gtkTearoffMenuItem;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkTearoffMenuItem);
+	
 	/**
 	 */
-	
 	
 	/**
 	 * Creates a new GtkTearoffMenuItem.
@@ -116,6 +132,13 @@ public class TearoffMenuItem : MenuItem
 	public this ()
 	{
 		// GtkWidget* gtk_tearoff_menu_item_new (void);
-		this(cast(GtkTearoffMenuItem*)gtk_tearoff_menu_item_new() );
+		auto p = gtk_tearoff_menu_item_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkTearoffMenuItem*) p);
 	}
 }

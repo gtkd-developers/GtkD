@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * structWrap:
  * module aliases:
@@ -48,7 +49,7 @@
 
 module glib.Memory;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -75,12 +76,6 @@ public class Memory
 	
 	/**
 	 */
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Allocates n_bytes bytes of memory.
@@ -178,10 +173,6 @@ public class Memory
 		g_free(mem);
 	}
 	
-	
-	
-	
-	
 	/**
 	 * Allocates byte_size bytes of memory, and copies byte_size bytes into it
 	 * from mem. If mem is NULL it returns NULL.
@@ -195,7 +186,6 @@ public class Memory
 		// gpointer g_memdup (gconstpointer mem,  guint byte_size);
 		return g_memdup(mem, byteSize);
 	}
-	
 	
 	/**
 	 * Sets the GMemVTable to use for memory allocation. You can use this to provide
@@ -228,7 +218,6 @@ public class Memory
 		// gboolean g_mem_is_system_malloc (void);
 		return g_mem_is_system_malloc();
 	}
-	
 	
 	/**
 	 * Outputs a summary of memory usage.

@@ -30,18 +30,26 @@
  * ctorStrct=
  * clss    = Curve
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_curve_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -49,11 +57,19 @@
 
 module gtk.Curve;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -78,7 +94,7 @@ private import gtk.DrawingArea;
  * on the curve which are connected by straight lines. In free mode the user can
  * draw the points of the curve freely, and they are not connected at all.
  */
-public class Curve : DrawingArea
+public class Curve : DrawingArea, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -112,15 +128,23 @@ public class Curve : DrawingArea
 		this.gtkCurve = gtkCurve;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkCurve);
+	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Curve)[] onCurveTypeChangedListeners;
+	/**
+	 * Emitted when the curve type has been changed.
+	 * The curve type can be changed explicitly with a call to
+	 * gtk_curve_set_curve_type(). It is also changed as a side-effect of
+	 * calling gtk_curve_reset() or gtk_curve_set_gamma().
+	 * See Also
+	 * GtkGammaCurve
+	 * a subclass for editing gamma curves.
+	 */
 	void addOnCurveTypeChanged(void delegate(Curve) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("curve-type-changed" in connectedSignals) )
@@ -149,14 +173,20 @@ public class Curve : DrawingArea
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkCurve.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_curve_new (void);
-		this(cast(GtkCurve*)gtk_curve_new() );
+		auto p = gtk_curve_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkCurve*) p);
 	}
 	
 	/**
@@ -237,8 +267,4 @@ public class Curve : DrawingArea
 		// void gtk_curve_set_curve_type (GtkCurve *curve,  GtkCurveType type);
 		gtk_curve_set_curve_type(gtkCurve, type);
 	}
-	
-	
-	
-	
 }

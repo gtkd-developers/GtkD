@@ -35,6 +35,7 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * 	- CellLayoutIF
  * prefixes:
  * 	- gtk_combo_box_
@@ -44,12 +45,19 @@
  * omit code:
  * 	- gtk_combo_box_new
  * 	- gtk_combo_box_new_text
+ * omit signals:
  * imports:
  * 	- atk.ObjectAtk
  * 	- glib.Str
  * 	- gtk.TreeModel
  * 	- gtk.TreeIter
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * 	- gtk.CellRenderer
+ * 	- glib.ListG
  * 	- gtk.CellLayoutIF
  * 	- gtk.CellLayoutT
  * structWrap:
@@ -62,16 +70,24 @@
 
 module gtk.ComboBox;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import atk.ObjectAtk;
 private import glib.Str;
 private import gtk.TreeModel;
 private import gtk.TreeIter;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 private import gtk.CellRenderer;
+private import glib.ListG;
 private import gtk.CellLayoutIF;
 private import gtk.CellLayoutT;
 
@@ -102,7 +118,7 @@ private import gtk.Bin;
  * gtk_combo_box_prepend_text(), gtk_combo_box_remove_text() and
  * gtk_combo_box_get_active_text().
  */
-public class ComboBox : Bin, CellLayoutIF
+public class ComboBox : Bin, BuildableIF, CellLayoutIF
 {
 	
 	/** the main Gtk struct */
@@ -139,6 +155,8 @@ public class ComboBox : Bin, CellLayoutIF
 	private int count = 0;
 	public int maxCount = 0;
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkComboBox);
 	
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkComboBox);
@@ -235,13 +253,18 @@ public class ComboBox : Bin, CellLayoutIF
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(ComboBox)[] onChangedListeners;
+	/**
+	 * The changed signal is emitted when the active
+	 * item is changed. The can be due to the user selecting
+	 * a different item from the list, or due to a
+	 * call to gtk_combo_box_set_active_iter().
+	 * It will also be emitted while typing into a GtkComboBoxEntry,
+	 * as well as when selecting an item from the GtkComboBoxEntry's list.
+	 * Since 2.4
+	 */
 	void addOnChanged(void delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("changed" in connectedSignals) )
@@ -270,6 +293,12 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	
 	void delegate(GtkScrollType, ComboBox)[] onMoveActiveListeners;
+	/**
+	 * The ::move-active signal is a
+	 * keybinding signal
+	 * which gets emitted to move the active selection.
+	 * Since 2.12
+	 */
 	void addOnMoveActive(void delegate(GtkScrollType, ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-active" in connectedSignals) )
@@ -298,6 +327,13 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	
 	gboolean delegate(ComboBox)[] onPopdownListeners;
+	/**
+	 * The ::popdown signal is a
+	 * keybinding signal
+	 * which gets emitted to popdown the combo box list.
+	 * The default bindings for this signal are Alt+Up and Escape.
+	 * Since 2.12
+	 */
 	void addOnPopdown(gboolean delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popdown" in connectedSignals) )
@@ -326,6 +362,15 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	
 	void delegate(ComboBox)[] onPopupListeners;
+	/**
+	 * The ::popup signal is a
+	 * keybinding signal
+	 * which gets emitted to popup the combo box list.
+	 * The default binding for this signal is Alt+Down.
+	 * Since 2.12
+	 * See Also
+	 * GtkComboBoxEntry, GtkTreeModel, GtkCellRenderer
+	 */
 	void addOnPopup(void delegate(ComboBox) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("popup" in connectedSignals) )
@@ -354,8 +399,6 @@ public class ComboBox : Bin, CellLayoutIF
 	}
 	
 	
-	
-	
 	/**
 	 * Creates a new GtkComboBox with the model initialized to model.
 	 * Since 2.4
@@ -365,7 +408,14 @@ public class ComboBox : Bin, CellLayoutIF
 	public this (TreeModel model)
 	{
 		// GtkWidget* gtk_combo_box_new_with_model (GtkTreeModel *model);
-		this(cast(GtkComboBox*)gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelStruct()) );
+		auto p = gtk_combo_box_new_with_model((model is null) ? null : model.getTreeModelStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkComboBox*) p);
 	}
 	
 	/**
@@ -507,7 +557,13 @@ public class ComboBox : Bin, CellLayoutIF
 	public TreeModel getModel()
 	{
 		// GtkTreeModel* gtk_combo_box_get_model (GtkComboBox *combo_box);
-		return new TreeModel( gtk_combo_box_get_model(gtkComboBox) );
+		auto p = gtk_combo_box_get_model(gtkComboBox);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TreeModel(cast(GtkTreeModel*) p);
 	}
 	
 	/**
@@ -525,7 +581,6 @@ public class ComboBox : Bin, CellLayoutIF
 		// void gtk_combo_box_set_model (GtkComboBox *combo_box,  GtkTreeModel *model);
 		gtk_combo_box_set_model(gtkComboBox, (model is null) ? null : model.getTreeModelStruct());
 	}
-	
 	
 	/**
 	 * Appends string to the list of strings stored in combo_box. Note that
@@ -594,7 +649,7 @@ public class ComboBox : Bin, CellLayoutIF
 	public char[] getActiveText()
 	{
 		// gchar* gtk_combo_box_get_active_text (GtkComboBox *combo_box);
-		return Str.toString(gtk_combo_box_get_active_text(gtkComboBox) );
+		return Str.toString(gtk_combo_box_get_active_text(gtkComboBox)).dup;
 	}
 	
 	/**
@@ -631,7 +686,13 @@ public class ComboBox : Bin, CellLayoutIF
 	public ObjectAtk getPopupAccessible()
 	{
 		// AtkObject* gtk_combo_box_get_popup_accessible (GtkComboBox *combo_box);
-		return new ObjectAtk( gtk_combo_box_get_popup_accessible(gtkComboBox) );
+		auto p = gtk_combo_box_get_popup_accessible(gtkComboBox);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -705,7 +766,7 @@ public class ComboBox : Bin, CellLayoutIF
 	public char[] getTitle()
 	{
 		// const gchar* gtk_combo_box_get_title (GtkComboBox *combo_box);
-		return Str.toString(gtk_combo_box_get_title(gtkComboBox) );
+		return Str.toString(gtk_combo_box_get_title(gtkComboBox)).dup;
 	}
 	
 	/**
@@ -735,18 +796,4 @@ public class ComboBox : Bin, CellLayoutIF
 		// gboolean gtk_combo_box_get_focus_on_click (GtkComboBox *combo);
 		return gtk_combo_box_get_focus_on_click(gtkComboBox);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

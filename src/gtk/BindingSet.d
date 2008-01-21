@@ -42,14 +42,16 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.BindingSet
  * 	- gtk.ObjectGtk
  * 	- glib.ListSG
- * 	- glib.Str;
+ * 	- glib.ScannerG
  * structWrap:
  * 	- GSList* -> ListSG
+ * 	- GScanner* -> ScannerG
  * 	- GtkBindingSet* -> BindingSet
  * 	- GtkObject* -> ObjectGtk
  * module aliases:
@@ -58,7 +60,7 @@
 
 module gtk.BindingSet;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -67,7 +69,7 @@ private import glib.Str;
 private import gtk.BindingSet;
 private import gtk.ObjectGtk;
 private import glib.ListSG;
-private import glib.Str;;
+private import glib.ScannerG;
 
 
 
@@ -171,11 +173,6 @@ public class BindingSet
 	/**
 	 */
 	
-	
-	
-	
-	
-	
 	/**
 	 * Warning
 	 * gtk_binding_entry_add_signall is deprecated and should not be used in newly-written code.
@@ -212,10 +209,10 @@ public class BindingSet
 	 * scanner =  GtkRC scanner
 	 * Returns: expected token upon errors, G_TOKEN_NONE on success.
 	 */
-	public static uint bindingParseBinding(GScanner* scanner)
+	public static uint bindingParseBinding(ScannerG scanner)
 	{
 		// guint gtk_binding_parse_binding (GScanner *scanner);
-		return gtk_binding_parse_binding(scanner);
+		return gtk_binding_parse_binding((scanner is null) ? null : scanner.getScannerGStruct());
 	}
 	
 	/**
@@ -227,7 +224,14 @@ public class BindingSet
 	public this (char[] setName)
 	{
 		// GtkBindingSet* gtk_binding_set_new (const gchar *set_name);
-		this(cast(GtkBindingSet*)gtk_binding_set_new(Str.toStringz(setName)) );
+		auto p = gtk_binding_set_new(Str.toStringz(setName));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkBindingSet*) p);
 	}
 	
 	/**
@@ -241,7 +245,13 @@ public class BindingSet
 	public static BindingSet byClass(void* objectClass)
 	{
 		// GtkBindingSet* gtk_binding_set_by_class (gpointer object_class);
-		return new BindingSet( gtk_binding_set_by_class(objectClass) );
+		auto p = gtk_binding_set_by_class(objectClass);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new BindingSet(cast(GtkBindingSet*) p);
 	}
 	
 	/**
@@ -255,7 +265,13 @@ public class BindingSet
 	public static BindingSet find(char[] setName)
 	{
 		// GtkBindingSet* gtk_binding_set_find (const gchar *set_name);
-		return new BindingSet( gtk_binding_set_find(Str.toStringz(setName)) );
+		auto p = gtk_binding_set_find(Str.toStringz(setName));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new BindingSet(cast(GtkBindingSet*) p);
 	}
 	
 	/**

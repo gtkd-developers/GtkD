@@ -42,15 +42,16 @@
  * 	- GtkTextIter
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.TextBuffer
- * 	- gtk.TextIter
  * 	- gdk.Pixbuf
  * 	- glib.ListSG
+ * 	- gtk.TextChildAnchor
  * 	- gtk.TextTag
  * 	- gtk.TextAttributes
- * 	- gtk.TextChildAnchor
+ * 	- pango.PgLanguage
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GdkPixbuf* -> Pixbuf
@@ -59,25 +60,26 @@
  * 	- GtkTextChildAnchor* -> TextChildAnchor
  * 	- GtkTextIter* -> TextIter
  * 	- GtkTextTag* -> TextTag
+ * 	- PangoLanguage* -> PgLanguage
  * module aliases:
  * local aliases:
  */
 
 module gtk.TextIter;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import glib.Str;
 private import gtk.TextBuffer;
-private import gtk.TextIter;
 private import gdk.Pixbuf;
 private import glib.ListSG;
+private import gtk.TextChildAnchor;
 private import gtk.TextTag;
 private import gtk.TextAttributes;
-private import gtk.TextChildAnchor;
+private import pango.PgLanguage;
 
 
 
@@ -131,7 +133,6 @@ public class TextIter
 	/**
 	 */
 	
-	
 	/**
 	 * Returns the GtkTextBuffer this iterator is associated with.
 	 * Returns: the buffer
@@ -139,7 +140,13 @@ public class TextIter
 	public TextBuffer getBuffer()
 	{
 		// GtkTextBuffer* gtk_text_iter_get_buffer (const GtkTextIter *iter);
-		return new TextBuffer( gtk_text_iter_get_buffer(gtkTextIter) );
+		auto p = gtk_text_iter_get_buffer(gtkTextIter);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextBuffer(cast(GtkTextBuffer*) p);
 	}
 	
 	/**
@@ -152,7 +159,13 @@ public class TextIter
 	public TextIter copy()
 	{
 		// GtkTextIter* gtk_text_iter_copy (const GtkTextIter *iter);
-		return new TextIter( gtk_text_iter_copy(gtkTextIter) );
+		auto p = gtk_text_iter_copy(gtkTextIter);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextIter(cast(GtkTextIter*) p);
 	}
 	
 	/**
@@ -277,7 +290,7 @@ public class TextIter
 	public char[] getSlice(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_slice (const GtkTextIter *start,  const GtkTextIter *end);
-		return Str.toString(gtk_text_iter_get_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
+		return Str.toString(gtk_text_iter_get_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct())).dup;
 	}
 	
 	/**
@@ -293,7 +306,7 @@ public class TextIter
 	public char[] getText(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_text (const GtkTextIter *start,  const GtkTextIter *end);
-		return Str.toString(gtk_text_iter_get_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
+		return Str.toString(gtk_text_iter_get_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct())).dup;
 	}
 	
 	/**
@@ -307,7 +320,7 @@ public class TextIter
 	public char[] getVisibleSlice(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_visible_slice (const GtkTextIter *start,  const GtkTextIter *end);
-		return Str.toString(gtk_text_iter_get_visible_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
+		return Str.toString(gtk_text_iter_get_visible_slice(gtkTextIter, (end is null) ? null : end.getTextIterStruct())).dup;
 	}
 	
 	/**
@@ -321,7 +334,7 @@ public class TextIter
 	public char[] getVisibleText(TextIter end)
 	{
 		// gchar* gtk_text_iter_get_visible_text (const GtkTextIter *start,  const GtkTextIter *end);
-		return Str.toString(gtk_text_iter_get_visible_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct()) );
+		return Str.toString(gtk_text_iter_get_visible_text(gtkTextIter, (end is null) ? null : end.getTextIterStruct())).dup;
 	}
 	
 	/**
@@ -333,7 +346,13 @@ public class TextIter
 	public Pixbuf getPixbuf()
 	{
 		// GdkPixbuf* gtk_text_iter_get_pixbuf (const GtkTextIter *iter);
-		return new Pixbuf( gtk_text_iter_get_pixbuf(gtkTextIter) );
+		auto p = gtk_text_iter_get_pixbuf(gtkTextIter);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -347,7 +366,13 @@ public class TextIter
 	public ListSG getMarks()
 	{
 		// GSList* gtk_text_iter_get_marks (const GtkTextIter *iter);
-		return new ListSG( gtk_text_iter_get_marks(gtkTextIter) );
+		auto p = gtk_text_iter_get_marks(gtkTextIter);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -364,7 +389,13 @@ public class TextIter
 	public ListSG getToggledTags(int toggledOn)
 	{
 		// GSList* gtk_text_iter_get_toggled_tags (const GtkTextIter *iter,  gboolean toggled_on);
-		return new ListSG( gtk_text_iter_get_toggled_tags(gtkTextIter, toggledOn) );
+		auto p = gtk_text_iter_get_toggled_tags(gtkTextIter, toggledOn);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -376,7 +407,13 @@ public class TextIter
 	public TextChildAnchor getChildAnchor()
 	{
 		// GtkTextChildAnchor* gtk_text_iter_get_child_anchor (const GtkTextIter *iter);
-		return new TextChildAnchor( gtk_text_iter_get_child_anchor(gtkTextIter) );
+		auto p = gtk_text_iter_get_child_anchor(gtkTextIter);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new TextChildAnchor(cast(GtkTextChildAnchor*) p);
 	}
 	
 	/**
@@ -449,7 +486,13 @@ public class TextIter
 	public ListSG getTags()
 	{
 		// GSList* gtk_text_iter_get_tags (const GtkTextIter *iter);
-		return new ListSG( gtk_text_iter_get_tags(gtkTextIter) );
+		auto p = gtk_text_iter_get_tags(gtkTextIter);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -659,10 +702,16 @@ public class TextIter
 	 * gtk_get_default_language().
 	 * Returns: language in effect at iter
 	 */
-	public PangoLanguage* getLanguage()
+	public PgLanguage getLanguage()
 	{
 		// PangoLanguage* gtk_text_iter_get_language (const GtkTextIter *iter);
-		return gtk_text_iter_get_language(gtkTextIter);
+		auto p = gtk_text_iter_get_language(gtkTextIter);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgLanguage(cast(PangoLanguage*) p);
 	}
 	
 	/**
@@ -1302,7 +1351,6 @@ public class TextIter
 		return gtk_text_iter_backward_to_tag_toggle(gtkTextIter, (tag is null) ? null : tag.getTextTagStruct());
 	}
 	
-	
 	/**
 	 * Advances iter, calling pred on each character. If
 	 * pred returns TRUE, returns TRUE and stops scanning.
@@ -1333,7 +1381,6 @@ public class TextIter
 		// gboolean gtk_text_iter_backward_find_char (GtkTextIter *iter,  GtkTextCharPredicate pred,  gpointer user_data,  const GtkTextIter *limit);
 		return gtk_text_iter_backward_find_char(gtkTextIter, pred, userData, (limit is null) ? null : limit.getTextIterStruct());
 	}
-	
 	
 	/**
 	 * Searches forward for str. Any match is returned by setting

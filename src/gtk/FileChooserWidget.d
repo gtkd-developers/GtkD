@@ -35,18 +35,25 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_file_chooser_widget_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- glib.ListSG;
  * 	- gtk.Widget;
  * 	- gtk.FileFilter;
  * 	- gtk.FileChooser;
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -54,7 +61,7 @@
 
 module gtk.FileChooserWidget;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -64,6 +71,11 @@ private import glib.ListSG;;
 private import gtk.Widget;;
 private import gtk.FileFilter;;
 private import gtk.FileChooser;;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -80,7 +92,7 @@ private import gtk.VBox;
  *  own. Instead, you should use the functions that work on a
  *  GtkFileChooser.
  */
-public class FileChooserWidget : VBox
+public class FileChooserWidget : VBox, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -116,6 +128,9 @@ public class FileChooserWidget : VBox
 	
 	private FileChooser fileChooser;
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkFileChooserWidget);
+	
 	/** */
 	public FileChooser getFileChooser()
 	{
@@ -129,7 +144,6 @@ public class FileChooserWidget : VBox
 	/**
 	 */
 	
-	
 	/**
 	 * Creates a new GtkFileChooserWidget. This is a file chooser widget that can
 	 * be embedded in custom windows, and it is the same widget that is used by
@@ -141,7 +155,14 @@ public class FileChooserWidget : VBox
 	public this (GtkFileChooserAction action)
 	{
 		// GtkWidget* gtk_file_chooser_widget_new (GtkFileChooserAction action);
-		this(cast(GtkFileChooserWidget*)gtk_file_chooser_widget_new(action) );
+		auto p = gtk_file_chooser_widget_new(action);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFileChooserWidget*) p);
 	}
 	
 	/**
@@ -158,6 +179,13 @@ public class FileChooserWidget : VBox
 	public this (GtkFileChooserAction action, char[] backend)
 	{
 		// GtkWidget* gtk_file_chooser_widget_new_with_backend  (GtkFileChooserAction action,  const gchar *backend);
-		this(cast(GtkFileChooserWidget*)gtk_file_chooser_widget_new_with_backend(action, Str.toStringz(backend)) );
+		auto p = gtk_file_chooser_widget_new_with_backend(action, Str.toStringz(backend));
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkFileChooserWidget*) p);
 	}
 }

@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Module
  * 	- glib.Str
@@ -51,7 +52,7 @@
 
 module glib.Module;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -158,7 +159,6 @@ public class Module
 	/**
 	 */
 	
-	
 	/**
 	 * Checks if modules are supported on the current platform.
 	 * Returns:TRUE if modules are supported.
@@ -192,7 +192,7 @@ public class Module
 	public static char[] buildPath(char[] directory, char[] moduleName)
 	{
 		// gchar* g_module_build_path (const gchar *directory,  const gchar *module_name);
-		return Str.toString(g_module_build_path(Str.toStringz(directory), Str.toStringz(moduleName)) );
+		return Str.toString(g_module_build_path(Str.toStringz(directory), Str.toStringz(moduleName))).dup;
 	}
 	
 	/**
@@ -216,9 +216,14 @@ public class Module
 	public static Module open(char[] fileName, GModuleFlags flags)
 	{
 		// GModule* g_module_open (const gchar *file_name,  GModuleFlags flags);
-		return new Module( g_module_open(Str.toStringz(fileName), flags) );
+		auto p = g_module_open(Str.toStringz(fileName), flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Module(cast(GModule*) p);
 	}
-	
 	
 	/**
 	 * Gets a symbol pointer from a module.
@@ -241,7 +246,7 @@ public class Module
 	public char[] name()
 	{
 		// const gchar* g_module_name (GModule *module);
-		return Str.toString(g_module_name(gModule) );
+		return Str.toString(g_module_name(gModule)).dup;
 	}
 	
 	/**
@@ -271,11 +276,6 @@ public class Module
 	public static char[] error()
 	{
 		// const gchar* g_module_error (void);
-		return Str.toString(g_module_error() );
+		return Str.toString(g_module_error()).dup;
 	}
-	
-	
-	
-	
-	
 }

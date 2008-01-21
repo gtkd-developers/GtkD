@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gdk.Display
@@ -51,7 +52,7 @@
 
 module glgdk.GLQuery;
 
-private import gtkglc.glgdktypes;
+public  import gtkglc.glgdktypes;
 
 private import gtkglc.glgdk;
 
@@ -70,7 +71,6 @@ public class GLQuery
 	
 	/**
 	 */
-	
 	
 	/**
 	 * Indicates whether the window system supports the OpenGL extension

@@ -35,14 +35,22 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_hpaned_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.Widget
+ * 	- glib.Str
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -51,12 +59,18 @@
 
 module gtk.HPaned;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
 
 private import gtk.Widget;
+private import glib.Str;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 
 
 
@@ -69,7 +83,7 @@ private import gtk.Paned;
  * the two panes is adjustable by the user by dragging
  * a handle. See GtkPaned for details.
  */
-public class HPaned : Paned
+public class HPaned : Paned, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -103,6 +117,9 @@ public class HPaned : Paned
 		this.gtkHPaned = gtkHPaned;
 	}
 	
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkHPaned);
+	
 	/**
 	 * Creates a new HPaned and adds two widgets as it's children
 	 * Params:
@@ -120,13 +137,19 @@ public class HPaned : Paned
 	/**
 	 */
 	
-	
 	/**
 	 * Create a new GtkHPaned
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_hpaned_new (void);
-		this(cast(GtkHPaned*)gtk_hpaned_new() );
+		auto p = gtk_hpaned_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkHPaned*) p);
 	}
 }

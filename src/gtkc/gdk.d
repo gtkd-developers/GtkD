@@ -668,69 +668,22 @@ extern(C)
 	void function(GdkWindow* window, gint mask, GdkExtensionMode mode)gdk_input_set_extension_events;
 	
 	// gdk.X11
-/+ Manually disabled. Won't compile, yet.
-	GdkVisual* function(VisualID xvisualid)gdkx_visual_get;
-	GdkColormap* function(Colormap xcolormap)gdkx_colormap_get;
-	GdkPixmap* function(GdkNativeWindow anid)gdk_pixmap_foreign_new;
-	GdkPixmap* function(GdkDisplay* display, GdkNativeWindow anid)gdk_pixmap_foreign_new_for_display;
-	GdkPixmap* function(GdkScreen* screen, GdkNativeWindow anid, gint width, gint height, gint depth)gdk_pixmap_foreign_new_for_screen;
+	
 	GdkWindow* function(GdkNativeWindow anid)gdk_window_foreign_new;
-	GdkWindow* function(GdkDisplay* display, GdkNativeWindow anid)gdk_window_foreign_new_for_display;
 	gpointer function(XID xid)gdk_xid_table_lookup;
-	gpointer function(GdkDisplay* display, XID xid)gdk_xid_table_lookup_for_display;
 	GdkWindow* function(GdkNativeWindow anid)gdk_window_lookup;
-	GdkWindow* function(GdkDisplay* display, GdkNativeWindow anid)gdk_window_lookup_for_display;
 	GdkPixmap* function(GdkNativeWindow anid)gdk_pixmap_lookup;
-	GdkPixmap* function(GdkDisplay* display, GdkNativeWindow anid)gdk_pixmap_lookup_for_display;
-	GdkDisplay* function(Display* xdisplay)gdk_x11_lookup_xdisplay;
 	guint32 function(GdkWindow* window)gdk_x11_get_server_time;
-	gboolean function(GdkAtom property)gdk_net_wm_supports;
-	gboolean function(GdkScreen* screen, GdkAtom property)gdk_x11_screen_supports_net_wm_hint;
-	char* function(GdkScreen* screen)gdk_x11_screen_get_window_manager_name;
-	GdkVisual* function(GdkScreen* screen, VisualID xvisualid)gdk_x11_screen_lookup_visual;
 	void function(GdkWindow* window, guint32 timestamp)gdk_x11_window_set_user_time;
 	void function(GdkWindow* window)gdk_x11_window_move_to_current_desktop;
-	guint32 function(GdkDisplay* display)gdk_x11_display_get_user_time;
-	GdkColormap* function(GdkVisual* visual, Colormap xcolormap)gdk_x11_colormap_foreign_new;
-	Colormap function(GdkColormap* colormap)gdk_x11_colormap_get_xcolormap;
-	Display* function(GdkColormap* colormap)gdk_x11_colormap_get_xdisplay;
-	Cursor function(GdkCursor* cursor)gdk_x11_cursor_get_xcursor;
-	Display* function(GdkCursor* cursor)gdk_x11_cursor_get_xdisplay;
 	void function(GdkDisplay* display, char* messageType, ... )gdk_x11_display_broadcast_startup_message;
 	gchar* function(GdkDisplay* display)gdk_x11_display_get_startup_notification_id;
-	Display* function(GdkDisplay* display)gdk_x11_display_get_xdisplay;
-	void function(GdkDisplay* display)gdk_x11_display_grab;
-	void function(GdkDisplay* display)gdk_x11_display_ungrab;
-	void function(GdkDisplay* display, gchar* theme, gint size)gdk_x11_display_set_cursor_theme;
-	void function(GdkDisplay* display, gint eventBase, gint nEvents)gdk_x11_register_standard_event_type;
-	Display* function(GdkDrawable* drawable)gdk_x11_drawable_get_xdisplay;
-        +/
 	XID function(GdkDrawable* drawable)gdk_x11_drawable_get_xid;
-        /+
 	char* function(GdkFont* font)gdk_x11_font_get_name;
-	Display* function(GdkFont* font)gdk_x11_font_get_xdisplay;
 	gpointer function(GdkFont* font)gdk_x11_font_get_xfont;
-	Display* function(GdkGC* gc)gdk_x11_gc_get_xdisplay;
-	GC function(GdkGC* gc)gdk_x11_gc_get_xgc;
-	Window function()gdk_x11_get_default_root_xwindow;
 	gint function()gdk_x11_get_default_screen;
-	Display* function()gdk_x11_get_default_xdisplay;
 	void function()gdk_x11_grab_server;
-	Display* function(GdkImage* image)gdk_x11_image_get_xdisplay;
-	XImage* function(GdkImage* image)gdk_x11_image_get_ximage;
-	int function(GdkScreen* screen)gdk_x11_screen_get_screen_number;
-	Screen* function(GdkScreen* screen)gdk_x11_screen_get_xscreen;
 	void function()gdk_x11_ungrab_server;
-	Visual* function(GdkVisual* visual)gdk_x11_visual_get_xvisual;
-	Atom function(GdkAtom atom)gdk_x11_atom_to_xatom;
-	Atom function(GdkDisplay* display, GdkAtom atom)gdk_x11_atom_to_xatom_for_display;
-	GdkAtom function(Atom xatom)gdk_x11_xatom_to_atom;
-	GdkAtom function(GdkDisplay* display, Atom xatom)gdk_x11_xatom_to_atom_for_display;
-	Atom function(gchar* atomName)gdk_x11_get_xatom_by_name;
-	Atom function(GdkDisplay* display, gchar* atomName)gdk_x11_get_xatom_by_name_for_display;
-	gchar* function(Atom xatom)gdk_x11_get_xatom_name;
-	gchar* function(GdkDisplay* display, Atom xatom)gdk_x11_get_xatom_name_for_display;
-        +/
 	
 	// gdk.
 	
@@ -1284,69 +1237,21 @@ Symbol[] gdkLinks =
 	{ "gdk_device_free_history",  cast(void**)& gdk_device_free_history},
 	{ "gdk_device_get_axis",  cast(void**)& gdk_device_get_axis},
 	{ "gdk_input_set_extension_events",  cast(void**)& gdk_input_set_extension_events},
-        /+ Manually disabled. Won't compile, yet.
-	{ "gdkx_visual_get",  cast(void**)& gdkx_visual_get},
-	{ "gdkx_colormap_get",  cast(void**)& gdkx_colormap_get},
-	{ "gdk_pixmap_foreign_new",  cast(void**)& gdk_pixmap_foreign_new},
-	{ "gdk_pixmap_foreign_new_for_display",  cast(void**)& gdk_pixmap_foreign_new_for_display},
-	{ "gdk_pixmap_foreign_new_for_screen",  cast(void**)& gdk_pixmap_foreign_new_for_screen},
 	{ "gdk_window_foreign_new",  cast(void**)& gdk_window_foreign_new},
-	{ "gdk_window_foreign_new_for_display",  cast(void**)& gdk_window_foreign_new_for_display},
 	{ "gdk_xid_table_lookup",  cast(void**)& gdk_xid_table_lookup},
-	{ "gdk_xid_table_lookup_for_display",  cast(void**)& gdk_xid_table_lookup_for_display},
 	{ "gdk_window_lookup",  cast(void**)& gdk_window_lookup},
-	{ "gdk_window_lookup_for_display",  cast(void**)& gdk_window_lookup_for_display},
 	{ "gdk_pixmap_lookup",  cast(void**)& gdk_pixmap_lookup},
-	{ "gdk_pixmap_lookup_for_display",  cast(void**)& gdk_pixmap_lookup_for_display},
-	{ "gdk_x11_lookup_xdisplay",  cast(void**)& gdk_x11_lookup_xdisplay},
 	{ "gdk_x11_get_server_time",  cast(void**)& gdk_x11_get_server_time},
-	{ "gdk_net_wm_supports",  cast(void**)& gdk_net_wm_supports},
-	{ "gdk_x11_screen_supports_net_wm_hint",  cast(void**)& gdk_x11_screen_supports_net_wm_hint},
-	{ "gdk_x11_screen_get_window_manager_name",  cast(void**)& gdk_x11_screen_get_window_manager_name},
-	{ "gdk_x11_screen_lookup_visual",  cast(void**)& gdk_x11_screen_lookup_visual},
 	{ "gdk_x11_window_set_user_time",  cast(void**)& gdk_x11_window_set_user_time},
 	{ "gdk_x11_window_move_to_current_desktop",  cast(void**)& gdk_x11_window_move_to_current_desktop},
-	{ "gdk_x11_display_get_user_time",  cast(void**)& gdk_x11_display_get_user_time},
-	{ "gdk_x11_colormap_foreign_new",  cast(void**)& gdk_x11_colormap_foreign_new},
-	{ "gdk_x11_colormap_get_xcolormap",  cast(void**)& gdk_x11_colormap_get_xcolormap},
-	{ "gdk_x11_colormap_get_xdisplay",  cast(void**)& gdk_x11_colormap_get_xdisplay},
-	{ "gdk_x11_cursor_get_xcursor",  cast(void**)& gdk_x11_cursor_get_xcursor},
-	{ "gdk_x11_cursor_get_xdisplay",  cast(void**)& gdk_x11_cursor_get_xdisplay},
 	{ "gdk_x11_display_broadcast_startup_message",  cast(void**)& gdk_x11_display_broadcast_startup_message},
 	{ "gdk_x11_display_get_startup_notification_id",  cast(void**)& gdk_x11_display_get_startup_notification_id},
-	{ "gdk_x11_display_get_xdisplay",  cast(void**)& gdk_x11_display_get_xdisplay},
-	{ "gdk_x11_display_grab",  cast(void**)& gdk_x11_display_grab},
-	{ "gdk_x11_display_ungrab",  cast(void**)& gdk_x11_display_ungrab},
-	{ "gdk_x11_display_set_cursor_theme",  cast(void**)& gdk_x11_display_set_cursor_theme},
-	{ "gdk_x11_register_standard_event_type",  cast(void**)& gdk_x11_register_standard_event_type},
-	{ "gdk_x11_drawable_get_xdisplay",  cast(void**)& gdk_x11_drawable_get_xdisplay},
-        +/
 	{ "gdk_x11_drawable_get_xid",  cast(void**)& gdk_x11_drawable_get_xid},
-        /+
 	{ "gdk_x11_font_get_name",  cast(void**)& gdk_x11_font_get_name},
-	{ "gdk_x11_font_get_xdisplay",  cast(void**)& gdk_x11_font_get_xdisplay},
 	{ "gdk_x11_font_get_xfont",  cast(void**)& gdk_x11_font_get_xfont},
-	{ "gdk_x11_gc_get_xdisplay",  cast(void**)& gdk_x11_gc_get_xdisplay},
-	{ "gdk_x11_gc_get_xgc",  cast(void**)& gdk_x11_gc_get_xgc},
-	{ "gdk_x11_get_default_root_xwindow",  cast(void**)& gdk_x11_get_default_root_xwindow},
 	{ "gdk_x11_get_default_screen",  cast(void**)& gdk_x11_get_default_screen},
-	{ "gdk_x11_get_default_xdisplay",  cast(void**)& gdk_x11_get_default_xdisplay},
 	{ "gdk_x11_grab_server",  cast(void**)& gdk_x11_grab_server},
-	{ "gdk_x11_image_get_xdisplay",  cast(void**)& gdk_x11_image_get_xdisplay},
-	{ "gdk_x11_image_get_ximage",  cast(void**)& gdk_x11_image_get_ximage},
-	{ "gdk_x11_screen_get_screen_number",  cast(void**)& gdk_x11_screen_get_screen_number},
-	{ "gdk_x11_screen_get_xscreen",  cast(void**)& gdk_x11_screen_get_xscreen},
 	{ "gdk_x11_ungrab_server",  cast(void**)& gdk_x11_ungrab_server},
-	{ "gdk_x11_visual_get_xvisual",  cast(void**)& gdk_x11_visual_get_xvisual},
-	{ "gdk_x11_atom_to_xatom",  cast(void**)& gdk_x11_atom_to_xatom},
-	{ "gdk_x11_atom_to_xatom_for_display",  cast(void**)& gdk_x11_atom_to_xatom_for_display},
-	{ "gdk_x11_xatom_to_atom",  cast(void**)& gdk_x11_xatom_to_atom},
-	{ "gdk_x11_xatom_to_atom_for_display",  cast(void**)& gdk_x11_xatom_to_atom_for_display},
-	{ "gdk_x11_get_xatom_by_name",  cast(void**)& gdk_x11_get_xatom_by_name},
-	{ "gdk_x11_get_xatom_by_name_for_display",  cast(void**)& gdk_x11_get_xatom_by_name_for_display},
-	{ "gdk_x11_get_xatom_name",  cast(void**)& gdk_x11_get_xatom_name},
-	{ "gdk_x11_get_xatom_name_for_display",  cast(void**)& gdk_x11_get_xatom_name_for_display},
-        +/
 	{ "gdk_cairo_create",  cast(void**)& gdk_cairo_create},
 	{ "gdk_cairo_set_source_color",  cast(void**)& gdk_cairo_set_source_color},
 	{ "gdk_cairo_set_source_pixbuf",  cast(void**)& gdk_cairo_set_source_pixbuf},

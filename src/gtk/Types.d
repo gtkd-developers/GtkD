@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -50,7 +51,7 @@
 
 module gtk.Types;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
@@ -101,65 +102,6 @@ public class Types
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Warning
 	 * gtk_type_init is deprecated and should not be used in newly-written code.
@@ -185,9 +127,6 @@ public class Types
 		// GtkType gtk_type_unique (GtkType parent_type,  const GtkTypeInfo *gtkinfo);
 		return gtk_type_unique(parentType, gtkinfo);
 	}
-	
-	
-	
 	
 	/**
 	 * Returns a pointer pointing to the class of type or NULL if there was
@@ -218,7 +157,6 @@ public class Types
 		// gpointer gtk_type_new (GtkType type);
 		return gtk_type_new(type);
 	}
-	
 	
 	/**
 	 * Warning

@@ -35,18 +35,25 @@
  * template for:
  * extend  = 
  * implements:
+ * 	- BuildableIF
  * prefixes:
  * 	- gtk_menu_
  * 	- gtk_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gdk.Screen
  * 	- gtk.AccelGroup
  * 	- glib.ListG
+ * 	- gobject.ObjectG
+ * 	- gobject.Value
+ * 	- gtk.Builder
+ * 	- gtk.BuildableIF
+ * 	- gtk.BuildableT
  * 	- gtk.MenuItem
  * structWrap:
  * 	- GList* -> ListG
@@ -59,16 +66,23 @@
 
 module gtk.Menu;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
 private import gdk.Screen;
 private import gtk.AccelGroup;
 private import glib.ListG;
+private import gobject.ObjectG;
+private import gobject.Value;
+private import gtk.Builder;
+private import gtk.BuildableIF;
+private import gtk.BuildableT;
 private import gtk.MenuItem;
 
 
@@ -118,7 +132,7 @@ private import gtk.MenuShell;
 	 *  return FALSE;
  * }
  */
-public class Menu : MenuShell
+public class Menu : MenuShell, BuildableIF
 {
 	
 	/** the main Gtk struct */
@@ -152,7 +166,8 @@ public class Menu : MenuShell
 		this.gtkMenu = gtkMenu;
 	}
 	
-	/** */
+	// add the Buildable capabilities
+	mixin BuildableT!(GtkMenu);	/** */
 	public void append(Widget widget)
 	{
 		super.append(widget);
@@ -205,13 +220,11 @@ public class Menu : MenuShell
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(GtkScrollType, Menu)[] onMoveScrollListeners;
+	/**
+	 */
 	void addOnMoveScroll(void delegate(GtkScrollType, Menu) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("move-scroll" in connectedSignals) )
@@ -240,14 +253,20 @@ public class Menu : MenuShell
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkMenu.
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_menu_new (void);
-		this(cast(GtkMenu*)gtk_menu_new() );
+		auto p = gtk_menu_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkMenu*) p);
 	}
 	
 	/**
@@ -262,9 +281,6 @@ public class Menu : MenuShell
 		// void gtk_menu_set_screen (GtkMenu *menu,  GdkScreen *screen);
 		gtk_menu_set_screen(gtkMenu, (screen is null) ? null : screen.getScreenStruct());
 	}
-	
-	
-	
 	
 	/**
 	 * Moves a GtkMenuItem to a new position within the GtkMenu.
@@ -352,7 +368,13 @@ public class Menu : MenuShell
 	public AccelGroup getAccelGroup()
 	{
 		// GtkAccelGroup* gtk_menu_get_accel_group (GtkMenu *menu);
-		return new AccelGroup( gtk_menu_get_accel_group(gtkMenu) );
+		auto p = gtk_menu_get_accel_group(gtkMenu);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new AccelGroup(cast(GtkAccelGroup*) p);
 	}
 	
 	/**
@@ -407,7 +429,7 @@ public class Menu : MenuShell
 	public char[] getTitle()
 	{
 		// const gchar* gtk_menu_get_title (GtkMenu *menu);
-		return Str.toString(gtk_menu_get_title(gtkMenu) );
+		return Str.toString(gtk_menu_get_title(gtkMenu)).dup;
 	}
 	
 	/**
@@ -436,7 +458,13 @@ public class Menu : MenuShell
 	public Widget getActive()
 	{
 		// GtkWidget* gtk_menu_get_active (GtkMenu *menu);
-		return new Widget( gtk_menu_get_active(gtkMenu) );
+		auto p = gtk_menu_get_active(gtkMenu);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -498,7 +526,13 @@ public class Menu : MenuShell
 	public Widget getAttachWidget()
 	{
 		// GtkWidget* gtk_menu_get_attach_widget (GtkMenu *menu);
-		return new Widget( gtk_menu_get_attach_widget(gtkMenu) );
+		auto p = gtk_menu_get_attach_widget(gtkMenu);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Widget(cast(GtkWidget*) p);
 	}
 	
 	/**
@@ -512,10 +546,14 @@ public class Menu : MenuShell
 	public static ListG getForAttachWidget(Widget widget)
 	{
 		// GList* gtk_menu_get_for_attach_widget (GtkWidget *widget);
-		return new ListG( gtk_menu_get_for_attach_widget((widget is null) ? null : widget.getWidgetStruct()) );
+		auto p = gtk_menu_get_for_attach_widget((widget is null) ? null : widget.getWidgetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
-	
-	
 	
 	/**
 	 * Informs GTK+ on which monitor a menu should be popped up.
@@ -535,12 +573,4 @@ public class Menu : MenuShell
 		// void gtk_menu_set_monitor (GtkMenu *menu,  gint monitor_num);
 		gtk_menu_set_monitor(gtkMenu, monitorNum);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
 }

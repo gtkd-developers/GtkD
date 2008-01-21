@@ -41,6 +41,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
@@ -60,10 +61,12 @@
 
 module gtk.CellRenderer;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
@@ -141,13 +144,16 @@ public class CellRenderer : ObjectGtk
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(CellRenderer)[] onEditingCanceledListeners;
+	/**
+	 * This signal gets emitted when the user cancels the process of editing a
+	 * cell. For example, an editable cell renderer could be written to cancel
+	 * editing when the user presses Escape.
+	 * See also: gtk_cell_renderer_stop_editing().
+	 * Since 2.4
+	 */
 	void addOnEditingCanceled(void delegate(CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("editing-canceled" in connectedSignals) )
@@ -176,6 +182,33 @@ public class CellRenderer : ObjectGtk
 	}
 	
 	void delegate(CellEditable, char[], CellRenderer)[] onEditingStartedListeners;
+	/**
+	 * This signal gets emitted when a cell starts to be edited.
+	 * The indended use of this signal is to do special setup
+	 * on editable, e.g. adding a GtkEntryCompletion or setting
+	 * up additional columns in a GtkComboBox.
+	 * Note that GTK+ doesn't guarantee that cell renderers will
+	 * continue to use the same kind of widget for editing in future
+	 * releases, therefore you should check the type of editable
+	 * static void
+	 * text_editing_started (GtkCellRenderer *cell,
+	 *  GtkCellEditable *editable,
+	 *  const gchar *path,
+	 *  gpointer data)
+	 * {
+		 *  if (GTK_IS_ENTRY (editable))
+		 *  {
+			 *  GtkEntry *entry = GTK_ENTRY (editable);
+			 *
+			 *  /+* ... create a GtkEntryCompletion +/
+			 *
+			 *  gtk_entry_set_completion (entry, completion);
+		 *  }
+	 * }
+	 * Since 2.6
+	 * See Also
+	 * GtkCellRendererText,GtkCellRendererPixbuf,GtkCellRendererToggle
+	 */
 	void addOnEditingStarted(void delegate(CellEditable, char[], CellRenderer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("editing-started" in connectedSignals) )
@@ -202,10 +235,6 @@ public class CellRenderer : ObjectGtk
 		
 		return consumed;
 	}
-	
-	
-	
-	
 	
 	
 	/**
@@ -291,7 +320,13 @@ public class CellRenderer : ObjectGtk
 	public CellEditable startEditing(Event event, Widget widget, char[] path, Rectangle backgroundArea, Rectangle cellArea, GtkCellRendererState flags)
 	{
 		// GtkCellEditable* gtk_cell_renderer_start_editing (GtkCellRenderer *cell,  GdkEvent *event,  GtkWidget *widget,  const gchar *path,  GdkRectangle *background_area,  GdkRectangle *cell_area,  GtkCellRendererState flags);
-		return new CellEditable( gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags) );
+		auto p = gtk_cell_renderer_start_editing(gtkCellRenderer, (event is null) ? null : event.getEventStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(path), (backgroundArea is null) ? null : backgroundArea.getRectangleStruct(), (cellArea is null) ? null : cellArea.getRectangleStruct(), flags);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new CellEditable(cast(GtkCellEditable*) p);
 	}
 	
 	/**
@@ -350,18 +385,4 @@ public class CellRenderer : ObjectGtk
 		// void gtk_cell_renderer_set_fixed_size (GtkCellRenderer *cell,  gint width,  gint height);
 		gtk_cell_renderer_set_fixed_size(gtkCellRenderer, width, height);
 	}
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
-	
 }

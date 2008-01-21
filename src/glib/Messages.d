@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * structWrap:
@@ -49,7 +50,7 @@
 
 module glib.Messages;
 
-private import gtkc.glibtypes;
+public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
@@ -112,7 +113,6 @@ public class Messages
 		return g_set_print_handler(func);
 	}
 	
-	
 	/**
 	 * Outputs a formatted message via the error message handler.
 	 * The default handler simply outputs the message to stderr.
@@ -143,12 +143,6 @@ public class Messages
 		// GPrintFunc g_set_printerr_handler (GPrintFunc func);
 		return g_set_printerr_handler(func);
 	}
-	
-	
-	
-	
-	
-	
 	
 	/**
 	 * Prompts the user with [E]xit, [H]alt, show [S]tack trace or [P]roceed.
@@ -208,5 +202,4 @@ public class Messages
 			// void g_on_error_stack_trace (const gchar *prg_name);
 			g_on_error_stack_trace(Str.toStringz(prgName));
 		}
-		
 }

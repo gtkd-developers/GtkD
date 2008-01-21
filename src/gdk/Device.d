@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.ListG
  * 	- gdk.Device
@@ -54,7 +55,7 @@
 
 module gdk.Device;
 
-private import gtkc.gdktypes;
+public  import gtkc.gdktypes;
 
 private import gtkc.gdk;
 
@@ -169,12 +170,6 @@ public class Device
 	/**
 	 */
 	
-	
-	
-	
-	
-	
-	
 	/**
 	 * Returns the list of available input devices for the default display.
 	 * The list is statically allocated and should not be freed.
@@ -183,7 +178,13 @@ public class Device
 	public static ListG gdkDevicesList()
 	{
 		// GList* gdk_devices_list (void);
-		return new ListG( gdk_devices_list() );
+		auto p = gdk_devices_list();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -244,7 +245,13 @@ public class Device
 	public static Device getCorePointer()
 	{
 		// GdkDevice* gdk_device_get_core_pointer (void);
-		return new Device( gdk_device_get_core_pointer() );
+		auto p = gdk_device_get_core_pointer();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Device(cast(GdkDevice*) p);
 	}
 	
 	/**
@@ -294,7 +301,6 @@ public class Device
 		gdk_device_free_history(events, nEvents);
 	}
 	
-	
 	/**
 	 * Interprets an array of double as axis values for a given device,
 	 * and locates the value in the array for a given axis use.
@@ -323,5 +329,4 @@ public class Device
 		// void gdk_input_set_extension_events (GdkWindow *window,  gint mask,  GdkExtensionMode mode);
 		gdk_input_set_extension_events((window is null) ? null : window.getWindowStruct(), mask, mode);
 	}
-	
 }

@@ -41,45 +41,57 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- glib.Str
  * 	- gtk.Style
+ * 	- gdk.Color
  * 	- gdk.Window
  * 	- gdk.Rectangle
+ * 	- gtk.IconSet
  * 	- gdk.Pixbuf
  * 	- gtk.IconSource
  * 	- gtk.Widget
  * 	- gdk.Font
  * 	- gdk.Drawable
+ * 	- pango.PgLayout
  * structWrap:
+ * 	- GdkColor* -> Color
  * 	- GdkDrawable* -> Drawable
  * 	- GdkFont* -> Font
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkRectangle* -> Rectangle
  * 	- GdkWindow* -> Window
+ * 	- GtkIconSet* -> IconSet
  * 	- GtkIconSource* -> IconSource
  * 	- GtkStyle* -> Style
  * 	- GtkWidget* -> Widget
+ * 	- PangoLayout* -> PgLayout
  * module aliases:
  * local aliases:
  */
 
 module gtk.Style;
 
-private import gtkc.gtktypes;
+public  import gtkc.gtktypes;
 
 private import gtkc.gtk;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Style;
+private import gdk.Color;
 private import gdk.Window;
 private import gdk.Rectangle;
+private import gtk.IconSet;
 private import gdk.Pixbuf;
 private import gtk.IconSource;
 private import gtk.Widget;
 private import gdk.Font;
 private import gdk.Drawable;
+private import pango.PgLayout;
 
 
 
@@ -124,13 +136,16 @@ public class Style : ObjectG
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(Style)[] onRealizeListeners;
+	/**
+	 * Emitted when the style has been initialized for a particular
+	 * colormap and depth. Connecting to this signal is probably seldom
+	 * useful since most of the time applications and widgets only
+	 * deal with styles that have been already realized.
+	 * Since 2.4
+	 */
 	void addOnRealize(void delegate(Style) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("realize" in connectedSignals) )
@@ -159,6 +174,13 @@ public class Style : ObjectG
 	}
 	
 	void delegate(Style)[] onUnrealizeListeners;
+	/**
+	 * Emitted when the aspects of the style specific to a particular colormap
+	 * and depth are being cleaned up. A connection to this signal can be useful
+	 * if a widget wants to cache objects like a GdkGC as object data on GtkStyle.
+	 * This signal provides a convenient place to free such cached objects.
+	 * Since 2.4
+	 */
 	void addOnUnrealize(void delegate(Style) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("unrealize" in connectedSignals) )
@@ -187,15 +209,20 @@ public class Style : ObjectG
 	}
 	
 	
-	
-	
 	/**
 	 * Creates a new GtkStyle.
 	 */
 	public this ()
 	{
 		// GtkStyle* gtk_style_new (void);
-		this(cast(GtkStyle*)gtk_style_new() );
+		auto p = gtk_style_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -204,7 +231,13 @@ public class Style : ObjectG
 	public Style copy()
 	{
 		// GtkStyle* gtk_style_copy (GtkStyle *style);
-		return new Style( gtk_style_copy(gtkStyle) );
+		auto p = gtk_style_copy(gtkStyle);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -223,7 +256,13 @@ public class Style : ObjectG
 	public Style attach(Window window)
 	{
 		// GtkStyle* gtk_style_attach (GtkStyle *style,  GdkWindow *window);
-		return new Style( gtk_style_attach(gtkStyle, (window is null) ? null : window.getWindowStruct()) );
+		auto p = gtk_style_attach(gtkStyle, (window is null) ? null : window.getWindowStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -245,7 +284,13 @@ public class Style : ObjectG
 	public Style doref()
 	{
 		// GtkStyle* gtk_style_ref (GtkStyle *style);
-		return new Style( gtk_style_ref(gtkStyle) );
+		auto p = gtk_style_ref(gtkStyle);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Style(cast(GtkStyle*) p);
 	}
 	
 	/**
@@ -281,7 +326,6 @@ public class Style : ObjectG
 		gtk_style_apply_default_background(gtkStyle, (window is null) ? null : window.getWindowStruct(), setBg, stateType, (area is null) ? null : area.getRectangleStruct(), x, y, width, height);
 	}
 	
-	
 	/**
 	 * Looks up color_name in the style's logical color mappings,
 	 * filling in color and returning TRUE if found, otherwise
@@ -294,20 +338,26 @@ public class Style : ObjectG
 	 * color =  the GdkColor to fill in
 	 * Returns: TRUE if the mapping was found.
 	 */
-	public int lookupColor(char[] colorName, GdkColor* color)
+	public int lookupColor(char[] colorName, Color color)
 	{
 		// gboolean gtk_style_lookup_color (GtkStyle *style,  const gchar *color_name,  GdkColor *color);
-		return gtk_style_lookup_color(gtkStyle, Str.toStringz(colorName), color);
+		return gtk_style_lookup_color(gtkStyle, Str.toStringz(colorName), (color is null) ? null : color.getColorStruct());
 	}
 	
 	/**
 	 * Params:
 	 * Returns:
 	 */
-	public GtkIconSet* lookupIconSet(char[] stockId)
+	public IconSet lookupIconSet(char[] stockId)
 	{
 		// GtkIconSet* gtk_style_lookup_icon_set (GtkStyle *style,  const gchar *stock_id);
-		return gtk_style_lookup_icon_set(gtkStyle, Str.toStringz(stockId));
+		auto p = gtk_style_lookup_icon_set(gtkStyle, Str.toStringz(stockId));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new IconSet(cast(GtkIconSet*) p);
 	}
 	
 	/**
@@ -327,7 +377,13 @@ public class Style : ObjectG
 	public Pixbuf renderIcon(IconSource source, GtkTextDirection direction, GtkStateType state, GtkIconSize size, Widget widget, char[] detail)
 	{
 		// GdkPixbuf* gtk_style_render_icon (GtkStyle *style,  const GtkIconSource *source,  GtkTextDirection direction,  GtkStateType state,  GtkIconSize size,  GtkWidget *widget,  const gchar *detail);
-		return new Pixbuf( gtk_style_render_icon(gtkStyle, (source is null) ? null : source.getIconSourceStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail)) );
+		auto p = gtk_style_render_icon(gtkStyle, (source is null) ? null : source.getIconSourceStruct(), direction, state, size, (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixbuf(cast(GdkPixbuf*) p);
 	}
 	
 	/**
@@ -342,7 +398,13 @@ public class Style : ObjectG
 	public Font getFont()
 	{
 		// GdkFont* gtk_style_get_font (GtkStyle *style);
-		return new Font( gtk_style_get_font(gtkStyle) );
+		auto p = gtk_style_get_font(gtkStyle);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Font(cast(GdkFont*) p);
 	}
 	
 	/**
@@ -731,10 +793,10 @@ public class Style : ObjectG
 	 * gtk_draw_layout is deprecated and should not be used in newly-written code.
 	 * Params:
 	 */
-	public void drawLayout(Window window, GtkStateType stateType, int useText, int x, int y, PangoLayout* layout)
+	public void drawLayout(Window window, GtkStateType stateType, int useText, int x, int y, PgLayout layout)
 	{
 		// void gtk_draw_layout (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  gboolean use_text,  gint x,  gint y,  PangoLayout *layout);
-		gtk_draw_layout(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, useText, x, y, layout);
+		gtk_draw_layout(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, useText, x, y, (layout is null) ? null : layout.getPgLayoutStruct());
 	}
 	
 	/**
@@ -1197,10 +1259,10 @@ public class Style : ObjectG
 	 * y =  y origin
 	 * layout =  the layout to draw
 	 */
-	public void paintLayout(Window window, GtkStateType stateType, int useText, Rectangle area, Widget widget, char[] detail, int x, int y, PangoLayout* layout)
+	public void paintLayout(Window window, GtkStateType stateType, int useText, Rectangle area, Widget widget, char[] detail, int x, int y, PgLayout layout)
 	{
 		// void gtk_paint_layout (GtkStyle *style,  GdkWindow *window,  GtkStateType state_type,  gboolean use_text,  GdkRectangle *area,  GtkWidget *widget,  const gchar *detail,  gint x,  gint y,  PangoLayout *layout);
-		gtk_paint_layout(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, useText, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, layout);
+		gtk_paint_layout(gtkStyle, (window is null) ? null : window.getWindowStruct(), stateType, useText, (area is null) ? null : area.getRectangleStruct(), (widget is null) ? null : widget.getWidgetStruct(), Str.toStringz(detail), x, y, (layout is null) ? null : layout.getPgLayoutStruct());
 	}
 	
 	/**
@@ -1247,7 +1309,6 @@ public class Style : ObjectG
 		gtk_draw_insertion_cursor((widget is null) ? null : widget.getWidgetStruct(), (drawable is null) ? null : drawable.getDrawableStruct(), (area is null) ? null : area.getRectangleStruct(), (location is null) ? null : location.getRectangleStruct(), isPrimary, direction, drawArrow);
 	}
 	
-	
 	/**
 	 * Copies a GtkBorder structure.
 	 * Params:
@@ -1270,7 +1331,4 @@ public class Style : ObjectG
 		// void gtk_border_free (GtkBorder *border_);
 		gtk_border_free(border);
 	}
-	
-	
-	
 }
