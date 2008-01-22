@@ -805,8 +805,13 @@ public class GtkWrapper : WrapperIF
         externalText ~= "// Adapted from John Reimer's DUI loader modules\n\n";
         externalText ~= "\nmodule "~bindingsDir~"."~loaderTableName~";"
                         "\n"
-                        "\nversion(Tango) private import tango.stdc.stdio;"
-                        "\nelse private import std.stdio;"
+                        "\nversion(Tango)"
+                        "\n{"
+                        "\n	private import tango.stdc.stdio;"
+                        "\n	debug private import tango.io.Stdout;"
+                        "\n}"
+                        "\nelse"
+                        "\n	private import std.stdio;"
                         "\n"
                         "\nprivate import "~bindingsDir~"." ~loaderTableName~"types;";
         if ( loaderTableName == "glib" )
