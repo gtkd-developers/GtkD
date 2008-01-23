@@ -210,25 +210,24 @@ public struct GdkPixbufFormat{}
  * where the prefix is NULL.
  * GdkPixbufModulePattern *signature[] = {
 	 */
-public struct GdkPixbufModulePattern{}
-// char *prefix;
-// gdk-pixbuf-Module-Interface.html
-// char *mask;
-// gdk-pixbuf-Module-Interface.html
-// int relevance;
-// gdk-pixbuf-Module-Interface.html
-
-
-/**
- * A GdkPixbufModule contains the necessary functions to load and save
- * images in a certain file format.
- * A GdkPixbufModule can be loaded dynamically from a GModule.
- * Each loadable module must contain a GdkPixbufModuleFillVtableFunc function
- * named fill_vtable, which will get called when the module
- * is loaded and must set the function pointers of the GdkPixbufModule.
- * char*module_name;
- * the name of the module, usually the same as the
- */
+	public struct GdkPixbufModulePattern
+{
+		char *prefix;
+		char *mask;
+		int relevance;
+	}
+	
+	
+	/**
+	 * A GdkPixbufModule contains the necessary functions to load and save
+	 * images in a certain file format.
+	 * A GdkPixbufModule can be loaded dynamically from a GModule.
+	 * Each loadable module must contain a GdkPixbufModuleFillVtableFunc function
+	 * named fill_vtable, which will get called when the module
+	 * is loaded and must set the function pointers of the GdkPixbufModule.
+	 * char*module_name;
+	 * the name of the module, usually the same as the
+	 */
 public struct GdkPixbufModule{}
 // char *moduleName;
 // gdk-pixbuf-Module-Interface.html

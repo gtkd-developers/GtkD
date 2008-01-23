@@ -683,15 +683,13 @@ public struct PangoLogAttr{}
  * intheight;
  * height of the rectangle.
  */
-public struct PangoRectangle{}
-// int x;
-// pango-Glyph-Storage.html
-// int y;
-// pango-Glyph-Storage.html
-// int width;
-// pango-Glyph-Storage.html
-// int height;
-// pango-Glyph-Storage.html
+public struct PangoRectangle
+{
+	int x;
+	int y;
+	int width;
+	int height;
+}
 
 
 /**
@@ -703,19 +701,15 @@ public struct PangoRectangle{}
  * y_device = x_user * matrix->yx + y_user * matrix->yy + matrix->y0;
  * doublexx;
  */
-public struct PangoMatrix{}
-// double xx;
-// pango-Glyph-Storage.html
-// double xy;
-// pango-Glyph-Storage.html
-// double yx;
-// pango-Glyph-Storage.html
-// double yy;
-// pango-Glyph-Storage.html
-// double x0;
-// pango-Glyph-Storage.html
-// double y0;
-// pango-Glyph-Storage.html
+public struct PangoMatrix
+{
+	double xx;
+	double xy;
+	double yx;
+	double yy;
+	double x0;
+	double y0;
+}
 
 
 /**
@@ -838,25 +832,18 @@ public struct PangoFontDescription{}
  * guintref_count;
  * reference count. Used internally. See pango_font_metrics_ref()
  */
-public struct PangoFontMetrics{}
-// uint refCount;
-// pango-Fonts.html
-// int ascent;
-// pango-Fonts.html
-// int descent;
-// pango-Fonts.html
-// int approximateCharWidth;
-// pango-Fonts.html
-// int approximateDigitWidth;
-// pango-Fonts.html
-// int underlinePosition;
-// pango-Fonts.html
-// int underlineThickness;
-// pango-Fonts.html
-// int strikethroughPosition;
-// pango-Fonts.html
-// int strikethroughThickness;
-// pango-Fonts.html
+public struct PangoFontMetrics
+{
+	uint refCount;
+	int ascent;
+	int descent;
+	int approximateCharWidth;
+	int approximateDigitWidth;
+	int underlinePosition;
+	int underlineThickness;
+	int strikethroughPosition;
+	int strikethroughThickness;
+}
 
 
 /**

@@ -25,8 +25,14 @@
 
 module gtkc.gthread;
 
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+version(Tango)
+{
+	private import tango.stdc.stdio;
+	debug private import tango.io.Stdout;
+}
+else
+	private import std.stdio;
+
 private import gtkc.gthreadtypes;
 private import gtkc.Loader;
 private import gtkc.paths;
@@ -37,13 +43,23 @@ static this()
 {
  gthread_Linker = new Linker(libPath ~ importLibs[LIBRARY.GTHREAD] );
  gthread_Linker.link(gthreadLinks);
- debug writefln("* Finished static this(): gthread");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static this(): gthread").newline;
+ 	else writefln("* Finished static this(): gthread");
+ }
 }
 
 static ~this()
 {
  delete gthread_Linker;
- debug writefln("* Finished static ~this(): gthread");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static ~this(): gthread").newline;
+ 	else writefln("* Finished static ~this(): gthread");
+ }
 }
 
 extern(C) 

@@ -25,8 +25,14 @@
 
 module gtkglc.glgtk;
 
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+version(Tango)
+{
+	private import tango.stdc.stdio;
+	debug private import tango.io.Stdout;
+}
+else
+	private import std.stdio;
+
 private import gtkglc.glgtktypes;
 private import gtkc.Loader;
 private import gtkc.paths;
@@ -37,13 +43,23 @@ static this()
 {
  glgtk_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLGTK] );
  glgtk_Linker.link(glgtkLinks);
- debug writefln("* Finished static this(): glgtk");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static this(): glgtk").newline;
+ 	else writefln("* Finished static this(): glgtk");
+ }
 }
 
 static ~this()
 {
  delete glgtk_Linker;
- debug writefln("* Finished static ~this(): glgtk");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static ~this(): glgtk").newline;
+ 	else writefln("* Finished static ~this(): glgtk");
+ }
 }
 
 extern(C) 

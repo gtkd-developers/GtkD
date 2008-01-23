@@ -25,8 +25,14 @@
 
 module gtkc.glade;
 
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+version(Tango)
+{
+	private import tango.stdc.stdio;
+	debug private import tango.io.Stdout;
+}
+else
+	private import std.stdio;
+
 private import gtkc.gladetypes;
 private import gtkc.Loader;
 private import gtkc.paths;
@@ -37,13 +43,23 @@ static this()
 {
  glade_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLADE] );
  glade_Linker.link(gladeLinks);
- debug writefln("* Finished static this(): glade");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static this(): glade").newline;
+ 	else writefln("* Finished static this(): glade");
+ }
 }
 
 static ~this()
 {
  delete glade_Linker;
- debug writefln("* Finished static ~this(): glade");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static ~this(): glade").newline;
+ 	else writefln("* Finished static ~this(): glade");
+ }
 }
 
 extern(C) 

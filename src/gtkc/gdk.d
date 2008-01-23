@@ -25,8 +25,14 @@
 
 module gtkc.gdk;
 
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+version(Tango)
+{
+	private import tango.stdc.stdio;
+	debug private import tango.io.Stdout;
+}
+else
+	private import std.stdio;
+
 private import gtkc.gdktypes;
 private import gtkc.cairotypes;
 private import gtkc.Loader;
@@ -38,13 +44,23 @@ static this()
 {
  gdk_Linker = new Linker(libPath ~ importLibs[LIBRARY.GDK], libPath ~ importLibs[LIBRARY.GDKPIXBUF] );
  gdk_Linker.link(gdkLinks);
- debug writefln("* Finished static this(): gdk");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static this(): gdk").newline;
+ 	else writefln("* Finished static this(): gdk");
+ }
 }
 
 static ~this()
 {
  delete gdk_Linker;
- debug writefln("* Finished static ~this(): gdk");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static ~this(): gdk").newline;
+ 	else writefln("* Finished static ~this(): gdk");
+ }
 }
 
 extern(C) 

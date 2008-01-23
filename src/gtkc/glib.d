@@ -25,8 +25,14 @@
 
 module gtkc.glib;
 
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+version(Tango)
+{
+	private import tango.stdc.stdio;
+	debug private import tango.io.Stdout;
+}
+else
+	private import std.stdio;
+
 private import gtkc.glibtypes;
 private import gtkc.gthreadtypes;
 private import gtkc.Loader;
@@ -38,13 +44,23 @@ static this()
 {
  glib_Linker = new Linker(libPath ~ importLibs[LIBRARY.GLIB] );
  glib_Linker.link(glibLinks);
- debug writefln("* Finished static this(): glib");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static this(): glib").newline;
+ 	else writefln("* Finished static this(): glib");
+ }
 }
 
 static ~this()
 {
  delete glib_Linker;
- debug writefln("* Finished static ~this(): glib");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static ~this(): glib").newline;
+ 	else writefln("* Finished static ~this(): glib");
+ }
 }
 
 extern(C) 

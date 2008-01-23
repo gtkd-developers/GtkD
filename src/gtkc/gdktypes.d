@@ -1794,9 +1794,10 @@ public struct GdkSegment
  * doublex22;
  * the x coordinate of the bottom right corner
  */
-public struct GdkTrapezoid{}
-// double y1, x11, x21, y2, x12, x22;
-// gdk-Drawing-Primitives.html
+public struct GdkTrapezoid
+{
+	double y1, x11, x21, y2, x12, x22;
+}
 
 
 /**

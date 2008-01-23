@@ -25,8 +25,14 @@
 
 module gtkc.gdkpixbuf;
 
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+version(Tango)
+{
+	private import tango.stdc.stdio;
+	debug private import tango.io.Stdout;
+}
+else
+	private import std.stdio;
+
 private import gtkc.gdkpixbuftypes;
 private import gtkc.Loader;
 private import gtkc.paths;
@@ -37,13 +43,23 @@ static this()
 {
  gdkpixbuf_Linker = new Linker(libPath ~ importLibs[LIBRARY.GDKPIXBUF] );
  gdkpixbuf_Linker.link(gdkpixbufLinks);
- debug writefln("* Finished static this(): gdkpixbuf");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static this(): gdkpixbuf").newline;
+ 	else writefln("* Finished static this(): gdkpixbuf");
+ }
 }
 
 static ~this()
 {
  delete gdkpixbuf_Linker;
- debug writefln("* Finished static ~this(): gdkpixbuf");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static ~this(): gdkpixbuf").newline;
+ 	else writefln("* Finished static ~this(): gdkpixbuf");
+ }
 }
 
 extern(C) 

@@ -25,8 +25,14 @@
 
 module gtkc.pango;
 
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+version(Tango)
+{
+	private import tango.stdc.stdio;
+	debug private import tango.io.Stdout;
+}
+else
+	private import std.stdio;
+
 private import gtkc.pangotypes;
 private import gtkc.Loader;
 private import gtkc.paths;
@@ -37,13 +43,23 @@ static this()
 {
  pango_Linker = new Linker(libPath ~ importLibs[LIBRARY.PANGO] );
  pango_Linker.link(pangoLinks);
- debug writefln("* Finished static this(): pango");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static this(): pango").newline;
+ 	else writefln("* Finished static this(): pango");
+ }
 }
 
 static ~this()
 {
  delete pango_Linker;
- debug writefln("* Finished static ~this(): pango");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static ~this(): pango").newline;
+ 	else writefln("* Finished static ~this(): pango");
+ }
 }
 
 extern(C) 

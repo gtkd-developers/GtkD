@@ -439,17 +439,14 @@ public struct cairo_scaled_font_t{}
  * matrix), but otherwise will remain unchanged.
  * doubleascent;
  */
-public struct cairo_font_extents_t{}
-// double ascent;
-// cairo-Scaled-Fonts.html
-// double descent;
-// cairo-Scaled-Fonts.html
-// double height;
-// cairo-Scaled-Fonts.html
-// double maxXAdvance;
-// cairo-Scaled-Fonts.html
-// double maxYAdvance;
-// cairo-Scaled-Fonts.html
+public struct cairo_font_extents_t
+{
+	double ascent;
+	double descent;
+	double height;
+	double maxXAdvance;
+	double maxYAdvance;
+}
 
 
 /**
@@ -464,19 +461,15 @@ public struct cairo_font_extents_t{}
  * but otherwise will remain unchanged.
  * doublex_bearing;
  */
-public struct cairo_text_extents_t{}
-// double xBearing;
-// cairo-Scaled-Fonts.html
-// double yBearing;
-// cairo-Scaled-Fonts.html
-// double width;
-// cairo-Scaled-Fonts.html
-// double height;
-// cairo-Scaled-Fonts.html
-// double xAdvance;
-// cairo-Scaled-Fonts.html
-// double yAdvance;
-// cairo-Scaled-Fonts.html
+public struct cairo_text_extents_t
+{
+	double xBearing;
+	double yBearing;
+	double width;
+	double height;
+	double xAdvance;
+	double yAdvance;
+}
 
 
 /**
@@ -504,13 +497,12 @@ public struct cairo_surface_t{}
  * rotation, shear, or a combination of those. The transformation of
  * a point (x, y) is given by:
  */
-public struct cairo_matrix_t{}
-// double xx; double yx;
-// cairo-cairo-matrix-t.html
-// double xy; double yy;
-// cairo-cairo-matrix-t.html
-// double x0; double y0;
-// cairo-cairo-matrix-t.html
+public struct cairo_matrix_t
+{
+	double xx; double yx;
+	double xy; double yy;
+	double x0; double y0;
+}
 
 
 /**
@@ -521,9 +513,10 @@ public struct cairo_matrix_t{}
  * would just use the address of a static cairo_data_key_t object.
  * intunused;
  */
-public struct cairo_user_data_key_t{}
-// int unused;
-// cairo-Types.html
+public struct cairo_user_data_key_t
+{
+	int unused;
+}
 
 
 /*

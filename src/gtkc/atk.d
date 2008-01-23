@@ -25,8 +25,14 @@
 
 module gtkc.atk;
 
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+version(Tango)
+{
+	private import tango.stdc.stdio;
+	debug private import tango.io.Stdout;
+}
+else
+	private import std.stdio;
+
 private import gtkc.atktypes;
 private import gtkc.Loader;
 private import gtkc.paths;
@@ -37,13 +43,23 @@ static this()
 {
  atk_Linker = new Linker(libPath ~ importLibs[LIBRARY.ATK] );
  atk_Linker.link(atkLinks);
- debug writefln("* Finished static this(): atk");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static this(): atk").newline;
+ 	else writefln("* Finished static this(): atk");
+ }
 }
 
 static ~this()
 {
  delete atk_Linker;
- debug writefln("* Finished static ~this(): atk");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static ~this(): atk").newline;
+ 	else writefln("* Finished static ~this(): atk");
+ }
 }
 
 extern(C) 

@@ -25,8 +25,14 @@
 
 module gtkc.gtk;
 
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+version(Tango)
+{
+	private import tango.stdc.stdio;
+	debug private import tango.io.Stdout;
+}
+else
+	private import std.stdio;
+
 private import gtkc.gtktypes;
 private import gtkc.Loader;
 private import gtkc.paths;
@@ -37,13 +43,23 @@ static this()
 {
  gtk_Linker = new Linker(libPath ~ importLibs[LIBRARY.GTK] );
  gtk_Linker.link(gtkLinks);
- debug writefln("* Finished static this(): gtk");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static this(): gtk").newline;
+ 	else writefln("* Finished static this(): gtk");
+ }
 }
 
 static ~this()
 {
  delete gtk_Linker;
- debug writefln("* Finished static ~this(): gtk");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static ~this(): gtk").newline;
+ 	else writefln("* Finished static ~this(): gtk");
+ }
 }
 
 extern(C) 

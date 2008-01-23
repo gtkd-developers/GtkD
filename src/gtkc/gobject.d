@@ -25,8 +25,14 @@
 
 module gtkc.gobject;
 
-version(Tango) private import tango.stdc.stdio;
-else private import std.stdio;
+version(Tango)
+{
+	private import tango.stdc.stdio;
+	debug private import tango.io.Stdout;
+}
+else
+	private import std.stdio;
+
 private import gtkc.gobjecttypes;
 private import gtkc.Loader;
 private import gtkc.paths;
@@ -37,13 +43,23 @@ static this()
 {
  gobject_Linker = new Linker(libPath ~ importLibs[LIBRARY.GOBJECT] );
  gobject_Linker.link(gobjectLinks);
- debug writefln("* Finished static this(): gobject");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static this(): gobject").newline;
+ 	else writefln("* Finished static this(): gobject");
+ }
 }
 
 static ~this()
 {
  delete gobject_Linker;
- debug writefln("* Finished static ~this(): gobject");
+
+ debug
+ {
+ 	version(Tango) Stdout("* Finished static ~this(): gobject").newline;
+ 	else writefln("* Finished static ~this(): gobject");
+ }
 }
 
 extern(C) 
