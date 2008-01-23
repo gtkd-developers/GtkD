@@ -1888,6 +1888,11 @@ public class GtkDClass
 		{
 			return true;
 		}
+		foreach(primitive; wrapper.getAliases())
+		{
+			if(primitive == type)
+				return true;
+		}
 		return (type in wrapper.getAliases()) !is null;
 	}
 
