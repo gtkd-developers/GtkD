@@ -98,25 +98,18 @@ alias GdkPixbufFormatFlags PixbufFormatFlags;
  * serialization and streaming.
  * guint32magic;
  */
-public struct GdkPixdata{}
-// uint magic; /+* GDK_PIXBUF_MAGIC_NUMBER +/
-// gdk-pixbuf-inline.html
-// int length; /+* <1 to disable length checks, otherwise:
-// gdk-pixbuf-inline.html
-// * GDK_PIXDATA_HEADER_LENGTH + pixelData length
-// gdk-pixbuf-inline.html
-// +/
-// gdk-pixbuf-inline.html
-// uint pixdataType; /+* GdkPixdataType +/
-// gdk-pixbuf-inline.html
-// uint rowstride;
-// gdk-pixbuf-inline.html
-// uint width;
-// gdk-pixbuf-inline.html
-// uint height;
-// gdk-pixbuf-inline.html
-// byte *pixelData;
-// gdk-pixbuf-inline.html
+public struct GdkPixdata
+{
+	uint magic; /+* GDK_PIXBUF_MAGIC_NUMBER +/
+	int length; /+* <1 to disable length checks, otherwise:
+	 * GDK_PIXDATA_HEADER_LENGTH + pixelData length
+	+/
+	uint pixdataType; /+* GdkPixdataType +/
+	uint rowstride;
+	uint width;
+	uint height;
+	byte *pixelData;
+}
 
 
 /**
@@ -172,25 +165,18 @@ public struct GdkPixbufLoader{}
  * gchar*license;
  * a string containing license information, typically set to
  */
-public struct GdkPixbufFormat{}
-// char *name;
-// gdk-pixbuf-Module-Interface.html
-// GdkPixbufModulePattern *signature;
-// gdk-pixbuf-Module-Interface.html
-// char *domain;
-// gdk-pixbuf-Module-Interface.html
-// char *description;
-// gdk-pixbuf-Module-Interface.html
-// char **mimeTypes;
-// gdk-pixbuf-Module-Interface.html
-// char **extensions;
-// gdk-pixbuf-Module-Interface.html
-// uint flags;
-// gdk-pixbuf-Module-Interface.html
-// int disabled;
-// gdk-pixbuf-Module-Interface.html
-// char *license;
-// gdk-pixbuf-Module-Interface.html
+public struct GdkPixbufFormat
+{
+	char *name;
+	GdkPixbufModulePattern *signature;
+	char *domain;
+	char *description;
+	char **mimeTypes;
+	char **extensions;
+	uint flags;
+	int disabled;
+	char *license;
+}
 
 
 /**

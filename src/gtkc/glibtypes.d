@@ -1280,13 +1280,12 @@ public struct GSourceCallbackFuncs{}
  * gbooleanexclusive;
  * are all threads exclusive to this pool
  */
-public struct GThreadPool{}
-// GFunc func;
-// glib-Thread-Pools.html
-// void* userData;
-// glib-Thread-Pools.html
-// int exclusive;
-// glib-Thread-Pools.html
+public struct GThreadPool
+{
+	GFunc func;
+	void* userData;
+	int exclusive;
+}
 
 
 /**
@@ -1471,29 +1470,23 @@ public struct GTimeVal
  * guintday:6;
  * the day of the day-month-year representation of the date, as
  */
-public struct GDate{}
-// uint julianDays : 32; /+* julian days representation - we use a
-// glib-Date-and-Time-Functions.html
-// * bitfield hoping that 64 bit platforms
-// glib-Date-and-Time-Functions.html
-// * will pack this whole struct inn one big
-// glib-Date-and-Time-Functions.html
-// * int
-// glib-Date-and-Time-Functions.html
-// +/
-// glib-Date-and-Time-Functions.html
-// uint julian : 1; /+* julian is valid +/
-// glib-Date-and-Time-Functions.html
-// uint dmy : 1; /+* dmy is valid +/
-// glib-Date-and-Time-Functions.html
-// /+* DMY representation +/
-// glib-Date-and-Time-Functions.html
-// uint day : 6;
-// glib-Date-and-Time-Functions.html
-// uint month : 4;
-// glib-Date-and-Time-Functions.html
-// uint year : 16;
-// glib-Date-and-Time-Functions.html
+public struct GDate
+{
+	uint bitfield0;
+	//uint julianDays : 32;
+	/+* julian days representation - we use a
+	 * bitfield hoping that 64 bit platforms
+	 * will pack this whole struct inn one big
+	 * int
+	+/
+	uint bitfield1;
+	//uint julian : 1; /+* julian is valid +/
+	//uint dmy : 1; /+* dmy is valid +/
+	/+* DMY representation +/
+	//uint day : 6;
+	//uint month : 4;
+	//uint year : 16;
+}
 
 
 /**
@@ -1540,67 +1533,39 @@ public struct GDebugKey
  * GScannerConfig*config;
  * GTokenTypetoken;
  */
-public struct GScanner{}
-// /+* unused fields +/
-// glib-Lexical-Scanner.html
-// void* userData;
-// glib-Lexical-Scanner.html
-// uint maxParseErrors;
-// glib-Lexical-Scanner.html
-// /+* error() increments this field +/
-// glib-Lexical-Scanner.html
-// uint parseErrors;
-// glib-Lexical-Scanner.html
-// /+* name of input stream, featured by the defaulx message handler +/
-// glib-Lexical-Scanner.html
-// char *inputName;
-// glib-Lexical-Scanner.html
-// /+* quarked data +/
-// glib-Lexical-Scanner.html
-// GData *qdata;
-// glib-Lexical-Scanner.html
-// /+* link into the scanner configuration +/
-// glib-Lexical-Scanner.html
-// GScannerConfig *config;
-// glib-Lexical-Scanner.html
-// /+* fields filled inn after getNextToken() +/
-// glib-Lexical-Scanner.html
-// GTokenType token;
-// glib-Lexical-Scanner.html
-// GTokenValue value;
-// glib-Lexical-Scanner.html
-// uint line;
-// glib-Lexical-Scanner.html
-// uint position;
-// glib-Lexical-Scanner.html
-// /+* fields filled inn after peekNextToken() +/
-// glib-Lexical-Scanner.html
-// GTokenType nextToken;
-// glib-Lexical-Scanner.html
-// GTokenValue nextValue;
-// glib-Lexical-Scanner.html
-// uint nextLine;
-// glib-Lexical-Scanner.html
-// uint nextPosition;
-// glib-Lexical-Scanner.html
-// /+* to be considered private +/
-// glib-Lexical-Scanner.html
-// GHashTable *symbolTable;
-// glib-Lexical-Scanner.html
-// int inputFd;
-// glib-Lexical-Scanner.html
-// char *text;
-// glib-Lexical-Scanner.html
-// char *textEnd;
-// glib-Lexical-Scanner.html
-// char *buffer;
-// glib-Lexical-Scanner.html
-// uint scopeId;
-// glib-Lexical-Scanner.html
-// /+* handler funct for _Warn and _Error +/
-// glib-Lexical-Scanner.html
-// GScannerMsgFunc msgHandler;
-// glib-Lexical-Scanner.html
+public struct GScanner
+{
+	/+* unused fields +/
+	void* userData;
+	uint maxParseErrors;
+	/+* error() increments this field +/
+	uint parseErrors;
+	/+* name of input stream, featured by the defaulx message handler +/
+	char *inputName;
+	/+* quarked data +/
+	GData *qdata;
+	/+* link into the scanner configuration +/
+	GScannerConfig *config;
+	/+* fields filled inn after getNextToken() +/
+	GTokenType token;
+	GTokenValue value;
+	uint line;
+	uint position;
+	/+* fields filled inn after peekNextToken() +/
+	GTokenType nextToken;
+	GTokenValue nextValue;
+	uint nextLine;
+	uint nextPosition;
+	/+* to be considered private +/
+	GHashTable *symbolTable;
+	int inputFd;
+	char *text;
+	char *textEnd;
+	char *buffer;
+	uint scopeId;
+	/+* handler funct for _Warn and _Error +/
+	GScannerMsgFunc msgHandler;
+}
 
 
 /**
@@ -1667,75 +1632,44 @@ public struct GScanner{}
  * is searched for in the default scope in addition to the current scope
  * (the default is FALSE).
  */
-public struct GScannerConfig{}
-// /+* Character sets
-// glib-Lexical-Scanner.html
-// +/
-// glib-Lexical-Scanner.html
-// char *csetSkipCharacters; /+* default: " \t\n" +/
-// glib-Lexical-Scanner.html
-// char *csetIdentifierFirst;
-// glib-Lexical-Scanner.html
-// char *csetIdentifierNth;
-// glib-Lexical-Scanner.html
-// char *cpairCommentSingle; /+* default: "#\n" +/
-// glib-Lexical-Scanner.html
-// /+* Should symbol lookup work case sensitive?
-// glib-Lexical-Scanner.html
-// +/
-// glib-Lexical-Scanner.html
-// uint caseSensitive : 1;
-// glib-Lexical-Scanner.html
-// /+* Boolean values to be adjusted "on the fly"
-// glib-Lexical-Scanner.html
-// * to configure scanning behaviour.
-// glib-Lexical-Scanner.html
-// +/
-// glib-Lexical-Scanner.html
-// uint skipCommentMulti : 1; /+* C like comment +/
-// glib-Lexical-Scanner.html
-// uint skipCommentSingle : 1; /+* single line comment +/
-// glib-Lexical-Scanner.html
-// uint scanCommentMulti : 1; /+* scan multi line comments? +/
-// glib-Lexical-Scanner.html
-// uint scanIdentifier : 1;
-// glib-Lexical-Scanner.html
-// uint scanIdentifier1char : 1;
-// glib-Lexical-Scanner.html
-// uint scanIdentifierNULL : 1;
-// glib-Lexical-Scanner.html
-// uint scanSymbols : 1;
-// glib-Lexical-Scanner.html
-// uint scanBinary : 1;
-// glib-Lexical-Scanner.html
-// uint scanOctal : 1;
-// glib-Lexical-Scanner.html
-// uint scanFloat : 1;
-// glib-Lexical-Scanner.html
-// uint scanHex : 1; /+* `0x0ff0' +/
-// glib-Lexical-Scanner.html
-// uint scanHexDollar : 1; /+* `$0ff0' +/
-// glib-Lexical-Scanner.html
-// uint scanStringSq : 1; /+* string: 'anything' +/
-// glib-Lexical-Scanner.html
-// uint scanStringDq : 1; /+* string: "\\-escapes!\n" +/
-// glib-Lexical-Scanner.html
-// uint numbers2_Int : 1; /+* bin, octal, hex => int +/
-// glib-Lexical-Scanner.html
-// uint int2_Float : 1; /+* int => G_TOKEN_FLOAT? +/
-// glib-Lexical-Scanner.html
-// uint identifier2_String : 1;
-// glib-Lexical-Scanner.html
-// uint char2_Token : 1; /+* return G_TOKEN_CHAR? +/
-// glib-Lexical-Scanner.html
-// uint symbol2_Token : 1;
-// glib-Lexical-Scanner.html
-// uint scope0_Fallback : 1; /+* try scope 0 on lookups? +/
-// glib-Lexical-Scanner.html
-// uint storeInt64 : 1; /+* use value.vInt64 rather than vInt +/
-// glib-Lexical-Scanner.html
-// uint paddingDummy;
-// glib-Lexical-Scanner.html
+public struct GScannerConfig
+{
+	/+* Character sets
+	+/
+	char *csetSkipCharacters; /+* default: " \t\n" +/
+	char *csetIdentifierFirst;
+	char *csetIdentifierNth;
+	char *cpairCommentSingle; /+* default: "#\n" +/
+	/+* Should symbol lookup work case sensitive?
+	+/
+	uint bitfield0;
+	//uint caseSensitive : 1;
+	/+* Boolean values to be adjusted "on the fly"
+	 * to configure scanning behaviour.
+	+/
+	//uint skipCommentMulti : 1; /+* C like comment +/
+	//uint skipCommentSingle : 1; /+* single line comment +/
+	//uint scanCommentMulti : 1; /+* scan multi line comments? +/
+	//uint scanIdentifier : 1;
+	//uint scanIdentifier1char : 1;
+	//uint scanIdentifierNULL : 1;
+	//uint scanSymbols : 1;
+	//uint scanBinary : 1;
+	//uint scanOctal : 1;
+	//uint scanFloat : 1;
+	//uint scanHex : 1; /+* `0x0ff0' +/
+	//uint scanHexDollar : 1; /+* `$0ff0' +/
+	//uint scanStringSq : 1; /+* string: 'anything' +/
+	//uint scanStringDq : 1; /+* string: "\\-escapes!\n" +/
+	//uint numbers2_Int : 1; /+* bin, octal, hex => int +/
+	//uint int2_Float : 1; /+* int => G_TOKEN_FLOAT? +/
+	//uint identifier2_String : 1;
+	//uint char2_Token : 1; /+* return G_TOKEN_CHAR? +/
+	//uint symbol2_Token : 1;
+	//uint scope0_Fallback : 1; /+* try scope 0 on lookups? +/
+	//uint storeInt64 : 1; /+* use value.vInt64 rather than vInt +/
+	uint paddingDummy;
+}
 
 
 /**
@@ -1746,17 +1680,14 @@ public struct GScannerConfig{}
  * GCompletionFuncfunc;
  * function which is called to get the string associated with a target
  */
-public struct GCompletion{}
-// GList* items;
-// glib-Automatic-String-Completion.html
-// GCompletionFunc func;
-// glib-Automatic-String-Completion.html
-// char* prefix;
-// glib-Automatic-String-Completion.html
-// GList* cache;
-// glib-Automatic-String-Completion.html
-// GCompletionStrncmpFunc strncmpFunc;
-// glib-Automatic-String-Completion.html
+public struct GCompletion
+{
+	GList* items;
+	GCompletionFunc func;
+	char* prefix;
+	GList* cache;
+	GCompletionStrncmpFunc strncmpFunc;
+}
 
 
 /**
@@ -1796,21 +1727,16 @@ public struct GOptionContext{}
  * constgchar*long_name;
  * The long name of an option can be used to specify it
  */
-public struct GOptionEntry{}
-// char *longName;
-// glib-Commandline-option-parser.html
-// char shortName;
-// glib-Commandline-option-parser.html
-// int flags;
-// glib-Commandline-option-parser.html
-// GOptionArg arg;
-// glib-Commandline-option-parser.html
-// void* argData;
-// glib-Commandline-option-parser.html
-// char *description;
-// glib-Commandline-option-parser.html
-// char *argDescription;
-// glib-Commandline-option-parser.html
+public struct GOptionEntry
+{
+	char *longName;
+	char shortName;
+	int flags;
+	GOptionArg arg;
+	void* argData;
+	char *description;
+	char *argDescription;
+}
 
 
 /**
@@ -1949,13 +1875,12 @@ public struct GMemChunk{}
  * gpointerdata;
  * holds the element's data, which can be a pointer to any kind of data,
  */
-public struct GList{}
-// void* data;
-// glib-Doubly-Linked-Lists.html
-// GList *next;
-// glib-Doubly-Linked-Lists.html
-// GList *prev;
-// glib-Doubly-Linked-Lists.html
+public struct GList
+{
+	void* data;
+	GList *next;
+	GList *prev;
+}
 
 
 /**
@@ -1964,11 +1889,11 @@ public struct GList{}
  * gpointerdata;
  * holds the element's data, which can be a pointer to any kind of data,
  */
-public struct GSList{}
-// void* data;
-// glib-Singly-Linked-Lists.html
-// GSList *next;
-// glib-Singly-Linked-Lists.html
+public struct GSList
+{
+	void* data;
+	GSList *next;
+}
 
 
 /**
@@ -1981,13 +1906,12 @@ public struct GSList{}
  * guintlength;
  * the number of elements in the queue.
  */
-public struct GQueue{}
-// GList *head;
-// glib-Double-ended-Queues.html
-// GList *tail;
-// glib-Double-ended-Queues.html
-// uint length;
-// glib-Double-ended-Queues.html
+public struct GQueue
+{
+	GList *head;
+	GList *tail;
+	uint length;
+}
 
 
 /**
@@ -1999,9 +1923,10 @@ public struct GQueue{}
  * gets stored in the first sizeof (gpointer)
  * bytes of the element.
  */
-public struct GTrashStack{}
-// GTrashStack *next;
-// glib-Trash-Stacks.html
+public struct GTrashStack
+{
+	GTrashStack *next;
+}
 
 
 /**
@@ -2101,17 +2026,14 @@ public struct GTree{}
  * GNode*next;
  * points to the node's next sibling (a sibling is another
  */
-public struct GNode{}
-// void* data;
-// glib-N-ary-Trees.html
-// GNode *next;
-// glib-N-ary-Trees.html
-// GNode *prev;
-// glib-N-ary-Trees.html
-// GNode *parent;
-// glib-N-ary-Trees.html
-// GNode *children;
-// glib-N-ary-Trees.html
+public struct GNode
+{
+	void* data;
+	GNode *next;
+	GNode *prev;
+	GNode *parent;
+	GNode *children;
+}
 
 
 /**

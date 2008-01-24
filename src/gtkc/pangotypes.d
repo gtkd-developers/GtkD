@@ -532,15 +532,13 @@ public struct PangoContext{}
  * gintoffset;
  * the offset of the segment from the beginning of the
  */
-public struct PangoItem{}
-// int offset;
-// pango-Text-Processing.html
-// int length;
-// pango-Text-Processing.html
-// int numChars;
-// pango-Text-Processing.html
-// PangoAnalysis analysis;
-// pango-Text-Processing.html
+public struct PangoItem
+{
+	int offset;
+	int length;
+	int numChars;
+	PangoAnalysis analysis;
+}
 
 
 /**
@@ -566,25 +564,18 @@ public struct PangoItem{}
  * GSList*extra_attrs;
  * extra attributes for this segment.
  */
-public struct PangoAnalysis{}
-// PangoEngineShape *shapeEngine;
-// pango-Text-Processing.html
-// PangoEngineLang *langEngine;
-// pango-Text-Processing.html
-// PangoFont *font;
-// pango-Text-Processing.html
-// byte level;
-// pango-Text-Processing.html
-// byte gravity; /+* PangoGravity +/
-// pango-Text-Processing.html
-// byte flags;
-// pango-Text-Processing.html
-// byte script; /+* PangoScript +/
-// pango-Text-Processing.html
-// PangoLanguage *language;
-// pango-Text-Processing.html
-// GSList *extraAttrs;
-// pango-Text-Processing.html
+public struct PangoAnalysis
+{
+	PangoEngineShape *shapeEngine;
+	PangoEngineLang *langEngine;
+	PangoFont *font;
+	byte level;
+	byte gravity; /+* PangoGravity +/
+	byte flags;
+	byte script; /+* PangoScript +/
+	PangoLanguage *language;
+	GSList *extraAttrs;
+}
 
 
 /**
@@ -601,73 +592,43 @@ public struct PangoAnalysis{}
  * guintis_cursor_position:1;
  * if set, cursor can appear in front of character.
  */
-public struct PangoLogAttr{}
-// uint isLineBreak : 1; /+* Can break line inn front of character +/
-// pango-Text-Processing.html
-// uint isMandatoryBreak : 1; /+* Must break line inn front of character +/
-// pango-Text-Processing.html
-// uint isCharBreak : 1; /+* Can break here when doing char wrap +/
-// pango-Text-Processing.html
-// uint isWhite : 1; /+* Whitespace character +/
-// pango-Text-Processing.html
-// /+* Cursor can appear inn front of character (i.e. this is a grapheme
-// pango-Text-Processing.html
-// * boundary, or the first character inn the text).
-// pango-Text-Processing.html
-// +/
-// pango-Text-Processing.html
-// uint isCursorPosition : 1;
-// pango-Text-Processing.html
-// /+* Note that inn degenerate cases, you could have both start/end set on
-// pango-Text-Processing.html
-// * some text, most likely for sentences (e.g. no space after a period, so
-// pango-Text-Processing.html
-// * the next sentence starts right away).
-// pango-Text-Processing.html
-// +/
-// pango-Text-Processing.html
-// uint isWordStart : 1; /+* first character inn a word +/
-// pango-Text-Processing.html
-// uint isWordEnd : 1; /+* is first non-word char after a word +/
-// pango-Text-Processing.html
-// /+* There are two ways to divide sentences. The first assigns all
-// pango-Text-Processing.html
-// * intersentence whitespace/control/format chars to some sentence,
-// pango-Text-Processing.html
-// * so all chars are inn some sentence; isSentenceBoundary denotes
-// pango-Text-Processing.html
-// * the boundaries there. The second way doesn't assign
-// pango-Text-Processing.html
-// * between-sentence spaces, etc. to any sentence, so
-// pango-Text-Processing.html
-// * isSentenceStart/isSentenceEnd mark the boundaries of those
-// pango-Text-Processing.html
-// * sentences.
-// pango-Text-Processing.html
-// +/
-// pango-Text-Processing.html
-// uint isSentenceBoundary : 1;
-// pango-Text-Processing.html
-// uint isSentenceStart : 1; /+* first character inn a sentence +/
-// pango-Text-Processing.html
-// uint isSentenceEnd : 1; /+* first non-sentence char after a sentence +/
-// pango-Text-Processing.html
-// /+* If set, backspace deletes one character rather than
-// pango-Text-Processing.html
-// * the entire grapheme cluster.
-// pango-Text-Processing.html
-// +/
-// pango-Text-Processing.html
-// uint backspaceDeletesCharacter : 1;
-// pango-Text-Processing.html
-// /+* Only few space variants (U+0020 and U+00A0) have variable
-// pango-Text-Processing.html
-// * width during justification.
-// pango-Text-Processing.html
-// +/
-// pango-Text-Processing.html
-// uint isExpandableSpace : 1;
-// pango-Text-Processing.html
+public struct PangoLogAttr
+{
+	uint bitfield0;
+	//uint isLineBreak : 1; /+* Can break line inn front of character +/
+	//uint isMandatoryBreak : 1; /+* Must break line inn front of character +/
+	//uint isCharBreak : 1; /+* Can break here when doing char wrap +/
+	//uint isWhite : 1; /+* Whitespace character +/
+	/+* Cursor can appear inn front of character (i.e. this is a grapheme
+	 * boundary, or the first character inn the text).
+	+/
+	//uint isCursorPosition : 1;
+	/+* Note that inn degenerate cases, you could have both start/end set on
+	 * some text, most likely for sentences (e.g. no space after a period, so
+	 * the next sentence starts right away).
+	+/
+	//uint isWordStart : 1; /+* first character inn a word +/
+	//uint isWordEnd : 1; /+* is first non-word char after a word +/
+	/+* There are two ways to divide sentences. The first assigns all
+	 * intersentence whitespace/control/format chars to some sentence,
+	 * so all chars are inn some sentence; isSentenceBoundary denotes
+	 * the boundaries there. The second way doesn't assign
+	 * between-sentence spaces, etc. to any sentence, so
+	 * isSentenceStart/isSentenceEnd mark the boundaries of those
+	 * sentences.
+	+/
+	//uint isSentenceBoundary : 1;
+	//uint isSentenceStart : 1; /+* first character inn a sentence +/
+	//uint isSentenceEnd : 1; /+* first non-sentence char after a sentence +/
+	/+* If set, backspace deletes one character rather than
+	 * the entire grapheme cluster.
+	+/
+	//uint backspaceDeletesCharacter : 1;
+	/+* Only few space variants (U+0020 and U+00A0) have variable
+	 * width during justification.
+	+/
+	//uint isExpandableSpace : 1;
+}
 
 
 /**
@@ -723,13 +684,12 @@ public struct PangoMatrix
  * PangoGlyphVisAttrattr;
  * the visual attributes of the glyph.
  */
-public struct PangoGlyphInfo{}
-// PangoGlyph glyph;
-// pango-Glyph-Storage.html
-// PangoGlyphGeometry geometry;
-// pango-Glyph-Storage.html
-// PangoGlyphVisAttr attr;
-// pango-Glyph-Storage.html
+public struct PangoGlyphInfo
+{
+	PangoGlyph glyph;
+	PangoGlyphGeometry geometry;
+	PangoGlyphVisAttr attr;
+}
 
 
 /**
@@ -742,13 +702,12 @@ public struct PangoGlyphInfo{}
  * PangoGlyphUnity_offset;
  * vertical offset from nominal character position.
  */
-public struct PangoGlyphGeometry{}
-// PangoGlyphUnit width;
-// pango-Glyph-Storage.html
-// PangoGlyphUnit xOffset;
-// pango-Glyph-Storage.html
-// PangoGlyphUnit yOffset;
-// pango-Glyph-Storage.html
+public struct PangoGlyphGeometry
+{
+	PangoGlyphUnit width;
+	PangoGlyphUnit xOffset;
+	PangoGlyphUnit yOffset;
+}
 
 
 /**
@@ -760,7 +719,7 @@ public struct PangoGlyphGeometry{}
  */
 public struct PangoGlyphVisAttr
 {
-	uint bitfield;
+	uint bitfield0;
 	//uint isClusterStart : 1;
 }
 
@@ -779,23 +738,17 @@ public struct PangoGlyphVisAttr
  * cluster. The indices are relative to the start of the text
  * corresponding to the PangoGlyphString.
  */
-public struct PangoGlyphString{}
-// int numGlyphs;
-// pango-Glyph-Storage.html
-// PangoGlyphInfo *glyphs;
-// pango-Glyph-Storage.html
-// /+* This is a memory inefficient way of representing the information
-// pango-Glyph-Storage.html
-// * here - each value gives the byte index within the text
-// pango-Glyph-Storage.html
-// * corresponding to the glyph string of the start of the cluster to
-// pango-Glyph-Storage.html
-// * which the glyph belongs.
-// pango-Glyph-Storage.html
-// +/
-// pango-Glyph-Storage.html
-// int *logClusters;
-// pango-Glyph-Storage.html
+public struct PangoGlyphString
+{
+	int numGlyphs;
+	PangoGlyphInfo *glyphs;
+	/+* This is a memory inefficient way of representing the information
+	 * here - each value gives the byte index within the text
+	 * corresponding to the glyph string of the start of the cluster to
+	 * which the glyph belongs.
+	+/
+	int *logClusters;
+}
 
 
 /**
@@ -807,11 +760,11 @@ public struct PangoGlyphString{}
  * PangoItem*item;
  * a PangoItem structure that provides information
  */
-public struct PangoGlyphItem{}
-// PangoItem *item;
-// pango-Glyph-Storage.html
-// PangoGlyphString *glyphs;
-// pango-Glyph-Storage.html
+public struct PangoGlyphItem
+{
+	PangoItem *item;
+	PangoGlyphString *glyphs;
+}
 
 
 /**
@@ -1030,11 +983,11 @@ public struct PangoAttribute
  * char*value;
  * the string which is the value of the attribute
  */
-public struct PangoAttrString{}
-// PangoAttribute attr;
-// pango-Text-Attributes.html
-// char *value;
-// pango-Text-Attributes.html
+public struct PangoAttrString
+{
+	PangoAttribute attr;
+	char *value;
+}
 
 
 /**
@@ -1045,11 +998,11 @@ public struct PangoAttrString{}
  * PangoLanguage*value;
  * the PangoLanguage which is the value of the attribute
  */
-public struct PangoAttrLanguage{}
-// PangoAttribute attr;
-// pango-Text-Attributes.html
-// PangoLanguage *value;
-// pango-Text-Attributes.html
+public struct PangoAttrLanguage
+{
+	PangoAttribute attr;
+	PangoLanguage *value;
+}
 
 
 /**
@@ -1060,11 +1013,11 @@ public struct PangoAttrLanguage{}
  * PangoColorcolor;
  * the PangoColor which is the value of the attribute
  */
-public struct PangoAttrColor{}
-// PangoAttribute attr;
-// pango-Text-Attributes.html
-// PangoColor color;
-// pango-Text-Attributes.html
+public struct PangoAttrColor
+{
+	PangoAttribute attr;
+	PangoColor color;
+}
 
 
 /**
@@ -1075,11 +1028,11 @@ public struct PangoAttrColor{}
  * intvalue;
  * the value of the attribute
  */
-public struct PangoAttrInt{}
-// PangoAttribute attr;
-// pango-Text-Attributes.html
-// int value;
-// pango-Text-Attributes.html
+public struct PangoAttrInt
+{
+	PangoAttribute attr;
+	int value;
+}
 
 
 /**
@@ -1090,11 +1043,11 @@ public struct PangoAttrInt{}
  * doublevalue;
  * the value of the attribute
  */
-public struct PangoAttrFloat{}
-// PangoAttribute attr;
-// pango-Text-Attributes.html
-// double value;
-// pango-Text-Attributes.html
+public struct PangoAttrFloat
+{
+	PangoAttribute attr;
+	double value;
+}
 
 
 /**
@@ -1105,11 +1058,11 @@ public struct PangoAttrFloat{}
  * PangoFontDescription*desc;
  * the font description which is the value of this attribute
  */
-public struct PangoAttrFontDesc{}
-// PangoAttribute attr;
-// pango-Text-Attributes.html
-// PangoFontDescription *desc;
-// pango-Text-Attributes.html
+public struct PangoAttrFontDesc
+{
+	PangoAttribute attr;
+	PangoFontDescription *desc;
+}
 
 
 /**
@@ -1128,19 +1081,15 @@ public struct PangoAttrFontDesc{}
  * GDestroyNotifydestroy_func;
  * destroy function for the user data
  */
-public struct PangoAttrShape{}
-// PangoAttribute attr;
-// pango-Text-Attributes.html
-// PangoRectangle inkRect;
-// pango-Text-Attributes.html
-// PangoRectangle logicalRect;
-// pango-Text-Attributes.html
-// void* data;
-// pango-Text-Attributes.html
-// PangoAttrDataCopyFunc copyFunc;
-// pango-Text-Attributes.html
-// GDestroyNotify destroyFunc;
-// pango-Text-Attributes.html
+public struct PangoAttrShape
+{
+	PangoAttribute attr;
+	PangoRectangle inkRect;
+	PangoRectangle logicalRect;
+	void* data;
+	PangoAttrDataCopyFunc copyFunc;
+	GDestroyNotify destroyFunc;
+}
 
 
 /**
@@ -1151,13 +1100,13 @@ public struct PangoAttrShape{}
  * intsize;
  * size of font, in units of 1/PANGO_SCALE of a point (for
  */
-public struct PangoAttrSize{}
-// PangoAttribute attr;
-// pango-Text-Attributes.html
-// int size;
-// pango-Text-Attributes.html
-// uint absolute : 1;
-// pango-Text-Attributes.html
+public struct PangoAttrSize
+{
+	PangoAttribute attr;
+	int size;
+	uint bitfield0;
+	//uint absolute : 1;
+}
 
 
 /**
@@ -1267,19 +1216,16 @@ public struct PangoLayoutIter{}
  * guintresolved_dir:3;
  * the resolved PangoDirection of the line
  */
-public struct PangoLayoutLine{}
-// PangoLayout *layout;
-// pango-Layout-Objects.html
-// int startIndex; /+* start of line as byte index into layout->text +/
-// pango-Layout-Objects.html
-// int length; /+* length of line inn bytes +/
-// pango-Layout-Objects.html
-// GSList *runs;
-// pango-Layout-Objects.html
-// uint isParagraphStart : 1; /+* TRUE if this is the first line of the paragraph +/
-// pango-Layout-Objects.html
-// uint resolvedDir : 3; /+* Resolved PangoDirection of line +/
-// pango-Layout-Objects.html
+public struct PangoLayoutLine
+{
+	PangoLayout *layout;
+	int startIndex; /+* start of line as byte index into layout->text +/
+	int length; /+* length of line inn bytes +/
+	GSList *runs;
+	uint bitfield0;
+	//uint isParagraphStart : 1; /+* TRUE if this is the first line of the paragraph +/
+	//uint resolvedDir : 3; /+* Resolved PangoDirection of line +/
+}
 
 
 /**
@@ -1296,9 +1242,10 @@ public struct PangoScriptIter{}
  * PangoLayout.
  * PangoMatrix*matrix;
  */
-public struct PangoRenderer{}
-// PangoMatrix *matrix; /+* May be NULL +/
-// PangoRenderer.html
+public struct PangoRenderer
+{
+	PangoMatrix *matrix; /+* May be NULL +/
+}
 
 
 /**
@@ -1434,17 +1381,14 @@ public struct PangoCoverage{}
  * gintn_scripts;
  * number of items in scripts.
  */
-public struct PangoEngineInfo{}
-// char *id;
-// pango-Engines.html
-// char *engineType;
-// pango-Engines.html
-// char *renderType;
-// pango-Engines.html
-// PangoEngineScriptInfo *scripts;
-// pango-Engines.html
-// int nScripts;
-// pango-Engines.html
+public struct PangoEngineInfo
+{
+	char *id;
+	char *engineType;
+	char *renderType;
+	PangoEngineScriptInfo *scripts;
+	int nScripts;
+}
 
 
 /**
@@ -1454,11 +1398,11 @@ public struct PangoEngineInfo{}
  * PangoScriptscript;
  * a PangoScript. The value PANGO_SCRIPT_COMMON has
  */
-public struct PangoEngineScriptInfo{}
-// PangoScript script;
-// pango-Engines.html
-// char *langs;
-// pango-Engines.html
+public struct PangoEngineScriptInfo
+{
+	PangoScript script;
+	char *langs;
+}
 
 
 /**

@@ -31,6 +31,7 @@ public import gtkc.gdkpixbuftypes;
 alias void* GdkAtom;
 alias void* GdkNativeWindow;
 
+const int GDK_MAX_TIMECOORD_AXES = 128;
 
 
 /**
@@ -1708,43 +1709,27 @@ public struct GdkGC{}
  * GdkColorforeground;
  * the foreground color. Note that gdk_gc_get_values()
  */
-public struct GdkGCValues{}
-// GdkColor foreground;
-// gdk-Graphics-Contexts.html
-// GdkColor background;
-// gdk-Graphics-Contexts.html
-// GdkFont *font;
-// gdk-Graphics-Contexts.html
-// GdkFunction funct;
-// gdk-Graphics-Contexts.html
-// GdkFill fill;
-// gdk-Graphics-Contexts.html
-// GdkPixmap *tile;
-// gdk-Graphics-Contexts.html
-// GdkPixmap *stipple;
-// gdk-Graphics-Contexts.html
-// GdkPixmap *clipMask;
-// gdk-Graphics-Contexts.html
-// GdkSubwindowMode subwindowMode;
-// gdk-Graphics-Contexts.html
-// int tsXOrigin;
-// gdk-Graphics-Contexts.html
-// int tsYOrigin;
-// gdk-Graphics-Contexts.html
-// int clipXOrigin;
-// gdk-Graphics-Contexts.html
-// int clipYOrigin;
-// gdk-Graphics-Contexts.html
-// int graphicsExposures;
-// gdk-Graphics-Contexts.html
-// int lineWidth;
-// gdk-Graphics-Contexts.html
-// GdkLineStyle lineStyle;
-// gdk-Graphics-Contexts.html
-// GdkCapStyle capStyle;
-// gdk-Graphics-Contexts.html
-// GdkJoinStyle joinStyle;
-// gdk-Graphics-Contexts.html
+public struct GdkGCValues
+{
+	GdkColor foreground;
+	GdkColor background;
+	GdkFont *font;
+	GdkFunction funct;
+	GdkFill fill;
+	GdkPixmap *tile;
+	GdkPixmap *stipple;
+	GdkPixmap *clipMask;
+	GdkSubwindowMode subwindowMode;
+	int tsXOrigin;
+	int tsYOrigin;
+	int clipXOrigin;
+	int clipYOrigin;
+	int graphicsExposures;
+	int lineWidth;
+	GdkLineStyle lineStyle;
+	GdkCapStyle capStyle;
+	GdkJoinStyle joinStyle;
+}
 
 
 /**
@@ -1828,11 +1813,11 @@ public struct GdkBitmap{}
  * gintn_colors;
  * The number of colors in the cmap.
  */
-public struct GdkRgbCmap{}
-// uint colors[256];
-// gdk-GdkRGB.html
-// int nColors;
-// gdk-GdkRGB.html
+public struct GdkRgbCmap
+{
+	uint colors[256];
+	int nColors;
+}
 
 
 /**
@@ -1863,31 +1848,21 @@ public struct GdkRgbCmap{}
  * GdkColormap*colormap;
  * the GdkColormap associated with the image
  */
-public struct GdkImage{}
-// GObject parentInstance;
-// gdk-Images.html
-// GdkImageType type; /+* read only. +/
-// gdk-Images.html
-// GdkVisual *visual; /+* read only. visual used to create the image +/
-// gdk-Images.html
-// GdkByteOrder byteOrder; /+* read only. +/
-// gdk-Images.html
-// int width; /+* read only. +/
-// gdk-Images.html
-// int height; /+* read only. +/
-// gdk-Images.html
-// ushort depth; /+* read only. +/
-// gdk-Images.html
-// ushort bpp; /+* read only. bytes per pixel +/
-// gdk-Images.html
-// ushort bpl; /+* read only. bytes per line +/
-// gdk-Images.html
-// ushort bitsPerPixel; /+* read only. bits per pixel +/
-// gdk-Images.html
-// void* mem;
-// gdk-Images.html
-// GdkColormap *colormap; /+* read only. +/
-// gdk-Images.html
+public struct GdkImage
+{
+	GObject parentInstance;
+	GdkImageType type; /+* read only. +/
+	GdkVisual *visual; /+* read only. visual used to create the image +/
+	GdkByteOrder byteOrder; /+* read only. +/
+	int width; /+* read only. +/
+	int height; /+* read only. +/
+	ushort depth; /+* read only. +/
+	ushort bpp; /+* read only. bytes per pixel +/
+	ushort bpl; /+* read only. bytes per line +/
+	ushort bitsPerPixel; /+* read only. bits per pixel +/
+	void* mem;
+	GdkColormap *colormap; /+* read only. +/
+}
 
 
 /**
@@ -1917,11 +1892,11 @@ public struct GdkColor
  * gintsize;
  * For pseudo-color colormaps, the number of colors
  */
-public struct GdkColormap{}
-// int size;
-// gdk-Colormaps-and-Colors.html
-// GdkColor *colors;
-// gdk-Colormaps-and-Colors.html
+public struct GdkColormap
+{
+	int size;
+	GdkColor *colors;
+}
 
 
 /**
@@ -1932,37 +1907,24 @@ public struct GdkColormap{}
  * guint
  * pixel_from_rgb (GdkVisual *visual,
  */
-public struct GdkVisual{}
-// GObject parentInstance;
-// gdk-Visuals.html
-// GdkVisualType type;
-// gdk-Visuals.html
-// int depth;
-// gdk-Visuals.html
-// GdkByteOrder byteOrder;
-// gdk-Visuals.html
-// int colormapSize;
-// gdk-Visuals.html
-// int bitsPerRgb;
-// gdk-Visuals.html
-// uint redMask;
-// gdk-Visuals.html
-// int redShift;
-// gdk-Visuals.html
-// int redPrec;
-// gdk-Visuals.html
-// uint greenMask;
-// gdk-Visuals.html
-// int greenShift;
-// gdk-Visuals.html
-// int greenPrec;
-// gdk-Visuals.html
-// uint blueMask;
-// gdk-Visuals.html
-// int blueShift;
-// gdk-Visuals.html
-// int bluePrec;
-// gdk-Visuals.html
+public struct GdkVisual
+{
+	GObject parentInstance;
+	GdkVisualType type;
+	int depth;
+	GdkByteOrder byteOrder;
+	int colormapSize;
+	int bitsPerRgb;
+	uint redMask;
+	int redShift;
+	int redPrec;
+	uint greenMask;
+	int greenShift;
+	int greenPrec;
+	uint blueMask;
+	int blueShift;
+	int bluePrec;
+}
 
 
 /**
@@ -1976,13 +1938,12 @@ public struct GdkVisual{}
  * GdkFontTypetype;
  * a value of type GdkFontType which indicates
  */
-public struct GdkFont{}
-// GdkFontType type;
-// gdk-Fonts.html
-// int ascent;
-// gdk-Fonts.html
-// int descent;
-// gdk-Fonts.html
+public struct GdkFont
+{
+	GdkFontType type;
+	int ascent;
+	int descent;
+}
 
 
 /**
@@ -1991,9 +1952,10 @@ public struct GdkFont{}
  * GdkCursorTypetype;
  * the GdkCursorType of the cursor
  */
-public struct GdkCursor{}
-// GdkCursorType type;
-// gdk-Cursors.html
+public struct GdkCursor
+{
+	GdkCursorType type;
+}
 
 
 /**
@@ -2035,29 +1997,20 @@ public struct GdkWindow{}
  * Here's an example of how the terminal example would be implemented, assuming
  * a terminal area widget called "terminal" and a toplevel window "toplevel":
  */
-public struct GdkGeometry{}
-// int minWidth;
-// gdk-Windows.html
-// int minHeight;
-// gdk-Windows.html
-// int maxWidth;
-// gdk-Windows.html
-// int maxHeight;
-// gdk-Windows.html
-// int baseWidth;
-// gdk-Windows.html
-// int baseHeight;
-// gdk-Windows.html
-// int widthInc;
-// gdk-Windows.html
-// int heightInc;
-// gdk-Windows.html
-// double minAspect;
-// gdk-Windows.html
-// double maxAspect;
-// gdk-Windows.html
-// GdkGravity winGravity;
-// gdk-Windows.html
+public struct GdkGeometry
+{
+	int minWidth;
+	int minHeight;
+	int maxWidth;
+	int maxHeight;
+	int baseWidth;
+	int baseHeight;
+	int widthInc;
+	int heightInc;
+	double minAspect;
+	double maxAspect;
+	GdkGravity winGravity;
+}
 
 
 /**
@@ -2093,35 +2046,23 @@ public struct GdkGeometry{}
  * GdkWindowTypeHinttype_hint;
  * a hint of the function of the window
  */
-public struct GdkWindowAttr{}
-// char *title;
-// gdk-Windows.html
-// int eventMask;
-// gdk-Windows.html
-// int x, y;
-// gdk-Windows.html
-// int width;
-// gdk-Windows.html
-// int height;
-// gdk-Windows.html
-// GdkWindowClass wclass;
-// gdk-Windows.html
-// GdkVisual *visual;
-// gdk-Windows.html
-// GdkColormap *colormap;
-// gdk-Windows.html
-// GdkWindowType windowType;
-// gdk-Windows.html
-// GdkCursor *cursor;
-// gdk-Windows.html
-// char *wmclassName;
-// gdk-Windows.html
-// char *wmclassClass;
-// gdk-Windows.html
-// int overrideRedirect;
-// gdk-Windows.html
-// GdkWindowTypeHint typeHint;
-// gdk-Windows.html
+public struct GdkWindowAttr
+{
+	char *title;
+	int eventMask;
+	int x, y;
+	int width;
+	int height;
+	GdkWindowClass wclass;
+	GdkVisual *visual;
+	GdkColormap *colormap;
+	GdkWindowType windowType;
+	GdkCursor *cursor;
+	char *wmclassName;
+	char *wmclassClass;
+	int overrideRedirect;
+	GdkWindowTypeHint typeHint;
+}
 
 
 /**
@@ -2221,7 +2162,7 @@ public struct GdkEventKey
 	char *string;
 	ushort hardwareKeycode;
 	byte group;
-	uint bitfield;
+	uint bitfield0;
 	//uint isModifier : 1;
 }
 
@@ -2810,27 +2751,19 @@ public struct GdkKeymapKey
  * GdkDragActionactions;
  * a bitmask of actions proposed by the source when
  */
-public struct GdkDragContext{}
-// GObject parentInstance;
-// gdk-Drag-and-Drop.html
-// GdkDragProtocol protocol;
-// gdk-Drag-and-Drop.html
-// int isSource;
-// gdk-Drag-and-Drop.html
-// GdkWindow *sourceWindow;
-// gdk-Drag-and-Drop.html
-// GdkWindow *destWindow;
-// gdk-Drag-and-Drop.html
-// GList *targets;
-// gdk-Drag-and-Drop.html
-// GdkDragAction actions;
-// gdk-Drag-and-Drop.html
-// GdkDragAction suggestedAction;
-// gdk-Drag-and-Drop.html
-// GdkDragAction action;
-// gdk-Drag-and-Drop.html
-// uint startTime;
-// gdk-Drag-and-Drop.html
+public struct GdkDragContext
+{
+	GObject parentInstance;
+	GdkDragProtocol protocol;
+	int isSource;
+	GdkWindow *sourceWindow;
+	GdkWindow *destWindow;
+	GList *targets;
+	GdkDragAction actions;
+	GdkDragAction suggestedAction;
+	GdkDragAction action;
+	uint startTime;
+}
 
 
 /**
@@ -2859,27 +2792,19 @@ public struct GdkDragContext{}
  * GdkDeviceKey*keys;
  * an array of GdkDeviceKey, describing the mapped macro buttons
  */
-public struct GdkDevice{}
-// GObject parentInstance;
-// gdk-Input-Devices.html
-// /+* All fields are read-only +/
-// gdk-Input-Devices.html
-// char *name;
-// gdk-Input-Devices.html
-// GdkInputSource source;
-// gdk-Input-Devices.html
-// GdkInputMode mode;
-// gdk-Input-Devices.html
-// int hasCursor; /+* TRUE if the X pointer follows device motion +/
-// gdk-Input-Devices.html
-// int numAxes;
-// gdk-Input-Devices.html
-// GdkDeviceAxis *axes;
-// gdk-Input-Devices.html
-// int numKeys;
-// gdk-Input-Devices.html
-// GdkDeviceKey *keys;
-// gdk-Input-Devices.html
+public struct GdkDevice
+{
+	GObject parentInstance;
+	/+* All fields are read-only +/
+	char *name;
+	GdkInputSource source;
+	GdkInputMode mode;
+	int hasCursor; /+* TRUE if the X pointer follows device motion +/
+	int numAxes;
+	GdkDeviceAxis *axes;
+	int numKeys;
+	GdkDeviceKey *keys;
+}
 
 
 /**
@@ -2889,11 +2814,11 @@ public struct GdkDevice{}
  * guintkeyval;
  * the keyval to generate when the macro button is pressed.
  */
-public struct GdkDeviceKey{}
-// uint keyval;
-// gdk-Input-Devices.html
-// GdkModifierType modifiers;
-// gdk-Input-Devices.html
+public struct GdkDeviceKey
+{
+	uint keyval;
+	GdkModifierType modifiers;
+}
 
 
 /**
@@ -2906,13 +2831,12 @@ public struct GdkDeviceKey{}
  * gdoublemax;
  * the maximal value that will be reported by this axis.
  */
-public struct GdkDeviceAxis{}
-// GdkAxisUse use;
-// gdk-Input-Devices.html
-// double min;
-// gdk-Input-Devices.html
-// double max;
-// gdk-Input-Devices.html
+public struct GdkDeviceAxis
+{
+	GdkAxisUse use;
+	double min;
+	double max;
+}
 
 
 /**
@@ -2923,11 +2847,11 @@ public struct GdkDeviceAxis{}
  * gdoubleaxes[GDK_MAX_TIMECOORD_AXES];
  * the values of the device's axes.
  */
-public struct GdkTimeCoord{}
-// uint time;
-// gdk-Input-Devices.html
-// double axes[GDK_MAX_TIMECOORD_AXES];
-// gdk-Input-Devices.html
+public struct GdkTimeCoord
+{
+	uint time;
+	double axes[GDK_MAX_TIMECOORD_AXES];
+}
 
 
 /*

@@ -38,11 +38,11 @@ alias void* GladeXMLCustomWidgetHandler;
 /**
  * Main Gtk struct.
  */
-public struct GladeXML{}
-// GObject parent;
-// GladeXML.html
-// char *filename;
-// GladeXML.html
+public struct GladeXML
+{
+	GObject parent;
+	char *filename;
+}
 
 
 public struct GladeXMLClass{}

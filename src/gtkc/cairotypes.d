@@ -28,6 +28,7 @@ public import gtkc.glibtypes;
 //public import std.c.windows.windows;
 private alias void* HDC;
 
+struct cairo_path_data_t;
 //struct Display;	// to support XLib surfaces
 //struct Visual;	// to support XLib surfaces
 //struct Screen;	// to support XLib surfaces
@@ -364,13 +365,12 @@ public struct cairo_t{}
  * includes both headers and coordinates for each portion.
  * cairo_status_tstatus;
  */
-public struct cairo_path_t{}
-// cairo_status_t status;
-// cairo-Paths.html
-// cairo_path_data_t *data;
-// cairo-Paths.html
-// int numData;
-// cairo-Paths.html
+public struct cairo_path_t
+{
+	cairo_status_t status;
+	cairo_path_data_t *data;
+	int numData;
+}
 
 
 /**
@@ -389,13 +389,12 @@ public struct cairo_path_t{}
  * with respect to the overall origin
  * unsignedlongindex;
  */
-public struct cairo_glyph_t{}
-// unsigned long index;
-// cairo-Text.html
-// double x;
-// cairo-Text.html
-// double y;
-// cairo-Text.html
+public struct cairo_glyph_t
+{
+	ulong index;
+	double x;
+	double y;
+}
 
 
 /**

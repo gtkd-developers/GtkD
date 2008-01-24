@@ -29,19 +29,18 @@ public import gtkc.pangotypes;
 public import gtkc.atktypes;
 public import gtkc.gdkpixbuftypes;
 public import gtkc.gdktypes;
+
 alias void GtkAccelGroupEntry;
 alias void GtkContainerClass;
 
-//alias GTokenType.G_TOKEN_LAST G_TOKEN_LAST;";
-//alias GtkSignalRunType.G_SIGNAL_RUN_FIRST G_SIGNAL_RUN_FIRST;
-//alias GtkSignalRunType.G_SIGNAL_RUN_LAST G_SIGNAL_RUN_LAST;
-//alias GtkSignalRunType.G_SIGNAL_NO_RECURSE G_SIGNAL_NO_RECURSE;
-//alias GtkSignalRunType.G_SIGNAL_ACTION G_SIGNAL_ACTION;
-//alias GtkSignalRunType.G_SIGNAL_NO_HOOKS G_SIGNAL_NO_HOOKS;
+struct GtkObjectClass
+{
+	GObjectClass parentClass;
+	void function(GtkObject*, GtkArg*, uint) setArg;
+	void function(GtkObject*, GtkArg *, uint) getArg;
+	void function(GtkObject*) destroy;
+}
 
-/* GtkDragResult is now an enum. */
-//alias int GtkDragResult;
-//alias int GtkTooltip;
 
 /**
  * typedef GType			GtkType;
@@ -1960,13 +1959,13 @@ struct GtkTextIter {
 public struct GtkAccelGroup{}
 
 
-public struct GtkAccelKey{}
-// uint accelKey;
-// gtk-Keyboard-Accelerators.html
-// GdkModifierType accelMods;
-// gtk-Keyboard-Accelerators.html
-// uint accelFlags : 16;
-// gtk-Keyboard-Accelerators.html
+public struct GtkAccelKey
+{
+	uint accelKey;
+	GdkModifierType accelMods;
+	uint bitfield0;
+	//uint accelFlags : 16;
+}
 
 
 /**
@@ -2004,17 +2003,14 @@ public struct GtkIconTheme{}
 /**
  * Main Gtk struct.
  */
-public struct GtkStockItem{}
-// char *stockId;
-// gtk-Stock-Items.html
-// char *label;
-// gtk-Stock-Items.html
-// GdkModifierType modifier;
-// gtk-Stock-Items.html
-// uint keyval;
-// gtk-Stock-Items.html
-// char *translationDomain;
-// gtk-Stock-Items.html
+public struct GtkStockItem
+{
+	char *stockId;
+	char *label;
+	GdkModifierType modifier;
+	uint keyval;
+	char *translationDomain;
+}
 
 
 /**
@@ -2036,27 +2032,19 @@ public struct GtkIconSet{}
  * This can later be composited together with other
  * GtkRcStyle structures to form a GtkStyle.
  */
-public struct GtkRcStyle{}
-// char *name;
-// gtk-Resource-Files.html
-// char *bgPixmapName[5];
-// gtk-Resource-Files.html
-// PangoFontDescription *fontDesc;
-// gtk-Resource-Files.html
-// GtkRcFlags colorFlags[5];
-// gtk-Resource-Files.html
-// GdkColor fg[5];
-// gtk-Resource-Files.html
-// GdkColor bg[5];
-// gtk-Resource-Files.html
-// GdkColor text[5];
-// gtk-Resource-Files.html
-// GdkColor base[5];
-// gtk-Resource-Files.html
-// int xthickness;
-// gtk-Resource-Files.html
-// int ythickness;
-// gtk-Resource-Files.html
+public struct GtkRcStyle
+{
+	char *name;
+	char *bgPixmapName[5];
+	PangoFontDescription *fontDesc;
+	GtkRcFlags colorFlags[5];
+	GdkColor fg[5];
+	GdkColor bg[5];
+	GdkColor text[5];
+	GdkColor base[5];
+	int xthickness;
+	int ythickness;
+}
 
 
 /**
@@ -2065,23 +2053,17 @@ public struct GtkRcStyle{}
 public struct GtkSettings{}
 
 
-public struct GtkSettingsValue{}
-// /+* origin should be something like "filename:linenumber" for rc files,
-// GtkSettings.html
-// * or e.g. "XProperty" for other sources
-// GtkSettings.html
-// +/
-// GtkSettings.html
-// char *origin;
-// GtkSettings.html
-// /+* valid types are LONG, DOUBLE and STRING corresponding to the token parsed,
-// GtkSettings.html
-// * or a GSTRING holding an unparsed statement
-// GtkSettings.html
-// +/
-// GtkSettings.html
-// GValue value;
-// GtkSettings.html
+public struct GtkSettingsValue
+{
+	/+* origin should be something like "filename:linenumber" for rc files,
+	 * or e.g. "XProperty" for other sources
+	+/
+	char *origin;
+	/+* valid types are LONG, DOUBLE and STRING corresponding to the token parsed,
+	 * or a GSTRING holding an unparsed statement
+	+/
+	GValue value;
+}
 
 
 /**
@@ -2094,23 +2076,18 @@ public struct GtkSettingsValue{}
  * widget to carry out the actual activation.
  * gchar*set_name;
  */
-public struct GtkBindingSet{}
-// char *setName;
-// gtk-Bindings.html
-// int priority;
-// gtk-Bindings.html
-// GSList *widgetPathPspecs;
-// gtk-Bindings.html
-// GSList *widgetClassPspecs;
-// gtk-Bindings.html
-// GSList *classBranchPspecs;
-// gtk-Bindings.html
-// GtkBindingEntry *entries;
-// gtk-Bindings.html
-// GtkBindingEntry *current;
-// gtk-Bindings.html
-// uint parsed : 1; /+* From RC content +/
-// gtk-Bindings.html
+public struct GtkBindingSet
+{
+	char *setName;
+	int priority;
+	GSList *widgetPathPspecs;
+	GSList *widgetClassPspecs;
+	GSList *classBranchPspecs;
+	GtkBindingEntry *entries;
+	GtkBindingEntry *current;
+	uint bitfield0;
+	//uint parsed : 1; /+* From RC content +/
+}
 
 
 /**
@@ -2118,29 +2095,21 @@ public struct GtkBindingSet{}
  * a GtkBindingEntry.
  * guintkeyval;
  */
-public struct GtkBindingEntry{}
-// /+* key portion
-// gtk-Bindings.html
-// +/
-// gtk-Bindings.html
-// uint keyval;
-// gtk-Bindings.html
-// GdkModifierType modifiers;
-// gtk-Bindings.html
-// GtkBindingSet *bindingSet;
-// gtk-Bindings.html
-// uint destroyed : 1;
-// gtk-Bindings.html
-// uint inEmission : 1;
-// gtk-Bindings.html
-// uint marksUnbound : 1;
-// gtk-Bindings.html
-// GtkBindingEntry *setNext;
-// gtk-Bindings.html
-// GtkBindingEntry *hashNext;
-// gtk-Bindings.html
-// GtkBindingSignal *signals;
-// gtk-Bindings.html
+public struct GtkBindingEntry
+{
+	/+* key portion
+	+/
+	uint keyval;
+	GdkModifierType modifiers;
+	GtkBindingSet *bindingSet;
+	uint bitfield0;
+	//uint destroyed : 1;
+	//uint inEmission : 1;
+	//uint marksUnbound : 1;
+	GtkBindingEntry *setNext;
+	GtkBindingEntry *hashNext;
+	GtkBindingSignal *signals;
+}
 
 
 /**
@@ -2148,15 +2117,13 @@ public struct GtkBindingEntry{}
  * in response to a key press via a signal emission.
  * GtkBindingSignal*next;
  */
-public struct GtkBindingSignal{}
-// GtkBindingSignal *next;
-// gtk-Bindings.html
-// char *signalName;
-// gtk-Bindings.html
-// uint nArgs;
-// gtk-Bindings.html
-// GtkBindingArg *args;
-// gtk-Bindings.html
+public struct GtkBindingSignal
+{
+	GtkBindingSignal *next;
+	char *signalName;
+	uint nArgs;
+	GtkBindingArg *args;
+}
 
 
 /**
@@ -2183,55 +2150,33 @@ public struct GtkBindingArg{}
 /**
  * Main Gtk struct.
  */
-public struct GtkStyle{}
-// GdkColor fg[5];
-// GtkStyle.html
-// GdkColor bg[5];
-// GtkStyle.html
-// GdkColor light[5];
-// GtkStyle.html
-// GdkColor dark[5];
-// GtkStyle.html
-// GdkColor mid[5];
-// GtkStyle.html
-// GdkColor text[5];
-// GtkStyle.html
-// GdkColor base[5];
-// GtkStyle.html
-// GdkColor textAa[5]; /+* Halfway between text/base +/
-// GtkStyle.html
-// GdkColor black;
-// GtkStyle.html
-// GdkColor white;
-// GtkStyle.html
-// PangoFontDescription *fontDesc;
-// GtkStyle.html
-// int xthickness;
-// GtkStyle.html
-// int ythickness;
-// GtkStyle.html
-// GdkGC *fgGc[5];
-// GtkStyle.html
-// GdkGC *bgGc[5];
-// GtkStyle.html
-// GdkGC *lightGc[5];
-// GtkStyle.html
-// GdkGC *darkGc[5];
-// GtkStyle.html
-// GdkGC *midGc[5];
-// GtkStyle.html
-// GdkGC *textGc[5];
-// GtkStyle.html
-// GdkGC *baseGc[5];
-// GtkStyle.html
-// GdkGC *textAaGc[5];
-// GtkStyle.html
-// GdkGC *blackGc;
-// GtkStyle.html
-// GdkGC *whiteGc;
-// GtkStyle.html
-// GdkPixmap *bgPixmap[5];
-// GtkStyle.html
+public struct GtkStyle
+{
+	GdkColor fg[5];
+	GdkColor bg[5];
+	GdkColor light[5];
+	GdkColor dark[5];
+	GdkColor mid[5];
+	GdkColor text[5];
+	GdkColor base[5];
+	GdkColor textAa[5]; /+* Halfway between text/base +/
+	GdkColor black;
+	GdkColor white;
+	PangoFontDescription *fontDesc;
+	int xthickness;
+	int ythickness;
+	GdkGC *fgGc[5];
+	GdkGC *bgGc[5];
+	GdkGC *lightGc[5];
+	GdkGC *darkGc[5];
+	GdkGC *midGc[5];
+	GdkGC *textGc[5];
+	GdkGC *baseGc[5];
+	GdkGC *textAaGc[5];
+	GdkGC *blackGc;
+	GdkGC *whiteGc;
+	GdkPixmap *bgPixmap[5];
+}
 
 
 public struct GtkBorder
@@ -2243,19 +2188,15 @@ public struct GtkBorder
 }
 
 
-public struct GtkRcProperty{}
-// /+* quark-ified property identifier like "GtkScrollbar::spacing" +/
-// GtkStyle.html
-// GQuark typeName;
-// GtkStyle.html
-// GQuark propertyName;
-// GtkStyle.html
-// /+* fields similar to GtkSettingsValue +/
-// GtkStyle.html
-// char *origin;
-// GtkStyle.html
-// GValue value;
-// GtkStyle.html
+public struct GtkRcProperty
+{
+	/+* quark-ified property identifier like "GtkScrollbar::spacing" +/
+	GQuark typeName;
+	GQuark propertyName;
+	/+* fields similar to GtkSettingsValue +/
+	char *origin;
+	GValue value;
+}
 
 
 /**
@@ -2284,24 +2225,23 @@ public struct GtkTargetEntry
  * an efficient form. This structure should be treated as
  * opaque.
  */
-public struct GtkTargetList{}
-// GList *list;
-// gtk-Selections.html
-// uint refCount;
-// gtk-Selections.html
+public struct GtkTargetList
+{
+	GList *list;
+	uint refCount;
+}
 
 
 /**
  * Internally used structure in the drag-and-drop and
  * selection handling code.
  */
-public struct GtkTargetPair{}
-// GdkAtom target;
-// gtk-Selections.html
-// uint flags;
-// gtk-Selections.html
-// uint info;
-// gtk-Selections.html
+public struct GtkTargetPair
+{
+	GdkAtom target;
+	uint flags;
+	uint info;
+}
 
 
 /**
@@ -2378,23 +2318,17 @@ public struct GtkArg{}
  * function for an instance of the object. reserved_1 is used for
  * GtkEnumValue to hold the enumerated values.
  */
-public struct GtkTypeInfo{}
-// char *typeName;
-// gtk-Types.html
-// uint objectSize;
-// gtk-Types.html
-// uint classSize;
-// gtk-Types.html
-// GtkClassInitFunc classInitFunc;
-// gtk-Types.html
-// GtkObjectInitFunc objectInitFunc;
-// gtk-Types.html
-// void* reserved1;
-// gtk-Types.html
-// void* reserved2;
-// gtk-Types.html
-// GtkClassInitFunc baseClassInitFunc;
-// gtk-Types.html
+public struct GtkTypeInfo
+{
+	char *typeName;
+	uint objectSize;
+	uint classSize;
+	GtkClassInitFunc classInitFunc;
+	GtkObjectInitFunc objectInitFunc;
+	void* reserved1;
+	void* reserved2;
+	GtkClassInitFunc baseClassInitFunc;
+}
 
 
 /**
@@ -2405,11 +2339,11 @@ public struct GtkTypeInfo{}
  * dividing GtkHSeparator in the dialog. It is treated exactly the same
  * as any other GtkHButtonBox.
  */
-public struct GtkDialog{}
-// GtkWidget *vbox;
-// GtkDialog.html
-// GtkWidget *actionArea;
-// GtkDialog.html
+public struct GtkDialog
+{
+	GtkWidget *vbox;
+	GtkWidget *actionArea;
+}
 
 
 /**
@@ -2639,106 +2573,64 @@ public struct GtkTextTag{}
  * guinteditable:1;
  * guintrealized:1;
  */
-public struct GtkTextAttributes{}
-// GtkTextAppearance appearance;
-// GtkTextTag.html
-// GtkJustification justification;
-// GtkTextTag.html
-// GtkTextDirection direction;
-// GtkTextTag.html
-// /+* Individual chunks of this can be set/unset as a group +/
-// GtkTextTag.html
-// PangoFontDescription *font;
-// GtkTextTag.html
-// double fontScale;
-// GtkTextTag.html
-// int leftMargin;
-// GtkTextTag.html
-// int indent;
-// GtkTextTag.html
-// int rightMargin;
-// GtkTextTag.html
-// int pixelsAboveLines;
-// GtkTextTag.html
-// int pixelsBelowLines;
-// GtkTextTag.html
-// int pixelsInsideWrap;
-// GtkTextTag.html
-// PangoTabArray *tabs;
-// GtkTextTag.html
-// GtkWrapMode wrapMode; /+* How to handle wrap-around for this tag.
-// GtkTextTag.html
-// * Must be GTK_WRAPMODE_CHAR,
-// GtkTextTag.html
-// * GTK_WRAPMODE_NONE, GTK_WRAPMODE_WORD
-// GtkTextTag.html
-// +/
-// GtkTextTag.html
-// PangoLanguage *language;
-// GtkTextTag.html
-// /+* hide the text +/
-// GtkTextTag.html
-// uint invisible : 1;
-// GtkTextTag.html
-// /+* Background is fit to full line height rather than
-// GtkTextTag.html
-// * baseline +/- ascent/descent (font height)
-// GtkTextTag.html
-// +/
-// GtkTextTag.html
-// uint bgFullHeight : 1;
-// GtkTextTag.html
-// /+* can edit this text +/
-// GtkTextTag.html
-// uint editable : 1;
-// GtkTextTag.html
-// /+* colors are allocated etc. +/
-// GtkTextTag.html
-// uint realized : 1;
-// GtkTextTag.html
+public struct GtkTextAttributes
+{
+	GtkTextAppearance appearance;
+	GtkJustification justification;
+	GtkTextDirection direction;
+	/+* Individual chunks of this can be set/unset as a group +/
+	PangoFontDescription *font;
+	double fontScale;
+	int leftMargin;
+	int indent;
+	int rightMargin;
+	int pixelsAboveLines;
+	int pixelsBelowLines;
+	int pixelsInsideWrap;
+	PangoTabArray *tabs;
+	GtkWrapMode wrapMode; /+* How to handle wrap-around for this tag.
+	 * Must be GTK_WRAPMODE_CHAR,
+	 * GTK_WRAPMODE_NONE, GTK_WRAPMODE_WORD
+	+/
+	PangoLanguage *language;
+	/+* hide the text +/
+	uint bitfield0;
+	//uint invisible : 1;
+	/+* Background is fit to full line height rather than
+	 * baseline +\- ascent\descent (font height)
+	+/
+	//uint bgFullHeight : 1;
+	/+* can edit this text +/
+	//uint editable : 1;
+	/+* colors are allocated etc. +/
+	//uint realized : 1;
+}
 
 
-public struct GtkTextAppearance{}
-// GdkColor bgColor;
-// GtkTextTag.html
-// GdkColor fgColor;
-// GtkTextTag.html
-// GdkBitmap *bgStipple;
-// GtkTextTag.html
-// GdkBitmap *fgStipple;
-// GtkTextTag.html
-// /+* super/subscript rise, can be negative +/
-// GtkTextTag.html
-// int rise;
-// GtkTextTag.html
-// uint underline : 4; /+* PangoUnderline +/
-// GtkTextTag.html
-// uint strikethrough : 1;
-// GtkTextTag.html
-// /+* Whether to use background-related values; this is irrelevant for
-// GtkTextTag.html
-// * the values struct when inn a tag, but is used for the composite
-// GtkTextTag.html
-// * values struct; it's true if any of the tags being composited
-// GtkTextTag.html
-// * had background stuff set.
-// GtkTextTag.html
-// +/
-// GtkTextTag.html
-// uint drawBg : 1;
-// GtkTextTag.html
-// /+* These are only used when we are actually laying out and rendering
-// GtkTextTag.html
-// * a paragraph; not when a GtkTextAppearance is part of a
-// GtkTextTag.html
-// * GtkTextAttributes.
-// GtkTextTag.html
-// +/
-// GtkTextTag.html
-// uint insideSelection : 1;
-// GtkTextTag.html
-// uint isText : 1;
-// GtkTextTag.html
+public struct GtkTextAppearance
+{
+	GdkColor bgColor;
+	GdkColor fgColor;
+	GdkBitmap *bgStipple;
+	GdkBitmap *fgStipple;
+	/+* super/subscript rise, can be negative +/
+	int rise;
+	uint bitfield0;
+	//uint underline : 4; /+* PangoUnderline +/
+	//uint strikethrough : 1;
+	/+* Whether to use background-related values; this is irrelevant for
+	 * the values struct when inn a tag, but is used for the composite
+	 * values struct; it's true if any of the tags being composited
+	 * had background stuff set.
+	+/
+	//uint drawBg : 1;
+	/+* These are only used when we are actually laying out and rendering
+	 * a paragraph; not when a GtkTextAppearance is part of a
+	 * GtkTextAttributes.
+	+/
+	//uint insideSelection : 1;
+	//uint isText : 1;
+}
 
 
 /**
@@ -3351,42 +3243,35 @@ public struct GtkTearoffMenuItem{}
  * The GtkToolbar struct only contains private data and should only be
  * accessed through the function described below.
  */
-public struct GtkToolbar{}
-// int numChildren;
-// GtkToolbar.html
-// GList *children;
-// GtkToolbar.html
-// GtkOrientation orientation;
-// GtkToolbar.html
-// GtkToolbarStyle style;
-// GtkToolbar.html
-// GtkIconSize iconSize;
-// GtkToolbar.html
-// #ifndef GTK_DISABLE_DEPRECATED
-// GtkToolbar.html
-// GtkTooltips *tooltips;
-// GtkToolbar.html
-// #else
-// GtkToolbar.html
-// void* _Tooltips;
-// GtkToolbar.html
-// #endif
-// GtkToolbar.html
+public struct GtkToolbar
+{
+	int numChildren;
+	GList *children;
+	GtkOrientation orientation;
+	GtkToolbarStyle style;
+	GtkIconSize iconSize;
+	version(GTK_DISABLE_DEPRECATED)
+	{
+		GtkTooltips *tooltips;
+	}
+	else
+	{
+		void* _Tooltips;
+	}
+}
 
 
 /**
  * Warning
  * GtkToolbarChild is deprecated and should not be used in newly-written code.
  */
-public struct GtkToolbarChild{}
-// GtkToolbarChildType type;
-// GtkToolbar.html
-// GtkWidget *widget;
-// GtkToolbar.html
-// GtkWidget *icon;
-// GtkToolbar.html
-// GtkWidget *label;
-// GtkToolbar.html
+public struct GtkToolbarChild
+{
+	GtkToolbarChildType type;
+	GtkWidget *widget;
+	GtkWidget *icon;
+	GtkWidget *label;
+}
 
 
 /**
@@ -3455,19 +3340,15 @@ public struct GtkActionGroup{}
  * constgchar*stock_id;
  * The stock id for the action, or the name of an icon from the icon
  */
-public struct GtkActionEntry{}
-// char *name;
-// GtkActionGroup.html
-// char *stockId;
-// GtkActionGroup.html
-// char *label;
-// GtkActionGroup.html
-// char *accelerator;
-// GtkActionGroup.html
-// char *tooltip;
-// GtkActionGroup.html
-// GCallback callback;
-// GtkActionGroup.html
+public struct GtkActionEntry
+{
+	char *name;
+	char *stockId;
+	char *label;
+	char *accelerator;
+	char *tooltip;
+	GCallback callback;
+}
 
 
 /**
@@ -3478,21 +3359,16 @@ public struct GtkActionEntry{}
  * constgchar*stock_id;
  * The stock id for the action, or the name of an icon from the icon
  */
-public struct GtkToggleActionEntry{}
-// char *name;
-// GtkActionGroup.html
-// char *stockId;
-// GtkActionGroup.html
-// char *label;
-// GtkActionGroup.html
-// char *accelerator;
-// GtkActionGroup.html
-// char *tooltip;
-// GtkActionGroup.html
-// GCallback callback;
-// GtkActionGroup.html
-// int isActive;
-// GtkActionGroup.html
+public struct GtkToggleActionEntry
+{
+	char *name;
+	char *stockId;
+	char *label;
+	char *accelerator;
+	char *tooltip;
+	GCallback callback;
+	int isActive;
+}
 
 
 /**
@@ -3624,17 +3500,14 @@ public struct GtkFileFilter{}
  * GtkFileFilterFlagscontains;
  * Flags indicating which of the following fields need
  */
-public struct GtkFileFilterInfo{}
-// GtkFileFilterFlags contains;
-// gtk-gtkfilefilter.html
-// char *filename;
-// gtk-gtkfilefilter.html
-// char *uri;
-// gtk-gtkfilefilter.html
-// char *displayName;
-// gtk-gtkfilefilter.html
-// char *mimeType;
-// gtk-gtkfilefilter.html
+public struct GtkFileFilterInfo
+{
+	GtkFileFilterFlags contains;
+	char *filename;
+	char *uri;
+	char *displayName;
+	char *mimeType;
+}
 
 
 /**
@@ -3663,13 +3536,12 @@ public struct GtkFontSelection{}
  * GtkWidget*cancel_button;
  * The Cancel button of the dialog
  */
-public struct GtkFontSelectionDialog{}
-// GtkWidget *okButton;
-// GtkFontSelectionDialog.html
-// GtkWidget *applyButton;
-// GtkFontSelectionDialog.html
-// GtkWidget *cancelButton;
-// GtkFontSelectionDialog.html
+public struct GtkFontSelectionDialog
+{
+	GtkWidget *okButton;
+	GtkWidget *applyButton;
+	GtkWidget *cancelButton;
+}
 
 
 /**
@@ -3743,13 +3615,12 @@ public struct GtkFixed{}
  * the vertical position of the widget within the GtkFixed
  * container.
  */
-public struct GtkFixedChild{}
-// GtkWidget *widget;
-// GtkFixed.html
-// int x;
-// GtkFixed.html
-// int y;
-// GtkFixed.html
+public struct GtkFixedChild
+{
+	GtkWidget *widget;
+	int x;
+	int y;
+}
 
 
 /**
@@ -3767,9 +3638,10 @@ public struct GtkVPaned{}
 /**
  * Main Gtk struct.
  */
-public struct GtkLayout{}
-// GdkWindow *binWindow;
-// GtkLayout.html
+public struct GtkLayout
+{
+	GdkWindow *binWindow;
+}
 
 
 /**
@@ -3804,33 +3676,23 @@ public struct GtkTable{}
  * xpadding and ypadding
  * specify the space between this widget and the surrounding table cells.
  */
-public struct GtkTableChild{}
-// GtkWidget *widget;
-// GtkTable.html
-// ushort leftAttach;
-// GtkTable.html
-// ushort rightAttach;
-// GtkTable.html
-// ushort topAttach;
-// GtkTable.html
-// ushort bottomAttach;
-// GtkTable.html
-// ushort xpadding;
-// GtkTable.html
-// ushort ypadding;
-// GtkTable.html
-// uint xexpand : 1;
-// GtkTable.html
-// uint yexpand : 1;
-// GtkTable.html
-// uint xshrink : 1;
-// GtkTable.html
-// uint yshrink : 1;
-// GtkTable.html
-// uint xfill : 1;
-// GtkTable.html
-// uint yfill : 1;
-// GtkTable.html
+public struct GtkTableChild
+{
+	GtkWidget *widget;
+	ushort leftAttach;
+	ushort rightAttach;
+	ushort topAttach;
+	ushort bottomAttach;
+	ushort xpadding;
+	ushort ypadding;
+	uint bitfield0;
+	//uint xexpand : 1;
+	//uint yexpand : 1;
+	//uint xshrink : 1;
+	//uint yshrink : 1;
+	//uint xfill : 1;
+	//uint yfill : 1;
+}
 
 
 /**
@@ -3841,8 +3703,12 @@ public struct GtkTableRowCol
 	ushort requisition;
 	ushort allocation;
 	ushort spacing;
-	uint bitfield;
+	uint bitfield0;
 	//uint needExpand : 1;
+	//uint needShrink : 1;
+	//uint expand : 1;
+	//uint shrink : 1;
+	//uint empty : 1;
 }
 
 
@@ -3893,11 +3759,11 @@ public struct GtkVScrollbar{}
  * There are no public fields in the GtkScrolledWindow struct; it should
  * only be accessed using the functions below.
  */
-public struct GtkScrolledWindow{}
-// GtkWidget *hscrollbar;
-// GtkScrolledWindow.html
-// GtkWidget *vscrollbar;
-// GtkScrolledWindow.html
+public struct GtkScrolledWindow
+{
+	GtkWidget *hscrollbar;
+	GtkWidget *vscrollbar;
+}
 
 
 /**
@@ -4113,13 +3979,13 @@ public struct GtkBin{}
  * GList*children;
  * a list of children belonging the GtkBox.
  */
-public struct GtkBox{}
-// GList *children;
-// GtkBox.html
-// short spacing;
-// GtkBox.html
-// uint homogeneous : 1;
-// GtkBox.html
+public struct GtkBox
+{
+	GList *children;
+	short spacing;
+	uint bitfield0;
+	//uint homogeneous : 1;
+}
 
 
 /**
@@ -4137,19 +4003,16 @@ public struct GtkBox{}
  * guint16padding;
  * the number of extra pixels to put between this child and its
  */
-public struct GtkBoxChild{}
-// GtkWidget *widget;
-// GtkBox.html
-// ushort padding;
-// GtkBox.html
-// uint expand : 1;
-// GtkBox.html
-// uint fill : 1;
-// GtkBox.html
-// uint pack : 1;
-// GtkBox.html
-// uint isSecondary : 1;
-// GtkBox.html
+public struct GtkBoxChild
+{
+	GtkWidget *widget;
+	ushort padding;
+	uint bitfield0;
+	//uint expand : 1;
+	//uint fill : 1;
+	//uint pack : 1;
+	//uint isSecondary : 1;
+}
 
 
 /**
@@ -4258,47 +4121,29 @@ public struct GtkSeparator{}
  * GtkStyle*style;
  * The style for the widget. The style contains the colors the widget should be
  */
-public struct GtkWidget{}
-// /+* The style for the widget. The style contains the
-// GtkWidget.html
-// * colors the widget should be drawn inn for each state
-// GtkWidget.html
-// * along with graphics contexts used to draw with and
-// GtkWidget.html
-// * the font to use for text.
-// GtkWidget.html
-// +/
-// GtkWidget.html
-// GtkStyle *style;
-// GtkWidget.html
-// /+* The widget's desired size.
-// GtkWidget.html
-// +/
-// GtkWidget.html
-// GtkRequisition requisition;
-// GtkWidget.html
-// /+* The widget's allocated size.
-// GtkWidget.html
-// +/
-// GtkWidget.html
-// GtkAllocation allocation;
-// GtkWidget.html
-// /+* The widget's window or its parent window if it does
-// GtkWidget.html
-// * not have a window. (Which will be indicated by the
-// GtkWidget.html
-// * GTK_NO_WINDOW flag being set).
-// GtkWidget.html
-// +/
-// GtkWidget.html
-// GdkWindow *window;
-// GtkWidget.html
-// /+* The widget's parent.
-// GtkWidget.html
-// +/
-// GtkWidget.html
-// GtkWidget *parent;
-// GtkWidget.html
+public struct GtkWidget
+{
+	/+* The style for the widget. The style contains the
+	 * colors the widget should be drawn inn for each state
+	 * along with graphics contexts used to draw with and
+	 * the font to use for text.
+	+/
+	GtkStyle *style;
+	/+* The widget's desired size.
+	+/
+	GtkRequisition requisition;
+	/+* The widget's allocated size.
+	+/
+	GtkAllocation allocation;
+	/+* The widget's window or its parent window if it does
+	 * not have a window. (Which will be indicated by the
+	 * GTK_NO_WINDOW flag being set).
+	+/
+	GdkWindow *window;
+	/+* The widget's parent.
+	+/
+	GtkWidget *parent;
+}
 
 
 /**
@@ -4312,25 +4157,18 @@ public struct GtkWidget{}
  * handles the emission.
  * Implementation of this signal is optional.
  */
-public struct GtkWidgetClass{}
-// /+* The object class structure needs to be the first
-// GtkWidget.html
-// * element inn the widget class structure inn order for
-// GtkWidget.html
-// * the class mechanism to work correctly. This allows a
-// GtkWidget.html
-// * GtkWidgetClass pointer to be cast to a GtkObjectClass
-// GtkWidget.html
-// * pointer.
-// GtkWidget.html
-// +/
-// GtkWidget.html
-// GtkObjectClass parentClass;
-// GtkWidget.html
-// uint activateSignal;
-// GtkWidget.html
-// uint setScrollAdjustmentsSignal;
-// GtkWidget.html
+public struct GtkWidgetClass
+{
+	/+* The object class structure needs to be the first
+	 * element inn the widget class structure inn order for
+	 * the class mechanism to work correctly. This allows a
+	 * GtkWidgetClass pointer to be cast to a GtkObjectClass
+	 * pointer.
+	+/
+	GtkObjectClass parentClass;
+	uint activateSignal;
+	uint setScrollAdjustmentsSignal;
+}
 
 
 /**
@@ -4370,21 +4208,16 @@ public struct GtkAllocation
 }
 
 
-public struct GtkSelectionData{}
-// GdkAtom selection;
-// GtkWidget.html
-// GdkAtom target;
-// GtkWidget.html
-// GdkAtom type;
-// GtkWidget.html
-// int format;
-// GtkWidget.html
-// char *data;
-// GtkWidget.html
-// int length;
-// GtkWidget.html
-// GdkDisplay *display;
-// GtkWidget.html
+public struct GtkSelectionData
+{
+	GdkAtom selection;
+	GdkAtom target;
+	GdkAtom type;
+	int format;
+	char *data;
+	int length;
+	GdkDisplay *display;
+}
 
 
 public struct GtkWidgetAuxInfo
@@ -4393,18 +4226,18 @@ public struct GtkWidgetAuxInfo
 	int y;
 	int width;
 	int height;
-	uint bitfield;
+	uint bitfield0;
 	//uint xSet : 1;
+	//uint ySet : 1;
 }
 
 
-public struct GtkWidgetShapeInfo{}
-// short offsetX;
-// GtkWidget.html
-// short offsetY;
-// GtkWidget.html
-// GdkBitmap *shapeMask;
-// GtkWidget.html
+public struct GtkWidgetShapeInfo
+{
+	short offsetX;
+	short offsetY;
+	GdkBitmap *shapeMask;
+}
 
 
 /**
@@ -4455,21 +4288,16 @@ public struct GtkRuler{}
 /**
  * This should be points_per_unit. This is the size of the unit in 1/72nd's of an inch and has nothing to do with screen pixels.
  */
-public struct GtkRulerMetric{}
-// char *metricName;
-// GtkRuler.html
-// char *abbrev;
-// GtkRuler.html
-// /+* This should be pointsPerUnit. This is the size of the unit
-// GtkRuler.html
-// * inn 1/72nd's of an inch and has nothing to do with screen pixels +/
-// GtkRuler.html
-// double pixelsPerUnit;
-// GtkRuler.html
-// double rulerScale[10];
-// GtkRuler.html
-// int subdivide[5]; /+* five possible modes of subdivision +/
-// GtkRuler.html
+public struct GtkRulerMetric
+{
+	char *metricName;
+	char *abbrev;
+	/+* This should be pointsPerUnit. This is the size of the unit
+	 * inn 1/72nd's of an inch and has nothing to do with screen pixels +/
+	double pixelsPerUnit;
+	double rulerScale[10];
+	int subdivide[5]; /+* five possible modes of subdivision +/
+}
 
 
 /**
@@ -4626,21 +4454,16 @@ public struct GtkRecentFilter{}
  * GtkRecentFilterFlagscontains;
  * Flags indicating which of the following fields need
  */
-public struct GtkRecentFilterInfo{}
-// GtkRecentFilterFlags contains;
-// GtkRecentFilter.html
-// char *uri;
-// GtkRecentFilter.html
-// char *displayName;
-// GtkRecentFilter.html
-// char *mimeType;
-// GtkRecentFilter.html
-// char **applications;
-// GtkRecentFilter.html
-// char **groups;
-// GtkRecentFilter.html
-// int age;
-// GtkRecentFilter.html
+public struct GtkRecentFilterInfo
+{
+	GtkRecentFilterFlags contains;
+	char *uri;
+	char *displayName;
+	char *mimeType;
+	char **applications;
+	char **groups;
+	int age;
+}
 
 
 /**
@@ -4755,47 +4578,29 @@ public struct GtkBuilder{}
  * GtkWidget*cancel_button;
  * the two main buttons that signals should be connected
  */
-public struct GtkFileSelection{}
-// GtkWidget *dirList;
-// GtkFileSelection.html
-// GtkWidget *fileList;
-// GtkFileSelection.html
-// GtkWidget *selectionEntry;
-// GtkFileSelection.html
-// GtkWidget *selectionText;
-// GtkFileSelection.html
-// GtkWidget *mainVbox;
-// GtkFileSelection.html
-// GtkWidget *okButton;
-// GtkFileSelection.html
-// GtkWidget *cancelButton;
-// GtkFileSelection.html
-// GtkWidget *helpButton;
-// GtkFileSelection.html
-// GtkWidget *historyPulldown;
-// GtkFileSelection.html
-// GtkWidget *historyMenu;
-// GtkFileSelection.html
-// GList *historyList;
-// GtkFileSelection.html
-// GtkWidget *fileopDialog;
-// GtkFileSelection.html
-// GtkWidget *fileopEntry;
-// GtkFileSelection.html
-// char *fileopFile;
-// GtkFileSelection.html
-// void* cmplState;
-// GtkFileSelection.html
-// GtkWidget *fileopCDir;
-// GtkFileSelection.html
-// GtkWidget *fileopDelFile;
-// GtkFileSelection.html
-// GtkWidget *fileopRenFile;
-// GtkFileSelection.html
-// GtkWidget *buttonArea;
-// GtkFileSelection.html
-// GtkWidget *actionArea;
-// GtkFileSelection.html
+public struct GtkFileSelection
+{
+	GtkWidget *dirList;
+	GtkWidget *fileList;
+	GtkWidget *selectionEntry;
+	GtkWidget *selectionText;
+	GtkWidget *mainVbox;
+	GtkWidget *okButton;
+	GtkWidget *cancelButton;
+	GtkWidget *helpButton;
+	GtkWidget *historyPulldown;
+	GtkWidget *historyMenu;
+	GList *historyList;
+	GtkWidget *fileopDialog;
+	GtkWidget *fileopEntry;
+	char *fileopFile;
+	void* cmplState;
+	GtkWidget *fileopCDir;
+	GtkWidget *fileopDelFile;
+	GtkWidget *fileopRenFile;
+	GtkWidget *buttonArea;
+	GtkWidget *actionArea;
+}
 
 
 /**
@@ -4810,70 +4615,46 @@ public struct GtkItemFactory{}
  * Warning
  * GtkItemFactoryEntry is deprecated and should not be used in newly-written code.
  */
-public struct GtkItemFactoryEntry{}
-// char *path;
-// GtkItemFactory.html
-// char *accelerator;
-// GtkItemFactory.html
-// GtkItemFactoryCallback callback;
-// GtkItemFactory.html
-// uint callbackAction;
-// GtkItemFactory.html
-// /+* possible values:
-// GtkItemFactory.html
-// * NULL -> "<Item>"
-// GtkItemFactory.html
-// * "" -> "<Item>"
-// GtkItemFactory.html
-// * "<Title>" -> create a title item
-// GtkItemFactory.html
-// * "<Item>" -> create a simple item
-// GtkItemFactory.html
-// * "<ImageItem>" -> create an item holding an image
-// GtkItemFactory.html
-// * "<StockItem>" -> create an item holding a stock image
-// GtkItemFactory.html
-// * "<CheckItem>" -> create a check item
-// GtkItemFactory.html
-// * "<ToggleItem>" -> create a toggle item
-// GtkItemFactory.html
-// * "<RadioItem>" -> create a radio item
-// GtkItemFactory.html
-// * <path> -> path of a radio item to link against
-// GtkItemFactory.html
-// * "<Separator>" -> create a separator
-// GtkItemFactory.html
-// * "<Tearoff>" -> create a tearoff separator
-// GtkItemFactory.html
-// * "<Branch>" -> create an item to hold sub items
-// GtkItemFactory.html
-// * "<LastBranch>" -> create a right justified item to hold sub items
-// GtkItemFactory.html
-// +/
-// GtkItemFactory.html
-// char *itemType;
-// GtkItemFactory.html
-// /+* Extra data for some item types:
-// GtkItemFactory.html
-// * ImageItem -> pointer to inlined pixbuf stream
-// GtkItemFactory.html
-// * StockItem -> name of stock item
-// GtkItemFactory.html
-// +/
-// GtkItemFactory.html
-// void* extraData;
-// GtkItemFactory.html
+public struct GtkItemFactoryEntry
+{
+	char *path;
+	char *accelerator;
+	GtkItemFactoryCallback callback;
+	uint callbackAction;
+	/+* possible values:
+	 * NULL -> "<Item>"
+	 * "" -> "<Item>"
+	 * "<Title>" -> create a title item
+	 * "<Item>" -> create a simple item
+	 * "<ImageItem>" -> create an item holding an image
+	 * "<StockItem>" -> create an item holding a stock image
+	 * "<CheckItem>" -> create a check item
+	 * "<ToggleItem>" -> create a toggle item
+	 * "<RadioItem>" -> create a radio item
+	 * <path> -> path of a radio item to link against
+	 * "<Separator>" -> create a separator
+	 * "<Tearoff>" -> create a tearoff separator
+	 * "<Branch>" -> create an item to hold sub items
+	 * "<LastBranch>" -> create a right justified item to hold sub items
+	+/
+	char *itemType;
+	/+* Extra data for some item types:
+	 * ImageItem -> pointer to inlined pixbuf stream
+	 * StockItem -> name of stock item
+	+/
+	void* extraData;
+}
 
 
 /**
  * Warning
  * GtkItemFactoryItem is deprecated and should not be used in newly-written code.
  */
-public struct GtkItemFactoryItem{}
-// char *path;
-// GtkItemFactory.html
-// GSList *widgets;
-// GtkItemFactory.html
+public struct GtkItemFactoryItem
+{
+	char *path;
+	GSList *widgets;
+}
 
 
 /**
@@ -4891,15 +4672,13 @@ public struct GtkTooltips{}
  * tooltips is the GtkTooltips group that this tooltip belongs to. widget is the GtkWidget that this tooltip data is associated with. tip_text is a string containing the tooltip message itself.
  * tip_private is a string that is not shown as the default tooltip. Instead, this message may be more informative and go towards forming a context-sensitive help system for your application. (FIXME: how to actually "switch on" private tips?)
  */
-public struct GtkTooltipsData{}
-// GtkTooltips *tooltips;
-// GtkTooltips.html
-// GtkWidget *widget;
-// GtkTooltips.html
-// char *tipText;
-// GtkTooltips.html
-// char *tipPrivate;
-// GtkTooltips.html
+public struct GtkTooltipsData
+{
+	GtkTooltips *tooltips;
+	GtkWidget *widget;
+	char *tipText;
+	char *tipPrivate;
+}
 
 
 /**

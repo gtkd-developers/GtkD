@@ -424,13 +424,12 @@ public struct AtkImplementor{}
  * corresponding to focused.
  * constgchar*property_name;
  */
-public struct AtkPropertyValues{}
-// char *propertyName;
-// AtkObject.html
-// GValue oldValue;
-// AtkObject.html
-// GValue newValue;
-// AtkObject.html
+public struct AtkPropertyValues
+{
+	char *propertyName;
+	GValue oldValue;
+	GValue newValue;
+}
 
 
 /**
@@ -493,15 +492,13 @@ public struct AtkText{}
  * A structure used to describe a text range.
  * AtkTextRectanglebounds;
  */
-public struct AtkTextRange{}
-// AtkTextRectangle bounds;
-// AtkText.html
-// int startOffset;
-// AtkText.html
-// int endOffset;
-// AtkText.html
-// char* content;
-// AtkText.html
+public struct AtkTextRange
+{
+	AtkTextRectangle bounds;
+	int startOffset;
+	int endOffset;
+	char* content;
+}
 
 
 /**
