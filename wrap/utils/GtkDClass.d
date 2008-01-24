@@ -1711,8 +1711,8 @@ public class GtkDClass
 					//else
 					if ( std.string.find(lines[pos], "[") >= 0 )
 					{
-						invalidDStruct = true;
-						debug(structs)writefln("- INVALID ([)>>>%s<<<", lines[pos]);
+//						invalidDStruct = true;
+//						debug(structs)writefln("- INVALID ([)>>>%s<<<", lines[pos]);
 					}
 					else if ( std.string.find(lines[pos], "{") >= 0 )
 					{
@@ -1725,7 +1725,12 @@ public class GtkDClass
 						writefln("collectStructs %s", std.string.strip(lines[pos]));
 						debug(structs)writefln("= IGNORED >>>%s<<<", lines[pos]);
 					}
-					else if ( !primitiveType(lines[pos]) )
+					else if ( std.string.find(lines[pos], "(") >= 0 && std.string.find(lines[pos], "*") > 3)
+					{
+						invalidDStruct = true;
+						debug(structs)writefln("- INVALID (()>>>%s<<<", lines[pos]);
+					}
+/*					else if ( !primitiveType(lines[pos]) )
 					{
 						switch ( structName )
 						{
@@ -1752,7 +1757,7 @@ public class GtkDClass
 								break;
 						}
 					}
-					else
+*/					else
 					{
 						debug(structs)writefln("+ ADDED   >>>%s<<<", lines[pos]);
 					}
@@ -1800,24 +1805,69 @@ public class GtkDClass
 				collectedStructs ~= "public struct "~structName~"\n{";
 
 				bool bitField = false;	// if we are in a bit field
+				int bitFieldNr; // Number apended to bit field
+				int bits; // Bits used in the curent bit field
 
 				foreach ( char[] def; structDef )
 				{
 					char[] elem = stringToGtkD(def, convParms, wrapper.getAliases());
-					if ( std.string.find(def, ":") >= 0 )
+
+					if ( startsWith(elem, "*") && std.string.find(elem, "+/") < elem.length - 2)
+					{
+						elem = std.string.replace(elem, "/", "\\");
+					}
+					if ( std.string.find(elem, "unsigned long") == 0)
+					{
+						elem = "ulong"~ elem[13..$];
+					}
+					if ( std.string.find(def, ":") >= 0 && (std.string.find(def, ":") <  std.string.find(def, "/+*") ||  std.string.find(def, "/+*") == -1) )
 					{
 						if ( !bitField )
 						{
 							bitField = true;
 							// just assume uint for now
 							// TODO get the type
-							collectedStructs ~= "\tuint bitfield;";
+							collectedStructs ~= "\tuint bitfield"~ std.string.toString(bitFieldNr) ~";";
+						}
+						if (std.string.find(elem, "/+*") > 0 && std.string.find(elem, "+/") < 0)
+						{
+							char[][] parts = std.string.split(elem, "/+*");
+							collectedStructs ~= "//" ~ parts[0];
+							collectedStructs ~= "/+*" ~ parts[1];
+						}
+						else
+						{
 							collectedStructs ~= "//" ~ elem;
+						}
+
+						bits += std.string.atoi(std.string.split(elem, ":")[1]);
+						if ( bits >= 32)
+						{
+							bitField = false;
+							bitFieldNr++;
+							bits = 0;
+						}
+					}
+					else if ( std.string.find(elem, "#") == 0 )
+					{
+						if ( std.string.find(elem, "#ifndef") == 0 )
+						{
+							collectedStructs ~= "version("~ elem[8..$] ~")";
+							collectedStructs ~= "{";
+						}
+						else if ( std.string.find(elem, "#else") == 0 )
+						{
+							collectedStructs ~= "}";
+							collectedStructs ~= "else";
+							collectedStructs ~= "{";
+						}
+						else if ( std.string.find(elem, "#endif") == 0 )
+						{
+							collectedStructs ~= "}";
 						}
 					}
 					else
 					{
-						bitField = false;
 						collectedStructs ~= elem;
 					}
 				}
@@ -2716,7 +2766,7 @@ public class GtkDClass
 	{
 		char[] converted;
 
-		//debug(tokenToGtkD) writefln("gToken=>>>%s<<< (prefix=%s)", gToken, convParms.prefix);
+		debug(tokenToGtkD) writefln("gToken=>>>%s<<<", gToken);
 
 		if ( (aliases !is null) && (gToken in aliases) )
 		{

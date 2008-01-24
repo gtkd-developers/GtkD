@@ -36,6 +36,7 @@ public import gtkc.gdkpixbuftypes;
 alias void* GdkAtom;
 alias void* GdkNativeWindow;
 
+const int GDK_MAX_TIMECOORD_AXES = 128;
 
 addTypedefs: end
 

@@ -37,19 +37,18 @@ public import gtkc.pangotypes;
 public import gtkc.atktypes;
 public import gtkc.gdkpixbuftypes;
 public import gtkc.gdktypes;
+
 alias void GtkAccelGroupEntry;
 alias void GtkContainerClass;
 
-//alias GTokenType.G_TOKEN_LAST G_TOKEN_LAST;";
-//alias GtkSignalRunType.G_SIGNAL_RUN_FIRST G_SIGNAL_RUN_FIRST;
-//alias GtkSignalRunType.G_SIGNAL_RUN_LAST G_SIGNAL_RUN_LAST;
-//alias GtkSignalRunType.G_SIGNAL_NO_RECURSE G_SIGNAL_NO_RECURSE;
-//alias GtkSignalRunType.G_SIGNAL_ACTION G_SIGNAL_ACTION;
-//alias GtkSignalRunType.G_SIGNAL_NO_HOOKS G_SIGNAL_NO_HOOKS;
+struct GtkObjectClass
+{
+	GObjectClass parentClass;
+	void function(GtkObject*, GtkArg*, uint) setArg;
+	void function(GtkObject*, GtkArg *, uint) getArg;
+	void function(GtkObject*) destroy;
+}
 
-/* GtkDragResult is now an enum. */
-//alias int GtkDragResult;
-//alias int GtkTooltip;
 addTypedefs: end
 
 addAliases: start
