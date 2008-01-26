@@ -1587,33 +1587,12 @@ public struct GdkDisplay{}
  * get_pointer()
  * Obtains the current pointer position and modifier state.
  */
-public struct GdkDisplayPointerHooks{}
-// void (*getPointer) (GdkDisplay *display,
-// GdkDisplay.html
-// GdkScreen **screen,
-// GdkDisplay.html
-// int *x,
-// GdkDisplay.html
-// int *y,
-// GdkDisplay.html
-// GdkModifierType *mask);
-// GdkDisplay.html
-// GdkWindow* (*windowGetPointer) (GdkDisplay *display,
-// GdkDisplay.html
-// GdkWindow *window,
-// GdkDisplay.html
-// int *x,
-// GdkDisplay.html
-// int *y,
-// GdkDisplay.html
-// GdkModifierType *mask);
-// GdkDisplay.html
-// GdkWindow* (*windowAtPointer) (GdkDisplay *display,
-// GdkDisplay.html
-// int *winX,
-// GdkDisplay.html
-// int *winY);
-// GdkDisplay.html
+public struct GdkDisplayPointerHooks
+{
+	void  function(GdkDisplay *display,GdkScreen **screen,int *x,int *y,GdkModifierType *mask) getPointer;
+	GdkWindow*  function(GdkDisplay *display,GdkWindow *window,int *x,int *y,GdkModifierType *mask) windowGetPointer;
+	GdkWindow*  function(GdkDisplay *display,int *winX,int *winY) windowAtPointer;
+}
 
 
 /**
@@ -2074,21 +2053,11 @@ public struct GdkWindowAttr
  * get_pointer()
  * Obtains the current pointer position and modifier state.
  */
-public struct GdkPointerHooks{}
-// GdkWindow* (*getPointer) (GdkWindow *window,
-// gdk-Windows.html
-// int *x,
-// gdk-Windows.html
-// int *y,
-// gdk-Windows.html
-// GdkModifierType *mask);
-// gdk-Windows.html
-// GdkWindow* (*windowAtPointer) (GdkScreen *screen, /+* unused +/
-// gdk-Windows.html
-// int *winX,
-// gdk-Windows.html
-// int *winY);
-// gdk-Windows.html
+public struct GdkPointerHooks
+{
+	GdkWindow*  function(GdkWindow *window,int *x,int *y,GdkModifierType *mask) getPointer;
+	GdkWindow*  function(GdkScreen *screen, /+* unused +/int *winX,int *winY) windowAtPointer;
+}
 
 
 /**

@@ -854,31 +854,14 @@ public struct PangoFontMap{}
  * load_font()
  * a function to load a font with a given description. See
  */
-public struct PangoFontMapClass{}
-// GObjectClass parentClass;
-// pango-Fonts.html
-// PangoFont * (*loadFont) (PangoFontMap *fontmap,
-// pango-Fonts.html
-// PangoContext *context,
-// pango-Fonts.html
-// PangoFontDescription *desc);
-// pango-Fonts.html
-// void (*listFamilies) (PangoFontMap *fontmap,
-// pango-Fonts.html
-// PangoFontFamily ***families,
-// pango-Fonts.html
-// int *nFamilies);
-// pango-Fonts.html
-// PangoFontset *(*loadFontset) (PangoFontMap *fontmap,
-// pango-Fonts.html
-// PangoContext *context,
-// pango-Fonts.html
-// PangoFontDescription *desc,
-// pango-Fonts.html
-// PangoLanguage *language);
-// pango-Fonts.html
-// char *shapeEngineType;
-// pango-Fonts.html
+public struct PangoFontMapClass
+{
+	GObjectClass parentClass;
+	PangoFont *  function(PangoFontMap *fontmap,PangoContext *context,PangoFontDescription *desc) loadFont;
+	void  function(PangoFontMap *fontmap,PangoFontFamily ***families,int *nFamilies) listFamilies;
+	PangoFontset * function(PangoFontMap *fontmap,PangoContext *context,PangoFontDescription *desc,PangoLanguage *language) loadFontset;
+	char *shapeEngineType;
+}
 
 
 /**
@@ -900,23 +883,14 @@ public struct PangoFontset{}
  * get_font()
  * a function to get the font in the fontset that contains the
  */
-public struct PangoFontsetClass{}
-// GObjectClass parentClass;
-// pango-Fonts.html
-// PangoFont * (*getFont) (PangoFontset *fontset,
-// pango-Fonts.html
-// uint wc);
-// pango-Fonts.html
-// PangoFontMetrics *(*getMetrics) (PangoFontset *fontset);
-// pango-Fonts.html
-// PangoLanguage * (*getLanguage) (PangoFontset *fontset);
-// pango-Fonts.html
-// void (*foreac) (PangoFontset *fontset,
-// pango-Fonts.html
-// PangoFontsetForeachFunc func,
-// pango-Fonts.html
-// void* data);
-// pango-Fonts.html
+public struct PangoFontsetClass
+{
+	GObjectClass parentClass;
+	PangoFont *  function(PangoFontset *fontset,uint wc) getFont;
+	PangoFontMetrics * function(PangoFontset *fontset) getMetrics;
+	PangoLanguage *  function(PangoFontset *fontset) getLanguage;
+	void  function(PangoFontset *fontset,PangoFontsetForeachFunc func,void* data) foreac;
+}
 
 
 /**
@@ -942,15 +916,13 @@ public struct PangoFontsetSimple{}
  * equal()
  * function to check two attributes of this type for equality (see pango_attribute_equal())
  */
-public struct PangoAttrClass{}
-// PangoAttrType type;
-// pango-Text-Attributes.html
-// PangoAttribute * (*copy) ( PangoAttribute *attr);
-// pango-Text-Attributes.html
-// void (*destroy) (PangoAttribute *attr);
-// pango-Text-Attributes.html
-// int (*equal) ( PangoAttribute *attr1, PangoAttribute *attr2);
-// pango-Text-Attributes.html
+public struct PangoAttrClass
+{
+	PangoAttrType type;
+	PangoAttribute *  function( PangoAttribute *attr) copy;
+	void  function(PangoAttribute *attr) destroy;
+	int  function( PangoAttribute *attr1, PangoAttribute *attr2) equal;
+}
 
 
 /**
@@ -1252,111 +1224,32 @@ public struct PangoRenderer
  * Class structure for PangoRenderer.
  * draw_glyphs()
  */
-public struct PangoRendererClass{}
-// /+* All of the following have defaulx implementations
-// PangoRenderer.html
-// * and take as coordinates user coordinates inn Pango units
-// PangoRenderer.html
-// +/
-// PangoRenderer.html
-// void (*drawGlyphs) (PangoRenderer *renderer,
-// PangoRenderer.html
-// PangoFont *font,
-// PangoRenderer.html
-// PangoGlyphString *glyphs,
-// PangoRenderer.html
-// int x,
-// PangoRenderer.html
-// int y);
-// PangoRenderer.html
-// void (*drawRectangle) (PangoRenderer *renderer,
-// PangoRenderer.html
-// PangoRenderPart part,
-// PangoRenderer.html
-// int x,
-// PangoRenderer.html
-// int y,
-// PangoRenderer.html
-// int width,
-// PangoRenderer.html
-// int height);
-// PangoRenderer.html
-// void (*drawErrorUnderline) (PangoRenderer *renderer,
-// PangoRenderer.html
-// int x,
-// PangoRenderer.html
-// int y,
-// PangoRenderer.html
-// int width,
-// PangoRenderer.html
-// int height);
-// PangoRenderer.html
-// /+* Nothing is drawn for shaped glyphs unless this is implemented +/
-// PangoRenderer.html
-// void (*drawShape) (PangoRenderer *renderer,
-// PangoRenderer.html
-// PangoAttrShape *attr,
-// PangoRenderer.html
-// int x,
-// PangoRenderer.html
-// int y);
-// PangoRenderer.html
-// /+* These two must be implemented and take coordinates inn
-// PangoRenderer.html
-// * device space as doubles.
-// PangoRenderer.html
-// +/
-// PangoRenderer.html
-// void (*drawTrapezoid) (PangoRenderer *renderer,
-// PangoRenderer.html
-// PangoRenderPart part,
-// PangoRenderer.html
-// double y1_,
-// PangoRenderer.html
-// double x11,
-// PangoRenderer.html
-// double x21,
-// PangoRenderer.html
-// double y2,
-// PangoRenderer.html
-// double x12,
-// PangoRenderer.html
-// double x22);
-// PangoRenderer.html
-// void (*drawGlyph) (PangoRenderer *renderer,
-// PangoRenderer.html
-// PangoFont *font,
-// PangoRenderer.html
-// PangoGlyph glyph,
-// PangoRenderer.html
-// double x,
-// PangoRenderer.html
-// double y);
-// PangoRenderer.html
-// /+* Notification of change inn rendering attributes
-// PangoRenderer.html
-// +/
-// PangoRenderer.html
-// void (*partChanged) (PangoRenderer *renderer,
-// PangoRenderer.html
-// PangoRenderPart part);
-// PangoRenderer.html
-// /+* Paired around drawing operations
-// PangoRenderer.html
-// +/
-// PangoRenderer.html
-// void (*begin) (PangoRenderer *renderer);
-// PangoRenderer.html
-// void (*end) (PangoRenderer *renderer);
-// PangoRenderer.html
-// /+* Hooks into the details of layout rendering
-// PangoRenderer.html
-// +/
-// PangoRenderer.html
-// void (*prepareRun) (PangoRenderer *renderer,
-// PangoRenderer.html
-// PangoLayoutRun *run);
-// PangoRenderer.html
+public struct PangoRendererClass
+{
+	/+* All of the following have defaulx implementations
+	 * and take as coordinates user coordinates inn Pango units
+	+/
+	void  function(PangoRenderer *renderer,PangoFont *font,PangoGlyphString *glyphs,int x,int y) drawGlyphs;
+	void  function(PangoRenderer *renderer,PangoRenderPart part,int x,int y,int width,int height) drawRectangle;
+	void  function(PangoRenderer *renderer,int x,int y,int width,int height) drawErrorUnderline;
+	/+* Nothing is drawn for shaped glyphs unless this is implemented +/
+	void  function(PangoRenderer *renderer,PangoAttrShape *attr,int x,int y) drawShape;
+	/+* These two must be implemented and take coordinates inn
+	 * device space as doubles.
+	+/
+	void  function(PangoRenderer *renderer,PangoRenderPart part,double y1_,double x11,double x21,double y2,double x12,double x22) drawTrapezoid;
+	void  function(PangoRenderer *renderer,PangoFont *font,PangoGlyph glyph,double x,double y) drawGlyph;
+	/+* Notification of change inn rendering attributes
+	+/
+	void  function(PangoRenderer *renderer,PangoRenderPart part) partChanged;
+	/+* Paired around drawing operations
+	+/
+	void  function(PangoRenderer *renderer) begin;
+	void  function(PangoRenderer *renderer) end;
+	/+* Hooks into the details of layout rendering
+	+/
+	void  function(PangoRenderer *renderer,PangoLayoutRun *run) prepareRun;
+}
 
 
 /**
@@ -1435,19 +1328,10 @@ public struct PangoEngineLang{}
  * Class structure for PangoEngineLang
  * script_break()
  */
-public struct PangoEngineLangClass{}
-// void (*scriptBreak) (PangoEngineLang *engine,
-// PangoEngineLang.html
-// char *text,
-// PangoEngineLang.html
-// int len,
-// PangoEngineLang.html
-// PangoAnalysis *analysis,
-// PangoEngineLang.html
-// PangoLogAttr *attrs,
-// PangoEngineLang.html
-// int attrsLen);
-// PangoEngineLang.html
+public struct PangoEngineLangClass
+{
+	void  function(PangoEngineLang *engine,char *text,int len,PangoAnalysis *analysis,PangoLogAttr *attrs,int attrsLen) scriptBreak;
+}
 
 
 /**
@@ -1468,27 +1352,11 @@ public struct PangoEngineShape{}
  * Class structure for PangoEngineShape
  * script_shape()
  */
-public struct PangoEngineShapeClass{}
-// void (*scriptShape) (PangoEngineShape *engine,
-// PangoEngineShape.html
-// PangoFont *font,
-// PangoEngineShape.html
-// char *text,
-// PangoEngineShape.html
-// int length,
-// PangoEngineShape.html
-// PangoAnalysis *analysis,
-// PangoEngineShape.html
-// PangoGlyphString *glyphs);
-// PangoEngineShape.html
-// PangoCoverageLevel (*covers) (PangoEngineShape *engine,
-// PangoEngineShape.html
-// PangoFont *font,
-// PangoEngineShape.html
-// PangoLanguage *language,
-// PangoEngineShape.html
-// gunichar wc);
-// PangoEngineShape.html
+public struct PangoEngineShapeClass
+{
+	void  function(PangoEngineShape *engine,PangoFont *font,char *text,int length,PangoAnalysis *analysis,PangoGlyphString *glyphs) scriptShape;
+	PangoCoverageLevel  function(PangoEngineShape *engine,PangoFont *font,PangoLanguage *language,gunichar wc) covers;
+}
 
 
 /*

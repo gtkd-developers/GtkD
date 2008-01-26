@@ -25,7 +25,7 @@ module gtkc.gobjecttypes;
 
 public import gtkc.glibtypes;
 
-
+alias void GTypeCValue;
 
 // G_TYPE_*
 enum GType
@@ -310,39 +310,18 @@ public struct GInterfaceInfo
  * to serve as a container for values of a type.
  * value_init()
  */
-public struct GTypeValueTable{}
-// void (*valueInit) (GValue *value);
-// gobject-Type-Information.html
-// void (*valueFree) (GValue *value);
-// gobject-Type-Information.html
-// void (*valueCopy) ( GValue *srcValue,
-// gobject-Type-Information.html
-// GValue *destValue);
-// gobject-Type-Information.html
-// /+* varargs functionality (optional) +/
-// gobject-Type-Information.html
-// void* (*valuePeekPointer) ( GValue *value);
-// gobject-Type-Information.html
-// char *collectFormat;
-// gobject-Type-Information.html
-// char* (*collectValue) (GValue *value,
-// gobject-Type-Information.html
-// uint nCollectValues,
-// gobject-Type-Information.html
-// GTypeCValue *collectValues,
-// gobject-Type-Information.html
-// uint collectFlags);
-// gobject-Type-Information.html
-// char *lcopyFormat;
-// gobject-Type-Information.html
-// char* (*lcopyValue) ( GValue *value,
-// gobject-Type-Information.html
-// uint nCollectValues,
-// gobject-Type-Information.html
-// GTypeCValue *collectValues,
-// gobject-Type-Information.html
-// uint collectFlags);
-// gobject-Type-Information.html
+public struct GTypeValueTable
+{
+	void  function(GValue *value) valueInit;
+	void  function(GValue *value) valueFree;
+	void  function( GValue *srcValue,GValue *destValue) valueCopy;
+	/+* varargs functionality (optional) +/
+	void*  function( GValue *value) valuePeekPointer;
+	char *collectFormat;
+	char*  function(GValue *value,uint nCollectValues,GTypeCValue *collectValues,uint collectFlags) collectValue;
+	char *lcopyFormat;
+	char*  function( GValue *value,uint nCollectValues,GTypeCValue *collectValues,uint collectFlags) lcopyValue;
+}
 
 
 /**
@@ -415,13 +394,12 @@ public struct GTypeModule
  * load()
  * loads the module and registers one or more types using
  */
-public struct GTypeModuleClass{}
-// GObjectClass parentClass;
-// GTypeModule.html
-// int (* load) (GTypeModule *modul);
-// GTypeModule.html
-// void (* unload) (GTypeModule *modul);
-// GTypeModule.html
+public struct GTypeModuleClass
+{
+	GObjectClass parentClass;
+	int  function(GTypeModule *modul)  load;
+	void  function(GTypeModule *modul)  unload;
+}
 
 
 /**
@@ -439,57 +417,23 @@ public struct GObject{}
  * static GObject*
  * my_singleton_constructor (GType type,
  */
-public struct GObjectClass{}
-// GTypeClass gTypeClass;
-// gobject-The-Base-Object-Type.html
-// /+* seldomly overidden +/
-// gobject-The-Base-Object-Type.html
-// GObject* (*constructor) (GType type,
-// gobject-The-Base-Object-Type.html
-// uint nConstructProperties,
-// gobject-The-Base-Object-Type.html
-// GObjectConstructParam *constructProperties);
-// gobject-The-Base-Object-Type.html
-// /+* overridable methods +/
-// gobject-The-Base-Object-Type.html
-// void (*setProperty) (GObject *object,
-// gobject-The-Base-Object-Type.html
-// uint propertyId,
-// gobject-The-Base-Object-Type.html
-// GValue *value,
-// gobject-The-Base-Object-Type.html
-// GParamSpec *pspec);
-// gobject-The-Base-Object-Type.html
-// void (*getProperty) (GObject *object,
-// gobject-The-Base-Object-Type.html
-// uint propertyId,
-// gobject-The-Base-Object-Type.html
-// GValue *value,
-// gobject-The-Base-Object-Type.html
-// GParamSpec *pspec);
-// gobject-The-Base-Object-Type.html
-// void (*dispose) (GObject *object);
-// gobject-The-Base-Object-Type.html
-// void (*finalize) (GObject *object);
-// gobject-The-Base-Object-Type.html
-// /+* seldomly overidden +/
-// gobject-The-Base-Object-Type.html
-// void (*dispatchPropertiesChanged) (GObject *object,
-// gobject-The-Base-Object-Type.html
-// uint nPspecs,
-// gobject-The-Base-Object-Type.html
-// GParamSpec **pspecs);
-// gobject-The-Base-Object-Type.html
-// /+* signals +/
-// gobject-The-Base-Object-Type.html
-// void (*notify) (GObject *object,
-// gobject-The-Base-Object-Type.html
-// GParamSpec *pspec);
-// gobject-The-Base-Object-Type.html
-// /+* called when done constructing +/
-// gobject-The-Base-Object-Type.html
-// void (*constructed) (GObject *object);
-// gobject-The-Base-Object-Type.html
+public struct GObjectClass
+{
+	GTypeClass gTypeClass;
+	/+* seldomly overidden +/
+	GObject*  function(GType type,uint nConstructProperties,GObjectConstructParam *constructProperties) constructor;
+	/+* overridable methods +/
+	void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) setProperty;
+	void  function(GObject *object,uint propertyId,GValue *value,GParamSpec *pspec) getProperty;
+	void  function(GObject *object) dispose;
+	void  function(GObject *object) finalize;
+	/+* seldomly overidden +/
+	void  function(GObject *object,uint nPspecs,GParamSpec **pspecs) dispatchPropertiesChanged;
+	/+* signals +/
+	void  function(GObject *object,GParamSpec *pspec) notify;
+	/+* called when done constructing +/
+	void  function(GObject *object) constructed;
+}
 
 
 /**
@@ -964,29 +908,16 @@ public struct GParamSpec
  * finalize()
  * The instance finalization function (optional), should chain
  */
-public struct GParamSpecClass{}
-// GTypeClass gTypeClass;
-// gobject-GParamSpec.html
-// GType valueType;
-// gobject-GParamSpec.html
-// void (*finalize) (GParamSpec *pspec);
-// gobject-GParamSpec.html
-// /+* GParam methods +/
-// gobject-GParamSpec.html
-// void (*valueSetDefault) (GParamSpec *pspec,
-// gobject-GParamSpec.html
-// GValue *value);
-// gobject-GParamSpec.html
-// int (*valueValidate) (GParamSpec *pspec,
-// gobject-GParamSpec.html
-// GValue *value);
-// gobject-GParamSpec.html
-// int (*valuesCmp) (GParamSpec *pspec,
-// gobject-GParamSpec.html
-// GValue *value1,
-// gobject-GParamSpec.html
-// GValue *value2);
-// gobject-GParamSpec.html
+public struct GParamSpecClass
+{
+	GTypeClass gTypeClass;
+	GType valueType;
+	void  function(GParamSpec *pspec) finalize;
+	/+* GParam methods +/
+	void  function(GParamSpec *pspec,GValue *value) valueSetDefault;
+	int  function(GParamSpec *pspec,GValue *value) valueValidate;
+	int  function(GParamSpec *pspec,GValue *value1,GValue *value2) valuesCmp;
+}
 
 
 /**
@@ -1010,35 +941,19 @@ public struct GParamSpecClass{}
  * value_set_default()
  * Resets a value to the default value for pspec
  */
-public struct GParamSpecTypeInfo{}
-// /+* type system portion +/
-// gobject-GParamSpec.html
-// ushort instanceSize; /+* obligatory +/
-// gobject-GParamSpec.html
-// ushort nPreallocs; /+* optional +/
-// gobject-GParamSpec.html
-// void (*instanceInit) (GParamSpec *pspec); /+* optional +/
-// gobject-GParamSpec.html
-// /+* class portion +/
-// gobject-GParamSpec.html
-// GType valueType; /+* obligatory +/
-// gobject-GParamSpec.html
-// void (*finalize) (GParamSpec *pspec); /+* optional +/
-// gobject-GParamSpec.html
-// void (*valueSetDefault) (GParamSpec *pspec, /+* recommended +/
-// gobject-GParamSpec.html
-// GValue *value);
-// gobject-GParamSpec.html
-// int (*valueValidate) (GParamSpec *pspec, /+* optional +/
-// gobject-GParamSpec.html
-// GValue *value);
-// gobject-GParamSpec.html
-// int (*valuesCmp) (GParamSpec *pspec, /+* recommended +/
-// gobject-GParamSpec.html
-// GValue *value1,
-// gobject-GParamSpec.html
-// GValue *value2);
-// gobject-GParamSpec.html
+public struct GParamSpecTypeInfo
+{
+	/+* type system portion +/
+	ushort instanceSize; /+* obligatory +/
+	ushort nPreallocs; /+* optional +/
+	void  function(GParamSpec *pspec) instanceInit;
+	/+* class portion +/
+	GType valueType; /+* obligatory +/
+	void  function(GParamSpec *pspec) finalize;
+	void  function(GParamSpec *pspec, /+* recommended +/GValue *value) valueSetDefault;
+	int  function(GParamSpec *pspec, /+* optional +/GValue *value) valueValidate;
+	int  function(GParamSpec *pspec, /+* recommended +/GValue *value1,GValue *value2) valuesCmp;
+}
 
 
 /**

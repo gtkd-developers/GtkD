@@ -1220,27 +1220,16 @@ public struct GSource{}
  * In the check function, it tests the results of the poll()
  * call to see if the required condition has been met, and returns TRUE if so.
  */
-public struct GSourceFuncs{}
-// int (*prepare) (GSource *source,
-// glib-The-Main-Event-Loop.html
-// int *timeout);
-// glib-The-Main-Event-Loop.html
-// int (*check) (GSource *source);
-// glib-The-Main-Event-Loop.html
-// int (*dispatch) (GSource *source,
-// glib-The-Main-Event-Loop.html
-// GSourceFunc callback,
-// glib-The-Main-Event-Loop.html
-// void* userData);
-// glib-The-Main-Event-Loop.html
-// void (*finalize) (GSource *source); /+* Can be NULL +/
-// glib-The-Main-Event-Loop.html
-// /+* For use by gSourceSetClosure +/
-// glib-The-Main-Event-Loop.html
-// GSourceFunc closureCallback;
-// glib-The-Main-Event-Loop.html
-// GSourceDummyMarshal closureMarshal; /+* Really is of type GClosureMarshal +/
-// glib-The-Main-Event-Loop.html
+public struct GSourceFuncs
+{
+	int  function(GSource *source,int *timeout) prepare;
+	int  function(GSource *source) check;
+	int  function(GSource *source,GSourceFunc callback,void* userData) dispatch;
+	void  function(GSource *source) finalize;
+	/+* For use by gSourceSetClosure +/
+	GSourceFunc closureCallback;
+	GSourceDummyMarshal closureMarshal; /+* Really is of type GClosureMarshal +/
+}
 
 
 /**
@@ -1253,19 +1242,12 @@ public struct GSourceFuncs{}
  * get()
  * Called to extract the callback function and data from the callback object.
  */
-public struct GSourceCallbackFuncs{}
-// void (*doref) (void* cbData);
-// glib-The-Main-Event-Loop.html
-// void (*unref) (void* cbData);
-// glib-The-Main-Event-Loop.html
-// void (*get) (void* cbData,
-// glib-The-Main-Event-Loop.html
-// GSource *source,
-// glib-The-Main-Event-Loop.html
-// GSourceFunc *func,
-// glib-The-Main-Event-Loop.html
-// void* *data);
-// glib-The-Main-Event-Loop.html
+public struct GSourceCallbackFuncs
+{
+	void  function(void* cbData) doref;
+	void  function(void* cbData) unref;
+	void  function(void* cbData,GSource *source, GSourceFunc *func,void* *data) get;
+}
 
 
 /**
@@ -1323,27 +1305,16 @@ public struct GModule{}
  * try_realloc()
  * function to use for reallocating memory without a default error handler.
  */
-public struct GMemVTable{}
-// void* (*malloc) (uint nBytes);
-// glib-Memory-Allocation.html
-// void* (*realloc) (void* mem,
-// glib-Memory-Allocation.html
-// uint nBytes);
-// glib-Memory-Allocation.html
-// void (*free) (void* mem);
-// glib-Memory-Allocation.html
-// /+* optional; set to NULL if not used ! +/
-// glib-Memory-Allocation.html
-// void* (*calloc) (uint nBlocks,
-// glib-Memory-Allocation.html
-// uint nBlockBytes);
-// glib-Memory-Allocation.html
-// void* (*tryMalloc) (uint nBytes);
-// glib-Memory-Allocation.html
-// void* (*tryRealloc) (void* mem,
-// glib-Memory-Allocation.html
-// uint nBytes);
-// glib-Memory-Allocation.html
+public struct GMemVTable
+{
+	void*  function(uint nBytes) malloc;
+	void*  function(void* mem,uint nBytes) realloc;
+	void  function(void* mem) free;
+	/+* optional; set to NULL if not used ! +/
+	void*  function(uint nBlocks,uint nBlockBytes) calloc;
+	void*  function(uint nBytes) tryMalloc;
+	void*  function(void* mem,uint nBytes) tryRealloc;
+}
 
 
 /**
@@ -1358,53 +1329,17 @@ public struct GIOChannel{}
  * A table of functions used to handle different types of GIOChannel
  * in a generic way.
  */
-public struct GIOFuncs{}
-// GIOStatus (*ioRead) (GIOChannel *channel,
-// glib-IO-Channels.html
-// char *buf,
-// glib-IO-Channels.html
-// uint count,
-// glib-IO-Channels.html
-// uint *bytesRead,
-// glib-IO-Channels.html
-// GError **err);
-// glib-IO-Channels.html
-// GIOStatus (*ioWrite) (GIOChannel *channel,
-// glib-IO-Channels.html
-// char *buf,
-// glib-IO-Channels.html
-// uint count,
-// glib-IO-Channels.html
-// uint *bytesWritten,
-// glib-IO-Channels.html
-// GError **err);
-// glib-IO-Channels.html
-// GIOStatus (*ioSeek) (GIOChannel *channel,
-// glib-IO-Channels.html
-// long offset,
-// glib-IO-Channels.html
-// GSeekType type,
-// glib-IO-Channels.html
-// GError **err);
-// glib-IO-Channels.html
-// GIOStatus (*ioClose) (GIOChannel *channel,
-// glib-IO-Channels.html
-// GError **err);
-// glib-IO-Channels.html
-// GSource* (*ioCreateWatch) (GIOChannel *channel,
-// glib-IO-Channels.html
-// GIOCondition condition);
-// glib-IO-Channels.html
-// void (*ioFree) (GIOChannel *channel);
-// glib-IO-Channels.html
-// GIOStatus (*ioSetFlags) (GIOChannel *channel,
-// glib-IO-Channels.html
-// GIOFlags flags,
-// glib-IO-Channels.html
-// GError **err);
-// glib-IO-Channels.html
-// GIOFlags (*ioGetFlags) (GIOChannel *channel);
-// glib-IO-Channels.html
+public struct GIOFuncs
+{
+	GIOStatus  function(GIOChannel *channel, char *buf, uint count,uint *bytesRead,GError **err) ioRead;
+	GIOStatus  function(GIOChannel *channel, char *buf, uint count,uint *bytesWritten,GError **err) ioWrite;
+	GIOStatus  function(GIOChannel *channel, long offset, GSeekType type,GError **err) ioSeek;
+	GIOStatus  function(GIOChannel *channel,GError **err) ioClose;
+	GSource*  function(GIOChannel *channel,GIOCondition condition) ioCreateWatch;
+	void  function(GIOChannel *channel) ioFree;
+	GIOStatus  function(GIOChannel *channel,GIOFlags flags,GError **err) ioSetFlags;
+	GIOFlags  function(GIOChannel *channel) ioGetFlags;
+}
 
 
 /**
@@ -1778,77 +1713,26 @@ public struct GMarkupParseContext{}
  * start_element()
  * Callback to invoke when the opening tag of an element
  */
-public struct GMarkupParser{}
-// /+* Called for open tags <foo bar="baz"> +/
-// glib-Simple-XML-Subset-Parser.html
-// void (*startElement) (GMarkupParseContext *context,
-// glib-Simple-XML-Subset-Parser.html
-// char *elementName,
-// glib-Simple-XML-Subset-Parser.html
-// char **attributeNames,
-// glib-Simple-XML-Subset-Parser.html
-// char **attributeValues,
-// glib-Simple-XML-Subset-Parser.html
-// void* userData,
-// glib-Simple-XML-Subset-Parser.html
-// GError **error);
-// glib-Simple-XML-Subset-Parser.html
-// /+* Called for close tags </foo> +/
-// glib-Simple-XML-Subset-Parser.html
-// void (*endElement) (GMarkupParseContext *context,
-// glib-Simple-XML-Subset-Parser.html
-// char *elementName,
-// glib-Simple-XML-Subset-Parser.html
-// void* userData,
-// glib-Simple-XML-Subset-Parser.html
-// GError **error);
-// glib-Simple-XML-Subset-Parser.html
-// /+* Called for character data +/
-// glib-Simple-XML-Subset-Parser.html
-// /+* text is not nul-terminated +/
-// glib-Simple-XML-Subset-Parser.html
-// void (*text) (GMarkupParseContext *context,
-// glib-Simple-XML-Subset-Parser.html
-// char *text,
-// glib-Simple-XML-Subset-Parser.html
-// uint textLen,
-// glib-Simple-XML-Subset-Parser.html
-// void* userData,
-// glib-Simple-XML-Subset-Parser.html
-// GError **error);
-// glib-Simple-XML-Subset-Parser.html
-// /+* Called for strings that should be re-saved verbatim inn this same
-// glib-Simple-XML-Subset-Parser.html
-// * position, but are not otherwise interpretable. At the moment
-// glib-Simple-XML-Subset-Parser.html
-// * this includes comments and processing instructions.
-// glib-Simple-XML-Subset-Parser.html
-// +/
-// glib-Simple-XML-Subset-Parser.html
-// /+* text is not nul-terminated. +/
-// glib-Simple-XML-Subset-Parser.html
-// void (*passthrough) (GMarkupParseContext *context,
-// glib-Simple-XML-Subset-Parser.html
-// char *passthroughText,
-// glib-Simple-XML-Subset-Parser.html
-// uint textLen,
-// glib-Simple-XML-Subset-Parser.html
-// void* userData,
-// glib-Simple-XML-Subset-Parser.html
-// GError **error);
-// glib-Simple-XML-Subset-Parser.html
-// /+* Called on error, including one set by other
-// glib-Simple-XML-Subset-Parser.html
-// * methods inn the vtable. The GError should not be freed.
-// glib-Simple-XML-Subset-Parser.html
-// +/
-// glib-Simple-XML-Subset-Parser.html
-// void (*error) (GMarkupParseContext *context,
-// glib-Simple-XML-Subset-Parser.html
-// GError *error,
-// glib-Simple-XML-Subset-Parser.html
-// void* userData);
-// glib-Simple-XML-Subset-Parser.html
+public struct GMarkupParser
+{
+	/+* Called for open tags <foo bar="baz"> +/
+	void  function(GMarkupParseContext *context,char *elementName,char **attributeNames,char **attributeValues,void* userData,GError **error) startElement;
+	/+* Called for close tags </foo> +/
+	void  function(GMarkupParseContext *context,char *elementName,void* userData,GError **error) endElement;
+	/+* Called for character data +/
+	/+* text is not nul-terminated +/
+	void  function(GMarkupParseContext *context,char *text,uint textLen, void* userData,GError **error) text;
+	/+* Called for strings that should be re-saved verbatim inn this same
+	 * position, but are not otherwise interpretable. At the moment
+	 * this includes comments and processing instructions.
+	+/
+	/+* text is not nul-terminated. +/
+	void  function(GMarkupParseContext *context,char *passthroughText,uint textLen, void* userData,GError **error) passthrough;
+	/+* Called on error, including one set by other
+	 * methods inn the vtable. The GError should not be freed.
+	+/
+	void  function(GMarkupParseContext *context,GError *error,void* userData) error;
+}
 
 
 /**

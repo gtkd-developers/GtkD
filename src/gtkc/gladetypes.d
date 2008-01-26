@@ -45,13 +45,12 @@ public struct GladeXML
 }
 
 
-public struct GladeXMLClass{}
-// GObjectClass parentClass;
-// GladeXML.html
-// /+* Virtual function: gets the appropriate gtype for the typename.+/
-// GladeXML.html
-// GType (* lookupType) (GladeXML*self, char *gtypename);
-// GladeXML.html
+public struct GladeXMLClass
+{
+	GObjectClass parentClass;
+	/+* Virtual function: gets the appropriate gtype for the typename.+/
+	GType  function(GladeXML*self, char *gtypename)  lookupType;
+}
 
 
 /*
