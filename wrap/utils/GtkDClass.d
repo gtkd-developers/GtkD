@@ -1675,6 +1675,7 @@ public class GtkDClass
 		collectedUnions ~= "}";
 	}
 
+	//TODO: Cleanup this function.
 	private void collectStructs(char[][] lines, ConvParms* convParms)
 	{
 		char[] structName = lines[0].dup;
@@ -1722,13 +1723,13 @@ public class GtkDClass
 					else if ( startsWith(std.string.strip(lines[pos]), '#') )
 					{
 						// ignore
-						writefln("collectStructs %s", std.string.strip(lines[pos]));
-						debug(structs)writefln("= IGNORED >>>%s<<<", lines[pos]);
+//						writefln("collectStructs %s", std.string.strip(lines[pos]));
+//						debug(structs)writefln("= IGNORED >>>%s<<<", lines[pos]);
 					}
 					else if ( std.string.find(lines[pos], "(") >= 0 && std.string.find(lines[pos], "*") > 3)
 					{
-						invalidDStruct = true;
-						debug(structs)writefln("- INVALID (()>>>%s<<<", lines[pos]);
+//						invalidDStruct = true;
+//						debug(structs)writefln("- INVALID (()>>>%s<<<", lines[pos]);
 					}
 /*					else if ( !primitiveType(lines[pos]) )
 					{
@@ -1808,9 +1809,9 @@ public class GtkDClass
 				int bitFieldNr; // Number apended to bit field
 				int bits; // Bits used in the curent bit field
 
-				foreach ( char[] def; structDef )
+				for ( uint i; i < structDef.length; i++ )
 				{
-					char[] elem = stringToGtkD(def, convParms, wrapper.getAliases());
+					char[] elem = stringToGtkD(structDef[i], convParms, wrapper.getAliases());
 
 					if ( startsWith(elem, "*") && std.string.find(elem, "+/") < elem.length - 2)
 					{
@@ -1820,7 +1821,7 @@ public class GtkDClass
 					{
 						elem = "ulong"~ elem[13..$];
 					}
-					if ( std.string.find(def, ":") >= 0 && (std.string.find(def, ":") <  std.string.find(def, "/+*") ||  std.string.find(def, "/+*") == -1) )
+					if ( std.string.find(structDef[i], ":") >= 0 && (std.string.find(structDef[i], ":") <  std.string.find(structDef[i], "/+*") ||  std.string.find(structDef[i], "/+*") == -1) )
 					{
 						if ( !bitField )
 						{
@@ -1847,6 +1848,22 @@ public class GtkDClass
 							bitFieldNr++;
 							bits = 0;
 						}
+					}
+					else if ( std.string.find(elem, "(") > 0 && !startsWith(elem, "* ") && !startsWith(elem, "/+*") )
+					{
+						char[] funct;
+						for ( ; i < structDef.length; i++ )
+						{
+							funct ~= stringToGtkD(structDef[i], convParms, wrapper.getAliases());
+
+							if ( std.string.find(structDef[i], ");") > 0 )
+								break;
+						}
+
+						funct = std.string.split(funct, ";")[0];
+						char[][] splitFunct = std.string.split(funct, "(");
+
+						collectedStructs ~= splitFunct[0] ~ " function(" ~ ((splitFunct[2][0..$-1] == "void") ? ")" : splitFunct[2]) ~ " " ~ splitFunct[1][1..$-2] ~ ";";
 					}
 					else if ( std.string.find(elem, "#") == 0 )
 					{
@@ -2776,7 +2793,7 @@ public class GtkDClass
 		{
 			converted = gToken.dup;
 		}
-		else if ( startsWith(gToken,"f_") && (endsWith(gToken,"_out") || endsWith(gToken,"_in") || endsWith(gToken,"inout") ) )
+		else if ( startsWith(gToken,"f_") && (endsWith(gToken,"_out") || endsWith(gToken,"_in") || endsWith(gToken,"_inout") ) )
 		{
 			converted = gToken.dup;
 		}

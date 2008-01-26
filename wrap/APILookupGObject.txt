@@ -30,6 +30,8 @@ addTypedefs: start
 
 public import gtkc.glibtypes;
 
+alias void GTypeCValue;
+
 addTypedefs: end
 
 addAliases: start
