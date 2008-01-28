@@ -1675,8 +1675,210 @@ public class GtkDClass
 		collectedUnions ~= "}";
 	}
 
-	//TODO: Cleanup this function.
 	private void collectStructs(char[][] lines, ConvParms* convParms)
+	{
+		char[] structName = lines[0].dup;
+		if ( startsWith(structName, "struct ") )
+		{
+			structName = structName[7..structName.length];
+		}
+
+		debug(structs)writefln("found typdef struct = %s", structName);
+
+		bool includeStruct = true;
+		int nStructs = 0;
+		while ( includeStruct && nStructs < convParms.noStructs.length )
+		{
+			includeStruct = ! (structName == convParms.noStructs[nStructs++]);
+		}
+
+		if ( includeStruct )
+		{
+			char[][] structDef;	/// all elements of the struct
+			int pos = 1;
+			if ( lines[1][lines[1].length-1] == '{' )
+			{
+				++pos;
+				debug(structs)writefln("collectStructs %s",std.string.strip(lines[pos]));
+				while ( pos < lines.length && lines[pos][0] != '}' )
+				{
+					structDef ~= lines[pos].dup;
+					++pos;
+				}
+			}
+
+			if ( pos < lines.length )
+			{
+				collectedStructs ~= "";
+				char[] line = lines[pos];
+				++pos;
+				char[] gtkStruct = convParms.realStrct.length > 0
+					? convParms.realStrct
+					: convParms.strct;
+
+				if ( pos < lines.length && lines[pos][0] > ' ' )
+				{
+					collectedStructs ~= "/**";
+					if ( structName == gtkStruct )
+					{
+						collectedStructs ~= " * Main Gtk struct.";
+					}
+					while ( pos < lines.length && lines[pos][0] > ' ' )
+					{
+						collectedStructs ~= " * "~lines[pos++].dup;
+					}
+					collectedStructs ~= " */";
+				}
+				else if ( structName == gtkStruct )
+				{
+					collectedStructs ~= "/**";
+					collectedStructs ~= " * Main Gtk struct.";
+					collectedStructs ~= " */";
+				}
+			}
+
+			if ( structDef.length > 0 )
+			{
+				collectedStructs ~= "public struct "~structName~"\n{";
+				getStructInternals(structDef, convParms);
+				collectedStructs ~= "\n}";
+			}
+			else
+			{
+				collectedStructs ~= "public struct "~structName~"{}";
+			}
+			collectedStructs ~= "";
+		}
+	}
+
+	void getStructInternals(char[][] structDef, ConvParms* convParms)
+	{
+		char[] getFunctionPointer(char[] def, inout int i)
+		{
+			char[] funct = std.string.split(def, ";")[0];
+			char[] comment = std.string.split(def, ";")[1];
+
+			char[][] splitFunct = std.string.split(funct, "(");
+
+			return splitFunct[0] ~ " function(" ~ ((splitFunct[2][0..$-1] == "void") ? ")" : splitFunct[2]) ~" "~ splitFunct[1][1..$-2] ~";"~ comment;
+		}
+
+		bool bitField = false;	// if we are in a bit field
+		int bitFieldNr; // Number apended to bit field
+		int bits; // Bits used in the curent bit field
+
+		for ( int i; i < structDef.length; i++ )
+		{
+			char[] elem = stringToGtkD(structDef[i], convParms, wrapper.getAliases());
+
+			if ( startsWith(elem, "*") && std.string.find(elem, "+/") < elem.length - 2)
+				elem = std.string.replace(elem, "/", "\\"); //Some comments are broken
+		
+			if ( std.string.find(elem, "unsigned long") == 0)
+				elem = "ulong"~ elem[13..$];  //TODO: posibly use fixtype
+
+			if ( std.string.find(structDef[i], ":") >= 0 && (std.string.find(structDef[i], ":") <  std.string.find(structDef[i], "/+*") ||  std.string.find(structDef[i], "/+*") == -1) )
+			//Bit fields.
+			{
+				if ( !bitField )
+				{
+					bitField = true;
+					collectedStructs ~= "\tuint bitfield"~ std.string.toString(bitFieldNr) ~";";
+				}
+				if (std.string.find(elem, "/+*") > 0 && std.string.find(elem, "+/") < 0)
+				{
+					char[][] parts = std.string.split(elem, "/+*");
+					collectedStructs ~= "//" ~ parts[0];
+					collectedStructs ~= "/+*" ~ parts[1];
+				}
+				else
+				{
+					collectedStructs ~= "//" ~ elem;
+				}
+
+				bits += std.string.atoi(std.string.split(elem, ":")[1]);
+				if ( bits >= 32)
+				{
+					bitField = false;
+					bitFieldNr++;
+					bits = 0;
+				}
+			}
+			else if ( std.string.find(elem, "#") > -1 && std.string.find(elem, "#") < 2 )
+			//Versions.
+			{
+				if ( std.string.find(elem, "#if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8") > -1 )
+				{
+					//GLIB_SIZEOF_VOID_P == 8 means 64 bit. assuming WIN32 is an bad name for just windows.
+					collectedStructs ~= "version(Win64)";
+					collectedStructs ~= "{";
+				}
+				if ( std.string.find(elem, "#ifndef") == 0 )
+				{
+					collectedStructs ~= "version("~ elem[8..$] ~")";
+					collectedStructs ~= "{";
+				}
+				else if ( std.string.find(elem, "#else") == 0 )
+				{
+					collectedStructs ~= "}";
+					collectedStructs ~= "else";
+					collectedStructs ~= "{";
+				}
+				else if ( std.string.find(elem, "#endif") == 0 )
+				{
+					collectedStructs ~= "}";
+				}
+			}
+			else if ( std.string.find(elem, "(") > 0 && !startsWith(elem, "* ") && !startsWith(elem, "/+*") )
+			//Function Pointers.
+			{
+				char[] funct;
+				for ( ; i < structDef.length; i++ )
+				{
+					funct ~= stringToGtkD(structDef[i], convParms, wrapper.getAliases());
+
+					if ( std.string.find(structDef[i], ");") > 0 )
+						break;
+				}
+
+				collectedStructs ~= getFunctionPointer(funct, i);
+			}
+			else if( std.string.find(elem, "{") > 0 )
+			//Nested Structs and unions.
+			{
+				char[] structUnion = std.string.split(structDef[i])[0];
+				int parentCount;
+				char[][] def;
+
+				for ( i++; i < structDef.length; i++ )
+				{
+					if ( std.string.find(structDef[i], "{") > -1 )
+						parentCount++;
+
+					if ( std.string.find(structDef[i], "}") > -1 && parentCount-- == 0)
+						break;
+
+					def ~= stringToGtkD(structDef[i], convParms, wrapper.getAliases());
+				}
+				
+				char[] varName = stringToGtkD(std.string.split(structDef[i])[1][0..$-1], convParms, wrapper.getAliases());
+				char[] structName = std.string.toupper(varName)[0..1] ~ varName[1..$];
+
+				collectedStructs ~= structUnion ~" "~ structName;
+				collectedStructs ~= "{";
+				getStructInternals(def, convParms);
+				collectedStructs ~= "}";
+				collectedStructs ~= structName ~" "~ varName ~";";
+			}
+			else
+			{
+				collectedStructs ~= elem;
+			}
+		}
+	}
+
+	//TODO: Remove me before 1.0.
+	private void old_collectStructs(char[][] lines, ConvParms* convParms)
 	{
 		char[] structName = lines[0].dup;
 		if ( startsWith(structName, "struct ") )
