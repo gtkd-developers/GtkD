@@ -26,15 +26,12 @@ module gtkc.gdkpixbuftypes;
 public import gtkc.glibtypes;
 public import gtkc.gobjecttypes;
 public import gtkc.gdktypes;
-//public alias void* AtkFocusHandler;
-//public struct AtkStateSet;
-//public struct AtkRectangle;
 public import gtkc.atktypes;
 
 version(Tango)
-	private import tango.stdc.stdio;
+private import tango.stdc.stdio;
 else
-	private import std.stdio;
+private import std.stdio;
 
 /**
  * An enumeration containing three sets of flags for a GdkPixdata struct:

@@ -1153,21 +1153,19 @@ public struct GMainContext{}
  * a bitwise combination of flags from GIOCondition, returned from the
  * poll() function to indicate which events occurred.
  */
-public struct GPollFD{}
-// #if defined (G_OS_WIN32) GLIB_SIZEOF_VOID_P == 8
-// glib-The-Main-Event-Loop.html
-// long fd;
-// glib-The-Main-Event-Loop.html
-// #else
-// glib-The-Main-Event-Loop.html
-// int fd;
-// glib-The-Main-Event-Loop.html
-// #endif
-// glib-The-Main-Event-Loop.html
-// ushort events;
-// glib-The-Main-Event-Loop.html
-// ushort revents;
-// glib-The-Main-Event-Loop.html
+public struct GPollFD
+{
+	version(Win64)
+	{
+		long fd;
+	}
+	else
+	{
+		int fd;
+	}
+	ushort events;
+	ushort revents;
+}
 
 
 /**
@@ -1225,7 +1223,7 @@ public struct GSourceFuncs
 	int  function(GSource *source,int *timeout) prepare;
 	int  function(GSource *source) check;
 	int  function(GSource *source,GSourceFunc callback,void* userData) dispatch;
-	void  function(GSource *source) finalize;
+	void  function(GSource *source) finalize; /+* Can be NULL +/
 	/+* For use by gSourceSetClosure +/
 	GSourceFunc closureCallback;
 	GSourceDummyMarshal closureMarshal; /+* Really is of type GClosureMarshal +/

@@ -27,6 +27,8 @@ public import gtkc.glibtypes;
 
 alias void GTypeCValue;
 
+
+
 // G_TYPE_*
 enum GType
 {
@@ -946,10 +948,10 @@ public struct GParamSpecTypeInfo
 	/+* type system portion +/
 	ushort instanceSize; /+* obligatory +/
 	ushort nPreallocs; /+* optional +/
-	void  function(GParamSpec *pspec) instanceInit;
+	void  function(GParamSpec *pspec) instanceInit; /+* optional +/
 	/+* class portion +/
 	GType valueType; /+* obligatory +/
-	void  function(GParamSpec *pspec) finalize;
+	void  function(GParamSpec *pspec) finalize; /+* optional +/
 	void  function(GParamSpec *pspec, /+* recommended +/GValue *value) valueSetDefault;
 	int  function(GParamSpec *pspec, /+* optional +/GValue *value) valueValidate;
 	int  function(GParamSpec *pspec, /+* recommended +/GValue *value1,GValue *value2) valuesCmp;

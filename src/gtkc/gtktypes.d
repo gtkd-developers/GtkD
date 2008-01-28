@@ -2132,19 +2132,17 @@ public struct GtkBindingSignal
  * GTypearg_type;
  * implementation detail
  */
-public struct GtkBindingArg{}
-// GType argType;
-// gtk-Bindings.html
-// unio {
-	// gtk-Bindings.html
-	// int longData;
-	// gtk-Bindings.html
-	// double doubleData;
-	// gtk-Bindings.html
-	// char *stringData;
-	// gtk-Bindings.html
-// } d;
-// gtk-Bindings.html
+public struct GtkBindingArg
+{
+	GType argType;
+	union D
+	{
+		int longData;
+		double doubleData;
+		char *stringData;
+	}
+	D d;
+}
 
 
 /**
@@ -2249,63 +2247,41 @@ public struct GtkTargetPair
  * GtkArg is deprecated and should not be used in newly-written code.
  * This is a structure that we use to pass in typed values (and names).
  */
-public struct GtkArg{}
-// GtkType type;
-// gtk-Types.html
-// char *name;
-// gtk-Types.html
-// /+* this unio only defines the required storage types for
-// gtk-Types.html
-// * the possibile values, thus there is no int enumData field,
-// gtk-Types.html
-// * because that would just be a mere alias for int intData.
-// gtk-Types.html
-// * use the GTK_VALUE_*() and GTK_RETLOC_*() macros to access
-// gtk-Types.html
-// * the discrete memebers.
-// gtk-Types.html
-// +/
-// gtk-Types.html
-// unio {
-	// gtk-Types.html
-	// /+* flat values +/
-	// gtk-Types.html
-	// char charData;
-	// gtk-Types.html
-	// char ucharData;
-	// gtk-Types.html
-	// int boolData;
-	// gtk-Types.html
-	// int intData;
-	// gtk-Types.html
-	// uint uintData;
-	// gtk-Types.html
-	// int longData;
-	// gtk-Types.html
-	// uint ulongData;
-	// gtk-Types.html
-	// float floatData;
-	// gtk-Types.html
-	// double doubleData;
-	// gtk-Types.html
-	// char *stringData;
-	// gtk-Types.html
-	// GtkObject *objectData;
-	// gtk-Types.html
-	// void* pointerData;
-	// gtk-Types.html
-	// /+* structured values +/
-	// gtk-Types.html
-	// struct {
-		// gtk-Types.html
-		// GtkSignalFunc f;
-		// gtk-Types.html
-		// void* d;
-		// gtk-Types.html
-	// } signalData;
-	// gtk-Types.html
-// } d;
-// gtk-Types.html
+public struct GtkArg
+{
+	GtkType type;
+	char *name;
+	/+* this unio only defines the required storage types for
+	 * the possibile values, thus there is no int enumData field,
+	 * because that would just be a mere alias for int intData.
+	 * use the GTK_VALUE_*() and GTK_RETLOC_*() macros to access
+	 * the discrete memebers.
+	+/
+	union D
+	{
+		/+* flat values +/
+		char charData;
+		char ucharData;
+		int boolData;
+		int intData;
+		XID uintData;
+		int longData;
+		XID ulongData;
+		float floatData;
+		double doubleData;
+		char *stringData;
+		GtkObject *objectData;
+		void* pointerData;
+		/+* structured values +/
+		struct SignalData
+		{
+			GtkSignalFunc f;
+			void* d;
+		}
+		SignalData signalData;
+	}
+	D d;
+}
 
 
 /**
