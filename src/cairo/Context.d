@@ -247,6 +247,8 @@ public class Context
 	 * Increases the reference count on cr by one. This prevents
 	 * cr from being destroyed until a matching call to cairo_destroy()
 	 * is made.
+	 * The number of references to a cairo_t can be get using
+	 * cairo_get_reference_count().
 	 * Returns: the referenced cairo_t.
 	 */
 	public Context reference()
@@ -588,10 +590,38 @@ public class Context
 	}
 	
 	/**
+	 * This function returns the length of the dash array in cr (0 if dashing
+	 * is not currently in effect).
+	 * See also cairo_set_dash() and cairo_get_dash().
+	 * Since 1.4
+	 * Returns: the length of the dash array, or 0 if no dash array set.
+	 */
+	public int getDashCount()
+	{
+		// int cairo_get_dash_count (cairo_t *cr);
+		return cairo_get_dash_count(cairo);
+	}
+	
+	/**
+	 * Gets the current dash array. If not NULL, dashes should be big
+	 * enough to hold at least the number of values returned by
+	 * cairo_get_dash_count().
+	 * Since 1.4
+	 * Params:
+	 * dashes =  return value for the dash array, or NULL
+	 * offset =  return value for the current dash offset, or NULL
+	 */
+	public void getDash(double* dashes, double* offset)
+	{
+		// void cairo_get_dash (cairo_t *cr,  double *dashes,  double *offset);
+		cairo_get_dash(cairo, dashes, offset);
+	}
+	
+	/**
 	 * Set the current fill rule within the cairo context. The fill rule
 	 * is used to determine which regions are inside or outside a complex
 	 * (potentially self-intersecting) path. The current fill rule affects
-	 * both cairo_fill and cairo_clip. See cairo_fill_rule_t for details
+	 * both cairo_fill() and cairo_clip(). See cairo_fill_rule_t for details
 	 * on the semantics of each available fill rule.
 	 * Params:
 	 * fillRule =  a fill rule, specified as a cairo_fill_rule_t
@@ -621,7 +651,7 @@ public class Context
 	 * cairo_stroke_to_path(), but does not have any effect during path
 	 * construction.
 	 * Params:
-	 * lineCap =  a line cap style, as a cairo_line_cap_t
+	 * lineCap =  a line cap style
 	 */
 	public void setLineCap(cairo_line_cap_t lineCap)
 	{
@@ -648,7 +678,7 @@ public class Context
 	 * cairo_stroke_to_path(), but does not have any effect during path
 	 * construction.
 	 * Params:
-	 * lineJoin =  a line joint style, as a cairo_line_join_t
+	 * lineJoin =  a line joint style
 	 */
 	public void setLineJoin(cairo_line_join_t lineJoin)
 	{
@@ -694,7 +724,11 @@ public class Context
 	}
 	
 	/**
-	 * Returns: the current line width value exactly as set bycairo_set_line_width(). Note that the value is unchanged even ifthe CTM has changed between the calls to cairo_set_line_width() andcairo_get_line_width().
+	 * This function returns the current line width value exactly as set by
+	 * cairo_set_line_width(). Note that the value is unchanged even if
+	 * the CTM has changed between the calls to cairo_set_line_width() and
+	 * cairo_get_line_width().
+	 * Returns: the current line width.
 	 */
 	public double getLineWidth()
 	{
@@ -703,7 +737,19 @@ public class Context
 	}
 	
 	/**
+	 * Sets the current miter limit within the cairo context.
+	 * If the current line join style is set to CAIRO_LINE_JOIN_MITER
+	 * (see cairo_set_line_join()), the miter limit is used to determine
+	 * whether the lines should be joined with a bevel instead of a miter.
+	 * Cairo divides the length of the miter by the line width.
+	 * If the result is greater than the miter limit, the style is
+	 * converted to a bevel.
+	 * As with the other stroke parameters, the current line miter limit is
+	 * examined by cairo_stroke(), cairo_stroke_extents(), and
+	 * cairo_stroke_to_path(), but does not have any effect during path
+	 * construction.
 	 * Params:
+	 * limit =  miter limit to set
 	 */
 	public void setMiterLimit(double limit)
 	{
@@ -819,6 +865,22 @@ public class Context
 	}
 	
 	/**
+	 * Computes a bounding box in user coordinates covering the area inside the
+	 * current clip.
+	 * Since 1.4
+	 * Params:
+	 * x1 =  left of the resulting extents
+	 * y1 =  top of the resulting extents
+	 * x2 =  right of the resulting extents
+	 * y2 =  bottom of the resulting extents
+	 */
+	public void clipExtents(double* x1, double* y1, double* x2, double* y2)
+	{
+		// void cairo_clip_extents (cairo_t *cr,  double *x1,  double *y1,  double *x2,  double *y2);
+		cairo_clip_extents(cairo, x1, y1, x2, y2);
+	}
+	
+	/**
 	 * Reset the current clip region to its original, unrestricted
 	 * state. That is, set the clip region to an infinitely large shape
 	 * containing the target surface. Equivalently, if infinity is too
@@ -834,6 +896,38 @@ public class Context
 	{
 		// void cairo_reset_clip (cairo_t *cr);
 		cairo_reset_clip(cairo);
+	}
+	
+	/**
+	 * Unconditionally frees rectangle_list and all associated
+	 * references. After this call, the rectangle_list pointer must not
+	 * be dereferenced.
+	 * Since 1.4
+	 * Params:
+	 * rectangleList =  a rectangle list, as obtained from cairo_copy_clip_rectangles()
+	 */
+	public static void rectangleListDestroy(cairo_rectangle_list_t* rectangleList)
+	{
+		// void cairo_rectangle_list_destroy (cairo_rectangle_list_t *rectangle_list);
+		cairo_rectangle_list_destroy(rectangleList);
+	}
+	
+	/**
+	 * Gets the current clip region as a list of rectangles in user coordinates.
+	 * Never returns NULL.
+	 * The status in the list may be CAIRO_STATUS_CLIP_NOT_REPRESENTABLE to
+	 * indicate that the clip region cannot be represented as a list of
+	 * user-space rectangles. The status may have other values to indicate
+	 * other errors.
+	 * The caller must always call cairo_rectangle_list_destroy on the result of
+	 * this function.
+	 * Since 1.4
+	 * Returns: the current clip region as a list of rectangles in user coordinates.
+	 */
+	public cairo_rectangle_list_t* copyClipRectangleList()
+	{
+		// cairo_rectangle_list_t* cairo_copy_clip_rectangle_list (cairo_t *cr);
+		return cairo_copy_clip_rectangle_list(cairo);
 	}
 	
 	/**
@@ -863,7 +957,17 @@ public class Context
 	}
 	
 	/**
+	 * Computes a bounding box in user coordinates covering the area that
+	 * would be affected by a cairo_fill() operation given the current path
+	 * and fill parameters. If the current path is empty, returns an empty
+	 * rectangle (0,0, 0,0). Surface dimensions and clipping are not taken
+	 * into account.
+	 * See cairo_fill(), cairo_set_fill_rule() and cairo_fill_preserve().
 	 * Params:
+	 * x1 =  left of the resulting extents
+	 * y1 =  top of the resulting extents
+	 * x2 =  right of the resulting extents
+	 * y2 =  bottom of the resulting extents
 	 */
 	public void fillExtents(double* x1, double* y1, double* x2, double* y2)
 	{
@@ -873,8 +977,9 @@ public class Context
 	
 	/**
 	 * Tests whether the given point is inside the area that would be
-	 * filled by doing a cairo_fill() operation on cr given the current
-	 * path and filling parameters.
+	 * affected by a cairo_fill() operation given the current path and
+	 * filling parameters. Surface dimensions and clipping are not taken
+	 * into account.
 	 * See cairo_fill(), cairo_set_fill_rule() and cairo_fill_preserve().
 	 * Params:
 	 * x =  X coordinate of the point to test
@@ -973,7 +1078,14 @@ public class Context
 	}
 	
 	/**
+	 * Computes a bounding box in user coordinates covering the area that
+	 * would be affected by a cairo_stroke() operation operation given the
+	 * current path and stroke parameters. If the current path is empty,
 	 * Params:
+	 * x1 =  left of the resulting extents
+	 * y1 =  top of the resulting extents
+	 * x2 =  right of the resulting extents
+	 * y2 =  bottom of the resulting extents
 	 */
 	public void strokeExtents(double* x1, double* y1, double* x2, double* y2)
 	{
@@ -983,8 +1095,9 @@ public class Context
 	
 	/**
 	 * Tests whether the given point is inside the area that would be
-	 * stroked by doing a cairo_stroke() operation on cr given the
-	 * current path and stroking parameters.
+	 * affected by a cairo_stroke() operation given the current path and
+	 * stroking parameters. Surface dimensions and clipping are not taken
+	 * into account.
 	 * See cairo_stroke(), cairo_set_line_width(), cairo_set_line_join(),
 	 * cairo_set_line_cap(), cairo_set_dash(), and
 	 * cairo_stroke_preserve().
@@ -1019,6 +1132,52 @@ public class Context
 	{
 		// void cairo_show_page (cairo_t *cr);
 		cairo_show_page(cairo);
+	}
+	
+	/**
+	 * Returns the current reference count of cr.
+	 * Since 1.4
+	 * Returns: the current reference count of cr. If theobject is a nil object, 0 will be returned.
+	 */
+	public uint getReferenceCount()
+	{
+		// unsigned int cairo_get_reference_count (cairo_t *cr);
+		return cairo_get_reference_count(cairo);
+	}
+	
+	/**
+	 * Attach user data to cr. To remove user data from a surface,
+	 * call this function with the key that was used to set it and NULL
+	 * for data.
+	 * Since 1.4
+	 * Params:
+	 * key =  the address of a cairo_user_data_key_t to attach the user data to
+	 * userData =  the user data to attach to the cairo_t
+	 * destroy =  a cairo_destroy_func_t which will be called when the
+	 * cairo_t is destroyed or when new user data is attached using the
+	 * same key.
+	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
+	 */
+	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
+	{
+		// cairo_status_t cairo_set_user_data (cairo_t *cr,  const cairo_user_data_key_t *key,  void *user_data,  cairo_destroy_func_t destroy);
+		return cairo_set_user_data(cairo, key, userData, destroy);
+	}
+	
+	/**
+	 * Return user data previously attached to cr using the specified
+	 * key. If no user data has been attached with the given key this
+	 * function returns NULL.
+	 * Since 1.4
+	 * Params:
+	 * key =  the address of the cairo_user_data_key_t the user data was
+	 * attached to
+	 * Returns: the user data previously attached or NULL.
+	 */
+	public void* getUserData(cairo_user_data_key_t* key)
+	{
+		// void* cairo_get_user_data (cairo_t *cr,  const cairo_user_data_key_t *key);
+		return cairo_get_user_data(cairo, key);
 	}
 	
 	/**
@@ -1087,7 +1246,7 @@ public class Context
 	 */
 	public void appendPath(cairo_path_t* path)
 	{
-		// void cairo_append_path (cairo_t *cr,  cairo_path_t *path);
+		// void cairo_append_path (cairo_t *cr,  const cairo_path_t *path);
 		cairo_append_path(cairo, path);
 	}
 	
@@ -1203,7 +1362,7 @@ public class Context
 	 * arc is centered at (xc, yc), begins at angle1 and proceeds in
 	 * the direction of decreasing angles to end at angle2. If angle2 is
 	 * greater than angle1 it will be progressively decreased by 2*M_PI
-	 * until it is greater than angle1.
+	 * until it is less than angle1.
 	 * See cairo_arc() for more details. This function differs only in the
 	 * direction of the arc between the two angles.
 	 * Params:
@@ -1286,16 +1445,37 @@ public class Context
 	}
 	
 	/**
+	 * Adds closed paths for the glyphs to the current path. The generated
+	 * path if filled, achieves an effect similar to that of
+	 * cairo_show_glyphs().
 	 * Params:
+	 * glyphs =  array of glyphs to show
+	 * numGlyphs =  number of glyphs to show
 	 */
 	public void glyphPath(cairo_glyph_t* glyphs, int numGlyphs)
 	{
-		// void cairo_glyph_path (cairo_t *cr,  cairo_glyph_t *glyphs,  int num_glyphs);
+		// void cairo_glyph_path (cairo_t *cr,  const cairo_glyph_t *glyphs,  int num_glyphs);
 		cairo_glyph_path(cairo, glyphs, numGlyphs);
 	}
 	
 	/**
+	 * Adds closed paths for text to the current path. The generated
+	 * path if filled, achieves an effect similar to that of
+	 * cairo_show_text().
+	 * Text conversion and positioning is done similar to cairo_show_text().
+	 * Like cairo_show_text(), After this call the current point is
+	 * moved to the origin of where the next glyph would be placed in
+	 * this same progression. That is, the current point will be at
+	 * the origin of the final glyph offset by its advance values.
+	 * This allows for chaining multiple calls to to cairo_text_path()
+	 * without having to set current point in between.
+	 * NOTE: The cairo_text_path() function call is part of what the cairo
+	 * designers call the "toy" text API. It is convenient for short demos
+	 * and simple programs, but it is not expected to be adequate for
+	 * serious text-using applications. See cairo_glyph_path() for the
+	 * "real" text path API in cairo.
 	 * Params:
+	 * utf8 =  a string of text encoded in UTF-8
 	 */
 	public void textPath(char[] utf8)
 	{
@@ -1616,65 +1796,6 @@ public class Context
 	}
 	
 	/**
-	 * A drawing operator that generates the shape from a string of UTF-8
-	 * characters, rendered according to the current font_face, font_size
-	 * (font_matrix), and font_options.
-	 * This function first computes a set of glyphs for the string of
-	 * text. The first glyph is placed so that its origin is at the
-	 * current point. The origin of each subsequent glyph is offset from
-	 * that of the previous glyph by the advance values of the previous
-	 * glyph.
-	 * After this call the current point is moved to the origin of where
-	 * the next glyph would be placed in this same progression. That is,
-	 * the current point will be at the origin of the final glyph offset
-	 * by its advance values. This allows for easy display of a single
-	 * logical string with multiple calls to cairo_show_text().
-	 * NOTE: The cairo_show_text() function call is part of what the cairo
-	 * designers call the "toy" text API. It is convenient for short demos
-	 * and simple programs, but it is not expected to be adequate for the
-	 * most serious of text-using applications. See cairo_show_glyphs()
-	 * for the "real" text display API in cairo.
-	 * Params:
-	 * utf8 =  a string of text encoded in UTF-8
-	 */
-	public void showText(char[] utf8)
-	{
-		// void cairo_show_text (cairo_t *cr,  const char *utf8);
-		cairo_show_text(cairo, Str.toStringz(utf8));
-	}
-	
-	/**
-	 * Params:
-	 */
-	public void showGlyphs(cairo_glyph_t* glyphs, int numGlyphs)
-	{
-		// void cairo_show_glyphs (cairo_t *cr,  cairo_glyph_t *glyphs,  int num_glyphs);
-		cairo_show_glyphs(cairo, glyphs, numGlyphs);
-	}
-	
-	/**
-	 * Gets the current font face for a cairo_t.
-	 * Returns: the current font object. Can return NULL on out-of-memory or if the context is already in an error state. This object is owned by cairo. To keep a reference to it, you must call cairo_font_face_reference().
-	 */
-	public cairo_font_face_t* getFontFace()
-	{
-		// cairo_font_face_t* cairo_get_font_face (cairo_t *cr);
-		return cairo_get_font_face(cairo);
-	}
-	
-	/**
-	 * Gets the font extents for the currently selected font.
-	 * Params:
-	 * extents =  a cairo_font_extents_t object into which the results
-	 * will be stored.
-	 */
-	public void fontExtents(cairo_font_extents_t* extents)
-	{
-		// void cairo_font_extents (cairo_t *cr,  cairo_font_extents_t *extents);
-		cairo_font_extents(cairo, extents);
-	}
-	
-	/**
 	 * Replaces the current cairo_font_face_t object in the cairo_t with
 	 * font_face. The replaced font face in the cairo_t will be
 	 * destroyed if there are no other references to it.
@@ -1685,6 +1806,16 @@ public class Context
 	{
 		// void cairo_set_font_face (cairo_t *cr,  cairo_font_face_t *font_face);
 		cairo_set_font_face(cairo, fontFace);
+	}
+	
+	/**
+	 * Gets the current font face for a cairo_t.
+	 * Returns: the current font face. This object is owned bycairo. To keep a reference to it, you must callcairo_font_face_reference.This function never returns NULL. If memory cannot be allocated, aspecial "nil" cairo_font_face_t object will be returned on whichcairo_font_face_status() returns CAIRO_STATUS_NO_MEMORY. Usingthis nil object will cause its error state to propagate to otherobjects it is passed to, (for example, callingcairo_set_font_face() with a nil font will trigger an error thatwill shutdown the cairo_t object).
+	 */
+	public cairo_font_face_t* getFontFace()
+	{
+		// cairo_font_face_t* cairo_get_font_face (cairo_t *cr);
+		return cairo_get_font_face(cairo);
 	}
 	
 	/**
@@ -1701,6 +1832,71 @@ public class Context
 	{
 		// void cairo_set_scaled_font (cairo_t *cr,  const cairo_scaled_font_t *scaled_font);
 		cairo_set_scaled_font(cairo, scaledFont);
+	}
+	
+	/**
+	 * Gets the current scaled font for a cairo_t.
+	 * Since 1.4
+	 * Returns: the current scaled font. This object is owned bycairo. To keep a reference to it, you must callcairo_scaled_font_reference().This function never returns NULL. If memory cannot be allocated, aspecial "nil" cairo_scaled_font_t object will be returned on whichcairo_scaled_font_status() returns CAIRO_STATUS_NO_MEMORY. Usingthis nil object will cause its error state to propagate to otherobjects it is passed to, (for example, callingcairo_set_scaled_font() with a nil font will trigger an error thatwill shutdown the cairo_t object).
+	 */
+	public cairo_scaled_font_t* getScaledFont()
+	{
+		// cairo_scaled_font_t* cairo_get_scaled_font (cairo_t *cr);
+		return cairo_get_scaled_font(cairo);
+	}
+	
+	/**
+	 * A drawing operator that generates the shape from a string of UTF-8
+	 * characters, rendered according to the current font_face, font_size
+	 * (font_matrix), and font_options.
+	 * This function first computes a set of glyphs for the string of
+	 * text. The first glyph is placed so that its origin is at the
+	 * current point. The origin of each subsequent glyph is offset from
+	 * that of the previous glyph by the advance values of the previous
+	 * glyph.
+	 * After this call the current point is moved to the origin of where
+	 * the next glyph would be placed in this same progression. That is,
+	 * the current point will be at the origin of the final glyph offset
+	 * by its advance values. This allows for easy display of a single
+	 * logical string with multiple calls to cairo_show_text().
+	 * NOTE: The cairo_show_text() function call is part of what the cairo
+	 * designers call the "toy" text API. It is convenient for short demos
+	 * and simple programs, but it is not expected to be adequate for
+	 * serious text-using applications. See cairo_show_glyphs() for the
+	 * "real" text display API in cairo.
+	 * Params:
+	 * utf8 =  a string of text encoded in UTF-8
+	 */
+	public void showText(char[] utf8)
+	{
+		// void cairo_show_text (cairo_t *cr,  const char *utf8);
+		cairo_show_text(cairo, Str.toStringz(utf8));
+	}
+	
+	/**
+	 * A drawing operator that generates the shape from an array of glyphs,
+	 * rendered according to the current font_face, font_size
+	 * (font_matrix), and font_options.
+	 * Params:
+	 * glyphs =  array of glyphs to show
+	 * numGlyphs =  number of glyphs to show
+	 */
+	public void showGlyphs(cairo_glyph_t* glyphs, int numGlyphs)
+	{
+		// void cairo_show_glyphs (cairo_t *cr,  const cairo_glyph_t *glyphs,  int num_glyphs);
+		cairo_show_glyphs(cairo, glyphs, numGlyphs);
+	}
+	
+	/**
+	 * Gets the font extents for the currently selected font.
+	 * Params:
+	 * extents =  a cairo_font_extents_t object into which the results
+	 * will be stored.
+	 */
+	public void fontExtents(cairo_font_extents_t* extents)
+	{
+		// void cairo_font_extents (cairo_t *cr,  cairo_font_extents_t *extents);
+		cairo_font_extents(cairo, extents);
 	}
 	
 	/**
@@ -1743,7 +1939,7 @@ public class Context
 	 */
 	public void glyphExtents(cairo_glyph_t* glyphs, int numGlyphs, cairo_text_extents_t* extents)
 	{
-		// void cairo_glyph_extents (cairo_t *cr,  cairo_glyph_t *glyphs,  int num_glyphs,  cairo_text_extents_t *extents);
+		// void cairo_glyph_extents (cairo_t *cr,  const cairo_glyph_t *glyphs,  int num_glyphs,  cairo_text_extents_t *extents);
 		cairo_glyph_extents(cairo, glyphs, numGlyphs, extents);
 	}
 }

@@ -101,11 +101,13 @@ public class FontFace
 	 * Increases the reference count on font_face by one. This prevents
 	 * font_face from being destroyed until a matching call to
 	 * cairo_font_face_destroy() is made.
+	 * The number of references to a cairo_font_face_t can be get using
+	 * cairo_font_face_get_reference_count().
 	 * Returns: the referenced cairo_font_face_t.
 	 */
 	public cairo_font_face_t* reference()
 	{
-		// cairo_font_face_t* cairo_font_face_reference  (cairo_font_face_t *font_face);
+		// cairo_font_face_t* cairo_font_face_reference (cairo_font_face_t *font_face);
 		return cairo_font_face_reference(cairo_font_face);
 	}
 	
@@ -132,18 +134,26 @@ public class FontFace
 	}
 	
 	/**
-	 * Return user data previously attached to font_face using the specified
-	 * key. If no user data has been attached with the given key this
-	 * function returns NULL.
-	 * Params:
-	 * key =  the address of the cairo_user_data_key_t the user data was
-	 * attached to
-	 * Returns: the user data previously attached or NULL.
+	 * This function returns the type of the backend used to create
+	 * a font face. See cairo_font_type_t for available types.
+	 * Since 1.2
+	 * Returns: The type of font_face.
 	 */
-	public void* getUserData(cairo_user_data_key_t* key)
+	public cairo_font_type_t getType()
 	{
-		// void* cairo_font_face_get_user_data (cairo_font_face_t *font_face,  const cairo_user_data_key_t *key);
-		return cairo_font_face_get_user_data(cairo_font_face, key);
+		// cairo_font_type_t cairo_font_face_get_type (cairo_font_face_t *font_face);
+		return cairo_font_face_get_type(cairo_font_face);
+	}
+	
+	/**
+	 * Returns the current reference count of font_face.
+	 * Since 1.4
+	 * Returns: the current reference count of font_face. If theobject is a nil object, 0 will be returned.
+	 */
+	public uint getReferenceCount()
+	{
+		// unsigned int cairo_font_face_get_reference_count (cairo_font_face_t *font_face);
+		return cairo_font_face_get_reference_count(cairo_font_face);
 	}
 	
 	/**
@@ -160,19 +170,22 @@ public class FontFace
 	 */
 	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
 	{
-		// cairo_status_t cairo_font_face_set_user_data  (cairo_font_face_t *font_face,  const cairo_user_data_key_t *key,  void *user_data,  cairo_destroy_func_t destroy);
+		// cairo_status_t cairo_font_face_set_user_data (cairo_font_face_t *font_face,  const cairo_user_data_key_t *key,  void *user_data,  cairo_destroy_func_t destroy);
 		return cairo_font_face_set_user_data(cairo_font_face, key, userData, destroy);
 	}
 	
 	/**
-	 * This function returns the type of the backend used to create
-	 * a font face. See cairo_font_type_t for available types.
-	 * Since 1.2
-	 * Returns: The type of font_face.
+	 * Return user data previously attached to font_face using the specified
+	 * key. If no user data has been attached with the given key this
+	 * function returns NULL.
+	 * Params:
+	 * key =  the address of the cairo_user_data_key_t the user data was
+	 * attached to
+	 * Returns: the user data previously attached or NULL.
 	 */
-	public cairo_font_type_t getType()
+	public void* getUserData(cairo_user_data_key_t* key)
 	{
-		// cairo_font_type_t cairo_font_face_get_type (cairo_font_face_t *font_face);
-		return cairo_font_face_get_type(cairo_font_face);
+		// void* cairo_font_face_get_user_data (cairo_font_face_t *font_face,  const cairo_user_data_key_t *key);
+		return cairo_font_face_get_user_data(cairo_font_face, key);
 	}
 }

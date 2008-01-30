@@ -128,7 +128,7 @@ public class ScaledFont
 	 */
 	public static ScaledFont create(FontFace fontFace, Matrix fontMatrix, Matrix ctm, FontOption options)
 	{
-		// cairo_scaled_font_t* cairo_scaled_font_create  (cairo_font_face_t *font_face,  const cairo_matrix_t *font_matrix,  const cairo_matrix_t *ctm,  const cairo_font_options_t *options);
+		// cairo_scaled_font_t* cairo_scaled_font_create (cairo_font_face_t *font_face,  const cairo_matrix_t *font_matrix,  const cairo_matrix_t *ctm,  const cairo_font_options_t *options);
 		auto p = cairo_scaled_font_create((fontFace is null) ? null : fontFace.getFontFaceStruct(), (fontMatrix is null) ? null : fontMatrix.getMatrixStruct(), (ctm is null) ? null : ctm.getMatrixStruct(), (options is null) ? null : options.getFontOptionStruct());
 		if(p is null)
 		{
@@ -142,11 +142,13 @@ public class ScaledFont
 	 * Increases the reference count on scaled_font by one. This prevents
 	 * scaled_font from being destroyed until a matching call to
 	 * cairo_scaled_font_destroy() is made.
+	 * The number of references to a cairo_scaled_font_t can be get using
+	 * cairo_scaled_font_get_reference_count().
 	 * Returns: the referenced cairo_scaled_font_t
 	 */
 	public ScaledFont reference()
 	{
-		// cairo_scaled_font_t* cairo_scaled_font_reference  (cairo_scaled_font_t *scaled_font);
+		// cairo_scaled_font_t* cairo_scaled_font_reference (cairo_scaled_font_t *scaled_font);
 		auto p = cairo_scaled_font_reference(cairo_scaled_font);
 		if(p is null)
 		{
@@ -221,7 +223,7 @@ public class ScaledFont
 	 * graphics state were set to the same font_face, font_matrix, ctm,
 	 * and font_options as scaled_font). Additionally, the x_advance and
 	 * y_advance values indicate the amount by which the current point
-	 * would be advanced by cairo_show_glyphs.
+	 * would be advanced by cairo_show_glyphs().
 	 * Note that whitespace glyphs do not contribute to the size of the
 	 * rectangle (extents.width and extents.height).
 	 * Params:
@@ -231,7 +233,7 @@ public class ScaledFont
 	 */
 	public void glyphExtents(cairo_glyph_t* glyphs, int numGlyphs, cairo_text_extents_t* extents)
 	{
-		// void cairo_scaled_font_glyph_extents (cairo_scaled_font_t *scaled_font,  cairo_glyph_t *glyphs,  int num_glyphs,  cairo_text_extents_t *extents);
+		// void cairo_scaled_font_glyph_extents (cairo_scaled_font_t *scaled_font,  const cairo_glyph_t *glyphs,  int num_glyphs,  cairo_text_extents_t *extents);
 		cairo_scaled_font_glyph_extents(cairo_scaled_font, glyphs, numGlyphs, extents);
 	}
 	
@@ -242,7 +244,7 @@ public class ScaledFont
 	 */
 	public FontFace getFontFace()
 	{
-		// cairo_font_face_t* cairo_scaled_font_get_font_face  (cairo_scaled_font_t *scaled_font);
+		// cairo_font_face_t* cairo_scaled_font_get_font_face (cairo_scaled_font_t *scaled_font);
 		auto p = cairo_scaled_font_get_font_face(cairo_scaled_font);
 		if(p is null)
 		{
@@ -261,7 +263,7 @@ public class ScaledFont
 	 */
 	public void getFontOptions(FontOption options)
 	{
-		// void cairo_scaled_font_get_font_options  (cairo_scaled_font_t *scaled_font,  cairo_font_options_t *options);
+		// void cairo_scaled_font_get_font_options (cairo_scaled_font_t *scaled_font,  cairo_font_options_t *options);
 		cairo_scaled_font_get_font_options(cairo_scaled_font, (options is null) ? null : options.getFontOptionStruct());
 	}
 	
@@ -274,7 +276,7 @@ public class ScaledFont
 	 */
 	public void getFontMatrix(Matrix fontMatrix)
 	{
-		// void cairo_scaled_font_get_font_matrix  (cairo_scaled_font_t *scaled_font,  cairo_matrix_t *font_matrix);
+		// void cairo_scaled_font_get_font_matrix (cairo_scaled_font_t *scaled_font,  cairo_matrix_t *font_matrix);
 		cairo_scaled_font_get_font_matrix(cairo_scaled_font, (fontMatrix is null) ? null : fontMatrix.getMatrixStruct());
 	}
 	
@@ -298,7 +300,53 @@ public class ScaledFont
 	 */
 	public cairo_font_type_t getType()
 	{
-		// cairo_font_type_t cairo_scaled_font_get_type  (cairo_scaled_font_t *scaled_font);
+		// cairo_font_type_t cairo_scaled_font_get_type (cairo_scaled_font_t *scaled_font);
 		return cairo_scaled_font_get_type(cairo_scaled_font);
+	}
+	
+	/**
+	 * Returns the current reference count of scaled_font.
+	 * Since 1.4
+	 * Returns: the current reference count of scaled_font. If theobject is a nil object, 0 will be returned.
+	 */
+	public uint getReferenceCount()
+	{
+		// unsigned int cairo_scaled_font_get_reference_count  (cairo_scaled_font_t *scaled_font);
+		return cairo_scaled_font_get_reference_count(cairo_scaled_font);
+	}
+	
+	/**
+	 * Attach user data to scaled_font. To remove user data from a surface,
+	 * call this function with the key that was used to set it and NULL
+	 * for data.
+	 * Since 1.4
+	 * Params:
+	 * key =  the address of a cairo_user_data_key_t to attach the user data to
+	 * userData =  the user data to attach to the cairo_scaled_font_t
+	 * destroy =  a cairo_destroy_func_t which will be called when the
+	 * cairo_t is destroyed or when new user data is attached using the
+	 * same key.
+	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
+	 */
+	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
+	{
+		// cairo_status_t cairo_scaled_font_set_user_data (cairo_scaled_font_t *scaled_font,  const cairo_user_data_key_t *key,  void *user_data,  cairo_destroy_func_t destroy);
+		return cairo_scaled_font_set_user_data(cairo_scaled_font, key, userData, destroy);
+	}
+	
+	/**
+	 * Return user data previously attached to scaled_font using the
+	 * specified key. If no user data has been attached with the given
+	 * key this function returns NULL.
+	 * Since 1.4
+	 * Params:
+	 * key =  the address of the cairo_user_data_key_t the user data was
+	 * attached to
+	 * Returns: the user data previously attached or NULL.
+	 */
+	public void* getUserData(cairo_user_data_key_t* key)
+	{
+		// void* cairo_scaled_font_get_user_data (cairo_scaled_font_t *scaled_font,  const cairo_user_data_key_t *key);
+		return cairo_scaled_font_get_user_data(cairo_scaled_font, key);
 	}
 }

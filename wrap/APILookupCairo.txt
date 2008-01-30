@@ -287,7 +287,7 @@ prefix: cairo_matrix_
 import: glib.Str
 outFile: Matrix
 
-file: cairo-Error-handling.html
+file: cairo-Error-Handling.html
 struct: cairo_status_t
 class: Status
 prefix: cairo_status_t

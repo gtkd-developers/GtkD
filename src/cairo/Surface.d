@@ -124,8 +124,24 @@ public class Surface
 	 */
 	public cairo_surface_t* createSimilar(cairo_content_t content, int width, int height)
 	{
-		// cairo_surface_t* cairo_surface_create_similar  (cairo_surface_t *other,  cairo_content_t content,  int width,  int height);
+		// cairo_surface_t* cairo_surface_create_similar (cairo_surface_t *other,  cairo_content_t content,  int width,  int height);
 		return cairo_surface_create_similar(cairo_surface, content, width, height);
+	}
+	
+	/**
+	 * Increases the reference count on surface by one. This prevents
+	 * surface from being destroyed until a matching call to
+	 * cairo_surface_destroy() is made.
+	 * The number of references to a cairo_surface_t can be get using
+	 * cairo_surface_get_reference_count().
+	 * Params:
+	 * surface =  a cairo_surface_t
+	 * Returns: the referenced cairo_surface_t.
+	 */
+	public cairo_surface_t* reference()
+	{
+		// cairo_surface_t* cairo_surface_reference (cairo_surface_t *surface);
+		return cairo_surface_reference(cairo_surface);
 	}
 	
 	/**
@@ -137,6 +153,17 @@ public class Surface
 	{
 		// void cairo_surface_destroy (cairo_surface_t *surface);
 		cairo_surface_destroy(cairo_surface);
+	}
+	
+	/**
+	 * Checks whether an error has previously occurred for this
+	 * surface.
+	 * Returns: CAIRO_STATUS_SUCCESS, CAIRO_STATUS_NULL_POINTER,CAIRO_STATUS_NO_MEMORY, CAIRO_STATUS_READ_ERROR,CAIRO_STATUS_INVALID_CONTENT, CAIRO_STATUS_INVALID_FORMAT, orCAIRO_STATUS_INVALID_VISUAL.
+	 */
+	public cairo_status_t status()
+	{
+		// cairo_status_t cairo_surface_status (cairo_surface_t *surface);
+		return cairo_surface_status(cairo_surface);
 	}
 	
 	/**
@@ -190,46 +217,16 @@ public class Surface
 	}
 	
 	/**
+	 * This function returns the content type of surface which indicates
+	 * whether the surface contains color and/or alpha information. See
+	 * cairo_content_t.
 	 * Since 1.2
-	 * Returns: The content type of surface which indicates whetherthe surface contains color and/or alpha information. Seecairo_content_t.
+	 * Returns: The content type of surface.
 	 */
 	public cairo_content_t getContent()
 	{
 		// cairo_content_t cairo_surface_get_content (cairo_surface_t *surface);
 		return cairo_surface_get_content(cairo_surface);
-	}
-	
-	/**
-	 * Attach user data to surface. To remove user data from a surface,
-	 * call this function with the key that was used to set it and NULL
-	 * for data.
-	 * Params:
-	 * key =  the address of a cairo_user_data_key_t to attach the user data to
-	 * userData =  the user data to attach to the surface
-	 * destroy =  a cairo_destroy_func_t which will be called when the
-	 * surface is destroyed or when new user data is attached using the
-	 * same key.
-	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
-	 */
-	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
-	{
-		// cairo_status_t cairo_surface_set_user_data (cairo_surface_t *surface,  const cairo_user_data_key_t *key,  void *user_data,  cairo_destroy_func_t destroy);
-		return cairo_surface_set_user_data(cairo_surface, key, userData, destroy);
-	}
-	
-	/**
-	 * Return user data previously attached to surface using the specified
-	 * key. If no user data has been attached with the given key this
-	 * function returns NULL.
-	 * Params:
-	 * key =  the address of the cairo_user_data_key_t the user data was
-	 * attached to
-	 * Returns: the user data previously attached or NULL.
-	 */
-	public void* getUserData(cairo_user_data_key_t* key)
-	{
-		// void* cairo_surface_get_user_data (cairo_surface_t *surface,  const cairo_user_data_key_t *key);
-		return cairo_surface_get_user_data(cairo_surface, key);
 	}
 	
 	/**
@@ -258,22 +255,8 @@ public class Surface
 	 */
 	public void markDirtyRectangle(int x, int y, int width, int height)
 	{
-		// void cairo_surface_mark_dirty_rectangle  (cairo_surface_t *surface,  int x,  int y,  int width,  int height);
+		// void cairo_surface_mark_dirty_rectangle (cairo_surface_t *surface,  int x,  int y,  int width,  int height);
 		cairo_surface_mark_dirty_rectangle(cairo_surface, x, y, width, height);
-	}
-	
-	/**
-	 * Increases the reference count on surface by one. This prevents
-	 * surface from being destroyed until a matching call to
-	 * cairo_surface_destroy() is made.
-	 * Params:
-	 * surface =  a cairo_surface_t
-	 * Returns: the referenced cairo_surface_t.
-	 */
-	public cairo_surface_t* reference()
-	{
-		// cairo_surface_t* cairo_surface_reference (cairo_surface_t *surface);
-		return cairo_surface_reference(cairo_surface);
 	}
 	
 	/**
@@ -341,17 +324,6 @@ public class Surface
 	}
 	
 	/**
-	 * Checks whether an error has previously occurred for this
-	 * surface.
-	 * Returns: CAIRO_STATUS_SUCCESS, CAIRO_STATUS_NULL_POINTER,CAIRO_STATUS_NO_MEMORY, CAIRO_STATUS_READ_ERROR,CAIRO_STATUS_INVALID_CONTENT, CAIRO_STATUS_INVALUE_FORMAT, orCAIRO_STATUS_INVALID_VISUAL.
-	 */
-	public cairo_status_t status()
-	{
-		// cairo_status_t cairo_surface_status (cairo_surface_t *surface);
-		return cairo_surface_status(cairo_surface);
-	}
-	
-	/**
 	 * This function returns the type of the backend used to create
 	 * a surface. See cairo_surface_type_t for available types.
 	 * Since 1.2
@@ -363,6 +335,50 @@ public class Surface
 	{
 		// cairo_surface_type_t cairo_surface_get_type (cairo_surface_t *surface);
 		return cairo_surface_get_type(cairo_surface);
+	}
+	
+	/**
+	 * Returns the current reference count of surface.
+	 * Since 1.4
+	 * Returns: the current reference count of surface. If theobject is a nil object, 0 will be returned.
+	 */
+	public uint getReferenceCount()
+	{
+		// unsigned int cairo_surface_get_reference_count (cairo_surface_t *surface);
+		return cairo_surface_get_reference_count(cairo_surface);
+	}
+	
+	/**
+	 * Attach user data to surface. To remove user data from a surface,
+	 * call this function with the key that was used to set it and NULL
+	 * for data.
+	 * Params:
+	 * key =  the address of a cairo_user_data_key_t to attach the user data to
+	 * userData =  the user data to attach to the surface
+	 * destroy =  a cairo_destroy_func_t which will be called when the
+	 * surface is destroyed or when new user data is attached using the
+	 * same key.
+	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
+	 */
+	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
+	{
+		// cairo_status_t cairo_surface_set_user_data (cairo_surface_t *surface,  const cairo_user_data_key_t *key,  void *user_data,  cairo_destroy_func_t destroy);
+		return cairo_surface_set_user_data(cairo_surface, key, userData, destroy);
+	}
+	
+	/**
+	 * Return user data previously attached to surface using the specified
+	 * key. If no user data has been attached with the given key this
+	 * function returns NULL.
+	 * Params:
+	 * key =  the address of the cairo_user_data_key_t the user data was
+	 * attached to
+	 * Returns: the user data previously attached or NULL.
+	 */
+	public void* getUserData(cairo_user_data_key_t* key)
+	{
+		// void* cairo_surface_get_user_data (cairo_surface_t *surface,  const cairo_user_data_key_t *key);
+		return cairo_surface_get_user_data(cairo_surface, key);
 	}
 	
 	/**
@@ -387,8 +403,8 @@ public class Surface
 	 * Creates an image surface for the provided pixel data. The output
 	 * buffer must be kept around until the cairo_surface_t is destroyed
 	 * or cairo_surface_finish() is called on the surface. The initial
-	 * contents of buffer will be used as the inital image contents; you
-	 * must explicitely clear the buffer, using, for example,
+	 * contents of buffer will be used as the initial image contents; you
+	 * must explicitly clear the buffer, using, for example,
 	 * cairo_rectangle() and cairo_fill() if you want it cleared.
 	 * Params:
 	 * data =  a pointer to a buffer supplied by the application
@@ -404,7 +420,7 @@ public class Surface
 	 */
 	public static cairo_surface_t* imageSurfaceCreateForData(ubyte* data, cairo_format_t format, int width, int height, int stride)
 	{
-		// cairo_surface_t* cairo_image_surface_create_for_data  (unsigned char *data,  cairo_format_t format,  int width,  int height,  int stride);
+		// cairo_surface_t* cairo_image_surface_create_for_data (unsigned char *data,  cairo_format_t format,  int width,  int height,  int stride);
 		return cairo_image_surface_create_for_data(data, format, width, height, stride);
 	}
 	
@@ -427,7 +443,7 @@ public class Surface
 	 */
 	public cairo_format_t imageSurfaceGetFormat()
 	{
-		// cairo_format_t cairo_image_surface_get_format  (cairo_surface_t *surface);
+		// cairo_format_t cairo_image_surface_get_format (cairo_surface_t *surface);
 		return cairo_image_surface_get_format(cairo_surface);
 	}
 	

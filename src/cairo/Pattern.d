@@ -104,6 +104,11 @@ public class Pattern
 	 * (x1,y1) while a radial gradient's control vector is from any point
 	 * on the start circle to the corresponding point on the end circle.
 	 * The color is specified in the same way as in cairo_set_source_rgb().
+	 * If two (or more) stops are specified with identical offset values,
+	 * they will be sorted according to the order in which the stops are
+	 * added, (stops added earlier will compare less than stops added
+	 * later). This can be useful for reliably making sharp color
+	 * transitions instead of the typical blend.
 	 * Note: If the pattern is not a gradient pattern, (eg. a linear or
 	 * radial pattern), then the pattern will be put into an error status
 	 * with a status of CAIRO_STATUS_PATTERN_TYPE_MISMATCH.
@@ -115,7 +120,7 @@ public class Pattern
 	 */
 	public void addColorStopRgb(double offset, double red, double green, double blue)
 	{
-		// void cairo_pattern_add_color_stop_rgb  (cairo_pattern_t *pattern,  double offset,  double red,  double green,  double blue);
+		// void cairo_pattern_add_color_stop_rgb (cairo_pattern_t *pattern,  double offset,  double red,  double green,  double blue);
 		cairo_pattern_add_color_stop_rgb(cairo_pattern, offset, red, green, blue);
 	}
 	
@@ -126,6 +131,11 @@ public class Pattern
 	 * (x1,y1) while a radial gradient's control vector is from any point
 	 * on the start circle to the corresponding point on the end circle.
 	 * The color is specified in the same way as in cairo_set_source_rgba().
+	 * If two (or more) stops are specified with identical offset values,
+	 * they will be sorted according to the order in which the stops are
+	 * added, (stops added earlier will compare less than stops added
+	 * later). This can be useful for reliably making sharp color
+	 * transitions instead of the typical blend.
 	 * Note: If the pattern is not a gradient pattern, (eg. a linear or
 	 * radial pattern), then the pattern will be put into an error status
 	 * with a status of CAIRO_STATUS_PATTERN_TYPE_MISMATCH.
@@ -138,8 +148,42 @@ public class Pattern
 	 */
 	public void addColorStopRgba(double offset, double red, double green, double blue, double alpha)
 	{
-		// void cairo_pattern_add_color_stop_rgba  (cairo_pattern_t *pattern,  double offset,  double red,  double green,  double blue,  double alpha);
+		// void cairo_pattern_add_color_stop_rgba (cairo_pattern_t *pattern,  double offset,  double red,  double green,  double blue,  double alpha);
 		cairo_pattern_add_color_stop_rgba(cairo_pattern, offset, red, green, blue, alpha);
+	}
+	
+	/**
+	 * Gets the number of color stops specified in the given gradient
+	 * pattern.
+	 * Since 1.4
+	 * Params:
+	 * count =  return value for the number of color stops, or NULL
+	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a gradientpattern.
+	 */
+	public cairo_status_t getColorStopCount(int* count)
+	{
+		// cairo_status_t cairo_pattern_get_color_stop_count (cairo_pattern_t *pattern,  int *count);
+		return cairo_pattern_get_color_stop_count(cairo_pattern, count);
+	}
+	
+	/**
+	 * Gets the color and offset information at the given index for a
+	 * gradient pattern. Values of index are 0 to 1 less than the number
+	 * returned by cairo_pattern_get_color_stop_count().
+	 * Since 1.4
+	 * Params:
+	 * index =  index of the stop to return data for
+	 * offset =  return value for the offset of the stop, or NULL
+	 * red =  return value for red component of color, or NULL
+	 * green =  return value for green component of color, or NULL
+	 * blue =  return value for blue component of color, or NULL
+	 * alpha =  return value for alpha component of color, or NULL
+	 * Returns: CAIRO_STATUS_SUCCESS, or CAIRO_STATUS_INVALID_INDEXif index is not valid for the given pattern. If the pattern isnot a gradient pattern, CAIRO_STATUS_PATTERN_TYPE_MISMATCH isreturned.
+	 */
+	public cairo_status_t getColorStopRgba(int index, double* offset, double* red, double* green, double* blue, double* alpha)
+	{
+		// cairo_status_t cairo_pattern_get_color_stop_rgba (cairo_pattern_t *pattern,  int index,  double *offset,  double *red,  double *green,  double *blue,  double *alpha);
+		return cairo_pattern_get_color_stop_rgba(cairo_pattern, index, offset, red, green, blue, alpha);
 	}
 	
 	/**
@@ -151,7 +195,7 @@ public class Pattern
 	 * red =  red component of the color
 	 * green =  green component of the color
 	 * blue =  blue component of the color
-	 * Returns: the newly created cairo_pattern_t if succesful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
+	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
 	 */
 	public static cairo_pattern_t* createRgb(double red, double green, double blue)
 	{
@@ -169,7 +213,7 @@ public class Pattern
 	 * green =  green component of the color
 	 * blue =  blue component of the color
 	 * alpha =  alpha component of the color
-	 * Returns: the newly created cairo_pattern_t if succesful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
+	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
 	 */
 	public static cairo_pattern_t* createRgba(double red, double green, double blue, double alpha)
 	{
@@ -178,15 +222,46 @@ public class Pattern
 	}
 	
 	/**
+	 * Gets the solid color for a solid color pattern.
+	 * Since 1.4
+	 * Params:
+	 * red =  return value for red component of color, or NULL
+	 * green =  return value for green component of color, or NULL
+	 * blue =  return value for blue component of color, or NULL
+	 * alpha =  return value for alpha component of color, or NULL
+	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if the pattern is not a solidcolor pattern.
+	 */
+	public cairo_status_t getRgba(double* red, double* green, double* blue, double* alpha)
+	{
+		// cairo_status_t cairo_pattern_get_rgba (cairo_pattern_t *pattern,  double *red,  double *green,  double *blue,  double *alpha);
+		return cairo_pattern_get_rgba(cairo_pattern, red, green, blue, alpha);
+	}
+	
+	/**
 	 * Create a new cairo_pattern_t for the given surface.
 	 * Params:
 	 * surface =  the surface
-	 * Returns: the newly created cairo_pattern_t if succesful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
+	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
 	 */
 	public static cairo_pattern_t* createForSurface(cairo_surface_t* surface)
 	{
-		// cairo_pattern_t* cairo_pattern_create_for_surface  (cairo_surface_t *surface);
+		// cairo_pattern_t* cairo_pattern_create_for_surface (cairo_surface_t *surface);
 		return cairo_pattern_create_for_surface(surface);
+	}
+	
+	/**
+	 * Gets the surface of a surface pattern. The reference returned in
+	 * surface is owned by the pattern; the caller should call
+	 * cairo_surface_reference() if the surface is to be retained.
+	 * Since 1.4
+	 * Params:
+	 * surface =  return value for surface of pattern, or NULL
+	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if the pattern is not a surfacepattern.
+	 */
+	public cairo_status_t getSurface(cairo_surface_t** surface)
+	{
+		// cairo_status_t cairo_pattern_get_surface (cairo_pattern_t *pattern,  cairo_surface_t **surface);
+		return cairo_pattern_get_surface(cairo_pattern, surface);
 	}
 	
 	/**
@@ -203,17 +278,33 @@ public class Pattern
 	 * y0 =  y coordinate of the start point
 	 * x1 =  x coordinate of the end point
 	 * y1 =  y coordinate of the end point
-	 * Returns: the newly created cairo_pattern_t if succesful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
+	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
 	 */
 	public static cairo_pattern_t* createLinear(double x0, double y0, double x1, double y1)
 	{
-		// cairo_pattern_t* cairo_pattern_create_linear  (double x0,  double y0,  double x1,  double y1);
+		// cairo_pattern_t* cairo_pattern_create_linear (double x0,  double y0,  double x1,  double y1);
 		return cairo_pattern_create_linear(x0, y0, x1, y1);
 	}
 	
 	/**
+	 * Gets the gradient endpoints for a linear gradient.
+	 * Since 1.4
+	 * Params:
+	 * x0 =  return value for the x coordinate of the first point, or NULL
+	 * y0 =  return value for the y coordinate of the first point, or NULL
+	 * x1 =  return value for the x coordinate of the second point, or NULL
+	 * y1 =  return value for the y coordinate of the second point, or NULL
+	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a lineargradient pattern.
+	 */
+	public cairo_status_t getLinearPoints(double* x0, double* y0, double* x1, double* y1)
+	{
+		// cairo_status_t cairo_pattern_get_linear_points (cairo_pattern_t *pattern,  double *x0,  double *y0,  double *x1,  double *y1);
+		return cairo_pattern_get_linear_points(cairo_pattern, x0, y0, x1, y1);
+	}
+	
+	/**
 	 * Creates a new radial gradient cairo_pattern_t between the two
-	 * circles defined by (x0, y0, c0) and (x1, y1, c0). Before using the
+	 * circles defined by (cx0, cy0, radius0) and (cx1, cy1, radius1). Before using the
 	 * gradient pattern, a number of color stops should be defined using
 	 * cairo_pattern_add_color_stop_rgb() or
 	 * cairo_pattern_add_color_stop_rgba().
@@ -223,16 +314,51 @@ public class Pattern
 	 * Params:
 	 * cx0 =  x coordinate for the center of the start circle
 	 * cy0 =  y coordinate for the center of the start circle
-	 * radius0 =  radius of the start cirle
+	 * radius0 =  radius of the start circle
 	 * cx1 =  x coordinate for the center of the end circle
 	 * cy1 =  y coordinate for the center of the end circle
-	 * radius1 =  radius of the end cirle
-	 * Returns: the newly created cairo_pattern_t if succesful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
+	 * radius1 =  radius of the end circle
+	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
 	 */
 	public static cairo_pattern_t* createRadial(double cx0, double cy0, double radius0, double cx1, double cy1, double radius1)
 	{
-		// cairo_pattern_t* cairo_pattern_create_radial  (double cx0,  double cy0,  double radius0,  double cx1,  double cy1,  double radius1);
+		// cairo_pattern_t* cairo_pattern_create_radial (double cx0,  double cy0,  double radius0,  double cx1,  double cy1,  double radius1);
 		return cairo_pattern_create_radial(cx0, cy0, radius0, cx1, cy1, radius1);
+	}
+	
+	/**
+	 * Gets the gradient endpoint circles for a radial gradient, each
+	 * specified as a center coordinate and a radius.
+	 * Since 1.4
+	 * Params:
+	 * x0 =  return value for the x coordinate of the center of the first circle, or NULL
+	 * y0 =  return value for the y coordinate of the center of the first circle, or NULL
+	 * r0 =  return value for the radius of the first circle, or NULL
+	 * x1 =  return value for the x coordinate of the center of the second circle, or NULL
+	 * y1 =  return value for the y coordinate of the center of the second circle, or NULL
+	 * r1 =  return value for the radius of the second circle, or NULL
+	 * Returns: CAIRO_STATUS_SUCCESS, orCAIRO_STATUS_PATTERN_TYPE_MISMATCH if pattern is not a radialgradient pattern.
+	 */
+	public cairo_status_t getRadialCircles(double* x0, double* y0, double* r0, double* x1, double* y1, double* r1)
+	{
+		// cairo_status_t cairo_pattern_get_radial_circles (cairo_pattern_t *pattern,  double *x0,  double *y0,  double *r0,  double *x1,  double *y1,  double *r1);
+		return cairo_pattern_get_radial_circles(cairo_pattern, x0, y0, r0, x1, y1, r1);
+	}
+	
+	/**
+	 * Increases the reference count on pattern by one. This prevents
+	 * pattern from being destroyed until a matching call to
+	 * cairo_pattern_destroy() is made.
+	 * The number of references to a cairo_pattern_t can be get using
+	 * cairo_pattern_get_reference_count().
+	 * Params:
+	 * pattern =  a cairo_pattern_t
+	 * Returns: the referenced cairo_pattern_t.
+	 */
+	public cairo_pattern_t* reference()
+	{
+		// cairo_pattern_t* cairo_pattern_reference (cairo_pattern_t *pattern);
+		return cairo_pattern_reference(cairo_pattern);
 	}
 	
 	/**
@@ -244,20 +370,6 @@ public class Pattern
 	{
 		// void cairo_pattern_destroy (cairo_pattern_t *pattern);
 		cairo_pattern_destroy(cairo_pattern);
-	}
-	
-	/**
-	 * Increases the reference count on pattern by one. This prevents
-	 * pattern from being destroyed until a matching call to
-	 * cairo_pattern_destroy() is made.
-	 * Params:
-	 * pattern =  a cairo_pattern_t
-	 * Returns: the referenced cairo_pattern_t.
-	 */
-	public cairo_pattern_t* reference()
-	{
-		// cairo_pattern_t* cairo_pattern_reference (cairo_pattern_t *pattern);
-		return cairo_pattern_reference(cairo_pattern);
 	}
 	
 	/**
@@ -297,7 +409,11 @@ public class Pattern
 	}
 	
 	/**
+	 * Sets the filter to be used for resizing when using this pattern.
+	 * See cairo_filter_t for details on each filter.
 	 * Params:
+	 * filter =  a cairo_filter_t describing the filter to use for resizing
+	 * the pattern
 	 */
 	public void setFilter(cairo_filter_t filter)
 	{
@@ -306,7 +422,9 @@ public class Pattern
 	}
 	
 	/**
-	 * Returns:
+	 * Gets the current filter for a pattern. See cairo_filter_t
+	 * for details on each filter.
+	 * Returns: the current filter used for resizing the pattern.
 	 */
 	public cairo_filter_t getFilter()
 	{
@@ -358,5 +476,51 @@ public class Pattern
 	{
 		// cairo_pattern_type_t cairo_pattern_get_type (cairo_pattern_t *pattern);
 		return cairo_pattern_get_type(cairo_pattern);
+	}
+	
+	/**
+	 * Returns the current reference count of pattern.
+	 * Since 1.4
+	 * Returns: the current reference count of pattern. If theobject is a nil object, 0 will be returned.
+	 */
+	public uint getReferenceCount()
+	{
+		// unsigned int cairo_pattern_get_reference_count (cairo_pattern_t *pattern);
+		return cairo_pattern_get_reference_count(cairo_pattern);
+	}
+	
+	/**
+	 * Attach user data to pattern. To remove user data from a surface,
+	 * call this function with the key that was used to set it and NULL
+	 * for data.
+	 * Since 1.4
+	 * Params:
+	 * key =  the address of a cairo_user_data_key_t to attach the user data to
+	 * userData =  the user data to attach to the cairo_pattern_t
+	 * destroy =  a cairo_destroy_func_t which will be called when the
+	 * cairo_t is destroyed or when new user data is attached using the
+	 * same key.
+	 * Returns: CAIRO_STATUS_SUCCESS or CAIRO_STATUS_NO_MEMORY if aslot could not be allocated for the user data.
+	 */
+	public cairo_status_t setUserData(cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)
+	{
+		// cairo_status_t cairo_pattern_set_user_data (cairo_pattern_t *pattern,  const cairo_user_data_key_t *key,  void *user_data,  cairo_destroy_func_t destroy);
+		return cairo_pattern_set_user_data(cairo_pattern, key, userData, destroy);
+	}
+	
+	/**
+	 * Return user data previously attached to pattern using the
+	 * specified key. If no user data has been attached with the given
+	 * key this function returns NULL.
+	 * Since 1.4
+	 * Params:
+	 * key =  the address of the cairo_user_data_key_t the user data was
+	 * attached to
+	 * Returns: the user data previously attached or NULL.
+	 */
+	public void* getUserData(cairo_user_data_key_t* key)
+	{
+		// void* cairo_pattern_get_user_data (cairo_pattern_t *pattern,  const cairo_user_data_key_t *key);
+		return cairo_pattern_get_user_data(cairo_pattern, key);
 	}
 }

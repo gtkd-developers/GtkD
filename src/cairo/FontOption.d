@@ -104,7 +104,7 @@ public class FontOption
 	 */
 	public static cairo_font_options_t* create()
 	{
-		// cairo_font_options_t* cairo_font_options_create  (void);
+		// cairo_font_options_t* cairo_font_options_create (void);
 		return cairo_font_options_create();
 	}
 	
@@ -115,7 +115,7 @@ public class FontOption
 	 */
 	public cairo_font_options_t* copy()
 	{
-		// cairo_font_options_t* cairo_font_options_copy  (const cairo_font_options_t *original);
+		// cairo_font_options_t* cairo_font_options_copy (const cairo_font_options_t *original);
 		return cairo_font_options_copy(cairo_font_options);
 	}
 	
@@ -181,24 +181,24 @@ public class FontOption
 	}
 	
 	/**
-	 * Sets the antiliasing mode for the font options object. This
+	 * Sets the antialiasing mode for the font options object. This
 	 * specifies the type of antialiasing to do when rendering text.
 	 * Params:
 	 * antialias =  the new antialiasing mode
 	 */
 	public void setAntialias(cairo_antialias_t antialias)
 	{
-		// void cairo_font_options_set_antialias  (cairo_font_options_t *options,  cairo_antialias_t antialias);
+		// void cairo_font_options_set_antialias (cairo_font_options_t *options,  cairo_antialias_t antialias);
 		cairo_font_options_set_antialias(cairo_font_options, antialias);
 	}
 	
 	/**
-	 * Gets the antialising mode for the font options object.
+	 * Gets the antialiasing mode for the font options object.
 	 * Returns: the antialiasing mode
 	 */
 	public cairo_antialias_t getAntialias()
 	{
-		// cairo_antialias_t cairo_font_options_get_antialias  (const cairo_font_options_t *options);
+		// cairo_antialias_t cairo_font_options_get_antialias (const cairo_font_options_t *options);
 		return cairo_font_options_get_antialias(cairo_font_options);
 	}
 	
@@ -238,7 +238,7 @@ public class FontOption
 	 */
 	public void setHintStyle(cairo_hint_style_t hintStyle)
 	{
-		// void cairo_font_options_set_hint_style  (cairo_font_options_t *options,  cairo_hint_style_t hint_style);
+		// void cairo_font_options_set_hint_style (cairo_font_options_t *options,  cairo_hint_style_t hint_style);
 		cairo_font_options_set_hint_style(cairo_font_options, hintStyle);
 	}
 	
@@ -249,7 +249,7 @@ public class FontOption
 	 */
 	public cairo_hint_style_t getHintStyle()
 	{
-		// cairo_hint_style_t cairo_font_options_get_hint_style  (const cairo_font_options_t *options);
+		// cairo_hint_style_t cairo_font_options_get_hint_style (const cairo_font_options_t *options);
 		return cairo_font_options_get_hint_style(cairo_font_options);
 	}
 	
@@ -263,7 +263,7 @@ public class FontOption
 	 */
 	public void setHintMetrics(cairo_hint_metrics_t hintMetrics)
 	{
-		// void cairo_font_options_set_hint_metrics  (cairo_font_options_t *options,  cairo_hint_metrics_t hint_metrics);
+		// void cairo_font_options_set_hint_metrics (cairo_font_options_t *options,  cairo_hint_metrics_t hint_metrics);
 		cairo_font_options_set_hint_metrics(cairo_font_options, hintMetrics);
 	}
 	

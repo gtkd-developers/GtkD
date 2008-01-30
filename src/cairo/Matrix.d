@@ -194,7 +194,7 @@ public class Matrix
 	}
 	
 	/**
-	 * Applies scaling by tx, ty to the transformation in matrix. The
+	 * Applies scaling by sx, sy to the transformation in matrix. The
 	 * effect of the new transformation is to first scale the coordinates
 	 * by sx and sy, then apply the original transformation to the coordinates.
 	 * Params:
@@ -230,7 +230,7 @@ public class Matrix
 	 * all transformation matrices have inverses; if the matrix
 	 * collapses points together (it is degenerate),
 	 * then it has no inverse and this function will fail.
-	 * Returns: If matrix has an inverse, modifies matrix to be the inverse matrix and returns CAIRO_STATUS_SUCCESS. Otherwise,Returns:CAIRO_STATUS_INVALID_MATRIX.
+	 * Returns: If matrix has an inverse, modifies matrix to be the inverse matrix and returns CAIRO_STATUS_SUCCESS. Otherwise, returns CAIRO_STATUS_INVALID_MATRIX.
 	 */
 	public cairo_status_t invert()
 	{

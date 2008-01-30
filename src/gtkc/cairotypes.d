@@ -76,7 +76,7 @@ public enum cairo_fill_rule_t
 	EVEN_ODD
 }
 /**
- * enumeration for style of line-endings
+ * Specifies how to render the endpoint of a line when stroking.
  * CAIRO_LINE_CAP_BUTT
  */
 public enum cairo_line_cap_t
@@ -85,6 +85,10 @@ public enum cairo_line_cap_t
 	ROUND,
 	SQUARE
 }
+/**
+ * Specifies how to render the junction of two lines when stroking.
+ * CAIRO_LINE_JOIN_MITER
+ */
 public enum cairo_line_join_t
 {
 	MITER,
@@ -108,6 +112,12 @@ public enum cairo_operator_t
 	ADD,
 	SATURATE
 }
+/**
+ * cairo_path_data_t is used to describe the type of one portion
+ * of a path when represented as a cairo_path_t.
+ * See cairo_path_data_t for details.
+ * CAIRO_PATH_MOVE_TO
+ */
 public enum cairo_path_data_type_t
 {
 	MOVE_TO,
@@ -115,12 +125,20 @@ public enum cairo_path_data_type_t
 	CURVE_TO,
 	CLOSE_PATH
 }
+/**
+ * Specifies variants of a font face based on their slant.
+ * CAIRO_FONT_SLANT_NORMAL
+ */
 public enum cairo_font_slant_t
 {
 	NORMAL,
 	ITALIC,
 	OBLIQUE
 }
+/**
+ * Specifies variants of a font face based on their weight.
+ * CAIRO_FONT_WEIGHT_NORMAL
+ */
 public enum cairo_font_weight_t
 {
 	NORMAL,
@@ -294,7 +312,8 @@ public enum cairo_surface_type_t
 	WIN32,
 	BEOS,
 	DIRECTFB,
-	SVG
+	SVG,
+	OS2
 }
 /**
  * cairo_format_t is used to identify the memory format of
@@ -307,8 +326,11 @@ public enum cairo_format_t
 	ARGB32,
 	RGB24,
 	A8,
-	A1,
-	RGB16_565
+	A1
+	/+* The value of 4 is reserved by a deprecated enum value.
+	 * The next format added must have an explicit value of 5.
+	RGB16_565 = 4,
+	+/
 }
 /**
  * cairo_status_t is used to indicate errors that can occur when
@@ -341,15 +363,45 @@ public enum cairo_status_t
 	INVALID_VISUAL,
 	FILE_NOT_FOUND,
 	INVALID_DASH,
-	INVALID_DSC_COMMENT
+	INVALID_DSC_COMMENT,
+	INVALID_INDEX,
+	CLIP_NOT_REPRESENTABLE
 }
 
 /**
  * Main Gtk struct.
  * A cairo_t contains the current state of the rendering device,
  * including coordinates of yet to be drawn shapes.
+ * Cairo contexts, as cairo_t objects are named, are central to
+ * cairo and all drawing with cairo is always done to a cairo_t
+ * object.
+ * Memory management of cairo_t is done with
+ * cairo_reference() and cairo_destroy().
  */
 public struct cairo_t{}
+
+
+/**
+ * A data structure for holding a rectangle.
+ * doublex;
+ */
+public struct cairo_rectangle_t
+{
+	double x, y, width, height;
+}
+
+
+/**
+ * A data structure for holding a dynamically allocated
+ * array of rectangles.
+ * cairo_status_tstatus;
+ */
+public struct cairo_rectangle_list_t
+{
+	cairo_status_t status;
+	cairo_rectangle_t *rectangles;
+	int numRectangles;
+}
 
 
 /**
@@ -387,7 +439,7 @@ public struct cairo_path_t
  * Note that the offsets given by x and y are not cumulative. When
  * drawing or measuring text, each glyph is individually positioned
  * with respect to the overall origin
- * unsignedlongindex;
+ * doublex;
  */
 public struct cairo_glyph_t
 {
@@ -399,6 +451,18 @@ public struct cairo_glyph_t
 
 /**
  * Main Gtk struct.
+ * A cairo_pattern_t represents a source when drawing onto a
+ * surface. There are different subtypes of cairo_pattern_t,
+ * for different types of sources; for example,
+ * cairo_pattern_create_rgb() creates a pattern for a solid
+ * opaque color.
+ * Other than various cairo_pattern_create_type
+ * functions, some of the pattern types can be implicitly created
+ * using vairous cairo_set_source_type functions;
+ * for example cairo_set_source_rgb().
+ * The type of a pattern can be queried with cairo_pattern_get_type().
+ * Memory management of cairo_pattern_t is done with
+ * cairo_pattern_reference() and cairo_pattern_destroy().
  */
 public struct cairo_pattern_t{}
 
@@ -411,6 +475,11 @@ public struct cairo_pattern_t{}
  * directions) . A font face can be set on a cairo_t by using
  * cairo_set_font_face(); the size and font matrix are set with
  * cairo_set_font_size() and cairo_set_font_matrix().
+ * There are various types of font faces, depending on the
+ * font backend they use. The type of a
+ * font face can be queried using cairo_font_face_get_type().
+ * Memory management of cairo_font_face_t is done with
+ * cairo_font_face_reference() and cairo_font_face_destroy().
  */
 public struct cairo_font_face_t{}
 
@@ -421,6 +490,11 @@ public struct cairo_font_face_t{}
  * resolution. A cairo_scaled_font_t is most useful for low-level font
  * usage where a library or application wants to cache a reference
  * to a scaled font to speed up the computation of metrics.
+ * There are various types of scaled fonts, depending on the
+ * font backend they use. The type of a
+ * scaled font can be queried using cairo_scaled_font_get_type().
+ * Memory management of cairo_scaled_font_t is done with
+ * cairo_scaled_font_reference() and cairo_scaled_font_destroy().
  */
 public struct cairo_scaled_font_t{}
 
@@ -473,6 +547,20 @@ public struct cairo_text_extents_t
 
 /**
  * Main Gtk struct.
+ * An opaque structure holding all options that are used when
+ * rendering fonts.
+ * Individual features of a cairo_font_options_t can be set or
+ * accessed using functions named
+ * cairo_font_options_set_feature_name and
+ * cairo_font_options_get_feature_name, like
+ * cairo_font_options_set_antialias() and
+ * cairo_font_options_get_antialias().
+ * New features may be added to a cairo_font_options_t in the
+ * future. For this reason, cairo_font_options_copy(),
+ * cairo_font_options_equal(), cairo_font_options_merge(), and
+ * cairo_font_options_hash() should be used to copy, check
+ * for equality, merge, or compute a hash value of
+ * cairo_font_options_t objects.
  */
 public struct cairo_font_options_t{}
 
@@ -481,9 +569,12 @@ public struct cairo_font_options_t{}
  * Main Gtk struct.
  * A cairo_surface_t represents an image, either as the destination
  * of a drawing operation or as source when drawing onto another
- * surface. There are different subtypes of cairo_surface_t for
+ * surface. To draw to a cairo_surface_t, create a cairo context
+ * with the surface as the target, using cairo_create().
+ * There are different subtypes of cairo_surface_t for
  * different drawing backends; for example, cairo_image_surface_create()
  * creates a bitmap image in memory.
+ * The type of a surface can be queried with cairo_surface_get_type().
  * Memory management of cairo_surface_t is done with
  * cairo_surface_reference() and cairo_surface_destroy().
  */
@@ -519,9 +610,16 @@ public struct cairo_user_data_key_t
 
 
 /*
+ * This macro encodes the given cairo version into an integer. The numbers
+ * returned by CAIRO_VERSION and cairo_version() are encoded using this macro.
+ * Two encoded version numbers can be compared as integers. The encoding ensures
+ * that later versions compare greater than earlier versions.
  * major:
+ * the major component of the version number
  * minor:
+ * the minor component of the version number
  * micro:
+ * the micro component of the version number
  */
 // TODO
 // #define CAIRO_VERSION_ENCODE(major, minor, micro)
