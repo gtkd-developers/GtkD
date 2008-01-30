@@ -2264,9 +2264,9 @@ public struct GtkArg
 		char ucharData;
 		int boolData;
 		int intData;
-		XID uintData;
+		uint uintData;
 		int longData;
-		XID ulongData;
+		uint ulongData;
 		float floatData;
 		double doubleData;
 		char *stringData;

@@ -149,7 +149,7 @@ public class X11
 	 * xid =  an X id.
 	 * Returns: the associated Gdk object, which may be a GdkPixmap,a GdkWindow or a GdkFont.
 	 */
-	public static void* gdkXidTableLookup(XID xid)
+	public static void* gdkXidTableLookup(uint xid)
 	{
 		// gpointer gdk_xid_table_lookup (XID xid);
 		return gdk_xid_table_lookup(xid);
@@ -284,7 +284,7 @@ public class X11
 	 * drawable =  a GdkDrawable.
 	 * Returns: the ID of drawable's X resource.
 	 */
-	public static XID drawableGetXid(Drawable drawable)
+	public static uint drawableGetXid(Drawable drawable)
 	{
 		// XID gdk_x11_drawable_get_xid (GdkDrawable *drawable);
 		return gdk_x11_drawable_get_xid((drawable is null) ? null : drawable.getDrawableStruct());

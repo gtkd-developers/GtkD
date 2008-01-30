@@ -80,7 +80,7 @@ alias: va_list void*
 alias: unichar dchar
 alias: unichar2 wchar
 alias: uchar ubyte
-alias: uint XID
+alias: XID uint
 
 #alias: gunichar dchar
 #alias: gunichar2 wchar
