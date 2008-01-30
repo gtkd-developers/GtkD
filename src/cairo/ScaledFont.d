@@ -43,7 +43,14 @@
  * omit signals:
  * imports:
  * 	- glib.Str
+ * 	- cairo.FontFace
+ * 	- cairo.Matrix
+ * 	- cairo.FontOption
  * structWrap:
+ * 	- cairo_font_face_t* -> FontFace
+ * 	- cairo_font_options_t* -> FontOption
+ * 	- cairo_matrix_t* -> Matrix
+ * 	- cairo_scaled_font_t* -> ScaledFont
  * module aliases:
  * local aliases:
  */
@@ -56,6 +63,9 @@ private import gtkc.cairo;
 
 
 private import glib.Str;
+private import cairo.FontFace;
+private import cairo.Matrix;
+private import cairo.FontOption;
 
 
 
@@ -116,10 +126,16 @@ public class ScaledFont
 	 *  rendering with it.
 	 * Returns: a newly created cairo_scaled_font_t. Destroy with cairo_scaled_font_destroy()
 	 */
-	public static cairo_scaled_font_t* create(cairo_font_face_t* fontFace, cairo_matrix_t* fontMatrix, cairo_matrix_t* ctm, cairo_font_options_t* options)
+	public static ScaledFont create(FontFace fontFace, Matrix fontMatrix, Matrix ctm, FontOption options)
 	{
 		// cairo_scaled_font_t* cairo_scaled_font_create  (cairo_font_face_t *font_face,  const cairo_matrix_t *font_matrix,  const cairo_matrix_t *ctm,  const cairo_font_options_t *options);
-		return cairo_scaled_font_create(fontFace, fontMatrix, ctm, options);
+		auto p = cairo_scaled_font_create((fontFace is null) ? null : fontFace.getFontFaceStruct(), (fontMatrix is null) ? null : fontMatrix.getMatrixStruct(), (ctm is null) ? null : ctm.getMatrixStruct(), (options is null) ? null : options.getFontOptionStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
 	
 	/**
@@ -128,10 +144,16 @@ public class ScaledFont
 	 * cairo_scaled_font_destroy() is made.
 	 * Returns: the referenced cairo_scaled_font_t
 	 */
-	public cairo_scaled_font_t* reference()
+	public ScaledFont reference()
 	{
 		// cairo_scaled_font_t* cairo_scaled_font_reference  (cairo_scaled_font_t *scaled_font);
-		return cairo_scaled_font_reference(cairo_scaled_font);
+		auto p = cairo_scaled_font_reference(cairo_scaled_font);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
 	
 	/**
@@ -218,10 +240,16 @@ public class ScaledFont
 	 * Since 1.2
 	 * Returns: The cairo_font_face_t with which scaled_font wascreated.
 	 */
-	public cairo_font_face_t* getFontFace()
+	public FontFace getFontFace()
 	{
 		// cairo_font_face_t* cairo_scaled_font_get_font_face  (cairo_scaled_font_t *scaled_font);
-		return cairo_scaled_font_get_font_face(cairo_scaled_font);
+		auto p = cairo_scaled_font_get_font_face(cairo_scaled_font);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new FontFace(cast(cairo_font_face_t*) p);
 	}
 	
 	/**
@@ -231,10 +259,10 @@ public class ScaledFont
 	 * Params:
 	 * options =  return value for the font options
 	 */
-	public void getFontOptions(cairo_font_options_t* options)
+	public void getFontOptions(FontOption options)
 	{
 		// void cairo_scaled_font_get_font_options  (cairo_scaled_font_t *scaled_font,  cairo_font_options_t *options);
-		cairo_scaled_font_get_font_options(cairo_scaled_font, options);
+		cairo_scaled_font_get_font_options(cairo_scaled_font, (options is null) ? null : options.getFontOptionStruct());
 	}
 	
 	/**
@@ -244,10 +272,10 @@ public class ScaledFont
 	 * Params:
 	 * fontMatrix =  return value for the matrix
 	 */
-	public void getFontMatrix(cairo_matrix_t* fontMatrix)
+	public void getFontMatrix(Matrix fontMatrix)
 	{
 		// void cairo_scaled_font_get_font_matrix  (cairo_scaled_font_t *scaled_font,  cairo_matrix_t *font_matrix);
-		cairo_scaled_font_get_font_matrix(cairo_scaled_font, fontMatrix);
+		cairo_scaled_font_get_font_matrix(cairo_scaled_font, (fontMatrix is null) ? null : fontMatrix.getMatrixStruct());
 	}
 	
 	/**
@@ -256,10 +284,10 @@ public class ScaledFont
 	 * Params:
 	 * ctm =  return value for the CTM
 	 */
-	public void getCtm(cairo_matrix_t* ctm)
+	public void getCtm(Matrix ctm)
 	{
 		// void cairo_scaled_font_get_ctm (cairo_scaled_font_t *scaled_font,  cairo_matrix_t *ctm);
-		cairo_scaled_font_get_ctm(cairo_scaled_font, ctm);
+		cairo_scaled_font_get_ctm(cairo_scaled_font, (ctm is null) ? null : ctm.getMatrixStruct());
 	}
 	
 	/**

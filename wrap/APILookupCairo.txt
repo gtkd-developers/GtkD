@@ -215,6 +215,13 @@ struct: cairo_scaled_font_t
 class: ScaledFont
 prefix: cairo_scaled_font_
 import: glib.Str
+structWrap: cairo_scaled_font_t* ScaledFont
+import: cairo.FontFace
+structWrap: cairo_font_face_t* FontFace
+import: cairo.Matrix
+structWrap: cairo_matrix_t* Matrix
+import: cairo.FontOption
+structWrap: cairo_font_options_t* FontOption
 outFile: ScaledFont
 
 file: cairo-Font-Options.html
