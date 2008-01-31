@@ -19,6 +19,7 @@
 module gtk.OtherTests;
 
 private import gtk.AboutDialog;
+private import gtk.Dialog;
 private import gtk.Widget;
 private import gtk.Window;
 private import gtk.Label;
@@ -117,8 +118,15 @@ public class OtherTests : Window
 			setArtists(names);
 			setLicense("License is LGPL");
 			setWebsite("http://lisdev.com");
+			addOnResponse(&onDialogResponse);
 			showAll();
 		}
+	}
+
+	void onDialogResponse(int response, Dialog dlg)
+	{
+		if(response == GtkResponseType.GTK_RESPONSE_CANCEL)
+			dlg.destroy();
 	}
 
 	gboolean onDeleteEvent(Event event, Widget widget)
