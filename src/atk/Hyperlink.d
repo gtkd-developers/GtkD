@@ -42,8 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- atk.ObjectAtk
  * 	- glib.Str
  * structWrap:
+ * 	- AtkObject* -> ObjectAtk
  * module aliases:
  * local aliases:
  */
@@ -57,6 +59,7 @@ private import gtkc.atk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import atk.ObjectAtk;
 private import glib.Str;
 
 
@@ -165,10 +168,16 @@ public class Hyperlink : ObjectG
 	 * i =  a (zero-index) integer specifying the desired anchor
 	 * Returns: an AtkObject associated with this hyperlinks i-th anchor
 	 */
-	public AtkObject* _GetObject(int i)
+	public ObjectAtk _GetObject(int i)
 	{
 		// AtkObject* atk_hyperlink_get_object (AtkHyperlink *link_,  gint i);
-		return atk_hyperlink_get_object(atkHyperlink, i);
+		auto p = atk_hyperlink_get_object(atkHyperlink, i);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

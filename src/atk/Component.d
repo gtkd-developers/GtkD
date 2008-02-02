@@ -42,7 +42,9 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- atk.ObjectAtk
  * structWrap:
+ * 	- AtkObject* -> ObjectAtk
  * module aliases:
  * local aliases:
  */
@@ -56,6 +58,7 @@ private import gtkc.atk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import atk.ObjectAtk;
 
 
 
@@ -255,10 +258,16 @@ public class Component
 	 * or to the components top level window
 	 * Returns: a reference to the accessible child, if one exists
 	 */
-	public AtkObject* refAccessibleAtPoint(int x, int y, AtkCoordType coordType)
+	public ObjectAtk refAccessibleAtPoint(int x, int y, AtkCoordType coordType)
 	{
 		// AtkObject* atk_component_ref_accessible_at_point  (AtkComponent *component,  gint x,  gint y,  AtkCoordType coord_type);
-		return atk_component_ref_accessible_at_point(atkComponent, x, y, coordType);
+		auto p = atk_component_ref_accessible_at_point(atkComponent, x, y, coordType);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

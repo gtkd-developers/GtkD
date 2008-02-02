@@ -77,6 +77,8 @@ file: AtkComponent.html
 struct: AtkComponent
 class: Component
 prefix: atk_component_
+structWrap: AtkObject* ObjectAtk
+import: atk.ObjectAtk
 outFile: Component
 
 file: AtkDocument.html
@@ -97,21 +99,33 @@ file: AtkGObjectAccessible.html
 struct: AtkGObjectAccessible
 class: GObjectAccessible
 prefix: atk_gobject_accessible
-import: gobject.ObjectG
+structWrap: AtkObject* ObjectAtk
 structWrap: GObject* ObjectG
+import: atk.ObjectAtk
+import: gobject.ObjectG
 outFile: GObjectAccessible
 
 file: AtkHyperlink.html
 struct: AtkHyperlink
 class: Hyperlink
 prefix: atk_hyperlink
+structWrap: AtkObject* ObjectAtk
+import: atk.ObjectAtk
 import: glib.Str
 outFile: Hyperlink
+
+#file: atk-AtkHyperlinkImpl.html
+#struct: AtkHyperlinkImpl
+#class: HyperlinkImpl
+#prefix: atk_hyperlink_impl_
+#outFile: HyperlinkImpl
 
 file: AtkHypertext.html
 struct: AtkHypertext
 class: Hypertext
 prefix: atk_hypertext
+structWrap: AtkHyperlink* Hyperlink
+import: atk.Hyperlink
 outFile: Hypertext
 
 file: AtkImage.html
@@ -125,62 +139,80 @@ file: AtkNoOpObject.html
 struct: AtkNoOpObject
 class: NoOpObject
 prefix: atk_no_op_object_
-import: gobject.ObjectG
+structWrap: AtkObject* ObjectAtk
 structWrap: GObject* ObjectG
+import: atk.ObjectAtk
+import: gobject.ObjectG
 outFile: NoOpObject
 
 file: AtkNoOpObjectFactory.html
 struct: AtkNoOpObjectFactory
 class: NoOpObjectFactory
 prefix: atk_no_op_object_factory
-import: gobject.ObjectG
-structWrap: GObject* ObjectG
 outFile: NoOpObjectFactory
 
 file: AtkObject.html
 struct: AtkObject
 class: ObjectAtk
 prefix: atk_object_
-import: glib.Str
-import: atk.StateSet
+prefix: atk_
+structWrap: AtkObject* ObjectAtk
+AtkRelationSet*
 structWrap: AtkStateSet* StateSet
+import: atk.ObjectAtk
+import: atk.StateSet
+import: glib.Str
 outFile: ObjectAtk
 
 file: AtkObjectFactory.html
 struct: AtkObjectFactory
 class: ObjectFactory
 prefix: atk_object_factory_
-import: gobject.ObjectG
+structWrap: AtkObject* ObjectAtk
 structWrap: GObject* ObjectG
+import: atk.ObjectAtk
+import: gobject.ObjectG
 outFile: ObjectFactory
 
 file: AtkRegistry.html
 struct: AtkRegistry
 class: Registry
 prefix: atk_registry_
+structWrap: AtkObjectFactory* ObjectFactory
+structWrap: AtkRegistry* Registry
+import: atk.ObjectFactory
+import: atk.Registry
 outFile: Registry
 
 file: AtkRelation.html
 struct: AtkRelation
 class: Relation
 prefix: atk_relation_
+structWrap: AtkObject* ObjectAtk
+structWrap: GPtrArray* PtrArray
+import: atk.ObjectAtk
 import: glib.PtrArray
 import: glib.Str
-structWrap: GPtrArray* PtrArray
 outFile: Relation
 
 file: AtkRelationSet.html
 struct: AtkRelationSet
 class: RelationSet
 prefix: atk_relationSet_
-import: glib.PtrArray
+structWrap: AtkObject* ObjectAtk
+structWrap: AtkRelation* Relation
 structWrap: GPtrArray* PtrArray
+import: atk.ObjectAtk
+import: atk.Relation
+import: glib.PtrArray
 outFile: RelationSet
 
 file: AtkSelection.html
 struct: AtkSelection
 class: Selection
 prefix: atk_selection_
+structWrap: AtkObject* ObjectAtk
+import: atk.ObjectAtk
 outFile: Selection
 
 file: atk-AtkState.html
@@ -193,6 +225,7 @@ file: atk-AtkStateSet.html
 struct: AtkStateSet
 class: StateSet
 prefix: atk_state_set_
+structWrap: AtkStateSet* StateSet
 import: glib.Str
 outFile: StateSet
 
@@ -200,8 +233,8 @@ file: AtkStreamableContent.html
 struct: AtkStreamableContent
 class: StreamableContent
 prefix: atk_streamable_content_
-import: glib.IOChannel
 structWrap: GIOChannel* IOChannel
+import: glib.IOChannel
 import: glib.Str
 outFile: StreamableContent
 
@@ -209,6 +242,8 @@ file: AtkTable.html
 struct: AtkTable
 class: Table
 prefix: atk_table_
+structWrap: AtkObject* ObjectAtk
+import: atk.ObjectAtk
 import: glib.Str
 outFile: Table
 
@@ -222,6 +257,8 @@ outFile:Text
 file: AtkUtil.html
 class: Util
 prefix: atk_
+structWrap: AtkObject* ObjectAtk
+import: atk.ObjectAtk
 import: glib.Str
 outFile: Util
 

@@ -42,8 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- atk.ObjectAtk
  * 	- gobject.ObjectG
  * structWrap:
+ * 	- AtkObject* -> ObjectAtk
  * 	- GObject* -> ObjectG
  * module aliases:
  * local aliases:
@@ -56,6 +58,7 @@ public  import gtkc.atktypes;
 private import gtkc.atk;
 
 
+private import atk.ObjectAtk;
 private import gobject.ObjectG;
 
 
@@ -112,10 +115,16 @@ public class GObjectAccessible : ObjectAtk
 	 * obj =  a GObject
 	 * Returns: a AtkObject which is the accessible object for the obj
 	 */
-	public static AtkObject* _ForObject(ObjectG obj)
+	public static ObjectAtk _ForObject(ObjectG obj)
 	{
 		// AtkObject* atk_gobject_accessible_for_object (GObject *obj);
-		return atk_gobject_accessible_for_object((obj is null) ? null : obj.getObjectGStruct());
+		auto p = atk_gobject_accessible_for_object((obj is null) ? null : obj.getObjectGStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

@@ -42,9 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gobject.ObjectG
  * structWrap:
- * 	- GObject* -> ObjectG
  * module aliases:
  * local aliases:
  */
@@ -56,7 +54,6 @@ public  import gtkc.atktypes;
 private import gtkc.atk;
 
 
-private import gobject.ObjectG;
 
 
 

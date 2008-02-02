@@ -42,7 +42,9 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- atk.Hyperlink
  * structWrap:
+ * 	- AtkHyperlink* -> Hyperlink
  * module aliases:
  * local aliases:
  */
@@ -56,6 +58,7 @@ private import gtkc.atk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import atk.Hyperlink;
 
 
 
@@ -147,10 +150,16 @@ public class Hypertext
 	 * linkIndex =  an integer specifying the desired link
 	 * Returns: the link in this hypertext document atindex link_index
 	 */
-	public AtkHyperlink* _GetLink(int linkIndex)
+	public Hyperlink _GetLink(int linkIndex)
 	{
 		// AtkHyperlink* atk_hypertext_get_link (AtkHypertext *hypertext,  gint link_index);
-		return atk_hypertext_get_link(atkHypertext, linkIndex);
+		auto p = atk_hypertext_get_link(atkHypertext, linkIndex);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Hyperlink(cast(AtkHyperlink*) p);
 	}
 	
 	/**

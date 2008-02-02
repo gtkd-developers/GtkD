@@ -42,8 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- atk.ObjectAtk
  * 	- gobject.ObjectG
  * structWrap:
+ * 	- AtkObject* -> ObjectAtk
  * 	- GObject* -> ObjectG
  * module aliases:
  * local aliases:
@@ -56,6 +58,7 @@ public  import gtkc.atktypes;
 private import gtkc.atk;
 
 
+private import atk.ObjectAtk;
 private import gobject.ObjectG;
 
 
@@ -112,9 +115,15 @@ public class NoOpObject : ObjectAtk
 	 * obj =  a GObject
 	 * Returns: a default (non-functioning stub) AtkObject
 	 */
-	public static AtkObject* newNoOpObject(ObjectG obj)
+	public static ObjectAtk newNoOpObject(ObjectG obj)
 	{
 		// AtkObject* atk_no_op_object_new (GObject *obj);
-		return atk_no_op_object_new((obj is null) ? null : obj.getObjectGStruct());
+		auto p = atk_no_op_object_new((obj is null) ? null : obj.getObjectGStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 }
