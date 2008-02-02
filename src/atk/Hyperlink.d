@@ -36,7 +36,7 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- atk_hyperlink
+ * 	- atk_hyperlink_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -152,7 +152,7 @@ public class Hyperlink : ObjectG
 	 * i =  a (zero-index) integer specifying the desired anchor
 	 * Returns: a string specifying the URI
 	 */
-	public char[] _GetUri(int i)
+	public char[] getUri(int i)
 	{
 		// gchar* atk_hyperlink_get_uri (AtkHyperlink *link_,  gint i);
 		return Str.toString(atk_hyperlink_get_uri(atkHyperlink, i)).dup;
@@ -168,7 +168,7 @@ public class Hyperlink : ObjectG
 	 * i =  a (zero-index) integer specifying the desired anchor
 	 * Returns: an AtkObject associated with this hyperlinks i-th anchor
 	 */
-	public ObjectAtk _GetObject(int i)
+	public ObjectAtk getObject(int i)
 	{
 		// AtkObject* atk_hyperlink_get_object (AtkHyperlink *link_,  gint i);
 		auto p = atk_hyperlink_get_object(atkHyperlink, i);
@@ -184,7 +184,7 @@ public class Hyperlink : ObjectG
 	 * Gets the index with the hypertext document at which this link ends.
 	 * Returns: the index with the hypertext document at which this link ends
 	 */
-	public int _GetEndIndex()
+	public int getEndIndex()
 	{
 		// gint atk_hyperlink_get_end_index (AtkHyperlink *link_);
 		return atk_hyperlink_get_end_index(atkHyperlink);
@@ -194,7 +194,7 @@ public class Hyperlink : ObjectG
 	 * Gets the index with the hypertext document at which this link begins.
 	 * Returns: the index with the hypertext document at which this link begins
 	 */
-	public int _GetStartIndex()
+	public int getStartIndex()
 	{
 		// gint atk_hyperlink_get_start_index (AtkHyperlink *link_);
 		return atk_hyperlink_get_start_index(atkHyperlink);
@@ -206,7 +206,7 @@ public class Hyperlink : ObjectG
 	 * respect to the document it references) and FALSE otherwise.
 	 * Returns: whether or not this link is still valid
 	 */
-	public int _IsValid()
+	public int isValid()
 	{
 		// gboolean atk_hyperlink_is_valid (AtkHyperlink *link_);
 		return atk_hyperlink_is_valid(atkHyperlink);
@@ -220,7 +220,7 @@ public class Hyperlink : ObjectG
 	 * a *
 	 * Returns: whether or not this link displays its content inline.
 	 */
-	public int _IsInline()
+	public int isInline()
 	{
 		// gboolean atk_hyperlink_is_inline (AtkHyperlink *link_);
 		return atk_hyperlink_is_inline(atkHyperlink);
@@ -230,7 +230,7 @@ public class Hyperlink : ObjectG
 	 * Gets the number of anchors associated with this hyperlink.
 	 * Returns: the number of anchors associated with this hyperlink
 	 */
-	public int _GetNAnchors()
+	public int getNAnchors()
 	{
 		// gint atk_hyperlink_get_n_anchors (AtkHyperlink *link_);
 		return atk_hyperlink_get_n_anchors(atkHyperlink);
@@ -240,7 +240,7 @@ public class Hyperlink : ObjectG
 	 * Determines whether this AtkHyperlink is selected
 	 * Returns:Returns: True is the AtkHyperlink is selected, False otherwiseSince ATK 1.4@Deprecated: This method is deprecated since ATK version 1.8.Please use ATK_STATE_SELECTED to indicate when a hyperlink within aHypertext container is selected.
 	 */
-	public int _IsSelectedLink()
+	public int isSelectedLink()
 	{
 		// gboolean atk_hyperlink_is_selected_link (AtkHyperlink *link_);
 		return atk_hyperlink_is_selected_link(atkHyperlink);

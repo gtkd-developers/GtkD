@@ -36,7 +36,7 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- atk_hypertext
+ * 	- atk_hypertext_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -150,7 +150,7 @@ public class Hypertext
 	 * linkIndex =  an integer specifying the desired link
 	 * Returns: the link in this hypertext document atindex link_index
 	 */
-	public Hyperlink _GetLink(int linkIndex)
+	public Hyperlink getLink(int linkIndex)
 	{
 		// AtkHyperlink* atk_hypertext_get_link (AtkHypertext *hypertext,  gint link_index);
 		auto p = atk_hypertext_get_link(atkHypertext, linkIndex);
@@ -166,7 +166,7 @@ public class Hypertext
 	 * Gets the number of links within this hypertext document.
 	 * Returns: the number of links within this hypertext document
 	 */
-	public int _GetNLinks()
+	public int getNLinks()
 	{
 		// gint atk_hypertext_get_n_links (AtkHypertext *hypertext);
 		return atk_hypertext_get_n_links(atkHypertext);
@@ -179,7 +179,7 @@ public class Hypertext
 	 * charIndex =  a character index
 	 * Returns: an index into the array of hyperlinks in hypertext,or -1 if there is no hyperlink associated with this character.Signal DetailsThe "link-selected" signalvoid user_function (AtkHypertext *atkhypertext, gint arg1, gpointer user_data) : Run LastThe "link-selected" signal is emitted by an AtkHyperText object when one ofthe hyperlinks associated with the object is selected.
 	 */
-	public int _GetLinkIndex(int charIndex)
+	public int getLinkIndex(int charIndex)
 	{
 		// gint atk_hypertext_get_link_index (AtkHypertext *hypertext,  gint char_index);
 		return atk_hypertext_get_link_index(atkHypertext, charIndex);

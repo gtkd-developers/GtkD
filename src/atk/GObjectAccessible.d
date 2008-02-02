@@ -36,7 +36,7 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- atk_gobject_accessible
+ * 	- atk_gobject_accessible_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -115,7 +115,7 @@ public class GObjectAccessible : ObjectAtk
 	 * obj =  a GObject
 	 * Returns: a AtkObject which is the accessible object for the obj
 	 */
-	public static ObjectAtk _ForObject(ObjectG obj)
+	public static ObjectAtk forObject(ObjectG obj)
 	{
 		// AtkObject* atk_gobject_accessible_for_object (GObject *obj);
 		auto p = atk_gobject_accessible_for_object((obj is null) ? null : obj.getObjectGStruct());
@@ -131,7 +131,7 @@ public class GObjectAccessible : ObjectAtk
 	 * Gets the GObject for which obj is the accessible object.
 	 * Returns: a GObject which is the object for which obj is the accessible objedct
 	 */
-	public ObjectG _GetObject()
+	public ObjectG getObject()
 	{
 		// GObject* atk_gobject_accessible_get_object (AtkGObjectAccessible *obj);
 		auto p = atk_gobject_accessible_get_object(atkGObjectAccessible);

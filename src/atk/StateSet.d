@@ -44,6 +44,7 @@
  * imports:
  * 	- glib.Str
  * structWrap:
+ * 	- AtkStateSet* -> StateSet
  * module aliases:
  * local aliases:
  */
@@ -206,10 +207,16 @@ public class StateSet
 	 * compareSet =  another AtkStateSet
 	 * Returns: a new AtkStateSet which is the intersection of the two sets.
 	 */
-	public AtkStateSet* andSets(AtkStateSet* compareSet)
+	public StateSet andSets(StateSet compareSet)
 	{
 		// AtkStateSet* atk_state_set_and_sets (AtkStateSet *set,  AtkStateSet *compare_set);
-		return atk_state_set_and_sets(atkStateSet, compareSet);
+		auto p = atk_state_set_and_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new StateSet(cast(AtkStateSet*) p);
 	}
 	
 	/**
@@ -218,10 +225,16 @@ public class StateSet
 	 * compareSet =  another AtkStateSet
 	 * Returns: a new AtkStateSet which is the union of the two sets,returning NULL is empty.
 	 */
-	public AtkStateSet* orSets(AtkStateSet* compareSet)
+	public StateSet orSets(StateSet compareSet)
 	{
 		// AtkStateSet* atk_state_set_or_sets (AtkStateSet *set,  AtkStateSet *compare_set);
-		return atk_state_set_or_sets(atkStateSet, compareSet);
+		auto p = atk_state_set_or_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new StateSet(cast(AtkStateSet*) p);
 	}
 	
 	/**
@@ -232,9 +245,15 @@ public class StateSet
 	 * compareSet =  another AtkStateSet
 	 * Returns: a new AtkStateSet which contains the states which are in exactly one of the two sets.
 	 */
-	public AtkStateSet* xorSets(AtkStateSet* compareSet)
+	public StateSet xorSets(StateSet compareSet)
 	{
 		// AtkStateSet* atk_state_set_xor_sets (AtkStateSet *set,  AtkStateSet *compare_set);
-		return atk_state_set_xor_sets(atkStateSet, compareSet);
+		auto p = atk_state_set_xor_sets(atkStateSet, (compareSet is null) ? null : compareSet.getStateSetStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new StateSet(cast(AtkStateSet*) p);
 	}
 }

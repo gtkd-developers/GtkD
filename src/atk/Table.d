@@ -42,8 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- atk.ObjectAtk
  * 	- glib.Str
  * structWrap:
+ * 	- AtkObject* -> ObjectAtk
  * module aliases:
  * local aliases:
  */
@@ -57,6 +59,7 @@ private import gtkc.atk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import atk.ObjectAtk;
 private import glib.Str;
 
 
@@ -351,10 +354,16 @@ public class Table
 	 * column =  a gint representing a column in table
 	 * Returns: a AtkObject* representing the referred to accessible
 	 */
-	public AtkObject* refAt(int row, int column)
+	public ObjectAtk refAt(int row, int column)
 	{
 		// AtkObject* atk_table_ref_at (AtkTable *table,  gint row,  gint column);
-		return atk_table_ref_at(atkTable, row, column);
+		auto p = atk_table_ref_at(atkTable, row, column);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -446,10 +455,16 @@ public class Table
 	 * Gets the caption for the table.
 	 * Returns: a AtkObject* representing the table caption, or NULLif value does not implement this interface.
 	 */
-	public AtkObject* getCaption()
+	public ObjectAtk getCaption()
 	{
 		// AtkObject* atk_table_get_caption (AtkTable *table);
-		return atk_table_get_caption(atkTable);
+		auto p = atk_table_get_caption(atkTable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -482,10 +497,16 @@ public class Table
 	 * column =  a gint representing a column in the table
 	 * Returns: a AtkObject* representing the specified column header, orNULL if value does not implement this interface.
 	 */
-	public AtkObject* getColumnHeader(int column)
+	public ObjectAtk getColumnHeader(int column)
 	{
 		// AtkObject* atk_table_get_column_header (AtkTable *table,  gint column);
-		return atk_table_get_column_header(atkTable, column);
+		auto p = atk_table_get_column_header(atkTable, column);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -494,20 +515,32 @@ public class Table
 	 * row =  a gint representing a row in the table
 	 * Returns: a AtkObject* representing the specified row header, orNULL if value does not implement this interface.
 	 */
-	public AtkObject* getRowHeader(int row)
+	public ObjectAtk getRowHeader(int row)
 	{
 		// AtkObject* atk_table_get_row_header (AtkTable *table,  gint row);
-		return atk_table_get_row_header(atkTable, row);
+		auto p = atk_table_get_row_header(atkTable, row);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
 	 * Gets the summary description of the table.
 	 * Returns: a AtkObject* representing a summary description of the table,or zero if value does not implement this interface.
 	 */
-	public AtkObject* getSummary()
+	public ObjectAtk getSummary()
 	{
 		// AtkObject* atk_table_get_summary (AtkTable *table);
-		return atk_table_get_summary(atkTable);
+		auto p = atk_table_get_summary(atkTable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -515,10 +548,10 @@ public class Table
 	 * Params:
 	 * caption =  a AtkObject representing the caption to set for table
 	 */
-	public void setCaption(AtkObject* caption)
+	public void setCaption(ObjectAtk caption)
 	{
 		// void atk_table_set_caption (AtkTable *table,  AtkObject *caption);
-		atk_table_set_caption(atkTable, caption);
+		atk_table_set_caption(atkTable, (caption is null) ? null : caption.getObjectAtkStruct());
 	}
 	
 	/**
@@ -553,10 +586,10 @@ public class Table
 	 * row =  a gint representing a row in table
 	 * header =  an AtkTable
 	 */
-	public void setRowHeader(int row, AtkObject* header)
+	public void setRowHeader(int row, ObjectAtk header)
 	{
 		// void atk_table_set_row_header (AtkTable *table,  gint row,  AtkObject *header);
-		atk_table_set_row_header(atkTable, row, header);
+		atk_table_set_row_header(atkTable, row, (header is null) ? null : header.getObjectAtkStruct());
 	}
 	
 	/**
@@ -565,10 +598,10 @@ public class Table
 	 * column =  a gint representing a column in table
 	 * header =  an AtkTable
 	 */
-	public void setColumnHeader(int column, AtkObject* header)
+	public void setColumnHeader(int column, ObjectAtk header)
 	{
 		// void atk_table_set_column_header (AtkTable *table,  gint column,  AtkObject *header);
-		atk_table_set_column_header(atkTable, column, header);
+		atk_table_set_column_header(atkTable, column, (header is null) ? null : header.getObjectAtkStruct());
 	}
 	
 	/**
@@ -577,10 +610,10 @@ public class Table
 	 * accessible =  an AtkObject representing the summary description
 	 * to set for table
 	 */
-	public void setSummary(AtkObject* accessible)
+	public void setSummary(ObjectAtk accessible)
 	{
 		// void atk_table_set_summary (AtkTable *table,  AtkObject *accessible);
-		atk_table_set_summary(atkTable, accessible);
+		atk_table_set_summary(atkTable, (accessible is null) ? null : accessible.getObjectAtkStruct());
 	}
 	
 	/**

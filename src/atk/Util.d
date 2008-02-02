@@ -42,8 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- atk.ObjectAtk
  * 	- glib.Str
  * structWrap:
+ * 	- AtkObject* -> ObjectAtk
  * module aliases:
  * local aliases:
  */
@@ -55,6 +57,7 @@ public  import gtkc.atktypes;
 private import gtkc.atk;
 
 
+private import atk.ObjectAtk;
 private import glib.Str;
 
 
@@ -118,10 +121,10 @@ public class Util
 	 * Params:
 	 * object =  an AtkObject
 	 */
-	public static void focusTrackerNotify(AtkObject* object)
+	public static void focusTrackerNotify(ObjectAtk object)
 	{
 		// void atk_focus_tracker_notify (AtkObject *object);
-		atk_focus_tracker_notify(object);
+		atk_focus_tracker_notify((object is null) ? null : object.getObjectAtkStruct());
 	}
 	
 	/**
@@ -180,20 +183,32 @@ public class Util
 	 * Gets the root accessible container for the current application.
 	 * Returns: the root accessible container for the current application
 	 */
-	public static AtkObject* getRoot()
+	public static ObjectAtk getRoot()
 	{
 		// AtkObject* atk_get_root (void);
-		return atk_get_root();
+		auto p = atk_get_root();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
 	 * Gets the currently focused object.
 	 * Returns:Returns: the currently focused object for the current applicationSince ATK 1.6
 	 */
-	public static AtkObject* getFocusObject()
+	public static ObjectAtk getFocusObject()
 	{
 		// AtkObject* atk_get_focus_object (void);
-		return atk_get_focus_object();
+		auto p = atk_get_focus_object();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

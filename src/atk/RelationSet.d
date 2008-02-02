@@ -42,8 +42,12 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- atk.ObjectAtk
+ * 	- atk.Relation
  * 	- glib.PtrArray
  * structWrap:
+ * 	- AtkObject* -> ObjectAtk
+ * 	- AtkRelation* -> Relation
  * 	- GPtrArray* -> PtrArray
  * module aliases:
  * local aliases:
@@ -56,6 +60,8 @@ public  import gtkc.atktypes;
 private import gtkc.atk;
 
 
+private import atk.ObjectAtk;
+private import atk.Relation;
 private import glib.PtrArray;
 
 
@@ -138,10 +144,10 @@ public class RelationSet : ObjectG
 	 * Params:
 	 * relation =  an AtkRelation
 	 */
-	public void atkRelationSetRemove(AtkRelation* relation)
+	public void atkRelationSetRemove(Relation relation)
 	{
 		// void atk_relation_set_remove (AtkRelationSet *set,  AtkRelation *relation);
-		atk_relation_set_remove(atkRelationSet, relation);
+		atk_relation_set_remove(atkRelationSet, (relation is null) ? null : relation.getRelationStruct());
 	}
 	
 	/**
@@ -153,10 +159,10 @@ public class RelationSet : ObjectG
 	 * Params:
 	 * relation =  an AtkRelation
 	 */
-	public void atkRelationSetAdd(AtkRelation* relation)
+	public void atkRelationSetAdd(Relation relation)
 	{
 		// void atk_relation_set_add (AtkRelationSet *set,  AtkRelation *relation);
-		atk_relation_set_add(atkRelationSet, relation);
+		atk_relation_set_add(atkRelationSet, (relation is null) ? null : relation.getRelationStruct());
 	}
 	
 	/**
@@ -175,10 +181,16 @@ public class RelationSet : ObjectG
 	 * i =  a gint representing a position in the set, starting from 0.
 	 * Returns: a AtkRelation, which is the relation at position i in the set.
 	 */
-	public AtkRelation* atkRelationSetGetRelation(int i)
+	public Relation atkRelationSetGetRelation(int i)
 	{
 		// AtkRelation* atk_relation_set_get_relation (AtkRelationSet *set,  gint i);
-		return atk_relation_set_get_relation(atkRelationSet, i);
+		auto p = atk_relation_set_get_relation(atkRelationSet, i);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Relation(cast(AtkRelation*) p);
 	}
 	
 	/**
@@ -187,10 +199,16 @@ public class RelationSet : ObjectG
 	 * relationship =  an AtkRelationType
 	 * Returns: an AtkRelation, which is a relation matching the specified type.
 	 */
-	public AtkRelation* atkRelationSetGetRelationByType(AtkRelationType relationship)
+	public Relation atkRelationSetGetRelationByType(AtkRelationType relationship)
 	{
 		// AtkRelation* atk_relation_set_get_relation_by_type  (AtkRelationSet *set,  AtkRelationType relationship);
-		return atk_relation_set_get_relation_by_type(atkRelationSet, relationship);
+		auto p = atk_relation_set_get_relation_by_type(atkRelationSet, relationship);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Relation(cast(AtkRelation*) p);
 	}
 	
 	/**
@@ -203,9 +221,9 @@ public class RelationSet : ObjectG
 	 * target =  an AtkObject
 	 * Since ATK 1.9
 	 */
-	public void atkRelationSetAddRelationByType(AtkRelationType relationship, AtkObject* target)
+	public void atkRelationSetAddRelationByType(AtkRelationType relationship, ObjectAtk target)
 	{
 		// void atk_relation_set_add_relation_by_type  (AtkRelationSet *set,  AtkRelationType relationship,  AtkObject *target);
-		atk_relation_set_add_relation_by_type(atkRelationSet, relationship, target);
+		atk_relation_set_add_relation_by_type(atkRelationSet, relationship, (target is null) ? null : target.getObjectAtkStruct());
 	}
 }

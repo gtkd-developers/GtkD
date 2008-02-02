@@ -91,14 +91,14 @@ outFile: Document
 file: AtkEditableText.html
 struct: AtkEditableText
 class: EditableText
-prefix: atk_editable_text
+prefix: atk_editable_text_
 import: glib.Str
 outFile: EditableText
 
 file: AtkGObjectAccessible.html
 struct: AtkGObjectAccessible
 class: GObjectAccessible
-prefix: atk_gobject_accessible
+prefix: atk_gobject_accessible_
 structWrap: AtkObject* ObjectAtk
 structWrap: GObject* ObjectG
 import: atk.ObjectAtk
@@ -108,7 +108,7 @@ outFile: GObjectAccessible
 file: AtkHyperlink.html
 struct: AtkHyperlink
 class: Hyperlink
-prefix: atk_hyperlink
+prefix: atk_hyperlink_
 structWrap: AtkObject* ObjectAtk
 import: atk.ObjectAtk
 import: glib.Str
@@ -123,7 +123,7 @@ outFile: Hyperlink
 file: AtkHypertext.html
 struct: AtkHypertext
 class: Hypertext
-prefix: atk_hypertext
+prefix: atk_hypertext_
 structWrap: AtkHyperlink* Hyperlink
 import: atk.Hyperlink
 outFile: Hypertext
@@ -148,7 +148,7 @@ outFile: NoOpObject
 file: AtkNoOpObjectFactory.html
 struct: AtkNoOpObjectFactory
 class: NoOpObjectFactory
-prefix: atk_no_op_object_factory
+prefix: atk_no_op_object_factory_
 outFile: NoOpObjectFactory
 
 file: AtkObject.html
@@ -157,9 +157,10 @@ class: ObjectAtk
 prefix: atk_object_
 prefix: atk_
 structWrap: AtkObject* ObjectAtk
-AtkRelationSet*
+structWrap: AtkRelationSet* RelationSet
 structWrap: AtkStateSet* StateSet
 import: atk.ObjectAtk
+import: atk.RelationSet
 import: atk.StateSet
 import: glib.Str
 outFile: ObjectAtk

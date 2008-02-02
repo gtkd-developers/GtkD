@@ -37,14 +37,19 @@
  * implements:
  * prefixes:
  * 	- atk_object_
+ * 	- atk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
+ * 	- atk.ObjectAtk
+ * 	- atk.RelationSet
  * 	- atk.StateSet
+ * 	- glib.Str
  * structWrap:
+ * 	- AtkObject* -> ObjectAtk
+ * 	- AtkRelationSet* -> RelationSet
  * 	- AtkStateSet* -> StateSet
  * module aliases:
  * local aliases:
@@ -59,8 +64,10 @@ private import gtkc.atk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
+private import atk.ObjectAtk;
+private import atk.RelationSet;
 private import atk.StateSet;
+private import glib.Str;
 
 
 
@@ -326,7 +333,7 @@ public class ObjectAtk : ObjectG
 	 * name =  a character string describing the new role.
 	 * Returns: an AtkRole for the new role.
 	 */
-	public static AtkRole atkRoleRegister(char[] name)
+	public static AtkRole roleRegister(char[] name)
 	{
 		// AtkRole atk_role_register (const gchar *name);
 		return atk_role_register(Str.toStringz(name));
@@ -340,10 +347,16 @@ public class ObjectAtk : ObjectG
 	 * if a non-null return value is required.
 	 * Returns: a reference to an object's AtkObject implementation
 	 */
-	public static AtkObject* atkImplementorRefAccessible(AtkImplementor* implementor)
+	public static ObjectAtk implementorRefAccessible(AtkImplementor* implementor)
 	{
 		// AtkObject* atk_implementor_ref_accessible (AtkImplementor *implementor);
-		return atk_implementor_ref_accessible(implementor);
+		auto p = atk_implementor_ref_accessible(implementor);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -370,10 +383,16 @@ public class ObjectAtk : ObjectG
 	 * Gets the accessible parent of the accessible.
 	 * Returns: a AtkObject representing the accessible parent of the accessible
 	 */
-	public AtkObject* getParent()
+	public ObjectAtk getParent()
 	{
 		// AtkObject* atk_object_get_parent (AtkObject *accessible);
-		return atk_object_get_parent(atkObject);
+		auto p = atk_object_get_parent(atkObject);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
@@ -394,20 +413,32 @@ public class ObjectAtk : ObjectG
 	 * i =  a gint representing the position of the child, starting from 0
 	 * Returns: an AtkObject representing the specified accessible childof the accessible.
 	 */
-	public AtkObject* refAccessibleChild(int i)
+	public ObjectAtk refAccessibleChild(int i)
 	{
 		// AtkObject* atk_object_ref_accessible_child (AtkObject *accessible,  gint i);
-		return atk_object_ref_accessible_child(atkObject, i);
+		auto p = atk_object_ref_accessible_child(atkObject, i);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**
 	 * Gets the AtkRelationSet associated with the object.
 	 * Returns: an AtkRelationSet representing the relation set of the object.
 	 */
-	public AtkRelationSet* refRelationSet()
+	public RelationSet refRelationSet()
 	{
 		// AtkRelationSet* atk_object_ref_relation_set (AtkObject *accessible);
-		return atk_object_ref_relation_set(atkObject);
+		auto p = atk_object_ref_relation_set(atkObject);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RelationSet(cast(AtkRelationSet*) p);
 	}
 	
 	/**
@@ -500,10 +531,10 @@ public class ObjectAtk : ObjectG
 	 * Params:
 	 * parent =  an AtkObject to be set as the accessible parent
 	 */
-	public void setParent(AtkObject* parent)
+	public void setParent(ObjectAtk parent)
 	{
 		// void atk_object_set_parent (AtkObject *accessible,  AtkObject *parent);
-		atk_object_set_parent(atkObject, parent);
+		atk_object_set_parent(atkObject, (parent is null) ? null : parent.getObjectAtkStruct());
 	}
 	
 	/**
@@ -573,10 +604,10 @@ public class ObjectAtk : ObjectG
 	 * target =  The AtkObject which is to be the target of the relation.
 	 * Returns:TRUE if the relationship is added.
 	 */
-	public int addRelationship(AtkRelationType relationship, AtkObject* target)
+	public int addRelationship(AtkRelationType relationship, ObjectAtk target)
 	{
 		// gboolean atk_object_add_relationship (AtkObject *object,  AtkRelationType relationship,  AtkObject *target);
-		return atk_object_add_relationship(atkObject, relationship, target);
+		return atk_object_add_relationship(atkObject, relationship, (target is null) ? null : target.getObjectAtkStruct());
 	}
 	
 	/**
@@ -586,10 +617,10 @@ public class ObjectAtk : ObjectG
 	 * target =  The AtkObject which is the target of the relation to be removed.
 	 * Returns:TRUE if the relationship is removed.
 	 */
-	public int removeRelationship(AtkRelationType relationship, AtkObject* target)
+	public int removeRelationship(AtkRelationType relationship, ObjectAtk target)
 	{
 		// gboolean atk_object_remove_relationship (AtkObject *object,  AtkRelationType relationship,  AtkObject *target);
-		return atk_object_remove_relationship(atkObject, relationship, target);
+		return atk_object_remove_relationship(atkObject, relationship, (target is null) ? null : target.getObjectAtkStruct());
 	}
 	
 	/**
@@ -611,7 +642,7 @@ public class ObjectAtk : ObjectG
 	 * role =  The AtkRole whose name is required
 	 * Returns: the string describing the AtkRole
 	 */
-	public static char[] atkRoleGetName(AtkRole role)
+	public static char[] roleGetName(AtkRole role)
 	{
 		// const gchar* atk_role_get_name (AtkRole role);
 		return Str.toString(atk_role_get_name(role)).dup;
@@ -623,7 +654,7 @@ public class ObjectAtk : ObjectG
 	 * role =  The AtkRole whose localized name is required
 	 * Returns: the localized string describing the AtkRole
 	 */
-	public static char[] atkRoleGetLocalizedName(AtkRole role)
+	public static char[] roleGetLocalizedName(AtkRole role)
 	{
 		// const gchar* atk_role_get_localized_name (AtkRole role);
 		return Str.toString(atk_role_get_localized_name(role)).dup;
@@ -635,7 +666,7 @@ public class ObjectAtk : ObjectG
 	 * name =  a string which is the (non-localized) name of an ATK role.
 	 * Returns: the AtkRole enumerated type corresponding to the specifiedname, or ATK_ROLE_INVALID if no matching role is found.
 	 */
-	public static AtkRole atkRoleForName(char[] name)
+	public static AtkRole roleForName(char[] name)
 	{
 		// AtkRole atk_role_for_name (const gchar *name);
 		return atk_role_for_name(Str.toStringz(name));

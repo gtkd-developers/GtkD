@@ -42,8 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- atk.ObjectAtk
  * 	- gobject.ObjectG
  * structWrap:
+ * 	- AtkObject* -> ObjectAtk
  * 	- GObject* -> ObjectG
  * module aliases:
  * local aliases:
@@ -56,6 +58,7 @@ public  import gtkc.atktypes;
 private import gtkc.atk;
 
 
+private import atk.ObjectAtk;
 private import gobject.ObjectG;
 
 
@@ -114,10 +117,16 @@ public class ObjectFactory : ObjectG
 	 * obj =  a GObject
 	 * Returns: an AtkObject that implements an accessibility interfaceon behalf of obj
 	 */
-	public AtkObject* createAccessible(ObjectG obj)
+	public ObjectAtk createAccessible(ObjectG obj)
 	{
 		// AtkObject* atk_object_factory_create_accessible  (AtkObjectFactory *factory,  GObject *obj);
-		return atk_object_factory_create_accessible(atkObjectFactory, (obj is null) ? null : obj.getObjectGStruct());
+		auto p = atk_object_factory_create_accessible(atkObjectFactory, (obj is null) ? null : obj.getObjectGStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

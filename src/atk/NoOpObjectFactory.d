@@ -36,7 +36,7 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- atk_no_op_object_factory
+ * 	- atk_no_op_object_factory_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -107,7 +107,7 @@ public class NoOpObjectFactory : ObjectFactory
 	 * (non-functioning) AtkObjects.
 	 * Returns: an instance of an AtkObjectFactory
 	 */
-	public static AtkObjectFactory* _New()
+	public static AtkObjectFactory* newNoOpObjectFactory()
 	{
 		// AtkObjectFactory* atk_no_op_object_factory_new (void);
 		return atk_no_op_object_factory_new();

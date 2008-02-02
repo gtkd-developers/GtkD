@@ -42,9 +42,11 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- atk.ObjectAtk
  * 	- glib.PtrArray
  * 	- glib.Str
  * structWrap:
+ * 	- AtkObject* -> ObjectAtk
  * 	- GPtrArray* -> PtrArray
  * module aliases:
  * local aliases:
@@ -57,6 +59,7 @@ public  import gtkc.atktypes;
 private import gtkc.atk;
 
 
+private import atk.ObjectAtk;
 private import glib.PtrArray;
 private import glib.Str;
 
@@ -198,9 +201,9 @@ public class Relation : ObjectG
 	 * target =  an AtkObject
 	 * Since ATK 1.9
 	 */
-	public void addTarget(AtkObject* target)
+	public void addTarget(ObjectAtk target)
 	{
 		// void atk_relation_add_target (AtkRelation *relation,  AtkObject *target);
-		atk_relation_add_target(atkRelation, target);
+		atk_relation_add_target(atkRelation, (target is null) ? null : target.getObjectAtkStruct());
 	}
 }

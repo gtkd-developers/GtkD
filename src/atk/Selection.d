@@ -42,7 +42,9 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- atk.ObjectAtk
  * structWrap:
+ * 	- AtkObject* -> ObjectAtk
  * module aliases:
  * local aliases:
  */
@@ -56,6 +58,7 @@ private import gtkc.atk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import atk.ObjectAtk;
 
 
 
@@ -179,10 +182,16 @@ public class Selection
 	 * ith selection as opposed to the ith child).
 	 * Returns: an AtkObject representing the selected accessible , or NULLif selection does not implement this interface.
 	 */
-	public AtkObject* refSelection(int i)
+	public ObjectAtk refSelection(int i)
 	{
 		// AtkObject* atk_selection_ref_selection (AtkSelection *selection,  gint i);
-		return atk_selection_ref_selection(atkSelection, i);
+		auto p = atk_selection_ref_selection(atkSelection, i);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ObjectAtk(cast(AtkObject*) p);
 	}
 	
 	/**

@@ -36,7 +36,7 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- atk_editable_text
+ * 	- atk_editable_text_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -115,7 +115,7 @@ public class EditableText
 	 * endOffset =  end of range in which to set attributes
 	 * Returns: TRUE if attributes successfully set for the specifiedrange, otherwise FALSE
 	 */
-	public int _SetRunAttributes(AtkAttributeSet* attribSet, int startOffset, int endOffset)
+	public int setRunAttributes(AtkAttributeSet* attribSet, int startOffset, int endOffset)
 	{
 		// gboolean atk_editable_text_set_run_attributes  (AtkEditableText *text,  AtkAttributeSet *attrib_set,  gint start_offset,  gint end_offset);
 		return atk_editable_text_set_run_attributes(atkEditableText, attribSet, startOffset, endOffset);
@@ -126,7 +126,7 @@ public class EditableText
 	 * Params:
 	 * string =  string to set for text contents of text
 	 */
-	public void _SetTextContents(char[] string)
+	public void setTextContents(char[] string)
 	{
 		// void atk_editable_text_set_text_contents (AtkEditableText *text,  const gchar *string);
 		atk_editable_text_set_text_contents(atkEditableText, Str.toStringz(string));
@@ -141,7 +141,7 @@ public class EditableText
 	 * the position at which to insert the text. After the call it
 	 * points at the position after the newly inserted text.
 	 */
-	public void _InsertText(char[] string, int length, int* position)
+	public void insertText(char[] string, int length, int* position)
 	{
 		// void atk_editable_text_insert_text (AtkEditableText *text,  const gchar *string,  gint length,  gint *position);
 		atk_editable_text_insert_text(atkEditableText, Str.toStringz(string), length, position);
@@ -154,7 +154,7 @@ public class EditableText
 	 * startPos =  start position
 	 * endPos =  end position
 	 */
-	public void _CopyText(int startPos, int endPos)
+	public void copyText(int startPos, int endPos)
 	{
 		// void atk_editable_text_copy_text (AtkEditableText *text,  gint start_pos,  gint end_pos);
 		atk_editable_text_copy_text(atkEditableText, startPos, endPos);
@@ -167,7 +167,7 @@ public class EditableText
 	 * startPos =  start position
 	 * endPos =  end position
 	 */
-	public void _CutText(int startPos, int endPos)
+	public void cutText(int startPos, int endPos)
 	{
 		// void atk_editable_text_cut_text (AtkEditableText *text,  gint start_pos,  gint end_pos);
 		atk_editable_text_cut_text(atkEditableText, startPos, endPos);
@@ -179,7 +179,7 @@ public class EditableText
 	 * startPos =  start position
 	 * endPos =  end position
 	 */
-	public void _DeleteText(int startPos, int endPos)
+	public void deleteText(int startPos, int endPos)
 	{
 		// void atk_editable_text_delete_text (AtkEditableText *text,  gint start_pos,  gint end_pos);
 		atk_editable_text_delete_text(atkEditableText, startPos, endPos);
@@ -190,7 +190,7 @@ public class EditableText
 	 * Params:
 	 * position =  position to paste
 	 */
-	public void _PasteText(int position)
+	public void pasteText(int position)
 	{
 		// void atk_editable_text_paste_text (AtkEditableText *text,  gint position);
 		atk_editable_text_paste_text(atkEditableText, position);
