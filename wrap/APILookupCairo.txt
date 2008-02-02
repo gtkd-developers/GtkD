@@ -81,8 +81,16 @@ file: cairo-cairo-t.html
 struct: cairo_t
 class: Context
 prefix: cairo_
-structWrap: cairo_surface_t* Surface
 structWrap: cairo_t* Context
+structWrap: cairo_font_face_t* FontFace
+structWrap: cairo_font_options_t* FontOption
+structWrap: cairo_matrix_t* Matrix
+structWrap: cairo_scaled_font_t* ScaledFont
+structWrap: cairo_surface_t* Surface
+import: cairo.FontFace
+import: cairo.FontOption
+import: cairo.Matrix
+import: cairo.ScaledFont
 import: cairo.Surface
 import: glib.Str
 import: gdk.Region
@@ -198,6 +206,11 @@ file: cairo-Patterns.html
 struct: cairo_pattern_t
 class: Pattern
 prefix: cairo_pattern_
+structWrap: cairo_matrix_t* Matrix
+structWrap: cairo_pattern_t* Pattern
+structWrap: cairo_surface_t* Surface
+import: cairo.Matrix
+import: cairo.Surface
 outFile: Pattern
 
 ###########################################################
@@ -208,26 +221,28 @@ file: cairo-cairo-font-face-t.html
 struct: cairo_font_face_t
 class: FontFace
 prefix: cairo_font_face_
+structWrap: cairo_font_face_t* FontFace
 outFile: FontFace
 
 file: cairo-Scaled-Fonts.html
 struct: cairo_scaled_font_t
 class: ScaledFont
 prefix: cairo_scaled_font_
-import: glib.Str
+structWrap: cairo_font_face_t* FontFace
+structWrap: cairo_font_options_t* FontOption
+structWrap: cairo_matrix_t* Matrix
 structWrap: cairo_scaled_font_t* ScaledFont
 import: cairo.FontFace
-structWrap: cairo_font_face_t* FontFace
-import: cairo.Matrix
-structWrap: cairo_matrix_t* Matrix
 import: cairo.FontOption
-structWrap: cairo_font_options_t* FontOption
+import: cairo.Matrix
+import: glib.Str
 outFile: ScaledFont
 
 file: cairo-Font-Options.html
 struct: cairo_font_options_t
 class: FontOption
 prefix: cairo_font_options_
+structWrap: cairo_font_options_t* FontOption
 outFile: FontOption
 
 #file: cairo-FreeType-Fonts.html
@@ -251,6 +266,7 @@ struct: cairo_surface_t
 class: Surface
 prefix: cairo_surface_
 prefix: cairo_
+structWrap: cairo_surface_t* Surface
 import: glib.Str
 openFile: Surface
 
@@ -282,15 +298,16 @@ closeFile: Surface
 file: cairo-cairo-matrix-t.html
 struct: cairo_matrix_t
 class: Matrix
-structWrap: surfaceT* Surface
+structWrap: cairo_matrix_t* Matrix
 prefix: cairo_matrix_
 import: glib.Str
 outFile: Matrix
 
 file: cairo-Error-Handling.html
-struct: cairo_status_t
+#struct: cairo_status_t
 class: Status
 prefix: cairo_status_t
+prefix: cairo_
 import: glib.Str
 outFile: Status
 

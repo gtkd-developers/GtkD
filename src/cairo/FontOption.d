@@ -43,6 +43,7 @@
  * omit signals:
  * imports:
  * structWrap:
+ * 	- cairo_font_options_t* -> FontOption
  * module aliases:
  * local aliases:
  */
@@ -102,10 +103,16 @@ public class FontOption
 	 *  to default values.
 	 * Returns: a newly allocated cairo_font_options_t. Free with cairo_font_options_destroy(). This function always returns a valid pointer; if memory cannot be allocated, then a special error object is returned where all operations on the object do nothing. You can check for this with cairo_font_options_status().
 	 */
-	public static cairo_font_options_t* create()
+	public static FontOption create()
 	{
 		// cairo_font_options_t* cairo_font_options_create (void);
-		return cairo_font_options_create();
+		auto p = cairo_font_options_create();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new FontOption(cast(cairo_font_options_t*) p);
 	}
 	
 	/**
@@ -113,10 +120,16 @@ public class FontOption
 	 *  original.
 	 * Returns: a newly allocated cairo_font_options_t. Free with cairo_font_options_destroy(). This function always returns a valid pointer; if memory cannot be allocated, then a special error object is returned where all operations on the object do nothing. You can check for this with cairo_font_options_status().
 	 */
-	public cairo_font_options_t* copy()
+	public FontOption copy()
 	{
 		// cairo_font_options_t* cairo_font_options_copy (const cairo_font_options_t *original);
-		return cairo_font_options_copy(cairo_font_options);
+		auto p = cairo_font_options_copy(cairo_font_options);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new FontOption(cast(cairo_font_options_t*) p);
 	}
 	
 	/**
@@ -146,13 +159,12 @@ public class FontOption
 	 * similar to compositing other onto options with the operation
 	 * of CAIRO_OPERATION_OVER.
 	 * Params:
-	 * options =  a cairo_font_options_t
 	 * other =  another cairo_font_options_t
 	 */
-	public void merge(cairo_font_options_t* other)
+	public void merge(FontOption other)
 	{
 		// void cairo_font_options_merge (cairo_font_options_t *options,  const cairo_font_options_t *other);
-		cairo_font_options_merge(cairo_font_options, other);
+		cairo_font_options_merge(cairo_font_options, (other is null) ? null : other.getFontOptionStruct());
 	}
 	
 	/**
@@ -170,14 +182,13 @@ public class FontOption
 	/**
 	 * Compares two font options objects for equality.
 	 * Params:
-	 * options =  a cairo_font_options_t
 	 * other =  another cairo_font_options_t
 	 * Returns: TRUE if all fields of the two font options objects match
 	 */
-	public cairo_bool_t equal(cairo_font_options_t* other)
+	public cairo_bool_t equal(FontOption other)
 	{
 		// cairo_bool_t cairo_font_options_equal (const cairo_font_options_t *options,  const cairo_font_options_t *other);
-		return cairo_font_options_equal(cairo_font_options, other);
+		return cairo_font_options_equal(cairo_font_options, (other is null) ? null : other.getFontOptionStruct());
 	}
 	
 	/**

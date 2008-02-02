@@ -44,7 +44,7 @@
  * imports:
  * 	- glib.Str
  * structWrap:
- * 	- surfaceT* -> Surface
+ * 	- cairo_matrix_t* -> Matrix
  * module aliases:
  * local aliases:
  */
@@ -249,10 +249,10 @@ public class Matrix
 	 * a =  a cairo_matrix_t
 	 * b =  a cairo_matrix_t
 	 */
-	public void multiply(cairo_matrix_t* a, cairo_matrix_t* b)
+	public void multiply(Matrix a, Matrix b)
 	{
 		// void cairo_matrix_multiply (cairo_matrix_t *result,  const cairo_matrix_t *a,  const cairo_matrix_t *b);
-		cairo_matrix_multiply(cairo_matrix, a, b);
+		cairo_matrix_multiply(cairo_matrix, (a is null) ? null : a.getMatrixStruct(), (b is null) ? null : b.getMatrixStruct());
 	}
 	
 	/**

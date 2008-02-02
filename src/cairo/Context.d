@@ -42,6 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- cairo.FontFace
+ * 	- cairo.FontOption
+ * 	- cairo.Matrix
+ * 	- cairo.ScaledFont
  * 	- cairo.Surface
  * 	- glib.Str
  * 	- gdk.Region
@@ -52,6 +56,10 @@
  * 	- gtkc.gdk
  * 	- gdk.Drawable
  * structWrap:
+ * 	- cairo_font_face_t* -> FontFace
+ * 	- cairo_font_options_t* -> FontOption
+ * 	- cairo_matrix_t* -> Matrix
+ * 	- cairo_scaled_font_t* -> ScaledFont
  * 	- cairo_surface_t* -> Surface
  * 	- cairo_t* -> Context
  * module aliases:
@@ -65,6 +73,10 @@ public  import gtkc.cairotypes;
 private import gtkc.cairo;
 
 
+private import cairo.FontFace;
+private import cairo.FontOption;
+private import cairo.Matrix;
+private import cairo.ScaledFont;
 private import cairo.Surface;
 private import glib.Str;
 private import gdk.Region;
@@ -1603,10 +1615,10 @@ public class Context
 	 * Params:
 	 * matrix =  a transformation to be applied to the user-space axes
 	 */
-	public void transform(cairo_matrix_t* matrix)
+	public void transform(Matrix matrix)
 	{
 		// void cairo_transform (cairo_t *cr,  const cairo_matrix_t *matrix);
-		cairo_transform(cairo, matrix);
+		cairo_transform(cairo, (matrix is null) ? null : matrix.getMatrixStruct());
 	}
 	
 	/**
@@ -1615,10 +1627,10 @@ public class Context
 	 * Params:
 	 * matrix =  a transformation matrix from user space to device space
 	 */
-	public void setMatrix(cairo_matrix_t* matrix)
+	public void setMatrix(Matrix matrix)
 	{
 		// void cairo_set_matrix (cairo_t *cr,  const cairo_matrix_t *matrix);
-		cairo_set_matrix(cairo, matrix);
+		cairo_set_matrix(cairo, (matrix is null) ? null : matrix.getMatrixStruct());
 	}
 	
 	/**
@@ -1626,10 +1638,10 @@ public class Context
 	 * Params:
 	 * matrix =  return value for the matrix
 	 */
-	public void getMatrix(cairo_matrix_t* matrix)
+	public void getMatrix(Matrix matrix)
 	{
 		// void cairo_get_matrix (cairo_t *cr,  cairo_matrix_t *matrix);
-		cairo_get_matrix(cairo, matrix);
+		cairo_get_matrix(cairo, (matrix is null) ? null : matrix.getMatrixStruct());
 	}
 	
 	/**
@@ -1747,10 +1759,10 @@ public class Context
 	 * matrix =  a cairo_matrix_t describing a transform to be applied to
 	 * the current font.
 	 */
-	public void setFontMatrix(cairo_matrix_t* matrix)
+	public void setFontMatrix(Matrix matrix)
 	{
 		// void cairo_set_font_matrix (cairo_t *cr,  const cairo_matrix_t *matrix);
-		cairo_set_font_matrix(cairo, matrix);
+		cairo_set_font_matrix(cairo, (matrix is null) ? null : matrix.getMatrixStruct());
 	}
 	
 	/**
@@ -1759,10 +1771,10 @@ public class Context
 	 * Params:
 	 * matrix =  return value for the matrix
 	 */
-	public void getFontMatrix(cairo_matrix_t* matrix)
+	public void getFontMatrix(Matrix matrix)
 	{
 		// void cairo_get_font_matrix (cairo_t *cr,  cairo_matrix_t *matrix);
-		cairo_get_font_matrix(cairo, matrix);
+		cairo_get_font_matrix(cairo, (matrix is null) ? null : matrix.getMatrixStruct());
 	}
 	
 	/**
@@ -1774,10 +1786,10 @@ public class Context
 	 * Params:
 	 * options =  font options to use
 	 */
-	public void setFontOptions(cairo_font_options_t* options)
+	public void setFontOptions(FontOption options)
 	{
 		// void cairo_set_font_options (cairo_t *cr,  const cairo_font_options_t *options);
-		cairo_set_font_options(cairo, options);
+		cairo_set_font_options(cairo, (options is null) ? null : options.getFontOptionStruct());
 	}
 	
 	/**
@@ -1789,10 +1801,10 @@ public class Context
 	 * options =  a cairo_font_options_t object into which to store
 	 *  the retrieved options. All existing values are overwritten
 	 */
-	public void getFontOptions(cairo_font_options_t* options)
+	public void getFontOptions(FontOption options)
 	{
 		// void cairo_get_font_options (cairo_t *cr,  cairo_font_options_t *options);
-		cairo_get_font_options(cairo, options);
+		cairo_get_font_options(cairo, (options is null) ? null : options.getFontOptionStruct());
 	}
 	
 	/**
@@ -1802,20 +1814,26 @@ public class Context
 	 * Params:
 	 * fontFace =  a cairo_font_face_t, or NULL to restore to the default font
 	 */
-	public void setFontFace(cairo_font_face_t* fontFace)
+	public void setFontFace(FontFace fontFace)
 	{
 		// void cairo_set_font_face (cairo_t *cr,  cairo_font_face_t *font_face);
-		cairo_set_font_face(cairo, fontFace);
+		cairo_set_font_face(cairo, (fontFace is null) ? null : fontFace.getFontFaceStruct());
 	}
 	
 	/**
 	 * Gets the current font face for a cairo_t.
 	 * Returns: the current font face. This object is owned bycairo. To keep a reference to it, you must callcairo_font_face_reference.This function never returns NULL. If memory cannot be allocated, aspecial "nil" cairo_font_face_t object will be returned on whichcairo_font_face_status() returns CAIRO_STATUS_NO_MEMORY. Usingthis nil object will cause its error state to propagate to otherobjects it is passed to, (for example, callingcairo_set_font_face() with a nil font will trigger an error thatwill shutdown the cairo_t object).
 	 */
-	public cairo_font_face_t* getFontFace()
+	public FontFace getFontFace()
 	{
 		// cairo_font_face_t* cairo_get_font_face (cairo_t *cr);
-		return cairo_get_font_face(cairo);
+		auto p = cairo_get_font_face(cairo);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new FontFace(cast(cairo_font_face_t*) p);
 	}
 	
 	/**
@@ -1828,10 +1846,10 @@ public class Context
 	 * Params:
 	 * scaledFont =  a cairo_scaled_font_t
 	 */
-	public void setScaledFont(cairo_scaled_font_t* scaledFont)
+	public void setScaledFont(ScaledFont scaledFont)
 	{
 		// void cairo_set_scaled_font (cairo_t *cr,  const cairo_scaled_font_t *scaled_font);
-		cairo_set_scaled_font(cairo, scaledFont);
+		cairo_set_scaled_font(cairo, (scaledFont is null) ? null : scaledFont.getScaledFontStruct());
 	}
 	
 	/**
@@ -1839,10 +1857,16 @@ public class Context
 	 * Since 1.4
 	 * Returns: the current scaled font. This object is owned bycairo. To keep a reference to it, you must callcairo_scaled_font_reference().This function never returns NULL. If memory cannot be allocated, aspecial "nil" cairo_scaled_font_t object will be returned on whichcairo_scaled_font_status() returns CAIRO_STATUS_NO_MEMORY. Usingthis nil object will cause its error state to propagate to otherobjects it is passed to, (for example, callingcairo_set_scaled_font() with a nil font will trigger an error thatwill shutdown the cairo_t object).
 	 */
-	public cairo_scaled_font_t* getScaledFont()
+	public ScaledFont getScaledFont()
 	{
 		// cairo_scaled_font_t* cairo_get_scaled_font (cairo_t *cr);
-		return cairo_get_scaled_font(cairo);
+		auto p = cairo_get_scaled_font(cairo);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ScaledFont(cast(cairo_scaled_font_t*) p);
 	}
 	
 	/**

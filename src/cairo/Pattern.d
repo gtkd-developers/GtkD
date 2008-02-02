@@ -42,7 +42,12 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- cairo.Matrix
+ * 	- cairo.Surface
  * structWrap:
+ * 	- cairo_matrix_t* -> Matrix
+ * 	- cairo_pattern_t* -> Pattern
+ * 	- cairo_surface_t* -> Surface
  * module aliases:
  * local aliases:
  */
@@ -54,6 +59,8 @@ public  import gtkc.cairotypes;
 private import gtkc.cairo;
 
 
+private import cairo.Matrix;
+private import cairo.Surface;
 
 
 
@@ -197,10 +204,16 @@ public class Pattern
 	 * blue =  blue component of the color
 	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
 	 */
-	public static cairo_pattern_t* createRgb(double red, double green, double blue)
+	public static Pattern createRgb(double red, double green, double blue)
 	{
 		// cairo_pattern_t* cairo_pattern_create_rgb (double red,  double green,  double blue);
-		return cairo_pattern_create_rgb(red, green, blue);
+		auto p = cairo_pattern_create_rgb(red, green, blue);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**
@@ -215,10 +228,16 @@ public class Pattern
 	 * alpha =  alpha component of the color
 	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
 	 */
-	public static cairo_pattern_t* createRgba(double red, double green, double blue, double alpha)
+	public static Pattern createRgba(double red, double green, double blue, double alpha)
 	{
 		// cairo_pattern_t* cairo_pattern_create_rgba (double red,  double green,  double blue,  double alpha);
-		return cairo_pattern_create_rgba(red, green, blue, alpha);
+		auto p = cairo_pattern_create_rgba(red, green, blue, alpha);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**
@@ -243,10 +262,16 @@ public class Pattern
 	 * surface =  the surface
 	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
 	 */
-	public static cairo_pattern_t* createForSurface(cairo_surface_t* surface)
+	public static Pattern createForSurface(Surface surface)
 	{
 		// cairo_pattern_t* cairo_pattern_create_for_surface (cairo_surface_t *surface);
-		return cairo_pattern_create_for_surface(surface);
+		auto p = cairo_pattern_create_for_surface((surface is null) ? null : surface.getSurfaceStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**
@@ -280,10 +305,16 @@ public class Pattern
 	 * y1 =  y coordinate of the end point
 	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
 	 */
-	public static cairo_pattern_t* createLinear(double x0, double y0, double x1, double y1)
+	public static Pattern createLinear(double x0, double y0, double x1, double y1)
 	{
 		// cairo_pattern_t* cairo_pattern_create_linear (double x0,  double y0,  double x1,  double y1);
-		return cairo_pattern_create_linear(x0, y0, x1, y1);
+		auto p = cairo_pattern_create_linear(x0, y0, x1, y1);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**
@@ -320,10 +351,16 @@ public class Pattern
 	 * radius1 =  radius of the end circle
 	 * Returns: the newly created cairo_pattern_t if successful, oran error pattern in case of no memory. The caller owns thereturned object and should call cairo_pattern_destroy() whenfinished with it.This function will always return a valid pointer, but if an erroroccurred the pattern status will be set to an error. To inspectthe status of a pattern use cairo_pattern_status().
 	 */
-	public static cairo_pattern_t* createRadial(double cx0, double cy0, double radius0, double cx1, double cy1, double radius1)
+	public static Pattern createRadial(double cx0, double cy0, double radius0, double cx1, double cy1, double radius1)
 	{
 		// cairo_pattern_t* cairo_pattern_create_radial (double cx0,  double cy0,  double radius0,  double cx1,  double cy1,  double radius1);
-		return cairo_pattern_create_radial(cx0, cy0, radius0, cx1, cy1, radius1);
+		auto p = cairo_pattern_create_radial(cx0, cy0, radius0, cx1, cy1, radius1);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**
@@ -351,14 +388,18 @@ public class Pattern
 	 * cairo_pattern_destroy() is made.
 	 * The number of references to a cairo_pattern_t can be get using
 	 * cairo_pattern_get_reference_count().
-	 * Params:
-	 * pattern =  a cairo_pattern_t
 	 * Returns: the referenced cairo_pattern_t.
 	 */
-	public cairo_pattern_t* reference()
+	public Pattern reference()
 	{
 		// cairo_pattern_t* cairo_pattern_reference (cairo_pattern_t *pattern);
-		return cairo_pattern_reference(cairo_pattern);
+		auto p = cairo_pattern_reference(cairo_pattern);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pattern(cast(cairo_pattern_t*) p);
 	}
 	
 	/**
@@ -447,10 +488,10 @@ public class Pattern
 	 * Params:
 	 * matrix =  a cairo_matrix_t
 	 */
-	public void setMatrix(cairo_matrix_t* matrix)
+	public void setMatrix(Matrix matrix)
 	{
 		// void cairo_pattern_set_matrix (cairo_pattern_t *pattern,  const cairo_matrix_t *matrix);
-		cairo_pattern_set_matrix(cairo_pattern, matrix);
+		cairo_pattern_set_matrix(cairo_pattern, (matrix is null) ? null : matrix.getMatrixStruct());
 	}
 	
 	/**
@@ -458,10 +499,10 @@ public class Pattern
 	 * Params:
 	 * matrix =  return value for the matrix
 	 */
-	public void getMatrix(cairo_matrix_t* matrix)
+	public void getMatrix(Matrix matrix)
 	{
 		// void cairo_pattern_get_matrix (cairo_pattern_t *pattern,  cairo_matrix_t *matrix);
-		cairo_pattern_get_matrix(cairo_pattern, matrix);
+		cairo_pattern_get_matrix(cairo_pattern, (matrix is null) ? null : matrix.getMatrixStruct());
 	}
 	
 	/**

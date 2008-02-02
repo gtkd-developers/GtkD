@@ -43,6 +43,7 @@
  * omit signals:
  * imports:
  * structWrap:
+ * 	- cairo_font_face_t* -> FontFace
  * module aliases:
  * local aliases:
  */
@@ -105,10 +106,16 @@ public class FontFace
 	 * cairo_font_face_get_reference_count().
 	 * Returns: the referenced cairo_font_face_t.
 	 */
-	public cairo_font_face_t* reference()
+	public FontFace reference()
 	{
 		// cairo_font_face_t* cairo_font_face_reference (cairo_font_face_t *font_face);
-		return cairo_font_face_reference(cairo_font_face);
+		auto p = cairo_font_face_reference(cairo_font_face);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new FontFace(cast(cairo_font_face_t*) p);
 	}
 	
 	/**

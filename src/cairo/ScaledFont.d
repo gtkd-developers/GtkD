@@ -42,10 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
  * 	- cairo.FontFace
- * 	- cairo.Matrix
  * 	- cairo.FontOption
+ * 	- cairo.Matrix
+ * 	- glib.Str
  * structWrap:
  * 	- cairo_font_face_t* -> FontFace
  * 	- cairo_font_options_t* -> FontOption
@@ -62,10 +62,10 @@ public  import gtkc.cairotypes;
 private import gtkc.cairo;
 
 
-private import glib.Str;
 private import cairo.FontFace;
-private import cairo.Matrix;
 private import cairo.FontOption;
+private import cairo.Matrix;
+private import glib.Str;
 
 
 

@@ -25,7 +25,7 @@
  * inFile  = cairo-Error-Handling.html
  * outPack = cairo
  * outFile = Status
- * strct   = cairo_status_t
+ * strct   = 
  * realStrct=
  * ctorStrct=
  * clss    = Status
@@ -37,6 +37,7 @@
  * implements:
  * prefixes:
  * 	- cairo_status_t
+ * 	- cairo_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -65,36 +66,6 @@ private import glib.Str;
  */
 public class Status
 {
-	
-	/** the main Gtk struct */
-	protected cairo_status_t* cairo_status;
-	
-	
-	public cairo_status_t* getStatusStruct()
-	{
-		return cairo_status;
-	}
-	
-	
-	/** the main Gtk struct as a void* */
-	protected void* getStruct()
-	{
-		return cast(void*)cairo_status;
-	}
-	
-	/**
-	 * Sets our main struct and passes it to the parent class
-	 */
-	public this (cairo_status_t* cairo_status)
-	{
-		if(cairo_status is null)
-		{
-			this = null;
-			version(Exceptions) throw new Exception("Null cairo_status passed to constructor.");
-			else return;
-		}
-		this.cairo_status = cairo_status;
-	}
 	
 	/**
 	 */
@@ -128,7 +99,7 @@ public class Status
 	 * objects, this call is likely to cause a crash, (eg. an assertion
 	 * failure due to a hash table being destroyed when non-empty).
 	 */
-	public static void cairoDebugResetStaticData()
+	public static void debugResetStaticData()
 	{
 		// void cairo_debug_reset_static_data (void);
 		cairo_debug_reset_static_data();
