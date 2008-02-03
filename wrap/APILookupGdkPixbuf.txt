@@ -145,9 +145,9 @@ file: gdk-pixbuf-animation.html
 struct: GdkPixbufAnimation
 class: PixbufAnimation
 prefix: gdk_pixbuf_animation_
+noprefix: gdk_pixbuf_simple_anim_
 #import: g.Error*
 #structWrap: GError** Error*
-import: gdkpixbuf.PixbufAnimation
 structWrap: GdkPixbufAnimation* PixbufAnimation
 #import: gdkpixbuf.PixbufAnimationIter
 #structWrap: GdkPixbufAnimationIter* PixbufAnimationIter
@@ -155,11 +155,16 @@ structWrap: GdkPixbufAnimation* PixbufAnimation
 #structWrap: GTimeVal* TimeVal
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-#import: gdk.PixbufSimpleAnim
-#structWrap: GdkPixbufSimpleAnim* PixbufSimpleAnim
 import: glib.Str
-
 outFile: PixbufAnimation
+
+struct: GdkPixbufSimpleAnim
+class: PixbufSimpleAnimation
+prefix: gdk_pixbuf_simple_anim_
+strictPrefix: Yes
+import: gdk.Pixbuf
+structWrap: GdkPixbuf* Pixbuf
+outFile: PixbufSimpleAnimation
 
 file: GdkPixbufLoader.html
 struct: GdkPixbufLoader

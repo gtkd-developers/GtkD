@@ -39,10 +39,10 @@
  * 	- gdk_pixbuf_animation_
  * omit structs:
  * omit prefixes:
+ * 	- gdk_pixbuf_simple_anim_
  * omit code:
  * omit signals:
  * imports:
- * 	- gdkpixbuf.PixbufAnimation
  * 	- gdk.Pixbuf
  * 	- glib.Str
  * structWrap:
@@ -59,7 +59,6 @@ public  import gtkc.gdkpixbuftypes;
 private import gtkc.gdkpixbuf;
 
 
-private import gdkpixbuf.PixbufAnimation;
 private import gdk.Pixbuf;
 private import glib.Str;
 
@@ -343,35 +342,5 @@ public class PixbufAnimation : ObjectG
 			else return null;
 		}
 		return new Pixbuf(cast(GdkPixbuf*) p);
-	}
-	
-	/**
-	 * Creates a new, empty animation.
-	 * Since 2.8
-	 * Params:
-	 * width =  the width of the animation
-	 * height =  the height of the animation
-	 * rate =  the speed of the animation, in frames per second
-	 * Returns: a newly allocated GdkPixbufSimpleAnim
-	 */
-	public static GdkPixbufSimpleAnim* gdkPixbufSimpleAnimNew(int width, int height, float rate)
-	{
-		// GdkPixbufSimpleAnim* gdk_pixbuf_simple_anim_new (gint width,  gint height,  gfloat rate);
-		return gdk_pixbuf_simple_anim_new(width, height, rate);
-	}
-	
-	/**
-	 * Adds a new frame to animation. The pixbuf must
-	 * have the dimensions specified when the animation
-	 * was constructed.
-	 * Since 2.8
-	 * Params:
-	 * animation =  a GdkPixbufSimpleAnim
-	 * pixbuf =  the pixbuf to add
-	 */
-	public static void gdkPixbufSimpleAnimAddFrame(GdkPixbufSimpleAnim* animation, Pixbuf pixbuf)
-	{
-		// void gdk_pixbuf_simple_anim_add_frame (GdkPixbufSimpleAnim *animation,  GdkPixbuf *pixbuf);
-		gdk_pixbuf_simple_anim_add_frame(animation, (pixbuf is null) ? null : pixbuf.getPixbufStruct());
 	}
 }
