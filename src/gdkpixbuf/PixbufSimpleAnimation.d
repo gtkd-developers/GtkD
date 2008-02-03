@@ -33,7 +33,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- gdk_pixbuf_simple_anim_
@@ -60,6 +60,7 @@ private import gdk.Pixbuf;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -71,7 +72,7 @@ private import gdk.Pixbuf;
  *  an animation you don't need to understand its representation, however; you just
  *  ask gdk-pixbuf what should be displayed at a given point in time.
  */
-public class PixbufSimpleAnimation
+public class PixbufSimpleAnimation : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -101,6 +102,7 @@ public class PixbufSimpleAnimation
 			version(Exceptions) throw new Exception("Null gdkPixbufSimpleAnim passed to constructor.");
 			else return;
 		}
+		super(cast(GObject*)gdkPixbufSimpleAnim);
 		this.gdkPixbufSimpleAnim = gdkPixbufSimpleAnim;
 	}
 	

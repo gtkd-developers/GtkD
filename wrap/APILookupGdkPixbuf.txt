@@ -160,6 +160,7 @@ outFile: PixbufAnimation
 
 struct: GdkPixbufSimpleAnim
 class: PixbufSimpleAnimation
+extend: GObject
 prefix: gdk_pixbuf_simple_anim_
 strictPrefix: Yes
 import: gdk.Pixbuf
