@@ -363,7 +363,7 @@ class TestDrawingArea : VBox
 					break;
 				
 				case "Image":
-					scaledPixbuf.renderToDrawable( d, gc.getGCStruct(),
+					scaledPixbuf.renderToDrawable( d, gc,
 					//d.getDrawableStruct(), gc.getGCStruct(), 
 						0, 0, x, y, 
 						scaledPixbuf.getWidth(), scaledPixbuf.getHeight(), 

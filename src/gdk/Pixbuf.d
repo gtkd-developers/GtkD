@@ -37,7 +37,6 @@
  * implements:
  * prefixes:
  * 	- gdk_pixbuf_
- * 	- gdk_pixbuf_
  * omit structs:
  * omit prefixes:
  * 	- gdk_pixbuf_ref
@@ -47,16 +46,17 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- glib.Str
  * 	- gdkpixbuf.PixbufFormat
  * 	- gdk.Drawable
  * 	- gdk.Bitmap
+ * 	- gdk.GC
  * 	- gdk.Colormap
  * 	- gdk.ImageGdk
  * structWrap:
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkColormap* -> Colormap
  * 	- GdkDrawable* -> Drawable
+ * 	- GdkGC* -> GC
  * 	- GdkImage* -> ImageGdk
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufFormat* -> PixbufFormat
@@ -72,10 +72,10 @@ private import gtkc.gdk;
 
 
 private import glib.Str;
-private import glib.Str;
 private import gdkpixbuf.PixbufFormat;
 private import gdk.Drawable;
 private import gdk.Bitmap;
+private import gdk.GC;
 private import gdk.Colormap;
 private import gdk.ImageGdk;
 
@@ -449,10 +449,10 @@ public class Pixbuf
 	 * xDither =  X offset for dither.
 	 * yDither =  Y offset for dither.
 	 */
-	public void renderToDrawable(Drawable drawable, GdkGC* gc, int srcX, int srcY, int destX, int destY, int width, int height, GdkRgbDither dither, int xDither, int yDither)
+	public void renderToDrawable(Drawable drawable, GC gc, int srcX, int srcY, int destX, int destY, int width, int height, GdkRgbDither dither, int xDither, int yDither)
 	{
 		// void gdk_pixbuf_render_to_drawable (GdkPixbuf *pixbuf,  GdkDrawable *drawable,  GdkGC *gc,  int src_x,  int src_y,  int dest_x,  int dest_y,  int width,  int height,  GdkRgbDither dither,  int x_dither,  int y_dither);
-		gdk_pixbuf_render_to_drawable(gdkPixbuf, (drawable is null) ? null : drawable.getDrawableStruct(), gc, srcX, srcY, destX, destY, width, height, dither, xDither, yDither);
+		gdk_pixbuf_render_to_drawable(gdkPixbuf, (drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), srcX, srcY, destX, destY, width, height, dither, xDither, yDither);
 	}
 	
 	/**

@@ -43,7 +43,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Bitmap
  * 	- gdk.Drawable
  * structWrap:
  * 	- GdkBitmap* -> Bitmap
@@ -60,7 +59,6 @@ private import gtkc.gdk;
 
 
 private import glib.Str;
-private import gdk.Bitmap;
 private import gdk.Drawable;
 
 

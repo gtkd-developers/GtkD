@@ -42,8 +42,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gtkc.cairotypes
  * 	- glib.Str
+ * 	- cairo.FontOption
  * 	- gdk.Screen
  * 	- gdk.Colormap
  * 	- gdk.Visual
@@ -63,6 +63,7 @@
  * 	- GdkScreen* -> Screen
  * 	- GdkVisual* -> Visual
  * 	- GdkWindow* -> Window
+ * 	- cairo_font_options_t* -> FontOption
  * module aliases:
  * local aliases:
  */
@@ -76,8 +77,8 @@ private import gtkc.gdk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gtkc.cairotypes;
 private import glib.Str;
+private import cairo.FontOption;
 private import gdk.Screen;
 private import gdk.Colormap;
 private import gdk.Visual;
@@ -638,10 +639,16 @@ public class Screen : ObjectG
 	 * Since 2.10
 	 * Returns: the current font options, or NULL if no default font options have been set.
 	 */
-	public cairo_font_options_t* getFontOptions()
+	public FontOption getFontOptions()
 	{
 		// const cairo_font_options_t* gdk_screen_get_font_options (GdkScreen *screen);
-		return gdk_screen_get_font_options(gdkScreen);
+		auto p = gdk_screen_get_font_options(gdkScreen);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new FontOption(cast(cairo_font_options_t*) p);
 	}
 	
 	/**
@@ -655,10 +662,10 @@ public class Screen : ObjectG
 	 * options =  a cairo_font_options_t, or NULL to unset any
 	 *  previously set default font options.
 	 */
-	public void setFontOptions(cairo_font_options_t* options)
+	public void setFontOptions(FontOption options)
 	{
 		// void gdk_screen_set_font_options (GdkScreen *screen,  const cairo_font_options_t *options);
-		gdk_screen_set_font_options(gdkScreen, options);
+		gdk_screen_set_font_options(gdkScreen, (options is null) ? null : options.getFontOptionStruct());
 	}
 	
 	/**

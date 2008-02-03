@@ -43,7 +43,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Color
  * 	- gdk.Colormap
  * structWrap:
  * 	- GdkColor* -> Color
@@ -60,7 +59,6 @@ private import gtkc.gdk;
 
 
 private import glib.Str;
-private import gdk.Color;
 private import gdk.Colormap;
 
 

@@ -43,7 +43,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Display
  * 	- gdk.Screen
  * 	- glib.ListG
  * 	- gdk.Event
@@ -68,7 +67,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gdk.Display;
 private import gdk.Screen;
 private import glib.ListG;
 private import gdk.Event;

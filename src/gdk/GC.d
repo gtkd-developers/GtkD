@@ -44,11 +44,11 @@
  * imports:
  * 	- gdk.Drawable
  * 	- gdk.Screen
- * 	- gdk.GC
  * 	- gdk.Color
  * 	- gdk.Font
  * 	- gdk.Pixmap
  * 	- gdk.Bitmap
+ * 	- gdk.Rectangle
  * 	- gdk.Region
  * 	- gdk.Colormap
  * structWrap:
@@ -59,6 +59,7 @@
  * 	- GdkFont* -> Font
  * 	- GdkGC* -> GC
  * 	- GdkPixmap* -> Pixmap
+ * 	- GdkRectangle* -> Rectangle
  * 	- GdkRegion* -> Region
  * 	- GdkScreen* -> Screen
  * module aliases:
@@ -74,11 +75,11 @@ private import gtkc.gdk;
 
 private import gdk.Drawable;
 private import gdk.Screen;
-private import gdk.GC;
 private import gdk.Color;
 private import gdk.Font;
 private import gdk.Pixmap;
 private import gdk.Bitmap;
+private import gdk.Rectangle;
 private import gdk.Region;
 private import gdk.Colormap;
 
@@ -433,10 +434,10 @@ public class GC : ObjectG
 	 * Params:
 	 * rectangle =  the rectangle to clip to.
 	 */
-	public void setClipRectangle(GdkRectangle* rectangle)
+	public void setClipRectangle(Rectangle rectangle)
 	{
 		// void gdk_gc_set_clip_rectangle (GdkGC *gc,  GdkRectangle *rectangle);
-		gdk_gc_set_clip_rectangle(gdkGC, rectangle);
+		gdk_gc_set_clip_rectangle(gdkGC, (rectangle is null) ? null : rectangle.getRectangleStruct());
 	}
 	
 	/**

@@ -43,7 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gdk.Rectangle
  * structWrap:
  * 	- GdkRectangle* -> Rectangle
  * module aliases:
@@ -57,7 +56,6 @@ public  import gtkc.gdktypes;
 private import gtkc.gdk;
 
 
-private import gdk.Rectangle;
 
 
 

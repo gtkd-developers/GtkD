@@ -42,7 +42,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gdk.DragContext
  * 	- gdk.Window
  * 	- gdk.Screen
  * 	- glib.ListG
@@ -64,7 +63,6 @@ public  import gtkc.gdktypes;
 private import gtkc.gdk;
 
 
-private import gdk.DragContext;
 private import gdk.Window;
 private import gdk.Screen;
 private import glib.ListG;

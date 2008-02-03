@@ -37,6 +37,7 @@
  * implements:
  * prefixes:
  * 	- gdk_colormap_
+ * 	- gdk_
  * omit structs:
  * omit prefixes:
  * 	- gdk_color_
@@ -44,7 +45,6 @@
  * omit signals:
  * imports:
  * 	- gdk.Visual
- * 	- gdk.Colormap
  * 	- gdk.Color
  * 	- gdk.Screen
  * structWrap:
@@ -64,7 +64,6 @@ private import gtkc.gdk;
 
 
 private import gdk.Visual;
-private import gdk.Colormap;
 private import gdk.Color;
 private import gdk.Screen;
 
@@ -347,7 +346,7 @@ public class Colormap
 	 * colors =  the new color values.
 	 * ncolors =  the number of colors to change.
 	 */
-	public void gdkColorsStore(Color colors, int ncolors)
+	public void colorsStore(Color colors, int ncolors)
 	{
 		// void gdk_colors_store (GdkColormap *colormap,  GdkColor *colors,  gint ncolors);
 		gdk_colors_store(gdkColormap, (colors is null) ? null : colors.getColorStruct(), ncolors);
@@ -370,7 +369,7 @@ public class Colormap
 	 * npixels =  the number of pixels in each plane to allocate.
 	 * Returns: TRUE if the allocation was successful
 	 */
-	public int gdkColorsAlloc(int contiguous, uint* planes, int nplanes, uint* pixels, int npixels)
+	public int colorsAlloc(int contiguous, uint* planes, int nplanes, uint* pixels, int npixels)
 	{
 		// gint gdk_colors_alloc (GdkColormap *colormap,  gboolean contiguous,  gulong *planes,  gint nplanes,  gulong *pixels,  gint npixels);
 		return gdk_colors_alloc(gdkColormap, contiguous, planes, nplanes, pixels, npixels);
@@ -386,7 +385,7 @@ public class Colormap
 	 * npixels =  the number of values in pixels.
 	 * planes =  the plane masks for all planes to free, OR'd together.
 	 */
-	public void gdkColorsFree(uint* pixels, int npixels, uint planes)
+	public void colorsFree(uint* pixels, int npixels, uint planes)
 	{
 		// void gdk_colors_free (GdkColormap *colormap,  gulong *pixels,  gint npixels,  gulong planes);
 		gdk_colors_free(gdkColormap, pixels, npixels, planes);

@@ -48,6 +48,7 @@
  * structWrap:
  * 	- GdkColormap* -> Colormap
  * 	- GdkDrawable* -> Drawable
+ * 	- GdkImage* -> ImageGdk
  * 	- GdkVisual* -> Visual
  * module aliases:
  * local aliases:
@@ -184,10 +185,16 @@ public class ImageGdk
 	 * height =  height of area in window
 	 * Returns: a new GdkImage or NULL
 	 */
-	public static GdkImage* get(Drawable drawable, int x, int y, int width, int height)
+	public static ImageGdk get(Drawable drawable, int x, int y, int width, int height)
 	{
 		// GdkImage* gdk_image_get (GdkDrawable *drawable,  gint x,  gint y,  gint width,  gint height);
-		return gdk_image_get((drawable is null) ? null : drawable.getDrawableStruct(), x, y, width, height);
+		auto p = gdk_image_get((drawable is null) ? null : drawable.getDrawableStruct(), x, y, width, height);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ImageGdk(cast(GdkImage*) p);
 	}
 	
 	/**
@@ -196,10 +203,16 @@ public class ImageGdk
 	 * Deprecated function; use g_object_ref() instead.
 	 * Returns: the image
 	 */
-	public GdkImage* doref()
+	public ImageGdk doref()
 	{
 		// GdkImage* gdk_image_ref (GdkImage *image);
-		return gdk_image_ref(gdkImage);
+		auto p = gdk_image_ref(gdkImage);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ImageGdk(cast(GdkImage*) p);
 	}
 	
 	/**

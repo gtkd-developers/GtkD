@@ -44,11 +44,12 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Font
  * 	- gdk.Display
+ * 	- pango.PgFontDescription
  * structWrap:
  * 	- GdkDisplay* -> Display
  * 	- GdkFont* -> Font
+ * 	- PangoFontDescription* -> PgFontDescription
  * module aliases:
  * local aliases:
  */
@@ -61,8 +62,8 @@ private import gtkc.gdk;
 
 
 private import glib.Str;
-private import gdk.Font;
 private import gdk.Display;
+private import pango.PgFontDescription;
 
 
 
@@ -352,10 +353,10 @@ public class Font
 	 * fontDesc =  a PangoFontDescription.
 	 * Returns: the newly loaded font, or NULL if the fontcannot be loaded.
 	 */
-	public static Font fromDescription(PangoFontDescription* fontDesc)
+	public static Font fromDescription(PgFontDescription fontDesc)
 	{
 		// GdkFont* gdk_font_from_description (PangoFontDescription *font_desc);
-		auto p = gdk_font_from_description(fontDesc);
+		auto p = gdk_font_from_description((fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
 		if(p is null)
 		{
 			version(Exceptions) throw new Exception("Null GObject from GTK+.");
@@ -378,10 +379,10 @@ public class Font
 	 * fontDesc =  a PangoFontDescription.
 	 * Returns: the newly loaded font, or NULL if the fontcannot be loaded.
 	 */
-	public static Font fromDescriptionForDisplay(Display display, PangoFontDescription* fontDesc)
+	public static Font fromDescriptionForDisplay(Display display, PgFontDescription fontDesc)
 	{
 		// GdkFont* gdk_font_from_description_for_display  (GdkDisplay *display,  PangoFontDescription *font_desc);
-		auto p = gdk_font_from_description_for_display((display is null) ? null : display.getDisplayStruct(), fontDesc);
+		auto p = gdk_font_from_description_for_display((display is null) ? null : display.getDisplayStruct(), (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct());
 		if(p is null)
 		{
 			version(Exceptions) throw new Exception("Null GObject from GTK+.");

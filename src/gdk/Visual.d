@@ -43,7 +43,6 @@
  * omit signals:
  * imports:
  * 	- glib.ListG
- * 	- gdk.Visual
  * 	- gdk.Screen
  * structWrap:
  * 	- GList* -> ListG
@@ -61,7 +60,6 @@ private import gtkc.gdk;
 
 
 private import glib.ListG;
-private import gdk.Visual;
 private import gdk.Screen;
 
 

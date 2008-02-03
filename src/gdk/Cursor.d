@@ -47,7 +47,6 @@
  * 	- gdk.Color
  * 	- gdk.Display
  * 	- gdk.Pixbuf
- * 	- gdk.Cursor
  * structWrap:
  * 	- GdkColor* -> Color
  * 	- GdkCursor* -> Cursor
@@ -70,7 +69,6 @@ private import gdk.Pixmap;
 private import gdk.Color;
 private import gdk.Display;
 private import gdk.Pixbuf;
-private import gdk.Cursor;
 
 
 

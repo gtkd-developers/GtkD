@@ -45,7 +45,6 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Drawable
- * 	- gdk.Pixmap
  * 	- gdk.Color
  * 	- gdk.Colormap
  * structWrap:
@@ -66,7 +65,6 @@ private import gtkc.gdk;
 
 private import glib.Str;
 private import gdk.Drawable;
-private import gdk.Pixmap;
 private import gdk.Color;
 private import gdk.Colormap;
 

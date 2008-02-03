@@ -42,7 +42,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gdk.DisplayManager
  * 	- gdk.Display
  * 	- glib.ListSG
  * 	- gdk.Device
@@ -64,7 +63,6 @@ private import gtkc.gdk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import gdk.DisplayManager;
 private import gdk.Display;
 private import glib.ListSG;
 private import gdk.Device;

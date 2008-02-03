@@ -42,7 +42,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- gdk.Region
  * 	- gdk.Rectangle
  * structWrap:
  * 	- GdkRectangle* -> Rectangle
@@ -58,7 +57,6 @@ public  import gtkc.gdktypes;
 private import gtkc.gdk;
 
 
-private import gdk.Region;
 private import gdk.Rectangle;
 
 

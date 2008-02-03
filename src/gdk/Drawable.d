@@ -44,7 +44,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Drawable
  * 	- gdk.Display
  * 	- gdk.Screen
  * 	- gdk.Visual
@@ -55,22 +54,10 @@
  * 	- gdk.Color
  * 	- gdk.Font
  * 	- gdk.ImageGdk
- * 	- pango.PgContext
- * 	- pango.PgItem
+ * 	- pango.PgFont
+ * 	- pango.PgGlyphString
+ * 	- pango.PgMatrix
  * 	- pango.PgLayout
- * 	- pango.PgFontDescription
- * 	- pango.PgFontMetrics
- * 	- pango.PgFontFamily
- * 	- pango.PgFontFace
- * 	- pango.PgFontMap
- * 	- pango.PgFontsetSimple
- * 	- pango.PgAttribute
- * 	- pango.PgAttributeList
- * 	- pango.PgLanguage
- * 	- pango.PgTabArray
- * 	- pango.PgLayout
- * 	- pango.PgLayoutIter
- * 	- pango.PgScriptIter
  * structWrap:
  * 	- GdkColor* -> Color
  * 	- GdkColormap* -> Colormap
@@ -83,21 +70,10 @@
  * 	- GdkRegion* -> Region
  * 	- GdkScreen* -> Screen
  * 	- GdkVisual* -> Visual
- * 	- PangoAttribute* -> PgAttribute
- * 	- PangoAttributeList* -> PgAttributeList
- * 	- PangoContext* -> PgContext
- * 	- PangoFontDescription* -> PgFontDescription
- * 	- PangoFontFace* -> PgFontFace
- * 	- PangoFontFamily* -> PgFontFamily
- * 	- PangoFontMap* -> PgFontMap
- * 	- PangoFontMetrics* -> PgFontMetrics
- * 	- PangoFontsetSimple* -> PgFontsetSimple
- * 	- PangoItem* -> PgItem
- * 	- PangoLanguage* -> PgLanguage
+ * 	- PangoFont* -> PgFont
+ * 	- PangoGlyphString* -> PgGlyphString
  * 	- PangoLayout* -> PgLayout
- * 	- PangoLayoutIter* -> PgLayoutIter
- * 	- PangoScriptIter* -> PgScriptIter
- * 	- PangoTabArray* -> PgTabArray
+ * 	- PangoMatrix* -> PgMatrix
  * module aliases:
  * local aliases:
  */
@@ -110,7 +86,6 @@ private import gtkc.gdk;
 
 
 private import glib.Str;
-private import gdk.Drawable;
 private import gdk.Display;
 private import gdk.Screen;
 private import gdk.Visual;
@@ -121,22 +96,10 @@ private import gdk.Pixbuf;
 private import gdk.Color;
 private import gdk.Font;
 private import gdk.ImageGdk;
-private import pango.PgContext;
-private import pango.PgItem;
+private import pango.PgFont;
+private import pango.PgGlyphString;
+private import pango.PgMatrix;
 private import pango.PgLayout;
-private import pango.PgFontDescription;
-private import pango.PgFontMetrics;
-private import pango.PgFontFamily;
-private import pango.PgFontFace;
-private import pango.PgFontMap;
-private import pango.PgFontsetSimple;
-private import pango.PgAttribute;
-private import pango.PgAttributeList;
-private import pango.PgLanguage;
-private import pango.PgTabArray;
-private import pango.PgLayout;
-private import pango.PgLayoutIter;
-private import pango.PgScriptIter;
 
 
 
@@ -652,10 +615,10 @@ public class Drawable : ObjectG
 	 * y =  Y coordinate of baseline origin
 	 * glyphs =  the glyph string to draw
 	 */
-	public void drawGlyphs(GC gc, PangoFont* font, int x, int y, PangoGlyphString* glyphs)
+	public void drawGlyphs(GC gc, PgFont font, int x, int y, PgGlyphString glyphs)
 	{
 		// void gdk_draw_glyphs (GdkDrawable *drawable,  GdkGC *gc,  PangoFont *font,  gint x,  gint y,  PangoGlyphString *glyphs);
-		gdk_draw_glyphs(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), font, x, y, glyphs);
+		gdk_draw_glyphs(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), (font is null) ? null : font.getPgFontStruct(), x, y, (glyphs is null) ? null : glyphs.getPgGlyphStringStruct());
 	}
 	
 	/**
@@ -677,10 +640,10 @@ public class Drawable : ObjectG
 	 *  in user space coordinates)
 	 * glyphs =  the glyph string to draw
 	 */
-	public void drawGlyphsTransformed(GC gc, PangoMatrix* matrix, PangoFont* font, int x, int y, PangoGlyphString* glyphs)
+	public void drawGlyphsTransformed(GC gc, PgMatrix matrix, PgFont font, int x, int y, PgGlyphString glyphs)
 	{
 		// void gdk_draw_glyphs_transformed (GdkDrawable *drawable,  GdkGC *gc,  PangoMatrix *matrix,  PangoFont *font,  gint x,  gint y,  PangoGlyphString *glyphs);
-		gdk_draw_glyphs_transformed(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), matrix, font, x, y, glyphs);
+		gdk_draw_glyphs_transformed(gdkDrawable, (gc is null) ? null : gc.getGCStruct(), (matrix is null) ? null : matrix.getPgMatrixStruct(), (font is null) ? null : font.getPgFontStruct(), x, y, (glyphs is null) ? null : glyphs.getPgGlyphStringStruct());
 	}
 	
 	/**

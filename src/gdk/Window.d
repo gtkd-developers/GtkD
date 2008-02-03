@@ -44,7 +44,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Window
  * 	- gdk.Region
  * 	- gdk.Rectangle
  * 	- gdk.Bitmap
@@ -73,7 +72,6 @@ private import gtkc.gdk;
 
 
 private import glib.Str;
-private import gdk.Window;
 private import gdk.Region;
 private import gdk.Rectangle;
 private import gdk.Bitmap;

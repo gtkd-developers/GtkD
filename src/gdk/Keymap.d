@@ -43,7 +43,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gdk.Keymap
  * 	- gdk.Display
  * structWrap:
  * 	- GdkDisplay* -> Display
@@ -62,7 +61,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gdk.Keymap;
 private import gdk.Display;
 
 
