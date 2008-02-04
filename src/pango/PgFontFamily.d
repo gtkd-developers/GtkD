@@ -33,7 +33,7 @@
  * class Code: No
  * interface Code: No
  * template for:
- * extend  = 
+ * extend  = GObject
  * implements:
  * prefixes:
  * 	- pango_font_family_
@@ -59,6 +59,7 @@ private import glib.Str;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
@@ -69,7 +70,7 @@ private import glib.Str;
  * Pango provides routines to list available fonts, and
  * to load a font of a given description.
  */
-public class PgFontFamily
+public class PgFontFamily : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -99,6 +100,7 @@ public class PgFontFamily
 			version(Exceptions) throw new Exception("Null pangoFontFamily passed to constructor.");
 			else return;
 		}
+		super(cast(GObject*)pangoFontFamily);
 		this.pangoFontFamily = pangoFontFamily;
 	}
 	

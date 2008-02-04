@@ -242,6 +242,7 @@ outFile: PgFontMetrics
 
 struct: PangoFontFamily
 class: PgFontFamily
+extend: GObject
 prefix: pango_font_family_
 strictPrefix: Yes
 import: glib.Str
@@ -250,6 +251,7 @@ outFile: PgFontFamily
 
 struct: PangoFontFace
 class: PgFontFace
+extend: GObject
 prefix: pango_font_face_
 strictPrefix: Yes
 import: glib.Str
@@ -259,6 +261,7 @@ outFile: PgFontFace
 
 struct: PangoFontMap
 class: PgFontMap
+extend: GObject
 prefix: pango_font_map_
 strictPrefix: Yes
 import: glib.Str
@@ -277,6 +280,7 @@ outFile: PgFontMap
 
 struct: PangoFontset
 class: PgFontset
+extend: GObject
 prefix: pango_fontset_
 strictPrefix: Yes
 noprefix: pango_fontset_simple_
