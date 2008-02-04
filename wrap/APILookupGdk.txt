@@ -316,6 +316,7 @@ outFile: Bitmap
 file: gdk-GdkRGB.html
 class: RGB
 prefix: gdk_
+noprefix: gdk_rgb_cmap_
 import: gdk.Drawable
 structWrap: GdkDrawable* Drawable
 import: gdk.GC

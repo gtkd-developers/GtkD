@@ -39,6 +39,7 @@
  * 	- gdk_
  * omit structs:
  * omit prefixes:
+ * 	- gdk_rgb_cmap_
  * omit code:
  * omit signals:
  * imports:
@@ -319,39 +320,6 @@ public class RGB
 	{
 		// void gdk_draw_rgb_32_image_dithalign (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *buf,  gint rowstride,  gint xdith,  gint ydith);
 		gdk_draw_rgb_32_image_dithalign((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride, xdith, ydith);
-	}
-	
-	/**
-	 * Creates a new GdkRgbCmap structure. The cmap maps color indexes to
-	 * RGB colors. If n_colors is less than 256, then images containing
-	 * color values greater than or equal to n_colors will produce undefined
-	 * results, including possibly segfaults.
-	 * Params:
-	 * colors = The colors, represented as 0xRRGGBB integer values.
-	 * nColors = The number of colors in the cmap.
-	 * Returns:The newly created GdkRgbCmap
-	 */
-	public static RgbCmap rgbCmapNew(uint* colors, int nColors)
-	{
-		// GdkRgbCmap* gdk_rgb_cmap_new (guint32 *colors,  gint n_colors);
-		auto p = gdk_rgb_cmap_new(colors, nColors);
-		if(p is null)
-		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
-		}
-		return new RgbCmap(cast(GdkRgbCmap*) p);
-	}
-	
-	/**
-	 * Frees the memory associated with a GdkRgbCmap created by gdk_rgb_cmap_new().
-	 * Params:
-	 * cmap = The GdkRgbCmap to free.
-	 */
-	public static void rgbCmapFree(RgbCmap cmap)
-	{
-		// void gdk_rgb_cmap_free (GdkRgbCmap *cmap);
-		gdk_rgb_cmap_free((cmap is null) ? null : cmap.getRgbCmapStruct());
 	}
 	
 	/**
