@@ -44,6 +44,7 @@
  * imports:
  * 	- gdk.Drawable
  * 	- gdk.GC
+ * 	- gdk.RgbCmap
  * 	- gdk.Colormap
  * 	- gdk.Color
  * 	- gdk.Visual
@@ -52,6 +53,7 @@
  * 	- GdkColormap* -> Colormap
  * 	- GdkDrawable* -> Drawable
  * 	- GdkGC* -> GC
+ * 	- GdkRgbCmap* -> RgbCmap
  * 	- GdkVisual* -> Visual
  * module aliases:
  * local aliases:
@@ -66,6 +68,7 @@ private import gtkc.gdk;
 
 private import gdk.Drawable;
 private import gdk.GC;
+private import gdk.RgbCmap;
 private import gdk.Colormap;
 private import gdk.Color;
 private import gdk.Visual;
@@ -244,10 +247,10 @@ public class RGB
 	 * start of the next.
 	 * cmap = The GdkRgbCmap used to assign colors to the color indices.
 	 */
-	public static void drawIndexedImage(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride, GdkRgbCmap* cmap)
+	public static void drawIndexedImage(Drawable drawable, GC gc, int x, int y, int width, int height, GdkRgbDither dith, char* buf, int rowstride, RgbCmap cmap)
 	{
 		// void gdk_draw_indexed_image (GdkDrawable *drawable,  GdkGC *gc,  gint x,  gint y,  gint width,  gint height,  GdkRgbDither dith,  guchar *buf,  gint rowstride,  GdkRgbCmap *cmap);
-		gdk_draw_indexed_image((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride, cmap);
+		gdk_draw_indexed_image((drawable is null) ? null : drawable.getDrawableStruct(), (gc is null) ? null : gc.getGCStruct(), x, y, width, height, dith, buf, rowstride, (cmap is null) ? null : cmap.getRgbCmapStruct());
 	}
 	
 	/**
@@ -328,10 +331,16 @@ public class RGB
 	 * nColors = The number of colors in the cmap.
 	 * Returns:The newly created GdkRgbCmap
 	 */
-	public static GdkRgbCmap* rgbCmapNew(uint* colors, int nColors)
+	public static RgbCmap rgbCmapNew(uint* colors, int nColors)
 	{
 		// GdkRgbCmap* gdk_rgb_cmap_new (guint32 *colors,  gint n_colors);
-		return gdk_rgb_cmap_new(colors, nColors);
+		auto p = gdk_rgb_cmap_new(colors, nColors);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RgbCmap(cast(GdkRgbCmap*) p);
 	}
 	
 	/**
@@ -339,10 +348,10 @@ public class RGB
 	 * Params:
 	 * cmap = The GdkRgbCmap to free.
 	 */
-	public static void rgbCmapFree(GdkRgbCmap* cmap)
+	public static void rgbCmapFree(RgbCmap cmap)
 	{
 		// void gdk_rgb_cmap_free (GdkRgbCmap *cmap);
-		gdk_rgb_cmap_free(cmap);
+		gdk_rgb_cmap_free((cmap is null) ? null : cmap.getRgbCmapStruct());
 	}
 	
 	/**

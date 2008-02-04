@@ -320,8 +320,8 @@ import: gdk.Drawable
 structWrap: GdkDrawable* Drawable
 import: gdk.GC
 structWrap: GdkGC* GC
-#import: gdk.RgbCmap
-#structWrap: GdkRgbCmap* RgbCmap
+import: gdk.RgbCmap
+structWrap: GdkRgbCmap* RgbCmap
 import: gdk.Colormap
 structWrap: GdkColormap* Colormap
 import: gdk.Color
@@ -329,6 +329,35 @@ structWrap: GdkColor* Color
 import: gdk.Visual
 structWrap: GdkVisual* Visual
 outFile: RGB
+
+struct: GdkRgbCmap
+class: RgbCmap
+strictPrefix: Y
+prefix: gdk_rgb_cmap_
+
+code: start
+	/**
+	 * Creates a new GdkRgbCmap structure. The cmap maps color indexes to
+	 * RGB colors. If n_colors is less than 256, then images containing
+	 * color values greater than or equal to n_colors will produce undefined
+	 * results, including possibly segfaults.
+	 * Params:
+	 * colors = The colors, represented as 0xRRGGBB integer values.
+	 */
+	public this (uint[] colors)
+	{
+		// GdkRgbCmap* gdk_rgb_cmap_new (guint32 *colors,  gint n_colors);
+		auto p = gdk_rgb_cmap_new(cast(uint*)(colors.ptr), colors.length);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GdkRgbCmap*) p);
+	}
+code: end
+outFile: RgbCmap
 
 file: gdk-Images.html
 struct: GdkImage
