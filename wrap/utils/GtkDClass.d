@@ -827,16 +827,14 @@ public class GtkDClass
 		else if ( startsWith(gName, "Atk") )	prefix = "Atk";
 		else if ( startsWith(gName, "G") )	prefix = "G";
 		else if ( startsWith(gName, "Pango") )	prefix = "Pg";
+		else if ( startsWith(gName, "cairo") )	prefix = "cairo";
 
 		conv = gName[prefix.length..gName.length];
-		if ( conv == "Object" )
-		{
-			conv ~= prefix;
-		}
-		if ( prefix == "Pg" )
-		{
-			conv = "Pg" ~ gName[5..gName.length];
-		}
+
+		if ( conv == "Object" ) conv ~= prefix;
+		if ( prefix == "Pg" ) conv = "Pg" ~ gName[5..gName.length];
+		if ( prefix == "cairo") conv = std.string.toupper(gName[6..7]) ~ gName[7..gName.length - 2];
+
 		debug(getParent)writefln("convertClassName %s >>> %s", gName, conv);
 		prefix = std.string.tolower(prefix);
 
@@ -1571,6 +1569,8 @@ public class GtkDClass
 							case "2BI": v = "TOO_"~v[1..v.length]; break;
 							case "2BU": v = "DOUBLE_"~v[1..v.length]; break;
 							case "3BU": v = "TRIPPLE_"~v[1..v.length]; break;
+							case "1_1": v = "VERSION_"~v[1..v.length]; break;
+							case "1_2": v = "VERSION_"~v[1..v.length]; break;
 							default:
 								// nothing
 								break;
