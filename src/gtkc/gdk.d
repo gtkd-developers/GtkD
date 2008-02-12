@@ -301,8 +301,6 @@ extern(C)
 	void function(GdkDrawable* drawable, GdkGC* gc, gint x, gint y, gint width, gint height, GdkRgbDither dith, guchar* buf, gint rowstride)gdk_draw_gray_image;
 	void function(GdkDrawable* drawable, GdkGC* gc, gint x, gint y, gint width, gint height, GdkRgbDither dith, guchar* buf, gint rowstride)gdk_draw_rgb_32_image;
 	void function(GdkDrawable* drawable, GdkGC* gc, gint x, gint y, gint width, gint height, GdkRgbDither dith, guchar* buf, gint rowstride, gint xdith, gint ydith)gdk_draw_rgb_32_image_dithalign;
-	GdkRgbCmap* function(guint32* colors, gint nColors)gdk_rgb_cmap_new;
-	void function(GdkRgbCmap* cmap)gdk_rgb_cmap_free;
 	void function(GdkGC* gc, guint32 rgb)gdk_rgb_gc_set_foreground;
 	void function(GdkGC* gc, guint32 rgb)gdk_rgb_gc_set_background;
 	gulong function(guint32 rgb)gdk_rgb_xpixel_from_rgb;
@@ -314,6 +312,11 @@ extern(C)
 	gboolean function()gdk_rgb_ditherable;
 	gboolean function(GdkColormap* cmap)gdk_rgb_colormap_ditherable;
 	void function(gboolean verbose)gdk_rgb_set_verbose;
+	
+	// gdk.RgbCmap
+	
+	GdkRgbCmap* function(guint32* colors, gint nColors)gdk_rgb_cmap_new;
+	void function(GdkRgbCmap* cmap)gdk_rgb_cmap_free;
 	
 	// gdk.ImageGdk
 	
@@ -920,8 +923,6 @@ Symbol[] gdkLinks =
 	{ "gdk_draw_gray_image",  cast(void**)& gdk_draw_gray_image},
 	{ "gdk_draw_rgb_32_image",  cast(void**)& gdk_draw_rgb_32_image},
 	{ "gdk_draw_rgb_32_image_dithalign",  cast(void**)& gdk_draw_rgb_32_image_dithalign},
-	{ "gdk_rgb_cmap_new",  cast(void**)& gdk_rgb_cmap_new},
-	{ "gdk_rgb_cmap_free",  cast(void**)& gdk_rgb_cmap_free},
 	{ "gdk_rgb_gc_set_foreground",  cast(void**)& gdk_rgb_gc_set_foreground},
 	{ "gdk_rgb_gc_set_background",  cast(void**)& gdk_rgb_gc_set_background},
 	{ "gdk_rgb_xpixel_from_rgb",  cast(void**)& gdk_rgb_xpixel_from_rgb},
@@ -933,6 +934,8 @@ Symbol[] gdkLinks =
 	{ "gdk_rgb_ditherable",  cast(void**)& gdk_rgb_ditherable},
 	{ "gdk_rgb_colormap_ditherable",  cast(void**)& gdk_rgb_colormap_ditherable},
 	{ "gdk_rgb_set_verbose",  cast(void**)& gdk_rgb_set_verbose},
+	{ "gdk_rgb_cmap_new",  cast(void**)& gdk_rgb_cmap_new},
+	{ "gdk_rgb_cmap_free",  cast(void**)& gdk_rgb_cmap_free},
 	{ "gdk_image_new",  cast(void**)& gdk_image_new},
 	{ "gdk_image_new_bitmap",  cast(void**)& gdk_image_new_bitmap},
 	{ "gdk_image_get",  cast(void**)& gdk_image_get},

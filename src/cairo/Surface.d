@@ -37,7 +37,6 @@
  * implements:
  * prefixes:
  * 	- cairo_surface_
- * 	- cairo_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -97,13 +96,6 @@ public class Surface
 		}
 		this.cairo_surface = cairo_surface;
 	}
-	
-	/**
-	 * Description
-	 *  Image surfaces provide the ability to render to memory buffers
-	 *  either allocated by cairo or by the calling code. The supported
-	 *  image formats are those defined in cairo_format_t.
-	 */
 	
 	/**
 	 */
@@ -390,114 +382,5 @@ public class Surface
 	{
 		// void* cairo_surface_get_user_data (cairo_surface_t *surface,  const cairo_user_data_key_t *key);
 		return cairo_surface_get_user_data(cairo_surface, key);
-	}
-	
-	/**
-	 * Creates an image surface of the specified format and
-	 * dimensions. Initially the surface contents are all
-	 * 0. (Specifically, within each pixel, each color or alpha channel
-	 * belonging to format will be 0. The contents of bits within a pixel,
-	 * but not belonging to the given format are undefined).
-	 * Params:
-	 * format =  format of pixels in the surface to create
-	 * width =  width of the surface, in pixels
-	 * height =  height of the surface, in pixels
-	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
-	 */
-	public static Surface imageSurfaceCreate(cairo_format_t format, int width, int height)
-	{
-		// cairo_surface_t* cairo_image_surface_create (cairo_format_t format,  int width,  int height);
-		auto p = cairo_image_surface_create(format, width, height);
-		if(p is null)
-		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
-		}
-		return new Surface(cast(cairo_surface_t*) p);
-	}
-	
-	/**
-	 * Creates an image surface for the provided pixel data. The output
-	 * buffer must be kept around until the cairo_surface_t is destroyed
-	 * or cairo_surface_finish() is called on the surface. The initial
-	 * contents of buffer will be used as the initial image contents; you
-	 * must explicitly clear the buffer, using, for example,
-	 * cairo_rectangle() and cairo_fill() if you want it cleared.
-	 * Params:
-	 * data =  a pointer to a buffer supplied by the application
-	 *  in which to write contents.
-	 * format =  the format of pixels in the buffer
-	 * width =  the width of the image to be stored in the buffer
-	 * height =  the height of the image to be stored in the buffer
-	 * stride =  the number of bytes between the start of rows
-	 *  in the buffer. Having this be specified separate from width
-	 *  allows for padding at the end of rows, or for writing
-	 *  to a subportion of a larger image.
-	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.See cairo_surface_set_user_data() for a means of attaching adestroy-notification fallback to the surface if necessary.
-	 */
-	public static Surface imageSurfaceCreateForData(ubyte* data, cairo_format_t format, int width, int height, int stride)
-	{
-		// cairo_surface_t* cairo_image_surface_create_for_data (unsigned char *data,  cairo_format_t format,  int width,  int height,  int stride);
-		auto p = cairo_image_surface_create_for_data(data, format, width, height, stride);
-		if(p is null)
-		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
-		}
-		return new Surface(cast(cairo_surface_t*) p);
-	}
-	
-	/**
-	 * Get a pointer to the data of the image surface, for direct
-	 * inspection or modification.
-	 * Since 1.2
-	 * Returns: a pointer to the image data of this surface or NULLif surface is not an image surface.
-	 */
-	public ubyte* imageSurfaceGetData()
-	{
-		// unsigned char* cairo_image_surface_get_data (cairo_surface_t *surface);
-		return cairo_image_surface_get_data(cairo_surface);
-	}
-	
-	/**
-	 * Get the format of the surface.
-	 * Since 1.2
-	 * Returns: the format of the surface
-	 */
-	public cairo_format_t imageSurfaceGetFormat()
-	{
-		// cairo_format_t cairo_image_surface_get_format (cairo_surface_t *surface);
-		return cairo_image_surface_get_format(cairo_surface);
-	}
-	
-	/**
-	 * Get the width of the image surface in pixels.
-	 * Returns: the width of the surface in pixels.
-	 */
-	public int imageSurfaceGetWidth()
-	{
-		// int cairo_image_surface_get_width (cairo_surface_t *surface);
-		return cairo_image_surface_get_width(cairo_surface);
-	}
-	
-	/**
-	 * Get the height of the image surface in pixels.
-	 * Returns: the height of the surface in pixels.
-	 */
-	public int imageSurfaceGetHeight()
-	{
-		// int cairo_image_surface_get_height (cairo_surface_t *surface);
-		return cairo_image_surface_get_height(cairo_surface);
-	}
-	
-	/**
-	 * Get the stride of the image surface in bytes
-	 * Since 1.2
-	 * Returns: the stride of the image surface in bytes (or 0 ifsurface is not an image surface). The stride is the distance inbytes from the beginning of one row of the image data to thebeginning of the next row.
-	 */
-	public int imageSurfaceGetStride()
-	{
-		// int cairo_image_surface_get_stride (cairo_surface_t *surface);
-		return cairo_image_surface_get_stride(cairo_surface);
 	}
 }

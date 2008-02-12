@@ -49,8 +49,6 @@ public alias int gssize;
 public alias void* va_list;
 public alias dchar unichar;
 public alias wchar unichar2;
-//public alias dchar gunichar;
-//public alias wchar gunichar2;
 public alias uint time_t;
 public alias uint XID;
 

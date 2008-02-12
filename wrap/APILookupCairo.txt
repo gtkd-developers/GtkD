@@ -265,31 +265,56 @@ file: cairo-cairo-surface-t.html
 struct: cairo_surface_t
 class: Surface
 prefix: cairo_surface_
-prefix: cairo_
 structWrap: cairo_surface_t* Surface
 import: glib.Str
-openFile: Surface
+outFile: Surface
 
 file: cairo-Image-Surfaces.html
-mergeFile: Surface
+struct: cairo_surface_t
+class: ImageSurface
+extend: cairo_surface_t
+prefix: cairo_image_surface_
+structWrap: cairo_surface_t* Surface
+import: glib.Str
+openFile: ImageSurface
 
-#file: cairo-Glitz-Surfaces.html
-#mergeFile: Surface
+file: cairo-PNG-Support.html
+prefix: cairo_surface_
+closeFile: ImageSurface
 
-#file: cairo-PDF-Surfaces.html
-#mergeFile: Surface
+file: cairo-PDF-Surfaces.html
+struct: cairo_surface_t
+class: PdfSurface
+extend: cairo_surface_t
+prefix: cairo_pdf_surface_
+structWrap: cairo_surface_t* Surface
+import: glib.Str
+outFile: PdfSurface
 
-#file: cairo-PNG-Support.html
-#mergeFile: Surface
-
-#file: cairo-PostScript-Surfaces.html
-#mergeFile: Surface
+file: cairo-PostScript-Surfaces.html
+struct: cairo_surface_t
+class: PostScriptSurface
+extend: cairo_surface_t
+prefix: cairo_ps_surface_
+structWrap: cairo_surface_t* Surface
+import: glib.Str
+outFile: PostScriptSurface
 
 #file: cairo-Win32-Surfaces.html
 #mergeFile: Surface
 
+file: cairo-SVG-Surfaces.html
+struct: cairo_surface_t
+class: SvgSurface
+extend: cairo_surface_t
+prefix: cairo_svg_surface_
+prefix: cairo_svg_
+structWrap: cairo_surface_t* Surface
+import: glib.Str
+outFile: SvgSurface
+
 #file: cairo-XLib-Surfaces.html
-closeFile: Surface
+#closeFile: Surface
 
 ###########################################################
 ### Cairo Utilities #######################################

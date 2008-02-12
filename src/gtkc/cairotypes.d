@@ -333,6 +333,16 @@ public enum cairo_format_t
 	+/
 }
 /**
+ * cairo_svg_version_t is used to describe the version number of the SVG
+ * specification that a generated SVG file will conform to.
+ * CAIRO_SVG_VERSION_1_1
+ */
+public enum cairo_svg_version_t
+{
+	VERSION__1,
+	VERSION__2
+}
+/**
  * cairo_status_t is used to indicate errors that can occur when
  * using Cairo. In some cases it is returned directly by functions.
  * but when using cairo_t, the last error, if any, is stored in
@@ -623,6 +633,46 @@ public struct cairo_user_data_key_t
  */
 // TODO
 // #define CAIRO_VERSION_ENCODE(major, minor, micro)
+
+/*
+ * cairo_read_func_t is the type of function which is called when a
+ * backend needs to read data from an intput stream. It is passed the
+ * closure which was specified by the user at the time the read
+ * function was registered, the buffer to read the data into and the
+ * length of the data in bytes. The read function should return
+ * CAIRO_STATUS_SUCCESS if all the data was successfully read,
+ * CAIRO_STATUS_READ_ERROR otherwise.
+ * closure:
+ *  the input closure
+ * data:
+ *  the buffer into which to read the data
+ * length:
+ *  the amount of data to read
+ * Returns:
+ *  the status code of the read operation
+ */
+// cairo_status_t (*cairo_read_func_t) (void *closure,  unsigned char *data,  unsigned int length);
+public typedef extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_read_func_t;
+
+/*
+ * cairo_write_func_t is the type of function which is called when a
+ * backend needs to write data to an output stream. It is passed the
+ * closure which was specified by the user at the time the write
+ * function was registered, the data to write and the length of the
+ * data in bytes. The write function should return
+ * CAIRO_STATUS_SUCCESS if all the data was successfully written,
+ * CAIRO_STATUS_WRITE_ERROR otherwise.
+ * closure:
+ *  the output closure
+ * data:
+ *  the buffer containing the data to write
+ * length:
+ *  the amount of data to write
+ * Returns:
+ *  the status code of the write operation
+ */
+// cairo_status_t (*cairo_write_func_t) (void *closure,  unsigned char *data,  unsigned int length);
+public typedef extern(C) cairo_status_t  function (void*, uchar*, uint) cairo_write_func_t;
 
 /*
  * cairo_destroy_func_t the type of function which is called when a

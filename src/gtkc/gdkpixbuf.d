@@ -86,6 +86,9 @@ extern(C)
 	int function(GdkPixbufAnimationIter* iter)gdk_pixbuf_animation_iter_get_delay_time;
 	gboolean function(GdkPixbufAnimationIter* iter)gdk_pixbuf_animation_iter_on_currently_loading_frame;
 	GdkPixbuf* function(GdkPixbufAnimationIter* iter)gdk_pixbuf_animation_iter_get_pixbuf;
+	
+	// gdkpixbuf.PixbufSimpleAnimation
+	
 	GdkPixbufSimpleAnim* function(gint width, gint height, gfloat rate)gdk_pixbuf_simple_anim_new;
 	void function(GdkPixbufSimpleAnim* animation, GdkPixbuf* pixbuf)gdk_pixbuf_simple_anim_add_frame;
 	

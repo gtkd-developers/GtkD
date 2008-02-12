@@ -265,6 +265,9 @@ extern(C)
 	uint function(cairo_surface_t* surface)cairo_surface_get_reference_count;
 	cairo_status_t function(cairo_surface_t* surface, cairo_user_data_key_t* key, void* userData, cairo_destroy_func_t destroy)cairo_surface_set_user_data;
 	void* function(cairo_surface_t* surface, cairo_user_data_key_t* key)cairo_surface_get_user_data;
+	
+	// cairo.ImageSurface
+	
 	cairo_surface_t* function(cairo_format_t format, int width, int height)cairo_image_surface_create;
 	cairo_surface_t* function(uchar* data, cairo_format_t format, int width, int height, int stride)cairo_image_surface_create_for_data;
 	uchar* function(cairo_surface_t* surface)cairo_image_surface_get_data;
@@ -272,6 +275,33 @@ extern(C)
 	int function(cairo_surface_t* surface)cairo_image_surface_get_width;
 	int function(cairo_surface_t* surface)cairo_image_surface_get_height;
 	int function(cairo_surface_t* surface)cairo_image_surface_get_stride;
+	cairo_surface_t* function(char* filename)cairo_image_surface_create_from_png;
+	cairo_surface_t* function(cairo_read_func_t readFunc, void* closure)cairo_image_surface_create_from_png_stream;
+	cairo_status_t function(cairo_surface_t* surface, char* filename)cairo_surface_write_to_png;
+	cairo_status_t function(cairo_surface_t* surface, cairo_write_func_t writeFunc, void* closure)cairo_surface_write_to_png_stream;
+	
+	// cairo.PdfSurface
+	
+	cairo_surface_t* function(char* filename, double widthInPoints, double heightInPoints)cairo_pdf_surface_create;
+	cairo_surface_t* function(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)cairo_pdf_surface_create_for_stream;
+	void function(cairo_surface_t* surface, double widthInPoints, double heightInPoints)cairo_pdf_surface_set_size;
+	
+	// cairo.PostScriptSurface
+	
+	cairo_surface_t* function(char* filename, double widthInPoints, double heightInPoints)cairo_ps_surface_create;
+	cairo_surface_t* function(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)cairo_ps_surface_create_for_stream;
+	void function(cairo_surface_t* surface, double widthInPoints, double heightInPoints)cairo_ps_surface_set_size;
+	void function(cairo_surface_t* surface)cairo_ps_surface_dsc_begin_setup;
+	void function(cairo_surface_t* surface)cairo_ps_surface_dsc_begin_page_setup;
+	void function(cairo_surface_t* surface, char* comment)cairo_ps_surface_dsc_comment;
+	
+	// cairo.SvgSurface
+	
+	cairo_surface_t* function(char* filename, double widthInPoints, double heightInPoints)cairo_svg_surface_create;
+	cairo_surface_t* function(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)cairo_svg_surface_create_for_stream;
+	void function(cairo_surface_t* surface, cairo_svg_version_t versio)cairo_svg_surface_restrict_to_version;
+	void function(cairo_svg_version_t** versions, int* numVersions)cairo_svg_get_versions;
+	char* function(cairo_svg_version_t versio)cairo_svg_version_to_string;
 	
 	// cairo.Matrix
 	
@@ -498,6 +528,24 @@ Symbol[] cairoLinks =
 	{ "cairo_image_surface_get_width",  cast(void**)& cairo_image_surface_get_width},
 	{ "cairo_image_surface_get_height",  cast(void**)& cairo_image_surface_get_height},
 	{ "cairo_image_surface_get_stride",  cast(void**)& cairo_image_surface_get_stride},
+	{ "cairo_image_surface_create_from_png",  cast(void**)& cairo_image_surface_create_from_png},
+	{ "cairo_image_surface_create_from_png_stream",  cast(void**)& cairo_image_surface_create_from_png_stream},
+	{ "cairo_surface_write_to_png",  cast(void**)& cairo_surface_write_to_png},
+	{ "cairo_surface_write_to_png_stream",  cast(void**)& cairo_surface_write_to_png_stream},
+	{ "cairo_pdf_surface_create",  cast(void**)& cairo_pdf_surface_create},
+	{ "cairo_pdf_surface_create_for_stream",  cast(void**)& cairo_pdf_surface_create_for_stream},
+	{ "cairo_pdf_surface_set_size",  cast(void**)& cairo_pdf_surface_set_size},
+	{ "cairo_ps_surface_create",  cast(void**)& cairo_ps_surface_create},
+	{ "cairo_ps_surface_create_for_stream",  cast(void**)& cairo_ps_surface_create_for_stream},
+	{ "cairo_ps_surface_set_size",  cast(void**)& cairo_ps_surface_set_size},
+	{ "cairo_ps_surface_dsc_begin_setup",  cast(void**)& cairo_ps_surface_dsc_begin_setup},
+	{ "cairo_ps_surface_dsc_begin_page_setup",  cast(void**)& cairo_ps_surface_dsc_begin_page_setup},
+	{ "cairo_ps_surface_dsc_comment",  cast(void**)& cairo_ps_surface_dsc_comment},
+	{ "cairo_svg_surface_create",  cast(void**)& cairo_svg_surface_create},
+	{ "cairo_svg_surface_create_for_stream",  cast(void**)& cairo_svg_surface_create_for_stream},
+	{ "cairo_svg_surface_restrict_to_version",  cast(void**)& cairo_svg_surface_restrict_to_version},
+	{ "cairo_svg_get_versions",  cast(void**)& cairo_svg_get_versions},
+	{ "cairo_svg_version_to_string",  cast(void**)& cairo_svg_version_to_string},
 	{ "cairo_matrix_init",  cast(void**)& cairo_matrix_init},
 	{ "cairo_matrix_init_identity",  cast(void**)& cairo_matrix_init_identity},
 	{ "cairo_matrix_init_translate",  cast(void**)& cairo_matrix_init_translate},
