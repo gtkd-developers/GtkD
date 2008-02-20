@@ -72,7 +72,7 @@ private import glib.Str;
 version(Tango) {
 	private import tango.core.Thread;
 	private import tango.stdc.stdio;
-	private import tango.stdc.posix.stdio;
+	private import tango.stdc.stdio;
 	private import tango.text.Util;
 	private import tango.stdc.string;
 } else {
@@ -192,6 +192,7 @@ public class Spawn
 		return "";
 	}
 	
+	extern (C) FILE*  fdopen(int, char*);
 	
 	/**
 	 * Executes the prepared process

@@ -255,7 +255,7 @@ public class GtkDClass
 		tangoImportConvs["std.thread"] = ["tango.core.Thread"];
 		tangoImportConvs["std.string"] = ["tango.text.Util"];
 		tangoImportConvs["std.c.string"] = ["tango.stdc.string"];
-		tangoImportConvs["std.c.stdio"] = ["tango.stdc.posix.stdio"];
+		tangoImportConvs["std.c.stdio"] = ["tango.stdc.stdio"];
 		tangoImportConvs["std.gc"] = ["tango.core.Memory"];
 		tangoImportConvs["std.stdarg"] = ["tango.core.Vararg"];
 		

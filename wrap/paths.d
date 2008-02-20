@@ -6,6 +6,7 @@
  * Added:	John Reimer	-- 2004-12-20
  * Updated: 2005-02-21 changed names; added version(linux)
  * Updated: 2005-05-05 updated Linux support
+ * Updated: 2008-02-16 Tango support
  */
 
 module gtkc.paths;
@@ -93,69 +94,87 @@ const char[][LIBRARY.max+1] importLibs =
 	];
 }
 
-// dmd 1.005 still makes private char[] public?!
-//private char[] libPath;
-// Specify the default path for the gtkD dll's
-
 version(Windows)
 {
-	import std.windows.registry;
-	import std.stdio;
+	//version(Phobos)
+	version(Tango){} else
+	{
+		import std.windows.registry;
+		import std.stdio;
+	}
+
+	extern (Windows)
+	{
+		private uint GetEnvironmentVariableA(char*, char*, uint);
+	}
+
+	//Based on tango.sys.Environment.Environment.get
+	static char[] GetEnvironmentVariable(char[] variable)
+	{
+		char[] var = variable ~ "\0";
+		uint size = GetEnvironmentVariableA(var.ptr, cast(char*)null, 0);
+	
+		if (size == 0) return "";
+
+		char[] buf = new char[size];
+		size = GetEnvironmentVariableA(var.ptr, buf.ptr, size);
+
+		if (size == 0) return "";
+
+		return buf[0 .. size];
+	}
 
 	char[] libPath()
 	{
-//		if ( libPath is null )
-//		{
-//			libPath = "\\Program Files\\Common Files\\GTK\\2.0\\bin\\";
-//		}
-//		return libPath;
-
-		Key k = Registry.localMachine();
-
 		char[] libPath;
 
-		foreach ( Key key ; k.keys() )
+		libPath = GetEnvironmentVariable("%GTK_BASEPATH%");
+
+		if(libPath.length > 0)
+			return libPath ~ "\\bin\\";
+
+		// version(Phobos)
+		version(Tango){} else
 		{
-			writefln("key = ", key.name());
+			// When using phobos Also try the Register
+
+			Key k = Registry.localMachine();
+
+			debug(register) foreach ( Key key ; k.keys() )
+			{
+				writefln("key = ", key.name());
+			}
+
+			try
+			{
+				k = k.getKey("SOFTWARE");
+				//writefln("key.value = %s", k.name());
+				k = k.getKey("GTK");
+				//writefln("key.value = %s", k.name());
+				k = k.getKey("2.0");
+				//writefln("key.value = %s", k.name());
+				Value v = k.getValue("DllPath");
+				libPath = v.value_SZ() ~ "\\";
+			}
+			catch ( Exception e )
+			{
+				libPath = "";
+			}
 		}
 
-		try
-		{
-			k = k.getKey("SOFTWARE");
-			//writefln("key.value = %s", k.name());
-			k = k.getKey("GTK");
-			//writefln("key.value = %s", k.name());
-			k = k.getKey("2.0");
-			//writefln("key.value = %s", k.name());
-			Value v = k.getValue("DllPath");
-			libPath = v.value_SZ() ~ "\\";
-		}
-		catch ( Exception e )
-		{
-			libPath = "\\Program Files\\Common Files\\GTK\\2.0\\bin\\";
-		}
-
-		if ( libPath is null )
-		{
-			libPath = "\\Program Files\\Common Files\\GTK\\2.0\\bin\\";
-		}
-
-
+		// Returns the found location or an empty string
+		// to load the libraries from the path.
+		// see http://msdn2.microsoft.com/en-us/library/ms682586(VS.85).aspx
 		return libPath;
 	}
 }
 
-//   empty for linux because default path is known by ld
+// empty for linux because default path is known by ld
 
 version(linux)
 {
 	char[] libPath()
 	{
-//		if ( libPath is null )
-//		{
-//			libPath = "";
-//		}
-//		return libPath;
 		return "";
 	}
 }
