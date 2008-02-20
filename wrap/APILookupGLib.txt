@@ -54,7 +54,9 @@ public alias int gssize;
 public alias void* va_list;
 public alias dchar unichar;
 public alias wchar unichar2;
-public alias uint time_t;
+//public alias dchar gunichar;
+//public alias wchar gunichar2;
+public alias int time_t;
 public alias uint XID;
 
 addTypedefs: end
@@ -667,10 +669,11 @@ outFile: Util
 file: glib-Lexical-Scanner.html
 struct: GScanner
 class: ScannerG
-prefix: g_scanner_
-structWrap: GScanner* ScannerG
 import: glib.HashTable
 structWrap: GHashTable* HashTable
+prefix: g_scanner
+#import: glib.Scanner
+structWrap: GScanner* ScannerG
 #import: glib.ScannerConfig
 #structWrap: GScannerConfig* ScannerConfig
 import: glib.Str
@@ -814,7 +817,6 @@ code: start
 		return "";
 	}
 
-	extern (C) FILE*  fdopen(int, char*);
 
 	/**
 	 * Executes the prepared process

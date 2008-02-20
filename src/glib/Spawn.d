@@ -192,7 +192,13 @@ public class Spawn
 		return "";
 	}
 	
-	extern (C) FILE*  fdopen(int, char*);
+	version(Tango)
+	{
+		version (Windows)
+			extern (C) FILE*  fdopen(int, char*);
+		else
+			private import tango.stdc.posix.stdio; 
+	}
 	
 	/**
 	 * Executes the prepared process
