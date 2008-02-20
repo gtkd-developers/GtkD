@@ -195,9 +195,9 @@ public class Spawn
 	version(Tango)
 	{
 		version (Windows)
-			extern (C) FILE*  fdopen(int, char*);
+		extern (C) FILE*  fdopen(int, char*); //Generates linker error on linux.
 		else
-			private import tango.stdc.posix.stdio; 
+		private import tango.stdc.posix.stdio;
 	}
 	
 	/**
