@@ -18,7 +18,7 @@
 
 module gtkD.TestDrawingArea;
 
-//debug = trace
+//debug = trace;
 
 private import gtk.VBox;
 private import gdk.Font;
@@ -171,8 +171,15 @@ class TestDrawingArea : VBox
 
 			primitiveType = "Filled Arc";
 			font = PgFontDescription.fromString("Courier 48");
+
 			image = new Image("../../images/gtkDlogo_a_small.png");
 			scaledPixbuf = image.getPixbuf();
+			if (scaledPixbuf is null)
+			{
+				version(Tango) Stdout("\nFailed to load image gtkDlogo_a_small.png").newline;
+				else printf("\nFailed to load image file gtkDlogo_a_small.png\n");
+			}
+
 			paintColor = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
 			black = new Color(cast(ubyte)0,cast(ubyte)0,cast(ubyte)0);
 
@@ -300,13 +307,16 @@ class TestDrawingArea : VBox
 
 		public void sizeSpinChanged(SpinButton spinButton)
 		{
-			int width = spinButton.getValueAsInt();
-			scaledPixbuf = image.getPixbuf();
+			if ( !(scaledPixbuf is null))
+			{
+				int width = spinButton.getValueAsInt();
+				scaledPixbuf = image.getPixbuf();
 			
-			float ww = width * scaledPixbuf.getWidth() / 30;
-			float hh = width * scaledPixbuf.getHeight() / 30;
+				float ww = width * scaledPixbuf.getWidth() / 30;
+				float hh = width * scaledPixbuf.getHeight() / 30;
 			
-			scaledPixbuf = scaledPixbuf.scaleSimple(cast(int)ww, cast(int)hh, GdkInterpType.HYPER);
+				scaledPixbuf = scaledPixbuf.scaleSimple(cast(int)ww, cast(int)hh, GdkInterpType.HYPER);
+			}
 		}
 					
 
@@ -363,12 +373,15 @@ class TestDrawingArea : VBox
 					break;
 				
 				case "Image":
-					scaledPixbuf.renderToDrawable( d, gc,
-					//d.getDrawableStruct(), gc.getGCStruct(), 
-						0, 0, x, y, 
-						scaledPixbuf.getWidth(), scaledPixbuf.getHeight(), 
-						GdkRgbDither.NONE, 0, 0
-						);
+					if ( !(scaledPixbuf is null))
+					{
+						scaledPixbuf.renderToDrawable( d, gc,
+						//d.getDrawableStruct(), gc.getGCStruct(), 
+							0, 0, x, y, 
+							scaledPixbuf.getWidth(), scaledPixbuf.getHeight(), 
+							GdkRgbDither.NONE, 0, 0
+							);
+					}
 					break;
 				
 				case "Polygon":
