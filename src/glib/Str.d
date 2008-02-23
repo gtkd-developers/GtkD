@@ -42,7 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- std.stdio
+ * 	- std.c.stdio
  * 	- glib.StringG
  * 	- std.c.string
  * structWrap:
@@ -65,7 +65,7 @@ version(Tango) {
 	private import tango.stdc.stdio;
 	private import tango.stdc.string;
 } else {
-	private import std.stdio;
+	private import std.c.stdio;
 	private import std.c.string;
 }
 

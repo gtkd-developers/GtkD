@@ -89,7 +89,7 @@ struct: GdkGLConfig
 class: GLConfig
 prefix: gdk_gl_config_
 import: glib.Str
-import: std.stdio
+import: std.c.stdio
 import: gdk.Screen
 structWrap: GdkScreen* Screen
 

@@ -251,7 +251,7 @@ public class GtkDClass
 		// the use of phobs is limited, maybe we can get by with this...
 		
 		char[][][char[]] tangoImportConvs;
-		tangoImportConvs["std.stdio"] = ["tango.stdc.stdio"];
+		tangoImportConvs["std.stdio"] = ["tango.io.Stdout"];
 		tangoImportConvs["std.thread"] = ["tango.core.Thread"];
 		tangoImportConvs["std.string"] = ["tango.text.Util"];
 		tangoImportConvs["std.c.string"] = ["tango.stdc.string"];

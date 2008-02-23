@@ -404,7 +404,7 @@ outFile: MessageLog
 
 file: glib-String-Utility-Functions.html
 class: Str
-import: std.stdio
+import: std.c.stdio
 import: glib.StringG
 structWrap: GString* StringG
 import: std.c.string
@@ -705,7 +705,6 @@ prefix: g_spawn_
 #structWrap: GError** Error*
 import: glib.Str
 import: std.thread
-import: std.stdio
 import: std.c.stdio
 import: std.string
 import: std.c.string
@@ -1039,7 +1038,7 @@ outFile: Spawn
 
 file: glib-File-Utilities.html
 class: FileUtils
-import: std.stdio
+import: std.c.stdio
 import: glib.Str
 prefix: g_
 #import: glib.ErrorG

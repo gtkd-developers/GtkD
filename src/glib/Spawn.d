@@ -47,7 +47,6 @@
  * 	- glib.MainLoop
  * 	- glib.Str
  * 	- std.thread
- * 	- std.stdio
  * 	- std.c.stdio
  * 	- std.string
  * 	- std.c.string
@@ -72,12 +71,10 @@ private import glib.Str;
 version(Tango) {
 	private import tango.core.Thread;
 	private import tango.stdc.stdio;
-	private import tango.stdc.stdio;
 	private import tango.text.Util;
 	private import tango.stdc.string;
 } else {
 	private import std.thread;
-	private import std.stdio;
 	private import std.c.stdio;
 	private import std.string;
 	private import std.c.string;

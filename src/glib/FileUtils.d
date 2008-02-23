@@ -42,7 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- std.stdio
+ * 	- std.c.stdio
  * 	- glib.Str
  * structWrap:
  * module aliases:
@@ -62,7 +62,7 @@ private import glib.Str;
 version(Tango) {
 	private import tango.stdc.stdio;
 } else {
-	private import std.stdio;
+	private import std.c.stdio;
 }
 
 
