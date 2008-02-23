@@ -63,7 +63,7 @@ private import gdk.Screen;
 
 
 version(Tango) {
-	private import tango.stdc.stdio;
+	private import tango.io.Stdout;
 } else {
 	private import std.stdio;
 }
@@ -121,13 +121,28 @@ public class GLConfig : ObjectG
 		gdkGLConfig = cast(GdkGLConfig*)gdk_gl_config_new_by_mode(mode);
 		if ( gdkGLConfig is null )
 		{
-			printf ("*** Cannot find the double-buffered visual.\n");
-			printf ("*** Trying single-buffered visual.\n");
+			version(Tango)
+			{
+				Stdout("*** Cannot find the double-buffered visual.").newline;
+				Stdout("*** Trying single-buffered visual.").newline;
+			}
+			else
+			{
+				writefln("*** Cannot find the double-buffered visual.");
+				writefln("*** Trying single-buffered visual.");
+			}
 			gdkGLConfig = cast(GdkGLConfig*)gdk_gl_config_new_by_mode(fallback);
 		}
 		if ( gdkGLConfig is null )
 		{
-			printf ("*** No appropriate OpenGL-capable visual found.\n");
+			version(Tango)
+			{
+				Stdout("*** No appropriate OpenGL-capable visual found.").newline;
+			}
+			else
+			{
+				writefln("*** No appropriate OpenGL-capable visual found.");
+			}
 			throw new Exception("GL configure failed");
 		}
 		this(gdkGLConfig);
