@@ -2,7 +2,7 @@
 rm libgtkd.a
 compd \
 	src/atk \
-	src/cairoLib \
+	src/cairo \
 	src/gdk \
 	src/glib \
 	src/gobject \
