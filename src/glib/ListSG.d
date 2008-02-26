@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = ListSG
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -42,7 +42,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ListG
  * structWrap:
  * 	- GSList* -> ListSG
  * module aliases:
@@ -56,7 +55,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.ListG;
 
 
 
@@ -124,6 +122,13 @@ public class ListSG
 			else return;
 		}
 		this.gSList = gSList;
+	}
+	
+	/** */
+	void* data()
+	{
+		int* pt = cast(int*)getStruct();
+		return cast(void *)(*pt);
 	}
 	
 	/**

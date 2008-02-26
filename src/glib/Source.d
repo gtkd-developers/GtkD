@@ -42,17 +42,12 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.MainLoop
- * 	- glib.Dataset
- * 	- glib.Date
- * 	- glib.Source
  * 	- glib.MainContext
+ * 	- glib.TimeVal
  * structWrap:
- * 	- GDataset* -> Dataset
- * 	- GDate* -> Date
  * 	- GMainContext* -> MainContext
- * 	- GMainLoop* -> MainLoop
  * 	- GSource* -> Source
+ * 	- GTimeVal* -> TimeVal
  * module aliases:
  * local aliases:
  */
@@ -64,11 +59,8 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.MainLoop;
-private import glib.Dataset;
-private import glib.Date;
-private import glib.Source;
 private import glib.MainContext;
+private import glib.TimeVal;
 
 
 
@@ -470,10 +462,10 @@ public class Source
 	 * Params:
 	 * timeval =  GTimeVal structure in which to store current time.
 	 */
-	public void getCurrentTime(GTimeVal* timeval)
+	public void getCurrentTime(TimeVal timeval)
 	{
 		// void g_source_get_current_time (GSource *source,  GTimeVal *timeval);
-		g_source_get_current_time(gSource, timeval);
+		g_source_get_current_time(gSource, (timeval is null) ? null : timeval.getTimeValStruct());
 	}
 	
 	/**

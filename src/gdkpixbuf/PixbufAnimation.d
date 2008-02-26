@@ -43,9 +43,11 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.TimeVal
  * 	- gdk.Pixbuf
  * 	- glib.Str
  * structWrap:
+ * 	- GTimeVal* -> TimeVal
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GdkPixbufAnimation* -> PixbufAnimation
  * module aliases:
@@ -59,6 +61,7 @@ public  import gtkc.gdkpixbuftypes;
 private import gtkc.gdkpixbuf;
 
 
+private import glib.TimeVal;
 private import gdk.Pixbuf;
 private import glib.Str;
 
@@ -217,10 +220,10 @@ public class PixbufAnimation : ObjectG
 	 * startTime =  time when the animation starts playing
 	 * Returns: an iterator to move over the animation
 	 */
-	public GdkPixbufAnimationIter* getIter(GTimeVal* startTime)
+	public GdkPixbufAnimationIter* getIter(TimeVal startTime)
 	{
 		// GdkPixbufAnimationIter* gdk_pixbuf_animation_get_iter (GdkPixbufAnimation *animation,  const GTimeVal *start_time);
-		return gdk_pixbuf_animation_get_iter(gdkPixbufAnimation, startTime);
+		return gdk_pixbuf_animation_get_iter(gdkPixbufAnimation, (startTime is null) ? null : startTime.getTimeValStruct());
 	}
 	
 	/**
@@ -279,10 +282,10 @@ public class PixbufAnimation : ObjectG
 	 * currentTime =  current time
 	 * Returns: TRUE if the image may need updating
 	 */
-	public static int iterAdvance(GdkPixbufAnimationIter* iter, GTimeVal* currentTime)
+	public static int iterAdvance(GdkPixbufAnimationIter* iter, TimeVal currentTime)
 	{
 		// gboolean gdk_pixbuf_animation_iter_advance (GdkPixbufAnimationIter *iter,  const GTimeVal *current_time);
-		return gdk_pixbuf_animation_iter_advance(iter, currentTime);
+		return gdk_pixbuf_animation_iter_advance(iter, (currentTime is null) ? null : currentTime.getTimeValStruct());
 	}
 	
 	/**

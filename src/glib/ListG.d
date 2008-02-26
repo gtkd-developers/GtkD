@@ -127,7 +127,7 @@ public class ListG
 	/** */
 	void* data()
 	{
-		int* pt =cast(int*)getStruct();
+		int* pt = cast(int*)getStruct();
 		return cast(void *)(*pt);
 	}
 	

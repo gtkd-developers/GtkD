@@ -43,7 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ErrorG
  * 	- glib.OptionGroup
  * 	- glib.Str
  * structWrap:
@@ -59,7 +58,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.ErrorG;
 private import glib.OptionGroup;
 private import glib.Str;
 

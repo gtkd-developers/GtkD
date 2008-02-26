@@ -37,7 +37,7 @@
  * implements:
  * prefixes:
  * 	- g_pattern_spec_
- * 	- g_pattern_match_
+ * 	- g_pattern_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -175,7 +175,7 @@ public class Pattern
 	 * stringReversed = the reverse of string or NULL.
 	 * Returns:TRUE if string matches pspec.
 	 */
-	public int gPatternMatch(uint stringLength, char[] string, char[] stringReversed)
+	public int match(uint stringLength, char[] string, char[] stringReversed)
 	{
 		// gboolean g_pattern_match (GPatternSpec *pspec,  guint string_length,  const gchar *string,  const gchar *string_reversed);
 		return g_pattern_match(gPatternSpec, stringLength, Str.toStringz(string), Str.toStringz(stringReversed));
@@ -189,7 +189,7 @@ public class Pattern
 	 * string = the UTF-8 encoded string to match.
 	 * Returns:TRUE if string matches pspec.
 	 */
-	public int string(char[] string)
+	public int matchString(char[] string)
 	{
 		// gboolean g_pattern_match_string (GPatternSpec *pspec,  const gchar *string);
 		return g_pattern_match_string(gPatternSpec, Str.toStringz(string));
@@ -205,7 +205,7 @@ public class Pattern
 	 * string = the UTF-8 encoded string to match.
 	 * Returns:TRUE if string matches pspec.
 	 */
-	public static int simple(char[] pattern, char[] string)
+	public static int matchSimple(char[] pattern, char[] string)
 	{
 		// gboolean g_pattern_match_simple (const gchar *pattern,  const gchar *string);
 		return g_pattern_match_simple(Str.toStringz(pattern), Str.toStringz(string));

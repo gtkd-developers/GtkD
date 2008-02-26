@@ -42,9 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.HashTable
  * structWrap:
- * 	- GHashTable* -> HashTable
  * module aliases:
  * local aliases:
  */
@@ -56,7 +54,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.HashTable;
 
 
 

@@ -338,27 +338,6 @@ public class Spawn
 		return exitStatus;
 	}
 	
-	// old version
-	//	public int commandLineSync()
-	//	{
-		//		char[] commandLine;
-		//		foreach ( int count, char[] arg; argv)
-		//		{
-			//			if ( count > 0 )
-			//			{
-				//				commandLine ~= ' ';
-			//			}
-			//			commandLine ~= arg;
-		//		}
-		//		return g_spawn_command_line_sync(
-		//
-		//			Str.toStringz(commandLine),
-		//			&strOutput,
-		//			&strError,
-		//			&exitStatus,
-		//			&error);
-	//	}
-	
 	/**
 	 * Executes a command synchronasly and
 	 * optionally calls delegates for sysout, syserr and end of job

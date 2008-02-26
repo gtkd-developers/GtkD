@@ -143,48 +143,28 @@ file: glib-The-Main-Event-Loop.html
 struct: GMainLoop
 class: MainLoop
 prefix: g_main_loop_
+prefix: g_
 noprefix: g_main_context_
 noprefix: g_timeout_
 noprefix: g_child_
 noprefix: g_source_
-import: glib.Dataset
-structWrap: GDataset* Dataset
+structWrap: GMainLoop* MainLoop
 import: glib.MainContext
 structWrap: GMainContext* MainContext
 import: glib.Source
 structWrap: GSource* Source
-nocode: g_main_loop_ref
-code: start
-	/**
-	 * Increases the reference count on a GMainLoop object by one.
-	 * Params:
-	 *  loop = a GMainLoop
-	 * Returns:
-	 *  loop
-	 */
-	public MainLoop doref()
-	{
-		// GMainLoop* g_main_loop_ref (GMainLoop *loop);
-		return new MainLoop( g_main_loop_ref(gMainLoop) );
-	}
-code: end	
 outFile: MainLoop
 
 struct: GMainContext
 class: MainContext
 prefix: g_main_context_
 strictPrefix: Yes
-import: glib.MainLoop
-structWrap: GMainLLoop* MainLoop
 import: glib.Source
 structWrap: GSource* Source
 import: gthread.Cond
 structWrap: GCond* Cond
 import: gthread.Mutex
 structWrap: GMutex* Mutex
-import: glib.ThreadPool
-structWrap: GThreadPoll* ThreadPoll
-import: glib.MainContext
 structWrap: GMainContext* MainContext
 #import: glib.SourceFuncs
 #structWrap: GSourceFuncs* SourceFuncs
@@ -193,10 +173,6 @@ structWrap: GMainContext* MainContext
 outFile: MainContext
 
 class: Timeout
-import: glib.MainLoop
-structWrap: GMainLoop* MainLoop
-import: glib.Dataset
-structWrap: GDataset* Dataset
 prefix: g_timeout_
 strictPrefix: Yes
 import: glib.Source
@@ -204,27 +180,18 @@ structWrap: GSource* Source
 outFile: Timeout
 
 class: Child
-import: glib.MainLoop
-structWrap: GMainLoop* MainLoop
-import: glib.Dataset
-structWrap: GDataset* Dataset
+import: glib.Source
+structWrap: GSource* Source
 prefix: g_child_
 strictPrefix: Yes
 outFile: Child
 
 struct: GSource
 class: Source
-import: glib.MainLoop
-structWrap: GMainLoop* MainLoop
-import: glib.Dataset
-structWrap: GDataset* Dataset
-import: glib.Date
-structWrap: GDate* Date
 prefix: g_source_
 strictPrefix: Yes
 #import: glib.SourceFuncs
 #structWrap: GSourceFuncs* SourceFuncs
-import: glib.Source
 structWrap: GSource* Source
 import: glib.MainContext
 structWrap: GMainContext* MainContext
@@ -232,101 +199,19 @@ structWrap: GMainContext* MainContext
 #structWrap: GSourceCallbackFuncs* SourceCallbackFuncs
 #import: glib.PollFD
 #structWrap: GPollFD* PollFD
-#import: glib.TimeVal
-#structWrap: GTimeVal* TimeVal
+import: glib.TimeVal
+structWrap: GTimeVal* TimeVal
 outFile: Source
 
 
-file: glib-Threads.html
-#struct: GThread
-#class: Thread
-#import: glib.ErrorG
-#import: gthread.Mutex
-#structWrap: GMutex* Mutex
-#import: glib.Source
-#structWrap: GSource* Source
-#import: glib.Dataset
-#structWrap: GDataset* Dataset
-#import: glib.ListG
-#structWrap: GList* ListG
-#prefix: g_thread_
-#noprefix: g_mutex_
-#noprefix: g_static_rec_mutex_
-#noprefix: g_static_rw_lock_
-#noprefix: g_cond_
-#noprefix: g_private_
-#noprefix: g_static_private_
-##import: glib.ThreadFunctions
-##structWrap: GThreadFunctions* ThreadFunctions
-#structWrap: GThread* Thread
-##import: glib.Error*
-##structWrap: GError** Error*
-##import: glib.StaticMutex
-##structWrap: GStaticMutex* StaticMutex
-#outFile: Thread
-
-#struct: GMutex
-#class: Mutex
-#prefix: g_mutex_
-#strictPrefix: Yes
-#outFile: Mutex
-
-#struct: GStaticRecMutex
-#class: StaticRecMutex
-#prefix: g_static_rec_mutex_
-#strictPrefix: Yes
-#outFile: StaticRecMutex
-
-#struct: GStaticRWLock
-#class: RWLock
-#prefix: g_static_rw_lock_
-#strictPrefix: Yes
-#outFile: RWLock
-
-#struct: GCond
-#class: Cond
-#import: glib.Date
-#structWrap: GDate* Date
-#prefix: g_cond_
-#strictPrefix: Yes
-#import: gthread.Mutex
-#structWrap: GMutex* Mutex
-##import: glib.TimeVal
-##structWrap: GTimeVal* TimeVal
-#outFile: Cond
-
-#struct: GPrivate
-#class: Private
-#import: glib.Dataset
-#structWrap: GDataset* Dataset
-#prefix: g_private_
-#strictPrefix: Yes
-#outFile: Private
-
-#struct: GStaticPrivate
-#class: StaticPrivate
-#import: glib.Dataset
-#structWrap: GDataset* Dataset
-#prefix: g_static_private_
-#strictPrefix: Yes
-#outFile: StaticPrivate
-
-
-
-
-
-
-
-
+#file: glib-Threads.html
+#In APILookupGThread.txt
 
 file: glib-Thread-Pools.html
 struct: GThreadPool
 class: ThreadPool
-import: glib.ErrorG
-import: glib.ListG
-structWrap: GList* ListG
 prefix: g_thread_pool_
-import: glib.MainLoop
+#import: glib.ErrorG
 outFile: ThreadPool
 
 
@@ -334,23 +219,18 @@ file: glib-Asynchronous-Queues.html
 struct: GAsyncQueue
 class: AsyncQueue
 prefix: g_async_queue_
-import: glib.ListG
-import: glib.Date
-import: glib.AsyncQueue
 structWrap: GAsyncQueue* AsyncQueue
-#import: glib.TimeVal
-#structWrap: GTimeVal* TimeVal
+import: glib.TimeVal
+structWrap: GTimeVal* TimeVal
 outFile: AsyncQueue
 
 file: glib-Dynamic-Loading-of-Modules.html
 struct: GModule
 class: Module
 prefix: g_module_
-import: glib.Module
 structWrap: GModule* Module
 import: glib.Str
 outFile: Module
-
 
 file: glib-Memory-Allocation.html
 class: Memory
@@ -359,19 +239,16 @@ prefix: g_
 #structWrap: GMemVTable* MemVTable
 outFile: Memory
 
-
 file: glib-IO-Channels.html
 struct: GIOChannel
 class: IOChannel
 prefix: g_io_channel_
-import: glib.ErrorG
+#import: glib.ErrorG
 import: glib.StringG
 import: glib.Source
-import: glib.Dataset
 import: glib.Str
 structWrap: GString* StringG
 structWrap: GSource* Source
-#import: glib.IOChannel
 structWrap: GIOChannel* IOChannel
 outFile: IOChannel
 
@@ -379,9 +256,9 @@ outFile: IOChannel
 file: glib-Error-Reporting.html
 struct: GError
 class: ErrorG
-import: glib.Quark
-import: glib.Str
 prefix: g_error_
+import: glib.Str
+structWrap: GError* ErrorG
 outFile: ErrorG
 
 
@@ -602,9 +479,9 @@ outFile: Str
 
 file: glib-Character-Set-Conversion.html
 class: CharacterSet
-import: glib.ErrorG
 prefix: g_
 import: glib.Str
+#import: glib.ErrorG
 # these fail to compile because of a reference to a struct that size is not known
 noprefix: g_convert_with_iconv
 noprefix: g_iconv_open
@@ -614,10 +491,16 @@ outFile: CharacterSet
 
 file: glib-Unicode-Manipulation.html
 class: Unicode
-import: glib.ErrorG
 prefix: g_
 import: glib.Str
+#import: glib.ErrorG
 outFile: Unicode
+
+file: glib-Base64-Encoding.html
+class: Base64
+prefix: g_base64_
+import: glib.Str
+outFile: Base64
 
 file: glib-I18N.html
 class: Internationalization
@@ -626,12 +509,20 @@ import: glib.Str
 outFile: Internationalization
 
 file: glib-Date-and-Time-Functions.html
+struct: GTimeVal
+class: TimeVal
+prefix: g_time_val_
+prefix: g_
+noprefix: g_date_
+import: glib.Str
+outFile: TimeVal
+
 struct: GDate
 class: Date
 prefix: g_date_
-#import: glib.TimeVal
-#structWrap: GTimeVal* TimeVal
-#import: glib.Date
+strictPrefix: Y
+import: glib.TimeVal
+structWrap: GTimeVal* TimeVal
 import: glib.Str
 structWrap: GDate* Date
 outFile: Date
@@ -639,9 +530,72 @@ outFile: Date
 file: glib-Random-Numbers.html
 struct: GRand
 class: RandG
+prefix: g_rand_
 prefix: g_
-#import: glib.Rand
 structWrap: GRand* RandG
+
+nocode: g_rand_int
+nocode: g_rand_int_range
+nocode: g_rand_double
+nocode: g_rand_double_range
+
+code: start
+	/**
+	 * Returns the next random guint32 from rand_ equally distributed over
+	 * the range [0..2^32-1].
+	 * Params:
+	 * rand =  a GRand.
+	 * Returns: A random number.
+	 */
+	public uint randInt()
+	{
+		// guint32 g_rand_int (GRand *rand_);
+		return g_rand_int(gRand);
+	}
+	
+	/**
+	 * Returns the next random gint32 from rand_ equally distributed over
+	 * the range [begin..end-1].
+	 * Params:
+	 * rand =  a GRand.
+	 * begin =  lower closed bound of the interval.
+	 * end =  upper open bound of the interval.
+	 * Returns: A random number.
+	 */
+	public int randIntRange(int begin, int end)
+	{
+		// gint32 g_rand_int_range (GRand *rand_,  gint32 begin,  gint32 end);
+		return g_rand_int_range(gRand, begin, end);
+	}
+	
+	/**
+	 * Returns the next random gdouble from rand_ equally distributed over
+	 * the range [0..1).
+	 * Params:
+	 * rand =  a GRand.
+	 * Returns: A random number.
+	 */
+	public double randDouble()
+	{
+		// gdouble g_rand_double (GRand *rand_);
+		return g_rand_double(gRand);
+	}
+	
+	/**
+	 * Returns the next random gdouble from rand_ equally distributed over
+	 * the range [begin..end).
+	 * Params:
+	 * rand =  a GRand.
+	 * begin =  lower closed bound of the interval.
+	 * end =  upper open bound of the interval.
+	 * Returns: A random number.
+	 */
+	public double randDoubleRange(double begin, double end)
+	{
+		// gdouble g_rand_double_range (GRand *rand_,  gdouble begin,  gdouble end);
+		return g_rand_double_range(gRand, begin, end);
+	}
+code: end
 outFile: RandG
 
 #file: glib-Hook-Functions.html
@@ -661,7 +615,6 @@ prefix: g_
 #import: glib.DebugKey
 #structWrap: GDebugKey* DebugKey
 import: glib.Str
-
 outFile: Util
 
 file: glib-Lexical-Scanner.html
@@ -669,8 +622,6 @@ struct: GScanner
 class: ScannerG
 prefix: g_scanner_
 structWrap: GScanner* ScannerG
-import: glib.HashTable
-structWrap: GHashTable* HashTable
 #import: glib.ScannerConfig
 #structWrap: GScannerConfig* ScannerConfig
 import: glib.Str
@@ -689,7 +640,6 @@ file: glib-Timers.html
 struct: GTimer
 class: Timer
 prefix: g_timer
-#import: glib.Timer
 structWrap: GTimer* Timer
 outFile: Timer
 
@@ -962,27 +912,6 @@ code: start
 		return exitStatus;
 	}
 
-// old version
-//	public int commandLineSync()
-//	{
-//		char[] commandLine;
-//		foreach ( int count, char[] arg; argv)
-//		{
-//			if ( count > 0 )
-//			{
-//				commandLine ~= ' ';
-//			}
-//			commandLine ~= arg;
-//		}
-//		return g_spawn_command_line_sync(
-//		
-//			Str.toStringz(commandLine), 
-//			&strOutput, 
-//			&strError, 
-//			&exitStatus, 
-//			&error);
-//	}
-	
 	/**
 	 * Executes a command synchronasly and 
 	 * optionally calls delegates for sysout, syserr and end of job
@@ -1038,33 +967,45 @@ outFile: Spawn
 
 file: glib-File-Utilities.html
 class: FileUtils
+prefix: g_
+noprefix: g_dir_
+noprefix: g_mapped_file_
 import: std.c.stdio
 import: glib.Str
-prefix: g_
 #import: glib.ErrorG
-#import: glib.Error*
 #structWrap: GError** Error*
-#import: glib.Dir
-#structWrap: GDir* Dir
-#import: glib.MappedFile
-#structWrap: GMappedFile* MappedFile
 outFile: FileUtils
+
+struct: GDir
+class: Directory
+prefix: g_dir_
+strictPrefix: Y
+import: glib.Str
+#import: glib.ErrorG
+outFile: Directory
+
+struct: GMappedFile
+class: MappedFile
+prefix: g_mapped_file_
+strictPrefix: Y
+import: glib.Str
+#import: glib.ErrorG
+outFile: MappedFile
 
 file: glib-Shell-related-Utilities.html
 class: ShellUtils
-import: glib.ErrorG
 prefix: g_shell_
 import: glib.Str
+#import: glib.ErrorG
 outFile: ShellUtils
 
 file: glib-Commandline-option-parser.html
 
 struct: GOptionContext
 class: OptionContext
-import: glib.ErrorG
 prefix: g_option_context_
 noprefix: g_option_group_
-#import: glib.Error*
+#import: glib.ErrorG
 #structWrap: GError** Error*
 #import: glib.OptionEntry
 #structWrap: GOptionEntry* OptionEntry
@@ -1075,10 +1016,6 @@ outFile: OptionContext
 
 struct: GOptionGroup
 class: OptionGroup
-import: glib.Dataset
-structWrap: GDataset* Dataset
-import: glib.OptionContext
-structWrap: GOptionContext* OptionContext
 prefix: g_option_group_
 strictPrefix: Yes
 #import: glib.OptionEntry
@@ -1090,20 +1027,39 @@ file: glib-Glob-style-pattern-matching.html
 struct: GPatternSpec
 class: Pattern
 prefix: g_pattern_spec_
-prefix: g_pattern_match_
-#import: glib.PatternSpec
+prefix: g_pattern_
 structWrap: GPatternSpec* Pattern
 import: glib.Str
 outFile: Pattern
 
+file: glib-Perl-compatible-regular-expressions.html
+struct: GRegex
+class: Regex
+prefix: g_regex_
+noprefix: g_match_info_
+import: glib.Str
+structWrap: GRegex* Regex
+#import: glib.ErrorG
+#structWrap: GError** ErrorG*
+#import: glib.MatchInfo
+#structWrap: GMatchInfo** MatchInfo*
+outFile: Regex
+
+struct: GMatchInfo
+class: MatchInfo
+prefix: g_match_info_
+strictPrefix: Y
+import: glib.Str
+#import: glib.ErrorG
+#structWrap: GError** ErrorG*
+outFile: MatchInfo
+
 file: glib-Simple-XML-Subset-Parser.html
 struct: GMarkupParseContext
 class: SimpleXML
-import: glib.ErrorG
-import: glib.Dataset
-structWrap: GDataset* Dataset
 prefix: g_markup_parse_context_
-#import: glib.Error*
+prefix: g_markup_
+#import: glib.ErrorG
 #structWrap: GError** Error*
 #import: glib.MarkupParser
 #structWrap: GMarkupParser* MarkupParser
@@ -1113,10 +1069,19 @@ outFile: SimpleXML
 file: glib-Key-value-file-parser.html
 struct: GKeyFile
 class: KeyFile
-import: glib.ErrorG
-import: glib.Str
 prefix: g_key_file_
-outFile: GKeyFile
+#import: glib.ErrorG
+import: glib.Str
+outFile: KeyFile
+
+file: glib-Bookmark-file-parser.html
+struct: GBookmarkFile
+class: BookmarkFile
+prefix: g_bookmark_file_
+#import: glib.ErrorG
+#structWrap: GError** Error*
+import: glib.Str
+outFile: BookmarkFile
 
 file: glib-Windows-Compatibility-Functions.html
 class: WindowsUtils
@@ -1138,6 +1103,7 @@ file: glib-Memory-Chunks.html
 struct: GMemChunk
 class: MemoryChunk
 prefix: g_mem_chunk_
+prefix: g_
 import: glib.Str
 outFile: MemoryChunk
 
@@ -1145,62 +1111,71 @@ file: glib-Doubly-Linked-Lists.html
 struct: GList
 class: ListG
 prefix: g_list_
-#import: glib.ListG
 structWrap: GList* ListG
 
 code: start
   	/** */ 
 	void* data()
 	{
-		int* pt =cast(int*)getStruct();
+		int* pt = cast(int*)getStruct();
 		return cast(void *)(*pt);
 	}
 code: end
-
 outFile: ListG
 
 file: glib-Singly-Linked-Lists.html
 struct: GSList
 class: ListSG
-import: glib.ListG
 prefix: g_slist_
-#import: glib.ListSG
 structWrap: GSList* ListSG
+
+code: start
+  	/** */ 
+	void* data()
+	{
+		int* pt = cast(int*)getStruct();
+		return cast(void *)(*pt);
+	}
+code: end
 outFile: ListSG
 
 file: glib-Double-ended-Queues.html
 struct: GQueue
 class: QueueG
-import: glib.ListG
 prefix: g_queue_
-#import: glib.QueueG
 structWrap: GQueue* QueueG
 import: glib.ListG
 structWrap: GList* ListG
 outFile: QueueG
 
+file: glib-Sequences.html
+struct: GSequence
+class: Sequence
+prefix: g_sequence_
+structWrap: GSequence* Sequence
+#structWrap: GSequenceIter* SequenceIter
+outFile: Sequence
+
 file: glib-Trash-Stacks.html
 struct: GTrashStack
 class: TrashStack
 prefix: g_trash_stack_
-#import: glib.TrashStack*
 #structWrap: GTrashStack** TrashStack*
 outFile: TrashStack
 
 file: glib-Hash-Tables.html
 struct: GHashTable
 class: HashTable
-import: glib.Dataset
 prefix: g_hash_table_
-#import: glib.HashTable
 structWrap: GHashTable* HashTable
+import: glib.ListG
+structWrap: GList* ListG
 outFile: HashTable
 
 file: glib-Strings.html
 struct: GString
 class: StringG
 prefix: g_string_
-#import: glib.StringG
 structWrap: GString* StringG
 import: glib.Str
 outFile: StringG
@@ -1215,9 +1190,7 @@ outFile: StringGChunk
 file: glib-Arrays.html
 struct: GArray
 class: ArrayG
-import: glib.ListG
 prefix: g_array_
-#import: glib.Array
 structWrap: GArray* ArrayG
 import: glib.Str
 outFile: ArrayG
@@ -1225,44 +1198,32 @@ outFile: ArrayG
 file: glib-Pointer-Arrays.html
 struct: GPtrArray
 class: PtrArray
-import: glib.ListG
-structWrap: GList* ListG
 prefix: g_ptr_array_
-#import: glib.PtrArray
 structWrap: GPtrArray* PtrArray
 outFile: PtrArray
 
 file: glib-Byte-Arrays.html
 struct: GByteArray
 class: ByteArray
-import: glib.ListG
-structWrap: GList* ListG
 prefix: g_byte_array_
 outFile: ByteArray
 
 file: glib-Balanced-Binary-Trees.html
 struct: GTree
 class: BBTree
-import: glib.ListG
-import: glib.Dataset
-structWrap: GList* List*
-structWrap: GDataset* Dataset
 prefix: g_tree_
 outFile: BBTree
 
 file: glib-N-ary-Trees.html
 struct: GNode
 class: Node
-import: glib.BBTree
-structWrap: GTree* BBTree
-structWrap: GNode* Node
 prefix: g_node_
+structWrap: GNode* Node
 outFile: Node
 
 file: glib-Quarks.html
 struct: GQuark
 class: Quark
-import: glib.ErrorG
 prefix: g_quark_
 import: glib.Str
 outFile: Quark
@@ -1271,22 +1232,16 @@ file: glib-Keyed-Data-Lists.html
 struct: GData
 class: DataList
 prefix: g_datalist_
-import: glib.Quark
-import: glib.Dataset
-structWrap: GDataset* Dataset
 outFile: DataList
 
 file: glib-Datasets.html
 class: Dataset
 prefix: g_dataset_
-import: glib.Quark
 outFile: Dataset
 
 file: glib-Relations-and-Tuples.html
 struct: GRelation
 class: Relation
-import: glib.HashTable
-structWrap: GHashTable* HashTable
 prefix: g_relation_
 noprefix: g_tuples_
 import: glib.Tuples
@@ -1302,8 +1257,6 @@ outFile: Tuples
 file: glib-Caches.html
 struct: GCache
 class: Cache
-import: glib.HashTable
-structWrap: GHashTable* HashTable
 prefix: g_cache_
 outFile: Cache
 

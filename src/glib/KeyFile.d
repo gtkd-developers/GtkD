@@ -24,7 +24,7 @@
  * Conversion parameters:
  * inFile  = glib-Key-value-file-parser.html
  * outPack = glib
- * outFile = GKeyFile
+ * outFile = KeyFile
  * strct   = GKeyFile
  * realStrct=
  * ctorStrct=
@@ -42,21 +42,19 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ErrorG
  * 	- glib.Str
  * structWrap:
  * module aliases:
  * local aliases:
  */
 
-module glib.GKeyFile;
+module glib.KeyFile;
 
 public  import gtkc.glibtypes;
 
 private import gtkc.glib;
 
 
-private import glib.ErrorG;
 private import glib.Str;
 
 

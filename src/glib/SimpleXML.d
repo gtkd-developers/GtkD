@@ -37,16 +37,14 @@
  * implements:
  * prefixes:
  * 	- g_markup_parse_context_
+ * 	- g_markup_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ErrorG
- * 	- glib.Dataset
  * 	- glib.Str
  * structWrap:
- * 	- GDataset* -> Dataset
  * module aliases:
  * local aliases:
  */
@@ -58,8 +56,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.ErrorG;
-private import glib.Dataset;
 private import glib.Str;
 
 
@@ -141,7 +137,7 @@ public class SimpleXML
 	 * length =  length of text in bytes, or -1 if the text is nul-terminated
 	 * Returns: a newly allocated string with the escaped text
 	 */
-	public static char[] gMarkupEscapeText(char[] text, int length)
+	public static char[] escapeText(char[] text, int length)
 	{
 		// gchar* g_markup_escape_text (const gchar *text,  gssize length);
 		return Str.toString(g_markup_escape_text(Str.toStringz(text), length)).dup;
@@ -168,7 +164,7 @@ public class SimpleXML
 	 * ... =  the arguments to insert in the format string
 	 * Returns: newly allocated result from formatting operation. Free with g_free().
 	 */
-	public static char[] gMarkupPrintfEscaped(char[] format, ... )
+	public static char[] printfEscaped(char[] format, ... )
 	{
 		// gchar* g_markup_printf_escaped (const char *format,  ...);
 		return Str.toString(g_markup_printf_escaped(Str.toStringz(format))).dup;
@@ -184,7 +180,7 @@ public class SimpleXML
 	 * args =  variable argument list, similar to vprintf()
 	 * Returns: newly allocated result from formatting operation. Free with g_free().
 	 */
-	public static char[] gMarkupVprintfEscaped(char[] format, void* args)
+	public static char[] vprintfEscaped(char[] format, void* args)
 	{
 		// gchar* g_markup_vprintf_escaped (const char *format,  va_list args);
 		return Str.toString(g_markup_vprintf_escaped(Str.toStringz(format), args)).dup;

@@ -42,12 +42,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Dataset
- * 	- glib.OptionContext
  * 	- glib.Str
  * structWrap:
- * 	- GDataset* -> Dataset
- * 	- GOptionContext* -> OptionContext
  * module aliases:
  * local aliases:
  */
@@ -59,8 +55,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.Dataset;
-private import glib.OptionContext;
 private import glib.Str;
 
 

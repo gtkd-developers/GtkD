@@ -6486,7 +6486,7 @@ structWrap: GtkPaperSize* PaperSize
 structWrap: GtkPrintSettings* PrintSettings
 #import: glib.ErrorG
 #structWrap: GError** ErrorG*
-import: glib.GKeyFile
+import: glib.KeyFile
 structWrap: GKeyFile* KeyFile
 outFile: PrintSettings
 
@@ -6501,7 +6501,7 @@ structWrap: GtkPaperSize* PaperSize
 structWrap: GtkPageSetup* PageSetup
 #import: glib.ErrorG
 #structWrap: GError** ErrorG*
-import: glib.GKeyFile
+import: glib.KeyFile
 structWrap: GKeyFile* KeyFile
 outFile: PageSetup
 
@@ -6514,7 +6514,7 @@ import: glib.Str
 structWrap: GtkPaperSize* PaperSize
 #import: glib.ErrorG
 #structWrap: GError** ErrorG*
-import: glib.GKeyFile
+import: glib.KeyFile
 structWrap: GKeyFile* KeyFile
 import: glib.ListG
 structWrap: GList* ListG

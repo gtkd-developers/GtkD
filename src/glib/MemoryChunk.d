@@ -37,6 +37,7 @@
  * implements:
  * prefixes:
  * 	- g_mem_chunk_
+ * 	- g_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -283,7 +284,7 @@ public class MemoryChunk
 	 *  allocator instead
 	 * Calls g_mem_chunk_clean() on all GMemChunk objects.
 	 */
-	public static void gBlowChunks()
+	public static void blowChunks()
 	{
 		// void g_blow_chunks (void);
 		g_blow_chunks();

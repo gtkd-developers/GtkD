@@ -30,13 +30,14 @@
  * ctorStrct=
  * clss    = MainLoop
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
  * 	- g_main_loop_
+ * 	- g_
  * omit structs:
  * omit prefixes:
  * 	- g_main_context_
@@ -44,15 +45,13 @@
  * 	- g_child_
  * 	- g_source_
  * omit code:
- * 	- g_main_loop_ref
  * omit signals:
  * imports:
- * 	- glib.Dataset
  * 	- glib.MainContext
  * 	- glib.Source
  * structWrap:
- * 	- GDataset* -> Dataset
  * 	- GMainContext* -> MainContext
+ * 	- GMainLoop* -> MainLoop
  * 	- GSource* -> Source
  * module aliases:
  * local aliases:
@@ -65,7 +64,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.Dataset;
 private import glib.MainContext;
 private import glib.Source;
 
@@ -171,19 +169,6 @@ public class MainLoop
 	}
 	
 	/**
-	 * Increases the reference count on a GMainLoop object by one.
-	 * Params:
-	 *  loop = a GMainLoop
-	 * Returns:
-	 *  loop
-	 */
-	public MainLoop doref()
-	{
-		// GMainLoop* g_main_loop_ref (GMainLoop *loop);
-		return new MainLoop( g_main_loop_ref(gMainLoop) );
-	}
-	
-	/**
 	 */
 	
 	/**
@@ -205,6 +190,22 @@ public class MainLoop
 			else return;
 		}
 		this(cast(GMainLoop*) p);
+	}
+	
+	/**
+	 * Increases the reference count on a GMainLoop object by one.
+	 * Returns: loop
+	 */
+	public MainLoop doref()
+	{
+		// GMainLoop* g_main_loop_ref (GMainLoop *loop);
+		auto p = g_main_loop_ref(gMainLoop);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new MainLoop(cast(GMainLoop*) p);
 	}
 	
 	/**
@@ -275,7 +276,7 @@ public class MainLoop
 	 * it returns 2. And so forth.
 	 * Returns: The main loop recursion level in the current thread
 	 */
-	public static int gMainDepth()
+	public static int mainDepth()
 	{
 		// gint g_main_depth (void);
 		return g_main_depth();
@@ -286,7 +287,7 @@ public class MainLoop
 	 * Since 2.12
 	 * Returns: The currently firing source or NULL.
 	 */
-	public static Source gMainCurrentSource()
+	public static Source mainCurrentSource()
 	{
 		// GSource* g_main_current_source (void);
 		auto p = g_main_current_source();
@@ -307,7 +308,7 @@ public class MainLoop
 	 * have a default priority of G_PRIORITY_DEFAULT.
 	 * Returns: the newly-created idle source
 	 */
-	public static Source gIdleSourceNew()
+	public static Source idleSourceNew()
 	{
 		// GSource* g_idle_source_new (void);
 		auto p = g_idle_source_new();
@@ -330,7 +331,7 @@ public class MainLoop
 	 * data =  data to pass to function.
 	 * Returns: the ID (greater than 0) of the event source.
 	 */
-	public static uint gIdleAdd(GSourceFunc funct, void* data)
+	public static uint idleAdd(GSourceFunc funct, void* data)
 	{
 		// guint g_idle_add (GSourceFunc function,  gpointer data);
 		return g_idle_add(funct, data);
@@ -348,7 +349,7 @@ public class MainLoop
 	 * notify =  function to call when the idle is removed, or NULL
 	 * Returns: the ID (greater than 0) of the event source.
 	 */
-	public static uint gIdleAddFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
+	public static uint idleAddFull(int priority, GSourceFunc funct, void* data, GDestroyNotify notify)
 	{
 		// guint g_idle_add_full (gint priority,  GSourceFunc function,  gpointer data,  GDestroyNotify notify);
 		return g_idle_add_full(priority, funct, data, notify);
@@ -360,7 +361,7 @@ public class MainLoop
 	 * data =  the data for the idle source's callback.
 	 * Returns: TRUE if an idle source was found and removed.
 	 */
-	public static int gIdleRemoveByData(void* data)
+	public static int idleRemoveByData(void* data)
 	{
 		// gboolean g_idle_remove_by_data (gpointer data);
 		return g_idle_remove_by_data(data);

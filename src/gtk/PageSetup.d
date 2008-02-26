@@ -45,7 +45,7 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.PaperSize
- * 	- glib.GKeyFile
+ * 	- glib.KeyFile
  * structWrap:
  * 	- GKeyFile* -> KeyFile
  * 	- GtkPageSetup* -> PageSetup
@@ -63,7 +63,7 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.PaperSize;
-private import glib.GKeyFile;
+private import glib.KeyFile;
 
 
 

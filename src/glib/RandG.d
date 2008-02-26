@@ -30,16 +30,21 @@
  * ctorStrct=
  * clss    = RandG
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
+ * 	- g_rand_
  * 	- g_
  * omit structs:
  * omit prefixes:
  * omit code:
+ * 	- g_rand_int
+ * 	- g_rand_int_range
+ * 	- g_rand_double
+ * 	- g_rand_double_range
  * omit signals:
  * imports:
  * structWrap:
@@ -124,127 +129,6 @@ public class RandG
 	}
 	
 	/**
-	 */
-	
-	/**
-	 * Creates a new random number generator initialized with seed.
-	 * Params:
-	 * seed =  a value to initialize the random number generator.
-	 * Returns: the new GRand.
-	 */
-	public static RandG randNewWithSeed(uint seed)
-	{
-		// GRand* g_rand_new_with_seed (guint32 seed);
-		auto p = g_rand_new_with_seed(seed);
-		if(p is null)
-		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
-		}
-		return new RandG(cast(GRand*) p);
-	}
-	
-	/**
-	 * Creates a new random number generator initialized with seed.
-	 * Since 2.4
-	 * Params:
-	 * seed =  an array of seeds to initialize the random number generator.
-	 * seedLength =  an array of seeds to initialize the random number generator.
-	 * Returns: the new GRand.
-	 */
-	public static RandG randNewWithSeedArray(uint* seed, uint seedLength)
-	{
-		// GRand* g_rand_new_with_seed_array (const guint32 *seed,  guint seed_length);
-		auto p = g_rand_new_with_seed_array(seed, seedLength);
-		if(p is null)
-		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
-		}
-		return new RandG(cast(GRand*) p);
-	}
-	
-	/**
-	 * Creates a new random number generator initialized with a seed taken
-	 * either from /dev/urandom (if existing) or from
-	 * the current time (as a fallback).
-	 * Returns: the new GRand.
-	 */
-	public static RandG randNew()
-	{
-		// GRand* g_rand_new (void);
-		auto p = g_rand_new();
-		if(p is null)
-		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
-		}
-		return new RandG(cast(GRand*) p);
-	}
-	
-	/**
-	 * Copies a GRand into a new one with the same exact state as before.
-	 * This way you can take a snapshot of the random number generator for
-	 * replaying later.
-	 * Since 2.4
-	 * Params:
-	 * rand =  a GRand.
-	 * Returns: the new GRand.
-	 */
-	public RandG randCopy()
-	{
-		// GRand* g_rand_copy (GRand *rand_);
-		auto p = g_rand_copy(gRand);
-		if(p is null)
-		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
-		}
-		return new RandG(cast(GRand*) p);
-	}
-	
-	/**
-	 * Frees the memory allocated for the GRand.
-	 * Params:
-	 * rand =  a GRand.
-	 */
-	public void randFree()
-	{
-		// void g_rand_free (GRand *rand_);
-		g_rand_free(gRand);
-	}
-	
-	/**
-	 * Sets the seed for the random number generator GRand to seed.
-	 * Params:
-	 * rand =  a GRand.
-	 * seed =  a value to reinitialize the random number generator.
-	 */
-	public void randSetSeed(uint seed)
-	{
-		// void g_rand_set_seed (GRand *rand_,  guint32 seed);
-		g_rand_set_seed(gRand, seed);
-	}
-	
-	/**
-	 * Initializes the random number generator by an array of
-	 * longs. Array can be of arbitrary size, though only the
-	 * first 624 values are taken. This function is useful
-	 * if you have many low entropy seeds, or if you require more then
-	 * 32bits of actual entropy for your application.
-	 * Since 2.4
-	 * Params:
-	 * rand =  a GRand.
-	 * seed =  array to initialize with
-	 * seedLength =  length of array
-	 */
-	public void randSetSeedArray(uint* seed, uint seedLength)
-	{
-		// void g_rand_set_seed_array (GRand *rand_,  const guint32 *seed,  guint seed_length);
-		g_rand_set_seed_array(gRand, seed, seedLength);
-	}
-	
-	/**
 	 * Returns the next random guint32 from rand_ equally distributed over
 	 * the range [0..2^32-1].
 	 * Params:
@@ -298,6 +182,121 @@ public class RandG
 	{
 		// gdouble g_rand_double_range (GRand *rand_,  gdouble begin,  gdouble end);
 		return g_rand_double_range(gRand, begin, end);
+	}
+	
+	/**
+	 */
+	
+	/**
+	 * Creates a new random number generator initialized with seed.
+	 * Params:
+	 * seed =  a value to initialize the random number generator.
+	 */
+	public this (uint seed)
+	{
+		// GRand* g_rand_new_with_seed (guint32 seed);
+		auto p = g_rand_new_with_seed(seed);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GRand*) p);
+	}
+	
+	/**
+	 * Creates a new random number generator initialized with seed.
+	 * Since 2.4
+	 * Params:
+	 * seed =  an array of seeds to initialize the random number generator.
+	 * seedLength =  an array of seeds to initialize the random number generator.
+	 */
+	public this (uint* seed, uint seedLength)
+	{
+		// GRand* g_rand_new_with_seed_array (const guint32 *seed,  guint seed_length);
+		auto p = g_rand_new_with_seed_array(seed, seedLength);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GRand*) p);
+	}
+	
+	/**
+	 * Creates a new random number generator initialized with a seed taken
+	 * either from /dev/urandom (if existing) or from
+	 * the current time (as a fallback).
+	 */
+	public this ()
+	{
+		// GRand* g_rand_new (void);
+		auto p = g_rand_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GRand*) p);
+	}
+	
+	/**
+	 * Copies a GRand into a new one with the same exact state as before.
+	 * This way you can take a snapshot of the random number generator for
+	 * replaying later.
+	 * Since 2.4
+	 * Returns: the new GRand.
+	 */
+	public RandG copy()
+	{
+		// GRand* g_rand_copy (GRand *rand_);
+		auto p = g_rand_copy(gRand);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new RandG(cast(GRand*) p);
+	}
+	
+	/**
+	 * Frees the memory allocated for the GRand.
+	 */
+	public void free()
+	{
+		// void g_rand_free (GRand *rand_);
+		g_rand_free(gRand);
+	}
+	
+	/**
+	 * Sets the seed for the random number generator GRand to seed.
+	 * Params:
+	 * seed =  a value to reinitialize the random number generator.
+	 */
+	public void setSeed(uint seed)
+	{
+		// void g_rand_set_seed (GRand *rand_,  guint32 seed);
+		g_rand_set_seed(gRand, seed);
+	}
+	
+	/**
+	 * Initializes the random number generator by an array of
+	 * longs. Array can be of arbitrary size, though only the
+	 * first 624 values are taken. This function is useful
+	 * if you have many low entropy seeds, or if you require more then
+	 * 32bits of actual entropy for your application.
+	 * Since 2.4
+	 * Params:
+	 * seed =  array to initialize with
+	 * seedLength =  length of array
+	 */
+	public void setSeedArray(uint* seed, uint seedLength)
+	{
+		// void g_rand_set_seed_array (GRand *rand_,  const guint32 *seed,  guint seed_length);
+		g_rand_set_seed_array(gRand, seed, seedLength);
 	}
 	
 	/**

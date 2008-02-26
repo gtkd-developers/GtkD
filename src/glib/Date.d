@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = glib-Date-and-Time-Functions.html
+ * inFile  = 
  * outPack = glib
  * outFile = Date
  * strct   = GDate
@@ -42,9 +42,11 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.TimeVal
  * 	- glib.Str
  * structWrap:
  * 	- GDate* -> Date
+ * 	- GTimeVal* -> TimeVal
  * module aliases:
  * local aliases:
  */
@@ -56,6 +58,7 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
+private import glib.TimeVal;
 private import glib.Str;
 
 
@@ -137,74 +140,6 @@ public class Date
 	
 	/**
 	 */
-	
-	/**
-	 * Equivalent to the UNIX gettimeofday() function, but portable.
-	 * Params:
-	 * result =  GTimeVal structure in which to store current time.
-	 */
-	public static void gGetCurrentTime(GTimeVal* result)
-	{
-		// void g_get_current_time (GTimeVal *result);
-		g_get_current_time(result);
-	}
-	
-	/**
-	 * Pauses the current thread for the given number of microseconds. There
-	 * are 1 million microseconds per second (represented by the
-	 * G_USEC_PER_SEC macro). g_usleep() may have limited precision,
-	 * depending on hardware and operating system; don't rely on the exact
-	 * length of the sleep.
-	 * Params:
-	 * microseconds = number of microseconds to pause.
-	 */
-	public static void gUsleep(uint microseconds)
-	{
-		// void g_usleep (gulong microseconds);
-		g_usleep(microseconds);
-	}
-	
-	/**
-	 * Adds the given number of microseconds to time_. microseconds can
-	 * also be negative to decrease the value of time_.
-	 * Params:
-	 * time =  a GTimeVal
-	 * microseconds =  number of microseconds to add to time
-	 */
-	public static void gTimeValAdd(GTimeVal* time, int microseconds)
-	{
-		// void g_time_val_add (GTimeVal *time_,  glong microseconds);
-		g_time_val_add(time, microseconds);
-	}
-	
-	/**
-	 * Converts a string containing an ISO 8601 encoded date and time
-	 * to a GTimeVal and puts it into time_.
-	 * Since 2.12
-	 * Params:
-	 * isoDate =  a ISO 8601 encoded date string
-	 * time =  a GTimeVal
-	 * Returns: TRUE if the conversion was successful.
-	 */
-	public static int gTimeValFromIso8601(char[] isoDate, GTimeVal* time)
-	{
-		// gboolean g_time_val_from_iso8601 (const gchar *iso_date,  GTimeVal *time_);
-		return g_time_val_from_iso8601(Str.toStringz(isoDate), time);
-	}
-	
-	/**
-	 * Converts time_ into a ISO 8601 encoded string, relative to the
-	 * Coordinated Universal Time (UTC).
-	 * Since 2.12
-	 * Params:
-	 * time =  a GTimeVal
-	 * Returns: a newly allocated string containing a ISO 8601 date
-	 */
-	public static char[] gTimeValToIso8601(GTimeVal* time)
-	{
-		// gchar* g_time_val_to_iso8601 (GTimeVal *time_);
-		return Str.toString(g_time_val_to_iso8601(time)).dup;
-	}
 	
 	/**
 	 * Allocates a GDate and initializes it to a sane state. The new date will
@@ -385,10 +320,10 @@ public class Date
 	 * Params:
 	 * timeval =  GTimeVal value to set
 	 */
-	public void setTimeVal(GTimeVal* timeval)
+	public void setTimeVal(TimeVal timeval)
 	{
 		// void g_date_set_time_val (GDate *date,  GTimeVal *timeval);
-		g_date_set_time_val(gDate, timeval);
+		g_date_set_time_val(gDate, (timeval is null) ? null : timeval.getTimeValStruct());
 	}
 	
 	/**

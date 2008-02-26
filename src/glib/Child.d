@@ -42,11 +42,9 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.MainLoop
- * 	- glib.Dataset
+ * 	- glib.Source
  * structWrap:
- * 	- GDataset* -> Dataset
- * 	- GMainLoop* -> MainLoop
+ * 	- GSource* -> Source
  * module aliases:
  * local aliases:
  */
@@ -58,8 +56,7 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.MainLoop;
-private import glib.Dataset;
+private import glib.Source;
 
 
 
@@ -157,10 +154,16 @@ public class Child
 	 * for the process to watch (which actually doesn't have to be a child).
 	 * Returns: the newly-created child watch source
 	 */
-	public static GSource* watchSourceNew(GPid pid)
+	public static Source watchSourceNew(GPid pid)
 	{
 		// GSource* g_child_watch_source_new (GPid pid);
-		return g_child_watch_source_new(pid);
+		auto p = g_child_watch_source_new(pid);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Source(cast(GSource*) p);
 	}
 	
 	/**

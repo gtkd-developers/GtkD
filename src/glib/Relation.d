@@ -43,10 +43,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.HashTable
  * 	- glib.Tuples
  * structWrap:
- * 	- GHashTable* -> HashTable
  * 	- GTuples* -> Tuples
  * module aliases:
  * local aliases:
@@ -59,7 +57,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.HashTable;
 private import glib.Tuples;
 
 

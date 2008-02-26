@@ -42,11 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ErrorG
- * 	- glib.ListG
- * 	- glib.MainLoop
  * structWrap:
- * 	- GList* -> ListG
  * module aliases:
  * local aliases:
  */
@@ -58,9 +54,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.ErrorG;
-private import glib.ListG;
-private import glib.MainLoop;
 
 
 

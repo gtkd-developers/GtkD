@@ -44,7 +44,7 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- glib.GKeyFile
+ * 	- glib.KeyFile
  * 	- glib.ListG
  * structWrap:
  * 	- GKeyFile* -> KeyFile
@@ -62,7 +62,7 @@ private import gtkc.gtk;
 
 
 private import glib.Str;
-private import glib.GKeyFile;
+private import glib.KeyFile;
 private import glib.ListG;
 
 

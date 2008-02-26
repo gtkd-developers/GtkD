@@ -151,8 +151,8 @@ noprefix: gdk_pixbuf_simple_anim_
 structWrap: GdkPixbufAnimation* PixbufAnimation
 #import: gdkpixbuf.PixbufAnimationIter
 #structWrap: GdkPixbufAnimationIter* PixbufAnimationIter
-#import: g.TimeVal
-#structWrap: GTimeVal* TimeVal
+import: glib.TimeVal
+structWrap: GTimeVal* TimeVal
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: glib.Str

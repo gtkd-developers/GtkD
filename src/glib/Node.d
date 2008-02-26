@@ -42,10 +42,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.BBTree
  * structWrap:
  * 	- GNode* -> Node
- * 	- GTree* -> BBTree
  * module aliases:
  * local aliases:
  */
@@ -57,7 +55,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.BBTree;
 
 
 

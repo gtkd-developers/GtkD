@@ -42,9 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Dataset
+ * 	- glib.ListG
  * structWrap:
  * 	- GHashTable* -> HashTable
+ * 	- GList* -> ListG
  * module aliases:
  * local aliases:
  */
@@ -56,7 +57,7 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.Dataset;
+private import glib.ListG;
 
 
 
@@ -388,10 +389,16 @@ public class HashTable
 	 * Since 2.14
 	 * Returns: a GList containing all the keys inside the hash table. The content of the list is owned by the hash table and should not be modified or freed. Use g_list_free() when done using the list.
 	 */
-	public GList* getKeys()
+	public ListG getKeys()
 	{
 		// GList* g_hash_table_get_keys (GHashTable *hash_table);
-		return g_hash_table_get_keys(gHashTable);
+		auto p = g_hash_table_get_keys(gHashTable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**
@@ -400,10 +407,16 @@ public class HashTable
 	 * Since 2.14
 	 * Returns: a GList containing all the values inside the hash table. The content of the list is owned by the hash table and should not be modified or freed. Use g_list_free() when done using the list.
 	 */
-	public GList* getValues()
+	public ListG getValues()
 	{
 		// GList* g_hash_table_get_values (GHashTable *hash_table);
-		return g_hash_table_get_values(gHashTable);
+		auto p = g_hash_table_get_values(gHashTable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListG(cast(GList*) p);
 	}
 	
 	/**

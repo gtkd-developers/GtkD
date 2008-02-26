@@ -42,11 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ListG
- * 	- glib.Dataset
  * structWrap:
- * 	- GDataset* -> Dataset
- * 	- GList* -> List*
  * module aliases:
  * local aliases:
  */
@@ -58,8 +54,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.ListG;
-private import glib.Dataset;
 
 
 

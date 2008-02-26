@@ -42,7 +42,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ListG
  * 	- glib.Str
  * structWrap:
  * 	- GArray* -> ArrayG
@@ -57,7 +56,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.ListG;
 private import glib.Str;
 
 

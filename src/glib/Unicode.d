@@ -42,7 +42,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ErrorG
  * 	- glib.Str
  * structWrap:
  * module aliases:
@@ -56,7 +55,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.ErrorG;
 private import glib.Str;
 
 

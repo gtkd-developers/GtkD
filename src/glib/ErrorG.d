@@ -42,9 +42,9 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Quark
  * 	- glib.Str
  * structWrap:
+ * 	- GError* -> ErrorG
  * module aliases:
  * local aliases:
  */
@@ -56,7 +56,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.Quark;
 private import glib.Str;
 
 
@@ -381,10 +380,16 @@ public class ErrorG
 	 * Makes a copy of error.
 	 * Returns: a new GError
 	 */
-	public GError* copy()
+	public ErrorG copy()
 	{
 		// GError* g_error_copy (const GError *error);
-		return g_error_copy(gError);
+		auto p = g_error_copy(gError);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ErrorG(cast(GError*) p);
 	}
 	
 	/**
@@ -424,10 +429,10 @@ public class ErrorG
 	 * dest =  error return location
 	 * src =  error to move into the return location
 	 */
-	public static void gPropagateError(GError** dest, GError* src)
+	public static void gPropagateError(GError** dest, ErrorG src)
 	{
 		// void g_propagate_error (GError **dest,  GError *src);
-		g_propagate_error(dest, src);
+		g_propagate_error(dest, (src is null) ? null : src.getErrorGStruct());
 	}
 	
 	/**

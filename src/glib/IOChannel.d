@@ -42,10 +42,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ErrorG
  * 	- glib.StringG
  * 	- glib.Source
- * 	- glib.Dataset
  * 	- glib.Str
  * structWrap:
  * 	- GIOChannel* -> IOChannel
@@ -62,10 +60,8 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.ErrorG;
 private import glib.StringG;
 private import glib.Source;
-private import glib.Dataset;
 private import glib.Str;
 
 

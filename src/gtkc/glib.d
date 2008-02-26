@@ -453,18 +453,29 @@ extern(C)
 	gchar* function(gunichar* str, glong len, glong* itemsRead, glong* itemsWritten, GError** error)g_ucs4_to_utf8;
 	gint function(gunichar c, gchar* outbuf)g_unichar_to_utf8;
 	
+	// glib.Base64
+	
+	gsize function(guchar* inn, gsize len, gboolean breakLines, gchar* f_out, gint* state, gint* save)g_base64_encode_step;
+	gsize function(gboolean breakLines, gchar* f_out, gint* state, gint* save)g_base64_encode_close;
+	gchar* function(guchar* data, gsize len)g_base64_encode;
+	gsize function(gchar* inn, gsize len, guchar* f_out, gint* state, guint* save)g_base64_decode_step;
+	guchar* function(gchar* text, gsize* outLen)g_base64_decode;
+	
 	// glib.Internationalization
 	
 	gchar* function(gchar* msgid, gchar* msgval)g_strip_context;
 	gchar** function()g_get_language_names;
 	
-	// glib.Date
+	// glib.TimeVal
 	
 	void function(GTimeVal* result)g_get_current_time;
 	void function(gulong microseconds)g_usleep;
 	void function(GTimeVal* time, glong microseconds)g_time_val_add;
 	gboolean function(gchar* isoDate, GTimeVal* time)g_time_val_from_iso8601;
 	gchar* function(GTimeVal* time)g_time_val_to_iso8601;
+	
+	// glib.Date
+	
 	GDate* function()g_date_new;
 	GDate* function(GDateDay day, GDateMonth month, GDateYear year)g_date_new_dmy;
 	GDate* function(guint32 julianDay)g_date_new_julian;
@@ -638,14 +649,6 @@ extern(C)
 	gint function(gchar* tmpl, gchar** nameUsed, GError** error)g_file_open_tmp;
 	gchar* function(gchar* filename, GError** error)g_file_read_link;
 	int function(gchar* pathname, int mode)g_mkdir_with_parents;
-	GDir* function(gchar* path, guint flags, GError** error)g_dir_open;
-	gchar* function(GDir* dir)g_dir_read_name;
-	void function(GDir* dir)g_dir_rewind;
-	void function(GDir* dir)g_dir_close;
-	GMappedFile* function(gchar* filename, gboolean writable, GError** error)g_mapped_file_new;
-	void function(GMappedFile* file)g_mapped_file_free;
-	gsize function(GMappedFile* file)g_mapped_file_get_length;
-	gchar* function(GMappedFile* file)g_mapped_file_get_contents;
 	int function(gchar* filename, int flags, int mode)g_open;
 	int function(gchar* oldfilename, gchar* newfilename)g_rename;
 	int function(gchar* filename, int mode)g_mkdir;
@@ -660,6 +663,20 @@ extern(C)
 	int function(gchar* filename, int mode)g_access;
 	int function(gchar* filename, int mode)g_creat;
 	int function(gchar* path)g_chdir;
+	
+	// glib.Directory
+	
+	GDir* function(gchar* path, guint flags, GError** error)g_dir_open;
+	gchar* function(GDir* dir)g_dir_read_name;
+	void function(GDir* dir)g_dir_rewind;
+	void function(GDir* dir)g_dir_close;
+	
+	// glib.MappedFile
+	
+	GMappedFile* function(gchar* filename, gboolean writable, GError** error)g_mapped_file_new;
+	void function(GMappedFile* file)g_mapped_file_free;
+	gsize function(GMappedFile* file)g_mapped_file_get_length;
+	gchar* function(GMappedFile* file)g_mapped_file_get_contents;
 	
 	// glib.ShellUtils
 	
@@ -706,6 +723,45 @@ extern(C)
 	gboolean function(GPatternSpec* pspec, guint stringLength, gchar* string, gchar* stringReversed)g_pattern_match;
 	gboolean function(GPatternSpec* pspec, gchar* string)g_pattern_match_string;
 	gboolean function(gchar* pattern, gchar* string)g_pattern_match_simple;
+	
+	// glib.Regex
+	
+	GRegex* function(gchar* pattern, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions, GError** error)g_regex_new;
+	GRegex* function(GRegex* regex)g_regex_ref;
+	void function(GRegex* regex)g_regex_unref;
+	gchar* function(GRegex* regex)g_regex_get_pattern;
+	gint function(GRegex* regex)g_regex_get_max_backref;
+	gint function(GRegex* regex)g_regex_get_capture_count;
+	gint function(GRegex* regex, gchar* name)g_regex_get_string_number;
+	gchar* function(gchar* string, gint length)g_regex_escape_string;
+	gboolean function(gchar* pattern, gchar* string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)g_regex_match_simple;
+	gboolean function(GRegex* regex, gchar* string, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo)g_regex_match;
+	gboolean function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo, GError** error)g_regex_match_full;
+	gboolean function(GRegex* regex, gchar* string, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo)g_regex_match_all;
+	gboolean function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, GRegexMatchFlags matchOptions, GMatchInfo** matchInfo, GError** error)g_regex_match_all_full;
+	gchar** function(gchar* pattern, gchar* string, GRegexCompileFlags compileOptions, GRegexMatchFlags matchOptions)g_regex_split_simple;
+	gchar** function(GRegex* regex, gchar* string, GRegexMatchFlags matchOptions)g_regex_split;
+	gchar** function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, GRegexMatchFlags matchOptions, gint maxTokens, GError** error)g_regex_split_full;
+	gchar* function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, gchar* replacement, GRegexMatchFlags matchOptions, GError** error)g_regex_replace;
+	gchar* function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, gchar* replacement, GRegexMatchFlags matchOptions, GError** error)g_regex_replace_literal;
+	gchar* function(GRegex* regex, gchar* string, gssize stringLen, gint startPosition, GRegexMatchFlags matchOptions, GRegexEvalCallback eval, gpointer userData, GError** error)g_regex_replace_eval;
+	gboolean function(gchar* replacement, gboolean* hasReferences, GError** error)g_regex_check_replacement;
+	
+	// glib.MatchInfo
+	
+	GRegex* function(GMatchInfo* matchInfo)g_match_info_get_regex;
+	gchar* function(GMatchInfo* matchInfo)g_match_info_get_string;
+	void function(GMatchInfo* matchInfo)g_match_info_free;
+	gboolean function(GMatchInfo* matchInfo)g_match_info_matches;
+	gboolean function(GMatchInfo* matchInfo, GError** error)g_match_info_next;
+	gint function(GMatchInfo* matchInfo)g_match_info_get_match_count;
+	gboolean function(GMatchInfo* matchInfo)g_match_info_is_partial_match;
+	gchar* function(GMatchInfo* matchInfo, gchar* stringToExpand, GError** error)g_match_info_expand_references;
+	gchar* function(GMatchInfo* matchInfo, gint matchNum)g_match_info_fetch;
+	gboolean function(GMatchInfo* matchInfo, gint matchNum, gint* startPos, gint* endPos)g_match_info_fetch_pos;
+	gchar* function(GMatchInfo* matchInfo, gchar* name)g_match_info_fetch_named;
+	gboolean function(GMatchInfo* matchInfo, gchar* name, gint* startPos, gint* endPos)g_match_info_fetch_named_pos;
+	gchar** function(GMatchInfo* matchInfo)g_match_info_fetch_all;
 	
 	// glib.SimpleXML
 	
@@ -761,6 +817,48 @@ extern(C)
 	void function(GKeyFile* keyFile, gchar* groupName, GError** error)g_key_file_remove_group;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error)g_key_file_remove_key;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error)g_key_file_remove_comment;
+	
+	// glib.BookmarkFile
+	
+	GBookmarkFile* function()g_bookmark_file_new;
+	void function(GBookmarkFile* bookmark)g_bookmark_file_free;
+	gboolean function(GBookmarkFile* bookmark, gchar* filename, GError** error)g_bookmark_file_load_from_file;
+	gboolean function(GBookmarkFile* bookmark, gchar* data, gsize length, GError** error)g_bookmark_file_load_from_data;
+	gboolean function(GBookmarkFile* bookmark, gchar* file, gchar** fullPath, GError** error)g_bookmark_file_load_from_data_dirs;
+	gchar* function(GBookmarkFile* bookmark, gsize* length, GError** error)g_bookmark_file_to_data;
+	gboolean function(GBookmarkFile* bookmark, gchar* filename, GError** error)g_bookmark_file_to_file;
+	gboolean function(GBookmarkFile* bookmark, gchar* uri)g_bookmark_file_has_item;
+	gboolean function(GBookmarkFile* bookmark, gchar* uri, gchar* group, GError** error)g_bookmark_file_has_group;
+	gboolean function(GBookmarkFile* bookmark, gchar* uri, gchar* name, GError** error)g_bookmark_file_has_application;
+	gint function(GBookmarkFile* bookmark)g_bookmark_file_get_size;
+	gchar** function(GBookmarkFile* bookmark, gsize* length)g_bookmark_file_get_uris;
+	gchar* function(GBookmarkFile* bookmark, gchar* uri, GError** error)g_bookmark_file_get_title;
+	gchar* function(GBookmarkFile* bookmark, gchar* uri, GError** error)g_bookmark_file_get_description;
+	gchar* function(GBookmarkFile* bookmark, gchar* uri, GError** error)g_bookmark_file_get_mime_type;
+	gboolean function(GBookmarkFile* bookmark, gchar* uri, GError** error)g_bookmark_file_get_is_private;
+	gboolean function(GBookmarkFile* bookmark, gchar* uri, gchar** href, gchar** mimeType, GError** error)g_bookmark_file_get_icon;
+	time_t function(GBookmarkFile* bookmark, gchar* uri, GError** error)g_bookmark_file_get_added;
+	time_t function(GBookmarkFile* bookmark, gchar* uri, GError** error)g_bookmark_file_get_modified;
+	time_t function(GBookmarkFile* bookmark, gchar* uri, GError** error)g_bookmark_file_get_visited;
+	gchar** function(GBookmarkFile* bookmark, gchar* uri, gsize* length, GError** error)g_bookmark_file_get_groups;
+	gchar** function(GBookmarkFile* bookmark, gchar* uri, gsize* length, GError** error)g_bookmark_file_get_applications;
+	gboolean function(GBookmarkFile* bookmark, gchar* uri, gchar* name, gchar** exec, guint* count, time_t* stamp, GError** error)g_bookmark_file_get_app_info;
+	void function(GBookmarkFile* bookmark, gchar* uri, gchar* title)g_bookmark_file_set_title;
+	void function(GBookmarkFile* bookmark, gchar* uri, gchar* description)g_bookmark_file_set_description;
+	void function(GBookmarkFile* bookmark, gchar* uri, gchar* mimeType)g_bookmark_file_set_mime_type;
+	void function(GBookmarkFile* bookmark, gchar* uri, gboolean isPrivate)g_bookmark_file_set_is_private;
+	void function(GBookmarkFile* bookmark, gchar* uri, gchar* href, gchar* mimeType)g_bookmark_file_set_icon;
+	void function(GBookmarkFile* bookmark, gchar* uri, time_t added)g_bookmark_file_set_added;
+	void function(GBookmarkFile* bookmark, gchar* uri, gchar** groups, gsize length)g_bookmark_file_set_groups;
+	void function(GBookmarkFile* bookmark, gchar* uri, time_t modified)g_bookmark_file_set_modified;
+	void function(GBookmarkFile* bookmark, gchar* uri, time_t visited)g_bookmark_file_set_visited;
+	gboolean function(GBookmarkFile* bookmark, gchar* uri, gchar* name, gchar* exec, gint count, time_t stamp, GError** error)g_bookmark_file_set_app_info;
+	void function(GBookmarkFile* bookmark, gchar* uri, gchar* group)g_bookmark_file_add_group;
+	void function(GBookmarkFile* bookmark, gchar* uri, gchar* name, gchar* exec)g_bookmark_file_add_application;
+	gboolean function(GBookmarkFile* bookmark, gchar* uri, gchar* group, GError** error)g_bookmark_file_remove_group;
+	gboolean function(GBookmarkFile* bookmark, gchar* uri, gchar* name, GError** error)g_bookmark_file_remove_application;
+	gboolean function(GBookmarkFile* bookmark, gchar* uri, GError** error)g_bookmark_file_remove_item;
+	gboolean function(GBookmarkFile* bookmark, gchar* oldUri, gchar* newUri, GError** error)g_bookmark_file_move_item;
 	
 	// glib.WindowsUtils
 	
@@ -899,6 +997,44 @@ extern(C)
 	gint function(GQueue* queue, GList* link)g_queue_link_index;
 	void function(GQueue* queue, GList* link)g_queue_unlink;
 	void function(GQueue* queue, GList* link)g_queue_delete_link;
+	
+	// glib.Sequence
+	
+	GSequence* function(GDestroyNotify dataDestroy)g_sequence_new;
+	void function(GSequence* seq)g_sequence_free;
+	gint function(GSequence* seq)g_sequence_get_length;
+	void function(GSequence* seq, GFunc func, gpointer userData)g_sequence_foreach;
+	void function(GSequenceIter* begin, GSequenceIter* end, GFunc func, gpointer userData)g_sequence_foreach_range;
+	void function(GSequence* seq, GCompareDataFunc cmpFunc, gpointer cmpData)g_sequence_sort;
+	void function(GSequence* seq, GSequenceIterCompareFunc cmpFunc, gpointer cmpData)g_sequence_sort_iter;
+	GSequenceIter* function(GSequence* seq)g_sequence_get_begin_iter;
+	GSequenceIter* function(GSequence* seq)g_sequence_get_end_iter;
+	GSequenceIter* function(GSequence* seq, gint pos)g_sequence_get_iter_at_pos;
+	GSequenceIter* function(GSequence* seq, gpointer data)g_sequence_append;
+	GSequenceIter* function(GSequence* seq, gpointer data)g_sequence_prepend;
+	GSequenceIter* function(GSequenceIter* iter, gpointer data)g_sequence_insert_before;
+	void function(GSequenceIter* src, GSequenceIter* dest)g_sequence_move;
+	void function(GSequenceIter* a, GSequenceIter* b)g_sequence_swap;
+	GSequenceIter* function(GSequence* seq, gpointer data, GCompareDataFunc cmpFunc, gpointer cmpData)g_sequence_insert_sorted;
+	GSequenceIter* function(GSequence* seq, gpointer data, GSequenceIterCompareFunc iterCmp, gpointer cmpData)g_sequence_insert_sorted_iter;
+	void function(GSequenceIter* iter, GCompareDataFunc cmpFunc, gpointer cmpData)g_sequence_sort_changed;
+	void function(GSequenceIter* iter, GSequenceIterCompareFunc iterCmp, gpointer cmpData)g_sequence_sort_changed_iter;
+	void function(GSequenceIter* iter)g_sequence_remove;
+	void function(GSequenceIter* begin, GSequenceIter* end)g_sequence_remove_range;
+	void function(GSequenceIter* dest, GSequenceIter* begin, GSequenceIter* end)g_sequence_move_range;
+	GSequenceIter* function(GSequence* seq, gpointer data, GCompareDataFunc cmpFunc, gpointer cmpData)g_sequence_search;
+	GSequenceIter* function(GSequence* seq, gpointer data, GSequenceIterCompareFunc iterCmp, gpointer cmpData)g_sequence_search_iter;
+	gpointer function(GSequenceIter* iter)g_sequence_get;
+	void function(GSequenceIter* iter, gpointer data)g_sequence_set;
+	gboolean function(GSequenceIter* iter)g_sequence_iter_is_begin;
+	gboolean function(GSequenceIter* iter)g_sequence_iter_is_end;
+	GSequenceIter* function(GSequenceIter* iter)g_sequence_iter_next;
+	GSequenceIter* function(GSequenceIter* iter)g_sequence_iter_prev;
+	gint function(GSequenceIter* iter)g_sequence_iter_get_position;
+	GSequenceIter* function(GSequenceIter* iter, gint delta)g_sequence_iter_move;
+	GSequence* function(GSequenceIter* iter)g_sequence_iter_get_sequence;
+	gint function(GSequenceIter* a, GSequenceIter* b)g_sequence_iter_compare;
+	GSequenceIter* function(GSequenceIter* begin, GSequenceIter* end)g_sequence_range_get_midpoint;
 	
 	// glib.TrashStack
 	
@@ -1472,6 +1608,11 @@ Symbol[] glibLinks =
 	{ "g_ucs4_to_utf16",  cast(void**)& g_ucs4_to_utf16},
 	{ "g_ucs4_to_utf8",  cast(void**)& g_ucs4_to_utf8},
 	{ "g_unichar_to_utf8",  cast(void**)& g_unichar_to_utf8},
+	{ "g_base64_encode_step",  cast(void**)& g_base64_encode_step},
+	{ "g_base64_encode_close",  cast(void**)& g_base64_encode_close},
+	{ "g_base64_encode",  cast(void**)& g_base64_encode},
+	{ "g_base64_decode_step",  cast(void**)& g_base64_decode_step},
+	{ "g_base64_decode",  cast(void**)& g_base64_decode},
 	{ "g_strip_context",  cast(void**)& g_strip_context},
 	{ "g_get_language_names",  cast(void**)& g_get_language_names},
 	{ "g_get_current_time",  cast(void**)& g_get_current_time},
@@ -1631,14 +1772,6 @@ Symbol[] glibLinks =
 	{ "g_file_open_tmp",  cast(void**)& g_file_open_tmp},
 	{ "g_file_read_link",  cast(void**)& g_file_read_link},
 	{ "g_mkdir_with_parents",  cast(void**)& g_mkdir_with_parents},
-	{ "g_dir_open",  cast(void**)& g_dir_open},
-	{ "g_dir_read_name",  cast(void**)& g_dir_read_name},
-	{ "g_dir_rewind",  cast(void**)& g_dir_rewind},
-	{ "g_dir_close",  cast(void**)& g_dir_close},
-	{ "g_mapped_file_new",  cast(void**)& g_mapped_file_new},
-	{ "g_mapped_file_free",  cast(void**)& g_mapped_file_free},
-	{ "g_mapped_file_get_length",  cast(void**)& g_mapped_file_get_length},
-	{ "g_mapped_file_get_contents",  cast(void**)& g_mapped_file_get_contents},
 	{ "g_open",  cast(void**)& g_open},
 	{ "g_rename",  cast(void**)& g_rename},
 	{ "g_mkdir",  cast(void**)& g_mkdir},
@@ -1653,6 +1786,14 @@ Symbol[] glibLinks =
 	{ "g_access",  cast(void**)& g_access},
 	{ "g_creat",  cast(void**)& g_creat},
 	{ "g_chdir",  cast(void**)& g_chdir},
+	{ "g_dir_open",  cast(void**)& g_dir_open},
+	{ "g_dir_read_name",  cast(void**)& g_dir_read_name},
+	{ "g_dir_rewind",  cast(void**)& g_dir_rewind},
+	{ "g_dir_close",  cast(void**)& g_dir_close},
+	{ "g_mapped_file_new",  cast(void**)& g_mapped_file_new},
+	{ "g_mapped_file_free",  cast(void**)& g_mapped_file_free},
+	{ "g_mapped_file_get_length",  cast(void**)& g_mapped_file_get_length},
+	{ "g_mapped_file_get_contents",  cast(void**)& g_mapped_file_get_contents},
 	{ "g_shell_parse_argv",  cast(void**)& g_shell_parse_argv},
 	{ "g_shell_quote",  cast(void**)& g_shell_quote},
 	{ "g_shell_unquote",  cast(void**)& g_shell_unquote},
@@ -1687,6 +1828,39 @@ Symbol[] glibLinks =
 	{ "g_pattern_match",  cast(void**)& g_pattern_match},
 	{ "g_pattern_match_string",  cast(void**)& g_pattern_match_string},
 	{ "g_pattern_match_simple",  cast(void**)& g_pattern_match_simple},
+	{ "g_regex_new",  cast(void**)& g_regex_new},
+	{ "g_regex_ref",  cast(void**)& g_regex_ref},
+	{ "g_regex_unref",  cast(void**)& g_regex_unref},
+	{ "g_regex_get_pattern",  cast(void**)& g_regex_get_pattern},
+	{ "g_regex_get_max_backref",  cast(void**)& g_regex_get_max_backref},
+	{ "g_regex_get_capture_count",  cast(void**)& g_regex_get_capture_count},
+	{ "g_regex_get_string_number",  cast(void**)& g_regex_get_string_number},
+	{ "g_regex_escape_string",  cast(void**)& g_regex_escape_string},
+	{ "g_regex_match_simple",  cast(void**)& g_regex_match_simple},
+	{ "g_regex_match",  cast(void**)& g_regex_match},
+	{ "g_regex_match_full",  cast(void**)& g_regex_match_full},
+	{ "g_regex_match_all",  cast(void**)& g_regex_match_all},
+	{ "g_regex_match_all_full",  cast(void**)& g_regex_match_all_full},
+	{ "g_regex_split_simple",  cast(void**)& g_regex_split_simple},
+	{ "g_regex_split",  cast(void**)& g_regex_split},
+	{ "g_regex_split_full",  cast(void**)& g_regex_split_full},
+	{ "g_regex_replace",  cast(void**)& g_regex_replace},
+	{ "g_regex_replace_literal",  cast(void**)& g_regex_replace_literal},
+	{ "g_regex_replace_eval",  cast(void**)& g_regex_replace_eval},
+	{ "g_regex_check_replacement",  cast(void**)& g_regex_check_replacement},
+	{ "g_match_info_get_regex",  cast(void**)& g_match_info_get_regex},
+	{ "g_match_info_get_string",  cast(void**)& g_match_info_get_string},
+	{ "g_match_info_free",  cast(void**)& g_match_info_free},
+	{ "g_match_info_matches",  cast(void**)& g_match_info_matches},
+	{ "g_match_info_next",  cast(void**)& g_match_info_next},
+	{ "g_match_info_get_match_count",  cast(void**)& g_match_info_get_match_count},
+	{ "g_match_info_is_partial_match",  cast(void**)& g_match_info_is_partial_match},
+	{ "g_match_info_expand_references",  cast(void**)& g_match_info_expand_references},
+	{ "g_match_info_fetch",  cast(void**)& g_match_info_fetch},
+	{ "g_match_info_fetch_pos",  cast(void**)& g_match_info_fetch_pos},
+	{ "g_match_info_fetch_named",  cast(void**)& g_match_info_fetch_named},
+	{ "g_match_info_fetch_named_pos",  cast(void**)& g_match_info_fetch_named_pos},
+	{ "g_match_info_fetch_all",  cast(void**)& g_match_info_fetch_all},
 	{ "g_markup_escape_text",  cast(void**)& g_markup_escape_text},
 	{ "g_markup_printf_escaped",  cast(void**)& g_markup_printf_escaped},
 	{ "g_markup_vprintf_escaped",  cast(void**)& g_markup_vprintf_escaped},
@@ -1736,6 +1910,45 @@ Symbol[] glibLinks =
 	{ "g_key_file_remove_group",  cast(void**)& g_key_file_remove_group},
 	{ "g_key_file_remove_key",  cast(void**)& g_key_file_remove_key},
 	{ "g_key_file_remove_comment",  cast(void**)& g_key_file_remove_comment},
+	{ "g_bookmark_file_new",  cast(void**)& g_bookmark_file_new},
+	{ "g_bookmark_file_free",  cast(void**)& g_bookmark_file_free},
+	{ "g_bookmark_file_load_from_file",  cast(void**)& g_bookmark_file_load_from_file},
+	{ "g_bookmark_file_load_from_data",  cast(void**)& g_bookmark_file_load_from_data},
+	{ "g_bookmark_file_load_from_data_dirs",  cast(void**)& g_bookmark_file_load_from_data_dirs},
+	{ "g_bookmark_file_to_data",  cast(void**)& g_bookmark_file_to_data},
+	{ "g_bookmark_file_to_file",  cast(void**)& g_bookmark_file_to_file},
+	{ "g_bookmark_file_has_item",  cast(void**)& g_bookmark_file_has_item},
+	{ "g_bookmark_file_has_group",  cast(void**)& g_bookmark_file_has_group},
+	{ "g_bookmark_file_has_application",  cast(void**)& g_bookmark_file_has_application},
+	{ "g_bookmark_file_get_size",  cast(void**)& g_bookmark_file_get_size},
+	{ "g_bookmark_file_get_uris",  cast(void**)& g_bookmark_file_get_uris},
+	{ "g_bookmark_file_get_title",  cast(void**)& g_bookmark_file_get_title},
+	{ "g_bookmark_file_get_description",  cast(void**)& g_bookmark_file_get_description},
+	{ "g_bookmark_file_get_mime_type",  cast(void**)& g_bookmark_file_get_mime_type},
+	{ "g_bookmark_file_get_is_private",  cast(void**)& g_bookmark_file_get_is_private},
+	{ "g_bookmark_file_get_icon",  cast(void**)& g_bookmark_file_get_icon},
+	{ "g_bookmark_file_get_added",  cast(void**)& g_bookmark_file_get_added},
+	{ "g_bookmark_file_get_modified",  cast(void**)& g_bookmark_file_get_modified},
+	{ "g_bookmark_file_get_visited",  cast(void**)& g_bookmark_file_get_visited},
+	{ "g_bookmark_file_get_groups",  cast(void**)& g_bookmark_file_get_groups},
+	{ "g_bookmark_file_get_applications",  cast(void**)& g_bookmark_file_get_applications},
+	{ "g_bookmark_file_get_app_info",  cast(void**)& g_bookmark_file_get_app_info},
+	{ "g_bookmark_file_set_title",  cast(void**)& g_bookmark_file_set_title},
+	{ "g_bookmark_file_set_description",  cast(void**)& g_bookmark_file_set_description},
+	{ "g_bookmark_file_set_mime_type",  cast(void**)& g_bookmark_file_set_mime_type},
+	{ "g_bookmark_file_set_is_private",  cast(void**)& g_bookmark_file_set_is_private},
+	{ "g_bookmark_file_set_icon",  cast(void**)& g_bookmark_file_set_icon},
+	{ "g_bookmark_file_set_added",  cast(void**)& g_bookmark_file_set_added},
+	{ "g_bookmark_file_set_groups",  cast(void**)& g_bookmark_file_set_groups},
+	{ "g_bookmark_file_set_modified",  cast(void**)& g_bookmark_file_set_modified},
+	{ "g_bookmark_file_set_visited",  cast(void**)& g_bookmark_file_set_visited},
+	{ "g_bookmark_file_set_app_info",  cast(void**)& g_bookmark_file_set_app_info},
+	{ "g_bookmark_file_add_group",  cast(void**)& g_bookmark_file_add_group},
+	{ "g_bookmark_file_add_application",  cast(void**)& g_bookmark_file_add_application},
+	{ "g_bookmark_file_remove_group",  cast(void**)& g_bookmark_file_remove_group},
+	{ "g_bookmark_file_remove_application",  cast(void**)& g_bookmark_file_remove_application},
+	{ "g_bookmark_file_remove_item",  cast(void**)& g_bookmark_file_remove_item},
+	{ "g_bookmark_file_move_item",  cast(void**)& g_bookmark_file_move_item},
 	{ "g_win32_error_message",  cast(void**)& g_win32_error_message},
 	{ "g_win32_getlocale",  cast(void**)& g_win32_getlocale},
 	{ "g_win32_get_package_installation_directory",  cast(void**)& g_win32_get_package_installation_directory},
@@ -1856,6 +2069,41 @@ Symbol[] glibLinks =
 	{ "g_queue_link_index",  cast(void**)& g_queue_link_index},
 	{ "g_queue_unlink",  cast(void**)& g_queue_unlink},
 	{ "g_queue_delete_link",  cast(void**)& g_queue_delete_link},
+	{ "g_sequence_new",  cast(void**)& g_sequence_new},
+	{ "g_sequence_free",  cast(void**)& g_sequence_free},
+	{ "g_sequence_get_length",  cast(void**)& g_sequence_get_length},
+	{ "g_sequence_foreach",  cast(void**)& g_sequence_foreach},
+	{ "g_sequence_foreach_range",  cast(void**)& g_sequence_foreach_range},
+	{ "g_sequence_sort",  cast(void**)& g_sequence_sort},
+	{ "g_sequence_sort_iter",  cast(void**)& g_sequence_sort_iter},
+	{ "g_sequence_get_begin_iter",  cast(void**)& g_sequence_get_begin_iter},
+	{ "g_sequence_get_end_iter",  cast(void**)& g_sequence_get_end_iter},
+	{ "g_sequence_get_iter_at_pos",  cast(void**)& g_sequence_get_iter_at_pos},
+	{ "g_sequence_append",  cast(void**)& g_sequence_append},
+	{ "g_sequence_prepend",  cast(void**)& g_sequence_prepend},
+	{ "g_sequence_insert_before",  cast(void**)& g_sequence_insert_before},
+	{ "g_sequence_move",  cast(void**)& g_sequence_move},
+	{ "g_sequence_swap",  cast(void**)& g_sequence_swap},
+	{ "g_sequence_insert_sorted",  cast(void**)& g_sequence_insert_sorted},
+	{ "g_sequence_insert_sorted_iter",  cast(void**)& g_sequence_insert_sorted_iter},
+	{ "g_sequence_sort_changed",  cast(void**)& g_sequence_sort_changed},
+	{ "g_sequence_sort_changed_iter",  cast(void**)& g_sequence_sort_changed_iter},
+	{ "g_sequence_remove",  cast(void**)& g_sequence_remove},
+	{ "g_sequence_remove_range",  cast(void**)& g_sequence_remove_range},
+	{ "g_sequence_move_range",  cast(void**)& g_sequence_move_range},
+	{ "g_sequence_search",  cast(void**)& g_sequence_search},
+	{ "g_sequence_search_iter",  cast(void**)& g_sequence_search_iter},
+	{ "g_sequence_get",  cast(void**)& g_sequence_get},
+	{ "g_sequence_set",  cast(void**)& g_sequence_set},
+	{ "g_sequence_iter_is_begin",  cast(void**)& g_sequence_iter_is_begin},
+	{ "g_sequence_iter_is_end",  cast(void**)& g_sequence_iter_is_end},
+	{ "g_sequence_iter_next",  cast(void**)& g_sequence_iter_next},
+	{ "g_sequence_iter_prev",  cast(void**)& g_sequence_iter_prev},
+	{ "g_sequence_iter_get_position",  cast(void**)& g_sequence_iter_get_position},
+	{ "g_sequence_iter_move",  cast(void**)& g_sequence_iter_move},
+	{ "g_sequence_iter_get_sequence",  cast(void**)& g_sequence_iter_get_sequence},
+	{ "g_sequence_iter_compare",  cast(void**)& g_sequence_iter_compare},
+	{ "g_sequence_range_get_midpoint",  cast(void**)& g_sequence_range_get_midpoint},
 	{ "g_trash_stack_push",  cast(void**)& g_trash_stack_push},
 	{ "g_trash_stack_pop",  cast(void**)& g_trash_stack_pop},
 	{ "g_trash_stack_peek",  cast(void**)& g_trash_stack_peek},

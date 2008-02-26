@@ -42,10 +42,8 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.HashTable
  * 	- glib.Str
  * structWrap:
- * 	- GHashTable* -> HashTable
  * 	- GScanner* -> ScannerG
  * module aliases:
  * local aliases:
@@ -58,7 +56,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.HashTable;
 private import glib.Str;
 
 

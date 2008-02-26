@@ -39,6 +39,8 @@
  * 	- g_
  * omit structs:
  * omit prefixes:
+ * 	- g_dir_
+ * 	- g_mapped_file_
  * omit code:
  * omit signals:
  * imports:
@@ -275,124 +277,6 @@ public class FileUtils
 	{
 		// int g_mkdir_with_parents (const gchar *pathname,  int mode);
 		return g_mkdir_with_parents(Str.toStringz(pathname), mode);
-	}
-	
-	/**
-	 * Opens a directory for reading. The names of the files in the
-	 * directory can then be retrieved using g_dir_read_name().
-	 * Params:
-	 * path =  the path to the directory you are interested in. On Unix
-	 *  in the on-disk encoding. On Windows in UTF-8
-	 * flags =  Currently must be set to 0. Reserved for future use.
-	 * error =  return location for a GError, or NULL.
-	 *  If non-NULL, an error will be set if and only if
-	 *  g_dir_open() fails.
-	 * Returns: a newly allocated GDir on success, NULL on failure. If non-NULL, you must free the result with g_dir_close() when you are finished with it.
-	 */
-	public static GDir* dirOpen(char[] path, uint flags, GError** error)
-	{
-		// GDir* g_dir_open (const gchar *path,  guint flags,  GError **error);
-		return g_dir_open(Str.toStringz(path), flags, error);
-	}
-	
-	/**
-	 * Retrieves the name of the next entry in the directory. The '.' and
-	 * '..' entries are omitted. On Windows, the returned name is in
-	 * UTF-8. On Unix, it is in the on-disk encoding.
-	 * Params:
-	 * dir =  a GDir* created by g_dir_open()
-	 * Returns: The entry's name or NULL if there are no  more entries. The return value is owned by GLib and must not be modified or freed.
-	 */
-	public static char[] dirReadName(GDir* dir)
-	{
-		// const gchar* g_dir_read_name (GDir *dir);
-		return Str.toString(g_dir_read_name(dir)).dup;
-	}
-	
-	/**
-	 * Resets the given directory. The next call to g_dir_read_name()
-	 * will return the first entry again.
-	 * Params:
-	 * dir =  a GDir* created by g_dir_open()
-	 */
-	public static void dirRewind(GDir* dir)
-	{
-		// void g_dir_rewind (GDir *dir);
-		g_dir_rewind(dir);
-	}
-	
-	/**
-	 * Closes the directory and deallocates all related resources.
-	 * Params:
-	 * dir =  a GDir* created by g_dir_open()
-	 */
-	public static void dirClose(GDir* dir)
-	{
-		// void g_dir_close (GDir *dir);
-		g_dir_close(dir);
-	}
-	
-	/**
-	 * Maps a file into memory. On UNIX, this is using the mmap() function.
-	 * If writable is TRUE, the mapped buffer may be modified, otherwise
-	 * it is an error to modify the mapped buffer. Modifications to the buffer
-	 * are not visible to other processes mapping the same file, and are not
-	 * written back to the file.
-	 * Note that modifications of the underlying file might affect the contents
-	 * of the GMappedFile. Therefore, mapping should only be used if the file
-	 * will not be modified, or if all modifications of the file are done
-	 * atomically (e.g. using g_file_set_contents()).
-	 * Since 2.8
-	 * Params:
-	 * filename =  The path of the file to load, in the GLib filename encoding
-	 * writable =  whether the mapping should be writable
-	 * error =  return location for a GError, or NULL
-	 * Returns: a newly allocated GMappedFile which must be freed with g_mapped_file_free(), or NULL if the mapping failed.
-	 */
-	public static GMappedFile* mappedFileNew(char[] filename, int writable, GError** error)
-	{
-		// GMappedFile* g_mapped_file_new (const gchar *filename,  gboolean writable,  GError **error);
-		return g_mapped_file_new(Str.toStringz(filename), writable, error);
-	}
-	
-	/**
-	 * Unmaps the buffer of file and frees it.
-	 * Since 2.8
-	 * Params:
-	 * file =  a GMappedFile
-	 */
-	public static void mappedFileFree(GMappedFile* file)
-	{
-		// void g_mapped_file_free (GMappedFile *file);
-		g_mapped_file_free(file);
-	}
-	
-	/**
-	 * Returns the length of the contents of a GMappedFile.
-	 * Since 2.8
-	 * Params:
-	 * file =  a GMappedFile
-	 * Returns: the length of the contents of file.
-	 */
-	public static uint mappedFileGetLength(GMappedFile* file)
-	{
-		// gsize g_mapped_file_get_length (GMappedFile *file);
-		return g_mapped_file_get_length(file);
-	}
-	
-	/**
-	 * Returns the contents of a GMappedFile.
-	 * Note that the contents may not be zero-terminated,
-	 * even if the GMappedFile is backed by a text file.
-	 * Since 2.8
-	 * Params:
-	 * file =  a GMappedFile
-	 * Returns: the contents of file.
-	 */
-	public static char[] mappedFileGetContents(GMappedFile* file)
-	{
-		// gchar* g_mapped_file_get_contents (GMappedFile *file);
-		return Str.toString(g_mapped_file_get_contents(file)).dup;
 	}
 	
 	/**

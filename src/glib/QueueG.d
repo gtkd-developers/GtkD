@@ -43,7 +43,6 @@
  * omit signals:
  * imports:
  * 	- glib.ListG
- * 	- glib.ListG
  * structWrap:
  * 	- GList* -> ListG
  * 	- GQueue* -> QueueG
@@ -58,7 +57,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.ListG;
 private import glib.ListG;
 
 

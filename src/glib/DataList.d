@@ -42,10 +42,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Quark
- * 	- glib.Dataset
  * structWrap:
- * 	- GDataset* -> Dataset
  * module aliases:
  * local aliases:
  */
@@ -57,8 +54,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.Quark;
-private import glib.Dataset;
 
 
 

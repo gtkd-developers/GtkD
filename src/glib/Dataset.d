@@ -42,7 +42,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Quark
  * structWrap:
  * module aliases:
  * local aliases:
@@ -55,7 +54,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.Quark;
 
 
 

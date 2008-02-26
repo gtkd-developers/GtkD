@@ -42,19 +42,14 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.MainLoop
  * 	- glib.Source
  * 	- gthread.Cond
  * 	- gthread.Mutex
- * 	- glib.ThreadPool
- * 	- glib.MainContext
  * structWrap:
  * 	- GCond* -> Cond
  * 	- GMainContext* -> MainContext
- * 	- GMainLLoop* -> MainLoop
  * 	- GMutex* -> Mutex
  * 	- GSource* -> Source
- * 	- GThreadPoll* -> ThreadPoll
  * module aliases:
  * local aliases:
  */
@@ -66,12 +61,9 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.MainLoop;
 private import glib.Source;
 private import gthread.Cond;
 private import gthread.Mutex;
-private import glib.ThreadPool;
-private import glib.MainContext;
 
 
 

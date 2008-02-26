@@ -42,7 +42,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Module
  * 	- glib.Str
  * structWrap:
  * 	- GModule* -> Module
@@ -57,7 +56,6 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
-private import glib.Module;
 private import glib.Str;
 
 
