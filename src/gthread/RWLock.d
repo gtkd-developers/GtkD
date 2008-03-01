@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = RWLock
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -123,6 +123,16 @@ public class RWLock
 			else return;
 		}
 		this.gStaticRWLock = gStaticRWLock;
+	}
+	
+	/**
+	 * Creates a new initialized RWLock.
+	 */
+	public this ()
+	{
+		this(new GStaticRWLock);
+		
+		init();
 	}
 	
 	/**

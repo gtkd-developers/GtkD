@@ -24,36 +24,39 @@
  * Conversion parameters:
  * inFile  = 
  * outPack = gthread
- * outFile = Private
- * strct   = GPrivate
+ * outFile = StaticMutex
+ * strct   = GStaticMutex
  * realStrct=
  * ctorStrct=
- * clss    = Private
+ * clss    = StaticMutex
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
  * prefixes:
- * 	- g_private_
+ * 	- g_static_mutex_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
+ * 	- gthread.Mutex
  * structWrap:
+ * 	- GMutex* -> Mutex
  * module aliases:
  * local aliases:
  */
 
-module gthread.Private;
+module gthread.StaticMutex;
 
 public  import gtkc.gthreadtypes;
 
 private import gtkc.gthread;
 
 
+private import gthread.Mutex;
 
 
 
@@ -92,101 +95,118 @@ private import gtkc.gthread;
  * common problems. To use error-checking mutexes, define the symbol
  * G_ERRORCHECK_MUTEXES when compiling the application.
  */
-public class Private
+public class StaticMutex
 {
 	
 	/** the main Gtk struct */
-	protected GPrivate* gPrivate;
+	protected GStaticMutex* gStaticMutex;
 	
 	
-	public GPrivate* getPrivateStruct()
+	public GStaticMutex* getStaticMutexStruct()
 	{
-		return gPrivate;
+		return gStaticMutex;
 	}
 	
 	
 	/** the main Gtk struct as a void* */
 	protected void* getStruct()
 	{
-		return cast(void*)gPrivate;
+		return cast(void*)gStaticMutex;
 	}
 	
 	/**
 	 * Sets our main struct and passes it to the parent class
 	 */
-	public this (GPrivate* gPrivate)
+	public this (GStaticMutex* gStaticMutex)
 	{
-		if(gPrivate is null)
+		if(gStaticMutex is null)
 		{
 			this = null;
-			version(Exceptions) throw new Exception("Null gPrivate passed to constructor.");
+			version(Exceptions) throw new Exception("Null gStaticMutex passed to constructor.");
 			else return;
 		}
-		this.gPrivate = gPrivate;
+		this.gStaticMutex = gStaticMutex;
+	}
+	
+	/**
+	 * Creates a new initialized StaticMutex.
+	 */
+	public this ()
+	{
+		this(new GStaticMutex);
+		
+		init();
 	}
 	
 	/**
 	 */
 	
 	/**
-	 * Creates a new GPrivate. If destructor is non-NULL, it is a pointer
-	 * to a destructor function. Whenever a thread ends and the corresponding
-	 * pointer keyed to this instance of GPrivate is non-NULL, the
-	 * destructor is called with this pointer as the argument.
-	 * Note
-	 * destructor is used quite differently from notify in
-	 * g_static_private_set().
-	 * Note
-	 * A GPrivate can not be freed. Reuse it instead, if you can, to avoid
-	 * shortage, or use GStaticPrivate.
-	 * Note
-	 * This function will abort if g_thread_init() has not been called yet.
-	 * Params:
-	 * destructor = a function to destroy the data keyed to GPrivate when a
-	 * thread ends.
+	 * Initializes mutex. Alternatively you can initialize it with
+	 * G_STATIC_MUTEX_INIT.
 	 */
-	public this (GDestroyNotify destructor)
+	public void init()
 	{
-		// GPrivate* g_private_new (GDestroyNotify destructor);
-		auto p = g_private_new(destructor);
+		// void g_static_mutex_init (GStaticMutex *mutex);
+		g_static_mutex_init(gStaticMutex);
+	}
+	
+	/**
+	 * Works like g_mutex_lock(), but for a GStaticMutex.
+	 */
+	public void lock()
+	{
+		// void g_static_mutex_lock (GStaticMutex *mutex);
+		g_static_mutex_lock(gStaticMutex);
+	}
+	
+	/**
+	 * Works like g_mutex_trylock(), but for a GStaticMutex.
+	 * Returns:TRUE, if the GStaticMutex could be locked.
+	 */
+	public int trylock()
+	{
+		// gboolean g_static_mutex_trylock (GStaticMutex *mutex);
+		return g_static_mutex_trylock(gStaticMutex);
+	}
+	
+	/**
+	 * Works like g_mutex_unlock(), but for a GStaticMutex.
+	 */
+	public void unlock()
+	{
+		// void g_static_mutex_unlock (GStaticMutex *mutex);
+		g_static_mutex_unlock(gStaticMutex);
+	}
+	
+	/**
+	 * For some operations (like g_cond_wait()) you must have a GMutex
+	 * instead of a GStaticMutex. This function will return the
+	 * corresponding GMutex for mutex.
+	 * Returns:the GMutex corresponding to mutex.
+	 */
+	public Mutex getMutex()
+	{
+		// GMutex* g_static_mutex_get_mutex (GStaticMutex *mutex);
+		auto p = g_static_mutex_get_mutex(gStaticMutex);
 		if(p is null)
 		{
-			this = null;
-			version(Exceptions) throw new Exception("Construction failure.");
-			else return;
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
 		}
-		this(cast(GPrivate*) p);
+		return new Mutex(cast(GMutex*) p);
 	}
 	
 	/**
-	 * Returns the pointer keyed to private_key for the current thread.
-	 * If g_private_set() hasn't been called for the
-	 * current private_key and thread yet, this pointer will be NULL.
-	 * This function can be used even if g_thread_init() has not yet been called, and,
-	 * in that case, will return the value of private_key casted to gpointer.
-	 * Note however, that private data set before g_thread_init() will
-	 * not be retained after the call. Instead, NULL
-	 * will be returned in all threads directly after g_thread_init(), regardless of
-	 * any g_private_set() calls issued before threading system intialization.
-	 * Returns:the corresponding pointer.
+	 * Releases all resources allocated to mutex.
+	 * You don't have to call this functions for a GStaticMutex with an
+	 * unbounded lifetime, i.e. objects declared 'static', but if you have a
+	 * GStaticMutex as a member of a structure and the structure is freed,
+	 * you should also free the GStaticMutex.
 	 */
-	public void* get()
+	public void free()
 	{
-		// gpointer g_private_get (GPrivate *private_key);
-		return g_private_get(gPrivate);
-	}
-	
-	/**
-	 * Sets the pointer keyed to private_key for the current thread.
-	 * This function can be used even if g_thread_init() has not yet been
-	 * called, and, in that case, will set private_key to data casted to GPrivate*.
-	 * See g_private_get() for resulting caveats.
-	 * Params:
-	 * data = the new pointer.
-	 */
-	public void set(void* data)
-	{
-		// void g_private_set (GPrivate *private_key,  gpointer data);
-		g_private_set(gPrivate, data);
+		// void g_static_mutex_free (GStaticMutex *mutex);
+		g_static_mutex_free(gStaticMutex);
 	}
 }

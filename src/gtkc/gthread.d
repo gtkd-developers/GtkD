@@ -72,6 +72,15 @@ extern(C)
 	void function(GMutex* mutex)g_mutex_unlock;
 	void function(GMutex* mutex)g_mutex_free;
 	
+	// gthread.StaticMutex
+	
+	void function(GStaticMutex* mutex)g_static_mutex_init;
+	void function(GStaticMutex* mutex)g_static_mutex_lock;
+	gboolean function(GStaticMutex* mutex)g_static_mutex_trylock;
+	void function(GStaticMutex* mutex)g_static_mutex_unlock;
+	GMutex* function(GStaticMutex* mutex)g_static_mutex_get_mutex;
+	void function(GStaticMutex* mutex)g_static_mutex_free;
+	
 	// gthread.StaticRecMutex
 	
 	void function(GStaticRecMutex* mutex)g_static_rec_mutex_init;
@@ -127,12 +136,6 @@ extern(C)
 	void function()g_thread_yield;
 	void function(gpointer retval)g_thread_exit;
 	void function(GFunc threadFunc, gpointer userData)g_thread_foreach;
-	void function(GStaticMutex* mutex)g_static_mutex_init;
-	void function(GStaticMutex* mutex)g_static_mutex_lock;
-	gboolean function(GStaticMutex* mutex)g_static_mutex_trylock;
-	void function(GStaticMutex* mutex)g_static_mutex_unlock;
-	GMutex* function(GStaticMutex* mutex)g_static_mutex_get_mutex;
-	void function(GStaticMutex* mutex)g_static_mutex_free;
 	gboolean function(gsize* valueLocation)g_once_init_enter;
 	void function(gsize* valueLocation, gsize initializationValue)g_once_init_leave;
 
@@ -147,6 +150,12 @@ Symbol[] gthreadLinks =
 	{ "g_mutex_trylock",  cast(void**)& g_mutex_trylock},
 	{ "g_mutex_unlock",  cast(void**)& g_mutex_unlock},
 	{ "g_mutex_free",  cast(void**)& g_mutex_free},
+	{ "g_static_mutex_init",  cast(void**)& g_static_mutex_init},
+	{ "g_static_mutex_lock",  cast(void**)& g_static_mutex_lock},
+	{ "g_static_mutex_trylock",  cast(void**)& g_static_mutex_trylock},
+	{ "g_static_mutex_unlock",  cast(void**)& g_static_mutex_unlock},
+	{ "g_static_mutex_get_mutex",  cast(void**)& g_static_mutex_get_mutex},
+	{ "g_static_mutex_free",  cast(void**)& g_static_mutex_free},
 	{ "g_static_rec_mutex_init",  cast(void**)& g_static_rec_mutex_init},
 	{ "g_static_rec_mutex_lock",  cast(void**)& g_static_rec_mutex_lock},
 	{ "g_static_rec_mutex_trylock",  cast(void**)& g_static_rec_mutex_trylock},
@@ -185,12 +194,6 @@ Symbol[] gthreadLinks =
 	{ "g_thread_yield",  cast(void**)& g_thread_yield},
 	{ "g_thread_exit",  cast(void**)& g_thread_exit},
 	{ "g_thread_foreach",  cast(void**)& g_thread_foreach},
-	{ "g_static_mutex_init",  cast(void**)& g_static_mutex_init},
-	{ "g_static_mutex_lock",  cast(void**)& g_static_mutex_lock},
-	{ "g_static_mutex_trylock",  cast(void**)& g_static_mutex_trylock},
-	{ "g_static_mutex_unlock",  cast(void**)& g_static_mutex_unlock},
-	{ "g_static_mutex_get_mutex",  cast(void**)& g_static_mutex_get_mutex},
-	{ "g_static_mutex_free",  cast(void**)& g_static_mutex_free},
 	{ "g_once_init_enter",  cast(void**)& g_once_init_enter},
 	{ "g_once_init_leave",  cast(void**)& g_once_init_leave},
 

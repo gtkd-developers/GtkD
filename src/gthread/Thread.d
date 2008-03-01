@@ -37,9 +37,11 @@
  * implements:
  * prefixes:
  * 	- g_thread_
+ * 	- g_
  * omit structs:
  * omit prefixes:
  * 	- g_mutex_
+ * 	- g_static_mutex_
  * 	- g_static_rec_mutex_
  * 	- g_static_rw_lock_
  * 	- g_cond_
@@ -48,16 +50,7 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.ErrorG
- * 	- gthread.Mutex
- * 	- glib.Source
- * 	- glib.Dataset
- * 	- glib.ListG
  * structWrap:
- * 	- GDataset* -> Dataset
- * 	- GList* -> ListG
- * 	- GMutex* -> Mutex
- * 	- GSource* -> Source
  * 	- GThread* -> Thread
  * module aliases:
  * local aliases:
@@ -70,11 +63,6 @@ public  import gtkc.gthreadtypes;
 private import gtkc.gthread;
 
 
-private import glib.ErrorG;
-private import gthread.Mutex;
-private import glib.Source;
-private import glib.Dataset;
-private import glib.ListG;
 
 
 
@@ -367,87 +355,6 @@ public class Thread
 	}
 	
 	/**
-	 * Initializes mutex. Alternatively you can initialize it with
-	 * G_STATIC_MUTEX_INIT.
-	 * Params:
-	 * mutex = a GStaticMutex to be initialized.
-	 */
-	public static void gStaticMutexInit(GStaticMutex* mutex)
-	{
-		// void g_static_mutex_init (GStaticMutex *mutex);
-		g_static_mutex_init(mutex);
-	}
-	
-	/**
-	 * Works like g_mutex_lock(), but for a GStaticMutex.
-	 * Params:
-	 * mutex = a GStaticMutex.
-	 */
-	public static void gStaticMutexLock(GStaticMutex* mutex)
-	{
-		// void g_static_mutex_lock (GStaticMutex *mutex);
-		g_static_mutex_lock(mutex);
-	}
-	
-	/**
-	 * Works like g_mutex_trylock(), but for a GStaticMutex.
-	 * Params:
-	 * mutex = a GStaticMutex.
-	 * Returns:TRUE, if the GStaticMutex could be locked.
-	 */
-	public static int gStaticMutexTrylock(GStaticMutex* mutex)
-	{
-		// gboolean g_static_mutex_trylock (GStaticMutex *mutex);
-		return g_static_mutex_trylock(mutex);
-	}
-	
-	/**
-	 * Works like g_mutex_unlock(), but for a GStaticMutex.
-	 * Params:
-	 * mutex = a GStaticMutex.
-	 */
-	public static void gStaticMutexUnlock(GStaticMutex* mutex)
-	{
-		// void g_static_mutex_unlock (GStaticMutex *mutex);
-		g_static_mutex_unlock(mutex);
-	}
-	
-	/**
-	 * For some operations (like g_cond_wait()) you must have a GMutex
-	 * instead of a GStaticMutex. This function will return the
-	 * corresponding GMutex for mutex.
-	 * Params:
-	 * mutex = a GStaticMutex.
-	 * Returns:the GMutex corresponding to mutex.
-	 */
-	public static Mutex gStaticMutexGetMutex(GStaticMutex* mutex)
-	{
-		// GMutex* g_static_mutex_get_mutex (GStaticMutex *mutex);
-		auto p = g_static_mutex_get_mutex(mutex);
-		if(p is null)
-		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
-		}
-		return new Mutex(cast(GMutex*) p);
-	}
-	
-	/**
-	 * Releases all resources allocated to mutex.
-	 * You don't have to call this functions for a GStaticMutex with an
-	 * unbounded lifetime, i.e. objects declared 'static', but if you have a
-	 * GStaticMutex as a member of a structure and the structure is freed,
-	 * you should also free the GStaticMutex.
-	 * Params:
-	 * mutex = a GStaticMutex to be freed.
-	 */
-	public static void gStaticMutexFree(GStaticMutex* mutex)
-	{
-		// void g_static_mutex_free (GStaticMutex *mutex);
-		g_static_mutex_free(mutex);
-	}
-	
-	/**
 	 * Function to be called when starting a critical initialization section.
 	 * The argument value_location must point to a static 0-initialized variable
 	 * that will be set to a value other than 0 at the end of the initialization section.
@@ -459,7 +366,7 @@ public class Thread
 	 * valueLocation = location of a static initializable variable containing 0.
 	 * Returns:TRUE if the initialization section should be entered, FALSE and blocks otheriwse
 	 */
-	public static int gOnceInitEnter(uint* valueLocation)
+	public static int onceInitEnter(uint* valueLocation)
 	{
 		// gboolean g_once_init_enter (volatile gsize *value_location);
 		return g_once_init_enter(valueLocation);
@@ -474,7 +381,7 @@ public class Thread
 	 * Params:
 	 * valueLocation = location of a static initializable variable containing 0.
 	 */
-	public static void gOnceInitLeave(uint* valueLocation, uint initializationValue)
+	public static void onceInitLeave(uint* valueLocation, uint initializationValue)
 	{
 		// void g_once_init_leave (volatile gsize *value_location,  gsize initialization_value);
 		g_once_init_leave(valueLocation, initializationValue);

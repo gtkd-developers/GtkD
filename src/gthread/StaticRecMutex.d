@@ -30,7 +30,7 @@
  * ctorStrct=
  * clss    = StaticRecMutex
  * interf  = 
- * class Code: No
+ * class Code: Yes
  * interface Code: No
  * template for:
  * extend  = 
@@ -123,6 +123,16 @@ public class StaticRecMutex
 			else return;
 		}
 		this.gStaticRecMutex = gStaticRecMutex;
+	}
+	
+	/**
+	 * Creates a new initialized StaticRecMutex.
+	 */
+	public this ()
+	{
+		this(new GStaticRecMutex);
+		
+		init();
 	}
 	
 	/**
