@@ -1,9 +1,10 @@
 #!/bin/sh
 rm libgtkd.a
-compd \
+./compd \
 	src/atk \
 	src/cairo \
 	src/gdk \
+	src/gdkpixbuf \
 	src/glib \
 	src/gobject \
 	src/gthread \

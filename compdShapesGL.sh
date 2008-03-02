@@ -1,5 +1,5 @@
 #!/bin/sh
-compd \
+./compd \
 	demos/gl/ShapesGL.d \
 	demos/gl/TrackBall.d \
 	-o ShapesGL \
@@ -8,5 +8,6 @@ compd \
 	-c \
 	-L .. \
 	-l phobos \
-	-L . -l gtkd -l gtkdgl -l GLU -l GL\
+	-L . -l gtkd -l gtkdgl \
+	-l GL\
 	-l dl

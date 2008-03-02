@@ -1,6 +1,6 @@
 #!/bin/sh
 rm libgtkdgl.a
-compd \
+./compd \
 	srcgl/glgdk \
 	srcgl/glgtk \
 	srcgl/gtkglc \

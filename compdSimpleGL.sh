@@ -1,5 +1,5 @@
 #!/bin/sh
-compd \
+./compd \
 	demos/gl/SimpleGL.d \
 	-o SimpleGL \
 	-c \
@@ -8,5 +8,7 @@ compd \
 	-c \
 	-L .. \
 	-l phobos \
-	-L . -l gtkd -l gtkdgl -l GLU -l GL\
+	-L . -l gtkd -l gtkdgl \
+	-l GLU \
+	-l GL\
 	-l dl
