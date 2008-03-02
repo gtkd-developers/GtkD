@@ -1,7 +1,7 @@
 /**
  * main.d
  *
- * A Duit main window that uses the clock widget from clock.d
+ * A gtkD main window that uses the clock widget from clock.d
  *
  * Based on the Gtkmm example by:
  * Jonathon Jongsma
@@ -15,18 +15,12 @@
  *   Davyd Madeley (C version)
  */
 
-/*
- * from http://www.dsource.org/forums/viewtopic.php?t=1666
- * satelliittipupu wrote:
- * You can use it for Duit demos!
- */
+module main;
 
-module cairo.main;
+import clock;
 
-private import cairo.clock;
-
-private import gtk.MainWindow;
-private import gtk.GtkD;
+import gtk.MainWindow;
+import gtk.GtkD;
 
 void main(char[][] args)
 {
@@ -43,3 +37,4 @@ void main(char[][] args)
 
 	GtkD.main();
 }
+
