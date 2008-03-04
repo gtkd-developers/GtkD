@@ -44,7 +44,7 @@
  * imports:
  * 	- glib.Str
  * structWrap:
- * 	- cairo_surface_t* -> Surface
+ * 	- cairo_surface_t* -> ImageSurface
  * module aliases:
  * local aliases:
  */
@@ -118,7 +118,7 @@ public class ImageSurface : Surface
 	 * height =  height of the surface, in pixels
 	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
 	 */
-	public static Surface create(cairo_format_t format, int width, int height)
+	public static ImageSurface create(cairo_format_t format, int width, int height)
 	{
 		// cairo_surface_t* cairo_image_surface_create (cairo_format_t format,  int width,  int height);
 		auto p = cairo_image_surface_create(format, width, height);
@@ -127,7 +127,7 @@ public class ImageSurface : Surface
 			version(Exceptions) throw new Exception("Null GObject from GTK+.");
 			else return null;
 		}
-		return new Surface(cast(cairo_surface_t*) p);
+		return new ImageSurface(cast(cairo_surface_t*) p);
 	}
 	
 	/**
@@ -149,7 +149,7 @@ public class ImageSurface : Surface
 	 *  to a subportion of a larger image.
 	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.See cairo_surface_set_user_data() for a means of attaching adestroy-notification fallback to the surface if necessary.
 	 */
-	public static Surface createForData(ubyte* data, cairo_format_t format, int width, int height, int stride)
+	public static ImageSurface createForData(ubyte* data, cairo_format_t format, int width, int height, int stride)
 	{
 		// cairo_surface_t* cairo_image_surface_create_for_data (unsigned char *data,  cairo_format_t format,  int width,  int height,  int stride);
 		auto p = cairo_image_surface_create_for_data(data, format, width, height, stride);
@@ -158,7 +158,7 @@ public class ImageSurface : Surface
 			version(Exceptions) throw new Exception("Null GObject from GTK+.");
 			else return null;
 		}
-		return new Surface(cast(cairo_surface_t*) p);
+		return new ImageSurface(cast(cairo_surface_t*) p);
 	}
 	
 	/**
@@ -222,7 +222,7 @@ public class ImageSurface : Surface
 	 * filename =  name of PNG file to load
 	 * Returns: a new cairo_surface_t initialized with the contentsof the PNG file, or a "nil" surface if any error occurred. A nilsurface can be checked for with cairo_surface_status(surface) which
 	 */
-	public static Surface createFromPng(char[] filename)
+	public static ImageSurface createFromPng(char[] filename)
 	{
 		// cairo_surface_t* cairo_image_surface_create_from_png (const char *filename);
 		auto p = cairo_image_surface_create_from_png(Str.toStringz(filename));
@@ -231,7 +231,7 @@ public class ImageSurface : Surface
 			version(Exceptions) throw new Exception("Null GObject from GTK+.");
 			else return null;
 		}
-		return new Surface(cast(cairo_surface_t*) p);
+		return new ImageSurface(cast(cairo_surface_t*) p);
 	}
 	
 	/**
@@ -242,7 +242,7 @@ public class ImageSurface : Surface
 	 * closure =  data to pass to read_func.
 	 * Returns: a new cairo_surface_t initialized with the contentsof the PNG file or NULL if the data read is not a valid PNG image ormemory could not be allocated for the operation.
 	 */
-	public static Surface createFromPngStream(cairo_read_func_t readFunc, void* closure)
+	public static ImageSurface createFromPngStream(cairo_read_func_t readFunc, void* closure)
 	{
 		// cairo_surface_t* cairo_image_surface_create_from_png_stream  (cairo_read_func_t read_func,  void *closure);
 		auto p = cairo_image_surface_create_from_png_stream(readFunc, closure);
@@ -251,7 +251,7 @@ public class ImageSurface : Surface
 			version(Exceptions) throw new Exception("Null GObject from GTK+.");
 			else return null;
 		}
-		return new Surface(cast(cairo_surface_t*) p);
+		return new ImageSurface(cast(cairo_surface_t*) p);
 	}
 	
 	/**

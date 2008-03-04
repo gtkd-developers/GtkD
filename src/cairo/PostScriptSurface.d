@@ -44,7 +44,7 @@
  * imports:
  * 	- glib.Str
  * structWrap:
- * 	- cairo_surface_t* -> Surface
+ * 	- cairo_surface_t* -> PostScriptSurface
  * module aliases:
  * local aliases:
  */
@@ -116,7 +116,7 @@ public class PostScriptSurface : Surface
 	 * heightInPoints =  height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
 	 */
-	public static Surface create(char[] filename, double widthInPoints, double heightInPoints)
+	public static PostScriptSurface create(char[] filename, double widthInPoints, double heightInPoints)
 	{
 		// cairo_surface_t* cairo_ps_surface_create (const char *filename,  double width_in_points,  double height_in_points);
 		auto p = cairo_ps_surface_create(Str.toStringz(filename), widthInPoints, heightInPoints);
@@ -125,7 +125,7 @@ public class PostScriptSurface : Surface
 			version(Exceptions) throw new Exception("Null GObject from GTK+.");
 			else return null;
 		}
-		return new Surface(cast(cairo_surface_t*) p);
+		return new PostScriptSurface(cast(cairo_surface_t*) p);
 	}
 	
 	/**
@@ -143,7 +143,7 @@ public class PostScriptSurface : Surface
 	 * heightInPoints =  height of the surface, in points (1 point == 1/72.0 inch)
 	 * Returns: a pointer to the newly created surface. The callerowns the surface and should call cairo_surface_destroy when donewith it.This function always returns a valid pointer, but it will return apointer to a "nil" surface if an error such as out of memoryoccurs. You can use cairo_surface_status() to check for this.
 	 */
-	public static Surface createForStream(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)
+	public static PostScriptSurface createForStream(cairo_write_func_t writeFunc, void* closure, double widthInPoints, double heightInPoints)
 	{
 		// cairo_surface_t* cairo_ps_surface_create_for_stream (cairo_write_func_t write_func,  void *closure,  double width_in_points,  double height_in_points);
 		auto p = cairo_ps_surface_create_for_stream(writeFunc, closure, widthInPoints, heightInPoints);
@@ -152,7 +152,7 @@ public class PostScriptSurface : Surface
 			version(Exceptions) throw new Exception("Null GObject from GTK+.");
 			else return null;
 		}
-		return new Surface(cast(cairo_surface_t*) p);
+		return new PostScriptSurface(cast(cairo_surface_t*) p);
 	}
 	
 	/**

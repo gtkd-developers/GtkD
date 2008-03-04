@@ -274,7 +274,7 @@ struct: cairo_surface_t
 class: ImageSurface
 extend: cairo_surface_t
 prefix: cairo_image_surface_
-structWrap: cairo_surface_t* Surface
+structWrap: cairo_surface_t* ImageSurface
 import: glib.Str
 openFile: ImageSurface
 
@@ -287,7 +287,7 @@ struct: cairo_surface_t
 class: PdfSurface
 extend: cairo_surface_t
 prefix: cairo_pdf_surface_
-structWrap: cairo_surface_t* Surface
+structWrap: cairo_surface_t* PdfSurface
 import: glib.Str
 outFile: PdfSurface
 
@@ -296,7 +296,7 @@ struct: cairo_surface_t
 class: PostScriptSurface
 extend: cairo_surface_t
 prefix: cairo_ps_surface_
-structWrap: cairo_surface_t* Surface
+structWrap: cairo_surface_t* PostScriptSurface
 import: glib.Str
 outFile: PostScriptSurface
 
@@ -309,7 +309,7 @@ class: SvgSurface
 extend: cairo_surface_t
 prefix: cairo_svg_surface_
 prefix: cairo_svg_
-structWrap: cairo_surface_t* Surface
+structWrap: cairo_surface_t* SvgSurface
 import: glib.Str
 outFile: SvgSurface
 
