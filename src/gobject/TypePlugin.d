@@ -42,8 +42,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gobject.Type
  * structWrap:
  * module aliases:
  * local aliases:
@@ -56,8 +54,6 @@ public  import gtkc.gobjecttypes;
 private import gtkc.gobject;
 
 
-private import glib.Str;
-private import gobject.Type;
 
 
 

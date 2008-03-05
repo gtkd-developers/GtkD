@@ -39,12 +39,10 @@
  * 	- g_flags_
  * omit structs:
  * omit prefixes:
- * 	- g_enum_
  * omit code:
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gobject.Flags
  * structWrap:
  * 	- GFlagsValue* -> Flags
  * module aliases:
@@ -59,7 +57,6 @@ private import gtkc.gobject;
 
 
 private import glib.Str;
-private import gobject.Flags;
 
 
 

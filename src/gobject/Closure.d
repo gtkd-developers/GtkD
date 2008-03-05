@@ -39,12 +39,11 @@
  * 	- g_closure_
  * omit structs:
  * omit prefixes:
- * 	- g_cclosure
+ * 	- g_cclosure_
  * omit code:
  * omit signals:
  * imports:
  * 	- gobject.ObjectG
- * 	- gobject.Closure
  * 	- gobject.Value
  * 	- glib.Source
  * structWrap:
@@ -64,7 +63,6 @@ private import gtkc.gobject;
 
 
 private import gobject.ObjectG;
-private import gobject.Closure;
 private import gobject.Value;
 private import glib.Source;
 

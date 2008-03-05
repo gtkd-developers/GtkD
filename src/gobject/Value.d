@@ -46,12 +46,9 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gobject.Value
  * 	- gobject.ParamSpec
- * 	- gobject.ObjectG
  * 	- gdk.Pixbuf
  * structWrap:
- * 	- GObject* -> ObjectG
  * 	- GParamSpec* -> ParamSpec
  * 	- GValue* -> Value
  * module aliases:
@@ -66,9 +63,7 @@ private import gtkc.gobject;
 
 
 private import glib.Str;
-private import gobject.Value;
 private import gobject.ParamSpec;
-private import gobject.ObjectG;
 private import gdk.Pixbuf;
 
 

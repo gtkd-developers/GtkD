@@ -43,7 +43,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gobject.ParamSpec
  * 	- gobject.Value
  * 	- glib.ListG
  * structWrap:
@@ -62,7 +61,6 @@ private import gtkc.gobject;
 
 
 private import glib.Str;
-private import gobject.ParamSpec;
 private import gobject.Value;
 private import glib.ListG;
 

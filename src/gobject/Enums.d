@@ -45,6 +45,7 @@
  * imports:
  * 	- glib.Str
  * structWrap:
+ * 	- GEnumValue* -> Enums
  * module aliases:
  * local aliases:
  */
@@ -117,10 +118,16 @@ public class Enums
 	 * value = the value to look up
 	 * Returns:the GEnumValue for value, or NULL if value is not a member of the enumeration
 	 */
-	public static GEnumValue* getValue(GEnumClass* enumClass, int value)
+	public static Enums getValue(GEnumClass* enumClass, int value)
 	{
 		// GEnumValue* g_enum_get_value (GEnumClass *enum_class,  gint value);
-		return g_enum_get_value(enumClass, value);
+		auto p = g_enum_get_value(enumClass, value);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Enums(cast(GEnumValue*) p);
 	}
 	
 	/**
@@ -130,10 +137,16 @@ public class Enums
 	 * name = the name to look up
 	 * Returns:the GEnumValue with name name, or NULL if the enumeration doesn't have a member with that name
 	 */
-	public static GEnumValue* getValueByName(GEnumClass* enumClass, char[] name)
+	public static Enums getValueByName(GEnumClass* enumClass, char[] name)
 	{
 		// GEnumValue* g_enum_get_value_by_name (GEnumClass *enum_class,  const gchar *name);
-		return g_enum_get_value_by_name(enumClass, Str.toStringz(name));
+		auto p = g_enum_get_value_by_name(enumClass, Str.toStringz(name));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Enums(cast(GEnumValue*) p);
 	}
 	
 	/**
@@ -143,10 +156,16 @@ public class Enums
 	 * nick = the nickname to look up
 	 * Returns:the GEnumValue with nickname nick, or NULL if the enumeration doesn't have a member with that nickname
 	 */
-	public static GEnumValue* getValueByNick(GEnumClass* enumClass, char[] nick)
+	public static Enums getValueByNick(GEnumClass* enumClass, char[] nick)
 	{
 		// GEnumValue* g_enum_get_value_by_nick (GEnumClass *enum_class,  const gchar *nick);
-		return g_enum_get_value_by_nick(enumClass, Str.toStringz(nick));
+		auto p = g_enum_get_value_by_nick(enumClass, Str.toStringz(nick));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Enums(cast(GEnumValue*) p);
 	}
 	
 	/**
@@ -158,10 +177,10 @@ public class Enums
 	 * name = A nul-terminated string used as the name of the new type.
 	 * Returns:The new type identifier.
 	 */
-	public static GType registerStatic(char[] name, GEnumValue* _StaticValues)
+	public static GType registerStatic(char[] name, Enums _StaticValues)
 	{
 		// GType g_enum_register_static (const gchar *name,  const GEnumValue *const_static_values);
-		return g_enum_register_static(Str.toStringz(name), _StaticValues);
+		return g_enum_register_static(Str.toStringz(name), (_StaticValues is null) ? null : _StaticValues.getEnumsStruct());
 	}
 	
 	/**
@@ -170,9 +189,9 @@ public class Enums
 	 * type = the type identifier of the type being completed
 	 * info = the GTypeInfo struct to be filled in
 	 */
-	public static void completeTypeInfo(GType type, GTypeInfo* info, GEnumValue* _Values)
+	public static void completeTypeInfo(GType type, GTypeInfo* info, Enums _Values)
 	{
 		// void g_enum_complete_type_info (GType g_enum_type,  GTypeInfo *info,  const GEnumValue *const_values);
-		g_enum_complete_type_info(type, info, _Values);
+		g_enum_complete_type_info(type, info, (_Values is null) ? null : _Values.getEnumsStruct());
 	}
 }

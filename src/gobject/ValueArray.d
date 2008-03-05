@@ -43,7 +43,6 @@
  * omit signals:
  * imports:
  * 	- gobject.Value
- * 	- gobject.ValueArray
  * structWrap:
  * 	- GValue* -> Value
  * 	- GValueArray* -> ValueArray
@@ -59,7 +58,6 @@ private import gtkc.gobject;
 
 
 private import gobject.Value;
-private import gobject.ValueArray;
 
 
 

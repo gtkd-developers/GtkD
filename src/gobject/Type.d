@@ -43,8 +43,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- glib.Quark
- * 	- gobject.Type
  * 	- gobject.TypePlugin
  * structWrap:
  * 	- GTypePlugin* -> TypePlugin
@@ -60,8 +58,6 @@ private import gtkc.gobject;
 
 
 private import glib.Str;
-private import glib.Quark;
-private import gobject.Type;
 private import gobject.TypePlugin;
 
 

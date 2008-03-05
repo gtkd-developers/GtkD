@@ -44,7 +44,6 @@
  * imports:
  * 	- glib.Str
  * 	- gobject.Closure
- * 	- gobject.Type
  * 	- gobject.Value
  * 	- glib.Quark
  * structWrap:
@@ -64,7 +63,6 @@ private import gtkc.gobject;
 
 private import glib.Str;
 private import gobject.Closure;
-private import gobject.Type;
 private import gobject.Value;
 private import glib.Quark;
 

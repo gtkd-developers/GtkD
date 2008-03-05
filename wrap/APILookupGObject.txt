@@ -93,8 +93,6 @@ file: gobject-Type-Information.html
 class: Type
 prefix: g_type_
 import: glib.Str
-import: glib.Quark
-import: gobject.Type
 #structWrap: GType* Type
 #import: gobject.TypeQuery
 #structWrap: GTypeQuery* TypeQuery
@@ -116,8 +114,6 @@ file: GTypePlugin.html
 struct: GTypePlugin
 class: TypePlugin
 prefix: g_type_plugin_
-import: glib.Str
-import: gobject.Type
 #import: gobject.TypeInfo
 #structWrap: GTypeInfo* TypeInfo
 #import: gobject.TypeValueTable
@@ -129,8 +125,8 @@ outFile: TypePlugin
 file: GTypeModule.html
 struct: GTypeModule
 class: TypeModule
-import: glib.Str
 prefix: g_type_module_
+import: glib.Str
 #import: gobject.TypeInfo
 #structWrap: GTypeInfo* TypeInfo
 #import: gobject.InterfaceInfo
@@ -396,8 +392,7 @@ class: Enums
 prefix: g_enum_
 noprefix: g_flags_
 import: glib.Str
-#import: gobject.EnumValue
-#structWrap: GEnumValue* EnumValue
+structWrap: GEnumValue* Enums
 #import: gobject.TypeInfo
 #structWrap: GTypeInfo* TypeInfo
 outFile: Enums
@@ -406,9 +401,7 @@ struct: GFlagsValue
 strictPrefix: Y
 class: Flags
 prefix: g_flags_
-noprefix: g_enum_
 import: glib.Str
-import: gobject.Flags
 structWrap: GFlagsValue* Flags
 #import: gobject.TypeInfo
 #structWrap: GTypeInfo* TypeInfo
@@ -426,12 +419,9 @@ class: Value
 nostruct: GValue
 prefix: g_value_
 import: glib.Str
-import: gobject.Value
 structWrap: GValue* Value
 import: gobject.ParamSpec
 structWrap: GParamSpec* ParamSpec
-import: gobject.ObjectG
-structWrap: GObject* ObjectG
 import: gdk.Pixbuf
 
 nocode: g_value_init
@@ -522,7 +512,6 @@ struct: GParamSpec
 class: ParamSpec
 prefix: g_param_spec_
 import: glib.Str
-import: gobject.ParamSpec
 structWrap: GParamSpec* ParamSpec
 import: gobject.Value
 structWrap: GValue* Value
@@ -542,8 +531,6 @@ prefix: g_signal_
 import: glib.Str
 import: gobject.Closure
 structWrap: GClosure* Closure
-import: gobject.Type
-#structWrap: GType* Type
 #import: gobject.SignalQuery
 #structWrap: GSignalQuery* SignalQuery
 import: gobject.Value
@@ -571,10 +558,9 @@ file: gobject-Closures.html
 struct: GClosure
 class: Closure
 prefix: g_closure_
-noprefix: g_cclosure
+noprefix: g_cclosure_
 import: gobject.ObjectG
 structWrap: GObject* ObjectG
-import: gobject.Closure
 structWrap: GClosure* Closure
 import: gobject.Value
 structWrap: GValue* Value
@@ -584,10 +570,8 @@ outFile: Closure
 
 struct: GCClosure
 class: CClosure
-prefix: g_cclosure
+prefix: g_cclosure_
 strictPrefix: Yes
-noprefix: g_closure_
-noprefix: g_source_set_closure
 import: gobject.Closure
 structWrap: GClosure* Closure
 import: gobject.ObjectG
@@ -602,6 +586,5 @@ class: ValueArray
 prefix: g_value_array_
 import: gobject.Value
 structWrap: GValue* Value
-import: gobject.ValueArray
 structWrap: GValueArray* ValueArray
 outFile: ValueArray
