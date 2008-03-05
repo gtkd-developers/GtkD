@@ -126,6 +126,7 @@ private import gtk.FileChooserButton;
 private import gdk.Drawable;
 
 private import gtk.AboutDialog;
+private import gtk.Dialog;
 
 private import gtk.TreeStore;
 private import gdk.Pixbuf;
@@ -169,26 +170,6 @@ class TestWindow : MainWindow
 	{
 			GtkD.exit(0);
 	}
-
-	void popupAbout(MenuItem item)
-	{
-		MessageDialog d = new MessageDialog(
-				this,
-				GtkDialogFlags.MODAL,
-				MessageType.INFO,
-				ButtonsType.OK,
-				"GtkD D (graphic) User Interface\n"
-				"D OO wrapper for GTK+\n"
-				"by Antonio Monteiro.\n"
-				"GtkD is released under the LGPL license\n"
-				"\n"
-				"Send comments and suggestions to gtkDoolkit@yahoo.ca\n"
-				"or go to the Dui group on dsource.org\n"
-				);
-		d.run();
-		d.destroy();
-	}
-
 
 	this()
 	{
@@ -353,27 +334,9 @@ class TestWindow : MainWindow
 		switch( action )
 		{
 			case "help.about":
-				(new AboutDialog()).showAll();
-//				MessageDialog d = new MessageDialog(
-//						this,
-//						GtkDialogFlags.MODAL,
-//						MessageType.INFO,
-//						ButtonsType.OK,
-//						"DUI D (graphic) User Interface\n"
-//						"an implementation through GTK+\n"
-//						"by Antonio Monteiro.\n"
-//						"DUI is released under the LGPL license\n"
-//						"\n"
-//						"Send comments and suggestions to gtkDoolkit@yahoo.ca\n"
-//						"or go to the yahoo group\n"
-//						"http://groups.yahoo.com/group/gtkDoolkit\n"
-//						"(Group email: gtkDoolkit@yahoogroups.com)\n"
-//						"\n"
-//						"See detailed information at DUI home page\n"
-//						"http://ca.geocities.com/gtkDoolkit\n"
-//						);
-//				d.run();
-//				d.destroy();
+				GtkDAbout dlg = new GtkDAbout();
+				dlg.addOnResponse(&onDialogResponse);
+				dlg.showAll();
 				break;
 			default:
 				MessageDialog d = new MessageDialog(
@@ -387,6 +350,12 @@ class TestWindow : MainWindow
 			break;
 		}
 
+	}
+
+	void onDialogResponse(int response, Dialog dlg)
+	{
+		if(response == GtkResponseType.GTK_RESPONSE_CANCEL)
+			dlg.destroy();
 	}
 
 	Widget getToolbar()
