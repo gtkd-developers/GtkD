@@ -1060,7 +1060,7 @@ class TestWindow : MainWindow
 		Table table = new Table(2,1,false);
 
 		SpinButton spin = new SpinButton(new Adjustment(1.0, 0.0, 100.0, 1.0, 10.0, 10.0),1,0);
-		table.attach(new Label("Sping this:"),0,1,0,1,AttachOptions.FILL,AttachOptions.FILL,4,4);
+		table.attach(new Label("Spin this:"),0,1,0,1,AttachOptions.FILL,AttachOptions.FILL,4,4);
 		table.attach(spin,1,2,0,1,AttachOptions.FILL,AttachOptions.FILL,4,4);
 
 		notebook.appendPage(table,"Spin Buttons");
