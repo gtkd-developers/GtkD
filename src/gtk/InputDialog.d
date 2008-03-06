@@ -44,6 +44,7 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- gtk.Button
  * 	- glib.Str
  * 	- gobject.ObjectG
  * 	- gobject.Value
@@ -64,6 +65,7 @@ private import gtkc.gtk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
+private import gtk.Button;
 private import glib.Str;
 private import gobject.ObjectG;
 private import gobject.Value;
@@ -134,6 +136,48 @@ public class InputDialog : Dialog, BuildableIF
 	
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkInputDialog);
+	
+	Button getCloseButton()
+	{
+		//int[] arr= [144, 148, 152, 160, 164, 168, 172, 176,
+		//	184, 188, 192, 196, 200, 204, 208, 212, 216,
+		//	224];
+		
+		//foreach(i; arr)
+		//{
+			//	int* pt2 =cast(int*)getStruct();
+			//	pt2+=i/4;
+			//	printf("*pt+%d=%X\n", i, *pt2);
+			
+			//	Widget wg = new Widget(cast(GtkWidget*)(*pt2));
+			//	Stdout(wg.getName()).newline;
+		//}
+		
+		int* pt =cast(int*)getStruct();
+		pt += 172/4;
+		return new Button(cast(GtkButton*)(*pt));
+	}
+	
+	Button getSaveButton()
+	{
+		//int[] arr= [144, 148, 152, 160, 164, 168, 172, 176,
+		//	184, 188, 192, 196, 200, 204, 208, 212, 216,
+		//	224];
+		
+		//foreach(i; arr)
+		//{
+			//	int* pt2 =cast(int*)getStruct();
+			//	pt2+=i/4;
+			//	printf("*pt+%d=%X\n", i, *pt2);
+			
+			//	Widget wg = new Widget(cast(GtkWidget*)(*pt2));
+			//	Stdout(wg.getName()).newline;
+		//}
+		
+		int* pt =cast(int*)getStruct();
+		pt += 176/4;
+		return new Button(cast(GtkButton*)(*pt));
+	}
 	
 	/**
 	 */

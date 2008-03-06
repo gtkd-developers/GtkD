@@ -5639,6 +5639,7 @@ class: InputDialog
 implements: BuildableIF
 prefix: gtk_input_dialog_
 prefix: gtk_
+import: gtk.Button
 
 #imports for Buildable Interface.
 import: glib.Str
@@ -5652,6 +5653,48 @@ import: gtk.BuildableT
 code: start
 	// add the Buildable capabilities
 	mixin BuildableT!(GtkInputDialog);
+
+	Button getCloseButton()
+	{
+		//int[] arr= [144, 148, 152, 160, 164, 168, 172, 176,
+		//	184, 188, 192, 196, 200, 204, 208, 212, 216,
+		//	224];
+
+		//foreach(i; arr)
+		//{
+		//	int* pt2 =cast(int*)getStruct();
+		//	pt2+=i/4;
+		//	printf("*pt+%d=%X\n", i, *pt2);
+
+		//	Widget wg = new Widget(cast(GtkWidget*)(*pt2));
+		//	Stdout(wg.getName()).newline;
+		//}
+
+		int* pt =cast(int*)getStruct();
+		pt += 172/4;
+		return new Button(cast(GtkButton*)(*pt));
+	}
+
+	Button getSaveButton()
+	{
+		//int[] arr= [144, 148, 152, 160, 164, 168, 172, 176,
+		//	184, 188, 192, 196, 200, 204, 208, 212, 216,
+		//	224];
+
+		//foreach(i; arr)
+		//{
+		//	int* pt2 =cast(int*)getStruct();
+		//	pt2+=i/4;
+		//	printf("*pt+%d=%X\n", i, *pt2);
+
+		//	Widget wg = new Widget(cast(GtkWidget*)(*pt2));
+		//	Stdout(wg.getName()).newline;
+		//}
+
+		int* pt =cast(int*)getStruct();
+		pt += 176/4;
+		return new Button(cast(GtkButton*)(*pt));
+	}
 code: end
 outFile: InputDialog
 
