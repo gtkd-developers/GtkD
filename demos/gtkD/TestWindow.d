@@ -832,13 +832,20 @@ class TestWindow : MainWindow
 		d.hide();
 	}
 
+	import tango.io.Stdout;
+
 	void showInput(Button button)
 	{
 		if ( id  is  null )
 		{
 			id = new InputDialog();
+			id.getCloseButton().addOnClicked(&CloseInputDialog);
 		}
 		id.run();
+	}
+
+	void CloseInputDialog(Button button)
+	{
 		id.hide();
 	}
 
