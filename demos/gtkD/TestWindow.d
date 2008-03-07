@@ -109,6 +109,7 @@ version(Tango) private import tango.core.Memory;
 else private import std.gc;
 private import glib.ListSG;
 
+private import glib.Str;
 private import gtk.Label;
 private import glib.ListG;
 private import gtk.ComboBoxEntry;
@@ -316,13 +317,13 @@ class TestWindow : MainWindow
 	{
 		this()
 		{
-			char** names = (new char*[2]).ptr;
-			int i = 0;
-			names[i++] = cast(char*)"Antonio Monteiro (binding/wrapping/proxying/decorating for D)";
-			names[i++] = cast(char*)"www.gtk.org (base C library)";
-			setAuthors(names);
-			setDocumenters(names);
-			setArtists(names);
+			char[][] names;
+			names ~= "Antonio Monteiro (binding/wrapping/proxying/decorating for D)";
+			names ~= "www.gtk.org (base C library)";
+
+			setAuthors( Str.toStringzArray(names) );
+			setDocumenters( Str.toStringzArray(names) );
+			setArtists( Str.toStringzArray(names) );
 			setLicense("License is LGPL");
 			setWebsite("http://lisdev.com");
 		}
