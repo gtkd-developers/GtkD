@@ -832,8 +832,6 @@ class TestWindow : MainWindow
 		d.hide();
 	}
 
-	import tango.io.Stdout;
-
 	void showInput(Button button)
 	{
 		if ( id  is  null )
