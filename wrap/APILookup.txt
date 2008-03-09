@@ -101,6 +101,7 @@ alias: union unio
 alias: version versio
 alias: in inn
 alias: ref doref
+alias: continue continu
 
 alias: GLIB_SYSDEF_POLLIN =1
 alias: GLIB_SYSDEF_POLLOUT =4

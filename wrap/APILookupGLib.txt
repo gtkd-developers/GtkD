@@ -639,7 +639,7 @@ outFile: StringCompletion
 file: glib-Timers.html
 struct: GTimer
 class: Timer
-prefix: g_timer
+prefix: g_timer_
 structWrap: GTimer* Timer
 outFile: Timer
 

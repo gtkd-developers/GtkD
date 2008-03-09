@@ -36,7 +36,7 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- g_timer
+ * 	- g_timer_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -104,18 +104,18 @@ public class Timer
 	/**
 	 * Creates a new timer, and starts timing (i.e. g_timer_start() is implicitly
 	 * called for you).
-	 * Returns:a new GTimer.
 	 */
-	public static Timer _New()
+	public this ()
 	{
 		// GTimer* g_timer_new (void);
 		auto p = g_timer_new();
 		if(p is null)
 		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
 		}
-		return new Timer(cast(GTimer*) p);
+		this(cast(GTimer*) p);
 	}
 	
 	/**
@@ -124,7 +124,7 @@ public class Timer
 	 * start time, so no need to call g_timer_start() immediately after creating the
 	 * timer.
 	 */
-	public void _Start()
+	public void start()
 	{
 		// void g_timer_start (GTimer *timer);
 		g_timer_start(gTimer);
@@ -134,7 +134,7 @@ public class Timer
 	 * Marks an end time, so calls to g_timer_elapsed() will return the difference
 	 * between this end time and the start time.
 	 */
-	public void _Stop()
+	public void stop()
 	{
 		// void g_timer_stop (GTimer *timer);
 		g_timer_stop(gTimer);
@@ -145,7 +145,7 @@ public class Timer
 	 * g_timer_stop() must be called before using this function.
 	 * Since 2.4
 	 */
-	public void _Continue()
+	public void continu()
 	{
 		// void g_timer_continue (GTimer *timer);
 		g_timer_continue(gTimer);
@@ -163,7 +163,7 @@ public class Timer
 	 *  1000000), or NULL
 	 * Returns:seconds elapsed as a floating point value, including  any fractional part.
 	 */
-	public double _Elapsed(uint* microseconds)
+	public double elapsed(uint* microseconds)
 	{
 		// gdouble g_timer_elapsed (GTimer *timer,  gulong *microseconds);
 		return g_timer_elapsed(gTimer, microseconds);
@@ -174,7 +174,7 @@ public class Timer
 	 * already-started timer to reset the start time, so g_timer_reset() serves no
 	 * purpose.
 	 */
-	public void _Reset()
+	public void reset()
 	{
 		// void g_timer_reset (GTimer *timer);
 		g_timer_reset(gTimer);
@@ -183,7 +183,7 @@ public class Timer
 	/**
 	 * Destroys a timer, freeing associated resources.
 	 */
-	public void _Destroy()
+	public void destroy()
 	{
 		// void g_timer_destroy (GTimer *timer);
 		g_timer_destroy(gTimer);
