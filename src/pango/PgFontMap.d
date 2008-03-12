@@ -127,7 +127,7 @@ public class PgFontMap : ObjectG
 	 * Params:
 	 * context =  the PangoContext the font will be used with
 	 * desc =  a PangoFontDescription describing the font to load
-	 * Returns:the font loaded, or NULL if no font matched.
+	 * Returns: the font loaded, or NULL if no font matched.
 	 */
 	public PgFont loadFont(PgContext context, PgFontDescription desc)
 	{
@@ -148,7 +148,7 @@ public class PgFontMap : ObjectG
 	 * context =  the PangoContext the font will be used with
 	 * desc =  a PangoFontDescription describing the font to load
 	 * language =  a PangoLanguage the fonts will be used for
-	 * Returns:the fontset, or NULL if no font matched.
+	 * Returns: the fontset, or NULL if no font matched.
 	 */
 	public PgFontset loadFontset(PgContext context, PgFontDescription desc, PgLanguage language)
 	{

@@ -107,8 +107,11 @@ public class WindowsUtils
 	
 	/**
 	 * Try to determine the installation directory for a software package.
-	 * package should be a short identifier for the package. Typically it
-	 * is the same identifier as used for
+	 * This function will be deprecated in the future. Use
+	 * g_win32_get_package_installation_directory_of_module() instead.
+	 * The use of package is deprecated. You should always pass NULL.
+	 * The original intended use of package was for a short identifier of
+	 * the package, typically the same identifier as used for
 	 * GETTEXT_PACKAGE in software configured using GNU
 	 * autotools. The function first looks in the Windows Registry for the
 	 * value #InstallationDirectory in the key
@@ -117,12 +120,13 @@ public class WindowsUtils
 	 * It is strongly recommended that packagers of GLib-using libraries
 	 * for Windows do not store installation paths in the Registry to be
 	 * used by this function as that interfers with having several
-	 * parallel installations of the library. Parallel installations of
-	 * different versions of some GLib-using library, or GLib itself,
-	 * might well be desirable for various reasons.
-	 * For the same reason it is recommeded to always pass NULL as
+	 * parallel installations of the library. Enabling multiple
+	 * installations of different versions of some GLib-using library, or
+	 * GLib itself, is desirable for various reasons.
+	 * For this reason it is recommeded to always pass NULL as
 	 * package to this function, to avoid the temptation to use the
-	 * Registry.
+	 * Registry. In version 2.18 of GLib the package parameter
+	 * will be ignored and this function won't look in the Registry at all.
 	 * If package is NULL, or the above value isn't found in the
 	 * Registry, but dll_name is non-NULL, it should name a DLL loaded
 	 * into the current process. Typically that would be the name of the
@@ -136,9 +140,9 @@ public class WindowsUtils
 	 * the main executable of the process was loaded is used instead in
 	 * the same way as above.
 	 * Params:
-	 * p =  An identifier for a software package, or NULL, in UTF-8
-	 * dllName =  The name of a DLL that a package provides, or NULL, in UTF-8
-	 * Returns: a string containing the installation directory forpackage. The string is in the GLib file name encoding, i.e. UTF-8on Windows. The return value should be freed with g_free() when notneeded any longer.
+	 * p =  You should pass NULL for this.
+	 * dllName =  The name of a DLL that a package provides in UTF-8, or NULL.
+	 * Returns: a string containing the installation directory forpackage. The string is in the GLib file name encoding,i.e. UTF-8. The return value should be freed with g_free() when notneeded any longer. If the function fails NULL is returned.
 	 */
 	public static char[] getPackageInstallationDirectory(char[] p, char[] dllName)
 	{
@@ -147,18 +151,52 @@ public class WindowsUtils
 	}
 	
 	/**
+	 * This function tries to determine the installation directory of a
+	 * software package based on the location of a DLL of the software
+	 * package.
+	 * hmodule should be the handle of a loaded DLL or NULL. The
+	 * function looks up the directory that DLL was loaded from. If
+	 * hmodule is NULL, the directory the main executable of the current
+	 * process is looked up. If that directory's last component is "bin"
+	 * or "lib", its parent directory is returned, otherwise the directory
+	 * itself.
+	 * It thus makes sense to pass only the handle to a "public" DLL of a
+	 * software package to this function, as such DLLs typically are known
+	 * to be installed in a "bin" or occasionally "lib" subfolder of the
+	 * installation folder. DLLs that are of the dynamically loaded module
+	 * or plugin variety are often located in more private locations
+	 * deeper down in the tree, from which it is impossible for GLib to
+	 * deduce the root of the package installation.
+	 * The typical use case for this function is to have a DllMain() that
+	 * saves the handle for the DLL. Then when code in the DLL needs to
+	 * construct names of files in the installation tree it calls this
+	 * function passing the DLL handle.
+	 * Since 2.16
+	 * Params:
+	 * hmodule =  The Win32 handle for a DLL loaded into the current process, or NULL
+	 * Returns: a string containing the guessed installation directory forthe software package hmodule is from. The string is in the GLibfile name encoding, i.e. UTF-8. The return value should be freedwith g_free() when not needed any longer. If the function failsNULL is returned.
+	 */
+	public static char[] getPackageInstallationDirectoryOfModule(void* hmodule)
+	{
+		// gchar* g_win32_get_package_installation_directory_of_module  (gpointer hmodule);
+		return Str.toString(g_win32_get_package_installation_directory_of_module(hmodule)).dup;
+	}
+	
+	/**
+	 * This function will be deprecated in the future. Use
+	 * g_win32_get_package_installation_directory_of_module() instead.
 	 * Returns a newly-allocated string containing the path of the
 	 * subdirectory subdir in the return value from calling
 	 * g_win32_get_package_installation_directory() with the package and
 	 * dll_name parameters. See the documentation for
 	 * g_win32_get_package_installation_directory() for more details. In
-	 * particular, note that it is recomended to always pass NULL as
-	 * package.
+	 * particular, note that it is deprecated to pass anything except NULL
+	 * as package.
 	 * Params:
-	 * p =  An identifier for a software package, in UTF-8, or NULL
-	 * dllName =  The name of a DLL that a package provides, in UTF-8, or NULL
+	 * p =  You should pass NULL for this.
+	 * dllName =  The name of a DLL that a package provides, in UTF-8, or NULL.
 	 * subdir =  A subdirectory of the package installation directory, also in UTF-8
-	 * Returns: a string containing the complete path to subdir insidethe installation directory of package. The returned string is inthe GLib file name encoding, i.e. UTF-8 on Windows. The returnvalue should be freed with g_free() when no longer needed.
+	 * Returns: a string containing the complete path to subdir insidethe installation directory of package. The returned string is inthe GLib file name encoding, i.e. UTF-8. The return value should befreed with g_free() when no longer needed. If something goes wrong,NULL is returned.
 	 */
 	public static char[] getPackageInstallationSubdirectory(char[] p, char[] dllName, char[] subdir)
 	{

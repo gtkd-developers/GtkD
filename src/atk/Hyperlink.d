@@ -238,7 +238,7 @@ public class Hyperlink : ObjectG
 	
 	/**
 	 * Determines whether this AtkHyperlink is selected
-	 * Returns:Returns: True is the AtkHyperlink is selected, False otherwiseSince ATK 1.4@Deprecated: This method is deprecated since ATK version 1.8.Please use ATK_STATE_SELECTED to indicate when a hyperlink within aHypertext container is selected.
+	 * Returns: True is the AtkHyperlink is selected, False otherwiseSince ATK 1.4@Deprecated: This method is deprecated since ATK version 1.8.Please use ATK_STATE_SELECTED to indicate when a hyperlink within aHypertext container is selected.
 	 */
 	public int isSelectedLink()
 	{

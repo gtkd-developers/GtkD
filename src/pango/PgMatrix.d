@@ -136,31 +136,32 @@ public class PgMatrix
 	/**
 	 * Converts extents from Pango units to device units, dividing by the
 	 * PANGO_SCALE factor and performing rounding.
-	 * The ink rectangle is converted by flooring the x/y coordinates and extending
+	 * The inclusive rectangle is converted by flooring the x/y coordinates and extending
 	 * width/height, such that the final rectangle completely includes the original
 	 * rectangle.
-	 * The logical rectangle is converted by rounding the coordinates
-	 * of the rectangle to the nearest device unit.
-	 * Note that in certain situations you may want pass a logical extents
-	 * rectangle to this function as ink_rect. The rule is: if you want the
-	 * resulting device-space rectangle to completely contain the original
-	 * rectangle, pass it in as ink_rect.
+	 * The nearest rectangle is converted by rounding the coordinates
+	 * of the rectangle to the nearest device unit (pixel).
+	 * The rule to which argument to use is: if you want the resulting device-space
+	 * rectangle to completely contain the original rectangle, pass it in as inclusive.
+	 * If you want two touching-but-not-overlapping rectangles stay
+	 * touching-but-not-overlapping after rounding to device units, pass them in
+	 * as nearest.
 	 * Since 1.16
 	 * Params:
-	 * inkRect =  ink rectangle to convert, or NULL.
-	 * logicalRect =  logical rectangle to convert, or NULL.
+	 * inclusive =  rectangle to round to pixels inclusively, or NULL.
+	 * nearest =  rectangle to round to nearest pixels, or NULL.
 	 */
-	public static void extentsToPixels(PangoRectangle* inkRect, PangoRectangle* logicalRect)
+	public static void extentsToPixels(PangoRectangle* inclusive, PangoRectangle* nearest)
 	{
-		// void pango_extents_to_pixels (PangoRectangle *ink_rect,  PangoRectangle *logical_rect);
-		pango_extents_to_pixels(inkRect, logicalRect);
+		// void pango_extents_to_pixels (PangoRectangle *inclusive,  PangoRectangle *nearest);
+		pango_extents_to_pixels(inclusive, nearest);
 	}
 	
 	/**
 	 * Copies a PangoMatrix.
 	 * Since 1.6
 	 * Params:
-	 * matrix =  a PangoMatrix, can be NULL
+	 * matrix =  a PangoMatrix, may be NULL
 	 * Returns: the newly allocated PangoMatrix, which should be freed with pango_matrix_free(), or NULL if matrix was NULL.
 	 */
 	public PgMatrix matrixCopy()
@@ -177,10 +178,9 @@ public class PgMatrix
 	
 	/**
 	 * Free a PangoMatrix created with pango_matrix_copy().
-	 * Does nothing if matrix is NULL.
 	 * Since 1.6
 	 * Params:
-	 * matrix =  a PangoMatrix, or NULL
+	 * matrix =  a PangoMatrix, may be NULL
 	 */
 	public void matrixFree()
 	{
@@ -292,8 +292,9 @@ public class PgMatrix
 	 * If you have the rectangle in Pango units and want to convert to
 	 * transformed pixel bounding box, it is more accurate to transform it first
 	 * (using this function) and pass the result to pango_extents_to_pixels(),
-	 * as ink_rect. However, there is a reason that you may want to convert
-	 * to pixels first and then transform, and that is when the transformed
+	 * first argument, for an inclusive rounded rectangle.
+	 * However, there are valid reasons that you may want to convert
+	 * to pixels first and then transform, for example when the transformed
 	 * coordinates may overflow in Pango units (large matrix translation for
 	 * example).
 	 * Since 1.16
@@ -316,7 +317,7 @@ public class PgMatrix
 	 * should be and how much you should shift the layout when rendering.
 	 * For better accuracy, you should use pango_matrix_transform_rectangle() on
 	 * original rectangle in Pango units and convert to pixels afterward
-	 * using pango_extents_to_pixels() as ink_rect.
+	 * using pango_extents_to_pixels()'s first argument.
 	 * Since 1.16
 	 * Params:
 	 * matrix =  a PangoMatrix, or NULL

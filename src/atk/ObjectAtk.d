@@ -445,7 +445,7 @@ public class ObjectAtk : ObjectG
 	 * Warning
 	 * atk_object_get_layer is deprecated and should not be used in newly-written code. Use atk_component_get_layer instead.
 	 * Gets the layer of the accessible.
-	 * Returns:Returns: an AtkLayer which is the layer of the accessible
+	 * Returns: an AtkLayer which is the layer of the accessible
 	 */
 	public AtkLayer getLayer()
 	{
@@ -458,7 +458,7 @@ public class ObjectAtk : ObjectG
 	 * atk_object_get_mdi_zorder is deprecated and should not be used in newly-written code. Use atk_component_get_mdi_zorder instead.
 	 * Gets the zorder of the accessible. The value G_MININT will be returned
 	 * if the layer of the accessible is not ATK_LAYER_MDI.
-	 * Returns:Returns: a gint which is the zorder of the accessible, i.e. the depth at which the component is shown in relation to other components in the same container.
+	 * Returns: a gint which is the zorder of the accessible, i.e. the depth at which the component is shown in relation to other components in the same container.
 	 */
 	public int getMdiZorder()
 	{
@@ -628,7 +628,7 @@ public class ObjectAtk : ObjectG
 	 * name-value pairs. As such these attributes may be considered weakly-typed properties or annotations,
 	 * as distinct from strongly-typed object data available via other get/set methods.
 	 * Not all objects have explicit "name-value pair" AtkAttributeSet properties.
-	 * Returns:Returns: an AtkAttributeSet consisting of all explicit properties/annotations applied to the object, or an empty set if the object has no name-value pair attributes assigned to it.Since ATK 1.12
+	 * Returns: an AtkAttributeSet consisting of all explicit properties/annotations applied to the object, or an empty set if the object has no name-value pair attributes assigned to it.Since ATK 1.12
 	 */
 	public AtkAttributeSet* getAttributes()
 	{

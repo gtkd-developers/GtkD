@@ -106,7 +106,7 @@ private import glib.Source;
  *  in the size of the derived structure and a table of functions.
  *  These GSourceFuncs determine the behavior of the new source
  *  types.
- *  New source types basically interact with with the main context
+ *  New source types basically interact with the main context
  *  in two ways. Their prepare function in GSourceFuncs can set
  *  a timeout to determine the maximum amount of time that the
  *  main loop will sleep before checking the source again. In

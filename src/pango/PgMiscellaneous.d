@@ -145,7 +145,7 @@ public class PgMiscellaneous
 	 * Leading white space is skipped.
 	 * Params:
 	 * pos =  in/out string position
-	 * f_out =  a GString into which to write the result
+	 * out =  a GString into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanWord(char** pos, GString* f_out)
@@ -161,7 +161,7 @@ public class PgMiscellaneous
 	 * a literal quote. Leading white space outside of quotes is skipped.
 	 * Params:
 	 * pos =  in/out string position
-	 * f_out =  a GString into which to write the result
+	 * out =  a GString into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanString(char** pos, GString* f_out)
@@ -175,7 +175,7 @@ public class PgMiscellaneous
 	 * Leading white space is skipped.
 	 * Params:
 	 * pos =  in/out string position
-	 * f_out =  an int into which to write the result
+	 * out =  an int into which to write the result
 	 * Returns: FALSE if a parse error occurred.
 	 */
 	public static int scanInt(char** pos, int* f_out)
@@ -421,9 +421,12 @@ public class PgMiscellaneous
 	 * underline or strikethrough, to whole device pixels, that is integer
 	 * multiples of PANGO_SCALE. The purpose of this function is to avoid
 	 * such lines looking blurry.
+	 * Care is taken to make sure thickness is at least one pixel when this
+	 * function returns, but returned position may become zero as a result
+	 * of rounding.
 	 * Since 1.12
 	 * Params:
-	 * thickness =  pointer to the thickness of a line, in Pango scaled units
+	 * thickness =  pointer to the thickness of a line, in Pango units
 	 * position =  corresponding position
 	 */
 	public static void quantizeLineGeometry(int* thickness, int* position)

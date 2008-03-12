@@ -260,7 +260,7 @@ public class PgLayout : ObjectG
 	 * Sets the text attributes for a layout object.
 	 * References attrs, so the caller can unref its reference.
 	 * Params:
-	 * attrs =  a PangoAttrList
+	 * attrs =  a PangoAttrList, can be NULL
 	 */
 	public void setAttributes(PgAttributeList attrs)
 	{
@@ -316,10 +316,11 @@ public class PgLayout : ObjectG
 	}
 	
 	/**
-	 * Sets the width to which the lines of the PangoLayout should wrap.
+	 * Sets the width to which the lines of the PangoLayout should wrap or
+	 * ellipsized. The default value is -1: no width set.
 	 * Params:
 	 * width =  the desired width in Pango units, or -1 to indicate that no
-	 *  wrapping should be performed.
+	 *  wrapping or ellipsization should be performed.
 	 */
 	public void setWidth(int width)
 	{
@@ -329,7 +330,7 @@ public class PgLayout : ObjectG
 	
 	/**
 	 * Gets the width to which the lines of the PangoLayout should wrap.
-	 * Returns: the width, or -1 if no width set.
+	 * Returns: the width in Pango units, or -1 if no width set.
 	 */
 	public int getWidth()
 	{
@@ -338,9 +339,53 @@ public class PgLayout : ObjectG
 	}
 	
 	/**
+	 * Sets the height to which the PangoLayout should be ellipsized at. There
+	 * are two different behaviors, based on whether height is positive or
+	 * negative.
+	 * If height is positive, it will be the maximum height of the layout. Only
+	 * lines would be shown that would fit, and if there is any text omitted,
+	 * an ellipsis added. At least one line is included in each paragraph regardless
+	 * of how small the height value is. A value of zero will render exactly one
+	 * line for the entire layout.
+	 * If height is negative, it will be the (negative of) maximum number of lines per
+	 * paragraph. That is, the total number of lines shown may well be more than
+	 * this value if the layout contains multiple paragraphs of text.
+	 * The default value of -1 means that first line of each paragraph is ellipsized.
+	 * This behvaior may be changed in the future to act per layout instead of per
+	 * paragraph. File a bug against pango at http://bugzilla.gnome.org/ if your
+	 * code relies on this behavior.
+	 * Height setting only has effect if a positive width is set on
+	 * layout and ellipsization mode of layout is not PANGO_ELLIPSIZE_NONE.
+	 * The behavior is undefined if a height other than -1 is set and
+	 * ellipsization mode is set to PANGO_ELLIPSIZE_NONE, and may change in the
+	 * future.
+	 * Since 1.20
+	 * Params:
+	 * height =  the desired height of the layout in Pango units if positive,
+	 *  or desired number of lines if negative.
+	 */
+	public void setHeight(int height)
+	{
+		// void pango_layout_set_height (PangoLayout *layout,  int height);
+		pango_layout_set_height(pangoLayout, height);
+	}
+	
+	/**
+	 * Gets the height of layout used for ellipsization. See
+	 * pango_layout_set_height() for details.
+	 * Since 1.20
+	 * Returns: the height, in Pango units if positive, ornumber of lines if negative.
+	 */
+	public int getHeight()
+	{
+		// int pango_layout_get_height (PangoLayout *layout);
+		return pango_layout_get_height(pangoLayout);
+	}
+	
+	/**
 	 * Sets the wrap mode; the wrap mode only has effect if a width
-	 * is set on the layout with pango_layout_set_width(). To turn off wrapping,
-	 * set the width to -1.
+	 * is set on the layout with pango_layout_set_width().
+	 * To turn off wrapping, set the width to -1.
 	 * Params:
 	 * wrap =  the wrap mode
 	 */
@@ -380,11 +425,14 @@ public class PgLayout : ObjectG
 	/**
 	 * Sets the type of ellipsization being performed for layout.
 	 * Depending on the ellipsization mode ellipsize text is
-	 * removed from the start, middle, or end of lines so they
-	 * fit within the width of layout set with pango_layout_set_width().
+	 * removed from the start, middle, or end of text so they
+	 * fit within the width and height of layout set with
+	 * pango_layout_set_width() and pango_layout_set_height().
 	 * If the layout contains characters such as newlines that
-	 * force it to be layed out in multiple lines, then each line
-	 * is ellipsized separately.
+	 * force it to be layed out in multiple paragraphs, then whether
+	 * each paragraph is ellipsized separately or the entire layout
+	 * is ellipsized as a whole depends on the set height of the layout.
+	 * See pango_layout_set_height() for details.
 	 * Since 1.6
 	 * Params:
 	 * ellipsize =  the new ellipsization mode for layout
@@ -427,6 +475,8 @@ public class PgLayout : ObjectG
 	 * of indent will produce a hanging indentation. That is, the first line will
 	 * have the full width, and subsequent lines will be indented by the
 	 * absolute value of indent.
+	 * The indent setting is ignored if layout alignment is set to
+	 * PANGO_ALIGN_CENTER.
 	 * Params:
 	 * indent =  the amount by which to indent.
 	 */
@@ -439,7 +489,7 @@ public class PgLayout : ObjectG
 	/**
 	 * Gets the paragraph indent width in Pango units. A negative value
 	 * indicates a hanging indentation.
-	 * Returns: the indent.
+	 * Returns: the indent in Pango units.
 	 */
 	public int getIndent()
 	{
@@ -448,9 +498,8 @@ public class PgLayout : ObjectG
 	}
 	
 	/**
-	 * Gets the amount of spacing in PangoGlyphUnit between the lines of the
-	 * layout.
-	 * Returns: the spacing.
+	 * Gets the amount of spacing between the lines of the layout.
+	 * Returns: the spacing in Pango units.
 	 */
 	public int getSpacing()
 	{
@@ -459,7 +508,7 @@ public class PgLayout : ObjectG
 	}
 	
 	/**
-	 * Sets the amount of spacing in PangoGlyphUnit between the lines of the
+	 * Sets the amount of spacing in Pango unit between the lines of the
 	 * layout.
 	 * Params:
 	 * spacing =  the amount of spacing
@@ -621,6 +670,10 @@ public class PgLayout : ObjectG
 	 * Counts the number unknown glyphs in layout. That is, zero if
 	 * glyphs for all characters in the layout text were found, or more
 	 * than zero otherwise.
+	 * This function can be used to determine if there are any fonts
+	 * available to render all characters in a certain string, or when
+	 * used in combination with PANGO_ATTR_FALLBACK, to check if a
+	 * certain font supports all the characters in the string.
 	 * Since 1.16
 	 * Returns: The number of unknown glyphs in layout.
 	 */
@@ -694,9 +747,9 @@ public class PgLayout : ObjectG
 	 * If either the X or Y positions were not inside the layout, then the
 	 * function returns FALSE; on an exact hit, it returns TRUE.
 	 * Params:
-	 * x =  the X offset (in PangoGlyphUnit)
+	 * x =  the X offset (in Pango units)
 	 *  from the left edge of the layout.
-	 * y =  the Y offset (in PangoGlyphUnit)
+	 * y =  the Y offset (in Pango units)
 	 *  from the top edge of the layout
 	 * index =  location to store calculated byte index
 	 * trailing =  location to store a integer indicating where
@@ -797,11 +850,9 @@ public class PgLayout : ObjectG
 	/**
 	 * Computes the logical and ink extents of layout in device units.
 	 * This function just calls pango_layout_get_extents() followed by
-	 * pango_extents_to_pixels().
-	 * See pango_extents_to_pixels() for details of how ink and logical rectangles
-	 * are rounded to pixels. In certain situations you may want to use
-	 * pango_layout_get_extents() directly and pass the resulting logical
-	 * rectangle to pango_extents_to_pixels() as an ink rectangle().
+	 * two pango_extents_to_pixels() calls, rounding ink_rect and logical_rect
+	 * such that the rounded rectangles fully contain the unrounded one (that is,
+	 * passes them as first argument to pango_extents_to_pixels()).
 	 * Params:
 	 * inkRect =  rectangle used to store the extents of the layout as drawn
 	 *  or NULL to indicate that the result is not needed.

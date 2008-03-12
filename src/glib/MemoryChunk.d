@@ -191,7 +191,7 @@ public class MemoryChunk
 	 */
 	public this (char[] name, int atomSize, uint areaSize, int type)
 	{
-		// GMemChunk* g_mem_chunk_new (const gchar *name,  gint atom_size,  gulong area_size,  gint type);
+		// GMemChunk* g_mem_chunk_new (const gchar *name,  gint atom_size,  gsize area_size,  gint type);
 		auto p = g_mem_chunk_new(Str.toStringz(name), atomSize, areaSize, type);
 		if(p is null)
 		{

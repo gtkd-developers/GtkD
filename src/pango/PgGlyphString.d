@@ -125,7 +125,7 @@ public class PgGlyphString
 	
 	/**
 	 * Copy a glyph string and associated storage.
-	 * Returns: the newly allocated PangoGlyphString, which should be freed with pango_glyph_string_free().
+	 * Returns: the newly allocated PangoGlyphString, which should be freed with pango_glyph_string_free(), or NULL if string was NULL.
 	 */
 	public PgGlyphString copy()
 	{
@@ -241,7 +241,7 @@ public class PgGlyphString
 	 * text =  the text for the run
 	 * length =  the number of bytes (not characters) in text.
 	 * analysis =  the analysis information return from pango_itemize()
-	 * xPos =  the x offset (in PangoGlyphUnit)
+	 * xPos =  the x offset (in Pango units)
 	 * index =  location to store calculated byte index within text
 	 * trailing =  location to store a boolean indicating
 	 *  whether the user clicked on the leading or trailing

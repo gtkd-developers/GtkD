@@ -151,7 +151,9 @@ public class PgLayoutLine
 	/**
 	 * Computes the logical and ink extents of layout_line in device units.
 	 * This function just calls pango_layout_line_get_extents() followed by
-	 * pango_extents_to_pixels().
+	 * two pango_extents_to_pixels() calls, rounding ink_rect and logical_rect
+	 * such that the rounded rectangles fully contain the unrounded one (that is,
+	 * passes them as first argument to pango_extents_to_pixels()).
 	 * Params:
 	 * inkRect =  rectangle used to store the extents of the glyph string
 	 *  as drawn, or NULL
@@ -171,7 +173,7 @@ public class PgLayoutLine
 	 * trailing =  an integer indicating the edge of the grapheme to retrieve
 	 *  the position of. If > 0, the trailing edge of the grapheme,
 	 *  if 0, the leading of the grapheme.
-	 * xPos =  location to store the x_offset (in PangoGlyphUnit)
+	 * xPos =  location to store the x_offset (in Pango unit)
 	 */
 	public void indexToX(int index, int trailing, int* xPos)
 	{
@@ -191,7 +193,7 @@ public class PgLayoutLine
 	 * grapheme in the line and trailing being set to the number of characters
 	 * in that grapheme. The reverse is true for a left-to-right line.
 	 * Params:
-	 * xPos =  the X offset (in PangoGlyphUnit)
+	 * xPos =  the X offset (in Pango units)
 	 *  from the left edge of the line.
 	 * index =  location to store calculated byte index for
 	 *  the grapheme in which the user clicked.
@@ -229,7 +231,7 @@ public class PgLayoutLine
 	 *  with each range starting at (*ranges)[2*n]
 	 *  and of width (*ranges)[2*n + 1] - (*ranges)[2*n].
 	 *  This array must be freed with g_free(). The coordinates are relative
-	 *  to the layout and are in PangoGlyphUnit.
+	 *  to the layout and are in Pango units.
 	 * nRanges =  The number of ranges stored in ranges.
 	 */
 	public void getXRanges(int startIndex, int endIndex, int** ranges, int* nRanges)

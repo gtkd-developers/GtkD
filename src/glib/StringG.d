@@ -206,7 +206,7 @@ public class StringG
 	
 	/**
 	 * Appends a formatted string onto the end of a GString.
-	 * This function is is similar to g_string_append_printf()
+	 * This function is similar to g_string_append_printf()
 	 * except that the arguments to the format string are passed
 	 * as a va_list.
 	 * Since 2.14
@@ -238,7 +238,7 @@ public class StringG
 	
 	/**
 	 * Appends a formatted string onto the end of a GString.
-	 * This function is is similar to g_string_printf() except
+	 * This function is similar to g_string_printf() except
 	 * that the text is appended to the GString.
 	 * Params:
 	 * format =  the string format. See the printf() documentation
@@ -323,6 +323,28 @@ public class StringG
 	{
 		// GString* g_string_append_len (GString *string,  const gchar *val,  gssize len);
 		auto p = g_string_append_len(gString, Str.toStringz(val), len);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new StringG(cast(GString*) p);
+	}
+	
+	/**
+	 * Appends unescaped to string, escaped any characters that
+	 * are reserved in URIs using URI-style escape sequences.
+	 * Since 2.16
+	 * Params:
+	 * unescaped =  a string
+	 * reservedCharsAllowed =  a string of reserved characters allowed to be used
+	 * allowUtf8 =  set TRUE if the escaped string may include UTF8 characters
+	 * Returns: string
+	 */
+	public StringG appendUriEscaped(char[] unescaped, char[] reservedCharsAllowed, int allowUtf8)
+	{
+		// GString* g_string_append_uri_escaped (GString *string,  const char *unescaped,  const char *reserved_chars_allowed,  gboolean allow_utf8);
+		auto p = g_string_append_uri_escaped(gString, Str.toStringz(unescaped), Str.toStringz(reservedCharsAllowed), allowUtf8);
 		if(p is null)
 		{
 			version(Exceptions) throw new Exception("Null GObject from GTK+.");

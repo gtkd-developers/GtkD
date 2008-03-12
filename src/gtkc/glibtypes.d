@@ -46,6 +46,7 @@ public alias float gfloat;
 public alias double gdouble;
 public alias uint gsize;
 public alias int gssize;
+public alias long goffset;
 public alias void* va_list;
 public alias dchar unichar;
 public alias wchar unichar2;
@@ -607,31 +608,31 @@ alias GDateDMY DateDMY;
  * Enumeration representing a month; values are G_DATE_JANUARY,
  * G_DATE_FEBRUARY, etc. G_DATE_BAD_MONTH is the invalid value.
  * G_DATE_BAD_MONTH
- * invalid value.
+ * invalid value
  * G_DATE_JANUARY
- * January.
+ * January
  * G_DATE_FEBRUARY
- * February.
+ * February
  * G_DATE_MARCH
- * March.
+ * March
  * G_DATE_APRIL
- * April.
+ * April
  * G_DATE_MAY
- * May.
+ * May
  * G_DATE_JUNE
- * June.
+ * June
  * G_DATE_JULY
- * July.
+ * July
  * G_DATE_AUGUST
- * August.
+ * August
  * G_DATE_SEPTEMBER
- * September.
+ * September
  * G_DATE_OCTOBER
- * October.
+ * October
  * G_DATE_NOVEMBER
- * November.
+ * November
  * G_DATE_DECEMBER
- * December.
+ * December
  */
 public enum GDateMonth
 {
@@ -655,21 +656,21 @@ alias GDateMonth DateMonth;
  * Enumeration representing a day of the week; G_DATE_MONDAY,
  * G_DATE_TUESDAY, etc. G_DATE_BAD_WEEKDAY is an invalid weekday.
  * G_DATE_BAD_WEEKDAY
- * invalid value.
+ * invalid value
  * G_DATE_MONDAY
- * Monday.
+ * Monday
  * G_DATE_TUESDAY
- * Tuesday.
+ * Tuesday
  * G_DATE_WEDNESDAY
- * Wednesday.
+ * Wednesday
  * G_DATE_THURSDAY
- * Thursday.
+ * Thursday
  * G_DATE_FRIDAY
- * Friday.
+ * Friday
  * G_DATE_SATURDAY
- * Saturday.
+ * Saturday
  * G_DATE_SUNDAY
- * Sunday.
+ * Sunday
  */
 public enum GDateWeekday
 {
@@ -1010,13 +1011,90 @@ alias GOptionFlags OptionFlags;
 /**
  * Error codes returned by regular expressions functions.
  * G_REGEX_ERROR_COMPILE
- * Compilation of the regular expression in g_regex_new() failed.
+ * Compilation of the regular expression failed.
  * G_REGEX_ERROR_OPTIMIZE
  * Optimization of the regular expression failed.
  * G_REGEX_ERROR_REPLACE
  * Replacement failed due to an ill-formed replacement string.
  * G_REGEX_ERROR_MATCH
  * The match process failed.
+ * G_REGEX_ERROR_INTERNAL
+ * Internal error of the regular expression engine. Since 2.16
+ * G_REGEX_ERROR_STRAY_BACKSLASH
+ * "\\" at end of pattern. Since 2.16
+ * G_REGEX_ERROR_MISSING_CONTROL_CHAR
+ * "\\c" at end of pattern. Since 2.16
+ * G_REGEX_ERROR_UNRECOGNIZED_ESCAPE
+ * Unrecognized character follows "\\". Since 2.16
+ * G_REGEX_ERROR_QUANTIFIERS_OUT_OF_ORDER
+ * Numbers out of order in "{}" quantifier. Since 2.16
+ * G_REGEX_ERROR_QUANTIFIER_TOO_BIG
+ * Number too big in "{}" quantifier. Since 2.16
+ * G_REGEX_ERROR_UNTERMINATED_CHARACTER_CLASS
+ * Missing terminating "]" for character class. Since 2.16
+ * G_REGEX_ERROR_INVALID_ESCAPE_IN_CHARACTER_CLASS
+ * Invalid escape sequence in character class. Since 2.16
+ * G_REGEX_ERROR_RANGE_OUT_OF_ORDER
+ * Range out of order in character class. Since 2.16
+ * G_REGEX_ERROR_NOTHING_TO_REPEAT
+ * Nothing to repeat. Since 2.16
+ * G_REGEX_ERROR_UNRECOGNIZED_CHARACTER
+ * Unrecognized character after "(?", "(?<" or "(?P". Since 2.16
+ * G_REGEX_ERROR_POSIX_NAMED_CLASS_OUTSIDE_CLASS
+ * POSIX named classes are supported only within a class. Since 2.16
+ * G_REGEX_ERROR_UNMATCHED_PARENTHESIS
+ * Missing terminating ")" or ")" without opening "(". Since 2.16
+ * G_REGEX_ERROR_INEXISTENT_SUBPATTERN_REFERENCE
+ * Reference to non-existent subpattern. Since 2.16
+ * G_REGEX_ERROR_UNTERMINATED_COMMENT
+ * Missing terminating ")" after comment. Since 2.16
+ * G_REGEX_ERROR_EXPRESSION_TOO_LARGE
+ * Regular expression too large. Since 2.16
+ * G_REGEX_ERROR_MEMORY_ERROR
+ * Failed to get memory. Since 2.16
+ * G_REGEX_ERROR_VARIABLE_LENGTH_LOOKBEHIND
+ * Lookbehind assertion is not fixed length. Since 2.16
+ * G_REGEX_ERROR_MALFORMED_CONDITION
+ * Malformed number or name after "(?(". Since 2.16
+ * G_REGEX_ERROR_TOO_MANY_CONDITIONAL_BRANCHES
+ * Conditional group contains more than two branches. Since 2.16
+ * G_REGEX_ERROR_ASSERTION_EXPECTED
+ * Assertion expected after "(?(". Since 2.16
+ * G_REGEX_ERROR_UNKNOWN_POSIX_CLASS_NAME
+ * Unknown POSIX class name. Since 2.16
+ * G_REGEX_ERROR_POSIX_COLLATING_ELEMENTS_NOT_SUPPORTED
+ * POSIX collating elements are not supported. Since 2.16
+ * G_REGEX_ERROR_HEX_CODE_TOO_LARGE
+ * Character value in "\\x{...}" sequence is too large. Since 2.16
+ * G_REGEX_ERROR_INVALID_CONDITION
+ * Invalid condition "(?(0)". Since 2.16
+ * G_REGEX_ERROR_SINGLE_BYTE_MATCH_IN_LOOKBEHIND
+ * \\C not allowed in lookbehind assertion. Since 2.16
+ * G_REGEX_ERROR_INFINITE_LOOP
+ * Recursive call could loop indefinitely. Since 2.16
+ * G_REGEX_ERROR_MISSING_SUBPATTERN_NAME_TERMINATOR
+ * Missing terminator in subpattern name. Since 2.16
+ * G_REGEX_ERROR_DUPLICATE_SUBPATTERN_NAME
+ * Two named subpatterns have the same name. Since 2.16
+ * G_REGEX_ERROR_MALFORMED_PROPERTY
+ * Malformed "\\P" or "\\p" sequence. Since 2.16
+ * G_REGEX_ERROR_UNKNOWN_PROPERTY
+ * Unknown property name after "\\P" or "\\p". Since 2.16
+ * G_REGEX_ERROR_SUBPATTERN_NAME_TOO_LONG
+ * Subpattern name is too long (maximum 32 characters). Since 2.16
+ * G_REGEX_ERROR_TOO_MANY_SUBPATTERNS
+ * Too many named subpatterns (maximum 10,000). Since 2.16
+ * G_REGEX_ERROR_INVALID_OCTAL_VALUE
+ * Octal value is greater than "\\377". Since 2.16
+ * G_REGEX_ERROR_TOO_MANY_BRANCHES_IN_DEFINE
+ * "DEFINE" group contains more than one branch. Since 2.16
+ * G_REGEX_ERROR_DEFINE_REPETION
+ * Repeating a "DEFINE" group is not allowed. Since 2.16
+ * G_REGEX_ERROR_INCONSISTENT_NEWLINE_OPTIONS
+ * Inconsistent newline options. Since 2.16
+ * G_REGEX_ERROR_MISSING_BACK_REFERENCE
+ * "\\g" is not followed by a braced name or an
+ * optionally braced non-zero number. Since 2.16
  * Since 2.14
  */
 public enum GRegexError
@@ -1024,7 +1102,46 @@ public enum GRegexError
 	COMPILE,
 	OPTIMIZE,
 	REPLACE,
-	MATCH
+	MATCH,
+	INTERNAL,
+	/+* These are the error codes from PCRE + 100 +/
+	STRAY_BACKSLASH = 101,
+	MISSING_CONTROL_CHAR = 102,
+	UNRECOGNIZED_ESCAPE = 103,
+	QUANTIFIERS_OUT_OF_ORDER = 104,
+	QUANTIFIER_TOO_BIG = 105,
+	UNTERMINATED_CHARACTER_CLASS = 106,
+	INVALID_ESCAPE_IN_CHARACTER_CLASS = 107,
+	RANGE_OUT_OF_ORDER = 108,
+	NOTHING_TO_REPEAT = 109,
+	UNRECOGNIZED_CHARACTER = 112,
+	POSIX_NAMED_CLASS_OUTSIDE_CLASS = 113,
+	UNMATCHED_PARENTHESIS = 114,
+	INEXISTENT_SUBPATTERN_REFERENCE = 115,
+	UNTERMINATED_COMMENT = 118,
+	EXPRESSION_TOO_LARGE = 120,
+	MEMORY_ERROR = 121,
+	VARIABLE_LENGTH_LOOKBEHIND = 125,
+	MALFORMED_CONDITION = 126,
+	TOO_MANY_CONDITIONAL_BRANCHES = 127,
+	ASSERTION_EXPECTED = 128,
+	UNKNOWN_POSIX_CLASS_NAME = 130,
+	POSIX_COLLATING_ELEMENTS_NOT_SUPPORTED = 131,
+	HEX_CODE_TOO_LARGE = 134,
+	INVALID_CONDITION = 135,
+	SINGLE_BYTE_MATCH_IN_LOOKBEHIND = 136,
+	INFINITE_LOOP = 140,
+	MISSING_SUBPATTERN_NAME_TERMINATOR = 142,
+	DUPLICATE_SUBPATTERN_NAME = 143,
+	MALFORMED_PROPERTY = 146,
+	UNKNOWN_PROPERTY = 147,
+	SUBPATTERN_NAME_TOO_LONG = 148,
+	TOO_MANY_SUBPATTERNS = 149,
+	INVALID_OCTAL_VALUE = 151,
+	TOO_MANY_BRANCHES_IN_DEFINE = 154,
+	DEFINE_REPETION = 155,
+	INCONSISTENT_NEWLINE_OPTIONS = 156,
+	MISSING_BACK_REFERENCE = 157
 }
 alias GRegexError RegexError;
 
@@ -1189,19 +1306,22 @@ alias GRegexMatchFlags RegexMatchFlags;
  * G_MARKUP_ERROR_UNKNOWN_ATTRIBUTE
  * error should be set by GMarkupParser functions; attribute wasn't known
  * G_MARKUP_ERROR_INVALID_CONTENT
- * error should be set by GMarkupParser functions; something was wrong with contents of the document, e.g. invalid attribute value
+ * error should be set by GMarkupParser functions; content was invalid
+ * G_MARKUP_ERROR_MISSING_ATTRIBUTE
+ * error should be set by GMarkupParser functions; a required attribute was missing
  */
 public enum GMarkupError
 {
 	BAD_UTF8,
 	EMPTY,
 	PARSE,
-	/+* These three are primarily intended for specific GMarkupParser
+	/+* The following are primarily intended for specific GMarkupParser
 	 * implementations to set.
 	+/
 	UNKNOWN_ELEMENT,
 	UNKNOWN_ATTRIBUTE,
-	INVALID_CONTENT
+	INVALID_CONTENT,
+	MISSING_ATTRIBUTE
 }
 alias GMarkupError MarkupError;
 
@@ -1215,9 +1335,30 @@ alias GMarkupError MarkupError;
 public enum GMarkupParseFlags
 {
 	DO_NOT_USE_THIS_UNSUPPORTED_FLAG = 1 << 0,
-	TREAT_CDATA_AS_TEXT = 1 << 1
+	TREAT_CDATA_AS_TEXT = 1 << 1,
+	PREFIX_ERROR_POSITION = 1 << 2
 }
 alias GMarkupParseFlags MarkupParseFlags;
+
+/**
+ * A mixed enumerated type and flags field. You must specify one type
+ * (string, strdup, boolean, tristate). Additionally, you may
+ * optionally bitwise OR the type with the flag
+ * G_MARKUP_COLLECT_OPTIONAL.
+ * It is likely that this enum will be extended in the future to
+ * support other types.
+ * G_MARKUP_COLLECT_INVALID
+ */
+public enum GMarkupCollectType
+{
+	INVALID,
+	STRING,
+	STRDUP,
+	BOOLEAN,
+	TRISTATE,
+	OPTIONAL = (1 << 16)
+}
+alias GMarkupCollectType MarkupCollectType;
 
 /**
  * Error codes returned by key file parsing.
@@ -1379,29 +1520,6 @@ public struct GSource{}
 /**
  * The GSourceFuncs struct contains a table of functions used to handle
  * event sources in a generic manner.
- * prepare
- * Called before all the file descriptors are polled.
- * If the source can determine that it is ready here (without waiting for the
- * results of the poll() call) it should return TRUE.
- * It can also return a timeout_ value which should be the maximum timeout
- * (in milliseconds) which should be passed to the poll() call.
- * The actual timeout used will be -1 if all sources returned -1, or it will
- * be the minimum of all the timeout_ values returned which were >= 0.
- * check
- * Called after all the file descriptors are polled.
- * The source should return TRUE if it is ready to be dispatched.
- * Note that some time may have passed since the previous prepare function was
- * called, so the source should be checked again here.
- * dispatch
- * Called to dispatch the event source, after it has returned TRUE in
- * either its prepare or its check function. The dispatch function is
- * passed in a callback function and data. The callback function may be
- * NULL if the source was never connected to a callback using
- * g_source_set_callback(). The dispatch function should call the
- * callback function with user_data and whatever additional parameters are
- * needed for this type of event source.
- * finalize
- * Called when the source is finalized.
  * For idle sources, the prepare and check functions always return TRUE to
  * indicate that the source is always ready to be processed.
  * The prepare function also returns a timeout value of 0 to ensure that the
@@ -1418,6 +1536,31 @@ public struct GSource{}
  * poll() call blocks.
  * In the check function, it tests the results of the poll()
  * call to see if the required condition has been met, and returns TRUE if so.
+ * prepare()
+ * Called before all the file descriptors are polled.
+ * If the source can determine that it is ready here (without waiting for the
+ * results of the poll() call) it should return TRUE.
+ * It can also return a timeout_ value which should be the maximum timeout
+ * (in milliseconds) which should be passed to the poll() call.
+ * The actual timeout used will be -1 if all sources returned -1, or it will
+ * be the minimum of all the timeout_ values returned which were >= 0.
+ * check()
+ * Called after all the file descriptors are polled.
+ * The source should return TRUE if it is ready to be dispatched.
+ * Note that some time may have passed since the previous prepare function was
+ * called, so the source should be checked again here.
+ * dispatch()
+ * Called to dispatch the event source, after it has returned TRUE in
+ * either its prepare or its check function. The dispatch function is
+ * passed in a callback function and data. The callback function may be
+ * NULL if the source was never connected to a callback using
+ * g_source_set_callback(). The dispatch function should call the
+ * callback function with user_data and whatever additional parameters are
+ * needed for this type of event source.
+ * finalize()
+ * Called when the source is finalized.
+ * GSourceFuncclosure_callback;
+ * GSourceDummyMarshalclosure_marshal;
  */
 public struct GSourceFuncs
 {
@@ -1451,9 +1594,9 @@ public struct GSourceCallbackFuncs
 
 /**
  * Main Gtk struct.
- * The GThreadPool struct represents a thread pool. It has six public
- * read-only members, but the underlying struct is bigger, so you must not copy
- * this struct.
+ * The GThreadPool struct represents a thread pool. It has three public
+ * read-only members, but the underlying struct is bigger, so you must not
+ * copy this struct.
  * GFuncfunc;
  * the function to execute in the threads of this pool
  * gpointeruser_data;
@@ -1574,9 +1717,9 @@ public struct GIConv{}
  * Similar to the struct timeval returned by
  * the gettimeofday() UNIX call.
  * glongtv_sec;
- * seconds.
+ * seconds
  * glongtv_usec;
- * microseconds.
+ * microseconds
  */
 public struct GTimeVal
 {
@@ -2062,6 +2205,9 @@ public struct GTrashStack
 public struct GHashTable{}
 
 
+public struct GHashTableIter{}
+
+
 /**
  * Main Gtk struct.
  * The GString struct contains the public fields of a GString.
@@ -2328,11 +2474,11 @@ public struct GAllocator{}
  * it is normally unnecessary to cast it explicitly, and doing
  * so might hide memory allocation errors.
  * struct_type:
- * the type of the elements to allocate.
+ * the type of the elements to allocate
  * n_structs:
- * the number of elements to allocate.
+ * the number of elements to allocate
  * Returns:
- * a pointer to the allocated memory, cast to a pointer to struct_type.
+ * a pointer to the allocated memory, cast to a pointer to struct_type
  */
 // TODO
 // #define g_new(struct_type, n_structs)
@@ -2359,13 +2505,13 @@ public struct GAllocator{}
  * n_structs elements of type struct_type. It returns the new address of
  * the memory, which may have been moved.
  * struct_type:
- * the type of the elements to allocate.
+ * the type of the elements to allocate
  * mem:
- * the currently allocated memory.
+ * the currently allocated memory
  * n_structs:
- * the number of elements to allocate.
+ * the number of elements to allocate
  * Returns:
- * a pointer to the new allocated memory, cast to a pointer to struct_type.
+ * a pointer to the new allocated memory, cast to a pointer to struct_type
  */
 // TODO
 // #define g_renew(struct_type, mem, n_structs)
@@ -2376,11 +2522,11 @@ public struct GAllocator{}
  * The returned pointer is cast to a pointer to the given type.
  * If n_structs is 0 it returns NULL.
  * struct_type:
- * the type of the elements to allocate.
+ * the type of the elements to allocate
  * n_structs:
- * the number of elements to allocate.
+ * the number of elements to allocate
  * Returns:
- * a pointer to the allocated memory, cast to a pointer to struct_type.
+ * a pointer to the allocated memory, cast to a pointer to struct_type
  * Since 2.8
  */
 // TODO
@@ -2391,13 +2537,13 @@ public struct GAllocator{}
  * to 0's, and returns NULL on failure. Contrast with g_new0(), which aborts
  * the program on failure.
  * The returned pointer is cast to a pointer to the given type.
- * If n_counts is 0 it returns NULL.
+ * The function returns NULL when n_structs is 0.
  * struct_type:
- * the type of the elements to allocate.
+ * the type of the elements to allocate
  * n_structs:
- * the number of elements to allocate.
+ * the number of elements to allocate
  * Returns:
- * a pointer to the allocated memory, cast to a pointer to struct_type.
+ * a pointer to the allocated memory, cast to a pointer to struct_type
  * Since 2.8
  */
 // TODO
@@ -2409,13 +2555,13 @@ public struct GAllocator{}
  * failure. Contrast with g_renew(), which aborts the program on failure.
  * It returns the new address of the memory, which may have been moved.
  * struct_type:
- * the type of the elements to allocate.
+ * the type of the elements to allocate
  * mem:
- * the currently allocated memory.
+ * the currently allocated memory
  * n_structs:
- * the number of elements to allocate.
+ * the number of elements to allocate
  * Returns:
- * a pointer to the new allocated memory, cast to a pointer to struct_type.
+ * a pointer to the new allocated memory, cast to a pointer to struct_type
  * Since 2.8
  */
 // TODO
@@ -2519,25 +2665,15 @@ public struct GAllocator{}
 // #define g_return_val_if_reached(val)
 
 /*
- * Debugging macro to terminate the application if the assertion fails.
- * If the assertion fails (i.e. the expression is not true), an error message
- * is logged and the application is terminated.
- * The macro can be turned off in final releases of code by defining
- * G_DISABLE_ASSERT when compiling the application.
  * expr:
- * the expression to check.
  */
 // TODO
-// #define g_assert(expr)
+// #define g_warn_if_fail(expr)
 
 /*
- * Debugging macro to terminate the application if it is ever reached.
- * If it is reached, an error message is logged and the application is terminated.
- * The macro can be turned off in final releases of code by defining
- * G_DISABLE_ASSERT when compiling the application.
  */
 // TODO
-// #define g_assert_not_reached()
+// #define g_warn_if_reached()
 
 /*
  * Inserts a breakpoint instruction into the code. On x86 and alpha systems
@@ -2625,40 +2761,60 @@ public struct GAllocator{}
 // #define g_utf8_next_char(p)
 
 /*
- * Marks a string for translation, gets replaced with the translated string
- * at runtime.
- * String:
- * the string to be translated
- * Since 2.4
- */
-// TODO
-// #define _(String)
-
-/*
- * Like _(), but applies g_strip_context() to the translation. This has the
- * advantage that the string can be adorned with a prefix to guarantee
- * uniqueness and provide context to the translator.
+ * Like _(), but handles context in message ids. This has the advantage that
+ * the string can be adorned with a prefix to guarantee uniqueness and provide
+ * context to the translator.
  * One use case given in the gettext manual is GUI translation, where one could
  * e.g. disambiguate two "Open" menu entries as "File|Open" and "Printer|Open".
  * Another use case is the string "Russian" which may have to be translated
  * differently depending on whether it's the name of a character set or a
  * language. This could be solved by using "charset|Russian" and
  * "language|Russian".
+ * See the C_() macro for a different way to mark up translatable strings
+ * with context.
  * Note
  * If you are using the Q_() macro, you need to make sure that you
  * pass --keyword=Q_ to xgettext when extracting messages.
+ * If you are using GNU gettext >= 0.15, you can also use
+ * --keyword=Q_:1g to let xgettext split the context
+ * string off into a msgctxt line in the po file.
  * String:
  * the string to be translated, with a '|'-separated prefix which
  *  must not be translated
+ * Returns:
+ * the translated message
  * Since 2.4
  */
 // TODO
 // #define Q_(String)
 
 /*
- * Marks a string for translation, gets replaced with the untranslated string
- * at runtime. This is useful in situations where the translated strings can't
+ * Uses gettext to get the translation for msgid. msgctxt is
+ * used as a context. This is mainly useful for short strings which
+ * may need different translations, depending on the context in which
+ * they are used.
+ * label1 = C_("Navigation", "Back");
+ * label2 = C_("Body part", "Back");
+ * Note
+ * If you are using the C_() macro, you need to make sure that you
+ * pass --keyword=C_:1c,2 to xgettext when extracting
+ * messages. Note that this only works with GNU gettext >= 0.15.
+ * Context:
+ * a message context, must be a string literal
+ * String:
+ * a message id, must be a string literal
+ * Returns:
+ * the translated message
+ * Since 2.16
+ */
+// TODO
+// #define C_(Context,String)
+
+/*
+ * Only marks a string for translation.
+ * This is useful in situations where the translated strings can't
  * be directly used, e.g. in string array initializers.
+ * To get the translated string, call gettext() at runtime.
  *  {
 	 *  static const char *messages[] = {
 		 *  N_("some very meaningful message"),
@@ -3095,11 +3251,11 @@ public struct GAllocator{}
 /*
  * Inserts a GNode as the last child of the given parent.
  * parent:
- * the GNode to place the new GNode under.
+ *  the GNode to place the new GNode under
  * node:
- * the GNode to insert.
+ *  the GNode to insert
  * Returns:
- * the inserted GNode.
+ *  the inserted GNode
  */
 // TODO
 // #define g_node_append(parent, node)
@@ -3107,14 +3263,14 @@ public struct GAllocator{}
 /*
  * Inserts a new GNode at the given position.
  * parent:
- * the GNode to place the new GNode under.
+ *  the GNode to place the new GNode under
  * position:
- * the position to place the new GNode at.
- * If position is -1, the new GNode is inserted as the last child of parent.
+ *  the position to place the new GNode at. If position is -1,
+ *  the new GNode is inserted as the last child of parent
  * data:
- * the data for the new GNode.
+ *  the data for the new GNode
  * Returns:
- * the new GNode.
+ *  the new GNode
  */
 // TODO
 // #define g_node_insert_data(parent, position, data)
@@ -3122,13 +3278,13 @@ public struct GAllocator{}
 /*
  * Inserts a new GNode before the given sibling.
  * parent:
- * the GNode to place the new GNode under.
+ *  the GNode to place the new GNode under
  * sibling:
- * the sibling GNode to place the new GNode before.
+ *  the sibling GNode to place the new GNode before
  * data:
- * the data for the new GNode.
+ *  the data for the new GNode
  * Returns:
- * the new GNode.
+ *  the new GNode
  */
 // TODO
 // #define g_node_insert_data_before(parent, sibling, data)
@@ -3136,11 +3292,11 @@ public struct GAllocator{}
 /*
  * Inserts a new GNode as the last child of the given parent.
  * parent:
- * the GNode to place the new GNode under.
+ *  the GNode to place the new GNode under
  * data:
- * the data for the new GNode.
+ *  the data for the new GNode
  * Returns:
- * the new GNode.
+ *  the new GNode
  */
 // TODO
 // #define g_node_append_data(parent, data)
@@ -3148,11 +3304,11 @@ public struct GAllocator{}
 /*
  * Inserts a new GNode as the first child of the given parent.
  * parent:
- * the GNode to place the new GNode under.
+ *  the GNode to place the new GNode under
  * data:
- * the data for the new GNode.
+ *  the data for the new GNode
  * Returns:
- * the new GNode.
+ *  the new GNode
  */
 // TODO
 // #define g_node_prepend_data(parent, data)
@@ -3160,9 +3316,10 @@ public struct GAllocator{}
 /*
  * Gets the first child of a GNode.
  * node:
- * a GNode.
+ *  a GNode
  * Returns:
- * the first child of node, or NULL if node is NULL or has no children.
+ *  the first child of node, or NULL if node is NULL
+ *  or has no children
  */
 // TODO
 // #define g_node_first_child(node)
@@ -3170,9 +3327,9 @@ public struct GAllocator{}
 /*
  * Gets the next sibling of a GNode.
  * node:
- * a GNode.
+ *  a GNode
  * Returns:
- * the next sibling of node, or NULL if node is NULL.
+ *  the next sibling of node, or NULL if node is NULL
  */
 // TODO
 // #define g_node_next_sibling(node)
@@ -3180,9 +3337,9 @@ public struct GAllocator{}
 /*
  * Gets the previous sibling of a GNode.
  * node:
- * a GNode.
+ *  a GNode
  * Returns:
- * the previous sibling of node, or NULL if node is NULL.
+ *  the previous sibling of node, or NULL if node is NULL
  */
 // TODO
 // #define g_node_prev_sibling(node)
@@ -3190,9 +3347,10 @@ public struct GAllocator{}
 /*
  * Returns TRUE if a GNode is a leaf node.
  * node:
- * a GNode.
+ *  a GNode
  * Returns:
- * TRUE if the GNode is a leaf node (i.e. it has no children).
+ *  TRUE if the GNode is a leaf node
+ *  (i.e. it has no children)
  */
 // TODO
 // #define	 G_NODE_IS_LEAF(node)	(((GNode*) (node))->children == NULL)
@@ -3200,10 +3358,10 @@ public struct GAllocator{}
 /*
  * Returns TRUE if a GNode is the root of a tree.
  * node:
- * a GNode.
+ *  a GNode
  * Returns:
- * TRUE if the GNode is the root of a tree (i.e. it has no parent
- * or siblings).
+ *  TRUE if the GNode is the root of a tree
+ *  (i.e. it has no parent or siblings)
  */
 // TODO
 // #define G_NODE_IS_ROOT(node)
@@ -3567,6 +3725,10 @@ public typedef extern(C) int  function (char[], char[], uint) GCompletionStrncmp
  * is called in the child after GLib has performed all the setup it plans
  * to perform but before calling exec(). On POSIX actions taken in this
  * function will thus only affect the child, not the parent.
+ * Note that POSIX allows only async-signal-safe functions (see signal(7))
+ * to be called in the child between fork() and exec(), which drastically
+ * limits the usefulness of child setup functions.
+ * Also note that modifying the environment from
  * On Windows the function is called in the parent. Its usefulness on
  * Windows is thus questionable. In many cases executing the child setup
  * function in the parent can have ill effects, and you should be very
@@ -3654,8 +3816,13 @@ public typedef extern(C) void  function (GOptionContext*, GOptionGroup*, void*, 
  * to g_regex_replace_eval(), and it should append the replacement to
  * result.
  * match_info:
+ * the GMatchInfo generated by the match.
+ * Use g_match_info_get_regex() and g_match_info_get_string() if you
+ * need the GRegex or the matched string.
  * result:
+ * a GString containing the new string
  * user_data:
+ * user data passed to g_regex_replace_eval()
  * Returns:
  * FALSE to continue the replacement process, TRUE to stop it
  * Since 2.14
@@ -3733,7 +3900,6 @@ public typedef extern(C) int  function (GSequenceIter*, GSequenceIter*, void*) G
  * The functions g_direct_hash(), g_int_hash() and g_str_hash() provide
  * hash functions which can be used when the key is a gpointer, gint, and
  * gchar* respectively.
- * FIXME: Need more here.
  * The hash values should be evenly distributed over a fairly large range?
  * The modulus is taken with the hash table size (a prime number)
  * to find the 'bucket' to place each key into.
@@ -3811,14 +3977,14 @@ public typedef extern(C) int  function (void*, void*, void*) GHRFunc;
 public typedef extern(C) int  function (void*, void*, void*) GTraverseFunc;
 
 /*
- * A function of this signature is used to copy the node data when doing a deep-copy
- * of a tree.
+ * A function of this signature is used to copy the node data
+ * when doing a deep-copy of a tree.
  * src:
- * A pointer to the data which should be copied.
+ *  A pointer to the data which should be copied
  * data:
- * Additional data.
+ *  Additional data
  * Returns:
- * A pointer to the copy.
+ *  A pointer to the copy
  * Since 2.4
  */
 // gpointer (*GCopyFunc) (gconstpointer src,  gpointer data);

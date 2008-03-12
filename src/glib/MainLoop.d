@@ -115,7 +115,7 @@ private import glib.Source;
  *  in the size of the derived structure and a table of functions.
  *  These GSourceFuncs determine the behavior of the new source
  *  types.
- *  New source types basically interact with with the main context
+ *  New source types basically interact with the main context
  *  in two ways. Their prepare function in GSourceFuncs can set
  *  a timeout to determine the maximum amount of time that the
  *  main loop will sleep before checking the source again. In
@@ -233,6 +233,8 @@ public class MainLoop
 	/**
 	 * Stops a GMainLoop from running. Any calls to g_main_loop_run()
 	 * for the loop will return.
+	 * Note that sources that have already been dispatched when
+	 * g_main_loop_quit() is called will still be executed.
 	 */
 	public void quit()
 	{

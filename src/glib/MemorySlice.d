@@ -66,7 +66,7 @@ private import gtkc.glib;
  * memory-waste, scalability and performance problems.
  * To achieve these goals, the slice allocator uses a sophisticated,
  * layered design that has been inspired by Bonwick's slab allocator
- * [5].
+ * [6].
  * It uses posix_memalign() to optimize allocations of many equally-sized
  * chunks, and has per-thread free lists (the so-called magazine layer)
  * to quickly satisfy allocation requests of already known structure sizes.

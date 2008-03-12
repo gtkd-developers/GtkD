@@ -195,7 +195,7 @@ public class CharacterSet
 	 * including fallback sequences for characters not representable
 	 * in the output. Note that it is not guaranteed that the specification
 	 * for the fallback sequences in fallback will be honored. Some
-	 * systems may do a approximate conversion from from_codeset
+	 * systems may do an approximate conversion from from_codeset
 	 * to to_codeset in their iconv() functions,
 	 * in which case GLib will simply return that approximate conversion.
 	 * Note that you should use g_iconv() for streaming
@@ -453,7 +453,8 @@ public class CharacterSet
 	/**
 	 * Converts a string from UTF-8 to the encoding used for strings by
 	 * the C runtime (usually the same as that used by the operating
-	 * system) in the current locale.
+	 * system) in the current locale. On
+	 * Windows this means the system codepage.
 	 * Params:
 	 * utf8string =  a UTF-8 encoded string
 	 * len =  the length of the string, or -1 if the string is
@@ -484,6 +485,11 @@ public class CharacterSet
 	 * g_convert(), to convert from the current locale's encoding to some
 	 * other encoding. (Frequently g_locale_to_utf8() and g_locale_from_utf8()
 	 * are nice shortcuts, though.)
+	 * On Windows the character set returned by this function is the
+	 * so-called system default ANSI code-page. That is the character set
+	 * used by the "narrow" versions of C library and Win32 functions that
+	 * handle file names. It might be different from the character set
+	 * used by the C library's current locale.
 	 * The return value is TRUE if the locale's encoding is UTF-8, in that
 	 * case you can perhaps avoid calling g_convert().
 	 * The string returned in charset is not allocated, and should not be

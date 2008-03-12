@@ -113,7 +113,7 @@ public class PgItem
 	
 	/**
 	 * Copy an existing PangoItem structure.
-	 * Returns: the newly allocated PangoItem, which should be freed with pango_item_free().
+	 * Returns: the newly allocated PangoItem, which should be freed with pango_item_free(), or NULL if item was NULL.
 	 */
 	public PgItem copy()
 	{

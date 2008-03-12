@@ -85,7 +85,7 @@ public class PgVersion
 	 * A version number can be encoded into an integer using
 	 * PANGO_VERSION_ENCODE().
 	 * Since 1.16
-	 * Returns:value: The encoded version of Pango library available at run time.
+	 * Returns: The encoded version of Pango library available at run time.
 	 */
 	public static int versio()
 	{
@@ -98,7 +98,7 @@ public class PgVersion
 	 * it returns the version of Pango available at run-time, as opposed to
 	 * the version available at compile-time.
 	 * Since 1.16
-	 * Returns:value: A string containing the version of Pango library available at run time. The returned string is owned by Pango and should not be modified or freed.
+	 * Returns: A string containing the version of Pango library available at run time. The returned string is owned by Pango and should not be modified or freed.
 	 */
 	public static char[] string()
 	{

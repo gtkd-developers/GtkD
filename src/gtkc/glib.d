@@ -182,6 +182,7 @@ extern(C)
 	// glib.AsyncQueue
 	
 	GAsyncQueue* function()g_async_queue_new;
+	GAsyncQueue* function(GDestroyNotify itemFreeFunc)g_async_queue_new_full;
 	GAsyncQueue* function(GAsyncQueue* queue)g_async_queue_ref;
 	void function(GAsyncQueue* queue)g_async_queue_unref;
 	void function(GAsyncQueue* queue, gpointer data)g_async_queue_push;
@@ -216,12 +217,12 @@ extern(C)
 	
 	// glib.Memory
 	
-	gpointer function(gulong nBytes)g_malloc;
-	gpointer function(gulong nBytes)g_malloc0;
-	gpointer function(gpointer mem, gulong nBytes)g_realloc;
-	gpointer function(gulong nBytes)g_try_malloc;
-	gpointer function(gulong nBytes)g_try_malloc0;
-	gpointer function(gpointer mem, gulong nBytes)g_try_realloc;
+	gpointer function(gsize nBytes)g_malloc;
+	gpointer function(gsize nBytes)g_malloc0;
+	gpointer function(gpointer mem, gsize nBytes)g_realloc;
+	gpointer function(gsize nBytes)g_try_malloc;
+	gpointer function(gsize nBytes)g_try_malloc0;
+	gpointer function(gpointer mem, gsize nBytes)g_try_realloc;
 	void function(gpointer mem)g_free;
 	gpointer function(gconstpointer mem, guint byteSize)g_memdup;
 	void function(GMemVTable* vtable)g_mem_set_vtable;
@@ -281,6 +282,8 @@ extern(C)
 	void function(GError** err, GQuark domain, gint code, gchar* format, ... )g_set_error;
 	void function(GError** dest, GError* src)g_propagate_error;
 	void function(GError** err)g_clear_error;
+	void function(GError** err, gchar* format, ... )g_prefix_error;
+	void function(GError** dest, GError* src, gchar* format, ... )g_propagate_prefixed_error;
 	
 	// glib.Messages
 	
@@ -288,6 +291,7 @@ extern(C)
 	GPrintFunc function(GPrintFunc func)g_set_print_handler;
 	void function(gchar* format, ... )g_printerr;
 	GPrintFunc function(GPrintFunc func)g_set_printerr_handler;
+	void function(char* domain, char* file, int line, char* func, char* warnexpr)g_warn_message;
 	void function(gchar* prgName)g_on_error_query;
 	void function(gchar* prgName)g_on_error_stack_trace;
 	
@@ -464,6 +468,7 @@ extern(C)
 	// glib.Internationalization
 	
 	gchar* function(gchar* msgid, gchar* msgval)g_strip_context;
+	gchar* function(gchar* domain, gchar* msgctxtid, gsize msgidoffset)g_dpgettext;
 	gchar** function()g_get_language_names;
 	
 	// glib.TimeVal
@@ -575,6 +580,7 @@ extern(C)
 	gchar* function(gchar** args)g_build_filenamev;
 	gchar* function(gchar* separator, gchar* firstElement, ... )g_build_path;
 	gchar* function(gchar* separator, gchar** args)g_build_pathv;
+	char* function(goffset size)g_format_size_for_display;
 	gchar* function(gchar* program)g_find_program_in_path;
 	gint function(gulong mask, gint nthBit)g_bit_nth_lsf;
 	gint function(gulong mask, gint nthBit)g_bit_nth_msf;
@@ -772,8 +778,10 @@ extern(C)
 	void function(GMarkupParseContext* context)g_markup_parse_context_free;
 	void function(GMarkupParseContext* context, gint* lineNumber, gint* charNumber)g_markup_parse_context_get_position;
 	gchar* function(GMarkupParseContext* context)g_markup_parse_context_get_element;
+	GSList* function(GMarkupParseContext* context)g_markup_parse_context_get_element_stack;
 	GMarkupParseContext* function(GMarkupParser* parser, GMarkupParseFlags flags, gpointer userData, GDestroyNotify userDataDnotify)g_markup_parse_context_new;
 	gboolean function(GMarkupParseContext* context, gchar* text, gssize textLen, GError** error)g_markup_parse_context_parse;
+	gboolean function(gchar* elementName, gchar** attributeNames, gchar** attributeValues, GError** error, GMarkupCollectType firstType, gchar* firstAttr, ... )g_markup_collect_attributes;
 	
 	// glib.KeyFile
 	
@@ -813,10 +821,10 @@ extern(C)
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gboolean[] list, gsize length)g_key_file_set_boolean_list;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gint[] list, gsize length)g_key_file_set_integer_list;
 	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gdouble[] list, gsize length)g_key_file_set_double_list;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* comment, GError** error)g_key_file_set_comment;
-	void function(GKeyFile* keyFile, gchar* groupName, GError** error)g_key_file_remove_group;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error)g_key_file_remove_key;
-	void function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error)g_key_file_remove_comment;
+	gboolean function(GKeyFile* keyFile, gchar* groupName, gchar* key, gchar* comment, GError** error)g_key_file_set_comment;
+	gboolean function(GKeyFile* keyFile, gchar* groupName, GError** error)g_key_file_remove_group;
+	gboolean function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error)g_key_file_remove_key;
+	gboolean function(GKeyFile* keyFile, gchar* groupName, gchar* key, GError** error)g_key_file_remove_comment;
 	
 	// glib.BookmarkFile
 	
@@ -865,6 +873,7 @@ extern(C)
 	gchar* function(gint error)g_win32_error_message;
 	gchar* function()g_win32_getlocale;
 	gchar* function(gchar* p, gchar* dllName)g_win32_get_package_installation_directory;
+	gchar* function(gpointer hmodule)g_win32_get_package_installation_directory_of_module;
 	gchar* function(gchar* p, gchar* dllName, gchar* subdir)g_win32_get_package_installation_subdirectory;
 	guint function()g_win32_get_windows_version;
 	gchar* function(gchar* utf8filename)g_win32_locale_filename_from_utf8;
@@ -879,7 +888,7 @@ extern(C)
 	
 	// glib.MemoryChunk
 	
-	GMemChunk* function(gchar* name, gint atomSize, gulong areaSize, gint type)g_mem_chunk_new;
+	GMemChunk* function(gchar* name, gint atomSize, gsize areaSize, gint type)g_mem_chunk_new;
 	gpointer function(GMemChunk* memChunk)g_mem_chunk_alloc;
 	gpointer function(GMemChunk* memChunk)g_mem_chunk_alloc0;
 	void function(GMemChunk* memChunk, gpointer mem)g_mem_chunk_free;
@@ -1065,6 +1074,11 @@ extern(C)
 	void function(GHashTable* hashTable)g_hash_table_destroy;
 	GHashTable* function(GHashTable* hashTable)g_hash_table_ref;
 	void function(GHashTable* hashTable)g_hash_table_unref;
+	void function(GHashTableIter* iter, GHashTable* hashTable)g_hash_table_iter_init;
+	gboolean function(GHashTableIter* iter, gpointer* key, gpointer* value)g_hash_table_iter_next;
+	GHashTable* function(GHashTableIter* iter)g_hash_table_iter_get_hash_table;
+	void function(GHashTableIter* iter)g_hash_table_iter_remove;
+	void function(GHashTableIter* iter)g_hash_table_iter_steal;
 	gboolean function(gconstpointer v1, gconstpointer v2)g_direct_equal;
 	guint function(gconstpointer v)g_direct_hash;
 	gboolean function(gconstpointer v1, gconstpointer v2)g_int_equal;
@@ -1086,6 +1100,7 @@ extern(C)
 	GString* function(GString* string, gchar c)g_string_append_c;
 	GString* function(GString* string, gunichar wc)g_string_append_unichar;
 	GString* function(GString* string, gchar* val, gssize len)g_string_append_len;
+	GString* function(GString* string, char* unescaped, char* reservedCharsAllowed, gboolean allowUtf8)g_string_append_uri_escaped;
 	GString* function(GString* string, gchar* val)g_string_prepend;
 	GString* function(GString* string, gchar c)g_string_prepend_c;
 	GString* function(GString* string, gunichar wc)g_string_prepend_unichar;
@@ -1365,6 +1380,7 @@ Symbol[] glibLinks =
 	{ "g_thread_pool_set_max_idle_time",  cast(void**)& g_thread_pool_set_max_idle_time},
 	{ "g_thread_pool_get_max_idle_time",  cast(void**)& g_thread_pool_get_max_idle_time},
 	{ "g_async_queue_new",  cast(void**)& g_async_queue_new},
+	{ "g_async_queue_new_full",  cast(void**)& g_async_queue_new_full},
 	{ "g_async_queue_ref",  cast(void**)& g_async_queue_ref},
 	{ "g_async_queue_unref",  cast(void**)& g_async_queue_unref},
 	{ "g_async_queue_push",  cast(void**)& g_async_queue_push},
@@ -1452,10 +1468,13 @@ Symbol[] glibLinks =
 	{ "g_set_error",  cast(void**)& g_set_error},
 	{ "g_propagate_error",  cast(void**)& g_propagate_error},
 	{ "g_clear_error",  cast(void**)& g_clear_error},
+	{ "g_prefix_error",  cast(void**)& g_prefix_error},
+	{ "g_propagate_prefixed_error",  cast(void**)& g_propagate_prefixed_error},
 	{ "g_print",  cast(void**)& g_print},
 	{ "g_set_print_handler",  cast(void**)& g_set_print_handler},
 	{ "g_printerr",  cast(void**)& g_printerr},
 	{ "g_set_printerr_handler",  cast(void**)& g_set_printerr_handler},
+	{ "g_warn_message",  cast(void**)& g_warn_message},
 	{ "g_on_error_query",  cast(void**)& g_on_error_query},
 	{ "g_on_error_stack_trace",  cast(void**)& g_on_error_stack_trace},
 	{ "g_log",  cast(void**)& g_log},
@@ -1614,6 +1633,7 @@ Symbol[] glibLinks =
 	{ "g_base64_decode_step",  cast(void**)& g_base64_decode_step},
 	{ "g_base64_decode",  cast(void**)& g_base64_decode},
 	{ "g_strip_context",  cast(void**)& g_strip_context},
+	{ "g_dpgettext",  cast(void**)& g_dpgettext},
 	{ "g_get_language_names",  cast(void**)& g_get_language_names},
 	{ "g_get_current_time",  cast(void**)& g_get_current_time},
 	{ "g_usleep",  cast(void**)& g_usleep},
@@ -1713,6 +1733,7 @@ Symbol[] glibLinks =
 	{ "g_build_filenamev",  cast(void**)& g_build_filenamev},
 	{ "g_build_path",  cast(void**)& g_build_path},
 	{ "g_build_pathv",  cast(void**)& g_build_pathv},
+	{ "g_format_size_for_display",  cast(void**)& g_format_size_for_display},
 	{ "g_find_program_in_path",  cast(void**)& g_find_program_in_path},
 	{ "g_bit_nth_lsf",  cast(void**)& g_bit_nth_lsf},
 	{ "g_bit_nth_msf",  cast(void**)& g_bit_nth_msf},
@@ -1868,8 +1889,10 @@ Symbol[] glibLinks =
 	{ "g_markup_parse_context_free",  cast(void**)& g_markup_parse_context_free},
 	{ "g_markup_parse_context_get_position",  cast(void**)& g_markup_parse_context_get_position},
 	{ "g_markup_parse_context_get_element",  cast(void**)& g_markup_parse_context_get_element},
+	{ "g_markup_parse_context_get_element_stack",  cast(void**)& g_markup_parse_context_get_element_stack},
 	{ "g_markup_parse_context_new",  cast(void**)& g_markup_parse_context_new},
 	{ "g_markup_parse_context_parse",  cast(void**)& g_markup_parse_context_parse},
+	{ "g_markup_collect_attributes",  cast(void**)& g_markup_collect_attributes},
 	{ "g_key_file_new",  cast(void**)& g_key_file_new},
 	{ "g_key_file_free",  cast(void**)& g_key_file_free},
 	{ "g_key_file_set_list_separator",  cast(void**)& g_key_file_set_list_separator},
@@ -1952,6 +1975,7 @@ Symbol[] glibLinks =
 	{ "g_win32_error_message",  cast(void**)& g_win32_error_message},
 	{ "g_win32_getlocale",  cast(void**)& g_win32_getlocale},
 	{ "g_win32_get_package_installation_directory",  cast(void**)& g_win32_get_package_installation_directory},
+	{ "g_win32_get_package_installation_directory_of_module",  cast(void**)& g_win32_get_package_installation_directory_of_module},
 	{ "g_win32_get_package_installation_subdirectory",  cast(void**)& g_win32_get_package_installation_subdirectory},
 	{ "g_win32_get_windows_version",  cast(void**)& g_win32_get_windows_version},
 	{ "g_win32_locale_filename_from_utf8",  cast(void**)& g_win32_locale_filename_from_utf8},
@@ -2128,6 +2152,11 @@ Symbol[] glibLinks =
 	{ "g_hash_table_destroy",  cast(void**)& g_hash_table_destroy},
 	{ "g_hash_table_ref",  cast(void**)& g_hash_table_ref},
 	{ "g_hash_table_unref",  cast(void**)& g_hash_table_unref},
+	{ "g_hash_table_iter_init",  cast(void**)& g_hash_table_iter_init},
+	{ "g_hash_table_iter_next",  cast(void**)& g_hash_table_iter_next},
+	{ "g_hash_table_iter_get_hash_table",  cast(void**)& g_hash_table_iter_get_hash_table},
+	{ "g_hash_table_iter_remove",  cast(void**)& g_hash_table_iter_remove},
+	{ "g_hash_table_iter_steal",  cast(void**)& g_hash_table_iter_steal},
 	{ "g_direct_equal",  cast(void**)& g_direct_equal},
 	{ "g_direct_hash",  cast(void**)& g_direct_hash},
 	{ "g_int_equal",  cast(void**)& g_int_equal},
@@ -2146,6 +2175,7 @@ Symbol[] glibLinks =
 	{ "g_string_append_c",  cast(void**)& g_string_append_c},
 	{ "g_string_append_unichar",  cast(void**)& g_string_append_unichar},
 	{ "g_string_append_len",  cast(void**)& g_string_append_len},
+	{ "g_string_append_uri_escaped",  cast(void**)& g_string_append_uri_escaped},
 	{ "g_string_prepend",  cast(void**)& g_string_prepend},
 	{ "g_string_prepend_c",  cast(void**)& g_string_prepend_c},
 	{ "g_string_prepend_unichar",  cast(void**)& g_string_prepend_unichar},

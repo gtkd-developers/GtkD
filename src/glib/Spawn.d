@@ -418,11 +418,16 @@ public class Spawn
 	/**
 	 * Executes a child synchronously (waits for the child to exit before returning).
 	 * All output from the child is stored in standard_output and standard_error,
-	 * if those parameters are non-NULL. If exit_status is non-NULL, the exit
-	 * status of the child is stored there as it would be returned by
-	 * waitpid(); standard UNIX macros such as WIFEXITED() and WEXITSTATUS()
-	 * must be used to evaluate the exit status. If an error occurs, no data is
-	 * returned in standard_output, standard_error, or exit_status.
+	 * if those parameters are non-NULL. Note that you must set the
+	 * G_SPAWN_STDOUT_TO_DEV_NULL and G_SPAWN_STDERR_TO_DEV_NULL flags when
+	 * passing NULL for standard_output and standard_error.
+	 * If exit_status is non-NULL, the exit status of the child is stored
+	 * there as it would be returned by waitpid(); standard UNIX macros such
+	 * as WIFEXITED() and WEXITSTATUS() must be used to evaluate the exit status.
+	 * Note that this function call waitpid() even if exit_status is NULL, and
+	 * does not accept the G_SPAWN_DO_NOT_REAP_CHILD flag.
+	 * If an error occurs, no data is returned in standard_output,
+	 * standard_error, or exit_status.
 	 * This function calls g_spawn_async_with_pipes() internally; see that
 	 * function for full details on the other parameters and details on
 	 * how these functions work on Windows.
@@ -433,10 +438,10 @@ public class Spawn
 	 * flags =  flags from GSpawnFlags
 	 * childSetup =  function to run in the child just before exec()
 	 * userData =  user data for child_setup
-	 * standardOutput =  return location for child output
-	 * standardError =  return location for child error messages
-	 * exitStatus =  return location for child exit status, as returned by waitpid()
-	 * error =  return location for error
+	 * standardOutput =  return location for child output, or NULL
+	 * standardError =  return location for child error messages, or NULL
+	 * exitStatus =  return location for child exit status, as returned by waitpid(), or NULL
+	 * error =  return location for error, or NULL
 	 * Returns: TRUE on success, FALSE if an error was set.
 	 */
 	public static int sync(char[] workingDirectory, char** argv, char** envp, GSpawnFlags flags, GSpawnChildSetupFunc childSetup, void* userData, char** standardOutput, char** standardError, int* exitStatus, GError** error)

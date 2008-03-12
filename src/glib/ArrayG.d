@@ -345,10 +345,10 @@ public class ArrayG
 	 * the underlying array for use elsewhere.
 	 * Note
 	 * If array elements contain dynamically-allocated memory, they should be freed
-	 * first.
+	 * separately.
 	 * Params:
 	 * freeSegment = if TRUE the actual element data is freed as well.
-	 * Returns:the element data if free_segment is FALSE, otherwise NULL
+	 * Returns:the element data if free_segment is FALSE, otherwise NULL.	The element data should be freed using g_free().
 	 */
 	public char[] free(int freeSegment)
 	{

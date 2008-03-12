@@ -3,18 +3,18 @@ mkdir gtkdocs
 cd gtkdocs
 
 #GLIB
-curl http://library.gnome.org/devel/glib/glib-html-2.14.4.tar.gz | tar xvfz -
-ln -s glib-html-2.14.4 gthread
-ln -s glib-html-2.14.4 glib
+curl http://library.gnome.org/devel/glib/glib-html-2.16.1.tar.gz | tar xvfz -
+ln -s glib-html-2.16.1 gthread
+ln -s glib-html-2.16.1 glib
 #GOBJECT
-curl http://library.gnome.org/devel/gobject/gobject-html-2.14.4.tar.gz | tar xvfz -
-ln -s gobject-html-2.14.4 gobject
+curl http://library.gnome.org/devel/gobject/gobject-html-2.16.1.tar.gz | tar xvfz -
+ln -s gobject-html-2.16.1 gobject
 #ATK
-curl http://library.gnome.org/devel/atk/atk-html-1.20.0.tar.gz | tar xvfz -
-ln -s atk-html-1.20.0 atk
+curl http://library.gnome.org/devel/atk/atk-html-1.22.0.tar.gz | tar xvfz -
+ln -s atk-html-1.22.0 atk
 #PANGO
-curl http://library.gnome.org/devel/pango/pango-html-1.18.3.tar.gz | tar xvfz -
-ln -s pango-html-1.18.3 pango
+curl http://library.gnome.org/devel/pango/pango-html-1.20.0.tar.gz | tar xvfz -
+ln -s pango-html-1.20.0 pango
 #GDK-PIXBUF
 curl http://library.gnome.org/devel/gdk-pixbuf/gdk-pixbuf-html-2.12.3.tar.gz | tar xvfz -
 ln -s gdk-pixbuf-html-2.12.3 gdk-pixbuf

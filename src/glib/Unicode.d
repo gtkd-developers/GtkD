@@ -712,6 +712,11 @@ public class Unicode
 	 * Reverses a UTF-8 string. str must be valid UTF-8 encoded text.
 	 * (Use g_utf8_validate() on all text before trying to use UTF-8
 	 * utility functions with it.)
+	 * This function is intended for programmatic uses of reversed strings.
+	 * It pays no attention to decomposed characters, combining marks, byte
+	 * order marks, directional indicators (LRM, LRO, etc) and similar
+	 * characters which might need special handling when reversing a string
+	 * for display purposes.
 	 * Note that unlike g_strreverse(), this function returns
 	 * newly-allocated memory, which should be freed with g_free() when
 	 * no longer needed.
@@ -813,9 +818,10 @@ public class Unicode
 	 * Converts a string into canonical form, standardizing
 	 * such issues as whether a character with an accent
 	 * is represented as a base character and combining
-	 * accent or as a single precomposed character. You
-	 * should generally call g_utf8_normalize() before
-	 * comparing two Unicode strings.
+	 * accent or as a single precomposed character. The
+	 * string has to be valid UTF-8, otherwise NULL is
+	 * returned. You should generally call g_utf8_normalize()
+	 * before comparing two Unicode strings.
 	 * The normalization mode G_NORMALIZE_DEFAULT only
 	 * standardizes differences that do not affect the
 	 * text content, such as the above-mentioned accent
@@ -838,7 +844,7 @@ public class Unicode
 	 * str =  a UTF-8 encoded string.
 	 * len =  length of str, in bytes, or -1 if str is nul-terminated.
 	 * mode =  the type of normalization to perform.
-	 * Returns: a newly allocated string, that is the  normalized form of str.
+	 * Returns: a newly allocated string, that is the normalized form of str, or NULL if str is not valid UTF-8.
 	 */
 	public static char[] utf8_Normalize(char[] str, int len, GNormalizeMode mode)
 	{

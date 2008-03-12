@@ -354,4 +354,46 @@ public class PgRenderer : ObjectG
 		}
 		return new PgMatrix(cast(PangoMatrix*) p);
 	}
+	
+	/**
+	 * Gets the layout currently being rendered using renderer.
+	 * Calling this function only makes sense from inside a subclass's
+	 * methods, like in its draw_shape() for example.
+	 * The returned layout should not be modified while still being
+	 * rendered.
+	 * Since 1.20
+	 * Returns: the layout, or NULL if no layout is being rendered using renderer at this time.
+	 */
+	public PgLayout getLayout()
+	{
+		// PangoLayout* pango_renderer_get_layout (PangoRenderer *renderer);
+		auto p = pango_renderer_get_layout(pangoRenderer);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgLayout(cast(PangoLayout*) p);
+	}
+	
+	/**
+	 * Gets the layout line currently being rendered using renderer.
+	 * Calling this function only makes sense from inside a subclass's
+	 * methods, like in its draw_shape() for example.
+	 * The returned layout line should not be modified while still being
+	 * rendered.
+	 * Since 1.20
+	 * Returns: the layout line, or NULL if no layout line is being rendered using renderer at this time.
+	 */
+	public PgLayoutLine getLayoutLine()
+	{
+		// PangoLayoutLine* pango_renderer_get_layout_line (PangoRenderer *renderer);
+		auto p = pango_renderer_get_layout_line(pangoRenderer);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgLayoutLine(cast(PangoLayoutLine*) p);
+	}
 }

@@ -503,7 +503,7 @@ public class Text
 	 * coordType =  Specify whether coordinates are relative to the screen or widget window.
 	 * xClipType =  Specify the horizontal clip type.
 	 * yClipType =  Specify the vertical clip type.
-	 * Returns:Returns: Array of AtkTextRange. The last element of the array returned  by this function will be NULL.Since ATK 1.3
+	 * Returns: Array of AtkTextRange. The last element of the array returned  by this function will be NULL.Since ATK 1.3
 	 */
 	public AtkTextRange** getBoundedRanges(AtkTextRectangle* rect, AtkCoordType coordType, AtkTextClipType xClipType, AtkTextClipType yClipType)
 	{

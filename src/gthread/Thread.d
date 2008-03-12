@@ -357,14 +357,15 @@ public class Thread
 	/**
 	 * Function to be called when starting a critical initialization section.
 	 * The argument value_location must point to a static 0-initialized variable
-	 * that will be set to a value other than 0 at the end of the initialization section.
+	 * that will be set to a value other than 0 at the end of the initialization
+	 * section.
 	 * In combination with g_once_init_leave() and the unique address value_location,
 	 * it can be ensured that an initialization section will be executed only once
 	 * during a program's life time, and that concurrent threads are blocked until
 	 * Since 2.14
 	 * Params:
 	 * valueLocation = location of a static initializable variable containing 0.
-	 * Returns:TRUE if the initialization section should be entered, FALSE and blocks otheriwse
+	 * Returns:TRUE if the initialization section should be entered, FALSE and blocks otherwise
 	 */
 	public static int onceInitEnter(uint* valueLocation)
 	{
@@ -373,13 +374,15 @@ public class Thread
 	}
 	
 	/**
-	 * Counterpart to g_once_init_enter(). Expects a location of a static 0-initialized
-	 * initialization variable, and an initialization value other than 0. Sets the variable
-	 * to the initialization value, and releases concurrent threads blocking in
-	 * g_once_init_enter() on this initialization variable.
+	 * Counterpart to g_once_init_enter(). Expects a location of a static
+	 * 0-initialized initialization variable, and an initialization value other
+	 * than 0. Sets the variable to the initialization value, and releases
+	 * concurrent threads blocking in g_once_init_enter() on this initialization
+	 * variable.
 	 * Since 2.14
 	 * Params:
 	 * valueLocation = location of a static initializable variable containing 0.
+	 * initializationValue = new non-0 value for *value_location.
 	 */
 	public static void onceInitLeave(uint* valueLocation, uint initializationValue)
 	{

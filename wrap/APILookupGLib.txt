@@ -51,6 +51,7 @@ public alias float gfloat;
 public alias double gdouble;
 public alias uint gsize;
 public alias int gssize;
+public alias long goffset;
 public alias void* va_list;
 public alias dchar unichar;
 public alias wchar unichar2;
@@ -1059,6 +1060,8 @@ struct: GMarkupParseContext
 class: SimpleXML
 prefix: g_markup_parse_context_
 prefix: g_markup_
+import: glib.ListSG
+structWrap: GSList* ListSG
 #import: glib.ErrorG
 #structWrap: GError** Error*
 #import: glib.MarkupParser

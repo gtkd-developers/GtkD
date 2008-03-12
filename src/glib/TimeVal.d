@@ -155,7 +155,7 @@ public class TimeVal
 	 * depending on hardware and operating system; don't rely on the exact
 	 * length of the sleep.
 	 * Params:
-	 * microseconds = number of microseconds to pause.
+	 * microseconds = number of microseconds to pause
 	 */
 	public static void usleep(uint microseconds)
 	{

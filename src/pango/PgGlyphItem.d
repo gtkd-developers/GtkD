@@ -193,6 +193,23 @@ public class PgGlyphItem
 	}
 	
 	/**
+	 * Make a deep copy an existing PangoGlyphItem structure.
+	 * Since 1.20
+	 * Returns: the newly allocated PangoGlyphItem, which should be freed with pango_glyph_item_free(), or NULL if orig was NULL.
+	 */
+	public PgGlyphItem copy()
+	{
+		// PangoGlyphItem* pango_glyph_item_copy (PangoGlyphItem *orig);
+		auto p = pango_glyph_item_copy(pangoGlyphItem);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgGlyphItem(cast(PangoGlyphItem*) p);
+	}
+	
+	/**
 	 * Frees a PangoGlyphItem and memory to which it points.
 	 * Since 1.6
 	 */

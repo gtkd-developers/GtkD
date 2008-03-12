@@ -224,7 +224,7 @@ public class Module
 	}
 	
 	/**
-	 * Gets a symbol pointer from a module.
+	 * Gets a symbol pointer from a module, such as one exported by G_MODULE_EXPORT.
 	 * Note that a valid symbol can be NULL.
 	 * Params:
 	 * symbolName = the name of the symbol to find.

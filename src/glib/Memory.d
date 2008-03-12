@@ -81,12 +81,12 @@ public class Memory
 	 * Allocates n_bytes bytes of memory.
 	 * If n_bytes is 0 it returns NULL.
 	 * Params:
-	 * nBytes = the number of bytes to allocate.
-	 * Returns:a pointer to the allocated memory.
+	 * nBytes = the number of bytes to allocate
+	 * Returns:a pointer to the allocated memory
 	 */
 	public static void* malloc(uint nBytes)
 	{
-		// gpointer g_malloc (gulong n_bytes);
+		// gpointer g_malloc (gsize n_bytes);
 		return g_malloc(nBytes);
 	}
 	
@@ -94,12 +94,12 @@ public class Memory
 	 * Allocates n_bytes bytes of memory, initialized to 0's.
 	 * If n_bytes is 0 it returns NULL.
 	 * Params:
-	 * nBytes = the number of bytes to allocate.
-	 * Returns:a pointer to the allocated memory.
+	 * nBytes = the number of bytes to allocate
+	 * Returns:a pointer to the allocated memory
 	 */
 	public static void* malloc0(uint nBytes)
 	{
-		// gpointer g_malloc0 (gulong n_bytes);
+		// gpointer g_malloc0 (gsize n_bytes);
 		return g_malloc0(nBytes);
 	}
 	
@@ -107,15 +107,16 @@ public class Memory
 	 * Reallocates the memory pointed to by mem, so that it now has space for
 	 * n_bytes bytes of memory. It returns the new address of the memory, which may
 	 * have been moved. mem may be NULL, in which case it's considered to
-	 * have zero-length. n_bytes may be 0, in which case NULL will be returned.
+	 * have zero-length. n_bytes may be 0, in which case NULL will be returned
+	 * and mem will be freed unless it is NULL.
 	 * Params:
-	 * mem = the memory to reallocate.
-	 * nBytes = new size of the memory in bytes.
-	 * Returns:the new address of the allocated memory.
+	 * mem = the memory to reallocate
+	 * nBytes = new size of the memory in bytes
+	 * Returns:the new address of the allocated memory
 	 */
 	public static void* realloc(void* mem, uint nBytes)
 	{
-		// gpointer g_realloc (gpointer mem,  gulong n_bytes);
+		// gpointer g_realloc (gpointer mem,  gsize n_bytes);
 		return g_realloc(mem, nBytes);
 	}
 	
@@ -128,7 +129,7 @@ public class Memory
 	 */
 	public static void* tryMalloc(uint nBytes)
 	{
-		// gpointer g_try_malloc (gulong n_bytes);
+		// gpointer g_try_malloc (gsize n_bytes);
 		return g_try_malloc(nBytes);
 	}
 	
@@ -137,12 +138,12 @@ public class Memory
 	 * failure. Contrast with g_malloc0(), which aborts the program on failure.
 	 * Since 2.8
 	 * Params:
-	 * nBytes = number of bytes to allocate.
-	 * Returns:the allocated memory, or NULL.
+	 * nBytes = number of bytes to allocate
+	 * Returns:the allocated memory, or NULL
 	 */
 	public static void* tryMalloc0(uint nBytes)
 	{
-		// gpointer g_try_malloc0 (gulong n_bytes);
+		// gpointer g_try_malloc0 (gsize n_bytes);
 		return g_try_malloc0(nBytes);
 	}
 	
@@ -157,7 +158,7 @@ public class Memory
 	 */
 	public static void* tryRealloc(void* mem, uint nBytes)
 	{
-		// gpointer g_try_realloc (gpointer mem,  gulong n_bytes);
+		// gpointer g_try_realloc (gpointer mem,  gsize n_bytes);
 		return g_try_realloc(mem, nBytes);
 	}
 	
@@ -165,7 +166,7 @@ public class Memory
 	 * Frees the memory pointed to by mem.
 	 * If mem is NULL it simply returns.
 	 * Params:
-	 * mem = the memory to free.
+	 * mem = the memory to free
 	 */
 	public static void free(void* mem)
 	{

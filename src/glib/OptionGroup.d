@@ -130,7 +130,11 @@ private import glib.Str;
 	 *  context = g_option_context_new ("- test tree model performance");
 	 *  g_option_context_add_main_entries (context, entries, GETTEXT_PACKAGE);
 	 *  g_option_context_add_group (context, gtk_get_option_group (TRUE));
-	 *  g_option_context_parse (context, argc, argv, error);
+	 *  if (!g_option_context_parse (context, argc, argv, error))
+	 *  {
+		 *  g_print ("option parsing failed: %s\n", error->message);
+		 *  exit (1);
+	 *  }
 	 *  /+* ... +/
  * }
  */

@@ -122,7 +122,7 @@ public class Node
 	 * Creates a new GNode containing the given data.
 	 * Used to create the first node in a tree.
 	 * Params:
-	 * data = the data of the new node.
+	 * data =  the data of the new node
 	 */
 	public this (void* data)
 	{
@@ -138,9 +138,9 @@ public class Node
 	}
 	
 	/**
-	 * Recursively copies a GNode (but does not deep-copy the data inside the nodes,
-	 * see g_node_copy_deep() if you need that).
-	 * Returns:a new GNode containing the same data pointers.
+	 * Recursively copies a GNode (but does not deep-copy the data inside the
+	 * nodes, see g_node_copy_deep() if you need that).
+	 * Returns: a new GNode containing the same data pointers
 	 */
 	public Node copy()
 	{
@@ -178,10 +178,10 @@ public class Node
 	/**
 	 * Inserts a GNode beneath the parent at the given position.
 	 * Params:
-	 * position = the position to place node at, with respect to its siblings.
-	 * If position is -1, node is inserted as the last child of parent.
-	 * node = the GNode to insert.
-	 * Returns:the inserted GNode.
+	 * position =  the position to place node at, with respect to its siblings
+	 *  If position is -1, node is inserted as the last child of parent
+	 * node =  the GNode to insert
+	 * Returns: the inserted GNode
 	 */
 	public Node insert(int position, Node node)
 	{
@@ -198,10 +198,10 @@ public class Node
 	/**
 	 * Inserts a GNode beneath the parent before the given sibling.
 	 * Params:
-	 * sibling = the sibling GNode to place node before. If sibling is NULL,
-	 * the node is inserted as the last child of parent.
-	 * node = the GNode to insert.
-	 * Returns:the inserted GNode.
+	 * sibling =  the sibling GNode to place node before.
+	 *  If sibling is NULL, the node is inserted as the last child of parent.
+	 * node =  the GNode to insert
+	 * Returns: the inserted GNode
 	 */
 	public Node insertBefore(Node sibling, Node node)
 	{
@@ -218,10 +218,10 @@ public class Node
 	/**
 	 * Inserts a GNode beneath the parent after the given sibling.
 	 * Params:
-	 * sibling = the sibling GNode to place node after. If sibling is NULL,
-	 * the node is inserted as the first child of parent.
-	 * node = the GNode to insert.
-	 * Returns:the inserted GNode.
+	 * sibling =  the sibling GNode to place node after.
+	 *  If sibling is NULL, the node is inserted as the first child of parent.
+	 * node =  the GNode to insert
+	 * Returns: the inserted GNode
 	 */
 	public Node insertAfter(Node sibling, Node node)
 	{
@@ -238,8 +238,8 @@ public class Node
 	/**
 	 * Inserts a GNode as the first child of the given parent.
 	 * Params:
-	 * node = the GNode to insert.
-	 * Returns:the inserted GNode.
+	 * node =  the GNode to insert
+	 * Returns: the inserted GNode
 	 */
 	public Node prepend(Node node)
 	{
@@ -268,16 +268,16 @@ public class Node
 	 * It calls the given function for each node visited.
 	 * The traversal can be halted at any point by returning TRUE from func.
 	 * Params:
-	 * order = the order in which nodes are visited - G_IN_ORDER, G_PRE_ORDER,
-	 * G_POST_ORDER, or G_LEVEL_ORDER.
-	 * flags = which types of children are to be visited, one of G_TRAVERSE_ALL,
-	 * G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES.
-	 * maxDepth = the maximum depth of the traversal. Nodes below this
-	 * depth will not be visited. If max_depth is -1 all nodes in the tree are
-	 * visited. If depth is 1, only the root is visited. If depth is 2, the root
-	 * and its children are visited. And so on.
-	 * func = the function to call for each visited GNode.
-	 * data = user data to pass to the function.
+	 * order =  the order in which nodes are visited - G_IN_ORDER,
+	 *  G_PRE_ORDER, G_POST_ORDER, or G_LEVEL_ORDER.
+	 * flags =  which types of children are to be visited, one of
+	 *  G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
+	 * maxDepth =  the maximum depth of the traversal. Nodes below this
+	 *  depth will not be visited. If max_depth is -1 all nodes in
+	 *  the tree are visited. If depth is 1, only the root is visited.
+	 *  If depth is 2, the root and its children are visited. And so on.
+	 * func =  the function to call for each visited GNode
+	 * data =  user data to pass to the function
 	 */
 	public void traverse(GTraverseType order, GTraverseFlags flags, int maxDepth, GNodeTraverseFunc func, void* data)
 	{
@@ -289,10 +289,10 @@ public class Node
 	 * Calls a function for each of the children of a GNode.
 	 * Note that it doesn't descend beneath the child nodes.
 	 * Params:
-	 * flags = which types of children are to be visited, one of G_TRAVERSE_ALL,
-	 * G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES.
-	 * func = the function to call for each visited node.
-	 * data = user data to pass to the function.
+	 * flags =  which types of children are to be visited, one of
+	 *  G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
+	 * func =  the function to call for each visited node
+	 * data =  user data to pass to the function
 	 */
 	public void childrenForeach(GTraverseFlags flags, GNodeForeachFunc func, void* data)
 	{
@@ -302,7 +302,7 @@ public class Node
 	
 	/**
 	 * Gets the root of a tree.
-	 * Returns:the root of the tree.
+	 * Returns: the root of the tree
 	 */
 	public Node getRoot()
 	{
@@ -319,12 +319,12 @@ public class Node
 	/**
 	 * Finds a GNode in a tree.
 	 * Params:
-	 * order = the order in which nodes are visited - G_IN_ORDER, G_PRE_ORDER,
-	 * G_POST_ORDER, or G_LEVEL_ORDER.
-	 * flags = which types of children are to be searched, one of G_TRAVERSE_ALL,
-	 * G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES.
-	 * data = the data to find.
-	 * Returns:the found GNode, or NULL if the data is not found.
+	 * order =  the order in which nodes are visited - G_IN_ORDER,
+	 *  G_PRE_ORDER, G_POST_ORDER, or G_LEVEL_ORDER
+	 * flags =  which types of children are to be searched, one of
+	 *  G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
+	 * data =  the data to find
+	 * Returns: the found GNode, or NULL if the data is not found
 	 */
 	public Node find(GTraverseType order, GTraverseFlags flags, void* data)
 	{
@@ -341,10 +341,10 @@ public class Node
 	/**
 	 * Finds the first child of a GNode with the given data.
 	 * Params:
-	 * flags = which types of children are to be searched, one of G_TRAVERSE_ALL,
-	 * G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES.
-	 * data = the data to find.
-	 * Returns:the found child GNode, or NULL if the data is not found.
+	 * flags =  which types of children are to be searched, one of
+	 *  G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
+	 * data =  the data to find
+	 * Returns: the found child GNode, or NULL if the data is not found
 	 */
 	public Node findChild(GTraverseFlags flags, void* data)
 	{
@@ -359,10 +359,11 @@ public class Node
 	}
 	
 	/**
-	 * Gets the position of the first child of a GNode which contains the given data.
+	 * Gets the position of the first child of a GNode
+	 * which contains the given data.
 	 * Params:
-	 * data = the data to find.
-	 * Returns:the index of the child of node which contains data, or -1if the data is not found.
+	 * data =  the data to find
+	 * Returns: the index of the child of node which contains  data, or -1 if the data is not found
 	 */
 	public int childIndex(void* data)
 	{
@@ -372,11 +373,11 @@ public class Node
 	
 	/**
 	 * Gets the position of a GNode with respect to its siblings.
-	 * child must be a child of node.
-	 * The first child is numbered 0, the second 1, and so on.
+	 * child must be a child of node. The first child is numbered 0,
+	 * the second 1, and so on.
 	 * Params:
-	 * child = a child of node.
-	 * Returns:the position of child with respect to its siblings.
+	 * child =  a child of node
+	 * Returns: the position of child with respect to its siblings
 	 */
 	public int childPosition(Node child)
 	{
@@ -386,7 +387,7 @@ public class Node
 	
 	/**
 	 * Gets the last child of a GNode.
-	 * Returns:the last child of node, or NULL if node has no children.
+	 * Returns: the last child of node, or NULL if node has no children
 	 */
 	public Node lastChild()
 	{
@@ -402,10 +403,11 @@ public class Node
 	
 	/**
 	 * Gets a child of a GNode, using the given index.
-	 * The first child is at index 0. If the index is too big, NULL is returned.
+	 * The first child is at index 0. If the index is
+	 * too big, NULL is returned.
 	 * Params:
-	 * n = the index of the desired child.
-	 * Returns:the child of node at index n.
+	 * n =  the index of the desired child
+	 * Returns: the child of node at index n
 	 */
 	public Node nthChild(uint n)
 	{
@@ -422,7 +424,7 @@ public class Node
 	/**
 	 * Gets the first sibling of a GNode.
 	 * This could possibly be the node itself.
-	 * Returns:the first sibling of node.
+	 * Returns: the first sibling of node
 	 */
 	public Node firstSibling()
 	{
@@ -439,7 +441,7 @@ public class Node
 	/**
 	 * Gets the last sibling of a GNode.
 	 * This could possibly be the node itself.
-	 * Returns:the last sibling of node.
+	 * Returns: the last sibling of node
 	 */
 	public Node lastSibling()
 	{
@@ -455,10 +457,9 @@ public class Node
 	
 	/**
 	 * Gets the depth of a GNode.
-	 * If node is NULL the depth is 0.
-	 * The root node has a depth of 1.
+	 * If node is NULL the depth is 0. The root node has a depth of 1.
 	 * For the children of the root node the depth is 2. And so on.
-	 * Returns:the depth of the GNode.
+	 * Returns: the depth of the GNode
 	 */
 	public uint depth()
 	{
@@ -469,9 +470,9 @@ public class Node
 	/**
 	 * Gets the number of nodes in a tree.
 	 * Params:
-	 * flags = which types of children are to be counted, one of G_TRAVERSE_ALL,
-	 * G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES.
-	 * Returns:the number of nodes in the tree.
+	 * flags =  which types of children are to be counted, one of
+	 *  G_TRAVERSE_ALL, G_TRAVERSE_LEAVES and G_TRAVERSE_NON_LEAVES
+	 * Returns: the number of nodes in the tree
 	 */
 	public uint nNodes(GTraverseFlags flags)
 	{
@@ -481,7 +482,7 @@ public class Node
 	
 	/**
 	 * Gets the number of children of a GNode.
-	 * Returns:the number of children of node.
+	 * Returns: the number of children of node
 	 */
 	public uint nChildren()
 	{
@@ -491,11 +492,11 @@ public class Node
 	
 	/**
 	 * Returns TRUE if node is an ancestor of descendant.
-	 * This is true if node is the parent of descendant, or if node is the
-	 * grandparent of descendant etc.
+	 * This is true if node is the parent of descendant,
+	 * or if node is the grandparent of descendant etc.
 	 * Params:
-	 * descendant = a GNode.
-	 * Returns:TRUE if node is an ancestor of descendant.
+	 * descendant =  a GNode
+	 * Returns: TRUE if node is an ancestor of descendant
 	 */
 	public int isAncestor(Node descendant)
 	{
@@ -506,9 +507,9 @@ public class Node
 	/**
 	 * Gets the maximum height of all branches beneath a GNode.
 	 * This is the maximum distance from the GNode to all leaf nodes.
-	 * If root is NULL, 0 is returned. If root has no children, 1 is returned.
-	 * If root has children, 2 is returned. And so on.
-	 * Returns:the maximum height of the tree beneath root.
+	 * If root is NULL, 0 is returned. If root has no children,
+	 * 1 is returned. If root has children, 2 is returned. And so on.
+	 * Returns: the maximum height of the tree beneath root
 	 */
 	public uint maxHeight()
 	{
@@ -526,7 +527,7 @@ public class Node
 	}
 	
 	/**
-	 * Removes the GNode and its children from the tree, freeing any memory
+	 * Removes root and its children from the tree, freeing any memory
 	 * allocated.
 	 */
 	public void destroy()

@@ -76,6 +76,7 @@ alias: gfloat float
 alias: gdouble double
 alias: gsize uint
 alias: gssize int
+alias: goffset long
 alias: va_list void*
 alias: unichar dchar
 alias: unichar2 wchar

@@ -214,6 +214,8 @@ public class PgFont : ObjectG
 	 * PANGO_DESCENT(), PANGO_LBEARING(), and PANGO_RBEARING() can be used to convert
 	 * from the extents rectangle to more traditional font metrics. The units
 	 * of the rectangles are in 1/PANGO_SCALE of a device unit.
+	 * If font is NULL, this function gracefully sets some sane values in the
+	 * output variables and returns.
 	 * Params:
 	 * glyph =  the glyph index
 	 * inkRect =  rectangle used to store the extents of the glyph as drawn
@@ -232,6 +234,8 @@ public class PgFont : ObjectG
 	 * substantially different for different scripts, a language tag can
 	 * be provided to indicate that the metrics should be retrieved that
 	 * correspond to the script(s) used by that language.
+	 * If font is NULL, this function gracefully sets some sane values in the
+	 * output variables and returns.
 	 * Params:
 	 * language =  language tag used to determine which script to get the metrics
 	 *  for, or NULL to indicate to get the metrics for the entire
@@ -253,7 +257,7 @@ public class PgFont : ObjectG
 	/**
 	 * Gets the font map for which the font was created.
 	 * Since 1.10
-	 * Returns: the PangoFontMap for the font
+	 * Returns: the PangoFontMap for the font, or NULL if font is NULL.
 	 */
 	public PgFontMap getFontMap()
 	{

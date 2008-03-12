@@ -74,8 +74,29 @@ private import gtkc.pango;
  * Applications should only need to set base gravity on PangoContext in use, and
  * let Pango decide the gravity assigned to each run of text. This automatically
  * handles text with mixed scripts. A very common use is to set the context base
- * gravity to auto and rotate the layout normally. Pango will make sure that
+ * gravity to auto using pango_context_set_base_gravity()
+ * and rotate the layout normally. Pango will make sure that
  * Asian languages take the right form, while other scripts are rotated normally.
+ * The correct way to set gravity on a layout is to set it on the context
+ * associated with it using pango_context_set_base_gravity(). The context
+ * of a layout can be accessed using pango_layout_get_context(). The currently
+ * set base gravity of the context can be accessed using
+ * pango_context_get_base_gravity() and the resolved
+ * gravity of it using pango_context_get_gravity(). The resolved gravity is
+ * the same as the base gravity for the most part, except that if the base
+ * gravity is set to PANGO_GRAVITY_AUTO, the resolved gravity will depend
+ * on the current matrix set on context, and is derived using
+ * pango_gravity_get_for_matrix().
+ * The next thing an application may want to set on the context is the
+ * gravity hint. A PangoGravityHint instructs how
+ * different scripts should react to the set base gravity.
+ * Font descriptions have a gravity property too, that can be set using
+ * pango_font_description_set_gravity() and accessed using
+ * pango_font_description_get_gravity(). However, those are rarely useful
+ * from application code and are mainly used by PangoLayout internally.
+ * Last but not least, one can create PangoAttributes for gravity
+ * and gravity hint using pango_attr_gravity_new() and
+ * pango_attr_gravity_hint_new().
  */
 public class PgVertical
 {
@@ -114,5 +135,22 @@ public class PgVertical
 	{
 		// PangoGravity pango_gravity_get_for_script (PangoScript script,  PangoGravity base_gravity,  PangoGravityHint hint);
 		return pango_gravity_get_for_script(script, baseGravity, hint);
+	}
+	
+	/**
+	 * Converts a PangoGravity value to its natural rotation in radians.
+	 * gravity should not be PANGO_GRAVITY_AUTO.
+	 * Note that pango_matrix_rotate() takes angle in degrees, not radians.
+	 * So, to call pango_matrix_rotate() with the output of this function
+	 * you should multiply it by (180. / G_PI).
+	 * Since 1.16
+	 * Params:
+	 * gravity =  gravity to query
+	 * Returns: the rotation value corresponding to gravity.
+	 */
+	public static double gravityToRotation(PangoGravity gravity)
+	{
+		// double pango_gravity_to_rotation (PangoGravity gravity);
+		return pango_gravity_to_rotation(gravity);
 	}
 }

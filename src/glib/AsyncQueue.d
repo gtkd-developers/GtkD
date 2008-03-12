@@ -153,6 +153,27 @@ public class AsyncQueue
 	}
 	
 	/**
+	 * Creates a new asynchronous queue with an initial reference count of 1 and
+	 * sets up a destroy notify function that is used to free any remaining
+	 * queue items when the queue is destroyed after the final unref.
+	 * Since 2.16
+	 * Params:
+	 * itemFreeFunc =  function to free queue elements
+	 */
+	public this (GDestroyNotify itemFreeFunc)
+	{
+		// GAsyncQueue* g_async_queue_new_full (GDestroyNotify item_free_func);
+		auto p = g_async_queue_new_full(itemFreeFunc);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GAsyncQueue*) p);
+	}
+	
+	/**
 	 * Increases the reference count of the asynchronous queue by 1. You
 	 * do not need to hold the lock to call this function.
 	 * Returns: the queue that was passed in (since 2.6)

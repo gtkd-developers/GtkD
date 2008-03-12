@@ -134,9 +134,6 @@ public class PgEngine : ObjectG
 	/**
 	 * Function to be provided by a module to register any
 	 * GObject types in the module.
-	 * Params:
-	 * modul =  a GTypeModule structure used to associate any
-	 *  GObject types created in this module with the module.
 	 */
 	public static void init(GTypeModule* modul)
 	{

@@ -96,6 +96,31 @@ public class Internationalization
 	}
 	
 	/**
+	 * This function is a variant of dgettext() which supports
+	 * a disambiguating message context. GNU gettext uses the
+	 * '\004' character to separate the message context and
+	 * message id in msgctxtid.
+	 * If 0 is passed as msgidoffset, this function will fall back to
+	 * trying to use the deprecated convention of using "|" as a separation
+	 * character.
+	 * Applications should normally not use this function directly,
+	 * but use the C_() macro for translations with context.
+	 * Since 2.16
+	 * Params:
+	 * domain =  the translation domain to use, or NULL to use
+	 *  the domain set with textdomain()
+	 * msgctxtid =  a combined message context and message id, separated
+	 *  by a \004 character
+	 * msgidoffset =  the offset of the message id in msgctxid
+	 * Returns: The translated string
+	 */
+	public static char[] dpgettext(char[] domain, char[] msgctxtid, uint msgidoffset)
+	{
+		// const gchar* g_dpgettext (const gchar *domain,  const gchar *msgctxtid,  gsize msgidoffset);
+		return Str.toString(g_dpgettext(Str.toStringz(domain), Str.toStringz(msgctxtid), msgidoffset)).dup;
+	}
+	
+	/**
 	 * Computes a list of applicable locale names, which can be used to
 	 * e.g. construct locale-dependent filenames or search paths. The returned
 	 * list is sorted from most desirable to least desirable and always contains

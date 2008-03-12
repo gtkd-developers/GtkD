@@ -419,6 +419,9 @@ struct: PangoLayoutIter
 class: PgLayoutIter
 prefix: pango_layout_iter_
 strictPrefix: Yes
+structWrap: PangoLayoutIter* PgLayoutIter
+import: pango.PgLayout
+structWrap: PangoLayout* PgLayout
 outFile: PgLayoutIter
 
 struct: PangoLayoutLine

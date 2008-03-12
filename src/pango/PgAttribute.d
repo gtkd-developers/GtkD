@@ -158,6 +158,21 @@ public class PgAttribute
 	}
 	
 	/**
+	 * Initializes attr's klass to klass, it's start_index to zero,
+	 * and end_index to G_MAXUINT such that the attribute applies
+	 * to the entire text by default.
+	 * Since 1.20
+	 * Params:
+	 * attr =  a PangoAttribute
+	 * klass =  a PangoAttributeClass
+	 */
+	public void attributeInit(PangoAttrClass* klass)
+	{
+		// void pango_attribute_init (PangoAttribute *attr,  const PangoAttrClass *klass);
+		pango_attribute_init(pangoAttribute, klass);
+	}
+	
+	/**
 	 * Make a copy of an attribute.
 	 * Params:
 	 * attr =  a PangoAttribute

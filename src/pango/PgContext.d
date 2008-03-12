@@ -225,7 +225,7 @@ public class PgContext : ObjectG
 	 * The original list is unmodified.
 	 * Params:
 	 * logicalItems =  a GList of PangoItem in logical order.
-	 * Returns:a GList of PangoItem structures in visual order.(Please open a bug if you use this function. It is not a particularly convenient interface, and the code is duplicated elsewhere in Pango for that reason.)
+	 * Returns: a GList of PangoItem structures in visual order.(Please open a bug if you use this function. It is not a particularly convenient interface, and the code is duplicated elsewhere in Pango for that reason.)
 	 */
 	public static ListG reorderItems(ListG logicalItems)
 	{
@@ -486,7 +486,7 @@ public class PgContext : ObjectG
 	 * that is the closest match for desc.
 	 * Params:
 	 * desc =  a PangoFontDescription describing the font to load
-	 * Returns:the font loaded, or NULL if no font matched.
+	 * Returns: the font loaded, or NULL if no font matched.
 	 */
 	public PgFont loadFont(PgFontDescription desc)
 	{
@@ -506,7 +506,7 @@ public class PgContext : ObjectG
 	 * Params:
 	 * desc =  a PangoFontDescription describing the fonts to load
 	 * language =  a PangoLanguage the fonts will be used for
-	 * Returns:the fontset, or NULL if no font matched.
+	 * Returns: the fontset, or NULL if no font matched.
 	 */
 	public PgFontset loadFontset(PgFontDescription desc, PgLanguage language)
 	{
@@ -613,23 +613,6 @@ public class PgContext : ObjectG
 	{
 		// PangoDirection pango_find_base_dir (const gchar *text,  gint length);
 		return pango_find_base_dir(Str.toStringz(text), length);
-	}
-	
-	/**
-	 * Converts a PangoGravity value to its natural rotation in radians.
-	 * gravity should not be PANGO_GRAVITY_AUTO.
-	 * Note that pango_matrix_rotate() takes angle in degrees, not radians.
-	 * So, to call pango_matrix_rotate() with the output of this function
-	 * you should multiply it by (180. / G_PI).
-	 * Since 1.16
-	 * Params:
-	 * gravity =  gravity to query
-	 * Returns: the rotation value corresponding to gravity.
-	 */
-	public static double gravityToRotation(PangoGravity gravity)
-	{
-		// double pango_gravity_to_rotation (PangoGravity gravity);
-		return pango_gravity_to_rotation(gravity);
 	}
 	
 	/**

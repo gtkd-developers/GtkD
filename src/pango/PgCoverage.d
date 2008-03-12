@@ -135,8 +135,8 @@ public class PgCoverage
 	}
 	
 	/**
-	 * Increase the reference count on the PangoCoverage by one.
-	 * if the result is zero, free the coverage and all associated memory.
+	 * Decrease the reference count on the PangoCoverage by one.
+	 * If the result is zero, free the coverage and all associated memory.
 	 */
 	public void unref()
 	{

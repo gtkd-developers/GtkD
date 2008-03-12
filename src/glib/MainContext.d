@@ -113,7 +113,7 @@ private import gthread.Mutex;
  *  in the size of the derived structure and a table of functions.
  *  These GSourceFuncs determine the behavior of the new source
  *  types.
- *  New source types basically interact with with the main context
+ *  New source types basically interact with the main context
  *  in two ways. Their prepare function in GSourceFuncs can set
  *  a timeout to determine the maximum amount of time that the
  *  main loop will sleep before checking the source again. In
@@ -170,7 +170,7 @@ public class MainContext
 	 */
 	
 	/**
-	 * Creates a new GMainContext strcuture
+	 * Creates a new GMainContext structure.
 	 */
 	public this ()
 	{
@@ -234,10 +234,13 @@ public class MainContext
 	 * checking to see if any event sources are ready to be processed,
 	 * then if no events sources are ready and may_block is TRUE, waiting
 	 * for a source to become ready, then dispatching the highest priority
-	 * events sources that are ready. Note that even when may_block is TRUE,
-	 * it is still possible for g_main_context_iteration() to return
-	 * FALSE, since the the wait may be interrupted for other
-	 * reasons than an event source becoming ready.
+	 * events sources that are ready. Otherwise, if may_block is FALSE
+	 * sources are not waited to become ready, only those highest priority
+	 * events sources will be dispatched (if any), that are ready at this
+	 * given moment without further waiting.
+	 * Note that even when may_block is TRUE, it is still possible for
+	 * g_main_context_iteration() to return FALSE, since the the wait may
+	 * be interrupted for other reasons than an event source becoming ready.
 	 * Params:
 	 * mayBlock =  whether the call may block.
 	 * Returns: TRUE if events were dispatched.
@@ -329,7 +332,7 @@ public class MainContext
 	
 	/**
 	 * Tries to become the owner of the specified context.
-	 * If some other context is the owner of the context,
+	 * If some other thread is the owner of the context,
 	 * returns FALSE immediately. Ownership is properly
 	 * recursive: the owner can require ownership again
 	 * and will release ownership when g_main_context_release()
@@ -348,7 +351,7 @@ public class MainContext
 	/**
 	 * Releases ownership of a context previously acquired by this thread
 	 * with g_main_context_acquire(). If the context was acquired multiple
-	 * times, the only release ownership when g_main_context_release()
+	 * times, the ownership will be released only when g_main_context_release()
 	 * is called as many times as it was acquired.
 	 */
 	public void release()

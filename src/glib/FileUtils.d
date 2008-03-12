@@ -172,10 +172,11 @@ public class FileUtils
 	 * to perform an operation, because there is always the possibility
 	 * of the condition changing before you actually perform the operation.
 	 * For example, you might think you could use G_FILE_TEST_IS_SYMLINK
-	 * to know whether it is is safe to write to a file without being
+	 * to know whether it is safe to write to a file without being
 	 * tricked into writing into a different location. It doesn't work!
 	 * /+* DON'T DO THIS +/
-	 *  if (!g_file_test (filename, G_FILE_TEST_IS_SYMLINK)) {
+	 *  if (!g_file_test (filename, G_FILE_TEST_IS_SYMLINK))
+	 *  {
 		 *  fd = g_open (filename, O_WRONLY);
 		 *  /+* write to fd +/
 	 *  }

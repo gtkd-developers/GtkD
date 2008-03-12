@@ -948,7 +948,7 @@ alias GdkWindowAttributesType WindowAttributesType;
  */
 public enum GdkFilterReturn
 {
-	CONTINUE, /+* Event not handled, continue processesing +/
+	CONTINUE, /+* Event not handled, continu processesing +/
 	TRANSLATE, /+* Native event translated into a GDK event and
 	stored inn the "event" structure that was
 	passed inn +/

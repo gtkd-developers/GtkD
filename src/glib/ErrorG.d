@@ -423,8 +423,8 @@ public class ErrorG
 	}
 	
 	/**
-	 * If dest is NULL, free src; otherwise,
-	 * moves src into *dest. *dest must be NULL.
+	 * If dest is NULL, free src; otherwise, moves src into *dest.
+	 * The error variable dest points to must be NULL.
 	 * Params:
 	 * dest =  error return location
 	 * src =  error to move into the return location
@@ -445,5 +445,45 @@ public class ErrorG
 	{
 		// void g_clear_error (GError **err);
 		g_clear_error(err);
+	}
+	
+	/**
+	 * Formats a string according to format and
+	 * prefix it to an existing error message. If
+	 * err is NULL (ie: no error variable) then do
+	 * nothing.
+	 * If *err is NULL (ie: an error variable is
+	 * present but there is no error condition) then
+	 * also do nothing. Whether or not it makes
+	 * sense to take advantage of this feature is up
+	 * to you.
+	 * Since 2.16
+	 * Params:
+	 * err =  a return location for a GError, or NULL
+	 * format =  printf()-style format string
+	 * ... =  arguments to format
+	 */
+	public static void gPrefixError(GError** err, char[] format, ... )
+	{
+		// void g_prefix_error (GError **err,  const gchar *format,  ...);
+		g_prefix_error(err, Str.toStringz(format));
+	}
+	
+	/**
+	 * If dest is NULL, free src; otherwise,
+	 * moves src into *dest. *dest must be NULL.
+	 * After the move, add a prefix as with
+	 * g_prefix_error().
+	 * Since 2.16
+	 * Params:
+	 * dest =  error return location
+	 * src =  error to move into the return location
+	 * format =  printf()-style format string
+	 * ... =  arguments to format
+	 */
+	public static void gPropagatePrefixedError(GError** dest, ErrorG src, char[] format, ... )
+	{
+		// void g_propagate_prefixed_error (GError **dest,  GError *src,  const gchar *format,  ...);
+		g_propagate_prefixed_error(dest, (src is null) ? null : src.getErrorGStruct(), Str.toStringz(format));
 	}
 }

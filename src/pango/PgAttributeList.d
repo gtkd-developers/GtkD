@@ -155,7 +155,7 @@ public class PgAttributeList
 	
 	/**
 	 * Copy list and return an identical new list.
-	 * Returns: the newly allocated PangoAttrList, with a reference count of one, which should be freed with pango_attr_list_unref().
+	 * Returns: the newly allocated PangoAttrList, with a reference count of one, which should be freed with pango_attr_list_unref(). Returns NULL if list was NULL.
 	 */
 	public PgAttributeList copy()
 	{

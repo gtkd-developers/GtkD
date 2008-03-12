@@ -278,10 +278,10 @@ public class IOChannel
 	 * so will not cause problems, as long as no attempt is made to
 	 * access the channel after it is closed).
 	 * Params:
-	 * filename =  A string containing the name of a file.
+	 * filename =  A string containing the name of a file
 	 * mode =  One of "r", "w", "a", "r+", "w+", "a+". These have
-	 *  the same meaning as in fopen().
-	 * error =  A location to return an error of type G_FILE_ERROR.
+	 *  the same meaning as in fopen()
+	 * error =  A location to return an error of type G_FILE_ERROR
 	 */
 	public this (char[] filename, char[] mode, GError** error)
 	{
@@ -308,7 +308,7 @@ public class IOChannel
 	 *  success if count < 6 and the channel's encoding is non-NULL.
 	 *  This indicates that the next UTF-8 character is too wide for
 	 *  the buffer.
-	 * error =  A location to return an error of type GConvertError
+	 * error =  a location to return an error of type GConvertError
 	 *  or GIOChannelError.
 	 * Returns: the status of the operation.
 	 */
@@ -319,10 +319,11 @@ public class IOChannel
 	}
 	
 	/**
+	 * Reads a Unicode character from channel.
 	 * This function cannot be called on a channel with NULL encoding.
 	 * Params:
 	 * thechar =  a location to return a character
-	 * error =  A location to return an error of type GConvertError
+	 * error =  a location to return an error of type GConvertError
 	 *  or GIOChannelError
 	 * Returns: a GIOStatus
 	 */
@@ -379,10 +380,10 @@ public class IOChannel
 	 *  be freed with g_free() when no longer needed. This
 	 *  data is terminated by an extra nul character, but there
 	 *  may be other nuls in the intervening data.
-	 * length =  Location to store length of the data
-	 * error =  A location to return an error of type GConvertError
+	 * length =  location to store length of the data
+	 * error =  location to return an error of type GConvertError
 	 *  or GIOChannelError
-	 * Returns: G_IO_STATUS_NORMAL on success. This function never returns G_IO_STATUS_EOF.
+	 * Returns: G_IO_STATUS_NORMAL on success.  This function never returns G_IO_STATUS_EOF.
 	 */
 	public GIOStatus readToEnd(char** strReturn, uint* length, GError** error)
 	{
@@ -405,7 +406,7 @@ public class IOChannel
 	 *  If the return value is G_IO_STATUS_NORMAL and the
 	 *  channel is blocking, this will always be equal
 	 *  to count if count >= 0.
-	 * error =  A location to return an error of type GConvertError
+	 * error =  a location to return an error of type GConvertError
 	 *  or GIOChannelError
 	 * Returns: the status of the operation.
 	 */
@@ -416,10 +417,11 @@ public class IOChannel
 	}
 	
 	/**
+	 * Writes a Unicode character to channel.
 	 * This function cannot be called on a channel with NULL encoding.
 	 * Params:
 	 * thechar =  a character
-	 * error =  A location to return an error of type GConvertError
+	 * error =  location to return an error of type GConvertError
 	 *  or GIOChannelError
 	 * Returns: a GIOStatus
 	 */
@@ -476,8 +478,8 @@ public class IOChannel
 	/**
 	 * Converts an errno error number to a GIOChannelError.
 	 * Params:
-	 * en =  an errno error number, e.g. EINVAL.
-	 * Returns: a GIOChannelError error number, e.g. G_IO_CHANNEL_ERROR_INVAL.
+	 * en =  an errno error number, e.g. EINVAL
+	 * Returns: a GIOChannelError error number, e.g.  G_IO_CHANNEL_ERROR_INVAL.
 	 */
 	public static GIOChannelError errorFromErrno(int en)
 	{
@@ -582,7 +584,7 @@ public class IOChannel
 	/**
 	 * Sets the buffer size.
 	 * Params:
-	 * size =  the size of the buffer. 0 == pick a good size
+	 * size =  the size of the buffer, or 0 to let GLib pick a good size
 	 */
 	public void setBufferSize(uint size)
 	{
@@ -592,9 +594,8 @@ public class IOChannel
 	
 	/**
 	 * This function returns a GIOCondition depending on whether there
-	 * is data to be read/space to write data in the
-	 * internal buffers in the GIOChannel. Only the flags G_IO_IN and
-	 * G_IO_OUT may be set.
+	 * is data to be read/space to write data in the internal buffers in
+	 * the GIOChannel. Only the flags G_IO_IN and G_IO_OUT may be set.
 	 * Returns: A GIOCondition
 	 */
 	public GIOCondition getBufferCondition()
@@ -623,8 +624,8 @@ public class IOChannel
 	/**
 	 * Sets the (writeable) flags in channel to (flags  G_IO_CHANNEL_SET_MASK).
 	 * Params:
-	 * flags =  the flags to set on the IO channel.
-	 * error =  A location to return an error of type GIOChannelError.
+	 * flags =  the flags to set on the IO channel
+	 * error =  A location to return an error of type GIOChannelError
 	 * Returns: the status of the operation.
 	 */
 	public GIOStatus setFlags(GIOFlags flags, GError** error)
@@ -636,7 +637,7 @@ public class IOChannel
 	/**
 	 * This returns the string that GIOChannel uses to determine
 	 * where in the file a line break occurs. A value of NULL
-	 * indicates auto detection.
+	 * indicates autodetection.
 	 * Params:
 	 * length =  a location to return the length of the line terminator
 	 * Returns: The line termination string. This value is owned by GLib and must not be freed.
@@ -651,13 +652,13 @@ public class IOChannel
 	 * This sets the string that GIOChannel uses to determine
 	 * where in the file a line break occurs.
 	 * Params:
-	 * lineTerm =  The line termination string. Use NULL for auto detect.
-	 *  Auto detection breaks on "\n", "\r\n", "\r", "\0", and
-	 *  the Unicode paragraph separator. Auto detection should
+	 * lineTerm =  The line termination string. Use NULL for autodetect.
+	 *  Autodetection breaks on "\n", "\r\n", "\r", "\0", and
+	 *  the Unicode paragraph separator. Autodetection should
 	 *  not be used for anything other than file-based channels.
 	 * length =  The length of the termination string. If -1 is passed, the
 	 *  string is assumed to be nul-terminated. This option allows
-	 *  termination strings with embeded nuls.
+	 *  termination strings with embedded nuls.
 	 */
 	public void setLineTerm(char[] lineTerm, int length)
 	{
@@ -702,9 +703,9 @@ public class IOChannel
 	}
 	
 	/**
-	 * Gets the encoding for the input/output of the channel. The internal
-	 * encoding is always UTF-8. The encoding NULL makes the
-	 * channel safe for binary data.
+	 * Gets the encoding for the input/output of the channel.
+	 * The internal encoding is always UTF-8. The encoding NULL
+	 * makes the channel safe for binary data.
 	 * Returns: A string containing the encoding, this string is owned by GLib and must not be freed.
 	 */
 	public char[] getEncoding()
@@ -714,14 +715,14 @@ public class IOChannel
 	}
 	
 	/**
-	 * Sets the encoding for the input/output of the channel. The internal
-	 * encoding is always UTF-8. The default encoding for the
-	 * external file is UTF-8.
+	 * Sets the encoding for the input/output of the channel.
+	 * The internal encoding is always UTF-8. The default encoding
+	 * for the external file is UTF-8.
 	 * The encoding NULL is safe to use with binary data.
 	 * The encoding can only be set if one of the following conditions
 	 * Params:
 	 * encoding =  the encoding type
-	 * error =  location to store an error of type GConvertError.
+	 * error =  location to store an error of type GConvertError
 	 * Returns: G_IO_STATUS_NORMAL if the encoding was successfully set.
 	 */
 	public GIOStatus setEncoding(char[] encoding, GError** error)
@@ -763,9 +764,10 @@ public class IOChannel
 	 * g_io_channel_read has been deprecated since version 2.2 and should not be used in newly-written code. Use g_io_channel_read_chars() instead.
 	 * Reads data from a GIOChannel.
 	 * Params:
-	 * buf =  a buffer to read the data into (which should be at least count bytes long).
-	 * count =  the number of bytes to read from the GIOChannel.
-	 * bytesRead =  returns the number of bytes actually read.
+	 * buf =  a buffer to read the data into (which should be at least
+	 *  count bytes long)
+	 * count =  the number of bytes to read from the GIOChannel
+	 * bytesRead =  returns the number of bytes actually read
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
 	public GIOError read(char[] buf, uint count, uint* bytesRead)
@@ -779,9 +781,9 @@ public class IOChannel
 	 * g_io_channel_write has been deprecated since version 2.2 and should not be used in newly-written code. Use g_io_channel_write_chars() instead.
 	 * Writes data to a GIOChannel.
 	 * Params:
-	 * buf =  the buffer containing the data to write.
-	 * count =  the number of bytes to write.
-	 * bytesWritten =  the number of bytes actually written.
+	 * buf =  the buffer containing the data to write
+	 * count =  the number of bytes to write
+	 * bytesWritten =  the number of bytes actually written
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
 	public GIOError write(char[] buf, uint count, uint* bytesWritten)
@@ -793,13 +795,14 @@ public class IOChannel
 	/**
 	 * Warning
 	 * g_io_channel_seek has been deprecated since version 2.2 and should not be used in newly-written code. Use g_io_channel_seek_position() instead.
-	 * Sets the current position in the GIOChannel, similar to the standard library
-	 * function fseek().
+	 * Sets the current position in the GIOChannel, similar to the standard
+	 * library function fseek().
 	 * Params:
-	 * offset =  an offset, in bytes, which is added to the position specified by type
+	 * offset =  an offset, in bytes, which is added to the position specified
+	 *  by type
 	 * type =  the position in the file, which can be G_SEEK_CUR (the current
-	 *  position), G_SEEK_SET (the start of the file), or G_SEEK_END (the end of the
-	 *  file).
+	 *  position), G_SEEK_SET (the start of the file), or G_SEEK_END
+	 *  (the end of the file)
 	 * Returns: G_IO_ERROR_NONE if the operation was successful.
 	 */
 	public GIOError seek(long offset, GSeekType type)

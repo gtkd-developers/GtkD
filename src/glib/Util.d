@@ -100,6 +100,7 @@ public class Util
 	 * be called once.
 	 * The application name will be used in contexts such as error messages,
 	 * or when displaying an application's name in the task list.
+	 * Since 2.2
 	 * Params:
 	 * applicationName =  localized name of the application
 	 */
@@ -575,6 +576,23 @@ public class Util
 	}
 	
 	/**
+	 * Formats a size (for example the size of a file) into a human readable string.
+	 * Sizes are rounded to the nearest size prefix (KB, MB, GB) and are displayed rounded to
+	 * the nearest tenth. E.g. the file size 3292528 bytes will be converted into
+	 * the string "3.1 MB".
+	 * The prefix units base is 1024 (i.e. 1 KB is 1024 bytes).
+	 * Since 2.16
+	 * Params:
+	 * size =  a size in bytes.
+	 * Returns: a formatted string containing a human readable file size.
+	 */
+	public static char[] formatSizeForDisplay(long size)
+	{
+		// char* g_format_size_for_display (goffset size);
+		return Str.toString(g_format_size_for_display(size)).dup;
+	}
+	
+	/**
 	 * Locates the first executable named program in the user's path, in the
 	 * same way that execvp() would locate it. Returns an allocated string
 	 * with the absolute path name, or NULL if the program is not found in
@@ -702,7 +720,7 @@ public class Util
 	 * command line or through environment variables.
 	 * Params:
 	 * string =  a list of debug options separated by colons, spaces, or
-	 * commas; or the string "all" to set all flags.
+	 * commas; or the string "all" to set all flags, or NULL.
 	 * keys =  pointer to an array of GDebugKey which associate
 	 *  strings with bit flags.
 	 * nkeys =  the number of GDebugKeys in the array.

@@ -108,6 +108,9 @@ private import glib.Str;
  * Key files are always encoded in UTF-8.
  * Key and Group names are case-sensitive, for example a group called
  * [GROUP] is a different group from [group].
+ * .ini files don't have a strongly typed boolean entry type, they only
+ * have GetProfileInt. In GKeyFile only
+ * true and false (in lower case) are allowed.
  * Note that in contrast to the
  * Desktop
  * Entry Specification, groups in key files may contain the same
@@ -202,10 +205,10 @@ public class KeyFile
 	 * either a GFileError or GKeyFileError.
 	 * Since 2.6
 	 * Params:
-	 * file =  the path of a filename to load, in the GLib file name encoding
+	 * file =  the path of a filename to load, in the GLib filename encoding
 	 * flags =  flags from GKeyFileFlags
 	 * error =  return location for a GError, or NULL
-	 * Returns: TRUE if a key file could be loaded, FALSE othewise
+	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 */
 	public int loadFromFile(char[] file, GKeyFileFlags flags, GError** error)
 	{
@@ -214,16 +217,15 @@ public class KeyFile
 	}
 	
 	/**
-	 * Loads a key file from memory into an empty GKeyFile structure. If
-	 * the object cannot be created then error is set to a
-	 * GKeyFileError.
+	 * Loads a key file from memory into an empty GKeyFile structure.
+	 * If the object cannot be created then error is set to a GKeyFileError.
 	 * Since 2.6
 	 * Params:
-	 * data =  key file loaded in memory.
+	 * data =  key file loaded in memory
 	 * length =  the length of data in bytes
 	 * flags =  flags from GKeyFileFlags
 	 * error =  return location for a GError, or NULL
-	 * Returns: TRUE if a key file could be loaded, FALSE othewise
+	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 */
 	public int loadFromData(char[] data, uint length, GKeyFileFlags flags, GError** error)
 	{
@@ -266,7 +268,7 @@ public class KeyFile
 	 *  of the file, or NULL
 	 * flags =  flags from GKeyFileFlags
 	 * error =  return location for a GError, or NULL
-	 * Returns: TRUE if a key file could be loaded, FALSE othewise
+	 * Returns: TRUE if a key file could be loaded, FALSE otherwise
 	 */
 	public int loadFromDirs(char[] file, char** searchDirs, char** fullPath, GKeyFileFlags flags, GError** error)
 	{
@@ -301,9 +303,9 @@ public class KeyFile
 	}
 	
 	/**
-	 * Returns all groups in the key file loaded with key_file. The
-	 * array of returned groups will be NULL-terminated, so length may
-	 * optionally be NULL.
+	 * Returns all groups in the key file loaded with key_file.
+	 * The array of returned groups will be NULL-terminated, so
+	 * length may optionally be NULL.
 	 * Since 2.6
 	 * Params:
 	 * length =  return location for the number of returned groups, or NULL
@@ -326,7 +328,7 @@ public class KeyFile
 	 * groupName =  a group name
 	 * length =  return location for the number of keys returned, or NULL
 	 * error =  return location for a GError, or NULL
-	 * Returns: a newly-allocated NULL-terminated array ofstrings. Use g_strfreev() to free it.
+	 * Returns: a newly-allocated NULL-terminated array of strings.  Use g_strfreev() to free it.
 	 */
 	public char** getKeys(char[] groupName, uint* length, GError** error)
 	{
@@ -405,8 +407,8 @@ public class KeyFile
 	 * Returns the value associated with key under group_name
 	 * translated in the given locale if available. If locale is
 	 * NULL then the current locale is assumed.
-	 * If key cannot be found then NULL is returned and error is set to
-	 * G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the value associated
+	 * If key cannot be found then NULL is returned and error is set
+	 * to G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the value associated
 	 * with key cannot be interpreted or no suitable translation can
 	 * be found then the untranslated value is returned.
 	 * Since 2.6
@@ -435,7 +437,7 @@ public class KeyFile
 	 * groupName =  a group name
 	 * key =  a key
 	 * error =  return location for a GError
-	 * Returns: the value associated with the key as a boolean, orFALSE if the key was not found or could not be parsed.
+	 * Returns: the value associated with the key as a boolean,  or FALSE if the key was not found or could not be parsed.
 	 */
 	public int getBoolean(char[] groupName, char[] key, GError** error)
 	{
@@ -445,7 +447,7 @@ public class KeyFile
 	
 	/**
 	 * Returns the value associated with key under group_name as an
-	 * integer. If group_name is NULL, the start_group is used.
+	 * integer.
 	 * If key cannot be found then 0 is returned and error is set to
 	 * G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the value associated
 	 * with key cannot be interpreted as an integer then 0 is returned
@@ -455,7 +457,7 @@ public class KeyFile
 	 * groupName =  a group name
 	 * key =  a key
 	 * error =  return location for a GError
-	 * Returns: the value associated with the key as an integer, or0 if the key was not found or could not be parsed.
+	 * Returns: the value associated with the key as an integer, or 0 if the key was not found or could not be parsed.
 	 */
 	public int getInteger(char[] groupName, char[] key, GError** error)
 	{
@@ -475,7 +477,7 @@ public class KeyFile
 	 * groupName =  a group name
 	 * key =  a key
 	 * error =  return location for a GError
-	 * Returns: the value associated with the key as a double, or0.0 if the key was not found or could not be parsed.
+	 * Returns: the value associated with the key as a double, or 0.0 if the key was not found or could not be parsed.
 	 */
 	public double getDouble(char[] groupName, char[] key, GError** error)
 	{
@@ -507,11 +509,12 @@ public class KeyFile
 	 * Returns the values associated with key under group_name
 	 * translated in the given locale if available. If locale is
 	 * NULL then the current locale is assumed.
-	 * If key cannot be found then NULL is returned and error is set to
-	 * G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the values associated
+	 * If key cannot be found then NULL is returned and error is set
+	 * to G_KEY_FILE_ERROR_KEY_NOT_FOUND. If the values associated
 	 * with key cannot be interpreted or no suitable translations
-	 * can be found then the untranslated values are returned.
-	 * The returned array is NULL-terminated, so length may optionally be NULL.
+	 * can be found then the untranslated values are returned. The
+	 * returned array is NULL-terminated, so length may optionally
+	 * be NULL.
 	 * Since 2.6
 	 * Params:
 	 * groupName =  a group name
@@ -529,7 +532,7 @@ public class KeyFile
 	
 	/**
 	 * Returns the values associated with key under group_name as
-	 * booleans. If group_name is NULL, the start_group is used.
+	 * booleans.
 	 * If key cannot be found then NULL is returned and error is set to
 	 * G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
 	 * with key cannot be interpreted as booleans then NULL is returned
@@ -540,7 +543,7 @@ public class KeyFile
 	 * key =  a key
 	 * length =  the number of booleans returned
 	 * error =  return location for a GError
-	 * Returns: the values associated with the key as a list ofbooleans, or NULL if the key was not found or could not be parsed.
+	 * Returns: the values associated with the key as a list of booleans, or NULL if the key was not found or could not be parsed.
 	 */
 	public int* getBooleanList(char[] groupName, char[] key, uint* length, GError** error)
 	{
@@ -561,7 +564,7 @@ public class KeyFile
 	 * key =  a key
 	 * length =  the number of integers returned
 	 * error =  return location for a GError
-	 * Returns: the values associated with the key as a list ofintegers, or NULL if the key was not found or could not be parsed.
+	 * Returns: the values associated with the key as a list of integers, or NULL if the key was not found or could not be parsed.
 	 */
 	public int* getIntegerList(char[] groupName, char[] key, uint* length, GError** error)
 	{
@@ -571,7 +574,7 @@ public class KeyFile
 	
 	/**
 	 * Returns the values associated with key under group_name as
-	 * doubles. If group_name is NULL, the start group is used.
+	 * doubles.
 	 * If key cannot be found then NULL is returned and error is set to
 	 * G_KEY_FILE_ERROR_KEY_NOT_FOUND. Likewise, if the values associated
 	 * with key cannot be interpreted as doubles then NULL is returned
@@ -582,7 +585,7 @@ public class KeyFile
 	 * key =  a key
 	 * length =  the number of doubles returned
 	 * error =  return location for a GError
-	 * Returns: the values associated with the key as a list ofdoubles, or NULL if the key was not found or could not be parsed.
+	 * Returns: the values associated with the key as a list of doubles, or NULL if the key was not found or could not be parsed.
 	 */
 	public double* getDoubleList(char[] groupName, char[] key, uint* length, GError** error)
 	{
@@ -592,10 +595,9 @@ public class KeyFile
 	
 	/**
 	 * Retrieves a comment above key from group_name.
-	 * group_name. If key is NULL then comment will
-	 * be read from above group_name. If both key
-	 * and group_name are NULL, then comment will
-	 * be read from above the first group in the file.
+	 * If key is NULL then comment will be read from above
+	 * group_name. If both key and group_name are NULL, then
+	 * comment will be read from above the first group in the file.
 	 * Since 2.6
 	 * Params:
 	 * groupName =  a group name, or NULL
@@ -610,9 +612,9 @@ public class KeyFile
 	}
 	
 	/**
-	 * Associates a new value with key under group_name. If key
-	 * cannot be found then it is created. If group_name cannot be
-	 * found then it is created.
+	 * Associates a new value with key under group_name.
+	 * If key cannot be found then it is created.
+	 * If group_name cannot be found then it is created.
 	 * Since 2.6
 	 * Params:
 	 * groupName =  a group name
@@ -626,9 +628,9 @@ public class KeyFile
 	}
 	
 	/**
-	 * Associates a new string value with key under group_name. If
-	 * key cannot be found then it is created. If group_name
-	 * cannot be found then it is created.
+	 * Associates a new string value with key under group_name.
+	 * If key cannot be found then it is created.
+	 * If group_name cannot be found then it is created.
 	 * Since 2.6
 	 * Params:
 	 * groupName =  a group name
@@ -642,9 +644,8 @@ public class KeyFile
 	}
 	
 	/**
-	 * Associates a string value for key and locale under
-	 * group_name. If the translation for key cannot be found
-	 * then it is created.
+	 * Associates a string value for key and locale under group_name.
+	 * If the translation for key cannot be found then it is created.
 	 * Since 2.6
 	 * Params:
 	 * groupName =  a group name
@@ -690,8 +691,7 @@ public class KeyFile
 	
 	/**
 	 * Associates a new double value with key under group_name.
-	 * If key cannot be found then it is created. If group_name
-	 * is NULL, the start group is used.
+	 * If key cannot be found then it is created.
 	 * Since 2.12
 	 * Params:
 	 * groupName =  a group name
@@ -706,8 +706,8 @@ public class KeyFile
 	
 	/**
 	 * Associates a list of string values for key under group_name.
-	 * If key cannot be found then it is created. If group_name
-	 * cannot be found then it is created.
+	 * If key cannot be found then it is created.
+	 * If group_name cannot be found then it is created.
 	 * Since 2.6
 	 * Params:
 	 * groupName =  a group name
@@ -740,8 +740,8 @@ public class KeyFile
 	}
 	
 	/**
-	 * Associates a list of boolean values with key under
-	 * group_name. If key cannot be found then it is created.
+	 * Associates a list of boolean values with key under group_name.
+	 * If key cannot be found then it is created.
 	 * If group_name is NULL, the start_group is used.
 	 * Since 2.6
 	 * Params:
@@ -757,8 +757,8 @@ public class KeyFile
 	}
 	
 	/**
-	 * Associates a list of integer values with key under
-	 * group_name. If key cannot be found then it is created.
+	 * Associates a list of integer values with key under group_name.
+	 * If key cannot be found then it is created.
 	 * Since 2.6
 	 * Params:
 	 * groupName =  a group name
@@ -775,7 +775,6 @@ public class KeyFile
 	/**
 	 * Associates a list of double values with key under
 	 * group_name. If key cannot be found then it is created.
-	 * If group_name is NULL the start group is used.
 	 * Since 2.12
 	 * Params:
 	 * groupName =  a group name
@@ -791,21 +790,21 @@ public class KeyFile
 	
 	/**
 	 * Places a comment above key from group_name.
-	 * group_name. If key is NULL then comment will
-	 * be written above group_name. If both key
-	 * and group_name are NULL, then comment will
-	 * be written above the first group in the file.
+	 * If key is NULL then comment will be written above group_name.
+	 * If both key and group_name are NULL, then comment will be
+	 * written above the first group in the file.
 	 * Since 2.6
 	 * Params:
 	 * groupName =  a group name, or NULL
 	 * key =  a key
 	 * comment =  a comment
 	 * error =  return location for a GError
+	 * Returns: TRUE if the comment was written, FALSE otherwise
 	 */
-	public void setComment(char[] groupName, char[] key, char[] comment, GError** error)
+	public int setComment(char[] groupName, char[] key, char[] comment, GError** error)
 	{
-		// void g_key_file_set_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *comment,  GError **error);
-		g_key_file_set_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(comment), error);
+		// gboolean g_key_file_set_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  const gchar *comment,  GError **error);
+		return g_key_file_set_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), Str.toStringz(comment), error);
 	}
 	
 	/**
@@ -815,11 +814,12 @@ public class KeyFile
 	 * Params:
 	 * groupName =  a group name
 	 * error =  return location for a GError or NULL
+	 * Returns: TRUE if the group was removed, FALSE otherwise
 	 */
-	public void removeGroup(char[] groupName, GError** error)
+	public int removeGroup(char[] groupName, GError** error)
 	{
-		// void g_key_file_remove_group (GKeyFile *key_file,  const gchar *group_name,  GError **error);
-		g_key_file_remove_group(gKeyFile, Str.toStringz(groupName), error);
+		// gboolean g_key_file_remove_group (GKeyFile *key_file,  const gchar *group_name,  GError **error);
+		return g_key_file_remove_group(gKeyFile, Str.toStringz(groupName), error);
 	}
 	
 	/**
@@ -829,28 +829,29 @@ public class KeyFile
 	 * groupName =  a group name
 	 * key =  a key name to remove
 	 * error =  return location for a GError or NULL
+	 * Returns: TRUE if the key was removed, FALSE otherwise
 	 */
-	public void removeKey(char[] groupName, char[] key, GError** error)
+	public int removeKey(char[] groupName, char[] key, GError** error)
 	{
-		// void g_key_file_remove_key (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		g_key_file_remove_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
+		// gboolean g_key_file_remove_key (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
+		return g_key_file_remove_key(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
 	}
 	
 	/**
 	 * Removes a comment above key from group_name.
-	 * group_name. If key is NULL then comment will
-	 * be written above group_name. If both key
-	 * and group_name are NULL, then comment will
-	 * be written above the first group in the file.
+	 * If key is NULL then comment will be removed above group_name.
+	 * If both key and group_name are NULL, then comment will
+	 * be removed above the first group in the file.
 	 * Since 2.6
 	 * Params:
 	 * groupName =  a group name, or NULL
 	 * key =  a key
 	 * error =  return location for a GError
+	 * Returns: TRUE if the comment was removed, FALSE otherwise
 	 */
-	public void removeComment(char[] groupName, char[] key, GError** error)
+	public int removeComment(char[] groupName, char[] key, GError** error)
 	{
-		// void g_key_file_remove_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
-		g_key_file_remove_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
+		// gboolean g_key_file_remove_comment (GKeyFile *key_file,  const gchar *group_name,  const gchar *key,  GError **error);
+		return g_key_file_remove_comment(gKeyFile, Str.toStringz(groupName), Str.toStringz(key), error);
 	}
 }

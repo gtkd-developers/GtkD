@@ -42,7 +42,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- pango.PgLayout
  * structWrap:
+ * 	- PangoLayout* -> PgLayout
+ * 	- PangoLayoutIter* -> PgLayoutIter
  * module aliases:
  * local aliases:
  */
@@ -54,6 +57,7 @@ public  import gtkc.pangotypes;
 private import gtkc.pango;
 
 
+private import pango.PgLayout;
 
 
 
@@ -102,6 +106,23 @@ public class PgLayoutIter
 	
 	/**
 	 */
+	
+	/**
+	 * Copies a PangLayoutIter.
+	 * Since 1.20
+	 * Returns: the newly allocated PangoLayoutIter, which should be freed with pango_layout_iter_free(), or NULL if iter was NULL.
+	 */
+	public PgLayoutIter copy()
+	{
+		// PangoLayoutIter* pango_layout_iter_copy (PangoLayoutIter *iter);
+		auto p = pango_layout_iter_copy(pangoLayoutIter);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgLayoutIter(cast(PangoLayoutIter*) p);
+	}
 	
 	/**
 	 * Frees an iterator that's no longer in use.
@@ -246,6 +267,23 @@ public class PgLayoutIter
 	{
 		// PangoLayoutLine* pango_layout_iter_get_line_readonly (PangoLayoutIter *iter);
 		return pango_layout_iter_get_line_readonly(pangoLayoutIter);
+	}
+	
+	/**
+	 * Gets the layout associated with a PangoLayoutIter.
+	 * Since 1.20
+	 * Returns: the layout associated with iter.
+	 */
+	public PgLayout getLayout()
+	{
+		// PangoLayout* pango_layout_iter_get_layout (PangoLayoutIter *iter);
+		auto p = pango_layout_iter_get_layout(pangoLayoutIter);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgLayout(cast(PangoLayout*) p);
 	}
 	
 	/**

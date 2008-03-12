@@ -145,6 +145,15 @@ public class Messages
 	}
 	
 	/**
+	 * Params:
+	 */
+	public static void warnMessage(char[] domain, char[] file, int line, char[] func, char[] warnexpr)
+	{
+		// void g_warn_message (const char *domain,  const char *file,  int line,  const char *func,  const char *warnexpr);
+		g_warn_message(Str.toStringz(domain), Str.toStringz(file), line, Str.toStringz(func), Str.toStringz(warnexpr));
+	}
+	
+	/**
 	 * Prompts the user with [E]xit, [H]alt, show [S]tack trace or [P]roceed.
 	 * This function is intended to be used for debugging use only. The following
 	 * example shows how it can be used together with the g_log() functions.

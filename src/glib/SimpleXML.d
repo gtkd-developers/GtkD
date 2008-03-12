@@ -43,8 +43,10 @@
  * omit code:
  * omit signals:
  * imports:
+ * 	- glib.ListSG
  * 	- glib.Str
  * structWrap:
+ * 	- GSList* -> ListSG
  * module aliases:
  * local aliases:
  */
@@ -56,6 +58,7 @@ public  import gtkc.glibtypes;
 private import gtkc.glib;
 
 
+private import glib.ListSG;
 private import glib.Str;
 
 
@@ -73,7 +76,7 @@ private import glib.Str;
  * easily migrate to full-scale XML at a later time if the need arises.
  * GMarkup is not guaranteed to signal an error on all invalid XML; the
  * parser may accept documents that an XML parser would not. However, XML
- * documents which are not well-formed[4] are not considered valid GMarkup
+ * documents which are not well-formed[5] are not considered valid GMarkup
  * documents.
  * Simplifications to XML include:
  * Only UTF-8 encoding is allowed.
@@ -228,6 +231,9 @@ public class SimpleXML
 	
 	/**
 	 * Retrieves the name of the currently open element.
+	 * If called from the start_element or end_element handlers this will
+	 * give the element_name as passed to those functions. For the parent
+	 * elements, see g_markup_parse_context_get_element_stack().
 	 * Since 2.2
 	 * Returns: the name of the currently open element, or NULL
 	 */
@@ -235,6 +241,31 @@ public class SimpleXML
 	{
 		// const gchar* g_markup_parse_context_get_element (GMarkupParseContext *context);
 		return Str.toString(g_markup_parse_context_get_element(gMarkupParseContext)).dup;
+	}
+	
+	/**
+	 * Retrieves the element stack from the internal state of the parser.
+	 * The returned GSList is a list of strings where the first item is
+	 * the currently open tag (as would be returned by
+	 * g_markup_parse_context_get_element()) and the next item is its
+	 * immediate parent.
+	 * This function is intended to be used in the start_element and
+	 * end_element handlers where g_markup_parse_context_get_element()
+	 * would merely return the name of the element that is being
+	 * processed.
+	 * Since 2.16
+	 * Returns: the element stack, which must not be modified
+	 */
+	public ListSG getElementStack()
+	{
+		// const GSList* g_markup_parse_context_get_element_stack  (GMarkupParseContext *context);
+		auto p = g_markup_parse_context_get_element_stack(gMarkupParseContext);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
@@ -281,5 +312,60 @@ public class SimpleXML
 	{
 		// gboolean g_markup_parse_context_parse (GMarkupParseContext *context,  const gchar *text,  gssize text_len,  GError **error);
 		return g_markup_parse_context_parse(gMarkupParseContext, Str.toStringz(text), textLen, error);
+	}
+	
+	/**
+	 * Collects the attributes of the element from the
+	 * data passed to the GMarkupParser start_element
+	 * function, dealing with common error conditions
+	 * and supporting boolean values.
+	 * This utility function is not required to write
+	 * a parser but can save a lot of typing.
+	 * The element_name, attribute_names,
+	 * attribute_values and error parameters passed
+	 * to the start_element callback should be passed
+	 * unmodified to this function.
+	 * Following these arguments is a list of
+	 * "supported" attributes to collect. It is an
+	 * error to specify multiple attributes with the
+	 * same name. If any attribute not in the list
+	 * appears in the attribute_names array then an
+	 * unknown attribute error will result.
+	 * The GMarkupCollectType field allows specifying
+	 * the type of collection to perform and if a
+	 * given attribute must appear or is optional.
+	 * The attribute name is simply the name of the
+	 * attribute to collect.
+	 * The pointer should be of the appropriate type
+	 * (see the descriptions under
+	 * GMarkupCollectType) and may be NULL in case a
+	 * particular attribute is to be allowed but
+	 * ignored.
+	 * This function deals with issuing errors for missing attributes
+	 * (of type G_MARKUP_ERROR_MISSING_ATTRIBUTE), unknown attributes
+	 * (of type G_MARKUP_ERROR_UNKNOWN_ATTRIBUTE) and duplicate
+	 * attributes (of type G_MARKUP_ERROR_INVALID_CONTENT) as well
+	 * as parse errors for boolean-valued attributes (again of type
+	 * G_MARKUP_ERROR_INVALID_CONTENT). In all of these cases FALSE
+	 * will be returned and error will be set as appropriate.
+	 * Since 2.16
+	 * Params:
+	 * elementName =  the current tag name
+	 * attributeNames =  the attribute names
+	 * attributeValues =  the attribute values
+	 * error =  a pointer to a GError or NULL
+	 * firstType =  the GMarkupCollectType of the
+	 *  first attribute
+	 * firstAttr =  the name of the first attribute
+	 * ... =  a pointer to the storage location of the
+	 *  first attribute (or NULL), followed by
+	 *  more types names and pointers, ending
+	 *  with G_MARKUP_COLLECT_INVALID.
+	 * Returns: TRUE if successful
+	 */
+	public static int collectAttributes(char[] elementName, char** attributeNames, char** attributeValues, GError** error, GMarkupCollectType firstType, char[] firstAttr, ... )
+	{
+		// gboolean g_markup_collect_attributes (const gchar *element_name,  const gchar **attribute_names,  const gchar **attribute_values,  GError **error,  GMarkupCollectType first_type,  const gchar *first_attr,  ...);
+		return g_markup_collect_attributes(Str.toStringz(elementName), attributeNames, attributeValues, error, firstType, Str.toStringz(firstAttr));
 	}
 }

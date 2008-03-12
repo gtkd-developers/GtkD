@@ -128,7 +128,7 @@ public class PgColor
 	 * pango_color_free(). Primarily used by language bindings,
 	 * not that useful otherwise (since colors can just be copied
 	 * by assignment in C).
-	 * Returns: the newly allocated PangoColor, which should be freed with pango_color_free().
+	 * Returns: the newly allocated PangoColor, which should be freed with pango_color_free(), or NULL if src was NULL.
 	 */
 	public PgColor copy()
 	{

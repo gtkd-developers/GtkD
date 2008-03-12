@@ -197,7 +197,7 @@ public class Util
 	
 	/**
 	 * Gets the currently focused object.
-	 * Returns:Returns: the currently focused object for the current applicationSince ATK 1.6
+	 * Returns: the currently focused object for the current applicationSince ATK 1.6
 	 */
 	public static ObjectAtk getFocusObject()
 	{

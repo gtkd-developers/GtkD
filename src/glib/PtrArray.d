@@ -294,10 +294,16 @@ public class PtrArray
 	}
 	
 	/**
-	 * Frees all of the memory allocated for the pointer array.
+	 * Frees the memory allocated for the GPtrArray.
+	 * If free_segment is TRUE it frees the memory block holding the elements
+	 * as well. Pass FALSE if you want to free the GPtrArray wrapper but preserve
+	 * the underlying array for use elsewhere.
+	 * Note
+	 * If array contents point to dynamically-allocated memory, they should be freed
+	 * separately.
 	 * Params:
-	 * freeSeg = if TRUE the array of pointers (pdata) is freed.
-	 * Returns:NULL if free_seg is TRUE, otherwise the array of pointers (pdata) is returned.
+	 * freeSeg = if TRUE the actual pointer array is freed as well.
+	 * Returns:the pointer array if free_seg is FALSE, otherwise NULL.	The pointer array should be freed using g_free().
 	 */
 	public void** free(int freeSeg)
 	{

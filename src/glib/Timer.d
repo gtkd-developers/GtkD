@@ -157,6 +157,9 @@ public class Timer
 	 * it was started and the time it was stopped. The return value is the number of
 	 * seconds elapsed, including any fractional part. The microseconds
 	 * out parameter is essentially useless.
+	 * Warning
+	 * Calling initialization functions, in particular g_thread_init(),
+	 * while a timer is running will cause invalid return values from this function.
 	 * Params:
 	 * microseconds = return location for the fractional part of seconds elapsed,
 	 *  in microseconds (that is, the total number of microseconds elapsed, modulo

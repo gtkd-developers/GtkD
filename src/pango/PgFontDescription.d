@@ -137,7 +137,7 @@ public class PgFontDescription
 	
 	/**
 	 * Make a copy of a PangoFontDescription.
-	 * Returns: the newly allocated PangoFontDescription, which should be freed with pango_font_description_free().
+	 * Returns: the newly allocated PangoFontDescription, which should be freed with pango_font_description_free(), or NULL if desc was NULL.
 	 */
 	public PgFontDescription copy()
 	{
@@ -156,7 +156,7 @@ public class PgFontDescription
 	 * of the family name and other allocated fields. The result can only
 	 * be used until desc is modified or freed. This is meant to be used
 	 * when the copy is only needed temporarily.
-	 * Returns: the newly allocated PangoFontDescription, which should be freed with pango_font_description_free().
+	 * Returns: the newly allocated PangoFontDescription, which should be freed with pango_font_description_free(), or NULL if desc was NULL.
 	 */
 	public PgFontDescription copyStatic()
 	{

@@ -1541,7 +1541,7 @@ public struct GValueArray
  * TYPE_PARENT:
  * The GType of the parent type.
  * flags:
- * GTypeFlags to pass to g_type_register_static()
+ * GTypeFlags to pass to g_type_module_register_type()
  * CODE:
  * Custom code that gets inserted in the *_get_type() function.
  * Since 2.14
@@ -2535,7 +2535,7 @@ public struct GValueArray
  * a GCClosure
  */
 // TODO
-// #define	G_CCLOSURE_SWAP_DATA(cclosure)	 (((GClosure*) (closure))->derivative_flag)
+// #define	G_CCLOSURE_SWAP_DATA(cclosure)	 (((GClosure*) (cclosure))->derivative_flag)
 
 /*
  * Cast a function pointer to a GCallback.
