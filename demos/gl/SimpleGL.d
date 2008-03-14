@@ -66,7 +66,7 @@ class SimpleGL : DrawingArea
 	 * put any gl initializations here
 	 * returns true to consume the event
 	 */
-	bit initGL()
+	bool initGL()
 	{
 		resizeGL(null);
 		return true;
@@ -79,7 +79,7 @@ class SimpleGL : DrawingArea
 	 * to force redrawing of the scene.
 	 * returns true to consume the event
 	 */
-	bit drawGL(GdkEventExpose* event = null)
+	bool drawGL(GdkEventExpose* event = null)
 	{
 		glClear (GL_COLOR_BUFFER_BIT | GL_DEPTH_BUFFER_BIT);
 		glLoadIdentity ();
@@ -103,7 +103,7 @@ class SimpleGL : DrawingArea
 	 * This method is called when the window is resized
 	 * returns true to consume the event
 	 */
-	bit resizeGL(GdkEventConfigure* event = null)
+	bool resizeGL(GdkEventConfigure* event = null)
 	{
 		GLfloat w;
 		GLfloat h;
