@@ -163,10 +163,10 @@ extern(C)
 	void function(gboolean solid)gdk_gl_draw_icosahedron;
 	void function(gboolean solid, double scale)gdk_gl_draw_teapot;
 	
-	// glgdk.GLTokens
+	// glgdk.
 	
 	
-	// glgdk.GLdVersion
+	// glgdk.
 	
 
 

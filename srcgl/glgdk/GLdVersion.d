@@ -28,7 +28,7 @@
  * strct   = 
  * realStrct=
  * ctorStrct=
- * clss    = GLdVersion
+ * clss    = 
  * interf  = 
  * class Code: No
  * interface Code: No
@@ -36,7 +36,6 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- gdk_gl_version_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -59,11 +58,5 @@ private import gtkglc.glgdk;
 
 
 /**
- * Description
  */
-public class GLdVersion
-{
-	
-	/**
-	 */
-}
+

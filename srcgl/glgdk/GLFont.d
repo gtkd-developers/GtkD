@@ -42,11 +42,12 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
  * 	- gdk.Display
+ * 	- pango.PgFont
  * 	- pango.PgFontDescription
  * structWrap:
  * 	- GdkDisplay* -> Display
+ * 	- PangoFont* -> PgFont
  * 	- PangoFontDescription* -> PgFontDescription
  * module aliases:
  * local aliases:
@@ -59,8 +60,8 @@ public  import gtkglc.glgdktypes;
 private import gtkglc.glgdk;
 
 
-private import glib.Str;
 private import gdk.Display;
+private import pango.PgFont;
 private import pango.PgFontDescription;
 
 
@@ -84,10 +85,16 @@ public class GLFont
 	 * listBase =  the index of the first display list to be generated.
 	 * Returns: the PangoFont used, or NULL if no font matched.
 	 */
-	public static PangoFont* usePangoFont(PgFontDescription fontDesc, int first, int count, int listBase)
+	public static PgFont usePangoFont(PgFontDescription fontDesc, int first, int count, int listBase)
 	{
 		// PangoFont* gdk_gl_font_use_pango_font (const PangoFontDescription *font_desc,  int first,  int count,  int list_base);
-		return gdk_gl_font_use_pango_font((fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct(), first, count, listBase);
+		auto p = gdk_gl_font_use_pango_font((fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct(), first, count, listBase);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFont(cast(PangoFont*) p);
 	}
 	
 	/**
@@ -100,9 +107,15 @@ public class GLFont
 	 * listBase =  the index of the first display list to be generated.
 	 * Returns: the PangoFont used, or NULL if no font matched.<<OpenGL WindowGeometric Object Rendering>>
 	 */
-	public static PangoFont* usePangoFontForDisplay(Display display, PgFontDescription fontDesc, int first, int count, int listBase)
+	public static PgFont usePangoFontForDisplay(Display display, PgFontDescription fontDesc, int first, int count, int listBase)
 	{
 		// PangoFont* gdk_gl_font_use_pango_font_for_display  (GdkDisplay *display,  const PangoFontDescription *font_desc,  int first,  int count,  int list_base);
-		return gdk_gl_font_use_pango_font_for_display((display is null) ? null : display.getDisplayStruct(), (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct(), first, count, listBase);
+		auto p = gdk_gl_font_use_pango_font_for_display((display is null) ? null : display.getDisplayStruct(), (fontDesc is null) ? null : fontDesc.getPgFontDescriptionStruct(), first, count, listBase);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new PgFont(cast(PangoFont*) p);
 	}
 }

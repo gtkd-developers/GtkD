@@ -68,16 +68,15 @@ wrap: glgdk
 
 file: gtkglext-gdkglinit.html
 
-#struct: GMutex
 class: GLdInit
 prefix: gdk_gl_
 outFile: GLdInit
 
 file: gtkglext-gdkglquery.html
 
-#struct: GMutex
 class: GLQuery
 prefix: gdk_gl_query_
+prefix: gdk_gl_
 import: glib.Str
 import: gdk.Display
 structWrap: GdkDisplay* Display
@@ -92,6 +91,10 @@ import: glib.Str
 import: std.stdio
 import: gdk.Screen
 structWrap: GdkScreen* Screen
+import: gdk.Colormap
+structWrap: GdkColormap* Colormap
+import: gdk.Visual
+structWrap: GdkVisual* Visual
 
 code: start
 	/**
@@ -145,6 +148,9 @@ class: GLContext
 prefix: gdk_gl_context_
 import: glgdk.GLDrawable
 structWrap: GdkGLDrawable* GLDrawable
+import: glgdk.GLConfig
+structWrap: GdkGLConfig* GLConfig
+structWrap: GdkGLContext* GLContext
 outFile: GLContext
 
 file: gtkglext-gdkgldrawable.html
@@ -154,6 +160,9 @@ class: GLDrawable
 prefix: gdk_gl_drawable_
 import: glgdk.GLContext
 structWrap: GdkGLContext* GLContext
+import: glgdk.GLConfig
+structWrap: GdkGLConfig* GLConfig
+structWrap: GdkGLDrawable* GLDrawable
 outFile: GLDrawable
 
 file: gtkglext-gdkglpixmap.html
@@ -161,8 +170,12 @@ file: gtkglext-gdkglpixmap.html
 struct: GdkGLPixmap
 class: GLPixmap
 prefix: gdk_gl_pixmap_
+prefix: gdk_
 import: glgdk.GLConfig
-structWrap: GdkGLCondif* GLConfig
+structWrap: GdkGLConfig* GLConfig
+import: gdk.Pixmap
+structWrap: GdkPixmap* Pixmap
+structWrap: GdkGLPixmap* GLPixmap
 outFile: GLPixmap
 
 file: gtkglext-gdkglwindow.html
@@ -172,32 +185,33 @@ class: GLWindow
 prefix: gdk_gl_window_
 import: glgdk.GLConfig
 structWrap: GdkGLCondif* GLConfig
+import: gdk.Window
+structWrap: GdkWindow* Window
+structWrap: GdkGLWindow* GLWindow
 outFile: GLWindow
 
 file: gtkglext-gdkglfont.html
 
-#struct: GdkGL
 class: GLFont
 prefix: gdk_gl_font_
-import: glib.Str
 import: gdk.Display
 structWrap: GdkDisplay* Display
+import: pango.PgFont
+structWrap: PangoFont* PgFont
 import: pango.PgFontDescription
 structWrap: PangoFontDescription* PgFontDescription
 outFile: GLFont
 
 file: gtkglext-gdkglshapes.html
 
-#struct: GdkGL
 class: GLDraw
 prefix: gdk_gl_draw_
 outFile: GLDraw
 
 file: gtkglext-gdkgltokens.html
 
-#struct: GdkGL
-class: GLTokens
-prefix: gdk_gl_tokens_
+#class: GLTokens
+#prefix: gdk_gl_tokens_
 outFile: GLTokens
 
 #file: gtkglext-gdkglx.html
@@ -219,7 +233,6 @@ outFile: GLTokens
 
 file: gtkglext-gdkglversion.html
 
-#struct: GdkGLVersion
-class: GLdVersion
-prefix: gdk_gl_version_
+#class: GLdVersion
+#prefix: gdk_gl_version_
 outFile: GLdVersion

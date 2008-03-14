@@ -28,7 +28,7 @@
  * strct   = 
  * realStrct=
  * ctorStrct=
- * clss    = GLTokens
+ * clss    = 
  * interf  = 
  * class Code: No
  * interface Code: No
@@ -36,7 +36,6 @@
  * extend  = 
  * implements:
  * prefixes:
- * 	- gdk_gl_tokens_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -59,11 +58,5 @@ private import gtkglc.glgdk;
 
 
 /**
- * Description
  */
-public class GLTokens
-{
-	
-	/**
-	 */
-}
+

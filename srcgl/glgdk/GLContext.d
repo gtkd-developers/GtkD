@@ -43,7 +43,10 @@
  * omit signals:
  * imports:
  * 	- glgdk.GLDrawable
+ * 	- glgdk.GLConfig
  * structWrap:
+ * 	- GdkGLConfig* -> GLConfig
+ * 	- GdkGLContext* -> GLContext
  * 	- GdkGLDrawable* -> GLDrawable
  * module aliases:
  * local aliases:
@@ -57,6 +60,7 @@ private import gtkglc.glgdk;
 
 
 private import glgdk.GLDrawable;
+private import glgdk.GLConfig;
 
 
 
@@ -113,10 +117,10 @@ public class GLContext : ObjectG
 	 * renderType =  GDK_GL_RGBA_TYPE or GDK_GL_COLOR_INDEX_TYPE (currently not
 	 *  used).
 	 */
-	public this (GLDrawable gldrawable, GdkGLContext* shareList, int direct, int renderType)
+	public this (GLDrawable gldrawable, GLContext shareList, int direct, int renderType)
 	{
 		// GdkGLContext* gdk_gl_context_new (GdkGLDrawable *gldrawable,  GdkGLContext *share_list,  gboolean direct,  int render_type);
-		auto p = gdk_gl_context_new((gldrawable is null) ? null : gldrawable.getGLDrawableStruct(), shareList, direct, renderType);
+		auto p = gdk_gl_context_new((gldrawable is null) ? null : gldrawable.getGLDrawableStruct(), (shareList is null) ? null : shareList.getGLContextStruct(), direct, renderType);
 		if(p is null)
 		{
 			this = null;
@@ -145,10 +149,10 @@ public class GLContext : ObjectG
 	 * src =  the source context.
 	 * Returns: FALSE if it fails, TRUE otherwise.
 	 */
-	public int copy(GdkGLContext* src, ulong mask)
+	public int copy(GLContext src, ulong mask)
 	{
 		// gboolean gdk_gl_context_copy (GdkGLContext *glcontext,  GdkGLContext *src,  unsigned long mask);
-		return gdk_gl_context_copy(gdkGLContext, src, mask);
+		return gdk_gl_context_copy(gdkGLContext, (src is null) ? null : src.getGLContextStruct(), mask);
 	}
 	
 	/**
@@ -171,10 +175,16 @@ public class GLContext : ObjectG
 	 * Gets GdkGLConfig with which the glcontext is configured.
 	 * Returns: the GdkGLConfig.
 	 */
-	public GdkGLConfig* getGLConfig()
+	public GLConfig getGLConfig()
 	{
 		// GdkGLConfig* gdk_gl_context_get_gl_config (GdkGLContext *glcontext);
-		return gdk_gl_context_get_gl_config(gdkGLContext);
+		auto p = gdk_gl_context_get_gl_config(gdkGLContext);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLConfig(cast(GdkGLConfig*) p);
 	}
 	
 	/**
@@ -182,10 +192,16 @@ public class GLContext : ObjectG
 	 * texture objects.
 	 * Returns: the GdkGLContext.
 	 */
-	public GdkGLContext* getShareList()
+	public GLContext getShareList()
 	{
 		// GdkGLContext* gdk_gl_context_get_share_list (GdkGLContext *glcontext);
-		return gdk_gl_context_get_share_list(gdkGLContext);
+		auto p = gdk_gl_context_get_share_list(gdkGLContext);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLContext(cast(GdkGLContext*) p);
 	}
 	
 	/**
@@ -212,9 +228,15 @@ public class GLContext : ObjectG
 	 * Returns the current GdkGLContext.
 	 * Returns: the current GdkGLContext or NULL if there is no current context.<<Frame Buffer ConfigurationRendering Surface>>
 	 */
-	public static GdkGLContext* getCurrent()
+	public static GLContext getCurrent()
 	{
 		// GdkGLContext* gdk_gl_context_get_current (void);
-		return gdk_gl_context_get_current();
+		auto p = gdk_gl_context_get_current();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLContext(cast(GdkGLContext*) p);
 	}
 }

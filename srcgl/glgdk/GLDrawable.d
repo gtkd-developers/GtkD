@@ -43,8 +43,11 @@
  * omit signals:
  * imports:
  * 	- glgdk.GLContext
+ * 	- glgdk.GLConfig
  * structWrap:
+ * 	- GdkGLConfig* -> GLConfig
  * 	- GdkGLContext* -> GLContext
+ * 	- GdkGLDrawable* -> GLDrawable
  * module aliases:
  * local aliases:
  */
@@ -57,6 +60,7 @@ private import gtkglc.glgdk;
 
 
 private import glgdk.GLContext;
+private import glgdk.GLConfig;
 
 
 
@@ -174,10 +178,16 @@ public class GLDrawable
 	 * Gets GdkGLConfig with which the gldrawable is configured.
 	 * Returns: the GdkGLConfig.
 	 */
-	public GdkGLConfig* getGLConfig()
+	public GLConfig getGLConfig()
 	{
 		// GdkGLConfig* gdk_gl_drawable_get_gl_config (GdkGLDrawable *gldrawable);
-		return gdk_gl_drawable_get_gl_config(gdkGLDrawable);
+		auto p = gdk_gl_drawable_get_gl_config(gdkGLDrawable);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLConfig(cast(GdkGLConfig*) p);
 	}
 	
 	/**
@@ -197,9 +207,15 @@ public class GLDrawable
 	 * Returns the current GdkGLDrawable.
 	 * Returns: the current GdkGLDrawable or NULL if there is no current drawable.<<Rendering ContextOpenGL Pixmap>>
 	 */
-	public static GdkGLDrawable* getCurrent()
+	public static GLDrawable getCurrent()
 	{
 		// GdkGLDrawable* gdk_gl_drawable_get_current (void);
-		return gdk_gl_drawable_get_current();
+		auto p = gdk_gl_drawable_get_current();
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLDrawable(cast(GdkGLDrawable*) p);
 	}
 }

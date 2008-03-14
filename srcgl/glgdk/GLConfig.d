@@ -45,8 +45,12 @@
  * 	- glib.Str
  * 	- std.stdio
  * 	- gdk.Screen
+ * 	- gdk.Colormap
+ * 	- gdk.Visual
  * structWrap:
+ * 	- GdkColormap* -> Colormap
  * 	- GdkScreen* -> Screen
+ * 	- GdkVisual* -> Visual
  * module aliases:
  * local aliases:
  */
@@ -60,6 +64,8 @@ private import gtkglc.glgdk;
 
 private import glib.Str;
 private import gdk.Screen;
+private import gdk.Colormap;
+private import gdk.Visual;
 
 
 version(Tango) {
@@ -273,10 +279,16 @@ public class GLConfig : ObjectG
 	 * configuration.
 	 * Returns: the appropriate GdkColormap.
 	 */
-	public GdkColormap* getColormap()
+	public Colormap getColormap()
 	{
 		// GdkColormap* gdk_gl_config_get_colormap (GdkGLConfig *glconfig);
-		return gdk_gl_config_get_colormap(gdkGLConfig);
+		auto p = gdk_gl_config_get_colormap(gdkGLConfig);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Colormap(cast(GdkColormap*) p);
 	}
 	
 	/**
@@ -284,10 +296,16 @@ public class GLConfig : ObjectG
 	 * configuration.
 	 * Returns: the appropriate GdkVisual.
 	 */
-	public GdkVisual* getVisual()
+	public Visual getVisual()
 	{
 		// GdkVisual* gdk_gl_config_get_visual (GdkGLConfig *glconfig);
-		return gdk_gl_config_get_visual(gdkGLConfig);
+		auto p = gdk_gl_config_get_visual(gdkGLConfig);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Visual(cast(GdkVisual*) p);
 	}
 	
 	/**

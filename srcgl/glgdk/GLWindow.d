@@ -43,8 +43,11 @@
  * omit signals:
  * imports:
  * 	- glgdk.GLConfig
+ * 	- gdk.Window
  * structWrap:
  * 	- GdkGLCondif* -> GLConfig
+ * 	- GdkGLWindow* -> GLWindow
+ * 	- GdkWindow* -> Window
  * module aliases:
  * local aliases:
  */
@@ -57,6 +60,7 @@ private import gtkglc.glgdk;
 
 
 private import glgdk.GLConfig;
+private import gdk.Window;
 
 
 
@@ -111,10 +115,10 @@ public class GLWindow : Drawable
 	 * window =  the GdkWindow to be used as the rendering area.
 	 * attribList =  this must be set to NULL or empty (first attribute of None).
 	 */
-	public this (GdkGLConfig* glconfig, GdkWindow* window, int* attribList)
+	public this (GdkGLConfig* glconfig, Window window, int* attribList)
 	{
 		// GdkGLWindow* gdk_gl_window_new (GdkGLConfig *glconfig,  GdkWindow *window,  const int *attrib_list);
-		auto p = gdk_gl_window_new(glconfig, window, attribList);
+		auto p = gdk_gl_window_new(glconfig, (window is null) ? null : window.getWindowStruct(), attribList);
 		if(p is null)
 		{
 			this = null;
@@ -140,10 +144,16 @@ public class GLWindow : Drawable
 	 * GdkDrawable which have an associated GdkWindow.
 	 * Returns: the GdkWindow associated with glwindow.
 	 */
-	public GdkWindow* getWindow()
+	public Window getWindow()
 	{
 		// GdkWindow* gdk_gl_window_get_window (GdkGLWindow *glwindow);
-		return gdk_gl_window_get_window(gdkGLWindow);
+		auto p = gdk_gl_window_get_window(gdkGLWindow);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Window(cast(GdkWindow*) p);
 	}
 	
 	/**
@@ -157,10 +167,16 @@ public class GLWindow : Drawable
 	 * attribList =  this must be set to NULL or empty (first attribute of None).
 	 * Returns: the GdkGLWindow used by the window if it is successful, NULL otherwise.
 	 */
-	public static GdkGLWindow* gdkWindowSetGLCapability(GdkWindow* window, GdkGLConfig* glconfig, int* attribList)
+	public static GLWindow gdkWindowSetGLCapability(Window window, GdkGLConfig* glconfig, int* attribList)
 	{
 		// GdkGLWindow* gdk_window_set_gl_capability (GdkWindow *window,  GdkGLConfig *glconfig,  const int *attrib_list);
-		return gdk_window_set_gl_capability(window, glconfig, attribList);
+		auto p = gdk_window_set_gl_capability((window is null) ? null : window.getWindowStruct(), glconfig, attribList);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLWindow(cast(GdkGLWindow*) p);
 	}
 	
 	/**
@@ -169,10 +185,10 @@ public class GLWindow : Drawable
 	 * Params:
 	 * window =  a GdkWindow.
 	 */
-	public static void gdkWindowUnsetGLCapability(GdkWindow* window)
+	public static void gdkWindowUnsetGLCapability(Window window)
 	{
 		// void gdk_window_unset_gl_capability (GdkWindow *window);
-		gdk_window_unset_gl_capability(window);
+		gdk_window_unset_gl_capability((window is null) ? null : window.getWindowStruct());
 	}
 	
 	/**
@@ -181,10 +197,10 @@ public class GLWindow : Drawable
 	 * window =  a GdkWindow.
 	 * Returns: TRUE if the window is OpenGL-capable, FALSE otherwise.
 	 */
-	public static int gdkWindowIsGLCapable(GdkWindow* window)
+	public static int gdkWindowIsGLCapable(Window window)
 	{
 		// gboolean gdk_window_is_gl_capable (GdkWindow *window);
-		return gdk_window_is_gl_capable(window);
+		return gdk_window_is_gl_capable((window is null) ? null : window.getWindowStruct());
 	}
 	
 	/**
@@ -193,9 +209,15 @@ public class GLWindow : Drawable
 	 * window =  a GdkWindow.
 	 * Returns: the GdkGLWindow.
 	 */
-	public static GdkGLWindow* gdkWindowGetGLWindow(GdkWindow* window)
+	public static GLWindow gdkWindowGetGLWindow(Window window)
 	{
 		// GdkGLWindow* gdk_window_get_gl_window (GdkWindow *window);
-		return gdk_window_get_gl_window(window);
+		auto p = gdk_window_get_gl_window((window is null) ? null : window.getWindowStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLWindow(cast(GdkGLWindow*) p);
 	}
 }

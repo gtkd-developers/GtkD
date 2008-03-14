@@ -37,6 +37,7 @@
  * implements:
  * prefixes:
  * 	- gdk_gl_query_
+ * 	- gdk_gl_
  * omit structs:
  * omit prefixes:
  * omit code:
@@ -150,7 +151,7 @@ public class GLQuery
 	 * procName =  function name.
 	 * Returns: the address of the function named by proc_name.<<InitializationFrame Buffer Configuration>>
 	 */
-	public static GdkGLProc gdkGLGetProcAddress(char[] procName)
+	public static GdkGLProc getProcAddress(char[] procName)
 	{
 		// GdkGLProc gdk_gl_get_proc_address (const char *proc_name);
 		return gdk_gl_get_proc_address(Str.toStringz(procName));

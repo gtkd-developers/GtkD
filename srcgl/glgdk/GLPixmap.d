@@ -37,14 +37,18 @@
  * implements:
  * prefixes:
  * 	- gdk_gl_pixmap_
+ * 	- gdk_
  * omit structs:
  * omit prefixes:
  * omit code:
  * omit signals:
  * imports:
  * 	- glgdk.GLConfig
+ * 	- gdk.Pixmap
  * structWrap:
- * 	- GdkGLCondif* -> GLConfig
+ * 	- GdkGLConfig* -> GLConfig
+ * 	- GdkGLPixmap* -> GLPixmap
+ * 	- GdkPixmap* -> Pixmap
  * module aliases:
  * local aliases:
  */
@@ -57,6 +61,7 @@ private import gtkglc.glgdk;
 
 
 private import glgdk.GLConfig;
+private import gdk.Pixmap;
 
 
 
@@ -111,10 +116,10 @@ public class GLPixmap : Drawable
 	 * pixmap =  the GdkPixmap to be used as the rendering area.
 	 * attribList =  this must be set to NULL or empty (first attribute of None).
 	 */
-	public this (GdkGLConfig* glconfig, GdkPixmap* pixmap, int* attribList)
+	public this (GLConfig glconfig, Pixmap pixmap, int* attribList)
 	{
 		// GdkGLPixmap* gdk_gl_pixmap_new (GdkGLConfig *glconfig,  GdkPixmap *pixmap,  const int *attrib_list);
-		auto p = gdk_gl_pixmap_new(glconfig, pixmap, attribList);
+		auto p = gdk_gl_pixmap_new((glconfig is null) ? null : glconfig.getGLConfigStruct(), (pixmap is null) ? null : pixmap.getPixmapStruct(), attribList);
 		if(p is null)
 		{
 			this = null;
@@ -140,10 +145,16 @@ public class GLPixmap : Drawable
 	 * GdkDrawable which have an associated GdkPixmap.
 	 * Returns: the GdkPixmap associated with glpixmap.
 	 */
-	public GdkPixmap* getPixmap()
+	public Pixmap getPixmap()
 	{
 		// GdkPixmap* gdk_gl_pixmap_get_pixmap (GdkGLPixmap *glpixmap);
-		return gdk_gl_pixmap_get_pixmap(gdkGLPixmap);
+		auto p = gdk_gl_pixmap_get_pixmap(gdkGLPixmap);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new Pixmap(cast(GdkPixmap*) p);
 	}
 	
 	/**
@@ -157,10 +168,16 @@ public class GLPixmap : Drawable
 	 * attribList =  this must be set to NULL or empty (first attribute of None).
 	 * Returns: the GdkGLPixmap used by the pixmap if it is successful, NULL otherwise.
 	 */
-	public static GdkGLPixmap* gdkPixmapSetGLCapability(GdkPixmap* pixmap, GdkGLConfig* glconfig, int* attribList)
+	public static GLPixmap pixmapSetGLCapability(Pixmap pixmap, GLConfig glconfig, int* attribList)
 	{
 		// GdkGLPixmap* gdk_pixmap_set_gl_capability (GdkPixmap *pixmap,  GdkGLConfig *glconfig,  const int *attrib_list);
-		return gdk_pixmap_set_gl_capability(pixmap, glconfig, attribList);
+		auto p = gdk_pixmap_set_gl_capability((pixmap is null) ? null : pixmap.getPixmapStruct(), (glconfig is null) ? null : glconfig.getGLConfigStruct(), attribList);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLPixmap(cast(GdkGLPixmap*) p);
 	}
 	
 	/**
@@ -169,10 +186,10 @@ public class GLPixmap : Drawable
 	 * Params:
 	 * pixmap =  a GdkPixmap.
 	 */
-	public static void gdkPixmapUnsetGLCapability(GdkPixmap* pixmap)
+	public static void pixmapUnsetGLCapability(Pixmap pixmap)
 	{
 		// void gdk_pixmap_unset_gl_capability (GdkPixmap *pixmap);
-		gdk_pixmap_unset_gl_capability(pixmap);
+		gdk_pixmap_unset_gl_capability((pixmap is null) ? null : pixmap.getPixmapStruct());
 	}
 	
 	/**
@@ -181,10 +198,10 @@ public class GLPixmap : Drawable
 	 * pixmap =  a GdkPixmap.
 	 * Returns: TRUE if the pixmap is OpenGL-capable, FALSE otherwise.
 	 */
-	public static int gdkPixmapIsGLCapable(GdkPixmap* pixmap)
+	public static int pixmapIsGLCapable(Pixmap pixmap)
 	{
 		// gboolean gdk_pixmap_is_gl_capable (GdkPixmap *pixmap);
-		return gdk_pixmap_is_gl_capable(pixmap);
+		return gdk_pixmap_is_gl_capable((pixmap is null) ? null : pixmap.getPixmapStruct());
 	}
 	
 	/**
@@ -193,9 +210,15 @@ public class GLPixmap : Drawable
 	 * pixmap =  a GdkPixmap.
 	 * Returns: the GdkGLPixmap.
 	 */
-	public static GdkGLPixmap* gdkPixmapGetGLPixmap(GdkPixmap* pixmap)
+	public static GLPixmap pixmapGetGLPixmap(Pixmap pixmap)
 	{
 		// GdkGLPixmap* gdk_pixmap_get_gl_pixmap (GdkPixmap *pixmap);
-		return gdk_pixmap_get_gl_pixmap(pixmap);
+		auto p = gdk_pixmap_get_gl_pixmap((pixmap is null) ? null : pixmap.getPixmapStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new GLPixmap(cast(GdkGLPixmap*) p);
 	}
 }
