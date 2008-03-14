@@ -503,6 +503,14 @@ prefix: g_base64_
 import: glib.Str
 outFile: Base64
 
+file: glib-Data-Checksums.html
+struct: GChecksum
+class: Checksum
+prefix: g_checksum_
+import: glib.Str
+structWrap: GChecksum* Checksum
+outFile: Checksum
+
 file: glib-I18N.html
 class: Internationalization
 prefix: g_
@@ -992,6 +1000,12 @@ strictPrefix: Y
 import: glib.Str
 #import: glib.ErrorG
 outFile: MappedFile
+
+file: glib-URI-Functions.html
+class: URI
+prefix: g_uri_
+import: glib.Str
+outFile: URI
 
 file: glib-Shell-related-Utilities.html
 class: ShellUtils

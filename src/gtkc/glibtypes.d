@@ -587,6 +587,21 @@ public enum GNormalizeMode
 alias GNormalizeMode NormalizeMode;
 
 /**
+ * The hashing algorithm to be used by GChecksum when performing the
+ * digest of some data.
+ * Note that the GChecksumType enumeration may be extended at a later
+ * date to include new hashing algorithm types.
+ * G_CHECKSUM_MD5
+ */
+public enum GChecksumType
+{
+	MD5,
+	SHA1,
+	SHA256
+}
+alias GChecksumType ChecksumType;
+
+/**
  * This enumeration isn't used in the API, but may be useful if you need
  * to mark a number as a day, month, or year.
  * G_DATE_DAY
@@ -1709,6 +1724,12 @@ public struct GError
  * and should only be accessed using the following functions.
  */
 public struct GIConv{}
+
+
+/**
+ * Main Gtk struct.
+ */
+public struct GChecksum{}
 
 
 /**

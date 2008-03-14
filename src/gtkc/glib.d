@@ -465,6 +465,18 @@ extern(C)
 	gsize function(gchar* inn, gsize len, guchar* f_out, gint* state, guint* save)g_base64_decode_step;
 	guchar* function(gchar* text, gsize* outLen)g_base64_decode;
 	
+	// glib.Checksum
+	
+	gssize function(GChecksumType checksumType)g_checksum_type_get_length;
+	GChecksum* function(GChecksumType checksumType)g_checksum_new;
+	GChecksum* function(GChecksum* checksum)g_checksum_copy;
+	void function(GChecksum* checksum)g_checksum_free;
+	void function(GChecksum* checksum, guchar* data, gssize length)g_checksum_update;
+	gchar* function(GChecksum* checksum)g_checksum_get_string;
+	void function(GChecksum* checksum, guint8* buffer, gsize* digestLen)g_checksum_get_digest;
+	gchar* function(GChecksumType checksumType, guchar* data, gsize length)g_compute_checksum_for_data;
+	gchar* function(GChecksumType checksumType, gchar* str, gssize length)g_compute_checksum_for_string;
+	
 	// glib.Internationalization
 	
 	gchar* function(gchar* msgid, gchar* msgval)g_strip_context;
@@ -683,6 +695,13 @@ extern(C)
 	void function(GMappedFile* file)g_mapped_file_free;
 	gsize function(GMappedFile* file)g_mapped_file_get_length;
 	gchar* function(GMappedFile* file)g_mapped_file_get_contents;
+	
+	// glib.URI
+	
+	char* function(char* uri)g_uri_parse_scheme;
+	char* function(char* unescaped, char* reservedCharsAllowed, gboolean allowUtf8)g_uri_escape_string;
+	char* function(char* escapedString, char* illegalCharacters)g_uri_unescape_string;
+	char* function(char* escapedString, char* escapedStringEnd, char* illegalCharacters)g_uri_unescape_segment;
 	
 	// glib.ShellUtils
 	
@@ -1632,6 +1651,15 @@ Symbol[] glibLinks =
 	{ "g_base64_encode",  cast(void**)& g_base64_encode},
 	{ "g_base64_decode_step",  cast(void**)& g_base64_decode_step},
 	{ "g_base64_decode",  cast(void**)& g_base64_decode},
+	{ "g_checksum_type_get_length",  cast(void**)& g_checksum_type_get_length},
+	{ "g_checksum_new",  cast(void**)& g_checksum_new},
+	{ "g_checksum_copy",  cast(void**)& g_checksum_copy},
+	{ "g_checksum_free",  cast(void**)& g_checksum_free},
+	{ "g_checksum_update",  cast(void**)& g_checksum_update},
+	{ "g_checksum_get_string",  cast(void**)& g_checksum_get_string},
+	{ "g_checksum_get_digest",  cast(void**)& g_checksum_get_digest},
+	{ "g_compute_checksum_for_data",  cast(void**)& g_compute_checksum_for_data},
+	{ "g_compute_checksum_for_string",  cast(void**)& g_compute_checksum_for_string},
 	{ "g_strip_context",  cast(void**)& g_strip_context},
 	{ "g_dpgettext",  cast(void**)& g_dpgettext},
 	{ "g_get_language_names",  cast(void**)& g_get_language_names},
@@ -1815,6 +1843,10 @@ Symbol[] glibLinks =
 	{ "g_mapped_file_free",  cast(void**)& g_mapped_file_free},
 	{ "g_mapped_file_get_length",  cast(void**)& g_mapped_file_get_length},
 	{ "g_mapped_file_get_contents",  cast(void**)& g_mapped_file_get_contents},
+	{ "g_uri_parse_scheme",  cast(void**)& g_uri_parse_scheme},
+	{ "g_uri_escape_string",  cast(void**)& g_uri_escape_string},
+	{ "g_uri_unescape_string",  cast(void**)& g_uri_unescape_string},
+	{ "g_uri_unescape_segment",  cast(void**)& g_uri_unescape_segment},
 	{ "g_shell_parse_argv",  cast(void**)& g_shell_parse_argv},
 	{ "g_shell_quote",  cast(void**)& g_shell_quote},
 	{ "g_shell_unquote",  cast(void**)& g_shell_unquote},

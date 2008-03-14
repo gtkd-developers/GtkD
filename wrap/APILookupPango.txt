@@ -493,6 +493,11 @@ outFile: PgVertical
 #noprefix: pango_cairo_font_map_
 #outFile: PgCairo
 
+#file: pango-ATSUI-Fonts.html
+#class: 
+#prefix: 
+#outFile: 
+
 #file: pango-X-Fonts-and-Rendering.html
 #class: 
 #prefix: 
