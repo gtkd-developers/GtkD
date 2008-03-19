@@ -430,6 +430,16 @@ private import glgtk.GLWidget;
 private import glgtk.GLtVersion;
 private import glgtk.GLCapability;
 
+private import gsv.SourceView;
+private import gsv.SourceBuffer;
+private import gsv.SourceSearch;
+private import gsv.SourceMark;
+private import gsv.SourceLanguage;
+private import gsv.SourceLanguageManager;
+private import gsv.SourceStyleScheme;
+private import gsv.SourceStyleSchemeManager;
+private import gsv.SourceStyle;
+
 private import gtkc.paths.d;
 private import gtkc.Loader.d;
 private import gtkc.glib;
@@ -444,3 +454,4 @@ private import gtkc.gtk;
 private import gtkc.glade;
 private import gtkglc.glgdk;
 private import gtkglc.glgtk;
+private import gsvc.gsv;

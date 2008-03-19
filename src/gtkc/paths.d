@@ -88,7 +88,7 @@ const char[][LIBRARY.max+1] importLibs =
 	LIBRARY.GLEXT:		"libGL.so",
 	LIBRARY.GDA:		"libgda-2.so.3",
 	LIBRARY.GLADE:		"libglade-2.0.so",
-	LIBRARY.GSV:		"libgtksourceview-1.0.so",
+	LIBRARY.GSV:		"libgtksourceview-2.0.so",
 	LIBRARY.GSTREAMER:	"libgstreamer-0.10.so",
 	LIBRARY.GSTINTERFACES:	"libgstinterfaces-0.10.so"
 	];

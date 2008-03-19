@@ -127,6 +127,7 @@ public class Str
 	}
 	body
 	{
+		if ( s is null ) return null;
 		char[] copy;
 		
 		if (s.length == 0)

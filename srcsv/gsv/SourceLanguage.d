@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gsv.SourceStyleScheme
  * 	- glib.Str
@@ -51,15 +52,7 @@
 
 module gsv.SourceLanguage;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gsvc.gsvtypes;
+public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 
@@ -69,11 +62,11 @@ private import glib.Str;
 
 
 
+private import gobject.ObjectG;
 
 /**
  * Description
  */
-private import gobject.ObjectG;
 public class SourceLanguage : ObjectG
 {
 	
@@ -98,25 +91,11 @@ public class SourceLanguage : ObjectG
 	 */
 	public this (GtkSourceLanguage* gtkSourceLanguage)
 	{
-		version(noAssert)
+		if(gtkSourceLanguage is null)
 		{
-			if ( gtkSourceLanguage is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkSourceLanguage is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkSourceLanguage is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkSourceLanguage !is null, "struct gtkSourceLanguage is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkSourceLanguage passed to constructor.");
+			else return;
 		}
 		super(cast(GObject*)gtkSourceLanguage);
 		this.gtkSourceLanguage = gtkSourceLanguage;
@@ -125,205 +104,103 @@ public class SourceLanguage : ObjectG
 	/**
 	 */
 	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
-	int[char[]] connectedSignals;
-	
-	void delegate(char[], SourceLanguage)[] onTagStyleChangedListeners;
-	void addOnTagStyleChanged(void delegate(char[], SourceLanguage) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	/**
+	 * Returns the ID of the language. The ID is not locale-dependent.
+	 * Returns: the ID of language.The returned string is owned by language and should not be freedor modified.
+	 */
+	public char[] gtkSourceLanguageGetId()
 	{
-		if ( !("tag-style-changed" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"tag-style-changed",
-			cast(GCallback)&callBackTagStyleChanged,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["tag-style-changed"] = 1;
-		}
-		onTagStyleChangedListeners ~= dlg;
+		// const gchar* gtk_source_language_get_id (GtkSourceLanguage *language);
+		return Str.toString(gtk_source_language_get_id(gtkSourceLanguage)).dup;
 	}
-	extern(C) static void callBackTagStyleChanged(GtkSourceLanguage* sourcelanguageStruct, gchar* arg1, SourceLanguage sourceLanguage)
-	{
-		bool consumed = false;
-		
-		foreach ( void delegate(char[], SourceLanguage) dlg ; sourceLanguage.onTagStyleChangedListeners )
-		{
-			dlg(Str.toString(arg1), sourceLanguage);
-		}
-		
-		return consumed;
-	}
-	
-	
 	
 	/**
 	 * Returns the localized name of the language.
-	 * language:
-	 *  a GtkSourceLanguage.
-	 * Returns:
-	 *  the name of language.
+	 * Returns: the name of language.The returned string is owned by language and should not be freedor modified.
 	 */
 	public char[] gtkSourceLanguageGetName()
 	{
-		// gchar* gtk_source_language_get_name (GtkSourceLanguage *language);
-		return Str.toString(gtk_source_language_get_name(gtkSourceLanguage) );
+		// const gchar* gtk_source_language_get_name (GtkSourceLanguage *language);
+		return Str.toString(gtk_source_language_get_name(gtkSourceLanguage)).dup;
 	}
 	
 	/**
 	 * Returns the localized section of the language.
 	 * Each language belong to a section (ex. HTML belogs to the
 	 * Markup section).
-	 * language:
-	 *  a GtkSourceLanguage.
-	 * Returns:
-	 *  the section of language.
+	 * Returns: the section of language.The returned string is owned by language and should not be freedor modified.
 	 */
 	public char[] gtkSourceLanguageGetSection()
 	{
-		// gchar* gtk_source_language_get_section (GtkSourceLanguage *language);
-		return Str.toString(gtk_source_language_get_section(gtkSourceLanguage) );
+		// const gchar* gtk_source_language_get_section (GtkSourceLanguage *language);
+		return Str.toString(gtk_source_language_get_section(gtkSourceLanguage)).dup;
 	}
 	
 	/**
-	 * Returns a list of tags for the given language. You should unref the tags
-	 * and free the list after usage.
-	 * language:
-	 *  a GtkSourceLanguage.
-	 * Returns:
-	 *  a list of GtkSourceTag objects.
+	 * Returns whether the language should be hidden from the user.
+	 * Returns: TRUE if the language should be hidden, FALSE otherwise.
 	 */
-	public GSList* gtkSourceLanguageGetTags()
+	public int gtkSourceLanguageGetHidden()
 	{
-		// GSList* gtk_source_language_get_tags (GtkSourceLanguage *language);
-		return gtk_source_language_get_tags(gtkSourceLanguage);
+		// gboolean gtk_source_language_get_hidden (GtkSourceLanguage *language);
+		return gtk_source_language_get_hidden(gtkSourceLanguage);
 	}
 	
 	/**
-	 * Gets the value of the ESC character in the given language.
-	 * language:
-	 *  a GtkSourceLanguage.
-	 * Returns:
-	 *  the value of the ESC character.
+	 * Params:
+	 * name =  metadata property name.
+	 * Returns: value of property name stored in the metadata of languageor NULL if language doesn't contain that metadata property.The returned string is owned by language and should not be freedor modified.
 	 */
-	public gunichar gtkSourceLanguageGetEscapeChar()
+	public char[] gtkSourceLanguageGetMetadata(char[] name)
 	{
-		// gunichar gtk_source_language_get_escape_char  (GtkSourceLanguage *language);
-		return gtk_source_language_get_escape_char(gtkSourceLanguage);
+		// const gchar* gtk_source_language_get_metadata (GtkSourceLanguage *language,  const gchar *name);
+		return Str.toString(gtk_source_language_get_metadata(gtkSourceLanguage, Str.toStringz(name))).dup;
 	}
 	
 	/**
-	 * Returns a list of mime types for the given language. After usage you should
-	 * free each element of the list as well as the list itself.
-	 * language:
-	 *  a GtkSourceLanguage.
-	 * Returns:
-	 *  a list of mime types (strings).
+	 * Returns the mime types associated to this language. This is just
+	 * an utility wrapper around gtk_source_language_get_metadata() to
+	 * retrieve the "mimetypes" metadata property and split it into an
+	 * array.
+	 * Returns: a newly-allocated NULL terminated array containingthe mime types or NULL if no mime types are found.The returned array must be freed with g_strfreev().
 	 */
-	public GSList* gtkSourceLanguageGetMimeTypes()
+	public char** gtkSourceLanguageGetMimeTypes()
 	{
-		// GSList* gtk_source_language_get_mime_types  (GtkSourceLanguage *language);
+		// gchar** gtk_source_language_get_mime_types (GtkSourceLanguage *language);
 		return gtk_source_language_get_mime_types(gtkSourceLanguage);
 	}
 	
 	/**
-	 * Sets a list of mime_types for the given language.
-	 * If mime_types is NULL this function will use the default mime
-	 * types from the language file.
-	 * language:
-	 *  a GtkSourceLanguage
-	 * mime_types:
-	 *  a list of mime types (strings).
+	 * Returns the globs associated to this language. This is just
+	 * an utility wrapper around gtk_source_language_get_metadata() to
+	 * retrieve the "globs" metadata property and split it into an array.
+	 * Returns: a newly-allocated NULL terminated array containingthe globs or NULL if no globs are found.The returned array must be freed with g_strfreev().
 	 */
-	public void gtkSourceLanguageSetMimeTypes(GSList* mimeTypes)
+	public char** gtkSourceLanguageGetGlobs()
 	{
-		// void gtk_source_language_set_mime_types  (GtkSourceLanguage *language,  const GSList *mime_types);
-		gtk_source_language_set_mime_types(gtkSourceLanguage, mimeTypes);
+		// gchar** gtk_source_language_get_globs (GtkSourceLanguage *language);
+		return gtk_source_language_get_globs(gtkSourceLanguage);
 	}
 	
 	/**
-	 * Gets the style scheme associated with the given language.
-	 * language:
-	 *  a GtkSourceLanguage.
-	 * Returns:
-	 *  a GtkSourceStyleScheme.
+	 * Returns the name of the style with ID style_id defined by this language.
+	 * Params:
+	 * styleId =  a style ID
+	 * Returns: the name of the style with ID style_id defined by this language orNULL if the style has no name or there is no style with ID style_id definedby this language. The returned string is owned by the language and mustnot be modified.
 	 */
-	public SourceStyleScheme gtkSourceLanguageGetStyleScheme()
+	public char[] gtkSourceLanguageGetStyleName(char[] styleId)
 	{
-		// GtkSourceStyleScheme* gtk_source_language_get_style_scheme  (GtkSourceLanguage *language);
-		return new SourceStyleScheme( gtk_source_language_get_style_scheme(gtkSourceLanguage) );
+		// const char* gtk_source_language_get_style_name (GtkSourceLanguage *language,  const char *style_id);
+		return Str.toString(gtk_source_language_get_style_name(gtkSourceLanguage, Str.toStringz(styleId))).dup;
 	}
 	
 	/**
-	 * Sets the style scheme of the given language.
-	 * language:
-	 *  a GtkSourceLanguage.
-	 * scheme:
-	 *  a GtkSourceStyleScheme.
+	 * Returns the ids of the styles defined by this language.
+	 * Returns: a NULL terminated array containingids of the styles defined by this language or NULL if no style isdefined. The returned array must be freed with g_strfreev().
 	 */
-	public void gtkSourceLanguageSetStyleScheme(SourceStyleScheme scheme)
+	public char** gtkSourceLanguageGetStyleIds()
 	{
-		// void gtk_source_language_set_style_scheme  (GtkSourceLanguage *language,  GtkSourceStyleScheme *scheme);
-		gtk_source_language_set_style_scheme(gtkSourceLanguage, (scheme is null) ? null : scheme.getSourceStyleSchemeStruct());
-	}
-	
-	/**
-	 * Gets the style of the tag whose ID is tag_id. If the style is
-	 * not defined then returns the default style.
-	 * language:
-	 *  a GtkSourceLanguage.
-	 * tag_id:
-	 *  the ID of a GtkSourceTag.
-	 * Returns:
-	 *  a GtkSourceTagStyle.
-	 */
-	public GtkSourceTagStyle* gtkSourceLanguageGetTagStyle(char[] tagId)
-	{
-		// GtkSourceTagStyle* gtk_source_language_get_tag_style  (GtkSourceLanguage *language,  const gchar *tag_id);
-		return gtk_source_language_get_tag_style(gtkSourceLanguage, Str.toStringz(tagId));
-	}
-	
-	/**
-	 * Sets the style of the tag whose ID is tag_id. If style is NULL
-	 * restore the default style.
-	 * language:
-	 *  a GtkSourceLanguage.
-	 * tag_id:
-	 *  the ID of a GtkSourceTag.
-	 * style:
-	 *  a GtkSourceTagStyle.
-	 */
-	public void gtkSourceLanguageSetTagStyle(char[] tagId, GtkSourceTagStyle* style)
-	{
-		// void gtk_source_language_set_tag_style  (GtkSourceLanguage *language,  const gchar *tag_id,  const GtkSourceTagStyle *style);
-		gtk_source_language_set_tag_style(gtkSourceLanguage, Str.toStringz(tagId), style);
-	}
-	
-	/**
-	 * Gets the default style of the tag whose ID is tag_id.
-	 * language:
-	 *  a GtkSourceLanguage.
-	 * tag_id:
-	 *  the ID of a GtkSourceTag.
-	 * Returns:
-	 *  a GtkSourceTagStyle.
-	 * Signal Details
-	 * The "tag-style-changed" signal
-	 * void user_function (GtkSourceLanguage *sourcelanguage,
-	 *  gchar *arg1,
-	 *  gpointer user_data) : Run last
-	 * sourcelanguage:
-	 * the object which received the signal.
-	 * arg1:
-	 * user_data:
-	 * user data set when the signal handler was connected.
-	 */
-	public GtkSourceTagStyle* gtkSourceLanguageGetTagDefaultStyle(char[] tagId)
-	{
-		// GtkSourceTagStyle* gtk_source_language_get_tag_default_style  (GtkSourceLanguage *language,  const gchar *tag_id);
-		return gtk_source_language_get_tag_default_style(gtkSourceLanguage, Str.toStringz(tagId));
+		// gchar** gtk_source_language_get_style_ids (GtkSourceLanguage *language);
+		return gtk_source_language_get_style_ids(gtkSourceLanguage);
 	}
 }

@@ -226,9 +226,9 @@ lookup: APILookupGLt.txt
 #J#bindDir: gdac
 #J#lookup: APILookupGda.txt
 
-#J#srcdir: srcsv
-#J#bindDir: gsvc
-#J#lookup: APILookupSourceView.txt
+srcdir: srcsv
+bindDir: gsvc
+lookup: APILookupSourceView.txt
 
 ##gstreamerD wrapping is not on by default
 ##because of the hand-editing that is still required.

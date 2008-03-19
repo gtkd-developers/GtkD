@@ -78,7 +78,7 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import cairo.FontOption;
+//private import cairo.FontOption;
 private import gdk.Screen;
 private import gdk.Colormap;
 private import gdk.Visual;
@@ -634,39 +634,39 @@ public class Screen : ObjectG
 		return gdk_screen_get_setting(gdkScreen, Str.toStringz(name), (value is null) ? null : value.getValueStruct());
 	}
 	
-	/**
-	 * Gets any options previously set with gdk_screen_set_font_options().
-	 * Since 2.10
-	 * Returns: the current font options, or NULL if no default font options have been set.
-	 */
-	public FontOption getFontOptions()
-	{
-		// const cairo_font_options_t* gdk_screen_get_font_options (GdkScreen *screen);
-		auto p = gdk_screen_get_font_options(gdkScreen);
-		if(p is null)
-		{
-			version(Exceptions) throw new Exception("Null GObject from GTK+.");
-			else return null;
-		}
-		return new FontOption(cast(cairo_font_options_t*) p);
-	}
-	
-	/**
-	 * Sets the default font options for the screen. These
-	 * options will be set on any PangoContext's newly created
-	 * with gdk_pango_context_get_for_screen(). Changing the
-	 * default set of font options does not affect contexts that
-	 * have already been created.
-	 * Since 2.10
-	 * Params:
-	 * options =  a cairo_font_options_t, or NULL to unset any
-	 *  previously set default font options.
-	 */
-	public void setFontOptions(FontOption options)
-	{
-		// void gdk_screen_set_font_options (GdkScreen *screen,  const cairo_font_options_t *options);
-		gdk_screen_set_font_options(gdkScreen, (options is null) ? null : options.getFontOptionStruct());
-	}
+//	/**
+//	 * Gets any options previously set with gdk_screen_set_font_options().
+//	 * Since 2.10
+//	 * Returns: the current font options, or NULL if no default font options have been set.
+//	 */
+//	public FontOption getFontOptions()
+//	{
+//		// const cairo_font_options_t* gdk_screen_get_font_options (GdkScreen *screen);
+//		auto p = gdk_screen_get_font_options(gdkScreen);
+//		if(p is null)
+//		{
+//			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+//			else return null;
+//		}
+//		return new FontOption(cast(cairo_font_options_t*) p);
+//	}
+//	
+//	/**
+//	 * Sets the default font options for the screen. These
+//	 * options will be set on any PangoContext's newly created
+//	 * with gdk_pango_context_get_for_screen(). Changing the
+//	 * default set of font options does not affect contexts that
+//	 * have already been created.
+//	 * Since 2.10
+//	 * Params:
+//	 * options =  a cairo_font_options_t, or NULL to unset any
+//	 *  previously set default font options.
+//	 */
+//	public void setFontOptions(FontOption options)
+//	{
+//		// void gdk_screen_set_font_options (GdkScreen *screen,  const cairo_font_options_t *options);
+//		gdk_screen_set_font_options(gdkScreen, (options is null) ? null : options.getFontOptionStruct());
+//	}
 	
 	/**
 	 * Gets the resolution for font handling on the screen; see

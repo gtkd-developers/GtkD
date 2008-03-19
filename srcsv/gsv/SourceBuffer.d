@@ -40,20 +40,17 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
- * 	- gsv.SourceTagTable
  * 	- gsv.SourceLanguage
- * 	- gsv.SourceTagStyle
- * 	- gsv.SourceMarker
+ * 	- gsv.SourceMark
  * 	- gtk.TextIter
  * 	- glib.Str
  * 	- glib.ListSG
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GtkSourceLanguage* -> SourceLanguage
- * 	- GtkSourceMarker* -> SourceMarker
- * 	- GtkSourceTagStyle* -> SourceTagStyle
- * 	- GtkSourceTagTable* -> SourceTagTable
+ * 	- GtkSourceMark* -> SourceMark
  * 	- GtkTextIter* -> TextIter
  * module aliases:
  * local aliases:
@@ -61,29 +58,22 @@
 
 module gsv.SourceBuffer;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gsvc.gsvtypes;
+public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
-private import gsv.SourceTagTable;
 private import gsv.SourceLanguage;
-private import gsv.SourceTagStyle;
-private import gsv.SourceMarker;
+private import gsv.SourceMark;
 private import gtk.TextIter;
 private import glib.Str;
 private import glib.ListSG;
 
 
 
+private import gtk.TextBuffer;
 
 /**
  * Description
@@ -96,12 +86,8 @@ private import glib.ListSG;
  * convenience function which allows you to initially set a
  * GtkSourceLanguage.
  * By default highlighting is enabled, but you can disable it with
- * gtk_source_buffer_set_highlight(). This can be useful if you're not
- * using GtkSourceLanguage objects to set the highlighting patterns, and
- * instead you're manually adding GtkSourceTag objects to the buffer's
- * tag table.
+ * gtk_source_buffer_set_highlight_syntax().
  */
-private import gtk.TextBuffer;
 public class SourceBuffer : TextBuffer
 {
 	
@@ -126,25 +112,11 @@ public class SourceBuffer : TextBuffer
 	 */
 	public this (GtkSourceBuffer* gtkSourceBuffer)
 	{
-		version(noAssert)
+		if(gtkSourceBuffer is null)
 		{
-			if ( gtkSourceBuffer is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkSourceBuffer is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkSourceBuffer is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkSourceBuffer !is null, "struct gtkSourceBuffer is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkSourceBuffer passed to constructor.");
+			else return;
 		}
 		super(cast(GtkTextBuffer*)gtkSourceBuffer);
 		this.gtkSourceBuffer = gtkSourceBuffer;
@@ -152,69 +124,11 @@ public class SourceBuffer : TextBuffer
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
-	void delegate(gboolean, SourceBuffer)[] onCanRedoListeners;
-	void addOnCanRedo(void delegate(gboolean, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("can-redo" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"can-redo",
-			cast(GCallback)&callBackCanRedo,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["can-redo"] = 1;
-		}
-		onCanRedoListeners ~= dlg;
-	}
-	extern(C) static void callBackCanRedo(GtkSourceBuffer* sourcebufferStruct, gboolean arg1, SourceBuffer sourceBuffer)
-	{
-		bool consumed = false;
-		
-		foreach ( void delegate(gboolean, SourceBuffer) dlg ; sourceBuffer.onCanRedoListeners )
-		{
-			dlg(arg1, sourceBuffer);
-		}
-		
-		return consumed;
-	}
-	
-	void delegate(gboolean, SourceBuffer)[] onCanUndoListeners;
-	void addOnCanUndo(void delegate(gboolean, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
-	{
-		if ( !("can-undo" in connectedSignals) )
-		{
-			Signals.connectData(
-			getStruct(),
-			"can-undo",
-			cast(GCallback)&callBackCanUndo,
-			cast(void*)this,
-			null,
-			connectFlags);
-			connectedSignals["can-undo"] = 1;
-		}
-		onCanUndoListeners ~= dlg;
-	}
-	extern(C) static void callBackCanUndo(GtkSourceBuffer* sourcebufferStruct, gboolean arg1, SourceBuffer sourceBuffer)
-	{
-		bool consumed = false;
-		
-		foreach ( void delegate(gboolean, SourceBuffer) dlg ; sourceBuffer.onCanUndoListeners )
-		{
-			dlg(arg1, sourceBuffer);
-		}
-		
-		return consumed;
-	}
-	
 	void delegate(TextIter, TextIter, SourceBuffer)[] onHighlightUpdatedListeners;
+	/**
+	 */
 	void addOnHighlightUpdated(void delegate(TextIter, TextIter, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("highlight-updated" in connectedSignals) )
@@ -242,79 +156,142 @@ public class SourceBuffer : TextBuffer
 		return consumed;
 	}
 	
-	void delegate(TextIter, SourceBuffer)[] onMarkerUpdatedListeners;
-	void addOnMarkerUpdated(void delegate(TextIter, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
+	void delegate(GtkTextMark*, SourceBuffer)[] onSourceMarkUpdatedListeners;
+	/**
+	 * The ::source_mark_updated signal is emitted each time
+	 * a mark is added to, moved or removed from the buffer.
+	 * See Also
+	 * There is an introduction document
+	 * describing the basic concepts of the buffer/view interactions.
+	 * Check GtkTextBuffer for information about the base buffer; and
+	 * GtkSourceView for examples on setting up the buffer to be displayed
+	 * in a view widget.
+	 */
+	void addOnSourceMarkUpdated(void delegate(GtkTextMark*, SourceBuffer) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
-		if ( !("marker-updated" in connectedSignals) )
+		if ( !("source-mark-updated" in connectedSignals) )
 		{
 			Signals.connectData(
 			getStruct(),
-			"marker-updated",
-			cast(GCallback)&callBackMarkerUpdated,
+			"source-mark-updated",
+			cast(GCallback)&callBackSourceMarkUpdated,
 			cast(void*)this,
 			null,
 			connectFlags);
-			connectedSignals["marker-updated"] = 1;
+			connectedSignals["source-mark-updated"] = 1;
 		}
-		onMarkerUpdatedListeners ~= dlg;
+		onSourceMarkUpdatedListeners ~= dlg;
 	}
-	extern(C) static void callBackMarkerUpdated(GtkSourceBuffer* sourcebufferStruct, GtkTextIter* arg1, SourceBuffer sourceBuffer)
+	extern(C) static void callBackSourceMarkUpdated(GtkSourceBuffer* bufferStruct, GtkTextMark* arg1, SourceBuffer sourceBuffer)
 	{
 		bool consumed = false;
 		
-		foreach ( void delegate(TextIter, SourceBuffer) dlg ; sourceBuffer.onMarkerUpdatedListeners )
+		foreach ( void delegate(GtkTextMark*, SourceBuffer) dlg ; sourceBuffer.onSourceMarkUpdatedListeners )
 		{
-			dlg(new TextIter(arg1), sourceBuffer);
+			dlg(arg1, sourceBuffer);
 		}
 		
 		return consumed;
 	}
 	
 	
-	
 	/**
 	 * Creates a new source buffer.
-	 * table:
-	 *  a GtkSourceTagTable, or NULL to create a new one.
-	 * Returns:
-	 *  a new source buffer.
+	 * Params:
+	 * table =  a GtkTextTagTable, or NULL to create a new one.
 	 */
-	public this (SourceTagTable table)
+	public this (GtkTextTagTable* table)
 	{
-		// GtkSourceBuffer* gtk_source_buffer_new (GtkSourceTagTable *table);
-		this(cast(GtkSourceBuffer*)gtk_source_buffer_new((table is null) ? null : table.getSourceTagTableStruct()) );
+		// GtkSourceBuffer* gtk_source_buffer_new (GtkTextTagTable *table);
+		auto p = gtk_source_buffer_new(table);
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkSourceBuffer*) p);
 	}
 	
 	/**
 	 * Creates a new source buffer using the highlighting patterns in
 	 * language. This is equivalent to creating a new source buffer with
-	 * the default tag table and then calling
-	 * gtk_source_buffer_set_language().
-	 * language:
-	 *  a GtkSourceLanguage.
-	 * Returns:
-	 *  a new source buffer which will highlight text
-	 * according to language.
+	 * a new tag table and then calling gtk_source_buffer_set_language().
+	 * Params:
+	 * language =  a GtkSourceLanguage.
 	 */
 	public this (SourceLanguage language)
 	{
-		// GtkSourceBuffer* gtk_source_buffer_new_with_language  (GtkSourceLanguage *language);
-		this(cast(GtkSourceBuffer*)gtk_source_buffer_new_with_language((language is null) ? null : language.getSourceLanguageStruct()) );
+		// GtkSourceBuffer* gtk_source_buffer_new_with_language (GtkSourceLanguage *language);
+		auto p = gtk_source_buffer_new_with_language((language is null) ? null : language.getSourceLanguageStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkSourceBuffer*) p);
 	}
 	
 	/**
-	 * Determines whether bracket match highlighting is activated for the
-	 * source buffer.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * Returns:
-	 *  TRUE if the source buffer will highlight matching
-	 * brackets.
+	 * Controls whether syntax is highlighted in the buffer. If highlight
+	 * is TRUE, the text will be highlighted according to the syntax
+	 * patterns specified in the language set with
+	 * gtk_source_buffer_set_language(). If highlight is FALSE, syntax highlighting
+	 * is disabled and all the GtkTextTag objects that have been added by the
+	 * syntax highlighting engine are removed from the buffer.
+	 * Params:
+	 * highlight =  TRUE to enable syntax highlighting, FALSE to disable it.
 	 */
-	public int getCheckBrackets()
+	public void setHighlightSyntax(int highlight)
 	{
-		// gboolean gtk_source_buffer_get_check_brackets  (GtkSourceBuffer *buffer);
-		return gtk_source_buffer_get_check_brackets(gtkSourceBuffer);
+		// void gtk_source_buffer_set_highlight_syntax  (GtkSourceBuffer *buffer,  gboolean highlight);
+		gtk_source_buffer_set_highlight_syntax(gtkSourceBuffer, highlight);
+	}
+	
+	/**
+	 * Determines whether syntax highlighting is activated in the source
+	 * buffer.
+	 * Returns: TRUE if syntax highlighting is enabled, FALSE otherwise.
+	 */
+	public int getHighlightSyntax()
+	{
+		// gboolean gtk_source_buffer_get_highlight_syntax  (GtkSourceBuffer *buffer);
+		return gtk_source_buffer_get_highlight_syntax(gtkSourceBuffer);
+	}
+	
+	/**
+	 * Associate a GtkSourceLanguage with the source buffer. If language is
+	 * not-NULL and syntax highlighting is enabled (see gtk_source_buffer_set_highlight_syntax()),
+	 * the syntax patterns defined in language will be used to highlight the text
+	 * contained in the buffer. If language is NULL, the text contained in the
+	 * buffer is not highlighted.
+	 * The buffer holds a reference to language.
+	 * Params:
+	 * language =  a GtkSourceLanguage to set, or NULL.
+	 */
+	public void setLanguage(SourceLanguage language)
+	{
+		// void gtk_source_buffer_set_language (GtkSourceBuffer *buffer,  GtkSourceLanguage *language);
+		gtk_source_buffer_set_language(gtkSourceBuffer, (language is null) ? null : language.getSourceLanguageStruct());
+	}
+	
+	/**
+	 * Returns the GtkSourceLanguage associated with the buffer,
+	 * see gtk_source_buffer_set_language(). The returned object should not be
+	 * unreferenced by the user.
+	 * Returns: GtkSourceLanguage associated with the buffer, or NULL.
+	 */
+	public SourceLanguage getLanguage()
+	{
+		// GtkSourceLanguage* gtk_source_buffer_get_language (GtkSourceBuffer *buffer);
+		auto p = gtk_source_buffer_get_language(gtkSourceBuffer);
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new SourceLanguage(cast(GtkSourceLanguage*) p);
 	}
 	
 	/**
@@ -324,78 +301,51 @@ public class SourceBuffer : TextBuffer
 	 * closing bracket character will be highlighted. You can specify the
 	 * style with the gtk_source_buffer_set_bracket_match_style()
 	 * function.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * check_brackets:
-	 *  TRUE if you want matching brackets highlighted.
+	 * Params:
+	 * highlight =  TRUE if you want matching brackets highlighted.
 	 */
-	public void setCheckBrackets(int checkBrackets)
+	public void setHighlightMatchingBrackets(int highlight)
 	{
-		// void gtk_source_buffer_set_check_brackets  (GtkSourceBuffer *buffer,  gboolean check_brackets);
-		gtk_source_buffer_set_check_brackets(gtkSourceBuffer, checkBrackets);
+		// void gtk_source_buffer_set_highlight_matching_brackets  (GtkSourceBuffer *buffer,  gboolean highlight);
+		gtk_source_buffer_set_highlight_matching_brackets(gtkSourceBuffer, highlight);
 	}
 	
 	/**
-	 * Sets the style used for highlighting matching brackets.
-	 * source_buffer:
-	 *  a GtkSourceBuffer.
-	 * style:
-	 *  the GtkSourceTagStyle specifying colors and text
-	 * attributes.
+	 * Determines whether bracket match highlighting is activated for the
+	 * source buffer.
+	 * Returns: TRUE if the source buffer will highlight matchingbrackets.
 	 */
-	public void setBracketMatchStyle(SourceTagStyle style)
+	public int getHighlightMatchingBrackets()
 	{
-		// void gtk_source_buffer_set_bracket_match_style  (GtkSourceBuffer *source_buffer,  const GtkSourceTagStyle *style);
-		gtk_source_buffer_set_bracket_match_style(gtkSourceBuffer, (style is null) ? null : style.getSourceTagStyleStruct());
+		// gboolean gtk_source_buffer_get_highlight_matching_brackets  (GtkSourceBuffer *buffer);
+		return gtk_source_buffer_get_highlight_matching_brackets(gtkSourceBuffer);
 	}
 	
 	/**
-	 * Determines whether text highlighting is activated in the source
-	 * buffer.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * Returns:
-	 *  TRUE if highlighting is enabled.
+	 * Sets style scheme used by the buffer.
+	 * Params:
+	 * scheme =  style scheme.
 	 */
-	public int getHighlight()
+	public void setStyleScheme(GtkSourceStyleScheme* scheme)
 	{
-		// gboolean gtk_source_buffer_get_highlight (GtkSourceBuffer *buffer);
-		return gtk_source_buffer_get_highlight(gtkSourceBuffer);
+		// void gtk_source_buffer_set_style_scheme (GtkSourceBuffer *buffer,  GtkSourceStyleScheme *scheme);
+		gtk_source_buffer_set_style_scheme(gtkSourceBuffer, scheme);
 	}
 	
 	/**
-	 * Controls whether text is highlighted in the buffer. If highlight
-	 * is TRUE, the text will be highlighted according to the patterns
-	 * installed in the buffer (either set with
-	 * gtk_source_buffer_set_language() or by adding individual
-	 * GtkSourceTag tags to the buffer's tag table). Otherwise, any
-	 * current highlighted text will be restored to the default buffer
-	 * style.
-	 * Tags not of GtkSourceTag type will not be removed by this option,
-	 * and normal GtkTextTag priority settings apply when highlighting is
-	 * enabled.
-	 * If not using a GtkSourceLanguage for setting the highlighting
-	 * patterns in the buffer, it is recommended for performance reasons
-	 * that you add all the GtkSourceTag tags with highlighting disabled
-	 * and enable it when finished.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * highlight:
-	 *  TRUE if you want to activate highlighting.
+	 * Returns the GtkSourceStyleScheme currently used in buffer.
+	 * Returns: the GtkSourceStyleScheme set bygtk_source_buffer_set_style_scheme(), or NULL.
 	 */
-	public void setHighlight(int highlight)
+	public GtkSourceStyleScheme* getStyleScheme()
 	{
-		// void gtk_source_buffer_set_highlight (GtkSourceBuffer *buffer,  gboolean highlight);
-		gtk_source_buffer_set_highlight(gtkSourceBuffer, highlight);
+		// GtkSourceStyleScheme* gtk_source_buffer_get_style_scheme  (GtkSourceBuffer *buffer);
+		return gtk_source_buffer_get_style_scheme(gtkSourceBuffer);
 	}
 	
 	/**
 	 * Determines the number of undo levels the buffer will track for
 	 * buffer edits.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * Returns:
-	 *  the maximum number of possible undo levels.
+	 * Returns: the maximum number of possible undo levels or -1 if no limit is set.
 	 */
 	public int getMaxUndoLevels()
 	{
@@ -407,16 +357,15 @@ public class SourceBuffer : TextBuffer
 	 * Sets the number of undo levels for user actions the buffer will
 	 * track. If the number of user actions exceeds the limit set by this
 	 * function, older actions will be discarded.
+	 * If max_undo_levels is -1, no limit is set.
 	 * A new action is started whenever the function
 	 * gtk_text_buffer_begin_user_action() is called. In general, this
 	 * happens whenever the user presses any key which modifies the
 	 * buffer, but the undo manager will try to merge similar consecutive
 	 * actions, such as multiple character insertions into one action.
 	 * But, inserting a newline does start a new action.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * max_undo_levels:
-	 *  the desired maximum number of undo levels.
+	 * Params:
+	 * maxUndoLevels =  the desired maximum number of undo levels.
 	 */
 	public void setMaxUndoLevels(int maxUndoLevels)
 	{
@@ -425,97 +374,13 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	/**
-	 * Determines the GtkSourceLanguage used by the buffer. The returned
-	 * object should not be unreferenced by the user.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * Returns:
-	 *  the GtkSourceLanguage set by
-	 * gtk_source_buffer_set_language(), or NULL.
+	 * Redoes the last undo operation. Use gtk_source_buffer_can_redo()
+	 * to check whether a call to this function will have any effect.
 	 */
-	public SourceLanguage getLanguage()
+	public void redo()
 	{
-		// GtkSourceLanguage* gtk_source_buffer_get_language  (GtkSourceBuffer *buffer);
-		return new SourceLanguage( gtk_source_buffer_get_language(gtkSourceBuffer) );
-	}
-	
-	/**
-	 * Sets the GtkSourceLanguage the source buffer will use, adding
-	 * GtkSourceTag tags with the language's patterns and setting the
-	 * escape character with gtk_source_buffer_set_escape_char(). Note
-	 * that this will remove any GtkSourceTag tags currently in the
-	 * buffer's tag table. The buffer holds a reference to the language
-	 * set.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * language:
-	 *  a GtkSourceLanguage to set, or NULL.
-	 */
-	public void setLanguage(SourceLanguage language)
-	{
-		// void gtk_source_buffer_set_language (GtkSourceBuffer *buffer,  GtkSourceLanguage *language);
-		gtk_source_buffer_set_language(gtkSourceBuffer, (language is null) ? null : language.getSourceLanguageStruct());
-	}
-	
-	/**
-	 * Determines the escaping character used by the source buffer
-	 * highlighting engine.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * Returns:
-	 *  the UTF-8 character for the escape character the
-	 * buffer is using.
-	 */
-	public gunichar getEscapeChar()
-	{
-		// gunichar gtk_source_buffer_get_escape_char  (GtkSourceBuffer *buffer);
-		return gtk_source_buffer_get_escape_char(gtkSourceBuffer);
-	}
-	
-	/**
-	 * Sets the escape character to be used by the highlighting engine.
-	 * When performing the initial analysis, the engine will discard a
-	 * matching syntax pattern if it's prefixed with an odd number of
-	 * escape characters. This allows for example to correctly highlight
-	 * strings with escaped quotes embedded.
-	 * This setting affects only syntax patterns (i.e. those defined in
-	 * GtkSyntaxTag tags).
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * escape_char:
-	 *  the escape character the buffer should use.
-	 */
-	public void setEscapeChar(gunichar escapeChar)
-	{
-		// void gtk_source_buffer_set_escape_char  (GtkSourceBuffer *buffer,  gunichar escape_char);
-		gtk_source_buffer_set_escape_char(gtkSourceBuffer, escapeChar);
-	}
-	
-	/**
-	 * Determines whether a source buffer can undo the last action.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * Returns:
-	 *  TRUE if it's possible to undo the last action.
-	 */
-	public int canUndo()
-	{
-		// gboolean gtk_source_buffer_can_undo (GtkSourceBuffer *buffer);
-		return gtk_source_buffer_can_undo(gtkSourceBuffer);
-	}
-	
-	/**
-	 * Determines whether a source buffer can redo the last action
-	 * (i.e. if the last operation was an undo).
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * Returns:
-	 *  TRUE if a redo is possible.
-	 */
-	public int canRedo()
-	{
-		// gboolean gtk_source_buffer_can_redo (GtkSourceBuffer *buffer);
-		return gtk_source_buffer_can_redo(gtkSourceBuffer);
+		// void gtk_source_buffer_redo (GtkSourceBuffer *buffer);
+		gtk_source_buffer_redo(gtkSourceBuffer);
 	}
 	
 	/**
@@ -526,8 +391,6 @@ public class SourceBuffer : TextBuffer
 	 * gtk_text_buffer_begin_user_action() and
 	 * gtk_text_buffer_end_user_action(), or sequences of similar edits
 	 * (inserts or deletes) on the same line.
-	 * buffer:
-	 *  a GtkSourceBuffer.
 	 */
 	public void undo()
 	{
@@ -536,15 +399,24 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	/**
-	 * Redoes the last undo operation. Use gtk_source_buffer_can_redo()
-	 * to check whether a call to this function will have any effect.
-	 * buffer:
-	 *  a GtkSourceBuffer.
+	 * Determines whether a source buffer can redo the last action
+	 * (i.e. if the last operation was an undo).
+	 * Returns: TRUE if a redo is possible.
 	 */
-	public void redo()
+	public int canRedo()
 	{
-		// void gtk_source_buffer_redo (GtkSourceBuffer *buffer);
-		gtk_source_buffer_redo(gtkSourceBuffer);
+		// gboolean gtk_source_buffer_can_redo (GtkSourceBuffer *buffer);
+		return gtk_source_buffer_can_redo(gtkSourceBuffer);
+	}
+	
+	/**
+	 * Determines whether a source buffer can undo the last action.
+	 * Returns: TRUE if it's possible to undo the last action.
+	 */
+	public int canUndo()
+	{
+		// gboolean gtk_source_buffer_can_undo (GtkSourceBuffer *buffer);
+		return gtk_source_buffer_can_undo(gtkSourceBuffer);
 	}
 	
 	/**
@@ -554,8 +426,6 @@ public class SourceBuffer : TextBuffer
 	 * loading a file in a text editor).
 	 * You may nest gtk_source_buffer_begin_not_undoable_action() /
 	 * gtk_source_buffer_end_not_undoable_action() blocks.
-	 * buffer:
-	 *  a GtkSourceBuffer.
 	 */
 	public void beginNotUndoableAction()
 	{
@@ -568,8 +438,6 @@ public class SourceBuffer : TextBuffer
 	 * last not undoable block is closed through the call to this
 	 * function, the list of undo actions is cleared and the undo manager
 	 * is re-enabled.
-	 * buffer:
-	 *  a GtkSourceBuffer.
 	 */
 	public void endNotUndoableAction()
 	{
@@ -578,203 +446,137 @@ public class SourceBuffer : TextBuffer
 	}
 	
 	/**
-	 * Creates a marker in the buffer of type type. A marker is
-	 * semantically very similar to a GtkTextMark, except it has a type
-	 * which is used by the GtkSourceView displaying the buffer to show a
-	 * pixmap on the left margin, at the line the marker is in. Because
-	 * of this, a marker is generally associated to a line and not a
-	 * character position. Markers are also accessible through a position
-	 * or range in the buffer.
-	 * Markers are implemented using GtkTextMark, so all characteristics
-	 * and restrictions to marks apply to markers too. These includes
-	 * life cycle issues and "mark-set" and "mark-deleted" signal
-	 * emissions.
-	 * Like a GtkTextMark, a GtkSourceMarker can be anonymous if the
-	 * passed name is NULL. Also, the buffer owns the markers so you
+	 * Creates a source mark in the buffer of category category. A source mark is
+	 * a GtkTextMark but organised into categories. Depending on the category
+	 * a pixbuf can be specified that will be displayed along the line of the mark.
+	 * Like a GtkTextMark, a GtkSourceMark can be anonymous if the
+	 * passed name is NULL. Also, the buffer owns the marks so you
 	 * shouldn't unreference it.
-	 * Markers always have left gravity and are moved to the beginning of
-	 * the line when the user deletes the line they were in. Also, if the
-	 * user deletes a region of text which contained lines with markers,
-	 * those are deleted.
-	 * Typical uses for a marker are bookmarks, breakpoints, current
+	 * Marks always have left gravity and are moved to the beginning of
+	 * the line when the user deletes the line they were in.
+	 * Typical uses for a source mark are bookmarks, breakpoints, current
 	 * executing instruction indication in a source file, etc..
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * name:
-	 *  the name of the marker, or NULL.
-	 * type:
-	 *  a string defining the marker type, or NULL.
-	 * where:
-	 *  location to place the marker.
-	 * Returns:
-	 *  a new GtkSourceMarker, owned by the buffer.
+	 * Since 2.2
+	 * Params:
+	 * name =  the name of the mark, or NULL.
+	 * category =  a string defining the mark category.
+	 * where =  location to place the mark.
+	 * Returns: a new GtkSourceMark, owned by the buffer.
 	 */
-	public SourceMarker createMarker(char[] name, char[] type, TextIter where)
+	public SourceMark createSourceMark(char[] name, char[] category, TextIter where)
 	{
-		// GtkSourceMarker* gtk_source_buffer_create_marker  (GtkSourceBuffer *buffer,  const gchar *name,  const gchar *type,  const GtkTextIter *where);
-		return new SourceMarker( gtk_source_buffer_create_marker(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(type), (where is null) ? null : where.getTextIterStruct()) );
+		// GtkSourceMark* gtk_source_buffer_create_source_mark  (GtkSourceBuffer *buffer,  const gchar *name,  const gchar *category,  const GtkTextIter *where);
+		auto p = gtk_source_buffer_create_source_mark(gtkSourceBuffer, Str.toStringz(name), Str.toStringz(category), (where is null) ? null : where.getTextIterStruct());
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new SourceMark(cast(GtkSourceMark*) p);
 	}
 	
 	/**
-	 * Moves marker to the new location where.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * marker:
-	 *  a GtkSourceMarker in buffer.
-	 * where:
-	 *  the new location for the marker.
+	 * Returns the list of marks of the given category at line.
+	 * If category is NULL, all marks at line are returned.
+	 * Since 2.2
+	 * Params:
+	 * line =  a line number.
+	 * category =  category to search for or NULL
+	 * Returns: a newly allocated GSList.
 	 */
-	public void moveMarker(SourceMarker marker, TextIter where)
+	public ListSG getSourceMarksAtLine(int line, char[] category)
 	{
-		// void gtk_source_buffer_move_marker (GtkSourceBuffer *buffer,  GtkSourceMarker *marker,  const GtkTextIter *where);
-		gtk_source_buffer_move_marker(gtkSourceBuffer, (marker is null) ? null : marker.getSourceMarkerStruct(), (where is null) ? null : where.getTextIterStruct());
+		// GSList* gtk_source_buffer_get_source_marks_at_line  (GtkSourceBuffer *buffer,  gint line,  const gchar *category);
+		auto p = gtk_source_buffer_get_source_marks_at_line(gtkSourceBuffer, line, Str.toStringz(category));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
-	 * Deletes marker from the source buffer. The same conditions as for
-	 * GtkTextMark apply here. The marker is no longer accessible from
-	 * the buffer, but if you held a reference to it, it will not be
-	 * destroyed.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * marker:
-	 *  a GtkSourceMarker in the buffer.
+	 * Returns the list of marks of the given category at iter. If category
+	 * is NULL it returns all marks at iter.
+	 * Since 2.2
+	 * Params:
+	 * iter =  an iterator.
+	 * category =  category to search for or NULL
+	 * Returns: a newly allocated GSList.
 	 */
-	public void deleteMarker(SourceMarker marker)
+	public ListSG getSourceMarksAtIter(TextIter iter, char[] category)
 	{
-		// void gtk_source_buffer_delete_marker (GtkSourceBuffer *buffer,  GtkSourceMarker *marker);
-		gtk_source_buffer_delete_marker(gtkSourceBuffer, (marker is null) ? null : marker.getSourceMarkerStruct());
+		// GSList* gtk_source_buffer_get_source_marks_at_iter  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
+		auto p = gtk_source_buffer_get_source_marks_at_iter(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
+		if(p is null)
+		{
+			version(Exceptions) throw new Exception("Null GObject from GTK+.");
+			else return null;
+		}
+		return new ListSG(cast(GSList*) p);
 	}
 	
 	/**
-	 * Looks up the GtkSourceMarker named name in buffer, returning
-	 * NULL if it doesn't exists.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * name:
-	 *  name of the marker to retrieve.
-	 * Returns:
-	 *  the GtkSourceMarker whose name is name, or NULL.
+	 * Remove all marks of category between start and end from the buffer.
+	 * If category is NULL, all marks in the range will be removed.
+	 * Since 2.2
+	 * Params:
+	 * start =  a GtkTextIter
+	 * end =  a GtkTextIter
+	 * category =  category to search for or NULL
 	 */
-	public SourceMarker getMarker(char[] name)
+	public void removeSourceMarks(TextIter start, TextIter end, char[] category)
 	{
-		// GtkSourceMarker* gtk_source_buffer_get_marker  (GtkSourceBuffer *buffer,  const gchar *name);
-		return new SourceMarker( gtk_source_buffer_get_marker(gtkSourceBuffer, Str.toStringz(name)) );
+		// void gtk_source_buffer_remove_source_marks  (GtkSourceBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end,  const gchar *category);
+		gtk_source_buffer_remove_source_marks(gtkSourceBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct(), Str.toStringz(category));
 	}
 	
 	/**
-	 * Returns an ordered (by position) GSList of
-	 * GtkSourceMarker objects inside the region delimited by the
-	 * GtkTextIter begin and end. The iters may be in any order.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * begin:
-	 *  beginning of the range.
-	 * end:
-	 *  end of the range.
-	 * Returns:
-	 *  a GSList of the GtkSourceMarker inside the range.
+	 * Moves iter to the position of the next GtkSourceMark of the given
+	 * category. Returns TRUE if iter was moved. If category is NULL, the
+	 * next source mark can be of any category.
+	 * Since 2.2
+	 * Params:
+	 * iter =  an iterator.
+	 * category =  category to search for or NULL
+	 * Returns: whether iter moved.
 	 */
-	public ListSG getMarkersInRegion(TextIter begin, TextIter end)
+	public int forwardIterToSourceMark(TextIter iter, char[] category)
 	{
-		// GSList* gtk_source_buffer_get_markers_in_region  (GtkSourceBuffer *buffer,  const GtkTextIter *begin,  const GtkTextIter *end);
-		return new ListSG( gtk_source_buffer_get_markers_in_region(gtkSourceBuffer, (begin is null) ? null : begin.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct()) );
+		// gboolean gtk_source_buffer_forward_iter_to_source_mark  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
+		return gtk_source_buffer_forward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
 	}
 	
 	/**
-	 * Returns the first (nearest to the top of the buffer) marker in
-	 * buffer.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * Returns:
-	 *  a reference to the first GtkSourceMarker, or NULL if
-	 * there are no markers in the buffer.
+	 * Moves iter to the position of the previous GtkSourceMark of the given
+	 * category. Returns TRUE if iter was moved. If category is NULL, the
+	 * previous source mark can be of any category.
+	 * Since 2.2
+	 * Params:
+	 * iter =  an iterator.
+	 * category =  category to search for or NULL
+	 * Returns: whether iter moved.
 	 */
-	public SourceMarker getFirstMarker()
+	public int backwardIterToSourceMark(TextIter iter, char[] category)
 	{
-		// GtkSourceMarker* gtk_source_buffer_get_first_marker  (GtkSourceBuffer *buffer);
-		return new SourceMarker( gtk_source_buffer_get_first_marker(gtkSourceBuffer) );
+		// gboolean gtk_source_buffer_backward_iter_to_source_mark  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  const gchar *category);
+		return gtk_source_buffer_backward_iter_to_source_mark(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(category));
 	}
 	
 	/**
-	 * Returns the last (nearest to the bottom of the buffer) marker in
-	 * buffer.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * Returns:
-	 *  a reference to the last GtkSourceMarker, or NULL if
-	 * there are no markers in the buffer.
+	 * Forces buffer to analyze and highlight the given area synchronously.
+	 * Note
+	 *  This is a potentially slow operation and should be used only
+	 *  when you need to make sure that some text not currently
+	 *  visible is highlighted, for instance before printing.
+	 * Params:
+	 * start =  start of the area to highlight.
+	 * end =  end of the area to highlight.
 	 */
-	public SourceMarker getLastMarker()
+	public void ensureHighlight(TextIter start, TextIter end)
 	{
-		// GtkSourceMarker* gtk_source_buffer_get_last_marker  (GtkSourceBuffer *buffer);
-		return new SourceMarker( gtk_source_buffer_get_last_marker(gtkSourceBuffer) );
+		// void gtk_source_buffer_ensure_highlight (GtkSourceBuffer *buffer,  const GtkTextIter *start,  const GtkTextIter *end);
+		gtk_source_buffer_ensure_highlight(gtkSourceBuffer, (start is null) ? null : start.getTextIterStruct(), (end is null) ? null : end.getTextIterStruct());
 	}
-	
-	/**
-	 * Initializes iter at the location of marker.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * iter:
-	 *  a GtkTextIter to initialize.
-	 * marker:
-	 *  a GtkSourceMarker of buffer.
-	 */
-	public void getIterAtMarker(TextIter iter, SourceMarker marker)
-	{
-		// void gtk_source_buffer_get_iter_at_marker  (GtkSourceBuffer *buffer,  GtkTextIter *iter,  GtkSourceMarker *marker);
-		gtk_source_buffer_get_iter_at_marker(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct(), (marker is null) ? null : marker.getSourceMarkerStruct());
-	}
-	
-	/**
-	 * Returns the nearest marker to the right of iter. If there are
-	 * multiple markers at the same position, this function will always
-	 * return the first one (from the internal linked list), even if
-	 * starting the search exactly at its location. You can get the
-	 * others using gtk_source_marker_next().
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * iter:
-	 *  the location to start searching from.
-	 * Returns:
-	 *  the GtkSourceMarker nearest to the right of iter,
-	 * or NULL if there are no more markers after iter.
-	 */
-	public SourceMarker getNextMarker(TextIter iter)
-	{
-		// GtkSourceMarker* gtk_source_buffer_get_next_marker  (GtkSourceBuffer *buffer,  GtkTextIter *iter);
-		return new SourceMarker( gtk_source_buffer_get_next_marker(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct()) );
-	}
-	
-	/**
-	 * Returns the nearest marker to the left of iter. If there are
-	 * multiple markers at the same position, this function will always
-	 * return the last one (from the internal linked list), even if
-	 * starting the search exactly at its location. You can get the
-	 * others using gtk_source_marker_prev().
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * iter:
-	 *  the location to start searching from.
-	 * Returns:
-	 *  the GtkSourceMarker nearest to the left of iter,
-	 * or NULL if there are no more markers before iter.
-	 * Property Details
-	 * The "check-brackets" property
-	 *  "check-brackets" gboolean : Read / Write
-	 * Whether to check and highlight matching brackets.
-	 * Default value: TRUE
-	 */
-	public SourceMarker getPrevMarker(TextIter iter)
-	{
-		// GtkSourceMarker* gtk_source_buffer_get_prev_marker  (GtkSourceBuffer *buffer,  GtkTextIter *iter);
-		return new SourceMarker( gtk_source_buffer_get_prev_marker(gtkSourceBuffer, (iter is null) ? null : iter.getTextIterStruct()) );
-	}
-	
-	
-	
-	
-	
-	
-	
 }

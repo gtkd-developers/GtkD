@@ -1,6 +1,6 @@
 #!/bin/sh
 rm libgtkdsv.a
-compd \
+./compd \
 	srcsv/gsv \
 	srcsv/gsvc \
 	-I src:srcsv:~/dmd/src/phobos \

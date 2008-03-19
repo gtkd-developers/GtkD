@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gsv.SourceBuffer
  * 	- gtkc.gtk
@@ -52,18 +53,12 @@
 
 module gsv.SourceView;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gsvc.gsvtypes;
+public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 
+private import gobject.Signals;
+public  import gtkc.gdktypes;
 
 private import gsv.SourceBuffer;
 private import gtkc.gtk;
@@ -71,11 +66,14 @@ private import glib.Str;
 
 
 
+private import gtk.TextView;
 
 /**
  * Description
+ * GtkSourceView is the main object of the gtksourceview library. It provides
+ * a text view which syntax highlighting, undo/redo and text marks. Use a
+ * GtkSourceBuffer to display text with a GtkSourceView.
  */
-private import gtk.TextView;
 public class SourceView : TextView
 {
 	
@@ -100,25 +98,11 @@ public class SourceView : TextView
 	 */
 	public this (GtkSourceView* gtkSourceView)
 	{
-		version(noAssert)
+		if(gtkSourceView is null)
 		{
-			if ( gtkSourceView is null )
-			{
-				int zero = 0;
-				version(Tango)
-				{
-					Stdout("struct gtkSourceView is null on constructor").newline;
-				}
-				else
-				{
-					printf("struct gtkSourceView is null on constructor");
-				}
-				zero = zero / zero;
-			}
-		}
-		else
-		{
-			assert(gtkSourceView !is null, "struct gtkSourceView is null on constructor");
+			this = null;
+			version(Exceptions) throw new Exception("Null gtkSourceView passed to constructor.");
+			else return;
 		}
 		super(cast(GtkTextView*)gtkSourceView);
 		this.gtkSourceView = gtkSourceView;
@@ -128,8 +112,6 @@ public class SourceView : TextView
 	 * Returns the GtkSourceBuffer being displayed by this source view.
 	 * The reference count on the buffer is not incremented; the caller
 	 * of this function won't own a new reference.
-	 * text_view:
-	 *  a GtkSourceView
 	 * Returns:
 	 *  a GtkSourceBuffer
 	 */
@@ -143,13 +125,11 @@ public class SourceView : TextView
 	
 	/**
 	 */
-	
-	// imports for the signal processing
-	private import gobject.Signals;
-	private import gtkc.gdktypes;
 	int[char[]] connectedSignals;
 	
 	void delegate(SourceView)[] onRedoListeners;
+	/**
+	 */
 	void addOnRedo(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("redo" in connectedSignals) )
@@ -178,6 +158,8 @@ public class SourceView : TextView
 	}
 	
 	void delegate(SourceView)[] onUndoListeners;
+	/**
+	 */
 	void addOnUndo(void delegate(SourceView) dlg, ConnectFlags connectFlags=cast(ConnectFlags)0)
 	{
 		if ( !("undo" in connectedSignals) )
@@ -206,118 +188,47 @@ public class SourceView : TextView
 	}
 	
 	
-	
 	/**
 	 * Creates a new GtkSourceView. An empty default buffer will be
 	 * created for you. If you want to specify your own buffer, consider
 	 * gtk_source_view_new_with_buffer().
-	 * Returns:
-	 *  a new GtkSourceView
 	 */
 	public this ()
 	{
 		// GtkWidget* gtk_source_view_new (void);
-		this(cast(GtkSourceView*)gtk_source_view_new() );
+		auto p = gtk_source_view_new();
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkSourceView*) p);
 	}
 	
 	/**
 	 * Creates a new GtkSourceView widget displaying the buffer
 	 * buffer. One buffer can be shared among many widgets.
-	 * buffer:
-	 *  a GtkSourceBuffer.
-	 * Returns:
-	 *  a new GtkTextView.
+	 * Params:
+	 * buffer =  a GtkSourceBuffer.
 	 */
 	public this (SourceBuffer buffer)
 	{
 		// GtkWidget* gtk_source_view_new_with_buffer (GtkSourceBuffer *buffer);
-		this(cast(GtkSourceView*)gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct()) );
-	}
-	
-	/**
-	 * If TRUE line numbers will be displayed beside the text.
-	 * view:
-	 *  a GtkSourceView.
-	 * show:
-	 *  whether line numbers should be displayed.
-	 */
-	public void setShowLineNumbers(int show)
-	{
-		// void gtk_source_view_set_show_line_numbers  (GtkSourceView *view,  gboolean show);
-		gtk_source_view_set_show_line_numbers(gtkSourceView, show);
-	}
-	
-	/**
-	 * Returns whether line numbers are displayed beside the text.
-	 * view:
-	 *  a GtkSourceView.
-	 * Returns:
-	 *  TRUE if the line numbers are displayed.
-	 */
-	public int getShowLineNumbers()
-	{
-		// gboolean gtk_source_view_get_show_line_numbers  (GtkSourceView *view);
-		return gtk_source_view_get_show_line_numbers(gtkSourceView);
-	}
-	
-	/**
-	 * If TRUE line markers will be displayed beside the text.
-	 * view:
-	 *  a GtkSourceView.
-	 * show:
-	 *  whether line markers should be displayed.
-	 */
-	public void setShowLineMarkers(int show)
-	{
-		// void gtk_source_view_set_show_line_markers  (GtkSourceView *view,  gboolean show);
-		gtk_source_view_set_show_line_markers(gtkSourceView, show);
-	}
-	
-	/**
-	 * Returns whether line markers are displayed beside the text.
-	 * view:
-	 *  a GtkSourceView.
-	 * Returns:
-	 *  TRUE if the line markers are displayed.
-	 */
-	public int getShowLineMarkers()
-	{
-		// gboolean gtk_source_view_get_show_line_markers  (GtkSourceView *view);
-		return gtk_source_view_get_show_line_markers(gtkSourceView);
-	}
-	
-	/**
-	 * Sets the width of tabulation in characters.
-	 * view:
-	 *  a GtkSourceView.
-	 * width:
-	 *  width of tab in characters.
-	 */
-	public void setTabsWidth(uint width)
-	{
-		// void gtk_source_view_set_tabs_width (GtkSourceView *view,  guint width);
-		gtk_source_view_set_tabs_width(gtkSourceView, width);
-	}
-	
-	/**
-	 * Returns the width of tabulation in characters.
-	 * view:
-	 *  a GtkSourceView.
-	 * Returns:
-	 *  width of tab.
-	 */
-	public uint getTabsWidth()
-	{
-		// guint gtk_source_view_get_tabs_width (GtkSourceView *view);
-		return gtk_source_view_get_tabs_width(gtkSourceView);
+		auto p = gtk_source_view_new_with_buffer((buffer is null) ? null : buffer.getSourceBufferStruct());
+		if(p is null)
+		{
+			this = null;
+			version(Exceptions) throw new Exception("Construction failure.");
+			else return;
+		}
+		this(cast(GtkSourceView*) p);
 	}
 	
 	/**
 	 * If TRUE auto indentation of text is enabled.
-	 * view:
-	 *  a GtkSourceView.
-	 * enable:
-	 *  whether to enable auto indentation.
+	 * Params:
+	 * enable =  whether to enable auto indentation.
 	 */
 	public void setAutoIndent(int enable)
 	{
@@ -327,10 +238,7 @@ public class SourceView : TextView
 	
 	/**
 	 * Returns whether auto indentation of text is enabled.
-	 * view:
-	 *  a GtkSourceView.
-	 * Returns:
-	 *  TRUE if auto indentation is enabled.
+	 * Returns: TRUE if auto indentation is enabled.
 	 */
 	public int getAutoIndent()
 	{
@@ -339,12 +247,60 @@ public class SourceView : TextView
 	}
 	
 	/**
+	 * If TRUE, when the tab key is pressed and there is a selection, the
+	 * selected text is indented of one level instead of being replaced with
+	 * the \t characters. Shift+Tab unindents the selection.
+	 * Since 1.8
+	 * Params:
+	 * enable =  whether to indent a block when tab is pressed.
+	 */
+	public void setIndentOnTab(int enable)
+	{
+		// void gtk_source_view_set_indent_on_tab (GtkSourceView *view,  gboolean enable);
+		gtk_source_view_set_indent_on_tab(gtkSourceView, enable);
+	}
+	
+	/**
+	 * Returns whether when the tab key is pressed the current selection
+	 * should get indented instead of replaced with the \t character.
+	 * Since 1.8
+	 * Returns: TRUE if the selection is indented when tab is pressed.
+	 */
+	public int getIndentOnTab()
+	{
+		// gboolean gtk_source_view_get_indent_on_tab (GtkSourceView *view);
+		return gtk_source_view_get_indent_on_tab(gtkSourceView);
+	}
+	
+	/**
+	 * Sets the number of spaces to use for each step of indent.
+	 * If width is -1, the value of the GtkSourceView::tab-width property
+	 * will be used.
+	 * Params:
+	 * width =  indent width in characters.
+	 */
+	public void setIndentWidth(int width)
+	{
+		// void gtk_source_view_set_indent_width (GtkSourceView *view,  gint width);
+		gtk_source_view_set_indent_width(gtkSourceView, width);
+	}
+	
+	/**
+	 * Returns the number of spaces to use for each step of indent.
+	 * See gtk_source_view_set_indent_width() for details.
+	 * Returns: indent width.
+	 */
+	public int getIndentWidth()
+	{
+		// gint gtk_source_view_get_indent_width (GtkSourceView *view);
+		return gtk_source_view_get_indent_width(gtkSourceView);
+	}
+	
+	/**
 	 * If TRUE any tabulator character inserted is replaced by a group
 	 * of space characters.
-	 * view:
-	 *  a GtkSourceView.
-	 * enable:
-	 *  whether to insert spaces instead of tabs.
+	 * Params:
+	 * enable =  whether to insert spaces instead of tabs.
 	 */
 	public void setInsertSpacesInsteadOfTabs(int enable)
 	{
@@ -355,10 +311,7 @@ public class SourceView : TextView
 	/**
 	 * Returns whether when inserting a tabulator character it should
 	 * be replaced by a group of space characters.
-	 * view:
-	 *  a GtkSourceView.
-	 * Returns:
-	 *  TRUE if spaces are inserted instead of tabs.
+	 * Returns: TRUE if spaces are inserted instead of tabs.
 	 */
 	public int getInsertSpacesInsteadOfTabs()
 	{
@@ -367,63 +320,87 @@ public class SourceView : TextView
 	}
 	
 	/**
-	 * If TRUE a margin is displayed
-	 * view:
-	 *  a GtkSourceView.
-	 * show:
-	 *  whether to show a margin.
+	 * Set the desired movement of the cursor when HOME and END keys
+	 * are pressed.
+	 * Params:
+	 * smartHe =  the desired behavior among GtkSourceSmartHomeEndType.
 	 */
-	public void setShowMargin(int show)
+	public void setSmartHomeEnd(GtkSourceSmartHomeEndType smartHe)
 	{
-		// void gtk_source_view_set_show_margin (GtkSourceView *view,  gboolean show);
-		gtk_source_view_set_show_margin(gtkSourceView, show);
+		// void gtk_source_view_set_smart_home_end (GtkSourceView *view,  GtkSourceSmartHomeEndType smart_he);
+		gtk_source_view_set_smart_home_end(gtkSourceView, smartHe);
 	}
 	
 	/**
-	 * Returns whether a margin is displayed.
-	 * view:
-	 *  a GtkSourceView.
-	 * Returns:
-	 *  TRUE if the margin is showed.
+	 * Returns a GtkSourceSmartHomeEndType end value specifying
+	 * how the cursor will move when HOME and END keys are pressed.
+	 * Returns: a GtkSourceSmartHomeEndTypeend value.
 	 */
-	public int getShowMargin()
+	public GtkSourceSmartHomeEndType getSmartHomeEnd()
 	{
-		// gboolean gtk_source_view_get_show_margin (GtkSourceView *view);
-		return gtk_source_view_get_show_margin(gtkSourceView);
+		// GtkSourceSmartHomeEndType gtk_source_view_get_smart_home_end  (GtkSourceView *view);
+		return gtk_source_view_get_smart_home_end(gtkSourceView);
 	}
 	
 	/**
-	 * Sets the position of the right margin in the given view.
-	 * view:
-	 *  a GtkSourceView.
-	 * margin:
-	 *  the position of the margin to set.
+	 * Associates a given pixbuf with a given mark category.
+	 * If pixbuf is NULL, the pixbuf is unset.
+	 * Since 2.2
+	 * Params:
+	 * category =  a mark category.
+	 * pixbuf =  a GdkPixbuf or NULL.
 	 */
-	public void setMargin(uint margin)
+	public void setMarkCategoryPixbuf(char[] category, GdkPixbuf* pixbuf)
 	{
-		// void gtk_source_view_set_margin (GtkSourceView *view,  guint margin);
-		gtk_source_view_set_margin(gtkSourceView, margin);
+		// void gtk_source_view_set_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category,  GdkPixbuf *pixbuf);
+		gtk_source_view_set_mark_category_pixbuf(gtkSourceView, Str.toStringz(category), pixbuf);
 	}
 	
 	/**
-	 * Gets the position of the right margin in the given view.
-	 * view:
-	 *  a GtkSourceView.
-	 * Returns:
-	 *  the position of the right margin.
+	 * Gets the pixbuf which is associated with the given mark category.
+	 * Since 2.2
+	 * Params:
+	 * category =  a mark category.
+	 * Returns: the associated GdkPixbuf, or NULL if not found.
 	 */
-	public uint getMargin()
+	public GdkPixbuf* getMarkCategoryPixbuf(char[] category)
 	{
-		// guint gtk_source_view_get_margin (GtkSourceView *view);
-		return gtk_source_view_get_margin(gtkSourceView);
+		// GdkPixbuf* gtk_source_view_get_mark_category_pixbuf  (GtkSourceView *view,  const gchar *category);
+		return gtk_source_view_get_mark_category_pixbuf(gtkSourceView, Str.toStringz(category));
 	}
 	
 	/**
-	 * If TRUE the current line is highlighted
-	 * view:
-	 *  a GtkSourceView
-	 * show:
-	 *  whether to highlight the current line
+	 * Set the priority for the given mark category. When there are
+	 * multiple marks on the same line, marks of categories with
+	 * higher priorities will be drawn on top.
+	 * Since 2.2
+	 * Params:
+	 * category =  a mark category.
+	 * priority =  the priority for the category
+	 */
+	public void setMarkCategoryPriority(char[] category, int priority)
+	{
+		// void gtk_source_view_set_mark_category_priority  (GtkSourceView *view,  const gchar *category,  gint priority);
+		gtk_source_view_set_mark_category_priority(gtkSourceView, Str.toStringz(category), priority);
+	}
+	
+	/**
+	 * Gets the priority which is associated with the given category.
+	 * Since 2.2
+	 * Params:
+	 * category =  a mark category.
+	 * Returns: the priority or if categoryexists but no priority was set, it defaults to 0.
+	 */
+	public int getMarkCategoryPriority(char[] category)
+	{
+		// gint gtk_source_view_get_mark_category_priority  (GtkSourceView *view,  const gchar *category);
+		return gtk_source_view_get_mark_category_priority(gtkSourceView, Str.toStringz(category));
+	}
+	
+	/**
+	 * If show is TRUE the current line is highlighted.
+	 * Params:
+	 * show =  whether to highlight the current line
 	 */
 	public void setHighlightCurrentLine(int show)
 	{
@@ -433,10 +410,7 @@ public class SourceView : TextView
 	
 	/**
 	 * Returns whether the current line is highlighted
-	 * view:
-	 *  a GtkSourceView
-	 * Returns:
-	 *  TRUE if the current line is highlighted
+	 * Returns: TRUE if the current line is highlighted.
 	 */
 	public int getHighlightCurrentLine()
 	{
@@ -445,78 +419,109 @@ public class SourceView : TextView
 	}
 	
 	/**
-	 * Associates a given pixbuf with a given marker_type.
-	 * view:
-	 *  a GtkSourceView.
-	 * marker_type:
-	 *  a marker type.
-	 * pixbuf:
-	 *  a GdkPixbuf.
+	 * If TRUE line marks will be displayed beside the text.
+	 * Since 2.2
+	 * Params:
+	 * show =  whether line marks should be displayed.
 	 */
-	public void setMarkerPixbuf(char[] markerType, GdkPixbuf* pixbuf)
+	public void setShowLineMarks(int show)
 	{
-		// void gtk_source_view_set_marker_pixbuf  (GtkSourceView *view,  const gchar *marker_type,  GdkPixbuf *pixbuf);
-		gtk_source_view_set_marker_pixbuf(gtkSourceView, Str.toStringz(markerType), pixbuf);
+		// void gtk_source_view_set_show_line_marks (GtkSourceView *view,  gboolean show);
+		gtk_source_view_set_show_line_marks(gtkSourceView, show);
 	}
 	
 	/**
-	 * Gets the pixbuf which is associated with the given marker_type.
-	 * view:
-	 *  a GtkSourceView.
-	 * marker_type:
-	 *  a marker type.
-	 * Returns:
-	 *  a GdkPixbuf if found, or NULL if not found.
+	 * Returns whether line marks are displayed beside the text.
+	 * Since 2.2
+	 * Returns: TRUE if the line marks are displayed.
 	 */
-	public GdkPixbuf* getMarkerPixbuf(char[] markerType)
+	public int getShowLineMarks()
 	{
-		// GdkPixbuf* gtk_source_view_get_marker_pixbuf  (GtkSourceView *view,  const gchar *marker_type);
-		return gtk_source_view_get_marker_pixbuf(gtkSourceView, Str.toStringz(markerType));
+		// gboolean gtk_source_view_get_show_line_marks (GtkSourceView *view);
+		return gtk_source_view_get_show_line_marks(gtkSourceView);
 	}
 	
 	/**
-	 * If TRUE HOME and END keys will move to the first/last non-space
-	 * character of the line before moving to the start/end.
-	 * view:
-	 *  a GtkSourceView.
-	 * enable:
-	 *  whether to enable smart behavior for HOME and END keys.
+	 * If TRUE line numbers will be displayed beside the text.
+	 * Params:
+	 * show =  whether line numbers should be displayed.
 	 */
-	public void setSmartHomeEnd(int enable)
+	public void setShowLineNumbers(int show)
 	{
-		// void gtk_source_view_set_smart_home_end  (GtkSourceView *view,  gboolean enable);
-		gtk_source_view_set_smart_home_end(gtkSourceView, enable);
+		// void gtk_source_view_set_show_line_numbers  (GtkSourceView *view,  gboolean show);
+		gtk_source_view_set_show_line_numbers(gtkSourceView, show);
 	}
 	
 	/**
-	 * Returns whether HOME and END keys will move to the first/last non-space
-	 * character of the line before moving to the start/end.
-	 * view:
-	 *  a GtkSourceView.
-	 * Returns:
-	 *  TRUE if smart behavior for HOME and END keys is enabled.
-	 * Property Details
-	 * The "auto-indent" property
-	 *  "auto-indent" gboolean : Read / Write
-	 * Whether to enable auto indentation.
-	 * Default value: FALSE
+	 * Returns whether line numbers are displayed beside the text.
+	 * Returns: TRUE if the line numbers are displayed.
 	 */
-	public int getSmartHomeEnd()
+	public int getShowLineNumbers()
 	{
-		// gboolean gtk_source_view_get_smart_home_end  (GtkSourceView *view);
-		return gtk_source_view_get_smart_home_end(gtkSourceView);
+		// gboolean gtk_source_view_get_show_line_numbers  (GtkSourceView *view);
+		return gtk_source_view_get_show_line_numbers(gtkSourceView);
 	}
 	
+	/**
+	 * If TRUE a right margin is displayed
+	 * Params:
+	 * show =  whether to show a right margin.
+	 */
+	public void setShowRightMargin(int show)
+	{
+		// void gtk_source_view_set_show_right_margin  (GtkSourceView *view,  gboolean show);
+		gtk_source_view_set_show_right_margin(gtkSourceView, show);
+	}
 	
+	/**
+	 * Returns whether a right margin is displayed.
+	 * Returns: TRUE if the right margin is shown.
+	 */
+	public int getShowRightMargin()
+	{
+		// gboolean gtk_source_view_get_show_right_margin  (GtkSourceView *view);
+		return gtk_source_view_get_show_right_margin(gtkSourceView);
+	}
 	
+	/**
+	 * Sets the position of the right margin in the given view.
+	 * Params:
+	 * pos =  the width in characters where to position the right margin.
+	 */
+	public void setRightMarginPosition(uint pos)
+	{
+		// void gtk_source_view_set_right_margin_position  (GtkSourceView *view,  guint pos);
+		gtk_source_view_set_right_margin_position(gtkSourceView, pos);
+	}
 	
+	/**
+	 * Gets the position of the right margin in the given view.
+	 * Returns: the position of the right margin.
+	 */
+	public uint getRightMarginPosition()
+	{
+		// guint gtk_source_view_get_right_margin_position  (GtkSourceView *view);
+		return gtk_source_view_get_right_margin_position(gtkSourceView);
+	}
 	
+	/**
+	 * Sets the width of tabulation in characters.
+	 * Params:
+	 * width =  width of tab in characters.
+	 */
+	public void setTabWidth(uint width)
+	{
+		// void gtk_source_view_set_tab_width (GtkSourceView *view,  guint width);
+		gtk_source_view_set_tab_width(gtkSourceView, width);
+	}
 	
-	
-	
-	
-	
-	
-	
-	
+	/**
+	 * Returns the width of tabulation in characters.
+	 * Returns: width of tab.
+	 */
+	public uint getTabWidth()
+	{
+		// guint gtk_source_view_get_tab_width (GtkSourceView *view);
+		return gtk_source_view_get_tab_width(gtkSourceView);
+	}
 }

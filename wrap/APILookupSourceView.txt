@@ -59,8 +59,9 @@ addConstants: end
 wrap: sourceview
 
 ###########################################################
-### Atk ###################################################
+### GtkSourceView #########################################
 ###########################################################
+
 
 file: GtkSourceView.html
 struct: GtkSourceView
@@ -98,14 +99,14 @@ class: SourceBuffer
 prefix: gtk_source_buffer_
 #import: gsv.SourceBuffer
 #structWrap: GtkSourceBuffer* SourceBuffer
-import: gsv.SourceTagTable
-structWrap: GtkSourceTagTable* SourceTagTable
+#import: gsv.SourceTagTable
+#structWrap: GtkSourceTagTable* SourceTagTable
 import: gsv.SourceLanguage
 structWrap: GtkSourceLanguage* SourceLanguage
-import: gsv.SourceTagStyle
-structWrap: GtkSourceTagStyle* SourceTagStyle
-import: gsv.SourceMarker
-structWrap: GtkSourceMarker* SourceMarker
+#import: gsv.SourceTagStyle
+#structWrap: GtkSourceTagStyle* SourceTagStyle
+import: gsv.SourceMark
+structWrap: GtkSourceMark* SourceMark
 import: gtk.TextIter
 structWrap: GtkTextIter* TextIter
 import: glib.Str
@@ -113,7 +114,7 @@ import: glib.ListSG
 structWrap: GSList* ListSG
 outFile: SourceBuffer
 
-file: gtksourceview-Searching-in-a-GtkSourceBuffer.html
+file: gtksourceview-20-Searching-in-a-GtkSourceBuffer.html
 #struct: 
 class: SourceSearch
 prefix: gtk_source_iter_
@@ -122,12 +123,12 @@ import: gtk.TextIter
 import: glib.Str
 outFile: SourceSearch
 
-file: gtksourceview-GtkSourceMarker.html
-struct: GtkSourceMarker
-class: SourceMarker
-prefix: gtk_source_marker_
+file: GtkSourceMark.html
+struct: GtkSourceMark
+class: SourceMark
+prefix: gtk_source_mark_
 import: glib.Str
-outFile: SourceMarker
+outFile: SourceMark
 
 file: GtkSourceLanguage.html
 struct: GtkSourceLanguage
@@ -138,14 +139,14 @@ import: gsv.SourceStyleScheme
 import: glib.Str
 outFile: SourceLanguage
 
-file: GtkSourceLanguagesManager.html
-struct: GtkSourceLanguagesManager
-class: SourceLanguagesManager
-prefix: gtk_source_languages_manager_
+file: GtkSourceLanguageManager.html
+struct: GtkSourceLanguageManager
+class: SourceLanguageManager
+prefix: gtk_source_language_manager_
 import: glib.ListSG
 structWrap: GSList* ListSG
 import: glib.Str
-outFile: SourceLanguagesManager
+outFile: SourceLanguageManager
 
 
 
@@ -157,31 +158,39 @@ prefix: gtk_source_style_scheme_
 import: glib.Str
 outFile: SourceStyleScheme
 
-
-file: GtkSourceTag.html
-struct: GtkSourceTag
-class: SourceTag
-prefix: gtk_source_tag_
-structWrap: GtkSourceTagStyle* SourceTagStyle
-import: gsv.SourceTagStyle
+file: GtkSourceStyleSchemeManager.html
+struct: GtkSourceStyleSchemeManager
+class: SourceStyleSchemeManager
+prefix: gtk_source_style_scheme_manager_
+#structWrap: 
 import: glib.Str
-outFile: SourceTag
+outFile: SourceStyleSchemeManager
 
 
-file: GtkSourceTagTable.html
-struct: GtkSourceTagTable
-class: SourceTagTable
-prefix: gtk_source_tag_table_
+#file: GtkSourceTag.html
+#struct: GtkSourceTag
+#class: SourceTag
+#prefix: gtk_source_tag_
+#structWrap: GtkSourceTagStyle* SourceTagStyle
+#import: gsv.SourceTagStyle
+#import: glib.Str
+#outFile: SourceTag
+
+
+#file: GtkSourceTagTable.html
+#struct: GtkSourceTagTable
+#class: SourceTagTable
+#prefix: gtk_source_tag_table_
+##structWrap: 
+#outFile: SourceTagTable
+
+
+file: GtkSourceStyle.html
+struct: GtkSourceStyle
+class: SourceStyle
+prefix: gtk_source_style_
 #structWrap: 
-outFile: SourceTagTable
-
-
-file: gtksourceview-GtkSourceTagStyle.html
-struct: GtkSourceTagStyle
-class: SourceTagStyle
-prefix: gtk_source_tag_style_
-#structWrap: 
-outFile: SourceTagStyle
+outFile: SourceStyle
 
 
 

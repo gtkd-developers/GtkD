@@ -25,11 +25,18 @@ module gsvc.gsvtypes;
 
 public import gtkc.gtktypes;
 
-
 /**
- * typedef GtkTextMark GtkSourceMarker;
+ * GTK_SOURCE_SMART_HOME_END_DISABLED
  */
-public alias GtkTextMark GtkSourceMarker;
+public enum GtkSourceSmartHomeEndType
+{
+	DISABLED,
+	BEFORE,
+	AFTER,
+	ALWAYS
+}
+alias GtkSourceSmartHomeEndType SourceSmartHomeEndType;
+
 public enum GtkSourceSearchFlags
 {
 	VISIBLE_ONLY = 1 << 0,
@@ -39,18 +46,24 @@ public enum GtkSourceSearchFlags
 }
 alias GtkSourceSearchFlags SourceSearchFlags;
 
-public enum GtkSourceTagStyleMask
-{
-	USE_BACKGROUND = 1 << 0, /+*< nick=useBackground >+/
-	USE_FOREGROUND = 1 << 1 /+*< nick=useForeground >+/
-}
-alias GtkSourceTagStyleMask SourceTagStyleMask;
-
 
 /**
  * Main Gtk struct.
  */
 public struct GtkSourceView{}
+
+
+public struct GtkSourceViewClass
+{
+//	GtkTextViewClass parentClass;
+//	void  function(GtkSourceView *view) undo;
+//	void  function(GtkSourceView *view) redo;
+//	/+* Padding for future expansion +/
+//	void  function() _GtkSourceReserved1;
+//	void  function() _GtkSourceReserved2;
+//	void  function() _GtkSourceReserved3;
+//	void  function() _GtkSourceReserved4;
+}
 
 
 /**
@@ -59,106 +72,59 @@ public struct GtkSourceView{}
 public struct GtkSourceBuffer{}
 
 
+public struct GtkSourceBufferClass
+{
+//	GtkTextBufferClass parentClass;
+//	/+* Padding for future expansion +/
+//	void  function() _GtkSourceReserved1;
+//	void  function() _GtkSourceReserved2;
+//	void  function() _GtkSourceReserved3;
+//	void  function() _GtkSourceReserved4;
+//	void  function() _GtkSourceReserved5;
+//	void  function() _GtkSourceReserved6;
+}
+
+
 /**
  * Main Gtk struct.
+ */
+public struct GtkSourceMark{}
+
+
+/**
+ * Main Gtk struct.
+ * GtkSourceLanguage structure contains only
+ * private members and should not be accessed directly.
  */
 public struct GtkSourceLanguage{}
 
 
 /**
  * Main Gtk struct.
+ * GtkSourceLanguageManager structure contains only
+ * private members and should not be accessed directly.
  */
-public struct GtkSourceLanguagesManager{}
+public struct GtkSourceLanguageManager{}
 
 
 /**
  * Main Gtk struct.
+ * GtkSourceStyleScheme structure contains only
+ * private members and should not be accessed directly.
  */
 public struct GtkSourceStyleScheme{}
 
 
-public struct GtkSourceStyleSchemeClass{}
-// GTypeInterface baseIface;
-// GtkSourceStyleScheme.html
-// /+* signals +/
-// GtkSourceStyleScheme.html
-// void (* styleChanged) (GtkSourceStyleScheme *scheme,
-// GtkSourceStyleScheme.html
-// char *tagId);
-// GtkSourceStyleScheme.html
-// /+* vtable +/
-// GtkSourceStyleScheme.html
-// char * (* getName) (GtkSourceStyleScheme *scheme);
-// GtkSourceStyleScheme.html
-// GtkSourceTagStyle * (* getTagStyle) (GtkSourceStyleScheme *scheme,
-// GtkSourceStyleScheme.html
-// char *styleName);
-// GtkSourceStyleScheme.html
-// GSList * (* getStyleNames) (GtkSourceStyleScheme *scheme);
-// GtkSourceStyleScheme.html
-// /+* Padding for future expansion +/
-// GtkSourceStyleScheme.html
-// void (*_GtkSourceReserved1) (void);
-// GtkSourceStyleScheme.html
-// void (*_GtkSourceReserved2) (void);
-// GtkSourceStyleScheme.html
-// void (*_GtkSourceReserved3) (void);
-// GtkSourceStyleScheme.html
-// void (*_GtkSourceReserved4) (void);
-// GtkSourceStyleScheme.html
+/**
+ * Main Gtk struct.
+ */
+public struct GtkSourceStyleSchemeManager{}
 
 
 /**
  * Main Gtk struct.
+ * The GtkSourceStyle structure is used to describe text attributes
+ * which are set when given style is used.
  */
-public struct GtkSourceTag{}
-
-
-public struct GtkSourceTagClass{}
-
-
-public struct GtkSyntaxTag{}
-
-
-public struct GtkSyntaxTagClass{}
-
-
-public struct GtkPatternTag{}
-
-
-public struct GtkPatternTagClass{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkSourceTagTable{}
-
-
-/**
- * Main Gtk struct.
- */
-public struct GtkSourceTagStyle{}
-// /+* readonly +/
-// gtksourceview-GtkSourceTagStyle.html
-// int isDefault;
-// gtksourceview-GtkSourceTagStyle.html
-// uint mask;
-// gtksourceview-GtkSourceTagStyle.html
-// GdkColor foreground;
-// gtksourceview-GtkSourceTagStyle.html
-// GdkColor background;
-// gtksourceview-GtkSourceTagStyle.html
-// int italic;
-// gtksourceview-GtkSourceTagStyle.html
-// int bold;
-// gtksourceview-GtkSourceTagStyle.html
-// int underline;
-// gtksourceview-GtkSourceTagStyle.html
-// int strikethrough;
-// gtksourceview-GtkSourceTagStyle.html
-// /+* Reserved for future expansion +/
-// gtksourceview-GtkSourceTagStyle.html
-// byte reserved[16];
-// gtksourceview-GtkSourceTagStyle.html
+public struct GtkSourceStyle{}
 

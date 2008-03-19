@@ -11,5 +11,7 @@ rm libgtkd.a
 	src/gtk \
 	src/gtkc \
 	src/pango \
-	-I src:~/dmd/src/phobos \
+	srcsv/gsv \
+	srcsv/gsvc \
+	-I src:srcsv:~/dmd/src/phobos \
 	-olib libgtkd

@@ -22,7 +22,7 @@
 
 /*
  * Conversion parameters:
- * inFile  = gtksourceview-Searching-in-a-GtkSourceBuffer.html
+ * inFile  = gtksourceview-20-Searching-in-a-GtkSourceBuffer.html
  * outPack = gsv
  * outFile = SourceSearch
  * strct   = 
@@ -40,6 +40,7 @@
  * omit structs:
  * omit prefixes:
  * omit code:
+ * omit signals:
  * imports:
  * 	- gtk.TextIter
  * 	- glib.Str
@@ -51,15 +52,7 @@
 
 module gsv.SourceSearch;
 
-version(noAssert)
-{
-	version(Tango)
-	{
-		import tango.io.Stdout;	// use the tango loging?
-	}
-}
-
-private import gsvc.gsvtypes;
+public  import gsvc.gsvtypes;
 
 private import gsvc.gsv;
 
@@ -79,24 +72,17 @@ public class SourceSearch
 	/**
 	 */
 	
-	
 	/**
 	 * Same as gtk_text_iter_backward_search(), but supports case insensitive
 	 * searching.
-	 * iter:
-	 *  a GtkTextIter where the search begins.
-	 * str:
-	 *  search string.
-	 * flags:
-	 *  bitmask of flags affecting the search.
-	 * match_start:
-	 *  return location for start of match, or %NULL.
-	 * match_end:
-	 *  return location for end of match, or %NULL.
-	 * limit:
-	 *  location of last possible match_start, or %NULL for start of buffer.
-	 * Returns:
-	 *  whether a match was found.
+	 * Params:
+	 * iter =  a GtkTextIter where the search begins.
+	 * str =  search string.
+	 * flags =  bitmask of flags affecting the search.
+	 * matchStart =  return location for start of match, or %NULL.
+	 * matchEnd =  return location for end of match, or %NULL.
+	 * limit =  location of last possible match_start, or %NULL for start of buffer.
+	 * Returns: whether a match was found.
 	 */
 	public static int backwardSearch(TextIter iter, char[] str, GtkSourceSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
 	{
@@ -122,41 +108,18 @@ public class SourceSearch
 	 * be matched regardless of what case it is in.
 	 * Same as gtk_text_iter_forward_search(), but supports case insensitive
 	 * searching.
-	 * iter:
-	 *  start of search.
-	 * str:
-	 *  a search string.
-	 * flags:
-	 *  flags affecting how the search is done.
-	 * match_start:
-	 *  return location for start of match, or %NULL.
-	 * match_end:
-	 *  return location for end of match, or %NULL.
-	 * limit:
-	 *  bound for the search, or %NULL for the end of the buffer.
-	 * Returns:
-	 *  whether a match was found.
+	 * Params:
+	 * iter =  start of search.
+	 * str =  a search string.
+	 * flags =  flags affecting how the search is done.
+	 * matchStart =  return location for start of match, or %NULL.
+	 * matchEnd =  return location for end of match, or %NULL.
+	 * limit =  bound for the search, or %NULL for the end of the buffer.
+	 * Returns: whether a match was found.
 	 */
 	public static int forwardSearch(TextIter iter, char[] str, GtkSourceSearchFlags flags, TextIter matchStart, TextIter matchEnd, TextIter limit)
 	{
 		// gboolean gtk_source_iter_forward_search (const GtkTextIter *iter,  const gchar *str,  GtkSourceSearchFlags flags,  GtkTextIter *match_start,  GtkTextIter *match_end,  const GtkTextIter *limit);
 		return gtk_source_iter_forward_search((iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(str), flags, (matchStart is null) ? null : matchStart.getTextIterStruct(), (matchEnd is null) ? null : matchEnd.getTextIterStruct(), (limit is null) ? null : limit.getTextIterStruct());
-	}
-	
-	/**
-	 * Tries to match the bracket character currently at iter with its
-	 * opening/closing counterpart, and if found moves iter to the position
-	 * where it was found.
-	 * iter must be a GtkTextIter belonging to a GtkSourceBuffer.
-	 * iter:
-	 *  a GtkTextIter.
-	 * Returns:
-	 *  TRUE if the matching bracket was found and the iter
-	 * iter moved.
-	 */
-	public static int findMatchingBracket(TextIter iter)
-	{
-		// gboolean gtk_source_iter_find_matching_bracket  (GtkTextIter *iter);
-		return gtk_source_iter_find_matching_bracket((iter is null) ? null : iter.getTextIterStruct());
 	}
 }
