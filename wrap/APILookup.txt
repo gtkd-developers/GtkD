@@ -57,7 +57,6 @@ alias: gboolean int
 alias: gpointer void*
 alias: gconstpointer void*
 alias: gchar char
-alias: gchar*char[]
 alias: gchar* char[]
 alias: guchar char
 alias: gshort short
@@ -142,13 +141,16 @@ package: gdk gdk
 package: gtk gtk
 package: gda gda
 package: glade glade
-package: sourceview gsv
 bind: gtkc
 
 srcdir: srcgl
 package: glgdk glgdk
 package: glgtk glgtk
 bind: gtkglc
+
+srcdir: srcsv
+package: sourceview gsv
+bind: gsvc
 
 ##gstreamerD wrapping is not on by default
 ##because of the hand-editing that is still required.
