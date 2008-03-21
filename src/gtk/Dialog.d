@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_dialog_
  * 	- gtk_
@@ -48,11 +47,6 @@
  * 	- gtk.Window
  * 	- gtk.Widget
  * 	- gdk.Screen
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkScreen* -> Screen
  * 	- GtkWidget* -> Widget
@@ -74,11 +68,6 @@ private import glib.Str;
 private import gtk.Window;
 private import gtk.Widget;
 private import gdk.Screen;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -175,7 +164,7 @@ private import gtk.Window;
  *  </action-widgets>
  * </object>
  */
-public class Dialog : Window, BuildableIF
+public class Dialog : Window
 {
 	
 	/** the main Gtk struct */
@@ -208,9 +197,6 @@ public class Dialog : Window, BuildableIF
 		super(cast(GtkWindow*)gtkDialog);
 		this.gtkDialog = gtkDialog;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkDialog);
 	
 	/** */
 	public Widget addButton(StockID stockID, int responseId)

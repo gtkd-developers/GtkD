@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Bin
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_bin_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- gtk.Widget
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -65,12 +58,6 @@ private import gtkc.gtk;
 
 
 private import gtk.Widget;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -84,7 +71,7 @@ private import gtk.Container;
  * Many GTK+ widgets are subclasses of GtkBin, including GtkWindow, GtkButton,
  * GtkFrame, GtkHandleBox, and GtkScrolledWindow.
  */
-public class Bin : Container, BuildableIF
+public class Bin : Container
 {
 	
 	/** the main Gtk struct */
@@ -117,9 +104,6 @@ public class Bin : Container, BuildableIF
 		super(cast(GtkContainer*)gtkBin);
 		this.gtkBin = gtkBin;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkBin);
 	
 	/**
 	 */

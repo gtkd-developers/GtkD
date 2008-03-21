@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Scale
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_scale_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- pango.PgLayout
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- PangoLayout* -> PgLayout
  * module aliases:
@@ -67,12 +60,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import pango.PgLayout;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -90,7 +77,7 @@ private import gtk.Range;
  * subclasses GtkHScale and GtkVScale. To create a scale widget,
  * call gtk_hscale_new_with_range() or gtk_vscale_new_with_range().
  */
-public class Scale : Range, BuildableIF
+public class Scale : Range
 {
 	
 	/** the main Gtk struct */
@@ -123,9 +110,6 @@ public class Scale : Range, BuildableIF
 		super(cast(GtkRange*)gtkScale);
 		this.gtkScale = gtkScale;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkScale);
 	
 	/**
 	 */

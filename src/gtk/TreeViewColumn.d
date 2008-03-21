@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_tree_view_column_
  * 	- gtk_
@@ -52,11 +51,7 @@
  * 	- gtk.TreeModel
  * 	- gtk.TreeIter
  * 	- gdk.Rectangle
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
+ * 	- glib.Str
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkRectangle* -> Rectangle
@@ -84,11 +79,7 @@ private import gtk.Widget;
 private import gtk.TreeModel;
 private import gtk.TreeIter;
 private import gdk.Rectangle;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
+private import glib.Str;
 
 
 
@@ -103,7 +94,7 @@ private import gtk.ObjectGtk;
  * for an overview of all the objects and data types related to the tree widget and how
  * they work together.
  */
-public class TreeViewColumn : ObjectGtk, BuildableIF
+public class TreeViewColumn : ObjectGtk
 {
 	
 	/** the main Gtk struct */
@@ -136,9 +127,6 @@ public class TreeViewColumn : ObjectGtk, BuildableIF
 		super(cast(GtkObject*)gtkTreeViewColumn);
 		this.gtkTreeViewColumn = gtkTreeViewColumn;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkTreeViewColumn);
 	
 	/**
 	 * Creates a new Tree view column

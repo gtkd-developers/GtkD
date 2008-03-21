@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_tool_button_
  * 	- gtk_
@@ -47,11 +46,6 @@
  * 	- glib.Str
  * 	- gtk.ToolItem
  * 	- gtk.Widget
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -70,11 +64,6 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.ToolItem;
 private import gtk.Widget;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -98,7 +87,7 @@ private import gtk.ToolItem;
  * non-NULL, the icon is determined by the stock item. Otherwise,
  * the button does not have a label.
  */
-public class ToolButton : ToolItem, BuildableIF
+public class ToolButton : ToolItem
 {
 	
 	/** the main Gtk struct */
@@ -134,9 +123,6 @@ public class ToolButton : ToolItem, BuildableIF
 	
 	/** An arbitrary string to be used by the application */
 	private char[] action;
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToolButton);
 	
 	/** */
 	public void setActionName(char[] action)

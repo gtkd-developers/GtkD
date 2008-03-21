@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = GammaCurve
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_gamma_curve_
  * 	- gtk_
@@ -44,12 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -62,12 +55,6 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 
 
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -92,7 +79,7 @@ private import gtk.VBox;
  * free), and the other 2 set the curve to a particular gamma value, or reset it
  * to a straight line.
  */
-public class GammaCurve : VBox, BuildableIF
+public class GammaCurve : VBox
 {
 	
 	/** the main Gtk struct */
@@ -125,9 +112,6 @@ public class GammaCurve : VBox, BuildableIF
 		super(cast(GtkVBox*)gtkGammaCurve);
 		this.gtkGammaCurve = gtkGammaCurve;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkGammaCurve);
 	
 	/**
 	 */

@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_tool_item_
  * 	- gtk_
@@ -47,11 +46,6 @@
  * 	- glib.Str
  * 	- gtk.Tooltips
  * 	- gtk.Widget
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkTooltips* -> Tooltips
  * 	- GtkWidget* -> Widget
@@ -71,11 +65,6 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Tooltips;
 private import gtk.Widget;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -91,7 +80,7 @@ private import gtk.Bin;
  * GtkToggleToolButton and GtkRadioToolButton classes.
  * See the GtkToolbar class for a description of the toolbar widget.
  */
-public class ToolItem : Bin, BuildableIF
+public class ToolItem : Bin
 {
 	
 	/** the main Gtk struct */
@@ -124,9 +113,6 @@ public class ToolItem : Bin, BuildableIF
 		super(cast(GtkBin*)gtkToolItem);
 		this.gtkToolItem = gtkToolItem;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToolItem);
 	
 	/**
 	 * Sets this widget tooltip

@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Box
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_box_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- gtk.Widget
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -65,12 +58,6 @@ private import gtkc.gtk;
 
 
 private import gtk.Widget;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -116,7 +103,7 @@ private import gtk.Container;
  * "fill" and "padding" child properties.
  * Use gtk_box_query_child_packing() to query these fields.
  */
-public class Box : Container, BuildableIF
+public class Box : Container
 {
 	
 	/** the main Gtk struct */
@@ -149,9 +136,6 @@ public class Box : Container, BuildableIF
 		super(cast(GtkContainer*)gtkBox);
 		this.gtkBox = gtkBox;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkBox);
 	
 	/**
 	 */

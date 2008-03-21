@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = EventBox
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_event_box_
  * 	- gtk_
@@ -44,12 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -62,12 +55,6 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 
 
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -79,7 +66,7 @@ private import gtk.Bin;
  * It is useful since it allows you to catch events for widgets which do not
  * have their own window.
  */
-public class EventBox : Bin, BuildableIF
+public class EventBox : Bin
 {
 	
 	/** the main Gtk struct */
@@ -112,9 +99,6 @@ public class EventBox : Bin, BuildableIF
 		super(cast(GtkBin*)gtkEventBox);
 		this.gtkEventBox = gtkEventBox;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkEventBox);
 	
 	/**
 	 */

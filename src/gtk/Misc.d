@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Misc
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_misc_
  * 	- gtk_
@@ -44,12 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -62,12 +55,6 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 
 
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -84,7 +71,7 @@ private import gtk.Widget;
  * a container in such a way that it expands automatically to fill its
  * allocated area, the alignment settings will not alter the widgets position.
  */
-public class Misc : Widget, BuildableIF
+public class Misc : Widget
 {
 	
 	/** the main Gtk struct */
@@ -117,9 +104,6 @@ public class Misc : Widget, BuildableIF
 		super(cast(GtkWidget*)gtkMisc);
 		this.gtkMisc = gtkMisc;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMisc);
 	
 	/**
 	 */

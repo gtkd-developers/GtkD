@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_check_button_
  * 	- gtk_
@@ -48,11 +47,6 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Button
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -67,11 +61,6 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.Button;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -82,7 +71,7 @@ private import gtk.ToggleButton;
  * A GtkCheckButton places a discrete GtkToggleButton next to a widget, (usually a GtkLabel). See the section on GtkToggleButton widgets for more information about toggle/check buttons.
  * The important signal ('toggled') is also inherited from GtkToggleButton.
  */
-public class CheckButton : ToggleButton, BuildableIF
+public class CheckButton : ToggleButton
 {
 	
 	/** the main Gtk struct */
@@ -115,9 +104,6 @@ public class CheckButton : ToggleButton, BuildableIF
 		super(cast(GtkToggleButton*)gtkCheckButton);
 		this.gtkCheckButton = gtkCheckButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkCheckButton);
 	
 	/**
 	 * Creates a new GtkCheckButton with a GtkLabel to the right of it.

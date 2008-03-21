@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = SpinButton
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_spin_button_
  * 	- gtk_
@@ -46,12 +45,6 @@
  * imports:
  * 	- gtk.Widget
  * 	- gtk.Adjustment
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkWidget* -> Widget
@@ -70,12 +63,6 @@ public  import gtkc.gdktypes;
 
 private import gtk.Widget;
 private import gtk.Adjustment;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -129,7 +116,7 @@ private import gtk.Entry;
 	 *  return;
  * }
  */
-public class SpinButton : Entry, BuildableIF
+public class SpinButton : Entry
 {
 	
 	/** the main Gtk struct */
@@ -162,9 +149,6 @@ public class SpinButton : Entry, BuildableIF
 		super(cast(GtkEntry*)gtkSpinButton);
 		this.gtkSpinButton = gtkSpinButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkSpinButton);
 	
 	/**
 	 */

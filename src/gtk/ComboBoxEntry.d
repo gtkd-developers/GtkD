@@ -35,8 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
- * 	- CellLayoutIF
  * prefixes:
  * 	- gtk_combo_box_entry_
  * omit structs:
@@ -48,16 +46,6 @@
  * imports:
  * 	- gtk.TreeModel
  * 	- gtk.Adjustment
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
- * 	- glib.Str
- * 	- gtk.CellRenderer
- * 	- glib.ListG
- * 	- gtk.CellLayoutIF
- * 	- gtk.CellLayoutT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkTreeModel* -> TreeModel
@@ -74,16 +62,6 @@ private import gtkc.gtk;
 
 private import gtk.TreeModel;
 private import gtk.Adjustment;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
-private import glib.Str;
-private import gtk.CellRenderer;
-private import glib.ListG;
-private import gtk.CellLayoutIF;
-private import gtk.CellLayoutT;
 
 
 
@@ -117,7 +95,7 @@ private import gtk.ComboBox;
  * GtkComboBoxEntry makes the entry available in UI definitions as an internal
  * child with name "entry".
  */
-public class ComboBoxEntry : ComboBox, BuildableIF, CellLayoutIF
+public class ComboBoxEntry : ComboBox
 {
 	
 	/** the main Gtk struct */
@@ -150,12 +128,6 @@ public class ComboBoxEntry : ComboBox, BuildableIF, CellLayoutIF
 		super(cast(GtkComboBox*)gtkComboBoxEntry);
 		this.gtkComboBoxEntry = gtkComboBoxEntry;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkComboBoxEntry);
-	
-	// add the CellLayout capabilities
-	mixin CellLayoutT!(GtkComboBoxEntry);
 	
 	/**
 	 * Creates a new GtkComboBoxEntry which has a GtkEntry as child. After

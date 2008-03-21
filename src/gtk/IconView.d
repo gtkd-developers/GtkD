@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = IconView
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_icon_view_
  * 	- gtk_
@@ -51,12 +50,6 @@
  * 	- gtk.TreeIter
  * 	- glib.ListG
  * 	- gdk.Pixmap
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixmap* -> Pixmap
@@ -85,12 +78,6 @@ private import gtk.Tooltip;
 private import gtk.TreeIter;
 private import glib.ListG;
 private import gdk.Pixmap;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -105,7 +92,7 @@ private import gtk.Container;
  * In addition to selection with the arrow keys, GtkIconView supports
  * rubberband selection, which is controlled by dragging the pointer.
  */
-public class IconView : Container, BuildableIF
+public class IconView : Container
 {
 	
 	/** the main Gtk struct */
@@ -138,9 +125,6 @@ public class IconView : Container, BuildableIF
 		super(cast(GtkContainer*)gtkIconView);
 		this.gtkIconView = gtkIconView;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkIconView);
 	
 	/**
 	 */

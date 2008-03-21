@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_button_
  * 	- gtk_
@@ -50,11 +49,6 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.Image
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -73,11 +67,6 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.Image;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -92,7 +81,7 @@ private import gtk.Bin;
  * hold most any other standard GtkWidget. The most commonly used child is
  * the GtkLabel.
  */
-public class Button : Bin, BuildableIF
+public class Button : Bin
 {
 	
 	/** the main Gtk struct */
@@ -130,9 +119,6 @@ public class Button : Bin, BuildableIF
 	
 	/** An arbitrary string to be used by the application */
 	private char[] action;
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkButton);
 	
 	/** */
 	public static void setIconSize(IconSize iconSize)

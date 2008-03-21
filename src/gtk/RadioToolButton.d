@@ -30,12 +30,11 @@
  * ctorStrct=GtkToolItem
  * clss    = RadioToolButton
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_radio_tool_button_
  * 	- gtk_
@@ -47,11 +46,6 @@
  * 	- glib.Str
  * 	- gtk.ToolItem
  * 	- glib.ListSG
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GSList* -> ListSG
  * 	- GtkToolItem* -> ToolItem
@@ -69,11 +63,6 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.ToolItem;
 private import glib.ListSG;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -92,7 +81,7 @@ private import gtk.ToggleToolButton;
  * gtk_radio_tool_button_new_from_widget_with_stock() to create a new
  * GtkRAdioToolButton containing a stock item.
  */
-public class RadioToolButton : ToggleToolButton, BuildableIF
+public class RadioToolButton : ToggleToolButton
 {
 	
 	/** the main Gtk struct */
@@ -125,9 +114,6 @@ public class RadioToolButton : ToggleToolButton, BuildableIF
 		super(cast(GtkToggleToolButton*)gtkRadioToolButton);
 		this.gtkRadioToolButton = gtkRadioToolButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRadioToolButton);
 	
 	/**
 	 */

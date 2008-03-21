@@ -737,7 +737,6 @@ outFile: Types
 file: GtkDialog.html
 struct: GtkDialog
 class: Dialog
-implements: BuildableIF
 prefix: gtk_dialog_
 prefix: gtk_
 import: glib.Str
@@ -748,19 +747,7 @@ structWrap: GtkWidget* Widget
 import: gdk.Screen
 structWrap: GdkScreen* Screen
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkDialog);
-
 	/** */
 	public Widget addButton(StockID stockID, int responseId)
 	{
@@ -791,25 +778,10 @@ outFile: Dialog
 file: GtkInvisible.html
 struct: GtkInvisible
 class: Invisible
-implements: BuildableIF
 prefix: gtk_invisible_
 prefix: gtk_
 import: gdk.Screen
 structWrap: GdkScreen* Screen
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkInvisible);
-code: end
 outFile: Invisible
 
 file: GtkMessageDialog.html
@@ -1065,7 +1037,6 @@ outFile: PopupBox
 file: GtkWindow.html
 struct: GtkWindow
 class: Window
-implements: BuildableIF
 prefix: gtk_window_
 prefix: gtk_
 import: glib.Str
@@ -1087,20 +1058,9 @@ structWrap: GList* ListG
 #structWrap: GdkEventKey* EventKey
 import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
+import: gtk.Window
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkWindow);
-
 	/**
 	 * Creates a top level window with a title
 	 * Params:
@@ -1200,7 +1160,6 @@ outFile: WindowGroup
 file: GtkAboutDialog.html
 struct: GtkAboutDialog
 class: AboutDialog
-implements: BuildableIF
 prefix: gtk_about_dialog_
 prefix: gtk_
 import: glib.Str
@@ -1208,26 +1167,11 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Window
 structWrap: GtkWindow* Window
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkAboutDialog);
-code: end
 outFile: AboutDialog
 
 file: GtkAssistant.html
 struct: GtkAssistant
 class: Assistant
-implements: BuildableIF
 prefix: gtk_assistant_
 prefix: gtk_
 import: glib.Str
@@ -1235,20 +1179,6 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkAssistant);
-code: end
 outFile: Assistant
 
 
@@ -1260,7 +1190,6 @@ outFile: Assistant
 file: GtkAccelLabel.html
 struct: GtkAccelLabel
 class: AccelLabel
-implements: BuildableIF
 prefix: gtk_accel_label_
 prefix: gtk_
 import: glib.Str
@@ -1272,26 +1201,11 @@ import: pango.PgAttributeList
 structWrap: PangoAttrList* PgAttributeList
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkAccelLabel);
-code: end
 outFile: AccelLabel
 
 file: GtkImage.html
 struct: GtkImage
 class: Image
-implements: BuildableIF
 prefix: gtk_image_
 prefix: gtk_
 import: glib.Str
@@ -1321,19 +1235,7 @@ structWrap: GdkPixmap* Pixmap
 nocode: gtk_image_new_from_stock
 nocode: gtk_image_new_from_icon_name
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkImage);
-
 // this will be an enum 
 	/**
 	 * Creates a GtkImage displaying a stock icon. Sample stock icon
@@ -1378,29 +1280,14 @@ outFile: Image
 file: GtkLabel.html
 struct: GtkLabel
 class: Label
-implements: BuildableIF
 prefix: gtk_label_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 nocode: gtk_label_new
 nocode: gtk_label_new_with_mnemonic
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkLabel);
-
 	/**
 	 * Creates a new GtkLabel, containing the text in str.
 	 * If characters in str are preceded by an underscore, they are
@@ -1439,49 +1326,19 @@ outFile: Label
 file: GtkProgressBar.html
 struct: GtkProgressBar
 class: ProgressBar
-implements: BuildableIF
 prefix: gtk_progress_bar_
 prefix: gtk_
 import: glib.Str
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkProgressBar);
-code: end
 outFile: ProgressBar
 
 file: GtkStatusbar.html
 struct: GtkStatusbar
 class: Statusbar
-implements: BuildableIF
 import: glib.Str
 prefix: gtk_statusbar_
 prefix: gtk_
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkStatusbar);
-code: end
 outFile: Statusbar
 
 file: GtkStatusIcon.html
@@ -1556,7 +1413,6 @@ outFile: StatusIcon
 file: GtkButton.html
 struct: GtkButton
 class: Button
-implements: BuildableIF
 prefix: gtk_button_
 prefix: gtk_
 import: glib.Str
@@ -1564,28 +1420,17 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Image
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 nocode: gtk_button_new_with_mnemonic
 nocode: gtk_button_new_with_label
 nocode: gtk_button_new_from_stock
 
 code: start
 
+
 	private static IconSize currentIconSize = IconSize.BUTTON;
 
 	/** An arbitrary string to be used by the application */
 	private char[] action;
-
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkButton);
 
 	/** */
 	public static void setIconSize(IconSize iconSize)
@@ -1693,28 +1538,15 @@ outFile: Button
 file: GtkCheckButton.html
 struct: GtkCheckButton
 class: CheckButton
-implements: BuildableIF
 import: glib.Str
 import: gtk.Button
 prefix: gtk_check_button_
 prefix: gtk_
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 nocode: gtk_check_button_new_with_label
 nocode: gtk_check_button_new_with_mnemonic
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkCheckButton);
-
 	/**
 	 * Creates a new GtkCheckButton with a GtkLabel to the right of it.
 	 * If mnemonic is true the label
@@ -1753,21 +1585,11 @@ outFile: CheckButton
 file: GtkRadioButton.html
 struct: GtkRadioButton
 class: RadioButton
-implements: BuildableIF
 prefix: gtk_radio_button_
 prefix: gtk_
 import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
 
 nocode: gtk_radio_button_new_with_label
 nocode: gtk_radio_button_new_with_mnemonic
@@ -1775,9 +1597,6 @@ nocode: gtk_radio_button_new_with_label_from_widget
 nocode: gtk_radio_button_new_with_mnemonic_from_widget
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRadioButton);
-
 	/**
 	 * Creates a new GtkRadioButton with a text label.
 	 * Params:
@@ -1843,27 +1662,14 @@ outFile: RadioButton
 file: GtkToggleButton.html
 struct: GtkToggleButton
 class: ToggleButton
-implements: BuildableIF
 prefix: gtk_toggle_button_
 prefix: gtk_
 import: glib.Str
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
 
 nocode: gtk_toggle_button_new_with_label
 nocode: gtk_toggle_button_new_with_mnemonic
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToggleButton);
-
 	/**
 	 * Creates a new toggle button with a text label.
 	 * Params:
@@ -1892,32 +1698,16 @@ outFile: ToggleButton
 file: GtkLinkButton.html
 struct: GtkLinkButton
 class: LinkButton
-implements: BuildableIF
 prefix: gtk_link_button_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkLinkButton);
-code: end
 outFile: LinkButton
 
 file: GtkScaleButton.html
 struct: GtkScaleButton
 class: ScaleButton
-implements: BuildableIF
 prefix: gtk_scale_button_
 prefix: gtk_
 import: glib.Str
@@ -1925,45 +1715,16 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkScaleButton);
-code: end
 outFile: ScaleButton
 
 file: GtkVolumeButton.html
 struct: GtkVolumeButton
 class: VolumeButton
-implements: BuildableIF
 prefix: gtk_volume_button_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkVolumeButton);
-code: end
 outFile: VolumeButton
 
 ###########################################################
@@ -1973,7 +1734,6 @@ outFile: VolumeButton
 file: GtkEntry.html
 struct: GtkEntry
 class: Entry
-implements: BuildableIF
 prefix: gtk_entry_
 prefix: gtk_
 import: glib.Str
@@ -1984,19 +1744,7 @@ structWrap: GtkEntryCompletion* EntryCompletion
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkEntry);
-
 	/** */
 	public this (char[] text)
 	{
@@ -2017,7 +1765,6 @@ outFile: Entry
 file: GtkEntryCompletion.html
 struct: GtkEntryCompletion
 class: EntryCompletion
-implements: BuildableIF
 prefix: gtk_entry_completion_
 prefix: gtk_
 import: glib.Str
@@ -2025,94 +1772,35 @@ import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.TreeModel
 structWrap: GtkTreeModel* TreeModel
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkEntryCompletion);
-code: end
 outFile: EntryCompletion
 
 file: GtkHScale.html
 struct: GtkHScale
 class: HScale
-implements: BuildableIF
 prefix: gtk_hscale_
 prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkHScale);
-code: end
 outFile: HScale
 
 file: GtkVScale.html
 struct: GtkVScale
 class: VScale
-implements: BuildableIF
 prefix: gtk_vscale_
 prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkVScale);
-code: end
 outFile: VScale
 
 file: GtkSpinButton.html
 struct: GtkSpinButton
 class: SpinButton
-implements: BuildableIF
 prefix: gtk_spin_button_
 prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkSpinButton);
-code: end
 outFile: SpinButton
 
 file: GtkEditable.html
@@ -2520,7 +2208,6 @@ file: GtkTextView.html
 
 struct: GtkTextView
 class: TextView
-implements: BuildableIF
 prefix: gtk_text_view_
 prefix: gtk_
 noprefix: gtk_text_child_anchor_
@@ -2546,15 +2233,6 @@ structWrap: GtkTextChildAnchor* TextChildAnchor
 import: glib.ListG
 structWrap: GList* ListG
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 #text: start
 #gtk_text_view_get_type ()
 #
@@ -2564,8 +2242,6 @@ import: gtk.BuildableT
 
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkTextView);
 
 	/**
 	 * Get the text line at the pixel y
@@ -3056,7 +2732,6 @@ outFile: TreeSelection
 file: GtkTreeViewColumn.html
 struct: GtkTreeViewColumn
 class: TreeViewColumn
-implements: BuildableIF
 prefix: gtk_tree_view_column_
 prefix: gtk_
 import: glib.Str
@@ -3072,22 +2747,10 @@ import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 import: gdk.Rectangle
 structWrap: GdkRectangle* Rectangle
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
+import: glib.Str
 nocode: gtk_tree_view_column_new_with_attributes
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkTreeViewColumn);
-
 	/**
 	 * Creates a new Tree view column
 	 * Params:
@@ -3115,7 +2778,6 @@ outFile: TreeViewColumn
 file: GtkTreeView.html
 struct: GtkTreeView
 class: TreeView
-implements: BuildableIF
 prefix: gtk_tree_view_
 prefix: gtk_
 import: glib.Str
@@ -3154,19 +2816,7 @@ structWrap: GtkTreeIter* TreeIter
 import: gtk.Entry
 structWrap: GtkEntry* Entry
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkTreeView);
-
 	/**
 	 * Expands the row of the iter.
 	 * Params:
@@ -3307,7 +2957,6 @@ outFile: TreeDragSource
 file: GtkCellView.html
 struct: GtkCellView
 class: CellView
-implements: BuildableIF
 prefix: gtk_cell_view_
 prefix: gtk_
 import: glib.Str
@@ -3324,22 +2973,10 @@ structWrap: GdkColor* Color
 import: glib.ListG
 structWrap: GList* ListG
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 nocode: gtk_cell_view_new_with_text
 nocode: gtk_cell_view_new_with_markup
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkCellView);
-
 	/**
 	 * Creates a new GtkCellView widget, adds a GtkCellRendererText
 	 * to it, and makes its show text.
@@ -3371,7 +3008,6 @@ outFile: CellView
 file: GtkIconView.html
 struct: GtkIconView
 class: IconView
-implements: BuildableIF
 prefix: gtk_icon_view_
 prefix: gtk_
 import: gtk.TreeModel
@@ -3396,20 +3032,6 @@ structWrap: GList* ListG
 #structWrap: GtkIconViewDropPosition* IconViewDropPosition
 import: gdk.Pixmap
 structWrap: GdkPixmap* Pixmap
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkIconView);
-code: end
 outFile: IconView
 
 file: GtkTreeSortable.html
@@ -3690,7 +3312,6 @@ outFile: ListStore
 file: GtkTreeStore.html
 struct: GtkTreeStore
 class: TreeStore
-implements: BuildableIF
 extend: GtkTreeModel
 prefix: gtk_tree_store_
 prefix: gtk_
@@ -3703,22 +3324,12 @@ import: gobject.Value
 structWrap: GValue* Value
 import: gtk.TreeNode
 import: gdk.Pixbuf;
+import: gobject.Value;
 import: gtk.TreeModel
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-#import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
 
 nocode: gtk_tree_store_set
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkTreeStore);
 
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.
@@ -3895,7 +3506,6 @@ file: GtkComboBox.html
 
 struct: GtkComboBox
 class: ComboBox
-implements: BuildableIF
 implements: CellLayoutIF
 import: atk.ObjectAtk
 structWrap: AtkObject* ObjectAtk
@@ -3912,15 +3522,6 @@ structWrap: GtkTreeModel* TreeModel
 import: gtk.TreeIter
 structWrap: GtkTreeIter* TreeIter
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 #imports for CellLauout Interface.
 #import: glib.Str
 import: gtk.CellRenderer
@@ -3936,8 +3537,6 @@ code: start
 	private int count = 0;
 	public int maxCount = 0;
 	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkComboBox);
 
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkComboBox);
@@ -4051,8 +3650,6 @@ file: GtkComboBoxEntry.html
 
 struct: GtkComboBoxEntry
 class: ComboBoxEntry
-implements: BuildableIF
-implements: CellLayoutIF
 prefix: gtk_combo_box_entry_
 #noprefix: gtk_combo_box_entry_new_text
 #noprefix: gtk_combo_box_append_text
@@ -4064,32 +3661,10 @@ structWrap: GtkTreeModel* TreeModel
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-#imports for CellLauout Interface.
-import: glib.Str
-import: gtk.CellRenderer
-import: glib.ListG
-import: gtk.CellLayoutIF
-import: gtk.CellLayoutT
-
 nocode: gtk_combo_box_entry_new
 nocode: gtk_combo_box_entry_new_text
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkComboBoxEntry);
-
-	// add the CellLayout capabilities
-	mixin CellLayoutT!(GtkComboBoxEntry);
-
 	/**
 	 * Creates a new GtkComboBoxEntry which has a GtkEntry as child. After
 	 * construction, you should set a model using gtk_combo_box_set_model() and a
@@ -4129,7 +3704,6 @@ outFile: ComboBoxEntry
 file: GtkMenu.html
 struct: GtkMenu
 class: Menu
-implements: BuildableIF
 prefix: gtk_menu_
 prefix: gtk_
 import: glib.Str
@@ -4141,20 +3715,6 @@ import: gtk.AccelGroup
 structWrap: GtkAccelGroup* AccelGroup
 import: glib.ListG
 structWrap: GList* ListG
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMenu);
-code: end
 import: gtk.MenuItem
 
 code: start
@@ -4214,7 +3774,6 @@ outFile: Menu
 file: GtkMenuBar.html
 struct: GtkMenuBar
 class: MenuBar
-implements: BuildableIF
 prefix: gtk_menu_bar_
 prefix: gtk_
 import: gtk.Widget
@@ -4223,20 +3782,7 @@ import: gtk.Menu;
 import: gtk.MenuItem;
 structWrap: GtkMenu* Menu
 structWrap: GtkMenuItem* MenuItem
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMenuBar);
-
 	/** */
 	Menu append(char[] label, bool rightJustify=false)
 	{
@@ -4259,23 +3805,12 @@ outFile: MenuBar
 file: GtkMenuItem.html
 struct: GtkMenuItem
 class: MenuItem
-implements: BuildableIF
 prefix: gtk_menu_item_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 import: gtk.AccelGroup
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 # method conflict with parent method
 nocode: gtk_menu_item_activate
 nocode: gtk_menu_item_new_with_label
@@ -4286,9 +3821,6 @@ code: start
 	
 	/** store the action code passed in by the applcation */
 	private char[] actionLabel;
-
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMenuItem);
 	
 	/** Gets the application set action code */
 	public char[] getActionName()
@@ -4385,7 +3917,6 @@ outFile: MenuItem
 file: GtkImageMenuItem.html
 struct: GtkImageMenuItem
 class: ImageMenuItem
-implements: BuildableIF
 prefix: gtk_image_menu_item_
 prefix: gtk_
 import: glib.Str
@@ -4394,22 +3925,10 @@ structWrap: GtkWidget* Widget
 import: gtk.AccelGroup
 structWrap: GtkAccelGroup* AccelGroup
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 nocode: gtk_image_menu_item_new_with_label
 nocode: gtk_image_menu_item_new_with_mnemonic
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkImageMenuItem);
-
 	/**
 	 * Creates a new GtkImageMenuItem containing a label.
 	 * If mnemonic it true the label
@@ -4440,21 +3959,11 @@ outFile: ImageMenuItem
 file: GtkRadioMenuItem.html
 struct: GtkRadioMenuItem
 class: RadioMenuItem
-implements: BuildableIF
 prefix: gtk_radio_menu_item_
 prefix: gtk_
 import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
 
 nocode: gtk_radio_menu_item_new_with_label
 nocode: gtk_radio_menu_item_new_with_mnemonic
@@ -4462,9 +3971,6 @@ nocode: gtk_radio_menu_item_new_with_mnemonic_from_widget
 nocode: gtk_radio_menu_item_new_with_label_from_widget
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRadioMenuItem);
-
 	/**
 	 * Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.
 	 * The new GtkRadioMenuItem is added to the same group as group.
@@ -4535,27 +4041,14 @@ outFile: RadioMenuItem
 file: GtkCheckMenuItem.html
 struct: GtkCheckMenuItem
 class: CheckMenuItem
-implements: BuildableIF
 prefix: gtk_check_menu_item_
 prefix: gtk_
 import: glib.Str
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
 
 nocode: gtk_check_menu_item_new_with_label
 nocode: gtk_check_menu_item_new_with_mnemonic
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkCheckMenuItem);
-
 	/**
 	 * Creates a new GtkCheckMenuItem with a label.
 	 * Params:
@@ -4584,51 +4077,20 @@ outFile: CheckMenuItem
 file: GtkSeparatorMenuItem.html
 struct: GtkSeparatorMenuItem
 class: SeparatorMenuItem
-implements: BuildableIF
 prefix: gtk_separator_menu_item_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkSeparatorMenuItem);
-code: end
 outFile: SeparatorMenuItem
 
 file: GtkTearoffMenuItem.html
 struct: GtkTearoffMenuItem
 class: TearoffMenuItem
-implements: BuildableIF
 prefix: gtk_tearoff_menu_item_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkTearoffMenuItem);
-code: end
 outFile: TearoffMenuItem
 
 file: GtkToolbar.html
 struct: GtkToolbar
 class: Toolbar
-implements: BuildableIF
 prefix: gtk_toolbar_
 prefix: gtk_
 import: glib.Str
@@ -4637,22 +4099,10 @@ import: gtk.Button
 import: gtk.ToolItem
 structWrap: GtkWidget* Widget
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 nocode: gtk_toolbar_get_style
 nocode: gtk_toolbar_insert
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToolbar);
-
 	/**
 	 * Retrieves whether the toolbar has text, icons, or both . See
 	 * gtk_toolbar_set_style().
@@ -4721,7 +4171,6 @@ outFile: Toolbar
 file: GtkToolItem.html
 struct: GtkToolItem
 class: ToolItem
-implements: BuildableIF
 prefix: gtk_tool_item_
 prefix: gtk_
 import: glib.Str
@@ -4730,19 +4179,7 @@ structWrap: GtkTooltips* Tooltips
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToolItem);
-
 	/**
 	 * Sets this widget tooltip
 	 * Deprecated: Since 2.12 use setTooltipText() or setTooltipMarkup()
@@ -4764,32 +4201,16 @@ file: GtkSeparatorToolItem.html
 struct: GtkSeparatorToolItem
 ctorStruct: GtkToolItem
 class: SeparatorToolItem
-implements: BuildableIF
 prefix: gtk_separator_tool_item_
 prefix: gtk_
 import: gtk.ToolItem
 structWrap: GtkToolItem* ToolItem
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkSeparatorToolItem);
-code: end
 outFile: SeparatorToolItem
 
 file: GtkToolButton.html
 struct: GtkToolButton
 ctorStruct: GtkToolItem
 class: ToolButton
-implements: BuildableIF
 prefix: gtk_tool_button_
 prefix: gtk_
 import: glib.Str
@@ -4798,21 +4219,9 @@ import: gtk.ToolItem
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
 	/** An arbitrary string to be used by the application */
 	private char[] action;
-
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToolButton);
 
 	/** */
 	public void setActionName(char[] action)
@@ -4839,7 +4248,6 @@ file: GtkMenuToolButton.html
 struct: GtkMenuToolButton
 ctorStruct: GtkToolItem
 class: MenuToolButton
-implements: BuildableIF
 prefix: gtk_menu_tool_button_
 prefix: gtk_
 import: glib.Str
@@ -4851,23 +4259,12 @@ import: gtk.Tooltips
 structWrap: GtkTooltips* Tooltips
 import: gtk.Menu
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
 
 nocode: gtk_menu_tool_button_new
 nocode: gtk_menu_tool_button_new_from_stock
 nocode: gtk_menu_tool_button_get_menu
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMenuToolButton);
-
 	/**
 	 * Creates a new GtkMenuToolButton using icon_widget as icon and
 	 * label as label.
@@ -4948,33 +4345,17 @@ file: GtkToggleToolButton.html
 struct: GtkToggleToolButton
 ctorStruct: GtkToolItem
 class: ToggleToolButton
-implements: BuildableIF
 prefix: gtk_toggle_tool_button_
 prefix: gtk_
 import: glib.Str
 import: gtk.ToolItem
 structWrap: GtkToolItem* ToolItem
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToggleToolButton);
-code: end
 outFile: ToggleToolButton
 
 file: GtkRadioToolButton.html
 struct: GtkRadioToolButton
 ctorStruct: GtkToolItem
 class: RadioToolButton
-implements: BuildableIF
 prefix: gtk_radio_tool_button_
 prefix: gtk_
 import: glib.Str
@@ -4982,20 +4363,6 @@ import: gtk.ToolItem
 structWrap: GtkToolItem* ToolItem
 import: glib.ListSG
 structWrap: GSList* ListSG
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRadioToolButton);
-code: end
 outFile: RadioToolButton
 
 ###########################################################
@@ -5104,74 +4471,29 @@ outFile: Action
 file: GtkToggleAction.html
 struct: GtkToggleAction
 class: ToggleAction
-implements: BuildableIF
 prefix: gtk_toggle_action_
 prefix: gtk_
 import: glib.Str
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToggleAction);
-code: end
 outFile: ToggleAction
 
 file: GtkRadioAction.html
 struct: GtkRadioAction
 class: RadioAction
-implements: BuildableIF
 prefix: gtk_radio_action_
 prefix: gtk_
 import: glib.Str
 import: glib.ListSG
 structWrap: GSList* ListSG
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRadioAction);
-code: end
 outFile: RadioAction
 
 file: GtkRecentAction.html
 struct: GtkRecentAction
 ctorStruct: GtkAction
 class: RecentAction
-implements: BuildableIF
 prefix: gtk_recent_action_
 prefix: gtk_
 import: glib.Str
 import: gtk.RecentManager
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRecentAction);
-code: end
 structWrap: GtkRecentManager* RecentManager
 
 nocode: gtk_recent_action_new
@@ -5239,74 +4561,29 @@ outFile: RecentAction
 file: GtkColorButton.html
 struct: GtkColorButton
 class: ColorButton
-implements: BuildableIF
 prefix: gtk_color_button_
 prefix: gtk_
 import: glib.Str
 import: gdk.Color
 structWrap: GdkColor* Color
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkColorButton);
-code: end
 outFile: ColorButton
 
 file: GtkColorSelection.html
 struct: GtkColorSelection
 class: ColorSelection
-implements: BuildableIF
 prefix: gtk_color_selection_
 prefix: gtk_
 import: glib.Str
 import: gdk.Color
 structWrap: GdkColor* Color
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkColorSelection);
-code: end
 outFile: ColorSelection
 
 file: GtkColorSelectionDialog.html
 struct: GtkColorSelectionDialog
 class: ColorSelectionDialog
-implements: BuildableIF
 prefix: gtk_color_selection_dialog_
 prefix: gtk_
 import: glib.Str
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkColorSelectionDialog);
-code: end
 outFile: ColorSelectionDialog
 
 file: GtkFileChooser.html
@@ -5328,7 +4605,6 @@ outFile: FileChooser
 file: GtkFileChooserButton.html
 struct: GtkFileChooserButton
 class: FileChooserButton
-implements: BuildableIF
 prefix: gtk_file_chooser_button_
 prefix: gtk_
 import: glib.Str
@@ -5339,20 +4615,8 @@ import: gtk.Widget;
 import: gtk.FileFilter;
 import: gtk.FileChooser;
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
 	private FileChooser fileChooser;
-
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFileChooserButton);
 
 	/** */
 	public FileChooser getFileChooser()
@@ -5369,7 +4633,6 @@ outFile: FileChooserButton
 file: GtkFileChooserDialog.html
 struct: GtkFileChooserDialog
 class: FileChooserDialog
-implements: BuildableIF
 prefix: gtk_file_chooser_dialog_
 prefix: gtk_
 import: glib.Str
@@ -5379,24 +4642,11 @@ import: glib.ListSG;
 import: gtk.Widget;
 import: gtk.FileFilter;
 import: gtk.FileChooser;
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 nocode: gtk_file_chooser_dialog_new
 nocode: gtk_file_chooser_dialog_new_with_backend
 
 code: start
 	private FileChooser fileChooser;
-
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFileChooserDialog);
 
 	/** */
 	public FileChooser getFileChooser()
@@ -5516,7 +4766,6 @@ outFile: FileChooserDialog
 file: GtkFileChooserWidget.html
 struct: GtkFileChooserWidget
 class: FileChooserWidget
-implements: BuildableIF
 prefix: gtk_file_chooser_widget_
 prefix: gtk_
 import: glib.Str
@@ -5525,20 +4774,8 @@ import: gtk.Widget;
 import: gtk.FileFilter;
 import: gtk.FileChooser;
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
 	private FileChooser fileChooser;
-
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFileChooserWidget);
 
 	/** */
 	public FileChooser getFileChooser()
@@ -5563,97 +4800,39 @@ outFile: FileFilter
 file: GtkFontButton.html
 struct: GtkFontButton
 class: FontButton
-implements: BuildableIF
 prefix: gtk_font_button_
 prefix: gtk_
 import: glib.Str
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFontButton);
-code: end
 outFile: FontButton
 
 file: GtkFontSelection.html
 struct: GtkFontSelection
 class: FontSelection
-implements: BuildableIF
 prefix: gtk_font_selection_
 prefix: gtk_
 import: glib.Str
 import: gdk.Font
 structWrap: GdkFont* Font
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFontSelection);
-code: end
 outFile: FontSelection
 
 file: GtkFontSelectionDialog.html
 struct: GtkFontSelectionDialog
 class: FontSelectionDialog
-implements: BuildableIF
 prefix: gtk_font_selection_dialog_
 prefix: gtk_
 import: glib.Str
 import: gdk.Font
 structWrap: GdkFont* Font
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFontSelectionDialog);
-code: end
 outFile: FontSelectionDialog
 
 file: GtkInputDialog.html
 struct: GtkInputDialog
 class: InputDialog
-implements: BuildableIF
 prefix: gtk_input_dialog_
 prefix: gtk_
 import: gtk.Button
 
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkInputDialog);
-
 	Button getCloseButton()
 	{
 		//int[] arr= [144, 148, 152, 160, 164, 168, 172, 176,
@@ -5705,24 +4884,11 @@ outFile: InputDialog
 file: GtkAlignment.html
 struct: GtkAlignment
 class: Alignment
-implements: BuildableIF
 prefix: gtk_alignment_
 prefix: gtk_
 import: gtk.Widget
 
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkAlignment);
-
 	/** */
 	public static Alignment center(Widget widget)
 	{
@@ -5800,90 +4966,31 @@ outFile: Alignment
 file: GtkAspectFrame.html
 struct: GtkAspectFrame
 class: AspectFrame
-implements: BuildableIF
 prefix: gtk_aspect_frame_
 prefix: gtk_
 import: glib.Str
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkAspectFrame);
-code: end
 outFile: AspectFrame
 
 file: GtkHBox.html
 struct: GtkHBox
 class: HBox
-implements: BuildableIF
 prefix: gtk_hbox_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkHBox);
-code: end
 outFile: HBox
 
 file: GtkVBox.html
 struct: GtkVBox
 class: VBox
-implements: BuildableIF
 prefix: gtk_vbox_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkVBox);
-code: end
 outFile: VBox
 
 file: GtkHButtonBox.html
 struct: GtkHButtonBox
 class: HButtonBox
-implements: BuildableIF
 prefix: gtk_hbutton_box_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkHButtonBox);
-
 	/**
 	 * Creates a new HButtonBox and sets comon parameters
 	 */
@@ -5902,23 +5009,9 @@ outFile: HButtonBox
 file: GtkVButtonBox.html
 struct: GtkVButtonBox
 class: VButtonBox
-implements: BuildableIF
 prefix: gtk_vbutton_box_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkVButtonBox);
-
     /**
      * Creates a new vertical button box and sets standart values for it's comon parameters
      * Returns: a new vertical button box
@@ -5937,49 +5030,21 @@ outFile: VButtonBox
 file: GtkFixed.html
 struct: GtkFixed
 class: Fixed
-implements: BuildableIF
 prefix: gtk_fixed_
 prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFixed);
-code: end
 outFile: Fixed
 
 file: GtkHPaned.html
 struct: GtkHPaned
 class: HPaned
-implements: BuildableIF
 prefix: gtk_hpaned_
 prefix: gtk_
 structWrap: GtkWidget* Widget
 import: gtk.Widget
 
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkHPaned);
-
 	/**
 	 * Creates a new HPaned and adds two widgets as it's children
 	 * Params:
@@ -5999,24 +5064,11 @@ outFile: HPaned
 file: GtkVPaned.html
 struct: GtkVPaned
 class: VPaned
-implements: BuildableIF
 prefix: gtk_vpaned_
 prefix: gtk_
 import: gtk.Widget
 
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkVPaned);
-
 	/**
 	 * Creates a new HPaned and adds two widgets as it's children
 	 * Params:
@@ -6036,48 +5088,23 @@ outFile: VPaned
 file: GtkLayout.html
 struct: GtkLayout
 class: Layout
-implements: BuildableIF
 prefix: gtk_layout_
 prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkLayout);
-code: end
 outFile: Layout
 
 file: GtkNotebook.html
 struct: GtkNotebook
 class: Notebook
-implements: BuildableIF
 prefix: gtk_notebook_
 prefix: gtk_
 import: glib.Str
 import: gtk.Label
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
 
 code: start
 /** The GtkNotebookTab is not documented */
@@ -6087,9 +5114,6 @@ public enum GtkNotebookTab
   GTK_NOTEBOOK_TAB_LAST
 }
 alias GtkNotebookTab NotebookTab;
-
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkNotebook);
 
 	/**
 	 * Append a page with a widget and a text for a label
@@ -6110,24 +5134,15 @@ outFile: Notebook
 file: GtkTable.html
 struct: GtkTable
 class: Table
-implements: BuildableIF
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 prefix: gtk_table_
 prefix: gtk_
 
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 nocode: gtk_table_new
 
 code: start
+
 	int row;
 	int col;
 	int maxRows;
@@ -6136,9 +5151,6 @@ code: start
 	public AttachOptions defaultXOption = AttachOptions.SHRINK;
 	public AttachOptions defaultYOption = AttachOptions.SHRINK;
 	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkTable);
-
 	/**
 	 * Removes all children and resizes the table to 1,1
 	 */
@@ -6193,25 +5205,10 @@ outFile: Table
 file: GtkExpander.html
 struct: GtkExpander
 class: Expander
-implements: BuildableIF
 prefix: gtk_expander_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkExpander);
-code: end
 structWrap: GtkWidget* Widget
 
 nocode: gtk_expander_new
@@ -6253,34 +5250,20 @@ outFile: Expander
 file: GtkFrame.html
 struct: GtkFrame
 class: Frame
-implements: BuildableIF
 prefix: gtk_frame_
 prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFrame);
-
-	/**
-	 * Creates frame with label and set it's child widget
-	 */
-	public this(Widget widget, char[] label)
-	{
-		this(label);
-		add(widget);
-	}
+/**
+ * Creates frame with label and set it's child widget
+ */
+public this(Widget widget, char[] label)
+{
+	this(label);
+	add(widget);
+}
 code: end
 
 outFile: Frame
@@ -6288,45 +5271,15 @@ outFile: Frame
 file: GtkHSeparator.html
 struct: GtkHSeparator
 class: HSeparator
-implements: BuildableIF
 prefix: gtk_hseparator_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkHSeparator);
-code: end
 outFile: HSeparator
 
 file: GtkVSeparator.html
 struct: GtkVSeparator
 class: VSeparator
-implements: BuildableIF
 prefix: gtk_vseparator_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkVSeparator);
-code: end
 outFile: VSeparator
 
 ###########################################################
@@ -6336,55 +5289,24 @@ outFile: VSeparator
 file: GtkHScrollbar.html
 struct: GtkHScrollbar
 class: HScrollbar
-implements: BuildableIF
 prefix: gtk_hscrollbar_
 prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkHScrollbar);
-code: end
 outFile: HScrollbar
 
 file: GtkVScrollbar.html
 struct: GtkVScrollbar
 class: VScrollbar
-implements: BuildableIF
 prefix: gtk_vscrollbar_
 prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkVScrollbar);
-code: end
 outFile: VScrollbar
 
 file: GtkScrolledWindow.html
 struct: GtkScrolledWindow
 class: ScrolledWindow
-implements: BuildableIF
 prefix: gtk_scrolled_window_
 prefix: gtk_
 import: gtk.Widget
@@ -6392,21 +5314,9 @@ structWrap: GtkWidget* Widget
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
 
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
 
 nocode: gtk_scrolled_window_new
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkScrolledWindow);
-
 	/** */
 	public this()
 	{
@@ -6595,7 +5505,6 @@ outFile: PrintJob
 file: GtkPrintUnixDialog.html
 struct: GtkPrintUnixDialog
 class: PrintUnixDialog
-implements: BuildableIF
 prefix: gtk_print_unix_dialog_
 prefix: gtk_
 import: glib.Str
@@ -6610,23 +5519,10 @@ structWrap: GtkPageSetup* PageSetup
 import: gtk.PrintSettings
 structWrap: GtkPrintSettings* PrintSettings
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 nocode: gtk_print_unix_dialog_set_settings
 nocode: gtk_print_unix_dialog_get_settings
 #Conflicts with Widget.getSettings
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkPrintUnixDialog);
-
 	/**
 	 * Sets the GtkPrintSettings for the GtkPrintUnixDialog. Typically,
 	 * this is used to restore saved print settings from a previous print
@@ -6666,7 +5562,6 @@ outFile: PrintUnixDialog
 file: GtkPageSetupUnixDialog.html
 struct: GtkPageSetupUnixDialog
 class: PageSetupUnixDialog
-implements: BuildableIF
 prefix: gtk_page_setup_unix_dialog_
 prefix: gtk_
 import: glib.Str
@@ -6678,20 +5573,6 @@ import: gtk.PageSetup
 structWrap: GtkPageSetup* PageSetup
 import: gtk.PrintSettings
 structWrap: GtkPrintSettings* PrintSettings
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkPageSetupUnixDialog);
-code: end
 outFile: PageSetupUnixDialog
 
 ###########################################################
@@ -6710,67 +5591,24 @@ outFile: Adjustment
 file: GtkArrow.html
 struct: GtkArrow
 class: Arrow
-implements: BuildableIF
 prefix: gtk_arrow_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkArrow);
-code: end
 outFile: Arrow
 
 file: GtkCalendar.html
 struct: GtkCalendar
 class: Calendar
-implements: BuildableIF
 prefix: gtk_calendar_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkCalendar);
-code: end
 outFile: Calendar
 
 file: GtkDrawingArea.html
 struct: GtkDrawingArea
 class: DrawingArea
-implements: BuildableIF
 prefix: gtk_drawing_area_
 prefix: gtk_
 
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkDrawingArea);
-
 	/**
 	 * Create a new DrawingArea and sets the SizeRequest
 	 * Params:
@@ -6790,45 +5628,15 @@ outFile: DrawingArea
 file: GtkEventBox.html
 struct: GtkEventBox
 class: EventBox
-implements: BuildableIF
 prefix: gtk_event_box_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkEventBox);
-code: end
 outFile: EventBox
 
 file: GtkHandleBox.html
 struct: GtkHandleBox
 class: HandleBox
-implements: BuildableIF
 prefix: gtk_handle_box_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkHandleBox);
-code: end
 outFile: HandleBox
 
 file: GtkIMContextSimple.html
@@ -6896,25 +5704,10 @@ outFile: Tooltip
 file: GtkViewport.html
 struct: GtkViewport
 class: Viewport
-implements: BuildableIF
 prefix: gtk_viewport_
 prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkViewport);
-code: end
 outFile: Viewport
 
 file: GtkAccessible.html
@@ -6931,57 +5724,26 @@ outFile: Accessible
 file: GtkBin.html
 struct: GtkBin
 class: Bin
-implements: BuildableIF
 prefix: gtk_bin_
 prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkBin);
-code: end
 outFile: Bin
 
 file: GtkBox.html
 struct: GtkBox
 class: Box
-implements: BuildableIF
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 prefix: gtk_box_
 prefix: gtk_
 #import: gtk.PackType
 #structWrap: GtkPackType* PackType
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkBox);
-code: end
 outFile: Box
 
 file: GtkButtonBox.html
 struct: GtkButtonBox
 class: ButtonBox
-implements: BuildableIF
 prefix: gtk_button_box_
 prefix: gtk_
 import: gtk.Widget
@@ -6989,20 +5751,7 @@ structWrap: GtkWidget* Widget
 import: gtk.Button
 import: gtk.HButtonBox
 import: gtk.VButtonBox
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkButtonBox);
-
 	/** */
 	static ButtonBox createActionBox(
 			void delegate(Button) onClicked, 
@@ -7056,14 +5805,13 @@ outFile: ButtonBox
 file: GtkContainer.html
 struct: GtkContainer
 class: Container
-implements: BuildableIF
-prefix: gtk_container_
-prefix: gtk_
 structWrap: GtkContainerClass* Container
 structWrap: GtkWidget* Widget
 import: glib.Str
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
+prefix: gtk_container_
+prefix: gtk_
 import: glib.ListG
 structWrap: GList* ListG
 import: gobject.Value
@@ -7075,18 +5823,7 @@ structWrap: GParamSpec* ParamSpec
 #import: g.ObjectClass
 #structWrap: GObjectClass* ObjectClass
 
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkContainer);
 
 	/**
 	 * Removes all widgets from the container
@@ -7110,69 +5847,24 @@ outFile: Container
 file: GtkItem.html
 struct: GtkItem
 class: Item
-implements: BuildableIF
 prefix: gtk_item_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkItem);
-code: end
 outFile: Item
 
 file: GtkMenuShell.html
 struct: GtkMenuShell
 class: MenuShell
-implements: BuildableIF
 prefix: gtk_menu_shell_
 prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMenuShell);
-code: end
 outFile: MenuShell
 
 file: GtkMisc.html
 struct: GtkMisc
 class: Misc
-implements: BuildableIF
 prefix: gtk_misc_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMisc);
-code: end
 outFile: Misc
 
 file: GtkObject.html
@@ -7195,25 +5887,12 @@ outFile: ObjectGtk
 file: GtkPaned.html
 struct: GtkPaned
 class: Paned
-implements: BuildableIF
 prefix: gtk_paned_
 prefix: gtk_
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkPaned);
-
 	/** */
 	public void add(Widget child1, Widget child2)
 	{
@@ -7227,93 +5906,33 @@ outFile: Paned
 file: GtkRange.html
 struct: GtkRange
 class: Range
-implements: BuildableIF
 prefix: gtk_range_
 prefix: gtk_
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRange);
-code: end
 outFile: Range
 
 file: GtkScale.html
 struct: GtkScale
 class: Scale
-implements: BuildableIF
 prefix: gtk_scale_
 prefix: gtk_
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkScale);
-code: end
 outFile: Scale
 
 file: GtkScrollbar.html
 struct: GtkScrollbar
 class: Scrollbar
-implements: BuildableIF
 prefix: gtk_scrollbar_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkScrollbar);
-code: end
 outFile: Scrollbar
 
 file: GtkSeparator.html
 struct: GtkSeparator
 class: Separator
-implements: BuildableIF
 prefix: gtk_separator
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkSeparator);
-code: end
 outFile: Separator
 
 file: GtkWidget.html
@@ -7568,47 +6187,17 @@ outFile: IMContext
 file: GtkPlug.html
 struct: GtkPlug
 class: Plug
-implements: BuildableIF
 prefix: gtk_plug_
 prefix: gtk_
 import: gdk.Display
 structWrap: GdkDisplay* Display
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkPlug);
-code: end
 outFile: Plug
 
 file: GtkSocket.html
 struct: GtkSocket
 class: Socket
-implements: BuildableIF
 prefix: gtk_socket_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkSocket);
-code: end
 outFile: Socket
 
 ###########################################################
@@ -7618,111 +6207,36 @@ outFile: Socket
 file: GtkCurve.html
 struct: GtkCurve
 class: Curve
-implements: BuildableIF
 prefix: gtk_curve_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkCurve);
-code: end
 outFile: Curve
 
 file: GtkGammaCurve.html
 struct: GtkGammaCurve
 class: GammaCurve
-implements: BuildableIF
 prefix: gtk_gamma_curve_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkGammaCurve);
-code: end
 outFile: GammaCurve
 
 file: GtkRuler.html
 struct: GtkRuler
 class: Ruler
-implements: BuildableIF
 prefix: gtk_ruler_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRuler);
-code: end
 outFile: Ruler
 
 file: GtkHRuler.html
 struct: GtkHRuler
 class: HRuler
-implements: BuildableIF
 prefix: gtk_hruler_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkHRuler);
-code: end
 outFile: HRuler
 
 file: GtkVRuler.html
 struct: GtkVRuler
 class: VRuler
-implements: BuildableIF
 prefix: gtk_vruler_
 prefix: gtk_
-
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkVRuler);
-code: end
 outFile: VRuler
 
 ###########################################################
@@ -7782,7 +6296,6 @@ outFile: RecentChooserT
 file: GtkRecentChooserDialog.html
 struct: GtkRecentChooserDialog
 class: RecentChooserDialog
-implements: BuildableIF
 implements: RecentChooserIF
 prefix: gtk_recent_chooser_dialog_
 prefix: gtk_
@@ -7793,15 +6306,6 @@ import: gtk.Window
 structWrap: GtkWindow* Window
 import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
 
 #imports for RecentChooser interface
 #import: glib.Str
@@ -7817,9 +6321,6 @@ nocode: gtk_recent_chooser_dialog_new
 nocode: gtk_recent_chooser_dialog_new_for_manager
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRecentChooserDialog);
-
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserDialog);
 
@@ -7880,7 +6381,6 @@ outFile: RecentChooserDialog
 file: GtkRecentChooserMenu.html
 struct: GtkRecentChooserMenu
 class: RecentChooserMenu
-implements: BuildableIF
 implements: RecentChooserIF
 prefix: gtk_recent_chooser_menu_
 prefix: gtk_
@@ -7890,15 +6390,6 @@ structWrap: GtkWidget* Widget
 import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
 
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 #imports for RecentChooser interface
 #import: glib.Str
 import: gtk.RecentInfo
@@ -7910,9 +6401,6 @@ import: gtk.RecentChooserIF
 import: gtk.RecentChooserT
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRecentChooserMenu);
-
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserMenu);
 code: end
@@ -7921,7 +6409,6 @@ outFile: RecentChooserMenu
 file: GtkRecentChooserWidget.html
 struct: GtkRecentChooserWidget
 class: RecentChooserWidget
-implements: BuildableIF
 implements: RecentChooserIF
 prefix: gtk_recent_chooser_widget_
 prefix: gtk_
@@ -7930,17 +6417,8 @@ structWrap: GtkWidget* Widget
 import: gtk.RecentManager
 structWrap: GtkRecentManager* RecentManager
 
-#imports for Buildable Interface.
-import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
 #imports for RecentChooser interface
-#import: glib.Str
+import: glib.Str
 import: gtk.RecentInfo
 import: gtk.RecentFilter
 import: glib.ListG
@@ -7950,9 +6428,6 @@ import: gtk.RecentChooserIF
 import: gtk.RecentChooserT
 
 code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRecentChooserWidget);
-
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserWidget);
 code: end
@@ -8086,24 +6561,9 @@ outFile: Builder
 file: GtkFileSelection.html
 struct: GtkFileSelection
 class: FileSelection
-implements: BuildableIF
 prefix: gtk_file_selection_
 prefix: gtk_
 import: glib.Str
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFileSelection);
-code: end
 outFile: FileSelection
 
 file: GtkItemFactory.html
@@ -8209,24 +6669,9 @@ outFile: Tooltips
 file: GtkProgress.html
 struct: GtkProgress
 class: Progress
-implements: BuildableIF
 prefix: gtk_progress_
 prefix: gtk_
 import: glib.Str
 import: gtk.Adjustment
 structWrap: GtkAdjustment* Adjustment
-
-#imports for Buildable Interface.
-#import: glib.Str
-import: gobject.ObjectG
-import: gobject.Value
-import: gtk.Builder
-#import: glib.MarkupParser
-import: gtk.BuildableIF
-import: gtk.BuildableT
-
-code: start
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkProgress);
-code: end
 outFile: Progress

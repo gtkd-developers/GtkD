@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_radio_menu_item_
  * 	- gtk_
@@ -50,11 +49,6 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListSG
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GSList* -> ListSG
  * module aliases:
@@ -72,11 +66,6 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ListSG;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -102,7 +91,7 @@ private import gtk.CheckMenuItem;
 	 *  gtk_check_menu_item_set_active (GTK_CHECK_MENU_ITEM (item), TRUE);
  * }
  */
-public class RadioMenuItem : CheckMenuItem, BuildableIF
+public class RadioMenuItem : CheckMenuItem
 {
 	
 	/** the main Gtk struct */
@@ -135,9 +124,6 @@ public class RadioMenuItem : CheckMenuItem, BuildableIF
 		super(cast(GtkCheckMenuItem*)gtkRadioMenuItem);
 		this.gtkRadioMenuItem = gtkRadioMenuItem;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRadioMenuItem);
 	
 	/**
 	 * Creates a new GtkRadioMenuItem whose child is a simple GtkLabel.

@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_scrolled_window_
  * 	- gtk_
@@ -47,12 +46,6 @@
  * imports:
  * 	- gtk.Widget
  * 	- gtk.Adjustment
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkWidget* -> Widget
@@ -71,12 +64,6 @@ public  import gtkc.gdktypes;
 
 private import gtk.Widget;
 private import gtk.Adjustment;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -117,7 +104,7 @@ private import gtk.Bin;
  * doesn't have exactly the right layout, it's very possible to set up
  * your own scrolling with GtkScrollbar and for example a GtkTable.
  */
-public class ScrolledWindow : Bin, BuildableIF
+public class ScrolledWindow : Bin
 {
 	
 	/** the main Gtk struct */
@@ -150,9 +137,6 @@ public class ScrolledWindow : Bin, BuildableIF
 		super(cast(GtkBin*)gtkScrolledWindow);
 		this.gtkScrolledWindow = gtkScrolledWindow;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkScrolledWindow);
 	
 	/** */
 	public this()

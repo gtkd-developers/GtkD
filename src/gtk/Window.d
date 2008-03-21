@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_window_
  * 	- gtk_
@@ -52,11 +51,7 @@
  * 	- gdk.Screen
  * 	- glib.ListG
  * 	- gdk.Pixbuf
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
+ * 	- gtk.Window
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixbuf* -> Pixbuf
@@ -86,11 +81,7 @@ private import gtk.WindowGroup;
 private import gdk.Screen;
 private import glib.ListG;
 private import gdk.Pixbuf;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
+private import gtk.Window;
 
 
 
@@ -99,7 +90,7 @@ private import gtk.Bin;
 /**
  * Description
  */
-public class Window : Bin, BuildableIF
+public class Window : Bin
 {
 	
 	/** the main Gtk struct */
@@ -132,9 +123,6 @@ public class Window : Bin, BuildableIF
 		super(cast(GtkBin*)gtkWindow);
 		this.gtkWindow = gtkWindow;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkWindow);
 	
 	/**
 	 * Creates a top level window with a title

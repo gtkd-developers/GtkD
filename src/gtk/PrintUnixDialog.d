@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_print_unix_dialog_
  * 	- gtk_
@@ -52,11 +51,6 @@
  * 	- gtk.Printer
  * 	- gtk.PageSetup
  * 	- gtk.PrintSettings
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkPageSetup* -> PageSetup
  * 	- GtkPrintSettings* -> PrintSettings
@@ -80,11 +74,6 @@ private import gtk.Window;
 private import gtk.Printer;
 private import gtk.PageSetup;
 private import gtk.PrintSettings;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -133,7 +122,7 @@ private import gtk.Dialog;
  *  </child>
  * </object>
  */
-public class PrintUnixDialog : Dialog, BuildableIF
+public class PrintUnixDialog : Dialog
 {
 	
 	/** the main Gtk struct */
@@ -166,9 +155,6 @@ public class PrintUnixDialog : Dialog, BuildableIF
 		super(cast(GtkDialog*)gtkPrintUnixDialog);
 		this.gtkPrintUnixDialog = gtkPrintUnixDialog;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkPrintUnixDialog);
 	
 	/**
 	 * Sets the GtkPrintSettings for the GtkPrintUnixDialog. Typically,

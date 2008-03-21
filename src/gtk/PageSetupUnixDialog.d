@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = PageSetupUnixDialog
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_page_setup_unix_dialog_
  * 	- gtk_
@@ -49,11 +48,6 @@
  * 	- gtk.Window
  * 	- gtk.PageSetup
  * 	- gtk.PrintSettings
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkPageSetup* -> PageSetup
  * 	- GtkPrintSettings* -> PrintSettings
@@ -75,11 +69,6 @@ private import gtk.Widget;
 private import gtk.Window;
 private import gtk.PageSetup;
 private import gtk.PrintSettings;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -93,7 +82,7 @@ private import gtk.Dialog;
  * the portability offered by the high-level printing API
  * Printing support was added in GTK+ 2.10.
  */
-public class PageSetupUnixDialog : Dialog, BuildableIF
+public class PageSetupUnixDialog : Dialog
 {
 	
 	/** the main Gtk struct */
@@ -126,9 +115,6 @@ public class PageSetupUnixDialog : Dialog, BuildableIF
 		super(cast(GtkDialog*)gtkPageSetupUnixDialog);
 		this.gtkPageSetupUnixDialog = gtkPageSetupUnixDialog;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkPageSetupUnixDialog);
 	
 	/**
 	 */

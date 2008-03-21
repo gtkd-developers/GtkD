@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_paned_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- gtk.Widget
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -67,12 +60,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import gtk.Widget;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -123,7 +110,7 @@ private import gtk.Container;
  * gtk_paned_pack2 (GTK_PANED (hpaned), frame2, FALSE, FALSE);
  * gtk_widget_set_size_request (frame2, 50, -1);
  */
-public class Paned : Container, BuildableIF
+public class Paned : Container
 {
 	
 	/** the main Gtk struct */
@@ -156,9 +143,6 @@ public class Paned : Container, BuildableIF
 		super(cast(GtkContainer*)gtkPaned);
 		this.gtkPaned = gtkPaned;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkPaned);
 	
 	/** */
 	public void add(Widget child1, Widget child2)

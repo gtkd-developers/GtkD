@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = ColorButton
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_color_button_
  * 	- gtk_
@@ -46,11 +45,6 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Color
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkColor* -> Color
  * module aliases:
@@ -68,11 +62,6 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Color;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -84,7 +73,7 @@ private import gtk.Button;
  * an allows to open a color selection dialog to change the color. It is suitable
  * widget for selecting a color in a preference dialog.
  */
-public class ColorButton : Button, BuildableIF
+public class ColorButton : Button
 {
 	
 	/** the main Gtk struct */
@@ -117,9 +106,6 @@ public class ColorButton : Button, BuildableIF
 		super(cast(GtkButton*)gtkColorButton);
 		this.gtkColorButton = gtkColorButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkColorButton);
 	
 	/**
 	 */

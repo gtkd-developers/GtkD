@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = VolumeButton
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_volume_button_
  * 	- gtk_
@@ -46,11 +45,6 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -66,11 +60,6 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.Widget;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -82,7 +71,7 @@ private import gtk.ScaleButton;
  * been tailored for use as a volume control widget with suitable
  * icons, tooltips and accessible labels.
  */
-public class VolumeButton : ScaleButton, BuildableIF
+public class VolumeButton : ScaleButton
 {
 	
 	/** the main Gtk struct */
@@ -115,9 +104,6 @@ public class VolumeButton : ScaleButton, BuildableIF
 		super(cast(GtkScaleButton*)gtkVolumeButton);
 		this.gtkVolumeButton = gtkVolumeButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkVolumeButton);
 	
 	/**
 	 */

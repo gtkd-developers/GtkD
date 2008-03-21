@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_notebook_
  * 	- gtk_
@@ -47,11 +46,6 @@
  * 	- glib.Str
  * 	- gtk.Label
  * 	- gtk.Widget
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -70,11 +64,6 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Label;
 private import gtk.Widget;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -112,7 +101,7 @@ private import gtk.Container;
  *  </child>
  * </object>
  */
-public class Notebook : Container, BuildableIF
+public class Notebook : Container
 {
 	
 	/** the main Gtk struct */
@@ -153,9 +142,6 @@ public class Notebook : Container, BuildableIF
 		GTK_NOTEBOOK_TAB_LAST
 	}
 	alias GtkNotebookTab NotebookTab;
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkNotebook);
 	
 	/**
 	 * Append a page with a widget and a text for a label

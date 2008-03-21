@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_cell_view_
  * 	- gtk_
@@ -52,11 +51,6 @@
  * 	- gtk.TreePath
  * 	- gdk.Color
  * 	- glib.ListG
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkColor* -> Color
@@ -80,11 +74,6 @@ private import gtk.TreeModel;
 private import gtk.TreePath;
 private import gdk.Color;
 private import glib.ListG;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -97,7 +86,7 @@ private import gtk.Widget;
  * some of the more complex features of GtkTreeView, like cell editing
  * and drag and drop.
  */
-public class CellView : Widget, BuildableIF
+public class CellView : Widget
 {
 	
 	/** the main Gtk struct */
@@ -130,9 +119,6 @@ public class CellView : Widget, BuildableIF
 		super(cast(GtkWidget*)gtkCellView);
 		this.gtkCellView = gtkCellView;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkCellView);
 	
 	/**
 	 * Creates a new GtkCellView widget, adds a GtkCellRendererText

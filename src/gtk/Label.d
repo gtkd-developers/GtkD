@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_label_
  * 	- gtk_
@@ -48,11 +47,6 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -70,11 +64,6 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -152,7 +141,7 @@ private import gtk.Misc;
  * with one another. If you want to set how the label as a whole
  * aligns in its available space, see gtk_misc_set_alignment().
  */
-public class Label : Misc, BuildableIF
+public class Label : Misc
 {
 	
 	/** the main Gtk struct */
@@ -185,9 +174,6 @@ public class Label : Misc, BuildableIF
 		super(cast(GtkMisc*)gtkLabel);
 		this.gtkLabel = gtkLabel;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkLabel);
 	
 	/**
 	 * Creates a new GtkLabel, containing the text in str.

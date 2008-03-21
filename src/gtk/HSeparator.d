@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = HSeparator
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_hseparator_
  * 	- gtk_
@@ -44,12 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -62,12 +55,6 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 
 
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -84,7 +71,7 @@ private import gtk.Separator;
  * widget using gtk_separator_menu_item_new() and add it to the menu with
  * gtk_menu_shell_append().
  */
-public class HSeparator : Separator, BuildableIF
+public class HSeparator : Separator
 {
 	
 	/** the main Gtk struct */
@@ -117,9 +104,6 @@ public class HSeparator : Separator, BuildableIF
 		super(cast(GtkSeparator*)gtkHSeparator);
 		this.gtkHSeparator = gtkHSeparator;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkHSeparator);
 	
 	/**
 	 */

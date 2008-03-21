@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = ColorSelection
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_color_selection_
  * 	- gtk_
@@ -46,11 +45,6 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Color
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkColor* -> Color
  * module aliases:
@@ -68,11 +62,6 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gdk.Color;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -86,7 +75,7 @@ private import gtk.VBox;
  * value, red, green, blue, and opacity. It is found on the standard
  * color selection dialog box GtkColorSelectionDialog.
  */
-public class ColorSelection : VBox, BuildableIF
+public class ColorSelection : VBox
 {
 	
 	/** the main Gtk struct */
@@ -119,9 +108,6 @@ public class ColorSelection : VBox, BuildableIF
 		super(cast(GtkVBox*)gtkColorSelection);
 		this.gtkColorSelection = gtkColorSelection;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkColorSelection);
 	
 	/**
 	 */

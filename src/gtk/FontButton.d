@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = FontButton
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_font_button_
  * 	- gtk_
@@ -45,11 +44,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -65,11 +59,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -80,7 +69,7 @@ private import gtk.Button;
  * The GtkFontButton is a button which displays the currently selected font an allows to open a font selection
  * dialog to change the font. It is suitable widget for selecting a font in a preference dialog.
  */
-public class FontButton : Button, BuildableIF
+public class FontButton : Button
 {
 	
 	/** the main Gtk struct */
@@ -113,9 +102,6 @@ public class FontButton : Button, BuildableIF
 		super(cast(GtkButton*)gtkFontButton);
 		this.gtkFontButton = gtkFontButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFontButton);
 	
 	/**
 	 */

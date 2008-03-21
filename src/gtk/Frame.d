@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_frame_
  * 	- gtk_
@@ -46,11 +45,6 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -66,11 +60,6 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.Widget;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -99,7 +88,7 @@ private import gtk.Bin;
  *  </child>
  * </object>
  */
-public class Frame : Bin, BuildableIF
+public class Frame : Bin
 {
 	
 	/** the main Gtk struct */
@@ -132,9 +121,6 @@ public class Frame : Bin, BuildableIF
 		super(cast(GtkBin*)gtkFrame);
 		this.gtkFrame = gtkFrame;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFrame);
 	
 	/**
 	 * Creates frame with label and set it's child widget

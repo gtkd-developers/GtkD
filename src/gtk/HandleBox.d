@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = HandleBox
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_handle_box_
  * 	- gtk_
@@ -44,12 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -64,12 +57,6 @@ private import gtkc.gtk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -97,7 +84,7 @@ private import gtk.Bin;
  * allocation will remain fixed as the height of the handlebox shrinks,
  * so the snap edge should be set to GTK_POS_BOTTOM.
  */
-public class HandleBox : Bin, BuildableIF
+public class HandleBox : Bin
 {
 	
 	/** the main Gtk struct */
@@ -130,9 +117,6 @@ public class HandleBox : Bin, BuildableIF
 		super(cast(GtkBin*)gtkHandleBox);
 		this.gtkHandleBox = gtkHandleBox;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkHandleBox);
 	
 	/**
 	 */

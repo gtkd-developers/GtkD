@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Invisible
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_invisible_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- gdk.Screen
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkScreen* -> Screen
  * module aliases:
@@ -65,12 +58,6 @@ private import gtkc.gtk;
 
 
 private import gdk.Screen;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -83,7 +70,7 @@ private import gtk.Widget;
  * It is used for reliable pointer grabs and selection handling in the code
  * for drag-and-drop.
  */
-public class Invisible : Widget, BuildableIF
+public class Invisible : Widget
 {
 	
 	/** the main Gtk struct */
@@ -116,9 +103,6 @@ public class Invisible : Widget, BuildableIF
 		super(cast(GtkWidget*)gtkInvisible);
 		this.gtkInvisible = gtkInvisible;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkInvisible);
 	
 	/**
 	 */

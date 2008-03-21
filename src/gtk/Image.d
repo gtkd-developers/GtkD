@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_image_
  * 	- gtk_
@@ -52,11 +51,6 @@
  * 	- gdk.ImageGdk
  * 	- gdk.Bitmap
  * 	- gdk.Pixmap
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkBitmap* -> Bitmap
  * 	- GdkImage* -> ImageGdk
@@ -80,11 +74,6 @@ private import gtk.IconSet;
 private import gdk.ImageGdk;
 private import gdk.Bitmap;
 private import gdk.Pixmap;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -157,7 +146,7 @@ private import gtk.Misc;
  * can then be loaded into a GdkPixbuf using
  * gdk_pixbuf_new_from_inline().
  */
-public class Image : Misc, BuildableIF
+public class Image : Misc
 {
 	
 	/** the main Gtk struct */
@@ -190,9 +179,6 @@ public class Image : Misc, BuildableIF
 		super(cast(GtkMisc*)gtkImage);
 		this.gtkImage = gtkImage;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkImage);
 	
 	// this will be an enum
 	/**

@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_tree_view_
  * 	- gtk_
@@ -58,11 +57,6 @@
  * 	- gdk.Pixmap
  * 	- gtk.TreeIter
  * 	- gtk.Entry
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkPixmap* -> Pixmap
@@ -104,11 +98,6 @@ private import gtk.Tooltip;
 private import gdk.Pixmap;
 private import gtk.TreeIter;
 private import gtk.Entry;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -154,7 +143,7 @@ private import gtk.Container;
  *  </child>
  * </object>
  */
-public class TreeView : Container, BuildableIF
+public class TreeView : Container
 {
 	
 	/** the main Gtk struct */
@@ -187,9 +176,6 @@ public class TreeView : Container, BuildableIF
 		super(cast(GtkContainer*)gtkTreeView);
 		this.gtkTreeView = gtkTreeView;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkTreeView);
 	
 	/**
 	 * Expands the row of the iter.

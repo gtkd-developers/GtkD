@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Curve
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_curve_
  * 	- gtk_
@@ -44,12 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -64,12 +57,6 @@ private import gtkc.gtk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -94,7 +81,7 @@ private import gtk.DrawingArea;
  * on the curve which are connected by straight lines. In free mode the user can
  * draw the points of the curve freely, and they are not connected at all.
  */
-public class Curve : DrawingArea, BuildableIF
+public class Curve : DrawingArea
 {
 	
 	/** the main Gtk struct */
@@ -127,9 +114,6 @@ public class Curve : DrawingArea, BuildableIF
 		super(cast(GtkDrawingArea*)gtkCurve);
 		this.gtkCurve = gtkCurve;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkCurve);
 	
 	/**
 	 */

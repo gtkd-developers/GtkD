@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Plug
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_plug_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- gdk.Display
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkDisplay* -> Display
  * module aliases:
@@ -67,12 +60,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import gdk.Display;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -92,7 +79,7 @@ private import gtk.Window;
  * The GtkPlug and GtkSocket widgets are currently not available
  * on all platforms supported by GTK+.
  */
-public class Plug : Window, BuildableIF
+public class Plug : Window
 {
 	
 	/** the main Gtk struct */
@@ -125,9 +112,6 @@ public class Plug : Window, BuildableIF
 		super(cast(GtkWindow*)gtkPlug);
 		this.gtkPlug = gtkPlug;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkPlug);
 	
 	/**
 	 */

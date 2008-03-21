@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Layout
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_layout_
  * 	- gtk_
@@ -46,12 +45,6 @@
  * imports:
  * 	- gtk.Adjustment
  * 	- gtk.Widget
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkWidget* -> Widget
@@ -70,12 +63,6 @@ public  import gtkc.gdktypes;
 
 private import gtk.Adjustment;
 private import gtk.Widget;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -94,7 +81,7 @@ private import gtk.Container;
  * GTK_WIDGET (layout)->window, as you would for a drawing
  * area.
  */
-public class Layout : Container, BuildableIF
+public class Layout : Container
 {
 	
 	/** the main Gtk struct */
@@ -127,9 +114,6 @@ public class Layout : Container, BuildableIF
 		super(cast(GtkContainer*)gtkLayout);
 		this.gtkLayout = gtkLayout;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkLayout);
 	
 	/**
 	 */

@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_recent_action_
  * 	- gtk_
@@ -48,11 +47,6 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.RecentManager
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkRecentManager* -> RecentManager
  * module aliases:
@@ -68,11 +62,6 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.RecentManager;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -88,7 +77,7 @@ private import gtk.Action;
  * the recently used files in the popup menu, use a GtkRecentAction as the
  * action for a <toolitem> element.
  */
-public class RecentAction : Action, BuildableIF
+public class RecentAction : Action
 {
 	
 	/** the main Gtk struct */
@@ -122,8 +111,7 @@ public class RecentAction : Action, BuildableIF
 		this.gtkRecentAction = gtkRecentAction;
 	}
 	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRecentAction);	/**
+	/**
 	 * Creates a new GtkRecentAction object. To add the action to
 	 * a GtkActionGroup and set the accelerator for the action,
 	 * call gtk_action_group_add_action_with_accel().

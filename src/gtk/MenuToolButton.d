@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_menu_tool_button_
  * 	- gtk_
@@ -52,11 +51,6 @@
  * 	- gtk.Widget
  * 	- gtk.Tooltips
  * 	- gtk.Menu
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkToolItem* -> ToolItem
  * 	- GtkTooltips* -> Tooltips
@@ -79,11 +73,6 @@ private import gtk.ToolItem;
 private import gtk.Widget;
 private import gtk.Tooltips;
 private import gtk.Menu;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -98,7 +87,7 @@ private import gtk.ToolButton;
  *  GtkMenuToolButton. Use gtk_menu_tool_button_new_from_stock() to
  *  create a new GtkMenuToolButton containing a stock item.
  */
-public class MenuToolButton : ToolButton, BuildableIF
+public class MenuToolButton : ToolButton
 {
 	
 	/** the main Gtk struct */
@@ -131,9 +120,6 @@ public class MenuToolButton : ToolButton, BuildableIF
 		super(cast(GtkToolButton*)gtkMenuToolButton);
 		this.gtkMenuToolButton = gtkMenuToolButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMenuToolButton);
 	
 	/**
 	 * Creates a new GtkMenuToolButton using icon_widget as icon and

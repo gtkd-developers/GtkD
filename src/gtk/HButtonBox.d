@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_hbutton_box_
  * 	- gtk_
@@ -44,12 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -62,12 +55,6 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 
 
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -91,7 +78,7 @@ private import gtk.ButtonBox;
  * arrangement and layout of the buttons can be changed with
  * gtk_button_box_set_layout().
  */
-public class HButtonBox : ButtonBox, BuildableIF
+public class HButtonBox : ButtonBox
 {
 	
 	/** the main Gtk struct */
@@ -124,9 +111,6 @@ public class HButtonBox : ButtonBox, BuildableIF
 		super(cast(GtkButtonBox*)gtkHButtonBox);
 		this.gtkHButtonBox = gtkHButtonBox;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkHButtonBox);
 	
 	/**
 	 * Creates a new HButtonBox and sets comon parameters

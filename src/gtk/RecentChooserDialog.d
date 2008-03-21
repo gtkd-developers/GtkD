@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * 	- RecentChooserIF
  * prefixes:
  * 	- gtk_recent_chooser_dialog_
@@ -51,11 +50,6 @@
  * 	- gtk.Widget
  * 	- gtk.Window
  * 	- gtk.RecentManager
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * 	- gtk.RecentInfo
  * 	- gtk.RecentFilter
  * 	- glib.ListG
@@ -82,11 +76,6 @@ private import glib.Str;
 private import gtk.Widget;
 private import gtk.Window;
 private import gtk.RecentManager;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 private import gtk.RecentInfo;
 private import gtk.RecentFilter;
 private import glib.ListG;
@@ -127,7 +116,7 @@ private import gtk.Dialog;
  * gtk_widget_destroy (dialog);
  * Recently used files are supported since GTK+ 2.10.
  */
-public class RecentChooserDialog : Dialog, BuildableIF, RecentChooserIF
+public class RecentChooserDialog : Dialog, RecentChooserIF
 {
 	
 	/** the main Gtk struct */
@@ -160,9 +149,6 @@ public class RecentChooserDialog : Dialog, BuildableIF, RecentChooserIF
 		super(cast(GtkDialog*)gtkRecentChooserDialog);
 		this.gtkRecentChooserDialog = gtkRecentChooserDialog;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRecentChooserDialog);
 	
 	// add the RecentChooser capabilities
 	mixin RecentChooserT!(GtkRecentChooserDialog);

@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Statusbar
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_statusbar_
  * 	- gtk_
@@ -45,11 +44,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -65,11 +59,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -101,7 +90,7 @@ private import gtk.HBox;
  * A message can be removed from anywhere in the stack if its message_id was
  * recorded at the time it was added. This is done using gtk_statusbar_remove().
  */
-public class Statusbar : HBox, BuildableIF
+public class Statusbar : HBox
 {
 	
 	/** the main Gtk struct */
@@ -134,9 +123,6 @@ public class Statusbar : HBox, BuildableIF
 		super(cast(GtkHBox*)gtkStatusbar);
 		this.gtkStatusbar = gtkStatusbar;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkStatusbar);
 	
 	/**
 	 */

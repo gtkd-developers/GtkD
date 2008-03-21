@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = AccelLabel
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_accel_label_
  * 	- gtk_
@@ -49,11 +48,6 @@
  * 	- gtk.Widget
  * 	- pango.PgAttributeList
  * 	- pango.PgLayout
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GClosure* -> Closure
  * 	- GtkWidget* -> Widget
@@ -75,11 +69,6 @@ private import gobject.Closure;
 private import gtk.Widget;
 private import pango.PgAttributeList;
 private import pango.PgLayout;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -124,7 +113,7 @@ private import gtk.Label;
  *  gtk_widget_add_accelerator (save_item, "activate", accel_group,
  *  GDK_s, GDK_CONTROL_MASK, GTK_ACCEL_VISIBLE);
  */
-public class AccelLabel : Label, BuildableIF
+public class AccelLabel : Label
 {
 	
 	/** the main Gtk struct */
@@ -157,9 +146,6 @@ public class AccelLabel : Label, BuildableIF
 		super(cast(GtkLabel*)gtkAccelLabel);
 		this.gtkAccelLabel = gtkAccelLabel;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkAccelLabel);
 	
 	/**
 	 */

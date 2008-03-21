@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = VScale
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_vscale_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- gtk.Adjustment
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
@@ -65,12 +58,6 @@ private import gtkc.gtk;
 
 
 private import gtk.Adjustment;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -83,7 +70,7 @@ private import gtk.Scale;
  * The position to show the current value, and the number of decimal places
  * shown can be set using the parent GtkScale class's functions.
  */
-public class VScale : Scale, BuildableIF
+public class VScale : Scale
 {
 	
 	/** the main Gtk struct */
@@ -116,9 +103,6 @@ public class VScale : Scale, BuildableIF
 		super(cast(GtkScale*)gtkVScale);
 		this.gtkVScale = gtkVScale;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkVScale);
 	
 	/**
 	 */

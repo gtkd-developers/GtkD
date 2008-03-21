@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_file_chooser_button_
  * 	- gtk_
@@ -50,11 +49,6 @@
  * 	- gtk.Widget;
  * 	- gtk.FileFilter;
  * 	- gtk.FileChooser;
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -76,11 +70,6 @@ private import glib.ListSG;;
 private import gtk.Widget;;
 private import gtk.FileFilter;;
 private import gtk.FileChooser;;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -110,7 +99,7 @@ private import gtk.HBox;
  * gtk_file_chooser_button_set_width_chars(), or pack the button in
  * such a way that other interface elements give space to the widget.
  */
-public class FileChooserButton : HBox, BuildableIF
+public class FileChooserButton : HBox
 {
 	
 	/** the main Gtk struct */
@@ -145,9 +134,6 @@ public class FileChooserButton : HBox, BuildableIF
 	}
 	
 	private FileChooser fileChooser;
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFileChooserButton);
 	
 	/** */
 	public FileChooser getFileChooser()

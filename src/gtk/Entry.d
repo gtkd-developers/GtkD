@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_entry_
  * 	- gtk_
@@ -48,11 +47,6 @@
  * 	- gtk.Adjustment
  * 	- gtk.EntryCompletion
  * 	- pango.PgLayout
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkEntryCompletion* -> EntryCompletion
@@ -74,11 +68,6 @@ private import glib.Str;
 private import gtk.Adjustment;
 private import gtk.EntryCompletion;
 private import pango.PgLayout;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -92,7 +81,7 @@ private import gtk.Widget;
  * of the widget, the widget will scroll so that the cursor
  * position is visible.
  */
-public class Entry : Widget, BuildableIF
+public class Entry : Widget
 {
 	
 	/** the main Gtk struct */
@@ -125,9 +114,6 @@ public class Entry : Widget, BuildableIF
 		super(cast(GtkWidget*)gtkEntry);
 		this.gtkEntry = gtkEntry;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkEntry);
 	
 	/** */
 	public this (char[] text)

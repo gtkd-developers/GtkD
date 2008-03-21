@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Range
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_range_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- gtk.Adjustment
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
@@ -67,12 +60,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import gtk.Adjustment;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -87,7 +74,7 @@ private import gtk.Widget;
  * of the "steppers". It also provides properties and methods for setting a
  * "fill level" on range widgets. See gtk_range_set_fill_level().
  */
-public class Range : Widget, BuildableIF
+public class Range : Widget
 {
 	
 	/** the main Gtk struct */
@@ -120,9 +107,6 @@ public class Range : Widget, BuildableIF
 		super(cast(GtkWidget*)gtkRange);
 		this.gtkRange = gtkRange;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRange);
 	
 	/**
 	 */

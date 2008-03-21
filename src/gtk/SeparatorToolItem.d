@@ -30,12 +30,11 @@
  * ctorStrct=GtkToolItem
  * clss    = SeparatorToolItem
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_separator_tool_item_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- gtk.ToolItem
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkToolItem* -> ToolItem
  * module aliases:
@@ -65,12 +58,6 @@ private import gtkc.gtk;
 
 
 private import gtk.ToolItem;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -86,7 +73,7 @@ private import gtk.ToolItem;
  * to the ends of the toolbar.
  *  Use gtk_separator_tool_item_new() to create a new GtkSeparatorToolItem.
  */
-public class SeparatorToolItem : ToolItem, BuildableIF
+public class SeparatorToolItem : ToolItem
 {
 	
 	/** the main Gtk struct */
@@ -119,9 +106,6 @@ public class SeparatorToolItem : ToolItem, BuildableIF
 		super(cast(GtkToolItem*)gtkSeparatorToolItem);
 		this.gtkSeparatorToolItem = gtkSeparatorToolItem;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkSeparatorToolItem);
 	
 	/**
 	 */

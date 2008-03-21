@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Fixed
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_fixed_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- gtk.Widget
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -65,12 +58,6 @@ private import gtkc.gtk;
 
 
 private import gtk.Widget;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -106,7 +93,7 @@ private import gtk.Container;
  * and prefer the simplicity of GtkFixed, by all means use the
  * widget. But you should be aware of the tradeoffs.
  */
-public class Fixed : Container, BuildableIF
+public class Fixed : Container
 {
 	
 	/** the main Gtk struct */
@@ -139,9 +126,6 @@ public class Fixed : Container, BuildableIF
 		super(cast(GtkContainer*)gtkFixed);
 		this.gtkFixed = gtkFixed;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFixed);
 	
 	/**
 	 */

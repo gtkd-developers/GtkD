@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Item
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_item_
  * 	- gtk_
@@ -44,12 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -64,12 +57,6 @@ private import gtkc.gtk;
 private import gobject.Signals;
 public  import gtkc.gdktypes;
 
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -80,7 +67,7 @@ private import gtk.Bin;
  * The GtkItem widget is an abstract base class for GtkMenuItem, GtkListItem
  * and GtkTreeItem.
  */
-public class Item : Bin, BuildableIF
+public class Item : Bin
 {
 	
 	/** the main Gtk struct */
@@ -113,9 +100,6 @@ public class Item : Bin, BuildableIF
 		super(cast(GtkBin*)gtkItem);
 		this.gtkItem = gtkItem;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkItem);
 	
 	/**
 	 */

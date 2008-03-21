@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_table_
  * 	- gtk_
@@ -46,12 +45,6 @@
  * omit signals:
  * imports:
  * 	- gtk.Widget
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -66,12 +59,6 @@ private import gtkc.gtk;
 
 
 private import gtk.Widget;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -93,7 +80,7 @@ private import gtk.Container;
  * gtk_table_set_homogeneous(), can be used to set whether all cells in the
  * table will resize themselves to the size of the largest widget in the table.
  */
-public class Table : Container, BuildableIF
+public class Table : Container
 {
 	
 	/** the main Gtk struct */
@@ -134,9 +121,6 @@ public class Table : Container, BuildableIF
 	
 	public AttachOptions defaultXOption = AttachOptions.SHRINK;
 	public AttachOptions defaultYOption = AttachOptions.SHRINK;
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkTable);
 	
 	/**
 	 * Removes all children and resizes the table to 1,1

@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = MenuShell
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_menu_shell_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- gtk.Widget
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -67,12 +60,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import gtk.Widget;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -87,7 +74,7 @@ private import gtk.Container;
  * application functions. A GtkMenuItem can have a submenu associated with it,
  * allowing for nested hierarchical menus.
  */
-public class MenuShell : Container, BuildableIF
+public class MenuShell : Container
 {
 	
 	/** the main Gtk struct */
@@ -120,9 +107,6 @@ public class MenuShell : Container, BuildableIF
 		super(cast(GtkContainer*)gtkMenuShell);
 		this.gtkMenuShell = gtkMenuShell;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMenuShell);
 	
 	/**
 	 */

@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * 	- CellLayoutIF
  * prefixes:
  * 	- gtk_combo_box_
@@ -51,11 +50,6 @@
  * 	- glib.Str
  * 	- gtk.TreeModel
  * 	- gtk.TreeIter
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * 	- gtk.CellRenderer
  * 	- glib.ListG
  * 	- gtk.CellLayoutIF
@@ -81,11 +75,6 @@ private import atk.ObjectAtk;
 private import glib.Str;
 private import gtk.TreeModel;
 private import gtk.TreeIter;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 private import gtk.CellRenderer;
 private import glib.ListG;
 private import gtk.CellLayoutIF;
@@ -118,7 +107,7 @@ private import gtk.Bin;
  * gtk_combo_box_prepend_text(), gtk_combo_box_remove_text() and
  * gtk_combo_box_get_active_text().
  */
-public class ComboBox : Bin, BuildableIF, CellLayoutIF
+public class ComboBox : Bin, CellLayoutIF
 {
 	
 	/** the main Gtk struct */
@@ -155,8 +144,6 @@ public class ComboBox : Bin, BuildableIF, CellLayoutIF
 	private int count = 0;
 	public int maxCount = 0;
 	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkComboBox);
 	
 	// add the CellLayout capabilities
 	mixin CellLayoutT!(GtkComboBox);

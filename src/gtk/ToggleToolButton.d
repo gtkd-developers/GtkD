@@ -30,12 +30,11 @@
  * ctorStrct=GtkToolItem
  * clss    = ToggleToolButton
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_toggle_tool_button_
  * 	- gtk_
@@ -46,11 +45,6 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.ToolItem
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkToolItem* -> ToolItem
  * module aliases:
@@ -68,11 +62,6 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.ToolItem;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -86,7 +75,7 @@ private import gtk.ToolButton;
  *  GtkToggleToolButton. Use gtk_toggle_tool_button_new_from_stock() to
  *  create a new GtkToggleToolButton containing a stock item.
  */
-public class ToggleToolButton : ToolButton, BuildableIF
+public class ToggleToolButton : ToolButton
 {
 	
 	/** the main Gtk struct */
@@ -119,9 +108,6 @@ public class ToggleToolButton : ToolButton, BuildableIF
 		super(cast(GtkToolButton*)gtkToggleToolButton);
 		this.gtkToggleToolButton = gtkToggleToolButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToggleToolButton);
 	
 	/**
 	 */

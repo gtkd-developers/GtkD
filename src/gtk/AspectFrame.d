@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = AspectFrame
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_aspect_frame_
  * 	- gtk_
@@ -45,11 +44,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -63,11 +57,6 @@ private import gtkc.gtk;
 
 
 private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -83,7 +72,7 @@ private import gtk.Frame;
  * a frame around the child. The frame will be
  * "shrink-wrapped" to the size of the child.
  */
-public class AspectFrame : Frame, BuildableIF
+public class AspectFrame : Frame
 {
 	
 	/** the main Gtk struct */
@@ -116,9 +105,6 @@ public class AspectFrame : Frame, BuildableIF
 		super(cast(GtkFrame*)gtkAspectFrame);
 		this.gtkAspectFrame = gtkAspectFrame;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkAspectFrame);
 	
 	/**
 	 */

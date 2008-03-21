@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_file_chooser_widget_
  * 	- gtk_
@@ -49,11 +48,6 @@
  * 	- gtk.Widget;
  * 	- gtk.FileFilter;
  * 	- gtk.FileChooser;
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -71,11 +65,6 @@ private import glib.ListSG;;
 private import gtk.Widget;;
 private import gtk.FileFilter;;
 private import gtk.FileChooser;;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -92,7 +81,7 @@ private import gtk.VBox;
  *  own. Instead, you should use the functions that work on a
  *  GtkFileChooser.
  */
-public class FileChooserWidget : VBox, BuildableIF
+public class FileChooserWidget : VBox
 {
 	
 	/** the main Gtk struct */
@@ -127,9 +116,6 @@ public class FileChooserWidget : VBox, BuildableIF
 	}
 	
 	private FileChooser fileChooser;
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFileChooserWidget);
 	
 	/** */
 	public FileChooser getFileChooser()

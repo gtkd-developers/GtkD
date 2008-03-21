@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = ProgressBar
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_progress_bar_
  * 	- gtk_
@@ -46,11 +45,6 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Adjustment
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
@@ -66,11 +60,6 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.Adjustment;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -109,7 +98,7 @@ private import gtk.Progress;
  * These have been grouped at the beginning of this section, followed by
  * a large chunk of deprecated 1.2 compatibility functions.
  */
-public class ProgressBar : Progress, BuildableIF
+public class ProgressBar : Progress
 {
 	
 	/** the main Gtk struct */
@@ -142,9 +131,6 @@ public class ProgressBar : Progress, BuildableIF
 		super(cast(GtkProgress*)gtkProgressBar);
 		this.gtkProgressBar = gtkProgressBar;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkProgressBar);
 	
 	/**
 	 */

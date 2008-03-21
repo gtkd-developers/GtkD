@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = EntryCompletion
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_entry_completion_
  * 	- gtk_
@@ -47,11 +46,6 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.TreeModel
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkTreeModel* -> TreeModel
  * 	- GtkWidget* -> Widget
@@ -71,11 +65,6 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.TreeModel;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -106,7 +95,7 @@ private import gobject.ObjectG;
  * to differentiate them clearly from completion strings. When an action is
  * selected, the ::action-activated signal is emitted.
  */
-public class EntryCompletion : ObjectG, BuildableIF
+public class EntryCompletion : ObjectG
 {
 	
 	/** the main Gtk struct */
@@ -139,9 +128,6 @@ public class EntryCompletion : ObjectG, BuildableIF
 		super(cast(GObject*)gtkEntryCompletion);
 		this.gtkEntryCompletion = gtkEntryCompletion;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkEntryCompletion);
 	
 	/**
 	 */

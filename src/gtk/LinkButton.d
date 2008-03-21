@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = LinkButton
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_link_button_
  * 	- gtk_
@@ -46,12 +45,6 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -67,12 +60,6 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gtk.Widget;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -92,7 +79,7 @@ private import gtk.Button;
  * on it: see gtk_link_button_set_uri_hook().
  * GtkLinkButton was added in GTK+ 2.10.
  */
-public class LinkButton : Button, BuildableIF
+public class LinkButton : Button
 {
 	
 	/** the main Gtk struct */
@@ -125,9 +112,6 @@ public class LinkButton : Button, BuildableIF
 		super(cast(GtkButton*)gtkLinkButton);
 		this.gtkLinkButton = gtkLinkButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkLinkButton);
 	
 	/**
 	 */

@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Separator
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_separator
  * 	- gtk_
@@ -44,12 +43,6 @@
  * omit code:
  * omit signals:
  * imports:
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -62,12 +55,6 @@ public  import gtkc.gtktypes;
 private import gtkc.gtk;
 
 
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -78,7 +65,7 @@ private import gtk.Widget;
  * The GtkSeparator widget is an abstract class, used only for deriving the
  * subclasses GtkHSeparator and GtkVSeparator.
  */
-public class Separator : Widget, BuildableIF
+public class Separator : Widget
 {
 	
 	/** the main Gtk struct */
@@ -111,9 +98,6 @@ public class Separator : Widget, BuildableIF
 		super(cast(GtkWidget*)gtkSeparator);
 		this.gtkSeparator = gtkSeparator;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkSeparator);
 	
 	/**
 	 */

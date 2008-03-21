@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = ToggleAction
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_toggle_action_
  * 	- gtk_
@@ -45,11 +44,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -65,11 +59,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -80,7 +69,7 @@ private import gtk.Action;
  * A GtkToggleAction corresponds roughly to a GtkCheckMenuItem. It has an
  * "active" state specifying whether the action has been checked or not.
  */
-public class ToggleAction : Action, BuildableIF
+public class ToggleAction : Action
 {
 	
 	/** the main Gtk struct */
@@ -113,9 +102,6 @@ public class ToggleAction : Action, BuildableIF
 		super(cast(GtkAction*)gtkToggleAction);
 		this.gtkToggleAction = gtkToggleAction;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToggleAction);
 	
 	/**
 	 */

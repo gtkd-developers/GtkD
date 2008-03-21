@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_toolbar_
  * 	- gtk_
@@ -50,11 +49,6 @@
  * 	- gtk.Widget
  * 	- gtk.Button
  * 	- gtk.ToolItem
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -74,11 +68,6 @@ private import glib.Str;
 private import gtk.Widget;
 private import gtk.Button;
 private import gtk.ToolItem;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -99,7 +88,7 @@ private import gtk.Container;
  * Creating a context menu for the toolbar can be done by connecting to
  * the "popup-context-menu" signal.
  */
-public class Toolbar : Container, BuildableIF
+public class Toolbar : Container
 {
 	
 	/** the main Gtk struct */
@@ -132,9 +121,6 @@ public class Toolbar : Container, BuildableIF
 		super(cast(GtkContainer*)gtkToolbar);
 		this.gtkToolbar = gtkToolbar;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToolbar);
 	
 	/**
 	 * Retrieves whether the toolbar has text, icons, or both . See

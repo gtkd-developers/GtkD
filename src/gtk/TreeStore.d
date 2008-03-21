@@ -35,7 +35,6 @@
  * template for:
  * extend  = GtkTreeModel
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_tree_store_
  * 	- gtk_
@@ -50,11 +49,8 @@
  * 	- gobject.Value
  * 	- gtk.TreeNode
  * 	- gdk.Pixbuf;
+ * 	- gobject.Value;
  * 	- gtk.TreeModel
- * 	- gobject.ObjectG
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GValue* -> Value
  * 	- GtkTreeIter* -> TreeIter
@@ -74,11 +70,8 @@ private import gtk.TreeIter;
 private import gobject.Value;
 private import gtk.TreeNode;
 private import gdk.Pixbuf;;
+private import gobject.Value;;
 private import gtk.TreeModel;
-private import gobject.ObjectG;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -106,7 +99,7 @@ private import gtk.TreeModel;
  *  </columns>
  * </object>
  */
-public class TreeStore : TreeModel, BuildableIF
+public class TreeStore : TreeModel
 {
 	
 	/** the main Gtk struct */
@@ -139,9 +132,6 @@ public class TreeStore : TreeModel, BuildableIF
 		super(cast(GtkTreeModel*)gtkTreeStore);
 		this.gtkTreeStore = gtkTreeStore;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkTreeStore);
 	
 	/**
 	 * Non-vararg creation function. Used primarily by language bindings.

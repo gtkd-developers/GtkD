@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_text_view_
  * 	- gtk_
@@ -56,11 +55,6 @@
  * 	- gdk.Window
  * 	- gtk.TextChildAnchor
  * 	- glib.ListG
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GdkRectangle* -> Rectangle
@@ -96,11 +90,6 @@ private import gtk.TextAttributes;
 private import gdk.Window;
 private import gtk.TextChildAnchor;
 private import glib.ListG;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -112,7 +101,7 @@ private import gtk.Container;
  * conceptual overview which gives an overview of all the objects and data
  * types related to the text widget and how they work together.
  */
-public class TextView : Container, BuildableIF
+public class TextView : Container
 {
 	
 	/** the main Gtk struct */
@@ -145,9 +134,6 @@ public class TextView : Container, BuildableIF
 		super(cast(GtkContainer*)gtkTextView);
 		this.gtkTextView = gtkTextView;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkTextView);
 	
 	/**
 	 * Get the text line at the pixel y

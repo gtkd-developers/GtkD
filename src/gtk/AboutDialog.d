@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = AboutDialog
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_about_dialog_
  * 	- gtk_
@@ -47,11 +46,6 @@
  * 	- glib.Str
  * 	- gdk.Pixbuf
  * 	- gtk.Window
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkWindow* -> Window
@@ -69,11 +63,6 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gdk.Pixbuf;
 private import gtk.Window;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -112,7 +101,7 @@ private import gtk.Dialog;
  * was called "name". This was changed to avoid the conflict with the
  * "name" property.
  */
-public class AboutDialog : Dialog, BuildableIF
+public class AboutDialog : Dialog
 {
 	
 	/** the main Gtk struct */
@@ -145,9 +134,6 @@ public class AboutDialog : Dialog, BuildableIF
 		super(cast(GtkDialog*)gtkAboutDialog);
 		this.gtkAboutDialog = gtkAboutDialog;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkAboutDialog);
 	
 	/**
 	 */

@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = VScrollbar
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_vscrollbar_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- gtk.Adjustment
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * module aliases:
@@ -65,12 +58,6 @@ private import gtkc.gtk;
 
 
 private import gtk.Adjustment;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -79,7 +66,7 @@ private import gtk.Scrollbar;
 /**
  * Description
  */
-public class VScrollbar : Scrollbar, BuildableIF
+public class VScrollbar : Scrollbar
 {
 	
 	/** the main Gtk struct */
@@ -112,9 +99,6 @@ public class VScrollbar : Scrollbar, BuildableIF
 		super(cast(GtkScrollbar*)gtkVScrollbar);
 		this.gtkVScrollbar = gtkVScrollbar;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkVScrollbar);
 	
 	/**
 	 */

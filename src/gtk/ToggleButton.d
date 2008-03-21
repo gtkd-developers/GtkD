@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_toggle_button_
  * 	- gtk_
@@ -47,11 +46,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -67,11 +61,6 @@ private import gobject.Signals;
 public  import gtkc.gdktypes;
 
 private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -110,7 +99,7 @@ private import gtk.Button;
 	 *  gtk_widget_show_all (dialog);
  * }
  */
-public class ToggleButton : Button, BuildableIF
+public class ToggleButton : Button
 {
 	
 	/** the main Gtk struct */
@@ -143,9 +132,6 @@ public class ToggleButton : Button, BuildableIF
 		super(cast(GtkButton*)gtkToggleButton);
 		this.gtkToggleButton = gtkToggleButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkToggleButton);
 	
 	/**
 	 * Creates a new toggle button with a text label.

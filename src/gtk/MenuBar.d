@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_menu_bar_
  * 	- gtk_
@@ -47,12 +46,6 @@
  * 	- gtk.Widget
  * 	- gtk.Menu;
  * 	- gtk.MenuItem;
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkMenu* -> Menu
  * 	- GtkMenuItem* -> MenuItem
@@ -71,12 +64,6 @@ private import gtkc.gtk;
 private import gtk.Widget;
 private import gtk.Menu;;
 private import gtk.MenuItem;;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -86,7 +73,7 @@ private import gtk.MenuShell;
  * Description
  * The GtkMenuBar is a subclass of GtkMenuShell which contains one to many GtkMenuItem. The result is a standard menu bar which can hold many menu items. GtkMenuBar allows for a shadow type to be set for aesthetic purposes. The shadow types are defined in the gtk_menu_bar_set_shadow_type function.
  */
-public class MenuBar : MenuShell, BuildableIF
+public class MenuBar : MenuShell
 {
 	
 	/** the main Gtk struct */
@@ -119,9 +106,6 @@ public class MenuBar : MenuShell, BuildableIF
 		super(cast(GtkMenuShell*)gtkMenuBar);
 		this.gtkMenuBar = gtkMenuBar;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMenuBar);
 	
 	/** */
 	Menu append(char[] label, bool rightJustify=false)

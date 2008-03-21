@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = Assistant
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_assistant_
  * 	- gtk_
@@ -47,11 +46,6 @@
  * 	- glib.Str
  * 	- gdk.Pixbuf
  * 	- gtk.Widget
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkPixbuf* -> Pixbuf
  * 	- GtkWidget* -> Widget
@@ -71,11 +65,6 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gdk.Pixbuf;
 private import gtk.Widget;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -87,7 +76,7 @@ private import gtk.Window;
  * operation splitted in several steps, guiding the user through its pages
  * and controlling the page flow to collect the necessary data.
  */
-public class Assistant : Window, BuildableIF
+public class Assistant : Window
 {
 	
 	/** the main Gtk struct */
@@ -120,9 +109,6 @@ public class Assistant : Window, BuildableIF
 		super(cast(GtkWindow*)gtkAssistant);
 		this.gtkAssistant = gtkAssistant;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkAssistant);
 	
 	/**
 	 */

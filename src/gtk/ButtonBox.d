@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_button_box_
  * 	- gtk_
@@ -48,12 +47,6 @@
  * 	- gtk.Button
  * 	- gtk.HButtonBox
  * 	- gtk.VButtonBox
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -71,12 +64,6 @@ private import gtk.Widget;
 private import gtk.Button;
 private import gtk.HButtonBox;
 private import gtk.VButtonBox;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -100,7 +87,7 @@ private import gtk.Box;
  * Therefore it ignores the homogeneous property which it inherited from GtkBox, and always
  * behaves as if homogeneous was TRUE.
  */
-public class ButtonBox : Box, BuildableIF
+public class ButtonBox : Box
 {
 	
 	/** the main Gtk struct */
@@ -133,9 +120,6 @@ public class ButtonBox : Box, BuildableIF
 		super(cast(GtkBox*)gtkButtonBox);
 		this.gtkButtonBox = gtkButtonBox;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkButtonBox);
 	
 	/** */
 	static ButtonBox createActionBox(

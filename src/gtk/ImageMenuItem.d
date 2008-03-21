@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_image_menu_item_
  * 	- gtk_
@@ -49,11 +48,6 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.AccelGroup
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAccelGroup* -> AccelGroup
  * 	- GtkWidget* -> Widget
@@ -71,11 +65,6 @@ private import gtkc.gtk;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.AccelGroup;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -87,7 +76,7 @@ private import gtk.MenuItem;
  * Note that the user can disable display of menu icons, so make sure to still
  * fill in the text label.
  */
-public class ImageMenuItem : MenuItem, BuildableIF
+public class ImageMenuItem : MenuItem
 {
 	
 	/** the main Gtk struct */
@@ -120,9 +109,6 @@ public class ImageMenuItem : MenuItem, BuildableIF
 		super(cast(GtkMenuItem*)gtkImageMenuItem);
 		this.gtkImageMenuItem = gtkImageMenuItem;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkImageMenuItem);
 	
 	/**
 	 * Creates a new GtkImageMenuItem containing a label.

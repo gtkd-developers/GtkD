@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = FontSelectionDialog
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_font_selection_dialog_
  * 	- gtk_
@@ -46,11 +45,6 @@
  * imports:
  * 	- glib.Str
  * 	- gdk.Font
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GdkFont* -> Font
  * module aliases:
@@ -66,11 +60,6 @@ private import gtkc.gtk;
 
 private import glib.Str;
 private import gdk.Font;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -90,7 +79,7 @@ private import gtk.Dialog;
  * name "font_selection". It also exposes the buttons with the names
  * "ok_button", "cancel_button" and "apply_button".
  */
-public class FontSelectionDialog : Dialog, BuildableIF
+public class FontSelectionDialog : Dialog
 {
 	
 	/** the main Gtk struct */
@@ -123,9 +112,6 @@ public class FontSelectionDialog : Dialog, BuildableIF
 		super(cast(GtkDialog*)gtkFontSelectionDialog);
 		this.gtkFontSelectionDialog = gtkFontSelectionDialog;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFontSelectionDialog);
 	
 	/**
 	 */

@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_menu_item_
  * 	- gtk_
@@ -50,11 +49,6 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.AccelGroup
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -73,11 +67,6 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.AccelGroup;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -91,7 +80,7 @@ private import gtk.Item;
  * As it derives from GtkBin it can hold any valid child widget, altough
  * only a few are really useful.
  */
-public class MenuItem : Item, BuildableIF
+public class MenuItem : Item
 {
 	
 	/** the main Gtk struct */
@@ -128,9 +117,6 @@ public class MenuItem : Item, BuildableIF
 	
 	/** store the action code passed in by the applcation */
 	private char[] actionLabel;
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMenuItem);
 	
 	/** Gets the application set action code */
 	public char[] getActionName()

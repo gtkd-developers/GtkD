@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_expander_
  * 	- gtk_
@@ -48,11 +47,6 @@
  * imports:
  * 	- glib.Str
  * 	- gtk.Widget
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWidget* -> Widget
  * module aliases:
@@ -70,11 +64,6 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import gtk.Widget;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -132,7 +121,7 @@ private import gtk.Bin;
  *  </child>
  * </object>
  */
-public class Expander : Bin, BuildableIF
+public class Expander : Bin
 {
 	
 	/** the main Gtk struct */
@@ -166,8 +155,7 @@ public class Expander : Bin, BuildableIF
 		this.gtkExpander = gtkExpander;
 	}
 	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkExpander);	/**
+	/**
 	 * Creates a new expander using label as the text of the label.
 	 * Since 2.4
 	 * Params:

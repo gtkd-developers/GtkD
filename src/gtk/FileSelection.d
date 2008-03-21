@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = FileSelection
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_file_selection_
  * 	- gtk_
@@ -45,11 +44,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -63,11 +57,6 @@ private import gtkc.gtk;
 
 
 private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -118,7 +107,7 @@ private import gtk.Dialog;
 	 *  gtk_widget_show (file_selector);
  * }
  */
-public class FileSelection : Dialog, BuildableIF
+public class FileSelection : Dialog
 {
 	
 	/** the main Gtk struct */
@@ -151,9 +140,6 @@ public class FileSelection : Dialog, BuildableIF
 		super(cast(GtkDialog*)gtkFileSelection);
 		this.gtkFileSelection = gtkFileSelection;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFileSelection);
 	
 	/**
 	 */

@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_radio_button_
  * 	- gtk_
@@ -50,11 +49,6 @@
  * imports:
  * 	- glib.Str
  * 	- glib.ListSG
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GSList* -> ListSG
  * module aliases:
@@ -72,11 +66,6 @@ public  import gtkc.gdktypes;
 
 private import glib.Str;
 private import glib.ListSG;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -129,7 +118,7 @@ private import gtk.CheckButton;
  * Inside the "toggled" handler, gtk_toggle_button_get_active() can be used
  * to determine if the button has been selected or deselected.
  */
-public class RadioButton : CheckButton, BuildableIF
+public class RadioButton : CheckButton
 {
 	
 	/** the main Gtk struct */
@@ -162,9 +151,6 @@ public class RadioButton : CheckButton, BuildableIF
 		super(cast(GtkCheckButton*)gtkRadioButton);
 		this.gtkRadioButton = gtkRadioButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkRadioButton);
 	
 	/**
 	 * Creates a new GtkRadioButton with a text label.

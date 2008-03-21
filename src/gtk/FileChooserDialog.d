@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_file_chooser_dialog_
  * 	- gtk_
@@ -52,11 +51,6 @@
  * 	- gtk.Widget;
  * 	- gtk.FileFilter;
  * 	- gtk.FileChooser;
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkWindow* -> Window
  * module aliases:
@@ -76,11 +70,6 @@ private import glib.ListSG;;
 private import gtk.Widget;;
 private import gtk.FileFilter;;
 private import gtk.FileChooser;;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -172,7 +161,7 @@ private import gtk.Dialog;
  * 	code when you use GtkFileChooserDialog to ensure
  * 	proper operation.
  */
-public class FileChooserDialog : Dialog, BuildableIF
+public class FileChooserDialog : Dialog
 {
 	
 	/** the main Gtk struct */
@@ -207,9 +196,6 @@ public class FileChooserDialog : Dialog, BuildableIF
 	}
 	
 	private FileChooser fileChooser;
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkFileChooserDialog);
 	
 	/** */
 	public FileChooser getFileChooser()

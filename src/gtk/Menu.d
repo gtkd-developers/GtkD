@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_menu_
  * 	- gtk_
@@ -49,11 +48,6 @@
  * 	- gdk.Screen
  * 	- gtk.AccelGroup
  * 	- glib.ListG
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * 	- gtk.MenuItem
  * structWrap:
  * 	- GList* -> ListG
@@ -78,11 +72,6 @@ private import gtk.Widget;
 private import gdk.Screen;
 private import gtk.AccelGroup;
 private import glib.ListG;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 private import gtk.MenuItem;
 
 
@@ -132,7 +121,7 @@ private import gtk.MenuShell;
 	 *  return FALSE;
  * }
  */
-public class Menu : MenuShell, BuildableIF
+public class Menu : MenuShell
 {
 	
 	/** the main Gtk struct */
@@ -166,8 +155,7 @@ public class Menu : MenuShell, BuildableIF
 		this.gtkMenu = gtkMenu;
 	}
 	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkMenu);	/** */
+	/** */
 	public void append(Widget widget)
 	{
 		super.append(widget);

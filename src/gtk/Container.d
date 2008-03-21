@@ -35,7 +35,6 @@
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_container_
  * 	- gtk_
@@ -49,11 +48,6 @@
  * 	- glib.ListG
  * 	- gobject.Value
  * 	- gobject.ParamSpec
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GList* -> ListG
  * 	- GParamSpec* -> ParamSpec
@@ -79,11 +73,6 @@ private import gtk.Adjustment;
 private import glib.ListG;
 private import gobject.Value;
 private import gobject.ParamSpec;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -177,7 +166,7 @@ private import gtk.Widget;
  *  </child>
  * </object>
  */
-public class Container : Widget, BuildableIF
+public class Container : Widget
 {
 	
 	/** the main Gtk struct */
@@ -210,9 +199,6 @@ public class Container : Widget, BuildableIF
 		super(cast(GtkWidget*)gtkContainer);
 		this.gtkContainer = gtkContainer;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkContainer);
 	
 	/**
 	 * Removes all widgets from the container

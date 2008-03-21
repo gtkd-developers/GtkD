@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = ColorSelectionDialog
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_color_selection_dialog_
  * 	- gtk_
@@ -45,12 +44,6 @@
  * omit signals:
  * imports:
  * 	- glib.Str
- * 	- glib.Str
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * module aliases:
  * local aliases:
@@ -64,12 +57,6 @@ private import gtkc.gtk;
 
 
 private import glib.Str;
-private import glib.Str;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -86,7 +73,7 @@ private import gtk.Dialog;
  * name "color_selection". It also exposes the buttons with the names
  * "ok_button", "cancel_button" and "help_button".
  */
-public class ColorSelectionDialog : Dialog, BuildableIF
+public class ColorSelectionDialog : Dialog
 {
 	
 	/** the main Gtk struct */
@@ -119,9 +106,6 @@ public class ColorSelectionDialog : Dialog, BuildableIF
 		super(cast(GtkDialog*)gtkColorSelectionDialog);
 		this.gtkColorSelectionDialog = gtkColorSelectionDialog;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkColorSelectionDialog);
 	
 	/**
 	 */

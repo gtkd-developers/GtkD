@@ -30,12 +30,11 @@
  * ctorStrct=
  * clss    = ScaleButton
  * interf  = 
- * class Code: Yes
+ * class Code: No
  * interface Code: No
  * template for:
  * extend  = 
  * implements:
- * 	- BuildableIF
  * prefixes:
  * 	- gtk_scale_button_
  * 	- gtk_
@@ -47,11 +46,6 @@
  * 	- glib.Str
  * 	- gtk.Widget
  * 	- gtk.Adjustment
- * 	- gobject.ObjectG
- * 	- gobject.Value
- * 	- gtk.Builder
- * 	- gtk.BuildableIF
- * 	- gtk.BuildableT
  * structWrap:
  * 	- GtkAdjustment* -> Adjustment
  * 	- GtkWidget* -> Widget
@@ -71,11 +65,6 @@ public  import gtkc.gdktypes;
 private import glib.Str;
 private import gtk.Widget;
 private import gtk.Adjustment;
-private import gobject.ObjectG;
-private import gobject.Value;
-private import gtk.Builder;
-private import gtk.BuildableIF;
-private import gtk.BuildableT;
 
 
 
@@ -88,7 +77,7 @@ private import gtk.Button;
  * applications, and GTK+ provides a GtkVolumeButton subclass that
  * is tailored for this use case.
  */
-public class ScaleButton : Button, BuildableIF
+public class ScaleButton : Button
 {
 	
 	/** the main Gtk struct */
@@ -121,9 +110,6 @@ public class ScaleButton : Button, BuildableIF
 		super(cast(GtkButton*)gtkScaleButton);
 		this.gtkScaleButton = gtkScaleButton;
 	}
-	
-	// add the Buildable capabilities
-	mixin BuildableT!(GtkScaleButton);
 	
 	/**
 	 */
