@@ -141,11 +141,11 @@ code: start
 	/**
 	 * Call this function before using any other GTK+ functions in your GUI applications.
 	 */
-	public static void init(char[][] args)
+	public static void init(string[] args)
 	{
 		char** argv = (new char*[args.length]).ptr;
 		int argc = 0;
-		foreach (char[] p; args)
+		foreach (string p; args)
 		{
 			argv[argc++] = cast(char*)p;
 		}
@@ -162,7 +162,7 @@ code: start
 	 * and release with gdk_threads_leave() afterwards throughout your code."
 	 * This is to be used on any call to GDK not executed from the main thread.
 	 */
-	public static void initMultiThread(char[][] args)
+	public static void initMultiThread(string[] args)
 	{
 		Thread.init(null);
 		gdkThreadsInit();
@@ -755,7 +755,7 @@ code: start
 	}
 	
 	/** */
-	public void addButtons(char[][] buttonsText, ResponseType[] responses)
+	public void addButtons(string[] buttonsText, ResponseType[] responses)
 	{
 		for ( int i=0 ; i<buttonsText.length && i<responses.length ; i++)
 		{
@@ -816,7 +816,7 @@ code: start
 	 * Returns:
 	 *  a new GtkMessageDialog
 	 */
-	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, char[] messageFormat, char[] message=null )
+	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, string messageFormat, string message=null )
 	{
 		this(parent, flags, type, buttons, false, messageFormat, message );
 	}
@@ -857,7 +857,7 @@ code: start
 	 *  messageFormat = printf()-style format string, or NULL
 	 *  message = the message - should be null, any formatting should be done prior to call this constructor
 	 */
-	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, char[] messageFormat, char[] message=null )
+	public this (Window parent, GtkDialogFlags flags, GtkMessageType type, GtkButtonsType buttons, bool markup, string messageFormat, string message=null )
 	{
 		if ( markup )
 		{
@@ -907,7 +907,7 @@ code: start
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static void information(char[] message, char[] title)
+	public static void information(string message, string title)
 	{
 		information(null, message, title);
 	}
@@ -919,7 +919,7 @@ code: start
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static void information(Window parent, char[] message, char[] title)
+	public static void information(Window parent, string message, string title)
 	{
 		MessageDialog d = new MessageDialog(parent, cast(GtkDialogFlags)0,
 										MessageType.INFO,
@@ -938,7 +938,7 @@ code: start
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static void error(char[] message, char[] title)
+	public static void error(string message, string title)
 	{
 		error(null, message, title);
 	}
@@ -950,7 +950,7 @@ code: start
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static void error(Window parent, char[] message, char[] title)
+	public static void error(Window parent, string message, string title)
 	{
 		MessageDialog d = new MessageDialog(parent, cast(GtkDialogFlags)0,
 										MessageType.ERROR,
@@ -970,7 +970,7 @@ code: start
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static bool yesNo(char[] message, char[] title)
+	public static bool yesNo(string message, string title)
 	{
 		return yesNo(null, message, title);
 	}
@@ -982,7 +982,7 @@ code: start
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static bool yesNo(Window parent, char[] message, char[] title)
+	public static bool yesNo(Window parent, string message, string title)
 	{
 		MessageDialog d = new MessageDialog(
 				parent, cast(GtkDialogFlags)0,
@@ -1004,7 +1004,7 @@ code: start
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static ResponseType yesNoCancel(char[] message, char[] title)
+	public static ResponseType yesNoCancel(string message, string title)
 	{
 		return yesNoCancel(null, message, title);
 	}
@@ -1016,7 +1016,7 @@ code: start
 	 *  message = The message to show on the dialog
 	 *  title = The title of the dialog
 	 */
-	public static ResponseType yesNoCancel(Window parent, char[] message, char[] title)
+	public static ResponseType yesNoCancel(Window parent, string message, string title)
 	{
 		MessageDialog d = new MessageDialog(
 				parent, cast(GtkDialogFlags)0,
@@ -1066,7 +1066,7 @@ code: start
 	 * Params:
 	 * 		title = The Window title
 	 */
-	public this(char[] title)
+	public this(string title)
 	{
 		this(GtkWindowType.TOPLEVEL);
 		setTitle(title);
@@ -1108,7 +1108,7 @@ public class MainWindow : Window
 	/**
 	 * Creates a new MainWindow with a title
 	 */
-	public this(char[] title)
+	public this(string title)
 	{
 		super(title);
 		countTotalMainWindows++;
@@ -1253,7 +1253,7 @@ code: start
 	public this (StockID stockID, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_stock (const gchar *stock_id,  GtkIconSize size);
-		this(cast(GtkImage*)gtk_image_new_from_stock(StockDesc[stockID].ptr, size) );
+		this(cast(GtkImage*)gtk_image_new_from_stock(Str.toStringz(StockDesc[stockID]), size) );
 	}
 	
 	/**
@@ -1267,7 +1267,7 @@ code: start
 	 * Returns:
 	 *  a new GtkImage displaying the themed icon
 	 */
-	public this (char[] iconName, GtkIconSize size)
+	public this (string iconName, GtkIconSize size)
 	{
 		// GtkWidget* gtk_image_new_from_icon_name (const gchar *icon_name,  GtkIconSize size);
 		this(cast(GtkImage*)gtk_image_new_from_icon_name(Str.toStringz(iconName), size) );
@@ -1307,7 +1307,7 @@ code: start
 	 *  mnemonic character
 	 *  mnemonic = when false uses the literal text passed in without mnemonic
 	 */
-	public this (char[] str, bool mnemonic=true)
+	public this (string str, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -1376,7 +1376,7 @@ code: start
 	public this (StockID stockID)
 	{
 		// GtkStatusIcon* gtk_status_icon_new_from_stock (const gchar *stock_id);
-		this(cast(GtkStatusIcon*)gtk_status_icon_new_from_stock(StockDesc[stockID].ptr) );
+		this(cast(GtkStatusIcon*)gtk_status_icon_new_from_stock(Str.toStringz(StockDesc[stockID])) );
 	}
 
 	/**
@@ -1389,7 +1389,7 @@ code: start
 	 *  loadFromFile = treat iconName as a filename and load that image
 	 *  with gtk_status_icon_new_from_file.
 	 */
-	public this (char[] iconName, bool loadFromFile = false)
+	public this (string iconName, bool loadFromFile = false)
 	{
 		//TODO: look at a better way to do this.
 		if(loadFromFile)
@@ -1426,11 +1426,10 @@ nocode: gtk_button_new_from_stock
 
 code: start
 
-
 	private static IconSize currentIconSize = IconSize.BUTTON;
 
 	/** An arbitrary string to be used by the application */
-	private char[] action;
+	private string action;
 
 	/** */
 	public static void setIconSize(IconSize iconSize)
@@ -1445,13 +1444,13 @@ code: start
 	}
 
 	/** */
-	public void setActionName(char[] action)
+	public void setActionName(string action)
 	{
-		this.action = action.dup;
+		this.action = action;
 	}
 
 	/** */
-	public char[] getActionName()
+	public string getActionName()
 	{
 		return action;
 	}
@@ -1470,7 +1469,7 @@ code: start
 	 * Returns:
 	 *  a new GtkButton
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -1504,7 +1503,7 @@ code: start
 		}
 		else
 		{
-			this(cast(GtkButton*)gtk_button_new_from_stock(StockDesc[stockID].ptr) );
+			this(cast(GtkButton*)gtk_button_new_from_stock(Str.toStringz(StockDesc[stockID])) );
 		}
 		
 	}
@@ -1517,14 +1516,14 @@ code: start
 	}
 	
 	/** */
-	public this(char[] label, void delegate(Button) dlg, bool mnemonic=true)
+	public this(string label, void delegate(Button) dlg, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnClicked(dlg);
 	}
 
 	/** */
-	public this(char[] label, void delegate(Button) dlg, char[] action)
+	public this(string label, void delegate(Button) dlg, string action)
 	{
 		this(label);
 		setActionName(action);
@@ -1557,7 +1556,7 @@ code: start
 	 *  mnemonic character
 	 *  mnemonic = true if the button has an mnemnonic
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -1572,7 +1571,7 @@ code: start
 	}
 
 	/** */
-	public this(char[] label, void delegate(CheckButton) onClicked, bool mnemonic=true)
+	public this(string label, void delegate(CheckButton) onClicked, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnClicked(cast(void delegate(Button))onClicked);
@@ -1607,7 +1606,7 @@ code: start
 	 *  gtk_label_new_with_mnemonic(), so underscores in label indicate the
 	 *  mnemonic for the button.
 	 */
-	public this (ListSG group, char[] label, bool mnemonic=true)
+	public this (ListSG group, string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -1637,7 +1636,7 @@ code: start
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the button.
 	 */
-	public this (RadioButton radioButton, char[] label, bool mnemonic=true)
+	public this (RadioButton radioButton, string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -1678,7 +1677,7 @@ code: start
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the button.
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -1746,14 +1745,14 @@ structWrap: PangoLayout* PgLayout
 
 code: start
 	/** */
-	public this (char[] text)
+	public this (string text)
 	{
 		this();
 		setText(text);
 	}
 
 	/** */	
-	public this (char[] text, int max)
+	public this (string text, int max)
 	{
 		this(max);
 		setText(text);
@@ -1910,7 +1909,7 @@ code: start
 	 * Params:
 	 *  text = UTF-8 text to insert
 	 */
-	public void setText(char[] text)
+	public void setText(string text)
 	{
 		// void gtk_text_buffer_set_text (GtkTextBuffer *buffer,  const gchar *text,  gint len);
 		gtk_text_buffer_set_text(gtkTextBuffer, Str.toStringz(text), text.length);
@@ -1928,7 +1927,7 @@ code: start
 	 *  iter = a position in the buffer
 	 *  text = UTF-8 format text to insert
 	 */
-	public void insert(TextIter iter, char[] text)
+	public void insert(TextIter iter, string text)
 	{
 		// void gtk_text_buffer_insert (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len);
 		gtk_text_buffer_insert(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length);
@@ -1940,7 +1939,7 @@ code: start
 	 * Params:
 	 *  text = some text in UTF-8 format
 	 */
-	public void insertAtCursor(char[] text)
+	public void insertAtCursor(string text)
 	{
 		// void gtk_text_buffer_insert_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len);
 		gtk_text_buffer_insert_at_cursor(gtkTextBuffer, Str.toStringz(text), text.length);
@@ -1961,7 +1960,7 @@ code: start
 	 * Returns:
 	 *  whether text was actually inserted
 	 */
-	public int insertInteractive(TextIter iter, char[] text, int defaultEditable)
+	public int insertInteractive(TextIter iter, string text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  gboolean default_editable);
 		return gtk_text_buffer_insert_interactive(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, defaultEditable);
@@ -1979,7 +1978,7 @@ code: start
 	 * Returns:
 	 *  whether text was actually inserted
 	 */
-	public int insertInteractiveAtCursor(char[] text, int defaultEditable)
+	public int insertInteractiveAtCursor(string text, int defaultEditable)
 	{
 		// gboolean gtk_text_buffer_insert_interactive_at_cursor  (GtkTextBuffer *buffer,  const gchar *text,  gint len,  gboolean default_editable);
 		return gtk_text_buffer_insert_interactive_at_cursor(gtkTextBuffer, Str.toStringz(text), text.length, defaultEditable);
@@ -1997,7 +1996,7 @@ code: start
 	 *  ... = NULL-terminated list of tags to apply
 	 */
 	//version(Tango){} else -- still doesn't work on tango, but it compiles now
-	public void insertWithTags(TextIter iter, char[] text, ... )
+	public void insertWithTags(TextIter iter, string text, ... )
 	{
 		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(TextTag)); i++)
 		{
@@ -2016,11 +2015,11 @@ code: start
 	 *  ... = more tag names
 	 */
  	// version(Tango){} else  -- still doesn't work on tango, but it compiles now 
- 	public void insertWithTagsByName(TextIter iter, char[] text, ... )
+ 	public void insertWithTagsByName(TextIter iter, string text, ... )
 	{
-		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(char[])); i++)
+		for (int i = 0; (i<_arguments.length) && (_arguments[i] == typeid(string)); i++)
 		{
-			char[] tagName = va_arg!(char[])(_argptr);
+			string tagName = va_arg!(string)(_argptr);
 			// void gtk_text_buffer_insert_with_tags_by_name  (GtkTextBuffer *buffer,  GtkTextIter *iter,  const gchar *text,  gint len,  const gchar *first_tag_name,  ...);
 			gtk_text_buffer_insert_with_tags_by_name(gtkTextBuffer, (iter is null) ? null : iter.getTextIterStruct(), Str.toStringz(text), text.length, Str.toStringz(tagName), null);
 		}
@@ -2033,8 +2032,8 @@ code: start
 	 *  propertyName=
 	 *  propertyValue=
 	 */ 
-	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, 
-									   char[] propertyName1, char[] propertyValue1)
+	TextTag createTag(string tagName, string propertyName, int propertyValue, 
+									   string propertyName1, string propertyValue1)
 	{
 		return new TextTag(
 			gtk_text_buffer_create_tag(gtkTextBuffer,
@@ -2053,7 +2052,7 @@ code: start
 	 *  propertyName=
 	 *  propertyValue=
 	 */
-	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue)
+	TextTag createTag(string tagName, string propertyName, int propertyValue)
 	{
 		return new TextTag(
 			gtk_text_buffer_create_tag(gtkTextBuffer, 
@@ -2070,7 +2069,7 @@ code: start
 	 *  propertyName=
 	 *  propertyValue=
 	 */
-	TextTag createTag(char[] tagName, char[] propertyName, double propertyValue)
+	TextTag createTag(string tagName, string propertyName, double propertyValue)
 	{
 		return new TextTag(
 			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),propertyValue,null)
@@ -2087,7 +2086,7 @@ code: start
 	 *  propertyName2=
 	 *  propertyValue2=
 	 */
-	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2)
+	TextTag createTag(string tagName, string propertyName, int propertyValue, string propertyName2, int propertyValue2)
 	{
 		return new TextTag(
 			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName), propertyValue, Str.toStringz(propertyName2), propertyValue2, null)
@@ -2095,7 +2094,7 @@ code: start
 	}
 
 	/** Create a new tag for this buffer */
-	TextTag createTag(char[] tagName, char[] propertyName, int propertyValue, char[] propertyName2, int propertyValue2, char[] propertyName3, int propertyValue3, char[] propertyName4, int propertyValue4, char[] propertyName5, int propertyValue5)
+	TextTag createTag(string tagName, string propertyName, int propertyValue, string propertyName2, int propertyValue2, string propertyName3, int propertyValue3, string propertyName4, int propertyValue4, string propertyName5, int propertyValue5)
 	{
 		return new TextTag(
 			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName), propertyValue, Str.toStringz(propertyName2), propertyValue2, Str.toStringz(propertyName3), propertyValue3, Str.toStringz(propertyName4), propertyValue4, Str.toStringz(propertyName5), propertyValue5, null)
@@ -2109,7 +2108,7 @@ code: start
 	 *  propertyName=
 	 *  propertyValue=
 	 */
-	TextTag createTag(char[] tagName, char[] propertyName, char[] propertyValue)
+	TextTag createTag(string tagName, string propertyName, string propertyValue)
 	{
 		return new TextTag(
 			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),Str.toStringz(propertyValue),null)
@@ -2124,7 +2123,7 @@ code: start
 	 *  propertyName=
 	 *  propertyValue= 
 	 */
-	TextTag createTag(char[] tagName, char[] propertyName, Bitmap propertyValue)
+	TextTag createTag(string tagName, string propertyName, Bitmap propertyValue)
 	{
 		return new TextTag(
 			gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), Str.toStringz(propertyName),propertyValue.getBitmapStruct(),null)
@@ -2134,9 +2133,9 @@ code: start
 
 	/**
 	 * Obtain the entire text 
-	 * Returns: The text char[]
+	 * Returns: The text string
 	 */
-	char[] getText()
+	string getText()
 	{
 		TextIter start = new TextIter();
 		TextIter end = new TextIter();
@@ -2153,9 +2152,9 @@ code: start
 	 *  propertyName2=
 	 *  propertyValue2=
 	 */
-	TextTag createTag(char[] tagName, 
-			char[] propertyName, char[] propertyValue, 
-			char[] propertyName2, int propertyValue2)
+	TextTag createTag(string tagName, 
+			string propertyName, string propertyValue, 
+			string propertyName2, int propertyValue2)
 	{
 		return new TextTag(
 		gtk_text_buffer_create_tag(gtkTextBuffer, Str.toStringz(tagName), 
@@ -2246,7 +2245,7 @@ code: start
 	/**
 	 * Get the text line at the pixel y
 	 */
-	char[] getLineTextAt(gint y)
+	string getLineTextAt(gint y)
 	{
 		
 		TextIter iter = new TextIter();
@@ -2267,7 +2266,7 @@ code: start
 	 * Params:
 	 *  text = the text to append
 	 */
-	void insertText(char[] text)
+	void insertText(string text)
 	{
 		TextBuffer buf = getBuffer();
 		buf.insertAtCursor(text);
@@ -2278,7 +2277,7 @@ code: start
 	 * Params:
 	 *  text = the text to append
 	 */
-	void appendText(char[] text, bool ensureVisible=true)
+	void appendText(string text, bool ensureVisible=true)
 	body
 	{
 		TextBuffer buf = getBuffer();
@@ -2335,7 +2334,7 @@ interfaceCode: start
 	 * Get the value of a column as a char array.
 	 * this is the same calling getValue and get the string from the value object
 	 */
-	char[] getValueString(TreeIter iter, int column);
+	string getValueString(TreeIter iter, int column);
 
 	/**
 	 * Get the value of a column as a char array.
@@ -2344,7 +2343,7 @@ interfaceCode: start
 	int getValueInt(TreeIter iter, int column);
 
 	/** */
-	void setValue(TreeIter iter, int column, char[] value);
+	void setValue(TreeIter iter, int column, string value);
 
 	/** */
 	void setValue(TreeIter iter, int column, int value);
@@ -2358,7 +2357,7 @@ code: start
 	 * Get the value of a column as a char array.
 	 * this is the same calling getValue and get the string from the value object
 	 */
-	char[] getValueString(TreeIter iter, int column)
+	string getValueString(TreeIter iter, int column)
 	{
 		Value value = new Value();
 		getValue(iter, column, value);
@@ -2473,7 +2472,7 @@ code: start
 	 *  column = the column number
 	 * Returns: a string representing the value of the column
 	 */
-	char[] getValueString(int column)
+	string getValueString(int column)
 	{
 		if ( gtkTreeModel  is  null )
 		{
@@ -2515,9 +2514,9 @@ code: start
 	/**
 	 * This return the path visible to the user.
 	 */
-	char[] getVisiblePath(char[] separator)
+	string getVisiblePath(string separator)
 	{
-		char[] vPath;
+		string vPath;
 		if ( gtkTreeModel  is  null )
 		{
 			throw new TreeIterError("getVisiblePath", "Tree model not set");
@@ -2645,7 +2644,7 @@ code: start
 	 * thrown<br>
 	 * - trying to access a method that requires a tree model and the tree model was never set
 	 */
-	public this(char[] method, char[] message)
+	public this(string method, string message)
 	{
 		super("TreeIter."~method~" : "~message);
 	}
@@ -2759,7 +2758,7 @@ code: start
 	 *  type = the type of data to be displayed (shouldn't this be on the renderer?)
 	 *  column = the column number
 	 */
-	this(char [] header, CellRenderer renderer, char [] type, int column)
+	this(string header, CellRenderer renderer, string type, int column)
 	{
 		this(gtk_tree_view_column_new_with_attributes(
 				Str.toStringz(header), 
@@ -2916,7 +2915,7 @@ code: start
 	 *  editable =
 	 * Returns: number of columns including the new one
 	 */
-	gint insertEditableColumn(int position, char[] title, CellRenderer renderer, bool editable)
+	gint insertEditableColumn(int position, string title, CellRenderer renderer, bool editable)
 	{
 		// OK, this is a trick because of my ignorance on how to pass variable argument lists
 		if ( position < 0 )
@@ -2988,7 +2987,7 @@ code: start
 	 * Returns:
 	 *  A newly created GtkCellView widget.
 	 */
-	public this (char[] text, bool markup=true)
+	public this (string text, bool markup=true)
 	{
 		if ( markup )
 		{
@@ -3194,7 +3193,7 @@ code: start
 	 */
 	public interface TreeNode
 	{
-		char[] getNodeValue(int column);
+		string getNodeValue(int column);
 		int columnCount();
 	}
 code: end
@@ -3203,8 +3202,8 @@ outFile: TreeNode
 file: GtkListStore.html
 struct: GtkListStore
 class: ListStore
-extend: GtkTreeModel
 implements: BuildableIF
+extend: GtkTreeModel
 prefix: gtk_list_store_
 prefix: gtk_
 import: gtk.TreeModel
@@ -3277,7 +3276,7 @@ code: start
 	}
 
 	/** */
-	void set(TreeIter iter, int [] columns, char[][] values)
+	void set(TreeIter iter, int [] columns, string[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
@@ -3292,7 +3291,7 @@ code: start
 	}
 
 	/** */
-	void setValue(TreeIter iter, int column, char[] value)
+	void setValue(TreeIter iter, int column, string value)
 	{
 		Value v = new Value(value);
 		gtk_list_store_set_value(gtkListStore, iter.getTreeIterStruct(), column, v.getValueStruct());
@@ -3367,7 +3366,7 @@ code: start
 	 *  column = to column number to set
 	 *  value = the value
 	 */
-	void setValue(TreeIter iter, int column, char[] value)
+	void setValue(TreeIter iter, int column, string value)
 	{
 		gtk_tree_store_set(gtkTreeStore, iter.getTreeIterStruct(), column, Str.toStringz(value) , -1);
 	}
@@ -3412,7 +3411,7 @@ code: start
 	}
 
 	/** */
-	void set(TreeIter iter, int [] columns, char[][] values)
+	void set(TreeIter iter, int [] columns, string[] values)
 	{
 		for ( int i=0 ; i<columns.length && i<values.length; i++ )
 		{
@@ -3439,12 +3438,12 @@ code: start
 	void set(TreeIter iter, TreeNode treeNode)
 	{
 		int[] cols;
-		char[][] vals;
+		string[] vals;
 		for ( int i=0 ; i<treeNode.columnCount() ; i++ )
 		{
 			//printf(">>>>>>>>>>>>> requesting value for %d\n",i);
 			cols ~= i;
-			char[] value = treeNode.getNodeValue(i);
+			string value = treeNode.getNodeValue(i);
 			if ( value  is  null )
 			{
 				vals ~= "";
@@ -3569,7 +3568,7 @@ code: start
 	}
 
 	/** */
-	public void setActiveText(char[] text, bool insert=false)
+	public void setActiveText(string text, bool insert=false)
 	{
             int active = 0;
             setActive(0);
@@ -3588,7 +3587,7 @@ code: start
 	}
 
 	/** */
-	int getIndex(char[] text)
+	int getIndex(string text)
 	{
 		TreeIter iter = new TreeIter();
 		TreeModel model = getModel();
@@ -3616,7 +3615,7 @@ code: start
 	}
 
 	/** */
-	void prependOrReplaceText(char[] text)
+	void prependOrReplaceText(string text)
 	{
 		int index = getIndex(text);
 		if ( index > 0 )
@@ -3718,12 +3717,6 @@ structWrap: GList* ListG
 import: gtk.MenuItem
 
 code: start
-	/** */
-	public void append(Widget widget)
-	{
-		super.append(widget);
-	}
-
 	/**
 	 * Popups up this menu
 	 * Params:
@@ -3742,7 +3735,7 @@ code: start
 	 *  label = the sub menu item label
 	 * Returns: the new menu
 	 */
-	Menu appendSubmenu(char[] label)
+	Menu appendSubmenu(string label)
 	{
 		MenuItem item = new MenuItem(label);
 		append(item);
@@ -3752,7 +3745,7 @@ code: start
 	}
 
 	/** */
-	void appendSubmenu(char[] label, Menu submenu)
+	void appendSubmenu(string label, Menu submenu)
 	{
 		MenuItem item = new MenuItem(label);
 		append(item);
@@ -3760,7 +3753,7 @@ code: start
 	}
 
 	/** */
-	Menu prependSubmenu(char[] label)
+	Menu prependSubmenu(string label)
 	{
 		MenuItem item = new MenuItem(label);
 		prepend(item);
@@ -3784,7 +3777,7 @@ structWrap: GtkMenu* Menu
 structWrap: GtkMenuItem* MenuItem
 code: start
 	/** */
-	Menu append(char[] label, bool rightJustify=false)
+	Menu append(string label, bool rightJustify=false)
 	{
 		MenuItem item = new MenuItem(label);
 		super.append(item);
@@ -3792,12 +3785,6 @@ code: start
 		Menu menu= new Menu();
 		item.setSubmenu(menu);
 		return menu;
-	}
-
-	/** */
-	public void append(Widget widget)
-	{
-		super.append(widget);
 	}
 code: end
 outFile: MenuBar
@@ -3820,10 +3807,10 @@ nocode: gtk_menu_item_new_with_mnemonic
 code: start
 	
 	/** store the action code passed in by the applcation */
-	private char[] actionLabel;
+	private string actionLabel;
 	
 	/** Gets the application set action code */
-	public char[] getActionName()
+	public string getActionName()
 	{
 		if ( actionLabel is null )
 		{
@@ -3836,7 +3823,7 @@ code: start
 	 * Creates a new menu item with a label and a listener and a action.
 	 * used for backward compatibily with DUI.
 	 */
-	this(char[] label, void delegate(MenuItem)dlg, char[] action)
+	this(string label, void delegate(MenuItem)dlg, string action)
 	{
 		this(label);
 		this.actionLabel = action;
@@ -3849,7 +3836,7 @@ code: start
 	 * Creates a new Item associated with a "activate" delegate and with a action code
 	 * and optionally accelGroup
 	 */
-	public this(void delegate(MenuItem) dlg, char[] label, char[] action, 
+	public this(void delegate(MenuItem) dlg, string label, string action, 
 				bool mnemonic=true,
 				AccelGroup accelGroup=null,
 				char accelKey='\0',
@@ -3871,7 +3858,7 @@ code: start
 	/**
 	 * Creates a new Item associated with a "activate" delegate
 	 */
-	public this(void delegate(MenuItem) dlg, char[] label, bool mnemonic=true)
+	public this(void delegate(MenuItem) dlg, string label, bool mnemonic=true)
 	{
 		this(label, mnemonic);
 		addOnActivate(dlg);
@@ -3885,7 +3872,7 @@ code: start
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the menu item.
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -3939,7 +3926,7 @@ code: start
 	 * Returns:
 	 *  a new GtkImageMenuItem.
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -3982,7 +3969,7 @@ code: start
 	 *  group = an existing GtkRadioMenuItem
 	 *  label = the text for the label
 	 */
-	public this (RadioMenuItem radioMenuItem, char[] label, bool mnemonic=true)
+	public this (RadioMenuItem radioMenuItem, string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -4007,7 +3994,7 @@ code: start
 	 *  label = the text of the button, with an underscore in front of the
 	 *  mnemonic character
 	 */
-	public this (char[] label)
+	public this (string label)
 	{
 	}
 	
@@ -4020,7 +4007,7 @@ code: start
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the menu item.
 	 */
-	public this (ListSG group, char[] label, bool mnemonic=true)
+	public this (ListSG group, string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -4057,7 +4044,7 @@ code: start
 	 *  will be created using gtk_label_new_with_mnemonic(), so underscores
 	 *  in label indicate the mnemonic for the menu item.
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -4131,26 +4118,26 @@ code: start
 	}
 
 	/** */	
-	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
+	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, GtkSignalFunc callback, void* userData, int position)
 	{
 		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, callback, userData, position);
 	}
 
 	/** */
-	public Widget insertStock(char[] stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
+	public Widget insertStock(string stockId, string tooltipText, string tooltipPrivateText, int position)
 	{
 		return insertStock(stockId, tooltipText, tooltipPrivateText, null, null, position);
 	}
 	
 	/** */
-	public Widget insertStock(StockID stockId, char[] tooltipText, char[] tooltipPrivateText, int position)
+	public Widget insertStock(StockID stockId, string tooltipText, string tooltipPrivateText, int position)
 	{
 		return insertStock(getId(stockId), tooltipText, tooltipPrivateText, null, null, position);
 	}
 
 	/** */
 	Button insertButton(StockID stockID,
-			char[] tooltipText, char[] tooltipPrivateText,
+			string tooltipText, string tooltipPrivateText,
 			gint position)
 	{
 		Button button = new Button(
@@ -4187,7 +4174,7 @@ code: start
 	 *  tipText = the tooltip
 	 *  tipPrivate = a private text
 	 */
-	void setTooltip(char[] tipText, char[] tipPrivate)
+	void setTooltip(string tipText, string tipPrivate)
 	{
 		Tooltips tt = new Tooltips();
 		tt.setTip(this, tipText, tipPrivate);
@@ -4221,16 +4208,16 @@ structWrap: GtkWidget* Widget
 
 code: start
 	/** An arbitrary string to be used by the application */
-	private char[] action;
+	private string action;
 
 	/** */
-	public void setActionName(char[] action)
+	public void setActionName(string action)
 	{
-		this.action = action.dup;
+		this.action = action;
 	}
 	
 	/** */
-	public char[] getActionName()
+	public string getActionName()
 	{
 		return action;
 	}
@@ -4273,7 +4260,7 @@ code: start
 	 *  iconWidget = a widget that will be used as icon widget, or NULL
 	 *  label = a string that will be used as label, or NULL
 	 */
-	public this(Widget iconWidget, char[] label)
+	public this(Widget iconWidget, string label)
 	{
 		// GtkToolItem* gtk_menu_tool_button_new (GtkWidget *icon_widget,  const gchar *label);
 		this( cast(GtkMenuToolButton*)gtk_menu_tool_button_new(
@@ -4326,7 +4313,7 @@ code: start
 	 *    	tipText = 	
 	 *    	tipPrivate = 	
 	 */
-	public void setArrowTooltip(char[] tipText, char[] tipPrivate)
+	public void setArrowTooltip(string tipText, string tipPrivate)
 	{
 		Tooltips tooltips = new Tooltips();
 		gtk_menu_tool_button_set_arrow_tooltip(
@@ -4512,7 +4499,7 @@ code: start
 	 * stockID =  the stock icon to display in widgets representing the
 	 *  action, or NULL
 	 */
-	public this (char[] name, char[] label, char[] tooltip, StockID stockID)
+	public this (string name, string label, string tooltip, StockID stockID)
 	{
 		// GtkAction* gtk_recent_action_new (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id);
 		auto p = gtk_recent_action_new(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]));
@@ -4539,7 +4526,7 @@ code: start
 	 * manager =  a GtkRecentManager, or NULL for using the default
 	 *  GtkRecentManager
 	 */
-	public this (char[] name, char[] label, char[] tooltip, StockID stockID, RecentManager manager)
+	public this (string name, string label, string tooltip, StockID stockID, RecentManager manager)
 	{
 		// GtkAction* gtk_recent_action_new_for_manager (const gchar *name,  const gchar *label,  const gchar *tooltip,  const gchar *stock_id,  GtkRecentManager *manager);
 		auto p = gtk_recent_action_new_for_manager(Str.toStringz(name), Str.toStringz(label), Str.toStringz(tooltip), Str.toStringz(StockDesc[stockID]), (manager is null) ? null : manager.getRecentManagerStruct());
@@ -4671,7 +4658,7 @@ code: start
 	 * Returns:
 	 *  a new GtkFileChooserDialog
 	 */
-	this(char[] title, Window parent, FileChooserAction action,  char[][] buttonsText=null, ResponseType[] responses=null)
+	this(string title, Window parent, FileChooserAction action,  string[] buttonsText=null, ResponseType[] responses=null)
 	{
 		if ( buttonsText  is  null )
 		{
@@ -4712,7 +4699,7 @@ code: start
 	 * See_Also:
 	 *  GtkFileChooser, GtkDialog
 	 */
-	public this (char[] title, Window parent, GtkFileChooserAction action, char[] backend,  char[][] buttonsText=null, ResponseType[] responses=null)
+	public this (string title, Window parent, GtkFileChooserAction action, string backend,  string[] buttonsText=null, ResponseType[] responses=null)
 	{
 		// GtkWidget* gtk_file_chooser_dialog_new_with_backend  (const gchar *title,  GtkWindow *parent,  GtkFileChooserAction action,  const gchar *backend,  const gchar *first_button_text,  ...);
 		this(
@@ -4738,7 +4725,7 @@ code: start
 		addButtons(buttonsText, responses);
 	}
 	
-//	this(char[] title, Window parent, FileChooserAction action,  StockID[] buttons=null, ResponseType[] responses=null)
+//	this(string title, Window parent, FileChooserAction action,  StockID[] buttons=null, ResponseType[] responses=null)
 //	{
 //		if ( buttons  is  null )
 //		{
@@ -5118,7 +5105,7 @@ alias GtkNotebookTab NotebookTab;
 	/**
 	 * Append a page with a widget and a text for a label
 	 */
-	public int appendPage(Widget child, char[] tabLabel)
+	public int appendPage(Widget child, string tabLabel)
 	{
 		return appendPage(child, new Label(tabLabel));
 	}
@@ -5226,7 +5213,7 @@ code: start
 	 *  underscores). The first underlined character represents a keyboard
 	 *  accelerator called a mnemonic.
 	 */
-	public this (char[] label, bool mnemonic=true)
+	public this (string label, bool mnemonic=true)
 	{
 		if ( mnemonic )
 		{
@@ -5255,15 +5242,16 @@ prefix: gtk_
 import: glib.Str
 import: gtk.Widget
 structWrap: GtkWidget* Widget
+
 code: start
-/**
- * Creates frame with label and set it's child widget
- */
-public this(Widget widget, char[] label)
-{
-	this(label);
-	add(widget);
-}
+	/**
+	 * Creates frame with label and set it's child widget
+	 */
+	public this(Widget widget, string label)
+	{
+		this(label);
+		add(widget);
+	}
 code: end
 
 outFile: Frame
@@ -5756,7 +5744,7 @@ code: start
 	static ButtonBox createActionBox(
 			void delegate(Button) onClicked, 
 			StockID[] stocks, 
-			char[][] actions,
+			string[] actions,
 			bool vertical=false
 		)
 	{
@@ -5785,7 +5773,7 @@ code: start
 	static ButtonBox createOkBox(void delegate(Button) onClicked)
 	{
 		static StockID[] stocks = [StockID.OK];
-		char[][] actions;
+		string[] actions;
 		actions ~= "action.ok";
 		return createActionBox(onClicked, stocks, actions);
 	}
@@ -5794,7 +5782,7 @@ code: start
 	static ButtonBox createOkCancelBox(void delegate(Button) onClicked)
 	{
 		static StockID[] stocks = [StockID.OK, StockID.CANCEL];
-		char[][] actions;
+		string[] actions;
 		actions ~= "action.ok";
 		actions ~= "action.cancel";
 		return createActionBox(onClicked, stocks, actions);
@@ -5876,7 +5864,7 @@ import: glib.Str
 
 code: star
 	/** */
-	public static char[] getId(StockID id)
+	public static string getId(StockID id)
 	{
 		return StockDesc[id];
 	}
@@ -6127,7 +6115,7 @@ code: start
 	 * Modifies the font for this widget.
 	 * This just calls modifyFont(new PgFontDescription(PgFontDescription.fromString(family ~ " " ~ size)));
 	 */
-	public void modifyFont(char[] family, int size)
+	public void modifyFont(string family, int size)
 	{
 		if ( size < 0 ) size = -size;	// hack to workaround leds bug - TO BE REMOVED
 
@@ -6158,7 +6146,7 @@ code: start
 	 *  tipText = the tooltip
 	 *  tipPrivate = a private text
 	 */
-	void setTooltip(char[] tipText, char[] tipPrivate)
+	void setTooltip(string tipText, string tipPrivate)
 	{
 		Tooltips tt = new Tooltips();
 		tt.setTip(this, tipText, tipPrivate);
@@ -6336,7 +6324,7 @@ code: start
 	 *  buttonsText = text to go in the buttons
 	 *  responses = response ID's for the buttons
 	 */
-	public this (char[] title, Window parent, RecentManager manager,  char[][] buttonsText=null, ResponseType[] responses=null )
+	public this (string title, Window parent, RecentManager manager,  string[] buttonsText=null, ResponseType[] responses=null )
 	{
 		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager, const gchar *first_button_text,  ...);
 		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
@@ -6362,7 +6350,7 @@ code: start
 	 *  stockIDs = stockIDs of the buttons
 	 *  responses = response ID's for the buttons
 	 */
-	public this (char[] title, Window parent, RecentManager manager,  StockID[] stockIDs, ResponseType[] responses=null )
+	public this (string title, Window parent, RecentManager manager,  StockID[] stockIDs, ResponseType[] responses=null )
 	{
 		// GtkWidget* gtk_recent_chooser_dialog_new_for_manager  (const gchar *title,  GtkWindow *parent,  GtkRecentManager *manager, const gchar *first_button_text,  ...);
 		auto p = gtk_recent_chooser_dialog_new_for_manager(Str.toStringz(title), (parent is null) ? null : parent.getWindowStruct(), (manager is null) ? null : manager.getRecentManagerStruct(), null);
@@ -6472,7 +6460,7 @@ interfaceCode: start
 	 * Params:
 	 * name =  name to set
 	 */
-	public void buildableSetName(char[] name);
+	public void buildableSetName(string name);
 	
 	/**
 	 * Gets the name of the buildable object.
@@ -6482,7 +6470,7 @@ interfaceCode: start
 	 * Since 2.12
 	 * Returns: the name set with gtk_buildable_set_name()
 	 */
-	public char[] buildableGetName();
+	public string buildableGetName();
 interfaceCode: end
 
 code: start
@@ -6492,7 +6480,7 @@ code: start
 	 * Params:
 	 * name =  name to set
 	 */
-	public void buildableSetName(char[] name)
+	public void buildableSetName(string name)
 	{
 		// void gtk_buildable_set_name (GtkBuildable *buildable,  const gchar *name);
 		gtk_buildable_set_name(getBuildableTStruct(), Str.toStringz(name));
@@ -6506,10 +6494,10 @@ code: start
 	 * Since 2.12
 	 * Returns: the name set with gtk_buildable_set_name()
 	 */
-	public char[] buildableGetName()
+	public string buildableGetName()
 	{
 		// const gchar* gtk_buildable_get_name (GtkBuildable *buildable);
-		return Str.toString(gtk_buildable_get_name(getBuildableTStruct())).dup;
+		return Str.toString(gtk_buildable_get_name(getBuildableTStruct()));
 	}
 code: end
 interface: BuildableIF

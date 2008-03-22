@@ -153,11 +153,11 @@ code: start
 	/**
 	 * Call this function before using any other GStreamer functions in your applications.
 	 */
-	public static void init(char[][] args) //public static void init(int* argc, char**[] argv)
+	public static void init(string[] args) //public static void init(int* argc, char**[] argv)
 	{
 		char** argv = cast(char**) new char*[args.length];
 		int argc = 0;
-		foreach (char[] p; args)
+		foreach (string p; args)
 		{
 			argv[argc++] = cast(char*)p;
 		}
@@ -185,7 +185,7 @@ code: start
 	 * Returns:
 	 *  a new GstBin
 	 */
-	public this(char[] name)
+	public this(string name)
 	{
 		// GstElement* gst_bin_new (const gchar *name);
 		this( cast(GstBin*) gst_bin_new(Str.toStringz(name)) );
@@ -411,7 +411,7 @@ code: start
 	/**
 	 *	This set's the filename for a filesrc element.
 	 */
-	public void location( char[] set )
+	public void location( string set )
 	{
 		//g_object_set( G_OBJECT(getElementStruct()), "location", set, NULL);
 		setProperty("location", set);
@@ -527,7 +527,7 @@ code: start
 	 * Returns:
 	 *  new GstElement or NULL if unable to create element
 	 */
-	public static Element make( char[] factoryname )
+	public static Element make( string factoryname )
 	{
 		// GstElement* gst_element_factory_make (const gchar *factoryname,  const gchar *name);
 		return new Element( gst_element_factory_make(Str.toStringz(factoryname), null ) );
@@ -703,7 +703,7 @@ code: start
 	 * Returns:
 	 *  a new GstPad, or NULL in case of an error.
 	 */
-	public this(char[] name, Pad target)
+	public this(string name, Pad target)
 	{
 		// GstPad* gst_ghost_pad_new (const gchar *name,  GstPad *target);
 		this( cast(GstGhostPad*) gst_ghost_pad_new(Str.toStringz(name), (target is null) ? null : target.getPadStruct()) );
@@ -1033,7 +1033,7 @@ code: start
 	 * Returns:
 	 *  The new warning message.
 	 */
-	public static Message newWarning(ObjectGst src, ErrorG error, char[] dbug)
+	public static Message newWarning(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_warning (GstObject *src,  GError *error,  gchar *debug);
 		return new Message(cast(GstMessage*)gst_message_new_warning((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
@@ -1084,7 +1084,7 @@ code: start
 	 * Returns:
 	 *  The new error message.
 	 */
-	public static Message newError(ObjectGst src, ErrorG error, char[] dbug)
+	public static Message newError(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_error (GstObject *src,  GError *error,  gchar *debug);
 		return new Message(cast(GstMessage*)gst_message_new_error((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
@@ -1102,7 +1102,7 @@ code: start
 	 * Returns:
 	 *  The new info message.
 	 */
-	public static Message newInfo(ObjectGst src, ErrorG error, char[] dbug)
+	public static Message newInfo(ObjectGst src, ErrorG error, string dbug)
 	{
 		// GstMessage* gst_message_new_info (GstObject *src,  GError *error,  gchar *debug);
 		return new Message(cast(GstMessage*)gst_message_new_info((src is null) ? null : src.getObjectGstStruct(), (error is null) ? null : error.getErrorGStruct(), Str.toStringz(dbug)) );
@@ -1231,7 +1231,7 @@ prefix: gst_pipeline_
 prefix: gst_
 code: start
 /** */
-public this (char[] name)
+public this (string name)
 {
 	this.gstPipeline = cast(GstPipeline*) gst_pipeline_new(Str.toStringz(name));
 	super(cast(GstBin*)this.gstPipeline);
@@ -1282,7 +1282,7 @@ code: start
 	 * Params:
 	 *  name = the name to set
 	 */
-	public void setFeatureName(char[] name)
+	public void setFeatureName(string name)
 	{
 		// void gst_plugin_feature_set_name (GstPluginFeature *feature,  const gchar *name);
 		gst_plugin_feature_set_name(gstPluginFeature, Str.toStringz(name));

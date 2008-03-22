@@ -39,6 +39,9 @@ addEnums: start
 addEnums: end
 
 addStructs: start
+public struct GtkTextViewClass{}
+
+public struct GtkTextBufferClass{}
 addStructs: end
 
 addTypes: start

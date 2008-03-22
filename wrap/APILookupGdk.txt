@@ -712,7 +712,7 @@ code: start
 	/**
 	 * Create and loads a font
 	 */
-	public this(char[] fontName)
+	public this(string fontName)
 	{
 		this(gdk_font_load(Str.toStringz(fontName)));
 	}

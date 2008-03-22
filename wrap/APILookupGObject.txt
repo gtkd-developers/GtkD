@@ -182,7 +182,7 @@ code: start
 	 *  key = the data identifier
 	 *  data = a pointer
 	 */
-	public: void setDataFull(char[] key, gpointer data)
+	public: void setDataFull(string key, gpointer data)
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
 		version(Tango) GC.addRoot(data);
@@ -332,7 +332,7 @@ code: start
 //	 *  key = the data identifier
 //	 *  data = a pointer
 //	 */
-//	private void setDestroyNotify(char[] key, gpointer data)
+//	private void setDestroyNotify(string key, gpointer data)
 //	{
 //		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
 //		//std.gc.addRoot(data);
@@ -357,26 +357,26 @@ code: start
 //	}
 
 	/** */
-	public void setProperty(char[] propertyName, int value)
+	public void setProperty(string propertyName, int value)
 	{
 		setProperty(propertyName, new Value(value));
 	}
 	
 	/** */
-	public void setProperty(char[] propertyName, char[] value)
+	public void setProperty(string propertyName, string value)
 	{
 		setProperty(propertyName, new Value(value));
 	}
 	
 	/** */
-	public void setProperty(char[] propertyName, long value)
+	public void setProperty(string propertyName, long value)
 	{
 		//We use g_object_set instead of g_object_set_property, because Value doesn't like longs and ulongs for some reason.
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
 
 	/** */
-	public void setProperty(char[] propertyName, ulong value)
+	public void setProperty(string propertyName, ulong value)
 	{
 		g_object_set( gObject, Str.toStringz(propertyName), value, null);
 	}
@@ -445,7 +445,7 @@ code: start
 	}
 
 	/** */
-	this(char[] value)
+	this(string value)
 	{
 		this();
 		init(GType.STRING);
@@ -542,7 +542,7 @@ structWrap: GQuark* Quark
 
 code: start
 	/** */
-	public static uint connectData(void* instanc, char[] detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
+	public static uint connectData(void* instanc, string detailedSignal, GCallback cHandler, Object data, GClosureNotify destroyData, GConnectFlags connectFlags)
 	{
 		// gulong g_signal_connect_data (gpointer instance,  const gchar *detailed_signal,  GCallback c_handler,  gpointer data,  GClosureNotify destroy_data,  GConnectFlags connect_flags);
 		return g_signal_connect_data(instanc, Str.toStringz(detailedSignal), cHandler, cast(void*)data, destroyData, connectFlags);

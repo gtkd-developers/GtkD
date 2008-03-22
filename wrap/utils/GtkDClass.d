@@ -593,7 +593,10 @@ public class GtkDClass
 					}
 					text ~= "";
 					text ~= "/** the main Gtk struct as a void* */";
-					text ~= "protected void* getStruct()"~iFaceChar;
+					if ( gtkDParentName.length > 0)
+						text ~= "protected override void* getStruct()"~iFaceChar;
+					else
+						text ~= "protected void* getStruct()"~iFaceChar;
 					if ( !convParms.isInterface )
 					{
 						text ~= "{";

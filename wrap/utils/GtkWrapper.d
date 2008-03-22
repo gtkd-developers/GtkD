@@ -987,7 +987,7 @@ public class GtkWrapper : WrapperIF
             tabs = "";
             def ~= "\n}";
             def ~= "\n\n// Stock strings";
-            def ~= "\nchar[][] StockDesc = ";
+            def ~= "\nstring[] StockDesc = ";
             def ~= "\n[";
             tabs ~= "\t";
             GtkDClass.append(def, stockChars, tabs);

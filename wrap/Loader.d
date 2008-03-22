@@ -59,7 +59,7 @@ version (Darwin)
 
 public struct Symbol
 {
-	char[]  name;		// Name of the exported procedure in dynamic library
+	string  name;		// Name of the exported procedure in dynamic library
 	void**	pointer;	// Address of the procedure pointer variable
 }
 
@@ -68,6 +68,7 @@ version(Tango)
 {
     private import tango.stdc.stdio;
     private import tango.io.Stdout;
+	alias char[] string;
 }
 else
 {
@@ -79,19 +80,21 @@ else
  * of the library and exported functions
  */
 
-//alias void function( char[] ) failureFN;
+//alias void function( string ) failureFN;
 
 public class Linker
 {
 
+	enum
+	{
+		RTLD_LAZY = 0x00001,		// Lazy function call binding
+		RTLD_NOW  = 0x00002,		// Immediate function call binding
+		RTLD_NOLOAD = 0x00004,    // No object load
+		RTLD_DEEPBIND = 0x00008,  //
+		RTLD_GLOBAL = 0x00100    // Make object available to whole program
+	}
 
-	const int RTLD_LAZY = 0x00001;		// Lazy function call binding
-	const int RTLD_NOW  = 0x00002;		// Immediate function call binding
-	const int RTLD_NOLOAD = 0x00004;    // No object load
-	const int RTLD_DEEPBIND = 0x00008;  //
-	const int RTLD_GLOBAL = 0x00100;     // Make object available to whole program
-
-	static char[][][char[]] loadFailures;
+	static string[][string] loadFailures;
 
 	/**
 	 * Gets all the failed loads for a specific library.
@@ -99,7 +102,7 @@ public class Linker
 	 * returns: An array of the names hat failed to load for a specific library
 	 *          or null if none was found
 	 */
-	public static char[][] getLoadFailures(char[] libName)
+	public static string[] getLoadFailures(string libName)
 	{
 		if ( libName in loadFailures )
 		{
@@ -116,9 +119,9 @@ public class Linker
 	 * This is filled in only if the default onFailure method is used durin load
 	 * returns: An array of the library names
 	 */
-	public static char[][] getLoadLibraries()
+	public static string[] getLoadLibraries()
 	{
-		return loadFailures.keys;
+		return cast(string[])loadFailures.keys;
 	}
 
 	/**
@@ -132,9 +135,9 @@ public class Linker
 
 	public static void dumpFailedLoads()
 	{
-		foreach ( char[] lib ; Linker.getLoadLibraries() )
+		foreach ( string lib ; Linker.getLoadLibraries() )
 		{
-			foreach ( char[] symbol ; Linker.getLoadFailures(lib) )
+			foreach ( string symbol ; Linker.getLoadFailures(lib) )
 			{
 				version(Tango) Stdout.formatln("failed ({}) {}", lib, symbol);
 				else writefln("failed (%s) %s", lib, symbol);
@@ -145,25 +148,25 @@ public class Linker
 	private HANDLE  handle;
 	private HANDLE alternateHandle;
 
-	private char[]  libraryName;
-	private char[]  alternateLibraryName;
+	private string  libraryName;
+	private string  alternateLibraryName;
 
 	// private bool continueOnFail = false;
 
-	alias void function( char[] libraryName, char[] symbolName, char[] message=null) failureFN;
+	alias void function( string libraryName, string symbolName, string message=null) failureFN;
 
 	private failureFN onLoadFailure;
 
 	// -----------------------------------------------------
 
-	this( char[] libraryName, char[] alternateLibraryName=null )
+	this( string libraryName, string alternateLibraryName=null )
 	{
 		this(libraryName, alternateLibraryName, &(Linker.defaultFail));
 	}
 
 	// ---------------------------------------
 
-	this (char[] libraryName, char[] alternateLibraryName, failureFN fn )
+	this (string libraryName, string alternateLibraryName, failureFN fn )
 	{
 		this.libraryName = libraryName;
 		this.alternateLibraryName = alternateLibraryName;
@@ -171,23 +174,23 @@ public class Linker
 
 		version(Windows)
 		{
-			handle = LoadLibraryA( (this.libraryName ~ "\0").ptr );
+			handle = LoadLibraryA( (this.libraryName ~ "\0").dup.ptr );
 			if ( alternateLibraryName !is null )
 			{
-				alternateHandle = LoadLibraryA( (this.alternateLibraryName ~ "\0").ptr );
+				alternateHandle = LoadLibraryA( (this.alternateLibraryName ~ "\0").dup.ptr );
 			}
 		}
 		version(linux)
 		{
-			handle = dlopen( (this.libraryName ~ "\0").ptr, RTLD_NOW);
+			handle = dlopen( (this.libraryName ~ "\0").dup.ptr, RTLD_NOW);
 			if (handle is null)
 			{
 				// non-dev libraries tend to be called xxxx.so.0
-				handle = dlopen( (this.libraryName ~ ".0\0").ptr, RTLD_NOW);
+				handle = dlopen( (this.libraryName ~ ".0\0").dup.ptr, RTLD_NOW);
 			}
 			if ( alternateLibraryName !is null )
 			{
-				alternateHandle = dlopen( (this.alternateLibraryName ~ "\0").ptr, RTLD_NOW);
+				alternateHandle = dlopen( (this.alternateLibraryName ~ "\0").dup.ptr, RTLD_NOW);
 			}
 			// clear the error buffer
 			dlerror();
@@ -233,17 +236,17 @@ public class Linker
 	 * Default on load fail.
 	 * Logs the symbols that failed to load
 	 */
-	static void defaultFail( char[] libraryName, char[] symbolName, char[] message=null )
+	static void defaultFail( string libraryName, string symbolName, string message=null )
 	{
 		//writefln("failed to load (%s): %s",libraryName , message );
 
 		if ( !(libraryName in loadFailures) )
 		{
-			char[][] cc;
+			string[] cc;
 			loadFailures[libraryName] = cc;
 		}
 
-		loadFailures[libraryName] ~= symbolName.dup;	// need dup?
+		loadFailures[libraryName] ~= symbolName;
 
 		//throw new Exception("Function failed to load from library: " ~ libraryName);
 	}
@@ -256,7 +259,7 @@ public class Linker
 	{
 		foreach( Symbol link; symbols )
 		{
-			*link.pointer = getSymbol(handle, (link.name~"\0").ptr);
+			*link.pointer = getSymbol(handle, (link.name~"\0").dup.ptr);
 			version(Tango)debug(loadSymbol) Stdout.formatln("Loaded... {} {}", libraryName, link.name);
 			else debug(loadSymbol) writefln("Loaded...", libraryName, " ", link.name);
 			if (*link.pointer is null)
@@ -264,7 +267,7 @@ public class Linker
 				// if gthread try on glib
 				if ( alternateHandle !is null )
 				{
-					*link.pointer = getSymbol(alternateHandle, (link.name~"\0").ptr);
+					*link.pointer = getSymbol(alternateHandle, (link.name~"\0").dup.ptr);
 					version(Tango) Stdout.formatln("Loader.Linker.link trying alternate lib <<<<<<<<< {}", link.name);
 					else writefln("Loader.Linker.link trying alternate lib <<<<<<<<< %s", link.name);
 				}

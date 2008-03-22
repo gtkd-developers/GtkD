@@ -162,7 +162,7 @@ public struct Funct
 		char[] wType;
 		if ( currType == "gchar*" || currType == "char*" )
 		{
-			wType = "char[]";
+			wType = "string";
 		}
 		else if ( convParms.structWrap.length == 0 )
 		{
@@ -467,7 +467,7 @@ public struct Funct
 		char[] parmToGtk;
 		if ( parmsType[i] != parmsWrap[i] )
 		{
-			if ( parmsWrap[i] == "char[]" )
+			if ( parmsWrap[i] == "string" )
 			{
 				parmToGtk = "Str.toStringz("
 							~ GtkDClass.idsToGtkD(parms[i], convParms, aliases)
@@ -491,7 +491,7 @@ public struct Funct
 		char[] parmToGtkD;
 		if ( parmsType[i] != parmsWrap[i] )
 		{
-			if ( parmsWrap[i] == "char[]" )
+			if ( parmsWrap[i] == "string" )
 			{
 				parmToGtkD = "Str.toString("
 							~ GtkDClass.idsToGtkD(parms[i], convParms, aliases)
@@ -629,11 +629,11 @@ public struct Funct
 				{
 					/* We return an object of a different type, we need to wrap it
 					 * accordingly. */
-					if(typeWrap == "char[]")
+					if(typeWrap == "string")
 					{
 						/* Returned strings get special care. */
 						//return Str.toString(gtk_function(arg1...argN)).dup;
-						bd ~= "return Str.toString(" ~ gtkCall ~ ").dup;";
+						bd ~= "return Str.toString(" ~ gtkCall ~ ");";
 
 						return bd;
 					}
