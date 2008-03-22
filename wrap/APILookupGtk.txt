@@ -3786,6 +3786,12 @@ code: start
 		item.setSubmenu(menu);
 		return menu;
 	}
+
+	/** */
+	public override void append(Widget widget) 
+	{ 
+		super.append(widget); 
+	}
 code: end
 outFile: MenuBar
 
