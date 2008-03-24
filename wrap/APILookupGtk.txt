@@ -782,6 +782,9 @@ prefix: gtk_invisible_
 prefix: gtk_
 import: gdk.Screen
 structWrap: GdkScreen* Screen
+
+override: getScreen
+
 outFile: Invisible
 
 file: GtkMessageDialog.html
@@ -1060,6 +1063,8 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Window
 
+override: getScreen
+
 code: start
 	/**
 	 * Creates a top level window with a title
@@ -1167,6 +1172,10 @@ import: gdk.Pixbuf
 structWrap: GdkPixbuf* Pixbuf
 import: gtk.Window
 structWrap: GtkWindow* Window
+
+override: getName
+override: setName
+
 outFile: AboutDialog
 
 file: GtkAssistant.html
@@ -2592,6 +2601,8 @@ prefix: gtk_tree_path_
 import: glib.Str
 structWrap: GtkTreePath* TreePath
 
+override: toString
+
 nocode: gtk_tree_path_new
 nocode: gtk_tree_path_new_first
 
@@ -3804,12 +3815,17 @@ import: glib.Str
 import: gtk.Widget
 import: gtk.AccelGroup
 structWrap: GtkWidget* Widget
+
 # method conflict with parent method
 nocode: gtk_menu_item_activate
 nocode: gtk_menu_item_new_with_label
 nocode: gtk_menu_item_new_with_mnemonic
 # replace the method
 # TODO create a method rename instead of replacing the entire code
+
+override: select
+override: deselect
+
 code: start
 	
 	/** store the action code passed in by the applcation */
@@ -4172,6 +4188,9 @@ structWrap: GtkTooltips* Tooltips
 import: gtk.Widget
 structWrap: GtkWidget* Widget
 
+override: setTooltipText
+override: setTooltipMarkup
+
 code: start
 	/**
 	 * Sets this widget tooltip
@@ -4180,7 +4199,7 @@ code: start
 	 *  tipText = the tooltip
 	 *  tipPrivate = a private text
 	 */
-	void setTooltip(string tipText, string tipPrivate)
+	override void setTooltip(string tipText, string tipPrivate)
 	{
 		Tooltips tt = new Tooltips();
 		tt.setTip(this, tipText, tipPrivate);
@@ -5147,7 +5166,7 @@ code: start
 	/**
 	 * Removes all children and resizes the table to 1,1
 	 */
-	void removeAll()
+	override void removeAll()
 	{
 		super.removeAll();
 		resize(1,1);
@@ -5868,6 +5887,9 @@ prefix: gtk_object_
 prefix: gtk_
 import: glib.Str
 
+override: setData
+override: getData
+
 code: star
 	/** */
 	public static string getId(StockID id)
@@ -6009,6 +6031,10 @@ import: gtk.Builder
 #import: glib.MarkupParser
 import: gtk.BuildableIF
 import: gtk.BuildableT
+
+override: unref
+override: destroy
+override: set
 
 code: start
 	// add the Buildable capabilities

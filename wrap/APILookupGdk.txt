@@ -245,6 +245,8 @@ import: pango.PgMatrix
 structWrap: PangoMatrix* PgMatrix
 import: pango.PgLayout
 structWrap: PangoLayout* PgLayout
+
+override: getData
  
 code: start
 	/**
@@ -559,6 +561,8 @@ structWrap: GdkColor* Color
 import: gdk.Colormap
 structWrap: GdkColormap* Colormap
 
+override: toString
+
 code: start
 
 	static Color _black;
@@ -598,7 +602,7 @@ code: start
 	{
 		this();
 		//printf("Color.this uint %X\n",rgb);
-		set( ((rgb&0xFFFF)),((rgb&0xFFFF00000000)>>32),(rgb&0xFFFF0000)>>16);
+		set( cast(ushort)((rgb&0xFFFF)),cast(ushort)((rgb&0xFFFF00000000)>>32),cast(ushort)((rgb&0xFFFF0000)>>16));
 	}
 
 	/** */
@@ -606,7 +610,7 @@ code: start
 	{
 		this();
 		//printf("Color.this int %X\n",rgb);
-		set8( cast(byte)((rgb&0xFF0000)>>16),cast(byte)((rgb&0x00FF00)>>8),cast(byte)(rgb&0xFF));
+		set8( cast(ubyte)((rgb&0xFF0000)>>16),cast(ubyte)((rgb&0x00FF00)>>8),cast(ubyte)(rgb&0xFF));
 	}
 
 	/** */
@@ -653,9 +657,9 @@ code: start
 	{
 		//printf("Color.set %X %X %X\n",red,green,blue);
 		
-		gdkColor.red = red * 257;
-		gdkColor.green = green * 257;
-		gdkColor.blue = blue * 257;
+		gdkColor.red = cast(ushort)(red * 257);
+		gdkColor.green = cast(ushort)(green * 257);
+		gdkColor.blue = cast(ushort)(blue * 257);
 		gdkColor.pixel = (red << 16) | (green << 8 ) | blue;
 		//printf("set8 pixel = %X\n", gdkColor.pixel);
 	}

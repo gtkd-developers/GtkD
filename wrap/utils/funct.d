@@ -411,16 +411,21 @@ public struct Funct
 			{
 				convName ~= convParms.outFile;
 			}
+			char[] overr;
+			if (convParms.needsOverride(convName))
+			{
+				overr = "override ";
+			}
 			if ( convParms.strct.length>0 
 				&& parmsType.length > 0 
 				&& (parmsType[0] == strctPointer )
 				)
 			{
-				dec = "public "~typeWrap~" "~convName~"(";
+				dec = "public "~overr~typeWrap~" "~convName~"(";
 			}
 			else
 			{
-				dec = "public static "~typeWrap~" "~convName~"(";
+				dec = "public static "~overr~typeWrap~" "~convName~"(";
 			}
 			ctor = false;
 		}

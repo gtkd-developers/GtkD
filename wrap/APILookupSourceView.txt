@@ -84,7 +84,7 @@ code: start
 	 * Returns:
 	 *  a GtkSourceBuffer
 	 */
-	public SourceBuffer getBuffer()
+	public override SourceBuffer getBuffer()
 	{
 		// GtkSourceBuffer* gtk_text_view_get_buffer (GtkTextView *text_view);
 		return new SourceBuffer( cast(GtkSourceBuffer*)gtk_text_view_get_buffer(cast(GtkTextView*)gtkSourceView) );

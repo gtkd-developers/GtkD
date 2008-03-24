@@ -215,6 +215,8 @@ strictPrefix: Yes
 import: glib.Str
 structWrap: PangoFontDescription* PgFontDescription
 
+override: toString
+
 code: start
 
 	/**
@@ -332,6 +334,7 @@ prefix: pango_color_
 strictPrefix: Yes
 import: glib.Str
 structWrap: PangoColor* PgColor
+override: toString
 outFile: PgColor
 
 struct: PangoLanguage

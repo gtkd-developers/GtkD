@@ -876,21 +876,41 @@ code: start
 			this.read = read;
 		}
 		
-		public int run()
+		version(Tango)
 		{
-			string line = readLine(file);
-			while( line !is null )
+			public int run()
 			{
-				++lineCount;
-				//writefln("Spawn.ReadFile.run line (%s) ========== >>>%s<<<", lineCount, line);
-				//printf("Spawn.ReadFile.run line (%d) ========== >>>%.*s<<<", lineCount, line);
-				if ( read !is null )
+				string line = readLine(file);
+				while( line !is null )
 				{
-					read(line);
+					++lineCount;
+					if ( read !is null )
+					{
+						read(line);
+					}
+					line = readLine(file);
 				}
-				line = readLine(file);
+				return 0;
 			}
-			return 0;
+		}
+		else
+		{
+			public override int run()
+			{
+				string line = readLine(file);
+				while( line !is null )
+				{
+					++lineCount;
+					//writefln("Spawn.ReadFile.run line (%s) ========== >>>%s<<<", lineCount, line);
+					//printf("Spawn.ReadFile.run line (%d) ========== >>>%.*s<<<", lineCount, line);
+					if ( read !is null )
+					{
+						read(line);
+					}
+					line = readLine(file);
+				}
+				return 0;
+			}
 		}
 	}
 	
@@ -1158,6 +1178,35 @@ class: MemoryChunk
 prefix: g_mem_chunk_
 prefix: g_
 import: glib.Str
+
+nocode: g_mem_chunk_print
+
+code: start
+	/**
+	 * Warning
+	 * g_mem_chunk_print has been deprecated since version 2.10 and should not be used in newly-written code. Use the slice
+	 *  allocator instead
+	 * Outputs debugging information for a GMemChunk.
+	 * It outputs the name of the GMemChunk (set with g_mem_chunk_new()),
+	 * the number of bytes used, and the number of blocks of memory allocated.
+	 */
+	version(Tango)
+	{
+		public void print()
+		{
+			// void g_mem_chunk_print (GMemChunk *mem_chunk);
+			g_mem_chunk_print(gMemChunk);
+		}
+	}
+	else
+	{
+		public override void print()
+		{
+			// void g_mem_chunk_print (GMemChunk *mem_chunk);
+			g_mem_chunk_print(gMemChunk);
+		}
+	}
+code: end
 outFile: MemoryChunk
 
 file: glib-Doubly-Linked-Lists.html
@@ -1299,6 +1348,31 @@ prefix: g_relation_
 noprefix: g_tuples_
 import: glib.Tuples
 structWrap: GTuples* Tuples
+
+nocode: g_relation_print
+
+code: start
+	/**
+	 * Outputs information about all records in a GRelation, as well as the indexes.
+	 * It is for debugging.
+	 */
+	version(Tango)
+	{
+		public void print()
+		{
+			// void g_relation_print (GRelation *relation);
+			g_relation_print(gRelation);
+		}
+	}
+	else
+	{
+		public override void print()
+		{
+			// void g_relation_print (GRelation *relation);
+			g_relation_print(gRelation);
+		}
+	}
+code: end
 outFile: Relation
 
 struct: GTuples

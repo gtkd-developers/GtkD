@@ -172,7 +172,7 @@ code: start
 		if ( gObject !is  null )
 		{
 			//writefln("ObjectG.this\n");
-			setDataFull("GObject",cast(void*)this);
+			objectGSetDataFull("GObject",cast(void*)this);
 		}
 	}
 	
@@ -182,7 +182,7 @@ code: start
 	 *  key = the data identifier
 	 *  data = a pointer
 	 */
-	public: void setDataFull(string key, gpointer data)
+	public: void objectGSetDataFull(string key, gpointer data)
 	{
 		//writefln("setData objectG=%X data=%X type %s",gObject,data,key);
 		version(Tango) GC.addRoot(data);
