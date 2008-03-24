@@ -58,7 +58,7 @@ public alias wchar unichar2;
 public alias uint time_t;
 public alias uint XID;
 
-version(Tango) public alias char[] string;
+version(Tango) private alias char[] string;
 
 addTypedefs: end
 
