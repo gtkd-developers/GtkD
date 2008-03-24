@@ -11,7 +11,7 @@
 
 module gtkc.paths;
 
-version(Tango) alias char[] string;
+version(Tango) private import gtkc.glibtypes; //For alias char[] string
 
 /*
  * Define the Libraries that gtkD will be using.

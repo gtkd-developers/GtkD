@@ -19,6 +19,18 @@ module gtkc.Loader;
 //debug = loadLib;
 //debug = loadSymbol;
 
+private import gtkc.paths;
+version(Tango)
+{
+    private import tango.stdc.stdio;
+    private import tango.io.Stdout;
+	private import gtkc.glibtypes; //For alias char[] string
+}
+else
+{
+    private import std.stdio;
+}
+
 alias void* HANDLE;
 
 version (Windows)
@@ -61,18 +73,6 @@ public struct Symbol
 {
 	string  name;		// Name of the exported procedure in dynamic library
 	void**	pointer;	// Address of the procedure pointer variable
-}
-
-private import gtkc.paths;
-version(Tango)
-{
-    private import tango.stdc.stdio;
-    private import tango.io.Stdout;
-	alias char[] string;
-}
-else
-{
-    private import std.stdio;
 }
 
 /*
