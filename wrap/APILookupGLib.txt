@@ -58,7 +58,12 @@ public alias wchar unichar2;
 public alias uint time_t;
 public alias uint XID;
 
-version(Tango) private alias char[] string;
+version(Tango)
+{
+	//avoid some conflicts with other string aliases.
+	static if( !is(string) )
+		private alias char[] string;
+}
 
 addTypedefs: end
 
